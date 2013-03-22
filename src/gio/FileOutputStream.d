@@ -84,13 +84,14 @@ private import gio.SeekableIF;
 private import gio.OutputStream;
 
 /**
- * Description
  * GFileOutputStream provides output streams that write their
  * content to a file.
+ *
  * GFileOutputStream implements GSeekable, which allows the output
  * stream to jump to arbitrary positions in the file and to truncate
  * the file, provided the filesystem of the file supports these
  * operations.
+ *
  * To find the position of a file output stream, use g_seekable_tell().
  * To find out if a file output stream supports seeking, use
  * g_seekable_can_seek().To position a file output stream, use

@@ -79,7 +79,6 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * GtkSymbolicColor is a boxed type that represents a symbolic color.
  * It is the result of parsing a
  * color expression.
@@ -88,6 +87,7 @@ private import gtkc.paths;
  * symbolic color references by the colors they refer to (in a given
  * context) and evaluates mix, shade and other expressions, resulting
  * in a GdkRGBA value.
+ *
  * It is not normally necessary to deal directly with GtkSymbolicColors,
  * since they are mostly used behind the scenes by GtkStyleContext and
  * GtkCssProvider.

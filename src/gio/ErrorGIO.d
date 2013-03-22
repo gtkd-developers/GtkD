@@ -63,7 +63,6 @@ private import gobject.ObjectG;
 
 
 /**
- * Description
  * Contains helper functions for reporting errors to the user.
  */
 public class ErrorGIO

@@ -69,21 +69,24 @@ private import gda.Transaction;
 
 
 /**
- * Description
  *  The GdaCommand structure holds data needed to issue a command to the
  *  providers.
  *  Applications usually create a GdaCommand (via gda_command_new), set its
  *  properties (via the gda_command_set_* functions) and pass it over to the
  *  database using the GdaConnection functions.
+ *
  *  One interesting thing about GdaCommand's is that they can be reused over
  *  and over. That is, applications don't need to create a command every time
  *  they want to run something on the connected database. Moreover, the ability
  *  to create command strings with placeholders allows the use of parameters to
  *  specify the values for those placeholders. Thus, an application can create a
  *  command of the form:
+ *
  *  INSERT INTO employees VALUES (id, name, address, salary)
+ *
  *  and reuse the same command over and over, just using different values for the
  *  placeholders.
+ *
  *  The value for the placeholders is specified when sending the GdaCommand to a
  *  database connection, which is done via the gda_connection_execute function.
  */

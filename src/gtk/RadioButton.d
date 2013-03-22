@@ -76,30 +76,37 @@ private import glib.ListSG;
 private import gtk.CheckButton;
 
 /**
- * Description
  * A single radio button performs the same basic function as a GtkCheckButton,
  * as its position in the object hierarchy reflects. It is only when multiple
  * radio buttons are grouped together that they become a different user
  * interface component in their own right.
+ *
  * Every radio button is a member of some group of radio buttons. When one is
  * selected, all other radio buttons in the same group are deselected. A
  * GtkRadioButton is one way of giving the user a choice from many options.
+ *
  * Radio button widgets are created with gtk_radio_button_new(), passing NULL
  * as the argument if this is the first radio button in a group. In subsequent
  * calls, the group you wish to add this button to should be passed as an
  * argument. Optionally, gtk_radio_button_new_with_label() can be used if you
  * want a text label on the radio button.
+ *
  * Alternatively, when adding widgets to an existing group of radio buttons,
  * use gtk_radio_button_new_from_widget() with a GtkRadioButton that already
  * has a group assigned to it. The convenience function
  * gtk_radio_button_new_with_label_from_widget() is also provided.
+ *
  * To retrieve the group a GtkRadioButton is assigned to, use
  * gtk_radio_button_get_group().
+ *
  * To remove a GtkRadioButton from one group and make it part of a new one,
  * use gtk_radio_button_set_group().
+ *
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
+ *
  * $(DDOC_COMMENT example)
+ *
  * When an unselected button in the group is clicked the clicked button
  * receives the "toggled" signal, as does the previously
  * selected button.

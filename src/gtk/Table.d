@@ -68,14 +68,16 @@ private import gtk.Widget;
 private import gtk.Container;
 
 /**
- * Description
  * The GtkTable functions allow the programmer to arrange widgets in rows and
  * columns, making it easy to align many widgets next to each other,
  * horizontally and vertically.
+ *
  * Tables are created with a call to gtk_table_new(), the size of which can
  * later be changed with gtk_table_resize().
+ *
  * Widgets can be added to a table using gtk_table_attach() or the more
  * convenient (but slightly less flexible) gtk_table_attach_defaults().
+ *
  * To alter the space next to a specific row, use gtk_table_set_row_spacing(),
  * and for a column, gtk_table_set_col_spacing().
  * The gaps between all rows or columns can be changed by
@@ -83,9 +85,12 @@ private import gtk.Container;
  * respectively. Note that spacing is added between the
  * children, while padding added by gtk_table_attach() is added on
  * either side of the widget it belongs to.
+ *
  * gtk_table_set_homogeneous(), can be used to set whether all cells in the
  * table will resize themselves to the size of the largest widget in the table.
+ *
  * Note
+ *
  * GtkTable has been deprecated. Use GtkGrid instead. It provides the same
  * capabilities as GtkTable for arranging widgets in a rectangular grid, but
  * does support height-for-width geometry management.

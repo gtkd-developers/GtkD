@@ -69,7 +69,6 @@ private import pango.PgGlyphItem;
 
 
 /**
- * Description
  * pango_shape() produces a string of glyphs which
  * can be measured or drawn to the screen. The following
  * structures are used to store information about

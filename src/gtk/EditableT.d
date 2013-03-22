@@ -68,15 +68,16 @@ public import glib.Str;
 
 
 /**
- * Description
  * The GtkEditable interface is an interface which should be implemented by
  * text editing widgets, such as GtkEntry and GtkSpinButton. It contains functions
  * for generically manipulating an editable widget, a large number of action
  * signals used for key bindings, and several signals that an application can
  * connect to to modify the behavior of a widget.
+ *
  * As an example of the latter usage, by connecting
  * the following handler to "insert-text", an application
  * can convert all entry into a widget into uppercase.
+ *
  * $(DDOC_COMMENT example)
  */
 public template EditableT(TStruct)

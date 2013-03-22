@@ -84,10 +84,10 @@ private import gio.SocketConnection;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GSocketListener is an object that keeps track of a set
  * of server sockets and helps you accept sockets from any of the
  * socket, either sync or async.
+ *
  * If you want to implement a network server, also look at GSocketService
  * and GThreadedSocketService which are subclass of GSocketListener
  * that makes this even easier.

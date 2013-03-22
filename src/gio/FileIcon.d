@@ -74,7 +74,6 @@ private import gio.LoadableIconIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GFileIcon specifies an icon by pointing to an image file
  * to be used as icon.
  */

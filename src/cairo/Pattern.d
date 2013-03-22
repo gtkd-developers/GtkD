@@ -71,11 +71,11 @@ private import cairo.Surface;
 
 
 /**
- * Description
  * cairo_pattern_t is the paint with which cairo draws.
  * The primary use of patterns is as the source for all cairo drawing
  * operations, although they can also be used as masks, that is, as the
  * brush too.
+ *
  * A cairo pattern is created by using one of the many constructors,
  * of the form
  * cairo_pattern_create_type()

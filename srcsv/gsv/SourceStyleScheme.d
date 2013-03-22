@@ -69,11 +69,11 @@ private import gsv.SourceStyle;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkSourceStyleScheme contains all the text styles to be used in
  * GtkSourceView and GtkSourceBuffer. For instance, it contains text styles
  * for syntax highlighting, it may contain foreground and background color for
  * non-highlighted text, color for the line numbers, etc.
+ *
  * Style schemes are stored in XML files. The format of a scheme file is
  * the documented in the
  * style scheme reference.

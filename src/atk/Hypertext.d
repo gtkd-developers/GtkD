@@ -68,7 +68,6 @@ private import atk.Hyperlink;
 
 
 /**
- * Description
  * An interface used for objects which implement linking between multiple
  * resource or content locations, or multiple 'markers' within a single
  * document. A Hypertext instance is associated with one or more Hyperlinks,

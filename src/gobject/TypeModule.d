@@ -72,7 +72,6 @@ private import gobject.Flags;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GTypeModule provides a simple implementation of the GTypePlugin
  * interface. The model of GTypeModule is a dynamically loaded module
  * which implements some number of types and interface
@@ -85,6 +84,7 @@ private import gobject.ObjectG;
  * will be reloaded. Note that the last unref cannot happen in module
  * code, since that would lead to the caller's code being unloaded before
  * g_object_unref() returns to it.
+ *
  * Keeping track of whether the module should be loaded or not is done by
  * using a use count - it starts at zero, and whenever it is greater than
  * zero, the module is loaded. The use count is maintained internally by
@@ -94,6 +94,7 @@ private import gobject.ObjectG;
  * it so that it can initialize its types. At some later point, when the
  * module no longer needs to be loaded except for the type
  * implementations it contains, g_type_module_unuse() is called.
+ *
  * GTypeModule does not actually provide any implementation of module
  * loading and unloading. To create a particular module type you must
  * derive from GTypeModule and implement the load and unload functions

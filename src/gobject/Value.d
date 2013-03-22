@@ -80,7 +80,6 @@ private import glib.VariantType;
 
 
 /**
- * Description
  * The GValue structure is basically a variable container that consists
  * of a type identifier and a specific value of that type.
  * The type identifier within a GValue structure always determines the
@@ -92,8 +91,10 @@ private import glib.VariantType;
  * by the GTypeValueTable associated with the type ID stored in the GValue.
  * Other GValue operations (such as converting values between types) are
  * provided by this interface.
+ *
  * The code in the example program below demonstrates GValue's
  * features.
+ *
  * $(DDOC_COMMENT example)
  */
 public class Value
@@ -204,7 +205,6 @@ public class Value
 	
 	
 	/**
-	 * Description
 	 * GValue provides an abstract container structure which can be
 	 * copied, transformed and compared while holding a value of any
 	 * (derived) type, which is registered as a GType with a
@@ -212,6 +212,7 @@ public class Value
 	 * specifications for most value types can be created as GParamSpec
 	 * derived instances, to implement e.g. GObject properties which
 	 * operate on GValue containers.
+	 *
 	 * Parameter names need to start with a letter (a-z or A-Z). Subsequent
 	 * characters can be letters, numbers or a '-'.
 	 * All other characters are replaced by a '-' during construction.

@@ -80,10 +80,10 @@ private import gio.DBusObjectIF;
 
 
 /**
- * Description
  * The GDBusObjectManager type is the base type for service- and
  * client-side implementations of the standardized org.freedesktop.DBus.ObjectManager
  * interface.
+ *
  * See GDBusObjectManagerClient for the client-side implementation
  * and GDBusObjectManagerServer for the service-side implementation.
  */

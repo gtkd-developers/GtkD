@@ -97,20 +97,24 @@ private import gtk.ScrollableT;
 private import gtk.Container;
 
 /**
- * Description
  * A GtkToolPalette allows you to add GtkToolItems to a palette-like
  * container with different categories and drag and drop support.
+ *
  * A GtkToolPalette is created with a call to gtk_tool_palette_new().
+ *
  * GtkToolItems cannot be added directly to a GtkToolPalette -
  * instead they are added to a GtkToolItemGroup which can than be added
  * to a GtkToolPalette. To add a GtkToolItemGroup to a GtkToolPalette,
  * use gtk_container_add().
+ *
  * $(DDOC_COMMENT example)
+ *
  * The easiest way to use drag and drop with GtkToolPalette is to call
  * gtk_tool_palette_add_drag_dest() with the desired drag source palette
  * and the desired drag target widget. Then gtk_tool_palette_get_drag_item()
  * can be used to get the dragged item in the "drag-data-received"
  * signal handler of the drag target.
+ *
  * $(DDOC_COMMENT example)
  */
 public class ToolPalette : Container, OrientableIF, ScrollableIF

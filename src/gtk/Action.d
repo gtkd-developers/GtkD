@@ -103,26 +103,37 @@ private import gtk.BuildableT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Actions represent operations that the user can be perform, along with
  * some information how it should be presented in the interface. Each action
  * provides methods to create icons, menu items and toolbar items
  * representing itself.
+ *
  * As well as the callback that is called when the action gets activated,
  * the following also gets associated with the action:
+ *
  * a name (not translated, for path lookup)
+ *
  * a label (translated, for display)
+ *
  * an accelerator
+ *
  * whether label indicates a stock id
+ *
  * a tooltip (optional, translated)
+ *
  * a toolbar label (optional, shorter than label)
+ *
  * The action will also have some state information:
+ *
  * visible (shown/hidden)
+ *
  * sensitive (enabled/disabled)
+ *
  * Apart from regular actions, there are toggle
  * actions, which can be toggled between two states and radio actions, of which only one in a group
  * can be in the "active" state. Other actions can be implemented as GtkAction
  * subclasses.
+ *
  * Each action can have one or more proxy widgets. To act as an action proxy,
  * widget needs to implement GtkActivatable interface. Proxies mirror the state
  * of the action and should change when the action's state changes. Properties
@@ -131,6 +142,7 @@ private import gobject.ObjectG;
  * "short-label" and "stock-id" properties are only mirorred
  * if proxy widget has "use-action-appearance" property set to
  * TRUE.
+ *
  * When the proxy is activated, it should activate its action.
  */
 public class Action : ObjectG, BuildableIF

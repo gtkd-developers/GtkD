@@ -73,7 +73,6 @@ private import glib.ListG;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * This is a base class for anything that can be added to a GstPlugin.
  */
 public class PluginFeature : ObjectGst

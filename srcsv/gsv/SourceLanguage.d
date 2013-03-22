@@ -66,7 +66,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkSourceLanguage encapsulates syntax and highlighting styles for a
  * particular language. Use GtkSourceLanguageManager to obtain a
  * GtkSourceLanguage instance, and gtk_source_buffer_set_language() to apply it

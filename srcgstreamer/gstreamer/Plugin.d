@@ -79,19 +79,22 @@ private import glib.ListG;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * GStreamer is extensible, so GstElement instances can be loaded at runtime.
  * A plugin system can provide one or more of the basic
  * GStreamer GstPluginFeature subclasses.
+ *
  * A plugin should export a symbol plugin_desc that is a
  * struct of type GstPluginDesc.
  * the plugin loader will check the version of the core library the plugin was
  * linked against and will create a new GstPlugin. It will then call the
  * GstPluginInitFunc function that was provided in the plugin_desc.
+ *
  * Once you have a handle to a GstPlugin (e.g. from the GstRegistryPool), you
  * can add any object that subclasses GstPluginFeature.
+ *
  * Use gst_plugin_find_feature() and gst_plugin_get_feature_list() to find
  * features in a plugin.
+ *
  * Usually plugins are always automaticlly loaded so you don't need to call
  * gst_plugin_load() explicitly to bring it into memory. There are options to
  * statically link plugins to an app or even use GStreamer without a plugin

@@ -71,15 +71,16 @@ private import glib.ArrayG;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GMountOperation provides a mechanism for interacting with the user.
  * It can be used for authenticating mountable operations, such as loop
  * mounting files, hard drive partitions or server locations. It can
  * also be used to ask the user questions or show a list of applications
  * preventing unmount or eject operations from completing.
+ *
  * Note that GMountOperation is used for more than just GMount
  * objects – for example it is also used in g_drive_start() and
  * g_drive_stop().
+ *
  * Users should instantiate a subclass of this that implements all the
  * various callbacks to show the required dialogs, such as
  * GtkMountOperation. If no user interaction is desired (for example

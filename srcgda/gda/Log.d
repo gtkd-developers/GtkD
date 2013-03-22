@@ -65,7 +65,6 @@ private import glib.Str;
 
 
 /**
- * Description
  */
 public class Log
 {

@@ -66,7 +66,6 @@ private import glgdk.GLConfig;
 
 
 /**
- * Description
  */
 public interface GLDrawableIF
 {

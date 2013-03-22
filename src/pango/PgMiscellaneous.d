@@ -78,7 +78,6 @@ version(Tango) {
 
 
 /**
- * Description
  * The functions and utilities in this section are mostly used from Pango
  * backends and modules, but may be useful for other purposes too.
  */

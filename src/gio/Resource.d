@@ -80,11 +80,11 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * Applications and libraries often contain binary or textual data that is really part of the
  * application, rather than user data. For instance GtkBuilder .ui files, splashscreen images,
  * GMenu markup xml, CSS files, icons, etc. These are often shipped as files in $datadir/appname, or
  * manually included as literal strings in the code.
+ *
  * The GResource API and the glib-compile-resources program
  * provide a convenient and efficient alternative to this which has some nice properties. You
  * maintain the files as normal files, so its easy to edit them, but during the build the files
@@ -92,44 +92,57 @@ private import gtkc.paths;
  * the resource files are efficient (as they are already in memory, shared with other instances) and
  * simple (no need to check for things like I/O errors or locate the files in the filesystem). It
  * also makes it easier to create relocatable applications.
+ *
  * Resource files can also be marked as compressed. Such files will be included in the resource bundle
  * in a compressed form, but will be automatically uncompressed when the resource is used. This
  * is very useful e.g. for larger text files that are parsed once (or rarely) and then thrown away.
+ *
  * Resource files can also be marked to be preprocessed, by setting the value of the
  * preprocess attribute to a comma-separated list of preprocessing options.
  * The only options currently supported are:
+ *
  * xml-stripblanks which will use xmllint to strip
  * ignorable whitespace from the xml file. For this to work, the XMLLINT
  * environment variable must be set to the full path to the xmllint executable, or xmllint
  * must be in the PATH; otherwise the preprocessing step is skipped.
+ *
  * to-pixdata which will use gdk-pixbuf-pixdata to convert
  * images to the GdkPixdata format, which allows you to create pixbufs directly using the data inside
  * the resource file, rather than an (uncompressed) copy if it. For this, the gdk-pixbuf-pixdata
  * program must be in the PATH, or the GDK_PIXBUF_PIXDATA environment variable must be
  * set to the full path to the gdk-pixbuf-pixdata executable; otherwise the resource compiler will
  * abort.
+ *
  * Resource bundles are created by the glib-compile-resources program
  * which takes an xml file that describes the bundle, and a set of files that the xml references. These
  * are combined into a binary resource bundle.
+ *
  * $(DDOC_COMMENT example)
+ *
  * This will create a resource bundle with the following files:
+ *
  * /org/gtk/Example/data/splashscreen.png
  * /org/gtk/Example/dialog.ui
  * /org/gtk/Example/menumarkup.xml
+ *
  * Note that all resources in the process share the same namespace, so use java-style
  * path prefixes (like in the above example) to avoid conflicts.
+ *
  * You can then use glib-compile-resources to compile the xml to a
  * binary bundle that you can load with g_resource_load(). However, its more common to use the --generate-source and
  * --generate-header arguments to create a source file and header to link directly into your application.
+ *
  * Once a GResource has been created and registered all the data in it can be accessed globally in the process by
  * using API calls like g_resources_open_stream() to stream the data or g_resources_lookup_data() to get a direct pointer
  * to the data. You can also use uris like "resource:///org/gtk/Example/data/splashscreen.png" with GFile to access
  * the resource data.
+ *
  * There are two forms of the generated source, the default version uses the compiler support for constructor
  * and destructor functions (where available) to automatically create and register the GResource on startup
  * or library load time. If you pass --manual-register two functions to register/unregister the resource is instead
  * created. This requires an explicit initialization call in your application/library, but it works on all platforms,
  * even on the minor ones where this is not available. (Constructor support is available for at least Win32, MacOS and Linux.)
+ *
  * Note that resource data can point directly into the data segment of e.g. a library, so if you are unloading libraries
  * during runtime you need to be very careful with keeping around pointers to data from a resource, as this goes away
  * when the library is unloaded. However, in practice this is not generally a problem, since most resource accesses

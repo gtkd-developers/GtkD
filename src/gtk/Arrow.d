@@ -64,15 +64,16 @@ private import gobject.ObjectG;
 private import gtk.Misc;
 
 /**
- * Description
  * GtkArrow should be used to draw simple arrows that need to point in
  * one of the four cardinal directions (up, down, left, or right). The
  * style of the arrow can be one of shadow in, shadow out, etched in, or
  * etched out. Note that these directions and style types may be
  * ammended in versions of GTK+ to come.
+ *
  * GtkArrow will fill any space alloted to it, but since it is inherited
  * from GtkMisc, it can be padded and/or aligned, to fill exactly the
  * space the programmer desires.
+ *
  * Arrows are created with a call to gtk_arrow_new(). The direction or
  * style of an arrow can be changed after creation by using gtk_arrow_set().
  */

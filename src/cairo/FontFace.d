@@ -63,9 +63,9 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
  * cairo_font_face_t represents a particular font at a particular weight,
  * slant, and other characteristic but no size, transformation, or size.
+ *
  * Font faces are created using font-backend-specific
  * constructors, typically of the form
  * cairo_backend_font_face_create(),

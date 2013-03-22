@@ -67,11 +67,11 @@ private import gtk.CellArea;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkCellAreaContext object is created by a given GtkCellArea
  * implementation via its GtkCellAreaClass.create_context() virtual
  * method and is used to store cell sizes and alignments for a series of
  * GtkTreeModel rows that are requested and rendered in the same context.
+ *
  * GtkCellLayout widgets can create any number of contexts in which to
  * request and render groups of data rows. However its important that the
  * same context which was used to request sizes for a given GtkTreeModel

@@ -68,29 +68,36 @@ private import glib.Str;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * GstTask is used by GstElement and GstPad to provide the data passing
  * threads in a GstPipeline.
+ *
  * A GstPad will typically start a GstTask to push or pull data to/from the
  * peer pads. Most source elements start a GstTask to push data. In some cases
  * a demuxer element can start a GstTask to pull data from a peer element. This
  * is typically done when the demuxer can perform random access on the upstream
  * peer element for improved performance.
+ *
  * Although convenience functions exist on GstPad to start/pause/stop tasks, it
  * might sometimes be needed to create a GstTask manually if it is not related to
  * a GstPad.
+ *
  * Before the GstTask can be run, it needs a GStaticRecMutex that can be set with
  * gst_task_set_lock().
+ *
  * The task can be started, paused and stopped with gst_task_start(), gst_task_pause()
  * and gst_task_stop() respectively.
+ *
  * A GstTask will repeadedly call the GstTaskFunction with the user data
  * that was provided when creating the task with gst_task_create(). Before calling
  * the function it will acquire the provided lock.
+ *
  * Stopping a task with gst_task_stop() will not immediatly make sure the task is
  * not running anymore. Use gst_task_join() to make sure the task is completely
  * stopped and the thread is stopped.
+ *
  * After creating a GstTask, use gst_object_unref() to free its resources. This can
  * only be done it the task is not running anymore.
+ *
  * Last reviewed on 2006-02-13 (0.10.4)
  */
 public class Task : ObjectGst

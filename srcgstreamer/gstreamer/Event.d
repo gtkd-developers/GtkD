@@ -82,27 +82,33 @@ private import gstreamer.MiniObject;
 
 
 /**
- * Description
  * The event class provides factory methods to construct and functions query
  * (parse) events.
+ *
  * Events are usually created with gst_event_new_*() which takes event-type
  * specific parameters as arguments.
  * To send an event application will usually use gst_element_send_event() and
  * elements will use gst_pad_send_event() or gst_pad_push_event().
  * The event should be unreffed with gst_event_unref() if it has not been sent.
+ *
  * Events that have been received can be parsed with their respective
  * gst_event_parse_*() functions.
+ *
  * Events are passed between elements in parallel to the data stream. Some events
  * are serialized with buffers, others are not. Some events only travel downstream,
  * others only upstream. Some events can travel both upstream and downstream.
+ *
  * The events are used to signal special conditions in the datastream such as
  * EOS (end of stream) or the start of a new stream-segment.
  * Events are also used to flush the pipeline of any pending data.
+ *
  * Most of the event API is used inside plugins. Applications usually only
  * construct and use seek events.
  * To do that gst_event_new_seek() is used to create a seek event. It takes
  * the needed parameters to specity seeking time and mode.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Last reviewed on 2006-09-6 (0.10.10)
  */
 public class Event

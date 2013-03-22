@@ -67,7 +67,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * AtkText should be implemented by AtkObjects on behalf of widgets that
  * have text content which is either attributed or otherwise non-trivial.
  * AtkObjects whose text content is simple, unattributed, and very brief
@@ -78,6 +77,7 @@ private import glib.Str;
  * to expose the text content. In the case of editable text content,
  * AtkEditableText (a subtype of the AtkText interface) should be
  * implemented instead.
+ *
  * AtkText provides not only traversal facilities and change notification
  * for text content, but also caret tracking and glyph bounding box
  * calculations. Note that the text strings are exposed as UTF-8, and are

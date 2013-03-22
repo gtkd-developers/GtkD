@@ -66,8 +66,8 @@ private import glib.Str;
 private import gio.SocketAddress;
 
 /**
- * Description
  * Support for UNIX-domain (also known as local) sockets.
+ *
  * UNIX domain sockets are generally visible in the filesystem.
  * However, some systems support abstract socket names which are not
  * visible in the filesystem and not affected by the filesystem
@@ -76,6 +76,7 @@ private import gio.SocketAddress;
  * systems, function calls may return G_IO_ERROR_NOT_SUPPORTED
  * errors. You can use g_unix_socket_address_abstract_names_supported()
  * to see if abstract names are supported.
+ *
  * Note that <gio/gunixsocketaddress.h> belongs to
  * the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.

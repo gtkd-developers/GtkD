@@ -67,7 +67,6 @@ private import gio.TlsDatabase;
 
 
 /**
- * Description
  */
 public class TlsBackend
 {

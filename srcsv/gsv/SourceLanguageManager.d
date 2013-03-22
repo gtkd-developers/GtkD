@@ -70,7 +70,6 @@ private import gsv.SourceLanguage;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkSourceLanguageManager is an object which processes language description
  * files and creates and stores GtkSourceLanguage objects, and provides API to
  * access them.

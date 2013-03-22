@@ -2500,15 +2500,29 @@ public class GtkDClass
 		string[] desc;
 		desc ~= "";
 		desc ~= tabs ~ "/**";
-		string[] block = getBlock ("Description", "Details");
-		foreach ( string line; block )
+		string[] block = getBlock ("Description", "Details", false);
+		//TODO: check if leaveing one blank line in stripHtml doesn't mess things up.
+		foreach ( int i, string line; block )
 		{
-			if( startsWith(line, "--") && endsWith(line, "--") )
+			if ( i == 0 )
+				continue;
+		
+			if ( startsWith(line, "--") && endsWith(line, "--") )
 				line = std.array.replace(line, "-", "_");
+
+			if ( desc.length == 2 && line.strip().length == 0 )
+				continue;
+				
+			if ( desc.length > 1 && desc[$-1].strip() == "*" && line.strip().length == 0 )
+				continue;
 
 			desc ~= " * " ~ line;
 		}
-		desc ~= tabs ~ " */";
+		
+		if ( desc[$-1].strip() == "*" )
+			desc[$-1] = tabs ~ " */";
+		else
+			desc ~= tabs ~ " */";
 
 		return desc;
 
@@ -2521,7 +2535,7 @@ public class GtkDClass
 	 *    	endLine = 		The end marker line
 	 * Returns: The block os lines
 	 */
-	private string[] getBlock(string startLine, string endLine)
+	private string[] getBlock(string startLine, string endLine, bool stripEmptyLine = true)
 	{
 		currLine = 0;
 
@@ -2536,7 +2550,7 @@ public class GtkDClass
 			++currLine;
 		}
 
-		return getUntil(endLine);
+		return getUntil(endLine, stripEmptyLine);
 	}
 
 	private int moveToBlockStart(string startLine, string[] inLines)
@@ -2555,7 +2569,7 @@ public class GtkDClass
 	 *    	endLine = 	the marker line
 	 * Returns:
 	 */
-	private string[] getUntil(string endLine)
+	private string[] getUntil(string endLine, bool stripEmptyLine = true)
 	{
 		bool end = false;
 
@@ -2570,7 +2584,7 @@ public class GtkDClass
 			}
 			else
 			{
-				if ( std.string.strip(inLines[currLine]).length > 0 )
+				if ( std.string.strip(inLines[currLine]).length > 0 || !stripEmptyLine )
 				{
 					block ~= inLines[currLine];
 				}

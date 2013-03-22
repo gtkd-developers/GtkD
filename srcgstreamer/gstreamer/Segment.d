@@ -67,43 +67,55 @@ private import glib.Str;
 
 
 /**
- * Description
  * This helper structure holds the relevant values for tracking the region of
  * interest in a media file, called a segment.
+ *
  * The structure can be used for two purposes:
+ *
  * performing seeks (handling seek events)
+ *
  * tracking playback regions (handling newsegment events)
+ *
  * The segment is usually configured by the application with a seek event which
  * is propagated upstream and eventually handled by an element that performs the seek.
+ *
  * The configured segment is then propagated back downstream with a newsegment event.
  * This information is then used to clip media to the segment boundaries.
+ *
  * A segment structure is initialized with gst_segment_init(), which takes a GstFormat
  * that will be used as the format of the segment values. The segment will be configured
  * with a start value of 0 and a stop/duration of -1, which is undefined. The default
  * rate and applied_rate is 1.0.
+ *
  * If the segment is used for managing seeks, the segment duration should be set with
  * gst_segment_set_duration(). The public duration field contains the duration of the
  * segment. When using the segment for seeking, the start and time members should
  * normally be left to their default 0 value. The stop position is left to -1 unless
  * explicitly configured to a different value after a seek event.
+ *
  * The current position in the segment should be set with the gst_segment_set_last_stop().
  * The public last_stop field contains the last set stop position in the segment.
+ *
  * For elements that perform seeks, the current segment should be updated with the
  * gst_segment_set_seek() and the values from the seek event. This method will update
  * all the segment fields. The last_stop field will contain the new playback position.
  * If the cur_type was different from GST_SEEK_TYPE_NONE, playback continues from
  * the last_stop position, possibly with updated flags or rate.
+ *
  * For elements that want to use GstSegment to track the playback region, use
  * gst_segment_set_newsegment() to update the segment fields with the information from
  * the newsegment event. The gst_segment_clip() method can be used to check and clip
  * the media data to the segment boundaries.
+ *
  * For elements that want to synchronize to the pipeline clock, gst_segment_to_running_time()
  * can be used to convert a timestamp to a value that can be used to synchronize
  * to the clock. This function takes into account all accumulated segments as well as
  * any rate or applied_rate conversions.
+ *
  * For elements that need to perform operations on media data in stream_time,
  * gst_segment_to_stream_time() can be used to convert a timestamp and the segment
  * info to stream time (which is always between 0 and the duration of the stream).
+ *
  * Last reviewed on 2007-05-17 (0.10.13)
  */
 public class Segment

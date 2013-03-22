@@ -81,15 +81,18 @@ private import glib.ListG;
 private import gstreamer.PluginFeature;
 
 /**
- * Description
  * GstElementFactory is used to create instances of elements. A
  * GstElementfactory can be added to a GstPlugin as it is also a
  * GstPluginFeature.
+ *
  * Use the gst_element_factory_find() and gst_element_factory_create()
  * functions to create element instances or use gst_element_factory_make() as a
  * convenient shortcut.
+ *
  * The following code example shows you how to create a GstFileSrc element.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Last reviewed on 2005-11-23 (0.9.5)
  */
 public class ElementFactory : PluginFeature

@@ -70,7 +70,6 @@ private import gio.File;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Entry point for using GIO functionality.
  */
 public class Vfs : ObjectG

@@ -64,13 +64,14 @@ private import gobject.ObjectG;
 private import gtk.ToolItem;
 
 /**
- * Description
  * A GtkSeparatorToolItem is a GtkToolItem that separates groups of other
  * GtkToolItems. Depending on the theme, a GtkSeparatorToolItem will
  * often look like a vertical line on horizontally docked toolbars.
+ *
  * If the GtkToolbar child property "expand" is TRUE and the property
  * "draw" is FALSE, a GtkSeparatorToolItem will act as
  * a "spring" that forces other items to the ends of the toolbar.
+ *
  * Use gtk_separator_tool_item_new() to create a new GtkSeparatorToolItem.
  */
 public class SeparatorToolItem : ToolItem

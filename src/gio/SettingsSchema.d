@@ -72,31 +72,38 @@ private import gtkc.paths;
 private import gobject.Boxed;
 
 /**
- * Description
  * The GSettingsSchemaSource and GSettingsSchema APIs provide a
  * mechanism for advanced control over the loading of schemas and a
  * mechanism for introspecting their content.
+ *
  * Plugin loading systems that wish to provide plugins a way to access
  * settings face the problem of how to make the schemas for these
  * settings visible to GSettings. Typically, a plugin will want to ship
  * the schema along with itself and it won't be installed into the
  * standard system directories for schemas.
+ *
  * GSettingsSchemaSource provides a mechanism for dealing with this by
  * allowing the creation of a new 'schema source' from which schemas can
  * be acquired. This schema source can then become part of the metadata
  * associated with the plugin and queried whenever the plugin requires
  * access to some settings.
+ *
  * Consider the following example:
+ *
  * $(DDOC_COMMENT example)
+ *
  * The code above shows how hooks should be added to the code that
  * initialises (or enables) the plugin to create the schema source and
  * how an API can be added to the plugin system to provide a convenient
  * way for the plugin to access its settings, using the schemas that it
  * ships.
+ *
  * From the standpoint of the plugin, it would need to ensure that it
  * ships a gschemas.compiled file as part of itself, and then simply do
  * the following:
+ *
  * $(DDOC_COMMENT example)
+ *
  * It's also possible that the plugin system expects the schema source
  * files (ie: .gschema.xml files) instead of a gschemas.compiled file.
  * In that case, the plugin loading system must compile the schemas for

@@ -67,7 +67,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * The AtkDocument interface should be supported by any object whose content is a
  * representation or view of a document. The AtkDocument interface should appear
  * on the toplevel container for the document content; however AtkDocument

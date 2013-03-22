@@ -67,9 +67,9 @@ private import gtk.Adjustment;
 private import gtk.Range;
 
 /**
- * Description
  * The GtkScrollbar widget is a horizontal or vertical scrollbar,
  * depending on the value of the "orientation" property.
+ *
  * The position of the thumb in a scrollbar is controlled by the scroll
  * adjustments. See GtkAdjustment for the fields in an adjustment - for
  * GtkScrollbar, the "value" field represents the position

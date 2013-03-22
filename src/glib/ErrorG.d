@@ -69,7 +69,6 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * GLib provides a standard method of reporting errors from a called
  * function to the calling code. (This is the same problem solved by
  * exceptions in other languages.) It's important to understand that
@@ -77,6 +76,7 @@ private import gtkc.Loader;
  * object) and a set of rules. If you use GError
  * incorrectly, then your code will not properly interoperate with other
  * code that uses GError, and users of your API will probably get confused.
+ *
  * First and foremost: GError should only be used to report
  * recoverable runtime errors, never to report programming
  * errors. If the programmer has screwed up, then you should
@@ -84,6 +84,7 @@ private import gtkc.Loader;
  * similar facility. (Incidentally, remember that the g_error() function
  * should only be used for programming errors, it
  * should not be used to print any error reportable via GError.)
+ *
  * Examples of recoverable runtime errors are "file not found" or
  * "failed to parse input." Examples of programming errors are "NULL
  * passed to strcmp()" or "attempted to free the same pointer twice."
@@ -91,22 +92,30 @@ private import gtkc.Loader;
  * should be handled or reported to the user, programming errors should
  * be eliminated by fixing the bug in the program. This is why most
  * functions in GLib and GTK+ do not use the GError facility.
+ *
  * Functions that can fail take a return location for a GError as their
  * last argument. For example:
+ *
  * $(DDOC_COMMENT example)
+ *
  * If you pass a non-NULL value for the error
  * argument, it should point to a location where an error can be placed.
  * For example:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Note that err != NULL in this example is a
  * reliable indicator of whether
  * g_file_get_contents() failed. Additionally, g_file_get_contents()
  * returns a boolean which indicates whether it was successful.
+ *
  * Because g_file_get_contents() returns FALSE on failure, if you
  * are only interested in whether it failed and don't need to display
  * an error message, you can pass NULL for the error
  * argument:
+ *
  * $(DDOC_COMMENT example)
+ *
  * The GError object contains three fields: domain
  * indicates the module the error-reporting function is located in,
  * code indicates the specific error that occurred,
@@ -122,24 +131,33 @@ private import gtkc.Loader;
  * context known only to the calling function (the file being opened,
  * or whatever -- though in the g_file_get_contents() case,
  * error->message already contains a filename).
+ *
  * When implementing a function that can report errors, the basic
  * tool is g_set_error(). Typically, if a fatal error occurs you
  * want to g_set_error(), then return immediately. g_set_error()
  * does nothing if the error location passed to it is NULL.
  * Here's an example:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Things are somewhat more complicated if you yourself call another
  * function that can report a GError. If the sub-function indicates
  * fatal errors in some way other than reporting a GError, such as
  * by returning TRUE on success, you can simply do the following:
+ *
  * $(DDOC_COMMENT example)
+ *
  * If the sub-function does not indicate errors other than by
  * reporting a GError, you need to create a temporary GError
  * since the passed-in one may be NULL. g_propagate_error() is
  * intended for use in this case.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Error pileups are always a bug. For example, this code is incorrect:
+ *
  * $(DDOC_COMMENT example)
+ *
  * tmp_error should be checked immediately after
  * sub_function_that_can_fail(), and either cleared or propagated
  * upward. The rule is: after each error, you must either
@@ -148,67 +166,88 @@ private import gtkc.Loader;
  * of handling an error by always doing nothing about it. So the
  * following code is fine, assuming errors in sub_function_that_can_fail()
  * are not fatal to my_function_that_can_fail():
+ *
  * $(DDOC_COMMENT example)
+ *
  * Note that passing NULL for the error location
  * ignores errors; it's equivalent to
  * try { sub_function_that_can_fail(); } catch (...) {}
  * in C++. It does not mean to leave errors
  * unhandled; it means to handle them by doing nothing.
+ *
  * Error domains and codes are conventionally named as follows:
+ *
  *  The error domain is called
  *  <NAMESPACE>_<MODULE>_ERROR,
  *  for example G_SPAWN_ERROR or G_THREAD_ERROR:
+ *
  * $(DDOC_COMMENT example)
+ *
  *  The quark function for the error domain is called
  *  <namespace>_<module>_error_quark,
  *  for example g_spawn_error_quark() or g_thread_error_quark().
+ *
  *  The error codes are in an enumeration called
  *  <Namespace><Module>Error;
  *  for example,GThreadError or GSpawnError.
+ *
  *  Members of the error code enumeration are called
  *  <NAMESPACE>_<MODULE>_ERROR_<CODE>,
  *  for example G_SPAWN_ERROR_FORK or G_THREAD_ERROR_AGAIN.
+ *
  *  If there's a "generic" or "unknown" error code for unrecoverable
  *  errors it doesn't make sense to distinguish with specific codes,
  *  it should be called <NAMESPACE>_<MODULE>_ERROR_FAILED,
  *  for example G_SPAWN_ERROR_FAILED.
+ *
  * Summary of rules for use of GError:
+ *
  *  Do not report programming errors via GError.
+ *
  *  The last argument of a function that returns an error should
  *  be a location where a GError can be placed (i.e. "GError** error").
  *  If GError is used with varargs, the GError** should be the last
  *  argument before the "...".
+ *
  *  The caller may pass NULL for the GError** if they are not interested
  *  in details of the exact error that occurred.
+ *
  *  If NULL is passed for the GError** argument, then errors should
  *  not be returned to the caller, but your function should still
  *  abort and return if an error occurs. That is, control flow should
  *  not be affected by whether the caller wants to get a GError.
+ *
  *  If a GError is reported, then your function by definition
  *  had a fatal failure and did not complete whatever
  *  it was supposed to do. If the failure was not fatal,
  *  then you handled it and you should not report it. If it was fatal,
  *  then you must report it and discontinue whatever you were doing
  *  immediately.
+ *
  *  If a GError is reported, out parameters are not guaranteed to
  *  be set to any defined value.
+ *
  *  A GError* must be initialized to NULL before passing its address
  *  to a function that can report errors.
+ *
  *  "Piling up" errors is always a bug. That is, if you assign a
  *  new GError to a GError* that is non-NULL, thus overwriting
  *  the previous error, it indicates that you should have aborted
  *  the operation instead of continuing. If you were able to continue,
  *  you should have cleared the previous error with g_clear_error().
  *  g_set_error() will complain if you pile up errors.
+ *
  *  By convention, if you return a boolean value indicating success
  *  then TRUE means success and FALSE means failure. If FALSE is
  *  returned, the error must be set to a non-NULL
  *  value.
+ *
  *  A NULL return value is also frequently used to mean that an error
  *  occurred. You should make clear in your documentation whether NULL
  *  is a valid return value in non-error cases; if NULL is a valid value,
  *  then users must check whether an error was returned to see if the
  *  function succeeded.
+ *
  *  When implementing a function that can report errors, you may want
  *  to add a check at the top of your function that the error return
  *  location is either NULL or contains a NULL error (e.g.

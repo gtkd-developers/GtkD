@@ -76,7 +76,6 @@ private import gio.Cancellable;
 
 
 /**
- * Description
  * GPollableInputStream is implemented by GInputStreams that
  * can be polled for readiness to read. This can be used when
  * interfacing with a non-GIO API that expects

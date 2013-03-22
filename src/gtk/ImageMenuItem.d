@@ -75,8 +75,8 @@ private import gtk.Widget;
 private import gtk.MenuItem;
 
 /**
- * Description
  * A GtkImageMenuItem is a menu item which has an icon next to the text label.
+ *
  * Note that the user can disable display of menu icons, so make sure to still
  * fill in the text label.
  */

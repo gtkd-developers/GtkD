@@ -66,7 +66,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Helper to test D-Bus code wihtout messing up with user' session bus.
  */
 public class TestDBus : ObjectG

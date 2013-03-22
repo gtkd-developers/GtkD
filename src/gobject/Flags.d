@@ -66,7 +66,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * The GLib type system provides fundamental types for enumeration and
  * flags types. (Flags types are like enumerations, but allow their
  * values to be combined by bitwise or). A registered enumeration or
@@ -77,6 +76,7 @@ private import glib.Str;
  * nickname. When an enumeration or flags type is registered with the
  * GLib type system, it can be used as value type for object
  * properties, using g_param_spec_enum() or g_param_spec_flags().
+ *
  * GObject ships with a utility called glib-mkenums that can construct
  * suitable type registration functions from C enumeration
  * definitions.

@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 
 
 /**
- * Description
  * It is often necessary in Pango to determine if a particular font can
  * represent a particular character, and also how well it can represent
  * that character. The PangoCoverage is a data structure that is used

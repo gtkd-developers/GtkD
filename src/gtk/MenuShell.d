@@ -74,9 +74,9 @@ private import gtk.Widget;
 private import gtk.Container;
 
 /**
- * Description
  * A GtkMenuShell is the abstract base class used to derive the
  * GtkMenu and GtkMenuBar subclasses.
+ *
  * A GtkMenuShell is a container of GtkMenuItem objects arranged
  * in a list which can be navigated, selected, and activated by the
  * user to perform application functions. A GtkMenuItem can have a

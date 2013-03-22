@@ -78,11 +78,11 @@ private import gdk.Window;
 private import gobject.ObjectG;
 
 /**
- * Description
  * These functions provide a low level interface for drag and drop.
  * The X backend of GDK supports both the Xdnd and Motif drag and drop
  * protocols transparently, the Win32 backend supports the WM_DROPFILES
  * protocol.
+ *
  * GTK+ provides a higher level abstraction based on top of these functions,
  * and so they are not normally needed in GTK+ applications.
  * See the Drag and Drop section of

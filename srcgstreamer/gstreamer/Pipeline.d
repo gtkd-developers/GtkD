@@ -80,24 +80,28 @@ private import gstreamer.Bus;
 private import gstreamer.Bin;
 
 /**
- * Description
  * A GstPipeline is a special GstBin used as the toplevel container for
  * the filter graph. The GstPipeline will manage the selection and
  * distribution of a global GstClock as well as provide a GstBus to the
  * application. It will also implement a default behavour for managing
  * seek events (see gst_element_seek()).
+ *
  * gst_pipeline_new() is used to create a pipeline. when you are done with
  * the pipeline, use gst_object_unref() to free its resources including all
  * added GstElement objects (if not otherwise referenced).
+ *
  * Elements are added and removed from the pipeline using the GstBin
  * methods like gst_bin_add() and gst_bin_remove() (see GstBin).
+ *
  * Before changing the state of the GstPipeline (see GstElement) a GstBus
  * can be retrieved with gst_pipeline_get_bus(). This bus can then be
  * used to receive GstMessage from the elements in the pipeline.
+ *
  * By default, a GstPipeline will automatically flush the pending GstBus
  * messages when going to the NULL state to ensure that no circular
  * references exist when no messages are read from the GstBus. This
  * behaviour can be changed with gst_pipeline_set_auto_flush_bus().
+ *
  * When the GstPipeline performs the PAUSED to PLAYING state change it will
  * select a clock for the elements. The clock selection algorithm will by
  * default select a clock provided by an element that is most upstream
@@ -106,10 +110,12 @@ private import gstreamer.Bin;
  * will select the clock provided by the live source. For normal pipelines
  * this will select a clock provided by the sinks (most likely the audio
  * sink). If no element provides a clock, a default GstSystemClock is used.
+ *
  * The clock selection can be controlled with the gst_pipeline_use_clock()
  * method, which will enforce a given clock on the pipeline. With
  * gst_pipeline_auto_clock() the default clock selection algorithm can be
  * restored.
+ *
  * A GstPipeline maintains a stream time for the elements. The stream
  * time is defined as the difference between the current clock time and
  * the base time. When the pipeline goes to READY or a flushing seek is
@@ -118,10 +124,12 @@ private import gstreamer.Bin;
  * configure the base time for the elements when the pipeline is set
  * to PLAYING again. This default behaviour can be changed with the
  * gst_pipeline_set_new_stream_time() method.
+ *
  * When sending a flushing seek event to a GstPipeline (see
  * gst_element_seek()), it will make sure that the pipeline is properly
  * PAUSED and resumed as well as set the new stream time to 0 when the
  * seek succeeded.
+ *
  * Last reviewed on 2006-03-12 (0.10.5)
  */
 public class Pipeline : Bin

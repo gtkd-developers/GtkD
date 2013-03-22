@@ -83,7 +83,6 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * GtkGradient is a boxed type that represents a gradient.
  * It is the result of parsing a
  * gradient expression.
@@ -91,6 +90,7 @@ private import gtkc.Loader;
  * be resolved with gtk_gradient_resolve(), which replaces all
  * symbolic color references by the colors they refer to (in a given
  * context) and constructs a cairo_pattern_t value.
+ *
  * It is not normally necessary to deal directly with GtkGradients,
  * since they are mostly used behind the scenes by GtkStyleContext and
  * GtkCssProvider.

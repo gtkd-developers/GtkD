@@ -79,11 +79,11 @@ private import gtk.AppChooserT;
 private import gtk.Box;
 
 /**
- * Description
  * GtkAppChooserWidget is a widget for selecting applications.
  * It is the main building block for GtkAppChooserDialog. Most
  * applications only need to use the latter; but you can use
  * this widget as part of a larger widget if you have special needs.
+ *
  * GtkAppChooserWidget offers detailed control over what applications
  * are shown, using the
  * "show-default",
@@ -93,6 +93,7 @@ private import gtk.Box;
  * "show-all"
  * properties. See the GtkAppChooser documentation for more information
  * about these groups of applications.
+ *
  * To keep track of the selected application, use the
  * "application-selected" and "application-activated" signals.
  */

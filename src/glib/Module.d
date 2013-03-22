@@ -65,29 +65,34 @@ private import glib.Str;
 
 
 /**
- * Description
  * These functions provide a portable way to dynamically load object files
  * (commonly known as 'plug-ins'). The current implementation supports all
  * systems that provide an implementation of dlopen() (e.g. Linux/Sun), as
  * well as HP-UX via its shl_load() mechanism, and Windows platforms via DLLs.
+ *
  * A program which wants to use these functions must be linked to the
  * libraries output by the command
  * pkg-config --libs gmodule-2.0.
+ *
  * To use them you must first determine whether dynamic loading
  * is supported on the platform by calling g_module_supported().
  * If it is, you can open a module with g_module_open(),
  * find the module's symbols (e.g. function names) with g_module_symbol(),
  * and later close the module with g_module_close().
  * g_module_name() will return the file name of a currently opened module.
+ *
  * If any of the above functions fail, the error status can be found with
  * g_module_error().
+ *
  * The GModule implementation features reference counting for opened modules,
  * and supports hook functions within a module which are called when the
  * module is loaded and unloaded (see GModuleCheckInit and GModuleUnload).
+ *
  * If your module introduces static data to common subsystems in the running
  * program, e.g. through calling
  * g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
+ *
  * $(DDOC_COMMENT example)
  */
 public class Module

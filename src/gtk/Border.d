@@ -71,19 +71,21 @@ private import gtkc.Loader;
 private import gobject.Boxed;
 
 /**
- * Description
  * GtkStyleContext is an object that stores styling information affecting
  * a widget defined by GtkWidgetPath.
+ *
  * In order to construct the final style information, GtkStyleContext
  * queries information from all attached GtkStyleProviders. Style providers
  * can be either attached explicitly to the context through
  * gtk_style_context_add_provider(), or to the screen through
  * gtk_style_context_add_provider_for_screen(). The resulting style is a
  * combination of all providers' information in priority order.
+ *
  * For GTK+ widgets, any GtkStyleContext returned by
  * gtk_widget_get_style_context() will already have a GtkWidgetPath, a
  * GdkScreen and RTL/LTR information set. The style context will be also
  * updated automatically if any of these settings change on the widget.
+ *
  * If you are using the theming layer standalone, you will need to set a
  * widget path and a screen yourself to the created style context through
  * gtk_style_context_set_path() and gtk_style_context_set_screen(), as well
@@ -91,15 +93,19 @@ private import gobject.Boxed;
  * whenever any of the conditions change, such as a change in the
  * "gtk-theme-name" setting or a hierarchy change in the rendered
  * widget.
+ *
  * Transition animations
+ *
  * GtkStyleContext has built-in support for state change transitions.
  * Note that these animations respect the "gtk-enable-animations"
  * setting.
+ *
  * For simple widgets where state changes affect the whole widget area,
  * calling gtk_style_context_notify_state_change() with a NULL region
  * is sufficient to trigger the transition animation. And GTK+ already
  * does that when gtk_widget_set_state() or gtk_widget_set_state_flags()
  * are called.
+ *
  * If a widget needs to declare several animatable regions (i.e. not
  * affecting the whole widget area), its "draw" signal handler
  * needs to wrap the render operations for the different regions with
@@ -108,20 +114,29 @@ private import gobject.Boxed;
  * identifier for the region which must be unique within the style context.
  * For simple widgets with a fixed set of animatable regions, using an
  * enumeration works well:
+ *
  * $(DDOC_COMMENT example)
+ *
  * For complex widgets with an arbitrary number of animatable regions, it
  * is up to the implementation to come up with a way to uniquely identify
  * each animatable region. Using pointers to internal structs is one way
  * to achieve this:
+ *
  * $(DDOC_COMMENT example)
+ *
  * The widget also needs to notify the style context about a state change
  * for a given animatable region so the animation is triggered.
+ *
  * $(DDOC_COMMENT example)
+ *
  * gtk_style_context_notify_state_change() accepts NULL region IDs as a
  * special value, in this case, the whole widget area will be updated
  * by the animation.
+ *
  * <hr>
+ *
  * Style classes and regions
+ *
  * Widgets can add style classes to their context, which can be used
  * to associate different styles by class (see the section called “Selectors”). Theme engines can also use style classes to vary their
  * rendering. GTK+ has a number of predefined style classes:
@@ -174,34 +189,45 @@ private import gobject.Boxed;
  * GTK_STYLE_CLASS_BOTTOM,
  * GTK_STYLE_CLASS_LEFT,
  * GTK_STYLE_CLASS_RIGHT,
+ *
  * Widgets can also add regions with flags to their context.
  * The regions used by GTK+ widgets are:
+ *
  * Region
  * Flags
  * Macro
  * Used by
+ *
  * row
  * even, odd
  * GTK_STYLE_REGION_ROW
  * GtkTreeView
+ *
  * column
  * first, last, sorted
  * GTK_STYLE_REGION_COLUMN
  * GtkTreeView
+ *
  * column-header
+ *
  * GTK_STYLE_REGION_COLUMN_HEADER
+ *
  * tab
  * even, odd, first, last
  * GTK_STYLE_REGION_TAB
  * GtkNotebook
+ *
  * <hr>
+ *
  * Custom styling in UI libraries and applications
+ *
  * If you are developing a library with custom GtkWidgets that
  * render differently than standard components, you may need to add a
  * GtkStyleProvider yourself with the GTK_STYLE_PROVIDER_PRIORITY_FALLBACK
  * priority, either a GtkCssProvider or a custom object implementing the
  * GtkStyleProvider interface. This way theming engines may still attempt
  * to style your UI elements in a different way if needed so.
+ *
  * If you are using custom styling on an applications, you probably want then
  * to make your style information prevail to the theme's, so you must use
  * a GtkStyleProvider with the GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -209,6 +235,7 @@ private import gobject.Boxed;
  * XDG_CONFIG_HOME/gtk-3.0/gtk.css will
  * still take precedence over your changes, as it uses the
  * GTK_STYLE_PROVIDER_PRIORITY_USER priority.
+ *
  * If a custom theming engine is needed, you probably want to implement a
  * GtkStyleProvider yourself so it points to your GtkThemingEngine
  * implementation, as GtkCssProvider uses gtk_theming_engine_load()

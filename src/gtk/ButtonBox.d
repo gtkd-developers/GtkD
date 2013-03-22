@@ -73,19 +73,21 @@ private import gtk.Widget;
 private import gtk.Box;
 
 /**
- * Description
  * A button box should be used to provide a consistent layout of buttons
  * throughout your application. The layout/spacing can be altered by the
  * programmer, or if desired, by the user to alter the 'feel' of a
  * program to a small degree.
+ *
  * gtk_button_box_get_layout() and gtk_button_box_set_layout() retrieve and
  * alter the method used to spread the buttons in a button box across the
  * container, respectively.
+ *
  * The main purpose of GtkButtonBox is to make sure the children have all the
  * same size. GtkButtonBox gives all children the same size, but it does allow
  * 'outliers' to keep their own larger size. To force all children to be
  * strictly the same size without exceptions, you can set the
  * "homogeneous" property to TRUE.
+ *
  * To excempt individual children from homogeneous sizing regardless of their
  * 'outlier' status, you can set the "non-homogeneous" child
  * property.

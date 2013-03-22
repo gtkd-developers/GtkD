@@ -76,7 +76,6 @@ private import gsv.SourceCompletionProposalT;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 {

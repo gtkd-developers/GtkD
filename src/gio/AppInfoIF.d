@@ -84,9 +84,9 @@ private import gio.IconIF;
 
 
 /**
- * Description
  * GAppInfo and GAppLaunchContext are used for describing and launching
  * applications installed on the system.
+ *
  * As of GLib 2.20, URIs will always be converted to POSIX paths
  * (using g_file_get_path()) when using g_app_info_launch() even if
  * the application requested an URI and not a POSIX path. For example
@@ -101,6 +101,7 @@ private import gio.IconIF;
  * mailto:, of course cannot be mapped to a POSIX
  * path (in gvfs there's no FUSE mount for it); such URIs will be
  * passed unmodified to the application.
+ *
  * Specifically for gvfs 2.26 and later, the POSIX URI will be mapped
  * back to the GIO URI in the GFile constructors (since gvfs
  * implements the GVfs extension point). As such, if the application
@@ -109,17 +110,22 @@ private import gio.IconIF;
  * that the URI passed to e.g. g_file_new_for_commandline_arg() is
  * equal to the result of g_file_get_uri(). The following snippet
  * illustrates this:
+ *
  * GFile *f;
  * char *uri;
+ *
  * file = g_file_new_for_commandline_arg (uri_from_commandline);
+ *
  * uri = g_file_get_uri (file);
  * strcmp (uri, uri_from_commandline) == 0; // FALSE
  * g_free (uri);
+ *
  * if (g_file_has_uri_scheme (file, "cdda"))
  *  {
 	 *  // do something special with uri
  *  }
  * g_object_unref (file);
+ *
  * This code will work when both cdda://sr0/Track
  * 1.wav and /home/user/.gvfs/cdda on sr0/Track
  * 1.wav is passed to the application. It should be noted

@@ -79,7 +79,6 @@ private import gio.UnixFDList;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A type for representing D-Bus messages that can be sent or received
  * on a GDBusConnection.
  */

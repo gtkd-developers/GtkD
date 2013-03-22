@@ -93,7 +93,6 @@ private import pango.PgLayoutLine;
 
 
 /**
- * Description
  * The Cairo library is a
  * vector graphics library with a powerful rendering model. It has such
  * features as anti-aliased primitives, alpha-compositing, and
@@ -101,6 +100,7 @@ private import pango.PgLayoutLine;
  * rendering to images, to PDF files, and to the screen on X and on other
  * windowing systems. The functions in this section allow using Pango
  * to render to Cairo surfaces.
+ *
  * Using Pango with Cairo is straightforward. A PangoContext created
  * with pango_cairo_font_map_create_context() can be used on any
  * Cairo context (cairo_t), but needs to be updated to match the
@@ -109,6 +109,7 @@ private import pango.PgLayoutLine;
  * pango_cairo_create_layout() and pango_cairo_update_layout() handle
  * the common case where the program doesn't need to manipulate the
  * properties of the PangoContext.
+ *
  * When you get the metrics of a layout or of a piece of a layout using
  * functions such as pango_layout_get_extents(), the reported metrics
  * are in user-space coordinates. If a piece of text is 10 units long,
@@ -119,7 +120,9 @@ private import pango.PgLayoutLine;
  * of the current transformation matrix. Note that the basic metrics
  * functions in Pango report results in integer Pango units. To get
  * to the floating point units used in Cairo divide by PANGO_SCALE.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Figure 2. Output of Example 1, “Using Pango with Cairo”
  */
 public class PgCairo

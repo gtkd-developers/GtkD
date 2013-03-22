@@ -65,10 +65,10 @@ private import glib.Str;
 
 
 /**
- * Description
  * Cairo uses a single status type to represent all kinds of errors. A status
  * value of CAIRO_STATUS_SUCCESS represents no error and has an integer value
  * of zero. All other status values represent an error.
+ *
  * Cairo's error handling is designed to be easy to use and safe. All major
  * cairo objects retain an error status internally which
  * can be queried anytime by the users using cairo*_status() calls. In

@@ -63,7 +63,6 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
  * Regions are a simple graphical data type representing an area of
  * integer-aligned rectangles. They are often used on raster surfaces
  * to track areas of interest, such as change or clip areas.

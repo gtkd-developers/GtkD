@@ -81,24 +81,27 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * The GIOChannel data type aims to provide a portable method for
  * using file descriptors, pipes, and sockets, and integrating them
  * into the main event
  * loop. Currently full support is available on UNIX platforms,
  * support for Windows is only partially complete.
+ *
  * To create a new GIOChannel on UNIX systems use
  * g_io_channel_unix_new(). This works for plain file descriptors,
  * pipes and sockets. Alternatively, a channel can be created for a
  * file in a system independent manner using g_io_channel_new_file().
+ *
  * Once a GIOChannel has been created, it can be used in a generic
  * manner with the functions g_io_channel_read_chars(),
  * g_io_channel_write_chars(), g_io_channel_seek_position(), and
  * g_io_channel_shutdown().
+ *
  * To add a GIOChannel to the main event loop use
  * g_io_add_watch() or g_io_add_watch_full(). Here you specify which
  * events you are interested in on the GIOChannel, and provide a
  * function to be called whenever these events occur.
+ *
  * GIOChannel instances are created with an initial reference count of
  * 1. g_io_channel_ref() and g_io_channel_unref() can be used to
  * increment or decrement the reference count respectively. When the
@@ -106,6 +109,7 @@ private import gtkc.Loader;
  * isn't closed automatically, unless it was created using
  * g_io_channel_new_file().) Using g_io_add_watch() or
  * g_io_add_watch_full() increments a channel's reference count.
+ *
  * The new functions g_io_channel_read_chars(),
  * g_io_channel_read_line(), g_io_channel_read_line_string(),
  * g_io_channel_read_to_end(), g_io_channel_write_chars(),

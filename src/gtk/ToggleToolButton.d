@@ -68,9 +68,9 @@ private import glib.Str;
 private import gtk.ToolButton;
 
 /**
- * Description
  * A GtkToggleToolButton is a GtkToolItem that contains a toggle
  * button.
+ *
  * Use gtk_toggle_tool_button_new() to create a new
  * GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
  * create a new GtkToggleToolButton containing a stock item.

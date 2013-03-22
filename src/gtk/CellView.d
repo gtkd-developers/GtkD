@@ -101,13 +101,13 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 
 /**
- * Description
  * A GtkCellView displays a single row of a GtkTreeModel using a GtkCellArea
  * and GtkCellAreaContext. A GtkCellAreaContext can be provided to the
  * GtkCellView at construction time in order to keep the cellview in context
  * of a group of cell views, this ensures that the renderers displayed will
  * be properly aligned with eachother (like the aligned cells in the menus
  * of GtkComboBox).
+ *
  * GtkCellView is GtkOrientable in order to decide in which orientation
  * the underlying GtkCellAreaContext should be allocated. Taking the GtkComboBox
  * menu as an example, cellviews should be oriented horizontally if the menus are

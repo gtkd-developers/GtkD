@@ -82,16 +82,17 @@ private import gio.File;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GFileEnumerator allows you to operate on a set of GFiles,
  * returning a GFileInfo structure for each file enumerated (e.g.
  * g_file_enumerate_children() will return a GFileEnumerator for each
  * of the children within a directory).
+ *
  * To get the next file's information from a GFileEnumerator, use
  * g_file_enumerator_next_file() or its asynchronous version,
  * g_file_enumerator_next_files_async(). Note that the asynchronous
  * version will return a list of GFileInfos, whereas the
  * synchronous will only return the next file in the enumerator.
+ *
  * To close a GFileEnumerator, use g_file_enumerator_close(), or
  * its asynchronous version, g_file_enumerator_close_async(). Once
  * a GFileEnumerator is closed, no further actions may be performed

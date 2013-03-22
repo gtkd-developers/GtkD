@@ -67,7 +67,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * Attributed text is used in a number of places in Pango. It
  * is used as the input to the itemization process and also when
  * creating a PangoLayout. The data types and functions in

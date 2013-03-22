@@ -66,7 +66,6 @@ private import glib.Str;
 private import gtk.Frame;
 
 /**
- * Description
  * The GtkAspectFrame is useful when you want
  * pack a widget so that it can resize but always retains
  * the same aspect ratio. For instance, one might be

@@ -80,7 +80,6 @@ private import gio.InputStream;
 private import gio.BufferedInputStream;
 
 /**
- * Description
  * Data input stream implements GInputStream and includes functions for
  * reading structured data directly from a binary input stream.
  */

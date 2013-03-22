@@ -71,16 +71,16 @@ private import gio.DBusConnection;
 
 
 /**
- * Description
  * Convenience API for owning bus names.
+ *
  * $(DDOC_COMMENT example)
  */
 public class DBusNames
 {
 	
 	/**
-	 * Description
 	 * Convenience API for watching bus names.
+	 *
 	 * $(DDOC_COMMENT example)
 	 */
 	

@@ -100,19 +100,21 @@ private import gio.MountOperation;
 
 
 /**
- * Description
  * The GVolume interface represents user-visible objects that can be
  * mounted. Note, when porting from GnomeVFS, GVolume is the moral
  * equivalent of GnomeVFSDrive.
+ *
  * Mounting a GVolume instance is an asynchronous operation. For more
  * information about asynchronous operations, see GAsyncResult and
  * GSimpleAsyncResult. To mount a GVolume, first call
  * g_volume_mount() with (at least) the GVolume instance, optionally
  * a GMountOperation object and a GAsyncReadyCallback.
+ *
  * Typically, one will only want to pass NULL for the
  * GMountOperation if automounting all volumes when a desktop session
  * starts since it's not desirable to put up a lot of dialogs asking
  * for credentials.
+ *
  * The callback will be fired when the operation has resolved (either
  * with success or failure), and a GAsyncReady structure will be
  * passed to the callback. That callback should then call
@@ -120,6 +122,7 @@ private import gio.MountOperation;
  * GAsyncReady data to see if the operation was completed
  * successfully. If an error is present when g_volume_mount_finish()
  * is called, then it will be filled with any error information.
+ *
  * It is sometimes necessary to directly access the underlying
  * operating system object behind a volume (e.g. for passing a volume
  * to an application via the commandline). For this purpose, GIO
@@ -130,6 +133,7 @@ private import gio.MountOperation;
  * of identifiers: G_VOLUME_IDENTIFIER_KIND_HAL_UDI,
  * G_VOLUME_IDENTIFIER_KIND_LABEL, etc. Use g_volume_get_identifier()
  * to obtain an identifier for a volume.
+ *
  * Note that G_VOLUME_IDENTIFIER_KIND_HAL_UDI will only be available
  * when the gvfs hal volume monitor is in use. Other volume monitors
  * will generally be able to provide the G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE

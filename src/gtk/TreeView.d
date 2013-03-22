@@ -115,31 +115,43 @@ private import gtk.ScrollableIF;
 private import gtk.Container;
 
 /**
- * Description
  * Widget that displays any object that implements the GtkTreeModel interface.
+ *
  * Please refer to the tree widget conceptual
  * overview for an overview of all the objects and data types related
  * to the tree widget and how they work together.
+ *
  * Several different coordinate systems are exposed in the GtkTreeView API.
  * These are:
+ *
  * Coordinate systems in GtkTreeView API
+ *
  * Widget coordinates
+ *
  * Coordinates relative to the widget (usually widget->window).
+ *
  * Bin window coordinates
+ *
  * Coordinates relative to the window that GtkTreeView renders to.
+ *
  * Tree coordinates
+ *
  * Coordinates relative to the entire scrollable area of GtkTreeView. These
  * coordinates start at (0, 0) for row 0 of the tree.
+ *
  * Several functions are available for converting between the different
  * coordinate systems. The most common translations are between widget and bin
  * window coordinates and between bin window and tree coordinates. For the
  * former you can use gtk_tree_view_convert_widget_to_bin_window_coords()
  * (and vice versa), for the latter gtk_tree_view_convert_bin_window_to_tree_coords()
  * (and vice versa).
+ *
  * GtkTreeView as GtkBuildable
+ *
  * The GtkTreeView implementation of the GtkBuildable interface accepts
  * GtkTreeViewColumn objects as <child> elements and exposes the
  * internal GtkTreeSelection in UI definitions.
+ *
  * $(DDOC_COMMENT example)
  */
 public class TreeView : Container, ScrollableIF

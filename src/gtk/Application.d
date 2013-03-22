@@ -81,17 +81,19 @@ private import gtk.Window;
 
 
 /**
- * Description
  * GtkApplication is a class that handles many important aspects
  * of a GTK+ application in a convenient fashion, without enforcing
  * a one-size-fits-all application model.
+ *
  * Currently, GtkApplication handles GTK+ initialization, application
  * uniqueness, session management, provides some basic scriptability and
  * desktop shell integration by exporting actions and menus and manages a
  * list of toplevel windows whose life-cycle is automatically tied to the
  * life-cycle of your application.
+ *
  * While GtkApplication works fine with plain GtkWindows, it is recommended
  * to use it together with GtkApplicationWindow.
+ *
  * When GDK threads are enabled, GtkApplication will acquire the GDK
  * lock when invoking actions that arrive from other processes. The GDK
  * lock is not touched for local action invocations. In order to have
@@ -100,6 +102,7 @@ private import gtk.Window;
  * g_action_group_activate_action(). The same applies to actions
  * associated with GtkApplicationWindow and to the 'activate' and
  * 'open' GApplication methods.
+ *
  * To set an application menu for a GtkApplication, use
  * gtk_application_set_app_menu(). The GMenuModel that this function
  * expects is usually constructed using GtkBuilder, as seen in the
@@ -107,16 +110,23 @@ private import gtk.Window;
  * GtkApplicationWindows, use gtk_application_set_menubar(). Use the base
  * GActionMap interface to add actions, to respond to the user
  * selecting these menu items.
+ *
  * GTK+ displays these menus as expected, depending on the platform
  * the application is running on.
+ *
  * Figure Menu integration in OS X.
+ *
  * Figure Menu integration in GNOME.
+ *
  * Figure Menu integration in Xfce.
+ *
  * $(DDOC_COMMENT example)
+ *
  * GtkApplication optionally registers with a session manager
  * of the users session (if you set the "register-session"
  * property) and offers various functionality related to the session
  * life-cycle.
+ *
  * An application can block various ways to end the session with
  * the gtk_application_inhibit() function. Typical use cases for
  * this kind of inhibiting are long-running, uninterruptible operations,

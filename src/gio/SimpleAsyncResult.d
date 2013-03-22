@@ -84,11 +84,11 @@ private import gio.AsyncResultT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Implements GAsyncResult for simple cases. Most of the time, this
  * will be all an application needs, and will be used transparently.
  * Because of this, GSimpleAsyncResult is used throughout GIO for
  * handling asynchronous functions.
+ *
  * GSimpleAsyncResult handles GAsyncReadyCallbacks, error
  * reporting, operation cancellation and the final state of an operation,
  * completely transparent to the application. Results can be returned
@@ -97,15 +97,18 @@ private import gobject.ObjectG;
  * of an operation, or a gssize for operations which return the number
  * of bytes modified by the operation; all of the simple return cases
  * are covered.
+ *
  * Most of the time, an application will not need to know of the details
  * of this API; it is handled transparently, and any necessary operations
  * are handled by GAsyncResult's interface. However, if implementing a
  * new GIO module, for writing language bindings, or for complex
  * applications that need better control of how asynchronous operations
  * are completed, it is important to understand this functionality.
+ *
  * GSimpleAsyncResults are tagged with the calling function to ensure
  * that asynchronous functions and their finishing functions are used
  * together correctly.
+ *
  * To create a new GSimpleAsyncResult, call g_simple_async_result_new().
  * If the result needs to be created for a GError, use
  * g_simple_async_result_new_from_error() or
@@ -116,11 +119,13 @@ private import gobject.ObjectG;
  * if your application or binding requires passing a variable argument list
  * directly), and the error can then be propagated through the use of
  * g_simple_async_result_propagate_error().
+ *
  * An asynchronous operation can be made to ignore a cancellation event by
  * calling g_simple_async_result_set_handle_cancellation() with a
  * GSimpleAsyncResult for the operation and FALSE. This is useful for
  * operations that are dangerous to cancel, such as close (which would
  * cause a leak if cancelled before being run).
+ *
  * GSimpleAsyncResult can integrate into GLib's event loop, GMainLoop,
  * or it can use GThreads.
  * g_simple_async_result_complete() will finish an I/O task directly
@@ -129,21 +134,25 @@ private import gobject.ObjectG;
  * context. g_simple_async_result_run_in_thread() will run the
  * job in a separate thread and then deliver the result to the
  * thread-default main context.
+ *
  * To set the results of an asynchronous function,
  * g_simple_async_result_set_op_res_gpointer(),
  * g_simple_async_result_set_op_res_gboolean(), and
  * g_simple_async_result_set_op_res_gssize()
  * are provided, setting the operation's result to a gpointer, gboolean, or
  * gssize, respectively.
+ *
  * Likewise, to get the result of an asynchronous function,
  * g_simple_async_result_get_op_res_gpointer(),
  * g_simple_async_result_get_op_res_gboolean(), and
  * g_simple_async_result_get_op_res_gssize() are
  * provided, getting the operation's result as a gpointer, gboolean, and
  * gssize, respectively.
+ *
  * For the details of the requirements implementations must respect, see
  * GAsyncResult. A typical implementation of an asynchronous operation
  * using GSimpleAsyncResult looks something like this:
+ *
  * $(DDOC_COMMENT example)
  */
 public class SimpleAsyncResult : ObjectG, AsyncResultIF

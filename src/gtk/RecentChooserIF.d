@@ -85,11 +85,11 @@ private import gtk.RecentFilter;
 
 
 /**
- * Description
  * GtkRecentChooser is an interface that can be implemented by widgets
  * displaying the list of recently used files. In GTK+, the main objects
  * that implement this interface are GtkRecentChooserWidget,
  * GtkRecentChooserDialog and GtkRecentChooserMenu.
+ *
  * Recently used files are supported since GTK+ 2.10.
  */
 public interface RecentChooserIF

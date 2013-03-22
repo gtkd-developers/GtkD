@@ -73,7 +73,6 @@ private import gio.Cancellable;
 
 
 /**
- * Description
  * GPollableOutputStream is implemented by GOutputStreams that
  * can be polled for readiness to write. This can be used when
  * interfacing with a non-GIO API that expects

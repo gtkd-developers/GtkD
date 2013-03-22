@@ -74,7 +74,6 @@ private import gdk.Pixbuf;
 private import gobject.ObjectG;
 
 /**
- * Description
  * These functions are used to create and destroy cursors.
  * There is a number of standard cursors, but it is also
  * possible to construct new cursors from pixbufs. There
@@ -84,6 +83,7 @@ private import gobject.ObjectG;
  * gdk_display_supports_cursor_color(),
  * gdk_display_get_default_cursor_size() and
  * gdk_display_get_maximal_cursor_size().
+ *
  * Cursors by themselves are not very interesting, they must be be
  * bound to a window for users to see them. This is done with
  * gdk_window_set_cursor() or by setting the cursor member of the

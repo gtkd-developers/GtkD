@@ -71,12 +71,12 @@ private import gio.SocketConnectableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Like GNetworkAddress does with hostnames, GNetworkService
  * provides an easy way to resolve a SRV record, and then attempt to
  * connect to one of the hosts that implements that service, handling
  * service priority/weighting, multiple IP addresses, and multiple
  * address families.
+ *
  * See GSrvTarget for more information about SRV records, and see
  * GSocketConnectable for and example of using the connectable
  * interface.

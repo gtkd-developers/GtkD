@@ -106,7 +106,6 @@ private import pango.PgGlyphString;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The Pango rendering pipeline takes a string of
  * Unicode characters and converts it into glyphs.
  * The functions described in this section accomplish
@@ -164,10 +163,10 @@ public class PgContext : ObjectG
 	}
 	
 	/**
-	 * Description
 	 * Pango supports bidirectional text (like Arabic and Hebrew) automatically.
 	 * Some applications however, need some help to correctly handle bidirectional
 	 * text.
+	 *
 	 * The PangoDirection type can be used with pango_context_set_base_dir() to
 	 * instruct Pango about direction of text, though in most cases Pango detects
 	 * that correctly and automatically. The rest of the facilities in this section

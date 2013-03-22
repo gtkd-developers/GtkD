@@ -64,10 +64,10 @@ private import gobject.ObjectG;
 private import gtk.Separator;
 
 /**
- * Description
  * The GtkVSeparator widget is a vertical separator, used to group the
  * widgets within a window. It displays a vertical line with a shadow to
  * make it appear sunken into the interface.
+ *
  * GtkVSeparator has been deprecated, use GtkSeparator instead.
  */
 public class VSeparator : Separator

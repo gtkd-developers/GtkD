@@ -74,7 +74,6 @@ private import gdk.RGBA;
 private import gtk.Box;
 
 /**
- * Description
  * The GtkColorSelection is a widget that is used to select
  * a color. It consists of a color wheel and number of sliders
  * and entry boxes for color parameters such as hue, saturation,

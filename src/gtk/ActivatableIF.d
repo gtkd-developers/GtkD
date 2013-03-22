@@ -66,12 +66,13 @@ private import gtk.Action;
 
 
 /**
- * Description
  * Activatable widgets can be connected to a GtkAction and reflects
  * the state of its action. A GtkActivatable can also provide feedback
  * through its action, as they are responsible for activating their
  * related actions.
+ *
  * Implementing GtkActivatable
+ *
  * When extending a class that is already GtkActivatable; it is only
  * necessary to implement the GtkActivatable->sync_action_properties()
  * and GtkActivatable->update() methods and chain up to the parent
@@ -82,6 +83,7 @@ private import gtk.Action;
  * the action pointer and boolean flag on your instance, and calling
  * gtk_activatable_do_set_related_action() and
  * gtk_activatable_sync_action_properties() at the appropriate times.
+ *
  * $(DDOC_COMMENT example)
  */
 public interface ActivatableIF

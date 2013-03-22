@@ -65,7 +65,6 @@ private import gobject.ObjectG;
 private import gobject.Boxed;
 
 /**
- * Description
  * Functions in this section are used to deal with PangoTabArray objects
  * that can be used to set tab stop positions in a PangoLayout.
  */

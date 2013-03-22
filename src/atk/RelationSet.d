@@ -73,7 +73,6 @@ private import glib.PtrArray;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The AtkRelationSet held by an object establishes its relationships with
  * objects beyond the normal "parent/child" hierarchical relationships that all
  * user interface objects have. AtkRelationSets establish whether objects are

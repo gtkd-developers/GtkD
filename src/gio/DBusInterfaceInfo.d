@@ -78,10 +78,10 @@ private import gio.DBusSignalInfo;
 
 
 /**
- * Description
  * Various data structures and convenience routines to parse and
  * generate D-Bus introspection XML. Introspection information is
  * used when registering objects with g_dbus_connection_register_object().
+ *
  * The format of D-Bus introspection XML is specified in the
  * D-Bus specification.
  */

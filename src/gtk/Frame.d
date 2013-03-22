@@ -69,18 +69,20 @@ private import gtk.Widget;
 private import gtk.Bin;
 
 /**
- * Description
  * The frame widget is a Bin that surrounds its child
  * with a decorative frame and an optional label.
  * If present, the label is drawn in a gap in the
  * top side of the frame. The position of the
  * label can be controlled with gtk_frame_set_label_align().
+ *
  * GtkFrame as GtkBuildable
+ *
  * The GtkFrame implementation of the GtkBuildable interface
  * supports placing a child in the label position by specifying
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
+ *
  * $(DDOC_COMMENT example)
  */
 public class Frame : Bin

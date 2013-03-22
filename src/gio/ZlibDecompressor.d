@@ -72,7 +72,6 @@ private import gio.ConverterIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GZlibDecompressor is an implementation of GConverter that
  * decompresses data compressed with zlib.
  */

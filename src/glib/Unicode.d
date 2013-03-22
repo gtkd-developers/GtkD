@@ -68,7 +68,6 @@ private import glib.GException;
 
 
 /**
- * Description
  * This section describes a number of functions for dealing with
  * Unicode characters and strings. There are analogues of the
  * traditional ctype.h character classification
@@ -76,6 +75,7 @@ private import glib.GException;
  * functions, functions to perform normalization, case conversion and
  * collation on UTF-8 strings and finally functions to convert between
  * the UTF-8, UTF-16 and UCS-4 encodings of Unicode.
+ *
  * The implementations of the Unicode functions in GLib are based
  * on the Unicode Character Data tables, which are available from
  * www.unicode.org.

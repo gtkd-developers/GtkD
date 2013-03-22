@@ -66,7 +66,6 @@ private import glib.Str;
 private import cairo.Surface;
 
 /**
- * Description
  * The PDF surface is used to render cairo graphics to Adobe
  * PDF files and is a multi-page vector surface backend.
  */

@@ -75,12 +75,13 @@ private import gtk.Widget;
 private import gtk.ToggleButton;
 
 /**
- * Description
  * The GtkMenuButton widget is used to display a menu when clicked on.
  * This menu can be provided either as a GtkMenu, or an abstract GMenuModel.
+ *
  * The GtkMenuButton widget can hold any valid child widget. That is, it
  * can hold almost any other standard GtkWidget. The most commonly used
  * child is the provided GtkArrow.
+ *
  * The positioning of the menu is determined by the "direction"
  * property of the menu button and the "halign" or "valign"
  * properties of the menu. For example, when the direction is GTK_ARROW_DOWN
@@ -90,15 +91,22 @@ private import gtk.ToggleButton;
  * If there is not enough space below the button, the menu is popped up above
  * the button instead. If the alignment would move part of the menu offscreen,
  * it is 'pushed in'.
+ *
  * halign = start
  * halign = center
  * halign = end
+ *
  * direction = down
+ *
  * direction = up
+ *
  * direction = left
  * direction = right
+ *
  * valign = start
+ *
  * valign = center
+ *
  * valign = end
  */
 public class MenuButton : ToggleButton

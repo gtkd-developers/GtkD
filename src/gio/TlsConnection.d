@@ -86,7 +86,6 @@ private import gio.TlsInteraction;
 private import gio.IOStream;
 
 /**
- * Description
  * GTlsConnection is the base TLS connection class type, which wraps
  * a GIOStream and provides TLS encryption on top of it. Its
  * subclasses, GTlsClientConnection and GTlsServerConnection,

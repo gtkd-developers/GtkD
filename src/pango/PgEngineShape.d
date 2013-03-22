@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 private import pango.PgEngine;
 
 /**
- * Description
  * The shape engines are rendering-system dependent
  * engines that convert character strings into glyph strings.
  * These engines are used in pango_shape().

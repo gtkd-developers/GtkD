@@ -64,16 +64,19 @@ private import gobject.ObjectG;
 private import gtk.Widget;
 
 /**
- * Description
  * The GtkMisc widget is an abstract widget which is not useful itself, but
  * is used to derive subclasses which have alignment and padding attributes.
+ *
  * The horizontal and vertical padding attributes allows extra space to be
  * added around the widget.
+ *
  * The horizontal and vertical alignment attributes enable the widget to be
  * positioned within its allocated area. Note that if the widget is added to
  * a container in such a way that it expands automatically to fill its
  * allocated area, the alignment settings will not alter the widgets position.
+ *
  * Note
+ *
  * Note that the desired effect can in most cases be achieved by using the
  * "halign", "valign" and "margin" properties
  * on the child widget, so GtkMisc should not be used in new code.

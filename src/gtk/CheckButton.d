@@ -70,10 +70,10 @@ private import gtk.Button;
 private import gtk.ToggleButton;
 
 /**
- * Description
  * A GtkCheckButton places a discrete GtkToggleButton next to a widget,
  * (usually a GtkLabel). See the section on GtkToggleButton widgets for
  * more information about toggle/check buttons.
+ *
  * The important signal ( "toggled" ) is also inherited from
  * GtkToggleButton.
  */

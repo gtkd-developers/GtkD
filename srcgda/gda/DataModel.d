@@ -78,7 +78,6 @@ private import gda.Value;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class DataModel : ObjectG
 {

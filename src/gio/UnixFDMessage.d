@@ -71,15 +71,16 @@ private import gio.UnixFDList;
 private import gio.SocketControlMessage;
 
 /**
- * Description
  * This GSocketControlMessage contains a GUnixFDList.
  * It may be sent using g_socket_send_message() and received using
  * g_socket_receive_message() over UNIX sockets (ie: sockets in the
  * G_SOCKET_ADDRESS_UNIX family). The file descriptors are copied
  * between processes by the kernel.
+ *
  * For an easier way to send and receive file descriptors over
  * stream-oriented UNIX sockets, see g_unix_connection_send_fd() and
  * g_unix_connection_receive_fd().
+ *
  * Note that <gio/gunixfdmessage.h> belongs to
  * the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.

@@ -70,19 +70,21 @@ private import gdk.Pixbuf;
 private import gtk.Window;
 
 /**
- * Description
  * GtkOffscreenWindow is strictly intended to be used for obtaining
  * snapshots of widgets that are not part of a normal widget hierarchy.
  * Since GtkOffscreenWindow is a toplevel widget you cannot obtain
  * snapshots of a full window with it since you cannot pack a toplevel
  * widget in another toplevel.
+ *
  * The idea is to take a widget and manually set the state of it,
  * add it to a GtkOffscreenWindow and then retrieve the snapshot
  * as a cairo_surface_t or GdkPixbuf.
+ *
  * GtkOffscreenWindow derives from GtkWindow only as an implementation
  * detail. Applications should not use any API specific to GtkWindow
  * to operate on this object. It should be treated as a GtkBin that
  * has no parent widget.
+ *
  * When contained offscreen widgets are redrawn, GtkOffscreenWindow
  * will emit a "damage-event" signal.
  */

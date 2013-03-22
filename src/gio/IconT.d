@@ -72,17 +72,21 @@ public import glib.GException;
 
 
 /**
- * Description
  * GIcon is a very minimal interface for icons. It provides functions
  * for checking the equality of two icons, hashing of icons and
  * serializing an icon to and from strings.
+ *
  * GIcon does not provide the actual pixmap for the icon as this is out
  * of GIO's scope, however implementations of GIcon may contain the name
  * of an icon (see GThemedIcon), or the path to an icon (see GLoadableIcon).
+ *
  * To obtain a hash of a GIcon, see g_icon_hash().
+ *
  * To check if two GIcons are equal, see g_icon_equal().
+ *
  * For serializing a GIcon, use g_icon_to_string() and
  * g_icon_new_for_string().
+ *
  * If your application or library provides one or more GIcon
  * implementations you need to ensure that each GType is registered
  * with the type system prior to calling g_icon_new_for_string().

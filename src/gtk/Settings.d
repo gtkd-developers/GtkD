@@ -85,9 +85,9 @@ private import gtk.StyleProviderIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkSettings provide a mechanism to share global settings between
  * applications.
+ *
  * On the X window system, this sharing is realized by an
  * XSettings
  * manager that is usually part of the desktop environment, along with
@@ -100,6 +100,7 @@ private import gobject.ObjectG;
  * a section called Settings. Themes can also provide default values
  * for settings by installing a settings.ini file
  * next to their gtk.css file.
+ *
  * Applications can override system-wide settings with
  * gtk_settings_set_string_property(), gtk_settings_set_long_property(),
  * etc. This should be restricted to special cases though; GtkSettings are
@@ -107,7 +108,9 @@ private import gobject.ObjectG;
  * need to be aware that settings that are specific to individual widgets
  * may not be available before the widget type has been realized at least
  * once. The following example demonstrates a way to do this:
+ *
  * $(DDOC_COMMENT example)
+ *
  * There is one GtkSettings instance per screen. It can be obtained with
  * gtk_settings_get_for_screen(), but in many cases, it is more convenient
  * to use gtk_widget_get_settings(). gtk_settings_get_default() returns the

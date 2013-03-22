@@ -71,7 +71,6 @@ private import gtk.ColorChooserT;
 private import gtk.Dialog;
 
 /**
- * Description
  * The GtkColorChooserDialog widget is a dialog for choosing
  * a color. It implements the GtkColorChooser interface.
  */

@@ -75,7 +75,6 @@ private import gtk.Widget;
 private import gtk.Window;
 
 /**
- * Description
  * This object can be used to show a calltip or help for the
  * current completion proposal.
  */

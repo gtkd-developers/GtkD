@@ -69,12 +69,12 @@ private import gio.PollableInputStreamIF;
 private import gio.InputStream;
 
 /**
- * Description
  * GUnixInputStream implements GInputStream for reading from a UNIX
  * file descriptor, including asynchronous operations. (If the file
  * descriptor refers to a socket or pipe, this will use poll() to do
  * asynchronous I/O. If it refers to a regular file, it will fall back
  * to doing asynchronous I/O in another thread.)
+ *
  * Note that <gio/gunixinputstream.h> belongs
  * to the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.

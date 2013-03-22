@@ -74,25 +74,32 @@ private import gstreamer.Structure;
 
 
 /**
- * Description
  * Caps (capabilities) are lighweight refcounted objects describing media types.
  * They are composed of an array of GstStructure.
+ *
  * Caps are exposed on GstPadTemplate to describe all possible types a
  * given pad can handle. They are also stored in the GstRegistry along with
  * a description of the GstElement.
+ *
  * Caps are exposed on the element pads using the gst_pad_get_caps() pad
  * function. This function describes the possible types that the pad can
  * handle or produce at runtime.
+ *
  * Caps are also attached to buffers to describe to content of the data
  * pointed to by the buffer with gst_buffer_set_caps(). Caps attached to
  * a GstBuffer allow for format negotiation upstream and downstream.
+ *
  * A GstCaps can be constructed with the following code fragment:
+ *
  * $(DDOC_COMMENT example)
+ *
  * A GstCaps is fixed when it has no properties with ranges or lists. Use
  * gst_caps_is_fixed() to test for fixed caps. Only fixed caps can be
  * set on a GstPad or GstBuffer.
+ *
  * Various methods exist to work with the media types such as subtracting
  * or intersecting.
+ *
  * Last reviewed on 2007-02-13 (0.10.10)
  */
 public class Caps

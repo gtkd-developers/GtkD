@@ -63,40 +63,53 @@ private import glib.Str;
 
 
 /**
- * Description
  * Cairo has a three-part version number scheme. In this scheme, we use
  * even vs. odd numbers to distinguish fixed points in the software
  * vs. in-progress development, (such as from git instead of a tar file,
  * or as a "snapshot" tar file as opposed to a "release" tar file).
+ *
  * $(DDOC_COMMENT example)
+ *
  * Here are a few examples of versions that one might see.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Compatibility
+ *
  * The API/ABI compatibility guarantees for various versions are as
  * follows. First, let's assume some cairo-using application code that is
  * successfully using the API/ABI "from" one version of cairo. Then let's
  * ask the question whether this same code can be moved "to" the API/ABI
  * of another version of cairo.
+ *
  * Moving from a release to any later version (release, snapshot,
  * development) is always guaranteed to provide compatibility.
+ *
  * Moving from a snapshot to any later version is not guaranteed to
  * provide compatibility, since snapshots may introduce new API that ends
  * up being removed before the next release.
+ *
  * Moving from an in-development version (odd micro component) to any
  * later version is not guaranteed to provide compatibility. In fact,
  * there's not even a guarantee that the code will even continue to work
  * with the same in-development version number. This is because these
  * numbers don't correspond to any fixed state of the software, but
  * rather the many states between snapshots and releases.
+ *
  * <hr>
+ *
  * Examining the version
+ *
  * Cairo provides the ability to examine the version at either
  * compile-time or run-time and in both a human-readable form as well as
  * an encoded form suitable for direct comparison. Cairo also provides the
  * macro CAIRO_VERSION_ENCODE() to perform the encoding.
+ *
  * $(DDOC_COMMENT example)
+ *
  * For example, checking that the cairo version is greater than or equal
  * to 1.0.0 could be achieved at compile-time or run-time as follows:
+ *
  * $(DDOC_COMMENT example)
  */
 public class Version

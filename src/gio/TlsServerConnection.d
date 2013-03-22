@@ -74,7 +74,6 @@ private import gio.TlsCertificate;
 private import gio.TlsConnection;
 
 /**
- * Description
  * GTlsServerConnection is the server-side subclass of GTlsConnection,
  * representing a server-side TLS connection.
  */

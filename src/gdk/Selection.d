@@ -69,13 +69,13 @@ private import gdk.Window;
 
 
 /**
- * Description
  * The X selection mechanism provides a way to transfer arbitrary chunks of
  * data between programs. A selection is a essentially
  * a named clipboard, identified by a string interned as a GdkAtom. By
  * claiming ownership of a selection, an application indicates that it will
  * be responsible for supplying its contents. The most common selections are
  * PRIMARY and CLIPBOARD.
+ *
  * The contents of a selection can be represented in a number of formats,
  * called targets. Each target is identified by an atom.
  * A list of all possible targets supported by the selection owner can be
@@ -84,6 +84,7 @@ private import gdk.Window;
  * a format (an integer, representing the number of bits per item).
  * See Properties and Atoms
  * for more information.
+ *
  * The functions in this section only contain the lowlevel parts of the
  * selection protocol. A considerably more complicated implementation is needed
  * on top of this. GTK+ contains such an implementation in the functions in

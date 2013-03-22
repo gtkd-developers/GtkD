@@ -70,8 +70,8 @@ private import glib.GException;
 
 
 /**
- * Description
  * Provides a base class for implementing asynchronous function results.
+ *
  * Asynchronous operations are broken up into two separate operations
  * which are chained together by a GAsyncReadyCallback. To begin
  * an asynchronous operation, provide a GAsyncReadyCallback to the
@@ -83,6 +83,7 @@ private import glib.GException;
  * the corresponding "_finish()" function, passing the object the
  * function was called for, the GAsyncResult instance, and (optionally)
  * an error to grab any error conditions that may have occurred.
+ *
  * The "_finish()" function for an operation takes the generic result
  * (of type GAsyncResult) and returns the specific result that the
  * operation in question yields (e.g. a GFileEnumerator for a
@@ -94,8 +95,11 @@ private import glib.GException;
  * action at all after the operation completes. Applications may also
  * take a reference to the GAsyncResult and call "_finish()" later;
  * however, the "_finish()" function may be called at most once.
+ *
  * Example of a typical asynchronous operation flow:
+ *
  * $(DDOC_COMMENT example)
+ *
  * The callback for an asynchronous operation is called only once, and is
  * always called, even in the case of a cancelled operation. On cancellation
  * the result is a G_IO_ERROR_CANCELLED error.

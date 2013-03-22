@@ -73,7 +73,6 @@ private import gda.Row;
 private import gda.DataModel;
 
 /**
- * Description
  * Unlike GdaDataModelArray, this data model implementation stores the GdaRow in
  * a hash table. So it only retrieves from the database backend exactly the
  * requested rows (while in GdaDataModelArray you have to retrieve all the rows

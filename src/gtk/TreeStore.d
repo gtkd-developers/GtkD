@@ -104,18 +104,20 @@ private import gtk.TreeSortableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkTreeStore object is a list model for use with a GtkTreeView
  * widget. It implements the GtkTreeModel interface, and consequentialy,
  * can use all of the methods available there. It also implements the
  * GtkTreeSortable interface so it can be sorted by the view. Finally,
  * it also implements the tree drag and
  * drop interfaces.
+ *
  * GtkTreeStore as GtkBuildable
+ *
  * The GtkTreeStore implementation of the GtkBuildable interface allows
  * to specify the model columns with a <columns> element that may
  * contain multiple <column> elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
+ *
  * $(DDOC_COMMENT example)
  */
 public class TreeStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF

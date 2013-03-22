@@ -72,7 +72,6 @@ private import gda.FieldAttributes;
 private import gda.DataModelArray;
 
 /**
- * Description
  */
 public class Table : DataModelArray
 {

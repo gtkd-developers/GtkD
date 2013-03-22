@@ -65,19 +65,25 @@ private import glib.Str;
 
 
 /**
- * Description
  * Arrays are similar to standard C arrays, except that they grow
  * automatically as elements are added.
+ *
  * Array elements can be of any size (though all elements of one array
  * are the same size), and the array can be automatically cleared to
  * '0's and zero-terminated.
+ *
  * To create a new array use g_array_new().
+ *
  * To add elements to an array, use g_array_append_val(),
  * g_array_append_vals(), g_array_prepend_val(), and
  * g_array_prepend_vals().
+ *
  * To access an element of an array, use g_array_index().
+ *
  * To set the size of an array, use g_array_set_size().
+ *
  * To free an array, use g_array_free().
+ *
  * $(DDOC_COMMENT example)
  */
 public class ArrayG

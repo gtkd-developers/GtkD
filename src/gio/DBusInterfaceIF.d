@@ -71,7 +71,6 @@ private import gio.DBusObjectIF;
 
 
 /**
- * Description
  * The GDBusInterface type is the base type for D-Bus interfaces both
  * on the service side (see GDBusInterfaceSkeleton) and client side
  * (see GDBusProxy).

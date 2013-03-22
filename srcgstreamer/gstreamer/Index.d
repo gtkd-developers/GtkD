@@ -73,7 +73,6 @@ private import gstreamer.ObjectGst;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * GstIndex is used to generate a stream index of one or more elements
  * in a pipeline.
  */

@@ -74,12 +74,12 @@ private import gobject.TypePlugin;
 
 
 /**
- * Description
  * The GType API is the foundation of the GObject system. It provides the
  * facilities for registering and managing all fundamental data types,
  * user-defined object and interface types. Before using any GType
  * or GObject functions, g_type_init() must be called to initialize the
  * type system.
+ *
  * For type creation and registration purposes, all types fall into one of
  * two categories: static or dynamic. Static types are never loaded or
  * unloaded at run-time as dynamic types may be. Static types are created
@@ -98,12 +98,14 @@ private import gobject.TypePlugin;
  * types called g_type_register_fundamental() which requires both a GTypeInfo
  * structure and a GTypeFundamentalInfo structure but it is seldom used
  * since most fundamental types are predefined rather than user-defined.
+ *
  * Type instance and class structs are limited to a total of 64 KiB,
  * including all parent types. Similarly, type instances' private data
  * (as created by g_type_class_add_private()) are limited to a total of
  * 64 KiB. If a type instance needs a large static buffer, allocate it
  * separately (typically by using GArray or GPtrArray) and put a pointer
  * to the buffer in the structure.
+ *
  * A final word about type names.
  * Such an identifier needs to be at least three characters long. There is no
  * upper length limit. The first character needs to be a letter (a-z or A-Z)

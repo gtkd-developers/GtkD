@@ -68,25 +68,32 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * The GOption commandline parser is intended to be a simpler replacement
  * for the popt library. It supports short and long commandline options,
  * as shown in the following example:
+ *
  * testtreemodel -r 1 --max-size 20 --rand --display=:1.0 -vb -- file1 file2
+ *
  * The example demonstrates a number of features of the GOption
  * commandline parser
+ *
  *  Options can be single letters, prefixed by a single dash. Multiple
  *  short options can be grouped behind a single dash.
+ *
  *  Long options are prefixed by two consecutive dashes.
+ *
  *  Options can have an extra argument, which can be a number, a string or
  *  a filename. For long options, the extra argument can be appended with
  *  an equals sign after the option name, which is useful if the extra
  *  argument starts with a dash, which would otherwise cause it to be
  *  interpreted as another option.
+ *
  *  Non-option arguments are returned to the application as rest arguments.
+ *
  *  An argument consisting solely of two dashes turns off further parsing,
  *  any remaining arguments (even those starting with a dash) are returned
  *  to the application as rest arguments.
+ *
  * Another important feature of GOption is that it can automatically
  * generate nicely formatted help output. Unless it is explicitly turned
  * off with g_option_context_set_help_enabled(), GOption will recognize
@@ -96,19 +103,24 @@ private import gtkc.paths;
  * (where groupname is the name of a
  * GOptionGroup) and write a text similar to the one shown in the
  * following example to stdout.
+ *
  * $(DDOC_COMMENT example)
+ *
  * GOption groups options in GOptionGroups, which makes it easy to
  * incorporate options from multiple sources. The intended use for this is
  * to let applications collect option groups from the libraries it uses,
  * add them to their GOptionContext, and parse all options by a single call
  * to g_option_context_parse(). See gtk_get_option_group() for an example.
+ *
  * If an option is declared to be of type string or filename, GOption takes
  * care of converting it to the right encoding; strings are returned in
  * UTF-8, filenames are returned in the GLib filename encoding. Note that
  * this only works if setlocale() has been called before
  * g_option_context_parse().
+ *
  * Here is a complete example of setting up GOption to parse the example
  * commandline above and produce the example help output.
+ *
  * $(DDOC_COMMENT example)
  */
 public class OptionGroup

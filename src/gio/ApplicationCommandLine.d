@@ -69,24 +69,27 @@ private import glib.Variant;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GApplicationCommandLine represents a command-line invocation of
  * an application. It is created by GApplication and emitted
  * in the "command-line" signal and virtual function.
+ *
  * The class contains the list of arguments that the program was invoked
  * with. It is also possible to query if the commandline invocation was
  * local (ie: the current process is running in direct response to the
  * invocation) or remote (ie: some other process forwarded the
  * commandline to this process).
+ *
  * The GApplicationCommandLine object can provide the argc and argv
  * parameters for use with the GOptionContext command-line parsing API,
  * with the g_application_command_line_get_arguments() function. See
  *  Example 20, “Deferred commandline handling” for an example.
+ *
  * The exit status of the originally-invoked process may be set and
  * messages can be printed to stdout or stderr of that process. The
  * lifecycle of the originally-invoked process is tied to the lifecycle
  * of this object (ie: the process exits when the last reference is
  * dropped).
+ *
  * The main use for GApplicationCommandLine (and the
  * "command-line" signal) is 'Emacs server' like use cases:
  * You can set the EDITOR environment variable to have
@@ -95,8 +98,11 @@ private import gobject.ObjectG;
  * in the running instance, instead of opening a new one. An important
  * aspect of this use case is that the process that gets started by git
  * does not return until the editing is done.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
  */
 public class ApplicationCommandLine : ObjectG

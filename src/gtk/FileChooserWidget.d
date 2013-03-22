@@ -71,12 +71,12 @@ private import gtk.FileChooserIF;
 private import gtk.Box;
 
 /**
- * Description
  * GtkFileChooserWidget is a widget suitable for selecting files.
  * It is the main building block of a GtkFileChooserDialog. Most
  * applications will only need to use the latter; you can use
  * GtkFileChooserWidget as part of a larger window if you have
  * special needs.
+ *
  * Note that GtkFileChooserWidget does not have any methods of its
  * own. Instead, you should use the functions that work on a
  * GtkFileChooser.

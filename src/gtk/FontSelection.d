@@ -75,16 +75,19 @@ private import pango.PgFontFamily;
 private import gtk.Box;
 
 /**
- * Description
  * The GtkFontSelection widget lists the available fonts, styles and sizes,
  * allowing the user to select a font.
  * It is used in the GtkFontSelectionDialog widget to provide a dialog box for
  * selecting fonts.
+ *
  * To set the font which is initially selected, use
  * gtk_font_selection_set_font_name().
+ *
  * To get the selected font use gtk_font_selection_get_font_name().
+ *
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_set_preview_text().
+ *
  * In GTK+ 3.2, GtkFontSelection has been deprecated in favor of
  * GtkFontChooser.
  */

@@ -67,31 +67,37 @@ private import glib.Str;
 
 
 /**
- * Description
  * GIOExtensionPoint provides a mechanism for modules to extend the
  * functionality of the library or application that loaded it in an
  * organized fashion.
+ *
  * An extension point is identified by a name, and it may optionally
  * require that any implementation must by of a certain type (or derived
  * thereof). Use g_io_extension_point_register() to register an
  * extension point, and g_io_extension_point_set_required_type() to
  * set a required type.
+ *
  * A module can implement an extension point by specifying the GType
  * that implements the functionality. Additionally, each implementation
  * of an extension point has a name, and a priority. Use
  * g_io_extension_point_implement() to implement an extension point.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  *  It is up to the code that registered the extension point how
  *  it uses the implementations that have been associated with it.
  *  Depending on the use case, it may use all implementations, or
  *  only the one with the highest priority, or pick a specific
  *  one by name.
+ *
  *  To avoid opening all modules just to find out what extension
  *  points they implement, GIO makes use of a caching mechanism,
  *  see gio-querymodules.
  *  You are expected to run this command after installing a
  *  GIO module.
+ *
  *  The GIO_EXTRA_MODULES environment variable can be
  *  used to specify additional directories to automatically load modules
  *  from. This environment variable has the same syntax as the

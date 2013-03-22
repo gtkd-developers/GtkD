@@ -87,7 +87,6 @@ private import pango.PgMatrix;
 private import gobject.ObjectG;
 
 /**
- * Description
  * PangoRenderer is a base class that contains the necessary logic for
  * rendering a PangoLayout or PangoLayoutLine. By subclassing
  * PangoRenderer and overriding operations such as draw_glyphs and

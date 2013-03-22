@@ -84,7 +84,6 @@ public import gtk.Widget;
 
 
 /**
- * Description
  * You must implement this interface to provide proposals to GtkSourceCompletion
  */
 public template SourceCompletionProviderT(TStruct)

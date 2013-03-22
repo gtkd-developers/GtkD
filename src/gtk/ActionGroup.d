@@ -85,9 +85,9 @@ private import gtk.BuildableT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Actions are organised into groups. An action group is essentially a
  * map from names to GtkAction objects.
+ *
  * All actions that would make sense to use in a particular context
  * should be in a single group. Multiple action groups may be used for a
  * particular user interface. In fact, it is expected that most nontrivial
@@ -97,6 +97,7 @@ private import gobject.ObjectG;
  * actions that act on that document (eg. save, cut/copy/paste, etc). Each
  * window's menus would be constructed from a combination of two action
  * groups.
+ *
  * Accelerators are handled by the GTK+ accelerator map. All actions are
  * assigned an accelerator path (which normally has the form
  * <Actions>/group-name/action-name)
@@ -104,16 +105,21 @@ private import gobject.ObjectG;
  * and toolitems take on this accelerator path. The GTK+ accelerator map
  * code makes sure that the correct shortcut is displayed next to the menu
  * item.
+ *
  * GtkActionGroup as GtkBuildable
+ *
  * The GtkActionGroup implementation of the GtkBuildable interface accepts
  * GtkAction objects as <child> elements in UI definitions.
+ *
  * Note that it is probably more common to define actions and action groups
  * in the code, since they are directly related to what the code can do.
+ *
  * The GtkActionGroup implementation of the GtkBuildable interface supports
  * a custom <accelerator> element, which has attributes named key and
  * modifiers and allows to specify accelerators. This is similar to the
  * <accelerator> element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
+ *
  * $(DDOC_COMMENT example)
  */
 public class ActionGroup : ObjectG, BuildableIF

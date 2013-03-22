@@ -67,7 +67,6 @@ private import gstreamer.Element;
 
 
 /**
- * Description
  * Provides interface functionality on per instance basis and not per class
  * basis, which is the case for gobject.
  */

@@ -69,7 +69,6 @@ private import glib.ListG;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class ErrorGda : ObjectG
 {

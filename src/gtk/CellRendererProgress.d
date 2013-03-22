@@ -69,9 +69,9 @@ private import gtk.OrientableT;
 private import gtk.CellRenderer;
 
 /**
- * Description
  * GtkCellRendererProgress renders a numeric value as a progress par in a cell.
  * Additionally, it can display a text on top of the progress bar.
+ *
  * The GtkCellRendererProgress cell renderer was added in GTK+ 2.6.
  */
 public class CellRendererProgress : CellRenderer, OrientableIF

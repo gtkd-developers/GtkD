@@ -71,7 +71,6 @@ private import glib.ListSG;
 private import gtk.ToggleAction;
 
 /**
- * Description
  * A GtkRadioAction is similar to GtkRadioMenuItem. A number of radio
  * actions can be linked together so that only one may be active at any
  * one time.

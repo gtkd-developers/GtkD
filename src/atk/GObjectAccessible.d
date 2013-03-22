@@ -70,7 +70,6 @@ private import gobject.ObjectG;
 private import atk.ObjectAtk;
 
 /**
- * Description
  * This object class is derived from AtkObject. It can be used as a basis for
  * implementing accessible objects for GObjects which are not derived from
  * GtkWidget. One example of its use is in providing an accessible object

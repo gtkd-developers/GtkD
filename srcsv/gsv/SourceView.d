@@ -88,7 +88,6 @@ private import gtkc.gtk;
 private import gtk.TextView;
 
 /**
- * Description
  * GtkSourceView is the main object of the GtkSourceView library. It provides
  * a text view which syntax highlighting, undo/redo and text marks. Use a
  * GtkSourceBuffer to display text with a GtkSourceView.

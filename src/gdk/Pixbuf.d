@@ -89,9 +89,9 @@ private import gdkpixbuf.PixbufFormat;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Pixbufs are client-side images. For details on how to create
  * and manipulate pixbufs, see the GdkPixbuf API documentation.
+ *
  * The functions described here allow to obtain pixbufs from
  * GdkWindows and cairo surfaces.
  */
@@ -160,7 +160,6 @@ public class Pixbuf : ObjectG
 	}
 	
 	/**
-	 * Description
 	 * The most basic way to create a pixbuf is to wrap an existing pixel
 	 * buffer with a GdkPixbuf structure. You can use the
 	 * gdk_pixbuf_new_from_data() function to do this You need to specify
@@ -170,14 +169,17 @@ public class Pixbuf : ObjectG
 	 * chunk of static data compiled into your application, you can pass
 	 * in NULL as the destroy notification function so that the data
 	 * will not be freed.
+	 *
 	 * The gdk_pixbuf_new() function can be used as a convenience to
 	 * create a pixbuf with an empty buffer. This is equivalent to
 	 * allocating a data buffer using malloc() and
 	 * then wrapping it with gdk_pixbuf_new_from_data(). The gdk_pixbuf_new()
 	 * function will compute an optimal rowstride so that rendering can be
 	 * performed with an efficient algorithm.
+	 *
 	 * As a special case, you can use the gdk_pixbuf_new_from_xpm_data()
 	 * function to create a pixbuf from inline XPM image data.
+	 *
 	 * You can also copy an existing pixbuf with the gdk_pixbuf_copy()
 	 * function. This is not the same as just doing a g_object_ref()
 	 * on the old pixbuf; the copy function will actually duplicate the
@@ -185,18 +187,22 @@ public class Pixbuf : ObjectG
 	 */
 	
 	/**
-	 * Description
 	 * The GdkPixbuf structure contains
 	 * information that describes an image in memory.
+	 *
 	 * Image Data
+	 *
 	 * Image data in a pixbuf is stored in memory in uncompressed,
 	 * packed format. Rows in the image are stored top to bottom, and
 	 * in each row pixels are stored from left to right. There may be
 	 * padding at the end of a row. The "rowstride" value of a pixbuf,
 	 * as returned by gdk_pixbuf_get_rowstride(), indicates the number
 	 * of bytes between rows.
+	 *
 	 * $(DDOC_COMMENT example)
+	 *
 	 * Note
+	 *
 	 * If you are doing memcpy() of raw pixbuf data, note that the
 	 * last row in the pixbuf may not be as wide as the full
 	 * rowstride, but rather just as wide as the pixel data needs to
@@ -208,7 +214,6 @@ public class Pixbuf : ObjectG
 	 */
 	
 	/**
-	 * Description
 	 * GdkPixbuf structures are reference counted. This means that an
 	 * application can share a single pixbuf among many parts of the
 	 * code. When a piece of the program needs to keep a pointer to a
@@ -217,10 +222,13 @@ public class Pixbuf : ObjectG
 	 * by calling g_object_unref(). The pixbuf will be destroyed when
 	 * its reference count drops to zero. Newly-created GdkPixbuf
 	 * structures start with a reference count of one.
+	 *
 	 * Note
+	 *
 	 * As GdkPixbuf is derived from GObject now, gdk_pixbuf_ref() and
 	 * gdk_pixbuf_unref() are deprecated in favour of g_object_ref()
 	 * and g_object_unref() resp.
+	 *
 	 * Finalizing a pixbuf means to free its pixel
 	 * data and to free the GdkPixbuf structure itself. Most of the
 	 * library functions that create GdkPixbuf structures create the
@@ -236,12 +244,12 @@ public class Pixbuf : ObjectG
 	 */
 	
 	/**
-	 * Description
 	 * The GdkPixBuf library provides a simple mechanism for loading
 	 * an image from a file in synchronous fashion. This means that the
 	 * library takes control of the application while the file is being
 	 * loaded; from the user's point of view, the application will block
 	 * until the image is done loading.
+	 *
 	 * This interface can be used by applications in which blocking is
 	 * acceptable while an image is being loaded. It can also be used to
 	 * load small images in general. Applications that need progressive
@@ -249,7 +257,6 @@ public class Pixbuf : ObjectG
 	 */
 	
 	/**
-	 * Description
 	 * These functions allow to save a GdkPixbuf in a number of
 	 * file formats. The formatted data can be written to a file
 	 * or to a memory buffer. GdkPixBuf can also call a user-defined
@@ -258,12 +265,12 @@ public class Pixbuf : ObjectG
 	 */
 	
 	/**
-	 * Description
 	 * The GdkPixBuf contains functions to scale pixbufs, to scale
 	 * pixbufs and composite against an existing image, and to scale
 	 * pixbufs and composite against a solid color or checkerboard.
 	 * Compositing a checkerboard is a common way to show an image with
 	 * an alpha channel in image-viewing and editing software.
+	 *
 	 * Since the full-featured functions (gdk_pixbuf_scale(),
 	 * gdk_pixbuf_composite(), and gdk_pixbuf_composite_color()) are
 	 * rather complex to use and have many arguments, two simple
@@ -271,12 +278,14 @@ public class Pixbuf : ObjectG
 	 * gdk_pixbuf_composite_color_simple() which create a new pixbuf of a
 	 * given size, scale an original image to fit, and then return the
 	 * new pixbuf.
+	 *
 	 * Scaling and compositing functions take advantage of MMX hardware
 	 * acceleration on systems where MMX is supported. If gdk-pixbuf is built
 	 * with the Sun mediaLib library, these functions are instead accelerated
 	 * using mediaLib, which provides hardware acceleration on Intel, AMD,
 	 * and Sparc chipsets. If desired, mediaLib support can be turned off by
 	 * setting the GDK_DISABLE_MEDIALIB environment variable.
+	 *
 	 * The following example demonstrates handling an expose event by
 	 * rendering the appropriate area of a source image (which is scaled
 	 * to fit the widget) onto the widget's window. The source image is
@@ -285,11 +294,11 @@ public class Pixbuf : ObjectG
 	 * image doesn't have an alpha channel, calling
 	 * gdk_pixbuf_composite_color() function has exactly the same effect
 	 * as calling gdk_pixbuf_scale().
+	 *
 	 * $(DDOC_COMMENT example)
 	 */
 	
 	/**
-	 * Description
 	 * These functions provide miscellaneous utilities for manipulating
 	 * pixbufs. The pixel data in pixbufs may of course be manipulated
 	 * directly by applications, but several common operations can be

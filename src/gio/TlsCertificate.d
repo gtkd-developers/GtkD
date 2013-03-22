@@ -78,7 +78,6 @@ private import gio.SocketConnectableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A certificate used for TLS authentication and encryption.
  * This can represent either a certificate only (eg, the certificate
  * received by a client from a server), or the combination of
@@ -120,10 +119,10 @@ public class TlsCertificate : ObjectG
 	}
 	
 	/**
-	 * Description
 	 * GTlsConnection and related classes provide TLS (Transport Layer
 	 * Security, previously known as SSL, Secure Sockets Layer) support for
 	 * gio-based network streams.
+	 *
 	 * In the simplest case, for a client connection, you can just set the
 	 * "tls" flag on a GSocketClient, and then any
 	 * connections created by that client will have TLS negotiated
@@ -132,11 +131,13 @@ public class TlsCertificate : ObjectG
 	 * default by setting the "tls-validation-flags"
 	 * property). The returned object will be a GTcpWrapperConnection,
 	 * which wraps the underlying GTlsClientConnection.
+	 *
 	 * For greater control, you can create your own GTlsClientConnection,
 	 * wrapping a GSocketConnection (or an arbitrary GIOStream with
 	 * pollable input and output streams) and then connect to its signals,
 	 * such as "accept-certificate", before starting the
 	 * handshake.
+	 *
 	 * Server-side TLS is similar, using GTlsServerConnection. At the
 	 * moment, there is no support for automatically wrapping server-side
 	 * connections in the way GSocketClient does for client-side

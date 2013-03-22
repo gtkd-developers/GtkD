@@ -77,21 +77,26 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * GtkWidgetPath is a boxed type that represents a widget hierarchy from
  * the topmost widget, typically a toplevel, to any child. This widget
  * path abstraction is used in GtkStyleContext on behalf of the real
  * widget in order to query style information.
+ *
  * If you are using GTK+ widgets, you probably will not need to use
  * this API directly, as there is gtk_widget_get_path(), and the style
  * context returned by gtk_widget_get_style_context() will be automatically
  * updated on widget hierarchy changes.
+ *
  * The widget path generation is generally simple:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Although more complex information, such as widget names, or
  * different classes (property that may be used by other widget
  * types) and intermediate regions may be included:
+ *
  * $(DDOC_COMMENT example)
+ *
  * All this information will be used to match the style information
  * that applies to the described widget.
  */

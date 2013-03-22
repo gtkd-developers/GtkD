@@ -67,7 +67,6 @@ private import gdk.Pixbuf;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GdkPixBuf library provides a simple mechanism to load and
  * represent animations. An animation is conceptually a series of
  * frames to be displayed over time. The animation may not be

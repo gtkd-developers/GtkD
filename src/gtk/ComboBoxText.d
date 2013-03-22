@@ -75,27 +75,33 @@ private import gtk.TreeModelIF;
 private import gtk.ComboBox;
 
 /**
- * Description
  * A GtkComboBoxText is a simple variant of GtkComboBox that hides
  * the model-view complexity for simple text-only use cases.
+ *
  * To create a GtkComboBoxText, use gtk_combo_box_text_new() or
  * gtk_combo_box_text_new_with_entry().
+ *
  * You can add items to a GtkComboBoxText with
  * gtk_combo_box_text_append_text(), gtk_combo_box_text_insert_text()
  * or gtk_combo_box_text_prepend_text() and remove options with
  * gtk_combo_box_text_remove().
+ *
  * If the GtkComboBoxText contains an entry (via the 'has-entry' property),
  * its contents can be retrieved using gtk_combo_box_text_get_active_text().
  * The entry itself can be accessed by calling gtk_bin_get_child() on the
  * combo box.
+ *
  * You should not call gtk_combo_box_set_model() or attempt to pack more cells
  * into this combo box via its GtkCellLayout interface.
+ *
  * GtkComboBoxText as GtkBuildable
+ *
  * The GtkComboBoxText implementation of the GtkBuildable interface
  * supports adding items directly using the <items> element
  * and specifying <item> elements for each item. Each <item>
  * element supports the regular translation attributes "translatable",
  * "context" and "comments".
+ *
  * $(DDOC_COMMENT example)
  */
 public class ComboBoxText : ComboBox
@@ -223,13 +229,13 @@ public class ComboBoxText : ComboBox
 	}
 	
 	/**
-	 * Description
 	 * A GtkComboBox is a widget that allows the user to choose from a list of
 	 * valid choices. The GtkComboBox displays the selected choice. When
 	 * activated, the GtkComboBox displays a popup which allows the user to
 	 * make a new choice. The style in which the selected value is displayed,
 	 * and the style of the popup is determined by the current theme. It may
 	 * be similar to a Windows-style combo box.
+	 *
 	 * The GtkComboBox uses the model-view pattern; the list of valid choices
 	 * is specified in the form of a tree model, and the display of the choices
 	 * can be adapted to the data in the model by using cell renderers, as you
@@ -237,9 +243,11 @@ public class ComboBoxText : ComboBox
 	 * GtkCellLayout interface. The tree model holding the valid choices is
 	 * not restricted to a flat list, it can be a real tree, and the popup will
 	 * reflect the tree structure.
+	 *
 	 * To allow the user to enter values not in the model, the 'has-entry'
 	 * property allows the GtkComboBox to contain a GtkEntry. This entry
 	 * can be accessed by calling gtk_bin_get_child() on the combo box.
+	 *
 	 * For a simple list of textual choices, the model-view API of GtkComboBox
 	 * can be a bit overwhelming. In this case, GtkComboBoxText offers a
 	 * simple alternative. Both GtkComboBox and GtkComboBoxText can contain

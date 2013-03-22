@@ -104,16 +104,17 @@ private import gio.InitableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GDBusProxy is a base class used for proxies to access a D-Bus
  * interface on a remote object. A GDBusProxy can be constructed for
  * both well-known and unique names.
+ *
  * By default, GDBusProxy will cache all properties (and listen to
  * changes) of the remote object, and proxy all signals that gets
  * emitted. This behaviour can be changed by passing suitable
  * GDBusProxyFlags when the proxy is created. If the proxy is for a
  * well-known name, the property cache is flushed when the name owner
  * vanishes and reloaded when a name owner appears.
+ *
  * If a GDBusProxy is used for a well-known name, the owner of the
  * name is tracked and can be read from
  * "g-name-owner". Connect to the "notify" signal to
@@ -125,6 +126,7 @@ private import gobject.ObjectG;
  * then calls will be sent to the well-known name which may result in
  * the message bus launching an owner (unless
  * G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is set).
+ *
  * The generic "g-properties-changed" and
  * "g-signal" signals are not very convenient to work
  * with. Therefore, the recommended way of working with proxies is to
@@ -133,11 +135,13 @@ private import gobject.ObjectG;
  * for how this can easily be done using the
  * gdbus-codegen
  * tool.
+ *
  * A GDBusProxy instance can be used from multiple threads but note
  * that all signals (e.g. "g-signal", "g-properties-changed"
  * and "notify") are emitted in the
  * thread-default main loop
  * of the thread where the instance was constructed.
+ *
  * $(DDOC_COMMENT example)
  */
 public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF

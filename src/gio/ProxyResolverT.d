@@ -81,7 +81,6 @@ public import gio.ProxyResolverIF;
 
 
 /**
- * Description
  * GProxyResolver provides synchronous and asynchronous network proxy
  * resolution. GProxyResolver is used within GSocketClient through
  * the method g_socket_connectable_proxy_enumerate().

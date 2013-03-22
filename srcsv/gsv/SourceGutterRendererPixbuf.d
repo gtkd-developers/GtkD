@@ -74,7 +74,6 @@ private import gdk.Pixbuf;
 private import gsv.SourceGutterRenderer;
 
 /**
- * Description
  */
 public class SourceGutterRendererPixbuf : SourceGutterRenderer
 {

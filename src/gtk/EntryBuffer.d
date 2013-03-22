@@ -68,12 +68,13 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkEntryBuffer class contains the actual text displayed in a
  * GtkEntry widget.
+ *
  * A single GtkEntryBuffer object can be shared by multiple GtkEntry
  * widgets which will then share the same text content, but not the cursor
  * position, visibility attributes, icon etc.
+ *
  * GtkEntryBuffer may be derived from. Such a derived class might allow
  * text to be stored in an alternate location, such as non-pageable memory,
  * useful in the case of important passwords. Or a derived class could

@@ -93,10 +93,10 @@ private import gda.Transaction;
 private import gobject.ObjectG;
 
 /**
- * Description
  *  The GdaConnection class offers access to all operations involving an
  *  opened connection to a database. GdaConnection objects are obtained
  *  via the GdaClient class.
+ *
  *  Once obtained, applications can use GdaConnection to execute commands,
  *  run transactions, and get information about all objects stored in the
  *  underlying database.

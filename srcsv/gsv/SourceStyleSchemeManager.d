@@ -70,7 +70,6 @@ private import gsv.SourceStyleScheme;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class SourceStyleSchemeManager : ObjectG
 {

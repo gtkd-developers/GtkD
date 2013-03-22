@@ -69,7 +69,6 @@ private import gdk.Display;
 
 
 /**
- * Description
  */
 public class GLQuery
 {

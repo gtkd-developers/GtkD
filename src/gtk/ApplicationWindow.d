@@ -77,12 +77,12 @@ private import gio.ActionMapT;
 private import gtk.Window;
 
 /**
- * Description
  * GtkApplicationWindow is a GtkWindow subclass that offers some
  * extra functionality for better integration with GtkApplication
  * features. Notably, it can handle both the application menu as well
  * as the menubar. See gtk_application_set_app_menu() and
  * gtk_application_set_menubar().
+ *
  * This class implements the GActionGroup and GActionMap interfaces,
  * to let you add window-specific actions that will be exported by the
  * associated GtkApplication, together with its application-wide
@@ -90,12 +90,15 @@ private import gtk.Window;
  * prefix and application-wide actions are prefixed with the "app."
  * prefix. Actions must be addressed with the prefixed name when
  * referring to them from a GMenuModel.
+ *
  * Note that widgets that are placed inside a GtkApplicationWindow
  * can also activate these actions, if they implement the
  * GtkActionable interface.
+ *
  * As with GtkApplication, the GDK lock will be acquired when
  * processing actions arriving from other processes and should therefore
  * be held when activating actions locally (if GDK threads are enabled).
+ *
  * The settings "gtk-shell-shows-app-menu" and
  * "gtk-shell-shows-menubar" tell GTK+ whether the
  * desktop environment is showing the application menu and menubar
@@ -103,6 +106,7 @@ private import gtk.Window;
  * For instance, on OS X, both menus will be displayed remotely;
  * on Windows neither will be. gnome-shell (starting with version 3.4)
  * will display the application menu, but not the menubar.
+ *
  * If the desktop environment does not display the menubar, then
  * GtkApplicationWindow will automatically show a GtkMenuBar for it.
  * (see the GtkApplication docs for some screenshots of how this
@@ -110,8 +114,11 @@ private import gtk.Window;
  * This behaviour can be overridden with the "show-menubar"
  * property. If the desktop environment does not display the application
  * menu, then it will automatically be included in the menubar.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * The XML format understood by GtkBuilder for GMenuModel consists
  * of a toplevel <menu> element, which contains
  * one or more <item> elements. Each
@@ -120,6 +127,7 @@ private import gtk.Window;
  * elements with a mandatory name attribute.
  * <link> elements have the same content
  * model as <menu>.
+ *
  * Attribute values can be translated using gettext, like other GtkBuilder
  * content. <attribute> elements can be marked for
  * translation with a translatable="yes" attribute.

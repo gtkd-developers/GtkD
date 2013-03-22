@@ -64,35 +64,44 @@ private import gobject.ObjectG;
 private import gtk.Widget;
 
 /**
- * Description
  * The GtkDrawingArea widget is used for creating custom user interface
  * elements. It's essentially a blank widget; you can draw on it. After
  * creating a drawing area, the application may want to connect to:
+ *
  *  Mouse and button press signals to respond to input from
  *  the user. (Use gtk_widget_add_events() to enable events
  *  you wish to receive.)
+ *
  *  The "realize" signal to take any necessary actions
  *  when the widget is instantiated on a particular display.
  *  (Create GDK resources in response to this signal.)
+ *
  *  The "configure-event" signal to take any necessary
  *  actions when the widget changes size.
+ *
  *  The "draw" signal to handle redrawing the
  *  contents of the widget.
+ *
  * The following code portion demonstrates using a drawing
  * area to display a circle in the normal widget foreground
  * color.
+ *
  * Note that GDK automatically clears the exposed area to the
  * background color before sending the expose event, and that
  * drawing is implicitly clipped to the exposed area.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Draw signals are normally delivered when a drawing area first comes
  * onscreen, or when it's covered by another window and then uncovered.
  * You can also force an expose event by adding to the "damage region"
  * of the drawing area's window; gtk_widget_queue_draw_area() and
  * gdk_window_invalidate_rect() are equally good ways to do this.
  * You'll then get a draw signal for the invalid region.
+ *
  * The available routines for drawing are documented on the GDK Drawing Primitives page
  * and the cairo documentation.
+ *
  * To receive mouse events on a drawing area, you will need to enable
  * them with gtk_widget_add_events(). To receive keyboard events, you
  * will need to set the "can-focus" property on the drawing area, and you

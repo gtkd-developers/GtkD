@@ -76,7 +76,6 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * The "GMarkup" parser is intended to parse a simple markup format
  * that's a subset of XML. This is a small, efficient, easy-to-use
  * parser. It should not be used if you expect to interoperate with
@@ -86,21 +85,27 @@ private import gtkc.paths;
  * Full-scale XML parsers should be able to parse the subset used by
  * GMarkup, so you can easily migrate to full-scale XML at a later
  * time if the need arises.
+ *
  * GMarkup is not guaranteed to signal an error on all invalid XML;
  * the parser may accept documents that an XML parser would not.
  * However, XML documents which are not well-formed[6]
  * are not considered valid GMarkup documents.
+ *
  * Simplifications to XML include:
+ *
  * Only UTF-8 encoding is allowed
  * No user-defined entities
  * Processing instructions, comments and the doctype declaration
  * are "passed through" but are not interpreted in any way
  * No DTD or validation.
+ *
  * The markup format does support:
+ *
  * Elements
  * Attributes
  * 5 standard entities:
  *  amp; lt; gt; quot; apos;
+ *
  * Character references
  * Sections marked as CDATA
  */

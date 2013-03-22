@@ -74,19 +74,20 @@ private import glib.Source;
 
 
 /**
- * Description
  * A GClosure represents a callback supplied by the programmer. It
  * will generally comprise a function of some kind and a marshaller
  * used to call it. It is the reponsibility of the marshaller to
  * convert the arguments for the invocation from GValues into
  * a suitable form, perform the callback on the converted arguments,
  * and transform the return value back into a GValue.
+ *
  * In the case of C programs, a closure usually just holds a pointer
  * to a function and maybe a data argument, and the marshaller
  * converts between GValue and native C types. The GObject
  * library provides the GCClosure type for this purpose. Bindings for
  * other languages need marshallers which convert between GValues and suitable representations in the runtime of the language in
  * order to use functions written in that languages as callbacks.
+ *
  * Within GObject, closures play an important role in the
  * implementation of signals. When a signal is registered, the
  * c_marshaller argument to g_signal_new() specifies the default C
@@ -99,14 +100,18 @@ private import glib.Source;
  * GObject create a closure automatically by using one of the
  * g_signal_connect_*() functions which take a callback function/user
  * data pair.
+ *
  * Using closures has a number of important advantages over a simple
  * callback function/data pointer combination:
+ *
  * Closures allow the callee to get the types of the callback parameters,
  * which means that language bindings don't have to write individual glue
  * for each callback type.
+ *
  * The reference counting of GClosure makes it easy to handle reentrancy
  * right; if a callback is removed while it is being invoked, the closure
  * and its parameters won't be freed until the invocation finishes.
+ *
  * g_closure_invalidate() and invalidation notifiers allow callbacks to be
  * automatically removed when the objects they point to go away.
  */

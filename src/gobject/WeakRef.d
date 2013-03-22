@@ -66,25 +66,29 @@ public  import gtkc.gdktypes;
 
 
 /**
- * Description
  * GObject is the fundamental type providing the common attributes and
  * methods for all object types in GTK+, Pango and other libraries
  * based on GObject. The GObject class provides methods for object
  * construction and destruction, property access methods, and signal
  * support. Signals are described in detail in Signals(3).
+ *
  * GInitiallyUnowned is derived from GObject. The only difference between
  * the two is that the initial reference of a GInitiallyUnowned is flagged
  * as a floating reference.
  * This means that it is not specifically claimed to be "owned" by
  * any code portion. The main motivation for providing floating references is
  * C convenience. In particular, it allows code to be written as:
+ *
  * $(DDOC_COMMENT example)
+ *
  * If container_add_child() will g_object_ref_sink() the
  * passed in child, no reference of the newly created child is leaked.
  * Without floating references, container_add_child()
  * can only g_object_ref() the new child, so to implement this code without
  * reference leaks, it would have to be written as:
+ *
  * $(DDOC_COMMENT example)
+ *
  * The floating reference can be converted into
  * an ordinary reference by calling g_object_ref_sink().
  * For already sunken objects (objects that don't have a floating reference
@@ -94,9 +98,11 @@ public  import gtkc.gdktypes;
  * language bindings that provide automated reference and memory ownership
  * maintenance (such as smart pointers or garbage collection) should not
  * expose floating references in their API.
+ *
  * Some object implementations may need to save an objects floating state
  * across certain code portions (an example is GtkMenu), to achieve this,
  * the following sequence can be used:
+ *
  * $(DDOC_COMMENT example)
  */
 public class WeakRef

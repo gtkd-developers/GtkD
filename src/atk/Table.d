@@ -70,7 +70,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * AtkTable should be implemented by components which present elements
  * ordered via rows and columns. It may also be used to present
  * tree-structured information if the nodes of the trees can be said to
@@ -78,9 +77,11 @@ private import glib.Str;
  * typically referred to as "cells", and these cells are exposed by
  * AtkTable as child AtkObjects of the AtkTable. Both row/column and
  * child-index-based access to these children is provided.
+ *
  * Children of AtkTable are frequently "lightweight" objects, that is,
  * they may not have backing widgets in the host UI toolkit. They are
  * therefore often transient.
+ *
  * Since tables are often very complex, AtkTable includes provision for
  * offering simplified summary information, as well as row and column
  * headers and captions. Headers and captions are AtkObjects which may

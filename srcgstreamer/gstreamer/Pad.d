@@ -95,31 +95,38 @@ private import glib.ListG;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * A GstElement is linked to other elements via "pads", which are extremely
  * light-weight generic link points.
  * After two pads are retrieved from an element with gst_element_get_pad(),
  * the pads can be link with gst_pad_link(). (For quick links,
  * you can also use gst_element_link(), which will make the obvious
  * link for you if it's straightforward.)
+ *
  * Pads are typically created from a GstPadTemplate with
  * gst_pad_new_from_template().
+ *
  * Pads have GstCaps attached to it to describe the media type they are
  * capable of dealing with. gst_pad_get_caps() and gst_pad_set_caps() are
  * used to manipulate the caps of the pads.
  * Pads created from a pad template cannot set capabilities that are
  * incompatible with the pad template capabilities.
+ *
  * Pads without pad templates can be created with gst_pad_new(),
  * which takes a direction and a name as an argument. If the name is NULL,
  * then a guaranteed unique name will be assigned to it.
+ *
  * gst_pad_get_parent() will retrieve the GstElement that owns the pad.
+ *
  * A GstElement creating a pad will typically use the various
  * gst_pad_set_*_function() calls to register callbacks for various events
  * on the pads.
+ *
  * GstElements will use gst_pad_push() and gst_pad_pull_range() to push out
  * or pull in a buffer.
+ *
  * To send a GstEvent on a pad, use gst_pad_send_event() and
  * gst_pad_push_event().
+ *
  * Last reviewed on 2006-07-06 (0.10.9)
  */
 public class Pad : ObjectGst

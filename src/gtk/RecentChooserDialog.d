@@ -77,15 +77,17 @@ private import gtk.RecentChooserT;
 private import gtk.Dialog;
 
 /**
- * Description
  * GtkRecentChooserDialog is a dialog box suitable for displaying the recently
  * used documents. This widgets works by putting a GtkRecentChooserWidget inside
  * a GtkDialog. It exposes the GtkRecentChooserIface interface, so you can use
  * all the GtkRecentChooser functions on the recent chooser dialog as well as
  * those for GtkDialog.
+ *
  * Note that GtkRecentChooserDialog does not have any methods of its own.
  * Instead, you should use the functions that work on a GtkRecentChooser.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentChooserDialog : Dialog, RecentChooserIF

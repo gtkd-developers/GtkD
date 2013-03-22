@@ -88,7 +88,6 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * GtkRecentManager provides a facility for adding, removing and
  * looking up recently used files. Each recently used file is
  * identified by its URI, and has meta-data associated to it, like
@@ -97,27 +96,40 @@ private import gtkc.paths;
  * the same file, the mime type of the file and whether the file
  * should be displayed only by the applications that have
  * registered it.
+ *
  * Note
+ *
  * The recently used files list is per user.
+ *
  * The GtkRecentManager acts like a database of all the recently
  * used files. You can create new GtkRecentManager objects, but
  * it is more efficient to use the default manager created by GTK+.
+ *
  * Adding a new recently used file is as simple as:
+ *
  * $(DDOC_COMMENT example)
+ *
  * The GtkRecentManager will try to gather all the needed information
  * from the file itself through GIO.
+ *
  * Looking up the meta-data associated with a recently used file
  * given its URI requires calling gtk_recent_manager_lookup_item():
+ *
  * $(DDOC_COMMENT example)
+ *
  * In order to retrieve the list of recently used files, you can use
  * gtk_recent_manager_get_items(), which returns a list of GtkRecentInfo
  * structures.
+ *
  * A GtkRecentManager is the model used to populate the contents of
  * one, or more GtkRecentChooser implementations.
+ *
  * Note
+ *
  * The maximum age of the recently used files list is
  * controllable through the "gtk-recent-files-max-age"
  * property.
+ *
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentInfo

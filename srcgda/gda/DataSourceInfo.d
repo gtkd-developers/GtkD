@@ -67,7 +67,6 @@ private import glib.Str;
 
 
 /**
- * Description
  *  The functions in this section allow applications an easy access to the libgda
  *  configuration, thus making them able to access the list of data sources
  *  configured in the system, for instance.

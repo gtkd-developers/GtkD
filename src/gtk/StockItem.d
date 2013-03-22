@@ -74,13 +74,13 @@ private import glib.ListSG;
 
 
 /**
- * Description
  * Stock items represent commonly-used menu or toolbar items such as
  * "Open" or "Exit". Each stock item is identified by a stock ID;
  * stock IDs are just strings, but macros such as GTK_STOCK_OPEN are
  * provided to avoid typing mistakes in the strings.
  * Applications can register their own stock items in addition to those
  * built-in to GTK+.
+ *
  * Each stock ID can be associated with a GtkStockItem, which contains
  * the user-visible label, keyboard accelerator, and translation domain
  * of the menu or toolbar item; and/or with an icon stored in a

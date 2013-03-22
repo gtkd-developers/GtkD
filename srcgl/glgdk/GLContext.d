@@ -73,7 +73,6 @@ private import glgdk.GLDrawableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class GLContext : ObjectG
 {

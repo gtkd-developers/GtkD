@@ -63,22 +63,25 @@ private import glib.ConstructionException;
 private import cairo.Surface;
 
 /**
- * Description
  * A recording surface is a surface that records all drawing operations at
  * the highest level of the surface backend interface, (that is, the
  * level of paint, mask, stroke, fill, and show_text_glyphs). The recording
  * surface can then be "replayed" against any target surface by using it
  * as a source surface.
+ *
  * If you want to replay a surface so that the results in target will be
  * identical to the results that would have been obtained if the original
  * operations applied to the recording surface had instead been applied to the
  * target surface, you can use code like this:
+ *
  * $(DDOC_COMMENT example)
+ *
  * A recording surface is logically unbounded, i.e. it has no implicit constraint
  * on the size of the drawing surface. However, in practice this is rarely
  * useful as you wish to replay against a particular target surface with
  * known bounds. For this case, it is more efficient to specify the target
  * extents to the recording surface upon creation.
+ *
  * The recording phase of the recording surface is careful to snapshot all
  * necessary objects (paths, patterns, etc.), in order to achieve
  * accurate replay. The efficiency of the recording surface could be

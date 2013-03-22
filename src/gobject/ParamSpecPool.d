@@ -71,9 +71,9 @@ private import glib.ListG;
 
 
 /**
- * Description
  * GParamSpec is an object structure that encapsulates the metadata
  * required to specify parameters, such as e.g. GObject properties.
+ *
  * Parameter names need to start with a letter (a-z or A-Z). Subsequent
  * characters can be letters, numbers or a '-'.
  * All other characters are replaced by a '-' during construction.

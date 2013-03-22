@@ -64,11 +64,11 @@ private import gobject.ObjectG;
 private import gtk.CellRenderer;
 
 /**
- * Description
  * GtkCellRendererSpinner renders a spinning animation in a cell, very
  * similar to GtkSpinner. It can often be used as an alternative
  * to a GtkCellRendererProgress for displaying indefinite activity,
  * instead of actual progress.
+ *
  * To start the animation in a cell, set the "active"
  * property to TRUE and increment the "pulse" property
  * at regular intervals. The usual way to set the cell renderer properties

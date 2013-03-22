@@ -71,13 +71,11 @@ private import gda.ParameterList;
 
 
 /**
- * Description
  */
 public class Gda
 {
 	
 	/**
-	 * Description
 	 */
 	
 	/**

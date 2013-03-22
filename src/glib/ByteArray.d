@@ -67,14 +67,18 @@ private import glib.Bytes;
 
 
 /**
- * Description
  * GByteArray is a mutable array of bytes based on GArray, to provide arrays
  * of bytes which grow automatically as elements are added.
+ *
  * To create a new GByteArray use g_byte_array_new(). To add elements to a
  * GByteArray, use g_byte_array_append(), and g_byte_array_prepend().
+ *
  * To set the size of a GByteArray, use g_byte_array_set_size().
+ *
  * To free a GByteArray, use g_byte_array_free().
+ *
  * $(DDOC_COMMENT example)
+ *
  * See GBytes if you are interested in an immutable object representing a
  * sequence of bytes.
  */

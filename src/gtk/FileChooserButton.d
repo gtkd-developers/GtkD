@@ -76,17 +76,20 @@ private import gtk.FileChooserIF;
 private import gtk.Box;
 
 /**
- * Description
  * The GtkFileChooserButton is a widget that lets the user select a
  * file. It implements the GtkFileChooser interface. Visually, it is a
  * file name with a button to bring up a GtkFileChooserDialog.
  * The user can then use that dialog to change the file associated with
  * that button. This widget does not support setting the
  * "select-multiple" property to TRUE.
+ *
  * $(DDOC_COMMENT example)
+ *
  * The GtkFileChooserButton supports the GtkFileChooserActions
  * GTK_FILE_CHOOSER_ACTION_OPEN and GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
+ *
  * Important
+ *
  * The GtkFileChooserButton will ellipsize the label,
  * and thus will thus request little horizontal space. To give the button
  * more space, you should call gtk_widget_get_preferred_size(),

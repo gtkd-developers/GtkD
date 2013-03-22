@@ -102,13 +102,13 @@ private import gtk.ScrollableIF;
 private import gtk.Container;
 
 /**
- * Description
  * GtkIconView provides an alternative view on a GtkTreeModel.
  * It displays the model as a grid of icons with labels. Like
  * GtkTreeView, it allows to select one or multiple items
  * (depending on the selection mode, see gtk_icon_view_set_selection_mode()).
  * In addition to selection with the arrow keys, GtkIconView supports
  * rubberband selection, which is controlled by dragging the pointer.
+ *
  * Note that if the tree model is backed by an actual tree store (as
  * opposed to a flat list where the mapping to icons is obvious),
  * GtkIconView will only display the first level of the tree and

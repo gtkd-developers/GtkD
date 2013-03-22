@@ -66,14 +66,15 @@ public  import gtkc.gdktypes;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkAdjustment object represents a value which has an associated lower
  * and upper bound, together with step and page increments, and a page size.
  * It is used within several GTK+ widgets, including
  * GtkSpinButton, GtkViewport, and GtkRange (which is a base class for
  * GtkHScrollbar, GtkVScrollbar, GtkHScale, and GtkVScale).
+ *
  * The GtkAdjustment object does not update the value itself. Instead
  * it is left up to the owner of the GtkAdjustment to control the value.
+ *
  * The owner of the GtkAdjustment typically calls the
  * gtk_adjustment_value_changed() and gtk_adjustment_changed() functions
  * after changing the value and its bounds. This results in the emission of the

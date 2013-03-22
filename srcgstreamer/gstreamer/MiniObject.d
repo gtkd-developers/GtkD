@@ -73,11 +73,11 @@ private import gobject.Value;
 
 
 /**
- * Description
  * GstMiniObject is a baseclass like GObject, but has been stripped down of
  * features to be fast and small.
  * It offers sub-classing and ref-counting in the same way as GObject does.
  * It has no properties and no signal-support though.
+ *
  * Last reviewed on 2005-11-23 (0.9.5)
  */
 public class MiniObject

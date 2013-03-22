@@ -84,9 +84,9 @@ private import gdk.Window;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GdkDevice object represents a single input device, such
  * as a keyboard, a mouse, a touchpad, etc.
+ *
  * See the GdkDeviceManager documentation for more information
  * about the various kinds of master and slave devices, and their
  * relationships.

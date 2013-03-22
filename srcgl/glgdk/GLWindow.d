@@ -76,7 +76,6 @@ private import glgdk.GLDrawableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class GLWindow : ObjectG, GLDrawableIF
 {
@@ -116,7 +115,6 @@ public class GLWindow : ObjectG, GLDrawableIF
 	mixin GLDrawableT!(GdkGLWindow);
 	
 	/**
-	 * Description
 	 */
 	
 	/**

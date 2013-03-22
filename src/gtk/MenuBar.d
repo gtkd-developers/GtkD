@@ -73,7 +73,6 @@ private import gtk.Widget;
 private import gtk.MenuShell;
 
 /**
- * Description
  * The GtkMenuBar is a subclass of GtkMenuShell which contains one or
  * more GtkMenuItems. The result is a standard menu bar which can hold
  * many menu items.

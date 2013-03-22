@@ -96,20 +96,22 @@ private import gio.InitableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GSocket is a low-level networking primitive. It is a more or less
  * direct mapping of the BSD socket API in a portable GObject based API.
  * It supports both the UNIX socket implementations and winsock2 on Windows.
+ *
  * GSocket is the platform independent base upon which the higher level
  * network primitives are based. Applications are not typically meant to
  * use it directly, but rather through classes like GSocketClient,
  * GSocketService and GSocketConnection. However there may be cases where
  * direct use of GSocket is useful.
+ *
  * GSocket implements the GInitable interface, so if it is manually constructed
  * by e.g. g_object_new() you must call g_initable_init() and check the
  * results before using the object. This is done automatically in
  * g_socket_new() and g_socket_new_from_fd(), so these functions can return
  * NULL.
+ *
  * Sockets operate in two general modes, blocking or non-blocking. When
  * in blocking mode all operations block until the requested operation
  * is finished or there is an error. In non-blocking mode all calls that
@@ -119,18 +121,22 @@ private import gobject.ObjectG;
  * attach it to a GMainContext to get callbacks when I/O is possible.
  * Note that all sockets are always set to non blocking mode in the system, and
  * blocking mode is emulated in GSocket.
+ *
  * When working in non-blocking mode applications should always be able to
  * handle getting a G_IO_ERROR_WOULD_BLOCK error even when some other
  * function said that I/O was possible. This can easily happen in case
  * of a race condition in the application, but it can also happen for other
  * reasons. For instance, on Windows a socket is always seen as writable
  * until a write returns G_IO_ERROR_WOULD_BLOCK.
+ *
  * GSockets can be either connection oriented or datagram based.
  * For connection oriented types you must first establish a connection by
  * either connecting to an address or accepting a connection from another
  * address. For connectionless socket types the target/source address is
  * specified or received in each I/O operation.
+ *
  * All socket file descriptors are set to be close-on-exec.
+ *
  * Note that creating a GSocket causes the signal SIGPIPE to be
  * ignored for the remainder of the program. If you are writing a
  * command-line utility that uses GSocket, you may need to take into

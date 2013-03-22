@@ -64,19 +64,22 @@ private import glib.Str;
 
 
 /**
- * Description
  * GLib doesn't force any particular localization method upon its users.
  * But since GLib itself is localized using the gettext() mechanism, it seems
  * natural to offer the de-facto standard gettext() support macros in an
  * easy-to-use form.
+ *
  * In order to use these macros in an application, you must include
  * glib/gi18n.h. For use in a library, must include
  * glib/gi18n-lib.h after defining
  * the GETTEXT_PACKAGE macro suitably for your library:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Note that you also have to call setlocale() and textdomain() (as well as
  * bindtextdomain() and bind_textdomain_codeset()) early on in your main()
  * to make gettext() work.
+ *
  * The gettext manual covers details of how to set up message extraction
  * with xgettext.
  */

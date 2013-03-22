@@ -83,12 +83,12 @@ public import gtk.TreePath;
 
 
 /**
- * Description
  * The GtkTreeModel interface defines a generic tree interface for
  * use by the GtkTreeView widget. It is an abstract interface, and
  * is designed to be usable with any appropriate data structure. The
  * programmer just has to implement this interface on their own data
  * type for it to be viewable by a GtkTreeView widget.
+ *
  * The model is represented as a hierarchical tree of strongly-typed,
  * columned data. In other words, the model can be seen as a tree where
  * every node has different values depending on which column is being
@@ -98,6 +98,7 @@ public import gtk.TreePath;
  * important to note that this interface only provides a way of examining
  * a model and observing changes. The implementation of each individual
  * model decides how and if changes are made.
+ *
  * In order to make life simpler for programmers who do not need to
  * write their own specialized model, two generic models are provided
  * — the GtkTreeStore and the GtkListStore. To use these, the
@@ -106,12 +107,14 @@ public import gtk.TreePath;
  * interfaces. As a result, implementing drag and drop, sorting, and
  * storing data is trivial. For the vast majority of trees and lists,
  * these two models are sufficient.
+ *
  * Models are accessed on a node/column level of granularity. One can
  * query for the value of a model at a certain node and a certain
  * column on that node. There are two structures used to reference
  * a particular node in a model. They are the GtkTreePath and the
  * GtkTreeIter[4]. Most of the interface
  * consists of operations on a GtkTreeIter.
+ *
  * A path is essentially a potential node. It is a location on a model
  * that may or may not actually correspond to a node on a specific
  * model. The GtkTreePath struct can be converted into either an
@@ -120,6 +123,7 @@ public import gtk.TreePath;
  * at that level. Thus, the path “0” refers to the root
  * node and the path “2:4” refers to the fifth child of
  * the third node.
+ *
  * By contrast, a GtkTreeIter is a reference to a specific node on
  * a specific model. It is a generic struct with an integer and three
  * generic pointers. These are filled in by the model in a model-specific
@@ -129,6 +133,7 @@ public import gtk.TreePath;
  * GtkTextBuffer. They are generally statically allocated on the
  * stack and only used for a short time. The model interface defines
  * a set of operations using them for navigating the model.
+ *
  * It is expected that models fill in the iterator with private data.
  * For example, the GtkListStore model, which is internally a simple
  * linked list, stores a list node in one of the pointers. The
@@ -136,6 +141,7 @@ public import gtk.TreePath;
  * pointers. Additionally, there is an integer field. This field is
  * generally filled with a unique stamp per model. This stamp is for
  * catching errors resulting from using invalid iterators with a model.
+ *
  * The lifecycle of an iterator can be a little confusing at first.
  * Iterators are expected to always be valid for as long as the model
  * is unchanged (and doesn't emit a signal). The model is considered
@@ -148,18 +154,23 @@ public import gtk.TreePath;
  * important performance enhancements were made in the sort model.
  * As a result, the GTK_TREE_MODEL_ITERS_PERSIST flag was added to
  * indicate this behavior.
+ *
  * To help show some common operation of a model, some examples are
  * provided. The first example shows three ways of getting the iter at
  * the location “3:2:5”. While the first method shown is
  * easier, the second is much more common, as you often get paths from
  * callbacks.
+ *
  * $(DDOC_COMMENT example)
+ *
  * This second example shows a quick way of iterating through a list
  * and getting a string and an integer from each row. The
  * populate_model function used below is not
  * shown, as it is specific to the GtkListStore. For information on
  * how to write such a function, see the GtkListStore documentation.
+ *
  * $(DDOC_COMMENT example)
+ *
  * The GtkTreeModel interface contains two methods for reference
  * counting: gtk_tree_model_ref_node() and gtk_tree_model_unref_node().
  * These two methods are optional to implement. The reference counting
@@ -172,14 +183,18 @@ public import gtk.TreePath;
  * a node based on the reference count. A file-system based model would
  * not want to keep the entire file hierarchy in memory, but just the
  * folders that are currently expanded in every current view.
+ *
  * When working with reference counting, the following rules must be taken
  * into account:
+ *
  * Never take a reference on a node without owning a
  * reference on its parent. This means that all parent nodes of a referenced
  * node must be referenced as well.
+ *
  * Outstanding references on a deleted node are not released.
  * This is not possible because the node has already been deleted by the
  * time the row-deleted signal is received.
+ *
  * Models are not obligated to emit a signal on rows of
  * which none of its siblings are referenced. To phrase this differently,
  * signals are only required for levels in which nodes are referenced. For

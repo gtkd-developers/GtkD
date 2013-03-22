@@ -70,18 +70,21 @@ private import glib.Str;
 private import gtk.Button;
 
 /**
- * Description
  * A GtkToggleButton is a GtkButton which will remain 'pressed-in' when
  * clicked. Clicking again will cause the toggle button to return to its
  * normal state.
+ *
  * A toggle button is created by calling either gtk_toggle_button_new() or
  * gtk_toggle_button_new_with_label(). If using the former, it is advisable to
  * pack a widget, (such as a GtkLabel and/or a GtkImage), into the toggle
  * button's container. (See GtkButton for more information).
+ *
  * The state of a GtkToggleButton can be set specifically using
  * gtk_toggle_button_set_active(), and retrieved using
  * gtk_toggle_button_get_active().
+ *
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled().
+ *
  * $(DDOC_COMMENT example)
  */
 public class ToggleButton : Button

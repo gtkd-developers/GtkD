@@ -69,9 +69,9 @@ private import gio.ConverterIF;
 private import gio.FilterInputStream;
 
 /**
- * Description
  * Converter input stream implements GInputStream and allows
  * conversion of data of various types during reading.
+ *
  * As of GLib 2.34, GConverterInputStream implements
  * GPollableInputStream.
  */

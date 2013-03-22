@@ -95,7 +95,6 @@ version(Tango) {
 
 
 /**
- * Description
  */
 public class Spawn
 {

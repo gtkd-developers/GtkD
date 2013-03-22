@@ -90,7 +90,6 @@ private import gio.DBusInterfaceIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Abstract base class for D-Bus interfaces on the service side.
  */
 public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF

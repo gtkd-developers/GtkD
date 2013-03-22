@@ -69,7 +69,6 @@ private import glib.ListG;
 
 
 /**
- * Description
  *  Parameter lists are used primary in the parsing and creation
  *  of connection strings.
  */

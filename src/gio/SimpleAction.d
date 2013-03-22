@@ -79,10 +79,10 @@ private import gio.ActionT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GSimpleAction is the obvious simple implementation of the GAction
  * interface. This is the easiest way to create an action for purposes of
  * adding it to a GSimpleActionGroup.
+ *
  * See also GtkAction.
  */
 public class SimpleAction : ObjectG, ActionIF

@@ -79,10 +79,10 @@ private import gio.SocketConnectableT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GNetworkAddress provides an easy way to resolve a hostname and
  * then attempt to connect to that host, handling the possibility of
  * multiple IP addresses and multiple address families.
+ *
  * See GSocketConnectable for and example of using the connectable
  * interface.
  */

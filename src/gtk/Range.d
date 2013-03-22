@@ -74,9 +74,9 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 
 /**
- * Description
  * GtkRange is the common base class for widgets which visualize an
  * adjustment, e.g GtkScale or GtkScrollbar.
+ *
  * Apart from signals for monitoring the parameters of the adjustment,
  * GtkRange provides properties and methods for influencing the sensitivity
  * of the "steppers". It also provides properties and methods for setting a

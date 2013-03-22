@@ -63,22 +63,30 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
  * Pointer Arrays are similar to Arrays but are used only for storing
  * pointers.
+ *
  * Note
+ *
  * If you remove elements from the array, elements at the
  * end of the array are moved into the space previously occupied by the
  * removed element. This means that you should not rely on the index of
  * particular elements remaining the same. You should also be careful
  * when deleting elements while iterating over the array.
+ *
  * To create a pointer array, use g_ptr_array_new().
+ *
  * To add elements to a pointer array, use g_ptr_array_add().
+ *
  * To remove elements from a pointer array, use g_ptr_array_remove(),
  * g_ptr_array_remove_index() or g_ptr_array_remove_index_fast().
+ *
  * To access an element of a pointer array, use g_ptr_array_index().
+ *
  * To set the size of a pointer array, use g_ptr_array_set_size().
+ *
  * To free a pointer array, use g_ptr_array_free().
+ *
  * $(DDOC_COMMENT example)
  */
 public class PtrArray

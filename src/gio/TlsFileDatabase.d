@@ -70,7 +70,6 @@ private import glib.GException;
 private import gio.TlsDatabase;
 
 /**
- * Description
  * GTlsFileDatabase is implemented by GTlsDatabase objects which load
  * their certificate information from a file. It is in interface which
  * TLS library specific subtypes implement.

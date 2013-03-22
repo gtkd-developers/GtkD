@@ -81,35 +81,42 @@ private import gtk.IconSet;
 private import gtk.Misc;
 
 /**
- * Description
  * The GtkImage widget displays an image. Various kinds of object
  * can be displayed as an image; most typically, you would load a
  * GdkPixbuf ("pixel buffer") from a file, and then display that.
  * There's a convenience function to do this, gtk_image_new_from_file(),
  * used as follows:
+ *
  * $(DDOC_COMMENT example)
+ *
  * If the file isn't loaded successfully, the image will contain a
  * "broken image" icon similar to that used in many web browsers.
  * If you want to handle errors in loading the file yourself,
  * for example by displaying an error message, then load the image with
  * gdk_pixbuf_new_from_file(), then create the GtkImage with
  * gtk_image_new_from_pixbuf().
+ *
  * The image file may contain an animation, if so the GtkImage will
  * display an animation (GdkPixbufAnimation) instead of a static image.
+ *
  * GtkImage is a subclass of GtkMisc, which implies that you can
  * align it (center, left, right) and add padding to it, using
  * GtkMisc methods.
+ *
  * GtkImage is a "no window" widget (has no GdkWindow of its own),
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
+ *
  * $(DDOC_COMMENT example)
+ *
  * When handling events on the event box, keep in mind that coordinates
  * in the image may be different from event box coordinates due to
  * the alignment and padding settings on the image (see GtkMisc).
  * The simplest way to solve this is to set the alignment to 0.0
  * (left/top), and set the padding to zero. Then the origin of
  * the image will be the same as the origin of the event box.
+ *
  * Sometimes an application will want to avoid depending on external data
  * files, such as image files. GTK+ comes with a program to avoid this,
  * called gdk-pixbuf-csource. This library

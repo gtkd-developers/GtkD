@@ -75,23 +75,26 @@ private import gdk.Display;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The purpose of the GdkDisplayManager singleton object is to offer
  * notification when displays appear or disappear or the default display
  * changes.
+ *
  * You can use gdk_display_manager_get() to obtain the GdkDisplayManager
  * singleton, but that should be rarely necessary. Typically, initializing
  * GTK+ opens a display that you can work with without ever accessing the
  * GdkDisplayManager.
+ *
  * The GDK library can be built with support for multiple backends.
  * The GdkDisplayManager object determines which backend is used
  * at runtime.
+ *
  * When writing backend-specific code that is supposed to work with
  * multiple GDK backends, you have to consider both compile time and
  * runtime. At compile time, use the GDK_WINDOWING_X11, GDK_WINDOWING_WIN32
  * macros, etc. to find out which backends are present in the GDK library
  * you are building your application against. At runtime, use type-check
  * macros like GDK_IS_X11_DISPLAY() to find out which backend is in use:
+ *
  * $(DDOC_COMMENT example)
  */
 public class DisplayManager : ObjectG

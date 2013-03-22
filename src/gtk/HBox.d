@@ -64,11 +64,13 @@ private import gobject.ObjectG;
 private import gtk.Box;
 
 /**
- * Description
  * GtkHBox is a container that organizes child widgets into a single row.
+ *
  * Use the GtkBox packing interface to determine the arrangement,
  * spacing, width, and alignment of GtkHBox children.
+ *
  * All children are allocated the same height.
+ *
  * GtkHBox has been deprecated. You can use GtkBox instead, which is a
  * very quick and easy change. If you have derived your own classes from
  * GtkHBox, you can simply change the inheritance to derive directly

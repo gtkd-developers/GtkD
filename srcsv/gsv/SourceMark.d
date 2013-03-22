@@ -67,10 +67,10 @@ private import glib.Str;
 private import gtk.TextMark;
 
 /**
- * Description
  * A GtkSourceMark marks a position in the text where you want to display
  * additional info. It is based on GtkTextMark and thus is still valid after
  * the text has changed though its position may change.
+ *
  * GtkSourceMarks are organised in categories which you have to set
  * when you create the mark. Each category can have a pixbuf and a priority
  * associated using gtk_source_view_set_mark_category_pixbuf and

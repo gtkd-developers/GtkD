@@ -91,7 +91,6 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * GtkIconTheme provides a facility for looking up icons by name
  * and size. The main reason for using a name rather than simply
  * providing a filename is to allow different icons to be used
@@ -102,22 +101,27 @@ private import gtkc.Loader;
  * named hicolor where applications should install
  * their icons, but more additional application themes can be
  * installed as operating system vendors and users choose.
+ *
  * Named icons are similar to the Themeable Stock Images(3)
  * facility, and the distinction between the two may be a bit confusing.
  * A few things to keep in mind:
+ *
  * Stock images usually are used in conjunction with
  * Stock Items(3), such as GTK_STOCK_OK or
  * GTK_STOCK_OPEN. Named icons are easier to set up and therefore
  * are more useful for new icons that an application wants to
  * add, such as application icons or window icons.
+ *
  * Stock images can only be loaded at the symbolic sizes defined
  * by the GtkIconSize enumeration, or by custom sizes defined
  * by gtk_icon_size_register(), while named icons are more flexible
  * and any pixel size can be specified.
+ *
  * Because stock images are closely tied to stock items, and thus
  * to actions in the user interface, stock images may come in
  * multiple variants for different widget states or writing
  * directions.
+ *
  * A good rule of thumb is that if there is a stock image for what
  * you want to use, use it, otherwise use a named icon. It turns
  * out that internally stock images are generally defined in
@@ -125,6 +129,7 @@ private import gtkc.Loader;
  * more than one case is icons that depend on writing direction;
  * GTK_STOCK_GO_FORWARD uses the two themed icons
  * "gtk-stock-go-forward-ltr" and "gtk-stock-go-forward-rtl".)
+ *
  * In many cases, named themes are used indirectly, via GtkImage
  * or stock items, rather than directly, but looking up icons
  * directly is also simple. The GtkIconTheme object acts
@@ -134,6 +139,7 @@ private import gtkc.Loader;
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
  * being used, looking up an icon can be as simple as:
+ *
  * $(DDOC_COMMENT example)
  */
 public class IconInfo

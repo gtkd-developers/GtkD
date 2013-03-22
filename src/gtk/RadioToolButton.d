@@ -70,10 +70,10 @@ private import glib.ListSG;
 private import gtk.ToggleToolButton;
 
 /**
- * Description
  * A GtkRadioToolButton is a GtkToolItem that contains a radio button,
  * that is, a button that is part of a group of toggle buttons where only
  * one button can be active at a time.
+ *
  * Use gtk_radio_tool_button_new() to create a new
  * GtkRadioToolButton. Use gtk_radio_tool_button_new_from_widget() to
  * create a new GtkRadioToolButton that is part of the same group as an

@@ -65,36 +65,43 @@ private import glib.Source;
 
 
 /**
- * Description
  * The main event loop manages all the available sources of events for
  * GLib and GTK+ applications. These events can come from any number of
  * different types of sources such as file descriptors (plain files,
  * pipes or sockets) and timeouts. New types of event sources can also
  * be added using g_source_attach().
+ *
  * To allow multiple independent sets of sources to be handled in
  * different threads, each source is associated with a GMainContext.
  * A GMainContext can only be running in a single thread, but
  * sources can be added to it and removed from it from other threads.
+ *
  * Each event source is assigned a priority. The default priority,
  * G_PRIORITY_DEFAULT, is 0. Values less than 0 denote higher priorities.
  * Values greater than 0 denote lower priorities. Events from high priority
  * sources are always processed before events from lower priority sources.
+ *
  * Idle functions can also be added, and assigned a priority. These will
  * be run whenever no events with a higher priority are ready to be processed.
+ *
  * The GMainLoop data type represents a main event loop. A GMainLoop is
  * created with g_main_loop_new(). After adding the initial event sources,
  * g_main_loop_run() is called. This continuously checks for new events from
  * each of the event sources and dispatches them. Finally, the processing of
  * an event from one of the sources leads to a call to g_main_loop_quit() to
  * exit the main loop, and g_main_loop_run() returns.
+ *
  * It is possible to create new instances of GMainLoop recursively.
  * This is often used in GTK+ applications when showing modal dialog
  * boxes. Note that event sources are associated with a particular
  * GMainContext, and will be checked and dispatched for all main
  * loops associated with that GMainContext.
+ *
  * GTK+ contains wrappers of some of these functions, e.g. gtk_main(),
  * gtk_main_quit() and gtk_events_pending().
+ *
  * Creating new source types
+ *
  * One of the unusual features of the GMainLoop functionality
  * is that new types of event source can be created and used in
  * addition to the builtin type of event source. A new event source
@@ -106,14 +113,18 @@ private import glib.Source;
  * call g_source_new() passing in the size of the derived structure and
  * a table of functions. These GSourceFuncs determine the behavior of
  * the new source type.
+ *
  * New source types basically interact with the main context
  * in two ways. Their prepare function in GSourceFuncs can set a timeout
  * to determine the maximum amount of time that the main loop will sleep
  * before checking the source again. In addition, or as well, the source
  * can add file descriptors to the set that the main context checks using
  * g_source_add_poll().
+ *
  * <hr>
+ *
  * Customizing the main loop iteration
+ *
  * Single iterations of a GMainContext can be run with
  * g_main_context_iteration(). In some cases, more detailed control
  * of exactly how the details of the main loop work is desired, for
@@ -122,9 +133,12 @@ private import glib.Source;
  * g_main_context_iteration() directly. These functions are
  * g_main_context_prepare(), g_main_context_query(),
  * g_main_context_check() and g_main_context_dispatch().
+ *
  * The operation of these functions can best be seen in terms
  * of a state diagram, as shown in Figure 1, “States of a Main Context”.
+ *
  * Figure 1. States of a Main Context
+ *
  * On Unix, the GLib mainloop is incompatible with fork(). Any program
  * using the mainloop must either exec() or exit() from the child
  * without returning to the mainloop.

@@ -67,12 +67,12 @@ public  import gtkc.gdktypes;
 private import gtk.Widget;
 
 /**
- * Description
  * GtkHSV is the 'color wheel' part of a complete color selector widget.
  * It allows to select a color by determining its HSV components in an
  * intuitive way. Moving the selection around the outer ring changes the hue,
  * and moving the selection point inside the inner triangle changes value and
  * saturation.
+ *
  * GtkHSV has been deprecated together with GtkColorSelection, where
  * it was used.
  */

@@ -78,10 +78,10 @@ private import gio.IconT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GEmblemedIcon is an implementation of GIcon that supports
  * adding an emblem to an icon. Adding multiple emblems to an
  * icon is ensured via g_emblemed_icon_add_emblem().
+ *
  * Note that GEmblemedIcon allows no control over the position
  * of the emblems. See also GEmblem for more information.
  */

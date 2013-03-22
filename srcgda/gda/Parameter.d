@@ -73,7 +73,6 @@ private import gda.Value;
 
 
 /**
- * Description
  *  Parameters are the way clients have to send an unlimited number
  *  of arguments to the providers.
  */

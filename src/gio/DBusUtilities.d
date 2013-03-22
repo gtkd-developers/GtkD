@@ -84,14 +84,12 @@ private import gio.IOStream;
 
 
 /**
- * Description
  * Various utility routines related to D-Bus.
  */
 public class DBusUtilities
 {
 	
 	/**
-	 * Description
 	 * Routines for working with D-Bus addresses. A D-Bus address is a string
 	 * like "unix:tmpdir=/tmp/my-app-name". The exact format of addresses
 	 * is explained in detail in the D-Bus specification.

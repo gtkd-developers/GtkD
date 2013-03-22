@@ -77,7 +77,6 @@ private import gstreamer.Element;
 
 
 /**
- * Description
  * These function allow to create a pipeline based on the syntax used in the
  * gst-launch utillity.
  */

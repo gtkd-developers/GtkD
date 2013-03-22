@@ -64,11 +64,11 @@ private import gobject.ObjectG;
 private import gtk.ButtonBox;
 
 /**
- * Description
  * A button box should be used to provide a consistent layout of buttons
  * throughout your application. The layout/spacing can be altered by the
  * programmer, or if desired, by the user to alter the 'feel' of a
  * program to a small degree.
+ *
  * A GtkVButtonBox is created with gtk_vbutton_box_new(). Buttons are
  * packed into a button box the same way widgets are added to any other
  * container, using gtk_container_add(). You can also use
@@ -77,9 +77,11 @@ private import gtk.ButtonBox;
  * button in a way that depends on the current layout style and on
  * whether the button has had gtk_button_box_set_child_secondary() called
  * on it.
+ *
  * The spacing between buttons can be set with gtk_box_set_spacing(). The
  * arrangement and layout of the buttons can be changed with
  * gtk_button_box_set_layout().
+ *
  * GtkVButtonBox has been deprecated, use GtkButtonBox instead.
  */
 public class VButtonBox : ButtonBox

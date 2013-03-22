@@ -66,7 +66,6 @@ private import glib.Str;
 private import gio.InetSocketAddress;
 
 /**
- * Description
  * Support for proxied GInetSocketAddress.
  */
 public class ProxyAddress : InetSocketAddress

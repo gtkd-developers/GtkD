@@ -71,13 +71,14 @@ private import gdk.Window;
 
 
 /**
- * Description
  * This section describes the GDK initialization functions and miscellaneous
  * utility functions, as well as deprecation facilities.
+ *
  * The GDK and GTK+ headers annotate deprecated APIs in a way that produces
  * compiler warnings if these deprecated APIs are used. The warnings
  * can be turned off by defining the macro GDK_DISABLE_DEPRECATION_WARNINGS
  * before including the glib.h header.
+ *
  * GDK and GTK+ also provide support for building applications against
  * defined subsets of deprecated or new APIs. Define the macro
  * GDK_VERSION_MIN_REQUIRED to specify up to what version

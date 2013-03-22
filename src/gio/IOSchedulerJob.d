@@ -67,9 +67,9 @@ private import gio.Cancellable;
 
 
 /**
- * Description
  * Schedules asynchronous I/O operations. GIOScheduler integrates
  * into the main event loop (GMainLoop) and uses threads.
+ *
  * Each I/O operation has a priority, and the scheduler uses the priorities
  * to determine the order in which operations are executed. They are
  * not used to determine system-wide I/O scheduling.

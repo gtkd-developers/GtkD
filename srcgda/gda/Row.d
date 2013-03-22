@@ -72,7 +72,6 @@ private import gda.DataModel;
 
 
 /**
- * Description
  */
 public class Row
 {

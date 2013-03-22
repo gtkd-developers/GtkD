@@ -73,8 +73,8 @@ private import gobject.Value;
 
 
 /**
- * Description
  * List of tags and values used to describe media metadata.
+ *
  * Last reviewed on 2005-11-23 (0.9.5)
  */
 public class TagList

@@ -95,7 +95,6 @@ private import gtk.PrintOperationPreviewIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkPrintOperation is the high-level, portable printing API.
  * It looks a bit different than other GTK+ dialogs such as the
  * GtkFileChooser, since some platforms don't expose enough
@@ -103,18 +102,22 @@ private import gobject.ObjectG;
  * platforms, GtkPrintOperation uses the native print dialog.
  * On platforms which do not provide a native print dialog, GTK+
  * uses its own, see GtkPrintUnixDialog.
+ *
  * The typical way to use the high-level printing API is to create
  * a GtkPrintOperation object with gtk_print_operation_new() when
  * the user selects to print. Then you set some properties on it,
  * e.g. the page size, any GtkPrintSettings from previous print
  * operations, the number of pages, the current page, etc.
+ *
  * Then you start the print operation by calling gtk_print_operation_run().
  * It will then show a dialog, let the user select a printer and
  * options. When the user finished the dialog various signals will
  * be emitted on the GtkPrintOperation, the main one being
  * "draw-page", which you are supposed to catch
  * and render the page on the provided GtkPrintContext using Cairo.
+ *
  * $(DDOC_COMMENT example)
+ *
  * By default GtkPrintOperation uses an external application to do
  * print preview. To implement a custom print preview, an application
  * must connect to the preview signal. The functions

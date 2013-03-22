@@ -66,7 +66,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class Transaction : ObjectG
 {

@@ -85,28 +85,35 @@ private import gtk.Widget;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkSourceMarkAttributes is an object specifying attributes used by
  * a GtkSourceView to visually show lines marked with GtkSourceMarks
  * of a specific category. It allows you to define a background color of a line,
  * an icon shown in gutter and tooltips.
+ *
  * The background color is used as a background of a line where a mark is placed
  * and it can be set with gtk_source_mark_attributes_set_background(). To check
  * if any custom background color was defined and what color it is, use
  * gtk_source_mark_attributes_get_background().
+ *
  * An icon is a graphic element which is shown in the gutter of a view. An
  * example use is showing a red filled circle in a debugger to show that a
  * breakpoint was set in certain line. To get an icon that will be placed in
  * a gutter first a base for it must be specified and then
  * gtk_source_mark_attributes_render_icon() must be called.
  * There are several ways to specify a base for an icon:
+ *
  *  gtk_source_mark_attributes_set_icon_name()
+ *
  *  gtk_source_mark_attributes_set_stock_id()
+ *
  *  gtk_source_mark_attributes_set_gicon()
+ *
  *  gtk_source_mark_attributes_set_pixbuf()
+ *
  * Using any of the above functions overrides the one used earlier. But note
  * that a getter counterpart of ealier used function can still return some
  * value, but it is just not used when rendering the proper icon.
+ *
  * To provide meaningful tooltips for a given mark of a category, you should
  * connect to ::query-tooltip-text or ::query-tooltip-markup where the latter
  * takes precedence.

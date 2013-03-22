@@ -72,24 +72,28 @@ private import gdk.Display;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Key values are the codes which are sent whenever a key is pressed or released.
  * They appear in the GdkEventKey.keyval field of the
  * GdkEventKey structure, which is passed to signal handlers for the
  * "key-press-event" and "key-release-event" signals.
  * The complete list of key values can be found in the
  * <gdk/gdkkeysyms.h> header file.
+ *
  * Key values are regularly updated from the upstream X.org X11 implementation,
  * so new values are added regularly. They will be prefixed with GDK_KEY_ rather
  * than XF86XK_ or XK_ (for older symbols).
+ *
  * Key values can be converted into a string representation using
  * gdk_keyval_name(). The reverse function, converting a string to a key value,
  * is provided by gdk_keyval_from_name().
+ *
  * The case of key values can be determined using gdk_keyval_is_upper() and
  * gdk_keyval_is_lower(). Key values can be converted to upper or lower case
  * using gdk_keyval_to_upper() and gdk_keyval_to_lower().
+ *
  * When it makes sense, key values can be converted to and from
  * Unicode characters with gdk_keyval_to_unicode() and gdk_unicode_to_keyval().
+ *
  * One GdkKeymap object exists for each user display. gdk_keymap_get_default()
  * returns the GdkKeymap for the default display; to obtain keymaps for other
  * displays, use gdk_keymap_get_for_display(). A keymap
@@ -110,6 +114,7 @@ private import gobject.ObjectG;
  * group 0, a key might have two English characters, and in group 1 it might have
  * two Hebrew characters. The Hebrew characters will be printed on the key next to
  * the English characters.
+ *
  * In order to use a keymap to interpret a key event, it's necessary to first
  * convert the keyboard state into an effective group and level. This is done via a
  * set of rules that varies widely according to type of keyboard and user
@@ -121,6 +126,7 @@ private import gobject.ObjectG;
  * differ from the effective group used for keymap lookups because some keys don't
  * have multiple groups - e.g. the Enter key is always in group 0 regardless of
  * keyboard state.
+ *
  * Note that gdk_keymap_translate_keyboard_state() also returns the keyval, i.e. it
  * goes ahead and performs the keymap lookup in addition to telling you which
  * effective group/level values were used for the lookup. GdkEventKey already

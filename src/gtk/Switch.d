@@ -76,7 +76,6 @@ private import gtk.ActivatableIF;
 private import gtk.Widget;
 
 /**
- * Description
  * GtkSwitch is a widget that has two states: on or off. The user can control
  * which state should be active by clicking the empty area, or by dragging the
  * handle.

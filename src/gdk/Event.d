@@ -76,9 +76,9 @@ private import gdk.Screen;
 
 
 /**
- * Description
  * This section describes functions dealing with events from the window
  * system.
+ *
  * In GTK+ applications the events are handled automatically in
  * gtk_main_do_event() and passed on to the appropriate widgets, so these
  * functions are rarely needed. Though some of the fields in the
@@ -242,9 +242,10 @@ public class Event
 	}
 	
 	/**
-	 * Description
 	 * The event structs contain data specific to each type of event in GDK.
+	 *
 	 * Note
+	 *
 	 * A common mistake is to forget to set the event mask of a widget so that
 	 * the required events are received. See gtk_widget_set_events().
 	 */

@@ -73,7 +73,6 @@ private import gda.Row;
 private import gda.DataModel;
 
 /**
- * Description
  */
 public class DataModelList : DataModel
 {

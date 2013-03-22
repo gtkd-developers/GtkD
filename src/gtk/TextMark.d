@@ -69,10 +69,10 @@ private import gtk.TextBuffer;
 private import gobject.ObjectG;
 
 /**
- * Description
  * You may wish to begin by reading the text widget
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
+ *
  * A GtkTextMark is like a bookmark in a text buffer; it preserves a position in
  * the text. You can convert the mark to an iterator using
  * gtk_text_buffer_get_iter_at_mark(). Unlike iterators, marks remain valid across
@@ -82,13 +82,17 @@ private import gobject.ObjectG;
  * mark, a mark with left gravity will be moved to the
  * beginning of the newly-inserted text, and a mark with right
  * gravity will be moved to the end.
+ *
  * [3]
+ *
  * Marks are reference counted, but the reference count only controls the validity
  * of the memory; marks can be deleted from the buffer at any time with
  * gtk_text_buffer_delete_mark(). Once deleted from the buffer, a mark is
  * essentially useless.
+ *
  * Marks optionally have names; these can be convenient to avoid passing the
  * GtkTextMark object around.
+ *
  * Marks are typically created using the gtk_text_buffer_create_mark() function.
  */
 public class TextMark : ObjectG

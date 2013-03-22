@@ -82,11 +82,11 @@ private import gda.Transaction;
 private import gobject.ObjectG;
 
 /**
- * Description
  *  This class is the main entry point for libgda client applications. It provides
  *  the way by which client applications open connections. Thus, before using any other
  *  database-oriented function in libgda, applications must create a GdaClient object
  *  (via gda_client_new), and, once created, open the connections from it.
+ *
  *  GdaClient also provides a way to treat several connections as if they were only
  *  one (a connection pool), which allows applications to, for instance, commit/rollback
  *  a transaction in all the connections being managed by a unique GdaClient object, or

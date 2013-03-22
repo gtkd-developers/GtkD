@@ -73,17 +73,18 @@ private import gdk.Display;
 private import gobject.ObjectG;
 
 /**
- * Description
  * In addition to a single pointer and keyboard for user interface input,
  * GDK contains support for a variety of input devices, including graphics
  * tablets, touchscreens and multiple pointers/keyboards interacting
  * simultaneously with the user interface. Such input devices often have
  * additional features, such as sub-pixel positioning information and
  * additional device-dependent information.
+ *
  * In order to query the device hierarchy and be aware of changes in the
  * device hierarchy (such as virtual devices being created or removed, or
  * physical devices being plugged or unplugged), GDK provides
  * GdkDeviceManager.
+ *
  * By default, and if the platform supports it, GDK is aware of multiple
  * keyboard/pointer pairs and multitouch devices. This behavior can be
  * changed by calling gdk_disable_multidevice() before gdk_display_open().
@@ -95,27 +96,34 @@ private import gobject.ObjectG;
  * GdkWindows (or gtk_widget_set_support_multidevice() on widgets).
  * window. See the gdk_window_set_support_multidevice() documentation
  * for more information.
+ *
  * On X11, multi-device support is implemented through XInput 2.
  * Unless gdk_disable_multidevice() is called, the XInput 2
  * GdkDeviceManager implementation will be used as the input source.
  * Otherwise either the core or XInput 1 implementations will be used.
+ *
  * For simple applications that don't have any special interest in
  * input devices, the so-called client pointer
  * provides a reasonable approximation to a simple setup with a single
  * pointer and keyboard. The device that has been set as the client
  * pointer can be accessed via gdk_device_manager_get_client_pointer().
+ *
  * Conceptually, in multidevice mode there are 2 device types. Virtual
  * devices (or master devices) are represented by the pointer cursors
  * and keyboard foci that are seen on the screen. Physical devices (or
  * slave devices) represent the hardware that is controlling the virtual
  * devices, and thus have no visible cursor on the screen.
+ *
  * Virtual devices are always paired, so there is a keyboard device for every
  * pointer device. Associations between devices may be inspected through
  * gdk_device_get_associated_device().
+ *
  * There may be several virtual devices, and several physical devices could
  * be controlling each of these virtual devices. Physical devices may also
  * be "floating", which means they are not attached to any virtual device.
+ *
  * $(DDOC_COMMENT example)
+ *
  * By default, GDK will automatically listen for events coming from all
  * master devices, setting the GdkDevice for all events coming from input
  * devices. Events containing device information are GDK_MOTION_NOTIFY,
@@ -127,10 +135,12 @@ private import gobject.ObjectG;
  * and GDK_GRAB_BROKEN. When dealing with an event on a master device,
  * it is possible to get the source (slave) device that the event originated
  * from via gdk_event_get_source_device().
+ *
  * In order to listen for events coming from devices
  * other than a virtual device, gdk_window_set_device_events() must be
  * called. Generally, this function can be used to modify the event mask
  * for any given device.
+ *
  * Input devices may also provide additional information besides X/Y.
  * For example, graphics tablets may also provide pressure and X/Y tilt
  * information. This information is device-dependent, and may be
@@ -139,6 +149,7 @@ private import gobject.ObjectG;
  * device that is routing events through it. Whenever the physical device
  * changes, the "n-axes" property will be notified, and
  * gdk_device_list_axes() will return the new device axes.
+ *
  * Devices may also have associated keys or
  * macro buttons. Such keys can be globally set to map into normal X
  * keyboard events. The mapping is set using gdk_device_set_key().

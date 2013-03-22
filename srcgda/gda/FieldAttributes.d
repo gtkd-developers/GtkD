@@ -69,7 +69,6 @@ private import gda.Value;
 
 
 /**
- * Description
  */
 public class FieldAttributes
 {

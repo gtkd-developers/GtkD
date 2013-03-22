@@ -67,7 +67,6 @@ public import glgdk.GLConfig;
 
 
 /**
- * Description
  */
 public template GLDrawableT(TStruct)
 {

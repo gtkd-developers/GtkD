@@ -85,7 +85,6 @@ private import gtk.Widget;
 
 
 /**
- * Description
  * GtkFileChooser is an interface that can be implemented by file
  * selection widgets. In GTK+, the main objects that implement this
  * interface are GtkFileChooserWidget, GtkFileChooserDialog, and
@@ -93,23 +92,32 @@ private import gtk.Widget;
  * implements the GtkFileChooser interface unless you are trying to
  * adapt an existing file selector to expose a standard programming
  * interface.
+ *
  * GtkFileChooser allows for shortcuts to various places in the filesystem.
  * In the default implementation these are displayed in the left pane. It
  * may be a bit confusing at first that these shortcuts come from various
  * sources and in various flavours, so lets explain the terminology here:
+ *
  * Bookmarks
+ *
  *  are created by the user, by dragging folders from the
  *  right pane to the left pane, or by using the "Add". Bookmarks
  *  can be renamed and deleted by the user.
+ *
  * Shortcuts
+ *
  *  can be provided by the application or by the underlying filesystem
  *  abstraction (e.g. both the gnome-vfs and the Windows filesystems
  *  provide "Desktop" shortcuts). Shortcuts cannot be modified by the
  *  user.
+ *
  * Volumes
+ *
  *  are provided by the underlying filesystem abstraction. They are
  *  the "roots" of the filesystem.
+ *
  * File Names and Encodings
+ *
  * When the user is finished selecting files in a
  * GtkFileChooser, your program can get the selected names
  * either as filenames or as URIs. For URIs, the normal escaping
@@ -119,7 +127,9 @@ private import gtk.Widget;
  * G_FILENAME_ENCODING environment variable.
  * Please see the GLib documentation for more details about this
  * variable.
+ *
  * Note
+ *
  *  This means that while you can pass the result of
  *  gtk_file_chooser_get_filename() to
  *  open(2) or
@@ -128,14 +138,18 @@ private import gtk.Widget;
  *  convert it first to UTF-8, which all GTK+ widgets expect.
  *  You should use g_filename_to_utf8() to convert filenames
  *  into strings that can be passed to GTK+ widgets.
+ *
  * <hr>
+ *
  * Adding a Preview Widget
+ *
  * You can add a custom preview widget to a file chooser and then
  * get notification about when the preview needs to be updated.
  * To install a preview widget, use
  * gtk_file_chooser_set_preview_widget(). Then, connect to the
  * "update-preview" signal to get notified when
  * you need to update the contents of the preview.
+ *
  * Your callback should use
  * gtk_file_chooser_get_preview_filename() to see what needs
  * previewing. Once you have generated the preview for the
@@ -143,48 +157,65 @@ private import gtk.Widget;
  * gtk_file_chooser_set_preview_widget_active() with a boolean
  * flag that indicates whether your callback could successfully
  * generate a preview.
+ *
  * $(DDOC_COMMENT example)
+ *
  * <hr>
+ *
  * Adding Extra Widgets
+ *
  * You can add extra widgets to a file chooser to provide options
  * that are not present in the default design. For example, you
  * can add a toggle button to give the user the option to open a
  * file in read-only mode. You can use
  * gtk_file_chooser_set_extra_widget() to insert additional
  * widgets in a file chooser.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Note
+ *
  *  If you want to set more than one extra widget in the file
  *  chooser, you can a container such as a GtkBox or a GtkGrid
  *  and include your widgets in it. Then, set the container as
  *  the whole extra widget.
+ *
  * <hr>
+ *
  * Key Bindings
+ *
  * Internally, GTK+ implements a file chooser's graphical user
  * interface with the private
  * GtkFileChooserDefaultClass. This
  * widget has several key
  * bindings and their associated signals. This section
  * describes the available key binding signals.
+ *
  * $(DDOC_COMMENT example)
+ *
  * You can change these defaults to something else. For
  * example, to add a Shift modifier to a few
  * of the default bindings, you can include the following
  * fragment in your .config/gtk-3.0/gtk.css file:
+ *
  * @binding-set MyOwnFilechooserBindings
  * {
 	 *  bind "<Alt><Shift>Up" { "up-folder" () }
 	 *  bind "<Alt><Shift>Down" { "down-folder" () }
 	 *  bind "<Alt><Shift>Home" { "home-folder" () }
  * }
+ *
  * GtkFileChooserDefault
  * {
 	 *  gtk-key-bindings: MyOwnFilechooserBindings
  * }
+ *
  * The "GtkFileChooserDefault::location-popup" signal
+ *
  *  void user_function (GtkFileChooserDefault *chooser,
  *  const char *path,
  * gpointer user_data);
+ *
  * This is used to make the file chooser show a "Location"
  * dialog which the user can use to manually type the name of
  * the file he wishes to select. The
@@ -198,13 +229,21 @@ private import gtk.Widget;
  * immediately type a path name. On Unix systems, this is bound to
  * ~ (tilde) with a path string
  * of "~" itself for access to home directories.
+ *
  * chooser :
+ *
  * 		the object which received the signal.
+ *
  * path :
+ *
  * 		default contents for the text entry for the file name
+ *
  * user_data :
+ *
  * 		user data set when the signal handler was connected.
+ *
  * Note
+ *
  *  You can create your own bindings for the
  *  "location-popup" signal with custom
  *  path strings, and have a crude form
@@ -213,29 +252,41 @@ private import gtk.Widget;
  *  frequently. You could then create an Alt+M
  *  shortcut by including the following in your
  *  .config/gtk-3.0/gtk.css:
+ *
  *  @binding-set MiscShortcut
  *  {
 	 *  bind "<Alt>M" { "location-popup" ("/home/username/misc") }
  *  }
+ *
  *  GtkFileChooserDefault
  *  {
 	 *  gtk-key-bindings: MiscShortcut
  *  }
+ *
  * The "GtkFileChooserDefault::up-folder" signal
+ *
  *  void user_function (GtkFileChooserDefault *chooser,
  *  gpointer user_data);
+ *
  * This is used to make the file chooser go to the parent of
  * the current folder in the file hierarchy. By default this
  * is bound to Backspace and
  * Alt+Up
  * (the Up key in the numeric keypad also works).
+ *
  * chooser :
+ *
  * 		the object which received the signal.
+ *
  * user_data :
+ *
  * 		user data set when the signal handler was connected.
+ *
  * The "GtkFileChooserDefault::down-folder" signal
+ *
  *  void user_function (GtkFileChooserDefault *chooser,
  *  gpointer user_data);
+ *
  * This is used to make the file chooser go to a child of the
  * current folder in the file hierarchy. The subfolder that
  * will be used is displayed in the path bar widget of the file
@@ -245,35 +296,56 @@ private import gtk.Widget;
  * default this is bound to
  * Alt+Down
  * (the Down key in the numeric keypad also works).
+ *
  * chooser :
+ *
  * 		the object which received the signal.
+ *
  * user_data :
+ *
  * 		user data set when the signal handler was connected.
+ *
  * The "GtkFileChooserDefault::home-folder" signal
+ *
  *  void user_function (GtkFileChooserDefault *chooser,
  *  gpointer user_data);
+ *
  * This is used to make the file chooser show the user's home
  * folder in the file list. By default this is bound to
  * Alt+Home
  * (the Home key in the numeric keypad also works).
+ *
  * chooser :
+ *
  * 		the object which received the signal.
+ *
  * user_data :
+ *
  * 		user data set when the signal handler was connected.
+ *
  * The "GtkFileChooserDefault::desktop-folder" signal
+ *
  *  void user_function (GtkFileChooserDefault *chooser,
  *  gpointer user_data);
+ *
  * This is used to make the file chooser show the user's Desktop
  * folder in the file list. By default this is bound to
  * Alt+D.
+ *
  * chooser :
+ *
  * 		the object which received the signal.
+ *
  * user_data :
+ *
  * 		user data set when the signal handler was connected.
+ *
  * The "GtkFileChooserDefault::quick-bookmark" signal
+ *
  *  void user_function (GtkFileChooserDefault *chooser,
  *  gint bookmark_index,
  *  gpointer user_data);
+ *
  * This is used to make the file chooser switch to the bookmark
  * specified in the bookmark_index parameter.
  * For example, if you have three bookmarks, you can pass 0, 1, 2 to
@@ -288,11 +360,17 @@ private import gtk.Widget;
  * successively;
  * Alt+0 is
  * defined to switch to the bookmark at index 10.
+ *
  * chooser :
+ *
  * 		the object which received the signal.
+ *
  * bookmark_indes :
+ *
  * 		index of the bookmark to switch to; the indices start at 0.
+ *
  * user_data :
+ *
  * 		user data set when the signal handler was connected.
  */
 public interface FileChooserIF

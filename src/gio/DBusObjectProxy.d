@@ -74,7 +74,6 @@ private import gio.DBusObjectIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GDBusObjectProxy is an object used to represent a remote object
  * with one or more D-Bus interfaces. Normally, you don't instantiate
  * a GDBusObjectProxy yourself - typically GDBusObjectManagerClient

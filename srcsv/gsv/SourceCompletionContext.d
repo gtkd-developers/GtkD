@@ -76,16 +76,19 @@ private import gtk.TextIter;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A completion context is created when a completion occurs. The completion can
  * be activated by several means, listed in GtkSourceCompletionActivation.
+ *
  * The completion can be activated by user request, i.e. when the user presses
  * Control+space, by default.
+ *
  * The completion can also be activated interactively, on each insertion or
  * deletion in the GtkTextBuffer.
+ *
  * A GtkTextIter is associated with the context, this is where the completion
  * takes place. With this GtkTextIter, you can get the associated
  * GtkTextBuffer with gtk_text_iter_get_buffer().
+ *
  * Once the context is created, the eligible providers are asked to add
  * proposals with gtk_source_completion_context_add_proposals().
  */

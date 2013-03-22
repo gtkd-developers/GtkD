@@ -70,13 +70,13 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GInetAddress represents an IPv4 or IPv6 internet address. Use
  * g_resolver_lookup_by_name() or g_resolver_lookup_by_name_async() to
  * look up the GInetAddress for a hostname. Use
  * g_resolver_lookup_by_address() or
  * g_resolver_lookup_by_address_async() to look up the hostname for a
  * GInetAddress.
+ *
  * To actually connect to a remote host, you will need a
  * GInetSocketAddress (which includes a GInetAddress as well as a
  * port number).

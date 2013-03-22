@@ -74,7 +74,6 @@ private import glib.Quark;
 
 
 /**
- * Description
  * The basic concept of the signal system is that of the
  * emission of a signal. Signals are introduced
  * per-type and are identified through strings. Signals introduced
@@ -92,12 +91,19 @@ private import glib.Quark;
  * frequently happens at the end of an object class' creation), while user
  * provided handlers are frequently connected and disconnected to/from a certain
  * signal on certain object instances.
+ *
  * A signal emission consists of five stages, unless prematurely stopped:
+ *
  * 	1 - Invocation of the object method handler for G_SIGNAL_RUN_FIRST signals
+ *
  * 	2 - Invocation of normal user-provided signal handlers (after flag FALSE)
+ *
  * 	3 - Invocation of the object method handler for G_SIGNAL_RUN_LAST signals
+ *
  * 	4 - Invocation of user provided signal handlers, connected with an after flag of TRUE
+ *
  * 	5 - Invocation of the object method handler for G_SIGNAL_RUN_CLEANUP signals
+ *
  * The user-provided signal handlers are called in the order they were
  * connected in.
  * All handlers may prematurely stop a signal emission, and any number of

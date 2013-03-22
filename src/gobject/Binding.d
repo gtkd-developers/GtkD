@@ -77,26 +77,33 @@ private import gobject.Value;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GBinding is the representation of a binding between a property on a
  * GObject instance (or source) and another property on another GObject
  * instance (or target). Whenever the source property changes, the same
  * value is applied to the target property; for instance, the following
  * binding:
+ *
  * $(DDOC_COMMENT example)
+ *
  * will cause object2:property-b to be updated every
  * time g_object_set() or the specific accessor changes the value of
  * object1:property-a.
+ *
  * It is possible to create a bidirectional binding between two properties
  * of two GObject instances, so that if either property changes, the
  * other is updated as well, for instance:
+ *
  * $(DDOC_COMMENT example)
+ *
  * will keep the two properties in sync.
+ *
  * It is also possible to set a custom transformation function (in both
  * directions, in case of a bidirectional binding) to apply a custom
  * transformation from the source value to the target value before
  * applying it; for instance, the following binding:
+ *
  * $(DDOC_COMMENT example)
+ *
  * will keep the value property of the two adjustments
  * in sync; the celsius_to_fahrenheit function will be
  * called whenever the adjustment1:value property changes
@@ -106,17 +113,22 @@ private import gobject.ObjectG;
  * the adjustment2:value property changes, and will
  * transform the current value of the property before applying it to the
  * adjustment1:value.
+ *
  * Note that GBinding does not resolve cycles by itself; a cycle like
+ *
  * $(DDOC_COMMENT example)
+ *
  * might lead to an infinite loop. The loop, in this particular case,
  * can be avoided if the objects emit the "notify" signal only
  * if the value has effectively been changed. A binding is implemented
  * using the "notify" signal, so it is susceptible to all the
  * various ways of blocking a signal emission, like g_signal_stop_emission()
  * or g_signal_handler_block().
+ *
  * A binding will be severed, and the resources it allocates freed, whenever
  * either one of the GObject instances it refers to are finalized, or when
  * the GBinding instance loses its last reference.
+ *
  * GBinding is available since GObject 2.26
  */
 public class Binding : ObjectG

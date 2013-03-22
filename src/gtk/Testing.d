@@ -71,7 +71,6 @@ private import gtk.Widget;
 
 
 /**
- * Description
  */
 public class Testing
 {

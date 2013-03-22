@@ -83,22 +83,26 @@ private import gtk.TreeDragSourceIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkTreeModelFilter is a tree model which wraps another tree model,
  * and can do the following things:
+ *
  * Filter specific rows, based on data from a "visible column", a column
  * storing booleans indicating whether the row should be filtered or not,
  * or based on the return value of a "visible function", which gets a
  * model, iter and user_data and returns a boolean indicating whether the
  * row should be filtered or not.
+ *
  * Modify the "appearance" of the model, using a modify function.
  * This is extremely powerful and allows for just changing
  * some values and also for creating a completely different model based on
  * the given child model.
+ *
  * Set a different root node, also known as a "virtual root". You can pass in
  * a GtkTreePath indicating the root node for the filter at construction time.
+ *
  * The basic API is similar to GtkTreeModelSort. For an example on its usage,
  * see the section on GtkTreeModelSort.
+ *
  * When using GtkTreeModelFilter, it is important to realize that
  * GtkTreeModelFilter maintains an internal cache of all nodes which are
  * visible in its clients. The cache is likely to be a subtree of the tree
@@ -110,6 +114,7 @@ private import gobject.ObjectG;
  * documentation. (Note that e.g. GtkTreeStore does not implement
  * reference counting and will always emit all signals, even when
  * the receiving node is not visible).
+ *
  * Because of this, limitations for possible visible functions do apply.
  * In general, visible functions should only use data or properties from
  * the node for which the visibility state must be determined, its siblings
@@ -117,12 +122,14 @@ private import gobject.ObjectG;
  * node is not possible, unless references are taken on these explicitly.
  * When no such reference exists, no signals may be received for these child
  * nodes (see reference couting rule number 3 in the GtkTreeModel section).
+ *
  * Determining the visibility state of a given node based on the state
  * of its child nodes is a frequently occurring use case. Therefore,
  * GtkTreeModelFilter explicitly supports this. For example, when a node
  * does not have any children, you might not want the node to be visible.
  * As soon as the first row is added to the node's child level (or the
  * last row removed), the node's visibility should be updated.
+ *
  * This introduces a dependency from the node on its child nodes. In order
  * to accommodate this, GtkTreeModelFilter must make sure the necesary
  * signals are received from the child model. This is achieved by building,
@@ -132,6 +139,7 @@ private import gobject.ObjectG;
  * row-deleted signal (also these which were not handled because the node
  * was not cached), GtkTreeModelFilter will check if the visibility state
  * of any parent node has changed.
+ *
  * Beware, however, that this explicit support is limited to these two
  * cases. For example, if you want a node to be visible only if two nodes
  * in a child's child level (2 levels deeper) are visible, you are on your

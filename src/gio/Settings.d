@@ -89,9 +89,9 @@ private import gio.SettingsSchema;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GSettings class provides a convenient API for storing and retrieving
  * application settings.
+ *
  * Reads and writes can be considered to be non-blocking. Reading
  * settings with GSettings is typically extremely fast: on
  * approximately the same order of magnitude (but slower than) a
@@ -108,14 +108,17 @@ private import gobject.ObjectG;
  * of preferences widgets. The built-in g_settings_bind() functionality
  * is careful not to write settings in response to notify signals as a
  * result of modifications that it makes to widgets.
+ *
  * When creating a GSettings instance, you have to specify a schema
  * that describes the keys in your settings and their types and default
  * values, as well as some other information.
+ *
  * Normally, a schema has as fixed path that determines where the settings
  * are stored in the conceptual global tree of settings. However, schemas
  * can also be 'relocatable', i.e. not equipped with a fixed path. This is
  * useful e.g. when the schema describes an 'account', and you want to be
  * able to store a arbitrary number of accounts.
+ *
  * Paths must start with and end with a forward slash character ('/')
  * and must not contain two sequential slash characters. Paths should
  * be chosen based on a domain name associated with the program or
@@ -123,12 +126,14 @@ private import gobject.ObjectG;
  * "/org/gtk/settings/file-chooser/" and "/ca/desrt/dconf-editor/".
  * Paths should not start with "/apps/", "/desktop/" or "/system/" as
  * they often did in GConf.
+ *
  * Unlike other configuration systems (like GConf), GSettings does not
  * restrict keys to basic types like strings and numbers. GSettings stores
  * values as GVariant, and allows any GVariantType for keys. Key names
  * are restricted to lowercase characters, numbers and '-'. Furthermore,
  * the names must begin with a lowercase character, must not end
  * with a '-', and must not contain consecutive dashes.
+ *
  * Similar to GConf, the default values in GSettings schemas can be
  * localized, but the localized values are stored in gettext catalogs
  * and looked up with the domain that is specified in the
@@ -136,12 +141,16 @@ private import gobject.ObjectG;
  * <schemalist> or <schema>
  * elements and the category that is specified in the l10n attribute of the
  * <key> element.
+ *
  * GSettings uses schemas in a compact binary form that is created
  * by the glib-compile-schemas
  * utility. The input is a schema description in an XML format that can be
  * described by the following DTD:
+ *
  * $(DDOC_COMMENT example)
+ *
  * glib-compile-schemas expects schema files to have the extension .gschema.xml
+ *
  * At runtime, schemas are identified by their id (as specified
  * in the id attribute of the
  * <schema> element). The
@@ -151,6 +160,7 @@ private import gobject.ObjectG;
  * the D-Bus bus name and schema id should match. For schemas which deal
  * with settings not associated with one named application, the id should
  * not use StudlyCaps, e.g. "org.gnome.font-rendering".
+ *
  * In addition to GVariant types, keys can have types that have enumerated
  * types. These can be described by a <choice>,
  * <enum> or <flags> element, see
@@ -159,9 +169,13 @@ private import gobject.ObjectG;
  * g_settings_set_enum(), g_settings_get_flags(), g_settings_set_flags()
  * access the numeric values corresponding to the string value of enum
  * and flags keys.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * Vendor overrides
+ *
  *  Default values are defined in the schemas that get installed by
  *  an application. Sometimes, it is necessary for a vendor or distributor
  *  to adjust these defaults. Since patching the XML source for the schema
@@ -171,16 +185,21 @@ private import gobject.ObjectG;
  *  directory as the XML schema sources which can override default values.
  *  The schema id serves as the group name in the key file, and the values
  *  are expected in serialized GVariant form, as in the following example:
+ *
  * $(DDOC_COMMENT example)
+ *
  *  glib-compile-schemas expects schema files to have the extension
  *  .gschema.override
+ *
  * Binding
+ *
  *  A very convenient feature of GSettings lets you bind GObject properties
  *  directly to settings, using g_settings_bind(). Once a GObject property
  *  has been bound to a setting, changes on either side are automatically
  *  propagated to the other side. GSettings handles details like
  *  mapping between GObject and GVariant types, and preventing infinite
  *  cycles.
+ *
  *  This makes it very easy to hook up a preferences dialog to the
  *  underlying settings. To make this even more convenient, GSettings
  *  looks for a boolean property with the name "sensitivity" and

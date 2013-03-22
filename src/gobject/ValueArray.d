@@ -67,18 +67,21 @@ private import gobject.Value;
 
 
 /**
- * Description
  * The prime purpose of a GValueArray is for it to be used as an
  * object property that holds an array of values. A GValueArray wraps
  * an array of GValue elements in order for it to be used as a boxed
  * type through G_TYPE_VALUE_ARRAY.
+ *
  * GValueArray is deprecated in favour of GArray since GLib 2.32. It
  * is possible to create a GArray that behaves like a GValueArray by
  * using the size of GValue as the element size, and by setting
  * g_value_unset() as the clear function using g_array_set_clear_func(),
  * for instance, the following code:
+ *
  * $(DDOC_COMMENT example)
+ *
  * can be replaced by:
+ *
  * $(DDOC_COMMENT example)
  */
 public class ValueArray

@@ -70,13 +70,16 @@ private import gthread.Mutex;
 
 
 /**
- * Description
  * A GstIterator is used to retrieve multiple objects from another object in
  * a threadsafe way.
+ *
  * Various GStreamer objects provide access to their internal structures using
  * an iterator.
+ *
  * The basic use pattern of an iterator is as follows:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Last reviewed on 2005-11-09 (0.9.4)
  */
 public class Iterator

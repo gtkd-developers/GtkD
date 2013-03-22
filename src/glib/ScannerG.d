@@ -69,7 +69,6 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * The GScanner and its associated functions provide a
  * general purpose lexical scanner.
  */

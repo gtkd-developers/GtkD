@@ -72,7 +72,6 @@ private import glib.OptionGroup;
 
 
 /**
- * Description
  * GStreamer is a framework for constructing graphs of various filters
  * (termed elements here) that will handle streaming media. Any discreet
  * (packetizable) media type is supported, with provisions for automatically
@@ -80,25 +79,34 @@ private import glib.OptionGroup;
  * a powerful negotiation framework. Plugins are heavily used to provide for
  * all elements, allowing one to construct plugins outside of the GST
  * library, even released binary-only if license require (please don't).
+ *
  * GStreamer borrows heavily from both the OGI media pipeline and
  * Microsoft's DirectShow, hopefully taking the best of both and leaving the
  * cruft behind. Its interface is slowly getting stable.
+ *
  * The GStreamer library should be initialized with
  * gst_init() before it can be used. You should pass pointers to the main argc
  * and argv variables so that GStreamer can process its own command line
  * options, as shown in the following example.
+ *
  * $(DDOC_COMMENT example)
+ *
  * It's allowed to pass two NULL pointers to gst_init() in case you don't want
  * to pass the command line args to GStreamer.
+ *
  * You can also use GOption to initialize your own parameters as shown in
  * the next code fragment:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Use gst_version() to query the library version at runtime or use the
  * GST_VERSION_* macros to find the version at compile time. Optionally
  * gst_version_string() returns a printable string.
+ *
  * The gst_deinit() call is used to clean up all internal resources used
  * by GStreamer. It is mostly used in unit tests
  * to check for leaks.
+ *
  * Last reviewed on 2006-08-11 (0.10.10)
  */
 public class GStreamer

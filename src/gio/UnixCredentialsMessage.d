@@ -67,11 +67,11 @@ private import gio.Credentials;
 private import gio.SocketControlMessage;
 
 /**
- * Description
  * This GSocketControlMessage contains a GCredentials instance. It
  * may be sent using g_socket_send_message() and received using
  * g_socket_receive_message() over UNIX sockets (ie: sockets in the
  * G_SOCKET_FAMILY_UNIX family).
+ *
  * For an easier way to send and receive credentials over
  * stream-oriented UNIX sockets, see
  * g_unix_connection_send_credentials() and

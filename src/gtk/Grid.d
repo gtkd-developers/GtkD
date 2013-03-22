@@ -72,16 +72,17 @@ private import gtk.OrientableT;
 private import gtk.Container;
 
 /**
- * Description
  * GtkGrid is a container which arranges its child widgets in
  * rows and columns. It is a very similar to GtkTable and GtkBox,
  * but it consistently uses GtkWidget's "margin" and "expand"
  * properties instead of custom child properties, and it fully supports
  * height-for-width geometry management.
+ *
  * Children are added using gtk_grid_attach(). They can span multiple
  * rows or columns. It is also possible to add a child next to an
  * existing child, using gtk_grid_attach_next_to(). The behaviour of
  * GtkGrid when several children occupy the same grid cell is undefined.
+ *
  * GtkGrid can be used like a GtkBox by just using gtk_container_add(),
  * which will place children next to each other in the direction determined
  * by the "orientation" property.

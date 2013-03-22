@@ -74,13 +74,14 @@ private import gobject.ObjectG;
 
 
 /**
- * Description
  * GtkBindingSet provides a mechanism for configuring GTK+ key bindings
  * through CSS files. This eases key binding adjustments for application
  * developers as well as users and provides GTK+ users or administrators
  * with high key binding configurability which requires no application
  * or toolkit side changes.
+ *
  * Installing a key binding
+ *
  * A CSS file binding consists of a 'binding-set' definition and a match
  * statement to apply the binding set to specific widget types. Details
  * on the matching mechanism are described under
@@ -94,12 +95,17 @@ private import gobject.ObjectG;
  * gtk_accelerator_parse(). Specifications of signal emissions consist
  * of a string identifying the signal name, and a list of signal specific
  * arguments in parenthesis.
+ *
  * For example for binding Control and the left or right cursor keys
  * of a GtkEntry widget to the "move-cursor" signal (so movement
  * occurs in 3-character steps), the following binding can be used:
+ *
  * $(DDOC_COMMENT example)
+ *
  * <hr>
+ *
  * Unbinding existing key bindings
+ *
  * GTK+ already defines a number of useful bindings for the widgets
  * it provides. Because custom bindings set up in CSS files take
  * precedence over the default bindings shipped with GTK+, overriding
@@ -107,7 +113,9 @@ private import gobject.ObjectG;
  * Installing a key binding
  * works as expected. The same mechanism can not be used to "unbind"
  * existing bindings, however.
+ *
  * $(DDOC_COMMENT example)
+ *
  * The above example will not have the desired effect of causing
  * "<Control>Right" and "<Control>Left" key presses to
  * be ignored by GTK+. Instead, it just causes any existing bindings
@@ -118,7 +126,9 @@ private import gobject.ObjectG;
  * eventually lookup and find the default GTK+ bindings for entries which
  * implement word movement. To keep GTK+ from activating its default
  * bindings, the "unbind" keyword can be used like this:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Now, GTK+ will find a match when looking up "<Control>Right"
  * and "<Control>Left" key presses before it resorts to its default
  * bindings, and the match instructs it to abort ("unbind") the search,
@@ -154,7 +164,6 @@ public class BindingSet
 	}
 	
 	/**
-	 * Description
 	 */
 	
 	/**

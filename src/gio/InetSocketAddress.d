@@ -67,7 +67,6 @@ private import gio.InetAddress;
 private import gio.SocketAddress;
 
 /**
- * Description
  * An IPv4 or IPv6 socket address; that is, the combination of a
  * GInetAddress and a port number.
  */

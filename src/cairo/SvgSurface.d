@@ -67,7 +67,6 @@ private import glib.Str;
 private import cairo.Surface;
 
 /**
- * Description
  * The SVG surface is used to render cairo graphics to
  * SVG files and is a multi-page vector surface backend.
  */

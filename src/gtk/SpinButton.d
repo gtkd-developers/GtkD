@@ -69,17 +69,19 @@ private import gtk.Adjustment;
 private import gtk.Entry;
 
 /**
- * Description
  * A GtkSpinButton is an ideal way to allow the user to set the value of
  * some attribute. Rather than having to directly type a number into a
  * GtkEntry, GtkSpinButton allows the user to click on one of two arrows
  * to increment or decrement the displayed value. A value can still be
  * typed in, with the bonus that it can be checked to ensure it is in a
  * given range.
+ *
  * The main properties of a GtkSpinButton are through an adjustment.
  * See the GtkAdjustment section for more details about an adjustment's
  * properties.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
  */
 public class SpinButton : Entry

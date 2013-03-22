@@ -82,11 +82,11 @@ private import gio.Cancellable;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GResolver provides cancellable synchronous and asynchronous DNS
  * resolution, for hostnames (g_resolver_lookup_by_address(),
  * g_resolver_lookup_by_name() and their async variants) and SRV
  * (service) records (g_resolver_lookup_service()).
+ *
  * GNetworkAddress and GNetworkService provide wrappers around
  * GResolver functionality that also implement GSocketConnectable,
  * making it easy to connect to a remote host/service.

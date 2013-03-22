@@ -65,7 +65,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * An AtkState describes a component's particular state. The actual state of
  * an component is described by its AtkStateSet, which is a set of AtkStates.
  */

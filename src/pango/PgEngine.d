@@ -72,7 +72,6 @@ private import pango.PgEngine;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Pango utilizes a module architecture in which the language-specific
  * and render-system-specific components are provided by loadable
  * modules. Each loadable module supplies one or more
@@ -80,6 +79,7 @@ private import gobject.ObjectG;
  * has an associated engine type and
  * render type. These two types are represented by
  * strings.
+ *
  * Each dynamically-loaded module exports several functions which provide
  * the public API. These functions are script_engine_list(),
  * script_engine_init() and script_engine_exit, and

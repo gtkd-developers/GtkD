@@ -70,14 +70,16 @@ private import gstreamer.Clock;
 private import gstreamer.Clock;
 
 /**
- * Description
  * The GStreamer core provides a GstSystemClock based on the system time.
  * Asynchronous callbacks are scheduled from an internal thread.
+ *
  * Clock implementors are encouraged to subclass this systemclock as it
  * implements the async notification.
+ *
  * Subclasses can however override all of the important methods for sync and
  * async notifications to implement their own callback methods or blocking
  * wait operations.
+ *
  * Last reviewed on 2006-03-08 (0.10.4)
  */
 public class SystemClock : Clock

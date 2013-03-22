@@ -107,12 +107,12 @@ private import gtk.CellEditableIF;
 private import gtk.Widget;
 
 /**
- * Description
  * The GtkEntry widget is a single line text entry
  * widget. A fairly large set of key bindings are supported
  * by default. If the entered text is longer than the allocation
  * of the widget, the widget will scroll so that the cursor
  * position is visible.
+ *
  * When using an entry for passwords and other sensitive information,
  * it can be put into "password mode" using gtk_entry_set_visibility().
  * In this mode, entered text is displayed using a 'invisible' character.
@@ -122,9 +122,11 @@ private import gtk.Widget;
  * when Caps Lock or input methods might interfere with entering text in
  * a password entry. The warning can be turned off with the
  * "caps-lock-warning" property.
+ *
  * Since 2.16, GtkEntry has the ability to display progress or activity
  * information behind the text. To make an entry display such information,
  * use gtk_entry_set_progress_fraction() or gtk_entry_set_progress_pulse_step().
+ *
  * Additionally, GtkEntry can show icons at either side of the entry. These
  * icons can be activatable by clicking, can be set up as drag source and
  * can have tooltips. To add an icon, use gtk_entry_set_icon_from_gicon() or
@@ -134,6 +136,7 @@ private import gtk.Widget;
  * from an icon, use gtk_entry_set_icon_drag_source(). To set a tooltip on
  * an icon, use gtk_entry_set_icon_tooltip_text() or the corresponding function
  * for markup.
+ *
  * Note that functionality or information that is only available by clicking
  * on an icon in an entry may not be accessible at all to users which are not
  * able to use a mouse or other pointing device. It is therefore recommended

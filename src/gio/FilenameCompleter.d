@@ -68,7 +68,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Completes partial file and directory names given a partial string by
  * looking in the file system for clues. Can return a list of possible
  * completion strings for widget implementations.

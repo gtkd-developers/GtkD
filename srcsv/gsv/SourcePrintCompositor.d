@@ -75,11 +75,11 @@ private import gsv.SourceView;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkSourcePrintCompositor object is used to compose a GtkSourceBuffer
  * for printing. You can set various configuration options to customize the
  * printed output. GtkSourcePrintCompositor is designed to be used with the
  * high-level printing API of gtk+, i.e. GtkPrintOperation.
+ *
  * The margins specified in this object are the layout margins: they define the
  * blank space bordering the printed area of the pages. They must not be
  * confused with the "print margins", i.e. the parts of the page that the

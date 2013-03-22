@@ -77,7 +77,6 @@ private import gio.DBusObjectManagerIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GDBusObjectManagerServer is used to export GDBusObject instances using
  * the standardized org.freedesktop.DBus.ObjectManager
  * interface. For example, remote D-Bus clients can get all objects
@@ -85,6 +84,7 @@ private import gobject.ObjectG;
  * object hierarchy is broadcast using signals. This means that D-Bus
  * clients can keep caches up to date by only listening to D-Bus
  * signals.
+ *
  * See GDBusObjectManagerClient for the client-side code that is
  * intended to be used with GDBusObjectManagerServer or any D-Bus
  * object implementing the org.freedesktop.DBus.ObjectManager

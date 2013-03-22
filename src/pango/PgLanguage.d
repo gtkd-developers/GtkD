@@ -67,7 +67,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * The functions in this section are used to identify the writing
  * system, or script of individual characters
  * and of ranges within a larger text string.

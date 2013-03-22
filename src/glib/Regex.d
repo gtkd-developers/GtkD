@@ -77,10 +77,10 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * The g_regex_*() functions implement regular
  * expression pattern matching using syntax and semantics similar to
  * Perl regular expression.
+ *
  * Some functions accept a start_position argument, setting it differs
  * from just passing over a shortened string and setting G_REGEX_MATCH_NOTBOL
  * in the case of a pattern that begins with any kind of lookbehind assertion.
@@ -93,6 +93,7 @@ private import gtkc.paths;
  * start_position set to 4, it finds the second occurrence of "iss" because
  * it is able to look behind the starting point to discover that it is
  * preceded by a letter.
+ *
  * Note that, unless you set the G_REGEX_RAW flag, all the strings passed
  * to these functions must be encoded in UTF-8. The lengths and the positions
  * inside the strings are in bytes and not in characters, so, for instance,
@@ -100,6 +101,7 @@ private import gtkc.paths;
  * single character. If you set G_REGEX_RAW the strings can be non-valid
  * UTF-8 strings and a byte is treated as a character, so "\xc3\xa0" is two
  * bytes and two characters long.
+ *
  * When matching a pattern, "\n" matches only against a "\n" character in
  * the string, and "\r" matches only a "\r" character. To match any newline
  * sequence use "\R". This particular group matches either the two-character
@@ -107,6 +109,7 @@ private import gtkc.paths;
  * U+000A, "\n"), VT vertical tab, U+000B, "\v"), FF (formfeed, U+000C, "\f"),
  * CR (carriage return, U+000D, "\r"), NEL (next line, U+0085), LS (line
  * separator, U+2028), or PS (paragraph separator, U+2029).
+ *
  * The behaviour of the dot, circumflex, and dollar metacharacters are
  * affected by newline characters, the default is to recognize any newline
  * character (the same characters recognized by "\R"). This can be changed
@@ -117,6 +120,7 @@ private import gtkc.paths;
  * relevant when compiling a pattern if G_REGEX_EXTENDED is set, and an
  * unescaped "#" outside a character class is encountered. This indicates
  * a comment that lasts until after the next newline.
+ *
  * When setting the G_REGEX_JAVASCRIPT_COMPAT flag, pattern syntax and pattern
  * matching is changed to be compatible with the way that regular expressions
  * work in JavaScript. More precisely, a lonely ']' character in the pattern
@@ -128,10 +132,12 @@ private import gtkc.paths;
  * pattern matching is modified so that back references to an unset subpattern
  * group produces a match with the empty string instead of an error. See
  * man:pcreapi(3) for more information.
+ *
  * Creating and manipulating the same GRegex structure from different
  * threads is not a problem as GRegex does not modify its internal
  * state between creation and destruction, on the other hand GMatchInfo
  * is not threadsafe.
+ *
  * The regular expressions low-level functionalities are obtained through
  * the excellent PCRE library
  * written by Philip Hazel.

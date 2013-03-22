@@ -82,13 +82,13 @@ private import glib.ListSG;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkAccelGroup represents a group of keyboard accelerators,
  * typically attached to a toplevel GtkWindow (with
  * gtk_window_add_accel_group()). Usually you won't need to create a
  * GtkAccelGroup directly; instead, when using GtkUIManager, GTK+
  * automatically sets up the accelerators for your menus in the ui
  * manager's GtkAccelGroup.
+ *
  * Note that accelerators are different from
  * mnemonics. Accelerators are shortcuts for
  * activating a menu item; they appear alongside the menu item they're a

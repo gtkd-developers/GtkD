@@ -72,7 +72,6 @@ public import gdk.Pixbuf;
 
 
 /**
- * Description
  * The proposal interface represents a completion item in the completion window.
  * It provides information on how to display the completion item and what action
  * should be taken when the completion item is activated.

@@ -69,7 +69,6 @@ public import gdk.Event;
 
 
 /**
- * Description
  * The GtkCellEditable interface must be implemented for widgets to be usable
  * when editing the contents of a GtkTreeView cell.
  */

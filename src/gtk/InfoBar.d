@@ -79,27 +79,32 @@ private import gtk.Widget;
 private import gtk.Box;
 
 /**
- * Description
  * GtkInfoBar is a widget that can be used to show messages to
  * the user without showing a dialog. It is often temporarily shown
  * at the top or bottom of a document. In contrast to GtkDialog, which
  * has a horizontal action area at the bottom, GtkInfoBar has a
  * vertical action area at the side.
+ *
  * The API of GtkInfoBar is very similar to GtkDialog, allowing you
  * to add buttons to the action area with gtk_info_bar_add_button() or
  * gtk_info_bar_new_with_buttons(). The sensitivity of action widgets
  * can be controlled with gtk_info_bar_set_response_sensitive().
  * To add widgets to the main content area of a GtkInfoBar, use
  * gtk_info_bar_get_content_area() and add your widgets to the container.
+ *
  * Similar to GtkMessageDialog, the contents of a GtkInfoBar can by
  * classified as error message, warning, informational message, etc,
  * by using gtk_info_bar_set_message_type(). GTK+ uses the message type
  * to determine the background color of the message area.
+ *
  * $(DDOC_COMMENT example)
+ *
  * GtkInfoBar as GtkBuildable
+ *
  * The GtkInfoBar implementation of the GtkBuildable interface exposes
  * the content area and action area as internal children with the names
  * "content_area" and "action_area".
+ *
  * GtkInfoBar supports a custom <action-widgets> element, which
  * can contain multiple <action-widget> elements. The "response"
  * attribute specifies a numeric response, and the content of the element

@@ -69,9 +69,9 @@ private import gdk.Screen;
 private import gtk.Widget;
 
 /**
- * Description
  * The GtkInvisible widget is used internally in GTK+, and is probably not
  * very useful for application developers.
+ *
  * It is used for reliable pointer grabs and selection handling in the code
  * for drag-and-drop.
  */

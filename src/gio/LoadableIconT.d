@@ -79,7 +79,6 @@ public import gio.InputStream;
 
 
 /**
- * Description
  * Extends the GIcon interface and adds the ability to
  * load icons from streams.
  */

@@ -72,27 +72,31 @@ private import gtk.Widget;
 private import gtk.Label;
 
 /**
- * Description
  * The GtkAccelLabel widget is a subclass of GtkLabel that also displays an
  * accelerator key on the right of the label text, e.g. 'Ctl+S'.
  * It is commonly used in menus to show the keyboard short-cuts for commands.
+ *
  * The accelerator key to display is not set explicitly.
  * Instead, the GtkAccelLabel displays the accelerators which have been added to
  * a particular widget. This widget is set by calling
  * gtk_accel_label_set_accel_widget().
+ *
  * For example, a GtkMenuItem widget may have an accelerator added to emit the
  * "activate" signal when the 'Ctl+S' key combination is pressed.
  * A GtkAccelLabel is created and added to the GtkMenuItem, and
  * gtk_accel_label_set_accel_widget() is called with the GtkMenuItem as the
  * second argument. The GtkAccelLabel will now display 'Ctl+S' after its label.
+ *
  * Note that creating a GtkMenuItem with gtk_menu_item_new_with_label() (or
  * one of the similar functions for GtkCheckMenuItem and GtkRadioMenuItem)
  * automatically adds a GtkAccelLabel to the GtkMenuItem and calls
  * gtk_accel_label_set_accel_widget() to set it up for you.
+ *
  * A GtkAccelLabel will only display accelerators which have GTK_ACCEL_VISIBLE
  * set (see GtkAccelFlags).
  * A GtkAccelLabel can display multiple accelerators and even signal names,
  * though it is almost always used to display just one accelerator key.
+ *
  * $(DDOC_COMMENT example)
  */
 public class AccelLabel : Label

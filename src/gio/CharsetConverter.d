@@ -75,7 +75,6 @@ private import gio.ConverterIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GCharsetConverter is an implementation of GConverter based on
  * GIConv.
  */

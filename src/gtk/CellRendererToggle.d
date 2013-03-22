@@ -68,7 +68,6 @@ private import glib.Str;
 private import gtk.CellRenderer;
 
 /**
- * Description
  * GtkCellRendererToggle renders a toggle button in a cell. The
  * button is drawn as a radio or a checkbutton, depending on the
  * "radio" property.

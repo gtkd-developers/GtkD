@@ -72,13 +72,13 @@ private import glib.Str;
 
 
 /**
- * Description
  * If GdkPixBuf has been compiled with GModule support, it can be extended by
  * modules which can load (and perhaps also save) new image and animation
  * formats. Each loadable module must export a
  * GdkPixbufModuleFillInfoFunc function named fill_info and
  * a GdkPixbufModuleFillVtableFunc function named
  * fill_vtable.
+ *
  * In order to make format-checking work before actually loading the modules
  * (which may require dlopening image libraries), modules export their
  * signatures (and other information) via the fill_info
@@ -86,6 +86,7 @@ private import glib.Str;
  * uses this to create a text file containing a list of all available loaders and
  * their signatures. This file is then read at runtime by GdkPixBuf to obtain
  * the list of available loaders and their signatures.
+ *
  * Modules may only implement a subset of the functionality available via
  * GdkPixbufModule. If a particular functionality is not implemented, the
  * fill_vtable function will simply not set the corresponding
@@ -93,16 +94,20 @@ private import glib.Str;
  * incremental loading (i.e. provides begin_load, stop_load and
  * load_increment), it doesn't have to implement load, since GdkPixBuf can
  * supply a generic load implementation wrapping the incremental loading.
+ *
  * Installing a module is a two-step process:
+ *
  * copy the module file(s) to the loader directory (normally
  * libdir/gtk-2.0/version/loaders,
  * unless overridden by the environment variable
  * GDK_PIXBUF_MODULEDIR)
+ *
  * call gdk-pixbuf-query-loaders to update the
  * module file (normally
  * sysconfdir/gtk-2.0/gdk-pixbuf.loaders,
  * unless overridden by the environment variable
  * GDK_PIXBUF_MODULE_FILE)
+ *
  * The GdkPixBuf interfaces needed for implementing modules are contained in
  * gdk-pixbuf-io.h (and
  * gdk-pixbuf-animation.h if the module supports animations).

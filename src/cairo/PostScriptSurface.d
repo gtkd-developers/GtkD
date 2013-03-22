@@ -67,7 +67,6 @@ private import glib.Str;
 private import cairo.Surface;
 
 /**
- * Description
  * The PostScript surface is used to render cairo graphics to Adobe
  * PostScript files and is a multi-page vector surface backend.
  */

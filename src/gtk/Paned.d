@@ -77,16 +77,17 @@ private import gtk.OrientableT;
 private import gtk.Container;
 
 /**
- * Description
  * GtkPaned has two panes, arranged either
  * horizontally or vertically. The division between
  * the two panes is adjustable by the user by dragging
  * a handle.
+ *
  * Child widgets are
  * added to the panes of the widget with gtk_paned_pack1() and
  * gtk_paned_pack2(). The division between the two children is set by default
  * from the size requests of the children, but it can be adjusted by the
  * user.
+ *
  * A paned widget draws a separator between the two child widgets and a
  * small handle that the user can drag to adjust the division. It does not
  * draw any relief around the children or around the separator. (The space
@@ -94,6 +95,7 @@ private import gtk.Container;
  * each child inside a GtkFrame with the shadow type set to GTK_SHADOW_IN
  * so that the gutter appears as a ridge. No separator is drawn if one of
  * the children is missing.
+ *
  * Each child has two options that can be set, resize and shrink. If
  * resize is true, then when the GtkPaned is resized, that child will
  * expand or shrink along with the paned widget. If shrink is true, then
@@ -101,8 +103,10 @@ private import gtk.Container;
  * Setting shrink to FALSE allows the application to set a minimum size.
  * If resize is false for both children, then this is treated as if
  * resize is true for both children.
+ *
  * The application can set the position of the slider as if it were set
  * by the user, by calling gtk_paned_set_position().
+ *
  * $(DDOC_COMMENT example)
  */
 public class Paned : Container, OrientableIF

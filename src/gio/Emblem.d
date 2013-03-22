@@ -72,10 +72,10 @@ private import gio.IconT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GEmblem is an implementation of GIcon that supports
  * having an emblem, which is an icon with additional properties.
  * It can than be added to a GEmblemedIcon.
+ *
  * Currently, only metainformation about the emblem's origin is
  * supported. More may be added in the future.
  */

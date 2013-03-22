@@ -66,23 +66,26 @@ public  import gtkc.gdktypes;
 private import gio.SocketListener;
 
 /**
- * Description
  * A GSocketService is an object that represents a service that
  * is provided to the network or over local sockets. When a new
  * connection is made to the service the "incoming"
  * signal is emitted.
+ *
  * A GSocketService is a subclass of GSocketListener and you need
  * to add the addresses you want to accept connections on with the
  * GSocketListener APIs.
+ *
  * There are two options for implementing a network service based on
  * GSocketService. The first is to create the service using
  * g_socket_service_new() and to connect to the "incoming"
  * signal. The second is to subclass GSocketService and override the
  * default signal handler implementation.
+ *
  * In either case, the handler must immediately return, or else it
  * will block additional incoming connections from being serviced.
  * If you are interested in writing connection handlers that contain
  * blocking code then see GThreadedSocketService.
+ *
  * The socket service runs on the main loop of the thread-default
  * context of the thread it is created in, and is not
  * threadsafe in general. However, the calls to start and stop the

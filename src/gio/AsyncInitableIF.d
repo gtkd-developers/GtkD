@@ -78,18 +78,21 @@ private import gio.Cancellable;
 
 
 /**
- * Description
  * This is the asynchronous version of GInitable; it behaves the same
  * in all ways except that initialization is asynchronous. For more details
  * see the descriptions on GInitable.
+ *
  * A class may implement both the GInitable and GAsyncInitable interfaces.
+ *
  * Users of objects implementing this are not intended to use the interface
  * method directly; instead it will be used automatically in various ways.
  * For C applications you generally just call g_async_initable_new_async()
  * directly, or indirectly via a foo_thing_new_async() wrapper. This will call
  * g_async_initable_init_async() under the cover, calling back with NULL and
  * a set GError on failure.
+ *
  * A typical implementation might look something like this:
+ *
  * $(DDOC_COMMENT example)
  */
 public interface AsyncInitableIF

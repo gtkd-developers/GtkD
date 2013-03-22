@@ -83,10 +83,10 @@ private import gio.UnixFDList;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Instances of the GDBusMethodInvocation class are used when
  * handling D-Bus method calls. It provides a way to asynchronously
  * return results and errors.
+ *
  * The normal way to obtain a GDBusMethodInvocation object is to receive
  * it as an argument to the handle_method_call() function in a
  * GDBusInterfaceVTable that was passed to g_dbus_connection_register_object().

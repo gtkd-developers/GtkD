@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 private import gio.SocketConnection;
 
 /**
- * Description
  * This is the subclass of GSocketConnection that is created
  * for TCP/IP sockets.
  */

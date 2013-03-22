@@ -84,9 +84,9 @@ private import gio.SeekableIF;
 private import gio.InputStream;
 
 /**
- * Description
  * GFileInputStream provides input streams that take their
  * content from a file.
+ *
  * GFileInputStream implements GSeekable, which allows the input
  * stream to jump to arbitrary positions in the file, provided the
  * filesystem of the file allows it. To find the position of a file

@@ -68,28 +68,33 @@ private import glib.ErrorG;
 
 
 /**
- * Description
  * All facilities that return errors from remote methods (such as
  * g_dbus_connection_call_sync()) use GError to represent both D-Bus
  * errors (e.g. errors returned from the other peer) and locally
  * in-process generated errors.
+ *
  * To check if a returned GError is an error from a remote peer, use
  * g_dbus_error_is_remote_error(). To get the actual D-Bus error name,
  * use g_dbus_error_get_remote_error(). Before presenting an error,
  * always use g_dbus_error_strip_remote_error().
+ *
  * In addition, facilities used to return errors to a remote peer also
  * use GError. See g_dbus_method_invocation_return_error() for
  * discussion about how the D-Bus error name is set.
+ *
  * Applications can associate a GError error domain with a set of D-Bus errors in order to
  * automatically map from D-Bus errors to GError and back. This
  * is typically done in the function returning the GQuark for the
  * error domain:
+ *
  * $(DDOC_COMMENT example)
+ *
  * With this setup, a D-Bus peer can transparently pass e.g. FOO_BAR_ERROR_ANOTHER_ERROR and
  * other peers will see the D-Bus error name org.project.Foo.Bar.Error.AnotherError.
  * If the other peer is using GDBus, the peer will see also FOO_BAR_ERROR_ANOTHER_ERROR instead
  * of G_IO_ERROR_DBUS_ERROR. Note that GDBus clients can still recover
  * org.project.Foo.Bar.Error.AnotherError using g_dbus_error_get_remote_error().
+ *
  * Note that errors in the G_DBUS_ERROR error domain is intended only
  * for returning errors from a remote message bus process. Errors
  * generated locally in-process by e.g. GDBusConnection is from the

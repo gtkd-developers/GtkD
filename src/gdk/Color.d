@@ -71,8 +71,8 @@ private import gtkc.Loader;;
 
 
 /**
- * Description
  * A GdkColor represents a color.
+ *
  * When working with cairo, it is often more convenient
  * to use a GdkRGBA instead.
  */

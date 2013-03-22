@@ -120,23 +120,26 @@ private import gio.AsyncInitableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GDBusConnection type is used for D-Bus connections to remote
  * peers such as a message buses. It is a low-level API that offers a
  * lot of flexibility. For instance, it lets you establish a connection
  * over any transport that can by represented as an GIOStream.
+ *
  * This class is rarely used directly in D-Bus clients. If you are writing
  * an D-Bus client, it is often easier to use the g_bus_own_name(),
  * g_bus_watch_name() or g_dbus_proxy_new_for_bus() APIs.
+ *
  * As an exception to the usual GLib rule that a particular object must not be
  * used by two threads at the same time, GDBusConnection's methods may be
  * called from any thread[1].
+ *
  * Most of the ways to obtain a GDBusConnection automatically initialize it
  * (i.e. connect to D-Bus): for instance, g_dbus_connection_new() and
  * g_bus_get(), and the synchronous versions of those methods, give you an
  * initialized connection. Language bindings for GIO should use
  * g_initable_new() or g_async_initable_new_async(), which also initialize the
  * connection.
+ *
  * If you construct an uninitialized GDBusConnection, such as via
  * g_object_new(), you must initialize it via g_initable_init() or
  * g_async_initable_init_async() before using its methods or properties.
@@ -145,9 +148,13 @@ private import gobject.ObjectG;
  * to undefined behaviour. In particular, if initialization fails with a
  * GError, the only valid thing you can do with that GDBusConnection is to
  * free it with g_object_unref().
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
  */
 public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
@@ -228,19 +235,19 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	}
 	
 	/**
-	 * Description
 	 * These functions support exporting a GActionGroup on D-Bus.
 	 * The D-Bus interface that is used is a private implementation
 	 * detail.
+	 *
 	 * To access an exported GActionGroup remotely, use
 	 * g_dbus_action_group_get() to obtain a GDBusActionGroup.
 	 */
 	
 	/**
-	 * Description
 	 * These functions support exporting a GMenuModel on D-Bus.
 	 * The D-Bus interface that is used is a private implementation
 	 * detail.
+	 *
 	 * To access an exported GMenuModel remotely, use
 	 * g_dbus_menu_model_get() to obtain a GDBusMenuModel.
 	 */

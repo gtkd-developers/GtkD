@@ -68,12 +68,13 @@ private import glib.Str;
 
 
 /**
- * Description
  * An interface whereby an object allows its backing content to be streamed to
  * clients. Typical implementors would be images or icons, HTML content, or
  * multimedia display/rendering widgets.
+ *
  * Negotiation of content type is allowed. Clients may examine the backing data
  * and transform, convert, or parse the content in order to present it in an alternate form to end-users.
+ *
  * The AtkStreamableContent interface is particularly useful for saving,
  * printing, or post-processing entire documents, or for persisting alternate
  * views of a document. If document content itself is being serialized,

@@ -62,11 +62,11 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
  * Memory slices provide a space-efficient and multi-processing scalable
  * way to allocate equal-sized pieces of memory, just like the original
  * GMemChunks (from GLib 2.8), while avoiding their excessive
  * memory-waste, scalability and performance problems.
+ *
  * To achieve these goals, the slice allocator uses a sophisticated,
  * layered design that has been inspired by Bonwick's slab allocator
  * [1].
@@ -79,6 +79,7 @@ private import glib.ConstructionException;
  * distribution of chunk addresses) to improve CPU cache utilization. The
  * caching layer of the slice allocator adapts itself to high lock contention
  * to improve scalability.
+ *
  * The slice allocator can allocate blocks as small as two pointers, and
  * unlike malloc(), it does not reserve extra space per block. For large block
  * sizes, g_slice_new() and g_slice_alloc() will automatically delegate to the
@@ -86,7 +87,9 @@ private import glib.ConstructionException;
  * to use the new g_slice API instead of g_malloc() and
  * friends, as long as objects are not resized during their lifetime and the
  * object size used at allocation time is still available when freeing.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
  */
 public class MemorySlice

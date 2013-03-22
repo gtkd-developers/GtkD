@@ -79,16 +79,18 @@ private import gtk.PageSetup;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkPrintContext encapsulates context information that is required when
  * drawing pages for printing, such as the cairo context and important
  * parameters like page size and resolution. It also lets you easily
  * create PangoLayout and PangoContext objects that match the font metrics
  * of the cairo surface.
+ *
  * GtkPrintContext objects gets passed to the "begin-print",
  * "end-print", "request-page-setup" and
  * "draw-page" signals on the GtkPrintOperation.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Printing support was added in GTK+ 2.10.
  */
 public class PrintContext : ObjectG

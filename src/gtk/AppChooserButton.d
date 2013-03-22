@@ -76,23 +76,26 @@ private import gtk.AppChooserT;
 private import gtk.ComboBox;
 
 /**
- * Description
  * The GtkAppChooserButton is a widget that lets the user select
  * an application. It implements the GtkAppChooser interface.
+ *
  * Initially, a GtkAppChooserButton selects the first application
  * in its list, which will either be the most-recently used application
  * or, if "show-default-item" is TRUE, the
  * default application.
+ *
  * The list of applications shown in a GtkAppChooserButton includes
  * the recommended applications for the given content type. When
  * "show-default-item" is set, the default application
  * is also included. To let the user chooser other applications,
  * you can set the "show-dialog-item" property,
  * which allows to open a full GtkAppChooserDialog.
+ *
  * It is possible to add custom items to the list, using
  * gtk_app_chooser_button_append_custom_item(). These items cause
  * the "custom-item-activated" signal to be
  * emitted when they are selected.
+ *
  * To track changes in the selected application, use the
  * "changed" signal.
  */

@@ -68,12 +68,13 @@ private import glib.Variant;
 
 
 /**
- * Description
  * This interface provides a convenient way of associating widgets with
  * actions on a GtkApplicationWindow or GtkApplication.
+ *
  * It primarily consists of two properties: "action-name"
  * and "action-target". There are also some convenience APIs
  * for setting these properties.
+ *
  * This interface is presently only meaningful if used on a widget that
  * is (or will be) located inside of a GtkApplicationWindow and can
  * only be used to associate the widget with actions on that window, or

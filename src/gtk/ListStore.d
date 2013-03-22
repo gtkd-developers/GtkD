@@ -99,13 +99,13 @@ private import gtk.TreeSortableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkListStore object is a list model for use with a GtkTreeView
  * widget. It implements the GtkTreeModel interface, and consequentialy,
  * can use all of the methods available there. It also implements the
  * GtkTreeSortable interface so it can be sorted by the view.
  * Finally, it also implements the tree drag and
  * drop interfaces.
+ *
  * The GtkListStore can accept most GObject types as a column type, though
  * it can't accept all custom types. Internally, it will keep a copy of
  * data passed in (such as a string or a boxed pointer). Columns that
@@ -115,8 +115,11 @@ private import gobject.ObjectG;
  * application writer to call gtk_tree_model_row_changed() to emit the
  * "row_changed" signal. This most commonly affects lists with
  * GdkPixbufs stored.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Performance Considerations
+ *
  * Internally, the GtkListStore was implemented with a linked list with a
  * tail pointer prior to GTK+ 2.6. As a result, it was fast at data
  * insertion and deletion, and not fast at random data access. The
@@ -124,8 +127,11 @@ private import gobject.ObjectG;
  * that GtkTreeIters can be cached while the row exists. Thus, if
  * access to a particular row is needed often and your code is expected to
  * run on older versions of GTK+, it is worth keeping the iter around.
+ *
  * <hr>
+ *
  * Atomic Operations
+ *
  * It is important to note that only the methods
  * gtk_list_store_insert_with_values() and gtk_list_store_insert_with_valuesv()
  * are atomic, in the sense that the row is being appended to the store and the
@@ -140,22 +146,28 @@ private import gobject.ObjectG;
  * to append rows to the GtkListStore will cause the
  * GtkTreeModelFilterVisibleFunc to be visited with an empty row first; the
  * function must be prepared for that.
+ *
  * <hr>
+ *
  * GtkListStore as GtkBuildable
+ *
  * The GtkListStore implementation of the GtkBuildable interface allows
  * to specify the model columns with a <columns> element that may
  * contain multiple <column> elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
+ *
  * Additionally, it is possible to specify content for the list store
  * in the UI definition, with the <data> element. It can contain
  * multiple <row> elements, each specifying to content for one
  * row of the list model. Inside a <row>, the <col> elements
  * specify the content for individual cells.
+ *
  * Note that it is probably more common to define your models
  * in the code, and one might consider it a layering violation
  * to specify the content of a list store in a UI definition,
  * data, not presentation,
  * and common wisdom is to separate the two, as far as possible.
+ *
  * $(DDOC_COMMENT example)
  */
 public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, TreeDragDestIF, TreeSortableIF

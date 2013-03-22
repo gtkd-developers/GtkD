@@ -81,7 +81,6 @@ private import gio.SocketConnectableIF;
 private import gio.TlsConnection;
 
 /**
- * Description
  * GTlsClientConnection is the client-side subclass of
  * GTlsConnection, representing a client-side TLS connection.
  */

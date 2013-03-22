@@ -64,13 +64,14 @@ private import gobject.ObjectG;
 private import gtk.Entry;
 
 /**
- * Description
  * GtkSearchEntry is a subclass of GtkEntry that has
  * been tailored for use as a search entry.
+ *
  * It will show an inactive symbolic "find" icon when the
  * search entry is empty, and a symbolic "clear" icon when
  * there is text. Clicking on the "clear" icon will empty
  * the search entry.
+ *
  * Note that the search/clear icon is shown using a secondary
  * icon, and thus does not work if you are using the secondary
  * icon position for some other purpose.

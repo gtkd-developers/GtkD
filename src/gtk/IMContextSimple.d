@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 private import gtk.IMContext;
 
 /**
- * Description
  */
 public class IMContextSimple : IMContext
 {

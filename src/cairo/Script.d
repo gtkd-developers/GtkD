@@ -72,7 +72,6 @@ private import cairo.RecordingSurface;
 private import cairo.Device;
 
 /**
- * Description
  * The script surface provides the ability to render to a native
  * script that matches the cairo drawing model. The scripts can
  * be replayed using tools under the util/cairo-script directoriy,

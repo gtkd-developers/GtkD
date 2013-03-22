@@ -66,7 +66,6 @@ private import gdk.Window;
 
 
 /**
- * Description
  * The functions in this section are intended to be used in test programs.
  * They allow to simulate some user input.
  */

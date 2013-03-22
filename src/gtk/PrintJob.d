@@ -84,10 +84,10 @@ private import gtk.PrintSettings;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkPrintJob object represents a job that is sent to a
  * printer. You only need to deal directly with print jobs if
  * you use the non-portable GtkPrintUnixDialog API.
+ *
  * Use gtk_print_job_get_surface() to obtain the cairo surface
  * onto which the pages must be drawn. Use gtk_print_job_send()
  * to send the finished job to the printer. If you don't use cairo

@@ -71,7 +71,6 @@ private import gtkc.Loader;;
 
 
 /**
- * Description
  * The GdkRGBA struct is a convenient way to pass rgba colors around.
  * It's based on cairo's way to deal with colors and mirrors its behavior.
  * All values are in the range from 0.0 to 1.0 inclusive. So the color

@@ -69,7 +69,6 @@ private import gtk.Widget;
 private import gtk.Bin;
 
 /**
- * Description
  * GtkOverlay is a container which contains a single main child, on top
  * of which it can place overlay widgets. The
  * position of each overlay widget is determined by its "halign"
@@ -79,9 +78,12 @@ private import gtk.Bin;
  * and valign set to GTK_ALIGN_END will be placed a the bottom edge of
  * the main widget, horizontally centered. The position can be adjusted
  * by setting the margin properties of the child to non-zero values.
+ *
  * More complicated placement of overlays is possible by connecting
  * to the "get-child-position" signal.
+ *
  * GtkOverlay as GtkBuildable
+ *
  * The GtkOverlay implementation of the GtkBuildable interface
  * supports placing a child as an overlay by specifying "overlay" as
  * the "type" attribute of a <child> element.

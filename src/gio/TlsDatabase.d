@@ -91,10 +91,10 @@ private import gio.TlsInteraction;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GTlsDatabase is used to lookup certificates and other information
  * from a certificate or key store. It is an abstract base class which
  * TLS library specific subtypes override.
+ *
  * Most common client applications will not directly interact with
  * GTlsDatabase. It is used internally by GTlsConnection.
  */

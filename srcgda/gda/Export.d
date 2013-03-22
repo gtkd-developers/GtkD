@@ -72,7 +72,6 @@ private import gda.Connection;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class Export : ObjectG
 {

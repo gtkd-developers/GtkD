@@ -78,20 +78,24 @@ private import glib.Source;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * The GstBus is an object responsible for delivering GstMessages in
  * a first-in first-out way from the streaming threads to the application.
+ *
  * Since the application typically only wants to deal with delivery of these
  * messages from one thread, the GstBus will marshall the messages between
  * different threads. This is important since the actual streaming of media
  * is done in another thread than the application.
+ *
  * The GstBus provides support for GSource based notifications. This makes it
  * possible to handle the delivery in the glib mainloop.
+ *
  * The GSource callback function gst_bus_async_signal_func() can be used to
  * convert all bus messages into signal emissions.
+ *
  * A message is posted on the bus with the gst_bus_post() method. With the
  * gst_bus_peek() and gst_bus_pop() methods one can look at or retrieve a
  * previously posted message.
+ *
  * The bus can be polled with the gst_bus_poll() method. This methods blocks
  * up to the specified timeout value until one of the specified messages types
  * is posted on the bus. The application can then _pop() the messages from the
@@ -101,14 +105,18 @@ private import gstreamer.ObjectGst;
  * install a GSource in the default glib main loop and will deliver messages
  * a short while after they have been posted. Note that the main loop should
  * be running for the asynchronous callbacks.
+ *
  * It is also possible to get messages from the bus without any thread
  * marshalling with the gst_bus_set_sync_handler() method. This makes it
  * possible to react to a message in the same thread that posted the
  * message on the bus. This should only be used if the application is able
  * to deal with messages from different threads.
+ *
  * Every GstPipeline has one bus.
+ *
  * Note that a GstPipeline will set its bus into flushing state when changing
  * from READY to NULL state.
+ *
  * Last reviewed on 2006-03-12 (0.10.5)
  */
 public class Bus : ObjectGst

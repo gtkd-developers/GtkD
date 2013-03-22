@@ -67,11 +67,11 @@ private import gtk.Widget;
 private import atk.ObjectAtk;
 
 /**
- * Description
  * The GtkAccessible class is the base class for accessible
  * implementations for GtkWidget subclasses. It is a thin
  * wrapper around AtkObject, which adds facilities for associating
  * a widget with its accessible object.
+ *
  * An accessible implementation for a third-party widget should
  * derive from GtkAccessible and implement the suitable interfaces
  * from ATK, such as AtkText or AtkSelection. To establish

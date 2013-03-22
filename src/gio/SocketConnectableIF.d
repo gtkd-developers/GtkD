@@ -67,12 +67,12 @@ private import gio.SocketAddressEnumerator;
 
 
 /**
- * Description
  * Objects that describe one or more potential socket endpoints
  * implement GSocketConnectable. Callers can then use
  * g_socket_connectable_enumerate() to get a GSocketAddressEnumerator
  * to try out each socket address in turn until one succeeds, as shown
  * in the sample code below.
+ *
  * $(DDOC_COMMENT example)
  */
 public interface SocketConnectableIF

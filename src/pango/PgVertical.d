@@ -66,10 +66,10 @@ private import pango.PgMatrix;
 
 
 /**
- * Description
  * Since 1.16, Pango is able to correctly lay vertical text out. In fact, it can
  * set layouts of mixed vertical and non-vertical text. This section describes
  * the types used for setting vertical text parameters.
+ *
  * The way this is implemented is through the concept of
  * gravity. Gravity of normal Latin text is south. A
  * gravity value of east means that glyphs will be rotated ninety degrees
@@ -78,12 +78,14 @@ private import pango.PgMatrix;
  * the huge advantage that most algorithms working on a PangoLayout do not need
  * any change as the assumption that lines run in the X direction and stack in
  * the Y direction holds even for vertical text layouts.
+ *
  * Applications should only need to set base gravity on PangoContext in use, and
  * let Pango decide the gravity assigned to each run of text. This automatically
  * handles text with mixed scripts. A very common use is to set the context base
  * gravity to auto using pango_context_set_base_gravity()
  * and rotate the layout normally. Pango will make sure that
  * Asian languages take the right form, while other scripts are rotated normally.
+ *
  * The correct way to set gravity on a layout is to set it on the context
  * associated with it using pango_context_set_base_gravity(). The context
  * of a layout can be accessed using pango_layout_get_context(). The currently
@@ -94,13 +96,16 @@ private import pango.PgMatrix;
  * gravity is set to PANGO_GRAVITY_AUTO, the resolved gravity will depend
  * on the current matrix set on context, and is derived using
  * pango_gravity_get_for_matrix().
+ *
  * The next thing an application may want to set on the context is the
  * gravity hint. A PangoGravityHint instructs how
  * different scripts should react to the set base gravity.
+ *
  * Font descriptions have a gravity property too, that can be set using
  * pango_font_description_set_gravity() and accessed using
  * pango_font_description_get_gravity(). However, those are rarely useful
  * from application code and are mainly used by PangoLayout internally.
+ *
  * Last but not least, one can create PangoAttributes for gravity
  * and gravity hint using pango_attr_gravity_new() and
  * pango_attr_gravity_hint_new().

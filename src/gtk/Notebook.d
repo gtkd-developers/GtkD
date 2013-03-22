@@ -73,9 +73,9 @@ private import gtk.Widget;
 private import gtk.Container;
 
 /**
- * Description
  * The GtkNotebook widget is a GtkContainer whose children are pages that
  * can be switched between using tab labels along one edge.
+ *
  * There are many configuration options for GtkNotebook. Among other
  * things, you can choose on which edge the tabs appear
  * (see gtk_notebook_set_tab_pos()), whether, if there are too many
@@ -83,16 +83,20 @@ private import gtk.Container;
  * arrows added (see gtk_notebook_set_scrollable()), and whether there
  * will be a popup menu allowing the users to switch pages.
  * (see gtk_notebook_popup_enable(), gtk_notebook_popup_disable())
+ *
  * GtkNotebook as GtkBuildable
+ *
  * The GtkNotebook implementation of the GtkBuildable interface
  * supports placing children into tabs by specifying "tab" as the
  * "type" attribute of a <child> element. Note that the content
  * of the tab must be created before the tab can be filled.
  * A tab child can be specified without specifying a <child>
  * type attribute.
+ *
  * To add a child widget in the notebooks action area, specify
  * "action-start" or "action-end" as the "type" attribute of the <child>
  * element.
+ *
  * $(DDOC_COMMENT example)
  */
 public class Notebook : Container

@@ -77,7 +77,6 @@ private import gtk.ToolShellT;
 private import gtk.Container;
 
 /**
- * Description
  * A GtkToolItemGroup is used together with GtkToolPalette to add
  * GtkToolItems to a palette like container with different
  * categories and drag and drop support.

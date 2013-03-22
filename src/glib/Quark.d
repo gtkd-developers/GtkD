@@ -64,17 +64,21 @@ private import glib.Str;
 
 
 /**
- * Description
  * Quarks are associations between strings and integer identifiers.
  * Given either the string or the GQuark identifier it is possible to
  * retrieve the other.
+ *
  * Quarks are used for both Datasets and Keyed Data Lists.
+ *
  * To create a new quark from a string, use g_quark_from_string() or
  * g_quark_from_static_string().
+ *
  * To find the string corresponding to a given GQuark, use
  * g_quark_to_string().
+ *
  * To find the GQuark corresponding to a given string, use
  * g_quark_try_string().
+ *
  * Another use for the string pool maintained for the quark functions
  * is string interning, using g_intern_string() or
  * g_intern_static_string(). An interned string is a canonical

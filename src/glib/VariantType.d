@@ -71,17 +71,18 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * This section introduces the GVariant type system. It is based, in
  * large part, on the D-Bus type system, with two major changes and some minor
  * lifting of restrictions. The DBus
  * specification, therefore, provides a significant amount of
  * information that is useful when working with GVariant.
+ *
  * The first major change with respect to the D-Bus type system is the
  * introduction of maybe (or "nullable") types. Any type in GVariant can be
  * converted to a maybe type, in which case, "nothing" (or "null") becomes a
  * valid value. Maybe types have been added by introducing the
  * character "m" to type strings.
+ *
  * The second major change is that the GVariant type system supports the
  * concept of "indefinite types" -- types that are less specific than
  * the normal types found in D-Bus. For example, it is possible to speak
@@ -90,9 +91,11 @@ private import gtkc.Loader;
  * strings". Indefinite types have been added by introducing the
  * characters "*", "?" and
  * "r" to type strings.
+ *
  * Finally, all arbitrary restrictions relating to the complexity of
  * types are lifted along with the restriction that dictionary entries
  * may only appear nested inside of arrays.
+ *
  * Just as in D-Bus, GVariant types are described with strings ("type
  * strings"). Subject to the differences mentioned above, these strings
  * are of the same form as those found in DBus. Note, however: D-Bus
@@ -104,6 +107,7 @@ private import gtkc.Loader;
  * that a D-Bus signature string is generally not a valid GVariant type
  * string -- except in the case that it is the signature of a message
  * containing exactly one argument.
+ *
  * An indefinite type is similar in spirit to what may be called an
  * abstract type in other type systems. No value can exist that has an
  * indefinite type as its type, but values can exist that have types
@@ -115,6 +119,7 @@ private import gtkc.Loader;
  * which certainly matches the type of "an array of no particular type",
  * since "array of integers" is a subtype of "array of no particular
  * type".
+ *
  * This is similar to how instances of abstract classes may not
  * directly exist in other type systems, but instances of their
  * non-abstract subtypes may. For example, in GTK, no object that has
@@ -122,20 +127,29 @@ private import gtkc.Loader;
  * but a GtkWindow can certainly be instantiated, and you would say
  * that the GtkWindow is a GtkBin (since GtkWindow is a subclass of
  * GtkBin).
+ *
  * A detailed description of GVariant type strings is given here:
+ *
  * GVariant Type Strings
+ *
  *  A GVariant type string can be any of the following:
+ *
  *  any basic type string (listed below)
+ *
  *  "v", "r" or
  *  "*"
+ *
  *  one of the characters 'a' or
  *  'm', followed by another type string
+ *
  *  the character '(', followed by a concatenation
  *  of zero or more other type strings, followed by the character
  *  ')'
+ *
  *  the character '{', followed by a basic type
  *  string (see below), followed by another type string, followed by
  *  the character '}'
+ *
  *  A basic type string describes a basic type (as per
  *  g_variant_type_is_basic()) and is always a single
  *  character in length. The valid basic type strings are
@@ -146,96 +160,145 @@ private import gtkc.Loader;
  *  "h", "d",
  *  "s", "o",
  *  "g" and "?".
+ *
  *  The above definition is recursive to arbitrary depth.
  *  "aaaaai" and "(ui(nq((y)))s)"
  *  are both valid type strings, as is
  *  "a(aa(ui)(qna{ya(yd)}))".
+ *
  *  The meaning of each of the characters is as follows:
+ *
  *  Character
+ *
  *  Meaning
+ *
  *  b
+ *
  *  the type string of G_VARIANT_TYPE_BOOLEAN; a boolean value.
+ *
  *  y
+ *
  *  the type string of G_VARIANT_TYPE_BYTE; a byte.
+ *
  *  n
+ *
  *  the type string of G_VARIANT_TYPE_INT16; a signed 16 bit
  *  integer.
+ *
  *  q
+ *
  *  the type string of G_VARIANT_TYPE_UINT16; an unsigned 16 bit
  *  integer.
+ *
  *  i
+ *
  *  the type string of G_VARIANT_TYPE_INT32; a signed 32 bit
  *  integer.
+ *
  *  u
+ *
  *  the type string of G_VARIANT_TYPE_UINT32; an unsigned 32 bit
  *  integer.
+ *
  *  x
+ *
  *  the type string of G_VARIANT_TYPE_INT64; a signed 64 bit
  *  integer.
+ *
  *  t
+ *
  *  the type string of G_VARIANT_TYPE_UINT64; an unsigned 64 bit
  *  integer.
+ *
  *  h
+ *
  *  the type string of G_VARIANT_TYPE_HANDLE; a signed 32 bit
  *  value that, by convention, is used as an index into an array
  *  of file descriptors that are sent alongside a D-Bus message.
+ *
  *  d
+ *
  *  the type string of G_VARIANT_TYPE_DOUBLE; a double precision
  *  floating point value.
+ *
  *  s
+ *
  *  the type string of G_VARIANT_TYPE_STRING; a string.
+ *
  *  o
+ *
  *  the type string of G_VARIANT_TYPE_OBJECT_PATH; a string in
  *  the form of a D-Bus object path.
+ *
  *  g
+ *
  *  the type string of G_VARIANT_TYPE_STRING; a string in the
  *  form of a D-Bus type signature.
+ *
  *  ?
+ *
  *  the type string of G_VARIANT_TYPE_BASIC; an indefinite type
  *  that is a supertype of any of the basic types.
+ *
  *  v
+ *
  *  the type string of G_VARIANT_TYPE_VARIANT; a container type
  *  that contain any other type of value.
+ *
  *  a
+ *
  *  used as a prefix on another type string to mean an array of
  *  that type; the type string "ai", for
  *  example, is the type of an array of 32 bit signed integers.
+ *
  *  m
+ *
  *  used as a prefix on another type string to mean a "maybe", or
  *  "nullable", version of that type; the type string
  *  "ms", for example, is the type of a value
  *  that maybe contains a string, or maybe contains nothing.
+ *
  *  ()
+ *
  *  used to enclose zero or more other concatenated type strings
  *  to create a tuple type; the type string
  *  "(is)", for example, is the type of a pair
  *  of an integer and a string.
+ *
  *  r
+ *
  *  the type string of G_VARIANT_TYPE_TUPLE; an indefinite type
  *  that is a supertype of any tuple type, regardless of the
  *  number of items.
+ *
  *  {}
+ *
  *  used to enclose a basic type string concatenated with another
  *  type string to create a dictionary entry type, which usually
  *  appears inside of an array to form a dictionary; the type
  *  string "a{sd}", for example, is the type of
  *  a dictionary that maps strings to double precision floating
  *  point values.
+ *
  *  The first type (the basic type) is the key type and the second
  *  type is the value type. The reason that the first type is
  *  restricted to being a basic type is so that it can easily be
  *  hashed.
+ *
  *  *
+ *
  *  the type string of G_VARIANT_TYPE_ANY; the indefinite type
  *  that is a supertype of all types. Note that, as with all type
  *  strings, this character represents exactly one type. It
  *  cannot be used inside of tuples to mean "any number of items".
+ *
  *  Any type string of a container that contains an indefinite type is,
  *  itself, an indefinite type. For example, the type string
  *  "a*" (corresponding to G_VARIANT_TYPE_ARRAY) is
  *  an indefinite type that is a supertype of every array type.
  *  "(*s)" is a supertype of all tuples that
  *  contain exactly two items where the second item is a string.
+ *
  *  "a{?*}" is an indefinite type that is a
  *  supertype of all arrays containing dictionary entries where the key
  *  is any basic type and the value is any type at all. This is, by

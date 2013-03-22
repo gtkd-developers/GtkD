@@ -70,10 +70,10 @@ private import glib.Str;
 private import gtk.MenuItem;
 
 /**
- * Description
  * A GtkCheckMenuItem is a menu item that maintains the state of a boolean
  * value in addition to a GtkMenuItem usual role in activating application
  * code.
+ *
  * A check box indicating the state of the boolean value is displayed
  * at the left side of the GtkMenuItem. Activating the GtkMenuItem
  * toggles the value.

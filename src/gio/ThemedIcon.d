@@ -72,7 +72,6 @@ private import gio.IconIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GThemedIcon is an implementation of GIcon that supports icon themes.
  * GThemedIcon contains a list of all of the icons present in an icon
  * theme, so that icons can be looked up quickly. GThemedIcon does

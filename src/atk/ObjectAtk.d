@@ -78,7 +78,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * This class is the primary class for accessibility support via
  * the Accessibility ToolKit (ATK). Objects which are instances
  * of AtkObject (or instances of AtkObject-derived types) are
@@ -87,6 +86,7 @@ private import gobject.ObjectG;
  * may also be queried as to whether they implement other ATK interfaces
  * (e.g. AtkAction, AtkComponent, etc.), as appropriate to the role
  * which a given UI component plays in a user interface.
+ *
  * All UI components in an application which provide useful
  * information or services to the user must provide corresponding
  * AtkObject instances on request (in GTK+, for instance, usually

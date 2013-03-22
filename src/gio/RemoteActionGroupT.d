@@ -69,11 +69,11 @@ public import glib.Variant;
 
 
 /**
- * Description
  * The GRemoteActionGroup interface is implemented by GActionGroup
  * instances that either transmit action invocations to other processes
  * or receive action invocations in the local process from other
  * processes.
+ *
  * The interface has _full variants of the two
  * methods on GActionGroup used to activate actions:
  * g_action_group_activate_action() and
@@ -81,8 +81,10 @@ public import glib.Variant;
  * "platform data" GVariant to be specified: a dictionary providing
  * context for the action invocation (for example: timestamps, startup
  * notification IDs, etc).
+ *
  * GDBusActionGroup implements GRemoteActionGroup. This provides a
  * mechanism to send platform data for action invocations over D-Bus.
+ *
  * Additionally, g_dbus_connection_export_action_group() will check if
  * the exported GActionGroup implements GRemoteActionGroup and use the
  * _full variants of the calls if available. This

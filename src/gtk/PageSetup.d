@@ -77,22 +77,25 @@ private import gtk.PaperSize;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkPageSetup object stores the page size, orientation and margins.
  * The idea is that you can get one of these from the page setup dialog
  * and then pass it to the GtkPrintOperation when printing.
  * The benefit of splitting this out of the GtkPrintSettings is that
  * these affect the actual layout of the page, and thus need to be set
  * long before user prints.
+ *
  * The margins specified in this object are the "print margins", i.e. the
  * parts of the page that the printer cannot print on. These are different
  * from the layout margins that a word processor uses; they are typically
  * used to determine the minimal size for the layout
  * margins.
+ *
  * To obtain a GtkPageSetup use gtk_page_setup_new() to get the defaults,
  * or use gtk_print_run_page_setup_dialog() to show the page setup dialog
  * and receive the resulting page setup.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Printing support was added in GTK+ 2.10.
  */
 public class PageSetup : ObjectG

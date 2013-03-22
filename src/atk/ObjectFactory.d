@@ -70,7 +70,6 @@ private import gobject.ObjectG;
 private import gobject.ObjectG;
 
 /**
- * Description
  * This class is the base object class for a factory used to create an
  * accessible object for a specific GType. The function
  * atk_registry_set_factory_type() is normally called to store

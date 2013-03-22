@@ -72,7 +72,6 @@ private import gio.ConverterIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GZlibCompressor is an implementation of GConverter that
  * compresses data using zlib.
  */

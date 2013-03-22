@@ -69,7 +69,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * These are portable utility functions.
  */
 public class Util

@@ -82,7 +82,6 @@ private import gio.ProxyAddress;
 
 
 /**
- * Description
  * A GProxy handles connecting to a remote host via a given type of
  * proxy server. It is implemented by the 'gio-proxy' extension point.
  * The extensions are named after their proxy protocol name. As an

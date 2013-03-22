@@ -69,7 +69,6 @@ private import gtk.MenuShell;
 private import gtk.IMContext;
 
 /**
- * Description
  */
 public class IMMulticontext : IMContext
 {

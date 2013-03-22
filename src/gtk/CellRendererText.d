@@ -68,10 +68,10 @@ private import glib.Str;
 private import gtk.CellRenderer;
 
 /**
- * Description
  * A GtkCellRendererText renders a given text in its cell, using the font, color and
  * style information provided by its properties. The text will be ellipsized if it is
  * too long and the "ellipsize" property allows it.
+ *
  * If the "mode" is GTK_CELL_RENDERER_MODE_EDITABLE,
  * the GtkCellRendererText allows to edit its text using an entry.
  */

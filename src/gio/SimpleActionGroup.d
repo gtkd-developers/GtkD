@@ -81,7 +81,6 @@ private import gio.ActionMapT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GSimpleActionGroup is a hash table filled with GAction objects,
  * implementing the GActionGroup and GActionMap interfaces.
  */

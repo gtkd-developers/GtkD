@@ -68,7 +68,6 @@ private import glib.GException;
 
 
 /**
- * Description
  * Functions for manipulating Universal Resource Identifiers (URIs) as
  * defined by
  * RFC 3986. It is highly recommended that you have read and

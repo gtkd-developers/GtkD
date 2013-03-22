@@ -139,29 +139,35 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * GtkWidget is the base class all widgets in GTK+ derive from. It manages the
  * widget lifecycle, states and style.
+ *
  * Height-for-width Geometry Management
+ *
  * GTK+ uses a height-for-width (and width-for-height) geometry management
  * system. Height-for-width means that a widget can change how much
  * vertical space it needs, depending on the amount of horizontal space
  * that it is given (and similar for width-for-height). The most common
  * example is a label that reflows to fill up the available width, wraps
  * to fewer lines, and therefore needs less height.
+ *
  * Height-for-width geometry management is implemented in GTK+ by way
  * of five virtual methods:
+ *
  * GtkWidgetClass.get_request_mode()
  * GtkWidgetClass.get_preferred_width()
  * GtkWidgetClass.get_preferred_height()
  * GtkWidgetClass.get_preferred_height_for_width()
  * GtkWidgetClass.get_preferred_width_for_height()
+ *
  * There are some important things to keep in mind when implementing
  * height-for-width and when using it in container implementations.
+ *
  * The geometry management system will query a widget hierarchy in
  * only one orientation at a time. When widgets are initially queried
  * for their minimum sizes it is generally done in two initial passes
  * in the GtkSizeRequestMode chosen by the toplevel.
+ *
  * For example, when queried in the normal
  * GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH mode:
  * First, the default minimum and natural width for each widget
@@ -175,6 +181,7 @@ private import gtkc.paths;
  * recursive operation. The minimum height for the minimum width is normally
  * used to set the minimum size constraint on the toplevel
  * (unless gtk_window_set_geometry_hints() is explicitly used instead).
+ *
  * After the toplevel window has initially requested its size in both
  * dimensions it can go on to allocate itself a reasonable size (or a size
  * previously specified with gtk_window_set_default_size()). During the
@@ -188,14 +195,17 @@ private import gtkc.paths;
  * widget is finally allocated can of course differ from the size it has
  * requested. For this reason, GtkWidget caches a small number of results
  * to avoid re-querying for the same sizes in one allocation cycle.
+ *
  * See GtkContainer's
  * geometry management section
  * to learn more about how height-for-width allocations are performed
  * by container widgets.
+ *
  * If a widget does move content around to intelligently use up the
  * allocated size then it must support the request in both
  * GtkSizeRequestModes even if the widget in question only
  * trades sizes in a single orientation.
+ *
  * For instance, a GtkLabel that does height-for-width word wrapping
  * will not expect to have GtkWidgetClass.get_preferred_height() called
  * because that call is specific to a width-for-height request. In this
@@ -203,15 +213,18 @@ private import gtkc.paths;
  * possible width. By following this rule any widget that handles
  * height-for-width or width-for-height requests will always be allocated
  * at least enough space to fit its own content.
+ *
  * Here are some examples of how a GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH widget
  * generally deals with width-for-height requests, for GtkWidgetClass.get_preferred_height()
  * it will do:
+ *
  * static void
  * foo_widget_get_preferred_height (GtkWidget *widget, gint *min_height, gint *nat_height)
  * {
 	 *  if (i_am_in_height_for_width_mode)
 	 *  {
 		 *  gint min_width;
+		 *
 		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, NULL);
 		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width (widget, min_width,
 		 *  min_height, nat_height);
@@ -222,8 +235,10 @@ private import gtkc.paths;
 		 *  it will return the minimum and natural height for the rotated label here.
 	 *  }
  * }
+ *
  * And in GtkWidgetClass.get_preferred_width_for_height() it will simply return
  * the minimum and natural width:
+ *
  * static void
  * foo_widget_get_preferred_width_for_height (GtkWidget *widget, gint for_height,
  *  gint *min_width, gint *nat_width)
@@ -239,12 +254,15 @@ private import gtkc.paths;
 		 *  height calculation here.
 	 *  }
  * }
+ *
  * Often a widget needs to get its own request during size request or
  * allocation. For example, when computing height it may need to also
  * compute width. Or when deciding how to use an allocation, the widget
  * may need to know its natural size. In these cases, the widget should
  * be careful to call its virtual methods directly, like this:
+ *
  * $(DDOC_COMMENT example)
+ *
  * It will not work to use the wrapper functions, such as
  * gtk_widget_get_preferred_width() inside your own size request
  * implementation. These return a request adjusted by GtkSizeGroup
@@ -253,13 +271,17 @@ private import gtkc.paths;
  * then the adjustments (such as widget margins) would be applied
  * twice. GTK+ therefore does not allow this and will warn if you try
  * to do it.
+ *
  * Of course if you are getting the size request for
  * another widget, such as a child of a
  * container, you must use the wrapper APIs.
  * Otherwise, you would not properly consider widget margins,
  * GtkSizeGroup, and so forth.
+ *
  * <hr>
+ *
  * Style Properties
+ *
  * GtkWidget introduces style
  * properties - these are basically object properties that are stored
  * not on the object, but in the style object associated to the widget. Style
@@ -267,24 +289,33 @@ private import gtkc.paths;
  * This mechanism is used for configuring such things as the location of the
  * scrollbar arrows through the theme, giving theme authors more control over the
  * look of applications without the need to write a theme engine in C.
+ *
  * Use gtk_widget_class_install_style_property() to install style properties for
  * a widget class, gtk_widget_class_find_style_property() or
  * gtk_widget_class_list_style_properties() to get information about existing
  * style properties and gtk_widget_style_get_property(), gtk_widget_style_get() or
  * gtk_widget_style_get_valist() to obtain the value of a style property.
+ *
  * <hr>
+ *
  * GtkWidget as GtkBuildable
+ *
  * The GtkWidget implementation of the GtkBuildable interface supports a
  * custom <accelerator> element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
+ *
  * $(DDOC_COMMENT example)
+ *
  * In addition to accelerators, GtkWidget also support a
  * custom <accessible> element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Finally, GtkWidget allows style information such as style classes to
  * be associated with widgets, using the custom <style> element:
+ *
  * $(DDOC_COMMENT example)
  */
 public class Requisition

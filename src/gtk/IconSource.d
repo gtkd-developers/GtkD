@@ -76,9 +76,9 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * Browse the available stock icons in the list of stock IDs found here. You can also use
  * the gtk-demo application for this purpose.
+ *
  * An icon factory manages a collection of GtkIconSet; a GtkIconSet manages a
  * set of variants of a particular icon (i.e. a GtkIconSet contains variants for
  * different sizes and widget states). Icons in an icon factory are named by a
@@ -90,32 +90,48 @@ private import gtkc.Loader;
  * gtk_icon_factory_remove_default(). Applications with icons should add a default
  * icon factory with their icons, which will allow themes to override the icons
  * for the application.
+ *
  * To display an icon, always use gtk_style_lookup_icon_set() on the widget that
  * will display the icon, or the convenience function
  * gtk_widget_render_icon(). These functions take the theme into account when
  * looking up the icon to use for a given stock ID.
+ *
  * GtkIconFactory as GtkBuildable
+ *
  * GtkIconFactory supports a custom <sources> element, which can contain
  * multiple <source> elements.
  * The following attributes are allowed:
+ *
  * stock-id
+ *
  * The stock id of the source, a string.
  * This attribute is mandatory
+ *
  * filename
+ *
  * The filename of the source, a string.
  * This attribute is optional
+ *
  * icon-name
+ *
  * The icon name for the source, a string.
  * This attribute is optional.
+ *
  * size
+ *
  * Size of the icon, a GtkIconSize enum value.
  * This attribute is optional.
+ *
  * direction
+ *
  * Direction of the source, a GtkTextDirection enum value.
  * This attribute is optional.
+ *
  * state
+ *
  * State of the source, a GtkStateType enum value.
  * This attribute is optional.
+ *
  * $(DDOC_COMMENT example)
  */
 public class IconSource

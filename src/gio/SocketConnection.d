@@ -83,13 +83,14 @@ private import gio.SocketAddress;
 private import gio.IOStream;
 
 /**
- * Description
  * GSocketConnection is a GIOStream for a connected socket. They
  * can be created either by GSocketClient when connecting to a host,
  * or by GSocketListener when accepting a new client.
+ *
  * The type of the GSocketConnection object returned from these calls
  * depends on the type of the underlying socket that is in use. For
  * instance, for a TCP/IP connection it will be a GTcpConnection.
+ *
  * Choosing what type of object to construct is done with the socket
  * connection factory, and it is possible for 3rd parties to register
  * custom socket connection types for specific combination of socket

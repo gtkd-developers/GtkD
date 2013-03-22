@@ -74,15 +74,16 @@ private import gio.IOStream;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GDBusAuthObserver type provides a mechanism for participating
  * in how a GDBusServer (or a GDBusConnection) authenticates remote
  * peers. Simply instantiate a GDBusAuthObserver and connect to the
  * signals you are interested in. Note that new signals may be added
  * in the future
+ *
  * For example, if you only want to allow D-Bus connections from
  * processes owned by the same uid as the server, you would use a
  * signal handler like the following:
+ *
  * $(DDOC_COMMENT example)
  */
 public class DBusAuthObserver : ObjectG

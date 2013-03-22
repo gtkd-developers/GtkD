@@ -70,10 +70,10 @@ public import gdk.RGBA;
 
 
 /**
- * Description
  * GtkColorChooser is an interface that is implemented by widgets
  * for choosing colors. Depending on the situation, colors may be
  * allowed to have alpha (translucency).
+ *
  * In GTK+, the main widgets that implement this interface are
  * GtkColorChooserWidget, GtkColorChooserDialog and GtkColorButton.
  */

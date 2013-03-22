@@ -73,7 +73,6 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * GKeyFile lets you parse, edit or create files containing groups of
  * key-value pairs, which we call key files for
  * lack of a better name. Several freedesktop.org specifications use
@@ -82,15 +81,20 @@ private import gtkc.Loader;
  * Entry Specification and the
  * Icon
  * Theme Specification.
+ *
  * The syntax of key files is described in detail in the
  * Desktop
  * Entry Specification, here is a quick summary: Key files
  * consists of groups of key-value pairs, interspersed with comments.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Lines beginning with a '#' and blank lines are considered comments.
+ *
  * Groups are started by a header line containing the group name enclosed
  * in '[' and ']', and ended implicitly by the start of the next group or
  * the end of the file. Each key-value pair must be contained in a group.
+ *
  * Key-value pairs generally have the form key=value,
  * with the exception of localized strings, which have the form
  * key[locale]=value, with a locale identifier of the
@@ -100,12 +104,15 @@ private import gtkc.Loader;
  * carriage return and backslash characters in value are escaped as \n,
  * \t, \r, and \\, respectively. To preserve leading spaces in values,
  * these can also be escaped as \s.
+ *
  * Key files can store strings (possibly with localized variants), integers,
  * booleans and lists of these. Lists are separated by a separator character,
  * typically ';' or ','. To use the list separator character in a value in
  * a list, it has to be escaped by prefixing it with a backslash.
+ *
  * This syntax is obviously inspired by the .ini files commonly met
  * on Windows, but there are some important differences:
+ *
  * .ini files use the ';' character to begin comments,
  *  key files use the '#' character.
  * Key files do not allow for ungrouped keys meaning only
@@ -118,6 +125,7 @@ private import gtkc.Loader;
  *  they only have GetProfileInt(). In key files, only
  *  true and false (in lower case)
  *  are allowed.
+ *
  * Note that in contrast to the
  * Desktop
  * Entry Specification, groups in key files may contain the same

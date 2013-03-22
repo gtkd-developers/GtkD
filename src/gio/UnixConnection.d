@@ -77,11 +77,12 @@ private import gio.Credentials;
 private import gio.SocketConnection;
 
 /**
- * Description
  * This is the subclass of GSocketConnection that is created
  * for UNIX domain sockets.
+ *
  * It contains functions to do some of the UNIX socket specific
  * functionality like passing file descriptors.
+ *
  * Note that <gio/gunixconnection.h> belongs to
  * the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.

@@ -89,12 +89,12 @@ private import gtkc.Loader;;
 
 
 /**
- * Description
  * cairo_t is the main object used when drawing with cairo. To
  * draw with cairo, you create a cairo_t, set the target surface,
  * and drawing options for the cairo_t, create shapes with
  * functions like cairo_move_to() and cairo_line_to(), and then
  * draw shapes with cairo_stroke() or cairo_fill().
+ *
  * cairo_t's can be pushed to a stack via cairo_save().
  * They may then safely be changed, without losing the current state.
  * Use cairo_restore() to restore to the saved state.
@@ -232,13 +232,11 @@ public class Context
 	}
 	
 	/**
-	 * Description
 	 * Paths are the most basic drawing tools and are primarily used to implicitly
 	 * generate simple masks.
 	 */
 	
 	/**
-	 * Description
 	 * The current transformation matrix, ctm, is a
 	 * two-dimensional affine transformation that maps all coordinates and other
 	 * drawing instruments from the user space into the
@@ -247,7 +245,6 @@ public class Context
 	 */
 	
 	/**
-	 * Description
 	 * The functions with text in their name form cairo's
 	 * toy text API. The toy API takes UTF-8 encoded
 	 * text and is limited in its functionality to rendering simple
@@ -258,6 +255,7 @@ public class Context
 	 * case that the selected font does not cover the characters in the text.
 	 * This set of functions are really that, a toy text API, for testing and
 	 * demonstration purposes. Any serious application should avoid them.
+	 *
 	 * The functions with glyphs in their name form cairo's
 	 * low-level text API. The low-level API relies on
 	 * the user to convert text to a set of glyph indexes and positions. This

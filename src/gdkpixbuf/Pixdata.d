@@ -75,7 +75,6 @@ private import glib.Str;
 
 
 /**
- * Description
  * Using GdkPixdata, images can be compiled into an application,
  * making it unnecessary to refer to external image files at runtime.
  * GdkPixBuf includes a utility named gdk-pixbuf-csource, which

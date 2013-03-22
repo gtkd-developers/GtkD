@@ -118,23 +118,30 @@ private import gio.MountOperation;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GFile is a high level abstraction for manipulating files on a
  * virtual file system. GFiles are lightweight, immutable objects
  * that do no I/O upon creation. It is necessary to understand that
  * GFile objects do not represent files, merely an identifier for a
  * file. All file content I/O is implemented as streaming operations
  * (see GInputStream and GOutputStream).
+ *
  * To construct a GFile, you can use:
+ *
  * g_file_new_for_path() if you have a path.
+ *
  * g_file_new_for_uri() if you have a URI.
+ *
  * g_file_new_for_commandline_arg() for a command line argument.
+ *
  * g_file_new_tmp() to create a temporary file from a template.
+ *
  * g_file_parse_name() from a UTF-8 string gotten from g_file_get_parse_name().
+ *
  * One way to think of a GFile is as an abstraction of a pathname. For
  * normal files the system pathname is what is stored internally, but as
  * GFiles are extensible it could also be something else that corresponds
  * to a pathname in a userspace implementation of a filesystem.
+ *
  * GFiles make up hierarchies of directories and files that correspond to
  * the files on a filesystem. You can move through the file system with
  * GFile using g_file_get_parent() to get an identifier for the parent
@@ -143,6 +150,7 @@ private import gobject.ObjectG;
  * GFiles. There can be multiple hierarchies, so you may not end up at
  * the same root if you repeatedly call g_file_get_parent() on two different
  * files.
+ *
  * All GFiles have a basename (get with g_file_get_basename()). These names
  * are byte strings that are used to identify the file on the filesystem
  * (relative to its parent directory) and there is no guarantees that they
@@ -154,6 +162,7 @@ private import gobject.ObjectG;
  * But always store the real basename or the GFile to use to actually
  * access the file, because there is no way to go from a display name to
  * the actual name.
+ *
  * Using GFile as an identifier has the same weaknesses as using a path
  * in that there may be multiple aliases for the same file. For instance,
  * hard or soft links may cause two different GFiles to refer to the same
@@ -164,18 +173,24 @@ private import gobject.ObjectG;
  * canonicalization of pathnames passed in, so that trivial differences in
  * the path string used at creation (duplicated slashes, slash at end of
  * path, "." or ".." path segments, etc) does not create different GFiles.
+ *
  * Many GFile operations have both synchronous and asynchronous versions
  * to suit your application. Asynchronous versions of synchronous functions
  * simply have _async() appended to their function names. The asynchronous
  * I/O functions call a GAsyncReadyCallback which is then used to finalize
  * the operation, producing a GAsyncResult which is then passed to the
  * function's matching _finish() operation.
+ *
  * Some GFile operations do not have synchronous analogs, as they may
  * take a very long time to finish, and blocking may leave an application
  * unusable. Notable cases include:
+ *
  * g_file_mount_mountable() to mount a mountable file.
+ *
  * g_file_unmount_mountable_with_operation() to unmount a mountable file.
+ *
  * g_file_eject_mountable_with_operation() to eject a mountable file.
+ *
  * One notable feature of GFiles are entity tags, or "etags" for
  * short. Entity tags are somewhat like a more abstract version of the
  * traditional mtime, and can be used to quickly determine if the file has

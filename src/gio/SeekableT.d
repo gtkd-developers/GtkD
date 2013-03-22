@@ -71,7 +71,6 @@ public import gio.Cancellable;
 
 
 /**
- * Description
  * GSeekable is implemented by streams (implementations of
  * GInputStream or GOutputStream) that support seeking.
  */

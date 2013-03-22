@@ -77,13 +77,15 @@ private import gio.InputStream;
 private import gio.FilterInputStream;
 
 /**
- * Description
  * Buffered input stream implements GFilterInputStream and provides
  * for buffered reads.
+ *
  * By default, GBufferedInputStream's buffer size is set at 4 kilobytes.
+ *
  * To create a buffered input stream, use g_buffered_input_stream_new(),
  * or g_buffered_input_stream_new_sized() to specify the buffer's size at
  * construction.
+ *
  * To get the size of a buffer within a buffered input stream, use
  * g_buffered_input_stream_get_buffer_size(). To change the size of a
  * buffered input stream's buffer, use

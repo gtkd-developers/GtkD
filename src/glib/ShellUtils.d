@@ -68,7 +68,6 @@ private import glib.GException;
 
 
 /**
- * Description
  */
 public class ShellUtils
 {

@@ -98,16 +98,17 @@ private import gio.InitableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GDBusObjectManagerClient is used to create, monitor and delete object
  * proxies for remote objects exported by a GDBusObjectManagerServer (or any
  * code implementing the org.freedesktop.DBus.ObjectManager
  * interface).
+ *
  * Once an instance of this type has been created, you can connect to
  * the "object-added" and
  * "object-removed" signals and inspect the
  * GDBusObjectProxy objects returned by
  * g_dbus_object_manager_get_objects().
+ *
  * If the name for a GDBusObjectManagerClient is not owned by anyone at
  * object construction time, the default behavior is to request the
  * message bus to launch an owner for the name. This behavior can be
@@ -119,6 +120,7 @@ private import gobject.ObjectG;
  * there will be no object proxies
  * (e.g. g_dbus_object_manager_get_objects() returns the empty list) and
  * the "name-owner" property is NULL.
+ *
  * The owner of the requested name can come and go (for example
  * consider a system service being restarted) – GDBusObjectManagerClient
  * handles this case too; simply connect to the "notify"
@@ -140,6 +142,7 @@ private import gobject.ObjectG;
  * "name-owner" will alternate between a name owner
  * (e.g. :1.42) and NULL even in the case where
  * the name of interest is atomically replaced
+ *
  * Ultimately, GDBusObjectManagerClient is used to obtain GDBusProxy
  * instances. All signals (including the
  * org.freedesktop.DBus.Properties::PropertiesChanged
@@ -149,6 +152,7 @@ private import gobject.ObjectG;
  * including the “half the proxy is from the old owner
  * and the other half is from the new owner” problem
  * cannot happen.
+ *
  * To avoid having the application connect to signals on the returned
  * GDBusObjectProxy and GDBusProxy objects, the
  * "interface-added",
@@ -161,6 +165,7 @@ private import gobject.ObjectG;
  * "interface-removed",
  * "interface-proxy-properties-changed" and
  * "interface-proxy-signal".
+ *
  * Note that all callbacks and signals are emitted in the
  * thread-default main loop
  * that the GDBusObjectManagerClient object was constructed

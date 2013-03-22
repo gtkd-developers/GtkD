@@ -84,20 +84,23 @@ private import gio.SeekableIF;
 private import gio.IOStream;
 
 /**
- * Description
  * GFileIOStream provides io streams that both read and write to the same
  * file handle.
+ *
  * GFileIOStream implements GSeekable, which allows the io
  * stream to jump to arbitrary positions in the file and to truncate
  * the file, provided the filesystem of the file supports these
  * operations.
+ *
  * To find the position of a file io stream, use
  * g_seekable_tell().
+ *
  * To find out if a file io stream supports seeking, use g_seekable_can_seek().
  * To position a file io stream, use g_seekable_seek().
  * To find out if a file io stream supports truncating, use
  * g_seekable_can_truncate(). To truncate a file io
  * stream, use g_seekable_truncate().
+ *
  * The default implementation of all the GFileIOStream operations
  * and the implementation of GSeekable just call into the same operations
  * on the output stream.

@@ -79,7 +79,6 @@ version(Tango) {
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class GLConfig : ObjectG
 {

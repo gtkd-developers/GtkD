@@ -75,7 +75,6 @@ private import gio.InetAddress;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GInetAddressMask represents a range of IPv4 or IPv6 addresses
  * described by a base address and a length indicating how many bits
  * of the base address are relevant for matching purposes. These are

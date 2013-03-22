@@ -70,7 +70,6 @@ private import glib.ListG;
 private import gobject.Boxed;
 
 /**
- * Description
  * SRV (service) records are used by some network protocols to provide
  * service-specific aliasing and load-balancing. For example, XMPP
  * (Jabber) uses SRV records to locate the XMPP server for a domain;
@@ -78,6 +77,7 @@ private import gobject.Boxed;
  * specific server hostname like "xmpp.example.com", an XMPP client
  * would look up the "xmpp-client" SRV record for "example.com", and
  * then connect to whatever host was pointed to by that record.
+ *
  * You can use g_resolver_lookup_service() or
  * g_resolver_lookup_service_async() to find the GSrvTargets
  * for a given service. However, if you are simply planning to connect

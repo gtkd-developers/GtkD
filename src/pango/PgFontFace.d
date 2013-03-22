@@ -69,7 +69,6 @@ private import pango.PgFontDescription;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Pango supports a flexible architecture where a
  * particular rendering architecture can supply an
  * implementation of fonts. The PangoFont structure

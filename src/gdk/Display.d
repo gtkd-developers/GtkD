@@ -90,11 +90,13 @@ private import gdk.Window;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GdkDisplay objects purpose are two fold:
+ *
  *  To manage and provide information about input devices (pointers
  *  and keyboards)
+ *
  *  To manage and provide information about the available GdkScreens
+ *
  * GdkDisplay objects are the GDK representation of an X Display,
  * which can be described as a workstation consisting of
  * a keyboard, a pointing device (such as a mouse) and one or more
@@ -102,6 +104,7 @@ private import gobject.ObjectG;
  * It is used to open and keep track of various GdkScreen objects
  * currently instantiated by the application. It is also used to
  * access the keyboard(s) and mouse pointer(s) of the display.
+ *
  * Most of the input device handling has been factored out into
  * the separate GdkDeviceManager object. Every display has a
  * device manager, which you can obtain using

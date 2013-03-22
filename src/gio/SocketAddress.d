@@ -76,7 +76,6 @@ private import gio.SocketConnectableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GSocketAddress is the equivalent of struct sockaddr
  * in the BSD sockets API. This is an abstract class; use
  * GInetSocketAddress for internet sockets, or GUnixSocketAddress

@@ -68,10 +68,10 @@ public import glib.GException;
 
 
 /**
- * Description
  * GConverter is implemented by objects that convert
  * binary data in various ways. The conversion can be
  * stateful and may fail at any place.
+ *
  * Some example conversions are: character set conversion,
  * compression, decompression and regular expression
  * replace.

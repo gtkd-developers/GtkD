@@ -66,7 +66,6 @@ private import glib.Str;
 private import gsv.SourceGutterRenderer;
 
 /**
- * Description
  */
 public class SourceGutterRendererText : SourceGutterRenderer
 {

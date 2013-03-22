@@ -82,9 +82,9 @@ version(Tango) {
 
 
 /**
- * Description
  * This section describes a number of utility functions for creating,
  * duplicating, and manipulating strings.
+ *
  * Note that the functions g_printf(), g_fprintf(), g_sprintf(),
  * g_snprintf(), g_vprintf(), g_vfprintf(), g_vsprintf() and g_vsnprintf()
  * are declared in the header gprintf.h which is
@@ -93,6 +93,7 @@ version(Tango) {
  * stdio.h), so you'll have to explicitly include
  * <glib/gprintf.h> in order to use the GLib
  * printf() functions.
+ *
  * While you may use the printf() functions
  * to format UTF-8 strings, notice that the precision of a
  * %Ns parameter is interpreted as the

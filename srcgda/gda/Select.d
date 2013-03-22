@@ -70,7 +70,6 @@ private import gda.DataModel;
 private import gda.DataModelArray;
 
 /**
- * Description
  */
 public class Select : DataModelArray
 {

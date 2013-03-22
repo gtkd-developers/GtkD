@@ -82,13 +82,13 @@ private import gtk.ScrollableT;
 private import gtk.Container;
 
 /**
- * Description
  * GtkLayout is similar to GtkDrawingArea in that it's a "blank slate"
  * and doesn't do anything but paint a blank background by default. It's
  * different in that it supports scrolling natively (you can add it to a
  * GtkScrolledWindow), and it can contain child widgets, since it's a
  * GtkContainer. However if you're just going to draw, a GtkDrawingArea
  * is a better choice since it has lower overhead.
+ *
  * When handling expose events on a GtkLayout, you must draw to
  * GTK_LAYOUT (layout)->bin_window, rather than to
  * GTK_WIDGET (layout)->window, as you would for a drawing

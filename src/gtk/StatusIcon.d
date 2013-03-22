@@ -88,22 +88,24 @@ private import gtk.Tooltip;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The "system tray" or notification area is normally used for transient icons
  * that indicate some special state. For example, a system tray icon might
  * appear to tell the user that they have new mail, or have an incoming instant
  * message, or something along those lines. The basic idea is that creating an
  * icon in the notification area is less annoying than popping up a dialog.
+ *
  * A GtkStatusIcon object can be used to display an icon in a "system tray".
  * The icon can have a tooltip, and the user can interact with it by
  * activating it or popping up a context menu. Critical information should
  * not solely be displayed in a GtkStatusIcon, since it may not be
  * visible (e.g. when the user doesn't have a notification area on his panel).
  * This can be checked with gtk_status_icon_is_embedded().
+ *
  * On X11, the implementation follows the freedesktop.org "System Tray"
  * specification.
  * Implementations of the "tray" side of this specification can
  * be found e.g. in the GNOME 2 and KDE panel applications.
+ *
  * Note that a GtkStatusIcon is not a widget, but just
  * a GObject. Making it a widget would be impractical, since the system tray
  * on Win32 doesn't allow to embed arbitrary widgets.

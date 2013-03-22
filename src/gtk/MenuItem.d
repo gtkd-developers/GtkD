@@ -81,16 +81,19 @@ private import gtk.ActivatableIF;
 private import gtk.Bin;
 
 /**
- * Description
  * The GtkMenuItem widget and the derived widgets are the only valid
  * childs for menus. Their function is to correctly handle highlighting,
  * alignment, events and submenus.
+ *
  * As it derives from GtkBin it can hold any valid child widget, altough
  * only a few are really useful.
+ *
  * GtkMenuItem as GtkBuildable
+ *
  * The GtkMenuItem implementation of the GtkBuildable interface
  * supports adding a submenu by specifying "submenu" as the "type"
  * attribute of a <child> element.
+ *
  * $(DDOC_COMMENT example)
  */
 public class MenuItem : Bin, ActivatableIF

@@ -65,7 +65,6 @@ private import gobject.ObjectG;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkSourceStyle structure is used to describe text attributes
  * which are set when given style is used.
  */

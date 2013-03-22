@@ -83,27 +83,38 @@ private import gtk.Window;
 private import gtk.Dialog;
 
 /**
- * Description
  * GtkPrintUnixDialog implements a print dialog for platforms
  * which don't provide a native print dialog, like Unix. It can
  * be used very much like any other GTK+ dialog, at the cost of
  * the portability offered by the
  * high-level printing API
+ *
  * In order to print something with GtkPrintUnixDialog, you need
  * to use gtk_print_unix_dialog_get_selected_printer() to obtain
  * a GtkPrinter object and use it to construct a GtkPrintJob using
  * gtk_print_job_new().
+ *
  * GtkPrintUnixDialog uses the following response values:
+ *
  * GTK_RESPONSE_OK
+ *
  * for the "Print" button
+ *
  * GTK_RESPONSE_APPLY
+ *
  * for the "Preview" button
+ *
  * GTK_RESPONSE_CANCEL
+ *
  * for the "Cancel" button
+ *
  * Printing support was added in GTK+ 2.10.
+ *
  * GtkPrintUnixDialog as GtkBuildable
+ *
  * The GtkPrintUnixDialog implementation of the GtkBuildable interface exposes its
  * notebook internal children with the name "notebook".
+ *
  * $(DDOC_COMMENT example)
  */
 public class PrintUnixDialog : Dialog

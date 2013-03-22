@@ -106,24 +106,29 @@ private import gdk.Visual;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GdkWindow is a (usually) rectangular region on the screen.
  * It's a low-level object, used to implement high-level objects such as
  * GtkWidget and GtkWindow on the GTK+ level. A GtkWindow is a toplevel
  * window, the thing a user might think of as a "window" with a titlebar and
  * so on; a GtkWindow may contain many GdkWindows. For example, each
  * GtkButton has a GdkWindow associated with it.
+ *
  * Composited Windows
+ *
  * Normally, the windowing system takes care of rendering the contents of a
  * child window onto its parent window. This mechanism can be intercepted by
  * calling gdk_window_set_composited() on the child window. For a
  * composited window it is the responsibility of the
  * application to render the window contents at the right spot.
+ *
  * <hr>
+ *
  * Offscreen Windows
+ *
  * Offscreen windows are more general than composited windows, since they allow
  * not only to modify the rendering of the child window onto its parent, but
  * also to apply coordinate transformations.
+ *
  * To integrate an offscreen window into a window hierarchy, one has to call
  * gdk_offscreen_window_set_embedder() and handle a number of signals. The
  * "pick-embedded-child" signal on the embedder window is used to
@@ -131,6 +136,7 @@ private import gobject.ObjectG;
  * "to-embedder" and "from-embedder" signals on the
  * offscreen window are used to translate coordinates between the embedder and
  * the offscreen window.
+ *
  * For rendering an offscreen window onto its embedder, the contents of the
  * offscreen window are available as a surface, via
  * gdk_offscreen_window_get_surface().

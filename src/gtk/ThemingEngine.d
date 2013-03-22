@@ -98,15 +98,16 @@ version(Tango) {
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkThemingEngine is the object used for rendering themed content
  * in GTK+ widgets. Even though GTK+ has a default implementation,
  * it can be overridden in CSS files by enforcing a GtkThemingEngine
  * object to be loaded as a module.
+ *
  * In order to implement a theming engine, a GtkThemingEngine subclass
  * must be created, alongside the CSS file that will reference it, the
  * theming engine would be created as an .so library, and installed in
  * $(gtk-modules-dir)/theming-engines/.
+ *
  * GtkThemingEngines have limited access to the object they are
  * rendering, the GtkThemingEngine API has read-only accessors to the
  * style information contained in the rendered object's GtkStyleContext.

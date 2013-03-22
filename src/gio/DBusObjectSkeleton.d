@@ -76,10 +76,10 @@ private import gio.DBusObjectIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GDBusObjectSkeleton instance is essentially a group of D-Bus
  * interfaces. The set of exported interfaces on the object may be
  * dynamic and change at runtime.
+ *
  * This type is intended to be used with GDBusObjectManager.
  */
 public class DBusObjectSkeleton : ObjectG, DBusObjectIF

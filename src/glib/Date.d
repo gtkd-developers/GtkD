@@ -69,7 +69,6 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * The GDate data structure represents a day between January 1, Year 1,
  * and sometime a few thousand years in the future (right now it will go
  * to the year 65535 or so, but g_date_set_parse() only parses up to the
@@ -79,6 +78,7 @@ private import gtkc.paths;
  * calendar forward and backward in time; there is no attempt to change
  * the calendar to match time periods or locations. GDate does not store
  * time information; it represents a day.
+ *
  * The GDate implementation has several nice features; it is only a
  * 64-bit struct, so storing large numbers of dates is very efficient. It
  * can keep both a Julian and day-month-year representation of the date,
@@ -88,6 +88,7 @@ private import gtkc.paths;
  * ("Julian" dates in the GDate API aren't really Julian dates in the
  * technical sense; technically, Julian dates count from the start of the
  * Julian period, Jan 1, 4713 BC).
+ *
  * GDate is simple to use. First you need a "blank" date; you can get a
  * dynamically allocated date from g_date_new(), or you can declare an
  * automatic variable or array and initialize it to a sane state by
@@ -101,9 +102,11 @@ private import gtkc.paths;
  * g_date_valid() predicate. g_date_valid() is also used to check for
  * errors with g_date_set_parse() and other functions that can
  * fail. Dates can be invalidated by calling g_date_clear() again.
+ *
  * It is very important to use the API to access the GDate
  * struct. Often only the day-month-year or only the Julian
  * representation is valid. Sometimes neither is valid. Use the API.
+ *
  * GLib also features GDateTime which represents a precise time.
  */
 public class Date

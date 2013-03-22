@@ -74,9 +74,9 @@ private import gstreamer.Plugin;
 
 
 /**
- * Description
  * The following functions allow you to detect the media type of an unknown
  * stream.
+ *
  * Last reviewed on 2005-11-09 (0.9.4)
  */
 public class TypeFind

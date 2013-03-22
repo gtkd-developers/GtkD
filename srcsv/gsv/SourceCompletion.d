@@ -88,7 +88,6 @@ private import gtk.TextIter;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class SourceCompletion : ObjectG
 {

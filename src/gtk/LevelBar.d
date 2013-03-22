@@ -68,16 +68,18 @@ private import glib.Str;
 private import gtk.Widget;
 
 /**
- * Description
  * The GtkLevelBar is a bar widget that can be used
  * as a level indicator. Typical use cases are displaying the strength
  * of a password, or showing the charge level of a battery.
+ *
  * Use gtk_level_bar_set_value() to set the current value, and
  * gtk_level_bar_add_offset_value() to set the value offsets at which
  * the bar will be considered in a different state. GTK will add two offsets
  * by default on the level bar: GTK_LEVEL_BAR_OFFSET_LOW and
  * GTK_LEVEL_BAR_OFFSET_HIGH, with values 0.25 and 0.75 respectively.
+ *
  * $(DDOC_COMMENT example)
+ *
  * The default interval of values is between zero and one, but it's possible to
  * modify the interval using gtk_level_bar_set_min_value() and
  * gtk_level_bar_set_max_value(). The value will be always drawn in proportion to

@@ -74,17 +74,20 @@ private import gtk.Widget;
 private import gtk.ToolButton;
 
 /**
- * Description
  * A GtkMenuToolButton is a GtkToolItem that contains a button and
  * a small additional button with an arrow. When clicked, the arrow
  * button pops up a dropdown menu.
+ *
  * Use gtk_menu_tool_button_new() to create a new
  * GtkMenuToolButton. Use gtk_menu_tool_button_new_from_stock() to
  * create a new GtkMenuToolButton containing a stock item.
+ *
  * GtkMenuToolButton as GtkBuildable
+ *
  * The GtkMenuToolButton implementation of the GtkBuildable interface
  * supports adding a menu by specifying "menu" as the "type"
  * attribute of a <child> element.
+ *
  * $(DDOC_COMMENT example)
  */
 public class MenuToolButton : ToolButton

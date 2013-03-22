@@ -71,7 +71,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * An ATK object which encapsulates a link or set of links
  * (for instance in the case of client-side image maps) in a hypertext document.
  * It may implement the AtkAction interface. AtkHyperlink may also be used

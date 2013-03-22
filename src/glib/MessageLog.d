@@ -64,9 +64,9 @@ private import glib.Str;
 
 
 /**
- * Description
  * These functions provide support for logging error messages
  * or messages used for debugging.
+ *
  * There are several built-in levels of messages, defined in
  * GLogLevelFlags. These can be extended with user-defined levels.
  */

@@ -74,22 +74,26 @@ private import gtk.Widget;
 private import gtk.Window;
 
 /**
- * Description
  * A GtkAssistant is a widget used to represent a generally complex
  * operation splitted in several steps, guiding the user through its pages
  * and controlling the page flow to collect the necessary data.
+ *
  * The design of GtkAssistant is that it controls what buttons to show and
  * to make sensitive, based on what it knows about the page sequence and
  * the type of each page, in
  * addition to state information like the page
  * completion and
  * committed status.
+ *
  * If you have a case that doesn't quite fit in GtkAssistants way of
  * handling buttons, you can use the GTK_ASSISTANT_PAGE_CUSTOM page type
  * and handle buttons yourself.
+ *
  * GtkAssistant as GtkBuildable
+ *
  * The GtkAssistant implementation of the GtkBuildable interface exposes the
  * action_area as internal children with the name "action_area".
+ *
  * To add pages to an assistant in GtkBuilder, simply add it as a
  * <child> to the GtkAssistant object, and set its child properties
  * as necessary.

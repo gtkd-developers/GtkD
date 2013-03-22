@@ -70,7 +70,6 @@ private import gio.DBusConnection;
 private import gio.MenuModel;
 
 /**
- * Description
  * GDBusMenuModel is an implementation of GMenuModel that can be used
  * as a proxy for a menu model that is exported over D-Bus with
  * g_dbus_connection_export_menu_model().

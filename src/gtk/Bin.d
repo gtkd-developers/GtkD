@@ -67,10 +67,10 @@ private import gtk.Widget;
 private import gtk.Container;
 
 /**
- * Description
  * The GtkBin widget is a container with just one child.
  * It is not very useful itself, but it is useful for deriving subclasses,
  * since it provides common code needed for handling a single child widget.
+ *
  * Many GTK+ widgets are subclasses of GtkBin, including GtkWindow,
  * GtkButton, GtkFrame, GtkHandleBox or GtkScrolledWindow.
  */

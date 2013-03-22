@@ -70,7 +70,6 @@ private import pango.PgMatrix;
 
 
 /**
- * Description
  * The capital-letter macros defined here can be used to check the version of
  * Pango at compile-time, and to encode Pango versions into
  * integers.

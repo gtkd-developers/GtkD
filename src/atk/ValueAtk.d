@@ -66,7 +66,6 @@ private import gobject.Value;
 
 
 /**
- * Description
  * AtkValue should be implemented for components which either display a
  * value from a bounded range, or which allow the user to specify a value
  * from a bounded range, or both. For instance, most sliders and range

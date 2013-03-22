@@ -72,16 +72,21 @@ private import gtk.Widget;
 private import gtk.Dialog;
 
 /**
- * Description
  * The GtkFontSelectionDialog widget is a dialog box for selecting a font.
+ *
  * To set the font which is initially selected, use
  * gtk_font_selection_dialog_set_font_name().
+ *
  * To get the selected font use gtk_font_selection_dialog_get_font_name().
+ *
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_dialog_set_preview_text().
+ *
  * In GTK+ 3.2, GtkFontSelectionDialog has been deprecated in favor of
  * GtkFontChooserDialog.
+ *
  * GtkFontSelectionDialog as GtkBuildable
+ *
  * The GtkFontSelectionDialog implementation of the GtkBuildable interface
  * exposes the embedded GtkFontSelection as internal child with the
  * name "font_selection". It also exposes the buttons with the names

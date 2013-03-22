@@ -76,7 +76,6 @@ private import gio.OutputStream;
 private import gio.FilterOutputStream;
 
 /**
- * Description
  * Data output stream implements GOutputStream and includes functions for
  * writing data directly to an output stream.
  */

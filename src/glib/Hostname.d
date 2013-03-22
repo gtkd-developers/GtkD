@@ -64,10 +64,10 @@ private import glib.Str;
 
 
 /**
- * Description
  * Functions for manipulating internet hostnames; in particular, for
  * converting between Unicode and ASCII-encoded forms of
  * Internationalized Domain Names (IDNs).
+ *
  * The Internationalized Domain
  * Names for Applications (IDNA) standards allow for the use
  * of Unicode domain names in applications, while providing

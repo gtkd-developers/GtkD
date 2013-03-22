@@ -62,7 +62,6 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
  * Threads act almost like processes, but unlike processes all threads
  * of one process share the same memory. This is good, as it provides
  * easy communication between the involved threads via this shared
@@ -72,6 +71,7 @@ private import glib.ConstructionException;
  * assumptions on the order of execution of code running in different
  * threads can be made, unless order is explicitly forced by the
  * programmer through synchronization primitives.
+ *
  * The aim of the thread-related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
@@ -82,22 +82,27 @@ private import glib.ConstructionException;
  * thread has a private instance of (GPrivate). There are facilities
  * for one-time initialization (GOnce, g_once_init_enter()). Finally,
  * there are primitives to create and manage threads (GThread).
+ *
  * The GLib threading system used to be initialized with g_thread_init().
  * This is no longer necessary. Since version 2.32, the GLib threading
  * system is automatically initialized at the start of your program,
  * and all thread-creation functions and synchronization primitives
  * are available right away.
+ *
  * Note that it is not safe to assume that your program has no threads
  * even if you don't call g_thread_new() yourself. GLib and GIO can
  * and will create threads for their own purposes in some cases, such
  * as when using g_unix_signal_source_new() or when using GDBus.
+ *
  * Originally, UNIX did not have threads, and therefore some traditional
  * UNIX APIs are problematic in threaded programs. Some notable examples
  * are
+ *
  *  C library functions that return data in statically allocated
  *  buffers, such as strtok() or strerror(). For many of these,
  *  there are thread-safe variants with a _r suffix, or you can
  *  look at corresponding GLib APIs (like g_strsplit() or g_strerror()).
+ *
  * setenv() and unsetenv() manipulate the process environment in
  *  a not thread-safe way, and may interfere with getenv() calls
  *  in other threads. Note that getenv() calls may be
@@ -105,6 +110,7 @@ private import glib.ConstructionException;
  *  calls getenv() under the covers. In general, it is best to treat
  *  the environment as readonly. If you absolutely have to modify the
  *  environment, do it early in main(), when no other threads are around yet.
+ *
  * setlocale() changes the locale for the entire process, affecting
  *  all threads. Temporary changes to the locale are often made to
  *  change the behavior of string scanning or formatting functions
@@ -112,14 +118,17 @@ private import glib.ConstructionException;
  *  (like g_ascii_formatd() or g_ascii_strtod()) that can often be
  *  used as an alternative. Or you can use the uselocale() function
  *  to change the locale only for the current thread.
+ *
  * fork() only takes the calling thread into the child's copy of the
  *  process image. If other threads were executing in critical
  *  sections they could have left mutexes locked which could easily
  *  cause deadlocks in the new child. For this reason, you should
  *  call exit() or exec() as soon as possible in the child and only
  *  make signal-safe library calls before that.
+ *
  * daemon() uses fork() in a way contrary to what is described
  *  above. It should not be used with GLib programs.
+ *
  * GLib itself is internally completely thread-safe (all global data is
  * automatically locked), but individual data structure instances are
  * not automatically locked for performance reasons. For example,

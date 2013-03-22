@@ -78,15 +78,17 @@ private import gtk.Widget;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Basic tooltips can be realized simply by using gtk_widget_set_tooltip_text()
  * or gtk_widget_set_tooltip_markup() without any explicit tooltip object.
+ *
  * When you need a tooltip with a little more fancy contents, like adding an
  * image, or you want the tooltip to have different contents per GtkTreeView
  * row or cell, you will have to do a little more work:
+ *
  * Set the "has-tooltip" property to TRUE, this will make GTK+
  * monitor the widget for motion and related events which are needed to
  * determine when and where to show a tooltip.
+ *
  * Connect to the "query-tooltip" signal. This signal will be
  * emitted when a tooltip is supposed to be shown. One of the arguments passed
  * to the signal handler is a GtkTooltip object. This is the object that we
@@ -94,15 +96,20 @@ private import gobject.ObjectG;
  * using functions like gtk_tooltip_set_icon(). There are functions for setting
  * the tooltip's markup, setting an image from a stock icon, or even putting in
  * a custom widget.
+ *
  * Return TRUE from your query-tooltip handler. This causes the tooltip to be
  * show. If you return FALSE, it will not be shown.
+ *
  * In the probably rare case where you want to have even more control over the
  * tooltip that is about to be shown, you can set your own GtkWindow which
  * will be used as tooltip window. This works as follows:
+ *
  * Set "has-tooltip" and connect to "query-tooltip" as
  * before.
+ *
  * Use gtk_widget_set_tooltip_window() to set a GtkWindow created by you as
  * tooltip window.
+ *
  * In the "query-tooltip" callback you can access your window using
  * gtk_widget_get_tooltip_window() and manipulate as you wish. The semantics of
  * the return value are exactly as before, return TRUE to show the window,

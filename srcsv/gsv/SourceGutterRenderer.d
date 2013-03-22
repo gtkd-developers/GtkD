@@ -82,7 +82,6 @@ private import gtk.Tooltip;
 private import gobject.ObjectG;
 
 /**
- * Description
  */
 public class SourceGutterRenderer : ObjectG
 {

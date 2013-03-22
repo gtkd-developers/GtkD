@@ -74,18 +74,20 @@ private import pango.PgLayout;
 private import gtk.Range;
 
 /**
- * Description
  * A GtkScale is a slider control used to select a numeric value.
  * To use it, you'll probably want to investigate the methods on
  * its base class, GtkRange, in addition to the methods for GtkScale itself.
  * To set the value of a scale, you would normally use gtk_range_set_value().
  * To detect changes to the value, you would normally use the
  * "value-changed" signal.
+ *
  * Note that using the same upper and lower bounds for the GtkScale (through
  * the GtkRange methods) will hide the slider itself. This is useful for
  * applications that want to show an undeterminate value on the scale, without
  * changing the layout of the application (such as movie or music players).
+ *
  * GtkScale as GtkBuildable
+ *
  * GtkScale supports a custom <marks> element, which
  * can contain multiple <mark> elements. The "value" and "position"
  * attributes have the same meaning as gtk_scale_add_mark() parameters of the

@@ -77,22 +77,28 @@ private import gtk.Window;
 private import gtk.Dialog;
 
 /**
- * Description
  * GtkMessageDialog presents a dialog with an image representing the type of
  * message (Error, Question, etc.) alongside some message text. It's simply a
  * convenience widget; you could construct the equivalent of GtkMessageDialog
  * from GtkDialog without too much effort, but GtkMessageDialog saves typing.
+ *
  * One difference from GtkDialog is that GtkMessageDialog sets the
  * "skip-taskbar-hint" property to TRUE, so that the dialog is hidden
  * from the taskbar by default.
+ *
  * The easiest way to do a modal message dialog is to use gtk_dialog_run(), though
  * you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
  * makes the dialog modal and waits for the user to respond to it. gtk_dialog_run()
  * returns when any dialog button is clicked.
+ *
  * $(DDOC_COMMENT example)
+ *
  * You might do a non-modal GtkMessageDialog as follows:
+ *
  * $(DDOC_COMMENT example)
+ *
  * GtkMessageDialog as GtkBuildable
+ *
  * The GtkMessageDialog implementation of the GtkBuildable interface exposes
  * the message area as an internal child with the name "message_area".
  */

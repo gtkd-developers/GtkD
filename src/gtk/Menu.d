@@ -88,20 +88,24 @@ private import gtk.Widget;
 private import gtk.MenuShell;
 
 /**
- * Description
  * A GtkMenu is a GtkMenuShell that implements a drop down menu
  * consisting of a list of GtkMenuItem objects which can be navigated
  * and activated by the user to perform application functions.
+ *
  * A GtkMenu is most commonly dropped down by activating a
  * GtkMenuItem in a GtkMenuBar or popped up by activating a
  * GtkMenuItem in another GtkMenu.
+ *
  * A GtkMenu can also be popped up by activating a GtkComboBox.
  * Other composite widgets such as the GtkNotebook can pop up a
  * GtkMenu as well.
+ *
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
  */
 public class Menu : MenuShell

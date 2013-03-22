@@ -76,7 +76,6 @@ private import pango.PgFontFamily;
 
 
 /**
- * Description
  * GtkFontChooser is an interface that can be implemented by widgets
  * displaying the list of fonts. In GTK+, the main objects
  * that implement this interface are GtkFontChooserWidget,

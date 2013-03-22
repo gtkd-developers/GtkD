@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 private import gtk.Bin;
 
 /**
- * Description
  * The GtkEventBox widget is a subclass of GtkBin which also has its
  * own window. It is useful since it allows you to catch events for widgets
  * which do not have their own window.

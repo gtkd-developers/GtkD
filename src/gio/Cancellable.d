@@ -74,7 +74,6 @@ private import glib.Source;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GCancellable is a thread-safe operation cancellation stack used
  * throughout GIO to allow for cancellation of synchronous and
  * asynchronous operations.

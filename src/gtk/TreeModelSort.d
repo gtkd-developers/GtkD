@@ -88,7 +88,6 @@ private import gtk.TreeSortableIF;
 private import gobject.ObjectG;
 
 /**
- * Description
  * The GtkTreeModelSort is a model which implements the GtkTreeSortable
  * interface. It does not hold any data itself, but rather is created with
  * a child model and proxies its data. It has identical column types to
@@ -96,6 +95,7 @@ private import gobject.ObjectG;
  * primary purpose of this model is to provide a way to sort a different
  * model without modifying it. Note that the sort function used by
  * GtkTreeModelSort is not guaranteed to be stable.
+ *
  * The use of this is best demonstrated through an example. In the
  * following sample code we create two GtkTreeView widgets each with a
  * view of the same data. As the model is wrapped here by a
@@ -103,12 +103,15 @@ private import gobject.ObjectG;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
+ *
  * $(DDOC_COMMENT example)
+ *
  * To demonstrate how to access the underlying child model from the sort
  * model, the next example will be a callback for the GtkTreeSelection
  * "changed" signal. In this callback, we get a string
  * from COLUMN_1 of the model. We then modify the string, find the same
  * selected row on the child model, and change the row there.
+ *
  * $(DDOC_COMMENT example)
  */
 public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortableIF

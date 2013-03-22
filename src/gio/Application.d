@@ -92,12 +92,12 @@ private import gio.ActionMapT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GApplication is the foundation of an application. It wraps some
  * low-level platform-specific services and is intended to act as the
  * foundation for higher-level application classes such as
  * GtkApplication or MxApplication. In general, you should not use
  * this class outside of a higher level framework.
+ *
  * GApplication provides convenient life cycle management by maintaining
  * a use count for the primary application instance.
  * The use count can be changed using g_application_hold() and
@@ -105,6 +105,7 @@ private import gobject.ObjectG;
  * Higher-level classes such as GtkApplication employ the use count to
  * ensure that the application stays alive as long as it has any opened
  * windows.
+ *
  * Another feature that GApplication (optionally) provides is process
  * uniqueness. Applications can make use of this functionality by
  * providing a unique application ID. If given, only one application
@@ -116,6 +117,7 @@ private import gobject.ObjectG;
  * called the primary instance; for non-unique
  * applications this is the always the current instance.
  * On Linux, the D-Bus session bus is used for communication.
+ *
  * The use of GApplication differs from some other commonly-used
  * uniqueness libraries (such as libunique) in important ways. The
  * application is not expected to manually register itself and check if
@@ -128,11 +130,13 @@ private import gobject.ObjectG;
  * If the application is not the primary instance then a signal is sent
  * to the primary instance and g_application_run() promptly returns.
  * See the code examples below.
+ *
  * If used, the expected form of an application identifier is very close
  * to that of of a
  * DBus bus name.
  * Examples include: "com.example.MyApp", "org.example.internal-apps.Calculator".
  * For details on valid application identifiers, see g_application_id_is_valid().
+ *
  * On Linux, the application identifier is claimed as a well-known bus name
  * on the user's session bus. This means that the uniqueness of your
  * application is scoped to the current session. It also means that your
@@ -145,6 +149,7 @@ private import gobject.ObjectG;
  * attempts to acquire the bus name of your application (which happens in
  * g_application_register()). Unfortunately, this means that you cannot use
  * g_application_get_is_remote() to decide if you want to register object paths.
+ *
  * GApplication also implements the GActionGroup and GActionMap
  * interfaces and lets you easily export actions by adding them with
  * g_action_map_add_action(). When invoking an action by calling
@@ -153,13 +158,17 @@ private import gobject.ObjectG;
  * the session bus, and GIO provides the GDBusActionGroup wrapper to
  * conveniently access them remotely. GIO provides a GDBusMenuModel wrapper
  * for remote access to exported GMenuModels.
+ *
  * There is a number of different entry points into a GApplication:
+ *
  * via 'Activate' (i.e. just starting the application)
  * via 'Open' (i.e. opening some files)
  * by handling a command-line
  * via activating an action
+ *
  * The "startup" signal lets you handle the application
  * initialization for all of these in a single place.
+ *
  * Regardless of which of these entry points is used to start the application,
  * GApplication passes some platform
  * data from the launching instance to the primary instance,
@@ -170,6 +179,7 @@ private import gobject.ObjectG;
  * available via g_application_command_line_get_cwd(),
  * g_application_command_line_get_environ() and
  * g_application_command_line_get_platform_data().
+ *
  * As the name indicates, the platform data may vary depending on the
  * operating system, but it always includes the current directory (key
  * "cwd"), and optionally the environment (ie the set of environment
@@ -179,13 +189,18 @@ private import gobject.ObjectG;
  * can add their own platform data by overriding the add_platform_data
  * virtual function. For instance, GtkApplication adds startup notification
  * data in this way.
+ *
  * To parse commandline arguments you may handle the
  * "command-line" signal or override the local_command_line()
  * vfunc, to parse them in either the primary instance or the local instance,
  * respectively.
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
+ *
  * $(DDOC_COMMENT example)
  */
 public class Application : ObjectG, ActionGroupIF, ActionMapIF

@@ -76,14 +76,15 @@ private import gtk.PageSetup;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkPrinter object represents a printer. You only need to
  * deal directly with printers if you use the non-portable
  * GtkPrintUnixDialog API.
+ *
  * A GtkPrinter allows to get status information about the printer,
  * such as its description, its location, the number of queued jobs,
  * etc. Most importantly, a GtkPrinter object can be used to create
  * a GtkPrintJob object, which lets you print to the printer.
+ *
  * Printing support was added in GTK+ 2.10.
  */
 public class Printer : ObjectG

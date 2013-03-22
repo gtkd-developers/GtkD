@@ -71,33 +71,40 @@ private import gstreamer.Caps;
 
 
 /**
- * Description
  * Buffers are the basic unit of data transfer in GStreamer. The GstBuffer
  * type provides all the state necessary to define a region of memory as part
  * of a stream. Sub-buffers are also supported, allowing a smaller region of a
  * buffer to become its own buffer, with mechanisms in place to ensure that
  * neither memory space goes away prematurely.
+ *
  * Buffers are usually created with gst_buffer_new(). After a buffer has been
  * created one will typically allocate memory for it and set the size of the
  * buffer data. The following example creates a buffer that can hold a given
  * video frame with a given width, height and bits per plane.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Alternatively, use gst_buffer_new_and_alloc()
  * to create a buffer with preallocated data of a given size.
+ *
  * The data pointed to by the buffer can be retrieved with the GST_BUFFER_DATA()
  * macro. The size of the data can be found with GST_BUFFER_SIZE(). For buffers
  * of size 0, the data pointer is undefined (usually NULL) and should never be used.
+ *
  * If an element knows what pad you will push the buffer out on, it should use
  * gst_pad_alloc_buffer() instead to create a buffer. This allows downstream
  * elements to provide special buffers to write in, like hardware buffers.
+ *
  * A buffer has a pointer to a GstCaps describing the media type of the data
  * in the buffer. Attach caps to the buffer with gst_buffer_set_caps(); this
  * is typically done before pushing out a buffer using gst_pad_push() so that
  * the downstream element knows the type of the buffer.
+ *
  * A buffer will usually have a timestamp, and a duration, but neither of these
  * are guaranteed (they may be set to GST_CLOCK_TIME_NONE). Whenever a
  * meaningful value can be given for these, they should be set. The timestamp
  * and duration are measured in nanoseconds (they are GstClockTime values).
+ *
  * A buffer can also have one or both of a start and an end offset. These are
  * media-type specific. For video buffers, the start offset will generally be
  * the frame number. For audio buffers, it will be the number of samples
@@ -106,29 +113,38 @@ private import gstreamer.Caps;
  * the end of the buffer. These can only be meaningfully interpreted if you
  * know the media type of the buffer (the GstCaps set on it). Either or both
  * can be set to GST_BUFFER_OFFSET_NONE.
+ *
  * gst_buffer_ref() is used to increase the refcount of a buffer. This must be
  * done when you want to keep a handle to the buffer after pushing it to the
  * next element.
+ *
  * To efficiently create a smaller buffer out of an existing one, you can
  * use gst_buffer_create_sub().
+ *
  * If a plug-in wants to modify the buffer data in-place, it should first obtain
  * a buffer that is safe to modify by using gst_buffer_make_writable(). This
  * function is optimized so that a copy will only be made when it is necessary.
+ *
  * A plugin that only wishes to modify the metadata of a buffer, such as the
  * offset, timestamp or caps, should use gst_buffer_make_metadata_writable(),
  * which will create a subbuffer of the original buffer to ensure the caller
  * has sole ownership, and not copy the buffer data.
+ *
  * Several flags of the buffer can be set and unset with the
  * GST_BUFFER_FLAG_SET() and GST_BUFFER_FLAG_UNSET() macros. Use
  * GST_BUFFER_FLAG_IS_SET() to test if a certain GstBufferFlag is set.
+ *
  * Buffers can be efficiently merged into a larger buffer with
  * gst_buffer_merge() and gst_buffer_span() if the gst_buffer_is_span_fast()
  * function returns TRUE.
+ *
  * An element should either unref the buffer or push it out on a src pad
  * using gst_pad_push() (see GstPad).
+ *
  * Buffers are usually freed by unreffing them with gst_buffer_unref(). When
  * the refcount drops to 0, any data pointed to by GST_BUFFER_MALLOCDATA() will
  * also be freed.
+ *
  * Last reviewed on August 11th, 2006 (0.10.10)
  */
 public class Buffer

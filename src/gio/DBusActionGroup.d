@@ -80,7 +80,6 @@ private import gio.RemoteActionGroupT;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GDBusActionGroup is an implementation of the GActionGroup
  * interface that can be used as a proxy for an action group
  * that is exported over D-Bus with g_dbus_connection_export_action_group().

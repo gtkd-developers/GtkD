@@ -66,7 +66,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * Description
  * Holds a password used in TLS.
  */
 public class TlsPassword : ObjectG

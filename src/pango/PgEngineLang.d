@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 private import pango.PgEngine;
 
 /**
- * Description
  * The language engines are rendering-system independent
  * engines that determine line, word, and character breaks for character strings.
  * These engines are used in pango_break().

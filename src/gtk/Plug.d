@@ -70,7 +70,6 @@ private import gdk.Display;
 private import gtk.Window;
 
 /**
- * Description
  * Together with GtkSocket, GtkPlug provides the ability to embed
  * widgets from one process into another process in a fashion that is
  * transparent to the user. One process creates a GtkSocket widget
@@ -78,13 +77,16 @@ private import gtk.Window;
  * which then creates a GtkPlug with that window ID. Any widgets
  * contained in the GtkPlug then will appear inside the first
  * application's window.
+ *
  * The communication between a GtkSocket and a GtkPlug follows the
  * XEmbed
  * protocol. This protocol has also been implemented in other toolkits,
  * e.g. Qt, allowing the same level of
  * integration when embedding a Qt widget
  * in GTK+ or vice versa.
+ *
  * Note
+ *
  * The GtkPlug and GtkSocket widgets are only available when GTK+
  * is compiled for the X11 platform and GDK_WINDOWING_X11 is defined.
  * They can only be used on a GdkX11Display. To use GtkPlug and

@@ -112,22 +112,25 @@ private import gstreamer.Bus;
 private import gstreamer.ObjectGst;
 
 /**
- * Description
  * GstElement is the abstract base class needed to construct an element that
  * can be used in a GStreamer pipeline. Please refer to the plugin writers
  * guide for more information on creating GstElement subclasses.
+ *
  * The name of a GstElement can be get with gst_element_get_name() and set with
  * gst_element_set_name(). For speed, GST_ELEMENT_NAME() can be used in the
  * core when using the appropriate locking. Do not use this in plug-ins or
  * applications in order to retain ABI compatibility.
+ *
  * All elements have pads (of the type GstPad). These pads link to pads on
  * other elements. GstBuffer flow between these linked pads.
  * A GstElement has a GList of GstPad structures for all their input (or sink)
  * and output (or source) pads.
  * Core and plug-in writers can add and remove pads with gst_element_add_pad()
  * and gst_element_remove_pad().
+ *
  * A pad of an element can be retrieved by name with gst_element_get_pad().
  * An iterator of all pads can be retrieved with gst_element_iterate_pads().
+ *
  * Elements can be linked through their pads.
  * If the link is straightforward, use the gst_element_link()
  * convenience function to link two elements, or gst_element_link_many()
@@ -137,10 +140,12 @@ private import gstreamer.ObjectGst;
  * For finer control, use gst_element_link_pads() and
  * gst_element_link_pads_filtered() to specify the pads to link on
  * each element by name.
+ *
  * Each element has a state (see GstState). You can get and set the state
  * of an element with gst_element_get_state() and gst_element_set_state().
  * To get a string representation of a GstState, use
  * gst_element_state_get_name().
+ *
  * You can get and set a GstClock on an element using gst_element_get_clock()
  * and gst_element_set_clock().
  * Some elements can provide a clock for the pipeline if
@@ -150,9 +155,11 @@ private import gstreamer.ObjectGst;
  * Not all elements require a clock to operate correctly. If
  * gst_element_requires_clock() returns TRUE, a clock should be set on the
  * element with gst_element_set_clock().
+ *
  * Note that clock slection and distribution is normally handled by the
  * toplevel GstPipeline so the clock functions are only to be used in very
  * specific situations.
+ *
  * Last reviewed on 2006-03-12 (0.10.5)
  */
 public class Element : ObjectGst

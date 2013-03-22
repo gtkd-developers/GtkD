@@ -68,7 +68,6 @@ private import glib.Str;
 private import cairo.Surface;
 
 /**
- * Description
  * Image surfaces provide the ability to render to memory buffers
  * either allocated by cairo or by the calling code. The supported
  * image formats are those defined in cairo_format_t.
@@ -102,9 +101,9 @@ public class ImageSurface : Surface
 	}
 	
 	/**
-	 * Description
 	 * The PNG functions allow reading PNG images into image surfaces, and writing
 	 * any surface to a PNG file.
+	 *
 	 * It is a toy API. It only offers very simple support for reading and
 	 * writing PNG files, which is sufficient for testing and
 	 * demonstration purposes. Applications which need more control over

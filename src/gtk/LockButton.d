@@ -67,25 +67,32 @@ private import gio.Permission;
 private import gtk.Button;
 
 /**
- * Description
  * GtkLockButton is a widget that can be used in control panels or
  * preference dialogs to allow users to obtain and revoke authorizations
  * needed to operate the controls. The required authorization is represented
  * by a GPermission object. Concrete implementations of GPermission may use
  * PolicyKit or some other authorization framework. To obtain a PolicyKit-based
  * GPermission, use polkit_permission_new().
+ *
  * If the user is not currently allowed to perform the action, but can obtain
  * the permission, the widget looks like this
+ *
  * $(DDOC_COMMENT example)
+ *
  * and the user can click the button to request the permission. Depending
  * on the platform, this may pop up an authentication dialog or ask the user
  * to authenticate in some other way. Once the user has obtained the permission,
  * the widget changes to this
+ *
  * $(DDOC_COMMENT example)
+ *
  * and the permission can be dropped again by clicking the button. If the user
  * is not able to obtain the permission at all, the widget looks like this
+ *
  * $(DDOC_COMMENT example)
+ *
  * If the user has the permission and cannot drop it, the button is hidden.
+ *
  * The text (and tooltips) that are shown in the various cases can be adjusted
  * with the "text-lock", "text-unlock",
  * "tooltip-lock", "tooltip-unlock" and

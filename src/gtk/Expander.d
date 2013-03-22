@@ -73,14 +73,16 @@ private import gtk.Widget;
 private import gtk.Bin;
 
 /**
- * Description
  * A GtkExpander allows the user to hide or show its child by clicking
  * on an expander triangle similar to the triangles used in a GtkTreeView.
+ *
  * Normally you use an expander as you would use any other descendant
  * of GtkBin; you create the child widget and use gtk_container_add()
  * to add it to the expander. When the expander is toggled, it will take
  * care of showing and hiding the child automatically.
+ *
  * Special Usage
+ *
  * There are situations in which you may prefer to show and hide the
  * expanded widget yourself, such as when you want to actually create
  * the widget at expansion time. In this case, create a GtkExpander
@@ -88,14 +90,19 @@ private import gtk.Bin;
  * "expanded" property which can be used to monitor
  * its expansion state. You should watch this property with a signal
  * connection as follows:
+ *
  * $(DDOC_COMMENT example)
+ *
  * <hr>
+ *
  * GtkExpander as GtkBuildable
+ *
  * The GtkExpander implementation of the GtkBuildable interface
  * supports placing a child in the label position by specifying
  * "label" as the "type" attribute of a <child> element.
  * A normal content child can be specified without specifying
  * a <child> type attribute.
+ *
  * $(DDOC_COMMENT example)
  */
 public class Expander : Bin

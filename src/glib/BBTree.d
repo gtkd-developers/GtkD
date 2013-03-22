@@ -67,19 +67,25 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * The GTree structure and its associated functions provide a sorted
  * collection of key/value pairs optimized for searching and traversing
  * in order.
+ *
  * To create a new GTree use g_tree_new().
+ *
  * To insert a key/value pair into a GTree use g_tree_insert().
+ *
  * To lookup the value corresponding to a given key, use
  * g_tree_lookup() and g_tree_lookup_extended().
+ *
  * To find out the number of nodes in a GTree, use g_tree_nnodes(). To
  * get the height of a GTree, use g_tree_height().
+ *
  * To traverse a GTree, calling a function for each node visited in
  * the traversal, use g_tree_foreach().
+ *
  * To remove a key/value pair use g_tree_remove().
+ *
  * To destroy a GTree, use g_tree_destroy().
  */
 public class BBTree

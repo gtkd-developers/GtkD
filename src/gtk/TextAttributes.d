@@ -71,14 +71,16 @@ private import gtkc.paths;
 
 
 /**
- * Description
  * You may wish to begin by reading the text widget
  * conceptual overview which gives an overview of all the objects and
  * data types related to the text widget and how they work together.
+ *
  * Tags should be in the GtkTextTagTable for a given GtkTextBuffer
  * before using them with that buffer.
+ *
  * gtk_text_buffer_create_tag() is the best way to create tags.
  * See gtk3-demo for numerous examples.
+ *
  * For each property of GtkTextTag, there is a "set" property, e.g.
  * "font-set" corresponds to "font". These "set" properties reflect
  * whether a property has been set or not.

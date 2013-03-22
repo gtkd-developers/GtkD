@@ -64,7 +64,6 @@ private import gobject.ObjectG;
 private import gda.DataModel;
 
 /**
- * Description
  */
 public class DataModelArray : DataModel
 {

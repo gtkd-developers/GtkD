@@ -71,15 +71,17 @@ private import gtk.FontChooserIF;
 private import gtk.Box;
 
 /**
- * Description
  * The GtkFontChooserWidget widget lists the available fonts,
  * styles and sizes, allowing the user to select a font. It is
  * used in the GtkFontChooserDialog widget to provide a
  * dialog box for selecting fonts.
+ *
  * To set the font which is initially selected, use
  * gtk_font_chooser_set_font() or gtk_font_chooser_set_font_desc().
+ *
  * To get the selected font use gtk_font_chooser_get_font() or
  * gtk_font_chooser_get_font_desc().
+ *
  * To change the text which is shown in the preview area, use
  * gtk_font_chooser_set_preview_text().
  */

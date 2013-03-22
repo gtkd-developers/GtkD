@@ -63,26 +63,32 @@ private import glib.ConstructionException;
 
 
 /**
- * Description
  * Devices are the abstraction Cairo employs for the rendering system
  * used by a cairo_surface_t. You can get the device of a surface using
  * cairo_surface_get_device().
+ *
  * Devices are created using custom functions specific to the rendering
  * system you want to use. See the documentation for the surface types
  * for those functions.
+ *
  * An important function that devices fulfill is sharing access to the
  * rendering system between Cairo and your application. If you want to
  * access a device directly that you used to draw to with Cairo, you must
  * first call cairo_device_flush() to ensure that Cairo finishes all
  * operations on the device and resets it to a clean state.
+ *
  * Cairo also provides the functions cairo_device_acquire() and
  * cairo_device_release() to synchronize access to the rendering system
  * in a multithreaded environment. This is done internally, but can also
  * be used by applications.
+ *
  * Putting this all together, a function that works with devices should
  * look something like this:
+ *
  * $(DDOC_COMMENT example)
+ *
  * Note
+ *
  * Please refer to the documentation of each backend for
  * additional usage requirements, guarantees provided, and
  * interactions with existing surface API of the device functions for

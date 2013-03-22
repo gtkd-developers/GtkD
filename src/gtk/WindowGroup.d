@@ -76,7 +76,6 @@ private import gtk.Window;
 private import gobject.ObjectG;
 
 /**
- * Description
  * GtkWindowGroup objects are referenced by each window in the group,
  * so once you have added all windows to a GtkWindowGroup, you can drop
  * the initial reference to the window group with g_object_unref(). If the

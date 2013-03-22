@@ -72,7 +72,6 @@ private import gtkc.Loader;
 
 
 /**
- * Description
  * GBookmarkFile lets you parse, edit or create files containing bookmarks
  * to URI, along with some meta-data about the resource pointed by the URI
  * like its MIME type, the application that is registering the bookmark and
@@ -80,6 +79,7 @@ private import gtkc.Loader;
  * using the
  * Desktop Bookmark
  * Specification.
+ *
  * The syntax of the bookmark files is described in detail inside the Desktop
  * Bookmark Specification, here is a quick summary: bookmark files use a
  * sub-class of the XML Bookmark Exchange Language
@@ -96,15 +96,19 @@ private import gtkc.Loader;
  * the bookmark as "private" to the applications and groups that has it
  * registered; the URI and MIME type of an icon, to be used when displaying
  * the bookmark inside a GUI.
+ *
  * $(DDOC_COMMENT example)
+ *
  * A bookmark file might contain more than one bookmark; each bookmark
  * is accessed through its URI.
+ *
  * The important caveat of bookmark files is that when you add a new
  * bookmark you must also add the application that is registering it, using
  * g_bookmark_file_add_application() or g_bookmark_file_set_app_info().
  * If a bookmark has no applications then it won't be dumped when creating
  * the on disk representation, using g_bookmark_file_to_data() or
  * g_bookmark_file_to_file().
+ *
  * The GBookmarkFile parser was added in GLib 2.12.
  */
 public class BookmarkFile

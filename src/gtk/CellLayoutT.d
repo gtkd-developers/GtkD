@@ -75,10 +75,10 @@ public import gtk.CellRenderer;
 
 
 /**
- * Description
  * GtkCellLayout is an interface to be implemented by all objects which
  * want to provide a GtkTreeViewColumn-like API for packing cells, setting
  * attributes and data funcs.
+ *
  * One of the notable features provided by implementations of GtkCellLayout
  * are attributes. Attributes let you set the properties
  * in flexible ways. They can just be set to constant values like regular
@@ -88,7 +88,9 @@ public import gtk.CellRenderer;
  * cell renderer. Finally, it is possible to specify a function with
  * gtk_cell_layout_set_cell_data_func() that is called to determine the value
  * of the attribute for each cell that is rendered.
+ *
  * GtkCellLayouts as GtkBuildable
+ *
  * Implementations of GtkCellLayout which also implement the GtkBuildable
  * interface (GtkCellView, GtkIconView, GtkComboBox,
  * GtkEntryCompletion, GtkTreeViewColumn) accept GtkCellRenderer objects
@@ -97,20 +99,27 @@ public import gtk.CellRenderer;
  * multiple <attribute> elements. Each <attribute> element has
  * a name attribute which specifies a property of the cell renderer; the
  * content of the element is the attribute value.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Furthermore for implementations of GtkCellLayout that use a GtkCellArea
  * to lay out cells (all GtkCellLayouts in GTK+ use a GtkCellArea)
  * cell properties can also be defined
  * in the format by specifying the custom <cell-packing> attribute which
  * can contain multiple <property> elements defined in the normal way.
+ *
  * $(DDOC_COMMENT example)
+ *
  * Subclassing GtkCellLayout implementations
+ *
  * When subclassing a widget that implements GtkCellLayout like
  * GtkIconView or GtkComboBox, there are some considerations related
  * to the fact that these widgets internally use a GtkCellArea.
  * The cell area is exposed as a construct-only property by these
  * widgets. This means that it is possible to e.g. do
+ *
  * $(DDOC_COMMENT example)
+ *
  * to use a custom cell area with a combo box. But construct properties
  * are only initialized after instance init()
  * functions have run, which means that using functions which rely on
@@ -118,7 +127,9 @@ public import gtk.CellRenderer;
  * cause the default cell area to be instantiated. In this case, a provided
  * construct property value will be ignored (with a warning, to alert
  * you to the problem).
+ *
  * $(DDOC_COMMENT example)
+ *
  * If supporting alternative cell areas with your derived widget is
  * not important, then this does not have to concern you. If you want
  * to support alternative cell areas, you can do so by moving the

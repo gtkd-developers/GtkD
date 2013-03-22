@@ -66,11 +66,11 @@ private import gtk.Widget;
 private import gtk.Paned;
 
 /**
- * Description
  * The HPaned widget is a container widget with two
  * children arranged horizontally. The division between
  * the two panes is adjustable by the user by dragging
  * a handle. See GtkPaned for details.
+ *
  * GtkHPaned has been deprecated, use GtkPaned instead.
  */
 public class HPaned : Paned

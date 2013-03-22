@@ -91,14 +91,15 @@ private import gtk.TextTagTable;
 private import gtk.TextBuffer;
 
 /**
- * Description
  * The GtkSourceBuffer object is the model for GtkSourceView widgets.
  * It extends the GtkTextBuffer object by adding features useful to display
  * and edit source code as syntax highlighting and bracket matching. It
  * also implements support for undo/redo operations.
+ *
  * To create a GtkSourceBuffer use gtk_source_buffer_new() or
  * gtk_source_buffer_new_with_language(). The second form is just a convenience
  * function which allows you to initially set a GtkSourceLanguage.
+ *
  * By default highlighting is enabled, but you can disable it with
  * gtk_source_buffer_set_highlight_syntax().
  */

@@ -64,8 +64,8 @@ private import glib.Str;
 
 
 /**
- * Description
  * These functions provide support for outputting messages.
+ *
  * The g_return family of macros (g_return_if_fail(),
  * g_return_val_if_fail(), g_return_if_reached(), g_return_val_if_reached())
  * should only be used for programming errors, a typical use case is

@@ -71,10 +71,10 @@ public import gio.ActionIF;
 
 
 /**
- * Description
  * The GActionMap interface is implemented by GActionGroup
  * implementations that operate by containing a number of
  * named GAction instances, such as GSimpleActionGroup.
+ *
  * One useful application of this interface is to map the
  * names of actions from various action groups to unique,
  * prefixed names (e.g. by prepending "app." or "win.").

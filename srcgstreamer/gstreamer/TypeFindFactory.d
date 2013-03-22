@@ -77,15 +77,17 @@ private import gstreamer.Caps;
 private import gstreamer.PluginFeature;
 
 /**
- * Description
  * These functions allow querying informations about registered typefind
  * functions. How to create and register these functions is described in
  * the section
  * "Writing typefind functions".
+ *
  * $(DDOC_COMMENT example)
+ *
  * The above example shows how to write a very simple typefinder that
  * identifies the given data. You can get quite a bit more complicated than
  * that though.
+ *
  * Last reviewed on 2005-11-09 (0.9.4)
  */
 public class TypeFindFactory : PluginFeature

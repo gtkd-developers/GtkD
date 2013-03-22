@@ -64,13 +64,13 @@ private import glib.ConstructionException;
 private import cairo.Pattern;
 
 /**
- * Description
  * The raster source provides the ability to supply arbitrary pixel data
  * whilst rendering. The pixels are queried at the time of rasterisation
  * by means of user callback functions, allowing for the ultimate
  * flexibility. For example, in handling compressed image sources, you
  * may keep a MRU cache of decompressed images and decompress sources on the
  * fly and discard old ones to conserve memory.
+ *
  * For the raster source to be effective, you must at least specify
  * the acquire and release callbacks which are used to retrieve the pixel
  * data for the region of interest and demark when it can be freed afterwards.

@@ -76,11 +76,12 @@ private import gtk.ActionableT;
 private import gtk.ToolItem;
 
 /**
- * Description
  * GtkToolButtons are GtkToolItems containing buttons.
+ *
  * Use gtk_tool_button_new() to create a new GtkToolButton. Use
  * gtk_tool_button_new_from_stock() to create a GtkToolButton
  * containing a stock item.
+ *
  * The label of a GtkToolButton is determined by the properties
  * "label-widget", "label", and
  * "stock-id". If "label-widget" is
@@ -88,6 +89,7 @@ private import gtk.ToolItem;
  * "label" is non-NULL, that string is used as the label.
  * Otherwise, if "stock-id" is non-NULL, the label is
  * determined by the stock item. Otherwise, the button does not have a label.
+ *
  * The icon of a GtkToolButton is determined by the properties
  * "icon-widget" and "stock-id". If
  * "icon-widget" is non-NULL, then

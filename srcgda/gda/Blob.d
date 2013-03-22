@@ -63,7 +63,6 @@ private import gobject.ObjectG;
 
 
 /**
- * Description
  */
 public class Blob
 {

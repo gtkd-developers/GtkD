@@ -71,7 +71,6 @@ private import gstreamer.Index;
 private import gstreamer.PluginFeature;
 
 /**
- * Description
  * GstIndexFactory is used to dynamically create GstIndex implementations.
  */
 public class IndexFactory : PluginFeature

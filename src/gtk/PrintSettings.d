@@ -77,16 +77,17 @@ private import gtk.PaperSize;
 private import gobject.ObjectG;
 
 /**
- * Description
  * A GtkPrintSettings object represents the settings of a print dialog in
  * a system-independent way. The main use for this object is that once
  * you've printed you can get a settings object that represents the settings
  * the user chose, and the next time you print you can pass that object in so
  * that the user doesn't have to re-set all his settings.
+ *
  * Its also possible to enumerate the settings so that you can easily save
  * the settings for the next time your app runs, or even store them in a
  * document. The predefined keys try to use shared values as much as possible
  * so that moving such a document between systems still works.
+ *
  * Printing support was added in GTK+ 2.10.
  */
 public class PrintSettings : ObjectG

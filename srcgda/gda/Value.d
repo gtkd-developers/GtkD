@@ -74,7 +74,6 @@ private import gobject.ObjectG;
 
 
 /**
- * Description
  */
 public class Value
 {

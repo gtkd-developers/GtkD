@@ -69,7 +69,6 @@ private import gtk.ColorChooserT;
 private import gtk.Box;
 
 /**
- * Description
  * The GtkColorChooserWidget widget lets the user select a
  * color. By default, the chooser presents a prefined palette
  * of colors, plus a small number of settable custom colors.
@@ -77,10 +76,13 @@ private import gtk.Box;
  * single-color editor. To enter the single-color editing mode,
  * use the context menu of any color of the palette, or use the
  * '+' button to add a new custom color.
+ *
  * The chooser automatically remembers the last selection, as well
  * as custom colors.
+ *
  * To change the initially selected color, use gtk_color_chooser_set_rgba().
  * To get the selected font use gtk_color_chooser_get_rgba().
+ *
  * The GtkColorChooserWidget is used in the GtkColorChooserDialog
  * to provide a dialog for selecting colors.
  */

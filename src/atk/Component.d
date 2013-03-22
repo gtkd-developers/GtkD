@@ -68,13 +68,13 @@ private import atk.ObjectAtk;
 
 
 /**
- * Description
  * AtkComponent should be implemented by most if not all UI elements with
  * an actual on-screen presence, i.e. components which can be said to have
  * a screen-coordinate bounding box. Virtually all widgets will need to
  * have AtkComponent implementations provided for their corresponding
  * AtkObject class. In short, only UI elements which are *not* GUI
  * elements will omit this ATK interface.
+ *
  * A possible exception might be textual information with a transparent
  * background, in which case text glyph bounding box information is
  * provided by AtkText.

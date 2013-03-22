@@ -64,18 +64,22 @@ private import gobject.ObjectG;
 private import gtk.Box;
 
 /**
- * Description
  * A GtkVBox is a container that organizes child widgets into a single column.
+ *
  * Use the GtkBox packing interface to determine the arrangement,
  * spacing, height, and alignment of GtkVBox children.
+ *
  * All children are allocated the same width.
+ *
  * GtkVBox has been deprecated. You can use GtkBox instead, which is a
  * very quick and easy change. If you have derived your own classes from
  * GtkVBox, you can simply change the inheritance to derive directly
  * from GtkBox, and set the "orientation" property to
  * GTK_ORIENTATION_VERTICAL in your instance init function, with a
  * call like:
+ *
  * $(DDOC_COMMENT example)
+ *
  * If you want your code to be future-proof, the recommendation is to
  * switch to GtkGrid, since GtkBox is going to be deprecated in favor
  * of the more flexible grid widget eventually. For more information

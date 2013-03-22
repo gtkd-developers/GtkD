@@ -78,12 +78,12 @@ private import gtkc.paths;
 private import gobject.Boxed;
 
 /**
- * Description
  * The selection mechanism provides the basis for different types
  * of communication between processes. In particular, drag and drop and
  * GtkClipboard work via selections. You will very seldom or
  * never need to use most of the functions in this section directly;
  * GtkClipboard provides a nicer interface to the same functionality.
+ *
  * Some of the datatypes defined this section are used in
  * the GtkClipboard and drag-and-drop API's as well. The
  * GtkTargetEntry structure and GtkTargetList objects represent
