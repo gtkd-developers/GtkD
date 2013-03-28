@@ -143,7 +143,7 @@ public class SourceView : TextView
 			throw new ConstructionException("null returned by gtk_text_view_get_buffer");
 		}
 		
-		return new SourceBuffer( cast(GtkSourceBuffer*)p );
+		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
 	}
 	
 	/**
