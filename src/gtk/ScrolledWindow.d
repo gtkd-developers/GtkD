@@ -152,7 +152,7 @@ public class ScrolledWindow : Bin
 	public this(Widget widget)
 	{
 		this();
-		addWithViewport(widget);
+		add(widget);
 	}
 	
 	/**
