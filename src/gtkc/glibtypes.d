@@ -355,6 +355,7 @@ alias GIOCondition IOCondition;
  * G_IO_FLAG_IS_WRITABLE
  * indicates that the io channel is writable.
  *  This flag cannot be changed.
+ * G_IO_FLAG_IS_WRITEABLE
  * G_IO_FLAG_IS_SEEKABLE
  * indicates that the io channel is seekable,
  *  i.e. that g_io_channel_seek_position() can
@@ -374,6 +375,7 @@ public enum GIOFlags
 	NONBLOCK = 1 << 1,
 	IS_READABLE = 1 << 2, /+* Read only flag +/
 	IS_WRITABLE = 1 << 3, /+* Read only flag +/
+	IS_WRITEABLE = 1 << 3, /+* Misspelling inn 2.29.10 and earlier +/
 	IS_SEEKABLE = 1 << 4, /+* Read only flag +/
 	MASK = (1 << 5) - 1,
 	GET_MASK = MASK,
@@ -572,10 +574,8 @@ alias GUnicodeType UnicodeType;
 
 /**
  * These are the possible line break classifications.
- * The five Hangul types were added in Unicode 4.1, so, has been
- * introduced in GLib 2.10. Note that new types may be added in the future.
- * Applications should be ready to handle unknown values.
- * They may be regarded as G_UNICODE_BREAK_UNKNOWN.
+ * Since new unicode versions may add new types here, applications should be ready
+ * to handle unknown values. They may be regarded as G_UNICODE_BREAK_UNKNOWN.
  * See http://www.unicode.org/unicode/reports/tr14/.
  * G_UNICODE_BREAK_MANDATORY
  * Mandatory Break (BK)
@@ -655,6 +655,8 @@ alias GUnicodeType UnicodeType;
  * Conditional Japanese Starter (CJ). Since: 2.32
  * G_UNICODE_BREAK_HEBREW_LETTER
  * Hebrew Letter (HL). Since: 2.32
+ * G_UNICODE_BREAK_REGIONAL_INDICATOR
+ * Regional Indicator (RI). Since: 2.36
  */
 public enum GUnicodeBreakType
 {
@@ -696,7 +698,8 @@ public enum GUnicodeBreakType
 	HANGUL_LVT_SYLLABLE,
 	CLOSE_PARANTHESIS,
 	CONDITIONAL_JAPANESE_STARTER,
-	HEBREW_LETTER
+	HEBREW_LETTER,
+	REGIONAL_INDICATOR
 }
 alias GUnicodeBreakType UnicodeBreakType;
 
@@ -1089,13 +1092,16 @@ alias GNormalizeMode NormalizeMode;
  * Use the SHA-1 hashing algorithm
  * G_CHECKSUM_SHA256
  * Use the SHA-256 hashing algorithm
+ * G_CHECKSUM_SHA512
+ * Use the SHA-512 hashing algorithm
  * Since 2.16
  */
 public enum GChecksumType
 {
 	MD5,
 	SHA1,
-	SHA256
+	SHA256,
+	SHA512
 }
 alias GChecksumType ChecksumType;
 
@@ -2635,23 +2641,6 @@ public struct GSource{}
 
 
 /**
- * The GSourceFuncs struct contains a table of
- * functions used to handle event sources in a generic manner.
- * For idle sources, the prepare and check functions always return TRUE
- * to indicate that the source is always ready to be processed. The prepare
- * function also returns a timeout value of 0 to ensure that the poll() call
- * doesn't block (since that would be time wasted which could have been spent
- * running the idle function).
- * For timeout sources, the prepare and check functions both return TRUE
- * if the timeout interval has expired. The prepare function also returns
- * a timeout value to ensure that the poll() call doesn't block too long
- * and miss the next timeout.
- * For file descriptor sources, the prepare function typically returns FALSE,
- * since it must wait until poll() has been called before it knows whether
- * any events need to be processed. It sets the returned timeout to -1 to
- * indicate that it doesn't mind how long the poll() call blocks. In the
- * check function, it tests the results of the poll() call to see if the
- * required condition has been met, and returns TRUE if so.
  * prepare ()
  * Called before all the file descriptors are polled. If the
  * source can determine that it is ready here (without waiting for the
@@ -2659,22 +2648,11 @@ public struct GSource{}
  * a timeout_ value which should be the maximum timeout (in milliseconds)
  * which should be passed to the poll() call. The actual timeout used will
  * be -1 if all sources returned -1, or it will be the minimum of all the
- * timeout_ values returned which were >= 0.
+ * timeout_ values returned which were >= 0. Since 2.36 this may
+ * be NULL, in which case the effect is as if the function always
  * check ()
- * Called after all the file descriptors are polled. The source
- * should return TRUE if it is ready to be dispatched. Note that some
- * time may have passed since the previous prepare function was called,
- * so the source should be checked again here.
  * dispatch ()
- * Called to dispatch the event source, after it has returned
- * TRUE in either its prepare or its check function. The dispatch
- * function is passed in a callback function and data. The callback
- * function may be NULL if the source was never connected to a callback
- * using g_source_set_callback(). The dispatch function should call the
- * callback function with user_data and whatever additional parameters
- * are needed for this type of event source.
  * finalize ()
- * Called when the source is finalized.
  */
 public struct GSourceFuncs
 {
@@ -5137,6 +5115,21 @@ public alias extern(C) void function(GOptionContext* context, GOptionGroup* grou
  */
 // gboolean (*GRegexEvalCallback) (const GMatchInfo *match_info,  GString *result,  gpointer user_data);
 public alias extern(C) int function(GMatchInfo* matchInfo, GString* result, void* userData) GRegexEvalCallback;
+
+/*
+ * The type of functions to be called when a UNIX fd watch source
+ * triggers.
+ * fd :
+ * the fd that triggered the event
+ * condition :
+ * the IO conditions reported on fd
+ * user_data :
+ * user data passed to g_unix_fd_add()
+ * Returns :
+ * FALSE if the source should be removed
+ */
+// gboolean (*GUnixFDSourceFunc) (gint fd,  GIOCondition condition,  gpointer user_data);
+public alias extern(C) int function(int fd, GIOCondition condition, void* userData) GUnixFDSourceFunc;
 
 /*
  * Specifies the type of a comparison function used to compare two

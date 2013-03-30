@@ -115,7 +115,7 @@ public class Atomic
 	 */
 	public static int intGet(int* atomic)
 	{
-		// gint g_atomic_int_get (volatile gint *atomic);
+		// gint g_atomic_int_get (const volatile gint *atomic);
 		return g_atomic_int_get(atomic);
 	}
 	
@@ -269,7 +269,7 @@ public class Atomic
 	 */
 	public static void* pointerGet(void* atomic)
 	{
-		// gpointer g_atomic_pointer_get (volatile void *atomic);
+		// gpointer g_atomic_pointer_get (const volatile void *atomic);
 		return g_atomic_pointer_get(atomic);
 	}
 	

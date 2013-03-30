@@ -458,11 +458,122 @@ public class Source
 	}
 	
 	/**
+	 * Sets a GSource to be dispatched when the given monotonic time is
+	 * reached (or passed). If the monotonic time is in the past (as it
+	 * always will be if ready_time is 0) then the source will be
+	 * dispatched immediately.
+	 * If ready_time is -1 then the source is never woken up on the basis
+	 * of the passage of time.
+	 * Dispatching the source does not reset the ready time. You should do
+	 * so yourself, from the source dispatch function.
+	 * Note that if you have a pair of sources where the ready time of one
+	 * suggests that it will be delivered first but the priority for the
+	 * other suggests that it would be delivered first, and the ready time
+	 * for both sources is reached during the same main context iteration
+	 * then the order of dispatch is undefined.
+	 * Since 2.36
+	 * Params:
+	 * readyTime = the monotonic time at which the source will be ready,
+	 * 0 for "immediately", -1 for "never"
+	 */
+	public void setReadyTime(long readyTime)
+	{
+		// void g_source_set_ready_time (GSource *source,  gint64 ready_time);
+		g_source_set_ready_time(gSource, readyTime);
+	}
+	
+	/**
+	 * Gets the "ready time" of source, as set by
+	 * g_source_set_ready_time().
+	 * Any time before the current monotonic time (including 0) is an
+	 * indication that the source will fire immediately.
+	 * Returns: the monotonic ready time, -1 for "never"
+	 */
+	public long getReadyTime()
+	{
+		// gint64 g_source_get_ready_time (GSource *source);
+		return g_source_get_ready_time(gSource);
+	}
+	
+	/**
+	 * Monitors fd for the IO events in events.
+	 * The tag returned by this function can be used to remove or modify the
+	 * monitoring of the fd using g_source_remove_unix_fd() or
+	 * g_source_modify_unix_fd().
+	 * It is not necessary to remove the fd before destroying the source; it
+	 * will be cleaned up automatically.
+	 * As the name suggests, this function is not available on Windows.
+	 * Since 2.36
+	 * Params:
+	 * fd = the fd to monitor
+	 * events = an event mask
+	 * Returns: an opaque tag
+	 */
+	public void* addUnixFd(int fd, GIOCondition events)
+	{
+		// gpointer g_source_add_unix_fd (GSource *source,  gint fd,  GIOCondition events);
+		return g_source_add_unix_fd(gSource, fd, events);
+	}
+	
+	/**
+	 * Reverses the effect of a previous call to g_source_add_unix_fd().
+	 * You only need to call this if you want to remove an fd from being
+	 * watched while keeping the same source around. In the normal case you
+	 * will just want to destroy the source.
+	 * As the name suggests, this function is not available on Windows.
+	 * Since 2.36
+	 * Params:
+	 * tag = the tag from g_source_add_unix_fd()
+	 */
+	public void removeUnixFd(void* tag)
+	{
+		// void g_source_remove_unix_fd (GSource *source,  gpointer tag);
+		g_source_remove_unix_fd(gSource, tag);
+	}
+	
+	/**
+	 * Updates the event mask to watch for the fd identified by tag.
+	 * tag is the tag returned from g_source_add_unix_fd().
+	 * If you want to remove a fd, don't set its event mask to zero.
+	 * Instead, call g_source_remove_unix_fd().
+	 * As the name suggests, this function is not available on Windows.
+	 * Since 2.36
+	 * Params:
+	 * tag = the tag from g_source_add_unix_fd()
+	 * newEvents = the new event mask to watch
+	 */
+	public void modifyUnixFd(void* tag, GIOCondition newEvents)
+	{
+		// void g_source_modify_unix_fd (GSource *source,  gpointer tag,  GIOCondition new_events);
+		g_source_modify_unix_fd(gSource, tag, newEvents);
+	}
+	
+	/**
+	 * Queries the events reported for the fd corresponding to tag on
+	 * source during the last poll.
+	 * The return value of this function is only defined when the function
+	 * is called from the check or dispatch functions for source.
+	 * As the name suggests, this function is not available on Windows.
+	 * Since 2.36
+	 * Params:
+	 * tag = the tag from g_source_add_unix_fd()
+	 * Returns: the conditions reported on the fd
+	 */
+	public GIOCondition queryUnixFd(void* tag)
+	{
+		// GIOCondition g_source_query_unix_fd (GSource *source,  gpointer tag);
+		return g_source_query_unix_fd(gSource, tag);
+	}
+	
+	/**
 	 * Adds a file descriptor to the set of file descriptors polled for
 	 * this source. This is usually combined with g_source_new() to add an
 	 * event source. The event source's check function will typically test
 	 * the revents field in the GPollFD struct and return TRUE if events need
 	 * to be processed.
+	 * Using this API forces the linear scanning of event sources on each
+	 * main loop iteration. Newly-written event sources should try to use
+	 * g_source_add_unix_fd() instead of this API.
 	 * Params:
 	 * fd = a GPollFD structure holding information about a file
 	 * descriptor to watch.

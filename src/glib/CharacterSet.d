@@ -434,17 +434,17 @@ public class CharacterSet
 	 * utf8string = a UTF-8 encoded string.
 	 * len = the length of the string, or -1 if the string is
 	 * nul-terminated.
-	 * bytesRead = location to store the number of bytes in the
-	 * input string that were successfully converted, or NULL.
+	 * bytesRead = location to store the number of bytes in
+	 * the input string that were successfully converted, or NULL.
 	 * Even if the conversion was successful, this may be
 	 * less than len if there were partial characters
 	 * at the end of the input. If the error
 	 * G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 * stored will the byte offset after the last valid
-	 * input sequence.
+	 * input sequence. [out][allow-none]
 	 * bytesWritten = the number of bytes stored in the output buffer (not
-	 * including the terminating nul).
-	 * Returns: The converted string, or NULL on an error.
+	 * including the terminating nul). [out]
+	 * Returns: The converted string, or NULL on an error. [array length=bytes_written][element-type guint8][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static string filenameFromUtf8(string utf8string, out gsize bytesRead, out gsize bytesWritten)

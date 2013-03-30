@@ -467,4 +467,18 @@ public class Thread
 		// void g_pointer_bit_unlock (volatile void *address,  gint lock_bit);
 		g_pointer_bit_unlock(address, lockBit);
 	}
+	
+	/**
+	 * Determine the approximate number of threads that the system will
+	 * schedule simultaneously for this process. This is intended to be
+	 * used as a parameter to g_thread_pool_new() for CPU bound tasks and
+	 * similar cases.
+	 * Since 2.36
+	 * Returns: Number of schedulable threads, always greater than 0
+	 */
+	public static uint getNumProcessors()
+	{
+		// guint g_get_num_processors (void);
+		return g_get_num_processors();
+	}
 }

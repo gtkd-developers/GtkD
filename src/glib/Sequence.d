@@ -631,7 +631,7 @@ public class Sequence
 	 * data = data to lookup
 	 * cmpFunc = the function used to compare items in the sequence
 	 * cmpData = user data passed to cmp_func.
-	 * Returns: an GSequenceIter pointing to the position of the first item found equal to data according to cmp_func and cmp_data.
+	 * Returns: an GSequenceIter pointing to the position of the first item found equal to data according to cmp_func and cmp_data, or NULL if no such item exists.
 	 */
 	public SequenceIter lookup(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
@@ -664,7 +664,7 @@ public class Sequence
 	 * data = data to lookup
 	 * iterCmp = the function used to compare iterators in the sequence
 	 * cmpData = user data passed to iter_cmp
-	 * Returns: an GSequenceIter pointing to the position of the first item found equal to data according to cmp_func and cmp_data.
+	 * Returns: an GSequenceIter pointing to the position of the first item found equal to data according to cmp_func and cmp_data, or NULL if no such item exists.
 	 */
 	public SequenceIter lookupIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{

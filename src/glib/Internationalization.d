@@ -70,15 +70,20 @@ private import glib.Str;
  * easy-to-use form.
  *
  * In order to use these macros in an application, you must include
- * glib/gi18n.h. For use in a library, must include
+ * glib/gi18n.h. For use in a library, you must include
  * glib/gi18n-lib.h after defining
  * the GETTEXT_PACKAGE macro suitably for your library:
  *
  * $(DDOC_COMMENT example)
  *
- * Note that you also have to call setlocale() and textdomain() (as well as
- * bindtextdomain() and bind_textdomain_codeset()) early on in your main()
- * to make gettext() work.
+ * For an application, note that you also have to call bindtextdomain(),
+ * bind_textdomain_codeset(), textdomain() and setlocale() early on in your
+ * main() to make gettext() work.
+ *
+ * For a library, you only have to call bindtextdomain() and
+ * bind_textdomain_codeset() in your initialization function. If your library
+ * doesn't have an initialization function, you can call the functions before
+ * the first translated message.
  *
  * The gettext manual covers details of how to set up message extraction
  * with xgettext.

@@ -163,24 +163,53 @@ public class TimeZone
 	 * identifier can either be an RFC3339/ISO 8601 time offset or
 	 * something that would pass as a valid value for the
 	 * TZ environment variable (including NULL).
+	 * In Windows, identifier can also be the unlocalized name of a time
+	 * zone for standard time, for example "Pacific Standard Time".
 	 * Valid RFC3339 time offsets are "Z" (for UTC) or
 	 * "±hh:mm". ISO 8601 additionally specifies
-	 * "±hhmm" and "±hh".
-	 * The TZ environment variable typically corresponds
-	 * to the name of a file in the zoneinfo database, but there are many
-	 * other possibilities. Note that those other possibilities are not
-	 * currently implemented, but are planned.
+	 * "±hhmm" and "±hh". Offsets are
+	 * time values to be added to Coordinated Universal Time (UTC) to get
+	 * the local time.
+	 * In Unix, the TZ environment variable typically
+	 * corresponds to the name of a file in the zoneinfo database, or
+	 * string in "std offset [dst [offset],start[/time],end[/time]]"
+	 * (POSIX) format. There are no spaces in the specification. The
+	 * name of standard and daylight savings time zone must be three or more
+	 * alphabetic characters. Offsets are time values to be added to local
+	 * time to get Coordinated Universal Time (UTC) and should be
+	 * "[±]hh[[:]mm[:ss]]". Dates are either
+	 * "Jn" (Julian day with n between 1 and 365, leap
+	 * years not counted), "n" (zero-based Julian day
+	 * with n between 0 and 365) or "Mm.w.d" (day d
+	 * (0 <= d <= 6) of week w (1 <= w <= 5) of month m (1 <= m <= 12), day
+	 * 0 is a Sunday). Times are in local wall clock time, the default is
+	 * 02:00:00.
+	 * In Windows, the "tzn[+|–]hh[:mm[:ss]][dzn]" format is used, but also
+	 * accepts POSIX format. The Windows format uses US rules for all time
+	 * zones; daylight savings time is 60 minutes behind the standard time
+	 * with date and time of change taken from Pacific Standard Time.
+	 * Offsets are time values to be added to the local time to get
+	 * Coordinated Universal Time (UTC).
 	 * g_time_zone_new_local() calls this function with the value of the
 	 * TZ environment variable. This function itself is
 	 * independent of the value of TZ, but if identifier
 	 * is NULL then /etc/localtime will be consulted
-	 * to discover the correct timezone.
+	 * to discover the correct time zone on Unix and the registry will be
+	 * consulted or GetTimeZoneInformation() will be used to get the local
+	 * time zone on Windows.
+	 * If intervals are not available, only time zone rules from
+	 * TZ environment variable or other means, then they
+	 * will be computed from year 1900 to 2037. If the maximum year for the
+	 * rules is available and it is greater than 2037, then it will followed
+	 * instead.
 	 * See RFC3339
 	 * §5.6 for a precise definition of valid RFC3339 time offsets
 	 * (the time-offset expansion) and ISO 8601 for the
 	 * full list of valid time offsets. See The
 	 * GNU C Library manual for an explanation of the possible
-	 * values of the TZ environment variable.
+	 * values of the TZ environment variable. See
+	 * Microsoft Time Zone Index Values for the list of time zones
+	 * on Windows.
 	 * You should release the return value by calling g_time_zone_unref()
 	 * when you are done with it.
 	 * Since 2.26

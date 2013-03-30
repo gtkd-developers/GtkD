@@ -165,7 +165,9 @@ public class Base64
 	}
 	
 	/**
-	 * Decode a sequence of Base-64 encoded text into binary data
+	 * Decode a sequence of Base-64 encoded text into binary data. Note
+	 * that the returned binary data is not necessarily zero-terminated,
+	 * so it should not be used as a character string.
 	 * Since 2.12
 	 * Params:
 	 * text = zero-terminated string with base64 text to decode

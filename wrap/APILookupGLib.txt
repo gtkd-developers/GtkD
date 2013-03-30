@@ -2360,6 +2360,7 @@ import: glib.ListSG
 import: gtkc.Loader
 import: gtkc.paths
 structWrap: GSList* ListSG
+structWrap: GMarkupParseContext* SimpleXML
 
 out: g_markup_parse_context_get_position line_number
 out: g_markup_parse_context_get_position char_number
@@ -2811,8 +2812,10 @@ noprefix: g_variant_builder_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: glib.Bytes
 import: glib.StringG
 import: glib.VariantType
+structWrap: GBytes* Bytes
 structWrap: GString* StringG
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType

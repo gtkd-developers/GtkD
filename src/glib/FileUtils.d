@@ -719,4 +719,30 @@ public class FileUtils
 		// int g_utime (const gchar *filename,  struct utimbuf *utb);
 		return g_utime(Str.toStringz(filename), utb);
 	}
+	
+	/**
+	 * This wraps the close() call; in case of error, errno will be
+	 * preserved, but the error will also be stored as a GError in error.
+	 * Besides using GError, there is another major reason to prefer this
+	 * function over the call provided by the system; on Unix, it will
+	 * attempt to correctly handle EINTR, which has platform-specific
+	 * semantics.
+	 * Params:
+	 * fd = A file descriptor
+	 * Throws: GException on failure.
+	 */
+	public static int close(int fd)
+	{
+		// gboolean g_close (gint fd,  GError **error);
+		GError* err = null;
+		
+		auto p = g_close(fd, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
 }

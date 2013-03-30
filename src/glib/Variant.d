@@ -54,9 +54,11 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Bytes
  * 	- glib.StringG
  * 	- glib.VariantType
  * structWrap:
+ * 	- GBytes* -> Bytes
  * 	- GString* -> StringG
  * 	- GVariant* -> Variant
  * 	- GVariantType* -> VariantType
@@ -77,6 +79,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Bytes;
 private import glib.StringG;
 private import glib.VariantType;
 
@@ -1730,6 +1733,27 @@ public class Variant
 	}
 	
 	/**
+	 * Returns a pointer to the serialised form of a GVariant instance.
+	 * The semantics of this function are exactly the same as
+	 * g_variant_get_data(), except that the returned GBytes holds
+	 * a reference to the variant data.
+	 * Since 2.36
+	 * Returns: A new GBytes representing the variant data. [transfer full]
+	 */
+	public Bytes getDataAsBytes()
+	{
+		// GBytes * g_variant_get_data_as_bytes (GVariant *value);
+		auto p = g_variant_get_data_as_bytes(gVariant);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Bytes(cast(GBytes*) p);
+	}
+	
+	/**
 	 * Stores the serialised form of value at data. data should be
 	 * large enough. See g_variant_get_size().
 	 * The stored data is in machine native byte order but may not be in
@@ -1786,6 +1810,29 @@ public class Variant
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data, size, trusted, notify, userData)");
+		}
+		this(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Constructs a new serialised-mode GVariant instance. This is the
+	 * inner interface for creation of new serialised values that gets
+	 * called from various functions in gvariant.c.
+	 * A reference is taken on bytes.
+	 * Since 2.36
+	 * Params:
+	 * type = a GVariantType
+	 * bytes = a GBytes
+	 * trusted = if the contents of bytes are trusted
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (VariantType type, Bytes bytes, int trusted)
+	{
+		// GVariant * g_variant_new_from_bytes (const GVariantType *type,  GBytes *bytes,  gboolean trusted);
+		auto p = g_variant_new_from_bytes((type is null) ? null : type.getVariantTypeStruct(), (bytes is null) ? null : bytes.getBytesStruct(), trusted);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_variant_new_from_bytes((type is null) ? null : type.getVariantTypeStruct(), (bytes is null) ? null : bytes.getBytesStruct(), trusted)");
 		}
 		this(cast(GVariant*) p);
 	}

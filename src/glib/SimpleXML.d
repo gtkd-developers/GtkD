@@ -51,6 +51,7 @@
  * 	- gtkc.Loader
  * 	- gtkc.paths
  * structWrap:
+ * 	- GMarkupParseContext* -> SimpleXML
  * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
@@ -403,5 +404,34 @@ public class SimpleXML
 	{
 		// gpointer g_markup_parse_context_pop (GMarkupParseContext *context);
 		return g_markup_parse_context_pop(gMarkupParseContext);
+	}
+	
+	/**
+	 * Increases the reference count of context.
+	 * Since 2.36
+	 * Returns: the same context
+	 */
+	public SimpleXML doref()
+	{
+		// GMarkupParseContext * g_markup_parse_context_ref (GMarkupParseContext *context);
+		auto p = g_markup_parse_context_ref(gMarkupParseContext);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new SimpleXML(cast(GMarkupParseContext*) p);
+	}
+	
+	/**
+	 * Decreases the reference count of context. When its reference count
+	 * drops to 0, it is freed.
+	 * Since 2.36
+	 */
+	public void unref()
+	{
+		// void g_markup_parse_context_unref (GMarkupParseContext *context);
+		g_markup_parse_context_unref(gMarkupParseContext);
 	}
 }

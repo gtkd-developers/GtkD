@@ -107,10 +107,14 @@ private import gtkc.Loader;
  *
  * To destroy a GHashTable use g_hash_table_destroy().
  *
- * $(DDOC_COMMENT example)
- *
- * As of version 2.32, there is also a g_hash_table_add() function to
- * add a key to a GHashTable that is being used as a set.
+ * A common use-case for hash tables is to store information about a
+ * set of keys, without associating any particular value with each
+ * key. GHashTable optimizes one way of doing so: If you store only
+ * key-value pairs where key == value, then GHashTable does not
+ * allocate memory to store the values, which can be a considerable
+ * space saving, if your set is large. The functions
+ * g_hash_table_add() and g_hash_table_contains() are designed to be
+ * used when using GHashTable this way.
  */
 public class HashTable
 {
@@ -452,8 +456,8 @@ public class HashTable
 	}
 	
 	/**
-	 * Retrieves every key inside hash_table. The returned data
-	 * is valid until hash_table is modified.
+	 * Retrieves every key inside hash_table. The returned data is valid
+	 * until changes to the hash release those keys.
 	 * Since 2.14
 	 * Returns: a GList containing all the keys inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
 	 */

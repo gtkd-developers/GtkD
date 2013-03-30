@@ -191,7 +191,7 @@ public class OptionContext
 	 * parameterString = a string which is displayed in
 	 * the first line of --help output, after the
 	 * usage summary
-	 * programname [OPTION...]
+	 * programname [OPTION...]. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string parameterString)

@@ -146,6 +146,12 @@ mixin( _shared ~ "static this()
 	Linker.link(g_source_get_context, \"g_source_get_context\", LIBRARY.GLIB);
 	Linker.link(g_source_set_callback, \"g_source_set_callback\", LIBRARY.GLIB);
 	Linker.link(g_source_set_callback_indirect, \"g_source_set_callback_indirect\", LIBRARY.GLIB);
+	Linker.link(g_source_set_ready_time, \"g_source_set_ready_time\", LIBRARY.GLIB);
+	Linker.link(g_source_get_ready_time, \"g_source_get_ready_time\", LIBRARY.GLIB);
+	Linker.link(g_source_add_unix_fd, \"g_source_add_unix_fd\", LIBRARY.GLIB);
+	Linker.link(g_source_remove_unix_fd, \"g_source_remove_unix_fd\", LIBRARY.GLIB);
+	Linker.link(g_source_modify_unix_fd, \"g_source_modify_unix_fd\", LIBRARY.GLIB);
+	Linker.link(g_source_query_unix_fd, \"g_source_query_unix_fd\", LIBRARY.GLIB);
 	Linker.link(g_source_add_poll, \"g_source_add_poll\", LIBRARY.GLIB);
 	Linker.link(g_source_remove_poll, \"g_source_remove_poll\", LIBRARY.GLIB);
 	Linker.link(g_source_add_child_source, \"g_source_add_child_source\", LIBRARY.GLIB);
@@ -248,6 +254,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_io_channel_win32_new_socket, \"g_io_channel_win32_new_socket\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_win32_new_messages, \"g_io_channel_win32_new_messages\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_init, \"g_io_channel_init\", LIBRARY.GLIB);
+	Linker.link(g_io_channel_new_file, \"g_io_channel_new_file\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_read_chars, \"g_io_channel_read_chars\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_read_unichar, \"g_io_channel_read_unichar\", LIBRARY.GLIB);
 	Linker.link(g_io_channel_read_line, \"g_io_channel_read_line\", LIBRARY.GLIB);
@@ -794,6 +801,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_creat, \"g_creat\", LIBRARY.GLIB);
 	Linker.link(g_chdir, \"g_chdir\", LIBRARY.GLIB);
 	Linker.link(g_utime, \"g_utime\", LIBRARY.GLIB);
+	Linker.link(g_close, \"g_close\", LIBRARY.GLIB);
 
 	// glib.Directory
 
@@ -938,6 +946,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_markup_parse_context_parse, \"g_markup_parse_context_parse\", LIBRARY.GLIB);
 	Linker.link(g_markup_parse_context_push, \"g_markup_parse_context_push\", LIBRARY.GLIB);
 	Linker.link(g_markup_parse_context_pop, \"g_markup_parse_context_pop\", LIBRARY.GLIB);
+	Linker.link(g_markup_parse_context_ref, \"g_markup_parse_context_ref\", LIBRARY.GLIB);
+	Linker.link(g_markup_parse_context_unref, \"g_markup_parse_context_unref\", LIBRARY.GLIB);
 	Linker.link(g_markup_collect_attributes, \"g_markup_collect_attributes\", LIBRARY.GLIB);
 
 	// glib.KeyFile
@@ -1034,10 +1044,13 @@ mixin( _shared ~ "static this()
 	// glib.UnixUtils
 
 	Linker.link(g_unix_open_pipe, \"g_unix_open_pipe\", LIBRARY.GLIB);
+	Linker.link(g_unix_set_fd_nonblocking, \"g_unix_set_fd_nonblocking\", LIBRARY.GLIB);
 	Linker.link(g_unix_signal_add, \"g_unix_signal_add\", LIBRARY.GLIB);
 	Linker.link(g_unix_signal_add_full, \"g_unix_signal_add_full\", LIBRARY.GLIB);
 	Linker.link(g_unix_signal_source_new, \"g_unix_signal_source_new\", LIBRARY.GLIB);
-	Linker.link(g_unix_set_fd_nonblocking, \"g_unix_set_fd_nonblocking\", LIBRARY.GLIB);
+	Linker.link(g_unix_fd_add, \"g_unix_fd_add\", LIBRARY.GLIB);
+	Linker.link(g_unix_fd_add_full, \"g_unix_fd_add_full\", LIBRARY.GLIB);
+	Linker.link(g_unix_fd_source_new, \"g_unix_fd_source_new\", LIBRARY.GLIB);
 
 	// glib.WindowsUtils
 
@@ -1557,8 +1570,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_variant_get_fixed_array, \"g_variant_get_fixed_array\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_size, \"g_variant_get_size\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_data, \"g_variant_get_data\", LIBRARY.GLIB);
+	Linker.link(g_variant_get_data_as_bytes, \"g_variant_get_data_as_bytes\", LIBRARY.GLIB);
 	Linker.link(g_variant_store, \"g_variant_store\", LIBRARY.GLIB);
 	Linker.link(g_variant_new_from_data, \"g_variant_new_from_data\", LIBRARY.GLIB);
+	Linker.link(g_variant_new_from_bytes, \"g_variant_new_from_bytes\", LIBRARY.GLIB);
 	Linker.link(g_variant_byteswap, \"g_variant_byteswap\", LIBRARY.GLIB);
 	Linker.link(g_variant_get_normal_form, \"g_variant_get_normal_form\", LIBRARY.GLIB);
 	Linker.link(g_variant_is_normal_form, \"g_variant_is_normal_form\", LIBRARY.GLIB);
@@ -1745,6 +1760,12 @@ mixin( gshared ~"extern(C)
 	GMainContext* function(GSource* source) c_g_source_get_context;
 	void function(GSource* source, GSourceFunc func, void* data, GDestroyNotify notify) c_g_source_set_callback;
 	void function(GSource* source, void* callbackData, GSourceCallbackFuncs* callbackFuncs) c_g_source_set_callback_indirect;
+	void function(GSource* source, gint64 readyTime) c_g_source_set_ready_time;
+	gint64 function(GSource* source) c_g_source_get_ready_time;
+	gpointer function(GSource* source, gint fd, GIOCondition events) c_g_source_add_unix_fd;
+	void function(GSource* source, void* tag) c_g_source_remove_unix_fd;
+	void function(GSource* source, void* tag, GIOCondition newEvents) c_g_source_modify_unix_fd;
+	GIOCondition function(GSource* source, void* tag) c_g_source_query_unix_fd;
 	void function(GSource* source, GPollFD* fd) c_g_source_add_poll;
 	void function(GSource* source, GPollFD* fd) c_g_source_remove_poll;
 	void function(GSource* source, GSource* childSource) c_g_source_add_child_source;
@@ -1847,6 +1868,7 @@ mixin( gshared ~"extern(C)
 	GIOChannel* function(gint socket) c_g_io_channel_win32_new_socket;
 	GIOChannel* function(gsize hwnd) c_g_io_channel_win32_new_messages;
 	void function(GIOChannel* channel) c_g_io_channel_init;
+	GIOChannel* function(gchar* filename, gchar* mode, GError** error) c_g_io_channel_new_file;
 	GIOStatus function(GIOChannel* channel, gchar* buf, gsize count, gsize* bytesRead, GError** error) c_g_io_channel_read_chars;
 	GIOStatus function(GIOChannel* channel, gunichar* thechar, GError** error) c_g_io_channel_read_unichar;
 	GIOStatus function(GIOChannel* channel, gchar** strReturn, gsize* length, gsize* terminatorPos, GError** error) c_g_io_channel_read_line;
@@ -1938,7 +1960,7 @@ mixin( gshared ~"extern(C)
 	gsize function(gchar* dest, gchar* src, gsize destSize) c_g_strlcpy;
 	gsize function(gchar* dest, gchar* src, gsize destSize) c_g_strlcat;
 	gchar* function(gchar* format, ... ) c_g_strdup_printf;
-	gchar* function(gchar* format, va_list args) c_g_strdup_vprintf;
+	gchar* function(gchar* format) c_g_strdup_vprintf;
 	gint function(gchar* format, ... ) c_g_printf;
 	gint function(gchar* format, va_list args) c_g_vprintf;
 	gint function(void* file, gchar* format, ... ) c_g_fprintf;
@@ -2393,6 +2415,7 @@ mixin( gshared ~"extern(C)
 	int function(gchar* filename, int mode) c_g_creat;
 	int function(gchar* path) c_g_chdir;
 	int function(gchar* filename, void* utb) c_g_utime;
+	gboolean function(gint fd, GError** error) c_g_close;
 
 	// glib.Directory
 
@@ -2537,6 +2560,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GMarkupParseContext* context, gchar* text, gssize textLen, GError** error) c_g_markup_parse_context_parse;
 	void function(GMarkupParseContext* context, GMarkupParser* parser, void* userData) c_g_markup_parse_context_push;
 	gpointer function(GMarkupParseContext* context) c_g_markup_parse_context_pop;
+	GMarkupParseContext* function(GMarkupParseContext* context) c_g_markup_parse_context_ref;
+	void function(GMarkupParseContext* context) c_g_markup_parse_context_unref;
 	gboolean function(gchar* elementName, gchar** attributeNames, gchar** attributeValues, GError** error, GMarkupCollectType firstType, gchar* firstAttr, ... ) c_g_markup_collect_attributes;
 
 	// glib.KeyFile
@@ -2633,10 +2658,13 @@ mixin( gshared ~"extern(C)
 	// glib.UnixUtils
 
 	gboolean function(gint* fds, gint flags, GError** error) c_g_unix_open_pipe;
+	gboolean function(gint fd, gboolean nonblock, GError** error) c_g_unix_set_fd_nonblocking;
 	guint function(gint signum, GSourceFunc handler, void* userData) c_g_unix_signal_add;
 	guint function(gint priority, gint signum, GSourceFunc handler, void* userData, GDestroyNotify notify) c_g_unix_signal_add_full;
 	GSource* function(gint signum) c_g_unix_signal_source_new;
-	gboolean function(gint fd, gboolean nonblock, GError** error) c_g_unix_set_fd_nonblocking;
+	guint function(gint fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData) c_g_unix_fd_add;
+	guint function(gint priority, gint fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData, GDestroyNotify notify) c_g_unix_fd_add_full;
+	GSource* function(gint fd, GIOCondition condition) c_g_unix_fd_source_new;
 
 	// glib.WindowsUtils
 
@@ -3156,8 +3184,10 @@ mixin( gshared ~"extern(C)
 	gconstpointer function(GVariant* value, gsize* nElements, gsize elementSize) c_g_variant_get_fixed_array;
 	gsize function(GVariant* value) c_g_variant_get_size;
 	gconstpointer function(GVariant* value) c_g_variant_get_data;
+	GBytes* function(GVariant* value) c_g_variant_get_data_as_bytes;
 	void function(GVariant* value, void* data) c_g_variant_store;
 	GVariant* function(GVariantType* type, void* data, gsize size, gboolean trusted, GDestroyNotify notify, void* userData) c_g_variant_new_from_data;
+	GVariant* function(GVariantType* type, GBytes* bytes, gboolean trusted) c_g_variant_new_from_bytes;
 	GVariant* function(GVariant* value) c_g_variant_byteswap;
 	GVariant* function(GVariant* value) c_g_variant_get_normal_form;
 	gboolean function(GVariant* value) c_g_variant_is_normal_form;
@@ -3342,6 +3372,12 @@ alias c_g_source_set_name_by_id  g_source_set_name_by_id;
 alias c_g_source_get_context  g_source_get_context;
 alias c_g_source_set_callback  g_source_set_callback;
 alias c_g_source_set_callback_indirect  g_source_set_callback_indirect;
+alias c_g_source_set_ready_time  g_source_set_ready_time;
+alias c_g_source_get_ready_time  g_source_get_ready_time;
+alias c_g_source_add_unix_fd  g_source_add_unix_fd;
+alias c_g_source_remove_unix_fd  g_source_remove_unix_fd;
+alias c_g_source_modify_unix_fd  g_source_modify_unix_fd;
+alias c_g_source_query_unix_fd  g_source_query_unix_fd;
 alias c_g_source_add_poll  g_source_add_poll;
 alias c_g_source_remove_poll  g_source_remove_poll;
 alias c_g_source_add_child_source  g_source_add_child_source;
@@ -3444,6 +3480,7 @@ alias c_g_io_channel_win32_new_fd  g_io_channel_win32_new_fd;
 alias c_g_io_channel_win32_new_socket  g_io_channel_win32_new_socket;
 alias c_g_io_channel_win32_new_messages  g_io_channel_win32_new_messages;
 alias c_g_io_channel_init  g_io_channel_init;
+alias c_g_io_channel_new_file  g_io_channel_new_file;
 alias c_g_io_channel_read_chars  g_io_channel_read_chars;
 alias c_g_io_channel_read_unichar  g_io_channel_read_unichar;
 alias c_g_io_channel_read_line  g_io_channel_read_line;
@@ -3990,6 +4027,7 @@ alias c_g_access  g_access;
 alias c_g_creat  g_creat;
 alias c_g_chdir  g_chdir;
 alias c_g_utime  g_utime;
+alias c_g_close  g_close;
 
 // glib.Directory
 
@@ -4134,6 +4172,8 @@ alias c_g_markup_parse_context_new  g_markup_parse_context_new;
 alias c_g_markup_parse_context_parse  g_markup_parse_context_parse;
 alias c_g_markup_parse_context_push  g_markup_parse_context_push;
 alias c_g_markup_parse_context_pop  g_markup_parse_context_pop;
+alias c_g_markup_parse_context_ref  g_markup_parse_context_ref;
+alias c_g_markup_parse_context_unref  g_markup_parse_context_unref;
 alias c_g_markup_collect_attributes  g_markup_collect_attributes;
 
 // glib.KeyFile
@@ -4230,10 +4270,13 @@ alias c_g_bookmark_file_move_item  g_bookmark_file_move_item;
 // glib.UnixUtils
 
 alias c_g_unix_open_pipe  g_unix_open_pipe;
+alias c_g_unix_set_fd_nonblocking  g_unix_set_fd_nonblocking;
 alias c_g_unix_signal_add  g_unix_signal_add;
 alias c_g_unix_signal_add_full  g_unix_signal_add_full;
 alias c_g_unix_signal_source_new  g_unix_signal_source_new;
-alias c_g_unix_set_fd_nonblocking  g_unix_set_fd_nonblocking;
+alias c_g_unix_fd_add  g_unix_fd_add;
+alias c_g_unix_fd_add_full  g_unix_fd_add_full;
+alias c_g_unix_fd_source_new  g_unix_fd_source_new;
 
 // glib.WindowsUtils
 
@@ -4753,8 +4796,10 @@ alias c_g_variant_lookup  g_variant_lookup;
 alias c_g_variant_get_fixed_array  g_variant_get_fixed_array;
 alias c_g_variant_get_size  g_variant_get_size;
 alias c_g_variant_get_data  g_variant_get_data;
+alias c_g_variant_get_data_as_bytes  g_variant_get_data_as_bytes;
 alias c_g_variant_store  g_variant_store;
 alias c_g_variant_new_from_data  g_variant_new_from_data;
+alias c_g_variant_new_from_bytes  g_variant_new_from_bytes;
 alias c_g_variant_byteswap  g_variant_byteswap;
 alias c_g_variant_get_normal_form  g_variant_get_normal_form;
 alias c_g_variant_is_normal_form  g_variant_is_normal_form;

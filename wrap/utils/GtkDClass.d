@@ -2913,6 +2913,11 @@ public class GtkDClass
 			GtkDClass.skipBlank(p, text);
 			type = untilBlank(p, text);
 		}
+		if ( type == "volatile" )
+		{
+			GtkDClass.skipBlank(p, text);
+			type = untilBlank(p, text);
+		}
 		if ( type == "unsigned" )
 		{
 			GtkDClass.skipBlank(p, text);

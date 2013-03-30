@@ -132,7 +132,7 @@ public class ByteArray
 	 * and will be freed with g_free(), i.e. it could be allocated using g_strdup().
 	 * Since 2.32
 	 * Params:
-	 * data = byte data for the array. [array length=len]
+	 * data = byte data for the array. [transfer full][array length=len]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (ubyte[] data)

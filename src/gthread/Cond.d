@@ -205,6 +205,8 @@ public class Cond
 	
 	/**
 	 * Atomically releases mutex and waits until cond is signalled.
+	 * When this function returns, mutex is locked again and owned by the
+	 * calling thread.
 	 * When using condition variables, it is possible that a spurious wakeup
 	 * may occur (ie: g_cond_wait() returns even though g_cond_signal() was
 	 * not called). It's also possible that a stolen wakeup may occur.

@@ -488,7 +488,7 @@ public class MainContext
 	/**
 	 * Adds a file descriptor to the set of file descriptors polled for
 	 * this context. This will very seldom be used directly. Instead
-	 * a typical event source will use g_source_add_poll() instead.
+	 * a typical event source will use g_source_add_unix_fd() instead.
 	 * Params:
 	 * fd = a GPollFD structure holding information about a file
 	 * descriptor to watch.

@@ -117,6 +117,32 @@ public class UnixUtils
 	}
 	
 	/**
+	 * Control the non-blocking state of the given file descriptor,
+	 * according to nonblock. On most systems this uses O_NONBLOCK, but
+	 * on some older ones may use O_NDELAY.
+	 * Since 2.30
+	 * Params:
+	 * fd = A file descriptor
+	 * nonblock = If TRUE, set the descriptor to be non-blocking
+	 * Returns: TRUE if successful
+	 * Throws: GException on failure.
+	 */
+	public static int setFdNonblocking(int fd, int nonblock)
+	{
+		// gboolean g_unix_set_fd_nonblocking (gint fd,  gboolean nonblock,  GError **error);
+		GError* err = null;
+		
+		auto p = g_unix_set_fd_nonblocking(fd, nonblock, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * A convenience function for g_unix_signal_source_new(), which
 	 * attaches to the default GMainContext. You can remove the watch
 	 * using g_source_remove().
@@ -145,7 +171,7 @@ public class UnixUtils
 	 * handler = Callback
 	 * userData = Data for handler
 	 * notify = GDestroyNotify for handler
-	 * Returns: An ID (greater than 0) for the event source
+	 * Returns: An ID (greater than 0) for the event source Rename to: g_unix_signal_add
 	 */
 	public static uint signalAddFull(int priority, int signum, GSourceFunc handler, void* userData, GDestroyNotify notify)
 	{
@@ -155,11 +181,14 @@ public class UnixUtils
 	
 	/**
 	 * Create a GSource that will be dispatched upon delivery of the UNIX
-	 * signal signum. Currently only SIGHUP,
-	 * SIGINT, and SIGTERM can
-	 * be monitored. Note that unlike the UNIX default, all sources which
-	 * have created a watch will be dispatched, regardless of which
-	 * underlying thread invoked g_unix_signal_source_new().
+	 * signal signum. In GLib versions before 2.36, only
+	 * SIGHUP, SIGINT,
+	 * SIGTERM can be monitored. In GLib 2.36,
+	 * SIGUSR1 and SIGUSR2 were
+	 * added.
+	 * Note that unlike the UNIX default, all sources which have created a
+	 * watch will be dispatched, regardless of which underlying thread
+	 * invoked g_unix_signal_source_new().
 	 * For example, an effective use of this function is to handle SIGTERM
 	 * cleanly; flushing any outstanding files, and then calling
 	 * g_main_loop_quit(). It is not safe to do any of this a regular
@@ -191,28 +220,70 @@ public class UnixUtils
 	}
 	
 	/**
-	 * Control the non-blocking state of the given file descriptor,
-	 * according to nonblock. On most systems this uses O_NONBLOCK, but
-	 * on some older ones may use O_NDELAY.
-	 * Since 2.30
+	 * Sets a function to be called when the IO condition, as specified by
+	 * condition becomes true for fd.
+	 * function will be called when the specified IO condition becomes
+	 * TRUE. The function is expected to clear whatever event caused the
+	 * IO condition to become true and return TRUE in order to be notified
+	 * when it happens again. If function returns FALSE then the watch
+	 * will be cancelled.
+	 * The return value of this function can be passed to g_source_remove()
+	 * to cancel the watch at any time that it exists.
+	 * The source will never close the fd -- you must do it yourself.
+	 * Since 2.36
 	 * Params:
-	 * fd = A file descriptor
-	 * nonblock = If TRUE, set the descriptor to be non-blocking
-	 * Returns: TRUE if successful
-	 * Throws: GException on failure.
+	 * fd = a file descriptor
+	 * condition = IO conditions to watch for on fd
+	 * userData = data to pass to function
+	 * Returns: the ID (greater than 0) of the event source
 	 */
-	public static int setFdNonblocking(int fd, int nonblock)
+	public static uint fdAdd(int fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData)
 	{
-		// gboolean g_unix_set_fd_nonblocking (gint fd,  gboolean nonblock,  GError **error);
-		GError* err = null;
+		// guint g_unix_fd_add (gint fd,  GIOCondition condition,  GUnixFDSourceFunc function,  gpointer user_data);
+		return g_unix_fd_add(fd, condition, funct, userData);
+	}
+	
+	/**
+	 * Sets a function to be called when the IO condition, as specified by
+	 * condition becomes true for fd.
+	 * This is the same as g_unix_fd_add(), except that it allows you to
+	 * specify a non-default priority and a provide a GDestroyNotify for
+	 * user_data.
+	 * Since 2.36
+	 * Params:
+	 * priority = the priority of the source
+	 * fd = a file descriptor
+	 * condition = IO conditions to watch for on fd
+	 * userData = data to pass to function
+	 * notify = function to call when the idle is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source
+	 */
+	public static uint fdAddFull(int priority, int fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData, GDestroyNotify notify)
+	{
+		// guint g_unix_fd_add_full (gint priority,  gint fd,  GIOCondition condition,  GUnixFDSourceFunc function,  gpointer user_data,  GDestroyNotify notify);
+		return g_unix_fd_add_full(priority, fd, condition, funct, userData, notify);
+	}
+	
+	/**
+	 * Creates a GSource to watch for a particular IO condition on a file
+	 * descriptor.
+	 * The source will never close the fd -- you must do it yourself.
+	 * Since 2.36
+	 * Params:
+	 * fd = a file descriptor
+	 * condition = IO conditions to watch for on fd
+	 * Returns: the newly created GSource
+	 */
+	public static Source fdSourceNew(int fd, GIOCondition condition)
+	{
+		// GSource * g_unix_fd_source_new (gint fd,  GIOCondition condition);
+		auto p = g_unix_fd_source_new(fd, condition);
 		
-		auto p = g_unix_set_fd_nonblocking(fd, nonblock, &err);
-		
-		if (err !is null)
+		if(p is null)
 		{
-			throw new GException( new ErrorG(err) );
+			return null;
 		}
 		
-		return p;
+		return new Source(cast(GSource*) p);
 	}
 }

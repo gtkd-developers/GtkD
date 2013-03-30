@@ -502,7 +502,7 @@ public class Str
 	 * Params:
 	 * str1 = a C string or NULL. [allow-none]
 	 * str2 = another C string or NULL. [allow-none]
-	 * Returns: -1, 0 or 1, if str1 is <, == or > than str2.
+	 * Returns: an integer less than, equal to, or greater than zero, if str1 is <, == or > than str2.
 	 */
 	public static int strcmp0(string str1, string str2)
 	{
@@ -570,13 +570,12 @@ public class Str
 	 * Params:
 	 * format = a standard printf() format string, but notice
 	 * string precision pitfalls
-	 * args = the list of parameters to insert into the format string
 	 * Returns: a newly-allocated string holding the result
 	 */
-	public static string strdupVprintf(string format, void* args)
+	public static string strdupVprintf(string format)
 	{
-		// gchar * g_strdup_vprintf (const gchar *format,  va_list args);
-		return Str.toString(g_strdup_vprintf(Str.toStringz(format), args));
+		// gchar * g_strdup_vprintf (const gchar *format);
+		return Str.toString(g_strdup_vprintf(Str.toStringz(format)));
 	}
 	
 	/**
@@ -1126,9 +1125,10 @@ public class Str
 	 * locale-sensitive, and it's broken if your string is localized, since
 	 * it doesn't work on many encodings at all, including UTF-8, EUC-JP,
 	 * etc.
-	 * There are therefore two replacement functions: g_ascii_strncasecmp(),
+	 * There are therefore two replacement techniques: g_ascii_strncasecmp(),
 	 * which only works on ASCII and is not locale-sensitive, and
-	 * g_utf8_casefold(), which is good for case-insensitive sorting of UTF-8.
+	 * g_utf8_casefold() followed by strcmp() on the resulting strings, which is
+	 * good for case-insensitive sorting of UTF-8.
 	 * A case-insensitive string comparison, corresponding to the standard
 	 * strncasecmp() function on platforms which support it.
 	 * It is similar to g_strcasecmp() except it only compares the first n

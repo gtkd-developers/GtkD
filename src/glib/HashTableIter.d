@@ -101,10 +101,14 @@ private import glib.HashTable;
  *
  * To destroy a GHashTable use g_hash_table_destroy().
  *
- * $(DDOC_COMMENT example)
- *
- * As of version 2.32, there is also a g_hash_table_add() function to
- * add a key to a GHashTable that is being used as a set.
+ * A common use-case for hash tables is to store information about a
+ * set of keys, without associating any particular value with each
+ * key. GHashTable optimizes one way of doing so: If you store only
+ * key-value pairs where key == value, then GHashTable does not
+ * allocate memory to store the values, which can be a considerable
+ * space saving, if your set is large. The functions
+ * g_hash_table_add() and g_hash_table_contains() are designed to be
+ * used when using GHashTable this way.
  */
 public class HashTableIter
 {

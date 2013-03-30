@@ -184,7 +184,7 @@ public class Util
 	 */
 	public static string getPrgname()
 	{
-		// gchar * g_get_prgname (void);
+		// const gchar * g_get_prgname (void);
 		return Str.toString(g_get_prgname());
 	}
 	
@@ -596,21 +596,26 @@ public class Util
 	}
 	
 	/**
-	 * Gets the current user's home directory as defined in the
-	 * password database.
-	 * Note that in contrast to traditional UNIX tools, this function
-	 * prefers passwd entries over the HOME
-	 * environment variable.
-	 * One of the reasons for this decision is that applications in many
-	 * cases need special handling to deal with the case where
-	 * HOME is
-	 * Not owned by the user
-	 * Not writeable
-	 * Not even readable
-	 * Since applications are in general not written
-	 * to deal with these situations it was considered better to make
-	 * g_get_home_dir() not pay attention to HOME and to
-	 * return the real home directory for the user. If applications
+	 * Gets the current user's home directory.
+	 * As with most UNIX tools, this function will return the value of the
+	 * HOME environment variable if it is set to an existing
+	 * absolute path name, falling back to the passwd
+	 * file in the case that it is unset.
+	 * If the path given in HOME is non-absolute, does not
+	 * exist, or is not a directory, the result is undefined.
+	 * Note
+	 *  Before version 2.36 this function would ignore the
+	 *  HOME environment variable, taking the value from the
+	 *  passwd database instead. This was changed to
+	 *  increase the compatibility of GLib with other programs (and the XDG
+	 *  basedir specification) and to increase testability of programs
+	 *  based on GLib (by making it easier to run them from test
+	 *  frameworks).
+	 *  If your program has a strong requirement for either the new or the
+	 *  old behaviour (and if you don't wish to increase your GLib
+	 *  dependency to ensure that the new behaviour is in effect) then you
+	 *  should either directly check the HOME environment
+	 *  variable yourself or unset it before calling any functions in GLib.
 	 * Returns: the current user's home directory
 	 */
 	public static string getHomeDir()

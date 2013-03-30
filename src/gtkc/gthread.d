@@ -51,6 +51,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_pointer_bit_lock, \"g_pointer_bit_lock\", LIBRARY.GTHREAD);
 	Linker.link(g_pointer_bit_trylock, \"g_pointer_bit_trylock\", LIBRARY.GTHREAD);
 	Linker.link(g_pointer_bit_unlock, \"g_pointer_bit_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_get_num_processors, \"g_get_num_processors\", LIBRARY.GTHREAD);
 
 	// gthread.Mutex
 
@@ -119,6 +120,7 @@ mixin( gshared ~"extern(C)
 	void function(void* address, gint lockBit) c_g_pointer_bit_lock;
 	gboolean function(void* address, gint lockBit) c_g_pointer_bit_trylock;
 	void function(void* address, gint lockBit) c_g_pointer_bit_unlock;
+	guint function() c_g_get_num_processors;
 
 	// gthread.Mutex
 
@@ -185,6 +187,7 @@ alias c_g_bit_unlock  g_bit_unlock;
 alias c_g_pointer_bit_lock  g_pointer_bit_lock;
 alias c_g_pointer_bit_trylock  g_pointer_bit_trylock;
 alias c_g_pointer_bit_unlock  g_pointer_bit_unlock;
+alias c_g_get_num_processors  g_get_num_processors;
 
 // gthread.Mutex
 

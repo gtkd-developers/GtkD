@@ -162,9 +162,9 @@ public class Child
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
 	 * Note further that using g_child_watch_source_new() is not
-	 * compatible with calling waitpid(-1) in
-	 * the application. Calling waitpid() for individual pids will
-	 * still work fine.
+	 * compatible with calling waitpid with a
+	 * nonpositive first argument in the application. Calling waitpid()
+	 * for individual pids will still work fine.
 	 * Since 2.4
 	 * Params:
 	 * pid = process to watch. On POSIX the pid of a child process. On

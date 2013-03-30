@@ -174,8 +174,8 @@ public class URI
 	 * uri = a uri describing a filename (escaped, encoded in ASCII).
 	 * hostname = Location to store hostname for the URI, or NULL.
 	 * If there is no hostname in the URI, NULL will be
-	 * stored in this location. [allow-none]
-	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error.
+	 * stored in this location. [out][allow-none]
+	 * Returns: a newly-allocated string holding the resulting filename, or NULL on an error. [type filename]
 	 * Throws: GException on failure.
 	 */
 	public static string gFilenameFromUri(string uri, out string hostname)
