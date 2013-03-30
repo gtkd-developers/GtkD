@@ -206,7 +206,7 @@ public class DBusMethodInvocation : ObjectG
 	 * you need to use low-level protocol features, such as UNIX file
 	 * descriptor passing, that cannot be properly expressed in the
 	 * GVariant API.
-	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 6, “D-Bus server example” and Example 8, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Since 2.26
 	 * Returns: GDBusMessage. Do not free, it is owned by invocation. [transfer none]

@@ -118,12 +118,16 @@ alias GFileCopyFlags FileCopyFlags;
  *  event instead (NB: not supported on all backends; the default
  *  behaviour -without specifying this flag- is to send single DELETED
  *  and CREATED events).
+ * G_FILE_MONITOR_WATCH_HARD_LINKS
+ * Watch for changes to the file made
+ *  via another hard link. Since 2.36.
  */
 public enum GFileMonitorFlags
 {
 	NONE = 0,
 	WATCH_MOUNTS = (1 << 0),
-	SEND_MOVED = (1 << 1)
+	SEND_MOVED = (1 << 1),
+	WATCH_HARD_LINKS = (1 << 2)
 }
 alias GFileMonitorFlags FileMonitorFlags;
 
@@ -325,7 +329,7 @@ alias GFileType FileType;
  * G_IO_ERROR_PARTIAL_INPUT
  * Need more input to finish operation. Since 2.24
  * G_IO_ERROR_INVALID_DATA
- * There input data was invalid. Since 2.24
+ * The input data was invalid. Since 2.24
  * G_IO_ERROR_DBUS_ERROR
  * A remote object generated an error that
  *  doesn't correspond to a locally registered GError error
@@ -347,6 +351,8 @@ alias GFileType FileType;
  * G_IO_ERROR_PROXY_NOT_ALLOWED
  * Proxy connection is not allowed by ruleset.
  *  Since 2.26
+ * G_IO_ERROR_BROKEN_PIPE
+ * Broken pipe. Since 2.36
  */
 public enum GIOErrorEnum
 {
@@ -393,7 +399,8 @@ public enum GIOErrorEnum
 	PROXY_FAILED,
 	PROXY_AUTH_FAILED,
 	PROXY_NEED_AUTH,
-	PROXY_NOT_ALLOWED
+	PROXY_NOT_ALLOWED,
+	BROKEN_PIPE
 }
 alias GIOErrorEnum IOErrorEnum;
 
@@ -1770,8 +1777,9 @@ alias GResourceError ResourceError;
  * Default
  * G_APPLICATION_IS_SERVICE
  * Run as a service. In this mode, registration
- *  fails if the service is already running, and the application will
- *  stay around for a while when the use count falls to zero.
+ *  fails if the service is already running, and the application
+ *  will initially wait up to 10 seconds for an initial activation
+ *  message to arrive.
  * G_APPLICATION_IS_LAUNCHER
  * Don't try to become the primary instance.
  * G_APPLICATION_HANDLES_OPEN
@@ -1843,6 +1851,16 @@ public enum GTestDBusFlags
 	NONE = 0
 }
 alias GTestDBusFlags TestDBusFlags;
+
+
+struct GStaticResource
+{
+	guint8* data;
+	gsize   data_len;
+	GResource* resource;
+	GStaticResource* next;
+	gpointer padding;
+}
 
 
 /**
@@ -2273,8 +2291,16 @@ public struct GAsyncResultIface
 	/+* Virtual Table +/
 	extern(C) void* function(GAsyncResult* res)  getUserData;
 	extern(C) GObject * function(GAsyncResult* res)  getSourceObject;
-	extern(C) int function(GAsyncResult* res, void* tag)  isTagged;
+	extern(C) int function(GAsyncResult* res, void* sourceTag)  isTagged;
 }
+
+
+/**
+ * Main Gtk struct.
+ * The opaque object representing a synchronous or asynchronous task
+ * and its result.
+ */
+public struct GTask{}
 
 
 /**
@@ -3624,6 +3650,13 @@ public struct GProxyResolverInterface
 
 /**
  * Main Gtk struct.
+ * A GProxyResolver implementation for using a fixed set of proxies.
+ */
+public struct GSimpleProxyResolver{}
+
+
+/**
+ * Main Gtk struct.
  * Interface for objects that contain or generate GSocketAddresses.
  */
 public struct GSocketConnectable{}
@@ -4358,6 +4391,25 @@ public struct GApplicationClass
 	extern(C) void function(GApplication* application, GFile** files, int nFiles, char* hint)  open;
 	extern(C) int function(GApplication* application, GApplicationCommandLine* commandLine)  commandLine;
 	/+* vfuncs +/
+	/+**
+	 * GApplicationClass::localCommandLine:
+	 * @application: a #GApplication
+	 * @arguments: (inout) (array zero-terminated=1): array of command line arguments
+	 * @exitStatus: (out): exit status to fill after processing the command line.
+	 *
+	 * This virtual funct is always invoked inn the local instance. It
+	 * gets passed a pointer to a %NULL-terminated copy of @argv and is
+	 * expected to remove arguments that it handled (shifting up remaining
+	 * arguments).
+	 *
+	 * The last argument to localCommandLine() is a pointer to the @status
+	 * variable which can used to set the exit status that is returned from
+	 * run().
+	 *
+	 * See run() for more details on #GApplication startup.
+	 *
+	 * Returns: %TRUE if the commandline has been completely handled
+	+/
 	extern(C) int function(GApplication* application, char*** arguments, int* exitStatus)  localCommandLine;
 	extern(C) void function(GApplication* application, GVariant* platformData)  beforeEmit;
 	extern(C) void function(GApplication* application, GVariant* platformData)  afterEmit;
@@ -4744,6 +4796,33 @@ public alias extern(C) int function(GCancellable* cancellable, void* userData) G
 public alias extern(C) void function(GObject* sourceObject, GAsyncResult* res, void* userData) GAsyncReadyCallback;
 
 /*
+ * The prototype for a task function to be run in a thread via
+ * g_task_run_in_thread() or g_task_run_in_thread_sync().
+ * If the return-on-cancel flag is set on task, and cancellable gets
+ * cancelled, then the GTask will be completed immediately (as though
+ * g_task_return_error_if_cancelled() had been called), without
+ * waiting for the task function to complete. However, the task
+ * function will continue running in its thread in the background. The
+ * function therefore needs to be careful about how it uses
+ * externally-visible state in this case. See
+ * g_task_set_return_on_cancel() for more details.
+ * Other than in that case, task will be completed when the
+ * GTaskThreadFunc returns, not when it calls
+ * a g_task_return_ function.
+ * task :
+ * the GTask
+ * source_object :
+ * task's source object. [type GObject]
+ * task_data :
+ * task's task data
+ * cancellable :
+ * task's GCancellable, or NULL
+ * Since 2.36
+ */
+// void (*GTaskThreadFunc) (GTask *task,  gpointer source_object,  gpointer task_data,  GCancellable *cancellable);
+public alias extern(C) void function(GTask* task, void* sourceObject, void* taskData, GCancellable* cancellable) GTaskThreadFunc;
+
+/*
  * I/O Job function.
  * Long-running jobs should periodically check the cancellable
  * to see if they have been cancelled.
@@ -5098,8 +5177,12 @@ public alias extern(C) void function(GDBusConnection* connection, char* name, ch
 
 /*
  * Invoked when the name being watched is known not to have to have a owner.
+ * This is also invoked when the GDBusConection on which the watch was
+ * established has been closed. In that case, connection will be
+ * NULL.
  * connection :
- * The GDBusConnection the name is being watched on.
+ * The GDBusConnection the name is being watched on, or
+ * NULL.
  * name :
  * The name being watched.
  * user_data :

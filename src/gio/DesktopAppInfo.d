@@ -45,6 +45,7 @@
  * 	- g_desktop_app_info_new_from_filename
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.ListG
@@ -73,6 +74,7 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
+private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
@@ -305,6 +307,48 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	{
 		// void g_desktop_app_info_set_desktop_env (const char *desktop_env);
 		g_desktop_app_info_set_desktop_env(Str.toStringz(desktopEnv));
+	}
+	
+	/**
+	 * Looks up a string value in the keyfile backing info.
+	 * The key is looked up in the "Desktop Entry" group.
+	 * Since 2.36
+	 * Params:
+	 * key = the key to look up
+	 * Returns: a newly allocated string, or NULL if the key is not found
+	 */
+	public string getString(string key)
+	{
+		// char * g_desktop_app_info_get_string (GDesktopAppInfo *info,  const char *key);
+		return Str.toString(g_desktop_app_info_get_string(gDesktopAppInfo, Str.toStringz(key)));
+	}
+	
+	/**
+	 * Looks up a boolean value in the keyfile backing info.
+	 * The key is looked up in the "Desktop Entry" group.
+	 * Since 2.36
+	 * Params:
+	 * key = the key to look up
+	 * Returns: the boolean value, or FALSE if the key is not found
+	 */
+	public int getBoolean(string key)
+	{
+		// gboolean g_desktop_app_info_get_boolean (GDesktopAppInfo *info,  const char *key);
+		return g_desktop_app_info_get_boolean(gDesktopAppInfo, Str.toStringz(key));
+	}
+	
+	/**
+	 * Returns whether key exists in the "Desktop Entry" group
+	 * of the keyfile backing info.
+	 * Since 2.26
+	 * Params:
+	 * key = the key to look up
+	 * Returns: TRUE if the key exists
+	 */
+	public int hasKey(string key)
+	{
+		// gboolean g_desktop_app_info_has_key (GDesktopAppInfo *info,  const char *key);
+		return g_desktop_app_info_has_key(gDesktopAppInfo, Str.toStringz(key));
 	}
 	
 	/**

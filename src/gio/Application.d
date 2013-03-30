@@ -406,7 +406,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	
 	/**
 	 * Creates a new GApplication instance.
-	 * This function calls g_type_init() for you.
 	 * If non-NULL, the application id must be valid. See
 	 * g_application_id_is_valid().
 	 * If no application ID is given then some features of GApplication
@@ -748,7 +747,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * This function always runs on the local instance. It gets passed a pointer
 	 * to a NULL-terminated copy of argv and is expected to remove the arguments
 	 * that it handled (shifting up remaining arguments). See
-	 *  Example 19, “Split commandline handling” for an example of
+	 *  Example 23, “Split commandline handling” for an example of
 	 * parsing argv manually. Alternatively, you may use the GOptionContext API,
 	 * after setting argc = g_strv_length (argv);.
 	 * The last argument to local_command_line() is a pointer to the status
@@ -785,14 +784,17 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * and override local_command_line(). In this case, you most likely want
 	 * to return TRUE from your local_command_line() implementation to
 	 * suppress the default handling. See
-	 *  Example 19, “Split commandline handling” for an example.
+	 *  Example 23, “Split commandline handling” for an example.
 	 * If, after the above is done, the use count of the application is zero
 	 * then the exit status is returned immediately. If the use count is
 	 * non-zero then the default main context is iterated until the use count
 	 * falls to zero, at which point 0 is returned.
-	 * If the G_APPLICATION_IS_SERVICE flag is set, then the exiting at
-	 * use count of zero is delayed for a while (ie: the instance stays
-	 * around to provide its service to others).
+	 * If the G_APPLICATION_IS_SERVICE flag is set, then the service will
+	 * run for as much as 10 seconds with a use count of zero while waiting
+	 * for the message that caused the activation to arrive. After that,
+	 * if the use count falls to zero the application will exit immediately,
+	 * except in the case that g_application_set_inactivity_timeout() is in
+	 * use.
 	 * Since 2.28
 	 * Params:
 	 * argv = the argv from main(), or NULL. [array length=argc][allow-none]

@@ -45,11 +45,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.DateTime
  * 	- gobject.ObjectG
  * 	- gio.Icon
  * 	- gio.IconIF
  * 	- gio.FileAttributeMatcher
  * structWrap:
+ * 	- GDateTime* -> DateTime
  * 	- GFileAttributeMatcher* -> FileAttributeMatcher
  * 	- GFileInfo* -> FileInfo
  * 	- GIcon* -> IconIF
@@ -69,6 +71,7 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import glib.DateTime;
 private import gobject.ObjectG;
 private import gio.Icon;
 private import gio.IconIF;
@@ -743,6 +746,26 @@ public class FileInfo : ObjectG
 	{
 		// gint32 g_file_info_get_sort_order (GFileInfo *info);
 		return g_file_info_get_sort_order(gFileInfo);
+	}
+	
+	/**
+	 * Returns the GDateTime representing the deletion date of the file, as
+	 * available in G_FILE_ATTRIBUTE_TRASH_DELETION_DATE. If the
+	 * G_FILE_ATTRIBUTE_TRASH_DELETION_DATE attribute is unset, NULL is returned.
+	 * Since 2.36
+	 * Returns: a GDateTime, or NULL.
+	 */
+	public DateTime getDeletionDate()
+	{
+		// GDateTime * g_file_info_get_deletion_date (GFileInfo *info);
+		auto p = g_file_info_get_deletion_date(gFileInfo);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(DateTime)(cast(GDateTime*) p);
 	}
 	
 	/**

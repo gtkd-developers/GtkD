@@ -117,7 +117,7 @@ public class DBusInterfaceInfo
 	
 	/**
 	 * Looks up information about a method.
-	 * This cost of this function is O(n) in number of methods unless
+	 * The cost of this function is O(n) in number of methods unless
 	 * g_dbus_interface_info_cache_build() has been used on info.
 	 * Since 2.26
 	 * Params:
@@ -139,7 +139,7 @@ public class DBusInterfaceInfo
 	
 	/**
 	 * Looks up information about a signal.
-	 * This cost of this function is O(n) in number of signals unless
+	 * The cost of this function is O(n) in number of signals unless
 	 * g_dbus_interface_info_cache_build() has been used on info.
 	 * Since 2.26
 	 * Params:
@@ -161,7 +161,7 @@ public class DBusInterfaceInfo
 	
 	/**
 	 * Looks up information about a property.
-	 * This cost of this function is O(n) in number of properties unless
+	 * The cost of this function is O(n) in number of properties unless
 	 * g_dbus_interface_info_cache_build() has been used on info.
 	 * Since 2.26
 	 * Params:

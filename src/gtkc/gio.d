@@ -40,6 +40,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_new_for_path, \"g_file_new_for_path\", LIBRARY.GIO);
 	Linker.link(g_file_new_for_uri, \"g_file_new_for_uri\", LIBRARY.GIO);
 	Linker.link(g_file_new_for_commandline_arg, \"g_file_new_for_commandline_arg\", LIBRARY.GIO);
+	Linker.link(g_file_new_for_commandline_arg_and_cwd, \"g_file_new_for_commandline_arg_and_cwd\", LIBRARY.GIO);
 	Linker.link(g_file_new_tmp, \"g_file_new_tmp\", LIBRARY.GIO);
 	Linker.link(g_file_parse_name, \"g_file_parse_name\", LIBRARY.GIO);
 	Linker.link(g_file_dup, \"g_file_dup\", LIBRARY.GIO);
@@ -211,6 +212,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_info_get_symlink_target, \"g_file_info_get_symlink_target\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_etag, \"g_file_info_get_etag\", LIBRARY.GIO);
 	Linker.link(g_file_info_get_sort_order, \"g_file_info_get_sort_order\", LIBRARY.GIO);
+	Linker.link(g_file_info_get_deletion_date, \"g_file_info_get_deletion_date\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_attribute_mask, \"g_file_info_set_attribute_mask\", LIBRARY.GIO);
 	Linker.link(g_file_info_unset_attribute_mask, \"g_file_info_unset_attribute_mask\", LIBRARY.GIO);
 	Linker.link(g_file_info_set_file_type, \"g_file_info_set_file_type\", LIBRARY.GIO);
@@ -251,6 +253,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_enumerator_has_pending, \"g_file_enumerator_has_pending\", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_set_pending, \"g_file_enumerator_set_pending\", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_get_container, \"g_file_enumerator_get_container\", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_get_child, \"g_file_enumerator_get_child\", LIBRARY.GIO);
 
 	// gio.ErrorGIO
 
@@ -314,6 +317,39 @@ mixin( _shared ~ "static this()
 	Linker.link(g_async_result_get_source_object, \"g_async_result_get_source_object\", LIBRARY.GIO);
 	Linker.link(g_async_result_is_tagged, \"g_async_result_is_tagged\", LIBRARY.GIO);
 	Linker.link(g_async_result_legacy_propagate_error, \"g_async_result_legacy_propagate_error\", LIBRARY.GIO);
+
+	// gio.Task
+
+	Linker.link(g_task_new, \"g_task_new\", LIBRARY.GIO);
+	Linker.link(g_task_set_task_data, \"g_task_set_task_data\", LIBRARY.GIO);
+	Linker.link(g_task_set_priority, \"g_task_set_priority\", LIBRARY.GIO);
+	Linker.link(g_task_set_check_cancellable, \"g_task_set_check_cancellable\", LIBRARY.GIO);
+	Linker.link(g_task_set_return_on_cancel, \"g_task_set_return_on_cancel\", LIBRARY.GIO);
+	Linker.link(g_task_set_source_tag, \"g_task_set_source_tag\", LIBRARY.GIO);
+	Linker.link(g_task_report_error, \"g_task_report_error\", LIBRARY.GIO);
+	Linker.link(g_task_report_new_error, \"g_task_report_new_error\", LIBRARY.GIO);
+	Linker.link(g_task_get_task_data, \"g_task_get_task_data\", LIBRARY.GIO);
+	Linker.link(g_task_get_priority, \"g_task_get_priority\", LIBRARY.GIO);
+	Linker.link(g_task_get_cancellable, \"g_task_get_cancellable\", LIBRARY.GIO);
+	Linker.link(g_task_get_check_cancellable, \"g_task_get_check_cancellable\", LIBRARY.GIO);
+	Linker.link(g_task_get_return_on_cancel, \"g_task_get_return_on_cancel\", LIBRARY.GIO);
+	Linker.link(g_task_get_context, \"g_task_get_context\", LIBRARY.GIO);
+	Linker.link(g_task_get_source_object, \"g_task_get_source_object\", LIBRARY.GIO);
+	Linker.link(g_task_get_source_tag, \"g_task_get_source_tag\", LIBRARY.GIO);
+	Linker.link(g_task_return_boolean, \"g_task_return_boolean\", LIBRARY.GIO);
+	Linker.link(g_task_return_int, \"g_task_return_int\", LIBRARY.GIO);
+	Linker.link(g_task_return_pointer, \"g_task_return_pointer\", LIBRARY.GIO);
+	Linker.link(g_task_return_error, \"g_task_return_error\", LIBRARY.GIO);
+	Linker.link(g_task_return_new_error, \"g_task_return_new_error\", LIBRARY.GIO);
+	Linker.link(g_task_return_error_if_cancelled, \"g_task_return_error_if_cancelled\", LIBRARY.GIO);
+	Linker.link(g_task_propagate_boolean, \"g_task_propagate_boolean\", LIBRARY.GIO);
+	Linker.link(g_task_propagate_int, \"g_task_propagate_int\", LIBRARY.GIO);
+	Linker.link(g_task_propagate_pointer, \"g_task_propagate_pointer\", LIBRARY.GIO);
+	Linker.link(g_task_had_error, \"g_task_had_error\", LIBRARY.GIO);
+	Linker.link(g_task_run_in_thread, \"g_task_run_in_thread\", LIBRARY.GIO);
+	Linker.link(g_task_run_in_thread_sync, \"g_task_run_in_thread_sync\", LIBRARY.GIO);
+	Linker.link(g_task_attach_source, \"g_task_attach_source\", LIBRARY.GIO);
+	Linker.link(g_task_is_valid, \"g_task_is_valid\", LIBRARY.GIO);
 
 	// gio.IOSchedulerJob
 
@@ -491,15 +527,19 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_memory_input_stream_new, \"g_memory_input_stream_new\", LIBRARY.GIO);
 	Linker.link(g_memory_input_stream_new_from_data, \"g_memory_input_stream_new_from_data\", LIBRARY.GIO);
+	Linker.link(g_memory_input_stream_new_from_bytes, \"g_memory_input_stream_new_from_bytes\", LIBRARY.GIO);
 	Linker.link(g_memory_input_stream_add_data, \"g_memory_input_stream_add_data\", LIBRARY.GIO);
+	Linker.link(g_memory_input_stream_add_bytes, \"g_memory_input_stream_add_bytes\", LIBRARY.GIO);
 
 	// gio.MemoryOutputStream
 
 	Linker.link(g_memory_output_stream_new, \"g_memory_output_stream_new\", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_new_resizable, \"g_memory_output_stream_new_resizable\", LIBRARY.GIO);
 	Linker.link(g_memory_output_stream_get_data, \"g_memory_output_stream_get_data\", LIBRARY.GIO);
 	Linker.link(g_memory_output_stream_get_size, \"g_memory_output_stream_get_size\", LIBRARY.GIO);
 	Linker.link(g_memory_output_stream_get_data_size, \"g_memory_output_stream_get_data_size\", LIBRARY.GIO);
 	Linker.link(g_memory_output_stream_steal_data, \"g_memory_output_stream_steal_data\", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_steal_as_bytes, \"g_memory_output_stream_steal_as_bytes\", LIBRARY.GIO);
 
 	// gio.BufferedInputStream
 
@@ -690,6 +730,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_desktop_app_info_get_keywords, \"g_desktop_app_info_get_keywords\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_get_startup_wm_class, \"g_desktop_app_info_get_startup_wm_class\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_set_desktop_env, \"g_desktop_app_info_set_desktop_env\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_string, \"g_desktop_app_info_get_string\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_boolean, \"g_desktop_app_info_get_boolean\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_has_key, \"g_desktop_app_info_has_key\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_launch_uris_as_manager, \"g_desktop_app_info_launch_uris_as_manager\", LIBRARY.GIO);
 
 	// gio.VolumeMonitor
@@ -955,6 +998,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_get_ttl, \"g_socket_get_ttl\", LIBRARY.GIO);
 	Linker.link(g_socket_get_broadcast, \"g_socket_get_broadcast\", LIBRARY.GIO);
 	Linker.link(g_socket_set_broadcast, \"g_socket_set_broadcast\", LIBRARY.GIO);
+	Linker.link(g_socket_get_option, \"g_socket_get_option\", LIBRARY.GIO);
+	Linker.link(g_socket_set_option, \"g_socket_set_option\", LIBRARY.GIO);
 	Linker.link(g_socket_get_family, \"g_socket_get_family\", LIBRARY.GIO);
 	Linker.link(g_socket_get_fd, \"g_socket_get_fd\", LIBRARY.GIO);
 	Linker.link(g_socket_get_local_address, \"g_socket_get_local_address\", LIBRARY.GIO);
@@ -1064,6 +1109,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_credentials_is_same_user, \"g_credentials_is_same_user\", LIBRARY.GIO);
 	Linker.link(g_credentials_get_unix_user, \"g_credentials_get_unix_user\", LIBRARY.GIO);
 	Linker.link(g_credentials_set_unix_user, \"g_credentials_set_unix_user\", LIBRARY.GIO);
+	Linker.link(g_credentials_get_unix_pid, \"g_credentials_get_unix_pid\", LIBRARY.GIO);
 
 	// gio.UnixCredentialsMessage
 
@@ -1118,6 +1164,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_client_set_socket_type, \"g_socket_client_set_socket_type\", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_timeout, \"g_socket_client_set_timeout\", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_enable_proxy, \"g_socket_client_set_enable_proxy\", LIBRARY.GIO);
+	Linker.link(g_socket_client_set_proxy_resolver, \"g_socket_client_set_proxy_resolver\", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_tls, \"g_socket_client_set_tls\", LIBRARY.GIO);
 	Linker.link(g_socket_client_set_tls_validation_flags, \"g_socket_client_set_tls_validation_flags\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_family, \"g_socket_client_get_family\", LIBRARY.GIO);
@@ -1126,6 +1173,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_socket_client_get_socket_type, \"g_socket_client_get_socket_type\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_timeout, \"g_socket_client_get_timeout\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_enable_proxy, \"g_socket_client_get_enable_proxy\", LIBRARY.GIO);
+	Linker.link(g_socket_client_get_proxy_resolver, \"g_socket_client_get_proxy_resolver\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_tls, \"g_socket_client_get_tls\", LIBRARY.GIO);
 	Linker.link(g_socket_client_get_tls_validation_flags, \"g_socket_client_get_tls_validation_flags\", LIBRARY.GIO);
 	Linker.link(g_socket_client_add_application_proxy, \"g_socket_client_add_application_proxy\", LIBRARY.GIO);
@@ -1328,6 +1376,13 @@ mixin( _shared ~ "static this()
 
 	// gio.ProxyResolver
 
+
+	// gio.SimpleProxyResolver
+
+	Linker.link(g_simple_proxy_resolver_new, \"g_simple_proxy_resolver_new\", LIBRARY.GIO);
+	Linker.link(g_simple_proxy_resolver_set_default_proxy, \"g_simple_proxy_resolver_set_default_proxy\", LIBRARY.GIO);
+	Linker.link(g_simple_proxy_resolver_set_ignore_hosts, \"g_simple_proxy_resolver_set_ignore_hosts\", LIBRARY.GIO);
+	Linker.link(g_simple_proxy_resolver_set_uri_proxy, \"g_simple_proxy_resolver_set_uri_proxy\", LIBRARY.GIO);
 
 	// gio.SocketConnectableT
 
@@ -1802,6 +1857,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_resource_open_stream, \"g_resource_open_stream\", LIBRARY.GIO);
 	Linker.link(g_resource_enumerate_children, \"g_resource_enumerate_children\", LIBRARY.GIO);
 	Linker.link(g_resource_get_info, \"g_resource_get_info\", LIBRARY.GIO);
+	Linker.link(g_static_resource_init, \"g_static_resource_init\", LIBRARY.GIO);
+	Linker.link(g_static_resource_fini, \"g_static_resource_fini\", LIBRARY.GIO);
+	Linker.link(g_static_resource_get_resource, \"g_static_resource_get_resource\", LIBRARY.GIO);
 	Linker.link(g_resources_register, \"g_resources_register\", LIBRARY.GIO);
 	Linker.link(g_resources_unregister, \"g_resources_unregister\", LIBRARY.GIO);
 	Linker.link(g_resources_lookup_data, \"g_resources_lookup_data\", LIBRARY.GIO);
@@ -1856,6 +1914,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_application_command_line_get_arguments, \"g_application_command_line_get_arguments\", LIBRARY.GIO);
 	Linker.link(g_application_command_line_get_cwd, \"g_application_command_line_get_cwd\", LIBRARY.GIO);
 	Linker.link(g_application_command_line_get_environ, \"g_application_command_line_get_environ\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_stdin, \"g_application_command_line_get_stdin\", LIBRARY.GIO);
+	Linker.link(g_application_command_line_create_file_for_arg, \"g_application_command_line_create_file_for_arg\", LIBRARY.GIO);
 	Linker.link(g_application_command_line_getenv, \"g_application_command_line_getenv\", LIBRARY.GIO);
 	Linker.link(g_application_command_line_get_is_remote, \"g_application_command_line_get_is_remote\", LIBRARY.GIO);
 	Linker.link(g_application_command_line_get_platform_data, \"g_application_command_line_get_platform_data\", LIBRARY.GIO);
@@ -2067,6 +2127,7 @@ mixin( gshared ~"extern(C)
 	GFile* function(char* path) c_g_file_new_for_path;
 	GFile* function(char* uri) c_g_file_new_for_uri;
 	GFile* function(char* arg) c_g_file_new_for_commandline_arg;
+	GFile* function(gchar* arg, gchar* cwd) c_g_file_new_for_commandline_arg_and_cwd;
 	GFile* function(char* tmpl, GFileIOStream** iostream, GError** error) c_g_file_new_tmp;
 	GFile* function(char* parseName) c_g_file_parse_name;
 	GFile* function(GFile* file) c_g_file_dup;
@@ -2238,6 +2299,7 @@ mixin( gshared ~"extern(C)
 	char* function(GFileInfo* info) c_g_file_info_get_symlink_target;
 	char* function(GFileInfo* info) c_g_file_info_get_etag;
 	gint32 function(GFileInfo* info) c_g_file_info_get_sort_order;
+	GDateTime* function(GFileInfo* info) c_g_file_info_get_deletion_date;
 	void function(GFileInfo* info, GFileAttributeMatcher* mask) c_g_file_info_set_attribute_mask;
 	void function(GFileInfo* info) c_g_file_info_unset_attribute_mask;
 	void function(GFileInfo* info, GFileType type) c_g_file_info_set_file_type;
@@ -2278,6 +2340,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GFileEnumerator* enumerator) c_g_file_enumerator_has_pending;
 	void function(GFileEnumerator* enumerator, gboolean pending) c_g_file_enumerator_set_pending;
 	GFile* function(GFileEnumerator* enumerator) c_g_file_enumerator_get_container;
+	GFile* function(GFileEnumerator* enumerator, GFileInfo* info) c_g_file_enumerator_get_child;
 
 	// gio.ErrorGIO
 
@@ -2341,6 +2404,39 @@ mixin( gshared ~"extern(C)
 	GObject* function(GAsyncResult* res) c_g_async_result_get_source_object;
 	gboolean function(GAsyncResult* res, void* sourceTag) c_g_async_result_is_tagged;
 	gboolean function(GAsyncResult* res, GError** error) c_g_async_result_legacy_propagate_error;
+
+	// gio.Task
+
+	GTask* function(void* sourceObject, GCancellable* cancellable, GAsyncReadyCallback callback, void* callbackData) c_g_task_new;
+	void function(GTask* task, void* taskData, GDestroyNotify taskDataDestroy) c_g_task_set_task_data;
+	void function(GTask* task, gint priority) c_g_task_set_priority;
+	void function(GTask* task, gboolean checkCancellable) c_g_task_set_check_cancellable;
+	gboolean function(GTask* task, gboolean returnOnCancel) c_g_task_set_return_on_cancel;
+	void function(GTask* task, void* sourceTag) c_g_task_set_source_tag;
+	void function(void* sourceObject, GAsyncReadyCallback callback, void* callbackData, void* sourceTag, GError* error) c_g_task_report_error;
+	void function(void* sourceObject, GAsyncReadyCallback callback, void* callbackData, void* sourceTag, GQuark domain, gint code, char* format, ... ) c_g_task_report_new_error;
+	gpointer function(GTask* task) c_g_task_get_task_data;
+	gint function(GTask* task) c_g_task_get_priority;
+	GCancellable* function(GTask* task) c_g_task_get_cancellable;
+	gboolean function(GTask* task) c_g_task_get_check_cancellable;
+	gboolean function(GTask* task) c_g_task_get_return_on_cancel;
+	GMainContext* function(GTask* task) c_g_task_get_context;
+	gpointer function(GTask* task) c_g_task_get_source_object;
+	gpointer function(GTask* task) c_g_task_get_source_tag;
+	void function(GTask* task, gboolean result) c_g_task_return_boolean;
+	void function(GTask* task, gssize result) c_g_task_return_int;
+	void function(GTask* task, void* result, GDestroyNotify resultDestroy) c_g_task_return_pointer;
+	void function(GTask* task, GError* error) c_g_task_return_error;
+	void function(GTask* task, GQuark domain, gint code, char* format, ... ) c_g_task_return_new_error;
+	gboolean function(GTask* task) c_g_task_return_error_if_cancelled;
+	gboolean function(GTask* task, GError** error) c_g_task_propagate_boolean;
+	gssize function(GTask* task, GError** error) c_g_task_propagate_int;
+	gpointer function(GTask* task, GError** error) c_g_task_propagate_pointer;
+	gboolean function(GTask* task) c_g_task_had_error;
+	void function(GTask* task, GTaskThreadFunc taskFunc) c_g_task_run_in_thread;
+	void function(GTask* task, GTaskThreadFunc taskFunc) c_g_task_run_in_thread_sync;
+	void function(GTask* task, GSource* source, GSourceFunc callback) c_g_task_attach_source;
+	gboolean function(void* result, void* sourceObject) c_g_task_is_valid;
 
 	// gio.IOSchedulerJob
 
@@ -2518,15 +2614,19 @@ mixin( gshared ~"extern(C)
 
 	GInputStream* function() c_g_memory_input_stream_new;
 	GInputStream* function(void* data, gssize len, GDestroyNotify destroy) c_g_memory_input_stream_new_from_data;
+	GInputStream* function(GBytes* bytes) c_g_memory_input_stream_new_from_bytes;
 	void function(GMemoryInputStream* stream, void* data, gssize len, GDestroyNotify destroy) c_g_memory_input_stream_add_data;
+	void function(GMemoryInputStream* stream, GBytes* bytes) c_g_memory_input_stream_add_bytes;
 
 	// gio.MemoryOutputStream
 
 	GOutputStream* function(void* data, gsize size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction) c_g_memory_output_stream_new;
+	GOutputStream* function() c_g_memory_output_stream_new_resizable;
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_size;
 	gsize function(GMemoryOutputStream* ostream) c_g_memory_output_stream_get_data_size;
 	gpointer function(GMemoryOutputStream* ostream) c_g_memory_output_stream_steal_data;
+	GBytes* function(GMemoryOutputStream* ostream) c_g_memory_output_stream_steal_as_bytes;
 
 	// gio.BufferedInputStream
 
@@ -2717,6 +2817,9 @@ mixin( gshared ~"extern(C)
 	char** function(GDesktopAppInfo* info) c_g_desktop_app_info_get_keywords;
 	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_startup_wm_class;
 	void function(char* desktopEnv) c_g_desktop_app_info_set_desktop_env;
+	char* function(GDesktopAppInfo* info, char* key) c_g_desktop_app_info_get_string;
+	gboolean function(GDesktopAppInfo* info, char* key) c_g_desktop_app_info_get_boolean;
+	gboolean function(GDesktopAppInfo* info, char* key) c_g_desktop_app_info_has_key;
 	gboolean function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, GError** error) c_g_desktop_app_info_launch_uris_as_manager;
 
 	// gio.VolumeMonitor
@@ -2982,6 +3085,8 @@ mixin( gshared ~"extern(C)
 	guint function(GSocket* socket) c_g_socket_get_ttl;
 	gboolean function(GSocket* socket) c_g_socket_get_broadcast;
 	void function(GSocket* socket, gboolean broadcast) c_g_socket_set_broadcast;
+	gboolean function(GSocket* socket, gint level, gint optname, gint* value, GError** error) c_g_socket_get_option;
+	gboolean function(GSocket* socket, gint level, gint optname, gint value, GError** error) c_g_socket_set_option;
 	GSocketFamily function(GSocket* socket) c_g_socket_get_family;
 	int function(GSocket* socket) c_g_socket_get_fd;
 	GSocketAddress* function(GSocket* socket, GError** error) c_g_socket_get_local_address;
@@ -3091,6 +3196,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(GCredentials* credentials, GCredentials* otherCredentials, GError** error) c_g_credentials_is_same_user;
 	uid_t function(GCredentials* credentials, GError** error) c_g_credentials_get_unix_user;
 	gboolean function(GCredentials* credentials, uid_t uid, GError** error) c_g_credentials_set_unix_user;
+	pid_t function(GCredentials* credentials, GError** error) c_g_credentials_get_unix_pid;
 
 	// gio.UnixCredentialsMessage
 
@@ -3145,6 +3251,7 @@ mixin( gshared ~"extern(C)
 	void function(GSocketClient* client, GSocketType type) c_g_socket_client_set_socket_type;
 	void function(GSocketClient* client, guint timeout) c_g_socket_client_set_timeout;
 	void function(GSocketClient* client, gboolean enable) c_g_socket_client_set_enable_proxy;
+	void function(GSocketClient* client, GProxyResolver* proxyResolver) c_g_socket_client_set_proxy_resolver;
 	void function(GSocketClient* client, gboolean tls) c_g_socket_client_set_tls;
 	void function(GSocketClient* client, GTlsCertificateFlags flags) c_g_socket_client_set_tls_validation_flags;
 	GSocketFamily function(GSocketClient* client) c_g_socket_client_get_family;
@@ -3153,6 +3260,7 @@ mixin( gshared ~"extern(C)
 	GSocketType function(GSocketClient* client) c_g_socket_client_get_socket_type;
 	guint function(GSocketClient* client) c_g_socket_client_get_timeout;
 	gboolean function(GSocketClient* client) c_g_socket_client_get_enable_proxy;
+	GProxyResolver* function(GSocketClient* client) c_g_socket_client_get_proxy_resolver;
 	gboolean function(GSocketClient* client) c_g_socket_client_get_tls;
 	GTlsCertificateFlags function(GSocketClient* client) c_g_socket_client_get_tls_validation_flags;
 	void function(GSocketClient* client, gchar* protocol) c_g_socket_client_add_application_proxy;
@@ -3355,6 +3463,13 @@ mixin( gshared ~"extern(C)
 
 	// gio.ProxyResolver
 
+
+	// gio.SimpleProxyResolver
+
+	GProxyResolver* function(gchar* defaultProxy, gchar** ignoreHosts) c_g_simple_proxy_resolver_new;
+	void function(GSimpleProxyResolver* resolver, gchar* defaultProxy) c_g_simple_proxy_resolver_set_default_proxy;
+	void function(GSimpleProxyResolver* resolver, gchar** ignoreHosts) c_g_simple_proxy_resolver_set_ignore_hosts;
+	void function(GSimpleProxyResolver* resolver, gchar* uriScheme, gchar* proxy) c_g_simple_proxy_resolver_set_uri_proxy;
 
 	// gio.SocketConnectableT
 
@@ -3829,6 +3944,9 @@ mixin( gshared ~"extern(C)
 	GInputStream* function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resource_open_stream;
 	char** function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resource_enumerate_children;
 	gboolean function(GResource* resource, char* path, GResourceLookupFlags lookupFlags, gsize* size, guint32* flags, GError** error) c_g_resource_get_info;
+	void function(GStaticResource* staticResource) c_g_static_resource_init;
+	void function(GStaticResource* staticResource) c_g_static_resource_fini;
+	GResource* function(GStaticResource* staticResource) c_g_static_resource_get_resource;
 	void function(GResource* resource) c_g_resources_register;
 	void function(GResource* resource) c_g_resources_unregister;
 	GBytes* function(char* path, GResourceLookupFlags lookupFlags, GError** error) c_g_resources_lookup_data;
@@ -3883,6 +4001,8 @@ mixin( gshared ~"extern(C)
 	gchar** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
 	gchar* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
 	gchar** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
+	GInputStream* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_stdin;
+	GFile* function(GApplicationCommandLine* cmdline, gchar* arg) c_g_application_command_line_create_file_for_arg;
 	gchar* function(GApplicationCommandLine* cmdline, gchar* name) c_g_application_command_line_getenv;
 	gboolean function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_is_remote;
 	GVariant* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_platform_data;
@@ -4092,6 +4212,7 @@ mixin( gshared ~"extern(C)
 alias c_g_file_new_for_path  g_file_new_for_path;
 alias c_g_file_new_for_uri  g_file_new_for_uri;
 alias c_g_file_new_for_commandline_arg  g_file_new_for_commandline_arg;
+alias c_g_file_new_for_commandline_arg_and_cwd  g_file_new_for_commandline_arg_and_cwd;
 alias c_g_file_new_tmp  g_file_new_tmp;
 alias c_g_file_parse_name  g_file_parse_name;
 alias c_g_file_dup  g_file_dup;
@@ -4263,6 +4384,7 @@ alias c_g_file_info_get_modification_time  g_file_info_get_modification_time;
 alias c_g_file_info_get_symlink_target  g_file_info_get_symlink_target;
 alias c_g_file_info_get_etag  g_file_info_get_etag;
 alias c_g_file_info_get_sort_order  g_file_info_get_sort_order;
+alias c_g_file_info_get_deletion_date  g_file_info_get_deletion_date;
 alias c_g_file_info_set_attribute_mask  g_file_info_set_attribute_mask;
 alias c_g_file_info_unset_attribute_mask  g_file_info_unset_attribute_mask;
 alias c_g_file_info_set_file_type  g_file_info_set_file_type;
@@ -4303,6 +4425,7 @@ alias c_g_file_enumerator_is_closed  g_file_enumerator_is_closed;
 alias c_g_file_enumerator_has_pending  g_file_enumerator_has_pending;
 alias c_g_file_enumerator_set_pending  g_file_enumerator_set_pending;
 alias c_g_file_enumerator_get_container  g_file_enumerator_get_container;
+alias c_g_file_enumerator_get_child  g_file_enumerator_get_child;
 
 // gio.ErrorGIO
 
@@ -4366,6 +4489,39 @@ alias c_g_async_result_get_user_data  g_async_result_get_user_data;
 alias c_g_async_result_get_source_object  g_async_result_get_source_object;
 alias c_g_async_result_is_tagged  g_async_result_is_tagged;
 alias c_g_async_result_legacy_propagate_error  g_async_result_legacy_propagate_error;
+
+// gio.Task
+
+alias c_g_task_new  g_task_new;
+alias c_g_task_set_task_data  g_task_set_task_data;
+alias c_g_task_set_priority  g_task_set_priority;
+alias c_g_task_set_check_cancellable  g_task_set_check_cancellable;
+alias c_g_task_set_return_on_cancel  g_task_set_return_on_cancel;
+alias c_g_task_set_source_tag  g_task_set_source_tag;
+alias c_g_task_report_error  g_task_report_error;
+alias c_g_task_report_new_error  g_task_report_new_error;
+alias c_g_task_get_task_data  g_task_get_task_data;
+alias c_g_task_get_priority  g_task_get_priority;
+alias c_g_task_get_cancellable  g_task_get_cancellable;
+alias c_g_task_get_check_cancellable  g_task_get_check_cancellable;
+alias c_g_task_get_return_on_cancel  g_task_get_return_on_cancel;
+alias c_g_task_get_context  g_task_get_context;
+alias c_g_task_get_source_object  g_task_get_source_object;
+alias c_g_task_get_source_tag  g_task_get_source_tag;
+alias c_g_task_return_boolean  g_task_return_boolean;
+alias c_g_task_return_int  g_task_return_int;
+alias c_g_task_return_pointer  g_task_return_pointer;
+alias c_g_task_return_error  g_task_return_error;
+alias c_g_task_return_new_error  g_task_return_new_error;
+alias c_g_task_return_error_if_cancelled  g_task_return_error_if_cancelled;
+alias c_g_task_propagate_boolean  g_task_propagate_boolean;
+alias c_g_task_propagate_int  g_task_propagate_int;
+alias c_g_task_propagate_pointer  g_task_propagate_pointer;
+alias c_g_task_had_error  g_task_had_error;
+alias c_g_task_run_in_thread  g_task_run_in_thread;
+alias c_g_task_run_in_thread_sync  g_task_run_in_thread_sync;
+alias c_g_task_attach_source  g_task_attach_source;
+alias c_g_task_is_valid  g_task_is_valid;
 
 // gio.IOSchedulerJob
 
@@ -4543,15 +4699,19 @@ alias c_g_filter_output_stream_set_close_base_stream  g_filter_output_stream_set
 
 alias c_g_memory_input_stream_new  g_memory_input_stream_new;
 alias c_g_memory_input_stream_new_from_data  g_memory_input_stream_new_from_data;
+alias c_g_memory_input_stream_new_from_bytes  g_memory_input_stream_new_from_bytes;
 alias c_g_memory_input_stream_add_data  g_memory_input_stream_add_data;
+alias c_g_memory_input_stream_add_bytes  g_memory_input_stream_add_bytes;
 
 // gio.MemoryOutputStream
 
 alias c_g_memory_output_stream_new  g_memory_output_stream_new;
+alias c_g_memory_output_stream_new_resizable  g_memory_output_stream_new_resizable;
 alias c_g_memory_output_stream_get_data  g_memory_output_stream_get_data;
 alias c_g_memory_output_stream_get_size  g_memory_output_stream_get_size;
 alias c_g_memory_output_stream_get_data_size  g_memory_output_stream_get_data_size;
 alias c_g_memory_output_stream_steal_data  g_memory_output_stream_steal_data;
+alias c_g_memory_output_stream_steal_as_bytes  g_memory_output_stream_steal_as_bytes;
 
 // gio.BufferedInputStream
 
@@ -4742,6 +4902,9 @@ alias c_g_desktop_app_info_get_categories  g_desktop_app_info_get_categories;
 alias c_g_desktop_app_info_get_keywords  g_desktop_app_info_get_keywords;
 alias c_g_desktop_app_info_get_startup_wm_class  g_desktop_app_info_get_startup_wm_class;
 alias c_g_desktop_app_info_set_desktop_env  g_desktop_app_info_set_desktop_env;
+alias c_g_desktop_app_info_get_string  g_desktop_app_info_get_string;
+alias c_g_desktop_app_info_get_boolean  g_desktop_app_info_get_boolean;
+alias c_g_desktop_app_info_has_key  g_desktop_app_info_has_key;
 alias c_g_desktop_app_info_launch_uris_as_manager  g_desktop_app_info_launch_uris_as_manager;
 
 // gio.VolumeMonitor
@@ -5007,6 +5170,8 @@ alias c_g_socket_set_ttl  g_socket_set_ttl;
 alias c_g_socket_get_ttl  g_socket_get_ttl;
 alias c_g_socket_get_broadcast  g_socket_get_broadcast;
 alias c_g_socket_set_broadcast  g_socket_set_broadcast;
+alias c_g_socket_get_option  g_socket_get_option;
+alias c_g_socket_set_option  g_socket_set_option;
 alias c_g_socket_get_family  g_socket_get_family;
 alias c_g_socket_get_fd  g_socket_get_fd;
 alias c_g_socket_get_local_address  g_socket_get_local_address;
@@ -5116,6 +5281,7 @@ alias c_g_credentials_set_native  g_credentials_set_native;
 alias c_g_credentials_is_same_user  g_credentials_is_same_user;
 alias c_g_credentials_get_unix_user  g_credentials_get_unix_user;
 alias c_g_credentials_set_unix_user  g_credentials_set_unix_user;
+alias c_g_credentials_get_unix_pid  g_credentials_get_unix_pid;
 
 // gio.UnixCredentialsMessage
 
@@ -5170,6 +5336,7 @@ alias c_g_socket_client_set_protocol  g_socket_client_set_protocol;
 alias c_g_socket_client_set_socket_type  g_socket_client_set_socket_type;
 alias c_g_socket_client_set_timeout  g_socket_client_set_timeout;
 alias c_g_socket_client_set_enable_proxy  g_socket_client_set_enable_proxy;
+alias c_g_socket_client_set_proxy_resolver  g_socket_client_set_proxy_resolver;
 alias c_g_socket_client_set_tls  g_socket_client_set_tls;
 alias c_g_socket_client_set_tls_validation_flags  g_socket_client_set_tls_validation_flags;
 alias c_g_socket_client_get_family  g_socket_client_get_family;
@@ -5178,6 +5345,7 @@ alias c_g_socket_client_get_protocol  g_socket_client_get_protocol;
 alias c_g_socket_client_get_socket_type  g_socket_client_get_socket_type;
 alias c_g_socket_client_get_timeout  g_socket_client_get_timeout;
 alias c_g_socket_client_get_enable_proxy  g_socket_client_get_enable_proxy;
+alias c_g_socket_client_get_proxy_resolver  g_socket_client_get_proxy_resolver;
 alias c_g_socket_client_get_tls  g_socket_client_get_tls;
 alias c_g_socket_client_get_tls_validation_flags  g_socket_client_get_tls_validation_flags;
 alias c_g_socket_client_add_application_proxy  g_socket_client_add_application_proxy;
@@ -5380,6 +5548,13 @@ alias c_g_proxy_resolver_lookup_finish  g_proxy_resolver_lookup_finish;
 
 // gio.ProxyResolver
 
+
+// gio.SimpleProxyResolver
+
+alias c_g_simple_proxy_resolver_new  g_simple_proxy_resolver_new;
+alias c_g_simple_proxy_resolver_set_default_proxy  g_simple_proxy_resolver_set_default_proxy;
+alias c_g_simple_proxy_resolver_set_ignore_hosts  g_simple_proxy_resolver_set_ignore_hosts;
+alias c_g_simple_proxy_resolver_set_uri_proxy  g_simple_proxy_resolver_set_uri_proxy;
 
 // gio.SocketConnectableT
 
@@ -5854,6 +6029,9 @@ alias c_g_resource_lookup_data  g_resource_lookup_data;
 alias c_g_resource_open_stream  g_resource_open_stream;
 alias c_g_resource_enumerate_children  g_resource_enumerate_children;
 alias c_g_resource_get_info  g_resource_get_info;
+alias c_g_static_resource_init  g_static_resource_init;
+alias c_g_static_resource_fini  g_static_resource_fini;
+alias c_g_static_resource_get_resource  g_static_resource_get_resource;
 alias c_g_resources_register  g_resources_register;
 alias c_g_resources_unregister  g_resources_unregister;
 alias c_g_resources_lookup_data  g_resources_lookup_data;
@@ -5908,6 +6086,8 @@ alias c_g_application_get_default  g_application_get_default;
 alias c_g_application_command_line_get_arguments  g_application_command_line_get_arguments;
 alias c_g_application_command_line_get_cwd  g_application_command_line_get_cwd;
 alias c_g_application_command_line_get_environ  g_application_command_line_get_environ;
+alias c_g_application_command_line_get_stdin  g_application_command_line_get_stdin;
+alias c_g_application_command_line_create_file_for_arg  g_application_command_line_create_file_for_arg;
 alias c_g_application_command_line_getenv  g_application_command_line_getenv;
 alias c_g_application_command_line_get_is_remote  g_application_command_line_get_is_remote;
 alias c_g_application_command_line_get_platform_data  g_application_command_line_get_platform_data;

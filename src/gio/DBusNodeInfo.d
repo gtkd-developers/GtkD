@@ -147,7 +147,7 @@ public class DBusNodeInfo
 	
 	/**
 	 * Looks up information about an interface.
-	 * This cost of this function is O(n) in number of interfaces.
+	 * The cost of this function is O(n) in number of interfaces.
 	 * Since 2.26
 	 * Params:
 	 * name = A D-Bus interface name.

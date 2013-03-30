@@ -69,7 +69,7 @@ private import glib.Str;
  * File attributes in GIO consist of a list of key-value pairs.
  *
  * Keys are strings that contain a key namespace and a key name, separated
- * by a colon, e.g. "namespace:keyname". Namespaces are included to sort
+ * by a colon, e.g. "namespace::keyname". Namespaces are included to sort
  * key-value pairs by namespaces for relevance. Keys can be retrived
  * using wildcards, e.g. "standard::*" will return all of the keys in the
  * "standard" namespace.
@@ -183,7 +183,7 @@ private import glib.Str;
  * Table 2. GFileAttributes Built-in Keys and Value Types
  *
  * Enum Value
- * Namespace:Key
+ * Namespace::Key
  * Value Type
  *
  * G_FILE_ATTRIBUTE_STANDARD_TYPE

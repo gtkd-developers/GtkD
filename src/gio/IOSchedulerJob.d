@@ -67,15 +67,13 @@ private import gio.Cancellable;
 
 
 /**
+ * Note
+ *
+ *  As of GLib 2.36, the g_io_scheduler methods
+ *  are deprecated in favor of GThreadPool and GTask.
+ *
  * Schedules asynchronous I/O operations. GIOScheduler integrates
  * into the main event loop (GMainLoop) and uses threads.
- *
- * Each I/O operation has a priority, and the scheduler uses the priorities
- * to determine the order in which operations are executed. They are
- * not used to determine system-wide I/O scheduling.
- * Priorities are integers, with lower numbers indicating higher priority.
- * It is recommended to choose priorities between G_PRIORITY_LOW and
- * G_PRIORITY_HIGH, with G_PRIORITY_DEFAULT as a default.
  */
 public class IOSchedulerJob
 {
@@ -108,6 +106,8 @@ public class IOSchedulerJob
 	 */
 	
 	/**
+	 * Warning
+	 * g_io_scheduler_push_job is deprecated and should not be used in newly-written code. use GThreadPool or g_task_run_in_thread()
 	 * Schedules the I/O job to run in another thread.
 	 * notify will be called on user_data after job_func has returned,
 	 * regardless whether the job was cancelled or has run to completion.
@@ -129,6 +129,10 @@ public class IOSchedulerJob
 	}
 	
 	/**
+	 * Warning
+	 * g_io_scheduler_cancel_all_jobs is deprecated and should not be used in newly-written code. You should never call this function, since you don't
+	 * know how other libraries in your program might be making use of
+	 * gioscheduler.
 	 * Cancels all cancellable I/O jobs.
 	 * A job is cancellable if a GCancellable was passed into
 	 * g_io_scheduler_push_job().
@@ -140,6 +144,8 @@ public class IOSchedulerJob
 	}
 	
 	/**
+	 * Warning
+	 * g_io_scheduler_job_send_to_mainloop is deprecated and should not be used in newly-written code. Use g_main_context_invoke().
 	 * Used from an I/O job to send a callback to be run in the thread
 	 * that the job was started from, waiting for the result (and thus
 	 * blocking the I/O job).
@@ -156,6 +162,8 @@ public class IOSchedulerJob
 	}
 	
 	/**
+	 * Warning
+	 * g_io_scheduler_job_send_to_mainloop_async is deprecated and should not be used in newly-written code. Use g_main_context_invoke().
 	 * Used from an I/O job to send a callback to be run asynchronously in
 	 * the thread that the job was started from. The callback will be run
 	 * when the main loop is available, but at that time the I/O job might

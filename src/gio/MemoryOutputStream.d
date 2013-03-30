@@ -143,6 +143,23 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	}
 	
 	/**
+	 * Creates a new GMemoryOutputStream, using g_realloc() and g_free()
+	 * for memory allocation.
+	 * Since 2.36
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this ()
+	{
+		// GOutputStream * g_memory_output_stream_new_resizable  (void);
+		auto p = g_memory_output_stream_new_resizable();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_memory_output_stream_new_resizable()");
+		}
+		this(cast(GMemoryOutputStream*) p);
+	}
+	
+	/**
 	 * Gets any loaded data from the ostream.
 	 * Note that the returned pointer may become invalid on the next
 	 * write or truncate operation on the stream.
@@ -198,5 +215,17 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	{
 		// gpointer g_memory_output_stream_steal_data (GMemoryOutputStream *ostream);
 		return g_memory_output_stream_steal_data(gMemoryOutputStream);
+	}
+	
+	/**
+	 * Returns data from the ostream as a GBytes. ostream must be
+	 * closed before calling this function.
+	 * Since 2.34
+	 * Returns: the stream's data. [transfer full]
+	 */
+	public GBytes* stealAsBytes()
+	{
+		// GBytes * g_memory_output_stream_steal_as_bytes  (GMemoryOutputStream *ostream);
+		return g_memory_output_stream_steal_as_bytes(gMemoryOutputStream);
 	}
 }

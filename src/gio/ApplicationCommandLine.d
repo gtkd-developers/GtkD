@@ -45,7 +45,9 @@
  * imports:
  * 	- glib.Str
  * 	- glib.Variant
+ * 	- gio.File
  * structWrap:
+ * 	- GFile* -> File
  * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
@@ -63,6 +65,7 @@ private import gobject.ObjectG;
 
 private import glib.Str;
 private import glib.Variant;
+private import gio.File;
 
 
 
@@ -82,7 +85,7 @@ private import gobject.ObjectG;
  * The GApplicationCommandLine object can provide the argc and argv
  * parameters for use with the GOptionContext command-line parsing API,
  * with the g_application_command_line_get_arguments() function. See
- *  Example 20, “Deferred commandline handling” for an example.
+ *  Example 24, “Deferred commandline handling” for an example.
  *
  * The exit status of the originally-invoked process may be set and
  * messages can be printed to stdout or stderr of that process. The
@@ -201,6 +204,48 @@ public class ApplicationCommandLine : ObjectG
 	{
 		// const gchar * const * g_application_command_line_get_environ  (GApplicationCommandLine *cmdline);
 		return Str.toStringArray(g_application_command_line_get_environ(gApplicationCommandLine));
+	}
+	
+	/**
+	 * Gets the stdin of the invoking process.
+	 * The GInputStream can be used to read data passed to the standard
+	 * input of the invoking process.
+	 * This doesn't work on all platforms. Presently, it is only available
+	 * on UNIX when using a DBus daemon capable of passing file descriptors.
+	 * If stdin is not available then NULL will be returned. In the
+	 * future, support may be expanded to other platforms.
+	 * You must only call this function once per commandline invocation.
+	 * Since 2.34
+	 * Returns: a GInputStream for stdin. [transfer full]
+	 */
+	public GInputStream* getStdin()
+	{
+		// GInputStream * g_application_command_line_get_stdin  (GApplicationCommandLine *cmdline);
+		return g_application_command_line_get_stdin(gApplicationCommandLine);
+	}
+	
+	/**
+	 * Creates a GFile corresponding to a filename that was given as part
+	 * of the invocation of cmdline.
+	 * This differs from g_file_new_for_commandline_arg() in that it
+	 * resolves relative pathnames using the current working directory of
+	 * the invoking process rather than the local process.
+	 * Since 2.36
+	 * Params:
+	 * arg = an argument from cmdline
+	 * Returns: a new GFile. [transfer full]
+	 */
+	public File createFileForArg(string arg)
+	{
+		// GFile * g_application_command_line_create_file_for_arg  (GApplicationCommandLine *cmdline,  const gchar *arg);
+		auto p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
 	}
 	
 	/**

@@ -70,6 +70,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ErrorG;
@@ -145,6 +147,15 @@ public interface AppInfoIF
 	
 	/**
 	 */
+	
+	void delegate(string, AppInfoIF)[] onLaunchFailedListeners();
+	/**
+	 */
+	void addOnLaunchFailed(void delegate(string, AppInfoIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void delegate(AppInfoIF, GVariant*, AppInfoIF)[] onLaunchedListeners();
+	/**
+	 */
+	void addOnLaunched(void delegate(AppInfoIF, GVariant*, AppInfoIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Creates a new GAppInfo from the given information.

@@ -152,7 +152,7 @@ public interface InitableIF
 	 * the value, and other property value pairs, and ended by NULL.
 	 * varArgs = The var args list generated from first_property_name.
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a newly allocated GObject, or NULL on error. [transfer full]
+	 * Returns: a newly allocated GObject, or NULL on error. [type GObject.Object][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static ObjectG newValist(GType objectType, string firstPropertyName, void* varArgs, Cancellable cancellable);
@@ -166,7 +166,7 @@ public interface InitableIF
 	 * objectType = a GType supporting GInitable.
 	 * parameters = the parameters to use to construct the object. [array length=n_parameters]
 	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a newly allocated GObject, or NULL on error. [transfer full]
+	 * Returns: a newly allocated GObject, or NULL on error. [type GObject.Object][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public static void* newv(GType objectType, GParameter[] parameters, Cancellable cancellable);

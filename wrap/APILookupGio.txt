@@ -52,6 +52,16 @@ alias GResolverRecordType ResolverRecordType;
 addEnums: end
 
 addStructs: start
+
+struct GStaticResource
+{
+	guint8* data;
+	gsize   data_len;
+	GResource* resource;
+	GStaticResource* next;
+	gpointer padding;
+}
+
 addStructs: end
 
 addTypes: start
@@ -147,10 +157,12 @@ extend: GObject
 prefix: g_file_info_
 noprefix: g_file_attribute_matcher_
 import: glib.Str
+import: glib.DateTime
 import: gobject.ObjectG
 import: gio.Icon
 import: gio.IconIF
 import: gio.FileAttributeMatcher
+structWrap: GDateTime* DateTime
 structWrap: GObject* ObjectG
 structWrap: GIcon* IconIF
 structWrap: GFileAttributeMatcher* FileAttributeMatcher
@@ -186,10 +198,12 @@ import: glib.ListG
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.File
+import: gio.FileInfo
 structWrap: GList* ListG
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GFile* File
+structWrap: GFileInfo* FileInfo
 outFile: FileEnumerator
 
 file: gio-GIOError.html
@@ -257,6 +271,32 @@ import: glib.GException
 structWrap: GObject* ObjectG
 interface: AsyncResultIF
 outFile: AsyncResultT
+
+file: GTask.html
+struct: GTask
+class: Task
+implements: AsyncResultIF
+prefix: g_task_
+import: glib.ErrorG
+import: glib.GException
+import: glib.MainContext
+import: glib.Source
+import: gio.Cancellable
+structWrap: GMainContext* MainContext
+structWrap: GSource* Source
+structWrap: GCancellable* Cancellable
+
+#imports for AsyncResult Interface.
+import: gio.AsyncResultIF
+import: gio.AsyncResultT
+
+nocode: g_task_get_source_object
+
+code: start
+	// add the AsyncResult capabilities
+	mixin AsyncResultT!(GSimpleAsyncResult);
+code: end
+outFile: Task
 
 file: gio-GIOScheduler.html
 struct: GIOSchedulerJob
@@ -571,6 +611,8 @@ ctorStruct: GInputStream
 class: MemoryInputStream
 implements: SeekableIF
 prefix: g_memory_input_stream_
+import: glib.Bytes
+structWrap: GBytes* Bytes
 
 #imports for Seekable Interface.
 import: gio.SeekableT
@@ -864,6 +906,7 @@ struct: GDesktopAppInfo
 class: DesktopAppInfo
 implements: AppInfoIF
 prefix: g_desktop_app_info_
+import: glib.Str
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListG
@@ -1404,6 +1447,7 @@ inout: g_socket_receive_message flags
 array: g_socket_send_message vectors num_vectors
 inout: g_socket_send_message messages
 array: g_socket_send_message messages num_messages
+out: g_socket_get_option value
 
 code: start
 	// add the Initable capabilities
@@ -1635,6 +1679,8 @@ import: glib.GException
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gio.IOStream
+import: gio.ProxyResolver
+import: gio.ProxyResolverIF
 import: gio.SocketAddress
 import: gio.SocketConnection
 import: gio.SocketConnectable
@@ -1642,6 +1688,7 @@ import: gio.SocketConnectableIF
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GIOStream* IOStream
+structWrap: GProxyResolver* ProxyResolverIF
 structWrap: GSocketAddress* SocketAddress
 structWrap: GSocketConnection* SocketConnection
 structWrap: GSocketConnectable* SocketConnectableIF
@@ -1966,13 +2013,16 @@ file:
 class: ProxyResolver
 extend: ObjectG
 implements: ProxyResolverIF
-import: gobject.ObjectG
+import: glib.Str
 
 #imports for ProxyResolver Interface.
 import: gio.ProxyResolverT
 import: gio.ProxyResolverIF
 
-code: start
+array: g_simple_proxy_resolver_new ignore_hosts
+array: g_simple_proxy_resolver_set_ignore_hosts ignore_hosts
+
+code: sta
 	// Minimal implementation.
 	mixin ProxyResolverT!(GProxyResolver);
 
@@ -1992,6 +2042,22 @@ code: start
 	}
 code: end
 outFile: ProxyResolver
+
+file: GSimpleProxyResolver.html
+struct: GSimpleProxyResolver
+class: SimpleProxyResolver
+implements: ProxyResolverIF
+prefix: g_simple_proxy_resolver_
+
+#imports for ProxyResolver Interface.
+import: gio.ProxyResolverT
+import: gio.ProxyResolverIF
+
+code: start
+	// Minimal implementation.
+	mixin ProxyResolverT!(GProxyResolver);
+code: end
+outFile: SimpleProxyResolver
 
 file: GSocketConnectable.html
 struct: GSocketConnectable
@@ -3036,7 +3102,11 @@ class: ApplicationCommandLine
 prefix: g_application_command_line_
 import: glib.Str
 import: glib.Variant
+import: gio.File
+import: gio.InputStream
 structWrap: GVariant* Variant
+structWrap: GFile* File
+structWrap: GInputStream* InputStream
 array: g_application_command_line_get_arguments Return argc
 outFile: ApplicationCommandLine
 

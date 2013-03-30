@@ -196,7 +196,7 @@ public class DBusServer : ObjectG, InitableIF
 	 * incoming connections.
 	 * The returned GDBusServer isn't active - you have to start it with
 	 * g_dbus_server_start().
-	 * See Example 6, “D-Bus peer-to-peer example” for how GDBusServer can
+	 * See Example 10, “D-Bus peer-to-peer example” for how GDBusServer can
 	 * be used.
 	 * This is a synchronous failable constructor. See
 	 * g_dbus_server_new() for the asynchronous version.

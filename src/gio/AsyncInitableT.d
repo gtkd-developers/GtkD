@@ -172,7 +172,7 @@ public template AsyncInitableT(TStruct)
 	 * Since 2.22
 	 * Params:
 	 * res = the GAsyncResult from the callback
-	 * Returns: a newly created GObject, or NULL on error. Free with g_object_unref(). [transfer full]
+	 * Returns: a newly created GObject, or NULL on error. Free with g_object_unref(). [type GObject.Object][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public ObjectG gAsyncInitableNewFinish(AsyncResultIF res)

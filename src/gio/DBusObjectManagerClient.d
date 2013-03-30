@@ -362,7 +362,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * Params:
 	 * connection = A GDBusConnection.
 	 * flags = Zero or more flags from the GDBusObjectManagerClientFlags enumeration.
-	 * name = The owner of the control object (unique or well-known name).
+	 * name = The owner of the control object (unique or well-known name), or NULL when not using a message bus connection. [allow-none]
 	 * objectPath = The object path of the control object.
 	 * getProxyTypeFunc = A GDBusProxyTypeFunc function or NULL to always construct GDBusProxy proxies. [allow-none]
 	 * getProxyTypeUserData = User data to pass to get_proxy_type_func.
@@ -486,7 +486,8 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	}
 	
 	/**
-	 * Gets the name that manager is for.
+	 * Gets the name that manager is for, or NULL if not a message bus
+	 * connection.
 	 * Since 2.30
 	 * Returns: A unique or well-known name. Do not free, the string belongs to manager.
 	 */

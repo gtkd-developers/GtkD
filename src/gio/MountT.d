@@ -111,7 +111,7 @@ public import gio.VolumeIF;
  *
  * Unmounting a GMount instance is an asynchronous operation. For
  * more information about asynchronous operations, see GAsyncResult
- * and GSimpleAsyncResult. To unmount a GMount instance, first call
+ * and GTask. To unmount a GMount instance, first call
  * g_mount_unmount_with_operation() with (at least) the GMount instance and a
  * GAsyncReadyCallback. The callback will be fired when the
  * operation has resolved (either with success or failure), and a

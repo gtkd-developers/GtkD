@@ -110,8 +110,8 @@ public interface ActionMapIF
 	 * $(DDOC_COMMENT example)
 	 * Since 2.32
 	 * Params:
-	 * entries = a pointer to the first item in an array of GActionEntry
-	 * structs
+	 * entries = a pointer to
+	 * the first item in an array of GActionEntry structs. [array length=n_entries][element-type GActionEntry]
 	 * nEntries = the length of entries, or -1 if entries is NULL-terminated
 	 * userData = the user data for signal connections
 	 */

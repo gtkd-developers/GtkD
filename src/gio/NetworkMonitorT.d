@@ -84,7 +84,7 @@ public import gio.SocketConnectableIF;
 /**
  * GNetworkMonitor provides an easy-to-use cross-platform API
  * for monitoring network connectivity. On Linux, the implementation
- * is based on the kernels netlink interface.
+ * is based on the kernel's netlink interface.
  */
 public template NetworkMonitorT(TStruct)
 {

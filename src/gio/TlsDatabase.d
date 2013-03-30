@@ -372,7 +372,7 @@ public class TlsDatabase : ObjectG
 	 * Since 2.30
 	 * Params:
 	 * result = a GAsyncResult.
-	 * Returns: a newly allocated list of GTlsCertificate objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list. [transfer full]
+	 * Returns: a newly allocated list of GTlsCertificate objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list. [transfer full][element-type GTlsCertificate]
 	 * Throws: GException on failure.
 	 */
 	public ListG lookupCertificatesIssuedByFinish(AsyncResultIF result)

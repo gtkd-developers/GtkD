@@ -257,6 +257,32 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Creates a GFile with the given argument from the command line.
+	 * This function is similar to g_file_new_for_commandline_arg() except
+	 * that it allows for passing the current working directory as an
+	 * argument instead of using the current working directory of the
+	 * process.
+	 * This is useful if the commandline argument was given in a context
+	 * other than the invocation of the current process.
+	 * See also g_application_command_line_create_file_for_arg().
+	 * Since 2.36
+	 * Params:
+	 * arg = a command line string
+	 * cwd = the current working directory of the commandline
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string arg, string cwd)
+	{
+		// GFile * g_file_new_for_commandline_arg_and_cwd  (const gchar *arg,  const gchar *cwd);
+		auto p = g_file_new_for_commandline_arg_and_cwd(Str.toStringz(arg), Str.toStringz(cwd));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_file_new_for_commandline_arg_and_cwd(Str.toStringz(arg), Str.toStringz(cwd))");
+		}
+		this(cast(GFile*) p);
+	}
+	
+	/**
 	 * Opens a file in the preferred directory for temporary files (as
 	 * returned by g_get_tmp_dir()) and returns a GFile and
 	 * GFileIOStream pointing to it.
@@ -1420,7 +1446,7 @@ public class File : ObjectG
 	 * operation was cancelled, the error G_IO_ERROR_CANCELLED will be
 	 * returned.
 	 * If the file does not exist, the G_IO_ERROR_NOT_FOUND error will
-	 * be returned. If the file is not a directory, the G_FILE_ERROR_NOTDIR
+	 * be returned. If the file is not a directory, the G_IO_ERROR_NOT_DIRECTORY
 	 * error will be returned. Other errors are possible too.
 	 * Params:
 	 * attributes = an attribute query string
@@ -2074,7 +2100,7 @@ public class File : ObjectG
 	 * flags = GFileQueryInfoFlags
 	 * cancellable = optional GCancellable object,
 	 * NULL to ignore. [allow-none]
-	 * Returns: TRUE if there was any error, FALSE otherwise.
+	 * Returns: FALSE if there was any error, TRUE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int setAttributesFromInfo(FileInfo info, GFileQueryInfoFlags flags, Cancellable cancellable)
@@ -2776,6 +2802,11 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * It does not make sense for flags to contain
+	 * G_FILE_MONITOR_WATCH_HARD_LINKS, since hard links can not be made to
+	 * directories. It is not possible to monitor all the files in a
+	 * directory for changes made via hard links; if you want to do this then
+	 * you must register individual watches with g_file_monitor().
 	 * Virtual: monitor_dir
 	 * Params:
 	 * flags = a set of GFileMonitorFlags
@@ -2811,6 +2842,13 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * If flags contains G_FILE_MONITOR_WATCH_HARD_LINKS then the monitor
+	 * will also attempt to report changes made to the file via another
+	 * filename (ie, a hard link). Without this flag, you can only rely on
+	 * changes made through the filename contained in file to be
+	 * reported. Using this flag may result in an increase in resource
+	 * usage, and may not have any effect depending on the GFileMonitor
+	 * backend and/or filesystem type.
 	 * Params:
 	 * flags = a set of GFileMonitorFlags
 	 * cancellable = optional GCancellable object,

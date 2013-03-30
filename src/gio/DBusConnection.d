@@ -1168,7 +1168,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * If connection is closed then the operation will fail with
 	 * G_IO_ERROR_CLOSED. If message is not well-formed,
 	 * the operation fails with G_IO_ERROR_INVALID_ARGUMENT.
-	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 6, “D-Bus server example” and Example 8, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Note that message must be unlocked, unless flags contain the
 	 * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
@@ -1215,7 +1215,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * See g_dbus_connection_send_message_with_reply_sync() for the synchronous version.
 	 * Note that message must be unlocked, unless flags contain the
 	 * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
-	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 6, “D-Bus server example” and Example 8, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Since 2.26
 	 * Params:
@@ -1242,7 +1242,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * occurred. That is to say that the returned GDBusMessage object may
 	 * be of type G_DBUS_MESSAGE_TYPE_ERROR. Use
 	 * g_dbus_message_to_gerror() to transcode this to a GError.
-	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 6, “D-Bus server example” and Example 8, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Since 2.26
 	 * Params:
@@ -1290,7 +1290,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * occurred. That is to say that the returned GDBusMessage object may
 	 * be of type G_DBUS_MESSAGE_TYPE_ERROR. Use
 	 * g_dbus_message_to_gerror() to transcode this to a GError.
-	 * See Example 2, “D-Bus server example” and Example 4, “D-Bus UNIX File Descriptor example” for an example of how to use this
+	 * See Example 6, “D-Bus server example” and Example 8, “D-Bus UNIX File Descriptor example” for an example of how to use this
 	 * low-level API to send and receive UNIX file descriptors.
 	 * Note that message must be unlocked, unless flags contain the
 	 * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL flag.
@@ -1402,7 +1402,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * incremented by 1 (unless allocated statically, e.g. if the
 	 * reference count is -1, see g_dbus_interface_info_ref()) for as long
 	 * as the object is exported. Also note that vtable will be copied.
-	 * See Example 2, “D-Bus server example” for an example of how to use this method.
+	 * See Example 6, “D-Bus server example” for an example of how to use this method.
 	 * Since 2.26
 	 * Params:
 	 * objectPath = The object path to register at.
@@ -1467,7 +1467,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * or other bindings.
 	 * Note that vtable will be copied so you cannot change it after
 	 * registration.
-	 * See Example 3, “D-Bus subtree example” for an example of how to use this method.
+	 * See Example 7, “D-Bus subtree example” for an example of how to use this method.
 	 * Since 2.26
 	 * Params:
 	 * objectPath = The object path to register the subtree at.
@@ -1566,7 +1566,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * Exports menu on connection at object_path.
 	 * The implemented D-Bus API should be considered private.
 	 * It is subject to change in the future.
-	 * An object path can only have one action group exported on it. If this
+	 * An object path can only have one menu model exported on it. If this
 	 * constraint is violated, the export will fail and 0 will be
 	 * returned (with error set accordingly).
 	 * You can unexport the menu model using

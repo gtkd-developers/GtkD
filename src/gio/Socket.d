@@ -429,8 +429,8 @@ public class Socket : ObjectG, InitableIF
 	 * On error -1 is returned and error is set accordingly.
 	 * Since 2.22
 	 * Params:
-	 * buffer = a buffer to read data into (which should be at least size
-	 * bytes long).
+	 * buffer = a buffer to
+	 * read data into (which should be at least size bytes long). [array length=size][element-type guint8]
 	 * size = the number of bytes you want to read from the socket
 	 * cancellable = a GCancellable or NULL. [allow-none]
 	 * Returns: Number of bytes read, or 0 if the connection was closed by the peer, or -1 on error
@@ -583,8 +583,8 @@ public class Socket : ObjectG, InitableIF
 	 * the blocking argument rather than by socket's properties.
 	 * Since 2.26
 	 * Params:
-	 * buffer = a buffer to read data into (which should be at least size
-	 * bytes long).
+	 * buffer = a buffer to
+	 * read data into (which should be at least size bytes long). [array length=size][element-type guint8]
 	 * size = the number of bytes you want to read from the socket
 	 * blocking = whether to do blocking or non-blocking I/O
 	 * cancellable = a GCancellable or NULL. [allow-none]
@@ -1187,6 +1187,75 @@ public class Socket : ObjectG, InitableIF
 	{
 		// void g_socket_set_broadcast (GSocket *socket,  gboolean broadcast);
 		g_socket_set_broadcast(gSocket, broadcast);
+	}
+	
+	/**
+	 * Gets the value of an integer-valued option on socket, as with
+	 * getsockopt(). (If you need to fetch a
+	 * non-integer-valued option, you will need to call
+	 * getsockopt() directly.)
+	 * The <gio/gnetworking.h>
+	 * header pulls in system headers that will define most of the
+	 * standard/portable socket options. For unusual socket protocols or
+	 * platform-dependent options, you may need to include additional
+	 * headers.
+	 * Note that even for socket options that are a single byte in size,
+	 * value is still a pointer to a gint variable, not a guchar;
+	 * g_socket_get_option() will handle the conversion internally.
+	 * Since 2.36
+	 * Params:
+	 * level = the "API level" of the option (eg, SOL_SOCKET)
+	 * optname = the "name" of the option (eg, SO_BROADCAST)
+	 * value = return location for the option value. [out]
+	 * Returns: success or failure. On failure, error will be set, and the system error value (errno or WSAGetLastError()) will still be set to the result of the getsockopt() call.
+	 * Throws: GException on failure.
+	 */
+	public int getOption(int level, int optname, out int value)
+	{
+		// gboolean g_socket_get_option (GSocket *socket,  gint level,  gint optname,  gint *value,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_get_option(gSocket, level, optname, &value, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Sets the value of an integer-valued option on socket, as with
+	 * setsockopt(). (If you need to set a
+	 * non-integer-valued option, you will need to call
+	 * setsockopt() directly.)
+	 * The <gio/gnetworking.h>
+	 * header pulls in system headers that will define most of the
+	 * standard/portable socket options. For unusual socket protocols or
+	 * platform-dependent options, you may need to include additional
+	 * headers.
+	 * Since 2.36
+	 * Params:
+	 * level = the "API level" of the option (eg, SOL_SOCKET)
+	 * optname = the "name" of the option (eg, SO_BROADCAST)
+	 * value = the value to set the option to
+	 * Returns: success or failure. On failure, error will be set, and the system error value (errno or WSAGetLastError()) will still be set to the result of the setsockopt() call.
+	 * Throws: GException on failure.
+	 */
+	public int setOption(int level, int optname, int value)
+	{
+		// gboolean g_socket_set_option (GSocket *socket,  gint level,  gint optname,  gint value,  GError **error);
+		GError* err = null;
+		
+		auto p = g_socket_set_option(gSocket, level, optname, value, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
 	
 	/**

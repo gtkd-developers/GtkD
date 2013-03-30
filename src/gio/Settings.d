@@ -164,7 +164,7 @@ private import gobject.ObjectG;
  * In addition to GVariant types, keys can have types that have enumerated
  * types. These can be described by a <choice>,
  * <enum> or <flags> element, see
- *  Example 12, “Ranges, choices and enumerated types”. The underlying type of
+ *  Example 16, “Ranges, choices and enumerated types”. The underlying type of
  * such a key is string, but you can use g_settings_get_enum(),
  * g_settings_set_enum(), g_settings_get_flags(), g_settings_set_flags()
  * access the numeric values corresponding to the string value of enum

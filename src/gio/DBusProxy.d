@@ -312,7 +312,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * ready, callback will be invoked and you can use
 	 * g_dbus_proxy_new_finish() to get the result.
 	 * See g_dbus_proxy_new_sync() and for a synchronous version of this constructor.
-	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 14, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * connection = A GDBusConnection.
@@ -345,7 +345,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * a name owner for the name.
 	 * This is a synchronous failable constructor. See g_dbus_proxy_new()
 	 * and g_dbus_proxy_new_finish() for the asynchronous version.
-	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 14, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * connection = A GDBusConnection.
@@ -379,7 +379,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	
 	/**
 	 * Like g_dbus_proxy_new() but takes a GBusType instead of a GDBusConnection.
-	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 14, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.
@@ -400,7 +400,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	
 	/**
 	 * Like g_dbus_proxy_new_sync() but takes a GBusType instead of a GDBusConnection.
-	 * See Example 10, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
+	 * See Example 14, “GDBusProxy for a well-known-name” for an example of how GDBusProxy can be used.
 	 * Since 2.26
 	 * Params:
 	 * busType = A GBusType.

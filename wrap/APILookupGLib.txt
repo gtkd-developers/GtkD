@@ -57,6 +57,7 @@ public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
 public alias uint uid_t;
+public alias int pid_t;
 
 
 version(Tango)

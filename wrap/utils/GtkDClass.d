@@ -1758,6 +1758,7 @@ public class GtkDClass
 		}
 
 		bool bitField = false;	// if we are in a bit field
+		bool comment = false;   // if we are in a comment block
 		int bitFieldNr; // Number apended to bit field
 		int bits; // Bits used in the curent bit field
 
@@ -1778,7 +1779,7 @@ public class GtkDClass
 			if ( std.string.indexOf(elem, "unsigned long") == 0)
 				elem = "ulong"~ elem[13..$];  //TODO: posibly use fixtype
 
-			if ( std.string.indexOf(structDef[i], ":") >= 0 && (std.string.indexOf(structDef[i], ":") <  std.string.indexOf(structDef[i], "/+*") ||  std.string.indexOf(structDef[i], "/+*") == -1) )
+			if ( std.string.indexOf(structDef[i], ":") >= 0 && (std.string.indexOf(structDef[i], ":") <  std.string.indexOf(structDef[i], "/+*") ||  std.string.indexOf(structDef[i], "/+*") == -1) && !startsWith(elem, "*") )
 			//Bit fields.
 			{
 				if ( !bitField )
@@ -1796,7 +1797,7 @@ public class GtkDClass
 				{
 					collectedStructs ~= "//" ~ elem;
 				}
-
+				
 				auto b = split(elem, ":")[1];
 				b = b[0 .. b.indexOf(";")].strip;
 				bits += to!int(b);
@@ -2830,6 +2831,10 @@ public class GtkDClass
 			converted = gToken;
 		}
 		else if ( endsWith(gToken, "_t**") && startsWith(gToken,"cairo_") )
+		{
+			converted = gToken;
+		}
+		else if ( gToken == "pid_t" )
 		{
 			converted = gToken;
 		}

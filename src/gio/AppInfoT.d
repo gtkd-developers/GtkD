@@ -71,6 +71,8 @@ public import gtkc.gio;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
+public import gobject.Signals;
+public  import gtkc.gdktypes;
 
 public import glib.Str;
 public import glib.ErrorG;
@@ -149,6 +151,68 @@ public template AppInfoT(TStruct)
 	
 	/**
 	 */
+	int[string] connectedSignals;
+	
+	void delegate(string, AppInfoIF)[] _onLaunchFailedListeners;
+	void delegate(string, AppInfoIF)[] onLaunchFailedListeners()
+	{
+		return  _onLaunchFailedListeners;
+	}
+	/**
+	 */
+	void addOnLaunchFailed(void delegate(string, AppInfoIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("launch-failed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"launch-failed",
+			cast(GCallback)&callBackLaunchFailed,
+			cast(void*)cast(AppInfoIF)this,
+			null,
+			connectFlags);
+			connectedSignals["launch-failed"] = 1;
+		}
+		_onLaunchFailedListeners ~= dlg;
+	}
+	extern(C) static void callBackLaunchFailed(GAppLaunchContext* gapplaunchcontextStruct, gchar* arg1, AppInfoIF _appInfoIF)
+	{
+		foreach ( void delegate(string, AppInfoIF) dlg ; _appInfoIF.onLaunchFailedListeners )
+		{
+			dlg(Str.toString(arg1), _appInfoIF);
+		}
+	}
+	
+	void delegate(AppInfoIF, GVariant*, AppInfoIF)[] _onLaunchedListeners;
+	void delegate(AppInfoIF, GVariant*, AppInfoIF)[] onLaunchedListeners()
+	{
+		return  _onLaunchedListeners;
+	}
+	/**
+	 */
+	void addOnLaunched(void delegate(AppInfoIF, GVariant*, AppInfoIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("launched" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"launched",
+			cast(GCallback)&callBackLaunched,
+			cast(void*)cast(AppInfoIF)this,
+			null,
+			connectFlags);
+			connectedSignals["launched"] = 1;
+		}
+		_onLaunchedListeners ~= dlg;
+	}
+	extern(C) static void callBackLaunched(GAppLaunchContext* gapplaunchcontextStruct, GAppInfo* arg1, GVariant* arg2, AppInfoIF _appInfoIF)
+	{
+		foreach ( void delegate(AppInfoIF, GVariant*, AppInfoIF) dlg ; _appInfoIF.onLaunchedListeners )
+		{
+			dlg(ObjectG.getDObject!(AppInfo)(arg1), arg2, _appInfoIF);
+		}
+	}
+	
 	
 	/**
 	 * Creates a new GAppInfo from the given information.

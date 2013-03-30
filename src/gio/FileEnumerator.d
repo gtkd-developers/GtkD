@@ -50,10 +50,12 @@
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.File
+ * 	- gio.FileInfo
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GFile* -> File
+ * 	- GFileInfo* -> FileInfo
  * 	- GList* -> ListG
  * module aliases:
  * local aliases:
@@ -76,6 +78,7 @@ private import glib.ListG;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.File;
+private import gio.FileInfo;
 
 
 
@@ -148,7 +151,7 @@ public class FileEnumerator : ObjectG
 	 * Returns: A GFileInfo or NULL on error or end of enumerator. Free the returned object with g_object_unref() when no longer needed. [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public GFileInfo* nextFile(Cancellable cancellable)
+	public FileInfo nextFile(Cancellable cancellable)
 	{
 		// GFileInfo * g_file_enumerator_next_file (GFileEnumerator *enumerator,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
@@ -160,7 +163,13 @@ public class FileEnumerator : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 	
 	/**
@@ -334,6 +343,29 @@ public class FileEnumerator : ObjectG
 	{
 		// GFile * g_file_enumerator_get_container (GFileEnumerator *enumerator);
 		auto p = g_file_enumerator_get_container(gFileEnumerator);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(File)(cast(GFile*) p);
+	}
+	
+	/**
+	 * Return a new GFile which refers to the file named by info in the source
+	 * directory of enumerator. This function is primarily intended to be used
+	 * inside loops with g_file_enumerator_next_file().
+	 * Since 2.36
+	 * Params:
+	 * info = a GFileInfo gotten from g_file_enumerator_next_file()
+	 * or the async equivalents.
+	 * Returns: a GFile for the GFileInfo passed it. [transfer full]
+	 */
+	public File getChild(FileInfo info)
+	{
+		// GFile * g_file_enumerator_get_child (GFileEnumerator *enumerator,  GFileInfo *info);
+		auto p = g_file_enumerator_get_child(gFileEnumerator, (info is null) ? null : info.getFileInfoStruct());
 		
 		if(p is null)
 		{

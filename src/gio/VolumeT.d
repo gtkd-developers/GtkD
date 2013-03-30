@@ -107,9 +107,9 @@ public import gio.MountOperation;
  *
  * Mounting a GVolume instance is an asynchronous operation. For more
  * information about asynchronous operations, see GAsyncResult and
- * GSimpleAsyncResult. To mount a GVolume, first call
- * g_volume_mount() with (at least) the GVolume instance, optionally
- * a GMountOperation object and a GAsyncReadyCallback.
+ * GTask. To mount a GVolume, first call g_volume_mount() with (at
+ * least) the GVolume instance, optionally a GMountOperation object
+ * and a GAsyncReadyCallback.
  *
  * Typically, one will only want to pass NULL for the
  * GMountOperation if automounting all volumes when a desktop session

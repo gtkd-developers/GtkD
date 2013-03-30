@@ -10,8 +10,8 @@ ln -s glib-html-2.36.0 glib
 curl https://developer.gnome.org/gobject/gobject-html-2.36.0.tar.gz | tar xvfz -
 ln -s gobject-html-2.36.0 gobject
 #GIO
-curl http://developer.gnome.org/gio/gio-html-2.34.0.tar.gz | tar xvfz -
-ln -s gio-html-2.34.0 gio
+curl https://developer.gnome.org/gio/gio-html-2.36.0.tar.gz | tar xvfz -
+ln -s gio-html-2.36.0 gio
 #ATK
 curl http://developer.gnome.org/atk/atk-html-2.6.0.tar.gz | tar xvfz -
 ln -s atk-html-2.6.0 atk

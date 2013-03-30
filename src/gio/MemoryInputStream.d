@@ -150,6 +150,24 @@ public class MemoryInputStream : InputStream, SeekableIF
 	}
 	
 	/**
+	 * Creates a new GMemoryInputStream with data from the given bytes.
+	 * Since 2.34
+	 * Params:
+	 * bytes = a GBytes
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GBytes* bytes)
+	{
+		// GInputStream * g_memory_input_stream_new_from_bytes  (GBytes *bytes);
+		auto p = g_memory_input_stream_new_from_bytes(bytes);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_memory_input_stream_new_from_bytes(bytes)");
+		}
+		this(cast(GMemoryInputStream*) p);
+	}
+	
+	/**
 	 * Appends data to data that can be read from the input stream
 	 * Params:
 	 * data = input data. [array length=len][element-type guint8][transfer full]
@@ -160,5 +178,17 @@ public class MemoryInputStream : InputStream, SeekableIF
 	{
 		// void g_memory_input_stream_add_data (GMemoryInputStream *stream,  const void *data,  gssize len,  GDestroyNotify destroy);
 		g_memory_input_stream_add_data(gMemoryInputStream, data, len, destroy);
+	}
+	
+	/**
+	 * Appends bytes to data that can be read from the input stream.
+	 * Since 2.34
+	 * Params:
+	 * bytes = input data
+	 */
+	public void addBytes(GBytes* bytes)
+	{
+		// void g_memory_input_stream_add_bytes (GMemoryInputStream *stream,  GBytes *bytes);
+		g_memory_input_stream_add_bytes(gMemoryInputStream, bytes);
 	}
 }

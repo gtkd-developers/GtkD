@@ -49,6 +49,8 @@
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gio.IOStream
+ * 	- gio.ProxyResolver
+ * 	- gio.ProxyResolverIF
  * 	- gio.SocketAddress
  * 	- gio.SocketConnection
  * 	- gio.SocketConnectable
@@ -57,6 +59,7 @@
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
  * 	- GIOStream* -> IOStream
+ * 	- GProxyResolver* -> ProxyResolverIF
  * 	- GSocketAddress* -> SocketAddress
  * 	- GSocketConnectable* -> SocketConnectableIF
  * 	- GSocketConnection* -> SocketConnection
@@ -82,6 +85,8 @@ private import glib.GException;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;
+private import gio.ProxyResolver;
+private import gio.ProxyResolverIF;
 private import gio.SocketAddress;
 private import gio.SocketConnection;
 private import gio.SocketConnectable;
@@ -695,6 +700,7 @@ public class SocketClient : ObjectG
 	 * proxy server. When enabled (the default), GSocketClient will use a
 	 * GProxyResolver to determine if a proxy protocol such as SOCKS is
 	 * needed, and automatically do the necessary proxy negotiation.
+	 * See also g_socket_client_set_proxy_resolver().
 	 * Since 2.26
 	 * Params:
 	 * enable = whether to enable proxies
@@ -703,6 +709,24 @@ public class SocketClient : ObjectG
 	{
 		// void g_socket_client_set_enable_proxy (GSocketClient *client,  gboolean enable);
 		g_socket_client_set_enable_proxy(gSocketClient, enable);
+	}
+	
+	/**
+	 * Overrides the GProxyResolver used by client. You can call this if
+	 * you want to use specific proxies, rather than using the system
+	 * default proxy settings.
+	 * Note that whether or not the proxy resolver is actually used
+	 * depends on the setting of "enable-proxy", which is not
+	 * changed by this function (but which is TRUE by default)
+	 * Since 2.36
+	 * Params:
+	 * proxyResolver = a GProxyResolver, or NULL for the
+	 * default. [allow-none]
+	 */
+	public void setProxyResolver(ProxyResolverIF proxyResolver)
+	{
+		// void g_socket_client_set_proxy_resolver (GSocketClient *client,  GProxyResolver *proxy_resolver);
+		g_socket_client_set_proxy_resolver(gSocketClient, (proxyResolver is null) ? null : proxyResolver.getProxyResolverTStruct());
 	}
 	
 	/**
@@ -821,6 +845,26 @@ public class SocketClient : ObjectG
 	{
 		// gboolean g_socket_client_get_enable_proxy (GSocketClient *client);
 		return g_socket_client_get_enable_proxy(gSocketClient);
+	}
+	
+	/**
+	 * Gets the GProxyResolver being used by client. Normally, this will
+	 * be the resolver returned by g_proxy_resolver_get_default(), but you
+	 * can override it with g_socket_client_set_proxy_resolver().
+	 * Since 2.36
+	 * Returns: The GProxyResolver being used by client. [transfer none]
+	 */
+	public ProxyResolverIF getProxyResolver()
+	{
+		// GProxyResolver * g_socket_client_get_proxy_resolver (GSocketClient *client);
+		auto p = g_socket_client_get_proxy_resolver(gSocketClient);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ProxyResolver)(cast(GProxyResolver*) p);
 	}
 	
 	/**

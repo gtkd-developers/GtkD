@@ -84,10 +84,12 @@ private import gio.AsyncResultT;
 private import gobject.ObjectG;
 
 /**
- * Implements GAsyncResult for simple cases. Most of the time, this
- * will be all an application needs, and will be used transparently.
- * Because of this, GSimpleAsyncResult is used throughout GIO for
- * handling asynchronous functions.
+ * Note
+ *
+ *  As of GLib 2.36, GSimpleAsyncResult is deprecated in favor of
+ *  GTask, which provides a simpler API.
+ *
+ * GSimpleAsyncResult implements GAsyncResult.
  *
  * GSimpleAsyncResult handles GAsyncReadyCallbacks, error
  * reporting, operation cancellation and the final state of an operation,

@@ -275,4 +275,29 @@ public class Credentials : ObjectG
 		
 		return p;
 	}
+	
+	/**
+	 * Tries to get the UNIX process identifier from credentials. This
+	 * method is only available on UNIX platforms.
+	 * This operation can fail if GCredentials is not supported on the
+	 * OS or if the native credentials type does not contain information
+	 * about the UNIX process ID.
+	 * Since 2.36
+	 * Returns: The UNIX process ID, or -1 if error is set.
+	 * Throws: GException on failure.
+	 */
+	public pid_t getUnixPid()
+	{
+		// pid_t g_credentials_get_unix_pid (GCredentials *credentials,  GError **error);
+		GError* err = null;
+		
+		auto p = g_credentials_get_unix_pid(gCredentials, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
 }
