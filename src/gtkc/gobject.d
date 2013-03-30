@@ -84,6 +84,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_type_remove_interface_check, \"g_type_remove_interface_check\", LIBRARY.GOBJECT);
 	Linker.link(g_type_value_table_peek, \"g_type_value_table_peek\", LIBRARY.GOBJECT);
 	Linker.link(g_type_ensure, \"g_type_ensure\", LIBRARY.GOBJECT);
+	Linker.link(g_type_get_type_registration_serial, \"g_type_get_type_registration_serial\", LIBRARY.GOBJECT);
 
 	// gobject.TypePlugin
 
@@ -501,6 +502,7 @@ mixin( gshared ~"extern(C)
 	void function(void* checkData, GTypeInterfaceCheckFunc checkFunc) c_g_type_remove_interface_check;
 	GTypeValueTable* function(GType type) c_g_type_value_table_peek;
 	void function(GType type) c_g_type_ensure;
+	guint function() c_g_type_get_type_registration_serial;
 
 	// gobject.TypePlugin
 
@@ -916,6 +918,7 @@ alias c_g_type_add_interface_check  g_type_add_interface_check;
 alias c_g_type_remove_interface_check  g_type_remove_interface_check;
 alias c_g_type_value_table_peek  g_type_value_table_peek;
 alias c_g_type_ensure  g_type_ensure;
+alias c_g_type_get_type_registration_serial  g_type_get_type_registration_serial;
 
 // gobject.TypePlugin
 

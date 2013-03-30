@@ -91,11 +91,12 @@ public alias GClosureMarshal GSignalCMarshaller;
  */
 public alias GVaClosureMarshal GSignalCVaMarshaller;
 /**
- * The GTypeDebugFlags enumeration values can be passed to
- * g_type_init_with_debug_flags() to trigger debugging messages during runtime.
- * Note that the messages can also be triggered by setting the
- * GOBJECT_DEBUG environment variable to a ':'-separated list of
- * "objects" and "signals".
+ * Warning
+ * GTypeDebugFlags has been deprecated since version 2.36 and should not be used in newly-written code. g_type_init() is now done automatically
+ * These flags used to be passed to g_type_init_with_debug_flags() which
+ * is now deprecated.
+ * If you need to enable debugging features, use the GOBJECT_DEBUG
+ * environment variable.
  * G_TYPE_DEBUG_NONE
  * Print no messages.
  * G_TYPE_DEBUG_OBJECTS
@@ -1426,11 +1427,12 @@ public struct GSignalInvocationHint
  * guint n_params;
  * The number of parameters that user callbacks take.
  * const GType *param_types;
- * The individual parameter types for user callbacks, note that the
- * effective callback signature is:
+ * The individual parameter types for
+ * user callbacks, note that the effective callback signature is:
  * @return_type callback (gpointer data1,
  * [param_types param_names,]
  * gpointer data2);
+ * . [array length=n_params]
  */
 public struct GSignalQuery
 {

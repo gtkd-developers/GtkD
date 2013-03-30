@@ -76,9 +76,7 @@ private import gobject.TypePlugin;
 /**
  * The GType API is the foundation of the GObject system. It provides the
  * facilities for registering and managing all fundamental data types,
- * user-defined object and interface types. Before using any GType
- * or GObject functions, g_type_init() must be called to initialize the
- * type system.
+ * user-defined object and interface types.
  *
  * For type creation and registration purposes, all types fall into one of
  * two categories: static or dynamic. Static types are never loaded or
@@ -135,14 +133,11 @@ public class Type
 	 */
 	
 	/**
-	 * Prior to any use of the type system, g_type_init() has to be called
-	 * to initialize the type system and assorted other code portions
-	 * (such as the various fundamental type implementations or the signal
-	 * system).
-	 * This function is idempotent: If you call it multiple times, all but
-	 * the first calls will be silently ignored.
-	 * There is no way to undo the effect of g_type_init().
-	 * Since version 2.24 this also initializes the thread system
+	 * Warning
+	 * g_type_init has been deprecated since version 2.36 and should not be used in newly-written code. the type system is now initialised automatically
+	 * This function used to initialise the type system. Since GLib 2.36,
+	 * the type system is initialised automatically and this function does
+	 * nothing.
 	 */
 	public static void init()
 	{
@@ -151,8 +146,13 @@ public class Type
 	}
 	
 	/**
-	 * Similar to g_type_init(), but additionally sets debug flags.
-	 * This function is idempotent.
+	 * Warning
+	 * g_type_init_with_debug_flags has been deprecated since version 2.36 and should not be used in newly-written code. the type system is now initialised automatically
+	 * This function used to initialise the type system with debugging
+	 * flags. Since GLib 2.36, the type system is initialised automatically
+	 * and this function does nothing.
+	 * If you need to enable debugging features, use the GOBJECT_DEBUG
+	 * environment variable.
 	 * Params:
 	 * debugFlags = Bitwise combination of GTypeDebugFlags values for
 	 * debugging purposes.
@@ -348,7 +348,7 @@ public class Type
 	 * sequentially in the same memory block as the public
 	 * structures.
 	 * Note that the accumulated size of the private structures of
-	 * a type and all its parent types cannot excced 64 KiB.
+	 * a type and all its parent types cannot exceed 64 KiB.
 	 * This function should be called in the type's class_init() function.
 	 * The private structure can be retrieved using the
 	 * G_TYPE_INSTANCE_GET_PRIVATE() macro.
@@ -938,5 +938,20 @@ public class Type
 	{
 		// void g_type_ensure (GType type);
 		g_type_ensure(type);
+	}
+	
+	/**
+	 * Returns an opaque serial number that represents the state of the set of registered
+	 * types. Any time a type is registred this serial changes, which means you can
+	 * cache information based on type lookups (such as g_type_from_name) and know if
+	 * the cache is still valid at a later time by comparing the current serial with
+	 * the one at the type lookup.
+	 * Since 2.36
+	 * Returns: An unsigned int, representing the state of type registrations.
+	 */
+	public static uint getTypeRegistrationSerial()
+	{
+		// guint g_type_get_type_registration_serial (void);
+		return g_type_get_type_registration_serial();
 	}
 }
