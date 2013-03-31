@@ -35,13 +35,53 @@ enum GtkSourceBracketMatchType
 }
 alias GtkSourceBracketMatchType SourceBracketMatchType;
 /**
+ * GTK_SOURCE_BRACKET_MATCH_NONE
+ * there is no bracket to match.
+ * GTK_SOURCE_BRACKET_MATCH_OUT_OF_RANGE
+ * matching a bracket
+ *  failed because the maximum range was reached.
+ * GTK_SOURCE_BRACKET_MATCH_NOT_FOUND
+ * a matching bracket was not found.
+ * GTK_SOURCE_BRACKET_MATCH_FOUND
+ * a matching bracket was found.
+ */
+public enum GtkSourceBracketMatchType
+{
+	NONE,
+	OUT_OF_RANGE,
+	NOT_FOUND,
+	FOUND
+}
+alias GtkSourceBracketMatchType SourceBracketMatchType;
+
+/**
+ * An error code used with GTK_SOURCE_COMPLETION_ERROR in a GError returned
+ * from a completion-related function.
+ * GTK_SOURCE_COMPLETION_ERROR_ALREADY_BOUND
+ * The GtkSourceCompletionProvider
+ * is already bound to the GtkSourceCompletion object.
+ * GTK_SOURCE_COMPLETION_ERROR_NOT_BOUND
+ * The GtkSourceCompletionProvider is
+ * not bound to the GtkSourceCompletion object.
+ */
+public enum GtkSourceCompletionError
+{
+	ALREADY_BOUND = 0,
+	NOT_BOUND
+}
+alias GtkSourceCompletionError SourceCompletionError;
+
+/**
  * GTK_SOURCE_COMPLETION_ACTIVATION_NONE
- * none.
+ * None.
  * GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
- * interactive activation
+ * Interactive activation. By
+ * default, it occurs on each insertion in the GtkTextBuffer. This can be
+ * blocked temporarily with gtk_source_completion_block_interactive().
  * GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
- * user requested activation
- * (e.g. through a keyboard accelerator from the view)
+ * User requested activation.
+ * By default, it occurs when the user presses
+ * Control+space.
  */
 public enum GtkSourceCompletionActivation
 {
@@ -73,6 +113,11 @@ public enum GtkSourceGutterRendererState
 }
 alias GtkSourceGutterRendererState SourceGutterRendererState;
 
+/**
+ * GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL
+ * GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST
+ * GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST
+ */
 public enum GtkSourceGutterRendererAlignmentMode
 {
 	MODE_CELL,
@@ -136,13 +181,7 @@ public enum GtkSourceDrawSpacesFlags
 	LEADING = 1 << 4,
 	TEXT = 1 << 5,
 	TRAILING = 1 << 6,
-	ALL = (SPACE |
-	TAB |
-	NEWLINE |
-	NBSP |
-	LEADING |
-	TEXT |
-	TRAILING)
+	ALL = 0x7f
 }
 alias GtkSourceDrawSpacesFlags SourceDrawSpacesFlags;
 
@@ -202,9 +241,115 @@ public struct GtkSourceCompletionProposal{}
 
 
 /**
+ * The virtual function table for GtkSourceCompletionProposal.
+ * GTypeInterface parent;
+ * The parent interface.
+ * get_label ()
+ * The virtual function pointer for gtk_source_completion_proposal_get_label().
+ * By default, NULL is returned.
+ * get_markup ()
+ * The virtual function pointer for gtk_source_completion_proposal_get_markup().
+ * By default, NULL is returned.
+ * get_text ()
+ * The virtual function pointer for gtk_source_completion_proposal_get_text().
+ * By default, NULL is returned.
+ * get_icon ()
+ * The virtual function pointer for gtk_source_completion_proposal_get_icon().
+ * By default, NULL is returned.
+ * get_info ()
+ * The virtual function pointer for gtk_source_completion_proposal_get_info().
+ * By default, NULL is returned.
+ * hash ()
+ * The virtual function pointer for gtk_source_completion_proposal_hash().
+ * By default, it uses a direct hash (g_direct_hash()).
+ * equal ()
+ * The virtual function pointer for gtk_source_completion_proposal_equal().
+ * By default, it uses direct equality (g_direct_equal()).
+ * changed ()
+ * The function pointer for the "changed" signal.
+ */
+public struct GtkSourceCompletionProposalIface
+{
+	GTypeInterface parent;
+	/+* Interface functions +/
+	extern(C) char * function(GtkSourceCompletionProposal* proposal) getLabel;
+	extern(C) char * function(GtkSourceCompletionProposal* proposal) getMarkup;
+	extern(C) char * function(GtkSourceCompletionProposal* proposal) getText;
+	extern(C) GdkPixbuf * function(GtkSourceCompletionProposal* proposal) getIcon;
+	extern(C) char * function(GtkSourceCompletionProposal* proposal) getInfo;
+	extern(C) uint function(GtkSourceCompletionProposal* proposal) hash;
+	extern(C) int function(GtkSourceCompletionProposal* proposal, GtkSourceCompletionProposal* other) equal;
+	/+* Signals +/
+	extern(C) void function(GtkSourceCompletionProposal* proposal) changed;
+}
+
+
+/**
  * Main Gtk struct.
  */
 public struct GtkSourceCompletionProvider{}
+
+
+/**
+ * The virtual function table for GtkSourceCompletionProvider.
+ * GTypeInterface g_iface;
+ * The parent interface.
+ * get_name ()
+ * The virtual function pointer for gtk_source_completion_provider_get_name().
+ * Must be implemented.
+ * get_icon ()
+ * The virtual function pointer for gtk_source_completion_provider_get_icon().
+ * By default, NULL is returned.
+ * populate ()
+ * The virtual function pointer for gtk_source_completion_provider_populate().
+ * Add no proposals by default.
+ * match ()
+ * The virtual function pointer for gtk_source_completion_provider_match().
+ * By default, TRUE is returned.
+ * get_activation ()
+ * The virtual function pointer for gtk_source_completion_provider_get_activation().
+ * The combination of all GtkSourceCompletionActivation is returned by default.
+ * get_info_widget ()
+ * The virtual function pointer for gtk_source_completion_provider_get_info_widget().
+ * By default, NULL is returned.
+ * update_info ()
+ * The virtual function pointer for gtk_source_completion_provider_update_info().
+ * Does nothing by default.
+ * get_start_iter ()
+ * The virtual function pointer for gtk_source_completion_provider_get_start_iter().
+ * By default, FALSE is returned.
+ * activate_proposal ()
+ * The virtual function pointer for gtk_source_completion_provider_activate_proposal().
+ * By default, FALSE is returned.
+ * get_interactive_delay ()
+ * The virtual function pointer for gtk_source_completion_provider_get_interactive_delay().
+ * By default, -1 is returned.
+ * get_priority ()
+ * The virtual function pointer for gtk_source_completion_provider_get_priority().
+ * By default, 0 is returned.
+ */
+public struct GtkSourceCompletionProviderIface
+{
+	GTypeInterface gIface;
+	extern(C) char * function(GtkSourceCompletionProvider* provider) getName;
+	extern(C) GdkPixbuf * function(GtkSourceCompletionProvider* provider) getIcon;
+	extern(C) void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) populate;
+	extern(C) int function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) match;
+	GtkSourceCompletionActivation
+	(*getActivation) (GtkSourceCompletionProvider *provider);
+	extern(C) GtkWidget * function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal) getInfoWidget;
+	extern(C) void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkSourceCompletionInfo* info) updateInfo;
+	extern(C) int function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) getStartIter;
+	extern(C) int function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) activateProposal;
+	extern(C) int function(GtkSourceCompletionProvider* provider) getInteractiveDelay;
+	extern(C) int function(GtkSourceCompletionProvider* provider) getPriority;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceCompletionWords{}
 
 
 /**
@@ -216,10 +361,7 @@ public struct GtkSourceGutter{}
 /**
  * Main Gtk struct.
  */
-public struct GtkSourceGutterRenderer
-{
-	GInitiallyUnowned parent;
-}
+public struct GtkSourceGutterRenderer{}
 
 
 /**

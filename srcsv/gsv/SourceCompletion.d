@@ -88,6 +88,52 @@ private import gtk.TextIter;
 private import gobject.ObjectG;
 
 /**
+ * The completion system helps the user when he writes some text, such
+ * as words, command names, functions, and suchlike. Proposals can be
+ * shown, to complete the text the user is writing. Each proposal can
+ * contain an additional piece of information, that is displayed when
+ * the "Details" button is active.
+ *
+ * Proposals are created via a GtkSourceCompletionProvider. There can
+ * be for example a provider to complete words (see
+ * GtkSourceCompletionWords), another provider for the completion of
+ * function's names, etc. To add a provider, call
+ * gtk_source_completion_add_provider().
+ *
+ * When the completion is activated, a GtkSourceCompletionContext object is
+ * created. The providers are asked whether they match the context, with
+ * gtk_source_completion_provider_match(). If a provider doesn't match the
+ * context, it will not be visible in the completion window. On the
+ * other hand, if the provider matches the context, its proposals will
+ * be displayed.
+ *
+ * When several providers match, they are all shown in the completion
+ * window, but one can switch between providers: see the
+ * "move-page" signal. It is also possible to
+ * activate the first proposals with key bindings, see the
+ * "accelerators" property.
+ *
+ * The GtkSourceCompletionProposal interface represents a proposal.
+ * The GtkSourceCompletionItem class is a simple implementation of this
+ * interface.
+ *
+ * If a proposal contains extra information (see
+ * gtk_source_completion_provider_get_info_widget()), it will be
+ * displayed in a GtkSourceCompletionInfo window, which appears when
+ * the "Details" button is clicked.
+ *
+ * A GtkSourceCompletionInfo window can also be used to display
+ * calltips. When no proposals are available, it can be useful to
+ * display extra information like a function's prototype (number of
+ * parameters, types of parameters, etc).
+ *
+ * Each GtkSourceView object is associated with a GtkSourceCompletion
+ * instance. This instance can be obtained with
+ * gtk_source_view_get_completion(). The GtkSourceView class contains also the
+ * "show-completion" signal.
+ *
+ * A same GtkSourceCompletionProvider object can be used for several
+ * GtkSourceCompletion.
  */
 public class SourceCompletion : ObjectG
 {
@@ -129,11 +175,12 @@ public class SourceCompletion : ObjectG
 	
 	void delegate(SourceCompletion)[] onActivateProposalListeners;
 	/**
-	 * The ::activate-proposal signal is a keybinding signal which gets
-	 * emitted when the user initiates a proposal activation.
+	 * The "activate-proposal" signal is a
+	 * keybinding signal which gets emitted when the user initiates
+	 * a proposal activation.
 	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name if they need to control the proposal activation
-	 * programmatically.
+	 * g_signal_emit_by_name() if they need to control the proposal
+	 * activation programmatically.
 	 */
 	void addOnActivateProposal(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -188,16 +235,18 @@ public class SourceCompletion : ObjectG
 	
 	void delegate(GtkScrollStep, gint, SourceCompletion)[] onMoveCursorListeners;
 	/**
-	 * The ::move-cursor signal is a keybinding signal which gets emitted when
-	 * the user initiates a cursor movement.
+	 * The "move-cursor" signal is a keybinding
+	 * signal which gets emitted when the user initiates a cursor
+	 * movement.
 	 * The Up, Down,
 	 * PageUp, PageDown,
 	 * Home and End keys are bound to the
-	 * normal behavior expected by those keys. The PageDown
-	 * and PageUp keys use the page size defined by the
-	 * "proposal-page-size" property.
+	 * normal behavior expected by those keys.
+	 * When step is equal to GTK_SCROLL_PAGES, the page size is defined by
+	 * the "proposal-page-size" property. It is used for
+	 * the PageDown and PageUp keys.
 	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name if they need to control the cursor
+	 * g_signal_emit_by_name() if they need to control the cursor
 	 * programmatically.
 	 */
 	void addOnMoveCursor(void delegate(GtkScrollStep, gint, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -225,9 +274,9 @@ public class SourceCompletion : ObjectG
 	
 	void delegate(GtkScrollStep, gint, SourceCompletion)[] onMovePageListeners;
 	/**
-	 * The ::move-page signal is a keybinding signal which gets emitted when
-	 * the user initiates a page movement (i.e. switches between provider
-	 * pages).
+	 * The "move-page" signal is a keybinding
+	 * signal which gets emitted when the user initiates a page
+	 * movement (i.e. switches between provider pages).
 	 * Control+Left
 	 * is for going to the previous provider.
 	 * Control+Right
@@ -236,8 +285,10 @@ public class SourceCompletion : ObjectG
 	 * is for displaying all the providers.
 	 * Control+End
 	 * is for going to the last provider.
+	 * When step is equal to GTK_SCROLL_PAGES, the page size is defined by
+	 * the "provider-page-size" property.
 	 * Applications should not connect to it, but may emit it with
-	 * g_signal_emit_by_name if they need to control the page selection
+	 * g_signal_emit_by_name() if they need to control the page selection
 	 * programmatically.
 	 */
 	void addOnMovePage(void delegate(GtkScrollStep, gint, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -387,6 +438,11 @@ public class SourceCompletion : ObjectG
 	/**
 	 * Starts a new completion with the specified GtkSourceCompletionContext and
 	 * a list of potential candidate providers for completion.
+	 * It can be convenient for showing a completion on-the-fly, without the need to
+	 * add or remove providers to the GtkSourceCompletion.
+	 * Another solution is to add providers with
+	 * gtk_source_completion_add_provider(), and implement
+	 * gtk_source_completion_provider_match() for each provider.
 	 * Params:
 	 * providers = a list of GtkSourceCompletionProvider, or NULL. [element-type GtkSource.CompletionProvider][allow-none]
 	 * context = The GtkSourceCompletionContext
@@ -449,7 +505,7 @@ public class SourceCompletion : ObjectG
 	 * the current cursor position will be used.
 	 * Params:
 	 * position = a GtkTextIter, or NULL. [allow-none]
-	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show with this context you don't need to unref it. [transfer floating]
+	 * Returns: a new GtkSourceCompletionContext. The reference being returned is a 'floating' reference, so if you invoke gtk_source_completion_show() with this context you don't need to unref it. [transfer floating]
 	 */
 	public SourceCompletionContext createContext(TextIter position)
 	{
@@ -465,6 +521,8 @@ public class SourceCompletion : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_completion_move_window has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_source_completion_provider_get_start_iter() instead.
 	 * Move the completion window to a specific iter.
 	 * Params:
 	 * iter = a GtkTextIter.
@@ -478,7 +536,7 @@ public class SourceCompletion : ObjectG
 	/**
 	 * Block interactive completion. This can be used to disable interactive
 	 * completion when inserting or deleting text from the buffer associated with
-	 * the completion. Use gtk_source_completion_unblock_interactive to enable
+	 * the completion. Use gtk_source_completion_unblock_interactive() to enable
 	 * interactive completion again.
 	 */
 	public void blockInteractive()
@@ -489,7 +547,7 @@ public class SourceCompletion : ObjectG
 	
 	/**
 	 * Unblock interactive completion. This can be used after using
-	 * gtk_source_completion_block_interactive to enable interactive completion
+	 * gtk_source_completion_block_interactive() to enable interactive completion
 	 * again.
 	 */
 	public void unblockInteractive()

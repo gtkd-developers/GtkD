@@ -136,6 +136,12 @@ mixin( _shared ~ "static this()
 	// gsv.SourceCompletionProvider
 
 
+	// gsv.SourceCompletionWords
+
+	Linker.link(gtk_source_completion_words_new, \"gtk_source_completion_words_new\", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_words_register, \"gtk_source_completion_words_register\", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_words_unregister, \"gtk_source_completion_words_unregister\", LIBRARY.GSV);
+
 	// gsv.SourceGutter
 
 	Linker.link(gtk_source_gutter_get_window, \"gtk_source_gutter_get_window\", LIBRARY.GSV);
@@ -143,6 +149,9 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_gutter_reorder, \"gtk_source_gutter_reorder\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_remove, \"gtk_source_gutter_remove\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_queue_draw, \"gtk_source_gutter_queue_draw\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_get_padding, \"gtk_source_gutter_get_padding\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_set_padding, \"gtk_source_gutter_set_padding\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_get_renderer_at_pos, \"gtk_source_gutter_get_renderer_at_pos\", LIBRARY.GSV);
 
 	// gsv.SourceGutterRenderer
 
@@ -245,6 +254,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_view_get_draw_spaces, \"gtk_source_view_get_draw_spaces\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_completion, \"gtk_source_view_get_completion\", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_gutter, \"gtk_source_view_get_gutter\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_visual_column, \"gtk_source_view_get_visual_column\", LIBRARY.GSV);
 
 	// gsv.SourceLanguage
 
@@ -455,6 +465,12 @@ mixin( gshared ~"extern(C)
 	// gsv.SourceCompletionProvider
 
 
+	// gsv.SourceCompletionWords
+
+	GtkSourceCompletionWords* function(gchar* name, GdkPixbuf* icon) c_gtk_source_completion_words_new;
+	void function(GtkSourceCompletionWords* words, GtkTextBuffer* buffer) c_gtk_source_completion_words_register;
+	void function(GtkSourceCompletionWords* words, GtkTextBuffer* buffer) c_gtk_source_completion_words_unregister;
+
 	// gsv.SourceGutter
 
 	GdkWindow* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window;
@@ -462,6 +478,9 @@ mixin( gshared ~"extern(C)
 	void function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer, gint position) c_gtk_source_gutter_reorder;
 	void function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer) c_gtk_source_gutter_remove;
 	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
+	void function(GtkSourceGutter* gutter, gint* xpad, gint* ypad) c_gtk_source_gutter_get_padding;
+	void function(GtkSourceGutter* gutter, gint xpad, gint ypad) c_gtk_source_gutter_set_padding;
+	GtkSourceGutterRenderer* function(GtkSourceGutter* gutter, gint x, gint y) c_gtk_source_gutter_get_renderer_at_pos;
 
 	// gsv.SourceGutterRenderer
 
@@ -564,6 +583,7 @@ mixin( gshared ~"extern(C)
 	GtkSourceDrawSpacesFlags function(GtkSourceView* view) c_gtk_source_view_get_draw_spaces;
 	GtkSourceCompletion* function(GtkSourceView* view) c_gtk_source_view_get_completion;
 	GtkSourceGutter* function(GtkSourceView* view, GtkTextWindowType windowType) c_gtk_source_view_get_gutter;
+	guint function(GtkSourceView* view, GtkTextIter* iter) c_gtk_source_view_get_visual_column;
 
 	// gsv.SourceLanguage
 
@@ -772,6 +792,12 @@ alias c_gtk_source_completion_provider_get_priority  gtk_source_completion_provi
 // gsv.SourceCompletionProvider
 
 
+// gsv.SourceCompletionWords
+
+alias c_gtk_source_completion_words_new  gtk_source_completion_words_new;
+alias c_gtk_source_completion_words_register  gtk_source_completion_words_register;
+alias c_gtk_source_completion_words_unregister  gtk_source_completion_words_unregister;
+
 // gsv.SourceGutter
 
 alias c_gtk_source_gutter_get_window  gtk_source_gutter_get_window;
@@ -779,6 +805,9 @@ alias c_gtk_source_gutter_insert  gtk_source_gutter_insert;
 alias c_gtk_source_gutter_reorder  gtk_source_gutter_reorder;
 alias c_gtk_source_gutter_remove  gtk_source_gutter_remove;
 alias c_gtk_source_gutter_queue_draw  gtk_source_gutter_queue_draw;
+alias c_gtk_source_gutter_get_padding  gtk_source_gutter_get_padding;
+alias c_gtk_source_gutter_set_padding  gtk_source_gutter_set_padding;
+alias c_gtk_source_gutter_get_renderer_at_pos  gtk_source_gutter_get_renderer_at_pos;
 
 // gsv.SourceGutterRenderer
 
@@ -881,6 +910,7 @@ alias c_gtk_source_view_set_draw_spaces  gtk_source_view_set_draw_spaces;
 alias c_gtk_source_view_get_draw_spaces  gtk_source_view_get_draw_spaces;
 alias c_gtk_source_view_get_completion  gtk_source_view_get_completion;
 alias c_gtk_source_view_get_gutter  gtk_source_view_get_gutter;
+alias c_gtk_source_view_get_visual_column  gtk_source_view_get_visual_column;
 
 // gsv.SourceLanguage
 

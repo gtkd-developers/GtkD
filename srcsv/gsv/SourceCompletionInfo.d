@@ -77,6 +77,20 @@ private import gtk.Window;
 /**
  * This object can be used to show a calltip or help for the
  * current completion proposal.
+ *
+ * The info window has always the same size as the natural size of its child
+ * widget, added with gtk_container_add(). If you want a fixed size instead, a
+ * possibility is to use a scrolled window, as the following example
+ * demonstrates.
+ *
+ * $(DDOC_COMMENT example)
+ *
+ * If the calltip is displayed on top of a certain widget, say a GtkTextView,
+ * you should hide it when the "focus-out-event" signal is emitted by
+ * the GtkTextView. You may also be interested by the
+ * "cursor-position" property (when its value is modified). If you
+ * use the GtkSourceCompletionInfo through the GtkSourceCompletion machinery,
+ * you don't need to worry about this.
  */
 public class SourceCompletionInfo : Window
 {
@@ -176,11 +190,12 @@ public class SourceCompletionInfo : Window
 	}
 	
 	/**
-	 * Sets the content widget of the info window. If widget does not fit within
-	 * the size requirements of the window, a GtkScrolledWindow will automatically
-	 * be created and added to the window. See that the previous widget will lose
-	 * a reference and it can be destroyed, so if you do not want this to happen
-	 * you must g_object_ref() before calling this method.
+	 * Warning
+	 * gtk_source_completion_info_set_widget has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_container_add() instead. If there is already a child
+	 * widget, remove it with gtk_container_remove().
+	 * Sets the content widget of the info window. See that the previous widget will
+	 * lose a reference and it can be destroyed, so if you do not want this to
+	 * happen you must use g_object_ref() before calling this method.
 	 * Params:
 	 * widget = a GtkWidget. [allow-none]
 	 */
@@ -191,6 +206,8 @@ public class SourceCompletionInfo : Window
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_completion_info_get_widget has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_bin_get_child() instead.
 	 * Get the current content widget.
 	 * Returns: The current content widget. [transfer none] Signal Details The "before-show" signal void user_function (GtkSourceCompletionInfo *info, gpointer user_data) : Action This signal is emitted before any "show" management. You can connect to this signal if you want to change some properties or position before the real "show".
 	 */

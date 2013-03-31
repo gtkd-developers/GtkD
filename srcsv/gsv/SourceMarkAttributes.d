@@ -98,7 +98,7 @@ private import gobject.ObjectG;
  * An icon is a graphic element which is shown in the gutter of a view. An
  * example use is showing a red filled circle in a debugger to show that a
  * breakpoint was set in certain line. To get an icon that will be placed in
- * a gutter first a base for it must be specified and then
+ * a gutter, first a base for it must be specified and then
  * gtk_source_mark_attributes_render_icon() must be called.
  * There are several ways to specify a base for an icon:
  *
@@ -111,11 +111,12 @@ private import gobject.ObjectG;
  *  gtk_source_mark_attributes_set_pixbuf()
  *
  * Using any of the above functions overrides the one used earlier. But note
- * that a getter counterpart of ealier used function can still return some
+ * that a getter counterpart of earlier used function can still return some
  * value, but it is just not used when rendering the proper icon.
  *
  * To provide meaningful tooltips for a given mark of a category, you should
- * connect to ::query-tooltip-text or ::query-tooltip-markup where the latter
+ * connect to "query-tooltip-text" or
+ * "query-tooltip-markup" where the latter
  * takes precedence.
  */
 public class SourceMarkAttributes : ObjectG

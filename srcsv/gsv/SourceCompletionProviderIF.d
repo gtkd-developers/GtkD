@@ -140,10 +140,12 @@ public interface SourceCompletionProviderIF
 	 * This allows for customized widgets on a proposal basis, although in general
 	 * providers will have the same custom widget for all their proposals and
 	 * proposal can be ignored. The implementation of this function is optional.
-	 * If implemented, gtk_source_completion_provider_update_info MUST also be
-	 * implemented. If not implemented, the default
-	 * gtk_source_completion_proposal_get_info will be used to display extra
-	 * information about a GtkSourceCompletionProposal.
+	 * If this function is not implemented, the default widget is a GtkLabel. The
+	 * return value of gtk_source_completion_proposal_get_info() is used as the
+	 * content of the GtkLabel.
+	 * Note
+	 *  If implemented, gtk_source_completion_provider_update_info()
+	 *  must also be implemented.
 	 * Params:
 	 * proposal = a currently selected GtkSourceCompletionProposal.
 	 * Returns: a custom GtkWidget to show extra information about proposal. [transfer none]
@@ -152,8 +154,9 @@ public interface SourceCompletionProviderIF
 	
 	/**
 	 * Update extra information shown in info for proposal.
-	 * This function MUST be implemented when
-	 * gtk_source_completion_provider_get_info_widget is implemented.
+	 * Note
+	 *  This function must be implemented when
+	 *  gtk_source_completion_provider_get_info_widget() is implemented.
 	 * Params:
 	 * proposal = a GtkSourceCompletionProposal.
 	 * info = a GtkSourceCompletionInfo.
@@ -182,7 +185,7 @@ public interface SourceCompletionProviderIF
 	 * with the text of proposal (see gtk_source_completion_proposal_get_text()).
 	 * Here is how the default activation selects the boundaries of the word to
 	 * replace. The end of the word is iter. For the start of the word, it depends
-	 * on wheter a start iter is defined for proposal (see
+	 * on whether a start iter is defined for proposal (see
 	 * gtk_source_completion_provider_get_start_iter()). If a start iter is defined,
 	 * the start of the word is the start iter. Else, the word (as long as possible)
 	 * will contain only alphanumerical and the "_" characters.
@@ -196,7 +199,7 @@ public interface SourceCompletionProviderIF
 	/**
 	 * Get the delay in milliseconds before starting interactive completion for
 	 * this provider. A value of -1 indicates to use the default value as set
-	 * by "auto-complete-delay".
+	 * by the "auto-complete-delay" property.
 	 * Returns: the interactive delay in milliseconds.
 	 */
 	public int gtkSourceCompletionProviderGetInteractiveDelay();

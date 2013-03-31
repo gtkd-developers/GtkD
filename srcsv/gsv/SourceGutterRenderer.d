@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtksourceview-3.0-GtkSourceGutterRenderer.html
+ * inFile  = GtkSourceGutterRenderer.html
  * outPack = gsv
  * outFile = SourceGutterRenderer
  * strct   = GtkSourceGutterRenderer
@@ -52,6 +52,7 @@
  * structWrap:
  * 	- GdkEvent* -> Event
  * 	- GdkRGBA* -> RGBA
+ * 	- GtkSourceGutterRenderer* -> SourceGutterRenderer
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextView* -> TextView
  * 	- GtkTooltip* -> Tooltip
@@ -69,6 +70,8 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import cairo.Context;
 private import gdk.Event;
@@ -119,6 +122,162 @@ public class SourceGutterRenderer : ObjectG
 	
 	/**
 	 */
+	int[string] connectedSignals;
+	
+	void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer)[] onActivateListeners;
+	/**
+	 * The ::activate signal is emitted when the renderer is
+	 * activated.
+	 */
+	void addOnActivate(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("activate" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["activate"] = 1;
+		}
+		onActivateListeners ~= dlg;
+	}
+	extern(C) static void callBackActivate(GtkSourceGutterRenderer* rendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, SourceGutterRenderer _sourceGutterRenderer)
+	{
+		foreach ( void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg ; _sourceGutterRenderer.onActivateListeners )
+		{
+			dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), _sourceGutterRenderer);
+		}
+	}
+	
+	bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer)[] onQueryActivatableListeners;
+	/**
+	 * The ::query-activatable signal is emitted when the renderer
+	 * can possibly be activated.
+	 */
+	void addOnQueryActivatable(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("query-activatable" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"query-activatable",
+			cast(GCallback)&callBackQueryActivatable,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["query-activatable"] = 1;
+		}
+		onQueryActivatableListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackQueryActivatable(GtkSourceGutterRenderer* rendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, SourceGutterRenderer _sourceGutterRenderer)
+	{
+		foreach ( bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg ; _sourceGutterRenderer.onQueryActivatableListeners )
+		{
+			if ( dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), _sourceGutterRenderer) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
+	void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer)[] onQueryDataListeners;
+	/**
+	 * The ::query-data signal is emitted when the renderer needs
+	 * to be filled with data just before a cell is drawn. This can
+	 * be used by general renderer implementations to allow render
+	 * data to be filled in externally.
+	 */
+	void addOnQueryData(void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("query-data" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"query-data",
+			cast(GCallback)&callBackQueryData,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["query-data"] = 1;
+		}
+		onQueryDataListeners ~= dlg;
+	}
+	extern(C) static void callBackQueryData(GtkSourceGutterRenderer* rendererStruct, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state, SourceGutterRenderer _sourceGutterRenderer)
+	{
+		foreach ( void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg ; _sourceGutterRenderer.onQueryDataListeners )
+		{
+			dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), state, _sourceGutterRenderer);
+		}
+	}
+	
+	bool delegate(TextIter, GdkRectangle*, gint, gint, Tooltip, SourceGutterRenderer)[] onQueryTooltipListeners;
+	/**
+	 * The ::query-tooltip signal is emitted when the renderer can
+	 * show a tooltip.
+	 */
+	void addOnQueryTooltip(bool delegate(TextIter, GdkRectangle*, gint, gint, Tooltip, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("query-tooltip" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"query-tooltip",
+			cast(GCallback)&callBackQueryTooltip,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["query-tooltip"] = 1;
+		}
+		onQueryTooltipListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackQueryTooltip(GtkSourceGutterRenderer* rendererStruct, GtkTextIter* iter, GdkRectangle* area, gint x, gint y, GtkTooltip* tooltip, SourceGutterRenderer _sourceGutterRenderer)
+	{
+		foreach ( bool delegate(TextIter, GdkRectangle*, gint, gint, Tooltip, SourceGutterRenderer) dlg ; _sourceGutterRenderer.onQueryTooltipListeners )
+		{
+			if ( dlg(ObjectG.getDObject!(TextIter)(iter), area, x, y, ObjectG.getDObject!(Tooltip)(tooltip), _sourceGutterRenderer) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+	
+	void delegate(SourceGutterRenderer)[] onQueueDrawListeners;
+	/**
+	 * The ::queue-draw signal is emitted when the renderer needs
+	 * to be redrawn. Use gtk_source_gutter_renderer_queue_draw()
+	 * to emit this signal from an implementation of the
+	 * GtkSourceGutterRenderer interface.
+	 */
+	void addOnQueueDraw(void delegate(SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("queue-draw" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"queue-draw",
+			cast(GCallback)&callBackQueueDraw,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["queue-draw"] = 1;
+		}
+		onQueueDrawListeners ~= dlg;
+	}
+	extern(C) static void callBackQueueDraw(GtkSourceGutterRenderer* rendererStruct, SourceGutterRenderer _sourceGutterRenderer)
+	{
+		foreach ( void delegate(SourceGutterRenderer) dlg ; _sourceGutterRenderer.onQueueDrawListeners )
+		{
+			dlg(_sourceGutterRenderer);
+		}
+	}
+	
 	
 	/**
 	 * Called when drawing a region begins. The region to be drawn is indicated

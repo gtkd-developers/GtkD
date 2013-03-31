@@ -703,6 +703,7 @@ private import gsv.SourceCompletionProposalT;
 private import gsv.SourceCompletionProviderIF;
 private import gsv.SourceCompletionProviderT;
 private import gsv.SourceCompletionProvider;
+private import gsv.SourceCompletionWords;
 private import gsv.SourceGutter;
 private import gsv.SourceGutterRenderer;
 private import gsv.SourceGutterRendererText;

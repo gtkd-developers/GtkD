@@ -279,6 +279,17 @@ code: start
 code: end
 outFile: SourceCompletionProvider
 
+file: GtkSourceCompletionWords.html
+struct: GtkSourceCompletionWords
+class: SourceCompletionWords
+prefix: gtk_source_completion_words_
+import: gdk.Pixbuf
+import: gtk.TextBuffer
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkTextBuffer* TextBuffer
+
+outFile: SourceCompletionWords
+
 file: GtkSourceGutter.html
 struct: GtkSourceGutter
 class: SourceGutter
@@ -287,9 +298,12 @@ import: gdk.Window
 import: gsv.SourceGutterRenderer
 structWrap: GdkWindow* Window
 structWrap: GtkSourceGutterRenderer* SourceGutterRenderer
+
+out: gtk_source_gutter_get_padding xpad
+out: gtk_source_gutter_get_padding ypad
 outFile: SourceGutter
 
-file: gtksourceview-3.0-GtkSourceGutterRenderer.html
+file: GtkSourceGutterRenderer.html
 struct: GtkSourceGutterRenderer
 class: SourceGutterRenderer
 extend: GObject
@@ -303,6 +317,7 @@ import: gtk.Tooltip
 structWrap: cairo_t* Context
 structWrap: GdkEvent* Event
 structWrap: GdkRGBA* RGBA
+structWrap: GtkSourceGutterRenderer* SourceGutterRenderer
 structWrap: GtkTextIter* TextIter
 structWrap: GtkTextView* TextView
 structWrap: GtkTooltip* Tooltip
@@ -321,7 +336,7 @@ inout: gtk_source_gutter_renderer_query_tooltip area
 
 outFile: SourceGutterRenderer
 
-file: gtksourceview-3.0-GtkSourceGutterRendererText.html
+file: GtkSourceGutterRendererText.html
 struct: GtkSourceGutterRendererText
 ctorStruct: GtkSourceGutterRenderer
 class: SourceGutterRendererText
@@ -330,7 +345,7 @@ prefix: gtk_source_gutter_renderer_text_
 import: glib.Str
 outFile: SourceGutterRendererText
 
-file: gtksourceview-3.0-GtkSourceGutterRendererPixbuf.html
+file: GtkSourceGutterRendererPixbuf.html
 struct: GtkSourceGutterRendererPixbuf
 ctorStruct: GtkSourceGutterRenderer
 class: SourceGutterRendererPixbuf

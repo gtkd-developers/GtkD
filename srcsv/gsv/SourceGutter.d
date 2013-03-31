@@ -189,4 +189,40 @@ public class SourceGutter : ObjectG
 		// void gtk_source_gutter_queue_draw (GtkSourceGutter *gutter);
 		gtk_source_gutter_queue_draw(gtkSourceGutter);
 	}
+	
+	/**
+	 */
+	public void getPadding(out int xpad, out int ypad)
+	{
+		// void gtk_source_gutter_get_padding (GtkSourceGutter *gutter,  gint *xpad,  gint *ypad);
+		gtk_source_gutter_get_padding(gtkSourceGutter, &xpad, &ypad);
+	}
+	
+	/**
+	 */
+	public void setPadding(int xpad, int ypad)
+	{
+		// void gtk_source_gutter_set_padding (GtkSourceGutter *gutter,  gint xpad,  gint ypad);
+		gtk_source_gutter_set_padding(gtkSourceGutter, xpad, ypad);
+	}
+	
+	/**
+	 * Finds the GtkSourceGutterRenderer at (x, y).
+	 * Params:
+	 * x = The x position to get identified.
+	 * y = The y position to get identified.
+	 * Returns: the renderer at (x, y) or NULL. [transfer none]
+	 */
+	public SourceGutterRenderer getRendererAtPos(int x, int y)
+	{
+		// GtkSourceGutterRenderer * gtk_source_gutter_get_renderer_at_pos  (GtkSourceGutter *gutter,  gint x,  gint y);
+		auto p = gtk_source_gutter_get_renderer_at_pos(gtkSourceGutter, x, y);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SourceGutterRenderer)(cast(GtkSourceGutterRenderer*) p);
+	}
 }

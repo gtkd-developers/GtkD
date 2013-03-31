@@ -23,7 +23,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtksourceview-3.0-GtkSourceGutterRendererPixbuf.html
+ * inFile  = GtkSourceGutterRendererPixbuf.html
  * outPack = gsv
  * outFile = SourceGutterRendererPixbuf
  * strct   = GtkSourceGutterRendererPixbuf

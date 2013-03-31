@@ -76,6 +76,8 @@ private import gsv.SourceCompletionProposalT;
 private import gobject.ObjectG;
 
 /**
+ * The GtkSourceCompletionItem class is a simple implementation of the
+ * GtkSourceCompletionProposal interface.
  */
 public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 {

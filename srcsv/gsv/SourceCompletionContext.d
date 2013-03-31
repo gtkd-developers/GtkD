@@ -76,21 +76,27 @@ private import gtk.TextIter;
 private import gobject.ObjectG;
 
 /**
- * A completion context is created when a completion occurs. The completion can
- * be activated by several means, listed in GtkSourceCompletionActivation.
+ * Initially, the completion window is hidden. For a completion to occur, it has
+ * to be activated. The different possible activations are listed in
+ * GtkSourceCompletionActivation. When an activation occurs, a
+ * GtkSourceCompletionContext object is created, and the eligible providers are
+ * asked to add proposals with gtk_source_completion_context_add_proposals().
  *
- * The completion can be activated by user request, i.e. when the user presses
- * Control+space, by default.
+ * If no proposals are added, the completion window remains hidden, and the
+ * context is destroyed.
  *
- * The completion can also be activated interactively, on each insertion or
- * deletion in the GtkTextBuffer.
+ * On the other hand, if proposals are added, the completion window becomes
+ * visible, and the user can choose a proposal. If the user is not happy with
+ * the shown proposals, he or she can insert or delete characters, to modify the
+ * completion context and therefore hoping to see the proposal he or she wants.
+ * This means that when an insertion or deletion occurs in the GtkTextBuffer
+ * when the completion window is visible, the eligible providers are again asked
+ * to add proposals. The "activation" remains the
+ * same in this case.
  *
  * A GtkTextIter is associated with the context, this is where the completion
  * takes place. With this GtkTextIter, you can get the associated
  * GtkTextBuffer with gtk_text_iter_get_buffer().
- *
- * Once the context is created, the eligible providers are asked to add
- * proposals with gtk_source_completion_context_add_proposals().
  */
 public class SourceCompletionContext : ObjectG
 {

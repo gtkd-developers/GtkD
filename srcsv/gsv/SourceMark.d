@@ -73,8 +73,8 @@ private import gtk.TextMark;
  *
  * GtkSourceMarks are organised in categories which you have to set
  * when you create the mark. Each category can have a pixbuf and a priority
- * associated using gtk_source_view_set_mark_category_pixbuf and
- * gtk_source_view_set_mark_category_priority. The pixbuf will be displayed in
+ * associated using gtk_source_view_set_mark_category_pixbuf() and
+ * gtk_source_view_set_mark_category_priority(). The pixbuf will be displayed in
  * the margin at the line where the mark residents if the
  * "show-line-marks" property is set to TRUE. If there are
  * multiple marks in the same line, the pixbufs will be drawn on top of each
@@ -122,7 +122,7 @@ public class SourceMark : TextMark
 	 * If name is NULL, the mark is anonymous; otherwise, the mark can be retrieved
 	 * by name using gtk_text_buffer_get_mark().
 	 * Normally marks are created using the utility function
-	 * gtk_source_buffer_create_mark().
+	 * gtk_source_buffer_create_source_mark().
 	 * Since 2.2
 	 * Params:
 	 * name = Name of the GtkSourceMark, can be NULL when not using a name
