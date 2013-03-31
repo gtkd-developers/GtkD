@@ -152,8 +152,11 @@ public class PgCairoFontMap : PgFontMap
 	 * pango_cairo_font_map_set_default(). This can be used to
 	 * change the Cairo font backend that the default fontmap
 	 * uses for example.
+	 * Note that since Pango 1.32.6, the default fontmap is per-thread.
+	 * Each thread gets its own default fontmap. In this way,
+	 * PangoCairo can be used safely from multiple threads.
 	 * Since 1.10
-	 * Returns: the default Cairo fontmap for Pango. This object is owned by Pango and must not be freed. [transfer none]
+	 * Returns: the default PangoCairo fontmap for the current thread. This object is owned by Pango and must not be freed. [transfer none]
 	 */
 	public static PgFontMap getDefault()
 	{
@@ -173,6 +176,11 @@ public class PgCairoFontMap : PgFontMap
 	 * This can be used to change the Cairo font backend that the
 	 * default fontmap uses for example. The old default font map
 	 * is unreffed and the new font map referenced.
+	 * Note that since Pango 1.32.6, the default fontmap is per-thread.
+	 * This function only changes the default fontmap for
+	 * the current thread. Default fontmaps of exisiting threads
+	 * are not changed. Default fontmaps of any new threads will
+	 * still be created using pango_cairo_font_map_new().
 	 * A value of NULL for fontmap will cause the current default
 	 * font map to be released and a new default font
 	 * map to be created on demand, using pango_cairo_font_map_new().

@@ -1309,12 +1309,16 @@ public struct PangoFontMap{}
  * A function to list available font families. See
  * pango_font_map_list_families().
  * load_fontset ()
- * a function to load a fontset with a given given description
+ * a function to load a fontset with a given description
  * suitable for a particular language. See
  * pango_font_map_load_fontset().
  * const char *shape_engine_type;
  * the type of rendering-system-dependent engines that
  * can handle fonts of this fonts loaded with this fontmap.
+ * get_serial ()
+ * a function to get the serial number of the fontmap.
+ * See pango_font_map_get_serial().
+ * changed ()
  */
 public struct PangoFontMapClass
 {
@@ -1323,6 +1327,8 @@ public struct PangoFontMapClass
 	extern(C) void function(PangoFontMap* fontmap, PangoFontFamily*** families, int* nFamilies) listFamilies;
 	extern(C) PangoFontset * function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language) loadFontset;
 	char *shapeEngineType;
+	extern(C) uint function(PangoFontMap* fontmap) getSerial;
+	extern(C) void function(PangoFontMap* fontmap) changed;
 }
 
 
@@ -2133,7 +2139,7 @@ public struct PangoEngineShapeClass
  * are defined.
  *  static GType prefix_type;
  *  static void prefix_register_type (GTypeModule module);
- * The prefix, _register_type()
+ * The prefix_register_type()
  * function should be called in your script_engine_init() function for
  * each type that your module implements, and then your script_engine_create()
  * function can create instances of the object as follows:
@@ -2156,7 +2162,7 @@ public struct PangoEngineShapeClass
  * are defined.
  *  static GType prefix_type;
  *  static void prefix_register_type (GTypeModule module);
- * The prefix, _register_type()
+ * The prefix_register_type()
  * function should be called in your script_engine_init() function for
  * each type that your module implements, and then your script_engine_create()
  * function can create instances of the object as follows:

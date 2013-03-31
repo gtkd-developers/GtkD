@@ -42,6 +42,8 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_itemize_with_base_dir, \"pango_itemize_with_base_dir\", LIBRARY.PANGO);
 	Linker.link(pango_reorder_items, \"pango_reorder_items\", LIBRARY.PANGO);
 	Linker.link(pango_context_new, \"pango_context_new\", LIBRARY.PANGO);
+	Linker.link(pango_context_changed, \"pango_context_changed\", LIBRARY.PANGO);
+	Linker.link(pango_context_get_serial, \"pango_context_get_serial\", LIBRARY.PANGO);
 	Linker.link(pango_context_set_font_map, \"pango_context_set_font_map\", LIBRARY.PANGO);
 	Linker.link(pango_context_get_font_map, \"pango_context_get_font_map\", LIBRARY.PANGO);
 	Linker.link(pango_context_get_font_description, \"pango_context_get_font_description\", LIBRARY.PANGO);
@@ -200,6 +202,7 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_font_map_load_fontset, \"pango_font_map_load_fontset\", LIBRARY.PANGO);
 	Linker.link(pango_font_map_list_families, \"pango_font_map_list_families\", LIBRARY.PANGO);
 	Linker.link(pango_font_map_get_shape_engine_type, \"pango_font_map_get_shape_engine_type\", LIBRARY.PANGO);
+	Linker.link(pango_font_map_get_serial, \"pango_font_map_get_serial\", LIBRARY.PANGO);
 
 	// pango.PgFontset
 
@@ -216,6 +219,8 @@ mixin( _shared ~ "static this()
 	// pango.PgAttribute
 
 	Linker.link(pango_parse_markup, \"pango_parse_markup\", LIBRARY.PANGO);
+	Linker.link(pango_markup_parser_new, \"pango_markup_parser_new\", LIBRARY.PANGO);
+	Linker.link(pango_markup_parser_finish, \"pango_markup_parser_finish\", LIBRARY.PANGO);
 	Linker.link(pango_attr_type_register, \"pango_attr_type_register\", LIBRARY.PANGO);
 	Linker.link(pango_attr_type_get_name, \"pango_attr_type_get_name\", LIBRARY.PANGO);
 	Linker.link(pango_attribute_init, \"pango_attribute_init\", LIBRARY.PANGO);
@@ -295,6 +300,7 @@ mixin( _shared ~ "static this()
 	Linker.link(pango_layout_copy, \"pango_layout_copy\", LIBRARY.PANGO);
 	Linker.link(pango_layout_get_context, \"pango_layout_get_context\", LIBRARY.PANGO);
 	Linker.link(pango_layout_context_changed, \"pango_layout_context_changed\", LIBRARY.PANGO);
+	Linker.link(pango_layout_get_serial, \"pango_layout_get_serial\", LIBRARY.PANGO);
 	Linker.link(pango_layout_set_text, \"pango_layout_set_text\", LIBRARY.PANGO);
 	Linker.link(pango_layout_get_text, \"pango_layout_get_text\", LIBRARY.PANGO);
 	Linker.link(pango_layout_get_character_count, \"pango_layout_get_character_count\", LIBRARY.PANGO);
@@ -527,6 +533,8 @@ mixin( gshared ~"extern(C)
 	GList* function(PangoContext* context, PangoDirection baseDir, char* text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter) c_pango_itemize_with_base_dir;
 	GList* function(GList* logicalItems) c_pango_reorder_items;
 	PangoContext* function() c_pango_context_new;
+	void function(PangoContext* context) c_pango_context_changed;
+	guint function(PangoContext* context) c_pango_context_get_serial;
 	void function(PangoContext* context, PangoFontMap* fontMap) c_pango_context_set_font_map;
 	PangoFontMap* function(PangoContext* context) c_pango_context_get_font_map;
 	PangoFontDescription* function(PangoContext* context) c_pango_context_get_font_description;
@@ -685,6 +693,7 @@ mixin( gshared ~"extern(C)
 	PangoFontset* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language) c_pango_font_map_load_fontset;
 	void function(PangoFontMap* fontmap, PangoFontFamily*** families, int* nFamilies) c_pango_font_map_list_families;
 	char* function(PangoFontMap* fontmap) c_pango_font_map_get_shape_engine_type;
+	guint function(PangoFontMap* fontmap) c_pango_font_map_get_serial;
 
 	// pango.PgFontset
 
@@ -701,6 +710,8 @@ mixin( gshared ~"extern(C)
 	// pango.PgAttribute
 
 	gboolean function(char* markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error) c_pango_parse_markup;
+	GMarkupParseContext* function(gunichar accelMarker) c_pango_markup_parser_new;
+	gboolean function(GMarkupParseContext* context, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error) c_pango_markup_parser_finish;
 	PangoAttrType function(gchar* name) c_pango_attr_type_register;
 	char* function(PangoAttrType type) c_pango_attr_type_get_name;
 	void function(PangoAttribute* attr, PangoAttrClass* klass) c_pango_attribute_init;
@@ -780,6 +791,7 @@ mixin( gshared ~"extern(C)
 	PangoLayout* function(PangoLayout* src) c_pango_layout_copy;
 	PangoContext* function(PangoLayout* layout) c_pango_layout_get_context;
 	void function(PangoLayout* layout) c_pango_layout_context_changed;
+	guint function(PangoLayout* layout) c_pango_layout_get_serial;
 	void function(PangoLayout* layout, char* text, int length) c_pango_layout_set_text;
 	char* function(PangoLayout* layout) c_pango_layout_get_text;
 	gint function(PangoLayout* layout) c_pango_layout_get_character_count;
@@ -1010,6 +1022,8 @@ alias c_pango_itemize  pango_itemize;
 alias c_pango_itemize_with_base_dir  pango_itemize_with_base_dir;
 alias c_pango_reorder_items  pango_reorder_items;
 alias c_pango_context_new  pango_context_new;
+alias c_pango_context_changed  pango_context_changed;
+alias c_pango_context_get_serial  pango_context_get_serial;
 alias c_pango_context_set_font_map  pango_context_set_font_map;
 alias c_pango_context_get_font_map  pango_context_get_font_map;
 alias c_pango_context_get_font_description  pango_context_get_font_description;
@@ -1168,6 +1182,7 @@ alias c_pango_font_map_load_font  pango_font_map_load_font;
 alias c_pango_font_map_load_fontset  pango_font_map_load_fontset;
 alias c_pango_font_map_list_families  pango_font_map_list_families;
 alias c_pango_font_map_get_shape_engine_type  pango_font_map_get_shape_engine_type;
+alias c_pango_font_map_get_serial  pango_font_map_get_serial;
 
 // pango.PgFontset
 
@@ -1184,6 +1199,8 @@ alias c_pango_fontset_simple_size  pango_fontset_simple_size;
 // pango.PgAttribute
 
 alias c_pango_parse_markup  pango_parse_markup;
+alias c_pango_markup_parser_new  pango_markup_parser_new;
+alias c_pango_markup_parser_finish  pango_markup_parser_finish;
 alias c_pango_attr_type_register  pango_attr_type_register;
 alias c_pango_attr_type_get_name  pango_attr_type_get_name;
 alias c_pango_attribute_init  pango_attribute_init;
@@ -1263,6 +1280,7 @@ alias c_pango_layout_new  pango_layout_new;
 alias c_pango_layout_copy  pango_layout_copy;
 alias c_pango_layout_get_context  pango_layout_get_context;
 alias c_pango_layout_context_changed  pango_layout_context_changed;
+alias c_pango_layout_get_serial  pango_layout_get_serial;
 alias c_pango_layout_set_text  pango_layout_set_text;
 alias c_pango_layout_get_text  pango_layout_get_text;
 alias c_pango_layout_get_character_count  pango_layout_get_character_count;

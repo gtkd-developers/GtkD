@@ -364,9 +364,9 @@ public class Text
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
-	 * startOffset = the start offset of the returned string
+	 * startOffset = the start offset of the returned string. [out]
 	 * endOffset = the offset of the first character after the
-	 * returned substring
+	 * returned substring. [out]
 	 * Returns: a newly allocated string containing the text after offset bounded by the specified boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
@@ -412,9 +412,9 @@ public class Text
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
-	 * startOffset = the start offset of the returned string
+	 * startOffset = the start offset of the returned string. [out]
 	 * endOffset = the offset of the first character after the
-	 * returned substring
+	 * returned substring. [out]
 	 * Returns: a newly allocated string containing the text at offset bounded by the specified boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
@@ -458,9 +458,9 @@ public class Text
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
-	 * startOffset = the start offset of the returned string
+	 * startOffset = the start offset of the returned string. [out]
 	 * endOffset = the offset of the first character after the
-	 * returned substring
+	 * returned substring. [out]
 	 * Returns: a newly allocated string containing the text before offset bounded by the specified boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
@@ -507,8 +507,8 @@ public class Text
 	 * Params:
 	 * offset = the offset at which to get the attributes, -1 means the offset of
 	 * the character to be inserted at the caret location.
-	 * startOffset = the address to put the start offset of the range
-	 * endOffset = the address to put the end offset of the range
+	 * startOffset = the address to put the start offset of the range. [out]
+	 * endOffset = the address to put the end offset of the range. [out]
 	 * Returns: an AtkAttributeSet which contains the attributes explicitly set at offset. This AtkAttributeSet should be freed by a call to atk_attribute_set_free(). [transfer full]
 	 */
 	public AtkAttributeSet* getRunAttributes(int offset, out int startOffset, out int endOffset)
@@ -565,7 +565,7 @@ public class Text
 	 * coordType = Specify whether coordinates are relative to the screen or widget window.
 	 * xClipType = Specify the horizontal clip type.
 	 * yClipType = Specify the vertical clip type.
-	 * Returns: Array of AtkTextRange. The last element of the array returned by this function will be NULL. [array zero-terminated=1]
+	 * Returns: Array of AtkTextRange. The last element of the array returned by this function will be NULL. Virtual: get_bounded_ranges. [array zero-terminated=1]
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
@@ -596,7 +596,8 @@ public class Text
 	 * and is NULL terminated.
 	 * Since 1.3
 	 * Params:
-	 * ranges = A pointer to an array of AtkTextRange which is to be freed.
+	 * ranges = A pointer to an array of AtkTextRange which is
+	 * to be freed. [array]
 	 */
 	public static void freeRanges(AtkTextRange** ranges)
 	{
@@ -622,9 +623,9 @@ public class Text
 	 * start of the text. The selected region closest to the beginning
 	 * of the text region is assigned the number 0, etc. Note that adding,
 	 * moving or deleting a selected region can change the numbering.
-	 * startOffset = passes back the start position of the selected region
+	 * startOffset = passes back the start position of the selected region. [out]
 	 * endOffset = passes back the end position of (e.g. offset immediately past)
-	 * the selected region
+	 * the selected region. [out]
 	 * Returns: a newly allocated string containing the selected text. Use g_free() to free the returned string.
 	 */
 	public string getSelection(int selectionNum, out int startOffset, out int endOffset)

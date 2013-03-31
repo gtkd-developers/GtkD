@@ -46,8 +46,10 @@
  * 	- glib.Str
  * 	- glib.Variant
  * 	- gio.File
+ * 	- gio.InputStream
  * structWrap:
  * 	- GFile* -> File
+ * 	- GInputStream* -> InputStream
  * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
@@ -66,6 +68,7 @@ private import gobject.ObjectG;
 private import glib.Str;
 private import glib.Variant;
 private import gio.File;
+private import gio.InputStream;
 
 
 
@@ -218,10 +221,17 @@ public class ApplicationCommandLine : ObjectG
 	 * Since 2.34
 	 * Returns: a GInputStream for stdin. [transfer full]
 	 */
-	public GInputStream* getStdin()
+	public InputStream getStdin()
 	{
 		// GInputStream * g_application_command_line_get_stdin  (GApplicationCommandLine *cmdline);
-		return g_application_command_line_get_stdin(gApplicationCommandLine);
+		auto p = g_application_command_line_get_stdin(gApplicationCommandLine);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 	
 	/**

@@ -148,7 +148,7 @@ public class StateSet : ObjectG
 	/**
 	 * Add the states for the specified types to the current state set.
 	 * Params:
-	 * types = an array of AtkStateType
+	 * types = an array of AtkStateType. [array length=n_types]
 	 */
 	public void addStates(AtkStateType[] types)
 	{
@@ -181,7 +181,7 @@ public class StateSet : ObjectG
 	 * Checks whether the states for all the specified types are in the
 	 * specified set.
 	 * Params:
-	 * types = an array of AtkStateType
+	 * types = an array of AtkStateType. [array length=n_types]
 	 * Returns: TRUE if all the states for type are in set.
 	 */
 	public int containsStates(AtkStateType[] types)

@@ -227,7 +227,7 @@ public class Document
 	 * Params:
 	 * attributeName = a character string representing the name of the attribute
 	 * whose value is being queried.
-	 * Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document.
+	 * Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document. Virtual: get_document_attribute_value
 	 */
 	public string getAttributeValue(string attributeName)
 	{
@@ -241,7 +241,7 @@ public class Document
 	 * attributeName = a character string representing the name of the attribute
 	 * whose value is being set.
 	 * attributeValue = a string value to be associated with attribute_name.
-	 * Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified).
+	 * Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified). Virtual: set_document_attribute
 	 */
 	public int setAttributeValue(string attributeName, string attributeValue)
 	{
@@ -253,7 +253,7 @@ public class Document
 	 * Gets an AtkAttributeSet which describes document-wide
 	 *  attributes as name-value pairs.
 	 * Since 1.12
-	 * Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole. [transfer none]
+	 * Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole. Virtual: get_document_attributes. [transfer none]
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
@@ -262,12 +262,15 @@ public class Document
 	}
 	
 	/**
+	 * Warning
+	 * atk_document_get_locale is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.7.90. Please use atk_object_get_object_locale instead.
 	 * Gets a UTF-8 string indicating the POSIX-style LC_MESSAGES locale
 	 *  of the content of this document instance. Individual
 	 *  text substrings or images within this document may have
 	 *  a different locale, see atk_text_get_attributes and
 	 *  atk_image_get_image_locale.
-	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of the document content as a whole, or NULL if the document content does not specify a locale. Signal Details The "load-complete" signal void user_function (AtkDocument *atkdocument, gpointer user_data) : Run Last The 'load-complete' signal is emitted when a pending load of a static document has completed. This signal is to be expected by ATK clients if and when AtkDocument implementors expose ATK_STATE_BUSY. If the state of an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY, it should be safe for clients to assume that the AtkDocument's static contents are fully loaded into the container. (Dynamic document contents should be exposed via other signals.)
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of the document content as a whole, or NULL if the document content does not specify a locale. Virtual: get_document_locale Signal Details The "load-complete" signal void user_function (AtkDocument *atkdocument, gpointer user_data) : Run Last The 'load-complete' signal is emitted when a pending load of a static document has completed. This signal is to be expected by ATK clients if and when AtkDocument implementors expose ATK_STATE_BUSY. If the state of an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY, it should be safe for clients to assume that the AtkDocument's static contents are fully loaded into the container. (Dynamic document contents should be exposed via other signals.)
 	 */
 	public string getLocale()
 	{

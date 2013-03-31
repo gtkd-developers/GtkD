@@ -51,10 +51,12 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.SimpleXML
  * 	- pango.PgAttributeList
  * 	- pango.PgLanguage
  * 	- pango.PgFontDescription
  * structWrap:
+ * 	- GMarkupParseContext* -> SimpleXML
  * 	- PangoAttrList* -> PgAttributeList
  * 	- PangoAttribute* -> PgAttribute
  * 	- PangoFontDescription* -> PgFontDescription
@@ -76,6 +78,7 @@ private import gobject.ObjectG;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.SimpleXML;
 private import pango.PgAttributeList;
 private import pango.PgLanguage;
 private import pango.PgFontDescription;
@@ -131,6 +134,7 @@ public class PgAttribute
 	 * and the first character so marked will be returned in accel_char.
 	 * Two accel_marker characters following each other produce a single
 	 * literal accel_marker character.
+	 * To parse a stream of pango markup incrementally, use pango_markup_parser_new().
 	 * If any error happens, none of the output arguments are touched except
 	 * for error.
 	 * Params:
@@ -151,6 +155,75 @@ public class PgAttribute
 		GError* err = null;
 		
 		auto p = pango_parse_markup(Str.toStringz(markupText), length, accelMarker, &outattrList, &outtext, accelChar, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		attrList = ObjectG.getDObject!(PgAttributeList)(outattrList);
+		text = Str.toString(outtext);
+		return p;
+	}
+	
+	/**
+	 * Parses marked-up text (see
+	 * markup format) to create
+	 * a plain-text string and an attribute list.
+	 * If accel_marker is nonzero, the given character will mark the
+	 * character following it as an accelerator. For example, accel_marker
+	 * might be an ampersand or underscore. All characters marked
+	 * as an accelerator will receive a PANGO_UNDERLINE_LOW attribute,
+	 * and the first character so marked will be returned in accel_char,
+	 * when calling finish(). Two accel_marker characters following each
+	 * other produce a single literal accel_marker character.
+	 * To feed markup to the parser, use g_markup_parse_context_parse()
+	 * on the returned GMarkupParseContext. When done with feeding markup
+	 * to the parser, use pango_markup_parser_finish() to get the data out
+	 * of it, and then use g_markup_parse_context_free() to free it.
+	 * This function is designed for applications that read pango markup
+	 * from streams. To simply parse a string containing pango markup,
+	 * the simpler pango_parse_markup() API is recommended instead.
+	 * Since 1.31.0
+	 * Params:
+	 * accelMarker = character that precedes an accelerator, or 0 for none
+	 * Returns: a GMarkupParseContext that should be destroyed with g_markup_parse_context_free(). [transfer none]
+	 */
+	public static SimpleXML markupParserNew(gunichar accelMarker)
+	{
+		// GMarkupParseContext * pango_markup_parser_new (gunichar accel_marker);
+		auto p = pango_markup_parser_new(accelMarker);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SimpleXML)(cast(GMarkupParseContext*) p);
+	}
+	
+	/**
+	 * After feeding a pango markup parser some data with g_markup_parse_context_parse(),
+	 * use this function to get the list of pango attributes and text out of the
+	 * markup. This function will not free context, use g_markup_parse_context_free()
+	 * to do so.
+	 * Since 1.31.0
+	 * Params:
+	 * context = A valid parse context that was returned from pango_markup_parser_new()
+	 * attrList = address of return location for a PangoAttrList, or NULL. [out][allow-none]
+	 * text = address of return location for text with tags stripped, or NULL. [out][allow-none]
+	 * accelChar = address of return location for accelerator char, or NULL. [out][allow-none]
+	 * Returns: FALSE if error is set, otherwise TRUE
+	 * Throws: GException on failure.
+	 */
+	public static int markupParserFinish(SimpleXML context, out PgAttributeList attrList, out string text, out gunichar accelChar)
+	{
+		// gboolean pango_markup_parser_finish (GMarkupParseContext *context,  PangoAttrList **attr_list,  char **text,  gunichar *accel_char,  GError **error);
+		PangoAttrList* outattrList = null;
+		char* outtext = null;
+		GError* err = null;
+		
+		auto p = pango_markup_parser_finish((context is null) ? null : context.getSimpleXMLStruct(), &outattrList, &outtext, &accelChar, &err);
 		
 		if (err !is null)
 		{

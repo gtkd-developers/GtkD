@@ -389,6 +389,8 @@ import: glib.Str
 structWrap: PangoAttribute* PgAttribute
 import: glib.ErrorG
 import: glib.GException
+import: glib.SimpleXML
+structWrap: GMarkupParseContext* SimpleXML
 import: pango.PgAttributeList
 structWrap: PangoAttrList* PgAttributeList
 import: pango.PgLanguage
@@ -398,6 +400,9 @@ structWrap: PangoFontDescription* PgFontDescription
 
 out: pango_parse_markup attr_list
 out: pango_parse_markup text
+out: pango_markup_parser_finish attr_list
+out: pango_markup_parser_finish text
+out: pango_markup_parser_finish accel_char
 
 outFile: PgAttribute
 

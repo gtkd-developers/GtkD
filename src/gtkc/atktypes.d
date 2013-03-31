@@ -268,6 +268,8 @@ public enum AtkHyperlinkStateFlags
  * A transitory object designed to present a message to the user, typically at the desktop level rather than inside a particular application. Since: ATK-2.1.0
  * ATK_ROLE_INFO_BAR
  * An object designed to present a message to the user within an existing window. Since: ATK-2.1.0
+ * ATK_ROLE_LEVEL_BAR
+ * A bar that serves as a level indicator to, for instance, show the strength of a password or the state of a battery. Since: ATK-2.7.3
  * ATK_ROLE_LAST_DEFINED
  * not a valid role, used for finding end of the enumeration
  */
@@ -374,6 +376,7 @@ public enum AtkRole
 	IMAGE_MAP,
 	NOTIFICATION,
 	INFO_BAR,
+	LEVEL_BAR,
 	LAST_DEFINED
 }
 /**
@@ -896,8 +899,8 @@ public struct AtkImplementor{}
 
 
 /**
- * note: For most properties the old_value field of AtkPropertyValues will
- * not contain a valid value.
+ * Note: for most properties the old_value field of AtkPropertyValues
+ * will not contain a valid value.
  * Currently, the only property for which old_value is used is
  * accessible-state; for instance if there is a focus state the
  * property change handler will be called for the object which lost the focus
@@ -1183,24 +1186,18 @@ public struct AtkValue{}
 /*
  * An AtkFunction is a function definition used for padding which has been added
  * to class and interface structures to allow for expansion in the future.
- * data :
- * a gpointer to parameter data.
  * Returns :
  * Nothing useful, this is only a dummy prototype.
  */
-// gboolean (*AtkFunction) (gpointer data);
-public alias extern(C) int function(void* data) AtkFunction;
+// gboolean (*AtkFunction) (gpointer user_data);
+public alias extern(C) int function(void* userData) AtkFunction;
 
 /*
  * An AtkPropertyChangeHandler is a function which is executed when an AtkObject's property changes value. It is specified in a call to
  * atk_object_connect_property_change_handler().
- * Param1 :
- * an AtkObject
- * Param2 :
- * an AtkPropertyValues
  */
-// void (*AtkPropertyChangeHandler) (AtkObject *Param1,  AtkPropertyValues *Param2);
-public alias extern(C) void function(AtkObject* Param1, AtkPropertyValues* Param2) AtkPropertyChangeHandler;
+// void (*AtkPropertyChangeHandler) (AtkObject *obj,  AtkPropertyValues *vals);
+public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) AtkPropertyChangeHandler;
 
 /*
  * A function which is called when an object emits a matching event,
@@ -1232,7 +1229,7 @@ public alias extern(C) void function() AtkEventListenerInit;
  * event :
  * an AtkKeyEventStruct containing information about the key event for which
  * notification is being given.
- * func_data :
+ * user_data :
  * a block of data which will be passed to the event listener, on notification.
  * Returns :
  * TRUE (nonzero) if the event emission should be stopped and the event
@@ -1240,5 +1237,5 @@ public alias extern(C) void function() AtkEventListenerInit;
  * event dispatch to the client application should proceed as normal.
  * see atk_add_key_event_listener.
  */
-// gint (*AtkKeySnoopFunc) (AtkKeyEventStruct *event,  gpointer func_data);
-public alias extern(C) int function(AtkKeyEventStruct* event, void* funcData) AtkKeySnoopFunc;
+// gint (*AtkKeySnoopFunc) (AtkKeyEventStruct *event,  gpointer user_data);
+public alias extern(C) int function(AtkKeyEventStruct* event, void* userData) AtkKeySnoopFunc;
