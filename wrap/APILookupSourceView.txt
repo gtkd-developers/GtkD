@@ -37,14 +37,6 @@ addAliases: start
 addAliases: end
 
 addEnums: start
-enum GtkSourceBracketMatchType
-{
-	NONE,
-	OUT_OF_RANGE,
-	NOT_FOUND,
-	FOUND
-}
-alias GtkSourceBracketMatchType SourceBracketMatchType;
 addEnums: end
 
 addStructs: start
@@ -283,11 +275,11 @@ file: GtkSourceCompletionWords.html
 struct: GtkSourceCompletionWords
 class: SourceCompletionWords
 prefix: gtk_source_completion_words_
+import; glib.Str
 import: gdk.Pixbuf
 import: gtk.TextBuffer
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkTextBuffer* TextBuffer
-
 outFile: SourceCompletionWords
 
 file: GtkSourceGutter.html

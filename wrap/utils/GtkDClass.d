@@ -1843,9 +1843,16 @@ public class GtkDClass
 					collectedStructs ~= "}";
 				}
 			}
-			else if ( std.string.indexOf(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
+			else if ( std.string.indexOf(elem, "(") > -1 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
 			//Function Pointers.
 			{
+				if ( startsWith(elem, "(") )
+				{
+					//Return type on separate line.
+					structDef[i] = collectedStructs[$-1] ~" "~ elem;
+					collectedStructs.length = collectedStructs.length -1;
+				}
+			
 				string funct;
 				for ( ; i < structDef.length; i++ )
 				{
