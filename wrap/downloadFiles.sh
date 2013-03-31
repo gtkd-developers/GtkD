@@ -22,8 +22,8 @@ ln -s pango-html-1.34.0 pango
 curl https://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.28.0.tar.gz | tar xvfz -
 ln -s gdk-pixbuf-html-2.28.0 gdk-pixbuf
 #GDK
-curl http://developer.gnome.org/gdk3/gdk3-html-3.6.0.tar.gz | tar xvfz -
-ln -s gdk3-html-3.6.0 gdk
+curl https://developer.gnome.org/gdk3/gdk3-html-3.8.0.tar.gz | tar xvfz -
+ln -s gdk3-html-3.8.0 gdk
 #GTK
 curl http://developer.gnome.org/gtk3/gtk3-html-3.6.0.tar.gz | tar xvfz -
 ln -s gtk3-html-3.6.0 gtk

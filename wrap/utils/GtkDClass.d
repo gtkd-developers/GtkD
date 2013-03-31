@@ -1758,7 +1758,6 @@ public class GtkDClass
 		}
 
 		bool bitField = false;	// if we are in a bit field
-		bool comment = false;   // if we are in a comment block
 		int bitFieldNr; // Number apended to bit field
 		int bits; // Bits used in the curent bit field
 
@@ -1823,7 +1822,12 @@ public class GtkDClass
 					collectedStructs ~= "static if (int.sizeof == ptrdiff_t.sizeof)";
 					collectedStructs ~= "{";
 				}
-				if ( std.string.indexOf(elem, "#ifndef") == 0 )
+				if ( std.string.indexOf(elem, "#ifdef G_ENABLE_DEBUG") == 0 )
+				{
+					collectedStructs ~= "debug";
+					collectedStructs ~= "{";
+				}
+				else if ( std.string.indexOf(elem, "#ifndef") == 0 )
 				{
 					collectedStructs ~= "version("~ elem[8..$] ~")";
 					collectedStructs ~= "{";

@@ -53,6 +53,7 @@
  * 	- gdk.Cursor
  * 	- gdk.Device
  * 	- gdk.Display
+ * 	- gdk.FrameClock
  * 	- gdk.Rectangle
  * 	- gdk.RGBA
  * 	- gdk.Screen
@@ -64,6 +65,7 @@
  * 	- GdkCursor* -> Cursor
  * 	- GdkDevice* -> Device
  * 	- GdkDisplay* -> Display
+ * 	- GdkFrameClock* -> FrameClock
  * 	- GdkRGBA* -> RGBA
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
@@ -96,6 +98,7 @@ private import gdk.Color;
 private import gdk.Cursor;
 private import gdk.Device;
 private import gdk.Display;
+private import gdk.FrameClock;
 private import gdk.Rectangle;
 private import gdk.RGBA;
 private import gdk.Screen;
@@ -706,6 +709,40 @@ public class Window : ObjectG
 	}
 	
 	/**
+	 * Obtains the GdkFullscreenMode of the window.
+	 * Returns: The GdkFullscreenMode applied to the window when fullscreen. Since 3.8
+	 */
+	public GdkFullscreenMode getFullscreenMode()
+	{
+		// GdkFullscreenMode gdk_window_get_fullscreen_mode (GdkWindow *window);
+		return gdk_window_get_fullscreen_mode(gdkWindow);
+	}
+	
+	/**
+	 * Specifies whether the window should span over all monitors (in a multi-head
+	 * setup) or only the current monitor when in fullscreen mode.
+	 * The mode argument is from the GdkFullscreenMode enumeration.
+	 * If GDK_FULLSCREEN_ON_ALL_MONITORS is specified, the fullscreen window will
+	 * span over all monitors from the GdkScreen.
+	 * On X11, searches through the list of monitors from the GdkScreen the ones
+	 * which delimit the 4 edges of the entire GdkScreen and will ask the window
+	 * manager to span the window over these monitors.
+	 * If the XINERAMA extension is not available or not usable, this function
+	 * has no effect.
+	 * Not all window managers support this, so you can't rely on the fullscreen
+	 * window to span over the multiple monitors when GDK_FULLSCREEN_ON_ALL_MONITORS
+	 * is specified.
+	 * Params:
+	 * mode = fullscreen mode
+	 * Since 3.8
+	 */
+	public void setFullscreenMode(GdkFullscreenMode mode)
+	{
+		// void gdk_window_set_fullscreen_mode (GdkWindow *window,  GdkFullscreenMode mode);
+		gdk_window_set_fullscreen_mode(gdkWindow, mode);
+	}
+	
+	/**
 	 * Set if window must be kept above other windows. If the
 	 * window was already above, then this function does nothing.
 	 * On X11, asks the window manager to keep window above, if the window
@@ -744,14 +781,16 @@ public class Window : ObjectG
 	}
 	
 	/**
-	 * Request the windowing system to make window partially transparent,
+	 * Set window to render as partially transparent,
 	 * with opacity 0 being fully transparent and 1 fully opaque. (Values
 	 * of the opacity parameter are clamped to the [0,1] range.)
-	 * On X11, this works only on X screens with a compositing manager
-	 * running.
-	 * For setting up per-pixel alpha, see gdk_screen_get_rgba_visual().
-	 * For making non-toplevel windows translucent, see
-	 * gdk_window_set_composited().
+	 * For toplevel windows this depends on support from the windowing system
+	 * that may not always be there. For instance, On X11, this works only on
+	 * X screens with a compositing manager running.
+	 * For child windows this function only works for non-native windows.
+	 * For setting up per-pixel alpha topelevels, see gdk_screen_get_rgba_visual(),
+	 * and for non-toplevels, see gdk_window_set_composited().
+	 * Support for non-toplevel windows was added in 3.8.
 	 * Since 2.12
 	 * Params:
 	 * opacity = opacity
@@ -1416,15 +1455,9 @@ public class Window : ObjectG
 	}
 	
 	/**
-	 * Indicates that the application will cooperate with the window
-	 * system in synchronizing the window repaint with the window
-	 * manager during resizing operations. After an application calls
-	 * this function, it must call gdk_window_configure_finished() every
-	 * time it has finished all processing associated with a set of
-	 * Configure events. Toplevel GTK+ windows automatically use this
-	 * protocol.
-	 * On X, calling this function makes window participate in the
-	 * _NET_WM_SYNC_REQUEST window manager protocol.
+	 * Warning
+	 * gdk_window_enable_synchronized_configure has been deprecated since version 3.8 and should not be used in newly-written code. this function is no longer needed
+	 * Does nothing, present only for compatiblity.
 	 * Since 2.6
 	 */
 	public void enableSynchronizedConfigure()
@@ -1434,19 +1467,34 @@ public class Window : ObjectG
 	}
 	
 	/**
-	 * Signal to the window system that the application has finished
-	 * handling Configure events it has received. Window Managers can
-	 * use this to better synchronize the frame repaint with the
-	 * application. GTK+ applications will automatically call this
-	 * function when appropriate.
-	 * This function can only be called if gdk_window_enable_synchronized_configure()
-	 * was called previously.
+	 * Warning
+	 * gdk_window_configure_finished has been deprecated since version 3.8 and should not be used in newly-written code. this function is no longer needed
+	 * Does nothing, present only for compatiblity.
 	 * Since 2.6
 	 */
 	public void configureFinished()
 	{
 		// void gdk_window_configure_finished (GdkWindow *window);
 		gdk_window_configure_finished(gdkWindow);
+	}
+	
+	/**
+	 * Gets the frame clock for the window. The frame clock for a window
+	 * never changes unless the window is reparented to a new toplevel
+	 * window.
+	 * Returns: the frame clock. [transfer none] Since 3.8
+	 */
+	public FrameClock getFrameClock()
+	{
+		// GdkFrameClock * gdk_window_get_frame_clock (GdkWindow *window);
+		auto p = gdk_window_get_frame_clock(gdkWindow);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
 	}
 	
 	/**
@@ -1729,7 +1777,7 @@ public class Window : ObjectG
 	 */
 	public void setBackgroundRgba(RGBA rgba)
 	{
-		// void gdk_window_set_background_rgba (GdkWindow *window,  GdkRGBA *rgba);
+		// void gdk_window_set_background_rgba (GdkWindow *window,  const GdkRGBA *rgba);
 		gdk_window_set_background_rgba(gdkWindow, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 	

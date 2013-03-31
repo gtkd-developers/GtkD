@@ -703,6 +703,7 @@ import: gdk.Color
 import: gdk.Cursor
 import: gdk.Device
 import: gdk.Display
+import: gdk.FrameClock
 import: gdk.Rectangle
 import: gdk.RGBA
 import: gdk.Screen
@@ -716,6 +717,7 @@ structWrap: GdkColor* Color
 structWrap: GdkCursor* Cursor
 structWrap: GdkDevice* Device
 structWrap: GdkDisplay* Display
+structWrap: GdkFrameClock* FrameClock
 structWrap: GdkRGBA* RGBA
 structWrap: GdkScreen* Screen
 structWrap: GdkVisual* Visual
@@ -784,6 +786,24 @@ code: start
 	}
 code: end
 outFile: Window
+
+file: gdk3-GdkFrameClock.html
+struct: GdkFrameClock
+class: FrameClock
+prefix: gdk_frame_clock_
+import: gdk.FrameTimings
+structWrap: GdkFrameTimings* FrameTimings
+
+out: gdk_frame_clock_get_refresh_info refresh_interval_return
+out: gdk_frame_clock_get_refresh_info presentation_time_return
+outFile: FrameClock
+
+file: gdk3-GdkFrameTimings.html
+struct: GdkFrameTimings
+class: FrameTimings
+prefix: gdk_frame_timings_
+structWrap: GdkFrameTimings* FrameTimings
+outFile: FrameTimings
 
 file: gdk3-Events.html
 struct: GdkEvent

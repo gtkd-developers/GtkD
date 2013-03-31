@@ -412,6 +412,8 @@ private import gdk.RGBA;
 private import gdk.Visual;
 private import gdk.Cursor;
 private import gdk.Window;
+private import gdk.FrameClock;
+private import gdk.FrameTimings;
 private import gdk.Event;
 private import gdk.Keymap;
 private import gdk.Selection;

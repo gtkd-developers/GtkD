@@ -396,6 +396,22 @@ public class X11
 	}
 	
 	/**
+	 * This function modifies or removes an arbitrary X11 window
+	 * property of type UTF8_STRING. If the given window is
+	 * not a toplevel window, it is ignored.
+	 * Params:
+	 * window = a GdkWindow. [type GdkX11Window]
+	 * name = Property name, will be interned as an X atom
+	 * value = Property value, or NULL to delete. [allow-none]
+	 * Since 3.4
+	 */
+	public static void windowSetUtf8_Property(Window window, string name, string value)
+	{
+		// void gdk_x11_window_set_utf8_property (GdkWindow *window,  const gchar *name,  const gchar *value);
+		gdk_x11_window_set_utf8_property((window is null) ? null : window.getWindowStruct(), Str.toStringz(name), Str.toStringz(value));
+	}
+	
+	/**
 	 * Gets the default GTK+ screen number.
 	 * Returns: returns the screen number specified by the --display command line option or the DISPLAY environment variable when gdk_init() calls XOpenDisplay().
 	 */

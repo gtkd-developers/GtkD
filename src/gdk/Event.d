@@ -485,6 +485,7 @@ public class Event
 	}
 	
 	/**
+	 * Returns the time stamp from event, if there is one; otherwise
 	 * returns GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
 	 * Returns: time stamp field from event
 	 */

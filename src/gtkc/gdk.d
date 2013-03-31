@@ -324,6 +324,8 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_window_unmaximize, \"gdk_window_unmaximize\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_fullscreen, \"gdk_window_fullscreen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_unfullscreen, \"gdk_window_unfullscreen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_fullscreen_mode, \"gdk_window_get_fullscreen_mode\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_set_fullscreen_mode, \"gdk_window_set_fullscreen_mode\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_keep_above, \"gdk_window_set_keep_above\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_keep_below, \"gdk_window_set_keep_below\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_opacity, \"gdk_window_set_opacity\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -365,6 +367,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_window_set_debug_updates, \"gdk_window_set_debug_updates\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_enable_synchronized_configure, \"gdk_window_enable_synchronized_configure\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_configure_finished, \"gdk_window_configure_finished\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_frame_clock, \"gdk_window_get_frame_clock\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_user_data, \"gdk_window_set_user_data\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_override_redirect, \"gdk_window_set_override_redirect\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_accept_focus, \"gdk_window_set_accept_focus\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -439,6 +442,29 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_window_coords_to_parent, \"gdk_window_coords_to_parent\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_effective_parent, \"gdk_window_get_effective_parent\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_effective_toplevel, \"gdk_window_get_effective_toplevel\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+
+	// gdk.FrameClock
+
+	Linker.link(gdk_frame_clock_get_frame_time, \"gdk_frame_clock_get_frame_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_request_phase, \"gdk_frame_clock_request_phase\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_begin_updating, \"gdk_frame_clock_begin_updating\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_end_updating, \"gdk_frame_clock_end_updating\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_get_frame_counter, \"gdk_frame_clock_get_frame_counter\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_get_history_start, \"gdk_frame_clock_get_history_start\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_get_timings, \"gdk_frame_clock_get_timings\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_get_current_timings, \"gdk_frame_clock_get_current_timings\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_clock_get_refresh_info, \"gdk_frame_clock_get_refresh_info\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+
+	// gdk.FrameTimings
+
+	Linker.link(gdk_frame_timings_ref, \"gdk_frame_timings_ref\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_unref, \"gdk_frame_timings_unref\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_get_frame_counter, \"gdk_frame_timings_get_frame_counter\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_get_complete, \"gdk_frame_timings_get_complete\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_get_frame_time, \"gdk_frame_timings_get_frame_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_get_presentation_time, \"gdk_frame_timings_get_presentation_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_get_refresh_interval, \"gdk_frame_timings_get_refresh_interval\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_frame_timings_get_predicted_presentation_time, \"gdk_frame_timings_get_predicted_presentation_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.Event
 
@@ -579,6 +605,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_x11_window_set_theme_variant, \"gdk_x11_window_set_theme_variant\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_set_user_time, \"gdk_x11_window_set_user_time\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_window_move_to_current_desktop, \"gdk_x11_window_move_to_current_desktop\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_x11_window_set_utf8_property, \"gdk_x11_window_set_utf8_property\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_get_default_screen, \"gdk_x11_get_default_screen\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_grab_server, \"gdk_x11_grab_server\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_x11_ungrab_server, \"gdk_x11_ungrab_server\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -911,6 +938,8 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window) c_gdk_window_unmaximize;
 	void function(GdkWindow* window) c_gdk_window_fullscreen;
 	void function(GdkWindow* window) c_gdk_window_unfullscreen;
+	GdkFullscreenMode function(GdkWindow* window) c_gdk_window_get_fullscreen_mode;
+	void function(GdkWindow* window, GdkFullscreenMode mode) c_gdk_window_set_fullscreen_mode;
 	void function(GdkWindow* window, gboolean setting) c_gdk_window_set_keep_above;
 	void function(GdkWindow* window, gboolean setting) c_gdk_window_set_keep_below;
 	void function(GdkWindow* window, gdouble opacity) c_gdk_window_set_opacity;
@@ -952,6 +981,7 @@ mixin( gshared ~"extern(C)
 	void function(gboolean setting) c_gdk_window_set_debug_updates;
 	void function(GdkWindow* window) c_gdk_window_enable_synchronized_configure;
 	void function(GdkWindow* window) c_gdk_window_configure_finished;
+	GdkFrameClock* function(GdkWindow* window) c_gdk_window_get_frame_clock;
 	void function(GdkWindow* window, void* userData) c_gdk_window_set_user_data;
 	void function(GdkWindow* window, gboolean overrideRedirect) c_gdk_window_set_override_redirect;
 	void function(GdkWindow* window, gboolean acceptFocus) c_gdk_window_set_accept_focus;
@@ -1026,6 +1056,29 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window, gdouble x, gdouble y, gdouble* parentX, gdouble* parentY) c_gdk_window_coords_to_parent;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_effective_parent;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_effective_toplevel;
+
+	// gdk.FrameClock
+
+	gint64 function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_frame_time;
+	void function(GdkFrameClock* frameClock, GdkFrameClockPhase phase) c_gdk_frame_clock_request_phase;
+	void function(GdkFrameClock* frameClock) c_gdk_frame_clock_begin_updating;
+	void function(GdkFrameClock* frameClock) c_gdk_frame_clock_end_updating;
+	gint64 function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_frame_counter;
+	gint64 function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_history_start;
+	GdkFrameTimings* function(GdkFrameClock* frameClock, gint64 frameCounter) c_gdk_frame_clock_get_timings;
+	GdkFrameTimings* function(GdkFrameClock* frameClock) c_gdk_frame_clock_get_current_timings;
+	void function(GdkFrameClock* frameClock, gint64 baseTime, gint64* refreshIntervalReturn, gint64* presentationTimeReturn) c_gdk_frame_clock_get_refresh_info;
+
+	// gdk.FrameTimings
+
+	GdkFrameTimings* function(GdkFrameTimings* timings) c_gdk_frame_timings_ref;
+	void function(GdkFrameTimings* timings) c_gdk_frame_timings_unref;
+	gint64 function(GdkFrameTimings* timings) c_gdk_frame_timings_get_frame_counter;
+	gboolean function(GdkFrameTimings* timings) c_gdk_frame_timings_get_complete;
+	gint64 function(GdkFrameTimings* timings) c_gdk_frame_timings_get_frame_time;
+	gint64 function(GdkFrameTimings* timings) c_gdk_frame_timings_get_presentation_time;
+	gint64 function(GdkFrameTimings* timings) c_gdk_frame_timings_get_refresh_interval;
+	gint64 function(GdkFrameTimings* timings) c_gdk_frame_timings_get_predicted_presentation_time;
 
 	// gdk.Event
 
@@ -1166,6 +1219,7 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window, char* variant) c_gdk_x11_window_set_theme_variant;
 	void function(GdkWindow* window, guint32 timestamp) c_gdk_x11_window_set_user_time;
 	void function(GdkWindow* window) c_gdk_x11_window_move_to_current_desktop;
+	void function(GdkWindow* window, gchar* name, gchar* value) c_gdk_x11_window_set_utf8_property;
 	gint function() c_gdk_x11_get_default_screen;
 	void function() c_gdk_x11_grab_server;
 	void function() c_gdk_x11_ungrab_server;
@@ -1496,6 +1550,8 @@ alias c_gdk_window_maximize  gdk_window_maximize;
 alias c_gdk_window_unmaximize  gdk_window_unmaximize;
 alias c_gdk_window_fullscreen  gdk_window_fullscreen;
 alias c_gdk_window_unfullscreen  gdk_window_unfullscreen;
+alias c_gdk_window_get_fullscreen_mode  gdk_window_get_fullscreen_mode;
+alias c_gdk_window_set_fullscreen_mode  gdk_window_set_fullscreen_mode;
 alias c_gdk_window_set_keep_above  gdk_window_set_keep_above;
 alias c_gdk_window_set_keep_below  gdk_window_set_keep_below;
 alias c_gdk_window_set_opacity  gdk_window_set_opacity;
@@ -1537,6 +1593,7 @@ alias c_gdk_window_process_updates  gdk_window_process_updates;
 alias c_gdk_window_set_debug_updates  gdk_window_set_debug_updates;
 alias c_gdk_window_enable_synchronized_configure  gdk_window_enable_synchronized_configure;
 alias c_gdk_window_configure_finished  gdk_window_configure_finished;
+alias c_gdk_window_get_frame_clock  gdk_window_get_frame_clock;
 alias c_gdk_window_set_user_data  gdk_window_set_user_data;
 alias c_gdk_window_set_override_redirect  gdk_window_set_override_redirect;
 alias c_gdk_window_set_accept_focus  gdk_window_set_accept_focus;
@@ -1611,6 +1668,29 @@ alias c_gdk_window_coords_from_parent  gdk_window_coords_from_parent;
 alias c_gdk_window_coords_to_parent  gdk_window_coords_to_parent;
 alias c_gdk_window_get_effective_parent  gdk_window_get_effective_parent;
 alias c_gdk_window_get_effective_toplevel  gdk_window_get_effective_toplevel;
+
+// gdk.FrameClock
+
+alias c_gdk_frame_clock_get_frame_time  gdk_frame_clock_get_frame_time;
+alias c_gdk_frame_clock_request_phase  gdk_frame_clock_request_phase;
+alias c_gdk_frame_clock_begin_updating  gdk_frame_clock_begin_updating;
+alias c_gdk_frame_clock_end_updating  gdk_frame_clock_end_updating;
+alias c_gdk_frame_clock_get_frame_counter  gdk_frame_clock_get_frame_counter;
+alias c_gdk_frame_clock_get_history_start  gdk_frame_clock_get_history_start;
+alias c_gdk_frame_clock_get_timings  gdk_frame_clock_get_timings;
+alias c_gdk_frame_clock_get_current_timings  gdk_frame_clock_get_current_timings;
+alias c_gdk_frame_clock_get_refresh_info  gdk_frame_clock_get_refresh_info;
+
+// gdk.FrameTimings
+
+alias c_gdk_frame_timings_ref  gdk_frame_timings_ref;
+alias c_gdk_frame_timings_unref  gdk_frame_timings_unref;
+alias c_gdk_frame_timings_get_frame_counter  gdk_frame_timings_get_frame_counter;
+alias c_gdk_frame_timings_get_complete  gdk_frame_timings_get_complete;
+alias c_gdk_frame_timings_get_frame_time  gdk_frame_timings_get_frame_time;
+alias c_gdk_frame_timings_get_presentation_time  gdk_frame_timings_get_presentation_time;
+alias c_gdk_frame_timings_get_refresh_interval  gdk_frame_timings_get_refresh_interval;
+alias c_gdk_frame_timings_get_predicted_presentation_time  gdk_frame_timings_get_predicted_presentation_time;
 
 // gdk.Event
 
@@ -1751,6 +1831,7 @@ alias c_gdk_x11_window_set_hide_titlebar_when_maximized  gdk_x11_window_set_hide
 alias c_gdk_x11_window_set_theme_variant  gdk_x11_window_set_theme_variant;
 alias c_gdk_x11_window_set_user_time  gdk_x11_window_set_user_time;
 alias c_gdk_x11_window_move_to_current_desktop  gdk_x11_window_move_to_current_desktop;
+alias c_gdk_x11_window_set_utf8_property  gdk_x11_window_set_utf8_property;
 alias c_gdk_x11_get_default_screen  gdk_x11_get_default_screen;
 alias c_gdk_x11_grab_server  gdk_x11_grab_server;
 alias c_gdk_x11_ungrab_server  gdk_x11_ungrab_server;

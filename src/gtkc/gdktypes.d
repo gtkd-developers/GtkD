@@ -838,6 +838,22 @@ public enum GdkWindowAttributesType
 alias GdkWindowAttributesType WindowAttributesType;
 
 /**
+ * Indicates which monitor (in a multi-head setup) a window should span over
+ * when in fullscreen mode.
+ * GDK_FULLSCREEN_ON_CURRENT_MONITOR
+ * Fullscreen on current monitor only.
+ * GDK_FULLSCREEN_ON_ALL_MONITORS
+ * Span across all monitors when fullscreen.
+ * Since 3.8
+ */
+public enum GdkFullscreenMode
+{
+	ON_CURRENT_MONITOR,
+	ON_ALL_MONITORS
+}
+alias GdkFullscreenMode FullscreenMode;
+
+/**
  * Specifies the result of applying a GdkFilterFunc to a native event.
  * GDK_FILTER_CONTINUE
  * event not handled, continue processing.
@@ -1029,6 +1045,41 @@ public enum GdkWMFunction
 	FUNC_CLOSE = 1 << 5
 }
 alias GdkWMFunction WMFunction;
+
+/**
+ * GdkFrameClockPhase is used to represent the different paint clock
+ * phases that can be requested. The elements of the enumeration
+ * correspond to the signals of GdkPaintClock.
+ * GDK_FRAME_CLOCK_PHASE_NONE
+ * no phase
+ * GDK_FRAME_CLOCK_PHASE_FLUSH_EVENTS
+ * corresponds to GdkFrameClock::flush-events. Should not be handled by applications.
+ * GDK_FRAME_CLOCK_PHASE_BEFORE_PAINT
+ * corresponds to GdkFrameClock::before-paint. Should not be handled by applications.
+ * GDK_FRAME_CLOCK_PHASE_UPDATE
+ * corresponds to GdkFrameClock::update.
+ * GDK_FRAME_CLOCK_PHASE_LAYOUT
+ * corresponds to GdkFrameClock::layout.
+ * GDK_FRAME_CLOCK_PHASE_PAINT
+ * corresponds to GdkFrameClock::paint.
+ * GDK_FRAME_CLOCK_PHASE_RESUME_EVENTS
+ * corresponds to GdkFrameClock::resume-events. Should not be handled by applications.
+ * GDK_FRAME_CLOCK_PHASE_AFTER_PAINT
+ * corresponds to GdkFrameClock::after-paint. Should not be handled by applications.
+ * Since 3.8
+ */
+public enum GdkFrameClockPhase
+{
+	NONE = 0,
+	FLUSH_EVENTS = 1 << 0,
+	BEFORE_PAINT = 1 << 1,
+	UPDATE = 1 << 2,
+	LAYOUT = 1 << 3,
+	PAINT = 1 << 4,
+	RESUME_EVENTS = 1 << 5,
+	AFTER_PAINT = 1 << 6
+}
+alias GdkFrameClockPhase FrameClockPhase;
 
 /**
  * Specifies the type of the event.
@@ -1839,6 +1890,40 @@ public struct GdkWindowAttr
 	char *wmclassClass;
 	int overrideRedirect;
 	GdkWindowTypeHint typeHint;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GdkFrameClock
+{
+	GObject parentInstance;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GdkFrameTimings
+{
+	uint refCount;
+	long frameCounter;
+	ulong cookie;
+	long frameTime;
+	long drawnTime;
+	long presentationTime;
+	long refreshInterval;
+	long predictedPresentationTime;
+	debug
+	{
+		long layoutStartTime;
+		long paintStartTime;
+		long frameEndTime;
+	}
+	uint bitfield0;
+	//uint complete : 1;
+	//uint sleptBefore : 1;
 }
 
 
