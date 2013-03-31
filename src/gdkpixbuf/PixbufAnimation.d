@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = PixbufAnimation
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -45,6 +45,7 @@
  * omit code:
  * 	- gdk_pixbuf_animation_ref
  * 	- gdk_pixbuf_animation_unref
+ * 	- gdk_pixbuf_animation_new_from_resource
  * omit signals:
  * imports:
  * 	- glib.ErrorG
@@ -52,7 +53,13 @@
  * 	- gdkpixbuf.PixbufAnimationIter
  * 	- gdk.Pixbuf
  * 	- glib.Str
+ * 	- gio.InputStream
+ * 	- gio.Cancellable
+ * 	- gio.AsyncResultIF
  * structWrap:
+ * 	- GAsyncResult* -> AsyncResultIF
+ * 	- GCancellable* -> Cancellable
+ * 	- GInputStream* -> InputStream
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
  * 	- GdkPixbufAnimationIter* -> PixbufAnimationIter
@@ -75,6 +82,9 @@ private import glib.GException;
 private import gdkpixbuf.PixbufAnimationIter;
 private import gdk.Pixbuf;
 private import glib.Str;
+private import gio.InputStream;
+private import gio.Cancellable;
+private import gio.AsyncResultIF;
 
 
 
@@ -125,6 +135,36 @@ public class PixbufAnimation : ObjectG
 	}
 	
 	/**
+	 * Creates a new pixbuf animation by loading an image from an resource.
+	 * The file format is detected automatically. If NULL is returned, then
+	 * error will be set.
+	 * Since 2.28
+	 * Params:
+	 * resourcePath = the path of the resource file
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static PixbufAnimation newFromResource(string resourcePath)
+	{
+		// GdkPixbufAnimation * gdk_pixbuf_animation_new_from_resource  (const char *resource_path,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_animation_new_from_resource(Str.toStringz(resourcePath), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_resource(Str.toStringz(resourcePath), &err)");
+		}
+		
+		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -152,6 +192,88 @@ public class PixbufAnimation : ObjectG
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err)");
+		}
+		this(cast(GdkPixbufAnimation*) p);
+	}
+	
+	/**
+	 * Creates a new animation by loading it from an input stream.
+	 * The file format is detected automatically. If NULL is returned, then
+	 * error will be set. The cancellable can be used to abort the operation
+	 * from another thread. If the operation was cancelled, the error
+	 * G_IO_ERROR_CANCELLED will be returned. Other possible errors are in
+	 * the GDK_PIXBUF_ERROR and G_IO_ERROR domains.
+	 * The stream is not closed.
+	 * Since 2.28
+	 * Params:
+	 * stream = a GInputStream to load the pixbuf from
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (InputStream stream, Cancellable cancellable)
+	{
+		// GdkPixbufAnimation * gdk_pixbuf_animation_new_from_stream  (GInputStream *stream,  GCancellable *cancellable,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_animation_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err)");
+		}
+		this(cast(GdkPixbufAnimation*) p);
+	}
+	
+	/**
+	 * Creates a new animation by asynchronously loading an image from an input stream.
+	 * For more details see gdk_pixbuf_new_from_stream(), which is the synchronous
+	 * version of this function.
+	 * When the operation is finished, callback will be called in the main thread.
+	 * You can then call gdk_pixbuf_animation_new_from_stream_finish() to get the
+	 * result of the operation.
+	 * Since 2.28
+	 * Params:
+	 * stream = a GInputStream from which to load the animation
+	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the the pixbuf is loaded
+	 * userData = the data to pass to the callback function
+	 */
+	public static void newFromStreamAsync(InputStream stream, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void gdk_pixbuf_animation_new_from_stream_async  (GInputStream *stream,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		gdk_pixbuf_animation_new_from_stream_async((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous pixbuf animation creation operation started with
+	 * gdk_pixbuf_animation_new_from_stream_async().
+	 * Since 2.28
+	 * Params:
+	 * asyncResult = a GAsyncResult
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (AsyncResultIF asyncResult)
+	{
+		// GdkPixbufAnimation * gdk_pixbuf_animation_new_from_stream_finish  (GAsyncResult *async_result,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_animation_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultTStruct(), &err)");
 		}
 		this(cast(GdkPixbufAnimation*) p);
 	}

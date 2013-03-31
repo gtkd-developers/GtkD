@@ -46,6 +46,10 @@ mixin( _shared ~ "static this()
 	// gdkpixbuf.PixbufAnimation
 
 	Linker.link(gdk_pixbuf_animation_new_from_file, \"gdk_pixbuf_animation_new_from_file\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_new_from_resource, \"gdk_pixbuf_animation_new_from_resource\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_new_from_stream, \"gdk_pixbuf_animation_new_from_stream\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_new_from_stream_async, \"gdk_pixbuf_animation_new_from_stream_async\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_animation_new_from_stream_finish, \"gdk_pixbuf_animation_new_from_stream_finish\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_animation_ref, \"gdk_pixbuf_animation_ref\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_animation_unref, \"gdk_pixbuf_animation_unref\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_animation_get_width, \"gdk_pixbuf_animation_get_width\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -110,6 +114,10 @@ mixin( gshared ~"extern(C)
 	// gdkpixbuf.PixbufAnimation
 
 	GdkPixbufAnimation* function(char* filename, GError** error) c_gdk_pixbuf_animation_new_from_file;
+	GdkPixbufAnimation* function(char* resourcePath, GError** error) c_gdk_pixbuf_animation_new_from_resource;
+	GdkPixbufAnimation* function(GInputStream* stream, GCancellable* cancellable, GError** error) c_gdk_pixbuf_animation_new_from_stream;
+	void function(GInputStream* stream, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_animation_new_from_stream_async;
+	GdkPixbufAnimation* function(GAsyncResult* asyncResult, GError** error) c_gdk_pixbuf_animation_new_from_stream_finish;
 	GdkPixbufAnimation* function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_ref;
 	void function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_unref;
 	int function(GdkPixbufAnimation* animation) c_gdk_pixbuf_animation_get_width;
@@ -172,6 +180,10 @@ alias c_gdk_pixdata_to_csource  gdk_pixdata_to_csource;
 // gdkpixbuf.PixbufAnimation
 
 alias c_gdk_pixbuf_animation_new_from_file  gdk_pixbuf_animation_new_from_file;
+alias c_gdk_pixbuf_animation_new_from_resource  gdk_pixbuf_animation_new_from_resource;
+alias c_gdk_pixbuf_animation_new_from_stream  gdk_pixbuf_animation_new_from_stream;
+alias c_gdk_pixbuf_animation_new_from_stream_async  gdk_pixbuf_animation_new_from_stream_async;
+alias c_gdk_pixbuf_animation_new_from_stream_finish  gdk_pixbuf_animation_new_from_stream_finish;
 alias c_gdk_pixbuf_animation_ref  gdk_pixbuf_animation_ref;
 alias c_gdk_pixbuf_animation_unref  gdk_pixbuf_animation_unref;
 alias c_gdk_pixbuf_animation_get_width  gdk_pixbuf_animation_get_width;

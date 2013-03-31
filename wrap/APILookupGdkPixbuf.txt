@@ -159,9 +159,48 @@ structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.Str
+import: gio.InputStream
+structWrap: GInputStream* InputStream
+import: gio.Cancellable
+structWrap: GCancellable* Cancellable
+import: gio.AsyncResultIF
+structWrap: GAsyncResult* AsyncResultIF
 nocode: gdk_pixbuf_animation_ref
 nocode: gdk_pixbuf_animation_unref
+nocode: gdk_pixbuf_animation_new_from_resource
 inout: gdk_pixbuf_animation_get_iter start_time
+
+code: start
+/**
+	 * Creates a new pixbuf animation by loading an image from an resource.
+	 * The file format is detected automatically. If NULL is returned, then
+	 * error will be set.
+	 * Since 2.28
+	 * Params:
+	 * resourcePath = the path of the resource file
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static PixbufAnimation newFromResource(string resourcePath)
+	{
+		// GdkPixbufAnimation * gdk_pixbuf_animation_new_from_resource  (const char *resource_path,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_animation_new_from_resource(Str.toStringz(resourcePath), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_resource(Str.toStringz(resourcePath), &err)");
+		}
+
+		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
+	}
+code: end
 outFile: PixbufAnimation
 
 struct: GdkPixbufAnimationIter
