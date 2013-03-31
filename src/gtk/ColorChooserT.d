@@ -174,7 +174,7 @@ public template ColorChooserT(TStruct)
 	/**
 	 * Gets the currently-selected color.
 	 * Params:
-	 * color = return location for the color
+	 * color = a GdkRGBA to fill in with the current color. [out]
 	 * Since 3.4
 	 */
 	public void getRgba(RGBA color)

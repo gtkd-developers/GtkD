@@ -195,11 +195,11 @@ public class MenuButton : ToggleButton
 	}
 	
 	/**
-	 * Sets the GMenuModel from which the "menu" property will be
+	 * Sets the GMenuModel from which the "popup" property will be
 	 * filled in, or NULL to disable the button.
 	 * The GtkMenu will be created with gtk_menu_new_from_model(), so actions
 	 * will be connected as documented there.
-	 * If you "menu" * is already set, then its content will be lost
+	 * If "popup" is already set, then its content will be lost
 	 * and replaced by our newly created GtkMenu.
 	 * Params:
 	 * menuModel = a GMenuModel. [allow-none]

@@ -235,7 +235,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererPixbuf
-	 * to it, and makes its show pixbuf.
+	 * to it, and makes it show pixbuf.
 	 * Since 2.6
 	 * Params:
 	 * pixbuf = the image to display in the cell view

@@ -280,7 +280,7 @@ public class Testing
 	 * spinner = valid GtkSpinButton widget.
 	 * button = Number of the pointer button for the event, usually 1, 2 or 3.
 	 * upwards = TRUE for upwards arrow click, FALSE for downwards arrow click.
-	 * Returns: wether all actions neccessary for the button click simulation were carried out successfully.
+	 * Returns: whether all actions neccessary for the button click simulation were carried out successfully.
 	 */
 	public static int spinButtonClick(SpinButton spinner, uint button, int upwards)
 	{
@@ -330,7 +330,7 @@ public class Testing
 	 * widget = Widget to generate a button click on.
 	 * button = Number of the pointer button for the event, usually 1, 2 or 3.
 	 * modifiers = Keyboard modifiers the event is setup with.
-	 * Returns: wether all actions neccessary for the button click simulation were carried out successfully.
+	 * Returns: whether all actions neccessary for the button click simulation were carried out successfully.
 	 */
 	public static int widgetClick(Widget widget, uint button, GdkModifierType modifiers)
 	{
@@ -351,7 +351,7 @@ public class Testing
 	 * widget = Widget to generate a key press and release on.
 	 * keyval = A Gdk keyboard value.
 	 * modifiers = Keyboard modifiers the event is setup with.
-	 * Returns: wether all actions neccessary for the key event simulation were carried out successfully.
+	 * Returns: whether all actions neccessary for the key event simulation were carried out successfully.
 	 */
 	public static int widgetSendKey(Widget widget, uint keyval, GdkModifierType modifiers)
 	{

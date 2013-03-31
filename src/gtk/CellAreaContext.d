@@ -73,7 +73,7 @@ private import gobject.ObjectG;
  * GtkTreeModel rows that are requested and rendered in the same context.
  *
  * GtkCellLayout widgets can create any number of contexts in which to
- * request and render groups of data rows. However its important that the
+ * request and render groups of data rows. However, it's important that the
  * same context which was used to request sizes for a given GtkTreeModel
  * row also be used for the same row when calling other GtkCellArea APIs
  * such as gtk_cell_area_render() and gtk_cell_area_event().
@@ -117,11 +117,11 @@ public class CellAreaContext : ObjectG
 	
 	/**
 	 * Fetches the GtkCellArea this context was created by.
-	 * This is generally unneeded by layouting widgets; however
+	 * This is generally unneeded by layouting widgets; however,
 	 * it is important for the context implementation itself to
 	 * fetch information about the area it is being used for.
 	 * For instance at GtkCellAreaContextClass.allocate() time
-	 * its important to know details about any cell spacing
+	 * it's important to know details about any cell spacing
 	 * that the GtkCellArea is configured with in order to
 	 * compute a proper allocation.
 	 * Returns: the GtkCellArea this context was created by. [transfer none] Since 3.0

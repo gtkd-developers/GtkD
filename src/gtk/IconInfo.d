@@ -46,6 +46,8 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.AsyncResultIF
+ * 	- gio.Cancellable
  * 	- gdk.Pixbuf
  * 	- gdk.RGBA
  * 	- gtk.IconTheme
@@ -54,6 +56,8 @@
  * 	- gtkc.paths
  * 	- gtkc.Loader
  * structWrap:
+ * 	- GAsyncResult* -> AsyncResultIF
+ * 	- GCancellable* -> Cancellable
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRGBA* -> RGBA
  * 	- GtkIconInfo* -> IconInfo
@@ -79,6 +83,8 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.AsyncResultIF;
+private import gio.Cancellable;
 private import gdk.Pixbuf;
 private import gdk.RGBA;
 private import gtk.IconTheme;
@@ -134,7 +140,7 @@ private import gtkc.Loader;
  * or stock items, rather than directly, but looking up icons
  * directly is also simple. The GtkIconTheme object acts
  * as a database of all the icons in the current theme. You
- * can create new GtkIconTheme objects, but its much more
+ * can create new GtkIconTheme objects, but it's much more
  * efficient to use the standard icon theme for the GdkScreen
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
@@ -212,6 +218,8 @@ public class IconInfo
 	
 	
 	/**
+	 * Warning
+	 * gtk_icon_info_copy has been deprecated since version 3.8 and should not be used in newly-written code. Use g_object_ref()
 	 * Make a copy of a GtkIconInfo.
 	 * Since 2.4
 	 * Returns: the new GtkIconInfo
@@ -230,6 +238,8 @@ public class IconInfo
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_info_free has been deprecated since version 3.8 and should not be used in newly-written code. Use g_object_unref()
 	 * Free a GtkIconInfo and associated information
 	 * Since 2.4
 	 */
@@ -350,6 +360,53 @@ public class IconInfo
 	}
 	
 	/**
+	 * Asynchronously load, render and scale an icon previously looked up
+	 * from the icon theme using gtk_icon_theme_lookup_icon().
+	 * For more details, see gtk_icon_info_load_icon() which is the synchronous
+	 * version of this call.
+	 * Params:
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the
+	 * request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 * Since 3.8
+	 */
+	public void loadIconAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void gtk_icon_info_load_icon_async (GtkIconInfo *icon_info,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		gtk_icon_info_load_icon_async(gtkIconInfo, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an async icon load, see gtk_icon_info_load_icon_async().
+	 * Params:
+	 * res = a GAsyncResult
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. [transfer full] Since 3.8
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadIconFinish(AsyncResultIF res)
+	{
+		// GdkPixbuf * gtk_icon_info_load_icon_finish (GtkIconInfo *icon_info,  GAsyncResult *res,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_icon_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultTStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
 	 * Loads an icon, modifying it to match the system colours for the foreground,
 	 * success, warning and error colors provided. If the icon is not a symbolic
 	 * one, the function will return the result from gtk_icon_info_load_icon().
@@ -384,6 +441,63 @@ public class IconInfo
 		GError* err = null;
 		
 		auto p = gtk_icon_info_load_symbolic(gtkIconInfo, (fg is null) ? null : fg.getRGBAStruct(), (successColor is null) ? null : successColor.getRGBAStruct(), (warningColor is null) ? null : warningColor.getRGBAStruct(), (errorColor is null) ? null : errorColor.getRGBAStruct(), &wasSymbolic, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Asynchronously load, render and scale a symbolic icon previously looked up
+	 * from the icon theme using gtk_icon_theme_lookup_icon().
+	 * For more details, see gtk_icon_info_load_symbolic() which is the synchronous
+	 * version of this call.
+	 * Params:
+	 * fg = a GdkRGBA representing the foreground color of the icon
+	 * successColor = a GdkRGBA representing the warning color
+	 * of the icon or NULL to use the default color. [allow-none]
+	 * warningColor = a GdkRGBA representing the warning color
+	 * of the icon or NULL to use the default color. [allow-none]
+	 * errorColor = a GdkRGBA representing the error color
+	 * of the icon or NULL to use the default color (allow-none). [allow-none]
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the
+	 * request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 * Since 3.8
+	 */
+	public void loadSymbolicAsync(RGBA fg, RGBA successColor, RGBA warningColor, RGBA errorColor, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void gtk_icon_info_load_symbolic_async (GtkIconInfo *icon_info,  const GdkRGBA *fg,  const GdkRGBA *success_color,  const GdkRGBA *warning_color,  const GdkRGBA *error_color,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		gtk_icon_info_load_symbolic_async(gtkIconInfo, (fg is null) ? null : fg.getRGBAStruct(), (successColor is null) ? null : successColor.getRGBAStruct(), (warningColor is null) ? null : warningColor.getRGBAStruct(), (errorColor is null) ? null : errorColor.getRGBAStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an async icon load, see gtk_icon_info_load_symbolic_async().
+	 * Params:
+	 * res = a GAsyncResult
+	 * wasSymbolic = a gboolean, returns whether the
+	 * loaded icon was a symbolic one and whether the fg color was
+	 * applied to it. [out][allow-none]
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. [transfer full] Since 3.8
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadSymbolicFinish(AsyncResultIF res, out int wasSymbolic)
+	{
+		// GdkPixbuf * gtk_icon_info_load_symbolic_finish (GtkIconInfo *icon_info,  GAsyncResult *res,  gboolean *was_symbolic,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_symbolic_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultTStruct(), &wasSymbolic, &err);
 		
 		if (err !is null)
 		{
@@ -460,6 +574,57 @@ public class IconInfo
 		GError* err = null;
 		
 		auto p = gtk_icon_info_load_symbolic_for_context(gtkIconInfo, (context is null) ? null : context.getStyleContextStruct(), wasSymbolic, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Asynchronously load, render and scale a symbolic icon previously looked up
+	 * from the icon theme using gtk_icon_theme_lookup_icon().
+	 * For more details, see gtk_icon_info_load_symbolic_for_context() which is the synchronous
+	 * version of this call.
+	 * Params:
+	 * context = a GtkStyleContext
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call when the
+	 * request is satisfied. [scope async]
+	 * userData = the data to pass to callback function. [closure]
+	 * Since 3.8
+	 */
+	public void loadSymbolicForContextAsync(StyleContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void gtk_icon_info_load_symbolic_for_context_async  (GtkIconInfo *icon_info,  GtkStyleContext *context,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		gtk_icon_info_load_symbolic_for_context_async(gtkIconInfo, (context is null) ? null : context.getStyleContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an async icon load, see gtk_icon_info_load_symbolic_for_context_async().
+	 * Params:
+	 * res = a GAsyncResult
+	 * wasSymbolic = a gboolean, returns whether the
+	 * loaded icon was a symbolic one and whether the fg color was
+	 * applied to it. [out][allow-none]
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. [transfer full] Since 3.8
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadSymbolicForContextFinish(AsyncResultIF res, out int wasSymbolic)
+	{
+		// GdkPixbuf * gtk_icon_info_load_symbolic_for_context_finish  (GtkIconInfo *icon_info,  GAsyncResult *res,  gboolean *was_symbolic,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_symbolic_for_context_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultTStruct(), &wasSymbolic, &err);
 		
 		if (err !is null)
 		{

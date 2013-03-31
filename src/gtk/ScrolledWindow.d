@@ -90,8 +90,8 @@ private import gtk.Bin;
  * If a widget has native scrolling abilities, it can be added to the
  * GtkScrolledWindow with gtk_container_add(). If a widget does not, you
  * must first add the widget to a GtkViewport, then add the GtkViewport
- * to the scrolled window. The convenience function
- * gtk_scrolled_window_add_with_viewport() does exactly this, so you can
+ * to the scrolled window. gtk_container_add() will do this for you for
+ * widgets that don't implement GtkScrollable natively, so you can
  * ignore the presence of the viewport.
  *
  * The position of the scrollbars is controlled by the scroll
@@ -360,6 +360,9 @@ public class ScrolledWindow : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_scrolled_window_add_with_viewport has been deprecated since version 3.8 and should not be used in newly-written code. gtk_container_add() will now automatically add
+	 * a GtkViewport if the child doesn't implement GtkScrollable.
 	 * Used to add children without native scrolling capabilities. This
 	 * is simply a convenience function; it is equivalent to adding the
 	 * unscrollable child to a viewport, then adding the viewport to the

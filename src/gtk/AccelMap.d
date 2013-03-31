@@ -407,7 +407,7 @@ public class AccelMap : ObjectG
 	 * of times.
 	 * Note that locking of individual accelerator paths is independent from
 	 * locking the GtkAccelGroup containing them. For runtime accelerator
-	 * changes to be possible both the accelerator path and its GtkAccelGroup
+	 * changes to be possible, both the accelerator path and its GtkAccelGroup
 	 * have to be unlocked.
 	 * Since 2.4
 	 * Params:

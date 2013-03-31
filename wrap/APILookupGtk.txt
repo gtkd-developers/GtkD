@@ -672,6 +672,7 @@ import: glib.Str
 import: cairo.Context
 import: gobject.Value
 import: glib.ListG
+import: gdk.FrameClock
 import: gdk.Pixbuf
 import: gdk.RGBA
 import: gdk.Screen
@@ -686,6 +687,7 @@ import: pango.PgLayout
 structWrap: cairo_t* Context
 structWrap: GValue* Value
 structWrap: GList* ListG
+structWrap: GdkFrameClock* FrameClock
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
 structWrap: GdkScreen* Screen
@@ -983,14 +985,18 @@ import: glib.GException
 import: glib.ListG
 import: gio.IconIF
 import: gdk.Pixbuf
+import: gdk.RGBA
 import: gdk.Screen
 import: gtk.IconInfo
+import: gtk.StyleContext
 structWrap: GList* ListG
 structWrap: GIcon* IconIF
 structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkRGBA* RGBA
 structWrap: GdkScreen* Screen
 structWrap: GtkIconInfo* IconInfo
 structWrap: GtkIconTheme* IconTheme
+structWrap: GtkStyleContext* StyleContext
 
 array: gtk_icon_theme_set_search_path path n_elements
 out: gtk_icon_theme_get_search_path path
@@ -1005,6 +1011,8 @@ strictPrefix: Y
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: gio.AsyncResultIF
+import: gio.Cancellable
 import: gdk.Pixbuf
 import: gdk.RGBA
 import: gtk.IconTheme
@@ -1012,6 +1020,8 @@ import: gtk.Style
 import: gtk.StyleContext
 import: gtkc.paths
 import: gtkc.Loader
+structWrap: GAsyncResult* AsyncResultIF
+structWrap: GCancellable* Cancellable
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
 structWrap: GtkIconInfo* IconInfo
@@ -1024,6 +1034,8 @@ out: gtk_icon_info_load_symbolic_for_style was_symbolic
 out: gtk_icon_info_get_embedded_rect rectangle
 out: gtk_icon_info_get_attach_points points
 array: gtk_icon_info_get_attach_points points n_points
+out: gtk_icon_info_load_symbolic_finish was_symbolic
+out: gtk_icon_info_load_symbolic_for_context_finish was_symbolic
 
 code: start
 	~this ()
@@ -1632,6 +1644,8 @@ structWrap: GtkWindow* Window
 structWrap: GtkWindowGroup* WindowGroup
 
 override: getScreen
+override: setOpacity
+override: getOpacity
 
 inout: gtk_window_set_geometry_hints geometry
 out: gtk_window_get_default_size width
@@ -2625,6 +2639,7 @@ import: gtk.Border
 import: gtk.EntryBuffer
 import: gtk.EntryCompletion
 import: gtk.TargetList
+import: gtk.Widget
 import: pango.PgAttributeList
 import: pango.PgLayout
 structWrap: GIcon* IconIF
@@ -2634,6 +2649,7 @@ structWrap: GtkBorder* Border
 structWrap: GtkEntryBuffer* EntryBuffer
 structWrap: GtkEntryCompletion* EntryCompletion
 structWrap: GtkTargetList* TargetList
+structWrap: GtkWidget* Widget
 structWrap: PangoAttrList* PgAttributeList
 structWrap: PangoLayout* PgLayout
 
@@ -8199,6 +8215,7 @@ import: gdk.Device
 import: gdk.Display
 import: gdk.DragContext
 import: gdk.Event
+import: gdk.FrameClock
 import: gdk.Pixbuf
 import: gdk.RGBA
 import: gdk.Screen
@@ -8229,6 +8246,7 @@ structWrap: GdkDevice* Device
 structWrap: GdkDisplay* Display
 structWrap: GdkDragContext* DragContext
 structWrap: GdkEvent* Event
+structWrap: GdkFrameClock* FrameClock
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
 structWrap: GdkScreen* Screen

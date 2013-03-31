@@ -88,8 +88,9 @@ private import gtk.Bin;
  * GtkTreeView or GtkIconView, it can be added to a GtkScrolledWindow
  * with gtk_container_add(). If a widget does not, you must first add the
  * widget to a GtkViewport, then add the viewport to the scrolled window.
- * The convenience function gtk_scrolled_window_add_with_viewport() does
- * exactly this, so you can ignore the presence of the viewport.
+ * gtk_container_add() does this automatically if a child that does not
+ * implement GtkScrollable is added to a GtkScrolledWindow, so you can
+ * ignore the presence of the viewport.
  *
  * The GtkViewport will start scrolling content only if allocated less
  * than the child widget's minimum size in a given orientation.
@@ -135,10 +136,11 @@ public class Viewport : Bin, ScrollableIF
 	 */
 	
 	/**
-	 * Creates a new GtkViewport with the given adjustments.
+	 * Creates a new GtkViewport with the given adjustments, or with default
+	 * adjustments if none are given.
 	 * Params:
-	 * hadjustment = horizontal adjustment
-	 * vadjustment = vertical adjustment
+	 * hadjustment = horizontal adjustment. [allow-none]
+	 * vadjustment = vertical adjustment. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)

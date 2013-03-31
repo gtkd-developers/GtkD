@@ -66,6 +66,8 @@
  * local aliases:
  * overrides:
  * 	- getScreen
+ * 	- setOpacity
+ * 	- getOpacity
  */
 
 module gtk.Window;
@@ -1975,18 +1977,22 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_get_opacity has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_widget_get_opacity instead.
 	 * Fetches the requested opacity for this window. See
 	 * gtk_window_set_opacity().
 	 * Since 2.12
 	 * Returns: the requested opacity for this window.
 	 */
-	public double getOpacity()
+	public override double getOpacity()
 	{
 		// gdouble gtk_window_get_opacity (GtkWindow *window);
 		return gtk_window_get_opacity(gtkWindow);
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_set_opacity has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_widget_set_opacity instead.
 	 * Request the windowing system to make window partially transparent,
 	 * with opacity 0 being fully transparent and 1 fully opaque. (Values
 	 * of the opacity parameter are clamped to the [0,1] range.) On X11
@@ -1999,7 +2005,7 @@ public class Window : Bin
 	 * Params:
 	 * opacity = desired opacity, between 0 and 1
 	 */
-	public void setOpacity(double opacity)
+	public override void setOpacity(double opacity)
 	{
 		// void gtk_window_set_opacity (GtkWindow *window,  gdouble opacity);
 		gtk_window_set_opacity(gtkWindow, opacity);

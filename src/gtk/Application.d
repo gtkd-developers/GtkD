@@ -235,8 +235,9 @@ public class Application : GioApplication
 	
 	/**
 	 * Creates a new GtkApplication instance.
-	 * This function calls g_type_init() for you. gtk_init() is called
-	 * as soon as the application gets registered as the primary instance.
+	 * When using GtkApplication, it is not necessary to call gtk_init()
+	 * manually. It is called as soon as the application gets registered as
+	 * the primary instance.
 	 * Concretely, gtk_init() is called in the default handler for the
 	 * "startup" signal. Therefore, GtkApplication subclasses should
 	 * chain up in their "startup" handler before using any GTK+ API.

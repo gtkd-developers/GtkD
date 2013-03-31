@@ -576,7 +576,7 @@ public class AboutDialog : Dialog
 	 * Creates a new section in the Credits page.
 	 * Params:
 	 * sectionName = The name of the section
-	 * people = The people who belong to that section
+	 * people = The people who belong to that section. [array zero-terminated=1]
 	 * Since 3.4
 	 */
 	public void addCreditSection(string sectionName, string[] people)

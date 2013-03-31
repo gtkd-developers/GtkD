@@ -96,6 +96,10 @@ public interface FontChooserIF
 	
 	void delegate(string, FontChooserIF)[] onFontActivatedListeners();
 	/**
+	 * Emitted when a font is activated.
+	 * This usually happens when the user double clicks an item,
+	 * or an item is selected and the user presses one of the keys
+	 * Space, Shift+Space, Return or Enter.
 	 * See Also
 	 * GtkFontChooserDialog, GtkFontChooserWidget, GtkFontButton
 	 */

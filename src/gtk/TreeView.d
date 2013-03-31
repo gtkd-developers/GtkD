@@ -390,10 +390,10 @@ public class TreeView : Container, ScrollableIF
 	void delegate(TreePath, TreeViewColumn, TreeView)[] onRowActivatedListeners;
 	/**
 	 * The "row-activated" signal is emitted when the method
-	 * gtk_tree_view_row_activated() is called or the user double clicks
-	 * a treeview row. It is also emitted when a non-editable row is
-	 * selected and one of the keys: Space, Shift+Space, Return or
-	 * Enter is pressed.
+	 * gtk_tree_view_row_activated() is called, when the user double
+	 * clicks a treeview row with the "activate-on-single-click"
+	 * property set to FALSE, or when the user single clicks a row when
+	 * the "activate-on-single-click" property set to TRUE. It is also
 	 * For selection handling refer to the tree
 	 * widget conceptual overview as well as GtkTreeSelection.
 	 */
@@ -954,6 +954,29 @@ public class TreeView : Container, ScrollableIF
 	{
 		// gboolean gtk_tree_view_get_rules_hint (GtkTreeView *tree_view);
 		return gtk_tree_view_get_rules_hint(gtkTreeView);
+	}
+	
+	/**
+	 * Cause the "row-activated" signal to be emitted
+	 * on a single click instead of a double click.
+	 * Params:
+	 * single = TRUE to emit row-activated on a single click
+	 * Since 3.8
+	 */
+	public void setActivateOnSingleClick(int single)
+	{
+		// void gtk_tree_view_set_activate_on_single_click  (GtkTreeView *tree_view,  gboolean single);
+		gtk_tree_view_set_activate_on_single_click(gtkTreeView, single);
+	}
+	
+	/**
+	 * Gets the setting set by gtk_tree_view_set_activate_on_single_click().
+	 * Returns: TRUE if row-activated will be emitted on a single click Since 3.8
+	 */
+	public int getActivateOnSingleClick()
+	{
+		// gboolean gtk_tree_view_get_activate_on_single_click  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_activate_on_single_click(gtkTreeView);
 	}
 	
 	/**

@@ -91,7 +91,7 @@ private import gobject.ObjectG;
  * For each property of GtkTextTag, there is a "set" property, e.g.
  * "font-set" corresponds to "font". These "set" properties reflect
  * whether a property has been set or not.
- * You should not set them independently.
+ * They are maintained by GTK+ and you should not set them independently.
  */
 public class TextTag : ObjectG
 {

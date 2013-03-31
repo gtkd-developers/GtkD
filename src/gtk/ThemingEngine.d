@@ -150,6 +150,10 @@ public class ThemingEngine : ObjectG
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_theming_engine_get_direction has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_theming_engine_get_state() and
+	 *  check for GTK_STATE_FLAG_DIR_LTR and
+	 *  GTK_STATE_FLAG_DIR_RTL instead.
 	 * Returns the widget direction used for rendering.
 	 * Returns: the widget direction Since 3.0
 	 */
@@ -350,6 +354,8 @@ public class ThemingEngine : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_theming_engine_get_font has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_theming_engine_get()
 	 * Returns the font description for a given state.
 	 * Params:
 	 * state = state to retrieve the font for
@@ -451,6 +457,8 @@ public class ThemingEngine : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_theming_engine_register_property has been deprecated since version 3.8 and should not be used in newly-written code. Code should use the default properties provided by CSS.
 	 * Registers a property so it can be used in the CSS file format,
 	 * on the CSS file the property will look like
 	 * "-${name_space}-${property_name}". being

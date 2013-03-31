@@ -138,7 +138,7 @@ private import gobject.ObjectG;
  * or just UI definitions if the context is clear. Do not
  * confuse GtkBuilder UI Definitions with
  * GtkUIManager UI Definitions, which are more
- * limited in scope.
+ * limited in scope. It is common to use .ui as the filename extension for files containing GtkBuilder UI definitions.
  *
  * start = element interface {
 	 *  attribute domain { text } ?,
@@ -283,12 +283,14 @@ private import gobject.ObjectG;
  * (can be specified by their name, nick or integer value), flags (can be
  * specified by their name, nick, integer value, optionally combined with "|",
  * e.g. "GTK_VISIBLE|GTK_REALIZED") and colors (in a format understood by
- * gdk_color_parse()). Objects can be referred to by their name. Pixbufs can be
- * specified as a filename of an image file to load. In general, GtkBuilder
- * allows forward references to objects — an object doesn't have to be
- * constructed before it can be referred to. The exception to this rule is that
- * an object has to be constructed before it can be used as the value of a
- * construct-only property.
+ * gdk_color_parse()). Pixbufs can be specified as a filename of an image file to load.
+ * Objects can be referred to by their name and by default refer to objects declared
+ * in the local xml fragment and objects exposed via gtk_builder_expose_object().
+ *
+ * In general, GtkBuilder allows forward references to objects mdash declared
+ * in the local xml; an object doesn't have to be constructed before it can be referred to.
+ * The exception to this rule is that an object has to be constructed before
+ * it can be used as the value of a construct-only property.
  *
  * Signal handlers are set up with the <signal> element. The "name"
  * attribute specifies the name of the signal, and the "handler" attribute
@@ -842,6 +844,20 @@ public class Builder : ObjectG
 		}
 		
 		return p;
+	}
+	
+	/**
+	 * Add object to the builder object pool so it can be referenced just like any
+	 * other object built by builder.
+	 * Params:
+	 * name = the name of the object exposed to the builder
+	 * object = the object to expose
+	 * Since 3.8
+	 */
+	public void exposeObject(string name, ObjectG object)
+	{
+		// void gtk_builder_expose_object (GtkBuilder *builder,  const gchar *name,  GObject *object);
+		gtk_builder_expose_object(gtkBuilder, Str.toStringz(name), (object is null) ? null : object.getObjectGStruct());
 	}
 	
 	/**

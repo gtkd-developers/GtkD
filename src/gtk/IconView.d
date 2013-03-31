@@ -199,10 +199,10 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	void delegate(TreePath, IconView)[] onItemActivatedListeners;
 	/**
 	 * The ::item-activated signal is emitted when the method
-	 * gtk_icon_view_item_activated() is called or the user double
-	 * clicks an item. It is also emitted when a non-editable item
-	 * is selected and one of the keys: Space, Return or Enter is
-	 * pressed.
+	 * gtk_icon_view_item_activated() is called, when the user double
+	 * clicks an item with the "activate-on-single-click" property set
+	 * to FALSE, or when the user single clicks an item when the
+	 * "activate-on-single-click" property set to TRUE. It is also
 	 */
 	void addOnItemActivated(void delegate(TreePath, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -939,6 +939,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		// gint gtk_icon_view_get_item_padding (GtkIconView *icon_view);
 		return gtk_icon_view_get_item_padding(gtkIconView);
+	}
+	
+	/**
+	 * Causes the "item-activated" signal to be emitted on
+	 * a single click instead of a double click.
+	 * Params:
+	 * single = TRUE to emit item-activated on a single click
+	 * Since 3.8
+	 */
+	public void setActivateOnSingleClick(int single)
+	{
+		// void gtk_icon_view_set_activate_on_single_click  (GtkIconView *icon_view,  gboolean single);
+		gtk_icon_view_set_activate_on_single_click(gtkIconView, single);
+	}
+	
+	/**
+	 * Gets the setting set by gtk_icon_view_set_activate_on_single_click().
+	 * Returns: TRUE if item-activated will be emitted on a single click Since 3.8
+	 */
+	public int getActivateOnSingleClick()
+	{
+		// gboolean gtk_icon_view_get_activate_on_single_click  (GtkIconView *icon_view);
+		return gtk_icon_view_get_activate_on_single_click(gtkIconView);
 	}
 	
 	/**

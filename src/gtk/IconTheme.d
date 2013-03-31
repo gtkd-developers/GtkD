@@ -50,15 +50,19 @@
  * 	- glib.ListG
  * 	- gio.IconIF
  * 	- gdk.Pixbuf
+ * 	- gdk.RGBA
  * 	- gdk.Screen
  * 	- gtk.IconInfo
+ * 	- gtk.StyleContext
  * structWrap:
  * 	- GIcon* -> IconIF
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkRGBA* -> RGBA
  * 	- GdkScreen* -> Screen
  * 	- GtkIconInfo* -> IconInfo
  * 	- GtkIconTheme* -> IconTheme
+ * 	- GtkStyleContext* -> StyleContext
  * module aliases:
  * local aliases:
  * overrides:
@@ -81,8 +85,10 @@ private import glib.GException;
 private import glib.ListG;
 private import gio.IconIF;
 private import gdk.Pixbuf;
+private import gdk.RGBA;
 private import gdk.Screen;
 private import gtk.IconInfo;
+private import gtk.StyleContext;
 
 
 
@@ -132,7 +138,7 @@ private import gobject.ObjectG;
  * or stock items, rather than directly, but looking up icons
  * directly is also simple. The GtkIconTheme object acts
  * as a database of all the icons in the current theme. You
- * can create new GtkIconTheme objects, but its much more
+ * can create new GtkIconTheme objects, but it's much more
  * efficient to use the standard icon theme for the GdkScreen
  * so that the icon information is shared with other people
  * looking up icons. In the case where the default screen is
@@ -402,7 +408,7 @@ public class IconTheme : ObjectG
 	 * iconName = the name of the icon to lookup
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
+	 * Returns: a GtkIconInfo object containing information about the icon, or NULL if the icon wasn't found. [transfer full]
 	 */
 	public IconInfo lookupIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
@@ -432,7 +438,7 @@ public class IconTheme : ObjectG
 	 * icon names to lookup. [array zero-terminated=1]
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
+	 * Returns: a GtkIconInfo object containing information about the icon, or NULL if the icon wasn't found. [transfer full]
 	 */
 	public IconInfo chooseIcon(string[] iconNames, int size, GtkIconLookupFlags flags)
 	{
@@ -457,7 +463,7 @@ public class IconTheme : ObjectG
 	 * icon = the GIcon to look up
 	 * size = desired icon size
 	 * flags = flags modifying the behavior of the icon lookup
-	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Free with gtk_icon_info_free()
+	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Unref with g_object_unref(). [transfer full]
 	 */
 	public IconInfo lookupByGicon(IconIF icon, int size, GtkIconLookupFlags flags)
 	{

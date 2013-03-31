@@ -545,7 +545,7 @@ public class ComboBoxText : ComboBox
 	 * function will return its contents (which will not necessarily
 	 * be an item from the list).
 	 * Since 2.24
-	 * Returns: a newly allocated string containing the currently active text. Must be freed with g_free().
+	 * Returns: a newly allocated string containing the currently active text. Must be freed with g_free(). [transfer full]
 	 */
 	public string getActiveText()
 	{

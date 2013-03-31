@@ -105,6 +105,10 @@ public template FontChooserT(TStruct)
 		return  _onFontActivatedListeners;
 	}
 	/**
+	 * Emitted when a font is activated.
+	 * This usually happens when the user double clicks an item,
+	 * or an item is selected and the user presses one of the keys
+	 * Space, Shift+Space, Return or Enter.
 	 * See Also
 	 * GtkFontChooserDialog, GtkFontChooserWidget, GtkFontButton
 	 */
@@ -123,11 +127,11 @@ public template FontChooserT(TStruct)
 		}
 		_onFontActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, gchar* arg1, FontChooserIF _fontChooserIF)
+	extern(C) static void callBackFontActivated(GtkFontChooser* selfStruct, gchar* fontname, FontChooserIF _fontChooserIF)
 	{
 		foreach ( void delegate(string, FontChooserIF) dlg ; _fontChooserIF.onFontActivatedListeners )
 		{
-			dlg(Str.toString(arg1), _fontChooserIF);
+			dlg(Str.toString(fontname), _fontChooserIF);
 		}
 	}
 	

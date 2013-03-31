@@ -609,7 +609,9 @@ public enum GtkStateType
 alias GtkStateType StateType;
 
 /**
- * Describes a widget state.
+ * Describes a widget state. Widget states are used to match the widget
+ * against CSS pseudo-classes. Note that GTK extends the regular CSS
+ * classes and sometimes uses different names.
  * GTK_STATE_FLAG_NORMAL
  * State during normal operation.
  * GTK_STATE_FLAG_ACTIVE
@@ -626,6 +628,10 @@ alias GtkStateType StateType;
  * Widget has the keyboard focus.
  * GTK_STATE_FLAG_BACKDROP
  * Widget is in a background toplevel window.
+ * GTK_STATE_FLAG_DIR_LTR
+ * Widget is in left-to-right text direction. Since 3.8
+ * GTK_STATE_FLAG_DIR_RTL
+ * Widget is in right-to-left text direction. Since 3.8
  */
 public enum GtkStateFlags
 {
@@ -636,7 +642,9 @@ public enum GtkStateFlags
 	INSENSITIVE = 1 << 3,
 	INCONSISTENT = 1 << 4,
 	FOCUSED = 1 << 5,
-	BACKDROP = 1 << 6
+	BACKDROP = 1 << 6,
+	DIR_LTR = 1 << 7,
+	DIR_RTL = 1 << 8
 }
 alias GtkStateFlags StateFlags;
 
@@ -813,7 +821,7 @@ alias GtkJunctionSides JunctionSides;
  * GTK_BORDER_STYLE_DASHED
  * A series of square-ended dashes
  * GTK_BORDER_STYLE_DOUBLE
- * Two parrallel lines with some space between them
+ * Two parallel lines with some space between them
  * GTK_BORDER_STYLE_GROOVE
  * Looks as if it were carved in the canvas
  * GTK_BORDER_STYLE_RIDGE
@@ -919,6 +927,7 @@ public enum GtkCssSectionType
 alias GtkCssSectionType CssSectionType;
 
 /**
+ * Used to specify options for gtk_icon_theme_lookup_icon()
  * GTK_ICON_LOOKUP_NO_SVG
  * Never return SVG icons, even if gdk-pixbuf
  *  supports them. Cannot be used together with GTK_ICON_LOOKUP_FORCE_SVG.
@@ -930,8 +939,14 @@ alias GtkCssSectionType CssSectionType;
  * When passed to
  *  gtk_icon_theme_lookup_icon() includes builtin icons
  *  as well as files. For a builtin icon, gtk_icon_info_get_filename()
+ *  returns NULL and you need to call gtk_icon_info_get_builtin_pixbuf().
  * GTK_ICON_LOOKUP_GENERIC_FALLBACK
+ * Try to shorten icon name at '-'
+ *  characters before looking at inherited themes. For more general
+ *  fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
  * GTK_ICON_LOOKUP_FORCE_SIZE
+ * Always return the icon scaled to the
+ *  requested size. Since 2.14.
  */
 public enum GtkIconLookupFlags
 {
@@ -1096,7 +1111,7 @@ alias GtkResponseType ResponseType;
  * GTK_MESSAGE_INFO
  * Informational message
  * GTK_MESSAGE_WARNING
- * Nonfatal warning message
+ * Non-fatal warning message
  * GTK_MESSAGE_QUESTION
  * Question requiring a choice
  * GTK_MESSAGE_ERROR
@@ -1603,7 +1618,7 @@ public enum GtkIconViewDropPosition
 alias GtkIconViewDropPosition IconViewDropPosition;
 
 /**
- * Tells how a cell is to be rendererd.
+ * Tells how a cell is to be rendered.
  * GTK_CELL_RENDERER_SELECTED
  * The cell is currently selected, and
  *  probably has a selection colored background to render to.
@@ -1661,7 +1676,7 @@ public enum GtkCellRendererAccelMode
 alias GtkCellRendererAccelMode CellRendererAccelMode;
 
 /**
- * Determines how widgets should be packed insided menubars
+ * Determines how widgets should be packed inside menubars
  * and menuitems contained in menubars.
  * GTK_PACK_DIRECTION_LTR
  * Widgets are packed left-to-right
@@ -2157,7 +2172,7 @@ alias GtkTextDirection TextDirection;
  * GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT
  * Prefer width-for-height geometry management
  * GTK_SIZE_REQUEST_CONSTANT_SIZE
- * Dont trade height-for-width or width-for-height
+ * Don't trade height-for-width or width-for-height
  */
 public enum GtkSizeRequestMode
 {
@@ -2824,7 +2839,7 @@ public struct GtkSelectionData
  * GtkTargetFlags for DND
  * guint info;
  * an application-assigned integer ID which will
- * get passed as a parater to e.g the "selection-get"
+ * get passed as a parameter to e.g the "selection-get"
  * signal. It allows the application to identify the target
  * type without extensive string compares.
  */
@@ -3444,6 +3459,11 @@ public struct GtkTreeModel{}
 public struct GtkTreePath{}
 
 
+/**
+ * A GtkTreeRowReference tracks model changes so that it always refers to the
+ * same row (a GtkTreePath refers to a position, not a fixed row). Create a
+ * new GtkTreeRowReference with gtk_tree_row_reference_new().
+ */
 public struct GtkTreeRowReference{}
 
 
@@ -5945,6 +5965,22 @@ public alias extern(C) char * function(GtkCalendar* calendar, uint year, uint mo
  */
 // void (*GtkCallback) (GtkWidget *widget,  gpointer data);
 public alias extern(C) void function(GtkWidget* widget, void* data) GtkCallback;
+
+/*
+ * Callback type for adding a function to update animations. See gtk_widget_add_tick_callback().
+ * widget :
+ * the widget
+ * frame_clock :
+ * the frame clock for the widget (same as calling gtk_widget_get_frame_clock())
+ * user_data :
+ * user data passed to gtk_widget_add_tick_callback().
+ * Returns :
+ * G_SOURCE_CONTINUE if the tick callback should continue to be called,
+ * G_SOURCE_REMOVE if the tick callback should be removed.
+ * Since 3.8
+ */
+// gboolean (*GtkTickCallback) (GtkWidget *widget,  GdkFrameClock *frame_clock,  gpointer user_data);
+public alias extern(C) int function(GtkWidget* widget, GdkFrameClock* frameClock, void* userData) GtkTickCallback;
 
 /*
  */

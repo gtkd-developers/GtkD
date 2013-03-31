@@ -54,6 +54,7 @@
  * 	- gtk.EntryBuffer
  * 	- gtk.EntryCompletion
  * 	- gtk.TargetList
+ * 	- gtk.Widget
  * 	- pango.PgAttributeList
  * 	- pango.PgLayout
  * 	- gtk.EditableT
@@ -68,6 +69,7 @@
  * 	- GtkEntryBuffer* -> EntryBuffer
  * 	- GtkEntryCompletion* -> EntryCompletion
  * 	- GtkTargetList* -> TargetList
+ * 	- GtkWidget* -> Widget
  * 	- PangoAttrList* -> PgAttributeList
  * 	- PangoLayout* -> PgLayout
  * module aliases:
@@ -95,6 +97,7 @@ private import gtk.Border;
 private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
 private import gtk.TargetList;
+private import gtk.Widget;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import gtk.EditableT;
@@ -556,14 +559,20 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 	}
 	
-	void delegate(GtkMenu*, Entry)[] onPopulatePopupListeners;
+	void delegate(Widget, Entry)[] onPopulatePopupListeners;
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
 	 * context menu of the entry.
 	 * If you need to add items to the context menu, connect
-	 * to this signal and append your menuitems to the menu.
+	 * to this signal and append your items to the widget, which
+	 * will be a GtkMenu in this case.
+	 * If "populate-all" is TRUE, this signal will
+	 * also be emitted to populate touch popups. In this case,
+	 * widget will be a different container, e.g. a GtkToolbar.
+	 * The signal handler should not make assumptions about the
+	 * type of widget.
 	 */
-	void addOnPopulatePopup(void delegate(GtkMenu*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopulatePopup(void delegate(Widget, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
 		{
@@ -578,11 +587,11 @@ public class Entry : Widget, EditableIF, CellEditableIF
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkMenu* menu, Entry _entry)
+	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkWidget* popup, Entry _entry)
 	{
-		foreach ( void delegate(GtkMenu*, Entry) dlg ; _entry.onPopulatePopupListeners )
+		foreach ( void delegate(Widget, Entry) dlg ; _entry.onPopulatePopupListeners )
 		{
-			dlg(menu, _entry);
+			dlg(ObjectG.getDObject!(Widget)(popup), _entry);
 		}
 	}
 	

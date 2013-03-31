@@ -657,6 +657,9 @@ public template FileChooserT(TStruct)
 	 * GtkFileChooser, like gtk_file_chooser_get_filename(),
 	 * rather than the URI functions like
 	 * gtk_file_chooser_get_uri(),
+	 * On some systems non-native files may still be
+	 * available using the native filesystem via a userspace
+	 * filesystem (FUSE).
 	 * Since 2.4
 	 * Params:
 	 * localOnly = TRUE if only local files can be selected
@@ -809,8 +812,9 @@ public template FileChooserT(TStruct)
 	
 	/**
 	 * Gets the filename for the currently selected file in
-	 * the file selector. If multiple files are selected,
-	 * one of the filenames will be returned at random.
+	 * the file selector. The filename is returned as an absolute path. If
+	 * multiple files are selected, one of the filenames will be returned at
+	 * random.
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 * Since 2.4
@@ -960,7 +964,7 @@ public template FileChooserT(TStruct)
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 * Since 2.4
-	 * Returns: The currently selected URI, or NULL if no file is selected. Free with g_free()
+	 * Returns: The currently selected URI, or NULL if no file is selected. If gtk_file_chooser_set_local_only() is set to TRUE (the default) a local URI will be returned for any FUSE locations. Free with g_free()
 	 */
 	public string getUri()
 	{

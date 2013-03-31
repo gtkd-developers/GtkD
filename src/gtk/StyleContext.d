@@ -50,6 +50,7 @@
  * 	- cairo.Context
  * 	- gobject.Value
  * 	- glib.ListG
+ * 	- gdk.FrameClock
  * 	- gdk.Pixbuf
  * 	- gdk.RGBA
  * 	- gdk.Screen
@@ -64,6 +65,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GValue* -> Value
+ * 	- GdkFrameClock* -> FrameClock
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRGBA* -> RGBA
  * 	- GdkScreen* -> Screen
@@ -97,6 +99,7 @@ private import glib.Str;
 private import cairo.Context;
 private import gobject.Value;
 private import glib.ListG;
+private import gdk.FrameClock;
 private import gdk.Pixbuf;
 private import gdk.RGBA;
 private import gdk.Screen;
@@ -434,6 +437,10 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_get_direction has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_style_context_get_state() and
+	 *  check for GTK_STATE_FLAG_DIR_LTR and
+	 *  GTK_STATE_FLAG_DIR_RTL instead.
 	 * Returns the widget direction used for rendering.
 	 * Returns: the widget direction Since 3.0
 	 */
@@ -519,6 +526,23 @@ public class StyleContext : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+	}
+	
+	/**
+	 * Returns the GdkFrameClock to which context is attached.
+	 * Returns: a GdkFrameClock, or NULL if context does not have an attached frame clock. [transfer none] Since 3.8
+	 */
+	public FrameClock getFrameClock()
+	{
+		// GdkFrameClock * gtk_style_context_get_frame_clock (GtkStyleContext *context);
+		auto p = gtk_style_context_get_frame_clock(gtkStyleContext);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
 	}
 	
 	/**
@@ -681,6 +705,9 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_get_font has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_style_context_get() for "font" or
+	 *  subproperties instead.
 	 * Returns the font description for a given state. The returned
 	 * object is const and will remain valid until the
 	 * "changed" signal happens.
@@ -951,6 +978,10 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_set_direction has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_style_context_set_state() with
+	 *  GTK_STATE_FLAG_DIR_LTR and GTK_STATE_FLAG_DIR_RTL
+	 *  instead.
 	 * Sets the reading direction for rendering purposes.
 	 * If you are using a GtkStyleContext returned from
 	 * gtk_widget_get_style_context(), you do not need to
@@ -1150,6 +1181,22 @@ public class StyleContext : ObjectG
 	{
 		// void gtk_style_context_set_screen (GtkStyleContext *context,  GdkScreen *screen);
 		gtk_style_context_set_screen(gtkStyleContext, (screen is null) ? null : screen.getScreenStruct());
+	}
+	
+	/**
+	 * Attaches context to the given frame clock.
+	 * The frame clock is used for the timing of animations.
+	 * If you are using a GtkStyleContext returned from
+	 * gtk_widget_get_style_context(), you do not need to
+	 * call this yourself.
+	 * Params:
+	 * frameClock = a GdkFrameClock
+	 * Since 3.8
+	 */
+	public void setFrameClock(FrameClock frameClock)
+	{
+		// void gtk_style_context_set_frame_clock (GtkStyleContext *context,  GdkFrameClock *frame_clock);
+		gtk_style_context_set_frame_clock(gtkStyleContext, (frameClock is null) ? null : frameClock.getFrameClockStruct());
 	}
 	
 	/**

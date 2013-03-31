@@ -91,6 +91,9 @@ private import gtkc.paths;
  * It is not normally necessary to deal directly with GtkSymbolicColors,
  * since they are mostly used behind the scenes by GtkStyleContext and
  * GtkCssProvider.
+ *
+ * GtkSymbolicColor is deprecated. Symbolic colors are considered an
+ * implementation detail of GTK+.
  */
 public class SymbolicColor
 {
@@ -165,6 +168,8 @@ public class SymbolicColor
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_new_literal has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Creates a symbolic color pointing to a literal color.
 	 * Params:
 	 * color = a GdkRGBA
@@ -182,6 +187,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_new_name has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Creates a symbolic color pointing to an unresolved named
 	 * color. See gtk_style_context_lookup_color() and
 	 * gtk_style_properties_lookup_color().
@@ -201,6 +208,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_new_mix has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Creates a symbolic color defined as a mix of another
 	 * two colors. a mix factor of 0 would resolve to color1,
 	 * while a factor of 1 would resolve to color2.
@@ -222,6 +231,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_new_win32 has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Creates a symbolic color based on the current win32
 	 * theme.
 	 * Note that while this call is available on all platforms
@@ -244,6 +255,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_ref has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Increases the reference count of color
 	 * Returns: the same color Since 3.0
 	 */
@@ -261,6 +274,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_unref has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Decreases the reference count of color, freeing its memory if the
 	 * reference count reaches 0.
 	 */
@@ -271,6 +286,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_resolve has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * If color is resolvable, resolved_color will be filled in
 	 * with the resolved color, and TRUE will be returned. Generally,
 	 * if color can't be resolved, it is due to it being defined on
@@ -291,6 +308,8 @@ public class SymbolicColor
 	}
 	
 	/**
+	 * Warning
+	 * gtk_symbolic_color_to_string has been deprecated since version 3.8 and should not be used in newly-written code. GtkSymbolicColor is deprecated.
 	 * Converts the given color to a string representation. This is useful
 	 * both for debugging and for serialization of strings. The format of
 	 * the string may change between different versions of GTK, but it is

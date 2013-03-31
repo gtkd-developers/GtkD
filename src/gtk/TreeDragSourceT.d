@@ -133,7 +133,7 @@ public template TreeDragSourceT(TStruct)
 	 * Params:
 	 * path = row that was dragged
 	 * selectionData = a GtkSelectionData to fill with data
-	 * from the dragged row. [out]
+	 * from the dragged row
 	 * Returns: TRUE if data of the required type was provided
 	 */
 	public int dragDataGet(TreePath path, SelectionData selectionData)

@@ -286,7 +286,7 @@ public class Main
 	 * understood by GTK+ are stripped before return. [array length=argc][inout][allow-none]
 	 * parameterString = a string which is displayed in
 	 * the first line of --help output, after
-	 * programname [OPTION...]
+	 * programname [OPTION...]. [allow-none]
 	 * entries = a NULL-terminated array
 	 * of GOptionEntrys describing the options of your program. [array zero-terminated=1]
 	 * translationDomain = a translation domain to use for translating

@@ -388,9 +388,9 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
-	 * Gets the fixed width of the column. This value is only meaning may not be
-	 * the actual width of the column on the screen, just what is requested.
-	 * Returns: the fixed width of the column
+	 * Gets the fixed width of the column. This may not be the actual displayed
+	 * width of the column; for that, use gtk_tree_view_column_get_width().
+	 * Returns: The fixed width of the column.
 	 */
 	public int getFixedWidth()
 	{
@@ -399,13 +399,18 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
-	 * Sets the size of the column in pixels. This is meaningful only if the sizing
-	 * type is GTK_TREE_VIEW_COLUMN_FIXED. The size of the column is clamped to
-	 * the min/max width for the column. Please note that the min/max width of the
-	 * column doesn't actually affect the "fixed_width" property of the widget, just
-	 * the actual size when displayed.
+	 * If fixed_width is not -1, sets the fixed width of tree_column; otherwise
+	 * unsets it. The effective value of fixed_width is clamped between the
+	 * minumum and maximum width of the column; however, the value stored in the
+	 * "fixed-width" property is not clamped. If the column sizing is
+	 * GTK_TREE_VIEW_COLUMN_GROW_ONLY or GTK_TREE_VIEW_COLUMN_AUTOSIZE, setting a
+	 * fixed width overrides the automatically calculated width. Note that
+	 * fixed_width is only a hint to GTK+; the width actually allocated to the
+	 * column may be greater or less than requested.
+	 * Along with "expand", the "fixed-width" property changes when the column is
+	 * resized by the user.
 	 * Params:
-	 * fixedWidth = The size to set tree_column to. Must be greater than 0.
+	 * fixedWidth = The new fixed width, in pixels, or -1.
 	 */
 	public void setFixedWidth(int fixedWidth)
 	{
@@ -498,9 +503,11 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	 * amongst all columns that have the expand set to TRUE. If no column has this
 	 * option set, then the last column gets all extra space. By default, every
 	 * column is created with this FALSE.
+	 * Along with "fixed-width", the "expand" property changes when the column is
+	 * resized by the user.
 	 * Since 2.4
 	 * Params:
-	 * expand = TRUE if the column should take available extra space, FALSE if not
+	 * expand = TRUE if the column should expand to fill available space.
 	 */
 	public void setExpand(int expand)
 	{
@@ -509,9 +516,9 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	}
 	
 	/**
-	 * Return TRUE if the column expands to take any available space.
+	 * Returns TRUE if the column expands to fill available space.
 	 * Since 2.4
-	 * Returns: TRUE, if the column expands
+	 * Returns: TRUE if the column expands to fill available space.
 	 */
 	public int getExpand()
 	{

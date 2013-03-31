@@ -470,14 +470,21 @@ public class TextView : Container, ScrollableIF
 		}
 	}
 	
-	void delegate(GtkMenu*, TextView)[] onPopulatePopupListeners;
+	void delegate(Widget, TextView)[] onPopulatePopupListeners;
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
 	 * context menu of the text view.
 	 * If you need to add items to the context menu, connect
-	 * to this signal and append your menuitems to the menu.
+	 * to this signal and append your items to the popup, which
+	 * will be a GtkMenu in this case.
+	 * If "populate-toolbar" is TRUE, this signal will
+	 * also be emitted to populate touch popups. In this case,
+	 * popup will be a different container, e.g. a GtkToolbar.
+	 * The signal handler should not make assumptions about the
+	 * type of widget, but check whether popup is a GtkMenu
+	 * or GtkToolbar or another kind of container.
 	 */
-	void addOnPopulatePopup(void delegate(GtkMenu*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopulatePopup(void delegate(Widget, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
 		{
@@ -492,11 +499,11 @@ public class TextView : Container, ScrollableIF
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* textViewStruct, GtkMenu* menu, TextView _textView)
+	extern(C) static void callBackPopulatePopup(GtkTextView* textViewStruct, GtkWidget* popup, TextView _textView)
 	{
-		foreach ( void delegate(GtkMenu*, TextView) dlg ; _textView.onPopulatePopupListeners )
+		foreach ( void delegate(Widget, TextView) dlg ; _textView.onPopulatePopupListeners )
 		{
-			dlg(menu, _textView);
+			dlg(ObjectG.getDObject!(Widget)(popup), _textView);
 		}
 	}
 	

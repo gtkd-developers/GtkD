@@ -97,7 +97,7 @@ private import gobject.ObjectG;
  * is rendered in the correct location using gtk_cell_renderer_render().
  *
  * There are a number of rules that must be followed when writing a new
- * GtkCellRenderer. First and foremost, its important that a certain set
+ * GtkCellRenderer. First and foremost, it's important that a certain set
  * of properties will always yield a cell renderer of the same size,
  * barring a GtkStyle change. The GtkCellRenderer also has a number of
  * generic properties that are expected to be honored by all children.
@@ -223,6 +223,23 @@ public class CellRenderer : ObjectG
 		}
 	}
 	
+	
+	/**
+	 * Sets the type to be used for creating accessibles for cells rendered by
+	 * cell renderers of renderer_class. Note that multiple accessibles will
+	 * be created.
+	 * This function should only be called from class init functions of cell
+	 * renderers.
+	 * Params:
+	 * rendererClass = class to set the accessible type for
+	 * type = The object type that implements the accessible for widget_class.
+	 * The type must be a subtype of GtkRendererCellAccessible
+	 */
+	public static void classSetAccessibleType(GtkCellRendererClass* rendererClass, GType type)
+	{
+		// void gtk_cell_renderer_class_set_accessible_type  (GtkCellRendererClass *renderer_class,  GType type);
+		gtk_cell_renderer_class_set_accessible_type(rendererClass, type);
+	}
 	
 	/**
 	 * Gets the aligned area used by cell inside cell_area. Used for finding

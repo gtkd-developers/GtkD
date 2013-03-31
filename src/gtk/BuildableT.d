@@ -77,7 +77,7 @@ public import gtk.Builder;
 
 
 /**
- * GtkBuildable allows objects to extend and customize thier deserialization
+ * GtkBuildable allows objects to extend and customize their deserialization
  * from GtkBuilder UI descriptions.
  * The interface includes methods for setting names and properties of objects,
  * parsing custom tags and constructing child objects.

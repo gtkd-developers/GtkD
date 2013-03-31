@@ -94,6 +94,11 @@ private import gtkc.Loader;
  * It is not normally necessary to deal directly with GtkGradients,
  * since they are mostly used behind the scenes by GtkStyleContext and
  * GtkCssProvider.
+ *
+ * GtkGradient is deprecated. It was used internally by GTK's CSS engine
+ * to represent gradients. As its handling is not conforming to modern
+ * web standards, it is not used anymore. If you want to use gradients in
+ * your own code, please use Cairo directly.
  */
 public class Gradient
 {
@@ -134,6 +139,8 @@ public class Gradient
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_gradient_new_linear has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Creates a new linear gradient along the line defined by (x0, y0) and (x1, y1). Before using the gradient
 	 * a number of stop colors must be added through gtk_gradient_add_color_stop().
 	 * Params:
@@ -155,6 +162,8 @@ public class Gradient
 	}
 	
 	/**
+	 * Warning
+	 * gtk_gradient_new_radial has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Creates a new radial gradient along the two circles defined by (x0, y0, radius0) and
 	 * (x1, y1, radius1). Before using the gradient a number of stop colors must be added
 	 * through gtk_gradient_add_color_stop().
@@ -179,6 +188,8 @@ public class Gradient
 	}
 	
 	/**
+	 * Warning
+	 * gtk_gradient_add_color_stop has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Adds a stop color to gradient.
 	 * Params:
 	 * offset = offset for the color stop
@@ -192,6 +203,8 @@ public class Gradient
 	}
 	
 	/**
+	 * Warning
+	 * gtk_gradient_ref has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Increases the reference count of gradient.
 	 * Returns: The same gradient Since 3.0
 	 */
@@ -209,6 +222,8 @@ public class Gradient
 	}
 	
 	/**
+	 * Warning
+	 * gtk_gradient_unref has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Decreases the reference count of gradient, freeing its memory
 	 * if the reference count reaches 0.
 	 */
@@ -219,6 +234,8 @@ public class Gradient
 	}
 	
 	/**
+	 * Warning
+	 * gtk_gradient_resolve has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * If gradient is resolvable, resolved_gradient will be filled in
 	 * with the resolved gradient as a cairo_pattern_t, and TRUE will
 	 * be returned. Generally, if gradient can't be resolved, it is
@@ -256,6 +273,8 @@ public class Gradient
 	}
 	
 	/**
+	 * Warning
+	 * gtk_gradient_to_string has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Creates a string representation for gradient that is suitable
 	 * for using in GTK CSS files.
 	 * Returns: A string representation for gradient

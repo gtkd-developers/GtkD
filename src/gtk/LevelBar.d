@@ -288,6 +288,28 @@ public class LevelBar : Widget
 	}
 	
 	/**
+	 * Sets the value of the "inverted" property.
+	 * Params:
+	 * inverted = TRUE to invert the level bar
+	 * Since 3.8
+	 */
+	public void setInverted(int inverted)
+	{
+		// void gtk_level_bar_set_inverted (GtkLevelBar *self,  gboolean inverted);
+		gtk_level_bar_set_inverted(gtkLevelBar, inverted);
+	}
+	
+	/**
+	 * Return the value of the "inverted" property.
+	 * Returns: TRUE if the level bar is inverted Since 3.8
+	 */
+	public int getInverted()
+	{
+		// gboolean gtk_level_bar_get_inverted (GtkLevelBar *self);
+		return gtk_level_bar_get_inverted(gtkLevelBar);
+	}
+	
+	/**
 	 * Adds a new offset marker on self at the position specified by value.
 	 * When the bar value is in the interval topped by value (or between value
 	 * and "max-value" in case the offset is the last one on the bar)

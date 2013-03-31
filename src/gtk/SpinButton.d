@@ -426,7 +426,7 @@ public class SpinButton : Entry
 	
 	/**
 	 * Sets the update behavior of a spin button.
-	 * This determines wether the spin button is always updated
+	 * This determines whether the spin button is always updated
 	 * or only when a valid value is set.
 	 * Params:
 	 * policy = a GtkSpinButtonUpdatePolicy value
