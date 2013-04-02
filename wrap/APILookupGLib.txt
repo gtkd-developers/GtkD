@@ -2484,7 +2484,7 @@ code: start
   	/** */ 
 	void* data()
 	{
-		return getListGStruct().data;
+		return gList.data;
 	}
 
   	/**
@@ -2493,7 +2493,12 @@ code: start
 	 */ 
 	ListG next()
 	{
-		return new ListG(getListGStruct().next);
+		if ( gList.next is null )
+		{
+			return null;
+		}
+
+		return new ListG(gList.next);
 	}
 
 	/**
@@ -2502,7 +2507,12 @@ code: start
 	 */ 
 	ListG previous()
 	{
-		return new ListG(getListGStruct().prev);
+		if ( gList.prev is null )
+		{
+			return null;
+		}
+
+		return new ListG(gList.prev);
 	}
 code: end
 outFile: ListG
@@ -2517,7 +2527,7 @@ code: start
   	/** */ 
 	void* data()
 	{
-		return getListSGStruct().data;
+		return gSList.data;
 	}
 
   	/**
@@ -2526,7 +2536,12 @@ code: start
 	 */ 
 	ListSG next()
 	{
-		return new ListSG(getListSGStruct().next);
+		if ( gSList.next is null )
+		{
+			return null;
+		}
+
+		return new ListSG(gSList.next);
 	}
 code: end
 outFile: ListSG

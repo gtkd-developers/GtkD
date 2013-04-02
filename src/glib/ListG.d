@@ -132,7 +132,7 @@ public class ListG
 	/** */
 	void* data()
 	{
-		return getListGStruct().data;
+		return gList.data;
 	}
 	
 	/**
@@ -141,7 +141,12 @@ public class ListG
 	 */
 	ListG next()
 	{
-		return new ListG(getListGStruct().next);
+		if ( gList.next is null )
+		{
+			return null;
+		}
+		
+		return new ListG(gList.next);
 	}
 	
 	/**
@@ -150,7 +155,12 @@ public class ListG
 	 */
 	ListG previous()
 	{
-		return new ListG(getListGStruct().prev);
+		if ( gList.prev is null )
+		{
+			return null;
+		}
+		
+		return new ListG(gList.prev);
 	}
 	
 	/**
