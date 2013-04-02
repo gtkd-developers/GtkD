@@ -38,26 +38,26 @@
  * implements:
  * prefixes:
  * 	- gst_object_
- * 	- gst_
  * omit structs:
+ * 	- GstObjectClass
  * omit prefixes:
  * omit code:
- * 	- gst_object_save_thyself
- * 	- gst_object_restore_thyself
- * 	- gst_class_signal_emit_by_name
- * 	- gst_class_signal_connect
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
  * 	- glib.ErrorG
  * 	- glib.ListG
+ * 	- gobject.ObjectG
  * 	- gobject.ParamSpec
+ * 	- gobject.Value
+ * 	- gstreamer.ControlBinding
  * structWrap:
  * 	- GError* -> ErrorG
  * 	- GList* -> ListG
  * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
+ * 	- GValue* -> Value
+ * 	- GstControlBinding* -> ControlBinding
  * 	- GstObject* -> ObjectGst
  * module aliases:
  * local aliases:
@@ -76,10 +76,12 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gobject.ObjectG;
 private import glib.ErrorG;
 private import glib.ListG;
+private import gobject.ObjectG;
 private import gobject.ParamSpec;
+private import gobject.Value;
+private import gstreamer.ControlBinding;
 
 
 
@@ -305,10 +307,10 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 * error = the GError. [in]
 	 */
-	public void defaultError(ErrorG error, string dbug)
+	public void defaultError(ErrorG error, ref char dbug)
 	{
 		// void gst_object_default_error (GstObject *source,  const GError *error,  const gchar *debug);
-		gst_object_default_error(gstObject, (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug));
+		gst_object_default_error(gstObject, (error is null) ? null : error.getErrorGStruct(), &dbug);
 	}
 	
 	/**
@@ -495,10 +497,10 @@ public class ObjectGst : ObjectG
 	 * binding = the GstControlBinding that should be used. [transfer full]
 	 * Returns: FALSE if the given binding has not been setup for this object or TRUE otherwise.
 	 */
-	public int addControlBinding(GstControlBinding* binding)
+	public int addControlBinding(ControlBinding binding)
 	{
 		// gboolean gst_object_add_control_binding (GstObject *object,  GstControlBinding *binding);
-		return gst_object_add_control_binding(gstObject, binding);
+		return gst_object_add_control_binding(gstObject, (binding is null) ? null : binding.getControlBindingStruct());
 	}
 	
 	/**
@@ -508,10 +510,17 @@ public class ObjectGst : ObjectG
 	 * propertyName = name of the property
 	 * Returns: the GstControlBinding for property_name or NULL if the property is not controlled. [transfer full]
 	 */
-	public GstControlBinding* getControlBinding(string propertyName)
+	public ControlBinding getControlBinding(string propertyName)
 	{
 		// GstControlBinding * gst_object_get_control_binding (GstObject *object,  const gchar *property_name);
-		return gst_object_get_control_binding(gstObject, Str.toStringz(propertyName));
+		auto p = gst_object_get_control_binding(gstObject, Str.toStringz(propertyName));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ControlBinding)(cast(GstControlBinding*) p);
 	}
 	
 	/**
@@ -521,10 +530,10 @@ public class ObjectGst : ObjectG
 	 * binding = the binding
 	 * Returns: TRUE if the binding could be removed.
 	 */
-	public int removeControlBinding(GstControlBinding* binding)
+	public int removeControlBinding(ControlBinding binding)
 	{
 		// gboolean gst_object_remove_control_binding (GstObject *object,  GstControlBinding *binding);
-		return gst_object_remove_control_binding(gstObject, binding);
+		return gst_object_remove_control_binding(gstObject, (binding is null) ? null : binding.getControlBindingStruct());
 	}
 	
 	/**
@@ -534,10 +543,17 @@ public class ObjectGst : ObjectG
 	 * timestamp = the time the control-change should be read from
 	 * Returns: the GValue of the property at the given time, or NULL if the property isn't controlled.
 	 */
-	public GValue* getValue(string propertyName, GstClockTime timestamp)
+	public Value getValue(string propertyName, GstClockTime timestamp)
 	{
 		// GValue * gst_object_get_value (GstObject *object,  const gchar *property_name,  GstClockTime timestamp);
-		return gst_object_get_value(gstObject, Str.toStringz(propertyName), timestamp);
+		auto p = gst_object_get_value(gstObject, Str.toStringz(propertyName), timestamp);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 	
 	/**
@@ -553,14 +569,13 @@ public class ObjectGst : ObjectG
 	 * propertyName = the name of the property to get
 	 * timestamp = the time that should be processed
 	 * interval = the time spacing between subsequent values
-	 * nValues = the number of values
 	 * values = array to put control-values in
 	 * Returns: TRUE if the given array could be filled, FALSE otherwise
 	 */
-	public int getValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, void* values)
+	public int getValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, void[] values)
 	{
 		// gboolean gst_object_get_value_array (GstObject *object,  const gchar *property_name,  GstClockTime timestamp,  GstClockTime interval,  guint n_values,  gpointer values);
-		return gst_object_get_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, nValues, values);
+		return gst_object_get_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, cast(int) values.length, values.ptr);
 	}
 	
 	/**
@@ -577,10 +592,10 @@ public class ObjectGst : ObjectG
 	 * values = array to put control-values in
 	 * Returns: TRUE if the given array could be filled, FALSE otherwise
 	 */
-	public int getGValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, GValue* values)
+	public int getGValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, Value values)
 	{
 		// gboolean gst_object_get_g_value_array (GstObject *object,  const gchar *property_name,  GstClockTime timestamp,  GstClockTime interval,  guint n_values,  GValue *values);
-		return gst_object_get_g_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, nValues, values);
+		return gst_object_get_g_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, nValues, (values is null) ? null : values.getValueStruct());
 	}
 	
 	/**

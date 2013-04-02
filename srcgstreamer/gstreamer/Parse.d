@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Parse
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,19 +40,18 @@
  * 	- gst_parse_
  * omit structs:
  * omit prefixes:
+ * 	- gst_parse_context_
  * omit code:
- * 	- gst_parse_error_quark
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.Quark
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- gstreamer.Element
+ * 	- gstreamer.ParseContext
  * structWrap:
- * 	- GError* -> ErrorG
- * 	- GQuark -> Quark
  * 	- GstElement* -> Element
+ * 	- GstParseContext* -> ParseContext
  * module aliases:
  * local aliases:
  * overrides:
@@ -68,10 +67,10 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
-private import glib.Quark;
 private import glib.ErrorG;
 private import glib.GException;
 private import gstreamer.Element;
+private import gstreamer.ParseContext;
 
 
 
@@ -88,18 +87,17 @@ public class Parse
 {
 	
 	/**
-	 * Get the error quark used by the parsing subsystem.
-	 * Returns:
-	 *  the quark of the parse errors.
 	 */
-	public static Quark errorQuark()
-	{
-		// GQuark gst_parse_error_quark (void);
-		return new Quark( cast(uint*)gst_parse_error_quark() );
-	}
 	
 	/**
+	 * Get the error quark used by the parsing subsystem.
+	 * Returns: the quark of the parse errors.
 	 */
+	public static GQuark errorQuark()
+	{
+		// GQuark gst_parse_error_quark (void);
+		return gst_parse_error_quark();
+	}
 	
 	/**
 	 * Create a new pipeline based on command line syntax.
@@ -145,12 +143,12 @@ public class Parse
 	 * Returns: a new element on success, NULL on failure. If more than one toplevel element is specified by the pipeline_description, all elements are put into a GstPipeline, which then is returned. [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public static Element launchFull(string pipelineDescription, GstParseContext* context, GstParseFlags flags)
+	public static Element launchFull(string pipelineDescription, ParseContext context, GstParseFlags flags)
 	{
 		// GstElement * gst_parse_launch_full (const gchar *pipeline_description,  GstParseContext *context,  GstParseFlags flags,  GError **error);
 		GError* err = null;
 		
-		auto p = gst_parse_launch_full(Str.toStringz(pipelineDescription), context, flags, &err);
+		auto p = gst_parse_launch_full(Str.toStringz(pipelineDescription), (context is null) ? null : context.getParseContextStruct(), flags, &err);
 		
 		if (err !is null)
 		{
@@ -175,12 +173,12 @@ public class Parse
 	 * Returns: a new element on success and NULL on failure. [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public static Element launchv(char** argv)
+	public static Element launchv(string[] argv)
 	{
 		// GstElement * gst_parse_launchv (const gchar **argv,  GError **error);
 		GError* err = null;
 		
-		auto p = gst_parse_launchv(argv, &err);
+		auto p = gst_parse_launchv(Str.toStringzArray(argv), &err);
 		
 		if (err !is null)
 		{
@@ -208,12 +206,12 @@ public class Parse
 	 * Returns: a new element on success; on failure, either NULL or a partially-constructed bin or element will be returned and error will be set (unless you passed GST_PARSE_FLAG_FATAL_ERRORS in flags, then NULL will always be returned on failure). [transfer full]
 	 * Throws: GException on failure.
 	 */
-	public static Element launchvFull(char** argv, GstParseContext* context, GstParseFlags flags)
+	public static Element launchvFull(string[] argv, ParseContext context, GstParseFlags flags)
 	{
 		// GstElement * gst_parse_launchv_full (const gchar **argv,  GstParseContext *context,  GstParseFlags flags,  GError **error);
 		GError* err = null;
 		
-		auto p = gst_parse_launchv_full(argv, context, flags, &err);
+		auto p = gst_parse_launchv_full(Str.toStringzArray(argv), (context is null) ? null : context.getParseContextStruct(), flags, &err);
 		
 		if (err !is null)
 		{
@@ -287,12 +285,12 @@ public class Parse
 	 * Returns: a newly-created bin, or NULL if an error occurred. [transfer full][type Gst.Bin]
 	 * Throws: GException on failure.
 	 */
-	public static Element binFromDescriptionFull(string binDescription, int ghostUnlinkedPads, GstParseContext* context, GstParseFlags flags)
+	public static Element binFromDescriptionFull(string binDescription, int ghostUnlinkedPads, ParseContext context, GstParseFlags flags)
 	{
 		// GstElement * gst_parse_bin_from_description_full (const gchar *bin_description,  gboolean ghost_unlinked_pads,  GstParseContext *context,  GstParseFlags flags,  GError **err);
 		GError* err = null;
 		
-		auto p = gst_parse_bin_from_description_full(Str.toStringz(binDescription), ghostUnlinkedPads, context, flags, &err);
+		auto p = gst_parse_bin_from_description_full(Str.toStringz(binDescription), ghostUnlinkedPads, (context is null) ? null : context.getParseContextStruct(), flags, &err);
 		
 		if (err !is null)
 		{
@@ -306,42 +304,5 @@ public class Parse
 		}
 		
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
-	}
-	
-	/**
-	 * Allocates a parse context for use with gst_parse_launch_full() or
-	 * gst_parse_launchv_full().
-	 * Free-function: gst_parse_context_free
-	 * Returns: a newly-allocated parse context. Free with gst_parse_context_free() when no longer needed. [transfer full]
-	 */
-	public static GstParseContext* contextNew()
-	{
-		// GstParseContext * gst_parse_context_new (void);
-		return gst_parse_context_new();
-	}
-	
-	/**
-	 * Frees a parse context previously allocated with gst_parse_context_new().
-	 * Params:
-	 * context = a GstParseContext. [transfer full]
-	 */
-	public static void contextFree(GstParseContext* context)
-	{
-		// void gst_parse_context_free (GstParseContext *context);
-		gst_parse_context_free(context);
-	}
-	
-	/**
-	 * Retrieve missing elements from a previous run of gst_parse_launch_full()
-	 * or gst_parse_launchv_full(). Will only return results if an error code
-	 * of GST_PARSE_ERROR_NO_SUCH_ELEMENT was returned.
-	 * Params:
-	 * context = a GstParseContext
-	 * Returns: a NULL-terminated array of element factory name strings of missing elements. Free with g_strfreev() when no longer needed. [transfer full][array zero-terminated=1][element-type gchar*]
-	 */
-	public static string[] contextGetMissingElements(GstParseContext* context)
-	{
-		// gchar ** gst_parse_context_get_missing_elements  (GstParseContext *context);
-		return Str.toStringArray(gst_parse_context_get_missing_elements(context));
 	}
 }

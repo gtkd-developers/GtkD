@@ -246,7 +246,8 @@ public class Element : ObjectGst
 		GstSeekType.SET, time_nanoseconds,
 		GstSeekType.NONE, GST_CLOCK_TIME_NONE);
 	}
-	
+
+	/+
 	/**
 	 * Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
 	 */
@@ -270,6 +271,7 @@ public class Element : ObjectGst
 		//writefln("no more pads.");
 		return result;
 	}
+	+/
 	
 	/**
 	 */
@@ -1305,10 +1307,10 @@ public class Element : ObjectGst
 	 * destVal = a pointer to the result. [out]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryConvert(ref GstForma srcFormat, long srcVal, GstFormat destFormat, out long destVal)
+	public int queryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, out long destVal)
 	{
 		// gboolean gst_element_query_convert (GstElement *element,  GstFormat src_format,  gint64 src_val,  GstFormat dest_format,  gint64 *dest_val);
-		return gst_element_query_convert(gstElement, &srcFormat, srcVal, destFormat, &destVal);
+		return gst_element_query_convert(gstElement, srcFormat, srcVal, destFormat, &destVal);
 	}
 	
 	/**

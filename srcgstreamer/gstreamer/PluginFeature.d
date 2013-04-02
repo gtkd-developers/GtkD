@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_plugin_feature_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,8 +45,10 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- gstreamer.Plugin
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GstPlugin* -> Plugin
  * 	- GstPluginFeature* -> PluginFeature
  * module aliases:
  * local aliases:
@@ -67,6 +68,7 @@ private import gobject.ObjectG;
 
 private import glib.Str;
 private import glib.ListG;
+private import gstreamer.Plugin;
 
 
 
@@ -138,10 +140,17 @@ public class PluginFeature : ObjectGst
 	 * Get the plugin that provides this feature.
 	 * Returns: the plugin that provides this feature, or NULL. Unref with gst_object_unref() when no longer needed. [transfer full]
 	 */
-	public GstPlugin* getPlugin()
+	public Plugin getPlugin()
 	{
 		// GstPlugin * gst_plugin_feature_get_plugin (GstPluginFeature *feature);
-		return gst_plugin_feature_get_plugin(gstPluginFeature);
+		auto p = gst_plugin_feature_get_plugin(gstPluginFeature);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**

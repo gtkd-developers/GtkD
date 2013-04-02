@@ -38,13 +38,11 @@
  * implements:
  * prefixes:
  * 	- gst_message_
- * 	- gst_
  * omit structs:
  * 	- GstMessage
  * omit prefixes:
  * omit code:
  * 	- gst_message_parse_tag
- * 	- gst_message_type_to_quark
  * 	- gst_message_new_element
  * 	- gst_message_new_new_clock
  * 	- gst_message_new_segment_done
@@ -55,24 +53,30 @@
  * 	- gst_message_new_error
  * 	- gst_message_new_info
  * 	- gst_message_new_latency
+ * 	- gst_message_new_duration_changed
  * 	- gst_message_new_async_start
+ * 	- gst_message_new_reset_time
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.Quark
- * 	- gstreamer.Structure
- * 	- gstreamer.ObjectGst
- * 	- gstreamer.Clock
  * 	- glib.ErrorG
+ * 	- gobject.Value
+ * 	- gstreamer.Clock
+ * 	- gstreamer.Element
+ * 	- gstreamer.ObjectGst
+ * 	- gstreamer.Structure
  * 	- gstreamer.TagList
+ * 	- gstreamer.Toc
  * structWrap:
  * 	- GError* -> ErrorG
- * 	- GQuark -> Quark
+ * 	- GValue* -> Value
  * 	- GstClock* -> Clock
+ * 	- GstElement* -> Element
  * 	- GstMessage* -> Message
  * 	- GstObject* -> ObjectGst
  * 	- GstStructure* -> Structure
  * 	- GstTagList* -> TagList
+ * 	- GstToc* -> Toc
  * module aliases:
  * local aliases:
  * overrides:
@@ -88,12 +92,14 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
-private import glib.Quark;
-private import gstreamer.Structure;
-private import gstreamer.ObjectGst;
-private import gstreamer.Clock;
 private import glib.ErrorG;
+private import gobject.Value;
+private import gstreamer.Clock;
+private import gstreamer.Element;
+private import gstreamer.ObjectGst;
+private import gstreamer.Structure;
 private import gstreamer.TagList;
+private import gstreamer.Toc;
 
 
 
@@ -157,49 +163,6 @@ public class Message
 	public ObjectGst src()
 	{
 		return new ObjectGst( cast(GstObject*)getMessageStruct().src );
-	}
-	
-	/**
-	 * Get the structure.
-	 */
-	public Structure structure()
-	{
-		return new Structure( getMessageStruct().structure );
-	}
-	
-	/**
-	 * Extracts the tag list from the GstMessage. The tag list returned in the
-	 * output argument is a copy; the caller must free it when done.
-	 * MT safe.
-	 * Params:
-	 *  tagList = Return location for the tag-list.
-	 */
-	public TagList parseTag()
-	{
-		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
-		GstTagList* tag_list_c;
-		gst_message_parse_tag(gstMessage, &tag_list_c);
-		
-		if ( tag_list_c is null )
-		{
-			return null;
-		}
-		
-		return new TagList(tag_list_c);
-	}
-	
-	//I'm not so sure about the following:
-	/**
-	 * Get the unique quark for the given message type.
-	 * Params:
-	 *  type = the message type
-	 * Returns:
-	 *  the quark associated with the message type
-	 */
-	public static Quark typeToQuark(GstMessageType type)
-	{
-		// GQuark gst_message_type_to_quark (GstMessageType type);
-		return new Quark( cast(uint*)gst_message_type_to_quark(type) );
 	}
 	
 	/**
@@ -446,29 +409,83 @@ public class Message
 	}
 	
 	/**
-	 * This message is posted by elements when they start an ASYNC state change.
-	 * new_base_time is set to TRUE when the element lost its state when it was
-	 * PLAYING.
+	 * Create a new duration changed message. This message is posted by elements
+	 * that know the duration of a stream when the duration changes. This message
+	 * is received by bins and is used to calculate the total duration of a
+	 * pipeline. Elements may post a duration message with a duration of
+	 * GST_CLOCK_TIME_NONE to indicate that the duration has changed and the
+	 * cached duration should be discarded. The new duration can then be
+	 * retrieved via a query.
 	 * Params:
-	 * src = The object originating the message.
-	 * newBaseTime = if a new base_time should be set on the element
+	 *    src = The object originating the message. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Message newAsyncStart(ObjectGst src, int newBaseTime)
+	public static Message newDurationChanged(ObjectGst src)
 	{
-		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
-		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime);
+		// GstMessage * gst_message_new_duration_changed (GstObject *src);
+		auto p = gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct());
 		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_message_new_async_start");
+			throw new ConstructionException("null returned by gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct())");
 		}
 		
-		return new Message(cast(GstMessage*)p);
+		return new Message(cast(GstMessage*)p );
+	}
+	
+	/**
+	 * This message is posted by elements when they start an ASYNC state change.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncStart(ObjectGst src)
+	{
+		// GstMessage * gst_message_new_async_start (GstObject *src);
+		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct())");
+		}
+		return new Message(cast(GstMessage*)p );
+	}
+	
+	/**
+	 * The message is posted when elements completed an ASYNC state change.
+	 * running_time contains the time of the desired running_time when this
+	 * elements goes to PLAYING. A value of GST_CLOCK_TIME_NONE for running_time
+	 * means that the element has no clock interaction and thus doesn't care about
+	 * the running_time of the pipeline.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * runningTime = the desired running_time
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncDone(ObjectGst src, GstClockTime runningTime)
+	{
+		// GstMessage * gst_message_new_async_done (GstObject *src,  GstClockTime running_time);
+		auto p = gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime)");
+		}
+		return new Message(cast(GstMessage*)p );
 	}
 	
 	/**
 	 */
+	
+	/**
+	 * Get the unique quark for the given message type.
+	 * Params:
+	 * type = the message type
+	 * Returns: the quark associated with the message type
+	 */
+	public static GQuark typeToQuark(GstMessageType type)
+	{
+		// GQuark gst_message_type_to_quark (GstMessageType type);
+		return gst_message_type_to_quark(type);
+	}
 	
 	/**
 	 * Get a printable name for the given message type. Do not modify or free.
@@ -603,10 +620,15 @@ public class Message
 	 * replace the message pointed to by old_message. [allow-none][transfer none]
 	 * Returns: TRUE if new_message was different from old_message
 	 */
-	public static int replace(GstMessage** oldMessage, Message newMessage)
+	public static int replace(ref Message oldMessage, Message newMessage)
 	{
 		// gboolean gst_message_replace (GstMessage **old_message,  GstMessage *new_message);
-		return gst_message_replace(oldMessage, (newMessage is null) ? null : newMessage.getMessageStruct());
+		GstMessage* outoldMessage = (oldMessage is null) ? null : oldMessage.getMessageStruct();
+		
+		auto p = gst_message_replace(&outoldMessage, (newMessage is null) ? null : newMessage.getMessageStruct());
+		
+		oldMessage = ObjectG.getDObject!(Message)(outoldMessage);
+		return p;
 	}
 	
 	/**
@@ -747,10 +769,10 @@ public class Message
 	 * bufferingLeft = amount of buffering time left in
 	 * milliseconds, or NULL. [out][allow-none]
 	 */
-	public void parseBufferingStats(GstBufferingMode* mode, int* avgIn, int* avgOut, long* bufferingLeft)
+	public void parseBufferingStats(out GstBufferingMode mode, out int avgIn, out int avgOut, out long bufferingLeft)
 	{
 		// void gst_message_parse_buffering_stats (GstMessage *message,  GstBufferingMode *mode,  gint *avg_in,  gint *avg_out,  gint64 *buffering_left);
-		gst_message_parse_buffering_stats(gstMessage, mode, avgIn, avgOut, bufferingLeft);
+		gst_message_parse_buffering_stats(gstMessage, &mode, &avgIn, &avgOut, &bufferingLeft);
 	}
 	
 	/**
@@ -781,10 +803,10 @@ public class Message
 	 * newstate = the new (current) state, or NULL. [out][allow-none]
 	 * pending = the pending (target) state, or NULL. [out][allow-none]
 	 */
-	public void parseStateChanged(GstState* oldstate, GstState* newstate, GstState* pending)
+	public void parseStateChanged(out GstState oldstate, out GstState newstate, out GstState pending)
 	{
 		// void gst_message_parse_state_changed (GstMessage *message,  GstState *oldstate,  GstState *newstate,  GstState *pending);
-		gst_message_parse_state_changed(gstMessage, oldstate, newstate, pending);
+		gst_message_parse_state_changed(gstMessage, &oldstate, &newstate, &pending);
 	}
 	
 	/**
@@ -826,10 +848,10 @@ public class Message
 	 * duration = result location for the duration. [out][allow-none]
 	 * eos = result location for the EOS flag. [out][allow-none]
 	 */
-	public void parseStepDone(GstFormat* format, ulong* amount, double* rate, int* flush, int* intermediate, ulong* duration, int* eos)
+	public void parseStepDone(out GstFormat format, out ulong amount, out double rate, out int flush, out int intermediate, out ulong duration, out int eos)
 	{
 		// void gst_message_parse_step_done (GstMessage *message,  GstFormat *format,  guint64 *amount,  gdouble *rate,  gboolean *flush,  gboolean *intermediate,  guint64 *duration,  gboolean *eos);
-		gst_message_parse_step_done(gstMessage, format, amount, rate, flush, intermediate, duration, eos);
+		gst_message_parse_step_done(gstMessage, &format, &amount, &rate, &flush, &intermediate, &duration, &eos);
 	}
 	
 	/**
@@ -1000,29 +1022,6 @@ public class Message
 	}
 	
 	/**
-	 * Create a new duration changed message. This message is posted by elements
-	 * that know the duration of a stream when the duration changes. This message
-	 * is received by bins and is used to calculate the total duration of a
-	 * pipeline. Elements may post a duration message with a duration of
-	 * GST_CLOCK_TIME_NONE to indicate that the duration has changed and the
-	 * cached duration should be discarded. The new duration can then be
-	 * retrieved via a query.
-	 * Params:
-	 * src = The object originating the message. [transfer none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (ObjectGst src)
-	{
-		// GstMessage * gst_message_new_duration_changed (GstObject *src);
-		auto p = gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct())");
-		}
-		this(cast(GstMessage*) p);
-	}
-	
-	/**
 	 * The message is posted when elements completed an ASYNC state change.
 	 * running_time contains the time of the desired running_time when this
 	 * elements goes to PLAYING. A value of GST_CLOCK_TIME_NONE for running_time
@@ -1050,10 +1049,10 @@ public class Message
 	 * Params:
 	 * runningTime = Result location for the running_time or NULL. [out]
 	 */
-	public void parseAsyncDone(GstClockTime* runningTime)
+	public void parseAsyncDone(out GstClockTime runningTime)
 	{
 		// void gst_message_parse_async_done (GstMessage *message,  GstClockTime *running_time);
-		gst_message_parse_async_done(gstMessage, runningTime);
+		gst_message_parse_async_done(gstMessage, &runningTime);
 	}
 	
 	/**
@@ -1097,10 +1096,10 @@ public class Message
 	 * flush = result location for the flush flag. [out][allow-none]
 	 * intermediate = result location for the intermediate flag. [out][allow-none]
 	 */
-	public void parseStepStart(int* active, GstFormat* format, ulong* amount, double* rate, int* flush, int* intermediate)
+	public void parseStepStart(out int active, out GstFormat format, out ulong amount, out double rate, out int flush, out int intermediate)
 	{
 		// void gst_message_parse_step_start (GstMessage *message,  gboolean *active,  GstFormat *format,  guint64 *amount,  gdouble *rate,  gboolean *flush,  gboolean *intermediate);
-		gst_message_parse_step_start(gstMessage, active, format, amount, rate, flush, intermediate);
+		gst_message_parse_step_start(gstMessage, &active, &format, &amount, &rate, &flush, &intermediate);
 	}
 	
 	/**
@@ -1189,10 +1188,10 @@ public class Message
 	 * duration = the duration of the buffer that
 	 * generated the message. [out][allow-none]
 	 */
-	public void parseQos(int* live, ulong* runningTime, ulong* streamTime, ulong* timestamp, ulong* duration)
+	public void parseQos(out int live, ulong* runningTime, out ulong streamTime, out ulong timestamp, out ulong duration)
 	{
 		// void gst_message_parse_qos (GstMessage *message,  gboolean *live,  guint64 *running_time,  guint64 *stream_time,  guint64 *timestamp,  guint64 *duration);
-		gst_message_parse_qos(gstMessage, live, runningTime, streamTime, timestamp, duration);
+		gst_message_parse_qos(gstMessage, &live, runningTime, &streamTime, &timestamp, &duration);
 	}
 	
 	/**
@@ -1207,10 +1206,10 @@ public class Message
 	 * specifies the current quality level of the element. The default
 	 * maximum quality is 1000000. [out][allow-none]
 	 */
-	public void parseQosValues(long* jitter, double* proportion, int* quality)
+	public void parseQosValues(out long jitter, out double proportion, out int quality)
 	{
 		// void gst_message_parse_qos_values (GstMessage *message,  gint64 *jitter,  gdouble *proportion,  gint *quality);
-		gst_message_parse_qos_values(gstMessage, jitter, proportion, quality);
+		gst_message_parse_qos_values(gstMessage, &jitter, &proportion, &quality);
 	}
 	
 	/**
@@ -1229,10 +1228,10 @@ public class Message
 	 * dropped = Total number of units dropped since the last
 	 * state change to READY or a flushing operation. [out][allow-none]
 	 */
-	public void parseQosStats(GstFormat* format, ulong* processed, ulong* dropped)
+	public void parseQosStats(out GstFormat format, out ulong processed, out ulong dropped)
 	{
 		// void gst_message_parse_qos_stats (GstMessage *message,  GstFormat *format,  guint64 *processed,  guint64 *dropped);
-		gst_message_parse_qos_stats(gstMessage, format, processed, dropped);
+		gst_message_parse_qos_stats(gstMessage, &format, &processed, &dropped);
 	}
 	
 	/**
@@ -1244,13 +1243,13 @@ public class Message
 	 * updated = whether TOC was updated or not.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ObjectGst src, GstToc* toc, int updated)
+	public this (ObjectGst src, Toc toc, int updated)
 	{
 		// GstMessage * gst_message_new_toc (GstObject *src,  GstToc *toc,  gboolean updated);
-		auto p = gst_message_new_toc((src is null) ? null : src.getObjectGstStruct(), toc, updated);
+		auto p = gst_message_new_toc((src is null) ? null : src.getObjectGstStruct(), (toc is null) ? null : toc.getTocStruct(), updated);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_message_new_toc((src is null) ? null : src.getObjectGstStruct(), toc, updated)");
+			throw new ConstructionException("null returned by gst_message_new_toc((src is null) ? null : src.getObjectGstStruct(), (toc is null) ? null : toc.getTocStruct(), updated)");
 		}
 		this(cast(GstMessage*) p);
 	}
@@ -1264,10 +1263,14 @@ public class Message
 	 * toc = return location for the TOC. [out][transfer full]
 	 * updated = return location for the updated flag. [out]
 	 */
-	public void parseToc(GstToc** toc, int* updated)
+	public void parseToc(out Toc toc, out int updated)
 	{
 		// void gst_message_parse_toc (GstMessage *message,  GstToc **toc,  gboolean *updated);
-		gst_message_parse_toc(gstMessage, toc, updated);
+		GstToc* outtoc = null;
+		
+		gst_message_parse_toc(gstMessage, &outtoc, &updated);
+		
+		toc = ObjectG.getDObject!(Toc)(outtoc);
 	}
 	
 	/**
@@ -1283,6 +1286,25 @@ public class Message
 	}
 	
 	/**
+	 * Create a new stream_start message. This message is generated and posted in
+	 * the sink elements of a GstBin. The bin will only forward the STREAM_START
+	 * message to the application if all sinks have posted an STREAM_START message.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ObjectGst src)
+	{
+		// GstMessage * gst_message_new_stream_start (GstObject *src);
+		auto p = gst_message_new_stream_start((src is null) ? null : src.getObjectGstStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_stream_start((src is null) ? null : src.getObjectGstStruct())");
+		}
+		this(cast(GstMessage*) p);
+	}
+	
+	/**
 	 * Create a new structure change message. This message is posted when the
 	 * structure of a pipeline is in the process of being changed, for example
 	 * when pads are linked or unlinked.
@@ -1294,13 +1316,13 @@ public class Message
 	 * busy = Whether the structure change is busy.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ObjectGst src, GstStructureChangeType type, GstElement* owner, int busy)
+	public this (ObjectGst src, GstStructureChangeType type, Element owner, int busy)
 	{
 		// GstMessage * gst_message_new_structure_change (GstObject *src,  GstStructureChangeType type,  GstElement *owner,  gboolean busy);
-		auto p = gst_message_new_structure_change((src is null) ? null : src.getObjectGstStruct(), type, owner, busy);
+		auto p = gst_message_new_structure_change((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct(), busy);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_message_new_structure_change((src is null) ? null : src.getObjectGstStruct(), type, owner, busy)");
+			throw new ConstructionException("null returned by gst_message_new_structure_change((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct(), busy)");
 		}
 		this(cast(GstMessage*) p);
 	}
@@ -1315,10 +1337,14 @@ public class Message
 	 * busy = a pointer to hold whether the change is in
 	 * progress or has been completed. [out][allow-none]
 	 */
-	public void parseStructureChange(GstStructureChangeType* type, GstElement** owner, int* busy)
+	public void parseStructureChange(out GstStructureChangeType type, out Element owner, out int busy)
 	{
 		// void gst_message_parse_structure_change (GstMessage *message,  GstStructureChangeType *type,  GstElement **owner,  gboolean *busy);
-		gst_message_parse_structure_change(gstMessage, type, owner, busy);
+		GstElement* outowner = null;
+		
+		gst_message_parse_structure_change(gstMessage, &type, &outowner, &busy);
+		
+		owner = ObjectG.getDObject!(Element)(outowner);
 	}
 	
 	/**
@@ -1347,10 +1373,10 @@ public class Message
 	 * Params:
 	 * state = Result location for the requested state or NULL. [out]
 	 */
-	public void parseRequestState(GstState* state)
+	public void parseRequestState(out GstState state)
 	{
 		// void gst_message_parse_request_state (GstMessage *message,  GstState *state);
-		gst_message_parse_request_state(gstMessage, state);
+		gst_message_parse_request_state(gstMessage, &state);
 	}
 	
 	/**
@@ -1362,13 +1388,13 @@ public class Message
 	 * owner = the owner element of src. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ObjectGst src, GstStreamStatusType type, GstElement* owner)
+	public this (ObjectGst src, GstStreamStatusType type, Element owner)
 	{
 		// GstMessage * gst_message_new_stream_status (GstObject *src,  GstStreamStatusType type,  GstElement *owner);
-		auto p = gst_message_new_stream_status((src is null) ? null : src.getObjectGstStruct(), type, owner);
+		auto p = gst_message_new_stream_status((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_message_new_stream_status((src is null) ? null : src.getObjectGstStruct(), type, owner)");
+			throw new ConstructionException("null returned by gst_message_new_stream_status((src is null) ? null : src.getObjectGstStruct(), type, (owner is null) ? null : owner.getElementStruct())");
 		}
 		this(cast(GstMessage*) p);
 	}
@@ -1382,10 +1408,14 @@ public class Message
 	 * type = A pointer to hold the status type. [out]
 	 * owner = The owner element of the message source. [out][transfer none]
 	 */
-	public void parseStreamStatus(GstStreamStatusType* type, GstElement** owner)
+	public void parseStreamStatus(out GstStreamStatusType type, out Element owner)
 	{
 		// void gst_message_parse_stream_status (GstMessage *message,  GstStreamStatusType *type,  GstElement **owner);
-		gst_message_parse_stream_status(gstMessage, type, owner);
+		GstElement* outowner = null;
+		
+		gst_message_parse_stream_status(gstMessage, &type, &outowner);
+		
+		owner = ObjectG.getDObject!(Element)(outowner);
 	}
 	
 	/**
@@ -1394,20 +1424,27 @@ public class Message
 	 * Params:
 	 * object = the object controlling the streaming
 	 */
-	public void setStreamStatusObject(GValue* object)
+	public void setStreamStatusObject(Value object)
 	{
 		// void gst_message_set_stream_status_object  (GstMessage *message,  const GValue *object);
-		gst_message_set_stream_status_object(gstMessage, object);
+		gst_message_set_stream_status_object(gstMessage, (object is null) ? null : object.getValueStruct());
 	}
 	
 	/**
 	 * Extracts the object managing the streaming thread from message.
 	 * Returns: a GValue containing the object that manages the streaming thread. This object is usually of type GstTask but other types can be added in the future. The object remains valid as long as message is valid.
 	 */
-	public GValue* getStreamStatusObject()
+	public Value getStreamStatusObject()
 	{
 		// const GValue * gst_message_get_stream_status_object  (GstMessage *message);
-		return gst_message_get_stream_status_object(gstMessage);
+		auto p = gst_message_get_stream_status_object(gstMessage);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 	
 	/**
@@ -1440,9 +1477,15 @@ public class Message
 	 * code = location for the code. [out][allow-none][transfer full]
 	 * text = location for the text. [out][allow-none][transfer full]
 	 */
-	public void parseProgress(GstProgressType* type, char** code, char** text)
+	public void parseProgress(out GstProgressType type, out string code, out string text)
 	{
 		// void gst_message_parse_progress (GstMessage *message,  GstProgressType *type,  gchar **code,  gchar **text);
-		gst_message_parse_progress(gstMessage, type, code, text);
+		char* outcode = null;
+		char* outtext = null;
+		
+		gst_message_parse_progress(gstMessage, &type, &outcode, &outtext);
+		
+		code = Str.toString(outcode);
+		text = Str.toString(outtext);
 	}
 }

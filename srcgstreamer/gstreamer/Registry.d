@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_registry_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:

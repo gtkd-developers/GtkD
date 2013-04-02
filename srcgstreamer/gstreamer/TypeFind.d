@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_type_find_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -51,7 +50,6 @@
  * structWrap:
  * 	- GstCaps* -> Caps
  * 	- GstPlugin* -> Plugin
- * 	- GstTypeFind* -> TypeFind
  * module aliases:
  * local aliases:
  * overrides:

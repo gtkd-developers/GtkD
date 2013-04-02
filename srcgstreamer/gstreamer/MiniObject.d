@@ -44,12 +44,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ParamSpec
- * 	- gobject.Value
  * structWrap:
- * 	- GParamSpec* -> ParamSpec
- * 	- GValue* -> Value
  * 	- GstMiniObject* -> MiniObject
  * module aliases:
  * local aliases:
@@ -65,9 +60,6 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
-private import glib.Str;
-private import gobject.ParamSpec;
-private import gobject.Value;
 
 
 

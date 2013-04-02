@@ -38,27 +38,29 @@
  * implements:
  * prefixes:
  * 	- gst_event_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_event_new_buffer_size
  * 	- gst_event_new_eos
  * 	- gst_event_new_flush_start
- * 	- gst_event_new_flush_stop
- * 	- gst_event_new_navigation
+ * 	- gst_event_new_toc_select
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gstreamer.Caps
+ * 	- gstreamer.Message
+ * 	- gstreamer.Segment
  * 	- gstreamer.Structure
  * 	- gstreamer.TagList
- * 	- gstreamer.MiniObject
+ * 	- gstreamer.Toc
  * structWrap:
+ * 	- GstCaps* -> Caps
  * 	- GstEvent* -> Event
- * 	- GstMiniObject -> MiniObject
- * 	- GstMiniObject* -> MiniObject
+ * 	- GstMessage* -> Message
+ * 	- GstSegment* -> Segment
  * 	- GstStructure* -> Structure
  * 	- GstTagList* -> TagList
+ * 	- GstToc* -> Toc
  * module aliases:
  * local aliases:
  * overrides:
@@ -74,9 +76,12 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import gstreamer.Caps;
+private import gstreamer.Message;
+private import gstreamer.Segment;
 private import gstreamer.Structure;
 private import gstreamer.TagList;
-private import gstreamer.MiniObject;
+private import gstreamer.Toc;
 
 
 
@@ -139,29 +144,6 @@ public class Event
 	}
 	
 	/**
-	 * Create a new buffersize event. The event is sent downstream and notifies
-	 * elements that they should provide a buffer of the specified dimensions.
-	 * When the async flag is set, a thread boundary is prefered.
-	 * Params:
-	 *  format = buffer format
-	 *  minsize = minimum buffer size
-	 *  maxsize = maximum buffer size
-	 *  async = thread behavior
-	 * Returns:
-	 *  a new GstEvent
-	 */
-	public static Event newBufferSize(GstFormat format, long minsize, long maxsize, int async)
-	{
-		// GstEvent* gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
-		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_buffer_size");
-		}
-		
-		return new Event(cast(GstEvent*)p);
-	}	/**
 	 * Create a new EOS event. The eos event can only travel downstream
 	 * synchronized with the buffer flow. Elements that receive the EOS
 	 * event on a pad can return UNEXPECTED as a GstFlowReturn when data
@@ -208,46 +190,21 @@ public class Event
 		
 		return new Event(cast(GstEvent*)p );
 	}	/**
-	 * Allocate a new flush stop event. The flush start event can be send
-	 * upstream and downstream and travels out-of-bounds with the dataflow.
-	 * It is typically send after sending a FLUSH_START event to make the
-	 * pads accept data again.
-	 * Elements can process this event synchronized with the dataflow since
-	 * the preceeding FLUSH_START event stopped the dataflow.
-	 * This event is typically generated to complete a seek and to resume
-	 * dataflow.
-	 * Returns:
-	 *  A new flush stop event.
+	 * Generate a TOC select event with the given uid. The purpose of the
+	 * TOC select event is to start playback based on the TOC's entry with
+	 * the given uid.
 	 */
-	public static Event newFlushStop()
+	public static Event newTocSelect(string uid)
 	{
-		// GstEvent* gst_event_new_flush_stop (void);
-		auto p = gst_event_new_flush_stop();
+		// GstEvent* gst_event_new_toc_select (const gchar *uid);
+		auto p = gst_event_new_toc_select(cast(char*)uid.ptr);
 		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_flush_stop");
+			throw new ConstructionException("null returned by gst_event_new_toc_select");
 		}
 		
 		return new Event(cast(GstEvent*)p );
-	}/**
-	 * Create a new navigation event from the given description.
-	 * Params:
-	 *  structure = description of the event
-	 * Returns:
-	 *  a new GstEvent
-	 */
-	public static Event newNavigation(Structure structure)
-	{
-		// GstEvent* gst_event_new_navigation (GstStructure *structure);
-		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_navigation");
-		}
-		
-		return new Event(cast(GstEvent*)p);
 	}
 	
 	/**
@@ -328,10 +285,15 @@ public class Event
 	 * replace the event pointed to by old_event. [allow-none][transfer none]
 	 * Returns: TRUE if new_event was different from old_event
 	 */
-	public static int replace(GstEvent** oldEvent, Event newEvent)
+	public static int replace(ref Event oldEvent, Event newEvent)
 	{
 		// gboolean gst_event_replace (GstEvent **old_event,  GstEvent *new_event);
-		return gst_event_replace(oldEvent, (newEvent is null) ? null : newEvent.getEventStruct());
+		GstEvent* outoldEvent = (oldEvent is null) ? null : oldEvent.getEventStruct();
+		
+		auto p = gst_event_replace(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct());
+		
+		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
+		return p;
 	}
 	
 	/**
@@ -359,10 +321,14 @@ public class Event
 	 * to be stolen. [inout][transfer full]
 	 * Returns: the GstEvent that was in old_event
 	 */
-	public static Event steal(GstEvent** oldEvent)
+	public static Event steal(ref Event oldEvent)
 	{
 		// GstEvent * gst_event_steal (GstEvent **old_event);
-		auto p = gst_event_steal(oldEvent);
+		GstEvent* outoldEvent = (oldEvent is null) ? null : oldEvent.getEventStruct();
+		
+		auto p = gst_event_steal(&outoldEvent);
+		
+		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
 		
 		if(p is null)
 		{
@@ -384,10 +350,15 @@ public class Event
 	 * replace the event pointed to by old_event. [allow-none][transfer full]
 	 * Returns: TRUE if new_event was different from old_event
 	 */
-	public static int take(GstEvent** oldEvent, Event newEvent)
+	public static int take(ref Event oldEvent, Event newEvent)
 	{
 		// gboolean gst_event_take (GstEvent **old_event,  GstEvent *new_event);
-		return gst_event_take(oldEvent, (newEvent is null) ? null : newEvent.getEventStruct());
+		GstEvent* outoldEvent = (oldEvent is null) ? null : oldEvent.getEventStruct();
+		
+		auto p = gst_event_take(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct());
+		
+		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
+		return p;
 	}
 	
 	/**
@@ -498,14 +469,38 @@ public class Event
 	}
 	
 	/**
+	 * Allocate a new flush stop event. The flush stop event can be sent
+	 * upstream and downstream and travels serialized with the dataflow.
+	 * It is typically sent after sending a FLUSH_START event to make the
+	 * pads accept data again.
+	 * Elements can process this event synchronized with the dataflow since
+	 * the preceeding FLUSH_START event stopped the dataflow.
+	 * This event is typically generated to complete a seek and to resume
+	 * dataflow.
+	 * Params:
+	 * resetTime = if time should be reset
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (int resetTime)
+	{
+		// GstEvent * gst_event_new_flush_stop (gboolean reset_time);
+		auto p = gst_event_new_flush_stop(resetTime);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_flush_stop(resetTime)");
+		}
+		this(cast(GstEvent*) p);
+	}
+	
+	/**
 	 * Parse the FLUSH_STOP event and retrieve the reset_time member.
 	 * Params:
 	 * resetTime = if time should be reset. [out]
 	 */
-	public void parseFlushStop(int* resetTime)
+	public void parseFlushStop(out int resetTime)
 	{
 		// void gst_event_parse_flush_stop (GstEvent *event,  gboolean *reset_time);
-		gst_event_parse_flush_stop(gstEvent, resetTime);
+		gst_event_parse_flush_stop(gstEvent, &resetTime);
 	}
 	
 	/**
@@ -538,10 +533,10 @@ public class Event
 	 * duration = location where to store the duration of
 	 * the gap, or NULL. [out][allow-none]
 	 */
-	public void parseGap(GstClockTime* timestamp, GstClockTime* duration)
+	public void parseGap(out GstClockTime timestamp, out GstClockTime duration)
 	{
 		// void gst_event_parse_gap (GstEvent *event,  GstClockTime *timestamp,  GstClockTime *duration);
-		gst_event_parse_gap(gstEvent, timestamp, duration);
+		gst_event_parse_gap(gstEvent, &timestamp, &duration);
 	}
 	
 	/**
@@ -584,10 +579,14 @@ public class Event
 	 * Params:
 	 * streamId = pointer to store the stream-id. [out][transfer none]
 	 */
-	public void parseStreamStart(char** streamId)
+	public void parseStreamStart(out string streamId)
 	{
 		// void gst_event_parse_stream_start (GstEvent *event,  const gchar **stream_id);
-		gst_event_parse_stream_start(gstEvent, streamId);
+		char* outstreamId = null;
+		
+		gst_event_parse_stream_start(gstEvent, &outstreamId);
+		
+		streamId = Str.toString(outstreamId);
 	}
 	
 	/**
@@ -618,13 +617,13 @@ public class Event
 	 * segment = a GstSegment. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstSegment* segment)
+	public this (Segment segment)
 	{
 		// GstEvent * gst_event_new_segment (const GstSegment *segment);
-		auto p = gst_event_new_segment(segment);
+		auto p = gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_segment(segment)");
+			throw new ConstructionException("null returned by gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct())");
 		}
 		this(cast(GstEvent*) p);
 	}
@@ -636,10 +635,14 @@ public class Event
 	 * Params:
 	 * segment = a pointer to a GstSegment. [out][transfer none]
 	 */
-	public void parseSegment(GstSegment** segment)
+	public void parseSegment(out Segment segment)
 	{
 		// void gst_event_parse_segment (GstEvent *event,  const GstSegment **segment);
-		gst_event_parse_segment(gstEvent, segment);
+		GstSegment* outsegment = null;
+		
+		gst_event_parse_segment(gstEvent, &outsegment);
+		
+		segment = ObjectG.getDObject!(Segment)(outsegment);
 	}
 	
 	/**
@@ -648,10 +651,10 @@ public class Event
 	 * Params:
 	 * segment = a pointer to a GstSegment
 	 */
-	public void copySegment(GstSegment* segment)
+	public void copySegment(Segment segment)
 	{
 		// void gst_event_copy_segment (GstEvent *event,  GstSegment *segment);
-		gst_event_copy_segment(gstEvent, segment);
+		gst_event_copy_segment(gstEvent, (segment is null) ? null : segment.getSegmentStruct());
 	}
 	
 	/**
@@ -693,6 +696,28 @@ public class Event
 		gst_event_parse_tag(gstEvent, &outtaglist);
 		
 		taglist = ObjectG.getDObject!(TagList)(outtaglist);
+	}
+	
+	/**
+	 * Create a new buffersize event. The event is sent downstream and notifies
+	 * elements that they should provide a buffer of the specified dimensions.
+	 * When the async flag is set, a thread boundary is preferred.
+	 * Params:
+	 * format = buffer format
+	 * minsize = minimum buffer size
+	 * maxsize = maximum buffer size
+	 * async = thread behavior
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (GstFormat format, long minsize, long maxsize, int async)
+	{
+		// GstEvent * gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
+		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_buffer_size(format, minsize, maxsize, async)");
+		}
+		this(cast(GstEvent*) p);
 	}
 	
 	/**
@@ -773,10 +798,10 @@ public class Event
 	 * diff = A pointer to store the diff in. [out]
 	 * timestamp = A pointer to store the timestamp in. [out]
 	 */
-	public void parseQos(GstQOSType* type, out double proportion, out GstClockTimeDiff diff, out GstClockTime timestamp)
+	public void parseQos(out GstQOSType type, out double proportion, out GstClockTimeDiff diff, out GstClockTime timestamp)
 	{
 		// void gst_event_parse_qos (GstEvent *event,  GstQOSType *type,  gdouble *proportion,  GstClockTimeDiff *diff,  GstClockTime *timestamp);
-		gst_event_parse_qos(gstEvent, type, &proportion, &diff, &timestamp);
+		gst_event_parse_qos(gstEvent, &type, &proportion, &diff, &timestamp);
 	}
 	
 	/**
@@ -840,6 +865,24 @@ public class Event
 	{
 		// void gst_event_parse_seek (GstEvent *event,  gdouble *rate,  GstFormat *format,  GstSeekFlags *flags,  GstSeekType *start_type,  gint64 *start,  GstSeekType *stop_type,  gint64 *stop);
 		gst_event_parse_seek(gstEvent, &rate, &format, &flags, &startType, &start, &stopType, &stop);
+	}
+	
+	/**
+	 * Create a new navigation event from the given description.
+	 * Params:
+	 * structure = description of the event. The event will take
+	 * ownership of the structure. [transfer full]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Structure structure)
+	{
+		// GstEvent * gst_event_new_navigation (GstStructure *structure);
+		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct())");
+		}
+		this(cast(GstEvent*) p);
 	}
 	
 	/**
@@ -914,10 +957,10 @@ public class Event
 	 * intermediate = a pointer to store the intermediate
 	 * boolean in. [out][allow-none]
 	 */
-	public void parseStep(GstFormat* format, ulong* amount, double* rate, int* flush, int* intermediate)
+	public void parseStep(out GstFormat format, out ulong amount, out double rate, out int flush, out int intermediate)
 	{
 		// void gst_event_parse_step (GstEvent *event,  GstFormat *format,  guint64 *amount,  gdouble *rate,  gboolean *flush,  gboolean *intermediate);
-		gst_event_parse_step(gstEvent, format, amount, rate, flush, intermediate);
+		gst_event_parse_step(gstEvent, &format, &amount, &rate, &flush, &intermediate);
 	}
 	
 	/**
@@ -930,13 +973,13 @@ public class Event
 	 * msg = the GstMessage to be posted. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, GstMessage* msg)
+	public this (string name, Message msg)
 	{
 		// GstEvent * gst_event_new_sink_message (const gchar *name,  GstMessage *msg);
-		auto p = gst_event_new_sink_message(Str.toStringz(name), msg);
+		auto p = gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_sink_message(Str.toStringz(name), msg)");
+			throw new ConstructionException("null returned by gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct())");
 		}
 		this(cast(GstEvent*) p);
 	}
@@ -946,10 +989,14 @@ public class Event
 	 * Params:
 	 * msg = a pointer to store the GstMessage in. [out][transfer full]
 	 */
-	public void parseSinkMessage(GstMessage** msg)
+	public void parseSinkMessage(out Message msg)
 	{
 		// void gst_event_parse_sink_message (GstEvent *event,  GstMessage **msg);
-		gst_event_parse_sink_message(gstEvent, msg);
+		GstMessage* outmsg = null;
+		
+		gst_event_parse_sink_message(gstEvent, &outmsg);
+		
+		msg = ObjectG.getDObject!(Message)(outmsg);
 	}
 	
 	/**
@@ -978,13 +1025,13 @@ public class Event
 	 * caps = a GstCaps. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstCaps* caps)
+	public this (Caps caps)
 	{
 		// GstEvent * gst_event_new_caps (GstCaps *caps);
-		auto p = gst_event_new_caps(caps);
+		auto p = gst_event_new_caps((caps is null) ? null : caps.getCapsStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_caps(caps)");
+			throw new ConstructionException("null returned by gst_event_new_caps((caps is null) ? null : caps.getCapsStruct())");
 		}
 		this(cast(GstEvent*) p);
 	}
@@ -995,10 +1042,14 @@ public class Event
 	 * Params:
 	 * caps = A pointer to the caps. [out][transfer none]
 	 */
-	public void parseCaps(GstCaps** caps)
+	public void parseCaps(out Caps caps)
 	{
 		// void gst_event_parse_caps (GstEvent *event,  GstCaps **caps);
-		gst_event_parse_caps(gstEvent, caps);
+		GstCaps* outcaps = null;
+		
+		gst_event_parse_caps(gstEvent, &outcaps);
+		
+		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
 	
 	/**
@@ -1009,13 +1060,13 @@ public class Event
 	 * updated = whether toc was updated or not.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstToc* toc, int updated)
+	public this (Toc toc, int updated)
 	{
 		// GstEvent * gst_event_new_toc (GstToc *toc,  gboolean updated);
-		auto p = gst_event_new_toc(toc, updated);
+		auto p = gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_toc(toc, updated)");
+			throw new ConstructionException("null returned by gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated)");
 		}
 		this(cast(GstEvent*) p);
 	}
@@ -1026,10 +1077,14 @@ public class Event
 	 * toc = pointer to GstToc structure. [out][transfer full]
 	 * updated = pointer to store TOC updated flag. [out]
 	 */
-	public void parseToc(GstToc** toc, int* updated)
+	public void parseToc(out Toc toc, out int updated)
 	{
 		// void gst_event_parse_toc (GstEvent *event,  GstToc **toc,  gboolean *updated);
-		gst_event_parse_toc(gstEvent, toc, updated);
+		GstToc* outtoc = null;
+		
+		gst_event_parse_toc(gstEvent, &outtoc, &updated);
+		
+		toc = ObjectG.getDObject!(Toc)(outtoc);
 	}
 	
 	/**
@@ -1037,10 +1092,14 @@ public class Event
 	 * Params:
 	 * uid = storage for the selection UID. [out]
 	 */
-	public void parseTocSelect(char** uid)
+	public void parseTocSelect(out string uid)
 	{
 		// void gst_event_parse_toc_select (GstEvent *event,  gchar **uid);
-		gst_event_parse_toc_select(gstEvent, uid);
+		char* outuid = null;
+		
+		gst_event_parse_toc_select(gstEvent, &outuid);
+		
+		uid = Str.toString(outuid);
 	}
 	
 	/**
@@ -1068,9 +1127,9 @@ public class Event
 	 * format = Result location for the format, or NULL. [out]
 	 * position = Result location for the position, or NULL. [out]
 	 */
-	public void parseSegmentDone(GstFormat* format, long* position)
+	public void parseSegmentDone(out GstFormat format, out long position)
 	{
 		// void gst_event_parse_segment_done (GstEvent *event,  GstFormat *format,  gint64 *position);
-		gst_event_parse_segment_done(gstEvent, format, position);
+		gst_event_parse_segment_done(gstEvent, &format, &position);
 	}
 }

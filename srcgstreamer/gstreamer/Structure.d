@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_structure_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,9 +46,11 @@
  * 	- glib.Str
  * 	- glib.Date
  * 	- gobject.Value
+ * 	- gstreamer.DateTime
  * structWrap:
  * 	- GDate* -> Date
  * 	- GValue* -> Value
+ * 	- GstDateTime* -> DateTime
  * 	- GstStructure* -> Structure
  * module aliases:
  * local aliases:
@@ -69,6 +70,7 @@ private import gobject.ObjectG;
 private import glib.Str;
 private import glib.Date;
 private import gobject.Value;
+private import gstreamer.DateTime;
 
 
 
@@ -634,10 +636,10 @@ public class Structure
 	 * value = a pointer to a uint to set. [out]
 	 * Returns: TRUE if the value could be set correctly. If there was no field with fieldname or the existing field did not contain a uint, this function returns FALSE.
 	 */
-	public int getUint(string fieldname, uint* value)
+	public int getUint(string fieldname, out uint value)
 	{
 		// gboolean gst_structure_get_uint (const GstStructure *structure,  const gchar *fieldname,  guint *value);
-		return gst_structure_get_uint(gstStructure, Str.toStringz(fieldname), value);
+		return gst_structure_get_uint(gstStructure, Str.toStringz(fieldname), &value);
 	}
 	
 	/**
@@ -708,10 +710,15 @@ public class Structure
 	 * value = a pointer to a GstDateTime to set. [out callee-allocates]
 	 * Returns: TRUE if the value could be set correctly. If there was no field with fieldname or the existing field did not contain a data, this function returns FALSE.
 	 */
-	public int getDateTime(string fieldname, GstDateTime** value)
+	public int getDateTime(string fieldname, out DateTime value)
 	{
 		// gboolean gst_structure_get_date_time (const GstStructure *structure,  const gchar *fieldname,  GstDateTime **value);
-		return gst_structure_get_date_time(gstStructure, Str.toStringz(fieldname), value);
+		GstDateTime* outvalue = null;
+		
+		auto p = gst_structure_get_date_time(gstStructure, Str.toStringz(fieldname), &outvalue);
+		
+		value = ObjectG.getDObject!(DateTime)(outvalue);
+		return p;
 	}
 	
 	/**

@@ -25,46 +25,48 @@
  * Conversion parameters:
  * inFile  = GstTagSetter.html
  * outPack = gstreamer
- * outFile = TagSetter
+ * outFile = TagSetterT
  * strct   = GstTagSetter
  * realStrct=
  * ctorStrct=
- * clss    = TagSetter
- * interf  = 
+ * clss    = TagSetterT
+ * interf  = TagSetterIF
  * class Code: No
  * interface Code: No
  * template for:
+ * 	- TStruct
  * extend  = 
  * implements:
  * prefixes:
  * 	- gst_tag_setter_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.Value
  * 	- gstreamer.TagList
  * structWrap:
+ * 	- GValue* -> Value
  * 	- GstTagList* -> TagList
- * 	- GstTagSetter* -> TagSetter
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gstreamer.TagSetter;
+module gstreamer.TagSetterT;
 
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
+public import gstreamerc.gstreamer;
+public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
-private import glib.Str;
-private import gstreamer.TagList;
+public import glib.Str;
+public import gobject.Value;
+public import gstreamer.TagList;
 
 
 
@@ -93,32 +95,18 @@ private import gstreamer.TagList;
  *
  * Last reviewed on 2006-05-18 (0.10.6)
  */
-public class TagSetter
+public template TagSetterT(TStruct)
 {
 	
 	/** the main Gtk struct */
 	protected GstTagSetter* gstTagSetter;
 	
 	
-	public GstTagSetter* getTagSetterStruct()
+	public GstTagSetter* getTagSetterTStruct()
 	{
-		return gstTagSetter;
+		return cast(GstTagSetter*)getStruct();
 	}
 	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gstTagSetter;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GstTagSetter* gstTagSetter)
-	{
-		this.gstTagSetter = gstTagSetter;
-	}
 	
 	/**
 	 */
@@ -130,7 +118,7 @@ public class TagSetter
 	public void resetTags()
 	{
 		// void gst_tag_setter_reset_tags (GstTagSetter *setter);
-		gst_tag_setter_reset_tags(gstTagSetter);
+		gst_tag_setter_reset_tags(getTagSetterTStruct());
 	}
 	
 	/**
@@ -142,7 +130,7 @@ public class TagSetter
 	public void mergeTags(TagList list, GstTagMergeMode mode)
 	{
 		// void gst_tag_setter_merge_tags (GstTagSetter *setter,  const GstTagList *list,  GstTagMergeMode mode);
-		gst_tag_setter_merge_tags(gstTagSetter, (list is null) ? null : list.getTagListStruct(), mode);
+		gst_tag_setter_merge_tags(getTagSetterTStruct(), (list is null) ? null : list.getTagListStruct(), mode);
 	}
 	
 	/**
@@ -152,10 +140,10 @@ public class TagSetter
 	 * tag = tag to set
 	 * value = GValue to set for the tag
 	 */
-	public void addTagValue(GstTagMergeMode mode, string tag, GValue* value)
+	public void addTagValue(GstTagMergeMode mode, string tag, Value value)
 	{
 		// void gst_tag_setter_add_tag_value (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  const GValue *value);
-		gst_tag_setter_add_tag_value(gstTagSetter, mode, Str.toStringz(tag), value);
+		gst_tag_setter_add_tag_value(getTagSetterTStruct(), mode, Str.toStringz(tag), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -169,7 +157,7 @@ public class TagSetter
 	public void addTagValist(GstTagMergeMode mode, string tag, void* varArgs)
 	{
 		// void gst_tag_setter_add_tag_valist (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  va_list var_args);
-		gst_tag_setter_add_tag_valist(gstTagSetter, mode, Str.toStringz(tag), varArgs);
+		gst_tag_setter_add_tag_valist(getTagSetterTStruct(), mode, Str.toStringz(tag), varArgs);
 	}
 	
 	/**
@@ -183,7 +171,7 @@ public class TagSetter
 	public void addTagValistValues(GstTagMergeMode mode, string tag, void* varArgs)
 	{
 		// void gst_tag_setter_add_tag_valist_values  (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  va_list var_args);
-		gst_tag_setter_add_tag_valist_values(gstTagSetter, mode, Str.toStringz(tag), varArgs);
+		gst_tag_setter_add_tag_valist_values(getTagSetterTStruct(), mode, Str.toStringz(tag), varArgs);
 	}
 	
 	/**
@@ -195,7 +183,7 @@ public class TagSetter
 	public TagList getTagList()
 	{
 		// const GstTagList * gst_tag_setter_get_tag_list (GstTagSetter *setter);
-		auto p = gst_tag_setter_get_tag_list(gstTagSetter);
+		auto p = gst_tag_setter_get_tag_list(getTagSetterTStruct());
 		
 		if(p is null)
 		{
@@ -215,7 +203,7 @@ public class TagSetter
 	public void setTagMergeMode(GstTagMergeMode mode)
 	{
 		// void gst_tag_setter_set_tag_merge_mode (GstTagSetter *setter,  GstTagMergeMode mode);
-		gst_tag_setter_set_tag_merge_mode(gstTagSetter, mode);
+		gst_tag_setter_set_tag_merge_mode(getTagSetterTStruct(), mode);
 	}
 	
 	/**
@@ -226,6 +214,6 @@ public class TagSetter
 	public GstTagMergeMode getTagMergeMode()
 	{
 		// GstTagMergeMode gst_tag_setter_get_tag_merge_mode (GstTagSetter *setter);
-		return gst_tag_setter_get_tag_merge_mode(gstTagSetter);
+		return gst_tag_setter_get_tag_merge_mode(getTagSetterTStruct());
 	}
 }

@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_format_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -128,7 +127,7 @@ public static GstFormat getByNick(string nick)
  * format = the format to find
  * Returns: TRUE if the format is found inside the array
  */
-public static int formatsContains(GstFormat[] formats, GstFormat format)
+public static int gstFormatsContains(GstFormat[] formats, GstFormat format)
 {
 	// gboolean gst_formats_contains (const GstFormat *formats,  GstFormat format);
 	return gst_formats_contains(formats.ptr, format);

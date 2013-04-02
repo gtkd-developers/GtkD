@@ -1480,7 +1480,7 @@ public class GtkDClass
 		}
 
 		//TODO: add an option for this to the APILookup files
-		if ( enumName == "GstEventType" || enumName == "GstEventTypeFlags" )
+		if ( enumName == "GstEventType" || enumName == "GstEventTypeFlags" || enumName == "GstQueryType" )
 			return;
 
 		if ( startsWith(enumName, "Gtk")

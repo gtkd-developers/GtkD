@@ -38,16 +38,20 @@
  * implements:
  * prefixes:
  * 	- gst_iterator_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
+ * 	- glib.ListG
  * 	- gthread.Mutex
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GMutex* -> Mutex
+ * 	- GObject* -> ObjectG
+ * 	- GValue* -> Value
  * 	- GstIterator* -> Iterator
  * module aliases:
  * local aliases:
@@ -63,8 +67,10 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
-private import glib.Str;
+private import glib.ListG;
 private import gthread.Mutex;
+private import gobject.ObjectG;
+private import gobject.Value;
 
 
 
@@ -165,14 +171,18 @@ public class Iterator
 	 * item = function to call on each item retrieved
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GType type, Mutex lock, uint* masterCookie, GList** list, GObject* owner, GstIteratorItemFunction item)
+	public this (GType type, Mutex lock, uint* masterCookie, ref ListG list, ObjectG owner, GstIteratorItemFunction item)
 	{
 		// GstIterator * gst_iterator_new_list (GType type,  GMutex *lock,  guint32 *master_cookie,  GList **list,  GObject *owner,  GstIteratorItemFunction item);
-		auto p = gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item);
+		GList* outlist = (list is null) ? null : list.getListGStruct();
+		
+		auto p = gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, &outlist, (owner is null) ? null : owner.getObjectGStruct(), item);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, list, owner, item)");
+			throw new ConstructionException("null returned by gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, &outlist, (owner is null) ? null : owner.getObjectGStruct(), item)");
 		}
+		
+		list = ObjectG.getDObject!(ListG)(outlist);
 		this(cast(GstIterator*) p);
 	}
 	
@@ -186,13 +196,13 @@ public class Iterator
 	 * object = object that this iterator should return
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GType type, GValue* object)
+	public this (GType type, Value object)
 	{
 		// GstIterator * gst_iterator_new_single (GType type,  const GValue *object);
-		auto p = gst_iterator_new_single(type, object);
+		auto p = gst_iterator_new_single(type, (object is null) ? null : object.getValueStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_iterator_new_single(type, object)");
+			throw new ConstructionException("null returned by gst_iterator_new_single(type, (object is null) ? null : object.getValueStruct())");
 		}
 		this(cast(GstIterator*) p);
 	}
@@ -241,10 +251,10 @@ public class Iterator
 	 * elem = pointer to hold next element. [out caller-allocates]
 	 * Returns: The result of the iteration. Unset elem after usage. MT safe.
 	 */
-	public GstIteratorResult next(GValue* elem)
+	public GstIteratorResult next(Value elem)
 	{
 		// GstIteratorResult gst_iterator_next (GstIterator *it,  GValue *elem);
-		return gst_iterator_next(gstIterator, elem);
+		return gst_iterator_next(gstIterator, (elem is null) ? null : elem.getValueStruct());
 	}
 	
 	/**
@@ -290,10 +300,10 @@ public class Iterator
 	 * userData = user data passed to the compare function. [closure]
 	 * Returns: a new GstIterator. MT safe. [transfer full]
 	 */
-	public Iterator filter(GCompareFunc func, GValue* userData)
+	public Iterator filter(GCompareFunc func, Value userData)
 	{
 		// GstIterator * gst_iterator_filter (GstIterator *it,  GCompareFunc func,  const GValue *user_data);
-		auto p = gst_iterator_filter(gstIterator, func, userData);
+		auto p = gst_iterator_filter(gstIterator, func, (userData is null) ? null : userData.getValueStruct());
 		
 		if(p is null)
 		{
@@ -322,10 +332,10 @@ public class Iterator
 	 * userData = user data passed to the fold function. [closure]
 	 * Returns: A GstIteratorResult, as described above. MT safe.
 	 */
-	public GstIteratorResult fold(GstIteratorFoldFunction func, GValue* ret, void* userData)
+	public GstIteratorResult fold(GstIteratorFoldFunction func, Value ret, void* userData)
 	{
 		// GstIteratorResult gst_iterator_fold (GstIterator *it,  GstIteratorFoldFunction func,  GValue *ret,  gpointer user_data);
-		return gst_iterator_fold(gstIterator, func, ret, userData);
+		return gst_iterator_fold(gstIterator, func, (ret is null) ? null : ret.getValueStruct(), userData);
 	}
 	
 	/**
@@ -357,9 +367,9 @@ public class Iterator
 	 * userData = user data passed to the compare function. [closure]
 	 * Returns: Returns TRUE if the element was found, else FALSE. MT safe.
 	 */
-	public int findCustom(GCompareFunc func, GValue* elem, void* userData)
+	public int findCustom(GCompareFunc func, Value elem, void* userData)
 	{
 		// gboolean gst_iterator_find_custom (GstIterator *it,  GCompareFunc func,  GValue *elem,  gpointer user_data);
-		return gst_iterator_find_custom(gstIterator, func, elem, userData);
+		return gst_iterator_find_custom(gstIterator, func, (elem is null) ? null : elem.getValueStruct(), userData);
 	}
 }

@@ -43,11 +43,9 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
  * 	- gstreamer.Clock
  * structWrap:
  * 	- GstClock* -> Clock
- * 	- GstSystemClock* -> SystemClock
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,7 +60,6 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
-private import glib.Str;
 private import gstreamer.Clock;
 
 

@@ -38,29 +38,29 @@
  * implements:
  * prefixes:
  * 	- gst_pad_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gst_pad_load_and_link
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gstreamer.Element
- * 	- gstreamer.MiniObject
- * 	- gstreamer.PadTemplate
- * 	- gstreamer.Caps
  * 	- gstreamer.Buffer
+ * 	- gstreamer.BufferList
+ * 	- gstreamer.Caps
+ * 	- gstreamer.Element
  * 	- gstreamer.Event
+ * 	- gstreamer.Iterator
+ * 	- gstreamer.ObjectGst
+ * 	- gstreamer.PadTemplate
  * 	- gstreamer.Query
- * 	- glib.ListG
  * structWrap:
- * 	- GList* -> ListG
  * 	- GstBuffer* -> Buffer
+ * 	- GstBufferList* -> BufferList
  * 	- GstCaps* -> Caps
  * 	- GstElement* -> Element
  * 	- GstEvent* -> Event
- * 	- GstMiniObject* -> MiniObject
+ * 	- GstIterator* -> Iterator
+ * 	- GstObject* -> ObjectGst
  * 	- GstPad* -> Pad
  * 	- GstPadTemplate* -> PadTemplate
  * 	- GstQuery* -> Query
@@ -81,14 +81,15 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gstreamer.Element;
-private import gstreamer.MiniObject;
-private import gstreamer.PadTemplate;
-private import gstreamer.Caps;
 private import gstreamer.Buffer;
+private import gstreamer.BufferList;
+private import gstreamer.Caps;
+private import gstreamer.Element;
 private import gstreamer.Event;
+private import gstreamer.Iterator;
+private import gstreamer.ObjectGst;
+private import gstreamer.PadTemplate;
 private import gstreamer.Query;
-private import glib.ListG;
 
 
 
@@ -210,9 +211,8 @@ public class Pad : ObjectGst
 	 */
 	public long queryPosition()
 	{
-		GstFormat form = GstFormat.TIME;
 		long cur_pos;
-		queryPosition( form, cur_pos );
+		queryPosition( GstFormat.TIME, cur_pos );
 		return cur_pos;
 	}
 	
@@ -224,12 +224,10 @@ public class Pad : ObjectGst
 	 */
 	public long queryDuration()
 	{
-		GstFormat form = GstFormat.TIME;
 		long cur_dur;
-		queryDuration( form, cur_dur );
+		queryDuration( GstFormat.TIME, cur_dur );
 		return cur_dur;
 	}
-	
 	
 	/**
 	 */
@@ -298,7 +296,7 @@ public class Pad : ObjectGst
 	 * ret = a GstFlowReturn to get the name of.
 	 * Returns: a static string with the name of the flow return.
 	 */
-	public static string flowGetName(GstFlowReturn ret)
+	public static string gstFlowGetName(GstFlowReturn ret)
 	{
 		// const gchar * gst_flow_get_name (GstFlowReturn ret);
 		return Str.toString(gst_flow_get_name(ret));
@@ -310,7 +308,7 @@ public class Pad : ObjectGst
 	 * ret = a GstFlowReturn to get the quark of.
 	 * Returns: the quark associated with the flow return or 0 if an invalid return was specified.
 	 */
-	public static GQuark flowToQuark(GstFlowReturn ret)
+	public static GQuark gstFlowToQuark(GstFlowReturn ret)
 	{
 		// GQuark gst_flow_to_quark (GstFlowReturn ret);
 		return gst_flow_to_quark(ret);
@@ -605,10 +603,17 @@ public class Pad : ObjectGst
 	
 	/**
 	 */
-	public static GstBufferList* probeInfoGetBufferList(GstPadProbeInfo* info)
+	public static BufferList probeInfoGetBufferList(GstPadProbeInfo* info)
 	{
 		// GstBufferList * gst_pad_probe_info_get_buffer_list (GstPadProbeInfo *info);
-		return gst_pad_probe_info_get_buffer_list(info);
+		auto p = gst_pad_probe_info_get_buffer_list(info);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
 	}
 	
 	/**
@@ -1060,10 +1065,10 @@ public class Pad : ObjectGst
 	 * if not. [transfer full]
 	 * Returns: a GstFlowReturn from the peer pad. MT safe.
 	 */
-	public GstFlowReturn pushList(GstBufferList* list)
+	public GstFlowReturn pushList(BufferList list)
 	{
 		// GstFlowReturn gst_pad_push_list (GstPad *pad,  GstBufferList *list);
-		return gst_pad_push_list(gstPad, list);
+		return gst_pad_push_list(gstPad, (list is null) ? null : list.getBufferListStruct());
 	}
 	
 	/**
@@ -1159,10 +1164,10 @@ public class Pad : ObjectGst
 	 * event = the GstEvent to handle. [transfer full]
 	 * Returns: TRUE if the event was sent successfully.
 	 */
-	public int eventDefault(GstObject* parent, Event event)
+	public int eventDefault(ObjectGst parent, Event event)
 	{
 		// gboolean gst_pad_event_default (GstPad *pad,  GstObject *parent,  GstEvent *event);
-		return gst_pad_event_default(gstPad, parent, (event is null) ? null : event.getEventStruct());
+		return gst_pad_event_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct(), (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**
@@ -1209,10 +1214,10 @@ public class Pad : ObjectGst
 	 * query = the GstQuery to handle. [transfer none]
 	 * Returns: TRUE if the query was performed successfully.
 	 */
-	public int queryDefault(GstObject* parent, Query query)
+	public int queryDefault(ObjectGst parent, Query query)
 	{
 		// gboolean gst_pad_query_default (GstPad *pad,  GstObject *parent,  GstQuery *query);
-		return gst_pad_query_default(gstPad, parent, (query is null) ? null : query.getQueryStruct());
+		return gst_pad_query_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct(), (query is null) ? null : query.getQueryStruct());
 	}
 	
 	/**
@@ -1222,10 +1227,10 @@ public class Pad : ObjectGst
 	 * cur = A location in which to store the current position, or NULL. [out]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryPosition(ref GstForma format, out long cur)
+	public int queryPosition(GstFormat format, out long cur)
 	{
 		// gboolean gst_pad_query_position (GstPad *pad,  GstFormat format,  gint64 *cur);
-		return gst_pad_query_position(gstPad, &format, &cur);
+		return gst_pad_query_position(gstPad, format, &cur);
 	}
 	
 	/**
@@ -1236,10 +1241,10 @@ public class Pad : ObjectGst
 	 * duration, or NULL. [out][allow-none]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryDuration(ref GstForma format, out long duration)
+	public int queryDuration(GstFormat format, out long duration)
 	{
 		// gboolean gst_pad_query_duration (GstPad *pad,  GstFormat format,  gint64 *duration);
-		return gst_pad_query_duration(gstPad, &format, &duration);
+		return gst_pad_query_duration(gstPad, format, &duration);
 	}
 	
 	/**
@@ -1251,10 +1256,10 @@ public class Pad : ObjectGst
 	 * destVal = a pointer to the result. [out]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int queryConvert(GstFormat srcFormat, long srcVal, ref GstForma destFormat, out long destVal)
+	public int queryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, out long destVal)
 	{
 		// gboolean gst_pad_query_convert (GstPad *pad,  GstFormat src_format,  gint64 src_val,  GstFormat dest_format,  gint64 *dest_val);
-		return gst_pad_query_convert(gstPad, srcFormat, srcVal, &destFormat, &destVal);
+		return gst_pad_query_convert(gstPad, srcFormat, srcVal, destFormat, &destVal);
 	}
 	
 	/**
@@ -1308,10 +1313,10 @@ public class Pad : ObjectGst
 	 * position, or NULL. [out][allow-none]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int peerQueryPosition(GstFormat format, long* cur)
+	public int peerQueryPosition(GstFormat format, out long cur)
 	{
 		// gboolean gst_pad_peer_query_position (GstPad *pad,  GstFormat format,  gint64 *cur);
-		return gst_pad_peer_query_position(gstPad, format, cur);
+		return gst_pad_peer_query_position(gstPad, format, &cur);
 	}
 	
 	/**
@@ -1322,10 +1327,10 @@ public class Pad : ObjectGst
 	 * duration, or NULL. [out][allow-none]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int peerQueryDuration(GstFormat format, long* duration)
+	public int peerQueryDuration(GstFormat format, out long duration)
 	{
 		// gboolean gst_pad_peer_query_duration (GstPad *pad,  GstFormat format,  gint64 *duration);
-		return gst_pad_peer_query_duration(gstPad, format, duration);
+		return gst_pad_peer_query_duration(gstPad, format, &duration);
 	}
 	
 	/**
@@ -1338,10 +1343,10 @@ public class Pad : ObjectGst
 	 * destVal = a pointer to the result. [out]
 	 * Returns: TRUE if the query could be performed.
 	 */
-	public int peerQueryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, long* destVal)
+	public int peerQueryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, out long destVal)
 	{
 		// gboolean gst_pad_peer_query_convert (GstPad *pad,  GstFormat src_format,  gint64 src_val,  GstFormat dest_format,  gint64 *dest_val);
-		return gst_pad_peer_query_convert(gstPad, srcFormat, srcVal, destFormat, destVal);
+		return gst_pad_peer_query_convert(gstPad, srcFormat, srcVal, destFormat, &destVal);
 	}
 	
 	/**
@@ -1416,10 +1421,17 @@ public class Pad : ObjectGst
 	 * Free-function: gst_iterator_free
 	 * Returns: a new GstIterator of GstPad or NULL when the pad does not have an iterator function configured. Use gst_iterator_free() after usage. [transfer full]
 	 */
-	public GstIterator* iterateInternalLinks()
+	public Iterator iterateInternalLinks()
 	{
 		// GstIterator * gst_pad_iterate_internal_links (GstPad *pad);
-		return gst_pad_iterate_internal_links(gstPad);
+		auto p = gst_pad_iterate_internal_links(gstPad);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -1432,10 +1444,17 @@ public class Pad : ObjectGst
 	 * parent = the parent of pad or NULL
 	 * Returns: a GstIterator of GstPad, or NULL if pad has no parent. Unref each returned pad with gst_object_unref().
 	 */
-	public GstIterator* iterateInternalLinksDefault(GstObject* parent)
+	public Iterator iterateInternalLinksDefault(ObjectGst parent)
 	{
 		// GstIterator * gst_pad_iterate_internal_links_default  (GstPad *pad,  GstObject *parent);
-		return gst_pad_iterate_internal_links_default(gstPad, parent);
+		auto p = gst_pad_iterate_internal_links_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
 	}
 	
 	/**
@@ -1567,10 +1586,10 @@ public class Pad : ObjectGst
 	 * if not. [transfer full]
 	 * Returns: a GstFlowReturn from the pad.
 	 */
-	public GstFlowReturn chainList(GstBufferList* list)
+	public GstFlowReturn chainList(BufferList list)
 	{
 		// GstFlowReturn gst_pad_chain_list (GstPad *pad,  GstBufferList *list);
-		return gst_pad_chain_list(gstPad, list);
+		return gst_pad_chain_list(gstPad, (list is null) ? null : list.getBufferListStruct());
 	}
 	
 	/**

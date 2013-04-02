@@ -24,6 +24,7 @@
 module gstreamerc.gstinterfacestypes;
 
 public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
 
 /**
  * Main Gtk struct.

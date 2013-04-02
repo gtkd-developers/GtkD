@@ -34,21 +34,22 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = GstPad
+ * extend  = 
  * implements:
  * prefixes:
  * 	- gst_ghost_pad_
- * 	- gst_
  * omit structs:
  * omit prefixes:
+ * 	- gst_proxy_pad_
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gstreamer.ObjectGst
  * 	- gstreamer.Pad
  * 	- gstreamer.PadTemplate
  * structWrap:
- * 	- GstGhostPad* -> GhostPad
+ * 	- GstObject* -> ObjectGst
  * 	- GstPad* -> Pad
  * 	- GstPadTemplate* -> PadTemplate
  * module aliases:
@@ -66,12 +67,13 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
 private import gstreamer.PadTemplate;
 
 
 
-private import gstreamer.Pad;
+private import gstreamer.ProxyPad;
 
 /**
  * GhostPads are useful when organizing pipelines with GstBin like elements.
@@ -90,7 +92,7 @@ private import gstreamer.Pad;
  *
  * Last reviewed on 2005-11-18 (0.9.5)
  */
-public class GhostPad : Pad
+public class GhostPad : ProxyPad
 {
 	
 	/** the main Gtk struct */
@@ -114,7 +116,7 @@ public class GhostPad : Pad
 	 */
 	public this (GstGhostPad* gstGhostPad)
 	{
-		super(cast(GstPad*)gstGhostPad);
+		super(cast(GstProxyPad*)gstGhostPad);
 		this.gstGhostPad = gstGhostPad;
 	}
 	
@@ -262,10 +264,10 @@ public class GhostPad : Pad
 	 * active = whether the pad should be active or not.
 	 * Returns: TRUE if the operation was successful.
 	 */
-	public static int activateModeDefault(Pad pad, GstObject* parent, GstPadMode mode, int active)
+	public static int activateModeDefault(Pad pad, ObjectGst parent, GstPadMode mode, int active)
 	{
 		// gboolean gst_ghost_pad_activate_mode_default (GstPad *pad,  GstObject *parent,  GstPadMode mode,  gboolean active);
-		return gst_ghost_pad_activate_mode_default((pad is null) ? null : pad.getPadStruct(), parent, mode, active);
+		return gst_ghost_pad_activate_mode_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), mode, active);
 	}
 	
 	/**
@@ -278,83 +280,9 @@ public class GhostPad : Pad
 	 * active = whether the pad should be active or not.
 	 * Returns: TRUE if the operation was successful.
 	 */
-	public static int internalActivateModeDefault(Pad pad, GstObject* parent, GstPadMode mode, int active)
+	public static int internalActivateModeDefault(Pad pad, ObjectGst parent, GstPadMode mode, int active)
 	{
 		// gboolean gst_ghost_pad_internal_activate_mode_default  (GstPad *pad,  GstObject *parent,  GstPadMode mode,  gboolean active);
-		return gst_ghost_pad_internal_activate_mode_default((pad is null) ? null : pad.getPadStruct(), parent, mode, active);
-	}
-	
-	/**
-	 * Get the internal pad of pad. Unref target pad after usage.
-	 * The internal pad of a GstGhostPad is the internally used
-	 * pad of opposite direction, which is used to link to the target.
-	 * Params:
-	 * pad = the GstProxyPad
-	 * Returns: the target GstProxyPad, can be NULL. Unref target pad after usage. [transfer full]
-	 */
-	public static GstProxyPad* proxyPadGetInternal(GstProxyPad* pad)
-	{
-		// GstProxyPad * gst_proxy_pad_get_internal (GstProxyPad *pad);
-		return gst_proxy_pad_get_internal(pad);
-	}
-	
-	/**
-	 * Invoke the default iterate internal links function of the proxy pad.
-	 * Params:
-	 * pad = the GstPad to get the internal links of.
-	 * parent = the parent of pad or NULL
-	 * Returns: a GstIterator of GstPad, or NULL if pad has no parent. Unref each returned pad with gst_object_unref().
-	 */
-	public static GstIterator* proxyPadIterateInternalLinksDefault(Pad pad, GstObject* parent)
-	{
-		// GstIterator * gst_proxy_pad_iterate_internal_links_default  (GstPad *pad,  GstObject *parent);
-		return gst_proxy_pad_iterate_internal_links_default((pad is null) ? null : pad.getPadStruct(), parent);
-	}
-	
-	/**
-	 * Invoke the default chain function of the proxy pad.
-	 * Params:
-	 * pad = a sink GstPad, returns GST_FLOW_ERROR if not.
-	 * parent = the parent of pad or NULL
-	 * buffer = the GstBuffer to send, return GST_FLOW_ERROR
-	 * if not. [transfer full]
-	 * Returns: a GstFlowReturn from the pad.
-	 */
-	public static GstFlowReturn proxyPadChainDefault(Pad pad, GstObject* parent, GstBuffer* buffer)
-	{
-		// GstFlowReturn gst_proxy_pad_chain_default (GstPad *pad,  GstObject *parent,  GstBuffer *buffer);
-		return gst_proxy_pad_chain_default((pad is null) ? null : pad.getPadStruct(), parent, buffer);
-	}
-	
-	/**
-	 * Invoke the default chain list function of the proxy pad.
-	 * Params:
-	 * pad = a sink GstPad, returns GST_FLOW_ERROR if not.
-	 * parent = the parent of pad or NULL
-	 * list = the GstBufferList to send, return GST_FLOW_ERROR
-	 * if not. [transfer full]
-	 * Returns: a GstFlowReturn from the pad.
-	 */
-	public static GstFlowReturn proxyPadChainListDefault(Pad pad, GstObject* parent, GstBufferList* list)
-	{
-		// GstFlowReturn gst_proxy_pad_chain_list_default (GstPad *pad,  GstObject *parent,  GstBufferList *list);
-		return gst_proxy_pad_chain_list_default((pad is null) ? null : pad.getPadStruct(), parent, list);
-	}
-	
-	/**
-	 * Invoke the default getrange function of the proxy pad.
-	 * Params:
-	 * pad = a src GstPad, returns GST_FLOW_ERROR if not.
-	 * parent = the parent of pad
-	 * offset = The start offset of the buffer
-	 * size = The length of the buffer
-	 * buffer = a pointer to hold the GstBuffer,
-	 * returns GST_FLOW_ERROR if NULL. [out callee-allocates]
-	 * Returns: a GstFlowReturn from the pad.
-	 */
-	public static GstFlowReturn proxyPadGetrangeDefault(Pad pad, GstObject* parent, ulong offset, uint size, GstBuffer** buffer)
-	{
-		// GstFlowReturn gst_proxy_pad_getrange_default (GstPad *pad,  GstObject *parent,  guint64 offset,  guint size,  GstBuffer **buffer);
-		return gst_proxy_pad_getrange_default((pad is null) ? null : pad.getPadStruct(), parent, offset, size, buffer);
+		return gst_ghost_pad_internal_activate_mode_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), mode, active);
 	}
 }

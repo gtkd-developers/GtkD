@@ -38,21 +38,20 @@
  * implements:
  * prefixes:
  * 	- gst_plugin_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.Module
  * 	- glib.ErrorG
  * 	- glib.GException
  * 	- glib.ListG
+ * 	- gstreamer.Structure
  * structWrap:
  * 	- GList* -> ListG
- * 	- GModule* -> Module
  * 	- GstPlugin* -> Plugin
+ * 	- GstStructure* -> Structure
  * module aliases:
  * local aliases:
  * overrides:
@@ -69,10 +68,10 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
-private import glib.Module;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
+private import gstreamer.Structure;
 
 
 
@@ -256,10 +255,17 @@ public class Plugin : ObjectGst
 	 * stored. This is the case when the registry is getting rebuilt.
 	 * Returns: The cached data as a GstStructure or NULL. [transfer none]
 	 */
-	public GstStructure* getCacheData()
+	public Structure getCacheData()
 	{
 		// const GstStructure * gst_plugin_get_cache_data (GstPlugin *plugin);
-		return gst_plugin_get_cache_data(gstPlugin);
+		auto p = gst_plugin_get_cache_data(gstPlugin);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 	
 	/**
@@ -269,10 +275,10 @@ public class Plugin : ObjectGst
 	 * Params:
 	 * cacheData = a structure containing the data to cache. [transfer full]
 	 */
-	public void setCacheData(GstStructure* cacheData)
+	public void setCacheData(Structure cacheData)
 	{
 		// void gst_plugin_set_cache_data (GstPlugin *plugin,  GstStructure *cache_data);
-		gst_plugin_set_cache_data(gstPlugin, cacheData);
+		gst_plugin_set_cache_data(gstPlugin, (cacheData is null) ? null : cacheData.getStructureStruct());
 	}
 	
 	/**
@@ -434,10 +440,10 @@ public class Plugin : ObjectGst
 	 * env_vars, or NULL.
 	 * flags = optional flags, or GST_PLUGIN_DEPENDENCY_FLAG_NONE
 	 */
-	public void addDependency(char** envVars, char** paths, char** names, GstPluginDependencyFlags flags)
+	public void addDependency(string[] envVars, string[] paths, string[] names, GstPluginDependencyFlags flags)
 	{
 		// void gst_plugin_add_dependency (GstPlugin *plugin,  const gchar **env_vars,  const gchar **paths,  const gchar **names,  GstPluginDependencyFlags flags);
-		gst_plugin_add_dependency(gstPlugin, envVars, paths, names, flags);
+		gst_plugin_add_dependency(gstPlugin, Str.toStringzArray(envVars), Str.toStringzArray(paths), Str.toStringzArray(names), flags);
 	}
 	
 	/**

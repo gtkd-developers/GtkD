@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_query_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -47,13 +46,22 @@
  * 	- gst_query_new_seeking
  * 	- gst_query_new_formats
  * 	- gst_query_new_segment
+ * 	- gst_query_new_latency
+ * 	- gst_query_new_uri
+ * 	- gst_query_new_scheduling
+ * 	- gst_query_new_drain
+ * 	- gst_query_new_accept_caps
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gstreamer.Iterator
+ * 	- gstreamer.Allocator
+ * 	- gstreamer.BufferPool
+ * 	- gstreamer.Caps
  * 	- gstreamer.Structure
  * structWrap:
- * 	- GstIterator* -> Iterator
+ * 	- GstAllocator* -> Allocator
+ * 	- GstBufferPool* -> BufferPool
+ * 	- GstCaps* -> Caps
  * 	- GstQuery* -> Query
  * 	- GstStructure* -> Structure
  * module aliases:
@@ -71,7 +79,9 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
-private import gstreamer.Iterator;
+private import gstreamer.Allocator;
+private import gstreamer.BufferPool;
+private import gstreamer.Caps;
 private import gstreamer.Structure;
 
 
@@ -216,6 +226,82 @@ public class Query
 		}
 		
 		return new Query(cast(GstQuery*)p );
+	}	/**
+	 * Constructs a new latency query object.
+	 * Use gst_query_unref() when done with it. A latency query is usually performed
+	 * by sinks to compensate for additional latency introduced by elements in the
+	 * pipeline.
+	 * Free-function: gst_query_unref
+	 */
+	public static Query newLatency()
+	{
+		// GstQuery * gst_query_new_latency (void);
+		auto p = gst_query_new_latency();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_latency()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}	/**
+	 * Constructs a new query URI query object. Use gst_query_unref()
+	 * when done with it. An URI query is used to query the current URI
+	 * that is used by the source or sink.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newUri()
+	{
+		// GstQuery * gst_query_new_uri (void);
+		auto p = gst_query_new_uri();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_uri()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}	/**
+	 * Constructs a new query object for querying the scheduling properties.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newScheduling()
+	{
+		// GstQuery * gst_query_new_scheduling (void);
+		auto p = gst_query_new_scheduling();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_scheduling()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}	/**
+	 * Constructs a new query object for querying the drain state.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newDrain()
+	{
+		// GstQuery * gst_query_new_drain (void);
+		auto p = gst_query_new_drain();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_drain()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}	/**
+	 * Constructs a new query object for querying if caps are accepted.
+	 * Free-function: gst_query_unref
+	 * Params:
+	 * caps = a fixed GstCaps
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newAcceptCaps(Caps caps)
+	{
+		// GstQuery * gst_query_new_accept_caps (GstCaps *caps);
+		auto p = gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct())");
+		}
+		return new Query(cast(GstQuery*)p );
 	}
 	
 	/**
@@ -315,10 +401,15 @@ public class Query
 	 * replace the query pointed to by old_query. [allow-none][transfer none]
 	 * Returns: TRUE if new_query was different from old_query
 	 */
-	public static int replace(GstQuery** oldQuery, Query newQuery)
+	public static int replace(ref Query oldQuery, Query newQuery)
 	{
 		// gboolean gst_query_replace (GstQuery **old_query,  GstQuery *new_query);
-		return gst_query_replace(oldQuery, (newQuery is null) ? null : newQuery.getQueryStruct());
+		GstQuery* outoldQuery = (oldQuery is null) ? null : oldQuery.getQueryStruct();
+		
+		auto p = gst_query_replace(&outoldQuery, (newQuery is null) ? null : newQuery.getQueryStruct());
+		
+		oldQuery = ObjectG.getDObject!(Query)(outoldQuery);
+		return p;
 	}
 	
 	/**
@@ -483,25 +574,6 @@ public class Query
 	}
 	
 	/**
-	 * Constructs a new latency query object.
-	 * Use gst_query_unref() when done with it. A latency query is usually performed
-	 * by sinks to compensate for additional latency introduced by elements in the
-	 * pipeline.
-	 * Free-function: gst_query_unref
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GstQuery * gst_query_new_latency (void);
-		auto p = gst_query_new_latency();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_query_new_latency()");
-		}
-		this(cast(GstQuery*) p);
-	}
-	
-	/**
 	 * Parse a latency query answer.
 	 * Params:
 	 * live = storage for live or NULL. [out][allow-none]
@@ -576,10 +648,10 @@ public class Query
 	 * Params:
 	 * nFormats = the number of formats in this query. [out][allow-none]
 	 */
-	public void parseNFormats(uint* nFormats)
+	public void parseNFormats(out uint nFormats)
 	{
 		// void gst_query_parse_n_formats (GstQuery *query,  guint *n_formats);
-		gst_query_parse_n_formats(gstQuery, nFormats);
+		gst_query_parse_n_formats(gstQuery, &nFormats);
 	}
 	
 	/**
@@ -590,10 +662,10 @@ public class Query
 	 * nth = the nth format to retrieve. [out]
 	 * format = a pointer to store the nth format. [out][allow-none]
 	 */
-	public void parseNthFormat(uint nth, GstFormat* format)
+	public void parseNthFormat(uint nth, out GstFormat format)
 	{
 		// void gst_query_parse_nth_format (GstQuery *query,  guint nth,  GstFormat *format);
-		gst_query_parse_nth_format(gstQuery, nth, format);
+		gst_query_parse_nth_format(gstQuery, nth, &format);
 	}
 	
 	/**
@@ -657,13 +729,13 @@ public class Query
 	 * filter = a filter
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstCaps* filter)
+	public this (Caps filter)
 	{
 		// GstQuery * gst_query_new_caps (GstCaps *filter);
-		auto p = gst_query_new_caps(filter);
+		auto p = gst_query_new_caps((filter is null) ? null : filter.getCapsStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_query_new_caps(filter)");
+			throw new ConstructionException("null returned by gst_query_new_caps((filter is null) ? null : filter.getCapsStruct())");
 		}
 		this(cast(GstQuery*) p);
 	}
@@ -674,10 +746,14 @@ public class Query
 	 * Params:
 	 * filter = A pointer to the caps filter. [out]
 	 */
-	public void parseCaps(GstCaps** filter)
+	public void parseCaps(out Caps filter)
 	{
 		// void gst_query_parse_caps (GstQuery *query,  GstCaps **filter);
-		gst_query_parse_caps(gstQuery, filter);
+		GstCaps* outfilter = null;
+		
+		gst_query_parse_caps(gstQuery, &outfilter);
+		
+		filter = ObjectG.getDObject!(Caps)(outfilter);
 	}
 	
 	/**
@@ -685,10 +761,10 @@ public class Query
 	 * Params:
 	 * caps = A pointer to the caps. [in]
 	 */
-	public void setCapsResult(GstCaps* caps)
+	public void setCapsResult(Caps caps)
 	{
 		// void gst_query_set_caps_result (GstQuery *query,  GstCaps *caps);
-		gst_query_set_caps_result(gstQuery, caps);
+		gst_query_set_caps_result(gstQuery, (caps is null) ? null : caps.getCapsStruct());
 	}
 	
 	/**
@@ -697,10 +773,14 @@ public class Query
 	 * Params:
 	 * caps = A pointer to the caps. [out]
 	 */
-	public void parseCapsResult(GstCaps** caps)
+	public void parseCapsResult(out Caps caps)
 	{
 		// void gst_query_parse_caps_result (GstQuery *query,  GstCaps **caps);
-		gst_query_parse_caps_result(gstQuery, caps);
+		GstCaps* outcaps = null;
+		
+		gst_query_parse_caps_result(gstQuery, &outcaps);
+		
+		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
 	
 	/**
@@ -709,10 +789,14 @@ public class Query
 	 * Params:
 	 * caps = A pointer to the caps. [out]
 	 */
-	public void parseAcceptCaps(GstCaps** caps)
+	public void parseAcceptCaps(out Caps caps)
 	{
 		// void gst_query_parse_accept_caps (GstQuery *query,  GstCaps **caps);
-		gst_query_parse_accept_caps(gstQuery, caps);
+		GstCaps* outcaps = null;
+		
+		gst_query_parse_accept_caps(gstQuery, &outcaps);
+		
+		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
 	
 	/**
@@ -731,10 +815,10 @@ public class Query
 	 * Params:
 	 * result = location for the result
 	 */
-	public void parseAcceptCapsResult(int* result)
+	public void parseAcceptCapsResult(out int result)
 	{
 		// void gst_query_parse_accept_caps_result (GstQuery *query,  gboolean *result);
-		gst_query_parse_accept_caps_result(gstQuery, result);
+		gst_query_parse_accept_caps_result(gstQuery, &result);
 	}
 	
 	/**
@@ -776,10 +860,10 @@ public class Query
 	 * busy = if buffering is busy, or NULL. [out][allow-none]
 	 * percent = a buffering percent, or NULL. [out][allow-none]
 	 */
-	public void parseBufferingPercent(int* busy, int* percent)
+	public void parseBufferingPercent(out int busy, out int percent)
 	{
 		// void gst_query_parse_buffering_percent (GstQuery *query,  gboolean *busy,  gint *percent);
-		gst_query_parse_buffering_percent(gstQuery, busy, percent);
+		gst_query_parse_buffering_percent(gstQuery, &busy, &percent);
 	}
 	
 	/**
@@ -805,10 +889,10 @@ public class Query
 	 * bufferingLeft = amount of buffering time left in
 	 * milliseconds, or NULL. [out][allow-none]
 	 */
-	public void parseBufferingStats(GstBufferingMode* mode, int* avgIn, int* avgOut, long* bufferingLeft)
+	public void parseBufferingStats(out GstBufferingMode mode, out int avgIn, out int avgOut, out long bufferingLeft)
 	{
 		// void gst_query_parse_buffering_stats (GstQuery *query,  GstBufferingMode *mode,  gint *avg_in,  gint *avg_out,  gint64 *buffering_left);
-		gst_query_parse_buffering_stats(gstQuery, mode, avgIn, avgOut, bufferingLeft);
+		gst_query_parse_buffering_stats(gstQuery, &mode, &avgIn, &avgOut, &bufferingLeft);
 	}
 	
 	/**
@@ -837,10 +921,10 @@ public class Query
 	 * estimatedTotal = estimated total amount of download
 	 * time, or NULL. [out][allow-none]
 	 */
-	public void parseBufferingRange(GstFormat* format, long* start, long* stop, long* estimatedTotal)
+	public void parseBufferingRange(out GstFormat format, out long start, out long stop, out long estimatedTotal)
 	{
 		// void gst_query_parse_buffering_range (GstQuery *query,  GstFormat *format,  gint64 *start,  gint64 *stop,  gint64 *estimated_total);
-		gst_query_parse_buffering_range(gstQuery, format, start, stop, estimatedTotal);
+		gst_query_parse_buffering_range(gstQuery, &format, &start, &stop, &estimatedTotal);
 	}
 	
 	/**
@@ -877,10 +961,10 @@ public class Query
 	 * stop = the stop position to set, or NULL. [out][allow-none]
 	 * Returns: a gboolean indicating if the parsing succeeded.
 	 */
-	public int parseNthBufferingRange(uint index, long* start, long* stop)
+	public int parseNthBufferingRange(uint index, out long start, out long stop)
 	{
 		// gboolean gst_query_parse_nth_buffering_range (GstQuery *query,  guint index,  gint64 *start,  gint64 *stop);
-		return gst_query_parse_nth_buffering_range(gstQuery, index, start, stop);
+		return gst_query_parse_nth_buffering_range(gstQuery, index, &start, &stop);
 	}
 	
 	/**
@@ -891,10 +975,14 @@ public class Query
 	 * uri = the storage for the current URI
 	 * (may be NULL). [out callee-allocates][allow-none]
 	 */
-	public void parseUri(char** uri)
+	public void parseUri(out string uri)
 	{
 		// void gst_query_parse_uri (GstQuery *query,  gchar **uri);
-		gst_query_parse_uri(gstQuery, uri);
+		char* outuri = null;
+		
+		gst_query_parse_uri(gstQuery, &outuri);
+		
+		uri = Str.toString(outuri);
 	}
 	
 	/**
@@ -916,13 +1004,13 @@ public class Query
 	 * needPool = return a pool
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstCaps* caps, int needPool)
+	public this (Caps caps, int needPool)
 	{
 		// GstQuery * gst_query_new_allocation (GstCaps *caps,  gboolean need_pool);
-		auto p = gst_query_new_allocation(caps, needPool);
+		auto p = gst_query_new_allocation((caps is null) ? null : caps.getCapsStruct(), needPool);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_query_new_allocation(caps, needPool)");
+			throw new ConstructionException("null returned by gst_query_new_allocation((caps is null) ? null : caps.getCapsStruct(), needPool)");
 		}
 		this(cast(GstQuery*) p);
 	}
@@ -935,10 +1023,14 @@ public class Query
 	 * caps = The GstCaps. [out][transfer none][allow-none]
 	 * needPool = Whether a GstBufferPool is needed. [out][allow-none]
 	 */
-	public void parseAllocation(GstCaps** caps, int* needPool)
+	public void parseAllocation(out Caps caps, out int needPool)
 	{
 		// void gst_query_parse_allocation (GstQuery *query,  GstCaps **caps,  gboolean *need_pool);
-		gst_query_parse_allocation(gstQuery, caps, needPool);
+		GstCaps* outcaps = null;
+		
+		gst_query_parse_allocation(gstQuery, &outcaps, &needPool);
+		
+		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
 	
 	/**
@@ -949,10 +1041,10 @@ public class Query
 	 * minBuffers = the min buffers
 	 * maxBuffers = the max buffers
 	 */
-	public void addAllocationPool(GstBufferPool* pool, uint size, uint minBuffers, uint maxBuffers)
+	public void addAllocationPool(BufferPool pool, uint size, uint minBuffers, uint maxBuffers)
 	{
 		// void gst_query_add_allocation_pool (GstQuery *query,  GstBufferPool *pool,  guint size,  guint min_buffers,  guint max_buffers);
-		gst_query_add_allocation_pool(gstQuery, pool, size, minBuffers, maxBuffers);
+		gst_query_add_allocation_pool(gstQuery, (pool is null) ? null : pool.getBufferPoolStruct(), size, minBuffers, maxBuffers);
 	}
 	
 	/**
@@ -976,10 +1068,14 @@ public class Query
 	 * minBuffers = the min buffers. [out][allow-none]
 	 * maxBuffers = the max buffers. [out][allow-none]
 	 */
-	public void parseNthAllocationPool(uint index, GstBufferPool** pool, uint* size, uint* minBuffers, uint* maxBuffers)
+	public void parseNthAllocationPool(uint index, out BufferPool pool, out uint size, out uint minBuffers, out uint maxBuffers)
 	{
 		// void gst_query_parse_nth_allocation_pool (GstQuery *query,  guint index,  GstBufferPool **pool,  guint *size,  guint *min_buffers,  guint *max_buffers);
-		gst_query_parse_nth_allocation_pool(gstQuery, index, pool, size, minBuffers, maxBuffers);
+		GstBufferPool* outpool = null;
+		
+		gst_query_parse_nth_allocation_pool(gstQuery, index, &outpool, &size, &minBuffers, &maxBuffers);
+		
+		pool = ObjectG.getDObject!(BufferPool)(outpool);
 	}
 	
 	/**
@@ -991,10 +1087,10 @@ public class Query
 	 * minBuffers = the min buffers
 	 * maxBuffers = the max buffers
 	 */
-	public void setNthAllocationPool(uint index, GstBufferPool* pool, uint size, uint minBuffers, uint maxBuffers)
+	public void setNthAllocationPool(uint index, BufferPool pool, uint size, uint minBuffers, uint maxBuffers)
 	{
 		// void gst_query_set_nth_allocation_pool (GstQuery *query,  guint index,  GstBufferPool *pool,  guint size,  guint min_buffers,  guint max_buffers);
-		gst_query_set_nth_allocation_pool(gstQuery, index, pool, size, minBuffers, maxBuffers);
+		gst_query_set_nth_allocation_pool(gstQuery, index, (pool is null) ? null : pool.getBufferPoolStruct(), size, minBuffers, maxBuffers);
 	}
 	
 	/**
@@ -1003,10 +1099,10 @@ public class Query
 	 * allocator = the memory allocator. [transfer none][allow-none]
 	 * params = a GstAllocationParams. [transfer none][allow-none]
 	 */
-	public void addAllocationParam(GstAllocator* allocator, GstAllocationParams* params)
+	public void addAllocationParam(Allocator allocator, GstAllocationParams* params)
 	{
 		// void gst_query_add_allocation_param (GstQuery *query,  GstAllocator *allocator,  const GstAllocationParams *params);
-		gst_query_add_allocation_param(gstQuery, allocator, params);
+		gst_query_add_allocation_param(gstQuery, (allocator is null) ? null : allocator.getAllocatorStruct(), params);
 	}
 	
 	/**
@@ -1030,10 +1126,14 @@ public class Query
 	 * allocator = variable to hold the result. [out][transfer none][allow-none]
 	 * params = parameters for the allocator. [out][allow-none]
 	 */
-	public void parseNthAllocationParam(uint index, GstAllocator** allocator, GstAllocationParams* params)
+	public void parseNthAllocationParam(uint index, out Allocator allocator, out GstAllocationParams params)
 	{
 		// void gst_query_parse_nth_allocation_param  (GstQuery *query,  guint index,  GstAllocator **allocator,  GstAllocationParams *params);
-		gst_query_parse_nth_allocation_param(gstQuery, index, allocator, params);
+		GstAllocator* outallocator = null;
+		
+		gst_query_parse_nth_allocation_param(gstQuery, index, &outallocator, &params);
+		
+		allocator = ObjectG.getDObject!(Allocator)(outallocator);
 	}
 	
 	/**
@@ -1044,10 +1144,10 @@ public class Query
 	 * allocator = new allocator to set. [transfer none][allow-none]
 	 * params = parameters for the allocator. [transfer none][allow-none]
 	 */
-	public void setNthAllocationParam(uint index, GstAllocator* allocator, GstAllocationParams* params)
+	public void setNthAllocationParam(uint index, out GstAllocator allocator, out GstAllocationParams params)
 	{
 		// void gst_query_set_nth_allocation_param (GstQuery *query,  guint index,  GstAllocator *allocator,  const GstAllocationParams *params);
-		gst_query_set_nth_allocation_param(gstQuery, index, allocator, params);
+		gst_query_set_nth_allocation_param(gstQuery, index, &allocator, &params);
 	}
 	
 	/**
@@ -1081,10 +1181,15 @@ public class Query
 	 * params = API specific flags. [out][allow-none]
 	 * Returns: a GType of the metadata API at index.
 	 */
-	public GType parseNthAllocationMeta(uint index, GstStructure** params)
+	public GType parseNthAllocationMeta(uint index, out Structure params)
 	{
 		// GType gst_query_parse_nth_allocation_meta (GstQuery *query,  guint index,  const GstStructure **params);
-		return gst_query_parse_nth_allocation_meta(gstQuery, index, params);
+		GstStructure* outparams = null;
+		
+		auto p = gst_query_parse_nth_allocation_meta(gstQuery, index, &outparams);
+		
+		params = ObjectG.getDObject!(Structure)(outparams);
+		return p;
 	}
 	
 	/**
@@ -1107,10 +1212,10 @@ public class Query
 	 * index = the index. [out][allow-none]
 	 * Returns: TRUE when api is in the list of metadata.
 	 */
-	public int findAllocationMeta(GType api, uint* index)
+	public int findAllocationMeta(GType api, out uint index)
 	{
 		// gboolean gst_query_find_allocation_meta (GstQuery *query,  GType api,  guint *index);
-		return gst_query_find_allocation_meta(gstQuery, api, index);
+		return gst_query_find_allocation_meta(gstQuery, api, &index);
 	}
 	
 	/**
@@ -1120,10 +1225,10 @@ public class Query
 	 * minsize = the suggested minimum size of pull requests. [out][allow-none]
 	 * maxsize = the suggested maximum size of pull requests:. [out][allow-none]
 	 */
-	public void parseScheduling(GstSchedulingFlags* flags, int* minsize, int* maxsize, int* alig)
+	public void parseScheduling(out GstSchedulingFlags flags, out int minsize, out int maxsize, out int alig)
 	{
 		// void gst_query_parse_scheduling (GstQuery *query,  GstSchedulingFlags *flags,  gint *minsize,  gint *maxsize,  gint *align);
-		gst_query_parse_scheduling(gstQuery, flags, minsize, maxsize, alig);
+		gst_query_parse_scheduling(gstQuery, &flags, &minsize, &maxsize, &alig);
 	}
 	
 	/**

@@ -38,13 +38,11 @@
  * implements:
  * prefixes:
  * 	- gst_segment_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
  * structWrap:
  * 	- GstSegment* -> Segment
  * module aliases:
@@ -61,7 +59,6 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
-private import glib.Str;
 
 
 
@@ -264,10 +261,10 @@ public class Segment
 	 * update = boolean holding whether position was updated.
 	 * Returns: TRUE if the seek could be performed.
 	 */
-	public int doSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, ulong start, GstSeekType stopType, ulong stop, int* update)
+	public int doSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, ulong start, GstSeekType stopType, ulong stop, ref int update)
 	{
 		// gboolean gst_segment_do_seek (GstSegment *segment,  gdouble rate,  GstFormat format,  GstSeekFlags flags,  GstSeekType start_type,  guint64 start,  GstSeekType stop_type,  guint64 stop,  gboolean *update);
-		return gst_segment_do_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, update);
+		return gst_segment_do_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, &update);
 	}
 	
 	/**

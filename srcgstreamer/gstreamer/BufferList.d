@@ -43,7 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gstreamer.BufferList
+ * 	- gstreamer.Buffer
  * structWrap:
  * 	- GstBuffer* -> Buffer
  * 	- GstBufferList* -> BufferList
@@ -61,7 +61,7 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
-private import gstreamer.BufferList;
+private import gstreamer.Buffer;
 
 
 

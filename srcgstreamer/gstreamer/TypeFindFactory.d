@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_type_find_factory_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,13 +45,12 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
- * 	- gstreamer.TypeFind
  * 	- gstreamer.Caps
+ * 	- gstreamer.TypeFind
  * structWrap:
  * 	- GList* -> ListG
  * 	- GstCaps* -> Caps
  * 	- GstTypeFind* -> TypeFind
- * 	- GstTypeFindFactory* -> TypeFindFactory
  * module aliases:
  * local aliases:
  * overrides:
@@ -69,8 +67,8 @@ private import gobject.ObjectG;
 
 private import glib.Str;
 private import glib.ListG;
-private import gstreamer.TypeFind;
 private import gstreamer.Caps;
+private import gstreamer.TypeFind;
 
 
 

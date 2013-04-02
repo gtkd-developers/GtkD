@@ -28,6 +28,7 @@
 
 addTypedefs: start
 public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
 addTypedefs: end
 
 addAliases: start

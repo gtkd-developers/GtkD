@@ -195,13 +195,12 @@ public class Bus : ObjectGst
 	public void setSyncHandler( GstBusSyncReply delegate(Message) dlg )
 	{
 		onSyncHandlerListener = dlg;
-		gst_bus_set_sync_handler(gstBus, cast(GstBusSyncHandler)&syncHandlerCallBack, cast(void*)this);
+		gst_bus_set_sync_handler(gstBus, cast(GstBusSyncHandler)&syncHandlerCallBack, cast(void*)this, null);
 	}
 	
 	GstBusSyncReply delegate(Message) onSyncHandlerListener;
 	
-	extern(C) static GstBusSyncReply syncHandlerCallBack(GstBus * bus, GstMessage * msg, Bus bus_d )//GstPipeline * pipeline)
-	//extern(C) static gboolean watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
+	extern(C) static GstBusSyncReply syncHandlerCallBack(GstBus* bus, GstMessage* msg, Bus bus_d)
 	{
 		Message msg_d = new Message( msg );
 		

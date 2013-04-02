@@ -45,11 +45,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gstreamer.Pad
  * 	- gstreamer.Caps
  * structWrap:
  * 	- GstCaps* -> Caps
- * 	- GstPad* -> Pad
  * 	- GstPadTemplate* -> PadTemplate
  * module aliases:
  * local aliases:
@@ -68,7 +66,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gstreamer.Pad;
 private import gstreamer.Caps;
 
 
@@ -153,13 +150,13 @@ public class PadTemplate : ObjectGst
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(Pad, PadTemplate)[] onPadCreatedListeners;
+	void delegate(GstPad*, PadTemplate)[] onPadCreatedListeners;
 	/**
 	 * This signal is fired when an element creates a pad from this template.
 	 * See Also
 	 * GstPad, GstElementFactory
 	 */
-	void addOnPadCreated(void delegate(Pad, PadTemplate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPadCreated(void delegate(GstPad*, PadTemplate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pad-created" in connectedSignals) )
 		{
@@ -176,9 +173,9 @@ public class PadTemplate : ObjectGst
 	}
 	extern(C) static void callBackPadCreated(GstPadTemplate* padTemplateStruct, GstPad* pad, PadTemplate _padTemplate)
 	{
-		foreach ( void delegate(Pad, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
+		foreach ( void delegate(GstPad*, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
 		{
-			dlg(ObjectG.getDObject!(Pad)(pad), _padTemplate);
+			dlg(pad, _padTemplate);
 		}
 	}
 	

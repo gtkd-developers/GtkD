@@ -38,21 +38,17 @@
  * implements:
  * prefixes:
  * 	- gst_pipeline_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gstreamer.Element
- * 	- gstreamer.Clock
  * 	- gstreamer.Bus
+ * 	- gstreamer.Clock
  * structWrap:
  * 	- GstBus* -> Bus
  * 	- GstClock* -> Clock
- * 	- GstElement* -> Element
- * 	- GstPipeline* -> Pipeline
  * module aliases:
  * local aliases:
  * overrides:
@@ -71,9 +67,8 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
-private import gstreamer.Element;
-private import gstreamer.Clock;
 private import gstreamer.Bus;
+private import gstreamer.Clock;
 
 
 

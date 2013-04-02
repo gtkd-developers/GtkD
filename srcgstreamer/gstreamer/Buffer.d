@@ -52,7 +52,6 @@
  * 	- GstAllocator* -> Allocator
  * 	- GstBuffer* -> Buffer
  * 	- GstMemory* -> Memory
- * 	- GstMeta* -> Meta
  * module aliases:
  * local aliases:
  * overrides:
@@ -863,17 +862,10 @@ public class Buffer
 	 * api = the GType of an API
 	 * Returns: the metadata for api on buffer. [transfer none]
 	 */
-	public Meta getMeta(GType api)
+	public GstMeta* getMeta(GType api)
 	{
 		// GstMeta * gst_buffer_get_meta (GstBuffer *buffer,  GType api);
-		auto p = gst_buffer_get_meta(gstBuffer, api);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return gst_buffer_get_meta(gstBuffer, api);
 	}
 	
 	/**
@@ -883,17 +875,10 @@ public class Buffer
 	 * params = params for info
 	 * Returns: the metadata for the api in info on buffer. [transfer none]
 	 */
-	public Meta addMeta(GstMetaInfo* info, void* params)
+	public GstMeta* addMeta(GstMetaInfo* info, void* params)
 	{
 		// GstMeta * gst_buffer_add_meta (GstBuffer *buffer,  const GstMetaInfo *info,  gpointer params);
-		auto p = gst_buffer_add_meta(gstBuffer, info, params);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return gst_buffer_add_meta(gstBuffer, info, params);
 	}
 	
 	/**
@@ -902,10 +887,10 @@ public class Buffer
 	 * meta = a GstMeta
 	 * Returns: TRUE if the metadata existed and was removed, FALSE if no such metadata was on buffer.
 	 */
-	public int removeMeta(Meta meta)
+	public int removeMeta(GstMeta* meta)
 	{
 		// gboolean gst_buffer_remove_meta (GstBuffer *buffer,  GstMeta *meta);
-		return gst_buffer_remove_meta(gstBuffer, (meta is null) ? null : meta.getMetaStruct());
+		return gst_buffer_remove_meta(gstBuffer, meta);
 	}
 	
 	/**
@@ -916,17 +901,10 @@ public class Buffer
 	 * state = an opaque state pointer
 	 * Returns: The next GstMeta or NULL when there are no more items. [transfer none]
 	 */
-	public Meta iterateMeta(void** state)
+	public GstMeta* iterateMeta(void** state)
 	{
 		// GstMeta * gst_buffer_iterate_meta (GstBuffer *buffer,  gpointer *state);
-		auto p = gst_buffer_iterate_meta(gstBuffer, state);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
+		return gst_buffer_iterate_meta(gstBuffer, state);
 	}
 	
 	/**

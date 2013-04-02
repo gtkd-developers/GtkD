@@ -38,15 +38,19 @@
  * implements:
  * prefixes:
  * 	- gst_task_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gthread.RecMutex
+ * 	- gthread.Thread
+ * 	- gstreamer.TaskPool
  * structWrap:
- * 	- GstTask* -> Task
+ * 	- GRecMutex* -> RecMutex
+ * 	- GThread* -> Thread
+ * 	- GstTaskPool* -> TaskPool
  * module aliases:
  * local aliases:
  * overrides:
@@ -62,6 +66,9 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import gthread.RecMutex;
+private import gthread.Thread;
+private import gstreamer.TaskPool;
 
 
 
@@ -184,10 +191,10 @@ public class Task : ObjectGst
 	 * Params:
 	 * mutex = The GRecMutex to use
 	 */
-	public void setLock(GRecMutex* mutex)
+	public void setLock(RecMutex mutex)
 	{
 		// void gst_task_set_lock (GstTask *task,  GRecMutex *mutex);
-		gst_task_set_lock(gstTask, mutex);
+		gst_task_set_lock(gstTask, (mutex is null) ? null : mutex.getRecMutexStruct());
 	}
 	
 	/**
@@ -197,10 +204,10 @@ public class Task : ObjectGst
 	 * Params:
 	 * pool = a GstTaskPool. [transfer none]
 	 */
-	public void setPool(GstTaskPool* pool)
+	public void setPool(TaskPool pool)
 	{
 		// void gst_task_set_pool (GstTask *task,  GstTaskPool *pool);
-		gst_task_set_pool(gstTask, pool);
+		gst_task_set_pool(gstTask, (pool is null) ? null : pool.getTaskPoolStruct());
 	}
 	
 	/**
@@ -209,10 +216,17 @@ public class Task : ObjectGst
 	 * MT safe.
 	 * Returns: the GstTaskPool used by task. gst_object_unref() after usage. [transfer full]
 	 */
-	public GstTaskPool* getPool()
+	public TaskPool getPool()
 	{
 		// GstTaskPool * gst_task_get_pool (GstTask *task);
-		return gst_task_get_pool(gstTask);
+		auto p = gst_task_get_pool(gstTask);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(TaskPool)(cast(GstTaskPool*) p);
 	}
 	
 	/**

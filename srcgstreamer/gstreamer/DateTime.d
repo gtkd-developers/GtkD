@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = DateTime
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gst_date_time_new_now_utc
+ * 	- gst_date_time_new_now_local_time
+ * 	- gst_date_time_new_from_unix_epoch_utc
+ * 	- gst_date_time_new_from_unix_epoch_local_time
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -100,6 +104,62 @@ public class DateTime
 	public this (GstDateTime* gstDateTime)
 	{
 		this.gstDateTime = gstDateTime;
+	}
+	
+	/**
+	 * Creates a new GstDateTime representing the current date and time.
+	 *
+	 * Params:
+	 *     utc  = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool utc)
+	{
+		GstDateTime* p;
+		
+		if ( utc )
+		{
+			p = gst_date_time_new_now_utc();
+		}
+		else
+		{
+			p = gst_date_time_new_now_local_time();
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
+		}
+		this(cast(GstDateTime*) p);
+	}
+	
+	/**
+	 * Creates a new GstDateTime using the time since Jan 1, 1970 specified by
+	 * secs.
+	 *
+	 * Params:
+	 *     secs = Seconds from the Unix epoch
+	 *     utc  = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (long secs, bool utc)
+	{
+		GstDateTime* p;
+		
+		if ( utc )
+		{
+			p = gst_date_time_new_from_unix_epoch_utc(secs);
+		}
+		else
+		{
+			p = gst_date_time_new_from_unix_epoch_local_time(secs);
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_date_time_new_from_unix_epoch_local_time(secs)");
+		}
+		this(cast(GstDateTime*) p);
 	}
 	
 	/**
@@ -303,25 +363,6 @@ public class DateTime
 	}
 	
 	/**
-	 * Creates a new GstDateTime using the time since Jan 1, 1970 specified by
-	 * secs. The GstDateTime is in the local timezone.
-	 * Free-function: gst_date_time_unref
-	 * Params:
-	 * secs = seconds from the Unix epoch
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (long secs)
-	{
-		// GstDateTime * gst_date_time_new_from_unix_epoch_local_time  (gint64 secs);
-		auto p = gst_date_time_new_from_unix_epoch_local_time(secs);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_date_time_new_from_unix_epoch_local_time(secs)");
-		}
-		this(cast(GstDateTime*) p);
-	}
-	
-	/**
 	 * Creates a new GstDateTime using the date and times in the gregorian calendar
 	 * in the local timezone.
 	 * year should be from 1 to 9999, month should be from 1 to 12, day from
@@ -350,22 +391,6 @@ public class DateTime
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_date_time_new_local_time(year, month, day, hour, minute, seconds)");
-		}
-		this(cast(GstDateTime*) p);
-	}
-	
-	/**
-	 * Creates a new GstDateTime representing the current date and time.
-	 * Free-function: gst_date_time_unref
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GstDateTime * gst_date_time_new_now_local_time (void);
-		auto p = gst_date_time_new_now_local_time();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
 		}
 		this(cast(GstDateTime*) p);
 	}
