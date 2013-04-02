@@ -123,12 +123,7 @@ public class ListSG
 	/** */
 	void* data()
 	{
-		if ( getListSGStruct().next is null )
-		{
-			return null;
-		}
-		
-		return getListSGStruct().data;
+		return gSList.data;
 	}
 	
 	/**
@@ -137,7 +132,12 @@ public class ListSG
 	 */
 	ListSG next()
 	{
-		return new ListSG(getListSGStruct().next);
+		if ( gSList.next is null )
+		{
+			return null;
+		}
+		
+		return new ListSG(gSList.next);
 	}
 	
 	/**
