@@ -5,15 +5,10 @@
 
 module gst_mediaplayer;
 
-//Tango imports
-import tango.util.log.Trace;//Thread safe console output.
-import Util = tango.text.Util;
-import Integer = tango.text.convert.Integer;
-import Stringz = tango.stdc.stringz;
-
-import tango.sys.Environment;
-import tango.io.FilePath;
-import tango.io.Path;
+import std.conv;
+import std.file;
+import std.path;
+import std.stdio;
 
 //gtkD imports:
 import gtk.Main;
@@ -27,7 +22,7 @@ import gtk.AspectFrame;
 
 import gtk.FileChooserDialog;
 
-import gdk.X11;//Needed for XOverlay
+import gdk.X11;//Needed for VideoOverlay
 
 import gtk.VBox;
 import gtk.HBox;
@@ -54,9 +49,9 @@ import gstreamer.Bus;
 import gstreamerc.gstreamertypes;
 import gstreamerc.gstreamer;
 
-import gstreamerc.gstinterfacestypes;//For GstXOverlay*
+//import gstreamerc.gstinterfacestypes;//For GstXOverlay*
 
-import gstinterfaces.XOverlay;
+import gstinterfaces.VideoOverlay;
 
 import gtkc.glib;
 import gtkc.gobject;
@@ -68,8 +63,8 @@ public:
 	
 	this()
 	{
-		debug(MonitorOverlay) Trace.formatln("Monitor.this() START.");
-		debug(MonitorOverlay) scope(exit) Trace.formatln("Monitor.this() END.");
+		debug(MonitorOverlay) writeln("Monitor.this() START.");
+		debug(MonitorOverlay) scope(exit) writeln("Monitor.this() END.");
 		
 		setAppPaintable( true );
 		
@@ -81,34 +76,34 @@ public:
 	//For some reason this does more harm than good?
 	int onExpose(GdkEventExpose* event, Widget widget)
 	{
-		if( xoverlay !is null )
+		if( videoOverlay !is null )
 		{
-			//Trace.formatln("And we even have an xoverlay");
-			xoverlay.expose();//For some reason this does more harm than good?
+			//writeln("And we even have an videoOverlay");
+			videoOverlay.expose();//For some reason this does more harm than good?
 		}
 		return false;//?
 	}
 	*/
 	
-	public XOverlay xoverlay() { return m_xoverlay; }
+	public VideoOverlay videoOverlay() { return m_videoOverlay; }
 	/**
-	* Give this method an XOverlay that you've created from
-	* a videoSink. like: monitorOverlay.xoverlay = new XOverlay( videoSink );
+	* Give this method an VideoOverlay that you've created from
+	* a videoSink. like: monitorOverlay.videoOverlay = new VideoOverlay( videoSink );
 	*/
-	public XOverlay xoverlay(XOverlay set)
+	public VideoOverlay videoOverlay(VideoOverlay set)
 	{
-		debug(MonitorOverlay) Trace.formatln("Monitor.xoverlay(set) START.");
-		debug(MonitorOverlay) scope(exit) Trace.formatln("Monitor.xoverlay(set) END.");
-		m_xoverlay = set;
+		debug(MonitorOverlay) writeln("Monitor.videoOverlay(set) START.");
+		debug(MonitorOverlay) scope(exit) writeln("Monitor.videoOverlay(set) END.");
+		m_videoOverlay = set;
 		
-		debug(MonitorOverlay) Trace.formatln("Monitor.xoverlay(set) xoverlay set. Now setting XwindowId.");
-		m_xoverlay.setXwindowId( X11.windowGetXid( getWindow() ) );
+		debug(MonitorOverlay) writeln("Monitor.videoOverlay(set) videoOverlay set. Now setting XwindowId.");
+		m_videoOverlay.setWindowHandle( X11.windowGetXid( getWindow() ) );
 		
-		debug(MonitorOverlay) Trace.formatln("X11.drawableGetXid: {}", X11.windowGetXid( getWindow() ) );
+		debug(MonitorOverlay) writeln("X11.drawableGetXid: {}", X11.windowGetXid( getWindow() ) );
 		
-		return m_xoverlay;
+		return m_videoOverlay;
 	}
-	protected XOverlay m_xoverlay;
+	protected VideoOverlay m_videoOverlay;
 	
 }
 
@@ -117,7 +112,7 @@ class GstMediaPlayer : MainWindow
 {
 public:
 
-	GstBusSyncReply createXOverlayWindowCb( Message msg )
+	GstBusSyncReply createVideoOverlayWindowCb( Message msg )
 	{
 		// ignore anything but 'prepare-xwindow-id' element messages
 		if( msg.type() != GstMessageType.ELEMENT )
@@ -130,32 +125,32 @@ public:
 		ObjectGst obu = msg.src();
 		Stdout("The message source is named: ")( obu.getName() ).newline;
 		*/
-		Structure str = msg.structure();
+		Structure str = msg.getStructure();
 		if( str.hasName("prepare-xwindow-id") == false )
 		//if (!gst_structure_has_name (message->structure, "prepare-xwindow-id"))
 			return GstBusSyncReply.PASS;
 		
-		debug(MonitorOverlay) Trace.formatln("Now we should create the X window.");
+		debug(MonitorOverlay) writeln("Now we should create the X window.");
 		
-		monitorOverlay.xoverlay = new XOverlay( videosink );
+		monitorOverlay.videoOverlay = new VideoOverlay( videosink );
 		
-		debug(MonitorOverlay) Trace.formatln("Created an xoverlay.");
+		debug(MonitorOverlay) writeln("Created an VideoOverlay.");
 		
 		return GstBusSyncReply.DROP;
 	}
 
 	bool busCall( Message msg )
 	{
-		debug(gstreamer) Trace.formatln("GstMediaPlayer.busCall(msg) START.");
-		debug(gstreamer) scope(exit) Trace.formatln("GstMediaPlayer.busCall(msg) END.");
+		debug(gstreamer) writeln("GstMediaPlayer.busCall(msg) START.");
+		debug(gstreamer) scope(exit) writeln("GstMediaPlayer.busCall(msg) END.");
 
 		switch( msg.type )
 		{
 			case GstMessageType.UNKNOWN:
-				Trace.formatln("Unknown message type.");
+				writeln("Unknown message type.");
 			break;
 			case GstMessageType.EOS:
-				Trace.formatln("End-of-stream. Looping from the start.");
+				writeln("End-of-stream. Looping from the start.");
 				//Main.quit();
 				onSeekToStart(null);
 			break;
@@ -166,7 +161,7 @@ public:
 				ErrorG err;
 				msg.parseError(err, dbug);
 				//g_free (dbug);
-				Trace.formatln("Error: {} dbug: {}", Stringz.fromStringz(err.getErrorGStruct().message), dbug );
+				writefln("Error: %s dbug: %s", to!string(err.getErrorGStruct().message), dbug );
 				//g_error_free (err);
 				Main.quit();
 			break;
@@ -178,9 +173,9 @@ public:
 		return true;
 	}
 
-	char[] g_appDir;
+	string g_appDir;
 
-	this(char[][] args)
+	this(string[] args)
 	{
 
 		super("GstMediaPlayer");
@@ -228,44 +223,19 @@ public:
 		
 		showAll();
 
-		scope mypath = new FilePath( args[0] );
-		
-		bool remove_trailing_dotslash = false;
-		
-		g_appDir = mypath.path();
-		
-		Trace.formatln("g_appDir before: {}", g_appDir );
-		
-		if( g_appDir == "./" )
-		{
-			remove_trailing_dotslash = true;
-		}
-		
-		bool starts_with_two_dots = false;
-		if( args[0][0] == '.' && args[0][1] == '.' )
-			starts_with_two_dots = true;
-		
-		mypath = mypath.absolute(Environment.cwd());//This will add /home/user...
-		if( starts_with_two_dots )
-			g_appDir = normalize( mypath.path() );//This will get rid of the trailing /../
-		else g_appDir = mypath.path();
-		
-		if( remove_trailing_dotslash == true )
-		{
-			//This will get rid of the trailing ./
-			g_appDir = g_appDir[0..length-2];
-		}
-		
-		Trace.formatln("g_appDir after: {}", g_appDir );
-		
 		if (args.length > 1)
 		{
 			mediaFileUri = args[1];
+
+			if ( !isRooted(mediaFileUri) )
+			{
+				mediaFileUri = buildNormalizedPath(getcwd(), mediaFileUri);
+			}
 		
 			//This will construct the filename to be a URI, but it will only
 			//work for files in the same directory.
 			if( mediaFileUri[0..7] != "file://" && mediaFileUri[0..7] != "http://" )
-				mediaFileUri = "file://" ~ g_appDir ~ mediaFileUri;
+				mediaFileUri = "file://"~ mediaFileUri;
 		}
 		
 		/*
@@ -274,11 +244,11 @@ public:
 		{
 			for( uint i = 0; i < args.length; i++ )
 			{
-				char[] ar = args[i];
+				string ar = args[i];
 				
 				if( ar == "--help" )
 				{
-					Trace.formatln("Usage: {} <mediafilename>", args[0]);
+					writeln("Usage: {} <mediafilename>", args[0]);
 					return -1;
 				}
 			}
@@ -290,7 +260,7 @@ public:
 		
 	}
 	
-	void playMediaFile(char[] file)
+	void playMediaFile(string file)
 	{
 		if( source !is null )
 		{
@@ -304,38 +274,35 @@ public:
 
 		source = ElementFactory.make("playbin", "ourplaybin");
 		//source = ElementFactory.make("playbin2", "ourplaybin");//playbin2 doesn't work,
-		//correctly with XOverlay.
+		//correctly with VideoOverlay.
 		videosink = ElementFactory.make("xvimagesink", "video-output-xvimagesink");
-		//Only xvimagesink work (almost) correctly with XOverlay, but even it still
+		//Only xvimagesink work (almost) correctly with VideoOverlay, but even it still
 		//has some problems. It won't work with compositing enabled...
 		//videosink = ElementFactory.make("autovideosink", "video-output-sink");
 		//videosink = ElementFactory.make("fakesink", "video-sink");
 
 		if( source is null )
 		{
-			Trace.formatln("PlayBin could not be created");
+			writeln("PlayBin could not be created");
 			throw new Exception("One or more gstreamerD elements could not be created.");
 		}
 		
 		if( videosink is null )
 		{
-			Trace.formatln("videosink could not be created");
+			writeln("videosink could not be created");
 			throw new Exception("One or more gstreamerD elements could not be created.");
 		}
 
 		//add message handlers
-		source.getBus().setSyncHandler( &createXOverlayWindowCb );
+		source.getBus().setSyncHandler( &createVideoOverlayWindowCb );
 		source.getBus().addWatch( &busCall );
 
 		//Some Value handling, to get our videosink C GstElement*
 		//to be accepted by setProperty. This could propably made cleaner.
-		//One idea is to add a Element.setProperty(char[], void*); method.
+		//One idea is to add a Element.setProperty(string, void*); method.
 		
 		Value val = new Value();
-		//val.init(GType.POINTER);
-		//val.setPointer( cast(void*)(videosink.getElementStruct()) );
 		val.init(GType.OBJECT);
-		//val.setObject( cast(GstElement*)videosink.getElementStruct() );
 		val.setObject( videosink.getElementStruct() );
 		source.setProperty( "video-sink", val );
 	
@@ -360,10 +327,10 @@ public:
 		{
 			isPlaying = true;
 			// Now set to playing and iterate.
-			debug(1) Trace.formatln("Setting to PLAYING.");
+			debug(1) writeln("Setting to PLAYING.");
 			//pipeline.setState( GstState.PLAYING );
 			source.setState( GstState.PLAYING );
-			debug(1) Trace.formatln("Running.");
+			debug(1) writeln("Running.");
 		}
 		else
 		{
@@ -381,7 +348,6 @@ public:
 	
 	void onSeekToStart(Button button)
 	{
-		//source.seek( 5 * GST_SECOND );//seek to 5 seconds.
 		source.seek( 0 );//seek to start.
 	}
 
@@ -398,7 +364,7 @@ public:
 	
 	void onAspectComboBoxChanged( ComboBoxText combo )
 	{
-		char[] asp = combo.getActiveText();
+		string asp = combo.getActiveText();
 		if( asp == "16:9" )
 			monitorAspectFrame.set( 0.5, 0.5, 16.0/9.0, false );
 		else //if( asp == "4:3" )
@@ -408,7 +374,7 @@ public:
 	
 	void runImportMaterialFileChooser()
 	{
-		char[][] a;
+		string[] a;
 		ResponseType[] r;
 		a ~= "Play file";
 		a ~= "Close";
@@ -421,10 +387,9 @@ public:
 		
 		if( importMaterialFileChooserDialog.run() != ResponseType.CANCEL )
 		{
-			//mediaFileUri = importMaterialFileChooserDialog.getFilename();
 			mediaFileUri = importMaterialFileChooserDialog.getUri();
 			
-			Trace.formatln( "file selected: {}", mediaFileUri );
+			writefln( "file selected: %s", mediaFileUri );
 			playMediaFile(mediaFileUri);
 		}
 		
@@ -433,7 +398,7 @@ public:
 	
 protected:
 
-	char[] mediaFileUri = "";
+	string mediaFileUri = "";
 
 	Element source, videosink;
 	
@@ -446,9 +411,9 @@ protected:
 		m_isPlaying = set;
 		/*
 		//For some reason enabling this change of playButton
-		//label, from Play to Pause, will cause the XOverlay
+		//label, from Play to Pause, will cause the VideoOverlay
 		//not to show the picture while we're on Pause.
-		//That's why it's disabled. XOverlay just doesn't work
+		//That's why it's disabled. VideoOverlay just doesn't work
 		//properly...
 		if( playButton !is null )
 		{
@@ -477,20 +442,20 @@ protected:
 }
 
 
-int main(char[][] args)
+int main(string[] args)
 {
-	Trace.formatln("gstreamerD GstMediaPlayer");
+	writeln("gstreamerD GstMediaPlayer");
 
 	uint major, minor, micro, nano;
 
-	Trace.formatln("Trying to init...");
+	writeln("Trying to init...");
 
 	Main.init(args);
 	GStreamer.init(args);
 
-	Trace.formatln("Checking version of GStreamer...");
+	writeln("Checking version of GStreamer...");
 	GStreamer.versio(major, minor, micro, nano);
-	Trace.formatln("The installed version of GStreamer is {}.{}.{}", major, minor, micro );
+	writefln("The installed version of GStreamer is %s.%s.%s", major, minor, micro );
 
 	GstMediaPlayer gstMediaPlayer = new GstMediaPlayer(args);
 
@@ -499,5 +464,6 @@ int main(char[][] args)
 
 	return 0;
 }
+
 
 
