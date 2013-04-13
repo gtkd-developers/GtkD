@@ -23,6 +23,7 @@ import gtk.DrawingArea;
 import gtk.AspectFrame;
 
 import gtk.FileChooserDialog;
+import gtk.FileFilter;
 
 import gdk.X11;//Needed for VideoOverlay
 
@@ -322,6 +323,18 @@ public:
 		if ( importMaterialFileChooserDialog  is  null )
 		{
 			importMaterialFileChooserDialog = new FileChooserDialog("Play mediafile", this, FileChooserAction.OPEN, a, r);
+
+			FileFilter all = new FileFilter();
+			all.setName("All files");
+			all.addPattern("*");
+			importMaterialFileChooserDialog.addFilter(all);
+
+			FileFilter files = new FileFilter();
+			files.setName("Supported files");
+			foreach( mime; supportedMimeTypes )
+				files.addMimeType(mime);
+			importMaterialFileChooserDialog.addFilter(files);
+			importMaterialFileChooserDialog.setFilter(files);
 		}
 		
 		if( importMaterialFileChooserDialog.run() != ResponseType.CANCEL )
@@ -373,6 +386,27 @@ protected:
 	AspectFrame monitorAspectFrame;
 	
 	FileChooserDialog importMaterialFileChooserDialog;
+
+	string[] supportedMimeTypes = 
+		["application/ogg", "application/ram", "application/sdp", "application/smil",
+		 "application/smil+xml", "application/vnd.rn-realmedia", "application/x-extension-m4a",
+		 "application/x-extension-mp4", "application/x-flac", "application/x-flash-video",
+		 "application/x-matroska", "application/x-netshow-channel", "application/x-ogg",
+		 "application/x-quicktime-media-link", "application/x-quicktimeplayer", "application/x-shorten",
+		 "application/x-smil", "audio/3gpp", "audio/ac3", "audio/AMR", "audio/AMR-WB", "audio/basic",
+		 "audio/midi", "audio/mp4", "audio/mpeg", "audio/ogg", "audio/vnd.rn-realaudio", "audio/x-ape",
+		 "audio/x-flac", "audio/x-it", "audio/x-m4a", "audio/x-matroska", "audio/x-mod", "audio/x-mp3",
+		 "audio/x-mpeg", "audio/x-musepack", "audio/x-pn-aiff", "audio/x-pn-au", "audio/x-pn-realaudio",
+		 "audio/x-pn-realaudio-plugin", "audio/x-pn-wav", "audio/x-pn-windows-acm", "audio/x-realaudio",
+		 "audio/x-real-audio", "audio/x-sbc", "audio/x-speex", "audio/x-tta", "audio/x-wav", "audio/x-wavpack",
+		 "audio/x-vorbis", "audio/x-vorbis+ogg", "audio/x-xm", "image/vnd.rn-realpix", "image/x-pict",
+		 "misc/ultravox", "text/google-video-pointer", "text/x-google-video-pointer", "video/3gpp",
+		 "video/dv", "video/fli", "video/flv", "video/mp4", "video/mp4v-es", "video/mpeg", "video/msvideo",
+		 "video/ogg", "video/quicktime", "video/vivo", "video/vnd.divx", "video/vnd.rn-realvideo",
+		 "video/vnd.vivo", "video/x-anim", "video/x-avi", "video/x-flc", "video/x-fli", "video/x-flic",
+		 "video/x-flv", "video/x-m4v", "video/x-matroska", "video/x-mpeg", "video/x-ms-asf", "video/x-msvideo",
+		 "video/x-ms-wm", "video/x-ms-wmv", "video/x-nsv", "video/x-ogm+ogg", "video/x-theora+ogg",
+		 "x-content/video-dvd", "x-content/video-vcd", "x-content/video-svcd"];
 }
 
 void main(string[] args)
