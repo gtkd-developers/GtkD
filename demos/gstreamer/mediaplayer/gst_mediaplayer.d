@@ -11,6 +11,8 @@ import std.path;
 import std.stdio;
 
 //gtkD imports:
+import cairo.Context;
+
 import gtk.Main;
 import gtk.MainWindow;
 
@@ -46,15 +48,7 @@ import gstreamer.Message;
 import gstreamer.Structure;
 import gstreamer.Bus;
 
-import gstreamerc.gstreamertypes;
-import gstreamerc.gstreamer;
-
-//import gstreamerc.gstinterfacestypes;//For GstXOverlay*
-
 import gstinterfaces.VideoOverlay;
-
-import gtkc.glib;
-import gtkc.gobject;
 
 
 class MonitorOverlay : DrawingArea
@@ -65,26 +59,10 @@ public:
 	{
 		debug(MonitorOverlay) writeln("Monitor.this() START.");
 		debug(MonitorOverlay) scope(exit) writeln("Monitor.this() END.");
-		
-		setAppPaintable( true );
-		
-		//For some reason this does more harm than good?
-		//addOnExpose( &onExpose );
+
+		setDoubleBuffered(false);
 	}
-	
-	/*
-	//For some reason this does more harm than good?
-	int onExpose(GdkEventExpose* event, Widget widget)
-	{
-		if( videoOverlay !is null )
-		{
-			//writeln("And we even have an videoOverlay");
-			videoOverlay.expose();//For some reason this does more harm than good?
-		}
-		return false;//?
-	}
-	*/
-	
+
 	public VideoOverlay videoOverlay() { return m_videoOverlay; }
 	/**
 	* Give this method an VideoOverlay that you've created from
@@ -95,7 +73,7 @@ public:
 		debug(MonitorOverlay) writeln("Monitor.videoOverlay(set) START.");
 		debug(MonitorOverlay) scope(exit) writeln("Monitor.videoOverlay(set) END.");
 		m_videoOverlay = set;
-		
+
 		debug(MonitorOverlay) writeln("Monitor.videoOverlay(set) videoOverlay set. Now setting XwindowId.");
 		m_videoOverlay.setWindowHandle( X11.windowGetXid( getWindow() ) );
 		
@@ -104,7 +82,6 @@ public:
 		return m_videoOverlay;
 	}
 	protected VideoOverlay m_videoOverlay;
-	
 }
 
 
@@ -114,22 +91,15 @@ public:
 
 	GstBusSyncReply createVideoOverlayWindowCb( Message msg )
 	{
-		// ignore anything but 'prepare-xwindow-id' element messages
+		// ignore anything but 'prepare-window-handle' element messages
 		if( msg.type() != GstMessageType.ELEMENT )
-		//if (GST_MESSAGE_TYPE (message) != GST_MESSAGE_ELEMENT)
 			return GstBusSyncReply.PASS;
-		
-		/*GstMessageType typ = msg.type();
-		Stdout("The message type is: ")( cast(int)typ ).newline;
-		
-		ObjectGst obu = msg.src();
-		Stdout("The message source is named: ")( obu.getName() ).newline;
-		*/
+
 		Structure str = msg.getStructure();
-		if( str.hasName("prepare-xwindow-id") == false )
-		//if (!gst_structure_has_name (message->structure, "prepare-xwindow-id"))
+
+		if( str.hasName("prepare-window-handle") == false )
 			return GstBusSyncReply.PASS;
-		
+
 		debug(MonitorOverlay) writeln("Now we should create the X window.");
 		
 		monitorOverlay.videoOverlay = new VideoOverlay( videosink );
@@ -148,23 +118,22 @@ public:
 		{
 			case GstMessageType.UNKNOWN:
 				writeln("Unknown message type.");
-			break;
+				break;
+
 			case GstMessageType.EOS:
 				writeln("End-of-stream. Looping from the start.");
-				//Main.quit();
 				onSeekToStart(null);
-			break;
+				break;
 
 			case GstMessageType.ERROR:
 			{
 				string dbug;
 				ErrorG err;
 				msg.parseError(err, dbug);
-				//g_free (dbug);
 				writefln("Error: %s dbug: %s", to!string(err.getErrorGStruct().message), dbug );
 				//g_error_free (err);
 				Main.quit();
-			break;
+				break;
 			}
 			default:
 			break;
@@ -173,11 +142,8 @@ public:
 		return true;
 	}
 
-	string g_appDir;
-
 	this(string[] args)
 	{
-
 		super("GstMediaPlayer");
 		
 		setSizeRequest(600, 400);
@@ -190,8 +156,6 @@ public:
 		monitorAspectFrame.add( monitorOverlay );
 		monitorAspectFrame.setShadowType( GtkShadowType.NONE );
 		monitorAspectFrame.setLabelWidget( null );//Yes! This get's rid of that stupid label on top of the aspectframe! More room for the monitor.
-		monitorAspectFrame.setBorderWidth(0);//No effect. Trying to get rid of that one pixel border...
-		monitorAspectFrame.setSizeRequest(360, -1);//No effect. Why?
 		
 		vbox.packStart( monitorAspectFrame, true, true, 0 );
 		
@@ -232,28 +196,10 @@ public:
 				mediaFileUri = buildNormalizedPath(getcwd(), mediaFileUri);
 			}
 		
-			//This will construct the filename to be a URI, but it will only
-			//work for files in the same directory.
+			//This will construct the filename to be a URI.
 			if( mediaFileUri[0..7] != "file://" && mediaFileUri[0..7] != "http://" )
 				mediaFileUri = "file://"~ mediaFileUri;
 		}
-		
-		/*
-		// check input arguments
-		if (args.length > 1)
-		{
-			for( uint i = 0; i < args.length; i++ )
-			{
-				string ar = args[i];
-				
-				if( ar == "--help" )
-				{
-					writeln("Usage: {} <mediafilename>", args[0]);
-					return -1;
-				}
-			}
-		}
-		*/
 
 		if( mediaFileUri != "" )
 			playMediaFile(mediaFileUri);
@@ -273,14 +219,10 @@ public:
 		// create elements
 
 		source = ElementFactory.make("playbin", "ourplaybin");
-		//source = ElementFactory.make("playbin2", "ourplaybin");//playbin2 doesn't work,
-		//correctly with VideoOverlay.
-		videosink = ElementFactory.make("xvimagesink", "video-output-xvimagesink");
+		videosink = ElementFactory.make("ximagesink", "video-output-xvimagesink");
 		//Only xvimagesink work (almost) correctly with VideoOverlay, but even it still
 		//has some problems. It won't work with compositing enabled...
-		//videosink = ElementFactory.make("autovideosink", "video-output-sink");
-		//videosink = ElementFactory.make("fakesink", "video-sink");
-
+		
 		if( source is null )
 		{
 			writeln("PlayBin could not be created");
@@ -374,12 +316,9 @@ public:
 	
 	void runImportMaterialFileChooser()
 	{
-		string[] a;
-		ResponseType[] r;
-		a ~= "Play file";
-		a ~= "Close";
-		r ~= ResponseType.APPLY;//GTK_RESPONSE_OK;
-		r ~= ResponseType.CANCEL;
+		string[] a = ["Play file", "Close"];
+		ResponseType[] r = [ResponseType.APPLY, ResponseType.CANCEL];
+
 		if ( importMaterialFileChooserDialog  is  null )
 		{
 			importMaterialFileChooserDialog = new FileChooserDialog("Play mediafile", this, FileChooserAction.OPEN, a, r);
@@ -409,12 +348,7 @@ protected:
 	bool isPlaying(bool set)
 	{
 		m_isPlaying = set;
-		/*
-		//For some reason enabling this change of playButton
-		//label, from Play to Pause, will cause the VideoOverlay
-		//not to show the picture while we're on Pause.
-		//That's why it's disabled. VideoOverlay just doesn't work
-		//properly...
+
 		if( playButton !is null )
 		{
 			if( m_isPlaying == true )
@@ -426,7 +360,7 @@ protected:
 				playButton.setLabel("Play");
 			}
 		}
-		*/
+
 		return m_isPlaying;
 	}
 	bool isPlaying() { return m_isPlaying; }
@@ -441,8 +375,7 @@ protected:
 	FileChooserDialog importMaterialFileChooserDialog;
 }
 
-
-int main(string[] args)
+void main(string[] args)
 {
 	writeln("gstreamerD GstMediaPlayer");
 
@@ -461,9 +394,4 @@ int main(string[] args)
 
 	//We must use the gtkD mainloop to run gstreamerD apps.
 	Main.run();
-
-	return 0;
 }
-
-
-
