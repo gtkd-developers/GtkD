@@ -85,9 +85,10 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
 private import gtkc.gobject;
+private import glib.Str;
 private import glib.ListG;
+private import gobject.Type;
 private import gstreamer.Bus;
 private import gstreamer.Caps;
 private import gstreamer.Clock;
@@ -247,31 +248,25 @@ public class Element : ObjectGst
 		GstSeekType.NONE, GST_CLOCK_TIME_NONE);
 	}
 
-	/+
 	/**
-	 * Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
+	 * Get's all the pads from an element in a Pad[].
 	 */
 	public Pad[] pads()
 	{
-		Pad[] result = new Pad[0];
-		
-		Iterator iter = iteratePads();
-		GstPad* obu_c = null;
-		iter.next( cast(void**) &obu_c );
-		while( obu_c !is null )
+		Pad[] result;
+		GValue* pad = g_value_init(new GValue(), Type.fromName("GstPad"));
+		GstIterator* iter = gst_element_iterate_pads(gstElement);
+
+		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
 		{
-			Pad tmpobu = new Pad( obu_c );
-			//writefln( "iterating Padname: ", tmpobu.getName() );
-			result.length = result.length + 1;
-			result[result.length-1] = tmpobu;
-			
-			obu_c = null;
-			iter.next( cast(void**) &obu_c );
+			result ~= new Pad(cast(GstPad*)g_value_get_object(pad));
+			g_value_reset(pad);
 		}
-		//writefln("no more pads.");
+
+		g_value_unset(pad);
+
 		return result;
 	}
-	+/
 	
 	/**
 	 */
