@@ -24,9 +24,35 @@
 module gstreamerc.gstinterfacestypes;
 
 public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
 
 /**
  * Main Gtk struct.
+ * Opaque GstVideoOverlay interface structure
  */
-public struct GstXOverlay{}
+public struct GstVideoOverlay{}
+
+
+/**
+ * GstVideoOverlay interface
+ * GTypeInterface iface;
+ * parent interface type.
+ * expose ()
+ * virtual method to handle expose events
+ * handle_events ()
+ * virtual method to handle events
+ * set_render_rectangle ()
+ * virtual method to set the render rectangle
+ * set_window_handle ()
+ * virtual method to configure the window handle
+ */
+public struct GstVideoOverlayInterface
+{
+	GTypeInterface iface;
+	/+* virtual functions +/
+	extern(C) void function(GstVideoOverlay* overlay) expose;
+	extern(C) void function(GstVideoOverlay* overlay, int handleEvents) handleEvents;
+	extern(C) void function(GstVideoOverlay* overlay, int x, int y, int width, int height) setRenderRectangle;
+	extern(C) void function(GstVideoOverlay* overlay, guintptr handle) setWindowHandle;
+}
 

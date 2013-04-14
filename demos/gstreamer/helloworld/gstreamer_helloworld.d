@@ -176,7 +176,7 @@ public:
 		version(Tango) Trace.formatln("Dynamic pad created, linking parser/decoder");
 		else writefln("Dynamic pad created, linking parser/decoder");
 
-		sinkpad = decoder.getPad("sink");
+		sinkpad = decoder.getStaticPad("sink");
 
 		version(Tango) Trace.formatln("doing a gst_pad_link.");
 		else writefln("doing a gst_pad_link.");

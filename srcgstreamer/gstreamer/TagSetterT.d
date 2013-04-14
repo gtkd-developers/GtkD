@@ -25,46 +25,48 @@
  * Conversion parameters:
  * inFile  = GstTagSetter.html
  * outPack = gstreamer
- * outFile = TagSetter
+ * outFile = TagSetterT
  * strct   = GstTagSetter
  * realStrct=
  * ctorStrct=
- * clss    = TagSetter
- * interf  = 
+ * clss    = TagSetterT
+ * interf  = TagSetterIF
  * class Code: No
  * interface Code: No
  * template for:
+ * 	- TStruct
  * extend  = 
  * implements:
  * prefixes:
  * 	- gst_tag_setter_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.Value
  * 	- gstreamer.TagList
  * structWrap:
+ * 	- GValue* -> Value
  * 	- GstTagList* -> TagList
- * 	- GstTagSetter* -> TagSetter
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gstreamer.TagSetter;
+module gstreamer.TagSetterT;
 
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
+public import gstreamerc.gstreamer;
+public import glib.ConstructionException;
+public import gobject.ObjectG;
 
 
-private import glib.Str;
-private import gstreamer.TagList;
+public import glib.Str;
+public import gobject.Value;
+public import gstreamer.TagList;
 
 
 
@@ -80,64 +82,44 @@ private import gstreamer.TagList;
  * need to do is watch for tag messages on your pipeline's bus. This
  * interface is only for setting metadata, not for extracting it. To set tags
  * from the application, find tagsetter elements and set tags using e.g.
- * gst_tag_setter_merge_tags() or gst_tag_setter_add_tags(). The application
- * should do that before the element goes to GST_STATE_PAUSED.
+ * gst_tag_setter_merge_tags() or gst_tag_setter_add_tags(). Also consider
+ * setting the GstTagMergeMode that is used for tag events that arrive at the
+ * tagsetter element (default mode is to keep existing tags).
+ * The application should do that before the element goes to GST_STATE_PAUSED.
  *
  * Elements implementing the GstTagSetter interface often have to merge
  * any tags received from upstream and the tags set by the application via
  * the interface. This can be done like this:
  *
- * GstTagMergeMode merge_mode;
- * const GstTagList *application_tags;
- * const GstTagList *event_tags;
- * GstTagSetter *tagsetter;
- * GstTagList *result;
- *
- * tagsetter = GST_TAG_SETTER (element);
- *
- * merge_mode = gst_tag_setter_get_tag_merge_mode (tagsetter);
- * tagsetter_tags = gst_tag_setter_get_tag_list (tagsetter);
- * event_tags = (const GstTagList *) element->event_tags;
- *
- * GST_LOG_OBJECT (tagsetter, "merging tags, merge mode = %d", merge_mode);
- * GST_LOG_OBJECT (tagsetter, "event tags: %" GST_PTR_FORMAT, event_tags);
- * GST_LOG_OBJECT (tagsetter, "set tags: %" GST_PTR_FORMAT, application_tags);
- *
- * result = gst_tag_list_merge (application_tags, event_tags, merge_mode);
- *
- * GST_LOG_OBJECT (tagsetter, "final tags: %" GST_PTR_FORMAT, result);
+ * $(DDOC_COMMENT example)
  *
  * Last reviewed on 2006-05-18 (0.10.6)
  */
-public class TagSetter
+public template TagSetterT(TStruct)
 {
 	
 	/** the main Gtk struct */
 	protected GstTagSetter* gstTagSetter;
 	
 	
-	public GstTagSetter* getTagSetterStruct()
+	public GstTagSetter* getTagSetterTStruct()
 	{
-		return gstTagSetter;
+		return cast(GstTagSetter*)getStruct();
 	}
 	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gstTagSetter;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GstTagSetter* gstTagSetter)
-	{
-		this.gstTagSetter = gstTagSetter;
-	}
 	
 	/**
 	 */
+	
+	/**
+	 * Reset the internal taglist. Elements should call this from within the
+	 * state-change handler.
+	 */
+	public void resetTags()
+	{
+		// void gst_tag_setter_reset_tags (GstTagSetter *setter);
+		gst_tag_setter_reset_tags(getTagSetterTStruct());
+	}
 	
 	/**
 	 * Merges the given list into the setter's list using the given mode.
@@ -148,7 +130,20 @@ public class TagSetter
 	public void mergeTags(TagList list, GstTagMergeMode mode)
 	{
 		// void gst_tag_setter_merge_tags (GstTagSetter *setter,  const GstTagList *list,  GstTagMergeMode mode);
-		gst_tag_setter_merge_tags(gstTagSetter, (list is null) ? null : list.getTagListStruct(), mode);
+		gst_tag_setter_merge_tags(getTagSetterTStruct(), (list is null) ? null : list.getTagListStruct(), mode);
+	}
+	
+	/**
+	 * Adds the given tag / GValue pair on the setter using the given merge mode.
+	 * Params:
+	 * mode = the mode to use
+	 * tag = tag to set
+	 * value = GValue to set for the tag
+	 */
+	public void addTagValue(GstTagMergeMode mode, string tag, Value value)
+	{
+		// void gst_tag_setter_add_tag_value (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  const GValue *value);
+		gst_tag_setter_add_tag_value(getTagSetterTStruct(), mode, Str.toStringz(tag), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -162,7 +157,7 @@ public class TagSetter
 	public void addTagValist(GstTagMergeMode mode, string tag, void* varArgs)
 	{
 		// void gst_tag_setter_add_tag_valist (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  va_list var_args);
-		gst_tag_setter_add_tag_valist(gstTagSetter, mode, Str.toStringz(tag), varArgs);
+		gst_tag_setter_add_tag_valist(getTagSetterTStruct(), mode, Str.toStringz(tag), varArgs);
 	}
 	
 	/**
@@ -176,18 +171,19 @@ public class TagSetter
 	public void addTagValistValues(GstTagMergeMode mode, string tag, void* varArgs)
 	{
 		// void gst_tag_setter_add_tag_valist_values  (GstTagSetter *setter,  GstTagMergeMode mode,  const gchar *tag,  va_list var_args);
-		gst_tag_setter_add_tag_valist_values(gstTagSetter, mode, Str.toStringz(tag), varArgs);
+		gst_tag_setter_add_tag_valist_values(getTagSetterTStruct(), mode, Str.toStringz(tag), varArgs);
 	}
 	
 	/**
 	 * Returns the current list of tags the setter uses. The list should not be
 	 * modified or freed.
-	 * Returns: a current snapshot of the taglist used in the setter or NULL if none is used.
+	 * This function is not thread-safe.
+	 * Returns: a current snapshot of the taglist used in the setter or NULL if none is used. [transfer none]
 	 */
 	public TagList getTagList()
 	{
-		// const GstTagList* gst_tag_setter_get_tag_list (GstTagSetter *setter);
-		auto p = gst_tag_setter_get_tag_list(gstTagSetter);
+		// const GstTagList * gst_tag_setter_get_tag_list (GstTagSetter *setter);
+		auto p = gst_tag_setter_get_tag_list(getTagSetterTStruct());
 		
 		if(p is null)
 		{
@@ -207,7 +203,7 @@ public class TagSetter
 	public void setTagMergeMode(GstTagMergeMode mode)
 	{
 		// void gst_tag_setter_set_tag_merge_mode (GstTagSetter *setter,  GstTagMergeMode mode);
-		gst_tag_setter_set_tag_merge_mode(gstTagSetter, mode);
+		gst_tag_setter_set_tag_merge_mode(getTagSetterTStruct(), mode);
 	}
 	
 	/**
@@ -218,6 +214,6 @@ public class TagSetter
 	public GstTagMergeMode getTagMergeMode()
 	{
 		// GstTagMergeMode gst_tag_setter_get_tag_merge_mode (GstTagSetter *setter);
-		return gst_tag_setter_get_tag_merge_mode(gstTagSetter);
+		return gst_tag_setter_get_tag_merge_mode(getTagSetterTStruct());
 	}
 }

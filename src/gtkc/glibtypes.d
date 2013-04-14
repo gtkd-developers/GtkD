@@ -45,6 +45,7 @@ public alias float gfloat;
 public alias double gdouble;
 public alias size_t gsize;
 public alias ptrdiff_t gssize;
+public alias size_t guintptr;
 public alias long goffset;
 public alias void* va_list;
 public alias dchar unichar;

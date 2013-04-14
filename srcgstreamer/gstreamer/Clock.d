@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_clock_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -70,7 +69,7 @@ private import gstreamer.ObjectGst;
 /**
  * GStreamer uses a global clock to synchronize the plugins in a pipeline.
  * Different clock implementations are possible by implementing this abstract
- * base class.
+ * base class or, more conveniently, by subclassing GstSystemClock.
  *
  * The GstClock returns a monotonically increasing time with the method
  * gst_clock_get_time(). Its accuracy and base time depend on the specific
@@ -79,7 +78,7 @@ private import gstreamer.ObjectGst;
  * meaningful in itself, what matters are the deltas between two clock times.
  * The time returned by a clock is called the absolute time.
  *
- * The pipeline uses the clock to calculate the stream time. Usually all
+ * The pipeline uses the clock to calculate the running time. Usually all
  * renderers synchronize to the global clock using the buffer timestamps, the
  * newsegment events and the element's base time, see GstPipeline.
  *
@@ -96,16 +95,16 @@ private import gstreamer.ObjectGst;
  * interrupted with the gst_clock_id_unschedule() call. If the blocking wait is
  * unscheduled a return value of GST_CLOCK_UNSCHEDULED is returned.
  *
- * Periodic callbacks scheduled async will be repeadedly called automatically
+ * Periodic callbacks scheduled async will be repeatedly called automatically
  * until it is unscheduled. To schedule a sync periodic callback,
- * gst_clock_id_wait() should be called repeadedly.
+ * gst_clock_id_wait() should be called repeatedly.
  *
  * The async callbacks can happen from any thread, either provided by the core
  * or from a streaming thread. The application should be prepared for this.
  *
  * A GstClockID that has been unscheduled cannot be used again for any wait
  * operation, a new GstClockID should be created and the old unscheduled one
- * should be destroyed wirth gst_clock_id_unref().
+ * should be destroyed with gst_clock_id_unref().
  *
  * It is possible to perform a blocking wait on the same GstClockID from
  * multiple threads. However, registering the same GstClockID for multiple
@@ -119,14 +118,14 @@ private import gstreamer.ObjectGst;
  * state changes and if the entry would be unreffed automatically, the handle
  * might become invalid without any notification.
  *
- * These clock operations do not operate on the stream time, so the callbacks
+ * These clock operations do not operate on the running time, so the callbacks
  * will also occur when not in PLAYING state as if the clock just keeps on
  * running. Some clocks however do not progress when the element that provided
  * the clock is not PLAYING.
  *
  * When a clock has the GST_CLOCK_FLAG_CAN_SET_MASTER flag set, it can be
  * slaved to another GstClock with the gst_clock_set_master(). The clock will
- * then automatically be synchronized to this master clock by repeadedly
+ * then automatically be synchronized to this master clock by repeatedly
  * sampling the master clock and the slave clock and recalibrating the slave
  * clock with gst_clock_set_calibration(). This feature is mostly useful for
  * plugins that have an internal clock but must operate with another clock
@@ -134,14 +133,14 @@ private import gstreamer.ObjectGst;
  * of their internal clock relative to the master clock by using the
  * gst_clock_get_calibration() function.
  *
- * The master/slave synchronisation can be tuned with the "timeout", "window-size"
- * and "window-threshold" properties. The "timeout" property defines the interval
- * to sample the master clock and run the calibration functions.
- * "window-size" defines the number of samples to use when calibrating and
- * "window-threshold" defines the minimum number of samples before the
- * calibration is performed.
+ * The master/slave synchronisation can be tuned with the "timeout",
+ * "window-size" and "window-threshold" properties.
+ * The "timeout" property defines the interval to sample the master
+ * clock and run the calibration functions. "window-size" defines the
+ * number of samples to use when calibrating and "window-threshold"
+ * defines the minimum number of samples before the calibration is performed.
  *
- * Last reviewed on 2006-08-11 (0.10.10)
+ * Last reviewed on 2012-03-28 (0.11.3)
  */
 public class Clock : ObjectGst
 {
@@ -186,14 +185,14 @@ public class Clock : ObjectGst
 	 * are available, a linear regression algorithm is run on the
 	 * observations and clock is recalibrated.
 	 * If this functions returns TRUE, r_squared will contain the
-	 * correlation coefficient of the interpollation. A value of 1.0
+	 * correlation coefficient of the interpolation. A value of 1.0
 	 * means a perfect regression was performed. This value can
 	 * be used to control the sampling frequency of the master and slave
 	 * clocks.
 	 * Params:
 	 * slave = a time on the slave
 	 * master = a time on the master
-	 * rSquared = a pointer to hold the result
+	 * rSquared = a pointer to hold the result. [out]
 	 * Returns: TRUE if enough observations were added to run the regression algorithm. MT safe.
 	 */
 	public int addObservation(GstClockTime slave, GstClockTime master, out double rSquared)
@@ -212,7 +211,7 @@ public class Clock : ObjectGst
 	 * however keep reporting its time adjusted with the last configured rate
 	 * and time offsets.
 	 * Params:
-	 * master = a master GstClock
+	 * master = a master GstClock. [allow-none]
 	 * Returns: TRUE if the clock is capable of being slaved to a master clock. Trying to set a master on a clock without the GST_CLOCK_FLAG_CAN_SET_MASTER flag will make this function return FALSE. MT safe.
 	 */
 	public int setMaster(Clock master)
@@ -224,11 +223,11 @@ public class Clock : ObjectGst
 	/**
 	 * Get the master clock that clock is slaved to or NULL when the clock is
 	 * not slaved to any master clock.
-	 * Returns: a master GstClock or NULL when this clock is not slaved to a master clock. Unref after usage. MT safe.
+	 * Returns: a master GstClock or NULL when this clock is not slaved to a master clock. Unref after usage. MT safe. [transfer full]
 	 */
 	public Clock getMaster()
 	{
-		// GstClock* gst_clock_get_master (GstClock *clock);
+		// GstClock * gst_clock_get_master (GstClock *clock);
 		auto p = gst_clock_get_master(gstClock);
 		
 		if(p is null)
@@ -270,7 +269,7 @@ public class Clock : ObjectGst
 	 * Gets the current time of the given clock. The time is always
 	 * monotonically increasing and adjusted according to the current
 	 * offset and rate.
-	 * Returns: the time of the clock. Or GST_CLOCK_TIME_NONE when giving wrong input. MT safe.
+	 * Returns: the time of the clock. Or GST_CLOCK_TIME_NONE when given invalid input. MT safe.
 	 */
 	public GstClockTime getTime()
 	{
@@ -282,9 +281,10 @@ public class Clock : ObjectGst
 	 * Get a GstClockID from clock to trigger a single shot
 	 * notification at the requested time. The single shot id should be
 	 * unreffed after usage.
+	 * Free-function: gst_clock_id_unref
 	 * Params:
 	 * time = the requested time
-	 * Returns: A GstClockID that can be used to request the time notification. MT safe.
+	 * Returns: a GstClockID that can be used to request the time notification. MT safe. [transfer full]
 	 */
 	public GstClockID newSingleShotId(GstClockTime time)
 	{
@@ -294,13 +294,14 @@ public class Clock : ObjectGst
 	
 	/**
 	 * Get an ID from clock to trigger a periodic notification.
-	 * The periodeic notifications will be start at time start_time and
+	 * The periodic notifications will start at time start_time and
 	 * will then be fired with the given interval. id should be unreffed
 	 * after usage.
+	 * Free-function: gst_clock_id_unref
 	 * Params:
 	 * startTime = the requested start time
 	 * interval = the requested interval
-	 * Returns: A GstClockID that can be used to request the time notification. MT safe.
+	 * Returns: a GstClockID that can be used to request the time notification. MT safe. [transfer full]
 	 */
 	public GstClockID newPeriodicId(GstClockTime startTime, GstClockTime interval)
 	{
@@ -309,9 +310,38 @@ public class Clock : ObjectGst
 	}
 	
 	/**
+	 * Reinitializes the provided single shot id to the provided time. Does not
+	 * modify the reference count.
+	 * Params:
+	 * id = a GstClockID
+	 * time = The requested time.
+	 * Returns: TRUE if the GstClockID could be reinitialized to the provided time, else FALSE.
+	 */
+	public int singleShotIdReinit(GstClockID id, GstClockTime time)
+	{
+		// gboolean gst_clock_single_shot_id_reinit (GstClock *clock,  GstClockID id,  GstClockTime time);
+		return gst_clock_single_shot_id_reinit(gstClock, id, time);
+	}
+	
+	/**
+	 * Reinitializes the provided periodic id to the provided start time and
+	 * interval. Does not modify the reference count.
+	 * Params:
+	 * id = a GstClockID
+	 * startTime = the requested start time
+	 * interval = the requested interval
+	 * Returns: TRUE if the GstClockID could be reinitialized to the provided time, else FALSE.
+	 */
+	public int periodicIdReinit(GstClockID id, GstClockTime startTime, GstClockTime interval)
+	{
+		// gboolean gst_clock_periodic_id_reinit (GstClock *clock,  GstClockID id,  GstClockTime start_time,  GstClockTime interval);
+		return gst_clock_periodic_id_reinit(gstClock, id, startTime, interval);
+	}
+	
+	/**
 	 * Gets the current internal time of the given clock. The time is returned
 	 * unadjusted for the offset and the rate.
-	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when giving wrong input. MT safe.
+	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when given invalid input. MT safe.
 	 */
 	public GstClockTime getInternalTime()
 	{
@@ -324,7 +354,7 @@ public class Clock : ObjectGst
 	 * rate and reference time set with gst_clock_set_calibration() and making sure
 	 * that the returned time is increasing. This function should be called with the
 	 * clock's OBJECT_LOCK held and is mainly used by clock subclasses.
-	 * This function is te reverse of gst_clock_unadjust_unlocked().
+	 * This function is the reverse of gst_clock_unadjust_unlocked().
 	 * Params:
 	 * internal = a clock time
 	 * Returns: the converted time of the clock.
@@ -340,10 +370,10 @@ public class Clock : ObjectGst
 	 * using the rate and reference time set with gst_clock_set_calibration().
 	 * This function should be called with the clock's OBJECT_LOCK held and
 	 * is mainly used by clock subclasses.
-	 * This function is te reverse of gst_clock_adjust_unlocked().
+	 * This function is the reverse of gst_clock_adjust_unlocked().
 	 * Params:
 	 * external = an external clock time
-	 * Returns: the internal time of the clock corresponding to external. Since 0.10.13
+	 * Returns: the internal time of the clock corresponding to external.
 	 */
 	public GstClockTime unadjustUnlocked(GstClockTime external)
 	{
@@ -358,10 +388,10 @@ public class Clock : ObjectGst
 	 * caller is not interested in the values.
 	 * MT safe.
 	 * Params:
-	 * internal = a location to store the internal time
-	 * external = a location to store the external time
-	 * rateNum = a location to store the rate numerator
-	 * rateDenom = a location to store the rate denominator
+	 * internal = a location to store the internal time. [out][allow-none]
+	 * external = a location to store the external time. [out][allow-none]
+	 * rateNum = a location to store the rate numerator. [out][allow-none]
+	 * rateDenom = a location to store the rate denominator. [out][allow-none]
 	 */
 	public void getCalibration(out GstClockTime internal, out GstClockTime external, out GstClockTime rateNum, out GstClockTime rateDenom)
 	{
@@ -381,13 +411,35 @@ public class Clock : ObjectGst
 	 * internal = a reference internal time
 	 * external = a reference external time
 	 * rateNum = the numerator of the rate of the clock relative to its
-	 *  internal time
+	 * internal time
 	 * rateDenom = the denominator of the rate of the clock
 	 */
 	public void setCalibration(GstClockTime internal, GstClockTime external, GstClockTime rateNum, GstClockTime rateDenom)
 	{
 		// void gst_clock_set_calibration (GstClock *clock,  GstClockTime internal,  GstClockTime external,  GstClockTime rate_num,  GstClockTime rate_denom);
 		gst_clock_set_calibration(gstClock, internal, external, rateNum, rateDenom);
+	}
+	
+	/**
+	 * Get the amount of time that master and slave clocks are sampled.
+	 * Returns: the interval between samples.
+	 */
+	public GstClockTime getTimeout()
+	{
+		// GstClockTime gst_clock_get_timeout (GstClock *clock);
+		return gst_clock_get_timeout(gstClock);
+	}
+	
+	/**
+	 * Set the amount of time, in nanoseconds, to sample master and slave
+	 * clocks
+	 * Params:
+	 * timeout = a timeout
+	 */
+	public void setTimeout(GstClockTime timeout)
+	{
+		// void gst_clock_set_timeout (GstClock *clock,  GstClockTime timeout);
+		gst_clock_set_timeout(gstClock, timeout);
 	}
 	
 	/**
@@ -417,7 +469,8 @@ public class Clock : ObjectGst
 	 * before this function returned.
 	 * Params:
 	 * id = The GstClockID to wait on
-	 * jitter = A pointer that will contain the jitter, can be NULL.
+	 * jitter = a pointer that will contain the jitter,
+	 * can be NULL. [out][allow-none]
 	 * Returns: the result of the blocking wait. GST_CLOCK_EARLY will be returned if the current clock time is past the time of id, GST_CLOCK_OK if id was scheduled in time. GST_CLOCK_UNSCHEDULED if id was unscheduled with gst_clock_id_unschedule(). MT safe.
 	 */
 	public static GstClockReturn idWait(GstClockID id, ref GstClockTimeDiff jitter)
@@ -429,19 +482,22 @@ public class Clock : ObjectGst
 	/**
 	 * Register a callback on the given GstClockID id with the given
 	 * function and user_data. When passing a GstClockID with an invalid
-	 * time to this function, the callback will be called immediatly
+	 * time to this function, the callback will be called immediately
 	 * with a time set to GST_CLOCK_TIME_NONE. The callback will
 	 * be called when the time of id has been reached.
+	 * The callback func can be invoked from any thread, either provided by the
+	 * core or from a streaming thread. The application should be prepared for this.
 	 * Params:
 	 * id = a GstClockID to wait on
 	 * func = The callback function
-	 * userData = User data passed in the calback
+	 * userData = User data passed in the callback
+	 * destroyData = GDestroyNotify for user_data
 	 * Returns: the result of the non blocking wait. MT safe.
 	 */
-	public static GstClockReturn idWaitAsync(GstClockID id, GstClockCallback func, void* userData)
+	public static GstClockReturn idWaitAsync(GstClockID id, GstClockCallback func, void* userData, GDestroyNotify destroyData)
 	{
-		// GstClockReturn gst_clock_id_wait_async (GstClockID id,  GstClockCallback func,  gpointer user_data);
-		return gst_clock_id_wait_async(id, func, userData);
+		// GstClockReturn gst_clock_id_wait_async (GstClockID id,  GstClockCallback func,  gpointer user_data,  GDestroyNotify destroy_data);
+		return gst_clock_id_wait_async(id, func, userData, destroyData);
 	}
 	
 	/**
@@ -477,7 +533,7 @@ public class Clock : ObjectGst
 	 * Increase the refcount of given id.
 	 * Params:
 	 * id = The GstClockID to ref
-	 * Returns: The same GstClockID with increased refcount. MT safe.
+	 * Returns: The same GstClockID with increased refcount. MT safe. [transfer full]
 	 */
 	public static GstClockID idRef(GstClockID id)
 	{
@@ -490,7 +546,7 @@ public class Clock : ObjectGst
 	 * GstClockID will be freed.
 	 * MT safe.
 	 * Params:
-	 * id = The GstClockID to unref
+	 * id = The GstClockID to unref. [transfer full]
 	 */
 	public static void idUnref(GstClockID id)
 	{

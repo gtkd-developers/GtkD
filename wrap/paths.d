@@ -75,8 +75,8 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         "libgtkglext-3.0-0.dll",
 	LIBRARY.GDA:           "libgda-4.0-4.dll",
 	LIBRARY.GSV:           "libgtksourceview-3.0-0.dll",
-	LIBRARY.GSTREAMER:     "libgstreamer-0.10.dll",
-	LIBRARY.GSTINTERFACES: "libgstinterfaces-0.10.dll"
+	LIBRARY.GSTREAMER:     "libgstreamer-1.0.dll",
+	LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dll"
 	];
 }
 else version(darwin)
@@ -101,8 +101,8 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-3.0.dylib",
 	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
 	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
-	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-0.10.dylib",
-	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstinterfaces-0.10.dylib"
+	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-1.0.dylib",
+	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstvideo-1.0.dylib"
 	];
 }
 else
@@ -125,8 +125,8 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         "libgtkglext-3.0.so.0",
 	LIBRARY.GDA:           "libgda-4.0.so.4",
 	LIBRARY.GSV:           "libgtksourceview-3.0.so.0",
-	LIBRARY.GSTREAMER:     "libgstreamer-0.10.so.0",
-	LIBRARY.GSTINTERFACES: "libgstinterfaces-0.10.so.0"
+	LIBRARY.GSTREAMER:     "libgstreamer-1.0.so.0",
+	LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0"
 	];
 }
 

@@ -28,6 +28,7 @@
 
 addTypedefs: start
 public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
 addTypedefs: end
 
 addAliases: start
@@ -61,10 +62,10 @@ srcout: srcgstreamer
 ### GStreamer - GstInterfaces ########################
 ###########################################################
 
-file: gst-plugins-base-libs-gstxoverlay.html
-struct: GstXOverlay
-class: XOverlay
-prefix: gst_x_overlay_
+file: gst-plugins-base-libs-gstvideooverlay.html
+struct: GstVideoOverlay
+class: VideoOverlay
+prefix: gst_video_overlay_
 import: gtkc.glibtypes
 import: glib.Str
 import: gstreamer.Element
@@ -76,8 +77,8 @@ code: start
 	*/
 	public this(Element elem)
 	{
-		this( cast(GstXOverlay*)elem.getElementStruct() );
+		this( cast(GstVideoOverlay*)elem.getElementStruct() );
 	}
 code: end
-outFile: XOverlay
+outFile: VideoOverlay
 

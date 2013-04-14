@@ -35,30 +35,33 @@ private import gtkc.paths;
 
 mixin( _shared ~ "static this()
 {
-	// gstinterfaces.XOverlay
+	// gstinterfaces.VideoOverlay
 
-	Linker.link(gst_x_overlay_set_xwindow_id, \"gst_x_overlay_set_xwindow_id\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_got_xwindow_id, \"gst_x_overlay_got_xwindow_id\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_prepare_xwindow_id, \"gst_x_overlay_prepare_xwindow_id\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_expose, \"gst_x_overlay_expose\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_x_overlay_handle_events, \"gst_x_overlay_handle_events\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_got_window_handle, \"gst_video_overlay_got_window_handle\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_window_handle, \"gst_video_overlay_set_window_handle\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_prepare_window_handle, \"gst_video_overlay_prepare_window_handle\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_expose, \"gst_video_overlay_expose\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_handle_events, \"gst_video_overlay_handle_events\", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_render_rectangle, \"gst_video_overlay_set_render_rectangle\", LIBRARY.GSTINTERFACES);
 }");
 
 mixin( gshared ~"extern(C)
 {
-	// gstinterfaces.XOverlay
+	// gstinterfaces.VideoOverlay
 
-	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_set_xwindow_id;
-	void function(GstXOverlay* overlay, gulong xwindowId) c_gst_x_overlay_got_xwindow_id;
-	void function(GstXOverlay* overlay) c_gst_x_overlay_prepare_xwindow_id;
-	void function(GstXOverlay* overlay) c_gst_x_overlay_expose;
-	void function(GstXOverlay* overlay, gboolean handleEvents) c_gst_x_overlay_handle_events;
+	void function(GstVideoOverlay* overlay, guintptr handle) c_gst_video_overlay_got_window_handle;
+	void function(GstVideoOverlay* overlay, guintptr handle) c_gst_video_overlay_set_window_handle;
+	void function(GstVideoOverlay* overlay) c_gst_video_overlay_prepare_window_handle;
+	void function(GstVideoOverlay* overlay) c_gst_video_overlay_expose;
+	void function(GstVideoOverlay* overlay, gboolean handleEvents) c_gst_video_overlay_handle_events;
+	gboolean function(GstVideoOverlay* overlay, gint x, gint y, gint width, gint height) c_gst_video_overlay_set_render_rectangle;
 }");
 
-// gstinterfaces.XOverlay
+// gstinterfaces.VideoOverlay
 
-alias c_gst_x_overlay_set_xwindow_id  gst_x_overlay_set_xwindow_id;
-alias c_gst_x_overlay_got_xwindow_id  gst_x_overlay_got_xwindow_id;
-alias c_gst_x_overlay_prepare_xwindow_id  gst_x_overlay_prepare_xwindow_id;
-alias c_gst_x_overlay_expose  gst_x_overlay_expose;
-alias c_gst_x_overlay_handle_events  gst_x_overlay_handle_events;
+alias c_gst_video_overlay_got_window_handle  gst_video_overlay_got_window_handle;
+alias c_gst_video_overlay_set_window_handle  gst_video_overlay_set_window_handle;
+alias c_gst_video_overlay_prepare_window_handle  gst_video_overlay_prepare_window_handle;
+alias c_gst_video_overlay_expose  gst_video_overlay_expose;
+alias c_gst_video_overlay_handle_events  gst_video_overlay_handle_events;
+alias c_gst_video_overlay_set_render_rectangle  gst_video_overlay_set_render_rectangle;

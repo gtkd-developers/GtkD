@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_plugin_feature_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,8 +45,10 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
+ * 	- gstreamer.Plugin
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GstPlugin* -> Plugin
  * 	- GstPluginFeature* -> PluginFeature
  * module aliases:
  * local aliases:
@@ -67,6 +68,7 @@ private import gobject.ObjectG;
 
 private import glib.Str;
 private import glib.ListG;
+private import gstreamer.Plugin;
 
 
 
@@ -113,18 +115,6 @@ public class PluginFeature : ObjectGst
 	 */
 	
 	/**
-	 * Compares type and name of plugin feature. Can be used with gst_filter_run().
-	 * Params:
-	 * data = the type and name to check against
-	 * Returns: TRUE if equal.
-	 */
-	public int typeNameFilter(GstTypeNameData* data)
-	{
-		// gboolean gst_plugin_feature_type_name_filter (GstPluginFeature *feature,  GstTypeNameData *data);
-		return gst_plugin_feature_type_name_filter(gstPluginFeature, data);
-	}
-	
-	/**
 	 * Specifies a rank for a plugin feature, so that autoplugging uses
 	 * the most appropriate feature.
 	 * Params:
@@ -134,20 +124,6 @@ public class PluginFeature : ObjectGst
 	{
 		// void gst_plugin_feature_set_rank (GstPluginFeature *feature,  guint rank);
 		gst_plugin_feature_set_rank(gstPluginFeature, rank);
-	}
-	
-	/**
-	 * Sets the name of a plugin feature. The name uniquely identifies a feature
-	 * within all features of the same type. Renaming a plugin feature is not
-	 * allowed. A copy is made of the name so you should free the supplied name
-	 * after calling this function.
-	 * Params:
-	 * name = the name to set
-	 */
-	public void setFeatureName(string name)
-	{
-		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
-		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));
 	}
 	
 	/**
@@ -161,23 +137,30 @@ public class PluginFeature : ObjectGst
 	}
 	
 	/**
-	 * Gets the name of a plugin feature.
-	 * Returns: the name
+	 * Get the plugin that provides this feature.
+	 * Returns: the plugin that provides this feature, or NULL. Unref with gst_object_unref() when no longer needed. [transfer full]
 	 */
-	public override string getName()
+	public Plugin getPlugin()
 	{
-		// const gchar* gst_plugin_feature_get_name (GstPluginFeature *feature);
-		return Str.toString(gst_plugin_feature_get_name(gstPluginFeature));
+		// GstPlugin * gst_plugin_feature_get_plugin (GstPluginFeature *feature);
+		auto p = gst_plugin_feature_get_plugin(gstPluginFeature);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
 	}
 	
 	/**
 	 * Loads the plugin containing feature if it's not already loaded. feature is
 	 * unaffected; use the return value instead.
-	 * Returns: A reference to the loaded feature, or NULL on error.
+	 * Returns: a reference to the loaded feature, or NULL on error. [transfer full]
 	 */
 	public PluginFeature load()
 	{
-		// GstPluginFeature* gst_plugin_feature_load (GstPluginFeature *feature);
+		// GstPluginFeature * gst_plugin_feature_load (GstPluginFeature *feature);
 		auto p = gst_plugin_feature_load(gstPluginFeature);
 		
 		if(p is null)
@@ -189,9 +172,31 @@ public class PluginFeature : ObjectGst
 	}
 	
 	/**
+	 * Copies the list of features. Caller should call gst_plugin_feature_list_free
+	 * when done with the list.
+	 * Params:
+	 * list = list
+	 * of GstPluginFeature. [transfer none][element-type Gst.PluginFeature]
+	 * Returns: a copy of list, with each feature's reference count incremented. [transfer full][element-type Gst.PluginFeature]
+	 */
+	public static ListG listCopy(ListG list)
+	{
+		// GList * gst_plugin_feature_list_copy (GList *list);
+		auto p = gst_plugin_feature_list_copy((list is null) ? null : list.getListGStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+	}
+	
+	/**
 	 * Unrefs each member of list, then frees the list.
 	 * Params:
-	 * list = list of GstPluginFeature
+	 * list = list
+	 * of GstPluginFeature. [transfer full][element-type Gst.PluginFeature]
 	 */
 	public static void listFree(ListG list)
 	{
@@ -212,5 +217,19 @@ public class PluginFeature : ObjectGst
 	{
 		// gboolean gst_plugin_feature_check_version (GstPluginFeature *feature,  guint min_major,  guint min_minor,  guint min_micro);
 		return gst_plugin_feature_check_version(gstPluginFeature, minMajor, minMinor, minMicro);
+	}
+	
+	/**
+	 * Compares the two given GstPluginFeature instances. This function can be
+	 * used as a GCompareFunc when sorting by rank and then by name.
+	 * Params:
+	 * p1 = a GstPluginFeature
+	 * p2 = a GstPluginFeature
+	 * Returns: negative value if the rank of p1 > the rank of p2 or the ranks are equal but the name of p1 comes before the name of p2; zero if the rank and names are equal; positive value if the rank of p1 < the rank of p2 or the ranks are equal but the name of p2 comes after the name of p1
+	 */
+	public static int rankCompareFunc(void* p1, void* p2)
+	{
+		// gint gst_plugin_feature_rank_compare_func  (gconstpointer p1,  gconstpointer p2);
+		return gst_plugin_feature_rank_compare_func(p1, p2);
 	}
 }

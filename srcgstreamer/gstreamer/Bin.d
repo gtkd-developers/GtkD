@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_bin_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -49,7 +48,6 @@
  * 	- gstreamer.Iterator
  * 	- gstreamer.Pad
  * structWrap:
- * 	- GstBin* -> Bin
  * 	- GstElement* -> Element
  * 	- GstIterator* -> Iterator
  * 	- GstPad* -> Pad
@@ -103,9 +101,9 @@ private import gstreamer.Element;
  *
  * gst_object_unref() is used to drop your reference to the bin.
  *
- * The element-added signal is
- * fired whenever a new element is added to the bin. Likewise the element-removed signal is fired
- * whenever an element is removed from the bin.
+ * The "element-added" signal is fired whenever a new element is added to
+ * the bin. Likewise the "element-removed" signal is fired whenever an
+ * element is removed from the bin.
  *
  * Notes
  *
@@ -129,14 +127,15 @@ private import gstreamer.Element;
  *  Is posted by GstBin when all elements that posted
  *  a SEGMENT_START have posted a SEGMENT_DONE.
  *
- * GST_MESSAGE_DURATION
+ * GST_MESSAGE_DURATION_CHANGED
  *
  *  Is posted by an element that detected a change
  *  in the stream duration. The default bin behaviour is to clear any
  *  cached duration values so that the next duration query will perform
  *  a full duration recalculation. The duration change is posted to the
  *  application so that it can refetch the new duration with a duration
- *  query.
+ *  query. Note that these messages can be posted before the bin is
+ *  prerolled, in which case the duration query might fail.
  *
  * GST_MESSAGE_CLOCK_LOST
  *
@@ -192,7 +191,7 @@ private import gstreamer.Element;
  * If all the sinks return TRUE, the bin will also return TRUE, else FALSE is
  * returned. If no sinks are in the bin, the event handler will return TRUE.
  *
- * Last reviewed on 2006-04-28 (0.10.6)
+ * Last reviewed on 2012-03-28 (0.11.3)
  */
 public class Bin : Element
 {
@@ -238,6 +237,46 @@ public class Bin : Element
 	/**
 	 */
 	int[string] connectedSignals;
+	
+	bool delegate(Bin)[] onDoLatencyListeners;
+	/**
+	 * Will be emitted when the bin needs to perform latency calculations. This
+	 * signal is only emited for toplevel bins or when async-handling is
+	 * enabled.
+	 * Only one signal handler is invoked. If no signals are connected, the
+	 * default handler is invoked, which will query and distribute the lowest
+	 * possible latency to all sinks.
+	 * Connect to this signal if the default latency calculations are not
+	 * sufficient, like when you need different latencies for different sinks in
+	 * the same pipeline.
+	 */
+	void addOnDoLatency(bool delegate(Bin) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("do-latency" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"do-latency",
+			cast(GCallback)&callBackDoLatency,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["do-latency"] = 1;
+		}
+		onDoLatencyListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackDoLatency(GstBin* binStruct, Bin _bin)
+	{
+		foreach ( bool delegate(Bin) dlg ; _bin.onDoLatencyListeners )
+		{
+			if ( dlg(_bin) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
 	
 	void delegate(Element, Bin)[] onElementAddedListeners;
 	/**
@@ -302,7 +341,7 @@ public class Bin : Element
 	 */
 	public this (string name)
 	{
-		// GstElement* gst_bin_new (const gchar *name);
+		// GstElement * gst_bin_new (const gchar *name);
 		auto p = gst_bin_new(Str.toStringz(name));
 		if(p is null)
 		{
@@ -316,9 +355,15 @@ public class Bin : Element
 	 * takes ownership of the element. An element can only be added to one bin.
 	 * If the element's pads are linked to other pads, the pads will be unlinked
 	 * before the element is added to the bin.
+	 * Note
+	 * When you add an element to an already-running pipeline, you will have to
+	 * take care to set the state of the newly-added element to the desired
+	 * state (usually PLAYING or PAUSED, same you set the pipeline to originally)
+	 * with gst_element_set_state(), or use gst_element_sync_state_with_parent().
+	 * The bin or pipeline will not take care of this for you.
 	 * MT safe.
 	 * Params:
-	 * element = the GstElement to add
+	 * element = the GstElement to add. [transfer full]
 	 * Returns: TRUE if the element could be added, FALSE if the bin does not want to accept the element.
 	 */
 	public int add(Element element)
@@ -338,7 +383,7 @@ public class Bin : Element
 	 * before the element is removed from the bin.
 	 * MT safe.
 	 * Params:
-	 * element = the GstElement to remove
+	 * element = the GstElement to remove. [transfer none]
 	 * Returns: TRUE if the element could be removed, FALSE if the bin does not want to remove the element.
 	 */
 	public int remove(Element element)
@@ -354,11 +399,11 @@ public class Bin : Element
 	 * MT safe. Caller owns returned reference.
 	 * Params:
 	 * name = the element name to search for
-	 * Returns: the GstElement with the given name, or NULL
+	 * Returns: the GstElement with the given name, or NULL. [transfer full]
 	 */
 	public Element getByName(string name)
 	{
-		// GstElement* gst_bin_get_by_name (GstBin *bin,  const gchar *name);
+		// GstElement * gst_bin_get_by_name (GstBin *bin,  const gchar *name);
 		auto p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
 		
 		if(p is null)
@@ -374,11 +419,11 @@ public class Bin : Element
 	 * element is not found, a recursion is performed on the parent bin.
 	 * Params:
 	 * name = the element name to search for
-	 * Returns: the GstElement with the given name, or NULL
+	 * Returns: the GstElement with the given name, or NULL. [transfer full]
 	 */
 	public Element getByNameRecurseUp(string name)
 	{
-		// GstElement* gst_bin_get_by_name_recurse_up (GstBin *bin,  const gchar *name);
+		// GstElement * gst_bin_get_by_name_recurse_up (GstBin *bin,  const gchar *name);
 		auto p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
 		
 		if(p is null)
@@ -398,11 +443,11 @@ public class Bin : Element
 	 * MT safe. Caller owns returned reference.
 	 * Params:
 	 * iface = the GType of an interface
-	 * Returns: A GstElement inside the bin implementing the interface
+	 * Returns: A GstElement inside the bin implementing the interface. [transfer full]
 	 */
 	public Element getByInterface(GType iface)
 	{
-		// GstElement* gst_bin_get_by_interface (GstBin *bin,  GType iface);
+		// GstElement * gst_bin_get_by_interface (GstBin *bin,  GType iface);
 		auto p = gst_bin_get_by_interface(gstBin, iface);
 		
 		if(p is null)
@@ -418,11 +463,11 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * Returns: a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL. [transfer full]
 	 */
 	public Iterator iterateElements()
 	{
-		// GstIterator* gst_bin_iterate_elements (GstBin *bin);
+		// GstIterator * gst_bin_iterate_elements (GstBin *bin);
 		auto p = gst_bin_iterate_elements(gstBin);
 		
 		if(p is null)
@@ -439,11 +484,11 @@ public class Bin : Element
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * Returns: a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL. [transfer full]
 	 */
 	public Iterator iterateRecurse()
 	{
-		// GstIterator* gst_bin_iterate_recurse (GstBin *bin);
+		// GstIterator * gst_bin_iterate_recurse (GstBin *bin);
 		auto p = gst_bin_iterate_recurse(gstBin);
 		
 		if(p is null)
@@ -456,15 +501,15 @@ public class Bin : Element
 	
 	/**
 	 * Gets an iterator for all elements in the bin that have the
-	 * GST_ELEMENT_IS_SINK flag set.
+	 * GST_ELEMENT_FLAG_SINK flag set.
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * Returns: a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL. [transfer full]
 	 */
 	public Iterator iterateSinks()
 	{
-		// GstIterator* gst_bin_iterate_sinks (GstBin *bin);
+		// GstIterator * gst_bin_iterate_sinks (GstBin *bin);
 		auto p = gst_bin_iterate_sinks(gstBin);
 		
 		if(p is null)
@@ -480,15 +525,15 @@ public class Bin : Element
 	 * sorted order. This means that the elements are returned from
 	 * the most downstream elements (sinks) to the sources.
 	 * This function is used internally to perform the state changes
-	 * of the bin elements.
+	 * of the bin elements and for clock selection.
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * Returns: a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL. [transfer full]
 	 */
 	public Iterator iterateSorted()
 	{
-		// GstIterator* gst_bin_iterate_sorted (GstBin *bin);
+		// GstIterator * gst_bin_iterate_sorted (GstBin *bin);
 		auto p = gst_bin_iterate_sorted(gstBin);
 		
 		if(p is null)
@@ -500,16 +545,16 @@ public class Bin : Element
 	}
 	
 	/**
-	 * Gets an iterator for all elements in the bin that have no sinkpads and have
-	 * the GST_ELEMENT_IS_SINK flag unset.
+	 * Gets an iterator for all elements in the bin that have the
+	 * GST_ELEMENT_FLAG_SOURCE flag set.
 	 * Each element yielded by the iterator will have its refcount increased, so
 	 * unref after use.
 	 * MT safe. Caller owns returned value.
-	 * Returns: a GstIterator of GstElement, or NULL
+	 * Returns: a GstIterator of GstElement, or NULL. [transfer full]
 	 */
 	public Iterator iterateSources()
 	{
-		// GstIterator* gst_bin_iterate_sources (GstBin *bin);
+		// GstIterator * gst_bin_iterate_sources (GstBin *bin);
 		auto p = gst_bin_iterate_sources(gstBin);
 		
 		if(p is null)
@@ -530,11 +575,11 @@ public class Bin : Element
 	 * MT safe. Caller owns returned value.
 	 * Params:
 	 * iface = the GType of an interface
-	 * Returns: a GstIterator of GstElement for all elements in the bin implementing the given interface, or NULL
+	 * Returns: a GstIterator of GstElement for all elements in the bin implementing the given interface, or NULL. [transfer full]
 	 */
 	public Iterator iterateAllByInterface(GType iface)
 	{
-		// GstIterator* gst_bin_iterate_all_by_interface (GstBin *bin,  GType iface);
+		// GstIterator * gst_bin_iterate_all_by_interface (GstBin *bin,  GType iface);
 		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
 		
 		if(p is null)
@@ -546,19 +591,34 @@ public class Bin : Element
 	}
 	
 	/**
-	 * Recursively looks for elements with an unconnected pad of the given
-	 * direction within the specified bin and returns an unconnected pad
+	 * Query bin for the current latency using and reconfigures this latency to all the
+	 * elements with a LATENCY event.
+	 * This method is typically called on the pipeline when a GST_MESSAGE_LATENCY
+	 * is posted on the bus.
+	 * This function simply emits the 'do-latency' signal so any custom latency
+	 * calculations will be performed.
+	 * Returns: TRUE if the latency could be queried and reconfigured.
+	 */
+	public int recalculateLatency()
+	{
+		// gboolean gst_bin_recalculate_latency (GstBin *bin);
+		return gst_bin_recalculate_latency(gstBin);
+	}
+	
+	/**
+	 * Recursively looks for elements with an unlinked pad of the given
+	 * direction within the specified bin and returns an unlinked pad
 	 * if one is found, or NULL otherwise. If a pad is found, the caller
 	 * owns a reference to it and should use gst_object_unref() on the
 	 * pad when it is not needed any longer.
 	 * Params:
-	 * direction = whether to look for an unconnected source or sink pad
-	 * Returns: unconnected pad of the given direction, or NULL. Since 0.10.3
+	 * direction = whether to look for an unlinked source or sink pad
+	 * Returns: unlinked pad of the given direction, or NULL. [transfer full]
 	 */
-	public Pad findUnconnectedPad(GstPadDirection direction)
+	public Pad findUnlinkedPad(GstPadDirection direction)
 	{
-		// GstPad* gst_bin_find_unconnected_pad (GstBin *bin,  GstPadDirection direction);
-		auto p = gst_bin_find_unconnected_pad(gstBin, direction);
+		// GstPad * gst_bin_find_unlinked_pad (GstBin *bin,  GstPadDirection direction);
+		auto p = gst_bin_find_unlinked_pad(gstBin, direction);
 		
 		if(p is null)
 		{

@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_registry_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -80,32 +79,39 @@ private import gstreamer.ObjectGst;
 
 /**
  * One registry holds the metadata of a set of plugins.
- * All registries build the GstRegistryPool.
  *
  * Design:
  *
  * The GstRegistry object is a list of plugins and some functions for dealing
- * with them. GstPlugins are matched 1-1 with a file on disk, and may or may
- * not be loaded at a given time. There may be multiple GstRegistry objects,
- * but the "default registry" is the only object that has any meaning to the
- * core.
- *
- * The registry.xml file is actually a cache of plugin information. This is
- * unlike versions prior to 0.10, where the registry file was the primary source
- * of plugin information, and was created by the gst-register command.
+ * with them. Each GstPlugin is matched 1-1 with a file on disk, and may or may
+ * not be loaded at a given time.
  *
  * The primary source, at all times, of plugin information is each plugin file
  * itself. Thus, if an application wants information about a particular plugin,
  * or wants to search for a feature that satisfies given criteria, the primary
  * means of doing so is to load every plugin and look at the resulting
  * information that is gathered in the default registry. Clearly, this is a time
- * consuming process, so we cache information in the registry.xml file.
+ * consuming process, so we cache information in the registry file. The format
+ * and location of the cache file is internal to gstreamer.
  *
- * On startup, plugins are searched for in the plugin search path. This path can
- * be set directly using the GST_PLUGIN_PATH environment variable. The registry
- * file is loaded from ~/.gstreamer-$GST_MAJORMINOR/registry-$ARCH.xml or the
- * file listed in the GST_REGISTRY env var. The only reason to change the
- * registry location is for testing.
+ * On startup, plugins are searched for in the plugin search path. The following
+ * locations are checked in this order:
+ *
+ * location from --gst-plugin-path commandline option.
+ *
+ * the GST_PLUGIN_PATH environment variable.
+ *
+ * the GST_PLUGIN_SYSTEM_PATH environment variable.
+ *
+ * default locations (if GST_PLUGIN_SYSTEM_PATH is not set). Those
+ *  default locations are:
+ *  ~/.gstreamer-$GST_API_VERSION/plugins/
+ *  and $prefix/libs/gstreamer-$GST_API_VERSION/.
+ *
+ * The registry cache file is loaded from
+ * ~/.gstreamer-$GST_API_VERSION/registry-$ARCH.bin or the
+ * file listed in the GST_REGISTRY env var. One reason to change the registry
+ * location is for testing.
  *
  * For each plugin that is found in the plugin search path, there could be 3
  * possibilities for cached information:
@@ -128,11 +134,13 @@ private import gstreamer.ObjectGst;
  *
  * Implementation notes:
  *
- * The "cache" and "default registry" are different concepts and can represent
+ * The "cache" and "registry" are different concepts and can represent
  * different sets of plugins. For various reasons, at init time, the cache is
  * stored in the default registry, and plugins not relevant to the current
  * process are marked with the GST_PLUGIN_FLAG_CACHED bit. These plugins are
- * removed at the end of intitialization.
+ * removed at the end of initialization.
+ *
+ * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class Registry : ObjectGst
 {
@@ -172,12 +180,12 @@ public class Registry : ObjectGst
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(void*, Registry)[] onFeatureAddedListeners;
+	void delegate(PluginFeature, Registry)[] onFeatureAddedListeners;
 	/**
 	 * Signals that a feature has been added to the registry (possibly
 	 * replacing a previously-added one by the same name)
 	 */
-	void addOnFeatureAdded(void delegate(void*, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnFeatureAdded(void delegate(PluginFeature, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("feature-added" in connectedSignals) )
 		{
@@ -192,22 +200,22 @@ public class Registry : ObjectGst
 		}
 		onFeatureAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, void* feature, Registry _registry)
+	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, GstPluginFeature* feature, Registry _registry)
 	{
-		foreach ( void delegate(void*, Registry) dlg ; _registry.onFeatureAddedListeners )
+		foreach ( void delegate(PluginFeature, Registry) dlg ; _registry.onFeatureAddedListeners )
 		{
-			dlg(feature, _registry);
+			dlg(ObjectG.getDObject!(PluginFeature)(feature), _registry);
 		}
 	}
 	
-	void delegate(void*, Registry)[] onPluginAddedListeners;
+	void delegate(Plugin, Registry)[] onPluginAddedListeners;
 	/**
 	 * Signals that a plugin has been added to the registry (possibly
 	 * replacing a previously-added one by the same name)
 	 * See Also
 	 * GstPlugin, GstPluginFeature
 	 */
-	void addOnPluginAdded(void delegate(void*, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPluginAdded(void delegate(Plugin, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plugin-added" in connectedSignals) )
 		{
@@ -222,24 +230,25 @@ public class Registry : ObjectGst
 		}
 		onPluginAddedListeners ~= dlg;
 	}
-	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, void* plugin, Registry _registry)
+	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, GstPlugin* plugin, Registry _registry)
 	{
-		foreach ( void delegate(void*, Registry) dlg ; _registry.onPluginAddedListeners )
+		foreach ( void delegate(Plugin, Registry) dlg ; _registry.onPluginAddedListeners )
 		{
-			dlg(plugin, _registry);
+			dlg(ObjectG.getDObject!(Plugin)(plugin), _registry);
 		}
 	}
 	
 	
 	/**
-	 * Retrieves the default registry. The caller does not own a reference on the
-	 * registry, as it is alive as long as GStreamer is initialized.
-	 * Returns: The default GstRegistry.
+	 * Retrieves the singleton plugin registry. The caller does not own a
+	 * reference on the registry, as it is alive as long as GStreamer is
+	 * initialized.
+	 * Returns: the GstRegistry. [transfer none]
 	 */
-	public static Registry getDefault()
+	public static Registry get()
 	{
-		// GstRegistry* gst_registry_get_default (void);
-		auto p = gst_registry_get_default();
+		// GstRegistry * gst_registry_get (void);
+		auto p = gst_registry_get();
 		
 		if(p is null)
 		{
@@ -253,11 +262,11 @@ public class Registry : ObjectGst
 	 * Retrieves a GList of GstPluginFeature of type.
 	 * Params:
 	 * type = a GType.
-	 * Returns: a GList of GstPluginFeature of type. gst_plugin_feature_list_free after usage. MT safe.
+	 * Returns: a GList of GstPluginFeature of type. Use gst_plugin_feature_list_free() after use MT safe. [transfer full][element-type Gst.PluginFeature]
 	 */
 	public ListG getFeatureList(GType type)
 	{
-		// GList* gst_registry_get_feature_list (GstRegistry *registry,  GType type);
+		// GList * gst_registry_get_feature_list (GstRegistry *registry,  GType type);
 		auto p = gst_registry_get_feature_list(gstRegistry, type);
 		
 		if(p is null)
@@ -269,32 +278,26 @@ public class Registry : ObjectGst
 	}
 	
 	/**
-	 * Retrieves a GList of features of the plugin with name name.
-	 * Params:
-	 * name = a plugin name.
-	 * Returns: a GList of GstPluginFeature. gst_plugin_feature_list_free() after usage.
+	 * Returns the registrys feature list cookie. This changes
+	 * every time a feature is added or removed from the registry.
+	 * Returns: the feature list cookie.
 	 */
-	public ListG getFeatureListByPlugin(string name)
+	public uint getFeatureListCookie()
 	{
-		// GList* gst_registry_get_feature_list_by_plugin  (GstRegistry *registry,  const gchar *name);
-		auto p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		// guint32 gst_registry_get_feature_list_cookie  (GstRegistry *registry);
+		return gst_registry_get_feature_list_cookie(gstRegistry);
 	}
 	
 	/**
-	 * Get the list of paths for the given registry.
-	 * Returns: A Glist of paths as strings. g_list_free after use. MT safe.
+	 * Retrieves a GList of features of the plugin with name name.
+	 * Params:
+	 * name = a plugin name.
+	 * Returns: a GList of GstPluginFeature. Use gst_plugin_feature_list_free() after usage. [transfer full][element-type Gst.PluginFeature]
 	 */
-	public ListG getPathList()
+	public ListG getFeatureListByPlugin(string name)
 	{
-		// GList* gst_registry_get_path_list (GstRegistry *registry);
-		auto p = gst_registry_get_path_list(gstRegistry);
+		// GList * gst_registry_get_feature_list_by_plugin  (GstRegistry *registry,  const gchar *name);
+		auto p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
 		
 		if(p is null)
 		{
@@ -307,11 +310,11 @@ public class Registry : ObjectGst
 	/**
 	 * Get a copy of all plugins registered in the given registry. The refcount
 	 * of each element in the list in incremented.
-	 * Returns: a GList of GstPlugin. gst_plugin_list_free after use. MT safe.
+	 * Returns: a GList of GstPlugin. Use gst_plugin_list_free() after usage. MT safe. [transfer full][element-type Gst.Plugin]
 	 */
 	public ListG getPluginList()
 	{
-		// GList* gst_registry_get_plugin_list (GstRegistry *registry);
+		// GList * gst_registry_get_plugin_list (GstRegistry *registry);
 		auto p = gst_registry_get_plugin_list(gstRegistry);
 		
 		if(p is null)
@@ -326,7 +329,7 @@ public class Registry : ObjectGst
 	 * Add the plugin to the registry. The plugin-added signal will be emitted.
 	 * This function will sink plugin.
 	 * Params:
-	 * plugin = the plugin to add
+	 * plugin = the plugin to add. [transfer full]
 	 * Returns: TRUE on success. MT safe.
 	 */
 	public int addPlugin(Plugin plugin)
@@ -339,7 +342,7 @@ public class Registry : ObjectGst
 	 * Remove the plugin from the registry.
 	 * MT safe.
 	 * Params:
-	 * plugin = the plugin to remove
+	 * plugin = the plugin to remove. [transfer none]
 	 */
 	public void removePlugin(Plugin plugin)
 	{
@@ -354,14 +357,14 @@ public class Registry : ObjectGst
 	 * Every plugin is reffed; use gst_plugin_list_free() after use, which
 	 * will unref again.
 	 * Params:
-	 * filter = the filter to use
+	 * filter = the filter to use. [scope call]
 	 * first = only return first match
-	 * userData = user data passed to the filter function
-	 * Returns: a GList of GstPlugin. Use gst_plugin_list_free() after usage. MT safe.
+	 * userData = user data passed to the filter function. [closure]
+	 * Returns: a GList of GstPlugin. Use gst_plugin_list_free() after usage. MT safe. [transfer full][element-type Gst.Plugin]
 	 */
 	public ListG pluginFilter(GstPluginFilter filter, int first, void* userData)
 	{
-		// GList* gst_registry_plugin_filter (GstRegistry *registry,  GstPluginFilter filter,  gboolean first,  gpointer user_data);
+		// GList * gst_registry_plugin_filter (GstRegistry *registry,  GstPluginFilter filter,  gboolean first,  gpointer user_data);
 		auto p = gst_registry_plugin_filter(gstRegistry, filter, first, userData);
 		
 		if(p is null)
@@ -378,14 +381,14 @@ public class Registry : ObjectGst
 	 * If the first flag is set, only the first match is
 	 * returned (as a list with a single object).
 	 * Params:
-	 * filter = the filter to use
+	 * filter = the filter to use. [scope call]
 	 * first = only return first match
-	 * userData = user data passed to the filter function
-	 * Returns: a GList of plugin features, gst_plugin_feature_list_free after use. MT safe.
+	 * userData = user data passed to the filter function. [closure]
+	 * Returns: a GList of GstPluginFeature. Use gst_plugin_feature_list_free() after usage. MT safe. [transfer full][element-type Gst.PluginFeature]
 	 */
 	public ListG featureFilter(GstPluginFeatureFilter filter, int first, void* userData)
 	{
-		// GList* gst_registry_feature_filter (GstRegistry *registry,  GstPluginFeatureFilter filter,  gboolean first,  gpointer user_data);
+		// GList * gst_registry_feature_filter (GstRegistry *registry,  GstPluginFeatureFilter filter,  gboolean first,  gpointer user_data);
 		auto p = gst_registry_feature_filter(gstRegistry, filter, first, userData);
 		
 		if(p is null)
@@ -401,11 +404,11 @@ public class Registry : ObjectGst
 	 * The plugin will be reffed; caller is responsible for unreffing.
 	 * Params:
 	 * name = the plugin name to find
-	 * Returns: The plugin with the given name or NULL if the plugin was not found. gst_object_unref() after usage. MT safe.
+	 * Returns: the plugin with the given name or NULL if the plugin was not found. gst_object_unref() after usage. MT safe. [transfer full]
 	 */
 	public Plugin findPlugin(string name)
 	{
-		// GstPlugin* gst_registry_find_plugin (GstRegistry *registry,  const gchar *name);
+		// GstPlugin * gst_registry_find_plugin (GstRegistry *registry,  const gchar *name);
 		auto p = gst_registry_find_plugin(gstRegistry, Str.toStringz(name));
 		
 		if(p is null)
@@ -421,11 +424,11 @@ public class Registry : ObjectGst
 	 * Params:
 	 * name = the pluginfeature name to find
 	 * type = the pluginfeature type to find
-	 * Returns: The pluginfeature with the given name and type or NULL if the plugin was not found. gst_object_unref() after usage. MT safe.
+	 * Returns: the pluginfeature with the given name and type or NULL if the plugin was not found. gst_object_unref() after usage. MT safe. [transfer full]
 	 */
 	public PluginFeature findFeature(string name, GType type)
 	{
-		// GstPluginFeature* gst_registry_find_feature (GstRegistry *registry,  const gchar *name,  GType type);
+		// GstPluginFeature * gst_registry_find_feature (GstRegistry *registry,  const gchar *name,  GType type);
 		auto p = gst_registry_find_feature(gstRegistry, Str.toStringz(name), type);
 		
 		if(p is null)
@@ -440,11 +443,11 @@ public class Registry : ObjectGst
 	 * Find a GstPluginFeature with name in registry.
 	 * Params:
 	 * name = a GstPluginFeature name
-	 * Returns: a GstPluginFeature with its refcount incremented, use gst_object_unref() after usage. MT safe.
+	 * Returns: a GstPluginFeature with its refcount incremented, use gst_object_unref() after usage. MT safe. [transfer full]
 	 */
 	public PluginFeature lookupFeature(string name)
 	{
-		// GstPluginFeature* gst_registry_lookup_feature (GstRegistry *registry,  const char *name);
+		// GstPluginFeature * gst_registry_lookup_feature (GstRegistry *registry,  const char *name);
 		auto p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
 		
 		if(p is null)
@@ -456,11 +459,10 @@ public class Registry : ObjectGst
 	}
 	
 	/**
-	 * Add the given path to the registry. The syntax of the
-	 * path is specific to the registry. If the path has already been
-	 * added, do nothing.
+	 * Scan the given path for plugins to add to the registry. The syntax of the
+	 * path is specific to the registry.
 	 * Params:
-	 * path = the path to add to the registry
+	 * path = the path to scan
 	 * Returns: TRUE if registry changed
 	 */
 	public int scanPath(string path)
@@ -470,64 +472,15 @@ public class Registry : ObjectGst
 	}
 	
 	/**
-	 * Read the contents of the binary cache file at location into registry.
-	 * Params:
-	 * location = a filename
-	 * Returns: TRUE on success.
-	 */
-	public int binaryReadCache(string location)
-	{
-		// gboolean gst_registry_binary_read_cache (GstRegistry *registry,  const char *location);
-		return gst_registry_binary_read_cache(gstRegistry, Str.toStringz(location));
-	}
-	
-	/**
-	 * Write the registry to a cache to file at given location.
-	 * Params:
-	 * location = a filename
-	 * Returns: TRUE on success.
-	 */
-	public int binaryWriteCache(string location)
-	{
-		// gboolean gst_registry_binary_write_cache (GstRegistry *registry,  const char *location);
-		return gst_registry_binary_write_cache(gstRegistry, Str.toStringz(location));
-	}
-	
-	/**
-	 * Read the contents of the XML cache file at location into registry.
-	 * Params:
-	 * location = a filename
-	 * Returns: TRUE on success.
-	 */
-	public int xmlReadCache(string location)
-	{
-		// gboolean gst_registry_xml_read_cache (GstRegistry *registry,  const char *location);
-		return gst_registry_xml_read_cache(gstRegistry, Str.toStringz(location));
-	}
-	
-	/**
-	 * Write registry in an XML format at the location given by
-	 * location. Directories are automatically created.
-	 * Params:
-	 * location = a filename
-	 * Returns: TRUE on success.
-	 */
-	public int xmlWriteCache(string location)
-	{
-		// gboolean gst_registry_xml_write_cache (GstRegistry *registry,  const char *location);
-		return gst_registry_xml_write_cache(gstRegistry, Str.toStringz(location));
-	}
-	
-	/**
 	 * Look up a plugin in the given registry with the given filename.
 	 * If found, plugin is reffed.
 	 * Params:
 	 * filename = the name of the file to look up
-	 * Returns: the GstPlugin if found, or NULL if not. gst_object_unref() after usage.
+	 * Returns: the GstPlugin if found, or NULL if not. gst_object_unref() after usage. [transfer full]
 	 */
 	public Plugin lookup(string filename)
 	{
-		// GstPlugin* gst_registry_lookup (GstRegistry *registry,  const char *filename);
+		// GstPlugin * gst_registry_lookup (GstRegistry *registry,  const char *filename);
 		auto p = gst_registry_lookup(gstRegistry, Str.toStringz(filename));
 		
 		if(p is null)
@@ -542,7 +495,7 @@ public class Registry : ObjectGst
 	 * Remove the feature from the registry.
 	 * MT safe.
 	 * Params:
-	 * feature = the feature to remove
+	 * feature = the feature to remove. [transfer none]
 	 */
 	public void removeFeature(PluginFeature feature)
 	{
@@ -554,7 +507,7 @@ public class Registry : ObjectGst
 	 * Add the feature to the registry. The feature-added signal will be emitted.
 	 * This function sinks feature.
 	 * Params:
-	 * feature = the feature to add
+	 * feature = the feature to add. [transfer full]
 	 * Returns: TRUE on success. MT safe.
 	 */
 	public int addFeature(PluginFeature feature)
@@ -564,19 +517,20 @@ public class Registry : ObjectGst
 	}
 	
 	/**
-	 * Checks whether a plugin feature by the given name exists in the
-	 * default registry and whether its version is at least the
+	 * Checks whether a plugin feature by the given name exists in
+	 * registry and whether its version is at least the
 	 * version required.
 	 * Params:
 	 * featureName = the name of the feature (e.g. "oggdemux")
 	 * minMajor = the minimum major version number
 	 * minMinor = the minimum minor version number
 	 * minMicro = the minimum micro version number
-	 * Returns: TRUE if the feature could be found and the version is the same as the required version or newer, and FALSE otherwise.
+	 * feature = the feature that has been added
+	 * Returns: TRUE if the feature could be found and the version is the same as the required version or newer, and FALSE otherwise. Signal Details The "feature-added" signal void user_function (GstRegistry *registry, GstPluginFeature *feature, gpointer user_data) : Run Last Signals that a feature has been added to the registry (possibly replacing a previously-added one by the same name)
 	 */
-	public static int defaultRegistryCheckFeatureVersion(string featureName, uint minMajor, uint minMinor, uint minMicro)
+	public int checkFeatureVersion(string featureName, uint minMajor, uint minMinor, uint minMicro)
 	{
-		// gboolean gst_default_registry_check_feature_version  (const gchar *feature_name,  guint min_major,  guint min_minor,  guint min_micro);
-		return gst_default_registry_check_feature_version(Str.toStringz(featureName), minMajor, minMinor, minMicro);
+		// gboolean gst_registry_check_feature_version (GstRegistry *registry,  const gchar *feature_name,  guint min_major,  guint min_minor,  guint min_micro);
+		return gst_registry_check_feature_version(gstRegistry, Str.toStringz(featureName), minMajor, minMinor, minMicro);
 	}
 }

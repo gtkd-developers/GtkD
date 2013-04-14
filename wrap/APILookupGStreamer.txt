@@ -26,25 +26,23 @@
 ###
 #
 
-#Notes for the gstreamerD developer:
-#The work on wrapping gstreamerD automatically isn't complete yet.
-#At the moment gstreamerc/gstreamer.d and gstreamerc/gstreamertypes.d
-#have to be copied from hand edited versions from wrap/.
-#The copying is done automatically in APILookup.txt
-
-
-enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.FLAG_LAST
-enumType: GST_OBJECT_FLAG_LAST GstObjectFlags.FLAG_LAST
-enumType: GST_MINI_OBJECT_FLAG_READONLY GstMiniObjectFlags.READONLY
+enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.LAST
+enumType: GST_OBJECT_FLAG_LAST GstObjectFlags.LAST
+enumType: GST_MINI_OBJECT_FLAG_LOCK_READONLY GstMiniObjectFlags.LOCK_READONLY
 enumType: GST_MINI_OBJECT_FLAG_LAST GstMiniObjectFlags.LAST
+enumType: GST_LOCK_FLAG_READ GstLockFlags.READ
+enumType: GST_LOCK_FLAG_WRITE GstLockFlags.WRITE
 enumType: GST_STATE_NULL GstState.NULL
 enumType: GST_STATE_READY GstState.READY
 enumType: GST_STATE_PAUSED GstState.PAUSED
 enumType: GST_STATE_PLAYING GstState.PLAYING
 enumType: FLAG_LAST GstBinFlags.FLAG_LAST
+enumType: GST_SEEK_FLAG_NONE GstSeekFlags.NONE
+enumType: GST_SEEK_FLAG_FLUSH GstSeekFlags.FLUSH
+enumType: GST_SEEK_FLAG_SKIP GstSeekFlags.SKIP
+enumType: GST_SEEK_FLAG_SEGMENT GstSeekFlags.SEGMENT
 
 alias: GST_SEEK_TYPE_NONE NONE
-alias: GST_SEEK_TYPE_CUR CUR
 alias: GST_SEEK_TYPE_SET SET
 alias: GST_SEEK_TYPE_END END
 alias: GST_BIN_FLAG_LAST FLAG_LAST
@@ -74,9 +72,11 @@ addEnums: start
 	 */
 	public enum GstEventTypeFlags
 	{
-		UPSTREAM = 1 << 0,
-		DOWNSTREAM = 1 << 1,
-		SERIALIZED = 1 << 2,
+		UPSTREAM     = 1 << 0,
+		DOWNSTREAM   = 1 << 1,
+		SERIALIZED   = 1 << 2,
+		STICKY       = 1 << 3,
+		STICKY_MULTI = 1 << 4,
 	}
 	alias GstEventTypeFlags EventTypeFlags;
 
@@ -92,27 +92,66 @@ addEnums: start
 	public enum GstEventType
 	{
 		UNKNOWN = 0,
+
 		/+* bidirectional events +/
-		FLUSH_START = 16 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM,
-		FLUSH_STOP = 32 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		FLUSH_START = (10 << 8) | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM,
+		FLUSH_STOP  = (20 << 8) | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+
 		/+* downstream serialized events +/
-		EOS = 80 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-		NEWSEGMENT = 96 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-		TAG = 112 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-		BUFFERSIZE = 128 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		STREAM_START = (  40 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY,
+		CAPS         = (  50 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY,
+		SEGMENT      = (  70 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY,
+		TAG          = (  80 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY | GstEventTypeFlags.STICKY_MULTI,
+		BUFFERSIZE   = (  90 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY,
+		SINK_MESSAGE = ( 100 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY | GstEventTypeFlags.STICKY_MULTI,
+		EOS          = ( 110 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY,
+		TOC          = ( 120 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY | GstEventTypeFlags.STICKY_MULTI,
+
+		/* non-sticky downstream serialized */
+		SEGMENT_DONE = ( 150 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		GAP          = ( 160 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+
 		/+* upstream events +/
-		QOS = 240 | GstEventTypeFlags.UPSTREAM,
-		SEEK = 256 | GstEventTypeFlags.UPSTREAM,
-		NAVIGATION = 272 | GstEventTypeFlags.UPSTREAM,
+		QOS         = ( 190 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		SEEK        = ( 200 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		NAVIGATION  = ( 210 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		LATENCY     = ( 220 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		STEP        = ( 230 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		RECONFIGURE = ( 240 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		TOC_SELECT  = ( 250 << 8 ) | GstEventTypeFlags.UPSTREAM,
+
 		/+* custom events start here +/
-		CUSTOM_UPSTREAM = 512 | GstEventTypeFlags.UPSTREAM,
-		CUSTOM_DOWNSTREAM = 512 | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-		CUSTOM_DOWNSTREAM_OOB = 512 | GstEventTypeFlags.DOWNSTREAM,
-		CUSTOM_BOTH = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
-		CUSTOM_BOTH_OOB = 512 | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM
+		CUSTOM_UPSTREAM          = ( 270 << 8 ) | GstEventTypeFlags.UPSTREAM,
+		CUSTOM_DOWNSTREAM        = ( 280 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		CUSTOM_DOWNSTREAM_OOB    = ( 290 << 8 ) | GstEventTypeFlags.DOWNSTREAM,
+		CUSTOM_DOWNSTREAM_STICKY = ( 300 << 8 ) | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED | GstEventTypeFlags.STICKY | GstEventTypeFlags.STICKY_MULTI,
+		CUSTOM_BOTH              = ( 310 << 8 ) | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM | GstEventTypeFlags.SERIALIZED,
+		CUSTOM_BOTH_OOB          = ( 320 << 8 ) | GstEventTypeFlags.UPSTREAM | GstEventTypeFlags.DOWNSTREAM
 	}
 	alias GstEventType EventType;
 
+	public enum GstQueryType
+	{
+		UNKNOWN     = (0 << 8)   | 0,
+		POSITION    = (10 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		DURATION    = (20 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		LATENCY     = (30 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		JITTER      = (40 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		RATE        = (50 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		SEEKING     = (60 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		SEGMENT     = (70 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		CONVERT     = (80 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		FORMATS     = (90 << 8)  | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		BUFFERING   = (110 << 8) | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		CUSTOM      = (120 << 8) | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		URI         = (130 << 8) | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		ALLOCATION  = (140 << 8) | GstQueryTypeFlags.DOWNSTREAM | GstQueryTypeFlags.SERIALIZED,
+		SCHEDULING  = (150 << 8) | GstQueryTypeFlags.UPSTREAM,
+		ACCEPT_CAPS = (160 << 8) | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		CAPS        = (170 << 8) | (GstQueryTypeFlags.UPSTREAM | GstQueryTypeFlags.DOWNSTREAM),
+		DRAIN       = (180 << 8) | GstQueryTypeFlags.DOWNSTREAM | GstQueryTypeFlags.SERIALIZED,
+	}
+	alias GstQueryType QueryType;
 addEnums: end
 
 addStructs: start
@@ -120,48 +159,32 @@ addStructs: start
 
 	public struct GstBuffer
 	{
-		GstMiniObject mini_object;
-	
+		GstMiniObject  mini_object;
+
 		/*< public >*/ /* with COW */
-		/* pointer to data and its size */
-		guint8 *data;
-		guint size;
-	
+		GstBufferPool* pool;
+
 		/* timestamp */
-		GstClockTime timestamp;
-		GstClockTime duration;
-	
-		/* the media type of this buffer */
-		GstCaps* caps;
-	
+		GstClockTime   pts;
+		GstClockTime   dts;
+		GstClockTime   duration;
+
 		/* media specific offset */
-		guint64 offset;
-		guint64 offset_end;
-	
-		guint8 *malloc_data;
-	
-		/*< private >*/
-		gpointer _gst_reserved[GST_PADDING];
+		guint64        offset;
+		guint64        offset_end;
 	}
 
-	public struct GstObjectClass {
-		GObjectClass parent_class;
+	public struct GstObjectClass
+	{
+		GInitiallyUnownedClass parent_class;
 
-		gchar   *path_string_separator;
-		GObject	*signal_object;
-
-		void* lock;
+		const gchar* path_string_separator;
 
 		/* signals */
-		extern(C) void function(GstObject* object, GstObject* parent) parent_set;
-		extern(C) void function(GstObject* object, GstObject* parent) parent_unset;
-		extern(C) void function(GstObject* object, GstXmlNodePtr parent) object_saved;
 		extern(C) void function(GstObject* object, GstObject* orig, GParamSpec* pspec) deep_notify;
-	
-		/*< public >*/ 
+
+		/*< public >*/
 		/* virtual methods for subclasses */
-		extern(C) GstXmlNodePtr function(GstObject* object, GstXmlNodePtr parent) save_thyself;
-		extern(C) void          function(GstObject* object, GstXmlNodePtr self) restore_thyself;
 
 		/*< private >*/
 		gpointer _gst_reserved[GST_PADDING];
@@ -169,32 +192,36 @@ addStructs: start
 
 	struct GstMessage
 	{
-		GstMiniObject mini_object;
-
-		/*< private > *//* with MESSAGE_LOCK */
-		GMutex* lock;                 /* lock and cond for async delivery */
-		GCond* cond;
+		GstMiniObject   mini_object;
 
 		/*< public > *//* with COW */
-		GstMessageType type;
-		ulong timestamp;//guint64 timestamp;
-		GstObject* src;
+		GstMessageType  type;
+		guint64         timestamp;
+		GstObject*      src;
+		guint32         seqnum;
 
-		GstStructure* structure;
-
-		/*< private > */
-		gpointer _gst_reserved[GST_PADDING];
+		/*< private >*//* with MESSAGE_LOCK */
+		GMutex          lock;                 /* lock and cond for async delivery */
+		GCond           cond;
 	}
 
 	public struct GstMiniObject
 	{
-		GTypeInstance instanc;
-		//< public >// with COW
-		int refcount;//gint refcount;
-		uint flags;//guint flags;
+		GType   type;
 
-		//< private >
-		gpointer _gst_reserved;
+		/*< public >*/ /* with COW */
+		gint    refcount;
+		gint    lockstate;
+		guint   flags;
+
+		extern(C) GstMiniObject* function(GstMiniObject* obj) copy;
+		extern(C) gboolean       function(GstMiniObject* obj) dispose;
+		extern(C) void           function(GstMiniObject* obj) free;
+
+		/* < private > */
+		/* Used to keep track of weak ref notifies and qdata */
+		guint n_qdata;
+		gpointer qdata;
 	}
 addStructs: end
 
@@ -239,94 +266,414 @@ srcout: srcgstreamer
 ### GStreamer #############################################
 ###########################################################
 
-file: gstreamer-GstMiniObject.html
-struct: GstMiniObject
-nostruct: GstMiniObject
-class: MiniObject
-prefix: gst_mini_object_
-import: glib.Str
-import: gobject.ParamSpec
-import: gobject.Value
-structWrap: GstMiniObject* MiniObject
-structWrap: GParamSpec* ParamSpec
-structWrap: GValue* Value
-inout: gst_mini_object_replace olddata
-outFile: MiniObject
-
-file: GstObject.html
-struct: GstObject
-class: ObjectGst
-prefix: gst_object_
+file: gstreamer-Gst.html
+class: GStreamer
 prefix: gst_
-#libxml2 missing:
-nocode: gst_object_save_thyself
-nocode: gst_object_restore_thyself
-nocode: gst_class_signal_emit_by_name
-#this is removed because of GstObjectClass* not working yet
-nocode: gst_class_signal_connect
+import: glib.ErrorG
+import: glib.GException
+import: glib.Str
+import: glib.OptionGroup
+structWrap: GOptionGroup* OptionGroup
+
+inout: gst_version major
+inout: gst_version minor
+inout: gst_version micro
+inout: gst_version nano
+inout: gst_init argv
+array: gst_init argv argc
+inout: gst_init_check argv
+array: gst_init_check argv argc
+outFile: gstreamer
+
+file: GstAllocator.html
+struct: GstAllocator
+class: Allocator
+prefix: gst_allocator_
+import: glib.Str
+import: gstreamer.Memory
+structWrap: GstAllocator* Allocator
+structWrap: GstMemory* Memory
+outFile: Allocator
+
+file: gstreamer-GstAtomicQueue.html
+struct: GstAtomicQueue
+class: AtomicQueue
+prefix: gst_atomic_queue_
+outFile: AtomicQueue
+
+file: GstBin.html
+struct: GstBin
+ctorStruct: GstElement
+class: Bin
+prefix: gst_bin_
+import: glib.Str
+import: gstreamer.Element
+import: gstreamer.Iterator
+import: gstreamer.Pad
+structWrap: GstElement* Element
+structWrap: GstIterator* Iterator
+structWrap: GstPad* Pad
+
+code: start
+	/** */
+	public this(Element elem)
+	{
+		super( elem.getElementStruct() );
+		this.gstBin = cast(GstBin*)elem.getElementStruct();
+	}
+code: end
+outFile: Bin
+
+file: gstreamer-GstBuffer.html
+struct: GstBuffer
+nostruct: GstBuffer
+class: Buffer
+prefix: gst_buffer_
+import: glib.Str
+import: gstreamer.Allocator
+import: gstreamer.Memory
+import: gstreamer.Meta
+structWrap: GstAllocator* Allocator
+structWrap: GstBuffer* Buffer
+structWrap: GstMemory* Memory
+
+array: gst_buffer_new_wrapped data size
+out: gst_buffer_get_sizes offset
+out: gst_buffer_get_sizes maxsize
+out: gst_buffer_get_sizes_range offset
+out: gst_buffer_get_sizes_range maxsize
+out: gst_buffer_find_memory idx
+out: gst_buffer_find_memory length
+out: gst_buffer_find_memory skip
+out: gst_buffer_map info
+out: gst_buffer_map_range info
+inout: gst_buffer_unmap info
+array: gst_buffer_memcmp mem size
+array: gst_buffer_extract dest size
+array: gst_buffer_fill src size
+inout: gst_buffer_replace obuf
+outFile: Buffer
+
+file: gstreamer-GstBufferList.html
+struct: GstBufferList
+class: BufferList
+prefix: gst_buffer_list_
+import: gstreamer.Buffer
+structWrap: GstBuffer* Buffer
+structWrap: GstBufferList* BufferList
+outFile: BufferList
+
+file: gstreamer-GstBufferPool.html
+struct: GstBufferPool
+class: BufferPool
+prefix: gst_buffer_pool_
+import: glib.Str
+import: gstreamer.Allocator
+import: gstreamer.Buffer
+import: gstreamer.Caps
+import: gstreamer.Structure
+structWrap: GstAllocator* Allocator
+structWrap: GstBuffer* Buffer
+structWrap: GstCaps* Caps
+structWrap: GstStructure* Structure
+
+out: gst_buffer_pool_config_get_params caps
+out: gst_buffer_pool_config_get_params size
+out: gst_buffer_pool_config_get_params min_buffers
+out: gst_buffer_pool_config_get_params max_buffers
+inout: gst_buffer_pool_config_get_allocator allocator
+out: gst_buffer_pool_acquire_buffer buffer
+outFile: BufferPool
+
+file: GstBus.html
+struct: GstBus
+class: Bus
+prefix: gst_bus_
+import: glib.Str
+import: glib.Source
+import: gstreamer.Message
+structWrap: GSource* Source
+structWrap: GstBus* Bus
+structWrap: GstMessage* Message
+
+nocode: gst_bus_add_watch
+nocode: gst_bus_set_sync_handler
+code: start
+	/**
+	 * Adds a bus watch to the default main context with the default priority.
+	 * This function is used to receive asynchronous messages in the main loop.
+	 * The watch can be removed using g_source_remove() or by returning FALSE
+	 * from func.
+	 * MT safe.
+	 * Params:
+	 *  dlg = A function to call when a message is received.
+	 * Returns:
+	 *  The event source id.
+	 */
+	public uint addWatch( bool delegate(Message) dlg )
+	{
+		onWatchListener = dlg;
+		return gst_bus_add_watch(gstBus, cast(GstBusFunc)&watchCallBack, cast(void*)this);
+	}
+
+	bool delegate(Message) onWatchListener;
+
+	extern(C) static gboolean watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
+	{
+		Message msg_d = new Message( msg );
+
+		return bus_d.onWatchListener( msg_d );
+	}
+	
+	 /**
+	  * Use this for making an XOverlay.
+	  * Sets the synchronous handler on the bus. The function will be called
+	  * every time a new message is posted on the bus. Note that the function
+	  * will be called in the same thread context as the posting object. This
+	  * function is usually only called by the creator of the bus. Applications
+	  * should handle messages asynchronously using the gst_bus watch and poll
+	  * functions.
+	  * You cannot replace an existing sync_handler. You can pass NULL to this
+	  * function, which will clear the existing handler.
+	  * Params:
+	  *  dlg = The handler function to install
+	  */
+	public void setSyncHandler( GstBusSyncReply delegate(Message) dlg )
+	{
+		onSyncHandlerListener = dlg;
+		gst_bus_set_sync_handler(gstBus, cast(GstBusSyncHandler)&syncHandlerCallBack, cast(void*)this, null);
+	}
+	
+	GstBusSyncReply delegate(Message) onSyncHandlerListener;
+	
+	extern(C) static GstBusSyncReply syncHandlerCallBack(GstBus* bus, GstMessage* msg, Bus bus_d)
+	{
+		Message msg_d = new Message( msg );
+		
+		return bus_d.onSyncHandlerListener( msg_d );
+	}
+code: end
+outFile: Bus
+
+file: gstreamer-GstCaps.html
+struct: GstCaps
+class: Caps
+prefix: gst_caps_
+prefix: gst_
+override: toString
+import: glib.Str
+import: gobject.Value
+import: gstreamer.Structure
+structWrap: GValue* Value
+structWrap: GstCaps* Caps
+structWrap: GstStructure* Structure
+
+inout: gst_caps_replace caps
+
+nocode: gst_caps_new_any
+
+code: start
+	/**
+	 * Creates a new GstCaps that indicates that it is compatible with
+	 * any media format.
+	 * Returns:
+	 *  the new GstCaps
+	 */
+	public static Caps newAny()
+	{
+		// GstCaps* gst_caps_new_any (void);
+		auto p = cast(GstCaps*)gst_caps_new_any();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_caps_new_any");
+		}
+
+		return new Caps(cast(GstCaps*)p );
+	}
+code: end
+outFile: Caps
+
+file: gstreamer-GstSample.html
+struct: GstSample
+class: Sample
+prefix: gst_sample_
+import: gstreamer.Buffer
+import: gstreamer.Caps
+import: gstreamer.Segment
+import: gstreamer.Structure
+structWrap: GstBuffer* Buffer
+structWrap: GstCaps* Caps
+structWrap: GstSample* Sample
+structWrap: GstSegment* Segment
+structWrap: GstStructure* Structure
+outFile: Sample
+
+file: GstChildProxy.html
+struct: GstChildProxy
+class: ChildProxyT
+template: TStruct
+prefix: gst_child_proxy_
 import: glib.Str
 import: gobject.ObjectG
-import: glib.ErrorG
-import: glib.ListG
 import: gobject.ParamSpec
-structWrap: GstObject* ObjectGst
+import: gobject.Value
 structWrap: GObject* ObjectG
-structWrap: GError* ErrorG
-structWrap: GList* ListG
 structWrap: GParamSpec* ParamSpec
-array: gst_object_default_deep_notify excluded_props
-inout: gst_object_replace oldobj
-outFile: ObjectGst
+structWrap: GValue* Value
+
+out: gst_child_proxy_lookup target
+out: gst_child_proxy_lookup pspec
+interface: ChildProxyIF
+outFile: ChildProxyT
+
+file: GstClock.html
+struct: GstClock
+class: Clock
+prefix: gst_clock_
+import: glib.Str
+structWrap: GstClock* Clock
+
+out: gst_clock_add_observation r_squared
+out: gst_clock_get_calibration internal
+out: gst_clock_get_calibration external
+out: gst_clock_get_calibration rate_num
+out: gst_clock_get_calibration rate_denom
+inout: gst_clock_id_wait jitter
+outFile: Clock
+
+#file: gstreamer-gstconfig.html
+
+file: GstControlBinding.html
+struct: GstControlBinding
+class: ControlBinding
+prefix: gst_control_binding_
+import: gobject.Value
+import: gstreamer.ObjectGst
+structWrap: GValue* Value
+structWrap: GstObject* ObjectGst
+
+array: gst_control_binding_get_value_array values n_values
+array: gst_control_binding_get_g_value_array values n_values
+outFile: ControlBinding
+
+file: GstControlSource.html
+struct: GstControlSource
+class: ControlSource
+prefix: gst_control_source_
+out: gst_control_source_get_value value
+array: gst_control_source_get_value_array values n_values
+outFile: ControlSource
+
+file: gstreamer-GstDateTime.html
+struct: GstDateTime
+class: DateTime
+prefix: gst_date_time_
+import: glib.Str
+#import: glib.DateTime
+import: gstreamer.DateTime
+#structWrap: GDateTime* DateTime
+structWrap: GstDateTime* DateTime
+
+nocode: gst_date_time_new_now_utc
+nocode: gst_date_time_new_now_local_time
+nocode: gst_date_time_new_from_unix_epoch_utc
+nocode: gst_date_time_new_from_unix_epoch_local_time
+
+code: start
+	/**
+	 * Creates a new GstDateTime representing the current date and time.
+	 * 
+	 * Params:
+	 *     utc  = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool utc)
+	{
+		GstDateTime* p;
+
+		if ( utc )
+		{
+			p = gst_date_time_new_now_utc();
+		}
+		else
+		{
+			p = gst_date_time_new_now_local_time();
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
+		}
+		this(cast(GstDateTime*) p);
+	}
+
+	/**
+	 * Creates a new GstDateTime using the time since Jan 1, 1970 specified by
+	 * secs.
+	 * 
+	 * Params:
+	 *     secs = Seconds from the Unix epoch
+	 *     utc  = If true use utc else use the local timezone.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (long secs, bool utc)
+	{
+		GstDateTime* p;
+
+		if ( utc )
+		{
+			p = gst_date_time_new_from_unix_epoch_utc(secs);
+		}
+		else
+		{
+			p = gst_date_time_new_from_unix_epoch_local_time(secs);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_date_time_new_from_unix_epoch_local_time(secs)");
+		}
+		this(cast(GstDateTime*) p);
+	}
+code: end
+outFile: DateTime
 
 file: GstElement.html
 struct: GstElement
 class: Element
 prefix: gst_element_
-prefix: gst_
-import: glib.Str
 import: gtkc.gobject
+import: glib.Str
 import: glib.ListG
+import: gobject.Type
+import: gstreamer.Bus
+import: gstreamer.Caps
+import: gstreamer.Clock
+import: gstreamer.ElementFactory
+import: gstreamer.Event
+import: gstreamer.Iterator
+import: gstreamer.Message
 import: gstreamer.Pad
 import: gstreamer.PadTemplate
-import: gstreamer.Clock
-import: gstreamer.Caps
-import: gstreamer.ElementFactory
-import: gstreamer.Iterator
-import: gstreamer.Index
-import: gstreamer.TagList
-import: gstreamer.Message
 import: gstreamer.Query
-import: gstreamer.Event
-import: gstreamer.Bus
-structWrap: GstBus* Bus
-#import: gstreamer.QueryType
-#I didn't do this:
-#import: gobject.ObjectG
-#structWrap: GObject* ObjectG
-#I tried this instead:
-structWrap: GObject* Pad
 structWrap: GList ListG
+structWrap: GstBus* Bus
+structWrap: GstCaps* Caps
+structWrap: GstClock* Clock
 structWrap: GstElement* Element
 structWrap: GstElementFactory* ElementFactory
+structWrap: GstEvent* Event
+structWrap: GstIterator* Iterator
+structWrap: GstMessage* Message
 structWrap: GstPad* Pad
 structWrap: GstPadTemplate* PadTemplate
-structWrap: GstClock* Clock
-structWrap: GstCaps* Caps
-structWrap: GstIterator* Iterator
-structWrap: GstIndex* Index
-structWrap: GstTagList* TagList
-structWrap: GstMessage* Message
 structWrap: GstQuery* Query
-structWrap: GstEvent* Event
-#structWrap: GstQueryType* QueryType
-#structWrap: GstFormat* GstFormat
 
 out: gst_element_get_state state
 out: gst_element_get_state pending
-inout: gst_element_query_convert dest_format
-inout: gst_element_query_position format
+out: gst_element_query_convert dest_val
 inout: gst_element_query_position cur
-inout: gst_element_query_duration format
 inout: gst_element_query_duration duration
 
 code: start
@@ -385,233 +732,45 @@ code: start
 								GstSeekType.SET, time_nanoseconds,
 								GstSeekType.NONE, GST_CLOCK_TIME_NONE);
 	}
-	
+
 	/**
-	* Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
+	* Get's all the pads from an element in a Pad[].
 	*/
 	public Pad[] pads()
 	{
-		Pad[] result = new Pad[0];
-		
-		Iterator iter = iteratePads();
-		GstPad* obu_c = null;
-		iter.next( cast(void**) &obu_c );
-		while( obu_c !is null )
+		Pad[] result;
+		GValue* pad = g_value_init(new GValue(), Type.fromName("GstPad"));
+		GstIterator* iter = gst_element_iterate_pads(gstElement);
+
+		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
 		{
-			Pad tmpobu = new Pad( obu_c );
-			//writefln( "iterating Padname: ", tmpobu.getName() );
-			result.length = result.length + 1;
-			result[result.length-1] = tmpobu;	
-			
-			obu_c = null;
-			iter.next( cast(void**) &obu_c );
+			result ~= new Pad(cast(GstPad*)g_value_get_object(pad));
+			g_value_reset(pad);
 		}
-		//writefln("no more pads.");
+
+		g_value_unset(pad);
+
 		return result;
 	}
 code: end
 outFile: Element
-
-file: gstreamer-Gst.html
-class: GStreamer
-prefix: gst_
-import: glib.ErrorG
-import: glib.GException
-import: glib.Str
-import: glib.OptionGroup
-structWrap: GOptionGroup* OptionGroup
-
-inout: gst_version major
-inout: gst_version minor
-inout: gst_version micro
-inout: gst_version nano
-inout: gst_init argv
-array: gst_init argv argc
-inout: gst_init_check argv
-array: gst_init_check argv argc
-outFile: gstreamer
-
-file: GstBin.html
-struct: GstBin
-ctorStruct: GstElement
-class: Bin
-prefix: gst_bin_
-prefix: gst_
-import: glib.Str
-import: gstreamer.Element
-import: gstreamer.Iterator
-import: gstreamer.Pad
-structWrap: GstBin* Bin
-structWrap: GstElement* Element
-structWrap: GstIterator* Iterator
-structWrap: GstPad* Pad
-
-code: start
-	/** */
-	public this(Element elem)
-	{
-		super( elem.getElementStruct() );
-		this.gstBin = cast(GstBin*)elem.getElementStruct();
-	}
-code: end
-outFile: Bin
-
-file: gstreamer-GstBuffer.html
-struct: GstBuffer
-nostruct: GstBuffer
-class: Buffer
-prefix: gst_buffer_
-prefix: gst_
-import: glib.Str
-import: gstreamer.Caps
-structWrap: GstBuffer* Buffer
-structWrap: GstCaps* Caps
-outFile: Buffer
-
-file: GstBus.html
-struct: GstBus
-class: Bus
-prefix: gst_bus_
-prefix: gst_
-import: glib.Str
-import: gstreamer.Message
-import: glib.Source
-structWrap: GstBus* Bus
-structWrap: GstMessage* Message
-structWrap: GSource* Source
-nocode: gst_bus_add_watch
-nocode: gst_bus_set_sync_handler
-code: start
-	/**
-	 * Adds a bus watch to the default main context with the default priority.
-	 * This function is used to receive asynchronous messages in the main loop.
-	 * The watch can be removed using g_source_remove() or by returning FALSE
-	 * from func.
-	 * MT safe.
-	 * Params:
-	 *  dlg = A function to call when a message is received.
-	 * Returns:
-	 *  The event source id.
-	 */
-	public uint addWatch( bool delegate(Message) dlg )
-	{
-		onWatchListener = dlg;
-		return gst_bus_add_watch(gstBus, cast(GstBusFunc)&watchCallBack, cast(void*)this);
-	}
-
-	bool delegate(Message) onWatchListener;
-
-	extern(C) static gboolean watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
-	{
-		Message msg_d = new Message( msg );
-
-		return bus_d.onWatchListener( msg_d );
-	}
-	
-	 /**
-	 * Use this for making an XOverlay.
-	 * Sets the synchronous handler on the bus. The function will be called
-	 * every time a new message is posted on the bus. Note that the function
-	 * will be called in the same thread context as the posting object. This
-	 * function is usually only called by the creator of the bus. Applications
-	 * should handle messages asynchronously using the gst_bus watch and poll
-	 * functions.
-	 * You cannot replace an existing sync_handler. You can pass NULL to this
-	 * function, which will clear the existing handler.
-	 * Params:
-	 *  dlg = The handler function to install
-	 */
-	public void setSyncHandler( GstBusSyncReply delegate(Message) dlg )
-	{
-		onSyncHandlerListener = dlg;
-		gst_bus_set_sync_handler(gstBus, cast(GstBusSyncHandler)&syncHandlerCallBack, cast(void*)this);
-	}
-	
-	GstBusSyncReply delegate(Message) onSyncHandlerListener;
-	
-	extern(C) static GstBusSyncReply syncHandlerCallBack(GstBus * bus, GstMessage * msg, Bus bus_d )//GstPipeline * pipeline)
-	//extern(C) static gboolean watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
-	{
-		Message msg_d = new Message( msg );
-		
-		return bus_d.onSyncHandlerListener( msg_d );
-	}
-code: end
-outFile: Bus
-
-file: gstreamer-GstCaps.html
-struct: GstCaps
-class: Caps
-prefix: gst_caps_
-prefix: gst_
-override: toString
-import: glib.Str
-import: gstreamer.Structure
-structWrap: GstCaps* Caps
-structWrap: GstStructure* Structure
-
-#libxml2 missing:
-nocode: gst_caps_save_thyself
-nocode: gst_caps_load_thyself
-nocode: gst_caps_new_any
-inout: gst_caps_replace caps
-
-code: start
-	/**
-	 * Creates a new GstCaps that indicates that it is compatible with
-	 * any media format.
-	 * Returns:
-	 *  the new GstCaps
-	 */
-	public static Caps newAny()
-	{
-		// GstCaps* gst_caps_new_any (void);
-		auto p = cast(GstCaps*)gst_caps_new_any();
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_caps_new_any");
-		}
-
-		return new Caps(cast(GstCaps*)p );
-	}
-code: end
-outFile: Caps
-
-#file: gstreamer-GstChildProxy.html
-#class: GstChildProxy
-#prefix: gst_child_proxy_
-#import: gstreamer.ObjectGst;
-#structWrap: GstObject* ObjectGst
-#outfile: ChildProxy
-
-file: GstClock.html
-struct: GstClock
-class: Clock
-prefix: gst_clock_
-prefix: gst_
-import: glib.Str
-structWrap: GstClock* Clock
-
-out: gst_clock_add_observation r_squared
-out: gst_clock_get_calibration internal
-out: gst_clock_get_calibration external
-out: gst_clock_get_calibration rate_num
-out: gst_clock_get_calibration rate_denom
-inout: gst_clock_id_wait jitter
-outFile: Clock
 
 file: GstElementFactory.html
 struct: GstElementFactory
 class: ElementFactory
 prefix: gst_element_factory_
 prefix: gst_element_
-prefix: gst_
 import: glib.Str
+import: glib.ListG
+import: gstreamer.Caps
 import: gstreamer.Element
 import: gstreamer.Plugin
-import: gstreamer.Caps
-import: glib.ListG
+structWrap: GList* ListG
+structWrap: GstCaps* Caps
+structWrap: GstElement* Element
+structWrap: GstElementFactory* ElementFactory
+structWrap: GstPlugin* Plugin
+
 code: start
 	/**
 	 * Create a new element of the type defined by the given element factory.
@@ -635,46 +794,46 @@ code: start
 		return new Element( p );
 	}
 code: end
-structWrap: GstElementFactory* ElementFactory
-structWrap: GstElement* Element
-structWrap: GstPlugin* Plugin
-structWrap: GstCaps* Caps
-structWrap: GList* ListG
 outFile: ElementFactory
+
+file: gstreamer-GstGError.html
+prefix: gst_
+import: glib.Str
+outFile: GError
 
 file: gstreamer-GstEvent.html
 struct: GstEvent
 class: Event
 prefix: gst_event_
-prefix: gst_
 import: glib.Str
+import: gstreamer.Caps
+import: gstreamer.Message
+import: gstreamer.Segment
 import: gstreamer.Structure
 import: gstreamer.TagList
-import: gstreamer.MiniObject
+import: gstreamer.Toc
+structWrap: GstCaps* Caps
 structWrap: GstEvent* Event
+structWrap: GstMessage* Message
+structWrap: GstSegment* Segment
 structWrap: GstStructure* Structure
 structWrap: GstTagList* TagList
-structWrap: GstMiniObject* MiniObject
-structWrap: GstMiniObject MiniObject
+structWrap: GstToc* Toc
 
+inout: gst_event_replace old_event
+inout: gst_event_steal old_event
+inout: gst_event_take old_event
+out: gst_event_parse_flush_stop reset_time
+out: gst_event_parse_gap timestamp
+out: gst_event_parse_gap duration
+out: gst_event_parse_stream_start stream_id
+out: gst_event_parse_segment segment
+out: gst_event_parse_tag taglist
 out: gst_event_parse_buffer_size format
 out: gst_event_parse_buffer_size minsize
 out: gst_event_parse_buffer_size maxsize
 out: gst_event_parse_buffer_size async
-inout: gst_event_parse_latency latency
-inout: gst_event_parse_new_segment update
-inout: gst_event_parse_new_segment rate
-inout: gst_event_parse_new_segment format
-out: gst_event_parse_new_segment start
-out: gst_event_parse_new_segment stop
-out: gst_event_parse_new_segment position
-inout: gst_event_parse_new_segment_full update
-inout: gst_event_parse_new_segment_full rate
-inout: gst_event_parse_new_segment_full applied_rate
-inout: gst_event_parse_new_segment_full format
-out: gst_event_parse_new_segment_full start
-out: gst_event_parse_new_segment_full stop
-out: gst_event_parse_new_segment_full position
+out: gst_event_parse_qos type
 out: gst_event_parse_qos proportion
 out: gst_event_parse_qos diff
 out: gst_event_parse_qos timestamp
@@ -685,35 +844,20 @@ out: gst_event_parse_seek start_type
 out: gst_event_parse_seek start
 out: gst_event_parse_seek stop_type
 out: gst_event_parse_seek stop
-out: gst_event_parse_tag taglist
+inout: gst_event_parse_latency latency
+out: gst_event_parse_step format
+out: gst_event_parse_step amount
+out: gst_event_parse_step rate
+out: gst_event_parse_step flush
+out: gst_event_parse_step intermediate
+out: gst_event_parse_sink_message msg
+out: gst_event_parse_caps caps
+out: gst_event_parse_toc toc
+out: gst_event_parse_toc updated
+out: gst_event_parse_toc_select uid
+out: gst_event_parse_segment_done format
+out: gst_event_parse_segment_done position
 
-nocode: gst_event_new_buffer_size
-code: start
-	/**
-	 * Create a new buffersize event. The event is sent downstream and notifies
-	 * elements that they should provide a buffer of the specified dimensions.
-	 * When the async flag is set, a thread boundary is prefered.
-	 * Params:
-	 *  format = buffer format
-	 *  minsize = minimum buffer size
-	 *  maxsize = maximum buffer size
-	 *  async = thread behavior
-	 * Returns:
-	 *  a new GstEvent
-	 */
-	public static Event newBufferSize(GstFormat format, long minsize, long maxsize, int async)
-	{
-		// GstEvent* gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
-		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_buffer_size");
-		}
-
-		return new Event(cast(GstEvent*)p);
-	}
-code: end
 nocode: gst_event_new_eos
 code: start
 	/**
@@ -768,308 +912,222 @@ code: start
 		return new Event(cast(GstEvent*)p );
 	}
 code: end
-nocode: gst_event_new_flush_stop
+nocode: gst_event_new_toc_select
 code: start
 	/**
-	 * Allocate a new flush stop event. The flush start event can be send
-	 * upstream and downstream and travels out-of-bounds with the dataflow.
-	 * It is typically send after sending a FLUSH_START event to make the
-	 * pads accept data again.
-	 * Elements can process this event synchronized with the dataflow since
-	 * the preceeding FLUSH_START event stopped the dataflow.
-	 * This event is typically generated to complete a seek and to resume
-	 * dataflow.
-	 * Returns:
-	 *  A new flush stop event.
+	 * Generate a TOC select event with the given uid. The purpose of the
+	 * TOC select event is to start playback based on the TOC's entry with
+	 * the given uid.
 	 */
-	public static Event newFlushStop()
+	public static Event newTocSelect(string uid)
 	{
-		// GstEvent* gst_event_new_flush_stop (void);
-		auto p = gst_event_new_flush_stop();
+		// GstEvent* gst_event_new_toc_select (const gchar *uid);
+		auto p = gst_event_new_toc_select(cast(char*)uid.ptr);
 
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_flush_stop");
+			throw new ConstructionException("null returned by gst_event_new_toc_select");
 		}
 
 		return new Event(cast(GstEvent*)p );
-	}
-code: end
-nocode: gst_event_new_navigation
-code: start
-/**
-	 * Create a new navigation event from the given description.
-	 * Params:
-	 *  structure = description of the event
-	 * Returns:
-	 *  a new GstEvent
-	 */
-	public static Event newNavigation(Structure structure)
-	{
-		// GstEvent* gst_event_new_navigation (GstStructure *structure);
-		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_navigation");
-		}
-
-		return new Event(cast(GstEvent*)p);
 	}
 code: end
 outFile: Event
 
 file: gstreamer-GstFormat.html
 prefix: gst_format_
-prefix: gst_
 import: glib.Str
 import: gstreamer.Iterator
 structWrap: GstIterator* Iterator
 array: gst_formats_contains formats
 outFile: Format
 
-file: gstreamer-GstGError.html
-prefix: gst_
-import: glib.Str
-outFile: GError
-
 file: GstGhostPad.html
 struct: GstGhostPad
 ctorStruct: GstPad
 class: GhostPad
-extend: GstPad
 prefix: gst_ghost_pad_
-prefix: gst_
+noprefix: gst_proxy_pad_
 import: glib.Str
+import: gstreamer.ObjectGst
 import: gstreamer.Pad
 import: gstreamer.PadTemplate
-structWrap: GstGhostPad* GhostPad
+structWrap: GstObject* ObjectGst
 structWrap: GstPad* Pad
 structWrap: GstPadTemplate* PadTemplate
 outFile: GhostPad
 
-file: GstImplementsInterface.html
-struct: GstImplementsInterface
-class: ImplementsInterface
-prefix: gst_element_
-prefix: gst_
-#prefix: gst_implements_interface_ #problem results in keyword cast
-import: gstreamer.Element
-structWrap: GstElement* Element
-outFile: ImplementsInterface
-
-file: GstIndex.html
-struct: GstIndex
-class: Index
-#prefix: GST_OBJECT_
-prefix: gst_index_
-prefix: gst_
+struct: GstPad
+realStruct: GstProxyPad
+class: ProxyPad
+prefix: gst_proxy_pad_
+strictPrefix: Y
+override: iterateInternalLinksDefault
 import: glib.Str
+import: gstreamer.Buffer
+import: gstreamer.BufferList
+import: gstreamer.Iterator
 import: gstreamer.ObjectGst
-structWrap: GstIndex* Index
+import: gstreamer.Pad
+structWrap: GstBuffer* Buffer
+structWrap: GstBufferList* BufferList
+structWrap: GstIterator* Iterator
 structWrap: GstObject* ObjectGst
+structWrap: GstPad* Pad
+structWrap: GstProxyPad* ProxyPad
 
-inout: gst_index_get_writer_id id
-out: gst_index_entry_assoc_map value
-outFile: Index
+out: gst_proxy_pad_getrange_default buffer
 
-file: GstIndexFactory.html
-struct: GstIndexFactory
-class: IndexFactory
-prefix: gst_index_factory_
-prefix: gst_
-import: glib.Str
-import: gstreamer.Index
-structWrap: GstIndexFactory* IndexFactory
-structWrap: GstIndex* Index
-outFile: IndexFactory
+nocode: gst_proxy_pad_get_internal
+
+code: start
+	/**
+	 * Get the internal pad of pad. Unref target pad after usage.
+	 * The internal pad of a GstGhostPad is the internally used
+	 * pad of opposite direction, which is used to link to the target.
+	 * 
+	 * Params:
+	 *     pad = the GstProxyPad
+	 * Returns: the target GstProxyPad, can be NULL. Unref target pad after usage. [transfer full]
+	 */
+	public ProxyPad getInternal()
+	{
+		// GstProxyPad * gst_proxy_pad_get_internal (GstProxyPad *pad);
+		auto p = gst_proxy_pad_get_internal(gstProxyPad);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ProxyPad)(cast(GstProxyPad*) p);
+	}
+code: end
+outFile: ProxyPad
 
 file: gstreamer-GstIterator.html
 struct: GstIterator
 class: Iterator
 prefix: gst_iterator_
-prefix: gst_
-import: glib.Str
+import: glib.ListG
 import: gthread.Mutex
+import: gobject.ObjectG
+import: gobject.Value
+structWrap: GList* ListG
 structWrap: GMutex* Mutex
+structWrap: GObject* ObjectG
+structWrap: GValue* Value
 structWrap: GstIterator* Iterator
 
 inout: gst_iterator_new master_cookie
+inout: gst_iterator_new_list list
 outFile: Iterator
 
-file: GstPad.html
-struct: GstPad
-class: Pad
-prefix: gst_pad_
-prefix: gst_
-#libxml2 missing:
-nocode: gst_pad_load_and_link
-import: glib.Str
-import: gstreamer.Element
-import: gstreamer.MiniObject
-import: gstreamer.PadTemplate
-import: gstreamer.Caps
-import: gstreamer.Buffer
-import: gstreamer.Event
-import: gstreamer.Query
-import: glib.ListG
-structWrap: GstPad* Pad
-structWrap: GstElement* Element
-structWrap: GstMiniObject* MiniObject
-structWrap: GstPadTemplate* PadTemplate
-structWrap: GstCaps* Caps
-structWrap: GstBuffer* Buffer
-structWrap: GstEvent* Event
-structWrap: GstQuery* Query
-structWrap: GList* ListG
+file: gstreamer-GstMemory.html
+struct: GstMemory
+class: Memory
+prefix: gst_memory_
+import: gstreamer.Allocator
+import: gstreamer.Memory
+structWrap: GstAllocator* Allocator
+structWrap: GstMemory* Memory
 
-out: gst_pad_alloc_buffer buf
-out: gst_pad_alloc_buffer_and_set_caps buf
-inout: gst_pad_get_range buffer
-inout: gst_pad_pull_range buffer
-inout: gst_pad_query_position format
-out: gst_pad_query_position cur
-inout: gst_pad_query_duration format
-out: gst_pad_query_duration duration
-inout: gst_pad_query_convert dest_format
-out: gst_pad_query_convert dest_val
-inout: gst_pad_query_peer_position format
-out: gst_pad_query_peer_position cur
-inout: gst_pad_query_peer_duration format
-out: gst_pad_query_peer_duration duration
-inout: gst_pad_query_peer_convert dest_format
-out: gst_pad_query_peer_convert dest_val
-#TODO: zero terminated array?
-#array: gst_pad_get_query_types Return
-#array: gst_pad_get_query_types_default Return
-code: start
-	/**
-	 * Sets our main struct and passes it to the parent class.
-	 * This one is additional to make gstreamer.Element addOnPadAdded()
-	 * working without changes.
-	 */
-	public this (GObject* gstPad)
-	{
-		super(cast(GstObject*)gstPad);
-		this.gstPad = cast(GstPad*) gstPad;
-	}
-	
-	/**
-	 * Queries a pad for the stream position.
-	 * This is a convenience function for gstreamerD.
-	 * Returns:
-	 *  The current position in nanoseconds - GstFormat.TIME.
-	 */
-	public long queryPosition()
-	{
-		GstFormat form = GstFormat.TIME;
-		long cur_pos;
-		queryPosition( form, cur_pos );
-		return cur_pos;
-	}
-
-	/**
-	 * Queries a pad for the stream duration.
-	 * This is a convenience function for gstreamerD.
-	 * Returns:
-	 *  The duration in nanoseconds - GstFormat.TIME.
-	 */
-	public long queryDuration()
-	{
-		GstFormat form = GstFormat.TIME;
-		long cur_dur;
-		queryDuration( form, cur_dur );
-		return cur_dur;
-	}
-	
-code: end
-outFile: Pad
-#########
-#########for pad signals disconnecting add this with hand editing:
-#########also this would be needed on all
-#########gtkD signals.
-#	protected uint padAddedHandlerId;
-#	void delegate(Pad, Element)[] onPadAddedListeners;
-#	void addOnPadAdded(void delegate(Pad, Element) dlg)
-#	{
-#		if ( !("pad-added" in connectedSignals) )
-#		{
-#			padAddedHandlerId = Signals.connectData(
-#			getStruct(),
-#			"pad-added",
-#			cast(GCallback)&callBackPadAdded,
-#			cast(void*)this,
-#			null,
-#			cast(ConnectFlags)0);
-#			connectedSignals["pad-added"] = 1;
-#		}
-#		onPadAddedListeners ~= dlg;
-#	}
-#	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
-#	{
-#		bit consumed = false;
-#		
-#		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
-#		{
-#			dlg(new Pad(newPad), element);
-#		}
-#		
-#		return consumed;
-#	}
-#	void disconnectOnPadAdded()
-#	{
-#		if( "pad-added" in connectedSignals )
-#		{
-#			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
-#			padAddedHandlerId = 0;
-#			connectedSignals["pad-added"] = 0;
-#			onPadAddedListeners = null;
-#		}
-#	}
+inout: gst_memory_get_sizes offset
+inout: gst_memory_get_sizes maxsize
+out: gst_memory_make_mapped info
+out: gst_memory_map info
+inout: gst_memory_unmap info
+out: gst_memory_is_span offset
+outFile: Memory
 
 file: gstreamer-GstMessage.html
 struct: GstMessage
 nostruct: GstMessage
 class: Message
 prefix: gst_message_
-prefix: gst_
 import: glib.Str
-import: glib.Quark
-import: gstreamer.Structure
-import: gstreamer.ObjectGst
-import: gstreamer.Clock
 import: glib.ErrorG
+import: gobject.Value
+import: gstreamer.Clock
+import: gstreamer.Element
+import: gstreamer.ObjectGst
+import: gstreamer.Structure
 import: gstreamer.TagList
-structWrap: GstMessage* Message
-structWrap: GQuark Quark
-structWrap: GstStructure* Structure
-structWrap: GstObject* ObjectGst
-structWrap: GstClock* Clock
+import: gstreamer.Toc
 structWrap: GError* ErrorG
+structWrap: GValue* Value
+structWrap: GstClock* Clock
+structWrap: GstElement* Element
+structWrap: GstMessage* Message
+structWrap: GstObject* ObjectGst
+structWrap: GstStructure* Structure
 structWrap: GstTagList* TagList
+structWrap: GstToc* Toc
 
-out: gst_message_parse_clock_lost clock
+inout: gst_message_replace old_message
+out: gst_message_parse_error gerror
+out: gst_message_parse_error debug
+out: gst_message_parse_warning gerror
+out: gst_message_parse_warning debug
+out: gst_message_parse_info gerror
+out: gst_message_parse_info debug
+out: gst_message_parse_tag tag_list
+out: gst_message_parse_buffering percent
+out: gst_message_parse_buffering_stats mode
+out: gst_message_parse_buffering_stats avg_in
+out: gst_message_parse_buffering_stats avg_out
+out: gst_message_parse_buffering_stats buffering_left
+out: gst_message_parse_state_changed oldstate
+out: gst_message_parse_state_changed newstate
+out: gst_message_parse_state_changed pending
+out: gst_message_parse_step_done format
+out: gst_message_parse_step_done amount
+out: gst_message_parse_step_done rate
+out: gst_message_parse_step_done flush
+out: gst_message_parse_step_done intermediate
+out: gst_message_parse_step_done duration
+out: gst_message_parse_step_done eos
 out: gst_message_parse_clock_provide clock
 out: gst_message_parse_clock_provide ready
-out: gst_message_parse_error debug
-out: gst_message_parse_error gerror
-out: gst_message_parse_info debug
-out: gst_message_parse_info gerror
-out: gst_message_parse_warning debug
-out: gst_message_parse_warning gerror
+out: gst_message_parse_clock_lost clock
 out: gst_message_parse_new_clock clock
-out: gst_message_parse_segment_done format
-out: gst_message_parse_segment_done position
 out: gst_message_parse_segment_start format
 out: gst_message_parse_segment_start position
-out: gst_message_parse_buffering percent
-out: gst_message_parse_duration format
-out: gst_message_parse_duration duration
-out: gst_message_parse_async_start new_base_time
+out: gst_message_parse_segment_done format
+out: gst_message_parse_segment_done position
+out: gst_message_parse_async_done running_time
+out: gst_message_parse_step_start active
+out: gst_message_parse_step_start format
+out: gst_message_parse_step_start amount
+out: gst_message_parse_step_start rate
+out: gst_message_parse_step_start flush
+out: gst_message_parse_step_start intermediate
+out: gst_message_parse_qos live
+out: gst_message_parse_qos rinning_time
+out: gst_message_parse_qos stream_time
+out: gst_message_parse_qos timestamp
+out: gst_message_parse_qos duration
+out: gst_message_parse_qos_values jitter
+out: gst_message_parse_qos_values proportion
+out: gst_message_parse_qos_values quality
+out: gst_message_parse_qos_stats format
+out: gst_message_parse_qos_stats processed
+out: gst_message_parse_qos_stats dropped
+out: gst_message_parse_toc toc
+out: gst_message_parse_toc updated
+out: gst_message_parse_structure_change type
+out: gst_message_parse_structure_change owner
+out: gst_message_parse_structure_change busy
+out: gst_message_parse_request_state state
+out: gst_message_parse_stream_status type
+out: gst_message_parse_stream_status owner
+out: gst_message_parse_progress type
+out: gst_message_parse_progress code
+out: gst_message_parse_progress text
+
+#TODO: use the messagetype enum to consolidate the constructors.
 
 nocode: gst_message_parse_tag
-#I'm not so sure about the following:
-nocode: gst_message_type_to_quark
 nocode: gst_message_new_element
 nocode: gst_message_new_new_clock
 nocode: gst_message_new_segment_done
@@ -1080,9 +1138,10 @@ nocode: gst_message_new_eos
 nocode: gst_message_new_error
 nocode: gst_message_new_info
 nocode: gst_message_new_latency
+nocode: gst_message_new_duration_changed
 nocode: gst_message_new_async_start
+nocode: gst_message_new_reset_time
 
-#This is a way to get the type of the message:
 code: start
 	/**
 	* Get the type of the message.
@@ -1098,49 +1157,6 @@ code: start
 	public ObjectGst src()
 	{
 		return new ObjectGst( cast(GstObject*)getMessageStruct().src );
-	}
-
-	/**
-	 * Get the structure.
-	 */
-	public Structure structure()
-	{
-		return new Structure( getMessageStruct().structure );
-	}
-
-	/**
-	 * Extracts the tag list from the GstMessage. The tag list returned in the
-	 * output argument is a copy; the caller must free it when done.
-	 * MT safe.
-	 * Params:
-	 *  tagList = Return location for the tag-list.
-	 */
-	public TagList parseTag()
-	{
-		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
-		GstTagList* tag_list_c;
-		gst_message_parse_tag(gstMessage, &tag_list_c);
-
-		if ( tag_list_c is null )
-		{
-			return null;
-		}
-
-		return new TagList(tag_list_c);
-	}
-
-	//I'm not so sure about the following:
-	/**
-	 * Get the unique quark for the given message type.
-	 * Params:
-	 *  type = the message type
-	 * Returns:
-	 *  the quark associated with the message type
-	 */
-	public static Quark typeToQuark(GstMessageType type)
-	{
-		// GQuark gst_message_type_to_quark (GstMessageType type);
-		return new Quark( cast(uint*)gst_message_type_to_quark(type) );
 	}
 
 	/**
@@ -1387,28 +1403,229 @@ code: start
 	}
 
 	/**
-	 * This message is posted by elements when they start an ASYNC state change.
-	 * new_base_time is set to TRUE when the element lost its state when it was
-	 * PLAYING.
+	 * Create a new duration changed message. This message is posted by elements
+	 * that know the duration of a stream when the duration changes. This message
+	 * is received by bins and is used to calculate the total duration of a
+	 * pipeline. Elements may post a duration message with a duration of
+	 * GST_CLOCK_TIME_NONE to indicate that the duration has changed and the
+	 * cached duration should be discarded. The new duration can then be
+	 * retrieved via a query.
 	 * Params:
-	 * src = The object originating the message.
-	 * newBaseTime = if a new base_time should be set on the element
+	 *    src = The object originating the message. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static Message newAsyncStart(ObjectGst src, int newBaseTime)
+	public static Message newDurationChanged(ObjectGst src)
 	{
-		// GstMessage* gst_message_new_async_start (GstObject *src,  gboolean new_base_time);
-		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct(), newBaseTime);
+		// GstMessage * gst_message_new_duration_changed (GstObject *src);
+		auto p = gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct());
 
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_message_new_async_start");
+			throw new ConstructionException("null returned by gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct())");
 		}
 
-		return new Message(cast(GstMessage*)p);
+		return new Message(cast(GstMessage*)p );
+	}
+
+	/**
+	 * This message is posted by elements when they start an ASYNC state change.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncStart(ObjectGst src)
+	{
+		// GstMessage * gst_message_new_async_start (GstObject *src);
+		auto p = gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct())");
+		}
+		return new Message(cast(GstMessage*)p );
+	}
+
+	/**
+	 * The message is posted when elements completed an ASYNC state change.
+	 * running_time contains the time of the desired running_time when this
+	 * elements goes to PLAYING. A value of GST_CLOCK_TIME_NONE for running_time
+	 * means that the element has no clock interaction and thus doesn't care about
+	 * the running_time of the pipeline.
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * runningTime = the desired running_time
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newAsyncDone(ObjectGst src, GstClockTime runningTime)
+	{
+		// GstMessage * gst_message_new_async_done (GstObject *src,  GstClockTime running_time);
+		auto p = gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime)");
+		}
+		return new Message(cast(GstMessage*)p );
 	}
 code: end
 outFile: Message
+
+file: gstreamer-GstMeta.html
+class: Meta
+prefix: gst_meta_
+import: glib.Str
+array: gst_meta_api_type_register tags
+outFile: Meta
+
+file: gstreamer-GstMiniObject.html
+struct: GstMiniObject
+nostruct: GstMiniObject
+class: MiniObject
+prefix: gst_mini_object_
+structWrap: GstMiniObject* MiniObject
+inout: gst_mini_object_replace olddata
+outFile: MiniObject
+
+file: GstObject.html
+struct: GstObject
+class: ObjectGst
+prefix: gst_object_
+nostruct: GstObjectClass
+import: glib.Str
+import: glib.ErrorG
+import: glib.ListG
+import: gobject.ObjectG
+import: gobject.ParamSpec
+import: gobject.Value
+import: gstreamer.ControlBinding
+structWrap: GError* ErrorG
+structWrap: GList* ListG
+structWrap: GObject* ObjectG
+structWrap: GParamSpec* ParamSpec
+structWrap: GValue* Value
+structWrap: GstControlBinding* ControlBinding
+structWrap: GstObject* ObjectGst
+
+array: gst_object_default_deep_notify excluded_props
+inout: gst_object_default_error debug
+inout: gst_object_replace oldobj
+array: gst_object_get_value_array values n_values
+outFile: ObjectGst
+
+file: GstPad.html
+struct: GstPad
+class: Pad
+prefix: gst_pad_
+import: glib.Str
+import: gstreamer.Buffer
+import: gstreamer.BufferList
+import: gstreamer.Caps
+import: gstreamer.Element
+import: gstreamer.Event
+import: gstreamer.Iterator
+import: gstreamer.ObjectGst
+import: gstreamer.PadTemplate
+import: gstreamer.Query
+structWrap: GstBuffer* Buffer
+structWrap: GstBufferList* BufferList
+structWrap: GstCaps* Caps
+structWrap: GstElement* Element
+structWrap: GstEvent* Event
+structWrap: GstIterator* Iterator
+structWrap: GstObject* ObjectGst
+structWrap: GstPad* Pad
+structWrap: GstPadTemplate* PadTemplate
+structWrap: GstQuery* Query
+
+inout: gst_pad_get_range buffer
+inout: gst_pad_pull_range buffer
+out: gst_pad_query_position cur
+out: gst_pad_query_duration duration
+out: gst_pad_query_convert dest_val
+out: gst_pad_peer_query_position cur
+out: gst_pad_peer_query_duration duration
+out: gst_pad_peer_query_convert dest_val
+
+code: start
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 * This one is additional to make gstreamer.Element addOnPadAdded()
+	 * working without changes.
+	 */
+	public this (GObject* gstPad)
+	{
+		super(cast(GstObject*)gstPad);
+		this.gstPad = cast(GstPad*) gstPad;
+	}
+	
+	/**
+	 * Queries a pad for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		long cur_pos;
+		queryPosition( GstFormat.TIME, cur_pos );
+		return cur_pos;
+	}
+
+	/**
+	 * Queries a pad for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		long cur_dur;
+		queryDuration( GstFormat.TIME, cur_dur );
+		return cur_dur;
+	}
+code: end
+outFile: Pad
+
+#########for pad signals disconnecting add this with hand editing:
+#########also this would be needed on all
+#########gtkD signals.
+#########
+#	protected uint padAddedHandlerId;
+#	void delegate(Pad, Element)[] onPadAddedListeners;
+#	void addOnPadAdded(void delegate(Pad, Element) dlg)
+#	{
+#		if ( !("pad-added" in connectedSignals) )
+#		{
+#			padAddedHandlerId = Signals.connectData(
+#			getStruct(),
+#			"pad-added",
+#			cast(GCallback)&callBackPadAdded,
+#			cast(void*)this,
+#			null,
+#			cast(ConnectFlags)0);
+#			connectedSignals["pad-added"] = 1;
+#		}
+#		onPadAddedListeners ~= dlg;
+#	}
+#	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
+#	{
+#		bit consumed = false;
+#		
+#		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
+#		{
+#			dlg(new Pad(newPad), element);
+#		}
+#		
+#		return consumed;
+#	}
+#	void disconnectOnPadAdded()
+#	{
+#		if( "pad-added" in connectedSignals )
+#		{
+#			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
+#			padAddedHandlerId = 0;
+#			connectedSignals["pad-added"] = 0;
+#			onPadAddedListeners = null;
+#		}
+#	}
 
 file: GstPadTemplate.html
 struct: GstPadTemplate
@@ -1416,55 +1633,85 @@ class: PadTemplate
 prefix: gst_pad_template_
 prefix: gst_
 import: glib.Str
-import: gstreamer.Pad
 import: gstreamer.Caps
-structWrap: GstPadTemplate* PadTemplate
-structWrap: GstPad* Pad
 structWrap: GstCaps* Caps
+structWrap: GstPadTemplate* PadTemplate
 outFile: PadTemplate
+
+file: gstreamer-GstParamSpec.html
+struct: GstParamSpecFraction
+class: ParamSpecFraction
+prefix: gst_param_spec_fraction_
+import: glib.Str
+
+nocode: gst_param_spec_fraction
+
+code: start
+	/**
+	 * This function creates a fraction GParamSpec for use by objects/elements
+	 * that want to expose properties of fraction type. This function is typically
+	 * used in connection with g_object_class_install_property() in a GObjects's
+	 * instance_init function.
+	 * Params:
+	 * name = canonical name of the property specified
+	 * nick = nick name for the property specified
+	 * blurb = description of the property specified
+	 * minNum = minimum value (fraction numerator)
+	 * minDenom = minimum value (fraction denominator)
+	 * maxNum = maximum value (fraction numerator)
+	 * maxDenom = maximum value (fraction denominator)
+	 * defaultNum = default value (fraction numerator)
+	 * defaultDenom = default value (fraction denominator)
+	 * flags = flags for the property specified
+	 * Returns: a newly created parameter specification. [transfer full]
+	 */
+	public this(string name, string nick, string blurb, int minNum, int minDenom, int maxNum, int maxDenom, int defaultNum, int defaultDenom, GParamFlags flags)
+	{
+		// GParamSpec * gst_param_spec_fraction (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint min_num,  gint min_denom,  gint max_num,  gint max_denom,  gint default_num,  gint default_denom,  GParamFlags flags);
+		auto p = gst_param_spec_fraction(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minNum, minDenom, maxNum, maxDenom, defaultNum, defaultDenom, flags);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_param_spec_fraction");
+		}
+		this(cast(GstParamSpecFraction*) p);
+	}
+code: end
+outFile: ParamSpecFraction
 
 file: gstreamer-GstParse.html
 class: Parse
 prefix: gst_parse_
-#I'm not so sure about the following:
-nocode: gst_parse_error_quark
-code: start
-	/**
-	 * Get the error quark used by the parsing subsystem.
-	 * Returns:
-	 *  the quark of the parse errors.
-	 */
-	public static Quark errorQuark()
-	{
-		// GQuark gst_parse_error_quark (void);
-		return new Quark( cast(uint*)gst_parse_error_quark() );
-	}
-code: end
+noprefix: gst_parse_context_
 import: glib.Str
-import: glib.Quark
 import: glib.ErrorG
 import: glib.GException
 import: gstreamer.Element
-structWrap: GQuark Quark
-structWrap: GError* ErrorG
+import: gstreamer.ParseContext
 structWrap: GstElement* Element
+structWrap: GstParseContext* ParseContext
+
+array: gst_parse_launchv argv
+array: gst_parse_launchv_full argv
 outFile: Parse
+
+struct: GstParseContext
+class: ParseContext
+prefix: gst_parse_context_
+strictPrefix: Y
+import: glib.Str
+outFile: ParseContext
 
 file: GstPipeline.html
 struct: GstPipeline
 ctorStruct: GstElement
 class: Pipeline
 prefix: gst_pipeline_
-prefix: gst_
 override: getBus
 override: setClock
 override: getClock
 import: glib.Str
-import: gstreamer.Element
-import: gstreamer.Clock
 import: gstreamer.Bus
-structWrap: GstPipeline* Pipeline
-structWrap: GstElement* Element
+import: gstreamer.Clock
 structWrap: GstBus* Bus
 structWrap: GstClock* Clock
 outFile: Pipeline
@@ -1473,43 +1720,70 @@ file: GstPlugin.html
 struct: GstPlugin
 class: Plugin
 prefix: gst_plugin_
-prefix: gst_
 override: getName
 import: glib.Str
-import: glib.Module
 import: glib.ErrorG
 import: glib.GException
 import: glib.ListG
-structWrap: GstPlugin* Plugin
-structWrap: GModule* Module
+import: gstreamer.Structure
 structWrap: GList* ListG
+structWrap: GstPlugin* Plugin
+structWrap: GstStructure* Structure
+
+array: gst_plugin_add_dependency env_vars
+array: gst_plugin_add_dependency paths
+array: gst_plugin_add_dependency names
+array: gst_plugin_add_dependency_simple env_vars
+array: gst_plugin_add_dependency_simple paths
+array: gst_plugin_add_dependency_simple names
 outFile: Plugin
 
 file: GstPluginFeature.html
 struct: GstPluginFeature
 class: PluginFeature
 prefix: gst_plugin_feature_
-prefix: gst_
 override: getName
+alias: setName setFeatureName
 import: glib.Str
 import: glib.ListG
-structWrap: GstPluginFeature* PluginFeature
+import: gstreamer.Plugin
 structWrap: GList* ListG
-alias: setName setFeatureName
+structWrap: GstPlugin* Plugin
+structWrap: GstPluginFeature* PluginFeature
 outFile: PluginFeature
+
+file: gstreamer-GstPoll.html
+struct: GstPoll
+class: Poll
+prefix: gst_poll_
+outFile: Poll
+
+file: GstPreset.html
+struct: GstPreset
+class: PresetT
+template: TStruct
+prefix: gst_preset_
+import: glib.Str
+out: gst_preset_get_meta value
+interface: PresetIF
+outFile: PresetT
 
 file: gstreamer-GstQuery.html
 struct: GstQuery
 class: Query
 prefix: gst_query_
-prefix: gst_
 import: glib.Str
-import: gstreamer.Iterator
+import: gstreamer.Allocator
+import: gstreamer.BufferPool
+import: gstreamer.Caps
 import: gstreamer.Structure
-structWrap: GstIterator* Iterator
+structWrap: GstAllocator* Allocator
+structWrap: GstBufferPool* BufferPool
+structWrap: GstCaps* Caps
 structWrap: GstQuery* Query
 structWrap: GstStructure* Structure
 
+inout: gst_query_replace old_query
 inout: gst_query_parse_convert src_format
 inout: gst_query_parse_convert src_value
 inout: gst_query_parse_convert dest_format
@@ -1526,12 +1800,45 @@ inout: gst_query_parse_seeking seekable
 inout: gst_query_parse_seeking segment_start
 inout: gst_query_parse_seeking segment_end
 array: gst_query_set_formatsv formats n_formats
-out: gst_query_parse_formats_length n_formats
-out: gst_query_parse_formats_nth format
+out: gst_query_parse_n_formats n_formats
+out: gst_query_parse_nth_format format
 inout: gst_query_parse_segment rate
 inout: gst_query_parse_segment format
 inout: gst_query_parse_segment start_value
 inout: gst_query_parse_segment stop_value
+out: gst_query_parse_caps filter
+out: gst_query_parse_caps_result caps
+out: gst_query_parse_accept_caps caps
+out: gst_query_parse_accept_caps_result result
+out: gst_query_parse_buffering_percent busy
+out: gst_query_parse_buffering_percent percent
+out: gst_query_parse_buffering_stats mode
+out: gst_query_parse_buffering_stats avg_in
+out: gst_query_parse_buffering_stats avg_out
+out: gst_query_parse_buffering_stats buffering_left
+out: gst_query_parse_buffering_range format
+out: gst_query_parse_buffering_range start
+out: gst_query_parse_buffering_range stop
+out: gst_query_parse_buffering_range estimated_total
+out: gst_query_parse_nth_buffering_range start
+out: gst_query_parse_nth_buffering_range stop
+out: gst_query_parse_uri uri
+out: gst_query_parse_allocation caps
+out: gst_query_parse_allocation need_pool
+out: gst_query_parse_nth_allocation_pool pool
+out: gst_query_parse_nth_allocation_pool size
+out: gst_query_parse_nth_allocation_pool min_buffers
+out: gst_query_parse_nth_allocation_pool max_buffers
+out: gst_query_parse_nth_allocation_param allocator
+out: gst_query_parse_nth_allocation_param params
+out: gst_query_set_nth_allocation_param allocator
+out: gst_query_set_nth_allocation_param params
+out: gst_query_parse_nth_allocation_meta params
+out: gst_query_find_allocation_meta index
+out: gst_query_parse_scheduling flags
+out: gst_query_parse_scheduling minsize
+out: gst_query_parse_scheduling maxsize
+out: gst_query_parse_scheduling align
 
 nocode: gst_query_new_position
 code: start
@@ -1650,21 +1957,114 @@ code: start
 		return new Query(cast(GstQuery*)p );
 	}
 code: end
+nocode: gst_query_new_latency
+code: start
+	/**
+	 * Constructs a new latency query object.
+	 * Use gst_query_unref() when done with it. A latency query is usually performed
+	 * by sinks to compensate for additional latency introduced by elements in the
+	 * pipeline.
+	 * Free-function: gst_query_unref
+	 */
+	public static Query newLatency()
+	{
+		// GstQuery * gst_query_new_latency (void);
+		auto p = gst_query_new_latency();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_latency()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}
+code: end
+nocode: gst_query_new_uri
+code: start
+	/**
+	 * Constructs a new query URI query object. Use gst_query_unref()
+	 * when done with it. An URI query is used to query the current URI
+	 * that is used by the source or sink.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newUri()
+	{
+		// GstQuery * gst_query_new_uri (void);
+		auto p = gst_query_new_uri();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_uri()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}
+code: end
+nocode: gst_query_new_scheduling
+code: start
+	/**
+	 * Constructs a new query object for querying the scheduling properties.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newScheduling()
+	{
+		// GstQuery * gst_query_new_scheduling (void);
+		auto p = gst_query_new_scheduling();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_scheduling()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}
+code: end
+nocode: gst_query_new_drain
+code: start
+	/**
+	 * Constructs a new query object for querying the drain state.
+	 * Free-function: gst_query_unref
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newDrain()
+	{
+		// GstQuery * gst_query_new_drain (void);
+		auto p = gst_query_new_drain();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_drain()");
+		}
+		return new Query(cast(GstQuery*)p );
+	}
+code: end
+nocode: gst_query_new_accept_caps
+code: start
+	/**
+	 * Constructs a new query object for querying if caps are accepted.
+	 * Free-function: gst_query_unref
+	 * Params:
+	 * caps = a fixed GstCaps
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Query newAcceptCaps(Caps caps)
+	{
+		// GstQuery * gst_query_new_accept_caps (GstCaps *caps);
+		auto p = gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct())");
+		}
+		return new Query(cast(GstQuery*)p );
+	}
+code: end
 outFile: Query
 
 file: GstRegistry.html
 struct: GstRegistry
 class: Registry
 prefix: gst_registry_
-prefix: gst_
 import: glib.Str
 import: glib.ListG
 import: gstreamer.Plugin
 import: gstreamer.PluginFeature
-#import: gobject.Type
-#structWrap: GType Type
-structWrap: GstRegistry* Registry
 structWrap: GList* ListG
+structWrap: GstRegistry* Registry
 structWrap: GstPlugin* Plugin
 structWrap: GstPluginFeature* PluginFeature
 outFile: Registry
@@ -1673,33 +2073,33 @@ file: gstreamer-GstSegment.html
 struct: GstSegment
 class: Segment
 prefix: gst_segment_
-prefix: gst_
-import: glib.Str
 structWrap: GstSegment* Segment
 
 inout: gst_segment_clip clip_start
 inout: gst_segment_clip clip_stop
-inout: gst_segment_set_seek update
+inout: gst_segment_do_seek update
 outFile: Segment
 
 file: gstreamer-GstStructure.html
 struct: GstStructure
 class: Structure
 prefix: gst_structure_
-prefix: gst_
+override: toString
 import: glib.Str
 import: glib.Date
 import: gobject.Value
-structWrap: GstStructure* Structure
+import: gstreamer.DateTime
 structWrap: GDate* Date
 structWrap: GValue* Value
+structWrap: GstDateTime* DateTime
+structWrap: GstStructure* Structure
 
-override: toString
 out: gst_structure_get_boolean value
 out: gst_structure_get_int value
-out: gst_structure_get_fourcc value
+out: gst_structure_get_uint value
 out: gst_structure_get_double value
 out: gst_structure_get_date value
+out: gst_structure_get_date_time value
 out: gst_structure_get_clock_time value
 out: gst_structure_get_enum value
 out: gst_structure_get_fraction value_numerator
@@ -1711,9 +2111,7 @@ file: GstSystemClock.html
 struct: GstSystemClock
 class: SystemClock
 prefix: gst_system_clock_
-import: glib.Str
 import: gstreamer.Clock
-structWrap: GstSystemClock* SystemClock
 structWrap: GstClock* Clock
 outFile: SystemClock
 
@@ -1722,72 +2120,134 @@ struct: GstTagList
 class: TagList
 prefix: gst_tag_list_
 prefix: gst_tag_
+override:toString
 import: glib.Str
 import: glib.Date
 import: gobject.Value
+import: gstreamer.DateTime
+import: gstreamer.Sample
 structWrap: GDate* Date
 structWrap: GValue* Value
+structWrap: GstDateTime* DateTime
+structWrap: GstSample* Sample
 structWrap: GstTagList* TagList
 
-inout: gst_tag_list_get_uchar value
-inout: gst_tag_list_get_uchar_index value
-inout: gst_tag_list_get_boolean value
-inout: gst_tag_list_get_boolean_index value
-inout: gst_tag_list_get_int value
-inout: gst_tag_list_get_int_index value
-inout: gst_tag_list_get_uint value
-inout: gst_tag_list_get_uint_index value
-inout: gst_tag_list_get_long value
-inout: gst_tag_list_get_long_index value
-inout: gst_tag_list_get_ulong value
-inout: gst_tag_list_get_ulong_index value
-inout: gst_tag_list_get_int64 value
-inout: gst_tag_list_get_int64_index value
-inout: gst_tag_list_get_uint64 value
-inout: gst_tag_list_get_uint64_index value
-inout: gst_tag_list_get_float value
-inout: gst_tag_list_get_float_index value
-inout: gst_tag_list_get_double value
-inout: gst_tag_list_get_double_index value
-inout: gst_tag_list_get_string value
-inout: gst_tag_list_get_string_index value
-inout: gst_tag_list_get_date value
-inout: gst_tag_list_get_date_index value
+out: gst_tag_list_get_boolean value
+out: gst_tag_list_get_boolean_index value
+out: gst_tag_list_get_int value
+out: gst_tag_list_get_int_index value
+out: gst_tag_list_get_uint value
+out: gst_tag_list_get_uint_index value
+out: gst_tag_list_get_int64 value
+out: gst_tag_list_get_int64_index value
+out: gst_tag_list_get_uint64 value
+out: gst_tag_list_get_uint64_index value
+out: gst_tag_list_get_float value
+out: gst_tag_list_get_float_index value
+out: gst_tag_list_get_double value
+out: gst_tag_list_get_double_index value
+out: gst_tag_list_get_string value
+out: gst_tag_list_get_string_index value
+out: gst_tag_list_peek_string_index value
+out: gst_tag_list_get_pointer value
+out: gst_tag_list_get_pointer_index value
+out: gst_tag_list_get_date value
+out: gst_tag_list_get_date_index value
+out: gst_tag_list_get_date_time value
+out: gst_tag_list_get_date_time_index value
+out: gst_tag_list_get_sample sample
+out: gst_tag_list_get_sample_index sample
 outFile: TagList
 
 file: GstTagSetter.html
 struct: GstTagSetter
-class: TagSetter
+class: TagSetterT
+template: TStruct
 prefix: gst_tag_setter_
-prefix: gst_
 import: glib.Str
+import: gobject.Value
 import: gstreamer.TagList
-structWrap: GstTagSetter* TagSetter
+structWrap: GValue* Value
 structWrap: GstTagList* TagList
-outFile: TagSetter
+interface: TagSetterIF
+outFile: TagSetterT
 
 file: GstTask.html
 struct: GstTask
 class: Task
 prefix: gst_task_
-prefix: gst_
 import: glib.Str
-structWrap: GstTask* Task
+import: gthread.RecMutex
+import: gthread.Thread
+import: gstreamer.TaskPool
+structWrap: GRecMutex* RecMutex
+structWrap: GThread* Thread
+structWrap: GstTaskPool* TaskPool
 outFile: Task
+
+file: GstTaskPool.html
+struct: GstTaskPool
+class: TaskPool
+prefix: gst_task_pool_
+import: glib.ErrorG
+import: glib.GException
+outFile: TaskPool
+
+file: gstreamer-GstToc.html
+struct: GstToc
+class: Toc
+prefix: gst_toc_
+noprefix: gst_toc_entry_
+import: glib.Str
+import: glib.ListG
+import: gstreamer.TagList
+import: gstreamer.TocEntry
+structWrap: GList* ListG
+structWrap: GstTagList* TagList
+structWrap: GstTocEntry* TocEntry
+outFile: Toc
+
+struct: GstTocEntry
+class: TocEntry
+prefix: gst_toc_entry_
+strictPrefix: Y
+import: glib.Str
+import: glib.ListG
+import: gstreamer.TagList
+import: gstreamer.Toc
+structWrap: GList* ListG
+structWrap: GstTagList* TagList
+structWrap: GstToc* Toc
+structWrap: GstTocEntry* TocEntry
+
+out: gst_toc_entry_get_start_stop_times start
+out: gst_toc_entry_get_start_stop_times stop
+outFile: TocEntry
+
+file: gstreamer-GstTocSetter.html
+struct: GstTocSetter
+class: TocSetterT
+template: TStruct
+prefix: gst_toc_setter_
+import: gstreamer.Toc
+structWrap: GstToc* Toc
+interface: TocSetterIF
+outFile: TocSetterT
 
 file: gstreamer-GstTypeFind.html
 struct: GstTypeFind
 class: TypeFind
 prefix: gst_type_find_
-prefix: gst_
 import: glib.Str
 import: gstreamer.Caps
 import: gstreamer.Plugin
-structWrap: GstTypeFind* TypeFind
 structWrap: GstCaps* Caps
 structWrap: GstPlugin* Plugin
+
 array: gst_type_find_register extensions
+
 nocode: gst_type_find_peek
+
 code: start
 	/**
 	 * Returns the size bytes of the stream to identify beginning at offset. If
@@ -1814,24 +2274,56 @@ file: GstTypeFindFactory.html
 struct: GstTypeFindFactory
 class: TypeFindFactory
 prefix: gst_type_find_factory_
-prefix: gst_
 import: glib.Str
 import: glib.ListG
-import: gstreamer.TypeFind
 import: gstreamer.Caps
-structWrap: GstTypeFindFactory* TypeFindFactory
+import: gstreamer.TypeFind
 structWrap: GList* ListG
-structWrap: GstTypeFind* TypeFind
 structWrap: GstCaps* Caps
+structWrap: GstTypeFind* TypeFind
 outFile: TypeFindFactory
 
-#libxml2 missing:
-#file: GstXML.html
-#struct: GstXML
-#class: XML
-#prefix: gst_xml_
-#prefix: gst_
-#structWrap: GstXML* XML
-#structWrap: GstElement* Element
-#outFile: XML
+file: gstreamer-GstUriHandler.html
+struct: GstURIHandler
+class: UriHandlerT
+template: TStruct
+prefix: gst_uri_protocol_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gstreamer.Element
+structWrap: GstElement* Element
+interface: UriHandlerIF
+outFile: UriHandlerT
+
+file: gstreamer-GstUtils.html
+class: Utils
+prefix: gst_util_
+import: glib.Str
+import: gobject.ObjectG
+import: gobject.Value
+structWrap: GObject* ObjectG
+structWrap: GValue* Value
+
+out: gst_util_fraction_to_double dest
+out: gst_util_double_to_fraction dest_n
+out: gst_util_double_to_fraction dest_d
+out: gst_util_fraction_multiply res_n
+out: gst_util_fraction_multiply res_d
+out: gst_util_fraction_add res_n
+out: gst_util_fraction_add res_d
+outFile: Utils
+
+file: gstreamer-GstValue.html
+class: ValueGst
+prefix: gst_value_
+import: glib.Str
+import: gobject.Value
+import: gstreamer.Caps
+import: gstreamer.Structure
+structWrap: GValue* Value
+structWrap: GstCaps* Caps
+structWrap: GstStructure* Structure
+inout: gst_value_register table
+outFile: Value
 

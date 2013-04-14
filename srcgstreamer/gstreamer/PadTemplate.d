@@ -45,11 +45,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gstreamer.Pad
  * 	- gstreamer.Caps
  * structWrap:
  * 	- GstCaps* -> Caps
- * 	- GstPad* -> Pad
  * 	- GstPadTemplate* -> PadTemplate
  * module aliases:
  * local aliases:
@@ -68,7 +66,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gstreamer.Pad;
 private import gstreamer.Caps;
 
 
@@ -92,7 +89,7 @@ private import gstreamer.ObjectGst;
  * GST_PAD_TEMPLATE_DIRECTION().
  *
  * The GST_PAD_TEMPLATE_NAME_TEMPLATE() is important for GST_PAD_REQUEST pads
- * because it has to be used as the name in the gst_element_request_pad_by_name()
+ * because it has to be used as the name in the gst_element_get_request_pad()
  * call to instantiate a pad from this template.
  *
  * Padtemplates can be created with gst_pad_template_new() or with
@@ -109,7 +106,7 @@ private import gstreamer.ObjectGst;
  * $(DDOC_COMMENT example)
  *
  * The following example shows you how to add the padtemplate to an
- * element class, this is usually done in the base_init of the class:
+ * element class, this is usually done in the class_init of the class:
  *
  * $(DDOC_COMMENT example)
  *
@@ -153,13 +150,13 @@ public class PadTemplate : ObjectGst
 	 */
 	int[string] connectedSignals;
 	
-	void delegate(Pad, PadTemplate)[] onPadCreatedListeners;
+	void delegate(GstPad*, PadTemplate)[] onPadCreatedListeners;
 	/**
 	 * This signal is fired when an element creates a pad from this template.
 	 * See Also
 	 * GstPad, GstElementFactory
 	 */
-	void addOnPadCreated(void delegate(Pad, PadTemplate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPadCreated(void delegate(GstPad*, PadTemplate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pad-created" in connectedSignals) )
 		{
@@ -176,9 +173,9 @@ public class PadTemplate : ObjectGst
 	}
 	extern(C) static void callBackPadCreated(GstPadTemplate* padTemplateStruct, GstPad* pad, PadTemplate _padTemplate)
 	{
-		foreach ( void delegate(Pad, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
+		foreach ( void delegate(GstPad*, PadTemplate) dlg ; _padTemplate.onPadCreatedListeners )
 		{
-			dlg(ObjectG.getDObject!(Pad)(pad), _padTemplate);
+			dlg(pad, _padTemplate);
 		}
 	}
 	
@@ -187,11 +184,11 @@ public class PadTemplate : ObjectGst
 	 * Converts a GstStaticPadTemplate into a GstPadTemplate.
 	 * Params:
 	 * padTemplate = the static pad template
-	 * Returns: a new GstPadTemplate.
+	 * Returns: a new GstPadTemplate. [transfer full]
 	 */
 	public static PadTemplate staticPadTemplateGet(GstStaticPadTemplate* padTemplate)
 	{
-		// GstPadTemplate* gst_static_pad_template_get (GstStaticPadTemplate *pad_template);
+		// GstPadTemplate * gst_static_pad_template_get (GstStaticPadTemplate *pad_template);
 		auto p = gst_static_pad_template_get(padTemplate);
 		
 		if(p is null)
@@ -206,11 +203,11 @@ public class PadTemplate : ObjectGst
 	 * Gets the capabilities of the static pad template.
 	 * Params:
 	 * templ = a GstStaticPadTemplate to get capabilities of.
-	 * Returns: the GstCaps of the static pad template. If you need to keep a reference to the caps, take a ref (see gst_caps_ref()).
+	 * Returns: the GstCaps of the static pad template. Unref after usage. Since the core holds an additional ref to the returned caps, use gst_caps_make_writable() on the returned caps to modify it. [transfer full]
 	 */
 	public static Caps staticPadTemplateGetCaps(GstStaticPadTemplate* templ)
 	{
-		// GstCaps* gst_static_pad_template_get_caps (GstStaticPadTemplate *templ);
+		// GstCaps * gst_static_pad_template_get_caps (GstStaticPadTemplate *templ);
 		auto p = gst_static_pad_template_get_caps(templ);
 		
 		if(p is null)
@@ -223,18 +220,17 @@ public class PadTemplate : ObjectGst
 	
 	/**
 	 * Creates a new pad template with a name according to the given template
-	 * and with the given arguments. This functions takes ownership of the provided
-	 * caps, so be sure to not use them afterwards.
+	 * and with the given arguments.
 	 * Params:
 	 * nameTemplate = the name template.
 	 * direction = the GstPadDirection of the template.
 	 * presence = the GstPadPresence of the pad.
-	 * caps = a GstCaps set for the template. The caps are taken ownership of.
+	 * caps = a GstCaps set for the template. [transfer none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string nameTemplate, GstPadDirection direction, GstPadPresence presence, Caps caps)
 	{
-		// GstPadTemplate* gst_pad_template_new (const gchar *name_template,  GstPadDirection direction,  GstPadPresence presence,  GstCaps *caps);
+		// GstPadTemplate * gst_pad_template_new (const gchar *name_template,  GstPadDirection direction,  GstPadPresence presence,  GstCaps *caps);
 		auto p = gst_pad_template_new(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct());
 		if(p is null)
 		{
@@ -245,11 +241,11 @@ public class PadTemplate : ObjectGst
 	
 	/**
 	 * Gets the capabilities of the pad template.
-	 * Returns: the GstCaps of the pad template. If you need to keep a reference to the caps, take a ref (see gst_caps_ref()). Signal Details The "pad-created" signal void user_function (GstPadTemplate *pad_template, GstPad *pad, gpointer user_data) : Run Last This signal is fired when an element creates a pad from this template.
+	 * Returns: the GstCaps of the pad template. Unref after usage. [transfer full]
 	 */
 	public Caps getCaps()
 	{
-		// GstCaps* gst_pad_template_get_caps (GstPadTemplate *templ);
+		// GstCaps * gst_pad_template_get_caps (GstPadTemplate *templ);
 		auto p = gst_pad_template_get_caps(gstPadTemplate);
 		
 		if(p is null)

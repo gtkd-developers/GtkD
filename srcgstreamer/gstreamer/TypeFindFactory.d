@@ -38,7 +38,6 @@
  * implements:
  * prefixes:
  * 	- gst_type_find_factory_
- * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,13 +45,12 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListG
- * 	- gstreamer.TypeFind
  * 	- gstreamer.Caps
+ * 	- gstreamer.TypeFind
  * structWrap:
  * 	- GList* -> ListG
  * 	- GstCaps* -> Caps
  * 	- GstTypeFind* -> TypeFind
- * 	- GstTypeFindFactory* -> TypeFindFactory
  * module aliases:
  * local aliases:
  * overrides:
@@ -69,8 +67,8 @@ private import gobject.ObjectG;
 
 private import glib.Str;
 private import glib.ListG;
-private import gstreamer.TypeFind;
 private import gstreamer.Caps;
+private import gstreamer.TypeFind;
 
 
 
@@ -129,12 +127,15 @@ public class TypeFindFactory : PluginFeature
 	
 	/**
 	 * Gets the list of all registered typefind factories. You must free the
-	 * list using gst_plugin_feature_list_free.
-	 * Returns: the list of all registered GstTypeFindFactory.
+	 * list using gst_plugin_feature_list_free().
+	 * The returned factories are sorted by highest rank first, and then by
+	 * factory name.
+	 * Free-function: gst_plugin_feature_list_free
+	 * Returns: the list of all registered GstTypeFindFactory. [transfer full][element-type Gst.TypeFindFactory]
 	 */
 	public static ListG getList()
 	{
-		// GList* gst_type_find_factory_get_list (void);
+		// GList * gst_type_find_factory_get_list (void);
 		auto p = gst_type_find_factory_get_list();
 		
 		if(p is null)
@@ -148,23 +149,23 @@ public class TypeFindFactory : PluginFeature
 	/**
 	 * Gets the extensions associated with a GstTypeFindFactory. The returned
 	 * array should not be changed. If you need to change stuff in it, you should
-	 * copy it using g_stdupv(). This function may return NULL to indicate
+	 * copy it using g_strdupv(). This function may return NULL to indicate
 	 * a 0-length list.
-	 * Returns: a NULL-terminated array of extensions associated with this factory
+	 * Returns: a NULL-terminated array of extensions associated with this factory. [transfer none][array zero-terminated=1][element-type utf8]
 	 */
 	public string[] getExtensions()
 	{
-		// gchar** gst_type_find_factory_get_extensions  (GstTypeFindFactory *factory);
+		// const gchar * const * gst_type_find_factory_get_extensions  (GstTypeFindFactory *factory);
 		return Str.toStringArray(gst_type_find_factory_get_extensions(gstTypeFindFactory));
 	}
 	
 	/**
 	 * Gets the GstCaps associated with a typefind factory.
-	 * Returns: The GstCaps associated with this factory
+	 * Returns: the GstCaps associated with this factory. [transfer none]
 	 */
 	public Caps getCaps()
 	{
-		// GstCaps* gst_type_find_factory_get_caps (GstTypeFindFactory *factory);
+		// GstCaps * gst_type_find_factory_get_caps (GstTypeFindFactory *factory);
 		auto p = gst_type_find_factory_get_caps(gstTypeFindFactory);
 		
 		if(p is null)
@@ -176,10 +177,22 @@ public class TypeFindFactory : PluginFeature
 	}
 	
 	/**
+	 * Check whether the factory has a typefind function. Typefind factories
+	 * without typefind functions are a last-effort fallback mechanism to
+	 * e.g. assume a certain media type based on the file extension.
+	 * Returns: TRUE if the factory has a typefind functions set, otherwise FALSE
+	 */
+	public int hasFunction()
+	{
+		// gboolean gst_type_find_factory_has_function (GstTypeFindFactory *factory);
+		return gst_type_find_factory_has_function(gstTypeFindFactory);
+	}
+	
+	/**
 	 * Calls the GstTypeFindFunction associated with this factory.
 	 * Params:
-	 * find = A properly setup GstTypeFind entry. The get_data and suggest_type
-	 *  members must be set.
+	 * find = a properly setup GstTypeFind entry. The get_data
+	 * and suggest_type members must be set. [transfer none]
 	 */
 	public void callFunction(TypeFind find)
 	{
