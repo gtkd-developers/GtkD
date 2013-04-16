@@ -2863,14 +2863,6 @@ code: start
 	{
 		this(new GtkTextIter);
 	}
-
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextIter !is null )
-		{
-			gtk_text_iter_free(gtkTextIter);
-		}
-	}
 code: end
 outFile: TextIter
 

@@ -129,15 +129,7 @@ public class TextIter : Boxed
 	{
 		this(new GtkTextIter);
 	}
-	
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextIter !is null )
-		{
-			gtk_text_iter_free(gtkTextIter);
-		}
-	}
-	
+		
 	/**
 	 */
 	
