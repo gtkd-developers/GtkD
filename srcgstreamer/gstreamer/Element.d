@@ -43,9 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
  * 	- gtkc.gobject
+ * 	- glib.Str
  * 	- glib.ListG
+ * 	- gobject.Type
  * 	- gstreamer.Bus
  * 	- gstreamer.Caps
  * 	- gstreamer.Clock
@@ -247,7 +248,7 @@ public class Element : ObjectGst
 		GstSeekType.SET, time_nanoseconds,
 		GstSeekType.NONE, GST_CLOCK_TIME_NONE);
 	}
-
+	
 	/**
 	 * Get's all the pads from an element in a Pad[].
 	 */
@@ -256,15 +257,15 @@ public class Element : ObjectGst
 		Pad[] result;
 		GValue* pad = g_value_init(new GValue(), Type.fromName("GstPad"));
 		GstIterator* iter = gst_element_iterate_pads(gstElement);
-
+		
 		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
 		{
 			result ~= new Pad(cast(GstPad*)g_value_get_object(pad));
 			g_value_reset(pad);
 		}
-
+		
 		g_value_unset(pad);
-
+		
 		return result;
 	}
 	

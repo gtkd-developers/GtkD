@@ -275,7 +275,7 @@ file: GtkSourceCompletionWords.html
 struct: GtkSourceCompletionWords
 class: SourceCompletionWords
 prefix: gtk_source_completion_words_
-import; glib.Str
+import: glib.Str
 import: gdk.Pixbuf
 import: gtk.TextBuffer
 structWrap: GdkPixbuf* Pixbuf

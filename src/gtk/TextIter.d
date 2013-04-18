@@ -129,7 +129,7 @@ public class TextIter : Boxed
 	{
 		this(new GtkTextIter);
 	}
-		
+	
 	/**
 	 */
 	
