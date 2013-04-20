@@ -477,7 +477,7 @@ public class Builder : ObjectG
 		foreach ( lib; importLibs )
 		{
 			GType function() func;
-			Module mod = Module.open( libPath ~ lib, GModuleFlags.BIND_LAZY );
+			Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
 			if( mod is null )
 			continue;
 			

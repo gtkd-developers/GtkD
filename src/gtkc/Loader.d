@@ -117,7 +117,7 @@ public struct Linker
 	 */
 	public static void loadLibrary(string library)
 	{
-		void* handle = pLoadLibrary(libPath ~ library);
+		void* handle = pLoadLibrary(library);
 
 		if ( handle is null )
 			throw new Exception("Library load failed: " ~ library);
