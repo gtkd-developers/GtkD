@@ -51,8 +51,30 @@ Or you can use one of the build options also available for Windows.
 
 Windows:
 --------
-You can build GtkD using build/bud http://www.dsource.org/projects/build
-see the README in the build directory.
+To build on Windows you can use the build script in combination with rdmd.
 
-If you are using D1 dsss is also an option see the README_DSSS for more
-information.
+    rdmd Build.d
+
+By default this builds gtkd, gtkdgl and gtkdsv to compile only one of these
+or gstreamerd you can pass the following options to the build file:
+ * gtkd      = build GtkD.
+ * gtkdgl    = build GtkDGL.
+ * sv        = build gtkd-sourceview
+ * gstreamer = build gstreamer.
+ * all       = build everything.
+
+For all the abobe packages there a two option avalable to specify aditional
+compiler and linker flags:
+ * --dcflags="your compiler flags"
+ * --ldflags="your linker flags"
+
+To specify if it should build for 64 or 32 bits, pass eighter
+the -m32 or -m64 flag to rdmd.
+
+    rdmd -m64 Build.d
+
+Building with bud/build:
+------------------------
+
+You can also build GtkD using build/bud http://www.dsource.org/projects/build
+see the README in the build directory.
