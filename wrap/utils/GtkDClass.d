@@ -1045,14 +1045,22 @@ public class GtkDClass
 			{
 				switch ( signalName )
 				{
-					case  "button-press-event": text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);"; break;
-					case  "button-release-event":
-						text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);";
-						text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);";
-						break;
-					case  "motion-notify-event": text ~= "addEvents(EventMask.POINTER_MOTION_MASK);"; break;
-					default:
-						break;
+					case  "button-press-event":      text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);";      break;
+					case  "button-release-event":    text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);";    break;
+					case  "enter-notify-event":      text ~= "addEvents(EventMask.ENTER_NOTIFY_MASK);";      break;
+					case  "focus-in-event":          text ~= "addEvents(EventMask.FOCUS_CHANGE_MASK);";      break;
+					case  "focus-out-event":         text ~= "addEvents(EventMask.FOCUS_CHANGE_MASK);";      break;
+					case  "key-press-event":         text ~= "addEvents(EventMask.KEY_PRESS_MASK);";         break;
+					case  "key-release-event":       text ~= "addEvents(EventMask.KEY_RELEASE_MASK);";       break;
+					case  "leave-notify-event":      text ~= "addEvents(EventMask.LEAVE_NOTIFY_MASK);";      break;
+					case  "motion-notify-event":     text ~= "addEvents(EventMask.POINTER_MOTION_MASK);";    break;
+					case  "property-notify-event":   text ~= "addEvents(EventMask.PROPERTY_CHANGE_MASK);";   break;
+					case  "proximity-in-event":      text ~= "addEvents(EventMask.PROXIMITY_IN_MASK);";      break;
+					case  "proximity-out-event":     text ~= "addEvents(EventMask.PROXIMITY_OUT_MASK);";     break;
+					case  "scroll-event":            text ~= "addEvents(EventMask.SCROLL_MASK);";            break;
+					case  "visibility-notify-event": text ~= "addEvents(EventMask.VISIBILITY_NOTIFY_MASK);"; break;
+
+					default: break;
 				}
 			}
 

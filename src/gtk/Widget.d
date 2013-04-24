@@ -715,7 +715,6 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
-			addEvents(EventMask.BUTTON_PRESS_MASK);
 			addEvents(EventMask.BUTTON_RELEASE_MASK);
 			Signals.connectData(
 			getStruct(),
@@ -1430,6 +1429,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("enter-notify-event" in connectedSignals) )
 		{
+			addEvents(EventMask.ENTER_NOTIFY_MASK);
 			Signals.connectData(
 			getStruct(),
 			"enter-notify-event",
@@ -1569,6 +1569,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("focus-in-event" in connectedSignals) )
 		{
+			addEvents(EventMask.FOCUS_CHANGE_MASK);
 			Signals.connectData(
 			getStruct(),
 			"focus-in-event",
@@ -1606,6 +1607,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("focus-out-event" in connectedSignals) )
 		{
+			addEvents(EventMask.FOCUS_CHANGE_MASK);
 			Signals.connectData(
 			getStruct(),
 			"focus-out-event",
@@ -1801,6 +1803,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("key-press-event" in connectedSignals) )
 		{
+			addEvents(EventMask.KEY_PRESS_MASK);
 			Signals.connectData(
 			getStruct(),
 			"key-press-event",
@@ -1838,6 +1841,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("key-release-event" in connectedSignals) )
 		{
+			addEvents(EventMask.KEY_RELEASE_MASK);
 			Signals.connectData(
 			getStruct(),
 			"key-release-event",
@@ -1913,6 +1917,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("leave-notify-event" in connectedSignals) )
 		{
+			addEvents(EventMask.LEAVE_NOTIFY_MASK);
 			Signals.connectData(
 			getStruct(),
 			"leave-notify-event",
@@ -2178,6 +2183,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("property-notify-event" in connectedSignals) )
 		{
+			addEvents(EventMask.PROPERTY_CHANGE_MASK);
 			Signals.connectData(
 			getStruct(),
 			"property-notify-event",
@@ -2214,6 +2220,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("proximity-in-event" in connectedSignals) )
 		{
+			addEvents(EventMask.PROXIMITY_IN_MASK);
 			Signals.connectData(
 			getStruct(),
 			"proximity-in-event",
@@ -2250,6 +2257,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("proximity-out-event" in connectedSignals) )
 		{
+			addEvents(EventMask.PROXIMITY_OUT_MASK);
 			Signals.connectData(
 			getStruct(),
 			"proximity-out-event",
@@ -2387,6 +2395,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("scroll-event" in connectedSignals) )
 		{
+			addEvents(EventMask.SCROLL_MASK);
 			Signals.connectData(
 			getStruct(),
 			"scroll-event",
@@ -2908,6 +2917,7 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( !("visibility-notify-event" in connectedSignals) )
 		{
+			addEvents(EventMask.VISIBILITY_NOTIFY_MASK);
 			Signals.connectData(
 			getStruct(),
 			"visibility-notify-event",
