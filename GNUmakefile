@@ -388,10 +388,12 @@ define make-lib
 endef
 
 define make-shared-lib
+    #$(ifeq ("$(DC)","dmd"),$(eval LDFLAGS+=$(LINKERFLAG)-lphobos2so))
+
 	# Combine all the object files into one file, since some d compilers
 	# don't support building a shared lib from multiple object files.
     ld -r $^ -o $@.o
-    $(DC) -shared $(output) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
+    $(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
     rm $@.o
 endef
 

@@ -72,11 +72,13 @@ public struct Linker
 	 */
 	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
 	{
-		string[] libStr = new string[libraries.length];
+		string[] libStr;
+		libStr.reserve(libraries.length);
 
-		foreach (i, library; libraries )
+		foreach ( library; libraries )
 		{
-			libStr[i] = importLibs[library];
+			foreach ( lib; importLibs[library] )
+				libStr ~= lib;
 		}
 
 		return getSymbol(symbol, libStr);
@@ -130,7 +132,8 @@ public struct Linker
 	 */
 	public static void unloadLibrary(LIBRARY library)
 	{
-		unloadLibrary( importLibs[library] );
+		foreach ( lib; importLibs[library] )
+			unloadLibrary( lib );
 	}
 
 	/*
@@ -181,7 +184,12 @@ public struct Linker
 	 */
 	public static bool isLoaded(LIBRARY library)
 	{
-		return isLoaded(importLibs[library]);
+		foreach ( lib; importLibs[library] )
+		{
+			if ( isLoaded(lib) )
+				return true;
+		}
+		return false;
 	}
 
 	/**
@@ -203,7 +211,14 @@ public struct Linker
 	 */
 	public static string[] getLoadFailures(LIBRARY library)
 	{
-		return getLoadFailures(importLibs[library]);
+		foreach ( lib; importLibs[library] )
+		{
+			string[] failures = getLoadFailures(lib);
+
+			if ( failures != null )
+				return failures;
+		}
+		return null;
 	}
 
 	/**
