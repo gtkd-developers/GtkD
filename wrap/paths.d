@@ -57,75 +57,75 @@ enum LIBRARY
 
 version (Windows)
 {
-const string[][LIBRARY.max+1] importLibs =
+const string[LIBRARY.max+1] importLibs =
 	[
-	LIBRARY.ATK:           ["libatk-1.0-0.dll"],
-	LIBRARY.CAIRO:         ["libcairo-2.dll"],
-	LIBRARY.GDK:           ["libgdk-3-0.dll"],
-	LIBRARY.GDKPIXBUF:     ["libgdk_pixbuf-2.0-0.dll"],
-	LIBRARY.GLIB:          ["libglib-2.0-0.dll"],
-	LIBRARY.GMODULE:       ["libgmodule-2.0-0.dll"],
-	LIBRARY.GOBJECT:       ["libgobject-2.0-0.dll"],
-	LIBRARY.GIO:           ["libgio-2.0-0.dll"],
-	LIBRARY.GTHREAD:       ["libgthread-2.0-0.dll"],
-	LIBRARY.GTK:           ["libgtk-3-0.dll"],
-	LIBRARY.PANGO:         ["libpango-1.0-0.dll"],
-	LIBRARY.PANGOCAIRO:    ["libpangocairo-1.0-0.dll"],
-	LIBRARY.GLGDK:         ["libgdkglext-3.0-0.dll"],
-	LIBRARY.GLGTK:         ["libgtkglext-3.0-0.dll"],
-	LIBRARY.GDA:           ["libgda-4.0-4.dll"],
-	LIBRARY.GSV:           ["libgtksourceview-3.0-1.dll", "libgtksourceview-3.0-0.dll"],
-	LIBRARY.GSTREAMER:     ["libgstreamer-1.0.dll"],
-	LIBRARY.GSTINTERFACES: ["libgstvideo-1.0.dll"]
+	LIBRARY.ATK:           "libatk-1.0-0.dll",
+	LIBRARY.CAIRO:         "libcairo-2.dll",
+	LIBRARY.GDK:           "libgdk-3-0.dll",
+	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0-0.dll",
+	LIBRARY.GLIB:          "libglib-2.0-0.dll",
+	LIBRARY.GMODULE:       "libgmodule-2.0-0.dll",
+	LIBRARY.GOBJECT:       "libgobject-2.0-0.dll",
+	LIBRARY.GIO:           "libgio-2.0-0.dll",
+	LIBRARY.GTHREAD:       "libgthread-2.0-0.dll",
+	LIBRARY.GTK:           "libgtk-3-0.dll",
+	LIBRARY.PANGO:         "libpango-1.0-0.dll",
+	LIBRARY.PANGOCAIRO:    "libpangocairo-1.0-0.dll",
+	LIBRARY.GLGDK:         "libgdkglext-3.0-0.dll",
+	LIBRARY.GLGTK:         "libgtkglext-3.0-0.dll",
+	LIBRARY.GDA:           "libgda-4.0-4.dll",
+	LIBRARY.GSV:           "libgtksourceview-3.0-0.dll",
+	LIBRARY.GSTREAMER:     "libgstreamer-1.0.dll",
+	LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dll"
 	];
 }
 else version(darwin)
 {
 const string DIRECTORY = "/opt/local/lib/";
 
-const string[][LIBRARY.max+1] importLibs =
+const string[LIBRARY.max+1] importLibs =
 	[
-	LIBRARY.ATK:           [DIRECTORY~"libatk-1.0.dylib"],
-	LIBRARY.CAIRO:         [DIRECTORY~"libcairo.dylib"],
-	LIBRARY.GDK:           [DIRECTORY~"libgdk-3.0.dylib"],
-	LIBRARY.GDKPIXBUF:     [DIRECTORY~"libgdk_pixbuf-2.0.dylib"],
-	LIBRARY.GLIB:          [DIRECTORY~"libglib-2.0.dylib"],
-	LIBRARY.GMODULE:       [DIRECTORY~"libgmodule-2.0.dylib"],
-	LIBRARY.GOBJECT:       [DIRECTORY~"libgobject-2.0.dylib"],
-	LIBRARY.GIO:           [DIRECTORY~"libgio-2.0.dylib"],
-	LIBRARY.GTHREAD:       [DIRECTORY~"libgthread-2.0.dylib"],
-	LIBRARY.GTK:           [DIRECTORY~"libgtk-3.0.dylib"],
-	LIBRARY.PANGO:         [DIRECTORY~"libpango-1.0.dylib"],
-	LIBRARY.PANGOCAIRO:    [DIRECTORY~"libpangocairo-1.0.dylib"],
-	LIBRARY.GLGDK:         [DIRECTORY~"libgdkglext-3.0.dylib"],
-	LIBRARY.GLGTK:         [DIRECTORY~"libgtkglext-3.0.dylib"],
-	LIBRARY.GDA:           [DIRECTORY~"libgda-2.dylib"],
-	LIBRARY.GSV:           [DIRECTORY~"libgtksourceview-3.0.dylib"],
-	LIBRARY.GSTREAMER:     [DIRECTORY~"libgstreamer-1.0.dylib"],
-	LIBRARY.GSTINTERFACES: [DIRECTORY~"libgstvideo-1.0.dylib"]
+	LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
+	LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
+	LIBRARY.GDK:           DIRECTORY~"libgdk-3.0.dylib",
+	LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
+	LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
+	LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
+	LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
+	LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
+	LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
+	LIBRARY.GTK:           DIRECTORY~"libgtk-3.0.dylib",
+	LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
+	LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
+	LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-3.0.dylib",
+	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-3.0.dylib",
+	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
+	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
+	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-1.0.dylib",
+	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstvideo-1.0.dylib"
 	];
 }
 else
 {
-const string[][LIBRARY.max+1] importLibs =
+const string[LIBRARY.max+1] importLibs =
 	[
-	LIBRARY.ATK:           ["libatk-1.0.so.0"],
-	LIBRARY.CAIRO:         ["libcairo.so.2"],
-	LIBRARY.GDK:           ["libgdk-3.so.0"],
-	LIBRARY.GDKPIXBUF:     ["libgdk_pixbuf-2.0.so.0"],
-	LIBRARY.GLIB:          ["libglib-2.0.so.0"],
-	LIBRARY.GMODULE:       ["libgmodule-2.0.so.0"],
-	LIBRARY.GOBJECT:       ["libgobject-2.0.so.0"],
-	LIBRARY.GIO:           ["libgio-2.0.so.0"],
-	LIBRARY.GTHREAD:       ["libgthread-2.0.so.0"],
-	LIBRARY.GTK:           ["libgtk-3.so.0"],
-	LIBRARY.PANGO:         ["libpango-1.0.so.0"],
-	LIBRARY.PANGOCAIRO:    ["libpangocairo-1.0.so.0"],
-	LIBRARY.GLGDK:         ["libgdkglext-3.0.so.0"],
-	LIBRARY.GLGTK:         ["libgtkglext-3.0.so.0"],
-	LIBRARY.GDA:           ["libgda-4.0.so.4"],
-	LIBRARY.GSV:           ["libgtksourceview-3.0.so.1", "libgtksourceview-3.0.so.0"],
-	LIBRARY.GSTREAMER:     ["libgstreamer-1.0.so.0"],
-	LIBRARY.GSTINTERFACES: ["libgstvideo-1.0.so.0"]
+	LIBRARY.ATK:           "libatk-1.0.so.0",
+	LIBRARY.CAIRO:         "libcairo.so.2",
+	LIBRARY.GDK:           "libgdk-3.so.0",
+	LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0.so.0",
+	LIBRARY.GLIB:          "libglib-2.0.so.0",
+	LIBRARY.GMODULE:       "libgmodule-2.0.so.0",
+	LIBRARY.GOBJECT:       "libgobject-2.0.so.0",
+	LIBRARY.GIO:           "libgio-2.0.so.0",
+	LIBRARY.GTHREAD:       "libgthread-2.0.so.0",
+	LIBRARY.GTK:           "libgtk-3.so.0",
+	LIBRARY.PANGO:         "libpango-1.0.so.0",
+	LIBRARY.PANGOCAIRO:    "libpangocairo-1.0.so.0",
+	LIBRARY.GLGDK:         "libgdkglext-3.0.so.0",
+	LIBRARY.GLGTK:         "libgtkglext-3.0.so.0",
+	LIBRARY.GDA:           "libgda-4.0.so.4",
+	LIBRARY.GSV:           "libgtksourceview-3.0.so.0",
+	LIBRARY.GSTREAMER:     "libgstreamer-1.0.so.0",
+	LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0"
 	];
 }

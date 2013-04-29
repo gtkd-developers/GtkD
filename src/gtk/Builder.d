@@ -474,20 +474,17 @@ public class Builder : ObjectG
 		symbol_name ~=  "_get_type" ;
 		
 		/* scan linked librarys for function symbol */
-		foreach ( library; importLibs )
+		foreach ( lib; importLibs )
 		{
-			foreach ( lib; library )
-			{
-				GType function() func;
-				Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
-				if( mod is null )
-				continue;
+			GType function() func;
+			Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
+			if( mod is null )
+			continue;
 			
-				scope(exit) mod.close();
+			scope(exit) mod.close();
 			
-				if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
-					return func();
-				}
+			if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
+				return func();
 			}
 		}
 		
