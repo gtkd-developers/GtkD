@@ -112,7 +112,7 @@ version (Windows)
 	version(D_Version2)
 	{
 		private import core.stdc.stdio;
-
+		
 		static if( !is(typeof(fdopen(0, null))) )
 		{
 			extern (C) FILE*  fdopen(int, char*);

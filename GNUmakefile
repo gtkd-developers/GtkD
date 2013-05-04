@@ -73,7 +73,7 @@ RANLIB=ranlib
 
 #######################################################################
 
-GTKD_VERSION=2.1.0
+GTKD_VERSION=2.2.0
 SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))
@@ -388,10 +388,12 @@ define make-lib
 endef
 
 define make-shared-lib
+	$(ifeq ("$(DC)","dmd"),$(eval LDFLAGS+=-defaultlib=phobos2so))
+
 	# Combine all the object files into one file, since some d compilers
 	# don't support building a shared lib from multiple object files.
     ld -r $^ -o $@.o
-    $(DC) -shared $(output) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
+    $(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
     rm $@.o
 endef
 

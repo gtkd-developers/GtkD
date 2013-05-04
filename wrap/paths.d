@@ -51,6 +51,7 @@ enum LIBRARY
 	GLGTK,
 	GDA,
 	GSV,
+	GSV1,
 	GSTREAMER,
 	GSTINTERFACES
 }
@@ -75,6 +76,7 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         "libgtkglext-3.0-0.dll",
 	LIBRARY.GDA:           "libgda-4.0-4.dll",
 	LIBRARY.GSV:           "libgtksourceview-3.0-0.dll",
+	LIBRARY.GSV1:          "libgtksourceview-3.0-1.dll",
 	LIBRARY.GSTREAMER:     "libgstreamer-1.0.dll",
 	LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dll"
 	];
@@ -101,6 +103,7 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-3.0.dylib",
 	LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
 	LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
+	LIBRARY.GSV1:          DIRECTORY~"libgtksourceview-3.0.dylib",
 	LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-1.0.dylib",
 	LIBRARY.GSTINTERFACES: DIRECTORY~"libgstvideo-1.0.dylib"
 	];
@@ -125,6 +128,7 @@ const string[LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:         "libgtkglext-3.0.so.0",
 	LIBRARY.GDA:           "libgda-4.0.so.4",
 	LIBRARY.GSV:           "libgtksourceview-3.0.so.0",
+	LIBRARY.GSV1:          "libgtksourceview-3.0.so.1",
 	LIBRARY.GSTREAMER:     "libgstreamer-1.0.so.0",
 	LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0"
 	];

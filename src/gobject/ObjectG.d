@@ -46,6 +46,7 @@
  * 	- g_weak_ref_
  * omit code:
  * omit signals:
+ * 	- notify
  * imports:
  * 	- gobject.ObjectG
  * 	- gobject.ParamSpec
@@ -308,8 +309,6 @@ public class ObjectG
 		return this;
 	}
 	
-	/**
-	 */
 	int[string] connectedSignals;
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
@@ -319,27 +318,41 @@ public class ObjectG
 	 * doesn't guarantee that the value of the property has actually
 	 * changed, it may also be emitted when the setter for the property
 	 * is called to reinstate the previous value.
+	 *
 	 * This signal is typically used to obtain change notification for a
-	 * single property, by specifying the property name as a detail in the
-	 * $(DDOC_COMMENT example)
+	 * single property.
+	 *
 	 * It is important to note that you must use
-	 * canonical parameter names as
-	 * detail strings for the notify signal.
-	 * See Also
-	 * GParamSpecObject, g_param_spec_object()
+	 * canonical parameter names for the property.
+	 *
+	 * Params:
+	 *     dlg          = The callback.
+	 *     property     = Set this if you only want to receive the signal for a specific property.
+	 *     connectFlags = The behavior of the signal's connection.
 	 */
-	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( !("notify" in connectedSignals) )
+		string signalName;
+		
+		if ( property == "" )
+		{
+			signalName = "notify";
+		}
+		else
+		{
+			signalName = "notify::"~ property;
+		}
+		
+		if ( !(signalName in connectedSignals) )
 		{
 			Signals.connectData(
 			getStruct(),
-			"notify",
+			signalName,
 			cast(GCallback)&callBackNotify,
 			cast(void*)this,
 			null,
 			connectFlags);
-			connectedSignals["notify"] = 1;
+			connectedSignals[signalName] = 1;
 		}
 		onNotifyListeners ~= dlg;
 	}
@@ -351,6 +364,8 @@ public class ObjectG
 		}
 	}
 	
+	/**
+	 */
 	
 	/**
 	 * Installs a new property. This is usually done in the class initializer.

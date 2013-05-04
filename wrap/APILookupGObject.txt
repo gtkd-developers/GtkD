@@ -261,6 +261,8 @@ import: glib.Str
 import: gtkc.paths
 import: gtkc.Loader
 
+nosignal: notify
+
 array: g_object_class_list_properties Return n_properties
 array: g_object_interface_list_properties Return n_properties_p
 array: g_object_newv parameters n_parameters
@@ -415,6 +417,61 @@ code: start
 		doref(gObject);
 
 		return this;
+	}
+
+	int[string] connectedSignals;
+	
+	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
+	/**
+	 * The notify signal is emitted on an object when one of its
+	 * properties has been changed. Note that getting this signal
+	 * doesn't guarantee that the value of the property has actually
+	 * changed, it may also be emitted when the setter for the property
+	 * is called to reinstate the previous value.
+	 * 
+	 * This signal is typically used to obtain change notification for a
+	 * single property.
+	 * 
+	 * It is important to note that you must use
+	 * canonical parameter names for the property.
+	 * 
+	 * Params:
+	 *     dlg          = The callback.
+	 *     property     = Set this if you only want to receive the signal for a specific property.
+	 *     connectFlags = The behavior of the signal's connection.
+	 */
+	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		string signalName;
+
+		if ( property == "" )
+		{
+			signalName = "notify";
+		}
+		else
+		{
+			signalName = "notify::"~ property;
+		}
+
+		if ( !(signalName in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			signalName,
+			cast(GCallback)&callBackNotify,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals[signalName] = 1;
+		}
+		onNotifyListeners ~= dlg;
+	}
+	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, ObjectG _objectG)
+	{
+		foreach ( void delegate(ParamSpec, ObjectG) dlg ; _objectG.onNotifyListeners )
+		{
+			dlg(ObjectG.getDObject!(ParamSpec)(pspec), _objectG);
+		}
 	}
 code: end
 outFile: ObjectG

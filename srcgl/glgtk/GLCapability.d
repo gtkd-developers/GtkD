@@ -233,7 +233,7 @@ template GLCapability()
 		
 		/*** do user actions ***/
 		bool consumeEvent = typeof(this).resizeGL(event);
-
+		
 		/*** Seems to be the default on Linux, but not on Windows ***/
 		version(Windows)
 		{
