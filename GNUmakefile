@@ -4,6 +4,7 @@ libdir=lib
 
 OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
+PHOBOSLIB=libphobos2.so
 
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
@@ -388,7 +389,7 @@ define make-lib
 endef
 
 define make-shared-lib
-	$(ifeq ("$(DC)","dmd"),$(eval LDFLAGS+=-defaultlib=phobos2so))
+	$(ifeq ("$(DC)","dmd"),$(eval LDFLAGS+=-defaultlib="$(PHOBOSLIB)"))
 
 	# Combine all the object files into one file, since some d compilers
 	# don't support building a shared lib from multiple object files.
