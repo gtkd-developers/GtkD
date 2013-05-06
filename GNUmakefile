@@ -4,7 +4,6 @@ libdir=lib
 
 OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
-PHOBOSLIB=libphobos2.so
 
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
@@ -389,13 +388,10 @@ define make-lib
 endef
 
 define make-shared-lib
-	$(ifeq ("$(DC)","dmd"),$(eval LDFLAGS+=-defaultlib="$(PHOBOSLIB)"))
+	#Remove this line when phobos #1280 is merged.
+	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=phobos2so))
 
-	# Combine all the object files into one file, since some d compilers
-	# don't support building a shared lib from multiple object files.
-    ld -r $^ -o $@.o
-    $(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
-    rm $@.o
+	$(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
 endef
 
 define install-so
