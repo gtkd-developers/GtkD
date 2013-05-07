@@ -203,7 +203,7 @@ $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
 $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),,$(if $(wildcard $(LIBNAME_GTKD)),,$(MAKE) $(LIBNAME_GTKD)))
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
-	$(if $(wildcard $(SONAME_GTKD)),$(shell ln -s $(SONAME_GTKD) $(SONAME_GTKD).$(SO_VERSION)))
+	$(if $(wildcard $(SONAME_GTKD)),$(if $(wildcard $(SONAME_GTKD).$(SO_VERSION)),,$(shell ln -s $(SONAME_GTKD) $(SONAME_GTKD).$(SO_VERSION))))
 	$(DC) $(OBJECTS_DEMO) $(output) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-$(MAJOR) $(LDFLAGS)
 
 #######################################################################
@@ -390,7 +390,7 @@ endef
 define make-shared-lib
 	#Remove this line when phobos #1280 is merged.
 	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=phobos2so))
-
+ 
 	$(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
 endef
 
