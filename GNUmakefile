@@ -310,11 +310,11 @@ install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
 	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION).7.0 $<.$(SO_VERSION)
 	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION) $<
 
-install-headers-gtkd: gtkd-$(MAJOR).pc install-headers-gtkd
+install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
 	install -d $(DESTDIR)$(datadir)/pkgconfig
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(prefix)/lib/pkgconfig
+	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
 	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
