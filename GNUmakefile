@@ -1,6 +1,7 @@
 SHELL=/bin/sh
 prefix=/usr/local
 libdir=lib
+datadir=$(prefix)/share
 
 OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
@@ -311,29 +312,29 @@ install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
 
 install-headers-gtkd: gtkd-$(MAJOR).pc install-headers-gtkd
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
-	install -d $(DESTDIR)$(prefix)/lib/pkgconfig
+	install -d $(DESTDIR)$(datadir)/pkgconfig
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(prefix)/lib/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
 	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(prefix)/lib/pkgconfig
+	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gtkdsv: gtkdsv-$(MAJOR).pc install-headers-gtkd
 	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(prefix)/lib/pkgconfig
+	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gda: gtkdgda-$(MAJOR).pc install-headers-gtkd
 	(cd srcgda; echo $(SOURCES_GTKDGDA) | sed -e s,srcgda/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdgda-$(MAJOR).pc $(DESTDIR)$(prefix)/lib/pkgconfig
+	install -m 644 gtkdgda-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(prefix)/lib/pkgconfig
+	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/pkgconfig/gtkd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION)
@@ -341,7 +342,7 @@ uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/pkgconfig/gtkdgl-$(MAJOR).pc
+	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdgl-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION)
@@ -349,7 +350,7 @@ uninstall-gtkdgl:
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/pkgconfig/gtkdsv-$(MAJOR).pc
+	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdsv-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION)
@@ -357,7 +358,7 @@ uninstall-gtkdsv:
 
 uninstall-gda:
 	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/pkgconfig/gtkdgda-$(MAJOR).pc
+	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdgda-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGDA)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA).$(SO_VERSION)
@@ -365,7 +366,7 @@ uninstall-gda:
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(prefix)/lib/pkgconfig/gstreamerd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(datadir)/pkgconfig/gstreamerd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
