@@ -73,7 +73,7 @@ RANLIB=ranlib
 
 #######################################################################
 
-GTKD_VERSION=1.7.0
+GTKD_VERSION=1.7.2
 SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))
