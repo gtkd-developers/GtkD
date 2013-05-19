@@ -823,6 +823,8 @@ private import gtkc.gdk;
 private import gtkc.gtk;
 private import gtkglc.glgdk;
 private import gtkglc.glgtk;
+private import gtkglc.gl.d;
+private import gtkglc.glu.d;
 private import gsvc.gsv;
 private import gdac.gda;
 private import gstreamerc.gstinterfaces;
