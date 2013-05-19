@@ -72,10 +72,10 @@ void build(string dir, string lib)
 	}
 	else
 	{
-		std.file.write("build.rf", format("-c %s -Isrc -of%s.o %s", dcflags, lib, dFiles(dir)));
+		std.file.write("build.rf", format("-c %s -Isrc -of%s.obj %s", dcflags, lib, dFiles(dir)));
 		system("dmd @build.rf");
-		system(format("lib -c %s %s.lib %s.o", ldflags, lib, lib));
-		std.file.remove(lib ~".o");
+		system(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
+		std.file.remove(lib ~".obj");
 	}
 	
 	std.file.remove("build.rf");
