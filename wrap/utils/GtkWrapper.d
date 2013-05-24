@@ -339,8 +339,8 @@ public class GtkWrapper : WrapperIF
 										}
 										if ( outPack == "glgtk" )
 										{
-											buildTextLibs ~= "private import "~bindingsDir~".gl.d;\n";
-											buildTextLibs ~= "private import "~bindingsDir~".glu.d;\n";
+											buildTextLibs ~= "private import "~bindingsDir~".gl;\n";
+											buildTextLibs ~= "private import "~bindingsDir~".glu;\n";
 										}
 										status = wrapFile(pack, outPack);
 									}
