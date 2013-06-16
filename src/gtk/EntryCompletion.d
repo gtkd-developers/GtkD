@@ -235,7 +235,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; _entryCompletion.onCursorOnMatchListeners )
 		{
-			if ( dlg(ObjectG.getDObject!(TreeModel)(model), ObjectG.getDObject!(TreeIter)(iter), _entryCompletion) )
+			if ( dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), _entryCompletion) )
 			{
 				return 1;
 			}
@@ -314,7 +314,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg ; _entryCompletion.onMatchSelectedListeners )
 		{
-			if ( dlg(ObjectG.getDObject!(TreeModel)(model), ObjectG.getDObject!(TreeIter)(iter), _entryCompletion) )
+			if ( dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), _entryCompletion) )
 			{
 				return 1;
 			}

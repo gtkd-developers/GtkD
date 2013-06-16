@@ -209,7 +209,7 @@ public template AppInfoT(TStruct)
 	{
 		foreach ( void delegate(AppInfoIF, GVariant*, AppInfoIF) dlg ; _appInfoIF.onLaunchedListeners )
 		{
-			dlg(ObjectG.getDObject!(AppInfo)(arg1), arg2, _appInfoIF);
+			dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(arg1), arg2, _appInfoIF);
 		}
 	}
 	

@@ -219,7 +219,7 @@ public class CellRenderer : ObjectG
 	{
 		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; _cellRenderer.onEditingStartedListeners )
 		{
-			dlg(ObjectG.getDObject!(CellEditable)(editable), Str.toString(path), _cellRenderer);
+			dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), _cellRenderer);
 		}
 	}
 	

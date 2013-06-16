@@ -388,7 +388,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg ; _cellArea.onAddEditableListeners )
 		{
-			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable)(editable), cellArea, Str.toString(path), _cellArea);
+			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), cellArea, Str.toString(path), _cellArea);
 		}
 	}
 	
@@ -416,7 +416,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(TreeModelIF, TreeIter, gboolean, gboolean, CellArea) dlg ; _cellArea.onApplyAttributesListeners )
 		{
-			dlg(ObjectG.getDObject!(TreeModel)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, _cellArea);
+			dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, _cellArea);
 		}
 	}
 	
@@ -479,7 +479,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	{
 		foreach ( void delegate(CellRenderer, CellEditableIF, CellArea) dlg ; _cellArea.onRemoveEditableListeners )
 		{
-			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable)(editable), _cellArea);
+			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), _cellArea);
 		}
 	}
 	

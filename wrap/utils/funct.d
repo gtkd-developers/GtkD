@@ -674,7 +674,7 @@ public struct Funct
 			}
 			else if (GtkDClass.endsWith(param.typeWrap, "IF"))
 			{
-				parmToGtkD = "ObjectG.getDObject!("~param.typeWrap[0..$-2]~")("~ param.convName ~")";
+				parmToGtkD = "ObjectG.getDObject!("~param.typeWrap[0..$-2]~", "~param.typeWrap~")("~ param.convName ~")";
 			}
 			else
 			{

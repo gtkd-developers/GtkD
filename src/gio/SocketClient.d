@@ -220,7 +220,7 @@ public class SocketClient : ObjectG
 	{
 		foreach ( void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg ; _socketClient.onListeners )
 		{
-			dlg(event, ObjectG.getDObject!(SocketConnectable)(connectable), ObjectG.getDObject!(IOStream)(connection), _socketClient);
+			dlg(event, ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), _socketClient);
 		}
 	}
 	

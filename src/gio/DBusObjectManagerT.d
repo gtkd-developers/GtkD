@@ -135,7 +135,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceAddedListeners )
 		{
-			dlg(ObjectG.getDObject!(DBusObject)(object), ObjectG.getDObject!(DBusInterface)(iface), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -169,7 +169,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onInterfaceRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!(DBusObject)(object), ObjectG.getDObject!(DBusInterface)(iface), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -201,7 +201,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onObjectAddedListeners )
 		{
-			dlg(ObjectG.getDObject!(DBusObject)(object), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), _dBusObjectManagerIF);
 		}
 	}
 	
@@ -233,7 +233,7 @@ public template DBusObjectManagerT(TStruct)
 	{
 		foreach ( void delegate(DBusObjectIF, DBusObjectManagerIF) dlg ; _dBusObjectManagerIF.onObjectRemovedListeners )
 		{
-			dlg(ObjectG.getDObject!(DBusObject)(object), _dBusObjectManagerIF);
+			dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), _dBusObjectManagerIF);
 		}
 	}
 	
