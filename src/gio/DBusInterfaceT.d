@@ -131,7 +131,7 @@ public template DBusInterfaceT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusObject)(cast(GDBusObject*) p);
+		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public template DBusInterfaceT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusObject)(cast(GDBusObject*) p);
+		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p);
 	}
 	
 	/**

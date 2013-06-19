@@ -308,7 +308,7 @@ public class TreeRowReference
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 	
 	/**

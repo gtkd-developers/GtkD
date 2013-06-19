@@ -168,7 +168,7 @@ public class ContentType
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -188,7 +188,7 @@ public class ContentType
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 	
 	/**

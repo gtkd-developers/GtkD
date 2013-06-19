@@ -753,7 +753,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SourceUndoManager)(cast(GtkSourceUndoManager*) p);
+		return ObjectG.getDObject!(SourceUndoManager, SourceUndoManagerIF)(cast(GtkSourceUndoManager*) p);
 	}
 	
 	/**

@@ -1290,6 +1290,6 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Action)(cast(GAction*) p);
+		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p);
 	}
 }

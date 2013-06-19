@@ -1338,7 +1338,7 @@ public class File : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -1373,7 +1373,7 @@ public class File : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Mount)(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p);
 	}
 	
 	/**
@@ -1424,7 +1424,7 @@ public class File : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Mount)(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p);
 	}
 	
 	/**

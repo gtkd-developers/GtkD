@@ -179,7 +179,7 @@ public class GLContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(GLDrawable)(cast(GdkGLDrawable*) p);
+		return ObjectG.getDObject!(GLDrawable, GLDrawableIF)(cast(GdkGLDrawable*) p);
 	}
 	
 	/**

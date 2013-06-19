@@ -864,7 +864,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ProxyResolver)(cast(GProxyResolver*) p);
+		return ObjectG.getDObject!(ProxyResolver, ProxyResolverIF)(cast(GProxyResolver*) p);
 	}
 	
 	/**

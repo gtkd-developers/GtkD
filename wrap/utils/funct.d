@@ -733,6 +733,8 @@ public struct Funct
 		{
 			if ( convParms.outPack == "cairo" || convParms.outPack == "glib" || convParms.outPack == "gthread" )
 				return "new "~ type;
+			else if( GtkDClass.endsWith(typeWrap, "IF") )
+				return "ObjectG.getDObject!("~ type[0..$-2] ~", "~ type ~")";
 			else
 				return "ObjectG.getDObject!("~ type ~")";
 		}
@@ -1133,8 +1135,6 @@ public struct Funct
 						/* What's with all the casting? */
 						/* A; Casting is needed because some GTK+
 						 *    functions can return void pointers. */
-						else if( GtkDClass.endsWith(typeWrap, "IF") )
-							bd ~= "return " ~ construct(typeWrap[0..$-2]) ~ "(cast(" ~ type ~ ") p);";
 						else
 							bd ~= "return " ~ construct(typeWrap) ~ "(cast(" ~ type ~ ") p);";
 						

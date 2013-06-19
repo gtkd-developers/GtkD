@@ -218,6 +218,6 @@ public template DBusObjectT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusInterface)(cast(GDBusInterface*) p);
+		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p);
 	}
 }

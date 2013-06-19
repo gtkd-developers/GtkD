@@ -1166,7 +1166,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CellEditable)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditable, CellEditableIF)(cast(GtkCellEditable*) p);
 	}
 	
 	/**

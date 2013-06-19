@@ -276,7 +276,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -294,7 +294,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -313,7 +313,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Drive)(cast(GDrive*) p);
+		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p);
 	}
 	
 	/**
@@ -347,7 +347,7 @@ public template MountT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Volume)(cast(GVolume*) p);
+		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p);
 	}
 	
 	/**

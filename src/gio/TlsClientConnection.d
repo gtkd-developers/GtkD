@@ -181,7 +181,7 @@ public class TlsClientConnection : TlsConnection
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SocketConnectable)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(cast(GSocketConnectable*) p);
 	}
 	
 	/**
