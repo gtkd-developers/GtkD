@@ -390,7 +390,7 @@ endef
 
 define make-shared-lib
 	#Remove this line when phobos #1280 is merged.
-	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=phobos2so))
+	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
  
 	$(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
 endef

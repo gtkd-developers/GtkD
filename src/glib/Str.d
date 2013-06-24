@@ -161,7 +161,7 @@ public class Str
 		{
 			// Need to make a copy
 			copy = new char[s.length + 1];
-			copy[0..s.length] = s.dup;
+			copy[0..s.length] = s.dup[];
 			copy[s.length] = 0;
 		}
 		
