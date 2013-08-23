@@ -45,9 +45,11 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Window
  * 	- gtk.ColorChooserIF
  * 	- gtk.ColorChooserT
  * structWrap:
+ * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
@@ -63,6 +65,7 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import gtk.Window;
 private import gtk.ColorChooserIF;
 private import gtk.ColorChooserT;
 
@@ -121,13 +124,13 @@ public class ColorChooserDialog : Dialog, ColorChooserIF
 	 * parent = Transient parent of the dialog, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string title, GtkWindow* parent)
+	public this (string title, Window parent)
 	{
 		// GtkWidget * gtk_color_chooser_dialog_new (const gchar *title,  GtkWindow *parent);
-		auto p = gtk_color_chooser_dialog_new(Str.toStringz(title), parent);
+		auto p = gtk_color_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_color_chooser_dialog_new(Str.toStringz(title), parent)");
+			throw new ConstructionException("null returned by gtk_color_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct())");
 		}
 		this(cast(GtkColorChooserDialog*) p);
 	}

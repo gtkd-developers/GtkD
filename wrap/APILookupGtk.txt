@@ -6823,6 +6823,8 @@ class: ColorChooserDialog
 implements: ColorChooserIF
 prefix: gtk_color_chooser_dialog_
 import: glib.Str
+import: gtk.Window
+structWrap: GtkWindow* Window
 
 #imports for ColorChooser Interface.
 import: gtk.ColorChooserIF
