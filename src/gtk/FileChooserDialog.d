@@ -226,7 +226,7 @@ public class FileChooserDialog : Dialog, FileChooserIF
 		
 		auto p = gtk_file_chooser_dialog_new(
 		Str.toStringz(title),
-		parent.getWindowStruct(),
+		(parent is null) ? null : parent.getWindowStruct(),
 		action,
 		null,
 		0);
