@@ -1,0 +1,109 @@
+#
+# This file is part of gstreamerD.
+#
+# gstreamerD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version, with
+# some exceptions, please read the COPYING file.
+#
+# gstreamerD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gstreamerD; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping VTE
+#####
+###
+#
+
+addTypedefs: start
+
+public import gtkc.gtktypes;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+# must start with wrap
+
+wrap: vte
+srcout: srcvte
+
+################################
+### VTE ########################
+################################
+
+# TODO: vteGetUserShell
+
+file: VteTerminal.html
+struct: VteTerminal
+class: Terminal
+implements: ScrollableIF
+prefix: vte_terminal_
+prefix: vte_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: gtk.MenuShell
+import: gtk.ScrollableIF
+import: gtk.ScrollableT
+structWrap: GtkMenuShell* MenuShell
+array: vte_terminal_feed data length
+array: vte_terminal_fork_command argv
+array: vte_terminal_fork_command envv
+array: vte_terminal_fork_command_full argv
+array: vte_terminal_fork_command_full envv
+code: start
+	// add the Scrollable capabilities
+	mixin ScrollableT!(VteTerminal);
+code: end
+outFile: Terminal
+
+file: vte-Vte-PTY.html
+struct: VtePty
+class: Pty
+implements: InitableIF
+prefix: vte_pty_
+import: gio.InitableIF
+import: gio.InitableT
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+out: vte_pty_get_size rows
+out: vte_pty_get_size columns
+code: start
+	// add the Initable capabilities
+	mixin InitableT!(VtePty);
+code: end
+outFile: Pty
+

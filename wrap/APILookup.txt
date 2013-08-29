@@ -162,6 +162,10 @@ package: gstreamer gstreamer
 package: gstinterfaces gstinterfaces
 bind: gstreamerc
 
+srcdir: srcvte
+package: vte vte
+bind: vtec
+
 # define other packages to create
 
 # define package by package, file by file
@@ -230,6 +234,10 @@ srcdir: srcgstreamer
 bindDir: gstreamerc
 lookup: APILookupGstInterfaces.txt
 lookup: APILookupGStreamer.txt
+
+srcdir: srcvte
+bindDir: vtec
+lookup: APILookupVte.txt
 
 #Hack to put the build text in the correct place.
 srcdir: .

@@ -53,3 +53,7 @@ ln -s gstreamer-html-1.0.5 gstreamer
 curl http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.0.5.tar.xz | tar xvfJ -
 ln -s gst-plugins-base-1.0.5/docs/libs/html gstinterfaces
 
+# vte
+curl https://developer.gnome.org/vte/vte-html-0.34.7.tar.gz | tar xvfz -
+ln -s vte-html-0.34.7 vte
+
