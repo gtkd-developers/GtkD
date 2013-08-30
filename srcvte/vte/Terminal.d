@@ -48,11 +48,31 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.ArrayG
+ * 	- glib.Regex
+ * 	- gio.Cancellable
+ * 	- gio.OutputStream
+ * 	- gdk.Color
+ * 	- gdk.Cursor
+ * 	- gdk.RGBA
+ * 	- gtk.Adjustment
  * 	- gtk.MenuShell
+ * 	- pango.PgFontDescription
+ * 	- vte.Pty
  * 	- gtk.ScrollableIF
  * 	- gtk.ScrollableT
  * structWrap:
+ * 	- GArray* -> ArrayG
+ * 	- GCancellable* -> Cancellable
+ * 	- GOutputStream* -> OutputStream
+ * 	- GRegex* -> Regex
+ * 	- GdkColor* -> Color
+ * 	- GdkCursor* -> Cursor
+ * 	- GdkRGBA* -> RGBA
+ * 	- GtkAdjustment* -> Adjustment
  * 	- GtkMenuShell* -> MenuShell
+ * 	- PangoFontDescription* -> PgFontDescription
+ * 	- VtePty* -> Pty
  * module aliases:
  * local aliases:
  * overrides:
@@ -72,7 +92,17 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.ArrayG;
+private import glib.Regex;
+private import gio.Cancellable;
+private import gio.OutputStream;
+private import gdk.Color;
+private import gdk.Cursor;
+private import gdk.RGBA;
+private import gtk.Adjustment;
 private import gtk.MenuShell;
+private import pango.PgFontDescription;
+private import vte.Pty;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
 
@@ -119,6 +149,8 @@ public class Terminal : Widget, ScrollableIF
 	
 	// add the Scrollable capabilities
 	mixin ScrollableT!(VteTerminal);
+
+	alias Widget.setOpacity setOpacity;
 	
 	/**
 	 */
@@ -1060,25 +1092,22 @@ public class Terminal : Widget, ScrollableIF
 	 * at the keyboard.
 	 * Params:
 	 * text = data to send to the child
-	 * length = length of text in bytes, or -1 if text is NUL-terminated
 	 */
-	public void feedChild(string text, glong length)
+	public void feedChild(string text)
 	{
 		// void vte_terminal_feed_child (VteTerminal *terminal,  const char *text,  glong length);
-		vte_terminal_feed_child(vteTerminal, Str.toStringz(text), length);
+		vte_terminal_feed_child(vteTerminal, cast(char*)text.ptr, cast(int) text.length);
 	}
 	
 	/**
 	 * Sends a block of binary data to the child.
 	 * Params:
 	 * data = data to send to the child
-	 * length = length of data
-	 * Since 0.12.1
 	 */
-	public void feedChildBinary(string data, glong length)
+	public void feedChildBinary(string data)
 	{
 		// void vte_terminal_feed_child_binary (VteTerminal *terminal,  const char *data,  glong length);
-		vte_terminal_feed_child_binary(vteTerminal, Str.toStringz(data), length);
+		vte_terminal_feed_child_binary(vteTerminal, cast(char*)data.ptr, cast(int) data.length);
 	}
 	
 	/**
@@ -1273,10 +1302,10 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 * bold = the new bold color
 	 */
-	public void setColorBold(GdkColor* bold)
+	public void setColorBold(Color bold)
 	{
 		// void vte_terminal_set_color_bold (VteTerminal *terminal,  const GdkColor *bold);
-		vte_terminal_set_color_bold(vteTerminal, bold);
+		vte_terminal_set_color_bold(vteTerminal, (bold is null) ? null : bold.getColorStruct());
 	}
 	
 	/**
@@ -1285,10 +1314,10 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 * bold = the new bold color or NULL. [allow-none]
 	 */
-	public void setColorBoldRgba(GdkRGBA* bold)
+	public void setColorBoldRgba(RGBA bold)
 	{
 		// void vte_terminal_set_color_bold_rgba (VteTerminal *terminal,  const GdkRGBA *bold);
-		vte_terminal_set_color_bold_rgba(vteTerminal, bold);
+		vte_terminal_set_color_bold_rgba(vteTerminal, (bold is null) ? null : bold.getRGBAStruct());
 	}
 	
 	/**
@@ -1296,10 +1325,10 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 * foreground = the new foreground color
 	 */
-	public void setColorForeground(GdkColor* foreground)
+	public void setColorForeground(Color foreground)
 	{
 		// void vte_terminal_set_color_foreground (VteTerminal *terminal,  const GdkColor *foreground);
-		vte_terminal_set_color_foreground(vteTerminal, foreground);
+		vte_terminal_set_color_foreground(vteTerminal, (foreground is null) ? null : foreground.getColorStruct());
 	}
 	
 	/**
@@ -1308,10 +1337,10 @@ public class Terminal : Widget, ScrollableIF
 	 * foreground = the new foreground color
 	 * Since 0.28
 	 */
-	public void setColorForegroundRgba(GdkRGBA* foreground)
+	public void setColorForegroundRgba(RGBA foreground)
 	{
 		// void vte_terminal_set_color_foreground_rgba  (VteTerminal *terminal,  const GdkRGBA *foreground);
-		vte_terminal_set_color_foreground_rgba(vteTerminal, foreground);
+		vte_terminal_set_color_foreground_rgba(vteTerminal, (foreground is null) ? null : foreground.getRGBAStruct());
 	}
 	
 	/**
@@ -1321,10 +1350,10 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 * background = the new background color
 	 */
-	public void setColorBackground(GdkColor* background)
+	public void setColorBackground(Color background)
 	{
 		// void vte_terminal_set_color_background (VteTerminal *terminal,  const GdkColor *background);
-		vte_terminal_set_color_background(vteTerminal, background);
+		vte_terminal_set_color_background(vteTerminal, (background is null) ? null : background.getColorStruct());
 	}
 	
 	/**
@@ -1335,10 +1364,10 @@ public class Terminal : Widget, ScrollableIF
 	 * background = the new background color
 	 * Since 0.28
 	 */
-	public void setColorBackgroundRgba(GdkRGBA* background)
+	public void setColorBackgroundRgba(RGBA background)
 	{
 		// void vte_terminal_set_color_background_rgba  (VteTerminal *terminal,  const GdkRGBA *background);
-		vte_terminal_set_color_background_rgba(vteTerminal, background);
+		vte_terminal_set_color_background_rgba(vteTerminal, (background is null) ? null : background.getRGBAStruct());
 	}
 	
 	/**
@@ -1346,10 +1375,10 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 * dim = the new dim color
 	 */
-	public void setColorDim(GdkColor* dim)
+	public void setColorDim(Color dim)
 	{
 		// void vte_terminal_set_color_dim (VteTerminal *terminal,  const GdkColor *dim);
-		vte_terminal_set_color_dim(vteTerminal, dim);
+		vte_terminal_set_color_dim(vteTerminal, (dim is null) ? null : dim.getColorStruct());
 	}
 	
 	/**
@@ -1359,10 +1388,10 @@ public class Terminal : Widget, ScrollableIF
 	 * dim = the new dim color or NULL. [allow-none]
 	 * Since 0.28
 	 */
-	public void setColorDimRgba(GdkRGBA* dim)
+	public void setColorDimRgba(RGBA dim)
 	{
 		// void vte_terminal_set_color_dim_rgba (VteTerminal *terminal,  const GdkRGBA *dim);
-		vte_terminal_set_color_dim_rgba(vteTerminal, dim);
+		vte_terminal_set_color_dim_rgba(vteTerminal, (dim is null) ? null : dim.getRGBAStruct());
 	}
 	
 	/**
@@ -1373,10 +1402,10 @@ public class Terminal : Widget, ScrollableIF
 	 * cursorBackground = the new color to use for the text cursor, or NULL. [allow-none]
 	 * Since 0.11.11
 	 */
-	public void setColorCursor(GdkColor* cursorBackground)
+	public void setColorCursor(Color cursorBackground)
 	{
 		// void vte_terminal_set_color_cursor (VteTerminal *terminal,  const GdkColor *cursor_background);
-		vte_terminal_set_color_cursor(vteTerminal, cursorBackground);
+		vte_terminal_set_color_cursor(vteTerminal, (cursorBackground is null) ? null : cursorBackground.getColorStruct());
 	}
 	
 	/**
@@ -1387,10 +1416,10 @@ public class Terminal : Widget, ScrollableIF
 	 * cursorBackground = the new color to use for the text cursor, or NULL. [allow-none]
 	 * Since 0.28
 	 */
-	public void setColorCursorRgba(GdkRGBA* cursorBackground)
+	public void setColorCursorRgba(RGBA cursorBackground)
 	{
 		// void vte_terminal_set_color_cursor_rgba (VteTerminal *terminal,  const GdkRGBA *cursor_background);
-		vte_terminal_set_color_cursor_rgba(vteTerminal, cursorBackground);
+		vte_terminal_set_color_cursor_rgba(vteTerminal, (cursorBackground is null) ? null : cursorBackground.getRGBAStruct());
 	}
 	
 	/**
@@ -1401,10 +1430,10 @@ public class Terminal : Widget, ScrollableIF
 	 * highlightBackground = the new color to use for highlighted text, or NULL. [allow-none]
 	 * Since 0.11.11
 	 */
-	public void setColorHighlight(GdkColor* highlightBackground)
+	public void setColorHighlight(Color highlightBackground)
 	{
 		// void vte_terminal_set_color_highlight (VteTerminal *terminal,  const GdkColor *highlight_background);
-		vte_terminal_set_color_highlight(vteTerminal, highlightBackground);
+		vte_terminal_set_color_highlight(vteTerminal, (highlightBackground is null) ? null : highlightBackground.getColorStruct());
 	}
 	
 	/**
@@ -1415,10 +1444,10 @@ public class Terminal : Widget, ScrollableIF
 	 * highlightBackground = the new color to use for highlighted text, or NULL. [allow-none]
 	 * Since 0.28
 	 */
-	public void setColorHighlightRgba(GdkRGBA* highlightBackground)
+	public void setColorHighlightRgba(RGBA highlightBackground)
 	{
 		// void vte_terminal_set_color_highlight_rgba  (VteTerminal *terminal,  const GdkRGBA *highlight_background);
-		vte_terminal_set_color_highlight_rgba(vteTerminal, highlightBackground);
+		vte_terminal_set_color_highlight_rgba(vteTerminal, (highlightBackground is null) ? null : highlightBackground.getRGBAStruct());
 	}
 	
 	/**
@@ -1440,10 +1469,10 @@ public class Terminal : Widget, ScrollableIF
 	 * palette = the color palette. [array length=palette_size zero-terminated=0][element-type Gdk.Color]
 	 * paletteSize = the number of entries in palette
 	 */
-	public void setColors(GdkColor* foreground, GdkColor* background, GdkColor* palette, glong paletteSize)
+	public void setColors(Color foreground, Color background, Color palette, glong paletteSize)
 	{
 		// void vte_terminal_set_colors (VteTerminal *terminal,  const GdkColor *foreground,  const GdkColor *background,  const GdkColor *palette,  glong palette_size);
-		vte_terminal_set_colors(vteTerminal, foreground, background, palette, paletteSize);
+		vte_terminal_set_colors(vteTerminal, (foreground is null) ? null : foreground.getColorStruct(), (background is null) ? null : background.getColorStruct(), (palette is null) ? null : palette.getColorStruct(), paletteSize);
 	}
 	
 	/**
@@ -1466,10 +1495,10 @@ public class Terminal : Widget, ScrollableIF
 	 * paletteSize = the number of entries in palette
 	 * Since 0.28
 	 */
-	public void setColorsRgba(GdkRGBA* foreground, GdkRGBA* background, GdkRGBA* palette, gsize paletteSize)
+	public void setColorsRgba(RGBA foreground, RGBA background, RGBA palette, gsize paletteSize)
 	{
 		// void vte_terminal_set_colors_rgba (VteTerminal *terminal,  const GdkRGBA *foreground,  const GdkRGBA *background,  const GdkRGBA *palette,  gsize palette_size);
-		vte_terminal_set_colors_rgba(vteTerminal, foreground, background, palette, paletteSize);
+		vte_terminal_set_colors_rgba(vteTerminal, (foreground is null) ? null : foreground.getRGBAStruct(), (background is null) ? null : background.getRGBAStruct(), (palette is null) ? null : palette.getRGBAStruct(), paletteSize);
 	}
 	
 	/**
@@ -1567,10 +1596,10 @@ public class Terminal : Widget, ScrollableIF
 	 * saturation is not 1.0.
 	 * Since 0.11
 	 */
-	public void setBackgroundTintColor(GdkColor* color)
+	public void setBackgroundTintColor(Color color)
 	{
 		// void vte_terminal_set_background_tint_color  (VteTerminal *terminal,  const GdkColor *color);
-		vte_terminal_set_background_tint_color(vteTerminal, color);
+		vte_terminal_set_background_tint_color(vteTerminal, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -1672,10 +1701,10 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 * fontDesc = a PangoFontDescription for the desired font, or NULL. [allow-none]
 	 */
-	public void setFont(PangoFontDescription* fontDesc)
+	public void setFont(PgFontDescription fontDesc)
 	{
 		// void vte_terminal_set_font (VteTerminal *terminal,  const PangoFontDescription *font_desc);
-		vte_terminal_set_font(vteTerminal, fontDesc);
+		vte_terminal_set_font(vteTerminal, (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -1719,10 +1748,10 @@ public class Terminal : Widget, ScrollableIF
 	 * antialias = Specify if anti aliasing of the fonts is to be used or not.
 	 * Since 0.11.11
 	 */
-	public void setFontFull(PangoFontDescription* fontDesc, VteTerminalAntiAlias antialias)
+	public void setFontFull(PgFontDescription fontDesc, VteTerminalAntiAlias antialias)
 	{
 		// void vte_terminal_set_font_full (VteTerminal *terminal,  const PangoFontDescription *font_desc,  VteTerminalAntiAlias antialias);
-		vte_terminal_set_font_full(vteTerminal, fontDesc, antialias);
+		vte_terminal_set_font_full(vteTerminal, (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), antialias);
 	}
 	
 	/**
@@ -1730,10 +1759,17 @@ public class Terminal : Widget, ScrollableIF
 	 * used to draw text in the terminal.
 	 * Returns: a PangoFontDescription describing the font the terminal is currently using to render text. [transfer none]
 	 */
-	public PangoFontDescription* getFont()
+	public PgFontDescription getFont()
 	{
 		// const PangoFontDescription * vte_terminal_get_font (VteTerminal *terminal);
-		return vte_terminal_get_font(vteTerminal);
+		auto p = vte_terminal_get_font(vteTerminal);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -1872,10 +1908,10 @@ public class Terminal : Widget, ScrollableIF
 	 * attributes = location for storing text attributes. [out caller-allocates][transfer full][array][element-type Vte.CharAttributes]
 	 * Returns: a newly allocated text string, or NULL. [transfer full]
 	 */
-	public string getText(VteSelectionFunc isSelected, void* userData, GArray* attributes)
+	public string getText(VteSelectionFunc isSelected, void* userData, ArrayG attributes)
 	{
 		// char * vte_terminal_get_text (VteTerminal *terminal,  VteSelectionFunc is_selected,  gpointer user_data,  GArray *attributes);
-		return Str.toString(vte_terminal_get_text(vteTerminal, isSelected, userData, attributes));
+		return Str.toString(vte_terminal_get_text(vteTerminal, isSelected, userData, (attributes is null) ? null : attributes.getArrayGStruct()));
 	}
 	
 	/**
@@ -1892,10 +1928,10 @@ public class Terminal : Widget, ScrollableIF
 	 * attributes = location for storing text attributes. [out caller-allocates][transfer full][array][element-type Vte.CharAttributes]
 	 * Returns: a newly allocated text string, or NULL. [transfer full] Since 0.11.11
 	 */
-	public string getTextIncludeTrailingSpaces(VteSelectionFunc isSelected, void* userData, GArray* attributes)
+	public string getTextIncludeTrailingSpaces(VteSelectionFunc isSelected, void* userData, ArrayG attributes)
 	{
 		// char * vte_terminal_get_text_include_trailing_spaces  (VteTerminal *terminal,  VteSelectionFunc is_selected,  gpointer user_data,  GArray *attributes);
-		return Str.toString(vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, attributes));
+		return Str.toString(vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, (attributes is null) ? null : attributes.getArrayGStruct()));
 	}
 	
 	/**
@@ -1916,10 +1952,10 @@ public class Terminal : Widget, ScrollableIF
 	 * attributes = location for storing text attributes. [out caller-allocates][transfer full][array][element-type Vte.CharAttributes]
 	 * Returns: a newly allocated text string, or NULL. [transfer full]
 	 */
-	public string getTextRange(glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, GArray* attributes)
+	public string getTextRange(glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, ArrayG attributes)
 	{
 		// char * vte_terminal_get_text_range (VteTerminal *terminal,  glong start_row,  glong start_col,  glong end_row,  glong end_col,  VteSelectionFunc is_selected,  gpointer user_data,  GArray *attributes);
-		return Str.toString(vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, attributes));
+		return Str.toString(vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, (attributes is null) ? null : attributes.getArrayGStruct()));
 	}
 	
 	/**
@@ -1929,10 +1965,10 @@ public class Terminal : Widget, ScrollableIF
 	 * column = a location to store the column, or NULL. [out][allow-none]
 	 * row = a location to store the row, or NULL. [out][allow-none]
 	 */
-	public void getCursorPosition(glong* column, glong* row)
+	public void getCursorPosition(out glong column, out glong row)
 	{
 		// void vte_terminal_get_cursor_position (VteTerminal *terminal,  glong *column,  glong *row);
-		vte_terminal_get_cursor_position(vteTerminal, column, row);
+		vte_terminal_get_cursor_position(vteTerminal, &column, &row);
 	}
 	
 	/**
@@ -1970,10 +2006,10 @@ public class Terminal : Widget, ScrollableIF
 	 * flags = the GRegexMatchFlags to use when matching the regex
 	 * Returns: an integer associated with this expression Since 0.17.1
 	 */
-	public int matchAddGregex(GRegex* regex, GRegexMatchFlags flags)
+	public int matchAddGregex(Regex regex, GRegexMatchFlags flags)
 	{
 		// int vte_terminal_match_add_gregex (VteTerminal *terminal,  GRegex *regex,  GRegexMatchFlags flags);
-		return vte_terminal_match_add_gregex(vteTerminal, regex, flags);
+		return vte_terminal_match_add_gregex(vteTerminal, (regex is null) ? null : regex.getRegexStruct(), flags);
 	}
 	
 	/**
@@ -2003,10 +2039,10 @@ public class Terminal : Widget, ScrollableIF
 	 * tag = a location to store the tag, or NULL. [out][allow-none]
 	 * Returns: a newly allocated string which matches one of the previously set regular expressions. [transfer full]
 	 */
-	public string matchCheck(glong column, glong row, int* tag)
+	public string matchCheck(glong column, glong row, out int tag)
 	{
 		// char * vte_terminal_match_check (VteTerminal *terminal,  glong column,  glong row,  int *tag);
-		return Str.toString(vte_terminal_match_check(vteTerminal, column, row, tag));
+		return Str.toString(vte_terminal_match_check(vteTerminal, column, row, &tag));
 	}
 	
 	/**
@@ -2018,10 +2054,10 @@ public class Terminal : Widget, ScrollableIF
 	 * highlighted, or NULL to use the standard cursor. [allow-none]
 	 * Since 0.11
 	 */
-	public void matchSetCursor(int tag, GdkCursor* cursor)
+	public void matchSetCursor(int tag, Cursor cursor)
 	{
 		// void vte_terminal_match_set_cursor (VteTerminal *terminal,  int tag,  GdkCursor *cursor);
-		vte_terminal_match_set_cursor(vteTerminal, tag, cursor);
+		vte_terminal_match_set_cursor(vteTerminal, tag, (cursor is null) ? null : cursor.getCursorStruct());
 	}
 	
 	/**
@@ -2140,10 +2176,10 @@ public class Terminal : Widget, ScrollableIF
 	 * xpad = address in which to store left/right-edge padding
 	 * ypad = address in which to store top/bottom-edge ypadding
 	 */
-	public void getPadding(int* xpad, int* ypad)
+	public void getPadding(out int xpad, out int ypad)
 	{
 		// void vte_terminal_get_padding (VteTerminal *terminal,  int *xpad,  int *ypad);
-		vte_terminal_get_padding(vteTerminal, xpad, ypad);
+		vte_terminal_get_padding(vteTerminal, &xpad, &ypad);
 	}
 	
 	/**
@@ -2162,12 +2198,12 @@ public class Terminal : Widget, ScrollableIF
 	 * Returns: TRUE on success, FALSE if there was an error Since 0.24
 	 * Throws: GException on failure.
 	 */
-	public int writeContents(GOutputStream* stream, VteTerminalWriteFlags flags, GCancellable* cancellable)
+	public int writeContents(OutputStream stream, VteTerminalWriteFlags flags, Cancellable cancellable)
 	{
 		// gboolean vte_terminal_write_contents (VteTerminal *terminal,  GOutputStream *stream,  VteTerminalWriteFlags flags,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = vte_terminal_write_contents(vteTerminal, stream, flags, cancellable, &err);
+		auto p = vte_terminal_write_contents(vteTerminal, (stream is null) ? null : stream.getOutputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -2202,10 +2238,17 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Returns: the search GRegex regex set in terminal, or NULL. [transfer none] Since 0.26
 	 */
-	public GRegex* searchGetGregex()
+	public Regex searchGetGregex()
 	{
 		// GRegex * vte_terminal_search_get_gregex (VteTerminal *terminal);
-		return vte_terminal_search_get_gregex(vteTerminal);
+		auto p = vte_terminal_search_get_gregex(vteTerminal);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Regex)(cast(GRegex*) p);
 	}
 	
 	/**
@@ -2223,10 +2266,10 @@ public class Terminal : Widget, ScrollableIF
 	 * regex = a GRegex, or NULL. [allow-none]
 	 * Since 0.26
 	 */
-	public void searchSetGregex(GRegex* regex)
+	public void searchSetGregex(Regex regex)
 	{
 		// void vte_terminal_search_set_gregex (VteTerminal *terminal,  GRegex *regex);
-		vte_terminal_search_set_gregex(vteTerminal, regex);
+		vte_terminal_search_set_gregex(vteTerminal, (regex is null) ? null : regex.getRegexStruct());
 	}
 	
 	/**
@@ -2306,12 +2349,12 @@ public class Terminal : Widget, ScrollableIF
 	 * Returns: TRUE on success, or FALSE on error with error filled in Since 0.26
 	 * Throws: GException on failure.
 	 */
-	public int forkCommandFull(VtePtyFlags ptyFlags, string workingDirectory, string[] argv, string[] envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GPid* childPid)
+	public int forkCommandFull(VtePtyFlags ptyFlags, string workingDirectory, string[] argv, string[] envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, out GPid childPid)
 	{
 		// gboolean vte_terminal_fork_command_full (VteTerminal *terminal,  VtePtyFlags pty_flags,  const char *working_directory,  char **argv,  char **envv,  GSpawnFlags spawn_flags,  GSpawnChildSetupFunc child_setup,  gpointer child_setup_data,  GPid *child_pid,  GError **error);
 		GError* err = null;
 		
-		auto p = vte_terminal_fork_command_full(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, childPid, &err);
+		auto p = vte_terminal_fork_command_full(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, &childPid, &err);
 		
 		if (err !is null)
 		{
@@ -2341,10 +2384,10 @@ public class Terminal : Widget, ScrollableIF
 	 * wtmp = TRUE if the session should be logged to the wtmp/wtmpx log
 	 * Returns: the ID of the new process in the parent, 0 in the child, and -1 if there was an error Since 0.11.11
 	 */
-	public pid_t forkpty(char** envv, string workingDirectory, int lastlog, int utmp, int wtmp)
+	public pid_t forkpty(string[] envv, string workingDirectory, int lastlog, int utmp, int wtmp)
 	{
 		// pid_t vte_terminal_forkpty (VteTerminal *terminal,  char **envv,  const char *working_directory,  gboolean lastlog,  gboolean utmp,  gboolean wtmp);
-		return vte_terminal_forkpty(vteTerminal, envv, Str.toStringz(workingDirectory), lastlog, utmp, wtmp);
+		return vte_terminal_forkpty(vteTerminal, Str.toStringzArray(envv), Str.toStringz(workingDirectory), lastlog, utmp, wtmp);
 	}
 	
 	/**
@@ -2363,10 +2406,17 @@ public class Terminal : Widget, ScrollableIF
 	 * Returns the VtePty of terminal.
 	 * Returns: a VtePty, or NULL. [transfer none] Since 0.26
 	 */
-	public VtePty* getPtyObject()
+	public Pty getPtyObject()
 	{
 		// VtePty * vte_terminal_get_pty_object (VteTerminal *terminal);
-		return vte_terminal_get_pty_object(vteTerminal);
+		auto p = vte_terminal_get_pty_object(vteTerminal);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pty)(cast(VtePty*) p);
 	}
 	
 	/**
@@ -2378,7 +2428,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Returns: a new VtePty. [transfer full] Since 0.26
 	 * Throws: GException on failure.
 	 */
-	public VtePty* ptyNew(VtePtyFlags flags)
+	public Pty ptyNew(VtePtyFlags flags)
 	{
 		// VtePty * vte_terminal_pty_new (VteTerminal *terminal,  VtePtyFlags flags,  GError **error);
 		GError* err = null;
@@ -2390,7 +2440,13 @@ public class Terminal : Widget, ScrollableIF
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pty)(cast(VtePty*) p);
 	}
 	
 	/**
@@ -2415,10 +2471,10 @@ public class Terminal : Widget, ScrollableIF
 	 * pty = a VtePty, or NULL. [allow-none]
 	 * Since 0.26.
 	 */
-	public void setPtyObject(VtePty* pty)
+	public void setPtyObject(Pty pty)
 	{
 		// void vte_terminal_set_pty_object (VteTerminal *terminal,  VtePty *pty);
-		vte_terminal_set_pty_object(vteTerminal, pty);
+		vte_terminal_set_pty_object(vteTerminal, (pty is null) ? null : pty.getPtyStruct());
 	}
 	
 	/**
@@ -2449,10 +2505,17 @@ public class Terminal : Widget, ScrollableIF
 	 * An accessor function provided for the benefit of language bindings.
 	 * Returns: the contents of terminal's adjustment field. [transfer none]
 	 */
-	public GtkAdjustment* getAdjustment()
+	public Adjustment getAdjustment()
 	{
 		// GtkAdjustment * vte_terminal_get_adjustment (VteTerminal *terminal);
-		return vte_terminal_get_adjustment(vteTerminal);
+		auto p = vte_terminal_get_adjustment(vteTerminal);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 	
 	/**

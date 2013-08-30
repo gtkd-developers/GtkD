@@ -74,18 +74,53 @@ prefix: vte_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: glib.ArrayG
+import: glib.Regex
+import: gio.Cancellable
+import: gio.OutputStream
+import: gdk.Color
+import: gdk.Cursor
+import: gdk.RGBA
+import: gtk.Adjustment
 import: gtk.MenuShell
+import: pango.PgFontDescription
+import: vte.Pty
+structWrap: GArray* ArrayG
+structWrap: GRegex* Regex
+structWrap: GCancellable* Cancellable
+structWrap: GOutputStream* OutputStream
+structWrap: GdkColor* Color
+structWrap: GdkCursor* Cursor
+structWrap: GdkRGBA* RGBA
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkMenuShell* MenuShell
+structWrap: PangoFontDescription* PgFontDescription
+structWrap: VtePty* Pty
+
+#imports for Scrollable Interface.
 import: gtk.ScrollableIF
 import: gtk.ScrollableT
-structWrap: GtkMenuShell* MenuShell
+
 array: vte_terminal_feed data length
+array: vte_terminal_feed_child text length
+array: vte_terminal_feed_child_binary data length
+out: vte_terminal_get_cursor_position column
+out: vte_terminal_get_cursor_position row
+out: vte_terminal_match_check tag
+out: vte_terminal_get_padding xpad
+out: vte_terminal_get_padding ypad
 array: vte_terminal_fork_command argv
 array: vte_terminal_fork_command envv
 array: vte_terminal_fork_command_full argv
 array: vte_terminal_fork_command_full envv
+out: vte_terminal_fork_command_full child_pid
+array: vte_terminal_forkpty envv
+
 code: start
 	// add the Scrollable capabilities
 	mixin ScrollableT!(VteTerminal);
+
+	alias Widget.setOpacity setOpacity;
 code: end
 outFile: Terminal
 
@@ -94,13 +129,17 @@ struct: VtePty
 class: Pty
 implements: InitableIF
 prefix: vte_pty_
-import: gio.InitableIF
-import: gio.InitableT
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+
+#imports for Initable Interface.
+import: gio.InitableIF
+import: gio.InitableT
+
 out: vte_pty_get_size rows
 out: vte_pty_get_size columns
+
 code: start
 	// add the Initable capabilities
 	mixin InitableT!(VtePty);

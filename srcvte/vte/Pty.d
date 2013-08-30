@@ -44,11 +44,11 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gio.InitableIF
- * 	- gio.InitableT
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- gio.InitableIF
+ * 	- gio.InitableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -64,11 +64,11 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
-private import gio.InitableIF;
-private import gio.InitableT;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import gio.InitableIF;
+private import gio.InitableT;
 
 
 
