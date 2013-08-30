@@ -809,6 +809,9 @@ private import gstreamer.UriHandlerT;
 private import gstreamer.Utils;
 private import gstreamer.Value;
 
+private import vte.Terminal;
+private import vte.Pty;
+
 private import gtkc.paths;
 private import gtkc.Loader;
 private import gtkc.glib;
@@ -829,3 +832,4 @@ private import gsvc.gsv;
 private import gdac.gda;
 private import gstreamerc.gstinterfaces;
 private import gstreamerc.gstreamer;
+private import vtec.vte;

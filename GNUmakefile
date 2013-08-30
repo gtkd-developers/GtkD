@@ -111,6 +111,12 @@ SOURCES_GSTREAMERD = $(wildcard srcgstreamer/*/*.d)
 OBJECTS_GSTREAMERD = $(patsubst %.d,%.o,$(SOURCES_GSTREAMERD))
 PICOBJECTS_GSTREAMERD = $(patsubst %.o,%.pic.o,$(OBJECTS_GSTREAMERD))
 
+LIBNAME_VTED = libvted-$(MAJOR).a
+SONAME_VTED = libvted-$(MAJOR).so
+SOURCES_VTED = $(wildcard srcvte/*/*.d)
+OBJECTS_VTED = $(patsubst %.d,%.o,$(SOURCES_VTED))
+PICOBJECTS_VTED = $(patsubst %.o,%.pic.o,$(OBJECTS_VTED))
+
 #######################################################################
 
 BINNAME_DEMO = TestWindow
@@ -136,12 +142,14 @@ gtkdgl:    $(LIBNAME_GTKDGL)
 sv:        $(LIBNAME_GTKDSV)
 gda:       $(LIBNAME_GTKDGDA)
 gstreamer: $(LIBNAME_GSTREAMERD)
+vte:       $(LIBNAME_VTED)
 
 shared-gtkd:      $(SONAME_GTKD)
 shared-gtkdgl:    $(SONAME_GTKDGL)
 shared-sv:        $(SONAME_GTKDSV)
 shared-gda:       $(SONAME_GTKDGDA)
 shared-gstreamer: $(SONAME_GSTREAMERD)
+shared-vte:       $(SONAME_VTED)
 
 #######################################################################
 
@@ -165,6 +173,10 @@ $(LIBNAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
 $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 	$(make-lib)
 
+$(LIBNAME_VTED): IMPORTS=-Isrc -Isrcvte
+$(LIBNAME_VTED): $(LIBNAME_GTKD) $(OBJECTS_VTED)
+	$(make-lib)
+
 #######################################################################
 
 $(SONAME_GTKD): IMPORTS=-Isrc
@@ -185,6 +197,10 @@ $(SONAME_GTKDGDA): $(PICOBJECTS_GTKDGDA)
 
 $(SONAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
 $(SONAME_GSTREAMERD): $(PICOBJECTS_GSTREAMERD)
+	$(make-shared-lib)
+
+$(SONAME_VTED): IMPORTS=-Isrc -Isrcvte
+$(SONAME_VTED): $(PICOBJECTS_VTED)
 	$(make-shared-lib)
 
 #######################################################################
@@ -228,6 +244,7 @@ pkgconfig-gtkdgl:    gtkdgl-$(MAJOR).pc
 pkgconfig-sv:        gtkdsv-$(MAJOR).pc
 pkgconfig-gda:       gtkdgda-$(MAJOR).pc
 pkgconfig-gstreamer: gstreamerd-$(MAJOR).pc
+pkgconfig-vte:       vted-$(MAJOR).pc
 
 gtkd-$(MAJOR).pc:
 	echo Name: GtkD > $@
@@ -262,6 +279,13 @@ gstreamerd-$(MAJOR).pc:
 	echo Description: A D binding and OO wrapper for Gstreamer. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgstreamerd-$(MAJOR) >> $@
+	echo Requires: gtkd-$(MAJOR) >> $@
+
+vted-$(MAJOR).pc:
+	echo Name: VteD > $@
+	echo Description: A D binding and OO wrapper for Vte. >> $@
+	echo Version: $(GTKD_VERSION) >> $@
+	echo Libs: $(LINKERFLAG)-lvted-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
 
 #######################################################################
