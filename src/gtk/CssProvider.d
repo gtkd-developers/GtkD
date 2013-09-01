@@ -848,18 +848,15 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * information.
 	 * Params:
 	 * data = CSS data loaded in memory. [array length=length][element-type guint8]
-	 * length = the length of data in bytes, or -1 for NUL terminated strings. If
-	 * length is not -1, the code will assume it is not NUL terminated and will
-	 * potentially do a copy.
 	 * Returns: TRUE. The return value is deprecated and FALSE will only be returned for backwards compatibility reasons if an error is not NULL and a loading error occured. To track errors while loading CSS, connect to the GtkCssProvider::parsing-error signal.
 	 * Throws: GException on failure.
 	 */
-	public int loadFromData(string data, gssize length)
+	public int loadFromData(string data)
 	{
 		// gboolean gtk_css_provider_load_from_data (GtkCssProvider *css_provider,  const gchar *data,  gssize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), length, &err);
+		auto p = gtk_css_provider_load_from_data(gtkCssProvider, cast(char*)data.ptr, cast(int) data.length, &err);
 		
 		if (err !is null)
 		{

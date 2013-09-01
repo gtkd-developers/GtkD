@@ -743,6 +743,7 @@ structWrap: GError* ErrorG
 structWrap: GFile* File
 structWrap: GtkCssSection* CssSection
 structWrap: GtkCssProvider* CssProvider
+array: gtk_css_provider_load_from_data data length
 
 override: toString
 
