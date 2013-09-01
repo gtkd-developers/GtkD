@@ -149,7 +149,7 @@ public class Terminal : Widget, ScrollableIF
 	
 	// add the Scrollable capabilities
 	mixin ScrollableT!(VteTerminal);
-
+	
 	alias Widget.setOpacity setOpacity;
 	
 	/**
