@@ -68,7 +68,7 @@ compiler and linker flags:
  * --dcflags="your compiler flags"
  * --ldflags="your linker flags"
 
-To specify if it should build for 64 or 32 bits, pass eighter
+To specify if it should build for 64 or 32 bits, pass either
 the -m32 or -m64 flag to rdmd.
 
     rdmd -m64 Build.d
