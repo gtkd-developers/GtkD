@@ -108,16 +108,16 @@ alias: GLIB_SYSDEF_POLLERR =8
 alias: GLIB_SYSDEF_POLLNVAL =32
 
 # ok, I'm not sure how to do this but I need to know the enum type for some enum entries
-enumType: G_TOKEN_LAST TokenType.LAST
+enumType: G_TOKEN_LAST (int)TokenType.LAST
 enumType: G_SIGNAL_RUN_FIRST SignalFlags.RUN_FIRST
 enumType: G_SIGNAL_RUN_LAST SignalFlags.RUN_LAST
 enumType: G_SIGNAL_NO_RECURSE SignalFlags.NO_RECURSE
 enumType: G_SIGNAL_ACTION SignalFlags.ACTION
 enumType: G_SIGNAL_NO_HOOKS SignalFlags.NO_HOOKS
-enumType: G_PARAM_READABLE ParamFlags.READABLE
-enumType: G_PARAM_WRITABLE ParamFlags.WRITABLE
-enumType: G_PARAM_CONSTRUCT ParamFlags.CONSTRUCT
-enumType: G_PARAM_CONSTRUCT_ONLY ParamFlags.CONSTRUCT_ONLY
+enumType: G_PARAM_READABLE (int)ParamFlags.READABLE
+enumType: G_PARAM_WRITABLE (int)ParamFlags.WRITABLE
+enumType: G_PARAM_CONSTRUCT (int)ParamFlags.CONSTRUCT
+enumType: G_PARAM_CONSTRUCT_ONLY (int)ParamFlags.CONSTRUCT_ONLY
 
 
 # define the lookup and destination directories

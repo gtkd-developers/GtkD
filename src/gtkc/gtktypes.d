@@ -279,7 +279,7 @@ alias GtkRcFlags RcFlags;
  */
 public enum GtkRcTokenType
 {
-	INVALID = TokenType.LAST,
+	INVALID = cast(int)TokenType.LAST,
 	INCLUDE,
 	NORMAL,
 	ACTIVE,
@@ -2177,10 +2177,10 @@ alias GtkObjectFlags ObjectFlags;
  */
 public enum GtkArgFlags
 {
-	READABLE = ParamFlags.READABLE,
-	WRITABLE = ParamFlags.WRITABLE,
-	CONSTRUCT = ParamFlags.CONSTRUCT,
-	CONSTRUCT_ONLY = ParamFlags.CONSTRUCT_ONLY,
+	READABLE = cast(int)ParamFlags.READABLE,
+	WRITABLE = cast(int)ParamFlags.WRITABLE,
+	CONSTRUCT = cast(int)ParamFlags.CONSTRUCT,
+	CONSTRUCT_ONLY = cast(int)ParamFlags.CONSTRUCT_ONLY,
 	CHILD_ARG = 1 << 4
 }
 alias GtkArgFlags ArgFlags;
