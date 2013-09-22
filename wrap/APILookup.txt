@@ -113,7 +113,7 @@ alias: GLIB_SYSDEF_POLLERR =8
 alias: GLIB_SYSDEF_POLLNVAL =32
 
 # ok, I'm not sure how to do this but I need to know the enum type for some enum entries
-enumType: G_TOKEN_LAST TokenType.LAST
+enumType: G_TOKEN_LAST (int)TokenType.LAST
 enumType: G_SIGNAL_RUN_FIRST SignalFlags.RUN_FIRST
 enumType: G_SIGNAL_RUN_LAST SignalFlags.RUN_LAST
 enumType: G_SIGNAL_NO_RECURSE SignalFlags.NO_RECURSE

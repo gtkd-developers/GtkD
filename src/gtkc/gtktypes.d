@@ -1003,7 +1003,7 @@ alias GtkRcFlags RcFlags;
  */
 public enum GtkRcTokenType
 {
-	INVALID = TokenType.LAST,
+	INVALID = cast(int)TokenType.LAST,
 	INCLUDE,
 	NORMAL,
 	ACTIVE,

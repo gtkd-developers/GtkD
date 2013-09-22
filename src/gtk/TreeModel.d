@@ -148,7 +148,7 @@ public class TreeModel : ObjectG, TreeModelIF
 			/* Some boilerplate type registration stuff */
 			if (customTreeModelType == GType.INVALID)
 			{
-				static GTypeInfo customTreeModelInfo =
+				GTypeInfo customTreeModelInfo =
 				{
 					CustomTreeModelClass.sizeof,                   /* class size */
 					null,                                          /* base_init */
@@ -161,7 +161,7 @@ public class TreeModel : ObjectG, TreeModelIF
 					//cast(GInstanceInitFunc) &customTreeModelInit   /* instance init */
 					null
 				};
-				static GInterfaceInfo treeModelInfo =
+				GInterfaceInfo treeModelInfo =
 				{
 					cast(GInterfaceInitFunc) &customTreeModelInit,
 					null,
