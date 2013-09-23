@@ -30,8 +30,8 @@ enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.LAST
 enumType: GST_OBJECT_FLAG_LAST GstObjectFlags.LAST
 enumType: GST_MINI_OBJECT_FLAG_LOCK_READONLY GstMiniObjectFlags.LOCK_READONLY
 enumType: GST_MINI_OBJECT_FLAG_LAST GstMiniObjectFlags.LAST
-enumType: GST_LOCK_FLAG_READ GstLockFlags.READ
-enumType: GST_LOCK_FLAG_WRITE GstLockFlags.WRITE
+enumType: GST_LOCK_FLAG_READ (int)GstLockFlags.READ
+enumType: GST_LOCK_FLAG_WRITE (int)GstLockFlags.WRITE
 enumType: GST_STATE_NULL GstState.NULL
 enumType: GST_STATE_READY GstState.READY
 enumType: GST_STATE_PAUSED GstState.PAUSED

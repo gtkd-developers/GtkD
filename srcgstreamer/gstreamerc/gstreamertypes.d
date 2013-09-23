@@ -1035,8 +1035,8 @@ alias GstMemoryFlags MemoryFlags;
  */
 public enum GstMapFlags
 {
-	READ = GstLockFlags.READ,
-	WRITE = GstLockFlags.WRITE,
+	READ = cast(int)GstLockFlags.READ,
+	WRITE = cast(int)GstLockFlags.WRITE,
 	FLAG_LAST = (1 << 16)
 }
 alias GstMapFlags MapFlags;
