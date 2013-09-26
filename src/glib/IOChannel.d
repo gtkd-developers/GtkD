@@ -433,7 +433,7 @@ public class IOChannel
 	 * Reads a Unicode character from channel.
 	 * This function cannot be called on a channel with NULL encoding.
 	 * Params:
-	 * thechar = a location to return a character
+	 * thechar = a location to return a character. [out]
 	 * Returns: a GIOStatus
 	 * Throws: GException on failure.
 	 */

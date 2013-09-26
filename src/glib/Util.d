@@ -625,12 +625,16 @@ public class Util
 	}
 	
 	/**
-	 * Gets the directory to use for temporary files. This is found from
-	 * inspecting the environment variables TMPDIR,
-	 * TMP, and TEMP in that order. If none
-	 * of those are defined "/tmp" is returned on UNIX and "C:\" on Windows.
-	 * The encoding of the returned string is system-defined. On Windows,
-	 * it is always UTF-8. The return value is never NULL or the empty string.
+	 * Gets the directory to use for temporary files.
+	 * On UNIX, this is taken from the TMPDIR environment
+	 * variable. If the variable is not set, P_tmpdir is
+	 * used, as defined by the system C library. Failing that, a hard-coded
+	 * default of "/tmp" is returned.
+	 * On Windows, the TEMP environment variable is used,
+	 * with the root directory of the Windows installation (eg: "C:\") used
+	 * as a default.
+	 * The encoding of the returned string is system-defined. On Windows, it
+	 * is always UTF-8. The return value is never NULL or the empty string.
 	 * Returns: the directory to use for temporary files.
 	 */
 	public static string getTmpDir()

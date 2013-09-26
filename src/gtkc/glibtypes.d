@@ -1445,6 +1445,8 @@ alias GSpawnError SpawnError;
 
 /**
  * Flags passed to g_spawn_sync(), g_spawn_async() and g_spawn_async_with_pipes().
+ * G_SPAWN_DEFAULT
+ * no flags, default behaviour
  * G_SPAWN_LEAVE_DESCRIPTORS_OPEN
  * the parent's open file descriptors will be
  *  inherited by the child; otherwise all descriptors except stdin/stdout/stderr
@@ -1478,6 +1480,7 @@ alias GSpawnError SpawnError;
  */
 public enum GSpawnFlags
 {
+	DEFAULT = 0,
 	LEAVE_DESCRIPTORS_OPEN = 1 << 0,
 	DO_NOT_REAP_CHILD = 1 << 1,
 	/+* look for argv[0] inn the path i.e. use execvp() +/
@@ -1568,10 +1571,10 @@ alias GSpawnFlags SpawnFlags;
  * G_FILE_ERROR_PIPE
  * Broken pipe; there is no process reading from the
  *  other end of a pipe. Every library function that returns this
- *  error code also generates a `SIGPIPE' signal; this signal
+ *  error code also generates a 'SIGPIPE' signal; this signal
  *  terminates the program if not handled or blocked. Thus, your
  *  program will never actually see this code unless it has handled
- *  or blocked `SIGPIPE'.
+ *  or blocked 'SIGPIPE'.
  * G_FILE_ERROR_AGAIN
  * Resource temporarily unavailable; the call might
  *  work if you try again later.
@@ -2187,7 +2190,7 @@ alias GRegexCompileFlags RegexCompileFlags;
  * Turns on the partial matching feature. In contrast to
  *  to G_REGEX_MATCH_PARTIAL_SOFT, this stops matching as soon as a partial match
  *  is found, without continuing to search for a possible complete match. See
- *  see g_match_info_is_partial_match() for more information. Since: 2.34
+ *  g_match_info_is_partial_match() for more information. Since: 2.34
  * G_REGEX_MATCH_NOTEMPTY_ATSTART
  * Like G_REGEX_MATCH_NOTEMPTY, but only applied to
  *  the start of the matched string. For anchored
@@ -2646,18 +2649,52 @@ public struct GSource{}
 
 
 /**
+ * The GSourceFuncs struct contains a table of
+ * functions used to handle event sources in a generic manner.
+ * For idle sources, the prepare and check functions always return TRUE
+ * to indicate that the source is always ready to be processed. The prepare
+ * function also returns a timeout value of 0 to ensure that the poll() call
+ * doesn't block (since that would be time wasted which could have been spent
+ * running the idle function).
+ * For timeout sources, the prepare and check functions both return TRUE
+ * if the timeout interval has expired. The prepare function also returns
+ * a timeout value to ensure that the poll() call doesn't block too long
+ * and miss the next timeout.
+ * For file descriptor sources, the prepare function typically returns FALSE,
+ * since it must wait until poll() has been called before it knows whether
+ * any events need to be processed. It sets the returned timeout to -1 to
+ * indicate that it doesn't mind how long the poll() call blocks. In the
+ * check function, it tests the results of the poll() call to see if the
+ * required condition has been met, and returns TRUE if so.
  * prepare ()
  * Called before all the file descriptors are polled. If the
  * source can determine that it is ready here (without waiting for the
  * results of the poll() call) it should return TRUE. It can also return
  * a timeout_ value which should be the maximum timeout (in milliseconds)
  * which should be passed to the poll() call. The actual timeout used will
- * be -1 if all sources returned -1, or it will be the minimum of all the
- * timeout_ values returned which were >= 0. Since 2.36 this may
- * be NULL, in which case the effect is as if the function always
+ * be -1 if all sources returned -1, or it will be the minimum of all
+ * the timeout_ values returned which were >= 0. Since 2.36 this may
+ * be NULL, in which case the effect is as if the function always returns
+ * FALSE with a timeout of -1. If prepare returns a
+ * timeout and the source also has a 'ready time' set then the
+ * nearer of the two will be used.
  * check ()
+ * Called after all the file descriptors are polled. The source
+ * should return TRUE if it is ready to be dispatched. Note that some
+ * time may have passed since the previous prepare function was called,
+ * so the source should be checked again here. Since 2.36 this may
+ * be NULL, in which case the effect is as if the function always returns
+ * FALSE.
  * dispatch ()
+ * Called to dispatch the event source, after it has returned
+ * TRUE in either its prepare or its check function. The dispatch
+ * function is passed in a callback function and data. The callback
+ * function may be NULL if the source was never connected to a callback
+ * using g_source_set_callback(). The dispatch function should call the
+ * callback function with user_data and whatever additional parameters
+ * are needed for this type of event source.
  * finalize ()
+ * Called when the source is finalized.
  */
 public struct GSourceFuncs
 {
@@ -2923,7 +2960,7 @@ public struct GDate
 
 /**
  * Main Gtk struct.
- * GDateTime is an opaque structure whose members cannot be accessed
+ * GTimeZone is an opaque structure whose members cannot be accessed
  * directly.
  * Since 2.26
  */
@@ -3148,8 +3185,8 @@ public struct GScannerConfig
 	//uint scanBinary : 1;
 	//uint scanOctal : 1;
 	//uint scanFloat : 1;
-	//uint scanHex : 1; /+* `0x0ff0' +/
-	//uint scanHexDollar : 1; /+* `$0ff0' +/
+	//uint scanHex : 1; /+* '0x0ff0' +/
+	//uint scanHexDollar : 1; /+* '$0ff0' +/
 	//uint scanStringSq : 1; /+* string: 'anything' +/
 	//uint scanStringDq : 1; /+* string: "\\-escapes!\n" +/
 	//uint numbers2_Int : 1; /+* bin, octal, hex => int +/
@@ -4893,7 +4930,8 @@ public alias extern(C) void function() GSourceDummyMarshal;
  * data passed to the function, set when the source was
  * created with one of the above functions
  * Returns :
- * FALSE if the source should be removed
+ * FALSE if the source should be removed. G_SOURCE_CONTINUE and
+ * G_SOURCE_REMOVE are more memorable names for the return value.
  */
 // gboolean (*GSourceFunc) (gpointer user_data);
 public alias extern(C) int function(void* userData) GSourceFunc;

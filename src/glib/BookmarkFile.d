@@ -389,7 +389,7 @@ public class BookmarkFile
 	 * The array of returned URIs will be NULL-terminated, so length may
 	 * optionally be NULL.
 	 * Since 2.12
-	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array length=length][transfer full]
 	 */
 	public string[] getUris()
 	{
@@ -518,8 +518,8 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * href = return location for the icon's location or NULL. [allow-none]
-	 * mimeType = return location for the icon's MIME type or NULL. [allow-none]
+	 * href = return location for the icon's location or NULL. [allow-none][out]
+	 * mimeType = return location for the icon's MIME type or NULL. [allow-none][out]
 	 * Returns: TRUE if the icon for the bookmark for the URI was found. You should free the returned strings.
 	 * Throws: GException on failure.
 	 */
@@ -626,7 +626,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it.
+	 * Returns: a newly allocated NULL-terminated array of group names. Use g_strfreev() to free it. [array length=length][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public string[] getGroups(string uri)
@@ -660,7 +660,7 @@ public class BookmarkFile
 	 * Since 2.12
 	 * Params:
 	 * uri = a valid URI
-	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it.
+	 * Returns: a newly allocated NULL-terminated array of strings. Use g_strfreev() to free it. [array length=length][transfer full]
 	 * Throws: GException on failure.
 	 */
 	public string[] getApplications(string uri)
@@ -702,9 +702,9 @@ public class BookmarkFile
 	 * Params:
 	 * uri = a valid URI
 	 * name = an application's name
-	 * exec = location for the command line of the application, or NULL. [allow-none]
-	 * count = return location for the registration count, or NULL. [allow-none]
-	 * stamp = return location for the last registration time, or NULL. [allow-none]
+	 * exec = return location for the command line of the application, or NULL. [allow-none][out]
+	 * count = return location for the registration count, or NULL. [allow-none][out]
+	 * stamp = return location for the last registration time, or NULL. [allow-none][out]
 	 * Returns: TRUE on success.
 	 * Throws: GException on failure.
 	 */

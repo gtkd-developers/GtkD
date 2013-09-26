@@ -631,7 +631,7 @@ public class StringG
 	 * Params:
 	 * v = a GString
 	 * v2 = another GString
-	 * Returns: TRUE if they strings are the same length and contain the same bytes
+	 * Returns: TRUE if the strings are the same length and contain the same bytes
 	 */
 	public int equal(StringG v2)
 	{

@@ -2846,6 +2846,8 @@ nocode: g_variant_new_object_path
 nocode: g_variant_new_signature
 nocode: g_variant_new_objv
 nocode: g_variant_new_bytestring
+nocode: g_variant_new_handle
+nocode: g_variant_new_take_string
 
 array: g_variant_get_strv Return length
 array: g_variant_dup_strv Return length

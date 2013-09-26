@@ -287,6 +287,19 @@ public class Regex
 	}
 	
 	/**
+	 * Gets the number of characters in the longest lookbehind assertion in the
+	 * pattern. This information is useful when doing multi-segment matching using
+	 * the partial matching facilities.
+	 * Since 2.38
+	 * Returns: the number of characters in the longest lookbehind assertion.
+	 */
+	public int getMaxLookbehind()
+	{
+		// gint g_regex_get_max_lookbehind (const GRegex *regex);
+		return g_regex_get_max_lookbehind(gRegex);
+	}
+	
+	/**
 	 * Retrieves the number of the subexpression named name.
 	 * Since 2.14
 	 * Params:

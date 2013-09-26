@@ -49,6 +49,8 @@
  * 	- g_variant_new_signature
  * 	- g_variant_new_objv
  * 	- g_variant_new_bytestring
+ * 	- g_variant_new_handle
+ * 	- g_variant_new_take_string
  * omit signals:
  * imports:
  * 	- glib.Str

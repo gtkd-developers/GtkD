@@ -727,6 +727,7 @@ public class FileUtils
 	 * function over the call provided by the system; on Unix, it will
 	 * attempt to correctly handle EINTR, which has platform-specific
 	 * semantics.
+	 * Since 2.36
 	 * Params:
 	 * fd = A file descriptor
 	 * Throws: GException on failure.

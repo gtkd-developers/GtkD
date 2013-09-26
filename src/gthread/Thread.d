@@ -190,6 +190,7 @@ public class Thread
 	 * of func becomes the return value of the thread, which can be obtained
 	 * with g_thread_join().
 	 * The name can be useful for discriminating threads in a debugger.
+	 * It is not used for other purposes and does not have to be unique.
 	 * Some systems restrict the length of name to 16 bytes.
 	 * If the thread can not be created the program aborts. See
 	 * g_thread_try_new() if you want to attempt to deal with failures.
@@ -197,7 +198,7 @@ public class Thread
 	 * Note that g_thread_join() implicitly unrefs the GThread as well.
 	 * Since 2.32
 	 * Params:
-	 * name = a name for the new thread
+	 * name = an (optional) name for the new thread. [allow-none]
 	 * func = a function to execute in the new thread
 	 * data = an argument to supply to the new thread
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -220,7 +221,7 @@ public class Thread
 	 * error is set and NULL is returned.
 	 * Since 2.32
 	 * Params:
-	 * name = a name for the new thread
+	 * name = an (optional) name for the new thread. [allow-none]
 	 * func = a function to execute in the new thread
 	 * data = an argument to supply to the new thread
 	 * Returns: the new GThread, or NULL if an error occurred

@@ -337,8 +337,14 @@ public class MainContext
 	}
 	
 	/**
-	 * If context is currently waiting in a poll(), interrupt
-	 * the poll(), and continue the iteration process.
+	 * If context is currently blocking in g_main_context_iteration()
+	 * waiting for a source to become ready, cause it to stop blocking
+	 * and return. Otherwise, cause the next invocation of
+	 * g_main_context_iteration() to return without blocking.
+	 * This API is useful for low-level control over GMainContext; for
+	 * example, integrating it with main loop implementations such as
+	 * GMainLoop.
+	 * Another related use for this function is when implementing a main
 	 */
 	public void wakeup()
 	{

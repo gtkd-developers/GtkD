@@ -151,7 +151,7 @@ public class Module
 	 * Params:
 	 * directory = the directory where the module is. This can be NULL
 	 * or the empty string to indicate that the standard platform-specific
-	 * directories will be used, though that is not recommended
+	 * directories will be used, though that is not recommended. [allow-none]
 	 * moduleName = the name of the module
 	 * Returns: the complete path of the module, including the standard library prefix and suffix. This should be freed when no longer needed
 	 */
@@ -198,7 +198,7 @@ public class Module
 	 * by G_MODULE_EXPORT. Note that a valid symbol can be NULL.
 	 * Params:
 	 * symbolName = the name of the symbol to find
-	 * symbol = returns the pointer to the symbol value
+	 * symbol = returns the pointer to the symbol value. [out]
 	 * Returns: TRUE on success
 	 */
 	public int symbol(string symbolName, void** symbol)
