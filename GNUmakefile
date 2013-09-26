@@ -24,11 +24,7 @@ endif
 default-goal: libs test
 shared: shared-libs
 
-ifneq (,$(findstring ldc,$(DC)))
-    all: libs shared-libs gda gstreamer shared-gda shared-gstreamer test
-else
-    all: libs gtkdgl gda gstreamer test
-endif
+all: libs shared-libs gda gstreamer vted shared-gda shared-gstreamer shared-vted test
 
 ifeq ("$(DC)","gdc")
     DCFLAGS=-O2
@@ -316,6 +312,9 @@ install-gda: $(LIBNAME_GTKDGDA) install-gtkd install-headers-gda
 install-gstreamer: $(LIBNAME_GSTREAMERD) install-gtkd install-headers-gstreamer
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
+install-vted: $(LIBNAME_VTED) install-gtkd install-headers-vted
+	install -m 644 $(LIBNAME_VTED) $(DESTDIR)$(prefix)/$(libdir)
+
 install-shared-gtkd: $(SONAME_GTKD)
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	$(install-so)
@@ -330,9 +329,10 @@ install-shared-gda: $(SONAME_GTKDGDA) install-shared-gtkd
 	$(install-so)
 
 install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
-	install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(SO_VERSION).7.0
-	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION).7.0 $<.$(SO_VERSION)
-	cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION) $<
+	$(install-so)
+
+install-shared-vted: $(SONAME_VTED) install-shared-gtkd
+	$(install-so)
 
 install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
@@ -355,6 +355,10 @@ install-headers-gda: gtkdgda-$(MAJOR).pc install-headers-gtkd
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+
+install-headers-vted: vted-$(MAJOR).pc install-headers-gtkd
+	(cd srcvte; echo $(SOURCES_VTED) | sed -e s,srcvte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
@@ -396,14 +400,22 @@ uninstall-gstreamer:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
+uninstall-vte:
+	$(foreach dir,$(shell ls srcvte), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
+	rm -f $(DESTDIR)$(datadir)/pkgconfig/vted-$(MAJOR).pc
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_VTED)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED).$(SO_VERSION)
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED).$(SO_VERSION).$(MINOR).$(BUGFIX)
+
 clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       gtkd-$(MAJOR).pc     $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
 	-rm -f $(LIBNAME_GTKDGL)     $(SONAME_GTKDGL)     gtkdgl-$(MAJOR).pc   $(OBJECTS_GTKDGL)     $(PICOBJECTS_GTKDGL)
 	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     gtkdsv-$(MAJOR).pc   $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
 	-rm -f $(LIBNAME_GTKDGDA)    $(SONAME_GTKDGDA)    gtkdgda-$(MAJOR).pc  $(OBJECTS_GTKDGDA)    $(PICOBJECTS_GTKDGDA)
 	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) gstreamerd-$(MAJOR).pc      $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
+	-rm -f $(LIBNAME_VTED)       $(SONAME_VTED)       vted-$(MAJOR).pc     $(OBJECTS_VTED)       $(PICOBJECTS_VTED)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)      $(SONAME_GTKD).$(SO_VERSION)
-	-rm -rf .pic
 
 #######################################################################
 
