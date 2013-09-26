@@ -48,8 +48,10 @@
  * 	- glib.Str
  * 	- glib.Variant
  * 	- glib.VariantType
+ * 	- gio.IconIF
  * 	- gio.MenuModel
  * structWrap:
+ * 	- GIcon* -> IconIF
  * 	- GMenuModel* -> MenuModel
  * 	- GVariant* -> Variant
  * 	- GVariantType* -> VariantType
@@ -70,6 +72,7 @@ private import gobject.ObjectG;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import gio.IconIF;
 private import gio.MenuModel;
 
 
@@ -176,6 +179,26 @@ public class MenuItem
 	}
 	
 	/**
+	 * Sets (or unsets) the icon on menu_item.
+	 * This call is the same as calling g_icon_serialize() and using the
+	 * result as the value to g_menu_item_set_attribute_value() for
+	 * G_MENU_ATTRIBUTE_ICON.
+	 * This API is only intended for use with "noun" menu items; things like
+	 * bookmarks or applications in an "Open With" menu. Don't use it on
+	 * menu items corresponding to verbs (eg: stock icons for 'Save' or
+	 * 'Quit').
+	 * If icon is NULL then the icon is unset.
+	 * Since 2.38
+	 * Params:
+	 * icon = a GIcon, or NULL
+	 */
+	public void setIcon(IconIF icon)
+	{
+		// void g_menu_item_set_icon (GMenuItem *menu_item,  GIcon *icon);
+		g_menu_item_set_icon(gMenuItem, (icon is null) ? null : icon.getIconTStruct());
+	}
+	
+	/**
 	 * Sets or unsets the "action" and "target" attributes of menu_item.
 	 * If action is NULL then both the "action" and "target" attributes
 	 * are unset (and target_value is ignored).
@@ -217,13 +240,8 @@ public class MenuItem
 	
 	/**
 	 * Sets the "action" and possibly the "target" attribute of menu_item.
-	 * If detailed_action contains a double colon ("::") then it is used as
-	 * a separator between an action name and a target string. In this
-	 * case, this call is equivalent to calling
-	 * g_menu_item_set_action_and_target() with the part before the "::" and
-	 * with a string-type GVariant containing the part following the "::".
-	 * If detailed_action doesn't contain "::" then the action is set to
-	 * the given string (verbatim) and the target value is unset.
+	 * The format of detailed_action is the same format parsed by
+	 * g_action_parse_detailed_name().
 	 * See g_menu_item_set_action_and_target() or
 	 * g_menu_item_set_action_and_target_value() for more flexible (but
 	 * slightly less convenient) alternatives.

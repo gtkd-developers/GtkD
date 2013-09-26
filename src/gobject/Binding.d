@@ -129,6 +129,13 @@ private import gobject.ObjectG;
  * either one of the GObject instances it refers to are finalized, or when
  * the GBinding instance loses its last reference.
  *
+ * Note
+ *
+ * Bindings for languages with garbage collection can use
+ * g_binding_unbind() to explicitly release a binding between the source
+ * and target properties, instead of relying on the last reference on the
+ * binding, source, and target instances to drop.
+ *
  * GBinding is available since GObject 2.26
  */
 public class Binding : ObjectG
@@ -237,6 +244,22 @@ public class Binding : ObjectG
 	{
 		// GBindingFlags g_binding_get_flags (GBinding *binding);
 		return g_binding_get_flags(gBinding);
+	}
+	
+	/**
+	 * Explicitly releases the binding between the source and the target
+	 * property expressed by binding.
+	 * Note
+	 * This function will release the reference that is being held on
+	 * the binding instance; if you want to hold on to the GBinding instance
+	 * after calling g_binding_unbind(), you will need to hold a reference
+	 * to it.
+	 * Since 2.38
+	 */
+	public void unbind()
+	{
+		// void g_binding_unbind (GBinding *binding);
+		g_binding_unbind(gBinding);
 	}
 	
 	/**

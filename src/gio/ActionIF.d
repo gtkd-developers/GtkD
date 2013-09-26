@@ -44,6 +44,8 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ErrorG
+ * 	- glib.GException
  * 	- glib.Variant
  * 	- glib.VariantType
  * structWrap:
@@ -64,6 +66,8 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.Variant;
 private import glib.VariantType;
 
@@ -113,6 +117,19 @@ public interface ActionIF
 	
 	/**
 	 */
+	
+	/**
+	 * Checks if action_name is valid.
+	 * action_name is valid if it consists only of alphanumeric characters,
+	 * plus '-' and '.'. The empty string is not a valid action name.
+	 * It is an error to call this function with a non-utf8 action_name.
+	 * action_name must not be NULL.
+	 * Since 2.38
+	 * Params:
+	 * actionName = an potential action name
+	 * Returns: TRUE if action_name is valid
+	 */
+	public static int nameIsValid(string actionName);
 	
 	/**
 	 * Queries the name of action.
@@ -211,4 +228,51 @@ public interface ActionIF
 	 * parameter = the parameter to the activation. [allow-none]
 	 */
 	public void activate(Variant parameter);
+	
+	/**
+	 * Parses a detailed action name into its separate name and target
+	 * components.
+	 * Detailed action names can have three formats.
+	 * The first format is used to represent an action name with no target
+	 * value and consists of just an action name containing no whitespace
+	 * nor the characters ':', '(' or ')'. For example: "app.action".
+	 * The second format is used to represent an action with a target value
+	 * that is a non-empty string consisting only of alphanumerics, plus '-'
+	 * and '.'. In that case, the action name and target value are
+	 * separated by a double colon ("::"). For example:
+	 * "app.action::target".
+	 * The third format is used to represent an action with any type of
+	 * target value, including strings. The target value follows the action
+	 * name, surrounded in parens. For example: "app.action(42)". The
+	 * target value is parsed using g_variant_parse(). If a tuple-typed
+	 * value is desired, it must be specified in the same way, resulting in
+	 * two sets of parens, for example: "app.action((1,2,3))". A string
+	 * target can be specified this way as well: "app.action('target')".
+	 * For strings, this third format must be used if * target value is
+	 * empty or contains characters other than alphanumerics, '-' and '.'.
+	 * Since 2.38
+	 * Params:
+	 * detailedName = a detailed action name
+	 * actionName = the action name. [out]
+	 * targetValue = the target value, or NULL for no target. [out]
+	 * Returns: TRUE if successful, else FALSE with error set
+	 * Throws: GException on failure.
+	 */
+	public static int parseDetailedName(string detailedName, out string actionName, out Variant targetValue);
+	
+	/**
+	 * Formats a detailed action name from action_name and target_value.
+	 * It is an error to call this function with an invalid action name.
+	 * This function is the opposite of
+	 * g_action_parse_detailed_action_name(). It will produce a string that
+	 * can be parsed back to the action_name and target_value by that
+	 * function.
+	 * See that function for the types of strings that will be printed by
+	 * this function.
+	 * Since 2.38
+	 * Params:
+	 * actionName = a valid action name
+	 * Returns: a detailed format string
+	 */
+	public static string printDetailedName(string actionName, Variant parameter);
 }

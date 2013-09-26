@@ -358,4 +358,14 @@ public class Menu : MenuModel
 		// void g_menu_remove (GMenu *menu,  gint position);
 		g_menu_remove(gMenu, position);
 	}
+	
+	/**
+	 * Removes all items in the menu.
+	 * Since 2.38
+	 */
+	public void removeAll()
+	{
+		// void g_menu_remove_all (GMenu *menu);
+		g_menu_remove_all(gMenu);
+	}
 }

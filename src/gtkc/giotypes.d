@@ -132,6 +132,33 @@ public enum GFileMonitorFlags
 alias GFileMonitorFlags FileMonitorFlags;
 
 /**
+ * Flags that can be used with g_file_measure_disk_usage().
+ * G_FILE_MEASURE_NONE
+ * No flags set.
+ * G_FILE_MEASURE_REPORT_ANY_ERROR
+ * Report any error encountered
+ *  while traversing the directory tree. Normally errors are only
+ *  reported for the toplevel file.
+ * G_FILE_MEASURE_APPARENT_SIZE
+ * Tally usage based on apparent file
+ *  sizes. Normally, the block-size is used, if available, as this is a
+ *  more accurate representation of disk space used.
+ *  Compare with 'du --apparent-size'.
+ * G_FILE_MEASURE_NO_XDEV
+ * Do not cross mount point boundaries.
+ *  Compare with 'du -x'.
+ * Since 2.38
+ */
+public enum GFileMeasureFlags
+{
+	NONE = 0,
+	REPORT_ANY_ERROR = (1 << 1),
+	APPARENT_SIZE = (1 << 2),
+	NO_XDEV = (1 << 3)
+}
+alias GFileMeasureFlags FileMeasureFlags;
+
+/**
  * Indicates a hint from the file system whether files should be
  * previewed in a file manager. Returned as the value of the key
  * G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
@@ -1532,12 +1559,21 @@ alias GDBusCallFlags DBusCallFlags;
  * Don't actually send the AddMatch
  * D-Bus call for this signal subscription. This gives you more control
  * over which match rules you add (but you must add them manually).
+ * G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_NAMESPACE
+ * Match first arguments that
+ * contain a bus or interface name with the given namespace.
+ * G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_PATH
+ * Match first arguments that
+ * contain an object path that is either equivalent to the given path,
+ * or one of the paths is a subpath of the other.
  * Since 2.26
  */
 public enum GDBusSignalFlags
 {
 	NONE = 0,
-	NO_MATCH_RULE = (1<<0)
+	NO_MATCH_RULE = (1<<0),
+	MATCH_ARG0_NAMESPACE = (1<<1),
+	MATCH_ARG0_PATH = (1<<2)
 }
 alias GDBusSignalFlags DBusSignalFlags;
 
@@ -1988,15 +2024,15 @@ public struct GFile{}
  * Finishes an asynchronous delete.
  * trash ()
  * Sends a GFile to the Trash location.
- * _trash_async ()
+ * trash_async ()
  * Asynchronously sends a GFile to the Trash location.
- * _trash_finish ()
+ * trash_finish ()
  * Finishes an asynchronous file trashing operation.
  * make_directory ()
  * Makes a directory.
- * _make_directory_async ()
+ * make_directory_async ()
  * Asynchronously makes a directory.
- * _make_directory_finish ()
+ * make_directory_finish ()
  * Finishes making a directory asynchronously.
  * make_symbolic_link ()
  * Makes a symbolic link.
@@ -2076,6 +2112,9 @@ public struct GFile{}
  * Polls a mountable object for media changes. Since 2.22.
  * poll_mountable_finish ()
  * Finishes an poll operation for media changes. Since 2.22.
+ * measure_disk_usage ()
+ * measure_disk_usage_async ()
+ * measure_disk_usage_finish ()
  */
 public struct GFileIface
 {
@@ -2137,11 +2176,11 @@ public struct GFileIface
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  deleteFileAsync;
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  deleteFileFinish;
 	extern(C) int function(GFile* file, GCancellable* cancellable, GError** error)  trash;
-	extern(C) void function()  _TrashAsync;
-	extern(C) void function()  _TrashFinish;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  trashAsync;
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  trashFinish;
 	extern(C) int function(GFile* file, GCancellable* cancellable, GError** error)  makeDirectory;
-	extern(C) void function()  _MakeDirectoryAsync;
-	extern(C) void function()  _MakeDirectoryFinish;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  makeDirectoryAsync;
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  makeDirectoryFinish;
 	extern(C) int function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** error)  makeSymbolicLink;
 	extern(C) void function()  _MakeSymbolicLinkAsync;
 	extern(C) void function()  _MakeSymbolicLinkFinish;
@@ -2181,6 +2220,9 @@ public struct GFileIface
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  ejectMountableWithOperationFinish;
 	extern(C) void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  pollMountable;
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  pollMountableFinish;
+	extern(C) int function(GFile* file, GFileMeasureFlags flags, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** error)  measureDiskUsage;
+	extern(C) void function(GFile* file, GFileMeasureFlags flags, int ioPriority, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData)  measureDiskUsageAsync;
+	extern(C) int function(GFile* file, GAsyncResult* result, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** error)  measureDiskUsageFinish;
 }
 
 
@@ -3097,6 +3139,7 @@ public struct GIcon{}
  * Constructs a GIcon from tokens. Set the GError if
  * the tokens are malformed. Don't implement if the GIcon can't be
  * serialized (Since 2.20).
+ * serialize ()
  */
 public struct GIconIface
 {
@@ -3106,6 +3149,7 @@ public struct GIconIface
 	extern(C) int function(GIcon* icon1, GIcon* icon2)  equal;
 	extern(C) int function(GIcon* icon, GPtrArray* tokens, int* outVersion)  toTokens;
 	extern(C) GIcon * function(char** tokens, int numTokens, int versio, GError** error)  fromTokens;
+	extern(C) GVariant * function(GIcon* icon)  serialize;
 }
 
 
@@ -3114,6 +3158,13 @@ public struct GIconIface
  * Gets an icon for a GFile. Implements GLoadableIcon.
  */
 public struct GFileIcon{}
+
+
+/**
+ * Main Gtk struct.
+ * Gets an icon for a GBytes. Implements GLoadableIcon.
+ */
+public struct GBytesIcon{}
 
 
 /**
@@ -3920,9 +3971,34 @@ public struct GDBusConnection{}
 /**
  * Virtual table for handling properties and method calls for a D-Bus
  * interface.
- * If you want to handle getting/setting D-Bus properties asynchronously, simply
- * register an object with the org.freedesktop.DBus.Properties
- * D-Bus interface using g_dbus_connection_register_object().
+ * Since 2.38, if you want to handle getting/setting D-Bus properties
+ * asynchronously, give NULL as your get_property() or set_property()
+ * function. The D-Bus call will be directed to your method_call
+ * function, with the provided interface_name set to
+ * "org.freedesktop.DBus.Properties".
+ * The usual checks on the validity of the calls is performed. For
+ * 'Get' calls, an error is automatically returned if
+ * the property does not exist or the permissions do not allow access.
+ * The same checks are performed for 'Set' calls, and
+ * the provided value is also checked for being the correct type.
+ * For both 'Get' and 'Set' calls,
+ * the GDBusMethodInvocation passed to the method_call handler can be
+ * queried with g_dbus_method_invocation_get_property_info() to get a
+ * pointer to the GDBusPropertyInfo of the property.
+ * If you have readable properties specified in your interface info, you
+ * must ensure that you either provide a non-NULL get_property()
+ * function or provide implementations of both the
+ * 'Get' and 'GetAll' methods on
+ * the 'org.freedesktop.DBus.Properties' interface in
+ * your method_call function. Note that the required return type of
+ * the 'Get' call is (v), not the
+ * type of the property. 'GetAll' expects a return
+ * value of type a{sv}.
+ * If you have writable properties specified in your interface info, you
+ * must ensure that you either provide a non-NULL set_property()
+ * function or provide an implementation of the 'Set'
+ * call. If implementing the call, you must return the value of type
+ * G_VARIANT_TYPE_UNIT.
  * GDBusInterfaceMethodCallFunc method_call;
  * Function for handling incoming method calls.
  * GDBusInterfaceGetPropertyFunc get_property;
@@ -4620,6 +4696,14 @@ public struct GSimpleAction{}
 
 /**
  * Main Gtk struct.
+ * This type is opaque.
+ * Since 2.38
+ */
+public struct GPropertyAction{}
+
+
+/**
+ * Main Gtk struct.
  */
 public struct GRemoteActionGroup{}
 
@@ -4767,6 +4851,43 @@ public alias extern(C) void function(long currentNumBytes, long totalNumBytes, v
  */
 // gboolean (*GFileReadMoreCallback) (const char *file_contents,  goffset file_size,  gpointer callback_data);
 public alias extern(C) int function(char* fileContents, long fileSize, void* callbackData) GFileReadMoreCallback;
+
+/*
+ * This callback type is used by g_file_measure_disk_usage() to make
+ * periodic progress reports when measuring the amount of disk spaced
+ * used by a directory.
+ * These calls are made on a best-effort basis and not all types of
+ * GFile will support them. At the minimum, however, one call will
+ * always be made immediately.
+ * In the case that there is no support, reporting will be set to
+ * FALSE (and the other values undefined) and no further calls will be
+ * made. Otherwise, the reporting will be TRUE and the other values
+ * all-zeros during the first (immediate) call. In this way, you can
+ * know which type of progress UI to show without a delay.
+ * For g_file_measure_disk_usage() the callback is made directly. For
+ * g_file_measure_disk_usage_async() the callback is made via the
+ * default main context of the calling thread (ie: the same way that the
+ * final async result would be reported).
+ * current_size is in the same units as requested by the operation (see
+ * G_FILE_DISK_USAGE_APPARENT_SIZE).
+ * The frequency of the updates is implementation defined, but is
+ * ideally about once every 200ms.
+ * The last progress callback may or may not be equal to the final
+ * result. Always check the async result to get the final value.
+ * reporting :
+ * TRUE if more reports will come
+ * current_size :
+ * the current cumulative size measurement
+ * num_dirs :
+ * the number of directories visited so far
+ * num_files :
+ * the number of non-directory files encountered
+ * user_data :
+ * the data passed to the original request for this callback
+ * Since 2.38
+ */
+// void (*GFileMeasureProgressCallback) (gboolean reporting,  guint64 current_size,  guint64 num_dirs,  guint64 num_files,  gpointer user_data);
+public alias extern(C) void function(int reporting, ulong currentSize, ulong numDirs, ulong numFiles, void* userData) GFileMeasureProgressCallback;
 
 /*
  * This is the function type of the callback used for the GSource

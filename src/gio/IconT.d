@@ -48,7 +48,12 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Variant
+ * 	- gio.IconIF
+ * 	- gio.Icon
  * structWrap:
+ * 	- GIcon* -> IconIF
+ * 	- GVariant* -> Variant
  * module aliases:
  * local aliases:
  * overrides:
@@ -67,6 +72,9 @@ public import gobject.ObjectG;
 public import glib.Str;
 public import glib.ErrorG;
 public import glib.GException;
+public import glib.Variant;
+public import gio.IconIF;
+public import gio.Icon;
 
 
 
@@ -84,12 +92,22 @@ public import glib.GException;
  *
  * To check if two GIcons are equal, see g_icon_equal().
  *
- * For serializing a GIcon, use g_icon_to_string() and
- * g_icon_new_for_string().
+ * For serializing a GIcon, use g_icon_serialize() and
+ * g_icon_deserialize().
+ *
+ * If you want to consume GIcon (for example, in a toolkit) you must
+ * be prepared to handle at least the three following cases:
+ * GLoadableIcon, GThemedIcon and GEmblemedIcon. It may also make
+ * sense to have fast-paths for other cases (like handling GdkPixbuf
+ * directly, for example) but all compliant GIcon implementations
+ * outside of GIO must implement GLoadableIcon.
  *
  * If your application or library provides one or more GIcon
- * implementations you need to ensure that each GType is registered
- * with the type system prior to calling g_icon_new_for_string().
+ * implementations you need to ensure that your new implementation also
+ * implements GLoadableIcon. Additionally, you must provide an
+ * implementation of g_icon_serialize() that gives a result that is
+ * understood by g_icon_deserialize(), yielding one of the built-in icon
+ * types.
  */
 public template IconT(TStruct)
 {
@@ -126,10 +144,10 @@ public template IconT(TStruct)
 	 * icon2 = pointer to the second GIcon. [allow-none]
 	 * Returns: TRUE if icon1 is equal to icon2. FALSE otherwise.
 	 */
-	public int equal(GIcon* icon2)
+	public int equal(IconIF icon2)
 	{
 		// gboolean g_icon_equal (GIcon *icon1,  GIcon *icon2);
-		return g_icon_equal(getIconTStruct(), icon2);
+		return g_icon_equal(getIconTStruct(), (icon2 is null) ? null : icon2.getIconTStruct());
 	}
 	
 	/**
@@ -154,5 +172,47 @@ public template IconT(TStruct)
 	{
 		// gchar * g_icon_to_string (GIcon *icon);
 		return Str.toString(g_icon_to_string(getIconTStruct()));
+	}
+	
+	/**
+	 * Serializes a GIcon into a GVariant. An equivalent GIcon can be retrieved
+	 * back by calling g_icon_deserialize() on the returned value.
+	 * As serialization will avoid using raw icon data when possible, it only
+	 * makes sense to transfer the GVariant between processes on the same machine,
+	 * (as opposed to over the network), and within the same file system namespace.
+	 * Since 2.38
+	 * Returns: a GVariant, or NULL when serialization fails. [transfer full]
+	 */
+	public Variant serialize()
+	{
+		// GVariant * g_icon_serialize (GIcon *icon);
+		auto p = g_icon_serialize(getIconTStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
+	}
+	
+	/**
+	 * Deserializes a GIcon previously serialized using g_icon_serialize().
+	 * Since 2.38
+	 * Params:
+	 * value = a GVariant created with g_icon_serialize()
+	 * Returns: a GIcon, or NULL when deserialization fails. [transfer full]
+	 */
+	public static IconIF deserialize(Variant value)
+	{
+		// GIcon * g_icon_deserialize (GVariant *value);
+		auto p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 }

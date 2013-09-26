@@ -135,6 +135,12 @@ out: g_file_load_partial_contents_finish etag_out
 out: g_file_replace_contents new_etag
 out: g_file_replace_contents_finish new_etag
 out: g_file_new_tmp iostream
+out: g_file_measure_disk_usage disk_usage
+out: g_file_measure_disk_usage num_dirs
+out: g_file_measure_disk_usage num_files
+out: g_file_measure_disk_usage_finish disk_usage
+out: g_file_measure_disk_usage_finish num_dirs
+out: g_file_measure_disk_usage_finish num_files
 
 # g_file_new_for_commandline_arg also accepts paths ans uris
 nocode: g_file_new_for_path
@@ -923,6 +929,7 @@ structWrap: GAppLaunchContext* AppLaunchContext
 import: gio.AppInfoT
 import: gio.AppInfoIF
 
+array: g_desktop_app_info_list_actions Return
 nocode: g_desktop_app_info_new_from_filename
 
 code: start
@@ -1215,6 +1222,11 @@ prefix: g_icon_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: glib.Variant
+import: gio.IconIF
+import: gio.Icon
+structWrap: GVariant* Variant
+structWrap: GIcon* IconIF
 override: toString
 #Skip this one for now
 nocode: g_icon_new_for_string
@@ -1276,6 +1288,25 @@ code: start
 	mixin LoadableIconT!(GFileIcon);
 code: end
 outFile: FileIcon
+
+file: gio-GBytesIcon.html
+struct: GBytesIcon
+ctorStruct: GIcon
+class: FileIcon
+implements: LoadableIconIF
+prefix: g_bytes_icon_
+import: glib.Bytes
+structWrap: GBytes* Bytes
+
+#imports for LoadableIcon Interface.
+import: gio.LoadableIconT
+import: gio.LoadableIconIF
+
+code: start
+	// add the LoadableIcon capabilities
+	mixin LoadableIconT!(GBytesIcon);
+code: end
+outFile: BytesIcon
 
 file: GLoadableIcon.html
 struct: GLoadableIcon
@@ -2485,11 +2516,13 @@ import: glib.GException
 import: glib.Variant
 import: gio.DBusConnection
 import: gio.DBusMessage
+import: gio.DBusPropertyInfo
 import: gio.UnixFDList
 structWrap: GError* ErrorG
 structWrap: GVariant* Variant
 structWrap: GDBusConnection* DBusConnection
 structWrap: GDBusMessage* DBusMessage
+structWrap: GDBusPropertyInfo* DBusPropertyInfo
 structWrap: GUnixFDList* UnixFDList
 outFile: DBusMethodInvocation
 
@@ -3179,10 +3212,16 @@ class: ActionT
 template: TStruct
 prefix: g_action_
 import: glib.Str
+import: glib.ErrorG
+import: glib.GException
 import: glib.Variant
 import: glib.VariantType
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
+
+out: g_action_parse_detailed_name action_name
+out: g_action_parse_detailed_name target_value
+
 interface: ActionIF
 outFile: ActionT
 
@@ -3237,6 +3276,23 @@ code: start
 	mixin ActionT!(GSimpleAction);
 code: end
 outFile: SimpleAction
+
+file: gio-GPropertyAction.html
+struct: GPropertyAction
+class: PropertyAction
+implements: ActionIF
+prefix: g_property_action_
+import: glib.Str
+
+#imports for Action Interface.
+import: gio.ActionIF
+import: gio.ActionT
+
+code: start
+	// add the Action capabilities
+	mixin ActionT!(GPropertyAction);
+code: end
+outFile: PropertyAction
 
 file: GRemoteActionGroup.html
 struct: GRemoteActionGroup
@@ -3355,9 +3411,11 @@ strictPrefix: Y
 import: glib.Str
 import: glib.Variant
 import: glib.VariantType
+import: gio.IconIF
 import: gio.MenuModel
 structWrap: GVariant* Variant
 structWrap: GVariantType* VariantType
+structWrap: GIcon* IconIF
 structWrap: GMenuModel* MenuModel
 
 #Use setSection or setSubmenu

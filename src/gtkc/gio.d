@@ -81,6 +81,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_query_filesystem_info_async, \"g_file_query_filesystem_info_async\", LIBRARY.GIO);
 	Linker.link(g_file_query_filesystem_info_finish, \"g_file_query_filesystem_info_finish\", LIBRARY.GIO);
 	Linker.link(g_file_query_default_handler, \"g_file_query_default_handler\", LIBRARY.GIO);
+	Linker.link(g_file_measure_disk_usage, \"g_file_measure_disk_usage\", LIBRARY.GIO);
+	Linker.link(g_file_measure_disk_usage_async, \"g_file_measure_disk_usage_async\", LIBRARY.GIO);
+	Linker.link(g_file_measure_disk_usage_finish, \"g_file_measure_disk_usage_finish\", LIBRARY.GIO);
 	Linker.link(g_file_find_enclosing_mount, \"g_file_find_enclosing_mount\", LIBRARY.GIO);
 	Linker.link(g_file_find_enclosing_mount_async, \"g_file_find_enclosing_mount_async\", LIBRARY.GIO);
 	Linker.link(g_file_find_enclosing_mount_finish, \"g_file_find_enclosing_mount_finish\", LIBRARY.GIO);
@@ -94,11 +97,15 @@ mixin( _shared ~ "static this()
 	Linker.link(g_file_delete_async, \"g_file_delete_async\", LIBRARY.GIO);
 	Linker.link(g_file_delete_finish, \"g_file_delete_finish\", LIBRARY.GIO);
 	Linker.link(g_file_trash, \"g_file_trash\", LIBRARY.GIO);
+	Linker.link(g_file_trash_async, \"g_file_trash_async\", LIBRARY.GIO);
+	Linker.link(g_file_trash_finish, \"g_file_trash_finish\", LIBRARY.GIO);
 	Linker.link(g_file_copy, \"g_file_copy\", LIBRARY.GIO);
 	Linker.link(g_file_copy_async, \"g_file_copy_async\", LIBRARY.GIO);
 	Linker.link(g_file_copy_finish, \"g_file_copy_finish\", LIBRARY.GIO);
 	Linker.link(g_file_move, \"g_file_move\", LIBRARY.GIO);
 	Linker.link(g_file_make_directory, \"g_file_make_directory\", LIBRARY.GIO);
+	Linker.link(g_file_make_directory_async, \"g_file_make_directory_async\", LIBRARY.GIO);
+	Linker.link(g_file_make_directory_finish, \"g_file_make_directory_finish\", LIBRARY.GIO);
 	Linker.link(g_file_make_directory_with_parents, \"g_file_make_directory_with_parents\", LIBRARY.GIO);
 	Linker.link(g_file_make_symbolic_link, \"g_file_make_symbolic_link\", LIBRARY.GIO);
 	Linker.link(g_file_query_settable_attributes, \"g_file_query_settable_attributes\", LIBRARY.GIO);
@@ -734,6 +741,9 @@ mixin( _shared ~ "static this()
 	Linker.link(g_desktop_app_info_get_boolean, \"g_desktop_app_info_get_boolean\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_has_key, \"g_desktop_app_info_has_key\", LIBRARY.GIO);
 	Linker.link(g_desktop_app_info_launch_uris_as_manager, \"g_desktop_app_info_launch_uris_as_manager\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_list_actions, \"g_desktop_app_info_list_actions\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_action_name, \"g_desktop_app_info_get_action_name\", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_launch_action, \"g_desktop_app_info_launch_action\", LIBRARY.GIO);
 
 	// gio.VolumeMonitor
 
@@ -896,6 +906,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_icon_equal, \"g_icon_equal\", LIBRARY.GIO);
 	Linker.link(g_icon_to_string, \"g_icon_to_string\", LIBRARY.GIO);
 	Linker.link(g_icon_new_for_string, \"g_icon_new_for_string\", LIBRARY.GIO);
+	Linker.link(g_icon_serialize, \"g_icon_serialize\", LIBRARY.GIO);
+	Linker.link(g_icon_deserialize, \"g_icon_deserialize\", LIBRARY.GIO);
 
 	// gio.Icon
 
@@ -904,6 +916,11 @@ mixin( _shared ~ "static this()
 
 	Linker.link(g_file_icon_new, \"g_file_icon_new\", LIBRARY.GIO);
 	Linker.link(g_file_icon_get_file, \"g_file_icon_get_file\", LIBRARY.GIO);
+
+	// gio.FileIcon
+
+	Linker.link(g_bytes_icon_new, \"g_bytes_icon_new\", LIBRARY.GIO);
+	Linker.link(g_bytes_icon_get_bytes, \"g_bytes_icon_get_bytes\", LIBRARY.GIO);
 
 	// gio.LoadableIconT
 
@@ -1612,6 +1629,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_dbus_method_invocation_get_interface_name, \"g_dbus_method_invocation_get_interface_name\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_get_method_name, \"g_dbus_method_invocation_get_method_name\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_get_method_info, \"g_dbus_method_invocation_get_method_info\", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_property_info, \"g_dbus_method_invocation_get_property_info\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_get_connection, \"g_dbus_method_invocation_get_connection\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_get_message, \"g_dbus_method_invocation_get_message\", LIBRARY.GIO);
 	Linker.link(g_dbus_method_invocation_get_parameters, \"g_dbus_method_invocation_get_parameters\", LIBRARY.GIO);
@@ -1908,6 +1926,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_application_run, \"g_application_run\", LIBRARY.GIO);
 	Linker.link(g_application_set_default, \"g_application_set_default\", LIBRARY.GIO);
 	Linker.link(g_application_get_default, \"g_application_get_default\", LIBRARY.GIO);
+	Linker.link(g_application_mark_busy, \"g_application_mark_busy\", LIBRARY.GIO);
+	Linker.link(g_application_unmark_busy, \"g_application_unmark_busy\", LIBRARY.GIO);
 
 	// gio.ApplicationCommandLine
 
@@ -1967,6 +1987,7 @@ mixin( _shared ~ "static this()
 
 	// gio.ActionT
 
+	Linker.link(g_action_name_is_valid, \"g_action_name_is_valid\", LIBRARY.GIO);
 	Linker.link(g_action_get_name, \"g_action_get_name\", LIBRARY.GIO);
 	Linker.link(g_action_get_parameter_type, \"g_action_get_parameter_type\", LIBRARY.GIO);
 	Linker.link(g_action_get_state_type, \"g_action_get_state_type\", LIBRARY.GIO);
@@ -1975,6 +1996,8 @@ mixin( _shared ~ "static this()
 	Linker.link(g_action_get_state, \"g_action_get_state\", LIBRARY.GIO);
 	Linker.link(g_action_change_state, \"g_action_change_state\", LIBRARY.GIO);
 	Linker.link(g_action_activate, \"g_action_activate\", LIBRARY.GIO);
+	Linker.link(g_action_parse_detailed_name, \"g_action_parse_detailed_name\", LIBRARY.GIO);
+	Linker.link(g_action_print_detailed_name, \"g_action_print_detailed_name\", LIBRARY.GIO);
 
 	// gio.Action
 
@@ -1985,6 +2008,10 @@ mixin( _shared ~ "static this()
 	Linker.link(g_simple_action_new_stateful, \"g_simple_action_new_stateful\", LIBRARY.GIO);
 	Linker.link(g_simple_action_set_enabled, \"g_simple_action_set_enabled\", LIBRARY.GIO);
 	Linker.link(g_simple_action_set_state, \"g_simple_action_set_state\", LIBRARY.GIO);
+
+	// gio.PropertyAction
+
+	Linker.link(g_property_action_new, \"g_property_action_new\", LIBRARY.GIO);
 
 	// gio.RemoteActionGroupT
 
@@ -2040,6 +2067,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_menu_insert_submenu, \"g_menu_insert_submenu\", LIBRARY.GIO);
 	Linker.link(g_menu_prepend_submenu, \"g_menu_prepend_submenu\", LIBRARY.GIO);
 	Linker.link(g_menu_remove, \"g_menu_remove\", LIBRARY.GIO);
+	Linker.link(g_menu_remove_all, \"g_menu_remove_all\", LIBRARY.GIO);
 
 	// gio.MenuItem
 
@@ -2048,6 +2076,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_menu_item_new_submenu, \"g_menu_item_new_submenu\", LIBRARY.GIO);
 	Linker.link(g_menu_item_new_from_model, \"g_menu_item_new_from_model\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_label, \"g_menu_item_set_label\", LIBRARY.GIO);
+	Linker.link(g_menu_item_set_icon, \"g_menu_item_set_icon\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_action_and_target_value, \"g_menu_item_set_action_and_target_value\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_action_and_target, \"g_menu_item_set_action_and_target\", LIBRARY.GIO);
 	Linker.link(g_menu_item_set_detailed_action, \"g_menu_item_set_detailed_action\", LIBRARY.GIO);
@@ -2168,6 +2197,9 @@ mixin( gshared ~"extern(C)
 	void function(GFile* file, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_query_filesystem_info_async;
 	GFileInfo* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_query_filesystem_info_finish;
 	GAppInfo* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_default_handler;
+	gboolean function(GFile* file, GFileMeasureFlags flags, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, guint64* diskUsage, guint64* numDirs, guint64* numFiles, GError** error) c_g_file_measure_disk_usage;
+	void function(GFile* file, GFileMeasureFlags flags, gint ioPriority, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData) c_g_file_measure_disk_usage_async;
+	gboolean function(GFile* file, GAsyncResult* result, guint64* diskUsage, guint64* numDirs, guint64* numFiles, GError** error) c_g_file_measure_disk_usage_finish;
 	GMount* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_find_enclosing_mount;
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_find_enclosing_mount_async;
 	GMount* function(GFile* file, GAsyncResult* res, GError** error) c_g_file_find_enclosing_mount_finish;
@@ -2181,11 +2213,15 @@ mixin( gshared ~"extern(C)
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_delete_async;
 	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_delete_finish;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_trash;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_trash_async;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_trash_finish;
 	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error) c_g_file_copy;
 	void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) c_g_file_copy_async;
 	gboolean function(GFile* file, GAsyncResult* res, GError** error) c_g_file_copy_finish;
 	gboolean function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error) c_g_file_move;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_make_directory;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_make_directory_async;
+	gboolean function(GFile* file, GAsyncResult* result, GError** error) c_g_file_make_directory_finish;
 	gboolean function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_make_directory_with_parents;
 	gboolean function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** error) c_g_file_make_symbolic_link;
 	GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** error) c_g_file_query_settable_attributes;
@@ -2821,6 +2857,9 @@ mixin( gshared ~"extern(C)
 	gboolean function(GDesktopAppInfo* info, char* key) c_g_desktop_app_info_get_boolean;
 	gboolean function(GDesktopAppInfo* info, char* key) c_g_desktop_app_info_has_key;
 	gboolean function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, GError** error) c_g_desktop_app_info_launch_uris_as_manager;
+	gchar** function(GDesktopAppInfo* info) c_g_desktop_app_info_list_actions;
+	gchar* function(GDesktopAppInfo* info, gchar* actionName) c_g_desktop_app_info_get_action_name;
+	void function(GDesktopAppInfo* info, gchar* actionName, GAppLaunchContext* launchContext) c_g_desktop_app_info_launch_action;
 
 	// gio.VolumeMonitor
 
@@ -2983,6 +3022,8 @@ mixin( gshared ~"extern(C)
 	gboolean function(GIcon* icon1, GIcon* icon2) c_g_icon_equal;
 	gchar* function(GIcon* icon) c_g_icon_to_string;
 	GIcon* function(gchar* str, GError** error) c_g_icon_new_for_string;
+	GVariant* function(GIcon* icon) c_g_icon_serialize;
+	GIcon* function(GVariant* value) c_g_icon_deserialize;
 
 	// gio.Icon
 
@@ -2991,6 +3032,11 @@ mixin( gshared ~"extern(C)
 
 	GIcon* function(GFile* file) c_g_file_icon_new;
 	GFile* function(GFileIcon* icon) c_g_file_icon_get_file;
+
+	// gio.FileIcon
+
+	GIcon* function(GBytes* bytes) c_g_bytes_icon_new;
+	GBytes* function(GBytesIcon* icon) c_g_bytes_icon_get_bytes;
 
 	// gio.LoadableIconT
 
@@ -3699,6 +3745,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_interface_name;
 	gchar* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_method_name;
 	GDBusMethodInfo* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_method_info;
+	GDBusPropertyInfo* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_property_info;
 	GDBusConnection* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_connection;
 	GDBusMessage* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_message;
 	GVariant* function(GDBusMethodInvocation* invocation) c_g_dbus_method_invocation_get_parameters;
@@ -3995,6 +4042,8 @@ mixin( gshared ~"extern(C)
 	int function(GApplication* application, int argc, char** argv) c_g_application_run;
 	void function(GApplication* application) c_g_application_set_default;
 	GApplication* function() c_g_application_get_default;
+	void function(GApplication* application) c_g_application_mark_busy;
+	void function(GApplication* application) c_g_application_unmark_busy;
 
 	// gio.ApplicationCommandLine
 
@@ -4054,6 +4103,7 @@ mixin( gshared ~"extern(C)
 
 	// gio.ActionT
 
+	gboolean function(gchar* actionName) c_g_action_name_is_valid;
 	gchar* function(GAction* action) c_g_action_get_name;
 	GVariantType* function(GAction* action) c_g_action_get_parameter_type;
 	GVariantType* function(GAction* action) c_g_action_get_state_type;
@@ -4062,6 +4112,8 @@ mixin( gshared ~"extern(C)
 	GVariant* function(GAction* action) c_g_action_get_state;
 	void function(GAction* action, GVariant* value) c_g_action_change_state;
 	void function(GAction* action, GVariant* parameter) c_g_action_activate;
+	gboolean function(gchar* detailedName, gchar** actionName, GVariant** targetValue, GError** error) c_g_action_parse_detailed_name;
+	gchar* function(gchar* actionName, GVariant* parameter) c_g_action_print_detailed_name;
 
 	// gio.Action
 
@@ -4072,6 +4124,10 @@ mixin( gshared ~"extern(C)
 	GSimpleAction* function(gchar* name, GVariantType* parameterType, GVariant* state) c_g_simple_action_new_stateful;
 	void function(GSimpleAction* simple, gboolean enabled) c_g_simple_action_set_enabled;
 	void function(GSimpleAction* simple, GVariant* value) c_g_simple_action_set_state;
+
+	// gio.PropertyAction
+
+	GPropertyAction* function(gchar* name, void* object, gchar* propertyName) c_g_property_action_new;
 
 	// gio.RemoteActionGroupT
 
@@ -4127,6 +4183,7 @@ mixin( gshared ~"extern(C)
 	void function(GMenu* menu, gint position, gchar* label, GMenuModel* submenu) c_g_menu_insert_submenu;
 	void function(GMenu* menu, gchar* label, GMenuModel* submenu) c_g_menu_prepend_submenu;
 	void function(GMenu* menu, gint position) c_g_menu_remove;
+	void function(GMenu* menu) c_g_menu_remove_all;
 
 	// gio.MenuItem
 
@@ -4135,6 +4192,7 @@ mixin( gshared ~"extern(C)
 	GMenuItem* function(gchar* label, GMenuModel* submenu) c_g_menu_item_new_submenu;
 	GMenuItem* function(GMenuModel* model, gint itemIndex) c_g_menu_item_new_from_model;
 	void function(GMenuItem* menuItem, gchar* label) c_g_menu_item_set_label;
+	void function(GMenuItem* menuItem, GIcon* icon) c_g_menu_item_set_icon;
 	void function(GMenuItem* menuItem, gchar* action, GVariant* targetValue) c_g_menu_item_set_action_and_target_value;
 	void function(GMenuItem* menuItem, gchar* action, gchar* formatString, ... ) c_g_menu_item_set_action_and_target;
 	void function(GMenuItem* menuItem, gchar* detailedAction) c_g_menu_item_set_detailed_action;
@@ -4253,6 +4311,9 @@ alias c_g_file_query_filesystem_info  g_file_query_filesystem_info;
 alias c_g_file_query_filesystem_info_async  g_file_query_filesystem_info_async;
 alias c_g_file_query_filesystem_info_finish  g_file_query_filesystem_info_finish;
 alias c_g_file_query_default_handler  g_file_query_default_handler;
+alias c_g_file_measure_disk_usage  g_file_measure_disk_usage;
+alias c_g_file_measure_disk_usage_async  g_file_measure_disk_usage_async;
+alias c_g_file_measure_disk_usage_finish  g_file_measure_disk_usage_finish;
 alias c_g_file_find_enclosing_mount  g_file_find_enclosing_mount;
 alias c_g_file_find_enclosing_mount_async  g_file_find_enclosing_mount_async;
 alias c_g_file_find_enclosing_mount_finish  g_file_find_enclosing_mount_finish;
@@ -4266,11 +4327,15 @@ alias c_g_file_delete  g_file_delete;
 alias c_g_file_delete_async  g_file_delete_async;
 alias c_g_file_delete_finish  g_file_delete_finish;
 alias c_g_file_trash  g_file_trash;
+alias c_g_file_trash_async  g_file_trash_async;
+alias c_g_file_trash_finish  g_file_trash_finish;
 alias c_g_file_copy  g_file_copy;
 alias c_g_file_copy_async  g_file_copy_async;
 alias c_g_file_copy_finish  g_file_copy_finish;
 alias c_g_file_move  g_file_move;
 alias c_g_file_make_directory  g_file_make_directory;
+alias c_g_file_make_directory_async  g_file_make_directory_async;
+alias c_g_file_make_directory_finish  g_file_make_directory_finish;
 alias c_g_file_make_directory_with_parents  g_file_make_directory_with_parents;
 alias c_g_file_make_symbolic_link  g_file_make_symbolic_link;
 alias c_g_file_query_settable_attributes  g_file_query_settable_attributes;
@@ -4906,6 +4971,9 @@ alias c_g_desktop_app_info_get_string  g_desktop_app_info_get_string;
 alias c_g_desktop_app_info_get_boolean  g_desktop_app_info_get_boolean;
 alias c_g_desktop_app_info_has_key  g_desktop_app_info_has_key;
 alias c_g_desktop_app_info_launch_uris_as_manager  g_desktop_app_info_launch_uris_as_manager;
+alias c_g_desktop_app_info_list_actions  g_desktop_app_info_list_actions;
+alias c_g_desktop_app_info_get_action_name  g_desktop_app_info_get_action_name;
+alias c_g_desktop_app_info_launch_action  g_desktop_app_info_launch_action;
 
 // gio.VolumeMonitor
 
@@ -5068,6 +5136,8 @@ alias c_g_icon_hash  g_icon_hash;
 alias c_g_icon_equal  g_icon_equal;
 alias c_g_icon_to_string  g_icon_to_string;
 alias c_g_icon_new_for_string  g_icon_new_for_string;
+alias c_g_icon_serialize  g_icon_serialize;
+alias c_g_icon_deserialize  g_icon_deserialize;
 
 // gio.Icon
 
@@ -5076,6 +5146,11 @@ alias c_g_icon_new_for_string  g_icon_new_for_string;
 
 alias c_g_file_icon_new  g_file_icon_new;
 alias c_g_file_icon_get_file  g_file_icon_get_file;
+
+// gio.FileIcon
+
+alias c_g_bytes_icon_new  g_bytes_icon_new;
+alias c_g_bytes_icon_get_bytes  g_bytes_icon_get_bytes;
 
 // gio.LoadableIconT
 
@@ -5784,6 +5859,7 @@ alias c_g_dbus_method_invocation_get_object_path  g_dbus_method_invocation_get_o
 alias c_g_dbus_method_invocation_get_interface_name  g_dbus_method_invocation_get_interface_name;
 alias c_g_dbus_method_invocation_get_method_name  g_dbus_method_invocation_get_method_name;
 alias c_g_dbus_method_invocation_get_method_info  g_dbus_method_invocation_get_method_info;
+alias c_g_dbus_method_invocation_get_property_info  g_dbus_method_invocation_get_property_info;
 alias c_g_dbus_method_invocation_get_connection  g_dbus_method_invocation_get_connection;
 alias c_g_dbus_method_invocation_get_message  g_dbus_method_invocation_get_message;
 alias c_g_dbus_method_invocation_get_parameters  g_dbus_method_invocation_get_parameters;
@@ -6080,6 +6156,8 @@ alias c_g_application_open  g_application_open;
 alias c_g_application_run  g_application_run;
 alias c_g_application_set_default  g_application_set_default;
 alias c_g_application_get_default  g_application_get_default;
+alias c_g_application_mark_busy  g_application_mark_busy;
+alias c_g_application_unmark_busy  g_application_unmark_busy;
 
 // gio.ApplicationCommandLine
 
@@ -6139,6 +6217,7 @@ alias c_g_simple_action_group_add_entries  g_simple_action_group_add_entries;
 
 // gio.ActionT
 
+alias c_g_action_name_is_valid  g_action_name_is_valid;
 alias c_g_action_get_name  g_action_get_name;
 alias c_g_action_get_parameter_type  g_action_get_parameter_type;
 alias c_g_action_get_state_type  g_action_get_state_type;
@@ -6147,6 +6226,8 @@ alias c_g_action_get_enabled  g_action_get_enabled;
 alias c_g_action_get_state  g_action_get_state;
 alias c_g_action_change_state  g_action_change_state;
 alias c_g_action_activate  g_action_activate;
+alias c_g_action_parse_detailed_name  g_action_parse_detailed_name;
+alias c_g_action_print_detailed_name  g_action_print_detailed_name;
 
 // gio.Action
 
@@ -6157,6 +6238,10 @@ alias c_g_simple_action_new  g_simple_action_new;
 alias c_g_simple_action_new_stateful  g_simple_action_new_stateful;
 alias c_g_simple_action_set_enabled  g_simple_action_set_enabled;
 alias c_g_simple_action_set_state  g_simple_action_set_state;
+
+// gio.PropertyAction
+
+alias c_g_property_action_new  g_property_action_new;
 
 // gio.RemoteActionGroupT
 
@@ -6212,6 +6297,7 @@ alias c_g_menu_append_submenu  g_menu_append_submenu;
 alias c_g_menu_insert_submenu  g_menu_insert_submenu;
 alias c_g_menu_prepend_submenu  g_menu_prepend_submenu;
 alias c_g_menu_remove  g_menu_remove;
+alias c_g_menu_remove_all  g_menu_remove_all;
 
 // gio.MenuItem
 
@@ -6220,6 +6306,7 @@ alias c_g_menu_item_new_section  g_menu_item_new_section;
 alias c_g_menu_item_new_submenu  g_menu_item_new_submenu;
 alias c_g_menu_item_new_from_model  g_menu_item_new_from_model;
 alias c_g_menu_item_set_label  g_menu_item_set_label;
+alias c_g_menu_item_set_icon  g_menu_item_set_icon;
 alias c_g_menu_item_set_action_and_target_value  g_menu_item_set_action_and_target_value;
 alias c_g_menu_item_set_action_and_target  g_menu_item_set_action_and_target;
 alias c_g_menu_item_set_detailed_action  g_menu_item_set_detailed_action;

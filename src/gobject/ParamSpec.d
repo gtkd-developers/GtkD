@@ -172,6 +172,21 @@ public class ParamSpec
 	}
 	
 	/**
+	 */
+	public Value getDefaultValue()
+	{
+		// const GValue * g_param_spec_get_default_value (GParamSpec *param);
+		auto p = g_param_spec_get_default_value(gParamSpec);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+	}
+	
+	/**
 	 * Sets value to its default value as specified in pspec.
 	 * Params:
 	 * value = a GValue of correct type for pspec

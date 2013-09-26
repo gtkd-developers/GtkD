@@ -156,6 +156,13 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	}
 	
 	/**
+	 * Sets the list of ignored hosts.
+	 * See "ignore-hosts" for more details on how the
+	 * ignore_hosts argument is interpreted.
+	 * Since 2.36
+	 * Params:
+	 * ignoreHosts = NULL-terminated list of hosts/IP addresses
+	 * to not use a proxy for
 	 */
 	public void setIgnoreHosts(char** ignoreHosts)
 	{

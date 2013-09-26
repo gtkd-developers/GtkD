@@ -71,7 +71,7 @@ private import gio.TlsDatabase;
 
 /**
  * GTlsFileDatabase is implemented by GTlsDatabase objects which load
- * their certificate information from a file. It is in interface which
+ * their certificate information from a file. It is an interface which
  * TLS library specific subtypes implement.
  */
 public class TlsFileDatabase : TlsDatabase

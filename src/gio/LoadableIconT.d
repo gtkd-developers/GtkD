@@ -153,7 +153,8 @@ public template LoadableIconT(TStruct)
 	 * Finishes an asynchronous icon load started in g_loadable_icon_load_async().
 	 * Params:
 	 * res = a GAsyncResult.
-	 * type = a location to store the type of the loaded icon, NULL to ignore.
+	 * type = a location to store the type of the
+	 * loaded icon, NULL to ignore. [out][allow-none]
 	 * Returns: a GInputStream to read the icon from. [transfer full]
 	 * Throws: GException on failure.
 	 */

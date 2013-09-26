@@ -356,14 +356,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * but is intended primarily for operating system components that
 	 * launch applications. Ordinary applications should use
 	 * g_app_info_launch_uris().
-	 * In contrast to g_app_info_launch_uris(), all processes created will
-	 * always be run directly as children as if by the UNIX fork()/exec()
-	 * calls.
-	 * This guarantee allows additional control over the exact environment
-	 * of the child processes, which is provided via a setup function
-	 * user_setup, as well as the process identifier of each child process
-	 * via pid_callback. See g_spawn_async() for more information about the
-	 * semantics of the user_setup function.
+	 * If the application is launched via traditional UNIX fork()/exec()
+	 * then spawn_flags, user_setup and user_setup_data are used for the
+	 * call to g_spawn_async(). Additionally, pid_callback (with
+	 * pid_callback_data) will be called to inform about the PID of the
+	 * created process.
+	 * If application launching occurs via some other mechanism (eg: D-Bus
+	 * activation) then spawn_flags, user_setup, user_setup_data,
+	 * pid_callback and pid_callback_data are ignored.
 	 * Params:
 	 * uris = List of URIs. [element-type utf8]
 	 * launchContext = a GAppLaunchContext
@@ -389,5 +389,69 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 		}
 		
 		return p;
+	}
+	
+	/**
+	 * Returns the list of "additional application actions" supported on the
+	 * desktop file, as per the desktop file specification.
+	 * As per the specification, this is the list of actions that are
+	 * explicitly listed in the "Actions" key of the [Desktop Entry] group.
+	 * Since 2.38
+	 * Returns: a list of strings, always non-NULL. [array zero-terminated=1][element-type utf8][transfer none]
+	 */
+	public string[] listActions()
+	{
+		// const gchar * const * g_desktop_app_info_list_actions (GDesktopAppInfo *info);
+		auto p = g_desktop_app_info_list_actions(gDesktopAppInfo);
+		
+		string[] strArray = null;
+		foreach ( cstr; p[0 .. ] )
+		{
+			strArray ~= Str.toString(cstr);
+		}
+		
+		return strArray;
+	}
+	
+	/**
+	 * Gets the user-visible display name of the "additional application
+	 * action" specified by action_name.
+	 * This corresponds to the "Name" key within the keyfile group for the
+	 * action.
+	 * Since 2.38
+	 * Params:
+	 * actionName = the name of the action as from
+	 * g_desktop_app_info_list_actions()
+	 * Returns: the locale-specific action name. [transfer full]
+	 */
+	public string getActionName(string actionName)
+	{
+		// gchar * g_desktop_app_info_get_action_name (GDesktopAppInfo *info,  const gchar *action_name);
+		return Str.toString(g_desktop_app_info_get_action_name(gDesktopAppInfo, Str.toStringz(actionName)));
+	}
+	
+	/**
+	 * Activates the named application action.
+	 * You may only call this function on action names that were
+	 * returned from g_desktop_app_info_list_actions().
+	 * Note that if the main entry of the desktop file indicates that the
+	 * application supports startup notification, and launch_context is
+	 * non-NULL, then startup notification will be used when activating the
+	 * action (and as such, invocation of the action on the receiving side
+	 * must signal the end of startup notification when it is completed).
+	 * This is the expected behaviour of applications declaring additional
+	 * actions, as per the desktop file specification.
+	 * As with g_app_info_launch() there is no way to detect failures that
+	 * occur while using this function.
+	 * Since 2.38
+	 * Params:
+	 * actionName = the name of the action as from
+	 * g_desktop_app_info_list_actions()
+	 * launchContext = a GAppLaunchContext. [allow-none]
+	 */
+	public void launchAction(string actionName, AppLaunchContext launchContext)
+	{
+		// void g_desktop_app_info_launch_action (GDesktopAppInfo *info,  const gchar *action_name,  GAppLaunchContext *launch_context);
+		g_desktop_app_info_launch_action(gDesktopAppInfo, Str.toStringz(actionName), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct());
 	}
 }

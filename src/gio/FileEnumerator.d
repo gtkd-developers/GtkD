@@ -96,6 +96,17 @@ private import gobject.ObjectG;
  * version will return a list of GFileInfos, whereas the
  * synchronous will only return the next file in the enumerator.
  *
+ * The ordering of returned files is unspecified for non-Unix
+ * platforms; for more information, see g_dir_read_name(). On Unix,
+ * when operating on local files, returned files will be sorted by
+ * inode number. Effectively you can assume that the ordering of
+ * returned files will be stable between successive calls (and
+ * applications) assuming the directory is unchanged.
+ *
+ * If your application needs a specific ordering, such as by name or
+ * modification time, you will have to implement that in your
+ * application code.
+ *
  * To close a GFileEnumerator, use g_file_enumerator_close(), or
  * its asynchronous version, g_file_enumerator_close_async(). Once
  * a GFileEnumerator is closed, no further actions may be performed
@@ -143,6 +154,8 @@ public class FileEnumerator : ObjectG
 	 * Will block until the information is available. The GFileInfo
 	 * returned from this function will contain attributes that match the
 	 * attribute string that was passed when the GFileEnumerator was created.
+	 * See the documentation of GFileEnumerator for information about the
+	 * order of returned files.
 	 * On error, returns NULL and sets error to the error. If the
 	 * enumerator is at the end, NULL will be returned and error will
 	 * be unset.
@@ -202,6 +215,8 @@ public class FileEnumerator : ObjectG
 	 * Request information for a number of files from the enumerator asynchronously.
 	 * When all i/o for the operation is finished the callback will be called with
 	 * the requested information.
+	 * See the documentation of GFileEnumerator for information about the
+	 * order of returned files.
 	 * The callback can be called with less than num_files files in case of error
 	 * or at the end of the enumerator. In case of a partial error the callback will
 	 * be called with any succeeding items and no error, and on the next request the

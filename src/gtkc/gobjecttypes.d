@@ -155,7 +155,7 @@ alias GTypeFundamentalFlags TypeFundamentalFlags;
 
 /**
  * Through the GParamFlags flag values, certain aspects of parameters
- * can be configured.
+ * can be configured. See also G_PARAM_READWRITE and G_PARAM_STATIC_STRINGS.
  * G_PARAM_READABLE
  * the parameter is readable
  * G_PARAM_WRITABLE
@@ -1852,6 +1852,26 @@ public struct GBinding{}
 // #define G_DEFINE_TYPE(TN, t_n, T_P)			 G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
 
 /*
+ * A convenience macro for type implementations, which declares a
+ * class initialization function, an instance initialization function (see GTypeInfo for information about
+ * these), a static variable named t_n_parent_class pointing to the parent class, and adds private
+ * instance data to the type. Furthermore, it defines a *_get_type() function. See G_DEFINE_TYPE_EXTENDED()
+ * for an example.
+ * Note that private structs added with this macros must have a struct
+ * name of the form TNPrivate.
+ * TN :
+ * The name of the new type, in Camel case.
+ * t_n :
+ * The name of the new type, in lowercase, with words
+ * separated by '_'.
+ * T_P :
+ * The GType of the parent type.
+ * Since 2.38
+ */
+// TODO
+// #define G_DEFINE_TYPE_WITH_PRIVATE(TN, t_n, T_P) G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, G_ADD_PRIVATE (TN))
+
+/*
  * A convenience macro for type implementations.
  * Similar to G_DEFINE_TYPE(), but allows you to insert custom code into the
  * *_get_type() function, e.g. interface implementations via G_IMPLEMENT_INTERFACE().
@@ -1886,6 +1906,21 @@ public struct GBinding{}
 // #define G_DEFINE_ABSTRACT_TYPE(TN, t_n, T_P)		 G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, {})
 
 /*
+ * Similar to G_DEFINE_TYPE_WITH_PRIVATE(), but defines an abstract type.
+ * See G_DEFINE_TYPE_EXTENDED() for an example.
+ * TN :
+ * The name of the new type, in Camel case.
+ * t_n :
+ * The name of the new type, in lowercase, with words
+ * separated by '_'.
+ * T_P :
+ * The GType of the parent type.
+ * Since 2.38
+ */
+// TODO
+// #define G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE(TN, t_n, T_P) G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, G_ADD_PRIVATE (TN))
+
+/*
  * A convenience macro for type implementations.
  * Similar to G_DEFINE_TYPE_WITH_CODE(), but defines an abstract type and allows you to
  * insert custom code into the *_get_type() function, e.g. interface implementations
@@ -1903,6 +1938,80 @@ public struct GBinding{}
  */
 // TODO
 // #define G_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
+
+/*
+ * A convenience macro to ease adding private data to instances of a new type
+ * in the _C_ section of G_DEFINE_TYPE_WITH_CODE() or
+ * G_DEFINE_ABSTRACT_TYPE_WITH_CODE().
+ * For instance:
+ * $(DDOC_COMMENT example)
+ * Will add MyObjectPrivate as the private data to any instance of the MyObject
+ * type.
+ * G_DEFINE_TYPE_* macros will automatically create a private function
+ * based on the arguments to this macro, which can be used to safely
+ * retrieve the private data from an instance of the type; for instance:
+ * $(DDOC_COMMENT example)
+ * Note that this macro can only be used together with the G_DEFINE_TYPE_*
+ * macros, since it depends on variable names from those macros.
+ * Also note that private structs added with these macros must have a struct
+ * name of the form TypeNamePrivate.
+ * TypeName :
+ * the name of the type in CamelCase
+ * Since 2.38
+ */
+// TODO
+// #define G_ADD_PRIVATE(TypeName)
+
+/*
+ * Evaluates to the offset of the field inside the instance private data
+ * structure for TypeName.
+ * Note that this macro can only be used together with the G_DEFINE_TYPE_*
+ * and G_ADD_PRIVATE() macros, since it depends on variable names from
+ * those macros.
+ * TypeName :
+ * the name of the type in CamelCase
+ * field :
+ * the name of the field in the private data structure
+ * Since 2.38
+ */
+// TODO
+// #define G_PRIVATE_OFFSET(TypeName, field)
+
+/*
+ * Evaluates to the field_name inside the inst private data
+ * structure for TypeName.
+ * Note that this macro can only be used together with the G_DEFINE_TYPE_*
+ * and G_ADD_PRIVATE() macros, since it depends on variable names from
+ * those macros.
+ * TypeName :
+ * the name of the type in CamelCase
+ * inst :
+ * the instance of TypeName you wish to access
+ * field_type :
+ * the type of the field in the private data structure
+ * field_name :
+ * the name of the field in the private data structure
+ * Since 2.38
+ */
+// TODO
+// #define G_PRIVATE_FIELD(TypeName, inst, field_type, field_name)
+
+/*
+ * Evaluates to a pointer to the field_name inside the inst private data
+ * structure for TypeName.
+ * Note that this macro can only be used together with the G_DEFINE_TYPE_*
+ * and G_ADD_PRIVATE() macros, since it depends on variable names from
+ * those macros.
+ * TypeName :
+ * the name of the type in CamelCase
+ * inst :
+ * the instance of TypeName you wish to access
+ * field_name :
+ * the name of the field in the private data structure
+ * Since 2.38
+ */
+// TODO
+// #define G_PRIVATE_FIELD_P(TypeName, inst, field_name)
 
 /*
  * A convenience macro for GTypeInterface definitions, which declares

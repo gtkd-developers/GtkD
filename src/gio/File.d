@@ -1342,6 +1342,97 @@ public class File : ObjectG
 	}
 	
 	/**
+	 * Recursively measures the disk usage of file.
+	 * This is essentially an analog of the 'du' command,
+	 * but it also reports the number of directories and non-directory files
+	 * encountered (including things like symbolic links).
+	 * By default, errors are only reported against the toplevel file
+	 * itself. Errors found while recursing are silently ignored, unless
+	 * G_FILE_DISK_USAGE_REPORT_ALL_ERRORS is given in flags.
+	 * The returned size, disk_usage, is in bytes and should be formatted
+	 * with g_format_size() in order to get something reasonable for showing
+	 * in a user interface.
+	 * progress_callback and progress_data can be given to request
+	 * periodic progress updates while scanning. See the documentation for
+	 * GFileMeasureProgressCallback for information about when and how the
+	 * callback will be invoked.
+	 * Since 2.38
+	 * Params:
+	 * flags = GFileMeasureFlags
+	 * cancellable = optional GCancellable. [allow-none]
+	 * progressCallback = a GFileMeasureProgressCallback. [allow-none]
+	 * progressData = user_data for progress_callback
+	 * diskUsage = the number of bytes of disk space used. [allow-none][out]
+	 * numDirs = the number of directories encountered. [allow-none][out]
+	 * numFiles = the number of non-directories encountered. [allow-none][out]
+	 * Returns: TRUE if successful, with the out parameters set. FALSE otherwise, with error set.
+	 * Throws: GException on failure.
+	 */
+	public int measureDiskUsage(GFileMeasureFlags flags, Cancellable cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, out ulong diskUsage, out ulong numDirs, out ulong numFiles)
+	{
+		// gboolean g_file_measure_disk_usage (GFile *file,  GFileMeasureFlags flags,  GCancellable *cancellable,  GFileMeasureProgressCallback progress_callback,  gpointer progress_data,  guint64 *disk_usage,  guint64 *num_dirs,  guint64 *num_files,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_measure_disk_usage(gFile, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressData, &diskUsage, &numDirs, &numFiles, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Recursively measures the disk usage of file.
+	 * This is the asynchronous version of g_file_measure_disk_usage(). See
+	 * there for more information.
+	 * Since 2.38
+	 * Params:
+	 * flags = GFileMeasureFlags
+	 * ioPriority = the I/O priority
+	 * of the request
+	 * cancellable = optional GCancellable. [allow-none]
+	 * progressCallback = a GFileMeasureProgressCallback. [allow-none]
+	 * progressData = user_data for progress_callback
+	 * callback = a GAsyncReadyCallback to call when complete. [allow-none]
+	 * userData = the data to pass to callback function
+	 */
+	public void measureDiskUsageAsync(GFileMeasureFlags flags, int ioPriority, Cancellable cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_measure_disk_usage_async (GFile *file,  GFileMeasureFlags flags,  gint io_priority,  GCancellable *cancellable,  GFileMeasureProgressCallback progress_callback,  gpointer progress_data,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_measure_disk_usage_async(gFile, flags, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), progressCallback, progressData, callback, userData);
+	}
+	
+	/**
+	 * Collects the results from an earlier call to
+	 * g_file_measure_disk_usage_async(). See g_file_measure_disk_usage() for
+	 * more information.
+	 * Since 2.38
+	 * Params:
+	 * result = the GAsyncResult passed to your GAsyncReadyCallback
+	 * diskUsage = the number of bytes of disk space used. [allow-none][out]
+	 * numDirs = the number of directories encountered. [allow-none][out]
+	 * numFiles = the number of non-directories encountered. [allow-none][out]
+	 * Returns: TRUE if successful, with the out parameters set. FALSE otherwise, with error set.
+	 * Throws: GException on failure.
+	 */
+	public int measureDiskUsageFinish(AsyncResultIF result, out ulong diskUsage, out ulong numDirs, out ulong numFiles)
+	{
+		// gboolean g_file_measure_disk_usage_finish (GFile *file,  GAsyncResult *result,  guint64 *disk_usage,  guint64 *num_dirs,  guint64 *num_files,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_measure_disk_usage_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &diskUsage, &numDirs, &numFiles, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
 	 * Gets a GMount for the GFile.
 	 * If the GFileIface for file does not have a mount (e.g.
 	 * possibly a remote share), error will be set to G_IO_ERROR_NOT_FOUND
@@ -1679,6 +1770,7 @@ public class File : ObjectG
 	 * Since 2.34
 	 * Params:
 	 * result = a GAsyncResult
+	 * Returns: TRUE if the file was deleted. FALSE otherwise.
 	 * Throws: GException on failure.
 	 */
 	public int deleteFinish(AsyncResultIF result)
@@ -1704,6 +1796,7 @@ public class File : ObjectG
 	 * If cancellable is not NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
 	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * Virtual: trash
 	 * Params:
 	 * cancellable = optional GCancellable object,
 	 * NULL to ignore. [allow-none]
@@ -1716,6 +1809,50 @@ public class File : ObjectG
 		GError* err = null;
 		
 		auto p = g_file_trash(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Asynchronously sends file to the Trash location, if possible.
+	 * Virtual: trash_async
+	 * Since 2.38
+	 * Params:
+	 * ioPriority = the I/O priority
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied
+	 * userData = the data to pass to callback function
+	 */
+	public void trashAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_trash_async (GFile *file,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_trash_async(gFile, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous file trashing operation, started with
+	 * g_file_trash_async().
+	 * Virtual: trash_finish
+	 * Since 2.38
+	 * Params:
+	 * result = a GAsyncResult
+	 * Returns: TRUE on successful trash, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int trashFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_trash_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_trash_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -1910,6 +2047,50 @@ public class File : ObjectG
 		GError* err = null;
 		
 		auto p = g_file_make_directory(gFile, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * Asynchronously creates a directory.
+	 * Virtual: make_directory_async
+	 * Since 2.38
+	 * Params:
+	 * ioPriority = the I/O priority
+	 * of the request
+	 * cancellable = optional GCancellable object,
+	 * NULL to ignore. [allow-none]
+	 * callback = a GAsyncReadyCallback to call
+	 * when the request is satisfied
+	 * userData = the data to pass to callback function
+	 */
+	public void makeDirectoryAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		// void g_file_make_directory_async (GFile *file,  int io_priority,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
+		g_file_make_directory_async(gFile, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+	
+	/**
+	 * Finishes an asynchronous directory creation, started with
+	 * g_file_make_directory_async().
+	 * Virtual: make_directory_finish
+	 * Since 2.38
+	 * Params:
+	 * result = a GAsyncResult
+	 * Returns: TRUE on successful directory creation, FALSE otherwise.
+	 * Throws: GException on failure.
+	 */
+	public int makeDirectoryFinish(AsyncResultIF result)
+	{
+		// gboolean g_file_make_directory_finish (GFile *file,  GAsyncResult *result,  GError **error);
+		GError* err = null;
+		
+		auto p = g_file_make_directory_finish(gFile, (result is null) ? null : result.getAsyncResultTStruct(), &err);
 		
 		if (err !is null)
 		{

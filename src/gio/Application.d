@@ -795,6 +795,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * if the use count falls to zero the application will exit immediately,
 	 * except in the case that g_application_set_inactivity_timeout() is in
 	 * use.
+	 * This function sets the prgname (g_set_prgname()), if not already set,
+	 * to the basename of argv[0]. Since 2.38, if G_APPLICATION_IS_SERVICE
+	 * is specified, the prgname is set to the application ID. The main
+	 * impact of this is is that the wmclass of windows created by Gtk+ will
+	 * be set accordingly, which helps the window manager determine which
+	 * application is showing the window.
 	 * Since 2.28
 	 * Params:
 	 * argv = the argv from main(), or NULL. [array length=argc][allow-none]
@@ -840,5 +846,35 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		}
 		
 		return ObjectG.getDObject!(Application)(cast(GApplication*) p);
+	}
+	
+	/**
+	 * Increases the busy count of application.
+	 * Use this function to indicate that the application is busy, for instance
+	 * while a long running operation is pending.
+	 * The busy state will be exposed to other processes, so a session shell will
+	 * use that information to indicate the state to the user (e.g. with a
+	 * spinner).
+	 * To cancel the busy indication, use g_application_unmark_busy().
+	 * Since 2.38
+	 */
+	public void markBusy()
+	{
+		// void g_application_mark_busy (GApplication *application);
+		g_application_mark_busy(gApplication);
+	}
+	
+	/**
+	 * Decreases the busy count of application.
+	 * When the busy count reaches zero, the new state will be propagated
+	 * to other processes.
+	 * This function must only be called to cancel the effect of a previous
+	 * call to g_application_mark_busy().
+	 * Since 2.38
+	 */
+	public void unmarkBusy()
+	{
+		// void g_application_unmark_busy (GApplication *application);
+		g_application_unmark_busy(gApplication);
 	}
 }

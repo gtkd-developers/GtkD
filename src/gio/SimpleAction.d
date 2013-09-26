@@ -263,6 +263,7 @@ public class SimpleAction : ObjectG, ActionIF
 	 * of the action should not attempt to directly modify the 'state'
 	 * property. Instead, they should call g_action_change_state() to
 	 * request the change.
+	 * If the value GVariant is floating, it is consumed.
 	 * Since 2.30
 	 * Params:
 	 * value = the new GVariant for the state

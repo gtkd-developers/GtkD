@@ -287,6 +287,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_param_spec_unref, \"g_param_spec_unref\", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_sink, \"g_param_spec_sink\", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_ref_sink, \"g_param_spec_ref_sink\", LIBRARY.GOBJECT);
+	Linker.link(g_param_spec_get_default_value, \"g_param_spec_get_default_value\", LIBRARY.GOBJECT);
 	Linker.link(g_param_value_set_default, \"g_param_value_set_default\", LIBRARY.GOBJECT);
 	Linker.link(g_param_value_defaults, \"g_param_value_defaults\", LIBRARY.GOBJECT);
 	Linker.link(g_param_value_validate, \"g_param_value_validate\", LIBRARY.GOBJECT);
@@ -446,6 +447,7 @@ mixin( _shared ~ "static this()
 	Linker.link(g_binding_get_target, \"g_binding_get_target\", LIBRARY.GOBJECT);
 	Linker.link(g_binding_get_target_property, \"g_binding_get_target_property\", LIBRARY.GOBJECT);
 	Linker.link(g_binding_get_flags, \"g_binding_get_flags\", LIBRARY.GOBJECT);
+	Linker.link(g_binding_unbind, \"g_binding_unbind\", LIBRARY.GOBJECT);
 	Linker.link(g_object_bind_property, \"g_object_bind_property\", LIBRARY.GOBJECT);
 	Linker.link(g_object_bind_property_full, \"g_object_bind_property_full\", LIBRARY.GOBJECT);
 	Linker.link(g_object_bind_property_with_closures, \"g_object_bind_property_with_closures\", LIBRARY.GOBJECT);
@@ -705,6 +707,7 @@ mixin( gshared ~"extern(C)
 	void function(GParamSpec* pspec) c_g_param_spec_unref;
 	void function(GParamSpec* pspec) c_g_param_spec_sink;
 	GParamSpec* function(GParamSpec* pspec) c_g_param_spec_ref_sink;
+	GValue* function(GParamSpec* param) c_g_param_spec_get_default_value;
 	void function(GParamSpec* pspec, GValue* value) c_g_param_value_set_default;
 	gboolean function(GParamSpec* pspec, GValue* value) c_g_param_value_defaults;
 	gboolean function(GParamSpec* pspec, GValue* value) c_g_param_value_validate;
@@ -864,6 +867,7 @@ mixin( gshared ~"extern(C)
 	GObject* function(GBinding* binding) c_g_binding_get_target;
 	gchar* function(GBinding* binding) c_g_binding_get_target_property;
 	GBindingFlags function(GBinding* binding) c_g_binding_get_flags;
+	void function(GBinding* binding) c_g_binding_unbind;
 	GBinding* function(void* source, gchar* sourceProperty, void* target, gchar* targetProperty, GBindingFlags flags) c_g_object_bind_property;
 	GBinding* function(void* source, gchar* sourceProperty, void* target, gchar* targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify notify) c_g_object_bind_property_full;
 	GBinding* function(void* source, gchar* sourceProperty, void* target, gchar* targetProperty, GBindingFlags flags, GClosure* transformTo, GClosure* transformFrom) c_g_object_bind_property_with_closures;
@@ -1121,6 +1125,7 @@ alias c_g_param_spec_ref  g_param_spec_ref;
 alias c_g_param_spec_unref  g_param_spec_unref;
 alias c_g_param_spec_sink  g_param_spec_sink;
 alias c_g_param_spec_ref_sink  g_param_spec_ref_sink;
+alias c_g_param_spec_get_default_value  g_param_spec_get_default_value;
 alias c_g_param_value_set_default  g_param_value_set_default;
 alias c_g_param_value_defaults  g_param_value_defaults;
 alias c_g_param_value_validate  g_param_value_validate;
@@ -1280,6 +1285,7 @@ alias c_g_binding_get_source_property  g_binding_get_source_property;
 alias c_g_binding_get_target  g_binding_get_target;
 alias c_g_binding_get_target_property  g_binding_get_target_property;
 alias c_g_binding_get_flags  g_binding_get_flags;
+alias c_g_binding_unbind  g_binding_unbind;
 alias c_g_object_bind_property  g_object_bind_property;
 alias c_g_object_bind_property_full  g_object_bind_property_full;
 alias c_g_object_bind_property_with_closures  g_object_bind_property_with_closures;

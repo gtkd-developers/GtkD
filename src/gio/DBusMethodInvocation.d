@@ -49,10 +49,12 @@
  * 	- glib.Variant
  * 	- gio.DBusConnection
  * 	- gio.DBusMessage
+ * 	- gio.DBusPropertyInfo
  * 	- gio.UnixFDList
  * structWrap:
  * 	- GDBusConnection* -> DBusConnection
  * 	- GDBusMessage* -> DBusMessage
+ * 	- GDBusPropertyInfo* -> DBusPropertyInfo
  * 	- GError* -> ErrorG
  * 	- GUnixFDList* -> UnixFDList
  * 	- GVariant* -> Variant
@@ -76,6 +78,7 @@ private import glib.GException;
 private import glib.Variant;
 private import gio.DBusConnection;
 private import gio.DBusMessage;
+private import gio.DBusPropertyInfo;
 private import gio.UnixFDList;
 
 
@@ -152,6 +155,10 @@ public class DBusMethodInvocation : ObjectG
 	
 	/**
 	 * Gets the name of the D-Bus interface the method was invoked on.
+	 * If this method call is a property Get, Set or GetAll call that has
+	 * been redirected to the method call handler then
+	 * "org.freedesktop.DBus.Properties" will be returned. See
+	 * GDBusInterfaceVTable for more information.
 	 * Since 2.26
 	 * Returns: A string. Do not free, it is owned by invocation.
 	 */
@@ -174,6 +181,10 @@ public class DBusMethodInvocation : ObjectG
 	
 	/**
 	 * Gets information about the method call, if any.
+	 * If this method invocation is a property Get, Set or GetAll call that
+	 * has been redirected to the method call handler then NULL will be
+	 * returned. See g_dbus_method_invocation_get_property_info() and
+	 * GDBusInterfaceVTable for more information.
 	 * Since 2.26
 	 * Returns: A GDBusMethodInfo or NULL. Do not free, it is owned by invocation.
 	 */
@@ -181,6 +192,31 @@ public class DBusMethodInvocation : ObjectG
 	{
 		// const GDBusMethodInfo * g_dbus_method_invocation_get_method_info  (GDBusMethodInvocation *invocation);
 		return g_dbus_method_invocation_get_method_info(gDBusMethodInvocation);
+	}
+	
+	/**
+	 * Gets information about the property that this method call is for, if
+	 * any.
+	 * This will only be set in the case of an invocation in response to a
+	 * property Get or Set call that has been directed to the method call
+	 * handler for an object on account of its property_get() or
+	 * property_set() vtable pointers being unset.
+	 * See GDBusInterfaceVTable for more information.
+	 * If the call was GetAll, NULL will be returned.
+	 * Since 2.38
+	 * Returns: a GDBusPropertyInfo or NULL. [transfer none]
+	 */
+	public DBusPropertyInfo getPropertyInfo()
+	{
+		// const GDBusPropertyInfo * g_dbus_method_invocation_get_property_info  (GDBusMethodInvocation *invocation);
+		auto p = g_dbus_method_invocation_get_property_info(gDBusMethodInvocation);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
 	}
 	
 	/**

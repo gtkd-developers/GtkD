@@ -281,7 +281,8 @@ public class ValueArray
 	 * g_value_array_sort has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_sort().
 	 * Sort value_array using compare_func to compare the elements according to
 	 * the semantics of GCompareFunc.
-	 * The current implementation uses Quick-Sort as sorting algorithm.
+	 * The current implementation uses the same sorting algorithm as standard
+	 * C qsort() function.
 	 * Params:
 	 * compareFunc = function to compare elements. [scope call]
 	 * Returns: the GValueArray passed in as value_array. [transfer none]
@@ -304,7 +305,8 @@ public class ValueArray
 	 * g_value_array_sort_with_data has been deprecated since version 2.32 and should not be used in newly-written code. Use GArray and g_array_sort_with_data().
 	 * Sort value_array using compare_func to compare the elements according
 	 * to the semantics of GCompareDataFunc.
-	 * The current implementation uses Quick-Sort as sorting algorithm.
+	 * The current implementation uses the same sorting algorithm as standard
+	 * C qsort() function.
 	 * Rename to: g_value_array_sort
 	 * Params:
 	 * compareFunc = function to compare elements. [scope call]

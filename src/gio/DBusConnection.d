@@ -1122,6 +1122,10 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	 * name. As such, to avoid certain race conditions, users should be
 	 * tracking the name owner of the well-known name and use that when
 	 * processing the received signal.
+	 * If one of G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_NAMESPACE or
+	 * G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_PATH are given, arg0 is
+	 * interpreted as part of a namespace or path. The first argument
+	 * of a signal is matched against that part as specified by D-Bus.
 	 * Since 2.26
 	 * Params:
 	 * sender = Sender name to match on (unique or well-known name)

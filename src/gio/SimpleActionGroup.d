@@ -144,6 +144,8 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	}
 	
 	/**
+	 * Warning
+	 * g_simple_action_group_lookup has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_lookup_action()
 	 * Looks up the action with the name action_name in the group.
 	 * If no such action exists, returns NULL.
 	 * Since 2.28
@@ -165,6 +167,8 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	}
 	
 	/**
+	 * Warning
+	 * g_simple_action_group_insert has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_add_action()
 	 * Adds an action to the action group.
 	 * If the action group already contains an action with the same name as
 	 * action then the old action is dropped from the group.
@@ -180,6 +184,8 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	}
 	
 	/**
+	 * Warning
+	 * g_simple_action_group_remove has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_remove_action()
 	 * Removes the named action from the action group.
 	 * If no action of this name is in the group then nothing happens.
 	 * Since 2.28
@@ -193,6 +199,8 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	}
 	
 	/**
+	 * Warning
+	 * g_simple_action_group_add_entries has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_add_action_entries()
 	 * A convenience function for creating multiple GSimpleAction instances
 	 * and adding them to the action group.
 	 * Since 2.30
