@@ -402,15 +402,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public string[] listActions()
 	{
 		// const gchar * const * g_desktop_app_info_list_actions (GDesktopAppInfo *info);
-		auto p = g_desktop_app_info_list_actions(gDesktopAppInfo);
-		
-		string[] strArray = null;
-		foreach ( cstr; p[0 .. ] )
-		{
-			strArray ~= Str.toString(cstr);
-		}
-		
-		return strArray;
+		return Str.toStringArray(g_desktop_app_info_list_actions(gDesktopAppInfo));
 	}
 	
 	/**

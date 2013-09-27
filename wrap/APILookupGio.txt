@@ -929,7 +929,6 @@ structWrap: GAppLaunchContext* AppLaunchContext
 import: gio.AppInfoT
 import: gio.AppInfoIF
 
-array: g_desktop_app_info_list_actions Return
 nocode: g_desktop_app_info_new_from_filename
 
 code: start
