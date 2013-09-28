@@ -596,6 +596,23 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Returns the internal scale factor that maps from monitor coordiantes
+	 * to the actual device pixels. On traditional systems this is 1, but
+	 * on very high density outputs this can be a higher value (often 2).
+	 * This can be used if you want to create pixel based data for a
+	 * particula monitor, but most of the time you're drawing to a window
+	 * where it is better to use gdk_window_get_scale_factor() instead.
+	 * Params:
+	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+	 * Returns: the scale factor Since 3.10
+	 */
+	public int getMonitorScaleFactor(int monitorNum)
+	{
+		// gint gdk_screen_get_monitor_scale_factor (GdkScreen *screen,  gint monitor_num);
+		return gdk_screen_get_monitor_scale_factor(gdkScreen, monitorNum);
+	}
+	
+	/**
 	 * Retrieves a desktop-wide setting such as double-click time
 	 * for the GdkScreen screen.
 	 * FIXME needs a list of valid settings here, or a link to

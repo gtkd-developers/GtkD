@@ -48,11 +48,13 @@
  * 	- gobject.Value
  * 	- gdk.Device
  * 	- gdk.Screen
+ * 	- gdk.Window
  * structWrap:
  * 	- GValue* -> Value
  * 	- GdkDevice* -> Device
  * 	- GdkEvent* -> Event
  * 	- GdkScreen* -> Screen
+ * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
  * overrides:
@@ -71,6 +73,7 @@ private import glib.Str;
 private import gobject.Value;
 private import gdk.Device;
 private import gdk.Screen;
+private import gdk.Window;
 
 
 
@@ -485,7 +488,6 @@ public class Event
 	}
 	
 	/**
-	 * Returns the time stamp from event, if there is one; otherwise
 	 * returns GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
 	 * Returns: time stamp field from event
 	 */
@@ -493,6 +495,33 @@ public class Event
 	{
 		// guint32 gdk_event_get_time (const GdkEvent *event);
 		return gdk_event_get_time(gdkEvent);
+	}
+	
+	/**
+	 * Extracts the GdkWindow associated with an event.
+	 * Returns: The GdkWindow associated with the event. [transfer none] Since 3.10
+	 */
+	public Window getWindow()
+	{
+		// GdkWindow * gdk_event_get_window (const GdkEvent *event);
+		auto p = gdk_event_get_window(gdkEvent);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+	
+	/**
+	 * Retrieves the type of the event.
+	 * Returns: a GdkEventType Since 3.10
+	 */
+	public GdkEventType getEventType()
+	{
+		// GdkEventType gdk_event_get_event_type (const GdkEvent *event);
+		return gdk_event_get_event_type(gdkEvent);
 	}
 	
 	/**

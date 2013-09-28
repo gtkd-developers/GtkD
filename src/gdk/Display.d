@@ -259,6 +259,8 @@ public class Display : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gdk_display_get_n_screens has been deprecated since version 3.10 and should not be used in newly-written code. The number of screens is always 1.
 	 * Gets the number of screen managed by the display.
 	 * Since 2.2
 	 * Returns: number of screens.

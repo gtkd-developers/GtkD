@@ -940,9 +940,7 @@ public class Window : ObjectG
 	 * Gdk uses multiple kinds of caching to get better performance and
 	 * nicer drawing. For instance, during exposes all paints to a window
 	 * using double buffered rendering are keep on a surface until the last
-	 * window has been exposed. It also delays window moves/scrolls until
-	 * as long as possible until next update to avoid tearing when moving
-	 * windows.
+	 * window has been exposed.
 	 * Normally this should be completely invisible to applications, as
 	 * we automatically flush the windows when required, but this might
 	 * be needed if you for instance mix direct native drawing with
@@ -1174,6 +1172,47 @@ public class Window : ObjectG
 	}
 	
 	/**
+	 * Returns the internal scale factor that maps from window coordiantes
+	 * to the actual device pixels. On traditional systems this is 1, but
+	 * on very high density outputs this can be a higher value (often 2).
+	 * A higher value means that drawing is automatically scaled up to
+	 * a higher resolution, so any code doing drawing will automatically look
+	 * nicer. However, if you are supplying pixel-based data the scale
+	 * value can be used to determine whether to use a pixel resource
+	 * with higher resolution data.
+	 * The scale of a window may change during runtime, if this happens
+	 * a configure event will be sent to the toplevel window.
+	 * Returns: the scale factor Since 3.10
+	 */
+	public int getScaleFactor()
+	{
+		// gint gdk_window_get_scale_factor (GdkWindow *window);
+		return gdk_window_get_scale_factor(gdkWindow);
+	}
+	
+	/**
+	 * For optimizization purposes, compositing window managers may
+	 * like to not draw obscured regions of windows, or turn off blending
+	 * during for these regions. With RGB windows with no transparency,
+	 * this is just the shape of the window, but with ARGB32 windows, the
+	 * compositor does not know what regions of the window are transparent
+	 * or not.
+	 * This function only works for toplevel windows.
+	 * GTK+ will automatically update this property automatically if
+	 * the window background is opaque, as we know where the opaque regions
+	 * are. If your window background is not opaque, please update this
+	 * property in your "style_updated" handler.
+	 * Params:
+	 * region = a region
+	 * Since 3.10
+	 */
+	public void setOpaqueRegion(Region region)
+	{
+		// void gdk_window_set_opaque_region (GdkWindow *window,  cairo_region_t *region);
+		gdk_window_set_opaque_region(gdkWindow, (region is null) ? null : region.getRegionStruct());
+	}
+	
+	/**
 	 * Computes the region of a window that potentially can be written
 	 * to by drawing primitives. This region may not take into account
 	 * other factors such as if the window is obscured by other windows,
@@ -1285,6 +1324,25 @@ public class Window : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Region)(cast(cairo_region_t*) p);
+	}
+	
+	/**
+	 * Registers an invalidate handler for a specific window. This
+	 * will get called whenever a region in the window or its children
+	 * is invalidated.
+	 * This can be used to record the invalidated region, which is
+	 * useful if you are keeping an offscreen copy of some region
+	 * and want to keep it up to date. You can also modify the
+	 * invalidated region in case you're doing some effect where
+	 * e.g. a child widget appears in multiple places.
+	 * Params:
+	 * handler = a GdkWindowInvalidateHandlerFunc callback function
+	 * Since 3.10
+	 */
+	public void setInvalidateHandler(GdkWindowInvalidateHandlerFunc handler)
+	{
+		// void gdk_window_set_invalidate_handler (GdkWindow *window,  GdkWindowInvalidateHandlerFunc handler);
+		gdk_window_set_invalidate_handler(gdkWindow, handler);
 	}
 	
 	/**
@@ -2182,6 +2240,7 @@ public class Window : ObjectG
 	 * Obtains the current device position and modifier state.
 	 * The position is given in coordinates relative to the upper left
 	 * corner of window.
+	 * Use gdk_window_get_device_position_double() if you need subpixel precision.
 	 * Params:
 	 * device = pointer GdkDevice to query to.
 	 * x = return location for the X coordinate of device, or NULL. [out][allow-none]
@@ -2193,6 +2252,30 @@ public class Window : ObjectG
 	{
 		// GdkWindow * gdk_window_get_device_position (GdkWindow *window,  GdkDevice *device,  gint *x,  gint *y,  GdkModifierType *mask);
 		auto p = gdk_window_get_device_position(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+	
+	/**
+	 * Obtains the current device position in doubles and modifier state.
+	 * The position is given in coordinates relative to the upper left
+	 * corner of window.
+	 * Params:
+	 * device = pointer GdkDevice to query to.
+	 * x = return location for the X coordinate of device, or NULL. [out][allow-none]
+	 * y = return location for the Y coordinate of device, or NULL. [out][allow-none]
+	 * mask = return location for the modifier mask, or NULL. [out][allow-none]
+	 * Returns: The window underneath device (as with gdk_device_get_window_at_position()), or NULL if the window is not known to GDK. [transfer none] Since 3.10
+	 */
+	public Window getDevicePositionDouble(Device device, out double x, out double y, out GdkModifierType mask)
+	{
+		// GdkWindow * gdk_window_get_device_position_double  (GdkWindow *window,  GdkDevice *device,  gdouble *x,  gdouble *y,  GdkModifierType *mask);
+		auto p = gdk_window_get_device_position_double(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
 		
 		if(p is null)
 		{
@@ -2265,6 +2348,30 @@ public class Window : ObjectG
 	{
 		// GList * gdk_window_get_children (GdkWindow *window);
 		auto p = gdk_window_get_children(gdkWindow);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+	}
+	
+	/**
+	 * Gets the list of children of window known to GDK with a
+	 * particular user_data set on it.
+	 * The returned list must be freed, but the elements in the
+	 * list need not be.
+	 * The list is returned in (relative) stacking order, i.e. the
+	 * lowest window is first.
+	 * Params:
+	 * userData = user data to look for
+	 * Returns: list of child windows inside window. [transfer container][element-type GdkWindow] Since 3.10
+	 */
+	public ListG getChildrenWithUserData(void* userData)
+	{
+		// GList * gdk_window_get_children_with_user_data  (GdkWindow *window,  gpointer user_data);
+		auto p = gdk_window_get_children_with_user_data(gdkWindow, userData);
 		
 		if(p is null)
 		{

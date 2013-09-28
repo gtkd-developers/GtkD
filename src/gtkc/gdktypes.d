@@ -60,8 +60,8 @@ enum GdkModifierIntent
 public alias GdkModifierIntent ModifierIntent;
 
 /**
- * Returned by gdk_pointer_grab() and gdk_keyboard_grab() to indicate
- * success or the reason for the failure of the grab attempt.
+ * Returned by gdk_device_grab(), gdk_pointer_grab() and gdk_keyboard_grab() to
+ * indicate success or the reason for the failure of the grab attempt.
  * GDK_GRAB_SUCCESS
  * the resource was successfully grabbed.
  * GDK_GRAB_ALREADY_GRABBED
@@ -1496,6 +1496,7 @@ alias GdkPropertyState PropertyState;
  * the window is kept below other windows.
  * GDK_WINDOW_STATE_FOCUSED
  * the window is presented as focused (with active decorations).
+ * GDK_WINDOW_STATE_TILED
  */
 public enum GdkWindowState
 {
@@ -1506,7 +1507,8 @@ public enum GdkWindowState
 	FULLSCREEN = 1 << 4,
 	ABOVE = 1 << 5,
 	BELOW = 1 << 6,
-	FOCUSED = 1 << 7
+	FOCUSED = 1 << 7,
+	TILED = 1 << 8
 }
 alias GdkWindowState WindowState;
 
@@ -1551,7 +1553,7 @@ alias GdkOwnerChange OwnerChange;
  * GDK_DRAG_PROTO_NONE
  * no protocol.
  * GDK_DRAG_PROTO_MOTIF
- * The Motif DND protocol.
+ * The Motif DND protocol. No longer supported
  * GDK_DRAG_PROTO_XDND
  * The Xdnd protocol.
  * GDK_DRAG_PROTO_ROOTWIN
@@ -1972,7 +1974,7 @@ public struct GdkEventAny
  * gint length;
  * the length of string.
  * gchar *string;
- * a string containing the an approximation of the text that
+ * a string containing an approximation of the text that
  * would result from this keypress. The only correct way to handle text
  * input of text is using input methods (see GtkIMContext), so this
  * field is deprecated and should never be used.
@@ -2858,6 +2860,22 @@ public alias extern(C) void function(guchar* pixels, void* data) GdkPixbufDestro
  */
 // gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
 public alias extern(C) int function(char* buf, gsize count, GError** error, void* data) GdkPixbufSaveFunc;
+
+/*
+ * Whenever some area of the window is invalidated (directly in the
+ * window or in a child window) this gets called with region in
+ * the coordinate space of window. You can use region to just
+ * keep track of the dirty region, or you can actually change
+ * region in case you are doing display tricks like showing
+ * a child in multiple places.
+ * window :
+ * a GdkWindow
+ * region :
+ * a cairo_region_t
+ * Since 3.10
+ */
+// void (*GdkWindowInvalidateHandlerFunc) (GdkWindow *window,  cairo_region_t *region);
+public alias extern(C) void function(GdkWindow* window, cairo_region_t* region) GdkWindowInvalidateHandlerFunc;
 
 /*
  * A function of this type is passed to gdk_window_invalidate_maybe_recurse().

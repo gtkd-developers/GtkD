@@ -169,7 +169,8 @@ public class DisplayManager : ObjectG
 	 * When called for the first time, this function consults the
 	 * GDK_BACKEND environment variable to find out which
 	 * of the supported GDK backends to use (in case GDK has been compiled
-	 * with multiple backends).
+	 * with multiple backends). Applications can use gdk_set_allowed_backends()
+	 * to limit what backends can be used.
 	 * Since 2.2
 	 * Returns: The global GdkDisplayManager singleton; gdk_parse_args(), gdk_init(), or gdk_init_check() must have been called first. [transfer none]
 	 */

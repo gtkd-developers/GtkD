@@ -250,6 +250,11 @@ out: gdk_device_get_axis value
 #Length = 2
 array: gdk_device_get_axis_value axes
 out: gdk_device_get_axis_value value
+out: gdk_device_get_position_double screen
+out: gdk_device_get_position_double x
+out: gdk_device_get_position_double y
+out: gdk_device_get_window_at_position_double win_x
+out: gdk_device_get_window_at_position_double win_y
 
 outFile: Device
 
@@ -680,13 +685,17 @@ struct: GdkCursor
 class: Cursor
 prefix: gdk_cursor_
 import: glib.Str
+import: cairo.Surface
 import: gdk.Display
 import: gdk.Pixbuf
+structWrap: cairo_surface_t* Surface
 structWrap: GdkDisplay* Display
 structWrap: GdkPixbuf* Pixbuf
 
 nocode: gdk_cursor_ref
 nocode: gdk_cursor_unref
+out: gdk_cursor_get_surface x_hot
+out: gdk_cursor_get_surface y_hot
 outFile: Cursor
 
 file: gdk3-Windows.html
@@ -755,6 +764,9 @@ out: gdk_window_coords_from_parent x
 out: gdk_window_coords_from_parent y
 out: gdk_window_coords_to_parent parent_x
 out: gdk_window_coords_to_parent parent_y
+out: gdk_window_get_device_position_double x
+out: gdk_window_get_device_position_double y
+out: gdk_window_get_device_position_double mask
 
 code: start
 	/**
@@ -814,10 +826,12 @@ import: glib.Str
 import: gobject.Value
 import: gdk.Device
 import: gdk.Screen
+import: gdk.Window
 structWrap: GValue* Value
 structWrap: GdkDevice* Device
 structWrap: GdkEvent* Event
 structWrap: GdkScreen* Screen
+structWrap: GdkWindow* Window
 
 out: gdk_event_get_state state
 out: gdk_event_get_axis value
@@ -1186,6 +1200,7 @@ outFile: Testing
 
 file: gdk3-Cairo-Interaction.html
 prefix: gdk_cairo_
+prefix: gdk_window_
 import: cairo.Context
 import: cairo.Region
 import: cairo.Surface

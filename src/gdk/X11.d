@@ -303,6 +303,24 @@ public class X11
 	}
 	
 	/**
+	 * Forces a specific window scale for all windows on this display,
+	 * instead of using the default or user configured scale. This
+	 * is can be used to disable scaling support by setting scale to
+	 * 1, or to programmatically set the window scale.
+	 * Once the scale is set by this call it will not change in response
+	 * to later user configuration changes.
+	 * Params:
+	 * display = the display. [type GdkX11Display]
+	 * scale = The new scale value
+	 * Since 3.10
+	 */
+	public static void displaySetWindowScale(Display display, int scale)
+	{
+		// void gdk_x11_display_set_window_scale (GdkDisplay *display,  gint scale);
+		gdk_x11_display_set_window_scale((display is null) ? null : display.getDisplayStruct(), scale);
+	}
+	
+	/**
 	 * Gets the XID of the specified output/monitor.
 	 * If the X server does not support version 1.2 of the RANDR
 	 * extension, 0 is returned.
@@ -316,6 +334,36 @@ public class X11
 	{
 		// XID gdk_x11_screen_get_monitor_output (GdkScreen *screen,  gint monitor_num);
 		return gdk_x11_screen_get_monitor_output((screen is null) ? null : screen.getScreenStruct(), monitorNum);
+	}
+	
+	/**
+	 * Returns the number of workspaces for screen when running under a
+	 * window manager that supports multiple workspaces, as described
+	 * in the Extended
+	 * Window Manager Hints.
+	 * Params:
+	 * screen = a GdkScreen
+	 * Returns: the number of workspaces, or 0 if workspaces are not supported Since 3.10
+	 */
+	public static uint screenGetNumberOfDesktops(Screen screen)
+	{
+		// guint32 gdk_x11_screen_get_number_of_desktops  (GdkScreen *screen);
+		return gdk_x11_screen_get_number_of_desktops((screen is null) ? null : screen.getScreenStruct());
+	}
+	
+	/**
+	 * Returns the current workspace for screen when running under a
+	 * window manager that supports multiple workspaces, as described
+	 * in the Extended
+	 * Window Manager Hints.
+	 * Params:
+	 * screen = a GdkScreen
+	 * Returns: the current workspace, or 0 if workspaces are not supported Since 3.10
+	 */
+	public static uint screenGetCurrentDesktop(Screen screen)
+	{
+		// guint32 gdk_x11_screen_get_current_desktop (GdkScreen *screen);
+		return gdk_x11_screen_get_current_desktop((screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**
@@ -396,6 +444,34 @@ public class X11
 	}
 	
 	/**
+	 * Moves the window to the given workspace when running unde a
+	 * window manager that supports multiple workspaces, as described
+	 * in the Extended
+	 * Window Manager Hints.
+	 * Params:
+	 * window = a GdkWindow
+	 * desktop = the number of the workspace to move the window to
+	 * Since 3.10
+	 */
+	public static void windowMoveToDesktop(Window window, uint desktop)
+	{
+		// void gdk_x11_window_move_to_desktop (GdkWindow *window,  guint32 desktop);
+		gdk_x11_window_move_to_desktop((window is null) ? null : window.getWindowStruct(), desktop);
+	}
+	
+	/**
+	 * Gets the number of the workspace window is on.
+	 * Params:
+	 * window = a GdkWindow
+	 * Returns: the current workspace of window Since 3.10
+	 */
+	public static uint windowGetDesktop(Window window)
+	{
+		// guint32 gdk_x11_window_get_desktop (GdkWindow *window);
+		return gdk_x11_window_get_desktop((window is null) ? null : window.getWindowStruct());
+	}
+	
+	/**
 	 * This function modifies or removes an arbitrary X11 window
 	 * property of type UTF8_STRING. If the given window is
 	 * not a toplevel window, it is ignored.
@@ -409,6 +485,47 @@ public class X11
 	{
 		// void gdk_x11_window_set_utf8_property (GdkWindow *window,  const gchar *name,  const gchar *value);
 		gdk_x11_window_set_utf8_property((window is null) ? null : window.getWindowStruct(), Str.toStringz(name), Str.toStringz(value));
+	}
+	
+	/**
+	 * Newer GTK+ windows using client-side decorations use extra geometry
+	 * around their frames for effects like shadows and invisible borders.
+	 * Window managers that want to maximize windows or snap to edges need
+	 * to know where the extents of the actual frame lie, so that users
+	 * don't feel like windows are snapping against random invisible edges.
+	 * Note that this property is automatically updated by GTK+, so this
+	 * function should only be used by applications which do not use GTK+
+	 * to create toplevel windows.
+	 * Params:
+	 * window = a GdkWindow. [type GdkX11Window]
+	 * left = The left extent
+	 * right = The right extent
+	 * top = The top extent
+	 * bottom = The bottom extent
+	 * Since 3.10
+	 */
+	public static void windowSetFrameExtents(Window window, int left, int right, int top, int bottom)
+	{
+		// void gdk_x11_window_set_frame_extents (GdkWindow *window,  int left,  int right,  int top,  int bottom);
+		gdk_x11_window_set_frame_extents((window is null) ? null : window.getWindowStruct(), left, right, top, bottom);
+	}
+	
+	/**
+	 * This function can be used to disable frame synchronization for a window.
+	 * Normally frame synchronziation will be enabled or disabled based on whether
+	 * the system has a compositor that supports frame synchronization, but if
+	 * the window is not directly managed by the window manager, then frame
+	 * synchronziation may need to be disabled. This is the case for a window
+	 * embedded via the XEMBED protocol.
+	 * Params:
+	 * window = a native GdkWindow. [type GdkX11Window]
+	 * frameSyncEnabled = whether frame-synchronization should be enabled
+	 * Since 3.8
+	 */
+	public static void windowSetFrameSyncEnabled(Window window, int frameSyncEnabled)
+	{
+		// void gdk_x11_window_set_frame_sync_enabled  (GdkWindow *window,  gboolean frame_sync_enabled);
+		gdk_x11_window_set_frame_sync_enabled((window is null) ? null : window.getWindowStruct(), frameSyncEnabled);
 	}
 	
 	/**

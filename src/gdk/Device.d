@@ -448,9 +448,9 @@ public class Device : ObjectG
 	
 	/**
 	 * Gets the current state of a pointer device relative to window. As a slave
-	 * device coordinates are those of its master pointer, This
+	 * device's coordinates are those of its master pointer, this
 	 * function may not be called on devices of type GDK_DEVICE_TYPE_SLAVE,
-	 * unless there is an ongoing grab on them, see gdk_device_grab().
+	 * unless there is an ongoing grab on them. See gdk_device_grab().
 	 * Params:
 	 * window = a GdkWindow.
 	 * axes = an array of doubles to store the values of the axes of device in,
@@ -486,6 +486,28 @@ public class Device : ObjectG
 	}
 	
 	/**
+	 * Gets the current location of device in double precision. As a slave device's
+	 * coordinates are those of its master pointer, this function
+	 * may not be called on devices of type GDK_DEVICE_TYPE_SLAVE,
+	 * unless there is an ongoing grab on them. See gdk_device_grab().
+	 * Params:
+	 * screen = location to store the GdkScreen
+	 * the device is on, or NULL. [out][transfer none][allow-none]
+	 * x = location to store root window X coordinate of device, or NULL. [out][allow-none]
+	 * y = location to store root window Y coordinate of device, or NULL. [out][allow-none]
+	 * Since 3.10
+	 */
+	public void getPositionDouble(out Screen screen, out double x, out double y)
+	{
+		// void gdk_device_get_position_double (GdkDevice *device,  GdkScreen **screen,  gdouble *x,  gdouble *y);
+		GdkScreen* outscreen = null;
+		
+		gdk_device_get_position_double(gdkDevice, &outscreen, &x, &y);
+		
+		screen = ObjectG.getDObject!(Screen)(outscreen);
+	}
+	
+	/**
 	 * Obtains the window underneath device, returning the location of the device in win_x and win_y. Returns
 	 * NULL if the window tree under device is not known to GDK (for example, belongs to another application).
 	 * As a slave device coordinates are those of its master pointer, This
@@ -502,6 +524,33 @@ public class Device : ObjectG
 	{
 		// GdkWindow * gdk_device_get_window_at_position (GdkDevice *device,  gint *win_x,  gint *win_y);
 		auto p = gdk_device_get_window_at_position(gdkDevice, &winX, &winY);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+	
+	/**
+	 * Obtains the window underneath device, returning the location of the device in win_x and win_y in
+	 * double precision. Returns NULL if the window tree under device is not known to GDK (for example,
+	 * belongs to another application).
+	 * As a slave device coordinates are those of its master pointer, This
+	 * function may not be called on devices of type GDK_DEVICE_TYPE_SLAVE,
+	 * unless there is an ongoing grab on them, see gdk_device_grab().
+	 * Params:
+	 * winX = return location for the X coordinate of the device location,
+	 * relative to the window origin, or NULL. [out][allow-none]
+	 * winY = return location for the Y coordinate of the device location,
+	 * relative to the window origin, or NULL. [out][allow-none]
+	 * Returns: the GdkWindow under the device position, or NULL. [transfer none] Since 3.0
+	 */
+	public Window getWindowAtPositionDouble(out double winX, out double winY)
+	{
+		// GdkWindow * gdk_device_get_window_at_position_double  (GdkDevice *device,  gdouble *win_x,  gdouble *win_y);
+		auto p = gdk_device_get_window_at_position_double(gdkDevice, &winX, &winY);
 		
 		if(p is null)
 		{

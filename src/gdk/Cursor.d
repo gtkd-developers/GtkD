@@ -46,11 +46,13 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- cairo.Surface
  * 	- gdk.Display
  * 	- gdk.Pixbuf
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -66,6 +68,7 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import cairo.Surface;
 private import gdk.Display;
 private import gdk.Pixbuf;
 
@@ -181,6 +184,36 @@ public class Cursor : ObjectG
 	}
 	
 	/**
+	 * Creates a new cursor from a cairo image surface.
+	 * Not all GDK backends support RGBA cursors. If they are not
+	 * supported, a monochrome approximation will be displayed.
+	 * The functions gdk_display_supports_cursor_alpha() and
+	 * gdk_display_supports_cursor_color() can be used to determine
+	 * whether RGBA cursors are supported;
+	 * gdk_display_get_default_cursor_size() and
+	 * gdk_display_get_maximal_cursor_size() give information about
+	 * cursor sizes.
+	 * On the X backend, support for RGBA cursors requires a
+	 * sufficently new version of the X Render extension.
+	 * Params:
+	 * display = the GdkDisplay for which the cursor will be created
+	 * surface = the cairo image surface containing the cursor pixel data
+	 * x = the horizontal offset of the 'hotspot' of the cursor
+	 * y = the vertical offset of the 'hotspot' of the cursor
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Display display, Surface surface, double x, double y)
+	{
+		// GdkCursor * gdk_cursor_new_from_surface (GdkDisplay *display,  cairo_surface_t *surface,  gdouble x,  gdouble y);
+		auto p = gdk_cursor_new_from_surface((display is null) ? null : display.getDisplayStruct(), (surface is null) ? null : surface.getSurfaceStruct(), x, y);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gdk_cursor_new_from_surface((display is null) ? null : display.getDisplayStruct(), (surface is null) ? null : surface.getSurfaceStruct(), x, y)");
+		}
+		this(cast(GdkCursor*) p);
+	}
+	
+	/**
 	 * Creates a new cursor by looking up name in the current cursor
 	 * theme.
 	 * Since 2.8
@@ -256,6 +289,29 @@ public class Cursor : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Returns a cairo image surface with the image used to display the cursor.
+	 * Note that depending on the capabilities of the windowing system and
+	 * on the cursor, GDK may not be able to obtain the image data. In this
+	 * case, NULL is returned.
+	 * Params:
+	 * xHot = Location to store the hotspot x position, or NULL
+	 * yHot = Location to store the hotspot y position, or NULL
+	 * Returns: a cairo_surface_t representing cursor, or NULL. [transfer full] Since 3.10
+	 */
+	public Surface getSurface(out double xHot, out double yHot)
+	{
+		// cairo_surface_t * gdk_cursor_get_surface (GdkCursor *cursor,  gdouble *x_hot,  gdouble *y_hot);
+		auto p = gdk_cursor_get_surface(gdkCursor, &xHot, &yHot);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 	}
 	
 	/**

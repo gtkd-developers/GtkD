@@ -218,6 +218,36 @@ public class Gdk
 	}
 	
 	/**
+	 * Sets a list of backends that GDK should try to use.
+	 * This can be be useful if your application does not
+	 * work with certain GDK backends.
+	 * By default, GDK tries all included backends.
+	 * For example,
+	 * gdk_set_allowed_backends ("wayland,quartz,*");
+	 * instructs GDK to try the Wayland backend first,
+	 * followed by the Quartz backend, and then all
+	 * others.
+	 * If the GDK_BACKEND environment variable
+	 * is set, it determines what backends are tried in what
+	 * order, while still respecting the set of allowed backends
+	 * that are specified by this function.
+	 * The possible backend names are x11, win32, quartz,
+	 * broadway, wayland. You can also include a * in the
+	 * list to try all remaining backends.
+	 * This call must happen prior to gdk_display_open(),
+	 * gtk_init(), gtk_init_with_args() or gtk_init_check()
+	 * in order to take effect.
+	 * Params:
+	 * backends = a comma-separated list of backends
+	 * Since 3.10
+	 */
+	public static void setAllowedBackends(string backends)
+	{
+		// void gdk_set_allowed_backends (const gchar *backends);
+		gdk_set_allowed_backends(Str.toStringz(backends));
+	}
+	
+	/**
 	 * Gets the program class. Unless the program class has explicitly
 	 * been set with gdk_set_program_class() or with the --class
 	 * commandline option, the default value is the program name (determined
@@ -244,6 +274,9 @@ public class Gdk
 	}
 	
 	/**
+	 * Warning
+	 * gdk_get_display has been deprecated since version 3.8 and should not be used in newly-written code. Call gdk_display_get_name (gdk_display_get_default()))
+	 *  instead.
 	 * Gets the name of the display, which usually comes from the
 	 * DISPLAY environment variable or the
 	 * --display command line option.

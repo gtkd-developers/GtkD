@@ -338,7 +338,7 @@ public class DeviceManager : ObjectG
 	 * Returns the client pointer, that is, the master pointer that acts as the core pointer
 	 * for this application. In X11, window managers may change this depending on the interaction
 	 * pattern under the presence of several pointers.
-	 * You should use this function sheldomly, only in code that isn't triggered by a GdkEvent
+	 * You should use this function seldomly, only in code that isn't triggered by a GdkEvent
 	 * and there aren't other means to get a meaningful GdkDevice to operate on.
 	 * Returns: The client pointer. This memory is owned by GDK and must not be freed or unreferenced. [transfer none] Since 3.0
 	 */

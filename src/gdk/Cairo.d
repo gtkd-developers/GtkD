@@ -38,6 +38,7 @@
  * implements:
  * prefixes:
  * 	- gdk_cairo_
+ * 	- gdk_window_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -108,10 +109,36 @@ private import gdk.Window;
  * height = height of the new surface
  * Returns: a pointer to the newly allocated surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
  */
-public static Surface gdkWindowCreateSimilarSurface(Window window, cairo_content_t content, int width, int height)
+public static Surface createSimilarSurface(Window window, cairo_content_t content, int width, int height)
 {
 	// cairo_surface_t * gdk_window_create_similar_surface (GdkWindow *window,  cairo_content_t content,  int width,  int height);
 	auto p = gdk_window_create_similar_surface((window is null) ? null : window.getWindowStruct(), content, width, height);
+	
+	if(p is null)
+	{
+		return null;
+	}
+	
+	return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
+}
+
+/**
+ * Create a new image surface that is efficient to draw on the
+ * given window.
+ * Initially the surface contents are all 0 (transparent if contents
+ * have transparency, black otherwise.)
+ * Params:
+ * window = window to make new surface similar to, or NULL if none
+ * format = the format for the new surface. [type int]
+ * width = width of the new surface
+ * height = height of the new surface
+ * scale = the scale of the new surface, or 0 to use same as window
+ * Returns: a pointer to the newly allocated surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs. Since 3.10
+ */
+public static Surface createSimilarImageSurface(Window window, cairo_format_t format, int width, int height, int scale)
+{
+	// cairo_surface_t * gdk_window_create_similar_image_surface  (GdkWindow *window,  cairo_format_t format,  int width,  int height,  int scale);
+	auto p = gdk_window_create_similar_image_surface((window is null) ? null : window.getWindowStruct(), format, width, height, scale);
 	
 	if(p is null)
 	{
@@ -271,5 +298,27 @@ public static Region regionCreateFromSurface(Surface surface)
 	}
 	
 	return ObjectG.getDObject!(Region)(cast(cairo_region_t*) p);
+}
+
+/**
+ * Creates an image surface with the same contents as
+ * the pixbuf.
+ * Params:
+ * pixbuf = a GdkPixbuf
+ * scale = the scale of the new surface, or 0 to use same as window
+ * forWindow = The window this will be drawn to, on NULL.
+ * Returns: a new cairo surface, must be freed with cairo_surface_destroy() Since 3.10
+ */
+public static Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindow)
+{
+	// cairo_surface_t * gdk_cairo_surface_create_from_pixbuf  (const GdkPixbuf *pixbuf,  int scale,  GdkWindow *for_window);
+	auto p = gdk_cairo_surface_create_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct(), scale, (forWindow is null) ? null : forWindow.getWindowStruct());
+	
+	if(p is null)
+	{
+		return null;
+	}
+	
+	return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 }
 

@@ -2,6 +2,11 @@
 mkdir gtkdocs
 cd gtkdocs
 
+#GDK
+curl https://developer.gnome.org/gdk3/gdk3-html-3.10.0.tar.gz | tar xvfz -
+ln -s gdk3-html-3.10.0 gdk
+exit
+
 #GLIB
 curl https://developer.gnome.org/glib/glib-html-2.38.0.tar.gz | tar xvfz -
 ln -s glib-html-2.38.0 gthread
@@ -22,8 +27,8 @@ ln -s pango-html-1.36.0 pango
 curl https://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.30.0.tar.gz | tar xvfz -
 ln -s gdk-pixbuf-html-2.30.0 gdk-pixbuf
 #GDK
-curl https://developer.gnome.org/gdk3/gdk3-html-3.8.0.tar.gz | tar xvfz -
-ln -s gdk3-html-3.8.0 gdk
+curl https://developer.gnome.org/gdk3/gdk3-html-3.10.0.tar.gz | tar xvfz -
+ln -s gdk3-html-3.10.0 gdk
 #GTK
 curl https://developer.gnome.org/gtk3/gtk3-html-3.8.0.tar.gz | tar xvfz -
 ln -s gtk3-html-3.8.0 gtk
