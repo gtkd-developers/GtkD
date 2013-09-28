@@ -16,11 +16,11 @@ ln -s gio-html-2.38.0 gio
 curl https://developer.gnome.org/atk/atk-html-2.10.0.tar.gz | tar xvfz -
 ln -s atk-html-2.10.0 atk
 #PANGO
-curl https://developer.gnome.org/pango/pango-html-1.34.0.tar.gz | tar xvfz -
-ln -s pango-html-1.34.0 pango
+curl https://developer.gnome.org/pango/pango-html-1.36.0.tar.gz | tar xvfz -
+ln -s pango-html-1.36.0 pango
 #GDK-PIXBUF
-curl https://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.28.0.tar.gz | tar xvfz -
-ln -s gdk-pixbuf-html-2.28.0 gdk-pixbuf
+curl https://developer.gnome.org/gdk-pixbuf/gdk-pixbuf-html-2.30.0.tar.gz | tar xvfz -
+ln -s gdk-pixbuf-html-2.30.0 gdk-pixbuf
 #GDK
 curl https://developer.gnome.org/gdk3/gdk3-html-3.8.0.tar.gz | tar xvfz -
 ln -s gdk3-html-3.8.0 gdk

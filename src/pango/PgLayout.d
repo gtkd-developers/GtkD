@@ -299,7 +299,7 @@ public class PgLayout : ObjectG
 	 * Sets the text attributes for a layout object.
 	 * References attrs, so the caller can unref its reference.
 	 * Params:
-	 * attrs = a PangoAttrList, can be NULL. [allow-none][transfer full]
+	 * attrs = a PangoAttrList, can be NULL. [allow-none][transfer none]
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{

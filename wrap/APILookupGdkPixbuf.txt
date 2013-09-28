@@ -230,6 +230,8 @@ import: gdkpixbuf.PixbufFormat
 structWrap: GdkPixbufFormat* PixbufFormat
 import: glib.ErrorG
 import: glib.GException
+import: glib.Bytes
+structWrap: GBytes* Bytes
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdkpixbuf.PixbufAnimation

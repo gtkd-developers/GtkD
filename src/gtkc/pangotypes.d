@@ -2243,8 +2243,8 @@ public alias extern(C) void* function(void* userData) PangoAttrDataCopyFunc;
  * user_data :
  * user data passed to the function
  * Returns :
- * TRUE if the attribute should be kept, FALSE if it should be
- * filtered out.
+ * TRUE if the attribute should be selected for
+ * filtering, FALSE otherwise.
  */
 // gboolean (*PangoAttrFilterFunc) (PangoAttribute *attribute,  gpointer user_data);
 public alias extern(C) int function(PangoAttribute* attribute, void* userData) PangoAttrFilterFunc;

@@ -48,10 +48,12 @@
  * 	- gdkpixbuf.PixbufFormat
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- glib.Bytes
  * 	- gdk.Pixbuf
  * 	- gdkpixbuf.PixbufAnimation
  * 	- glib.Str
  * structWrap:
+ * 	- GBytes* -> Bytes
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
  * 	- GdkPixbufFormat* -> PixbufFormat
@@ -74,6 +76,7 @@ public  import gtkc.gdktypes;
 private import gdkpixbuf.PixbufFormat;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Bytes;
 private import gdk.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import glib.Str;
@@ -381,6 +384,35 @@ public class PixbufLoader : ObjectG
 		GError* err = null;
 		
 		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, cast(int) buf.length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+	
+	/**
+	 * This will cause a pixbuf loader to parse a buffer inside a GBytes
+	 * for an image. It will return TRUE if the data was loaded successfully,
+	 * and FALSE if an error occurred. In the latter case, the loader
+	 * will be closed, and will not accept further writes. If FALSE is
+	 * returned, error will be set to an error from the GDK_PIXBUF_ERROR
+	 * or G_FILE_ERROR domains.
+	 * See also: gdk_pixbuf_loader_write()
+	 * Since 2.30
+	 * Params:
+	 * buffer = The image data as a GBytes
+	 * Returns: TRUE if the write was successful, or FALSE if the loader cannot parse the buffer.
+	 * Throws: GException on failure.
+	 */
+	public int writeBytes(Bytes buffer)
+	{
+		// gboolean gdk_pixbuf_loader_write_bytes (GdkPixbufLoader *loader,  GBytes *buffer,  GError **error);
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_loader_write_bytes(gdkPixbufLoader, (buffer is null) ? null : buffer.getBytesStruct(), &err);
 		
 		if (err !is null)
 		{

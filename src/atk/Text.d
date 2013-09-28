@@ -428,10 +428,10 @@ public class Text
 	 * or -1 if an error has occurred (e.g. invalid offset, not implemented). [out]
 	 * Returns: a newly allocated string containing the text at the offset bounded by the specified granularity. Use g_free() to free the returned string. Returns NULL if the offset is invalid or no implementation is available.
 	 */
-	public string getStringAtOffset(int offset, AtkTextGranularity granularity, int* startOffset, int* endOffset)
+	public string getStringAtOffset(int offset, AtkTextGranularity granularity, out int startOffset, out int endOffset)
 	{
 		// gchar * atk_text_get_string_at_offset (AtkText *text,  gint offset,  AtkTextGranularity granularity,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_string_at_offset(atkText, offset, granularity, startOffset, endOffset));
+		return Str.toString(atk_text_get_string_at_offset(atkText, offset, granularity, &startOffset, &endOffset));
 	}
 	
 	/**

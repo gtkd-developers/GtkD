@@ -79,6 +79,7 @@ mixin( _shared ~ "static this()
 	Linker.link(gdk_pixbuf_loader_new_with_mime_type, \"gdk_pixbuf_loader_new_with_mime_type\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_get_format, \"gdk_pixbuf_loader_get_format\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_write, \"gdk_pixbuf_loader_write\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_loader_write_bytes, \"gdk_pixbuf_loader_write_bytes\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_set_size, \"gdk_pixbuf_loader_set_size\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_get_pixbuf, \"gdk_pixbuf_loader_get_pixbuf\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_loader_get_animation, \"gdk_pixbuf_loader_get_animation\", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -147,6 +148,7 @@ mixin( gshared ~"extern(C)
 	GdkPixbufLoader* function(char* mimeType, GError** error) c_gdk_pixbuf_loader_new_with_mime_type;
 	GdkPixbufFormat* function(GdkPixbufLoader* loader) c_gdk_pixbuf_loader_get_format;
 	gboolean function(GdkPixbufLoader* loader, guchar* buf, gsize count, GError** error) c_gdk_pixbuf_loader_write;
+	gboolean function(GdkPixbufLoader* loader, GBytes* buffer, GError** error) c_gdk_pixbuf_loader_write_bytes;
 	void function(GdkPixbufLoader* loader, int width, int height) c_gdk_pixbuf_loader_set_size;
 	GdkPixbuf* function(GdkPixbufLoader* loader) c_gdk_pixbuf_loader_get_pixbuf;
 	GdkPixbufAnimation* function(GdkPixbufLoader* loader) c_gdk_pixbuf_loader_get_animation;
@@ -213,6 +215,7 @@ alias c_gdk_pixbuf_loader_new_with_type  gdk_pixbuf_loader_new_with_type;
 alias c_gdk_pixbuf_loader_new_with_mime_type  gdk_pixbuf_loader_new_with_mime_type;
 alias c_gdk_pixbuf_loader_get_format  gdk_pixbuf_loader_get_format;
 alias c_gdk_pixbuf_loader_write  gdk_pixbuf_loader_write;
+alias c_gdk_pixbuf_loader_write_bytes  gdk_pixbuf_loader_write_bytes;
 alias c_gdk_pixbuf_loader_set_size  gdk_pixbuf_loader_set_size;
 alias c_gdk_pixbuf_loader_get_pixbuf  gdk_pixbuf_loader_get_pixbuf;
 alias c_gdk_pixbuf_loader_get_animation  gdk_pixbuf_loader_get_animation;
