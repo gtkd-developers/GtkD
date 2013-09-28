@@ -48,8 +48,8 @@ curl -L http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | 
 ln -s  libgda-1.2.4/doc/C/html gda
 
 #gtkSourceView
-curl https://developer.gnome.org/gtksourceview/gtksourceview-html-3.8.0.tar.gz | tar xvfz -
-ln -s gtksourceview-html-3.8.0 sourceview
+curl https://developer.gnome.org/gtksourceview/gtksourceview-html-3.10.0.tar.gz | tar xvfz -
+ln -s gtksourceview-html-3.10.0 sourceview
 
 #gstreamer
 curl https://developer.gnome.org/gstreamer/gstreamer-html-1.0.5.tar.gz | tar xvfz -

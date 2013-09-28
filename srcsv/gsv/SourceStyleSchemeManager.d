@@ -70,6 +70,7 @@ private import gsv.SourceStyleScheme;
 private import gobject.ObjectG;
 
 /**
+ * Object which provides access to GtkSourceStyleSchemes.
  */
 public class SourceStyleSchemeManager : ObjectG
 {

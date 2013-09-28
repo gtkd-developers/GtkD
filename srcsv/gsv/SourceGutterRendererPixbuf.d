@@ -159,6 +159,10 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_gutter_renderer_pixbuf_set_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Don't use this function.
+	 * Params:
+	 * stockId = the stock id
 	 */
 	public void setStockId(string stockId)
 	{
@@ -167,6 +171,9 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_gutter_renderer_pixbuf_get_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Don't use this function.
+	 * Returns: the stock id.
 	 */
 	public string getStockId()
 	{

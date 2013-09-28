@@ -261,6 +261,8 @@ public class SourceMarkAttributes : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_mark_attributes_set_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Don't use this function.
 	 * Sets stock id to be used as a base for rendered icon.
 	 * Params:
 	 * stockId = a stock id.
@@ -272,6 +274,8 @@ public class SourceMarkAttributes : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_source_mark_attributes_get_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Don't use this function.
 	 * Gets a stock id of an icon used by this attributes. Note that the stock id can
 	 * be NULL if it wasn't set earlier.
 	 * Returns: Stock id. Returned string is owned by attributes and shouldn't be freed. [transfer none]
@@ -388,7 +392,7 @@ public class SourceMarkAttributes : ObjectG
 	
 	/**
 	 * Queries for a tooltip by emitting
-	 * a GtkSourceMarkAttributes::query-tooltip-text signal. The tooltip is a plain
+	 * a "query-tooltip-text" signal. The tooltip is a plain
 	 * text.
 	 * Params:
 	 * mark = a GtkSourceMark.
@@ -402,7 +406,7 @@ public class SourceMarkAttributes : ObjectG
 	
 	/**
 	 * Queries for a tooltip by emitting
-	 * a GtkSourceMarkAttributes::query-tooltip-markup signal. The tooltip may contain
+	 * a "query-tooltip-markup" signal. The tooltip may contain
 	 * a markup.
 	 * Params:
 	 * mark = a GtkSourceMark.

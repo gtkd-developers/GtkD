@@ -75,7 +75,7 @@ private import gobject.ObjectG;
  * non-highlighted text, color for the line numbers, etc.
  *
  * Style schemes are stored in XML files. The format of a scheme file is
- * the documented in the
+ * documented in the
  * style scheme reference.
  */
 public class SourceStyleScheme : ObjectG

@@ -106,9 +106,14 @@ public enum GtkSourceGutterRendererState
 alias GtkSourceGutterRendererState SourceGutterRendererState;
 
 /**
+ * The alignment mode of the renderer, when a cell spans multiple lines (due to
+ * text wrapping).
  * GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL
+ * The full cell.
  * GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST
+ * The first line.
  * GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST
+ * The last line.
  */
 public enum GtkSourceGutterRendererAlignmentMode
 {
@@ -358,31 +363,13 @@ public struct GtkSourceGutterRenderer{}
 /**
  * Main Gtk struct.
  */
-public struct GtkSourceGutterRendererText{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkSourceGutterRendererPixbuf{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkSourceMark{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSourceMarkAttributes{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSourceView{}
+public struct GtkSourceGutterRendererText{}
 
 
 /**
@@ -400,7 +387,31 @@ public struct GtkSourceLanguageManager{}
 /**
  * Main Gtk struct.
  */
+public struct GtkSourceMark{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceMarkAttributes{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkSourcePrintCompositor{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceSearchContext{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceSearchSettings{}
 
 
 /**
@@ -425,4 +436,10 @@ public struct GtkSourceStyleSchemeManager{}
  * Main Gtk struct.
  */
 public struct GtkSourceUndoManager{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceView{}
 

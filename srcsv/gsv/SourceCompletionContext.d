@@ -94,6 +94,19 @@ private import gobject.ObjectG;
  * to add proposals. The "activation" remains the
  * same in this case.
  *
+ * When the completion window is hidden, the interactive completion is triggered
+ * only on insertion in the buffer, not on deletion. Once the completion window
+ * is visible, then on each insertion or deletion, there is a new population and
+ * the providers are asked to add proposals. If there are no more proposals, the
+ * completion window disappears. So if you want to keep the completion window
+ * visible, but there are no proposals, you can insert a dummy proposal named
+ * "No proposals". For example, the user types progressively the name of
+ * a function, and some proposals appear. The user types a bad character and
+ * there are no proposals anymore. What the user wants is to delete the last
+ * character, and see the previous proposals. If the completion window
+ * disappears, the previous proposals will not reappear on the character
+ * deletion.
+ *
  * A GtkTextIter is associated with the context, this is where the completion
  * takes place. With this GtkTextIter, you can get the associated
  * GtkTextBuffer with gtk_text_iter_get_buffer().

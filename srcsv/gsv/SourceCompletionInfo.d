@@ -86,11 +86,12 @@ private import gtk.Window;
  * $(DDOC_COMMENT example)
  *
  * If the calltip is displayed on top of a certain widget, say a GtkTextView,
- * you should hide it when the "focus-out-event" signal is emitted by
- * the GtkTextView. You may also be interested by the
- * "cursor-position" property (when its value is modified). If you
- * use the GtkSourceCompletionInfo through the GtkSourceCompletion machinery,
- * you don't need to worry about this.
+ * you should attach the calltip window to the GtkTextView with
+ * gtk_window_set_attached_to(). By doing this, the calltip will be hidden when
+ * the "focus-out-event" signal is emitted by the GtkTextView. You
+ * may also be interested by the "cursor-position" property (when
+ * its value is modified). If you use the GtkSourceCompletionInfo through the
+ * GtkSourceCompletion machinery, you don't need to worry about this.
  */
 public class SourceCompletionInfo : Window
 {
@@ -132,6 +133,8 @@ public class SourceCompletionInfo : Window
 	
 	void delegate(SourceCompletionInfo)[] onBeforeShowListeners;
 	/**
+	 * Warning
+	 * GtkSourceCompletionInfo::before-show has been deprecated since version 3.10 and should not be used in newly-written code. This signal should not be used.
 	 * This signal is emitted before any "show" management. You can connect
 	 * to this signal if you want to change some properties or position
 	 * before the real "show".
@@ -209,7 +212,7 @@ public class SourceCompletionInfo : Window
 	 * Warning
 	 * gtk_source_completion_info_get_widget has been deprecated since version 3.8 and should not be used in newly-written code. Use gtk_bin_get_child() instead.
 	 * Get the current content widget.
-	 * Returns: The current content widget. [transfer none] Signal Details The "before-show" signal void user_function (GtkSourceCompletionInfo *info, gpointer user_data) : Action This signal is emitted before any "show" management. You can connect to this signal if you want to change some properties or position before the real "show".
+	 * Returns: The current content widget. [transfer none] Signal Details The "before-show" signal void user_function (GtkSourceCompletionInfo *info, gpointer user_data) : Action Warning GtkSourceCompletionInfo::before-show has been deprecated since version 3.10 and should not be used in newly-written code. This signal should not be used. This signal is emitted before any "show" management. You can connect to this signal if you want to change some properties or position before the real "show".
 	 */
 	public Widget getWidget()
 	{

@@ -155,6 +155,8 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_source_completion_item_new_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_source_completion_item_new() instead.
 	 * Creates a new GtkSourceCompletionItem from a stock item. If label is NULL,
 	 * the stock label will be used.
 	 * Params:

@@ -47,14 +47,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_buffer_get_highlight_matching_brackets, \"gtk_source_buffer_get_highlight_matching_brackets\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_set_style_scheme, \"gtk_source_buffer_set_style_scheme\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_get_style_scheme, \"gtk_source_buffer_get_style_scheme\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_max_undo_levels, \"gtk_source_buffer_get_max_undo_levels\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_max_undo_levels, \"gtk_source_buffer_set_max_undo_levels\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_redo, \"gtk_source_buffer_redo\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_undo, \"gtk_source_buffer_undo\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_can_redo, \"gtk_source_buffer_can_redo\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_can_undo, \"gtk_source_buffer_can_undo\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_begin_not_undoable_action, \"gtk_source_buffer_begin_not_undoable_action\", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_end_not_undoable_action, \"gtk_source_buffer_end_not_undoable_action\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_ensure_highlight, \"gtk_source_buffer_ensure_highlight\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_create_source_mark, \"gtk_source_buffer_create_source_mark\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, \"gtk_source_buffer_forward_iter_to_source_mark\", LIBRARY.GSV);
@@ -66,6 +58,14 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_buffer_get_context_classes_at_iter, \"gtk_source_buffer_get_context_classes_at_iter\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_iter_forward_to_context_class_toggle, \"gtk_source_buffer_iter_forward_to_context_class_toggle\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_iter_backward_to_context_class_toggle, \"gtk_source_buffer_iter_backward_to_context_class_toggle\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_get_max_undo_levels, \"gtk_source_buffer_get_max_undo_levels\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_set_max_undo_levels, \"gtk_source_buffer_set_max_undo_levels\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_redo, \"gtk_source_buffer_redo\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_undo, \"gtk_source_buffer_undo\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_can_redo, \"gtk_source_buffer_can_redo\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_can_undo, \"gtk_source_buffer_can_undo\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_begin_not_undoable_action, \"gtk_source_buffer_begin_not_undoable_action\", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_end_not_undoable_action, \"gtk_source_buffer_end_not_undoable_action\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_get_undo_manager, \"gtk_source_buffer_get_undo_manager\", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_set_undo_manager, \"gtk_source_buffer_set_undo_manager\", LIBRARY.GSV);
 
@@ -178,14 +178,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_gutter_renderer_query_tooltip, \"gtk_source_gutter_renderer_query_tooltip\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_renderer_query_data, \"gtk_source_gutter_renderer_query_data\", LIBRARY.GSV);
 
-	// gsv.SourceGutterRendererText
-
-	Linker.link(gtk_source_gutter_renderer_text_new, \"gtk_source_gutter_renderer_text_new\", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_set_markup, \"gtk_source_gutter_renderer_text_set_markup\", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_set_text, \"gtk_source_gutter_renderer_text_set_text\", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_measure, \"gtk_source_gutter_renderer_text_measure\", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_measure_markup, \"gtk_source_gutter_renderer_text_measure_markup\", LIBRARY.GSV);
-
 	// gsv.SourceGutterRendererPixbuf
 
 	Linker.link(gtk_source_gutter_renderer_pixbuf_new, \"gtk_source_gutter_renderer_pixbuf_new\", LIBRARY.GSV);
@@ -197,6 +189,37 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_gutter_renderer_pixbuf_get_gicon, \"gtk_source_gutter_renderer_pixbuf_get_gicon\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_renderer_pixbuf_set_icon_name, \"gtk_source_gutter_renderer_pixbuf_set_icon_name\", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_renderer_pixbuf_get_icon_name, \"gtk_source_gutter_renderer_pixbuf_get_icon_name\", LIBRARY.GSV);
+
+	// gsv.SourceGutterRendererText
+
+	Linker.link(gtk_source_gutter_renderer_text_new, \"gtk_source_gutter_renderer_text_new\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_text_set_markup, \"gtk_source_gutter_renderer_text_set_markup\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_text_set_text, \"gtk_source_gutter_renderer_text_set_text\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_text_measure, \"gtk_source_gutter_renderer_text_measure\", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_text_measure_markup, \"gtk_source_gutter_renderer_text_measure_markup\", LIBRARY.GSV);
+
+	// gsv.SourceLanguage
+
+	Linker.link(gtk_source_language_get_id, \"gtk_source_language_get_id\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_name, \"gtk_source_language_get_name\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_section, \"gtk_source_language_get_section\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_hidden, \"gtk_source_language_get_hidden\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_metadata, \"gtk_source_language_get_metadata\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_mime_types, \"gtk_source_language_get_mime_types\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_globs, \"gtk_source_language_get_globs\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_style_name, \"gtk_source_language_get_style_name\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_style_ids, \"gtk_source_language_get_style_ids\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_style_fallback, \"gtk_source_language_get_style_fallback\", LIBRARY.GSV);
+
+	// gsv.SourceLanguageManager
+
+	Linker.link(gtk_source_language_manager_new, \"gtk_source_language_manager_new\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_get_default, \"gtk_source_language_manager_get_default\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_set_search_path, \"gtk_source_language_manager_set_search_path\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_get_search_path, \"gtk_source_language_manager_get_search_path\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_get_language_ids, \"gtk_source_language_manager_get_language_ids\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_get_language, \"gtk_source_language_manager_get_language\", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_guess_language, \"gtk_source_language_manager_guess_language\", LIBRARY.GSV);
 
 	// gsv.SourceMark
 
@@ -221,63 +244,6 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_mark_attributes_render_icon, \"gtk_source_mark_attributes_render_icon\", LIBRARY.GSV);
 	Linker.link(gtk_source_mark_attributes_get_tooltip_text, \"gtk_source_mark_attributes_get_tooltip_text\", LIBRARY.GSV);
 	Linker.link(gtk_source_mark_attributes_get_tooltip_markup, \"gtk_source_mark_attributes_get_tooltip_markup\", LIBRARY.GSV);
-
-	// gsv.SourceView
-
-	Linker.link(gtk_source_view_new, \"gtk_source_view_new\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_new_with_buffer, \"gtk_source_view_new_with_buffer\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_auto_indent, \"gtk_source_view_set_auto_indent\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_auto_indent, \"gtk_source_view_get_auto_indent\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_indent_on_tab, \"gtk_source_view_set_indent_on_tab\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_indent_on_tab, \"gtk_source_view_get_indent_on_tab\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_indent_width, \"gtk_source_view_set_indent_width\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_indent_width, \"gtk_source_view_get_indent_width\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_insert_spaces_instead_of_tabs, \"gtk_source_view_set_insert_spaces_instead_of_tabs\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_insert_spaces_instead_of_tabs, \"gtk_source_view_get_insert_spaces_instead_of_tabs\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_smart_home_end, \"gtk_source_view_set_smart_home_end\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_smart_home_end, \"gtk_source_view_get_smart_home_end\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_attributes, \"gtk_source_view_set_mark_attributes\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_mark_attributes, \"gtk_source_view_get_mark_attributes\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_highlight_current_line, \"gtk_source_view_set_highlight_current_line\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_highlight_current_line, \"gtk_source_view_get_highlight_current_line\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_show_line_marks, \"gtk_source_view_set_show_line_marks\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_show_line_marks, \"gtk_source_view_get_show_line_marks\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_show_line_numbers, \"gtk_source_view_set_show_line_numbers\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_show_line_numbers, \"gtk_source_view_get_show_line_numbers\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_show_right_margin, \"gtk_source_view_set_show_right_margin\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_show_right_margin, \"gtk_source_view_get_show_right_margin\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_right_margin_position, \"gtk_source_view_set_right_margin_position\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_right_margin_position, \"gtk_source_view_get_right_margin_position\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_tab_width, \"gtk_source_view_set_tab_width\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_tab_width, \"gtk_source_view_get_tab_width\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_draw_spaces, \"gtk_source_view_set_draw_spaces\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_draw_spaces, \"gtk_source_view_get_draw_spaces\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_completion, \"gtk_source_view_get_completion\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_gutter, \"gtk_source_view_get_gutter\", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_visual_column, \"gtk_source_view_get_visual_column\", LIBRARY.GSV);
-
-	// gsv.SourceLanguage
-
-	Linker.link(gtk_source_language_get_id, \"gtk_source_language_get_id\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_name, \"gtk_source_language_get_name\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_section, \"gtk_source_language_get_section\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_hidden, \"gtk_source_language_get_hidden\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_metadata, \"gtk_source_language_get_metadata\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_mime_types, \"gtk_source_language_get_mime_types\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_globs, \"gtk_source_language_get_globs\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_style_name, \"gtk_source_language_get_style_name\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_style_ids, \"gtk_source_language_get_style_ids\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_style_fallback, \"gtk_source_language_get_style_fallback\", LIBRARY.GSV);
-
-	// gsv.SourceLanguageManager
-
-	Linker.link(gtk_source_language_manager_new, \"gtk_source_language_manager_new\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_default, \"gtk_source_language_manager_get_default\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_set_search_path, \"gtk_source_language_manager_set_search_path\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_search_path, \"gtk_source_language_manager_get_search_path\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_language_ids, \"gtk_source_language_manager_get_language_ids\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_language, \"gtk_source_language_manager_get_language\", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_guess_language, \"gtk_source_language_manager_guess_language\", LIBRARY.GSV);
 
 	// gsv.SourcePrintCompositor
 
@@ -318,6 +284,40 @@ mixin( _shared ~ "static this()
 	Linker.link(gtk_source_print_compositor_paginate, \"gtk_source_print_compositor_paginate\", LIBRARY.GSV);
 	Linker.link(gtk_source_print_compositor_get_pagination_progress, \"gtk_source_print_compositor_get_pagination_progress\", LIBRARY.GSV);
 	Linker.link(gtk_source_print_compositor_draw_page, \"gtk_source_print_compositor_draw_page\", LIBRARY.GSV);
+
+	// gsv.SourceSearchContext
+
+	Linker.link(gtk_source_search_context_new, \"gtk_source_search_context_new\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_buffer, \"gtk_source_search_context_get_buffer\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_settings, \"gtk_source_search_context_get_settings\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_set_settings, \"gtk_source_search_context_set_settings\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_highlight, \"gtk_source_search_context_get_highlight\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_set_highlight, \"gtk_source_search_context_set_highlight\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_occurrences_count, \"gtk_source_search_context_get_occurrences_count\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_occurrence_position, \"gtk_source_search_context_get_occurrence_position\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_forward, \"gtk_source_search_context_forward\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_forward_async, \"gtk_source_search_context_forward_async\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_forward_finish, \"gtk_source_search_context_forward_finish\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_backward, \"gtk_source_search_context_backward\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_backward_async, \"gtk_source_search_context_backward_async\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_backward_finish, \"gtk_source_search_context_backward_finish\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_replace, \"gtk_source_search_context_replace\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_replace_all, \"gtk_source_search_context_replace_all\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_regex_error, \"gtk_source_search_context_get_regex_error\", LIBRARY.GSV);
+
+	// gsv.SourceSearchSettings
+
+	Linker.link(gtk_source_search_settings_new, \"gtk_source_search_settings_new\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_get_search_text, \"gtk_source_search_settings_get_search_text\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_set_search_text, \"gtk_source_search_settings_set_search_text\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_get_case_sensitive, \"gtk_source_search_settings_get_case_sensitive\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_set_case_sensitive, \"gtk_source_search_settings_set_case_sensitive\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_get_at_word_boundaries, \"gtk_source_search_settings_get_at_word_boundaries\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_set_at_word_boundaries, \"gtk_source_search_settings_set_at_word_boundaries\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_get_wrap_around, \"gtk_source_search_settings_get_wrap_around\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_set_wrap_around, \"gtk_source_search_settings_set_wrap_around\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_get_regex_enabled, \"gtk_source_search_settings_get_regex_enabled\", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_set_regex_enabled, \"gtk_source_search_settings_set_regex_enabled\", LIBRARY.GSV);
 
 	// gsv.SourceStyle
 
@@ -360,6 +360,45 @@ mixin( _shared ~ "static this()
 
 	// gsv.SourceUndoManager
 
+
+	// gsv.Utils
+
+	Linker.link(gtk_source_utils_unescape_search_text, \"gtk_source_utils_unescape_search_text\", LIBRARY.GSV);
+	Linker.link(gtk_source_utils_escape_search_text, \"gtk_source_utils_escape_search_text\", LIBRARY.GSV);
+
+	// gsv.SourceView
+
+	Linker.link(gtk_source_view_new, \"gtk_source_view_new\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_new_with_buffer, \"gtk_source_view_new_with_buffer\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_auto_indent, \"gtk_source_view_set_auto_indent\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_auto_indent, \"gtk_source_view_get_auto_indent\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_indent_on_tab, \"gtk_source_view_set_indent_on_tab\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_indent_on_tab, \"gtk_source_view_get_indent_on_tab\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_indent_width, \"gtk_source_view_set_indent_width\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_indent_width, \"gtk_source_view_get_indent_width\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_insert_spaces_instead_of_tabs, \"gtk_source_view_set_insert_spaces_instead_of_tabs\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_insert_spaces_instead_of_tabs, \"gtk_source_view_get_insert_spaces_instead_of_tabs\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_smart_home_end, \"gtk_source_view_set_smart_home_end\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_smart_home_end, \"gtk_source_view_get_smart_home_end\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_mark_attributes, \"gtk_source_view_set_mark_attributes\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_mark_attributes, \"gtk_source_view_get_mark_attributes\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_highlight_current_line, \"gtk_source_view_set_highlight_current_line\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_highlight_current_line, \"gtk_source_view_get_highlight_current_line\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_show_line_marks, \"gtk_source_view_set_show_line_marks\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_show_line_marks, \"gtk_source_view_get_show_line_marks\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_show_line_numbers, \"gtk_source_view_set_show_line_numbers\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_show_line_numbers, \"gtk_source_view_get_show_line_numbers\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_show_right_margin, \"gtk_source_view_set_show_right_margin\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_show_right_margin, \"gtk_source_view_get_show_right_margin\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_right_margin_position, \"gtk_source_view_set_right_margin_position\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_right_margin_position, \"gtk_source_view_get_right_margin_position\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_tab_width, \"gtk_source_view_set_tab_width\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_tab_width, \"gtk_source_view_get_tab_width\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_set_draw_spaces, \"gtk_source_view_set_draw_spaces\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_draw_spaces, \"gtk_source_view_get_draw_spaces\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_completion, \"gtk_source_view_get_completion\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_gutter, \"gtk_source_view_get_gutter\", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_visual_column, \"gtk_source_view_get_visual_column\", LIBRARY.GSV);
 }");
 
 mixin( gshared ~"extern(C)
@@ -376,14 +415,6 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceBuffer* buffer) c_gtk_source_buffer_get_highlight_matching_brackets;
 	void function(GtkSourceBuffer* buffer, GtkSourceStyleScheme* scheme) c_gtk_source_buffer_set_style_scheme;
 	GtkSourceStyleScheme* function(GtkSourceBuffer* buffer) c_gtk_source_buffer_get_style_scheme;
-	gint function(GtkSourceBuffer* buffer) c_gtk_source_buffer_get_max_undo_levels;
-	void function(GtkSourceBuffer* buffer, gint maxUndoLevels) c_gtk_source_buffer_set_max_undo_levels;
-	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_redo;
-	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_undo;
-	gboolean function(GtkSourceBuffer* buffer) c_gtk_source_buffer_can_redo;
-	gboolean function(GtkSourceBuffer* buffer) c_gtk_source_buffer_can_undo;
-	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_begin_not_undoable_action;
-	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_end_not_undoable_action;
 	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
 	GtkSourceMark* function(GtkSourceBuffer* buffer, gchar* name, gchar* category, GtkTextIter* where) c_gtk_source_buffer_create_source_mark;
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* category) c_gtk_source_buffer_forward_iter_to_source_mark;
@@ -395,6 +426,14 @@ mixin( gshared ~"extern(C)
 	gchar** function(GtkSourceBuffer* buffer, GtkTextIter* iter) c_gtk_source_buffer_get_context_classes_at_iter;
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* contextClass) c_gtk_source_buffer_iter_forward_to_context_class_toggle;
 	gboolean function(GtkSourceBuffer* buffer, GtkTextIter* iter, gchar* contextClass) c_gtk_source_buffer_iter_backward_to_context_class_toggle;
+	gint function(GtkSourceBuffer* buffer) c_gtk_source_buffer_get_max_undo_levels;
+	void function(GtkSourceBuffer* buffer, gint maxUndoLevels) c_gtk_source_buffer_set_max_undo_levels;
+	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_redo;
+	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_undo;
+	gboolean function(GtkSourceBuffer* buffer) c_gtk_source_buffer_can_redo;
+	gboolean function(GtkSourceBuffer* buffer) c_gtk_source_buffer_can_undo;
+	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_begin_not_undoable_action;
+	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_end_not_undoable_action;
 	GtkSourceUndoManager* function(GtkSourceBuffer* buffer) c_gtk_source_buffer_get_undo_manager;
 	void function(GtkSourceBuffer* buffer, GtkSourceUndoManager* manager) c_gtk_source_buffer_set_undo_manager;
 
@@ -507,14 +546,6 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, gint x, gint y, GtkTooltip* tooltip) c_gtk_source_gutter_renderer_query_tooltip;
 	void function(GtkSourceGutterRenderer* renderer, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state) c_gtk_source_gutter_renderer_query_data;
 
-	// gsv.SourceGutterRendererText
-
-	GtkSourceGutterRenderer* function() c_gtk_source_gutter_renderer_text_new;
-	void function(GtkSourceGutterRendererText* renderer, gchar* markup, gint length) c_gtk_source_gutter_renderer_text_set_markup;
-	void function(GtkSourceGutterRendererText* renderer, gchar* text, gint length) c_gtk_source_gutter_renderer_text_set_text;
-	void function(GtkSourceGutterRendererText* renderer, gchar* text, gint* width, gint* height) c_gtk_source_gutter_renderer_text_measure;
-	void function(GtkSourceGutterRendererText* renderer, gchar* markup, gint* width, gint* height) c_gtk_source_gutter_renderer_text_measure_markup;
-
 	// gsv.SourceGutterRendererPixbuf
 
 	GtkSourceGutterRenderer* function() c_gtk_source_gutter_renderer_pixbuf_new;
@@ -526,6 +557,37 @@ mixin( gshared ~"extern(C)
 	GIcon* function(GtkSourceGutterRendererPixbuf* renderer) c_gtk_source_gutter_renderer_pixbuf_get_gicon;
 	void function(GtkSourceGutterRendererPixbuf* renderer, gchar* iconName) c_gtk_source_gutter_renderer_pixbuf_set_icon_name;
 	gchar* function(GtkSourceGutterRendererPixbuf* renderer) c_gtk_source_gutter_renderer_pixbuf_get_icon_name;
+
+	// gsv.SourceGutterRendererText
+
+	GtkSourceGutterRenderer* function() c_gtk_source_gutter_renderer_text_new;
+	void function(GtkSourceGutterRendererText* renderer, gchar* markup, gint length) c_gtk_source_gutter_renderer_text_set_markup;
+	void function(GtkSourceGutterRendererText* renderer, gchar* text, gint length) c_gtk_source_gutter_renderer_text_set_text;
+	void function(GtkSourceGutterRendererText* renderer, gchar* text, gint* width, gint* height) c_gtk_source_gutter_renderer_text_measure;
+	void function(GtkSourceGutterRendererText* renderer, gchar* markup, gint* width, gint* height) c_gtk_source_gutter_renderer_text_measure_markup;
+
+	// gsv.SourceLanguage
+
+	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_id;
+	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_name;
+	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_section;
+	gboolean function(GtkSourceLanguage* language) c_gtk_source_language_get_hidden;
+	gchar* function(GtkSourceLanguage* language, gchar* name) c_gtk_source_language_get_metadata;
+	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_mime_types;
+	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_globs;
+	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_name;
+	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_style_ids;
+	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_fallback;
+
+	// gsv.SourceLanguageManager
+
+	GtkSourceLanguageManager* function() c_gtk_source_language_manager_new;
+	GtkSourceLanguageManager* function() c_gtk_source_language_manager_get_default;
+	void function(GtkSourceLanguageManager* lm, gchar** dirs) c_gtk_source_language_manager_set_search_path;
+	gchar** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_search_path;
+	gchar** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_language_ids;
+	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* id) c_gtk_source_language_manager_get_language;
+	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* filename, gchar* contentType) c_gtk_source_language_manager_guess_language;
 
 	// gsv.SourceMark
 
@@ -550,63 +612,6 @@ mixin( gshared ~"extern(C)
 	GdkPixbuf* function(GtkSourceMarkAttributes* attributes, GtkWidget* widget, gint size) c_gtk_source_mark_attributes_render_icon;
 	gchar* function(GtkSourceMarkAttributes* attributes, GtkSourceMark* mark) c_gtk_source_mark_attributes_get_tooltip_text;
 	gchar* function(GtkSourceMarkAttributes* attributes, GtkSourceMark* mark) c_gtk_source_mark_attributes_get_tooltip_markup;
-
-	// gsv.SourceView
-
-	GtkWidget* function() c_gtk_source_view_new;
-	GtkWidget* function(GtkSourceBuffer* buffer) c_gtk_source_view_new_with_buffer;
-	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_auto_indent;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_auto_indent;
-	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_indent_on_tab;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_indent_on_tab;
-	void function(GtkSourceView* view, gint width) c_gtk_source_view_set_indent_width;
-	gint function(GtkSourceView* view) c_gtk_source_view_get_indent_width;
-	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_insert_spaces_instead_of_tabs;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_insert_spaces_instead_of_tabs;
-	void function(GtkSourceView* view, GtkSourceSmartHomeEndType smartHe) c_gtk_source_view_set_smart_home_end;
-	GtkSourceSmartHomeEndType function(GtkSourceView* view) c_gtk_source_view_get_smart_home_end;
-	void function(GtkSourceView* view, gchar* category, GtkSourceMarkAttributes* attributes, gint priority) c_gtk_source_view_set_mark_attributes;
-	GtkSourceMarkAttributes* function(GtkSourceView* view, gchar* category, gint* priority) c_gtk_source_view_get_mark_attributes;
-	void function(GtkSourceView* view, gboolean hl) c_gtk_source_view_set_highlight_current_line;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_highlight_current_line;
-	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_marks;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_line_marks;
-	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_numbers;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_line_numbers;
-	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_right_margin;
-	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_right_margin;
-	void function(GtkSourceView* view, guint pos) c_gtk_source_view_set_right_margin_position;
-	guint function(GtkSourceView* view) c_gtk_source_view_get_right_margin_position;
-	void function(GtkSourceView* view, guint width) c_gtk_source_view_set_tab_width;
-	guint function(GtkSourceView* view) c_gtk_source_view_get_tab_width;
-	void function(GtkSourceView* view, GtkSourceDrawSpacesFlags flags) c_gtk_source_view_set_draw_spaces;
-	GtkSourceDrawSpacesFlags function(GtkSourceView* view) c_gtk_source_view_get_draw_spaces;
-	GtkSourceCompletion* function(GtkSourceView* view) c_gtk_source_view_get_completion;
-	GtkSourceGutter* function(GtkSourceView* view, GtkTextWindowType windowType) c_gtk_source_view_get_gutter;
-	guint function(GtkSourceView* view, GtkTextIter* iter) c_gtk_source_view_get_visual_column;
-
-	// gsv.SourceLanguage
-
-	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_id;
-	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_name;
-	gchar* function(GtkSourceLanguage* language) c_gtk_source_language_get_section;
-	gboolean function(GtkSourceLanguage* language) c_gtk_source_language_get_hidden;
-	gchar* function(GtkSourceLanguage* language, gchar* name) c_gtk_source_language_get_metadata;
-	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_mime_types;
-	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_globs;
-	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_name;
-	gchar** function(GtkSourceLanguage* language) c_gtk_source_language_get_style_ids;
-	gchar* function(GtkSourceLanguage* language, gchar* styleId) c_gtk_source_language_get_style_fallback;
-
-	// gsv.SourceLanguageManager
-
-	GtkSourceLanguageManager* function() c_gtk_source_language_manager_new;
-	GtkSourceLanguageManager* function() c_gtk_source_language_manager_get_default;
-	void function(GtkSourceLanguageManager* lm, gchar** dirs) c_gtk_source_language_manager_set_search_path;
-	gchar** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_search_path;
-	gchar** function(GtkSourceLanguageManager* lm) c_gtk_source_language_manager_get_language_ids;
-	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* id) c_gtk_source_language_manager_get_language;
-	GtkSourceLanguage* function(GtkSourceLanguageManager* lm, gchar* filename, gchar* contentType) c_gtk_source_language_manager_guess_language;
 
 	// gsv.SourcePrintCompositor
 
@@ -647,6 +652,40 @@ mixin( gshared ~"extern(C)
 	gboolean function(GtkSourcePrintCompositor* compositor, GtkPrintContext* context) c_gtk_source_print_compositor_paginate;
 	gdouble function(GtkSourcePrintCompositor* compositor) c_gtk_source_print_compositor_get_pagination_progress;
 	void function(GtkSourcePrintCompositor* compositor, GtkPrintContext* context, gint pageNr) c_gtk_source_print_compositor_draw_page;
+
+	// gsv.SourceSearchContext
+
+	GtkSourceSearchContext* function(GtkSourceBuffer* buffer, GtkSourceSearchSettings* settings) c_gtk_source_search_context_new;
+	GtkSourceBuffer* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_buffer;
+	GtkSourceSearchSettings* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_settings;
+	void function(GtkSourceSearchContext* search, GtkSourceSearchSettings* settings) c_gtk_source_search_context_set_settings;
+	gboolean function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_highlight;
+	void function(GtkSourceSearchContext* search, gboolean highlight) c_gtk_source_search_context_set_highlight;
+	gint function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_occurrences_count;
+	gint function(GtkSourceSearchContext* search, GtkTextIter* matchStart, GtkTextIter* matchEnd) c_gtk_source_search_context_get_occurrence_position;
+	gboolean function(GtkSourceSearchContext* search, GtkTextIter* iter, GtkTextIter* matchStart, GtkTextIter* matchEnd) c_gtk_source_search_context_forward;
+	void function(GtkSourceSearchContext* search, GtkTextIter* iter, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gtk_source_search_context_forward_async;
+	gboolean function(GtkSourceSearchContext* search, GAsyncResult* result, GtkTextIter* matchStart, GtkTextIter* matchEnd, GError** error) c_gtk_source_search_context_forward_finish;
+	gboolean function(GtkSourceSearchContext* search, GtkTextIter* iter, GtkTextIter* matchStart, GtkTextIter* matchEnd) c_gtk_source_search_context_backward;
+	void function(GtkSourceSearchContext* search, GtkTextIter* iter, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gtk_source_search_context_backward_async;
+	gboolean function(GtkSourceSearchContext* search, GAsyncResult* result, GtkTextIter* matchStart, GtkTextIter* matchEnd, GError** error) c_gtk_source_search_context_backward_finish;
+	gboolean function(GtkSourceSearchContext* search, GtkTextIter* matchStart, GtkTextIter* matchEnd, gchar* replace, gint replaceLength, GError** error) c_gtk_source_search_context_replace;
+	guint function(GtkSourceSearchContext* search, gchar* replace, gint replaceLength, GError** error) c_gtk_source_search_context_replace_all;
+	GError* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_regex_error;
+
+	// gsv.SourceSearchSettings
+
+	GtkSourceSearchSettings* function() c_gtk_source_search_settings_new;
+	gchar* function(GtkSourceSearchSettings* settings) c_gtk_source_search_settings_get_search_text;
+	void function(GtkSourceSearchSettings* settings, gchar* searchText) c_gtk_source_search_settings_set_search_text;
+	gboolean function(GtkSourceSearchSettings* settings) c_gtk_source_search_settings_get_case_sensitive;
+	void function(GtkSourceSearchSettings* settings, gboolean caseSensitive) c_gtk_source_search_settings_set_case_sensitive;
+	gboolean function(GtkSourceSearchSettings* settings) c_gtk_source_search_settings_get_at_word_boundaries;
+	void function(GtkSourceSearchSettings* settings, gboolean atWordBoundaries) c_gtk_source_search_settings_set_at_word_boundaries;
+	gboolean function(GtkSourceSearchSettings* settings) c_gtk_source_search_settings_get_wrap_around;
+	void function(GtkSourceSearchSettings* settings, gboolean wrapAround) c_gtk_source_search_settings_set_wrap_around;
+	gboolean function(GtkSourceSearchSettings* settings) c_gtk_source_search_settings_get_regex_enabled;
+	void function(GtkSourceSearchSettings* settings, gboolean regexEnabled) c_gtk_source_search_settings_set_regex_enabled;
 
 	// gsv.SourceStyle
 
@@ -689,6 +728,45 @@ mixin( gshared ~"extern(C)
 
 	// gsv.SourceUndoManager
 
+
+	// gsv.Utils
+
+	gchar* function(gchar* text) c_gtk_source_utils_unescape_search_text;
+	gchar* function(gchar* text) c_gtk_source_utils_escape_search_text;
+
+	// gsv.SourceView
+
+	GtkWidget* function() c_gtk_source_view_new;
+	GtkWidget* function(GtkSourceBuffer* buffer) c_gtk_source_view_new_with_buffer;
+	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_auto_indent;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_auto_indent;
+	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_indent_on_tab;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_indent_on_tab;
+	void function(GtkSourceView* view, gint width) c_gtk_source_view_set_indent_width;
+	gint function(GtkSourceView* view) c_gtk_source_view_get_indent_width;
+	void function(GtkSourceView* view, gboolean enable) c_gtk_source_view_set_insert_spaces_instead_of_tabs;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_insert_spaces_instead_of_tabs;
+	void function(GtkSourceView* view, GtkSourceSmartHomeEndType smartHe) c_gtk_source_view_set_smart_home_end;
+	GtkSourceSmartHomeEndType function(GtkSourceView* view) c_gtk_source_view_get_smart_home_end;
+	void function(GtkSourceView* view, gchar* category, GtkSourceMarkAttributes* attributes, gint priority) c_gtk_source_view_set_mark_attributes;
+	GtkSourceMarkAttributes* function(GtkSourceView* view, gchar* category, gint* priority) c_gtk_source_view_get_mark_attributes;
+	void function(GtkSourceView* view, gboolean hl) c_gtk_source_view_set_highlight_current_line;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_highlight_current_line;
+	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_marks;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_line_marks;
+	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_line_numbers;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_line_numbers;
+	void function(GtkSourceView* view, gboolean show) c_gtk_source_view_set_show_right_margin;
+	gboolean function(GtkSourceView* view) c_gtk_source_view_get_show_right_margin;
+	void function(GtkSourceView* view, guint pos) c_gtk_source_view_set_right_margin_position;
+	guint function(GtkSourceView* view) c_gtk_source_view_get_right_margin_position;
+	void function(GtkSourceView* view, guint width) c_gtk_source_view_set_tab_width;
+	guint function(GtkSourceView* view) c_gtk_source_view_get_tab_width;
+	void function(GtkSourceView* view, GtkSourceDrawSpacesFlags flags) c_gtk_source_view_set_draw_spaces;
+	GtkSourceDrawSpacesFlags function(GtkSourceView* view) c_gtk_source_view_get_draw_spaces;
+	GtkSourceCompletion* function(GtkSourceView* view) c_gtk_source_view_get_completion;
+	GtkSourceGutter* function(GtkSourceView* view, GtkTextWindowType windowType) c_gtk_source_view_get_gutter;
+	guint function(GtkSourceView* view, GtkTextIter* iter) c_gtk_source_view_get_visual_column;
 }");
 
 // gsv.SourceBuffer
@@ -703,14 +781,6 @@ alias c_gtk_source_buffer_set_highlight_matching_brackets  gtk_source_buffer_set
 alias c_gtk_source_buffer_get_highlight_matching_brackets  gtk_source_buffer_get_highlight_matching_brackets;
 alias c_gtk_source_buffer_set_style_scheme  gtk_source_buffer_set_style_scheme;
 alias c_gtk_source_buffer_get_style_scheme  gtk_source_buffer_get_style_scheme;
-alias c_gtk_source_buffer_get_max_undo_levels  gtk_source_buffer_get_max_undo_levels;
-alias c_gtk_source_buffer_set_max_undo_levels  gtk_source_buffer_set_max_undo_levels;
-alias c_gtk_source_buffer_redo  gtk_source_buffer_redo;
-alias c_gtk_source_buffer_undo  gtk_source_buffer_undo;
-alias c_gtk_source_buffer_can_redo  gtk_source_buffer_can_redo;
-alias c_gtk_source_buffer_can_undo  gtk_source_buffer_can_undo;
-alias c_gtk_source_buffer_begin_not_undoable_action  gtk_source_buffer_begin_not_undoable_action;
-alias c_gtk_source_buffer_end_not_undoable_action  gtk_source_buffer_end_not_undoable_action;
 alias c_gtk_source_buffer_ensure_highlight  gtk_source_buffer_ensure_highlight;
 alias c_gtk_source_buffer_create_source_mark  gtk_source_buffer_create_source_mark;
 alias c_gtk_source_buffer_forward_iter_to_source_mark  gtk_source_buffer_forward_iter_to_source_mark;
@@ -722,6 +792,14 @@ alias c_gtk_source_buffer_iter_has_context_class  gtk_source_buffer_iter_has_con
 alias c_gtk_source_buffer_get_context_classes_at_iter  gtk_source_buffer_get_context_classes_at_iter;
 alias c_gtk_source_buffer_iter_forward_to_context_class_toggle  gtk_source_buffer_iter_forward_to_context_class_toggle;
 alias c_gtk_source_buffer_iter_backward_to_context_class_toggle  gtk_source_buffer_iter_backward_to_context_class_toggle;
+alias c_gtk_source_buffer_get_max_undo_levels  gtk_source_buffer_get_max_undo_levels;
+alias c_gtk_source_buffer_set_max_undo_levels  gtk_source_buffer_set_max_undo_levels;
+alias c_gtk_source_buffer_redo  gtk_source_buffer_redo;
+alias c_gtk_source_buffer_undo  gtk_source_buffer_undo;
+alias c_gtk_source_buffer_can_redo  gtk_source_buffer_can_redo;
+alias c_gtk_source_buffer_can_undo  gtk_source_buffer_can_undo;
+alias c_gtk_source_buffer_begin_not_undoable_action  gtk_source_buffer_begin_not_undoable_action;
+alias c_gtk_source_buffer_end_not_undoable_action  gtk_source_buffer_end_not_undoable_action;
 alias c_gtk_source_buffer_get_undo_manager  gtk_source_buffer_get_undo_manager;
 alias c_gtk_source_buffer_set_undo_manager  gtk_source_buffer_set_undo_manager;
 
@@ -834,14 +912,6 @@ alias c_gtk_source_gutter_renderer_queue_draw  gtk_source_gutter_renderer_queue_
 alias c_gtk_source_gutter_renderer_query_tooltip  gtk_source_gutter_renderer_query_tooltip;
 alias c_gtk_source_gutter_renderer_query_data  gtk_source_gutter_renderer_query_data;
 
-// gsv.SourceGutterRendererText
-
-alias c_gtk_source_gutter_renderer_text_new  gtk_source_gutter_renderer_text_new;
-alias c_gtk_source_gutter_renderer_text_set_markup  gtk_source_gutter_renderer_text_set_markup;
-alias c_gtk_source_gutter_renderer_text_set_text  gtk_source_gutter_renderer_text_set_text;
-alias c_gtk_source_gutter_renderer_text_measure  gtk_source_gutter_renderer_text_measure;
-alias c_gtk_source_gutter_renderer_text_measure_markup  gtk_source_gutter_renderer_text_measure_markup;
-
 // gsv.SourceGutterRendererPixbuf
 
 alias c_gtk_source_gutter_renderer_pixbuf_new  gtk_source_gutter_renderer_pixbuf_new;
@@ -853,6 +923,37 @@ alias c_gtk_source_gutter_renderer_pixbuf_set_gicon  gtk_source_gutter_renderer_
 alias c_gtk_source_gutter_renderer_pixbuf_get_gicon  gtk_source_gutter_renderer_pixbuf_get_gicon;
 alias c_gtk_source_gutter_renderer_pixbuf_set_icon_name  gtk_source_gutter_renderer_pixbuf_set_icon_name;
 alias c_gtk_source_gutter_renderer_pixbuf_get_icon_name  gtk_source_gutter_renderer_pixbuf_get_icon_name;
+
+// gsv.SourceGutterRendererText
+
+alias c_gtk_source_gutter_renderer_text_new  gtk_source_gutter_renderer_text_new;
+alias c_gtk_source_gutter_renderer_text_set_markup  gtk_source_gutter_renderer_text_set_markup;
+alias c_gtk_source_gutter_renderer_text_set_text  gtk_source_gutter_renderer_text_set_text;
+alias c_gtk_source_gutter_renderer_text_measure  gtk_source_gutter_renderer_text_measure;
+alias c_gtk_source_gutter_renderer_text_measure_markup  gtk_source_gutter_renderer_text_measure_markup;
+
+// gsv.SourceLanguage
+
+alias c_gtk_source_language_get_id  gtk_source_language_get_id;
+alias c_gtk_source_language_get_name  gtk_source_language_get_name;
+alias c_gtk_source_language_get_section  gtk_source_language_get_section;
+alias c_gtk_source_language_get_hidden  gtk_source_language_get_hidden;
+alias c_gtk_source_language_get_metadata  gtk_source_language_get_metadata;
+alias c_gtk_source_language_get_mime_types  gtk_source_language_get_mime_types;
+alias c_gtk_source_language_get_globs  gtk_source_language_get_globs;
+alias c_gtk_source_language_get_style_name  gtk_source_language_get_style_name;
+alias c_gtk_source_language_get_style_ids  gtk_source_language_get_style_ids;
+alias c_gtk_source_language_get_style_fallback  gtk_source_language_get_style_fallback;
+
+// gsv.SourceLanguageManager
+
+alias c_gtk_source_language_manager_new  gtk_source_language_manager_new;
+alias c_gtk_source_language_manager_get_default  gtk_source_language_manager_get_default;
+alias c_gtk_source_language_manager_set_search_path  gtk_source_language_manager_set_search_path;
+alias c_gtk_source_language_manager_get_search_path  gtk_source_language_manager_get_search_path;
+alias c_gtk_source_language_manager_get_language_ids  gtk_source_language_manager_get_language_ids;
+alias c_gtk_source_language_manager_get_language  gtk_source_language_manager_get_language;
+alias c_gtk_source_language_manager_guess_language  gtk_source_language_manager_guess_language;
 
 // gsv.SourceMark
 
@@ -877,63 +978,6 @@ alias c_gtk_source_mark_attributes_get_pixbuf  gtk_source_mark_attributes_get_pi
 alias c_gtk_source_mark_attributes_render_icon  gtk_source_mark_attributes_render_icon;
 alias c_gtk_source_mark_attributes_get_tooltip_text  gtk_source_mark_attributes_get_tooltip_text;
 alias c_gtk_source_mark_attributes_get_tooltip_markup  gtk_source_mark_attributes_get_tooltip_markup;
-
-// gsv.SourceView
-
-alias c_gtk_source_view_new  gtk_source_view_new;
-alias c_gtk_source_view_new_with_buffer  gtk_source_view_new_with_buffer;
-alias c_gtk_source_view_set_auto_indent  gtk_source_view_set_auto_indent;
-alias c_gtk_source_view_get_auto_indent  gtk_source_view_get_auto_indent;
-alias c_gtk_source_view_set_indent_on_tab  gtk_source_view_set_indent_on_tab;
-alias c_gtk_source_view_get_indent_on_tab  gtk_source_view_get_indent_on_tab;
-alias c_gtk_source_view_set_indent_width  gtk_source_view_set_indent_width;
-alias c_gtk_source_view_get_indent_width  gtk_source_view_get_indent_width;
-alias c_gtk_source_view_set_insert_spaces_instead_of_tabs  gtk_source_view_set_insert_spaces_instead_of_tabs;
-alias c_gtk_source_view_get_insert_spaces_instead_of_tabs  gtk_source_view_get_insert_spaces_instead_of_tabs;
-alias c_gtk_source_view_set_smart_home_end  gtk_source_view_set_smart_home_end;
-alias c_gtk_source_view_get_smart_home_end  gtk_source_view_get_smart_home_end;
-alias c_gtk_source_view_set_mark_attributes  gtk_source_view_set_mark_attributes;
-alias c_gtk_source_view_get_mark_attributes  gtk_source_view_get_mark_attributes;
-alias c_gtk_source_view_set_highlight_current_line  gtk_source_view_set_highlight_current_line;
-alias c_gtk_source_view_get_highlight_current_line  gtk_source_view_get_highlight_current_line;
-alias c_gtk_source_view_set_show_line_marks  gtk_source_view_set_show_line_marks;
-alias c_gtk_source_view_get_show_line_marks  gtk_source_view_get_show_line_marks;
-alias c_gtk_source_view_set_show_line_numbers  gtk_source_view_set_show_line_numbers;
-alias c_gtk_source_view_get_show_line_numbers  gtk_source_view_get_show_line_numbers;
-alias c_gtk_source_view_set_show_right_margin  gtk_source_view_set_show_right_margin;
-alias c_gtk_source_view_get_show_right_margin  gtk_source_view_get_show_right_margin;
-alias c_gtk_source_view_set_right_margin_position  gtk_source_view_set_right_margin_position;
-alias c_gtk_source_view_get_right_margin_position  gtk_source_view_get_right_margin_position;
-alias c_gtk_source_view_set_tab_width  gtk_source_view_set_tab_width;
-alias c_gtk_source_view_get_tab_width  gtk_source_view_get_tab_width;
-alias c_gtk_source_view_set_draw_spaces  gtk_source_view_set_draw_spaces;
-alias c_gtk_source_view_get_draw_spaces  gtk_source_view_get_draw_spaces;
-alias c_gtk_source_view_get_completion  gtk_source_view_get_completion;
-alias c_gtk_source_view_get_gutter  gtk_source_view_get_gutter;
-alias c_gtk_source_view_get_visual_column  gtk_source_view_get_visual_column;
-
-// gsv.SourceLanguage
-
-alias c_gtk_source_language_get_id  gtk_source_language_get_id;
-alias c_gtk_source_language_get_name  gtk_source_language_get_name;
-alias c_gtk_source_language_get_section  gtk_source_language_get_section;
-alias c_gtk_source_language_get_hidden  gtk_source_language_get_hidden;
-alias c_gtk_source_language_get_metadata  gtk_source_language_get_metadata;
-alias c_gtk_source_language_get_mime_types  gtk_source_language_get_mime_types;
-alias c_gtk_source_language_get_globs  gtk_source_language_get_globs;
-alias c_gtk_source_language_get_style_name  gtk_source_language_get_style_name;
-alias c_gtk_source_language_get_style_ids  gtk_source_language_get_style_ids;
-alias c_gtk_source_language_get_style_fallback  gtk_source_language_get_style_fallback;
-
-// gsv.SourceLanguageManager
-
-alias c_gtk_source_language_manager_new  gtk_source_language_manager_new;
-alias c_gtk_source_language_manager_get_default  gtk_source_language_manager_get_default;
-alias c_gtk_source_language_manager_set_search_path  gtk_source_language_manager_set_search_path;
-alias c_gtk_source_language_manager_get_search_path  gtk_source_language_manager_get_search_path;
-alias c_gtk_source_language_manager_get_language_ids  gtk_source_language_manager_get_language_ids;
-alias c_gtk_source_language_manager_get_language  gtk_source_language_manager_get_language;
-alias c_gtk_source_language_manager_guess_language  gtk_source_language_manager_guess_language;
 
 // gsv.SourcePrintCompositor
 
@@ -974,6 +1018,40 @@ alias c_gtk_source_print_compositor_get_n_pages  gtk_source_print_compositor_get
 alias c_gtk_source_print_compositor_paginate  gtk_source_print_compositor_paginate;
 alias c_gtk_source_print_compositor_get_pagination_progress  gtk_source_print_compositor_get_pagination_progress;
 alias c_gtk_source_print_compositor_draw_page  gtk_source_print_compositor_draw_page;
+
+// gsv.SourceSearchContext
+
+alias c_gtk_source_search_context_new  gtk_source_search_context_new;
+alias c_gtk_source_search_context_get_buffer  gtk_source_search_context_get_buffer;
+alias c_gtk_source_search_context_get_settings  gtk_source_search_context_get_settings;
+alias c_gtk_source_search_context_set_settings  gtk_source_search_context_set_settings;
+alias c_gtk_source_search_context_get_highlight  gtk_source_search_context_get_highlight;
+alias c_gtk_source_search_context_set_highlight  gtk_source_search_context_set_highlight;
+alias c_gtk_source_search_context_get_occurrences_count  gtk_source_search_context_get_occurrences_count;
+alias c_gtk_source_search_context_get_occurrence_position  gtk_source_search_context_get_occurrence_position;
+alias c_gtk_source_search_context_forward  gtk_source_search_context_forward;
+alias c_gtk_source_search_context_forward_async  gtk_source_search_context_forward_async;
+alias c_gtk_source_search_context_forward_finish  gtk_source_search_context_forward_finish;
+alias c_gtk_source_search_context_backward  gtk_source_search_context_backward;
+alias c_gtk_source_search_context_backward_async  gtk_source_search_context_backward_async;
+alias c_gtk_source_search_context_backward_finish  gtk_source_search_context_backward_finish;
+alias c_gtk_source_search_context_replace  gtk_source_search_context_replace;
+alias c_gtk_source_search_context_replace_all  gtk_source_search_context_replace_all;
+alias c_gtk_source_search_context_get_regex_error  gtk_source_search_context_get_regex_error;
+
+// gsv.SourceSearchSettings
+
+alias c_gtk_source_search_settings_new  gtk_source_search_settings_new;
+alias c_gtk_source_search_settings_get_search_text  gtk_source_search_settings_get_search_text;
+alias c_gtk_source_search_settings_set_search_text  gtk_source_search_settings_set_search_text;
+alias c_gtk_source_search_settings_get_case_sensitive  gtk_source_search_settings_get_case_sensitive;
+alias c_gtk_source_search_settings_set_case_sensitive  gtk_source_search_settings_set_case_sensitive;
+alias c_gtk_source_search_settings_get_at_word_boundaries  gtk_source_search_settings_get_at_word_boundaries;
+alias c_gtk_source_search_settings_set_at_word_boundaries  gtk_source_search_settings_set_at_word_boundaries;
+alias c_gtk_source_search_settings_get_wrap_around  gtk_source_search_settings_get_wrap_around;
+alias c_gtk_source_search_settings_set_wrap_around  gtk_source_search_settings_set_wrap_around;
+alias c_gtk_source_search_settings_get_regex_enabled  gtk_source_search_settings_get_regex_enabled;
+alias c_gtk_source_search_settings_set_regex_enabled  gtk_source_search_settings_set_regex_enabled;
 
 // gsv.SourceStyle
 
@@ -1016,3 +1094,42 @@ alias c_gtk_source_undo_manager_can_redo_changed  gtk_source_undo_manager_can_re
 
 // gsv.SourceUndoManager
 
+
+// gsv.Utils
+
+alias c_gtk_source_utils_unescape_search_text  gtk_source_utils_unescape_search_text;
+alias c_gtk_source_utils_escape_search_text  gtk_source_utils_escape_search_text;
+
+// gsv.SourceView
+
+alias c_gtk_source_view_new  gtk_source_view_new;
+alias c_gtk_source_view_new_with_buffer  gtk_source_view_new_with_buffer;
+alias c_gtk_source_view_set_auto_indent  gtk_source_view_set_auto_indent;
+alias c_gtk_source_view_get_auto_indent  gtk_source_view_get_auto_indent;
+alias c_gtk_source_view_set_indent_on_tab  gtk_source_view_set_indent_on_tab;
+alias c_gtk_source_view_get_indent_on_tab  gtk_source_view_get_indent_on_tab;
+alias c_gtk_source_view_set_indent_width  gtk_source_view_set_indent_width;
+alias c_gtk_source_view_get_indent_width  gtk_source_view_get_indent_width;
+alias c_gtk_source_view_set_insert_spaces_instead_of_tabs  gtk_source_view_set_insert_spaces_instead_of_tabs;
+alias c_gtk_source_view_get_insert_spaces_instead_of_tabs  gtk_source_view_get_insert_spaces_instead_of_tabs;
+alias c_gtk_source_view_set_smart_home_end  gtk_source_view_set_smart_home_end;
+alias c_gtk_source_view_get_smart_home_end  gtk_source_view_get_smart_home_end;
+alias c_gtk_source_view_set_mark_attributes  gtk_source_view_set_mark_attributes;
+alias c_gtk_source_view_get_mark_attributes  gtk_source_view_get_mark_attributes;
+alias c_gtk_source_view_set_highlight_current_line  gtk_source_view_set_highlight_current_line;
+alias c_gtk_source_view_get_highlight_current_line  gtk_source_view_get_highlight_current_line;
+alias c_gtk_source_view_set_show_line_marks  gtk_source_view_set_show_line_marks;
+alias c_gtk_source_view_get_show_line_marks  gtk_source_view_get_show_line_marks;
+alias c_gtk_source_view_set_show_line_numbers  gtk_source_view_set_show_line_numbers;
+alias c_gtk_source_view_get_show_line_numbers  gtk_source_view_get_show_line_numbers;
+alias c_gtk_source_view_set_show_right_margin  gtk_source_view_set_show_right_margin;
+alias c_gtk_source_view_get_show_right_margin  gtk_source_view_get_show_right_margin;
+alias c_gtk_source_view_set_right_margin_position  gtk_source_view_set_right_margin_position;
+alias c_gtk_source_view_get_right_margin_position  gtk_source_view_get_right_margin_position;
+alias c_gtk_source_view_set_tab_width  gtk_source_view_set_tab_width;
+alias c_gtk_source_view_get_tab_width  gtk_source_view_get_tab_width;
+alias c_gtk_source_view_set_draw_spaces  gtk_source_view_set_draw_spaces;
+alias c_gtk_source_view_get_draw_spaces  gtk_source_view_get_draw_spaces;
+alias c_gtk_source_view_get_completion  gtk_source_view_get_completion;
+alias c_gtk_source_view_get_gutter  gtk_source_view_get_gutter;
+alias c_gtk_source_view_get_visual_column  gtk_source_view_get_visual_column;

@@ -91,17 +91,50 @@ private import gtk.TextTagTable;
 private import gtk.TextBuffer;
 
 /**
- * The GtkSourceBuffer object is the model for GtkSourceView widgets.
- * It extends the GtkTextBuffer object by adding features useful to display
- * and edit source code as syntax highlighting and bracket matching. It
- * also implements support for undo/redo operations.
+ *  The GtkSourceBuffer object is the model for GtkSourceView widgets.
+ *  It extends the GtkTextBuffer object by adding features useful to display
+ *  and edit source code such as syntax highlighting and bracket matching. It
+ *  also implements support for undo/redo operations, and for the search and
+ *  replace.
  *
- * To create a GtkSourceBuffer use gtk_source_buffer_new() or
- * gtk_source_buffer_new_with_language(). The second form is just a convenience
- * function which allows you to initially set a GtkSourceLanguage.
+ *  To create a GtkSourceBuffer use gtk_source_buffer_new() or
+ *  gtk_source_buffer_new_with_language(). The second form is just a convenience
+ *  function which allows you to initially set a GtkSourceLanguage.
  *
- * By default highlighting is enabled, but you can disable it with
- * gtk_source_buffer_set_highlight_syntax().
+ *  By default highlighting is enabled, but you can disable it with
+ *  gtk_source_buffer_set_highlight_syntax().
+ *
+ * Undo and Redo
+ *
+ *  A custom GtkSourceUndoManager can be implemented and set with
+ *  gtk_source_buffer_set_undo_manager(). However the default implementation
+ *  should be suitable for most uses. By default, actions that can be undone or
+ *  redone are defined as groups of operations between a call to
+ *  gtk_text_buffer_begin_user_action() and gtk_text_buffer_end_user_action(). In
+ *  general, this happens whenever the user presses any key which modifies the
+ *  buffer. But the default undo manager will try to merge similar consecutive
+ *  actions, such as multiple character insertions on the same line, into one
+ *  action. But, inserting a newline starts a new action.
+ *
+ *  The default undo manager remembers the "modified" state of the buffer, and
+ *  restore it when an action is undone or redone. It can be useful in a text
+ *  editor to know whether the file is saved. See gtk_text_buffer_get_modified()
+ *  and gtk_text_buffer_set_modified().
+ *
+ * <hr>
+ *
+ * Context Classes
+ *
+ *  It is possible to retrieve some information from the syntax highlighting
+ *  engine. There are currently three context classes, that are applied to
+ *  regions of a GtkSourceBuffer:
+ *
+ *  comment: the region delimits a comment;
+ *
+ *  string: the region delimits a string;
+ *
+ *  no-spell-check: the region should not be spell
+ *  checked.
  */
 public class SourceBuffer : TextBuffer
 {
@@ -243,18 +276,18 @@ public class SourceBuffer : TextBuffer
 		}
 		onSourceMarkUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer _sourceBuffer)
+	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* mark, SourceBuffer _sourceBuffer)
 	{
 		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; _sourceBuffer.onSourceMarkUpdatedListeners )
 		{
-			dlg(arg1, _sourceBuffer);
+			dlg(mark, _sourceBuffer);
 		}
 	}
 	
 	void delegate(SourceBuffer)[] onUndoListeners;
 	/**
 	 * See Also
-	 * GtkTextBuffer,GtkSourceView
+	 * GtkTextBuffer, GtkSourceView
 	 */
 	void addOnUndo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -435,109 +468,6 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Determines the number of undo levels the buffer will track for
-	 * buffer edits.
-	 * Returns: the maximum number of possible undo levels or -1 if no limit is set.
-	 */
-	public int getMaxUndoLevels()
-	{
-		// gint gtk_source_buffer_get_max_undo_levels  (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_get_max_undo_levels(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Sets the number of undo levels for user actions the buffer will
-	 * track. If the number of user actions exceeds the limit set by this
-	 * function, older actions will be discarded.
-	 * If max_undo_levels is -1, no limit is set.
-	 * A new action is started whenever the function
-	 * gtk_text_buffer_begin_user_action() is called. In general, this
-	 * happens whenever the user presses any key which modifies the
-	 * buffer, but the undo manager will try to merge similar consecutive
-	 * actions, such as multiple character insertions into one action.
-	 * But, inserting a newline does start a new action.
-	 * Params:
-	 * maxUndoLevels = the desired maximum number of undo levels.
-	 */
-	public void setMaxUndoLevels(int maxUndoLevels)
-	{
-		// void gtk_source_buffer_set_max_undo_levels  (GtkSourceBuffer *buffer,  gint max_undo_levels);
-		gtk_source_buffer_set_max_undo_levels(gtkSourceBuffer, maxUndoLevels);
-	}
-	
-	/**
-	 * Redoes the last undo operation. Use gtk_source_buffer_can_redo()
-	 * to check whether a call to this function will have any effect.
-	 */
-	public void redo()
-	{
-		// void gtk_source_buffer_redo (GtkSourceBuffer *buffer);
-		gtk_source_buffer_redo(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Undoes the last user action which modified the buffer. Use
-	 * gtk_source_buffer_can_undo() to check whether a call to this
-	 * function will have any effect.
-	 * Actions are defined as groups of operations between a call to
-	 * gtk_text_buffer_begin_user_action() and
-	 * gtk_text_buffer_end_user_action(), or sequences of similar edits
-	 * (inserts or deletes) on the same line.
-	 */
-	public void undo()
-	{
-		// void gtk_source_buffer_undo (GtkSourceBuffer *buffer);
-		gtk_source_buffer_undo(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Determines whether a source buffer can redo the last action
-	 * (i.e. if the last operation was an undo).
-	 * Returns: TRUE if a redo is possible.
-	 */
-	public int canRedo()
-	{
-		// gboolean gtk_source_buffer_can_redo (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_can_redo(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Determines whether a source buffer can undo the last action.
-	 * Returns: TRUE if it's possible to undo the last action.
-	 */
-	public int canUndo()
-	{
-		// gboolean gtk_source_buffer_can_undo (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_can_undo(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Marks the beginning of a not undoable action on the buffer,
-	 * disabling the undo manager. Typically you would call this function
-	 * before initially setting the contents of the buffer (e.g. when
-	 * loading a file in a text editor).
-	 * You may nest gtk_source_buffer_begin_not_undoable_action() /
-	 * gtk_source_buffer_end_not_undoable_action() blocks.
-	 */
-	public void beginNotUndoableAction()
-	{
-		// void gtk_source_buffer_begin_not_undoable_action  (GtkSourceBuffer *buffer);
-		gtk_source_buffer_begin_not_undoable_action(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Marks the end of a not undoable action on the buffer. When the
-	 * last not undoable block is closed through the call to this
-	 * function, the list of undo actions is cleared and the undo manager
-	 * is re-enabled.
-	 */
-	public void endNotUndoableAction()
-	{
-		// void gtk_source_buffer_end_not_undoable_action  (GtkSourceBuffer *buffer);
-		gtk_source_buffer_end_not_undoable_action(gtkSourceBuffer);
-	}
-	
-	/**
 	 * Forces buffer to analyze and highlight the given area synchronously.
 	 * Note
 	 *  This is a potentially slow operation and should be used only
@@ -676,11 +606,13 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Check if the class context_klass is set on iter.
+	 * Check if the class context_class is set on iter.
+	 * See the GtkSourceBuffer description for the list of context classes.
 	 * Since 2.10
 	 * Params:
 	 * iter = a GtkTextIter.
 	 * contextClass = class to search for.
+	 * Returns: whether iter has the context class.
 	 */
 	public int iterHasContextClass(TextIter iter, string contextClass)
 	{
@@ -690,6 +622,7 @@ public class SourceBuffer : TextBuffer
 	
 	/**
 	 * Get all defined context classes at iter.
+	 * See the GtkSourceBuffer description for the list of context classes.
 	 * Since 2.10
 	 * Params:
 	 * iter = a GtkTextIter.
@@ -707,6 +640,7 @@ public class SourceBuffer : TextBuffer
 	 * Does not return toggles located at iter, only toggles after iter. Sets
 	 * iter to the location of the toggle, or to the end of the buffer if no
 	 * toggle is found.
+	 * See the GtkSourceBuffer description for the list of context classes.
 	 * Since 2.10
 	 * Params:
 	 * iter = a GtkTextIter.
@@ -725,6 +659,7 @@ public class SourceBuffer : TextBuffer
 	 * Does not return toggles located at iter, only toggles after iter. Sets
 	 * iter to the location of the toggle, or to the end of the buffer if no
 	 * toggle is found.
+	 * See the GtkSourceBuffer description for the list of context classes.
 	 * Since 2.10
 	 * Params:
 	 * iter = a GtkTextIter.
@@ -735,6 +670,99 @@ public class SourceBuffer : TextBuffer
 	{
 		// gboolean gtk_source_buffer_iter_backward_to_context_class_toggle  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *context_class);
 		return gtk_source_buffer_iter_backward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass));
+	}
+	
+	/**
+	 * Determines the number of undo levels the buffer will track for
+	 * buffer edits.
+	 * Returns: the maximum number of possible undo levels or -1 if no limit is set.
+	 */
+	public int getMaxUndoLevels()
+	{
+		// gint gtk_source_buffer_get_max_undo_levels  (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_get_max_undo_levels(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Sets the number of undo levels for user actions the buffer will
+	 * track. If the number of user actions exceeds the limit set by this
+	 * function, older actions will be discarded.
+	 * If max_undo_levels is -1, no limit is set.
+	 * Params:
+	 * maxUndoLevels = the desired maximum number of undo levels.
+	 */
+	public void setMaxUndoLevels(int maxUndoLevels)
+	{
+		// void gtk_source_buffer_set_max_undo_levels  (GtkSourceBuffer *buffer,  gint max_undo_levels);
+		gtk_source_buffer_set_max_undo_levels(gtkSourceBuffer, maxUndoLevels);
+	}
+	
+	/**
+	 * Redoes the last undo operation. Use gtk_source_buffer_can_redo()
+	 * to check whether a call to this function will have any effect.
+	 */
+	public void redo()
+	{
+		// void gtk_source_buffer_redo (GtkSourceBuffer *buffer);
+		gtk_source_buffer_redo(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Undoes the last user action which modified the buffer. Use
+	 * gtk_source_buffer_can_undo() to check whether a call to this
+	 * function will have any effect.
+	 */
+	public void undo()
+	{
+		// void gtk_source_buffer_undo (GtkSourceBuffer *buffer);
+		gtk_source_buffer_undo(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Determines whether a source buffer can redo the last action
+	 * (i.e. if the last operation was an undo).
+	 * Returns: TRUE if a redo is possible.
+	 */
+	public int canRedo()
+	{
+		// gboolean gtk_source_buffer_can_redo (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_can_redo(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Determines whether a source buffer can undo the last action.
+	 * Returns: TRUE if it's possible to undo the last action.
+	 */
+	public int canUndo()
+	{
+		// gboolean gtk_source_buffer_can_undo (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_can_undo(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Marks the beginning of a not undoable action on the buffer,
+	 * disabling the undo manager. Typically you would call this function
+	 * before initially setting the contents of the buffer (e.g. when
+	 * loading a file in a text editor).
+	 * You may nest gtk_source_buffer_begin_not_undoable_action() /
+	 * gtk_source_buffer_end_not_undoable_action() blocks.
+	 */
+	public void beginNotUndoableAction()
+	{
+		// void gtk_source_buffer_begin_not_undoable_action  (GtkSourceBuffer *buffer);
+		gtk_source_buffer_begin_not_undoable_action(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Marks the end of a not undoable action on the buffer. When the
+	 * last not undoable block is closed through the call to this
+	 * function, the list of undo actions is cleared and the undo manager
+	 * is re-enabled.
+	 */
+	public void endNotUndoableAction()
+	{
+		// void gtk_source_buffer_end_not_undoable_action  (GtkSourceBuffer *buffer);
+		gtk_source_buffer_end_not_undoable_action(gtkSourceBuffer);
 	}
 	
 	/**
