@@ -72,9 +72,10 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * An AtkRelation describes a relation between an object and one or more
- * other objects. The actual relations that an object has with other objects
- * are defined as an AtkRelationSet, which is a set of AtkRelations.
+ * An AtkRelation describes a relation between an object and one or
+ * more other objects. The actual relations that an object has with
+ * other objects are defined as an AtkRelationSet, which is a set of
+ * AtkRelations.
  */
 public class Relation : ObjectG
 {

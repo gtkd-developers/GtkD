@@ -68,20 +68,22 @@ private import glib.Str;
 
 
 /**
- * An interface whereby an object allows its backing content to be streamed to
- * clients. Typical implementors would be images or icons, HTML content, or
- * multimedia display/rendering widgets.
+ * An interface whereby an object allows its backing content to be
+ * streamed to clients. Typical implementors would be images or
+ * icons, HTML content, or multimedia display/rendering widgets.
  *
- * Negotiation of content type is allowed. Clients may examine the backing data
- * and transform, convert, or parse the content in order to present it in an alternate form to end-users.
+ * Negotiation of content type is allowed. Clients may examine the
+ * backing data and transform, convert, or parse the content in order
+ * to present it in an alternate form to end-users.
  *
- * The AtkStreamableContent interface is particularly useful for saving,
- * printing, or post-processing entire documents, or for persisting alternate
- * views of a document. If document content itself is being serialized,
- * stored, or converted, then use of the AtkStreamableContent interface can help
- * address performance issues. Unlike most ATK interfaces,
- * this interface is not strongly tied to the current user-agent view of the
- * a particular document, but may in some cases give access to the underlying model data.
+ * The AtkStreamableContent interface is particularly useful for
+ * saving, printing, or post-processing entire documents, or for
+ * persisting alternate views of a document. If document content
+ * itself is being serialized, stored, or converted, then use of the
+ * AtkStreamableContent interface can help address performance
+ * issues. Unlike most ATK interfaces, this interface is not strongly
+ * tied to the current user-agent view of the a particular document,
+ * but may in some cases give access to the underlying model data.
  */
 public class StreamableContent
 {
@@ -128,7 +130,7 @@ public class StreamableContent
 	 * type is at position 0, the second at position 1, and so on.
 	 * Params:
 	 * i = a gint representing the position of the mime type starting from 0
-	 * Returns: : a gchar* representing the specified mime type; the caller should not free the character string.
+	 * Returns: a gchar* representing the specified mime type; the caller should not free the character string.
 	 */
 	public string getMimeType(int i)
 	{

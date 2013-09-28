@@ -73,12 +73,14 @@ private import glib.PtrArray;
 private import gobject.ObjectG;
 
 /**
- * The AtkRelationSet held by an object establishes its relationships with
- * objects beyond the normal "parent/child" hierarchical relationships that all
- * user interface objects have. AtkRelationSets establish whether objects are
- * labelled or controlled by other components, share group membership with other
- * components (for instance within a radio-button group), or share content which
- * "flows" between them, among other types of possible relationships.
+ * The AtkRelationSet held by an object establishes its relationships
+ * with objects beyond the normal "parent/child" hierarchical
+ * relationships that all user interface objects have.
+ * AtkRelationSets establish whether objects are labelled or
+ * controlled by other components, share group membership with other
+ * components (for instance within a radio-button group), or share
+ * content which "flows" between them, among other types of possible
+ * relationships.
  */
 public class RelationSet : ObjectG
 {

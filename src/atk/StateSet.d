@@ -67,8 +67,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * An AtkStateSet determines a component's state set. It is composed of a set
- * of AtkStates.
+ * An AtkStateSet determines a component's state set. It is composed
+ * of a set of AtkStates.
  */
 public class StateSet : ObjectG
 {

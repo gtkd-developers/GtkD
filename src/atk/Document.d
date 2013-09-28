@@ -67,12 +67,13 @@ private import glib.Str;
 
 
 /**
- * The AtkDocument interface should be supported by any object whose content is a
- * representation or view of a document. The AtkDocument interface should appear
- * on the toplevel container for the document content; however AtkDocument
- * instances may be nested (i.e. an AtkDocument may be a descendant of another
- * AtkDocument) in those cases where one document contains "embedded content"
- * which can reasonably be considered a document in its own right.
+ * The AtkDocument interface should be supported by any object whose
+ * content is a representation or view of a document. The AtkDocument
+ * interface should appear on the toplevel container for the document
+ * content; however AtkDocument instances may be nested (i.e. an
+ * AtkDocument may be a descendant of another AtkDocument) in those
+ * cases where one document contains "embedded content" which can
+ * reasonably be considered a document in its own right.
  */
 public class Document
 {
@@ -107,13 +108,15 @@ public class Document
 	
 	void delegate(Document)[] onLoadCompleteListeners;
 	/**
-	 * The 'load-complete' signal is emitted when a pending load of a static
-	 * document has completed. This signal is to be expected by ATK clients
-	 * if and when AtkDocument implementors expose ATK_STATE_BUSY. If the state
-	 * of an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,
-	 * it should be safe for clients to assume that the AtkDocument's static contents
-	 * are fully loaded into the container. (Dynamic document contents should
-	 * be exposed via other signals.)
+	 * The 'load-complete' signal is emitted when a pending load of
+	 * a static document has completed. This signal is to be
+	 * expected by ATK clients if and when AtkDocument implementors
+	 * expose ATK_STATE_BUSY. If the state of an AtkObject which
+	 * implements AtkDocument does not include ATK_STATE_BUSY, it
+	 * should be safe for clients to assume that the AtkDocument's
+	 * static contents are fully loaded into the container.
+	 * (Dynamic document contents should be exposed via other
+	 * signals.)
 	 */
 	void addOnLoadComplete(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -140,11 +143,12 @@ public class Document
 	
 	void delegate(Document)[] onLoadStoppedListeners;
 	/**
-	 * The 'load-stopped' signal is emitted when a pending load of document contents
-	 * is cancelled, paused, or otherwise interrupted by the user or application
-	 * logic. It should not however be
-	 * emitted while waiting for a resource (for instance while blocking on a file or
-	 * network read) unless a user-significant timeout has occurred.
+	 * The 'load-stopped' signal is emitted when a pending load of
+	 * document contents is cancelled, paused, or otherwise
+	 * interrupted by the user or application logic. It should not
+	 * however be emitted while waiting for a resource (for instance
+	 * while blocking on a file or network read) unless a
+	 * user-significant timeout has occurred.
 	 */
 	void addOnLoadStopped(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -171,9 +175,10 @@ public class Document
 	
 	void delegate(Document)[] onReloadListeners;
 	/**
-	 * The 'reload' signal is emitted when the contents of a document is refreshed
-	 * from its source. Once 'reload' has been emitted, a matching 'load-complete'
-	 * or 'load-stopped' signal should follow, which clients may await before
+	 * The 'reload' signal is emitted when the contents of a
+	 * document is refreshed from its source. Once 'reload' has
+	 * been emitted, a matching 'load-complete' or 'load-stopped'
+	 * signal should follow, which clients may await before
 	 * interrogating ATK for the latest document content.
 	 */
 	void addOnReload(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -264,7 +269,7 @@ public class Document
 	/**
 	 * Warning
 	 * atk_document_get_locale is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
-	 * 2.7.90. Please use atk_object_get_object_locale instead.
+	 * 2.7.90. Please use atk_object_get_object_locale() instead.
 	 * Gets a UTF-8 string indicating the POSIX-style LC_MESSAGES locale
 	 *  of the content of this document instance. Individual
 	 *  text substrings or images within this document may have

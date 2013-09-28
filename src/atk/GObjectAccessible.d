@@ -70,10 +70,10 @@ private import gobject.ObjectG;
 private import atk.ObjectAtk;
 
 /**
- * This object class is derived from AtkObject. It can be used as a basis for
- * implementing accessible objects for GObjects which are not derived from
- * GtkWidget. One example of its use is in providing an accessible object
- * for GnomeCanvasItem in the GAIL library.
+ * This object class is derived from AtkObject. It can be used as a
+ * basis for implementing accessible objects for GObjects which are
+ * not derived from GtkWidget. One example of its use is in providing
+ * an accessible object for GnomeCanvasItem in the GAIL library.
  */
 public class GObjectAccessible : ObjectAtk
 {

@@ -70,23 +70,24 @@ private import glib.Str;
 
 
 /**
- * AtkTable should be implemented by components which present elements
- * ordered via rows and columns. It may also be used to present
- * tree-structured information if the nodes of the trees can be said to
- * contain multiple "columns". Individual elements of an AtkTable are
- * typically referred to as "cells", and these cells are exposed by
- * AtkTable as child AtkObjects of the AtkTable. Both row/column and
- * child-index-based access to these children is provided.
+ * AtkTable should be implemented by components which present
+ * elements ordered via rows and columns. It may also be used to
+ * present tree-structured information if the nodes of the trees can
+ * be said to contain multiple "columns". Individual elements of an
+ * AtkTable are typically referred to as "cells", and these cells are
+ * exposed by AtkTable as child AtkObjects of the AtkTable. Both
+ * row/column and child-index-based access to these children is
+ * provided.
  *
- * Children of AtkTable are frequently "lightweight" objects, that is,
- * they may not have backing widgets in the host UI toolkit. They are
- * therefore often transient.
- *
- * Since tables are often very complex, AtkTable includes provision for
- * offering simplified summary information, as well as row and column
- * headers and captions. Headers and captions are AtkObjects which may
- * implement other interfaces (AtkText, AtkImage, etc.) as appropriate.
- * AtkTable summaries may themselves be (simplified) AtkTables, etc.
+ * Children of AtkTable are frequently "lightweight" objects, that
+ * is, they may not have backing widgets in the host UI toolkit. They
+ * are therefore often transient.
+ * Since tables are often very complex, AtkTable includes provision
+ * for offering simplified summary information, as well as row and
+ * column headers and captions. Headers and captions are AtkObjects
+ * which may implement other interfaces (AtkText, AtkImage, etc.) as
+ * appropriate. AtkTable summaries may themselves be (simplified)
+ * AtkTables, etc.
  */
 public class Table
 {
@@ -121,8 +122,8 @@ public class Table
 	
 	void delegate(gint, gint, Table)[] onColumnDeletedListeners;
 	/**
-	 * The "column-deleted" signal is emitted by an object which implements the
-	 * AtkTable interface when a column is deleted.
+	 * The "column-deleted" signal is emitted by an object which
+	 * implements the AtkTable interface when a column is deleted.
 	 */
 	void addOnColumnDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -149,8 +150,8 @@ public class Table
 	
 	void delegate(gint, gint, Table)[] onColumnInsertedListeners;
 	/**
-	 * The "column-inserted" signal is emitted by an object which implements the
-	 * AtkTable interface when a column is inserted.
+	 * The "column-inserted" signal is emitted by an object which
+	 * implements the AtkTable interface when a column is inserted.
 	 */
 	void addOnColumnInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -177,8 +178,9 @@ public class Table
 	
 	void delegate(Table)[] onColumnReorderedListeners;
 	/**
-	 * The "column-reordered" signal is emitted by an object which implements the
-	 * AtkTable interface when the columns are reordered.
+	 * The "column-reordered" signal is emitted by an object which
+	 * implements the AtkTable interface when the columns are
+	 * reordered.
 	 */
 	void addOnColumnReordered(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -205,8 +207,9 @@ public class Table
 	
 	void delegate(Table)[] onModelChangedListeners;
 	/**
-	 * The "model-changed" signal is emitted by an object which implements the
-	 * AtkTable interface when the model displayed by the table changes.
+	 * The "model-changed" signal is emitted by an object which
+	 * implements the AtkTable interface when the model displayed by
+	 * the table changes.
 	 */
 	void addOnModelChanged(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -233,8 +236,8 @@ public class Table
 	
 	void delegate(gint, gint, Table)[] onRowDeletedListeners;
 	/**
-	 * The "row-deleted" signal is emitted by an object which implements the
-	 * AtkTable interface when a row is deleted.
+	 * The "row-deleted" signal is emitted by an object which
+	 * implements the AtkTable interface when a row is deleted.
 	 */
 	void addOnRowDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -261,8 +264,8 @@ public class Table
 	
 	void delegate(gint, gint, Table)[] onRowInsertedListeners;
 	/**
-	 * The "row-inserted" signal is emitted by an object which implements the
-	 * AtkTable interface when a row is inserted.
+	 * The "row-inserted" signal is emitted by an object which
+	 * implements the AtkTable interface when a row is inserted.
 	 */
 	void addOnRowInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -289,10 +292,9 @@ public class Table
 	
 	void delegate(Table)[] onRowReorderedListeners;
 	/**
-	 * The "row-reordered" signal is emitted by an object which implements the
-	 * AtkTable interface when the rows are reordered.
-	 * See Also
-	 * AtkObject, ATK_STATE_TRANSIENT
+	 * The "row-reordered" signal is emitted by an object which
+	 * implements the AtkTable interface when the rows are
+	 * reordered.
 	 */
 	void addOnRowReordered(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

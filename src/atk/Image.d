@@ -66,16 +66,18 @@ private import glib.Str;
 
 /**
  * AtkImage should be implemented by AtkObject subtypes on behalf of
- * components which display image/pixmap information onscreen, and which
- * provide information (other than just widget borders, etc.) via that
- * image content. For instance, icons, buttons with icons, toolbar
- * elements, and image viewing panes typically should implement AtkImage.
+ * components which display image/pixmap information onscreen, and
+ * which provide information (other than just widget borders, etc.)
+ * via that image content. For instance, icons, buttons with icons,
+ * toolbar elements, and image viewing panes typically should
+ * implement AtkImage.
  *
  * AtkImage primarily provides two types of information: coordinate
- * information (useful for screen review mode of screenreaders, and for use
- * by onscreen magnifiers), and descriptive information. The descriptive
- * information is provided for alternative, text-only presentation of the
- * most significant information present in the image.
+ * information (useful for screen review mode of screenreaders, and
+ * for use by onscreen magnifiers), and descriptive information. The
+ * descriptive information is provided for alternative, text-only
+ * presentation of the most significant information present in the
+ * image.
  */
 public class Image
 {

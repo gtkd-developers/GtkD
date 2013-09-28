@@ -78,22 +78,26 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * This class is the primary class for accessibility support via
- * the Accessibility ToolKit (ATK). Objects which are instances
- * of AtkObject (or instances of AtkObject-derived types) are
- * queried for properties which relate basic (and generic) properties of a
- * UI component such as name and description. Instances of AtkObject
- * may also be queried as to whether they implement other ATK interfaces
- * (e.g. AtkAction, AtkComponent, etc.), as appropriate to the role
- * which a given UI component plays in a user interface.
+ * This class is the primary class for accessibility support via the
+ * Accessibility ToolKit (ATK). Objects which are instances of
+ * AtkObject (or instances of AtkObject-derived types) are queried
+ * for properties which relate basic (and generic) properties of a UI
+ * component such as name and description. Instances of AtkObject
+ * may also be queried as to whether they implement other ATK
+ * interfaces (e.g. AtkAction, AtkComponent, etc.), as appropriate
+ * to the role which a given UI component plays in a user interface.
  *
  * All UI components in an application which provide useful
  * information or services to the user must provide corresponding
- * AtkObject instances on request (in GTK+, for instance, usually
- * on a call to #gtk_widget_get_accessible()), either via ATK support
- * built into the toolkit for the widget class or ancestor class, or in
- * the case of custom widgets, if the inherited AtkObject implementation
- * is insufficient, via instances of a new AtkObject subclass.
+ * AtkObject instances on request (in GTK+, for instance, usually on
+ * a call to #gtk_widget_get_accessible()), either via ATK support
+ * built into the toolkit for the widget class or ancestor class, or
+ * in the case of custom widgets, if the inherited AtkObject
+ * implementation is insufficient, via instances of a new AtkObject
+ * subclass.
+ *
+ * See also: AtkObjectFactory, AtkRegistry. (GTK+ users see also
+ * GtkAccessible).
  */
 public class ObjectAtk : ObjectG
 {
@@ -135,10 +139,10 @@ public class ObjectAtk : ObjectG
 	
 	void delegate(void*, ObjectAtk)[] onActiveDescendantChangedListeners;
 	/**
-	 * The "active-descendant-changed" signal is emitted by an object which has
-	 * the state ATK_STATE_MANAGES_DESCENDANTS when the focus object in the
-	 * object changes. For instance, a table will emit the signal when the cell
-	 * in the table which has focus changes.
+	 * The "active-descendant-changed" signal is emitted by an object
+	 * which has the state ATK_STATE_MANAGES_DESCENDANTS when the focus
+	 * object in the object changes. For instance, a table will emit the
+	 * signal when the cell in the table which has focus changes.
 	 */
 	void addOnActiveDescendantChanged(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -166,7 +170,8 @@ public class ObjectAtk : ObjectG
 	void delegate(guint, void*, ObjectAtk)[] onChildrenChangedListeners;
 	/**
 	 * The signal "children-changed" is emitted when a child is added or
-	 * removed form an object. It supports two details: "add" and "remove"
+	 * removed form an object. It supports two details: "add" and
+	 * "remove"
 	 */
 	void addOnChildrenChanged(void delegate(guint, void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -193,7 +198,10 @@ public class ObjectAtk : ObjectG
 	
 	void delegate(gboolean, ObjectAtk)[] onFocusListeners;
 	/**
-	 * The signal "focus-event" is emitted when an object gains or loses focus.
+	 * Warning
+	 * AtkObject::focus-event is deprecated and should not be used in newly-written code. Since 2.9.4. Use "state-change" signal instead.
+	 * The signal "focus-event" is emitted when an object gained or lost
+	 * focus.
 	 */
 	void addOnFocus(void delegate(gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -221,8 +229,8 @@ public class ObjectAtk : ObjectG
 	void delegate(void*, ObjectAtk)[] onPropertyChangeListeners;
 	/**
 	 * The signal "property-change" is emitted when an object's property
-	 * value changes. The detail identifies the name of the property whose
-	 * value has changed.
+	 * value changes. The detail identifies the name of the property
+	 * whose value has changed.
 	 */
 	void addOnPropertyChange(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -249,8 +257,9 @@ public class ObjectAtk : ObjectG
 	
 	void delegate(string, gboolean, ObjectAtk)[] onStateChangeListeners;
 	/**
-	 * The "state-change" signal is emitted when an object's state changes.
-	 * The detail value identifies the state type which has changed.
+	 * The "state-change" signal is emitted when an object's state
+	 * changes. The detail value identifies the state type which has
+	 * changed.
 	 */
 	void addOnStateChange(void delegate(string, gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -277,11 +286,8 @@ public class ObjectAtk : ObjectG
 	
 	void delegate(ObjectAtk)[] onVisibleDataChangedListeners;
 	/**
-	 * The "visible-data-changed" signal is emitted when the visual appearance of
-	 * the object changed.
-	 * See Also
-	 * See also: AtkObjectFactory, AtkRegistry.
-	 * ( GTK+ users see also GtkAccessible).
+	 * The "visible-data-changed" signal is emitted when the visual
+	 * appearance of the object changed.
 	 */
 	void addOnVisibleDataChanged(void delegate(ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -620,12 +626,24 @@ public class ObjectAtk : ObjectG
 	 * as distinct from strongly-typed object data available via other get/set methods.
 	 * Not all objects have explicit "name-value pair" AtkAttributeSet properties.
 	 * Since 1.12
-	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it. [transfer none]
+	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it. This atkattributeset should be freed by a call to atk_attribute_set_free(). [transfer full]
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
 		// AtkAttributeSet * atk_object_get_attributes (AtkObject *accessible);
 		return atk_object_get_attributes(atkObject);
+	}
+	
+	/**
+	 * Gets a UTF-8 string indicating the POSIX-style LC_MESSAGES locale
+	 * of accessible.
+	 * Since 2.7.90
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of accessible.
+	 */
+	public string getObjectLocale()
+	{
+		// const gchar * atk_object_get_object_locale (AtkObject *accessible);
+		return Str.toString(atk_object_get_object_locale(atkObject));
 	}
 	
 	/**

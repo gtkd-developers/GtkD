@@ -70,9 +70,10 @@ private import gobject.ObjectG;
 private import atk.ObjectAtk;
 
 /**
- * An AtkNoOpObject is an AtkObject which purports to implement all ATK
- * interfaces. It is the type of AtkObject which is created if an accessible
- * object is requested for an object type for which no factory type is specified.
+ * An AtkNoOpObject is an AtkObject which purports to implement all
+ * ATK interfaces. It is the type of AtkObject which is created if an
+ * accessible object is requested for an object type for which no
+ * factory type is specified.
  */
 public class NoOpObject : ObjectAtk
 {

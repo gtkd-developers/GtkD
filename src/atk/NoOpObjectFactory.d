@@ -64,9 +64,9 @@ private import gobject.ObjectG;
 private import atk.ObjectFactory;
 
 /**
- * The AtkObjectFactory which creates an AtkNoOpObject. An instance of this is
- * created by an AtkRegistry if no factory type has not been specified to
- * create an accessible object of a particular type.
+ * The AtkObjectFactory which creates an AtkNoOpObject. An instance of
+ * this is created by an AtkRegistry if no factory type has not been
+ * specified to create an accessible object of a particular type.
  */
 public class NoOpObjectFactory : ObjectFactory
 {

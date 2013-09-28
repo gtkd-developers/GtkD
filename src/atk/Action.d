@@ -65,30 +65,23 @@ private import glib.Str;
 
 
 /**
- * AtkAction should be implemented by instances of AtkObject classes with
- * which the user can interact directly, i.e. buttons, checkboxes,
- * scrollbars, e.g. components which are not "passive"
+ * AtkAction should be implemented by instances of AtkObject classes
+ * with which the user can interact directly, i.e. buttons,
+ * checkboxes, scrollbars, e.g. components which are not "passive"
  * providers of UI information.
  *
- * Exceptions: when the user interaction is already covered by
- * another appropriate interface such as AtkEditableText (insert/delete
- * text, etc.) or AtkValue (set value) then these actions should not be
+ * Exceptions: when the user interaction is already covered by another
+ * appropriate interface such as AtkEditableText (insert/delete text,
+ * etc.) or AtkValue (set value) then these actions should not be
  * exposed by AtkAction as well.
- *
- * Also note that the AtkAction API is limited in that parameters may not
- * be passed to the object being activated; thus the action must be
- * self-contained and specifiable via only a single "verb". Concrete
- * examples include "press", "release", "click" for buttons, "drag"
- * (meaning initiate drag) and "drop" for drag sources and drop targets,
- * etc.
  *
  * Though most UI interactions on components should be invocable via
  * keyboard as well as mouse, there will generally be a close mapping
  * between "mouse actions" that are possible on a component and the
- * AtkActions. Where mouse and keyboard actions are redundant in effect,
- * AtkAction should expose only one action rather than exposing redundant
- * actions if possible. By convention we have been using "mouse centric"
- * terminology for AtkAction names.
+ * AtkActions. Where mouse and keyboard actions are redundant in
+ * effect, AtkAction should expose only one action rather than
+ * exposing redundant actions if possible. By convention we have been
+ * using "mouse centric" terminology for AtkAction names.
  */
 public class Action
 {
@@ -145,6 +138,7 @@ public class Action
 	}
 	
 	/**
+	 * Returns a description of the specified action of the object.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
 	 * Returns: a description string, or NULL if action does not implement this interface.
@@ -156,6 +150,19 @@ public class Action
 	}
 	
 	/**
+	 * Returns a non-localized string naming the specified action of the
+	 * object. This name is generally not descriptive of the end result
+	 * of the action, but instead names the 'interaction type' which the
+	 * object supports. By convention, the above strings should be used to
+	 * represent the actions which correspond to the common point-and-click
+	 * interaction techniques of the same name: i.e.
+	 * "click", "press", "release", "drag", "drop", "popup", etc.
+	 * The "popup" action should be used to pop up a context menu for the
+	 * object, if one exists.
+	 * For technical reasons, some toolkits cannot guarantee that the
+	 * reported action is actually 'bound' to a nontrivial user event;
+	 * i.e. the result of some actions via atk_action_do_action() may be
+	 * NIL.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
 	 * Returns: a name string, or NULL if action does not implement this interface.
@@ -167,6 +174,7 @@ public class Action
 	}
 	
 	/**
+	 * Returns the localized name of the specified action of the object.
 	 * Params:
 	 * i = the action index corresponding to the action to be performed
 	 * Returns: a name string, or NULL if action does not implement this interface.

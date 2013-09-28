@@ -68,15 +68,16 @@ private import atk.ObjectAtk;
 
 
 /**
- * AtkSelection should be implemented by UI components with children which
- * are exposed by atk_object_ref_child and atk_object_get_n_children, if
- * the use of the parent UI component ordinarily involves selection of one
- * or more of the objects corresponding to those AtkObject children - for
- * example, selectable lists.
+ * AtkSelection should be implemented by UI components with children
+ * which are exposed by atk_object_ref_child and
+ * atk_object_get_n_children, if the use of the parent UI component
+ * ordinarily involves selection of one or more of the objects
+ * corresponding to those AtkObject children - for example,
+ * selectable lists.
  *
- * Note that other types of "selection" (for instance text selection) are
- * accomplished a other ATK interfaces - AtkSelection is limited to the
- * selection/deselection of children.
+ * Note that other types of "selection" (for instance text selection)
+ * are accomplished a other ATK interfaces - AtkSelection is limited
+ * to the selection/deselection of children.
  */
 public class Selection
 {
@@ -111,10 +112,8 @@ public class Selection
 	
 	void delegate(Selection)[] onSelectionChangedListeners;
 	/**
-	 * The "selection-changed" signal is emitted by an object which implements
-	 * AtkSelection interface when the selection changes.
-	 * See Also
-	 * AtkText
+	 * The "selection-changed" signal is emitted by an object which
+	 * implements AtkSelection interface when the selection changes.
 	 */
 	void addOnSelectionChanged(void delegate(Selection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

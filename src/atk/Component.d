@@ -68,16 +68,16 @@ private import atk.ObjectAtk;
 
 
 /**
- * AtkComponent should be implemented by most if not all UI elements with
- * an actual on-screen presence, i.e. components which can be said to have
- * a screen-coordinate bounding box. Virtually all widgets will need to
- * have AtkComponent implementations provided for their corresponding
- * AtkObject class. In short, only UI elements which are *not* GUI
- * elements will omit this ATK interface.
+ * AtkComponent should be implemented by most if not all UI elements
+ * with an actual on-screen presence, i.e. components which can be
+ * said to have a screen-coordinate bounding box. Virtually all
+ * widgets will need to have AtkComponent implementations provided
+ * for their corresponding AtkObject class. In short, only UI
+ * elements which are *not* GUI elements will omit this ATK interface.
  *
- * A possible exception might be textual information with a transparent
- * background, in which case text glyph bounding box information is
- * provided by AtkText.
+ * A possible exception might be textual information with a
+ * transparent background, in which case text glyph bounding box
+ * information is provided by AtkText.
  */
 public class Component
 {
@@ -112,8 +112,8 @@ public class Component
 	
 	void delegate(AtkRectangle*, Component)[] onBoundsChangedListeners;
 	/**
-	 * The 'bounds-changed" signal is emitted when the bposition or size of the
-	 * a component changes.
+	 * The 'bounds-changed" signal is emitted when the bposition or
+	 * size of the component changes.
 	 */
 	void addOnBoundsChanged(void delegate(AtkRectangle*, Component) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -140,12 +140,16 @@ public class Component
 	
 	
 	/**
+	 * Warning
+	 * atk_component_add_focus_handler is deprecated and should not be used in newly-written code. This method is deprecated since ATK version 2.9.4. If
+	 * you need to track when an object gains or lose the focus, use
+	 * state-changed:focused notification instead.
 	 * Add the specified handler to the set of functions to be called
 	 * when this object receives focus events (in or out). If the handler is
 	 * already added it is not added again
 	 * Params:
 	 * handler = The AtkFocusHandler to be attached to component
-	 * Returns: a handler id which can be used in atk_component_remove_focus_handler or zero if the handler was already added.
+	 * Returns: a handler id which can be used in atk_component_remove_focus_handler() or zero if the handler was already added.
 	 */
 	public uint addFocusHandler(AtkFocusHandler handler)
 	{
@@ -266,6 +270,10 @@ public class Component
 	}
 	
 	/**
+	 * Warning
+	 * atk_component_remove_focus_handler is deprecated and should not be used in newly-written code. This method is deprecated since ATK version 2.9.4. If
+	 * you need to track when an object gains or lose the focus, use
+	 * state-changed:focused notification instead.
 	 * Remove the handler specified by handler_id from the list of
 	 * functions to be executed when this object receives focus events
 	 * (in or out).
@@ -334,8 +342,8 @@ public class Component
 	 * void user_function (AtkComponent *atkcomponent,
 	 *  AtkRectangle *arg1,
 	 *  gpointer user_data) : Run Last
-	 * The 'bounds-changed" signal is emitted when the bposition or size of the
-	 * a component changes.
+	 * The 'bounds-changed" signal is emitted when the bposition or
+	 * size of the component changes.
 	 * Returns: An alpha value from 0 to 1.0, inclusive.
 	 */
 	public double getAlpha()

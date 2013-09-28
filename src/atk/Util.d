@@ -68,9 +68,10 @@ private import glib.Str;
 
 
 /**
- * A set of ATK utility functions which are used to support event registration of
- * various types, and obtaining the 'root' accessible of a process and
- * information about the current ATK implementation and toolkit version.
+ * A set of ATK utility functions which are used to support event
+ * registration of various types, and obtaining the 'root' accessible
+ * of a process and information about the current ATK implementation
+ * and toolkit version.
  */
 public class Util
 {
@@ -79,6 +80,11 @@ public class Util
 	 */
 	
 	/**
+	 * Warning
+	 * atk_add_focus_tracker is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself. If you need focus tracking on your
+	 * implementation, subscribe to the state-changed:focused signal.
 	 * Adds the specified function to the list of functions to be called
 	 * when an object receives focus.
 	 * Params:
@@ -93,6 +99,11 @@ public class Util
 	}
 	
 	/**
+	 * Warning
+	 * atk_remove_focus_tracker is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself. If you need focus tracking on your
+	 * implementation, subscribe to the state-changed:focused signal.
 	 * Removes the specified focus tracker from the list of functions
 	 * to be called when any object receives focus.
 	 * Params:
@@ -105,6 +116,10 @@ public class Util
 	}
 	
 	/**
+	 * Warning
+	 * atk_focus_tracker_init is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself.
 	 * Specifies the function to be called for focus tracker initialization.
 	 * This function should be called by an implementation of the
 	 * ATK interface if any specific work needs to be done to enable
@@ -119,6 +134,10 @@ public class Util
 	}
 	
 	/**
+	 * Warning
+	 * atk_focus_tracker_notify is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself.
 	 * Cause the focus tracker functions which have been specified to be
 	 * executed for the object.
 	 * Params:

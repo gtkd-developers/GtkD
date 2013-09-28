@@ -70,11 +70,6 @@ private import atk.Registry;
 private import gobject.ObjectG;
 
 /**
- * The AtkRegistry is normally used to create appropriate ATK "peers" for user
- * interface components. Application developers usually need only interact with
- * the AtkRegistry by associating appropriate ATK implementation classes with
- * GObject classes via the atk_registry_set_factory_type call, passing the
- * appropriate GType for application custom widget classes.
  */
 public class Registry : ObjectG
 {

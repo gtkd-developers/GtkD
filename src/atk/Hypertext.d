@@ -68,11 +68,14 @@ private import atk.Hyperlink;
 
 
 /**
- * An interface used for objects which implement linking between multiple
- * resource or content locations, or multiple 'markers' within a single
- * document. A Hypertext instance is associated with one or more Hyperlinks,
- * which are associated with particular offsets within the Hypertext's included
- * content. While this interface is derived from Text, there is no requirement that Hypertext instances have textual content; they may implement Image as well, and Hyperlinks need not have non-zero text offsets.
+ * An interface used for objects which implement linking between
+ * multiple resource or content locations, or multiple 'markers'
+ * within a single document. A Hypertext instance is associated with
+ * one or more Hyperlinks, which are associated with particular
+ * offsets within the Hypertext's included content. While this
+ * interface is derived from Text, there is no requirement that
+ * Hypertext instances have textual content; they may implement Image
+ * as well, and Hyperlinks need not have non-zero text offsets.
  */
 public class Hypertext
 {
@@ -107,10 +110,9 @@ public class Hypertext
 	
 	void delegate(gint, Hypertext)[] onLinkSelectedListeners;
 	/**
-	 * The "link-selected" signal is emitted by an AtkHyperText object when one of
-	 * the hyperlinks associated with the object is selected.
-	 * See Also
-	 * AtkHyperlink
+	 * The "link-selected" signal is emitted by an AtkHyperText
+	 * object when one of the hyperlinks associated with the object
+	 * is selected.
 	 */
 	void addOnLinkSelected(void delegate(gint, Hypertext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

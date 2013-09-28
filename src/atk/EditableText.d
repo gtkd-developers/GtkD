@@ -65,12 +65,15 @@ private import glib.Str;
 
 
 /**
- * AtkEditableText should be implemented by UI components which contain
- * text which the user can edit, via the AtkObject corresponding to that
- * component (see AtkObject).
+ * AtkEditableText should be implemented by UI components which
+ * contain text which the user can edit, via the AtkObject
+ * corresponding to that component (see AtkObject).
  *
- * AtkEditableText is a subclass of AtkText, and as such, an object which
- * implements AtkEditableText is by definition an AtkText implementor as well.
+ * AtkEditableText is a subclass of AtkText, and as such, an object
+ * which implements AtkEditableText is by definition an AtkText
+ * implementor as well.
+ *
+ * See also: AtkText
  */
 public class EditableText
 {

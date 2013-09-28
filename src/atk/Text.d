@@ -67,23 +67,25 @@ private import glib.Str;
 
 
 /**
- * AtkText should be implemented by AtkObjects on behalf of widgets that
- * have text content which is either attributed or otherwise non-trivial.
- * AtkObjects whose text content is simple, unattributed, and very brief
- * may expose that content via atk_object_get_name instead; however if the
- * text is editable, multi-line, typically longer than three or four words,
- * attributed, selectable, or if the object already uses the 'name' ATK
- * property for other information, the AtkText interface should be used
- * to expose the text content. In the case of editable text content,
+ * AtkText should be implemented by AtkObjects on behalf of widgets
+ * that have text content which is either attributed or otherwise
+ * non-trivial. AtkObjects whose text content is simple,
+ * unattributed, and very brief may expose that content via
+ * atk_object_get_name instead; however if the text is editable,
+ * multi-line, typically longer than three or four words, attributed,
+ * selectable, or if the object already uses the 'name' ATK property
+ * for other information, the AtkText interface should be used to
+ * expose the text content. In the case of editable text content,
  * AtkEditableText (a subtype of the AtkText interface) should be
  * implemented instead.
  *
- * AtkText provides not only traversal facilities and change notification
- * for text content, but also caret tracking and glyph bounding box
- * calculations. Note that the text strings are exposed as UTF-8, and are
- * therefore potentially multi-byte, and caret-to-byte offset mapping makes
- * no assumptions about the character length; also bounding box
- * glyph-to-offset mapping may be complex for languages which use ligatures.
+ *  AtkText provides not only traversal facilities and change
+ * notification for text content, but also caret tracking and glyph
+ * bounding box calculations. Note that the text strings are exposed
+ * as UTF-8, and are therefore potentially multi-byte, and
+ * caret-to-byte offset mapping makes no assumptions about the
+ * character length; also bounding box glyph-to-offset mapping may be
+ * complex for languages which use ligatures.
  */
 public class Text
 {
@@ -118,8 +120,9 @@ public class Text
 	
 	void delegate(Text)[] onTextAttributesChangedListeners;
 	/**
-	 * The "text-attributes-changed" signal is emitted when the text attributes of
-	 * the text of an object which implements AtkText changes.
+	 * The "text-attributes-changed" signal is emitted when the text
+	 * attributes of the text of an object which implements AtkText
+	 * changes.
 	 */
 	void addOnTextAttributesChanged(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -146,8 +149,9 @@ public class Text
 	
 	void delegate(gint, Text)[] onTextCaretMovedListeners;
 	/**
-	 * The "text-caret-moved" signal is emitted when the caret position of
-	 * the text of an object which implements AtkText changes.
+	 * The "text-caret-moved" signal is emitted when the caret
+	 * position of the text of an object which implements AtkText
+	 * changes.
 	 */
 	void addOnTextCaretMoved(void delegate(gint, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -174,10 +178,14 @@ public class Text
 	
 	void delegate(gint, gint, Text)[] onTextChangedListeners;
 	/**
-	 * The "text-changed" signal is emitted when the text of the object which
-	 * implements the AtkText interface changes, This signal will have a detail
-	 * which is either "insert" or "delete" which identifies whether the text
-	 * change was an insertion or a deletion
+	 * Warning
+	 * AtkText::text-changed is deprecated and should not be used in newly-written code. Since 2.9.4. Use "text-insert" or
+	 * "text-remove" instead.
+	 * The "text-changed" signal is emitted when the text of the
+	 * object which implements the AtkText interface changes, This
+	 * signal will have a detail which is either "insert" or
+	 * "delete" which identifies whether the text change was an
+	 * insertion or a deletion.
 	 */
 	void addOnTextChanged(void delegate(gint, gint, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -204,6 +212,8 @@ public class Text
 	
 	void delegate(gint, gint, string, Text)[] onTextInsertListeners;
 	/**
+	 * The "text-insert" signal is emitted when a new text is
+	 * inserted.
 	 */
 	void addOnTextInsert(void delegate(gint, gint, string, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -230,6 +240,8 @@ public class Text
 	
 	void delegate(gint, gint, string, Text)[] onTextRemoveListeners;
 	/**
+	 * The "text-remove" signal is emitted when a new text is
+	 * removed.
 	 */
 	void addOnTextRemove(void delegate(gint, gint, string, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -256,8 +268,8 @@ public class Text
 	
 	void delegate(Text)[] onTextSelectionChangedListeners;
 	/**
-	 * The "text-selection-changed" signal is emitted when the selected text of
-	 * an object which implements AtkText changes.
+	 * The "text-selection-changed" signal is emitted when the
+	 * selected text of an object which implements AtkText changes.
 	 */
 	void addOnTextSelectionChanged(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -279,32 +291,6 @@ public class Text
 		foreach ( void delegate(Text) dlg ; _text.onTextSelectionChangedListeners )
 		{
 			dlg(_text);
-		}
-	}
-	
-	void delegate(gint, gint, gint, string, Text)[] onTextUpdateListeners;
-	/**
-	 */
-	void addOnTextUpdate(void delegate(gint, gint, gint, string, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("text-update" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"text-update",
-			cast(GCallback)&callBackTextUpdate,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["text-update"] = 1;
-		}
-		onTextUpdateListeners ~= dlg;
-	}
-	extern(C) static void callBackTextUpdate(AtkText* atktextStruct, gint arg1, gint arg2, gint arg3, gchar* arg4, Text _text)
-	{
-		foreach ( void delegate(gint, gint, gint, string, Text) dlg ; _text.onTextUpdateListeners )
-		{
-			dlg(arg1, arg2, arg3, Str.toString(arg4), _text);
 		}
 	}
 	
@@ -335,32 +321,10 @@ public class Text
 	}
 	
 	/**
+	 * Warning
+	 * atk_text_get_text_after_offset is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.3. Please use atk_text_get_string_at_offset() instead.
 	 * Gets the specified text.
-	 * If the boundary_type if ATK_TEXT_BOUNDARY_CHAR the character after the
-	 * offset is returned.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_START the returned string
-	 * is from the word start after the offset to the next word start.
-	 * The returned string will contain the word after the offset if the offset
-	 * is inside a word or if the offset is not inside a word.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_END the returned string
-	 * is from the word end at or after the offset to the next work end.
-	 * The returned string will contain the word after the offset if the offset
-	 * is inside a word and will contain the word after the word after the offset
-	 * if the offset is not inside a word.
-	 * If the boundary type is ATK_TEXT_BOUNDARY_SENTENCE_START the returned
-	 * string is from the sentence start after the offset to the next sentence
-	 * start.
-	 * The returned string will contain the sentence after the offset if the offset
-	 * is inside a sentence or if the offset is not inside a sentence.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_SENTENCE_END the returned string
-	 * is from the sentence end at or after the offset to the next sentence end.
-	 * The returned string will contain the sentence after the offset if the offset
-	 * is inside a sentence and will contain the sentence after the sentence
-	 * after the offset if the offset is not inside a sentence.
-	 * If the boundary type is ATK_TEXT_BOUNDARY_LINE_START the returned
-	 * string is from the line start after the offset to the next line start.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_LINE_END the returned string
-	 * is from the line end at or after the offset to the next line end.
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
@@ -376,6 +340,9 @@ public class Text
 	}
 	
 	/**
+	 * Warning
+	 * atk_text_get_text_at_offset is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.4. Please use atk_text_get_string_at_offset() instead.
 	 * Gets the specified text.
 	 * If the boundary_type if ATK_TEXT_BOUNDARY_CHAR the character at the
 	 * offset is returned.
@@ -385,30 +352,15 @@ public class Text
 	 * The returned string will contain the word at the offset if the offset
 	 * is inside a word and will contain the word before the offset if the
 	 * offset is not inside a word.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_END the returned string
-	 * is from the word end before the offset to the word end at or after the
-	 * offset.
-	 * The returned string will contain the word at the offset if the offset
-	 * is inside a word and will contain the word after to the offset if the
-	 * offset is not inside a word.
 	 * If the boundary type is ATK_TEXT_BOUNDARY_SENTENCE_START the returned
 	 * string is from the sentence start at or before the offset to the sentence
 	 * start after the offset.
 	 * The returned string will contain the sentence at the offset if the offset
 	 * is inside a sentence and will contain the sentence before the offset
 	 * if the offset is not inside a sentence.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_SENTENCE_END the returned string
-	 * is from the sentence end before the offset to the sentence end at or
-	 * after the offset.
-	 * The returned string will contain the sentence at the offset if the offset
-	 * is inside a sentence and will contain the sentence after the offset
-	 * if the offset is not inside a sentence.
 	 * If the boundary type is ATK_TEXT_BOUNDARY_LINE_START the returned
 	 * string is from the line start at or before the offset to the line
 	 * start after the offset.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_LINE_END the returned string
-	 * is from the line end before the offset to the line end at or after
-	 * the offset.
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
@@ -424,37 +376,10 @@ public class Text
 	}
 	
 	/**
+	 * Warning
+	 * atk_text_get_text_before_offset is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * 2.9.3. Please use atk_text_get_string_at_offset() instead.
 	 * Gets the specified text.
-	 * If the boundary_type if ATK_TEXT_BOUNDARY_CHAR the character before the
-	 * offset is returned.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_START the returned string
-	 * is from the word start before the word start before or at the offset to
-	 * the word start before or at the offset.
-	 * The returned string will contain the word before the offset if the offset
-	 * is inside a word and will contain the word before the word before the
-	 * offset if the offset is not inside a word.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_WORD_END the returned string
-	 * is from the word end before the word end before the offset to the word
-	 * end before the offset.
-	 * The returned string will contain the word before the offset if the offset
-	 * is inside a word or if the offset is not inside a word.
-	 * If the boundary type is ATK_TEXT_BOUNDARY_SENTENCE_START the returned
-	 * string is from the sentence start before the sentence start before
-	 * the offset to the sentence start before the offset.
-	 * The returned string will contain the sentence before the offset if the
-	 * offset is inside a sentence and will contain the sentence before the
-	 * sentence before the offset if the offset is not inside a sentence.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_SENTENCE_END the returned string
-	 * is from the sentence end before the sentence end at or before the offset to
-	 * the sentence end at or before the offset.
-	 * The returned string will contain the sentence before the offset if the
-	 * offset is inside a sentence or if the offset is not inside a sentence.
-	 * If the boundary type is ATK_TEXT_BOUNDARY_LINE_START the returned
-	 * string is from the line start before the line start ar or before the offset
-	 * to the line start ar or before the offset.
-	 * If the boundary_type is ATK_TEXT_BOUNDARY_LINE_END the returned string
-	 * is from the line end before the line end before the offset to the
-	 * line end before the offset.
 	 * Params:
 	 * offset = position
 	 * boundaryType = An AtkTextBoundary
@@ -467,6 +392,46 @@ public class Text
 	{
 		// gchar * atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
 		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, &startOffset, &endOffset));
+	}
+	
+	/**
+	 * Gets a portion of the text exposed through an AtkText according to a given offset
+	 * and a specific granularity, along with the start and end offsets defining the
+	 * boundaries of such a portion of text.
+	 * If granularity is ATK_TEXT_GRANULARITY_CHAR the character at the
+	 * offset is returned.
+	 * If granularity is ATK_TEXT_GRANULARITY_WORD the returned string
+	 * is from the word start at or before the offset to the word start after
+	 * the offset.
+	 * The returned string will contain the word at the offset if the offset
+	 * is inside a word and will contain the word before the offset if the
+	 * offset is not inside a word.
+	 * If granularity is ATK_TEXT_GRANULARITY_SENTENCE the returned string
+	 * is from the sentence start at or before the offset to the sentence
+	 * start after the offset.
+	 * The returned string will contain the sentence at the offset if the offset
+	 * is inside a sentence and will contain the sentence before the offset
+	 * if the offset is not inside a sentence.
+	 * If granularity is ATK_TEXT_GRANULARITY_LINE the returned string
+	 * is from the line start at or before the offset to the line
+	 * start after the offset.
+	 * If granularity is ATK_TEXT_GRANULARITY_PARAGRAPH the returned string
+	 * is from the start of the paragraph at or before the offset to the start
+	 * of the following paragraph after the offset.
+	 * Since 2.9.4
+	 * Params:
+	 * offset = position
+	 * granularity = An AtkTextGranularity
+	 * startOffset = the start offset of the returned string, or -1
+	 * if an error has occurred (e.g. invalid offset, not implemented). [out]
+	 * endOffset = the offset of the first character after the returned string,
+	 * or -1 if an error has occurred (e.g. invalid offset, not implemented). [out]
+	 * Returns: a newly allocated string containing the text at the offset bounded by the specified granularity. Use g_free() to free the returned string. Returns NULL if the offset is invalid or no implementation is available.
+	 */
+	public string getStringAtOffset(int offset, AtkTextGranularity granularity, int* startOffset, int* endOffset)
+	{
+		// gchar * atk_text_get_string_at_offset (AtkText *text,  gint offset,  AtkTextGranularity granularity,  gint *start_offset,  gint *end_offset);
+		return Str.toString(atk_text_get_string_at_offset(atkText, offset, granularity, startOffset, endOffset));
 	}
 	
 	/**

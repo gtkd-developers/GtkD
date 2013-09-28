@@ -66,13 +66,13 @@ private import gobject.Value;
 
 
 /**
- * AtkValue should be implemented for components which either display a
- * value from a bounded range, or which allow the user to specify a value
- * from a bounded range, or both. For instance, most sliders and range
- * controls, as well as dials, should have AtkObject representations which
- * implement AtkValue on the component's behalf. AtKValues may be
- * read-only, in which case attempts to alter the value return FALSE to
- * indicate failure.
+ * AtkValue should be implemented for components which either display
+ * a value from a bounded range, or which allow the user to specify a
+ * value from a bounded range, or both. For instance, most sliders
+ * and range controls, as well as dials, should have AtkObject
+ * representations which implement AtkValue on the component's
+ * behalf. AtKValues may be read-only, in which case attempts to
+ * alter the value return FALSE to indicate failure.
  */
 public class ValueAtk
 {

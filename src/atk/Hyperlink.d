@@ -71,11 +71,12 @@ private import glib.Str;
 private import gobject.ObjectG;
 
 /**
- * An ATK object which encapsulates a link or set of links
- * (for instance in the case of client-side image maps) in a hypertext document.
- * It may implement the AtkAction interface. AtkHyperlink may also be used
- * to refer to inline embedded content, since it allows specification of a start
- * and end offset within the host AtkHypertext object.
+ * An ATK object which encapsulates a link or set of links (for
+ * instance in the case of client-side image maps) in a hypertext
+ * document. It may implement the AtkAction interface. AtkHyperlink
+ * may also be used to refer to inline embedded content, since it
+ * allows specification of a start and end offset within the host
+ * AtkHypertext object.
  */
 public class Hyperlink : ObjectG
 {
@@ -238,7 +239,9 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Warning
-	 * atk_hyperlink_is_selected_link is deprecated and should not be used in newly-written code. Please use ATK_STATE_SELECTED to indicate when a hyperlink within a Hypertext container is selected.
+	 * atk_hyperlink_is_selected_link is deprecated and should not be used in newly-written code. This method is deprecated since ATK version 1.8.
+	 * Please use ATK_STATE_SELECTED to indicate when a hyperlink within a
+	 * Hypertext container is selected.
 	 * Determines whether this AtkHyperlink is selected
 	 * Since 1.4
 	 * Returns: True is the AtkHyperlink is selected, False otherwise

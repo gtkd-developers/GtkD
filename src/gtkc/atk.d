@@ -145,6 +145,7 @@ mixin( _shared ~ "static this()
 	Linker.link(atk_object_add_relationship, \"atk_object_add_relationship\", LIBRARY.ATK);
 	Linker.link(atk_object_remove_relationship, \"atk_object_remove_relationship\", LIBRARY.ATK);
 	Linker.link(atk_object_get_attributes, \"atk_object_get_attributes\", LIBRARY.ATK);
+	Linker.link(atk_object_get_object_locale, \"atk_object_get_object_locale\", LIBRARY.ATK);
 	Linker.link(atk_role_get_name, \"atk_role_get_name\", LIBRARY.ATK);
 	Linker.link(atk_role_get_localized_name, \"atk_role_get_localized_name\", LIBRARY.ATK);
 	Linker.link(atk_role_for_name, \"atk_role_for_name\", LIBRARY.ATK);
@@ -260,6 +261,7 @@ mixin( _shared ~ "static this()
 	Linker.link(atk_text_get_text_after_offset, \"atk_text_get_text_after_offset\", LIBRARY.ATK);
 	Linker.link(atk_text_get_text_at_offset, \"atk_text_get_text_at_offset\", LIBRARY.ATK);
 	Linker.link(atk_text_get_text_before_offset, \"atk_text_get_text_before_offset\", LIBRARY.ATK);
+	Linker.link(atk_text_get_string_at_offset, \"atk_text_get_string_at_offset\", LIBRARY.ATK);
 	Linker.link(atk_text_get_caret_offset, \"atk_text_get_caret_offset\", LIBRARY.ATK);
 	Linker.link(atk_text_get_character_extents, \"atk_text_get_character_extents\", LIBRARY.ATK);
 	Linker.link(atk_text_get_run_attributes, \"atk_text_get_run_attributes\", LIBRARY.ATK);
@@ -418,6 +420,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(AtkObject* object, AtkRelationType relationship, AtkObject* target) c_atk_object_add_relationship;
 	gboolean function(AtkObject* object, AtkRelationType relationship, AtkObject* target) c_atk_object_remove_relationship;
 	AtkAttributeSet* function(AtkObject* accessible) c_atk_object_get_attributes;
+	gchar* function(AtkObject* accessible) c_atk_object_get_object_locale;
 	gchar* function(AtkRole role) c_atk_role_get_name;
 	gchar* function(AtkRole role) c_atk_role_get_localized_name;
 	AtkRole function(gchar* name) c_atk_role_for_name;
@@ -533,6 +536,7 @@ mixin( gshared ~"extern(C)
 	gchar* function(AtkText* text, gint offset, AtkTextBoundary boundaryType, gint* startOffset, gint* endOffset) c_atk_text_get_text_after_offset;
 	gchar* function(AtkText* text, gint offset, AtkTextBoundary boundaryType, gint* startOffset, gint* endOffset) c_atk_text_get_text_at_offset;
 	gchar* function(AtkText* text, gint offset, AtkTextBoundary boundaryType, gint* startOffset, gint* endOffset) c_atk_text_get_text_before_offset;
+	gchar* function(AtkText* text, gint offset, AtkTextGranularity granularity, gint* startOffset, gint* endOffset) c_atk_text_get_string_at_offset;
 	gint function(AtkText* text) c_atk_text_get_caret_offset;
 	void function(AtkText* text, gint offset, gint* x, gint* y, gint* width, gint* height, AtkCoordType coords) c_atk_text_get_character_extents;
 	AtkAttributeSet* function(AtkText* text, gint offset, gint* startOffset, gint* endOffset) c_atk_text_get_run_attributes;
@@ -689,6 +693,7 @@ alias c_atk_object_initialize  atk_object_initialize;
 alias c_atk_object_add_relationship  atk_object_add_relationship;
 alias c_atk_object_remove_relationship  atk_object_remove_relationship;
 alias c_atk_object_get_attributes  atk_object_get_attributes;
+alias c_atk_object_get_object_locale  atk_object_get_object_locale;
 alias c_atk_role_get_name  atk_role_get_name;
 alias c_atk_role_get_localized_name  atk_role_get_localized_name;
 alias c_atk_role_for_name  atk_role_for_name;
@@ -804,6 +809,7 @@ alias c_atk_text_get_character_at_offset  atk_text_get_character_at_offset;
 alias c_atk_text_get_text_after_offset  atk_text_get_text_after_offset;
 alias c_atk_text_get_text_at_offset  atk_text_get_text_at_offset;
 alias c_atk_text_get_text_before_offset  atk_text_get_text_before_offset;
+alias c_atk_text_get_string_at_offset  atk_text_get_string_at_offset;
 alias c_atk_text_get_caret_offset  atk_text_get_caret_offset;
 alias c_atk_text_get_character_extents  atk_text_get_character_extents;
 alias c_atk_text_get_run_attributes  atk_text_get_run_attributes;

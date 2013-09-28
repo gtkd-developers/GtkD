@@ -32,7 +32,6 @@ public struct AtkRectangle;
 
 /**
  * typedef guint64 AtkState;
- * The AtkState value should not be referenceed directly.
  */
 public alias ulong AtkState;
 
@@ -276,7 +275,7 @@ public enum AtkHyperlinkStateFlags
 public enum AtkRole
 {
 	INVALID = 0,
-	ACCEL_LABEL,
+	ACCEL_LABEL, /+*<nick= accelerator-label>+/
 	ALERT,
 	ANIMATION,
 	ARROW,
@@ -644,25 +643,30 @@ public enum AtkStateType
 	LAST_DEFINED
 }
 /**
- * Text boundary types used for specifying boundaries for regions of text
+ * Text boundary types used for specifying boundaries for regions of text.
+ * This enumerationis deprecated since 2.9.4 and should not be used. Use
+ * AtkTextGranularity with atk_text_get_string_at_offset instead.
  * ATK_TEXT_BOUNDARY_CHAR
  * Boundary is the boundary between characters
  * (including non-printing characters)
  * ATK_TEXT_BOUNDARY_WORD_START
  * Boundary is the start (i.e. first character) of a word.
  * ATK_TEXT_BOUNDARY_WORD_END
- * Boundary is the end (i.e. last character) of a word.
+ * Boundary is the end (i.e. last
+ * character) of a word.
  * ATK_TEXT_BOUNDARY_SENTENCE_START
  * Boundary is the first character in a sentence.
  * ATK_TEXT_BOUNDARY_SENTENCE_END
- * Boundary is the last (terminal) character in a sentence;
- * in languages which use "sentence stop" punctuation such as English, the boundary is thus the
- * '.', '?', or similar terminal punctuation character.
+ * Boundary is the last (terminal)
+ * character in a sentence; in languages which use "sentence stop"
+ * punctuation such as English, the boundary is thus the '.', '?', or
+ * similar terminal punctuation character.
  * ATK_TEXT_BOUNDARY_LINE_START
  * Boundary is the initial character of the content or a
  * character immediately following a newline, linefeed, or return character.
  * ATK_TEXT_BOUNDARY_LINE_END
- * Boundary is the linefeed, or return character.
+ * Boundary is the linefeed, or return
+ * character.
  */
 public enum AtkTextBoundary
 {
@@ -673,6 +677,37 @@ public enum AtkTextBoundary
 	SENTENCE_END,
 	LINE_START,
 	LINE_END
+}
+/**
+ * Text granularity types used for specifying the granularity of the region of
+ * text we are interested in.
+ * ATK_TEXT_GRANULARITY_CHAR
+ * Granularity is defined by the boundaries between characters
+ * (including non-printing characters)
+ * ATK_TEXT_GRANULARITY_WORD
+ * Granularity is defined by the boundaries of a word,
+ * starting at the beginning of the current word and finishing at the beginning of
+ * the following one, if present.
+ * ATK_TEXT_GRANULARITY_SENTENCE
+ * Granularity is defined by the boundaries of a sentence,
+ * starting at the beginning of the current sentence and finishing at the beginning of
+ * the following one, if present.
+ * ATK_TEXT_GRANULARITY_LINE
+ * Granularity is defined by the boundaries of a line,
+ * starting at the beginning of the current line and finishing at the beginning of
+ * the following one, if present.
+ * ATK_TEXT_GRANULARITY_PARAGRAPH
+ * Granularity is defined by the boundaries of a paragraph,
+ * starting at the beginning of the current paragraph and finishing at the beginning of
+ * the following one, if present.
+ */
+public enum AtkTextGranularity
+{
+	CHAR,
+	WORD,
+	SENTENCE,
+	LINE,
+	PARAGRAPH
 }
 /**
  * Describes the type of clipping required.
@@ -817,84 +852,175 @@ public enum AtkKeyEventType
 
 /**
  * Main Gtk struct.
- * The AtkAction structure does not contain any fields.
  */
 public struct AtkAction{}
 
 
+public struct AtkActionIface
+{
+	GTypeInterface parent;
+	extern(C) int function(AtkAction* action, int i) doAction;
+	extern(C) int function(AtkAction* action) getNActions;
+	extern(C) char* function(AtkAction* action, int i) getDescription;
+	extern(C) char* function(AtkAction* action, int i) getName;
+	extern(C) char* function(AtkAction* action, int i) getKeybinding;
+	extern(C) int function(AtkAction* action, int i, char* desc) setDescription;
+	extern(C) char* function(AtkAction* action, int i) getLocalizedName;
+}
+
+
 /**
  * Main Gtk struct.
- * The AtkComponent structure does not contain any fields.
  */
 public struct AtkComponent{}
 
 
 /**
+ * GTypeInterface parent;
+ * add_focus_handler ()
+ * This virtual function is deprecated since 2.9.4
+ * and it should not be overriden. See
+ * atk_component_add_focus_handler() for more information.
+ * contains ()
+ * ref_accessible_at_point ()
+ * get_extents ()
+ * get_position ()
+ * get_size ()
+ * grab_focus ()
+ * remove_focus_handler ()
+ * This virtual function is deprecated since
+ * 2.9.4 and it should not be overriden. See
+ * atk_component_remove_focus_handler() for more information.
+ * set_extents ()
+ * set_position ()
+ * set_size ()
+ * get_layer ()
+ * get_mdi_zorder ()
+ * bounds_changed ()
+ * get_alpha ()
+ */
+public struct AtkComponentIface
+{
+	GTypeInterface parent;
+	extern(C) uint function(AtkComponent* component, AtkFocusHandler handler)  addFocusHandler;
+	extern(C) int function(AtkComponent* component, int x, int y, AtkCoordType coordType)  contains;
+	extern(C) AtkObject* function(AtkComponent* component, int x, int y, AtkCoordType coordType)  refAccessibleAtPoint;
+	extern(C) void function(AtkComponent* component, int* x, int* y, int* width, int* height, AtkCoordType coordType)  getExtents;
+	extern(C) void function(AtkComponent* component, int* x, int* y, AtkCoordType coordType)  getPosition;
+	extern(C) void function(AtkComponent* component, int* width, int* height)  getSize;
+	extern(C) int function(AtkComponent* component)  grabFocus;
+	extern(C) void function(AtkComponent* component, uint handlerId)  removeFocusHandler;
+	extern(C) int function(AtkComponent* component, int x, int y, int width, int height, AtkCoordType coordType)  setExtents;
+	extern(C) int function(AtkComponent* component, int x, int y, AtkCoordType coordType)  setPosition;
+	extern(C) int function(AtkComponent* component, int width, int height)  setSize;
+	extern(C) AtkLayer function(AtkComponent* component)  getLayer;
+	extern(C) int function(AtkComponent* component)  getMdiZorder;
+	/+*
+	 * signal handlers
+	+/
+	extern(C) void function(AtkComponent* component, AtkRectangle* bounds)  boundsChanged;
+	extern(C) double function(AtkComponent* component)  getAlpha;
+}
+
+
+/**
+ * A data structure for holding a rectangle. Those coordinates are
+ * relative to the component top-level parent.
+ * gint x;
+ * X coordinate of the left side of the rectangle.
+ * gint y;
+ * Y coordinate of the top side of the rectangle.
+ * gint width;
+ * width of the rectangle.
+ * gint height;
+ * height of the rectangle.
+ */
+public struct AtkRectangle
+{
+	int x;
+	int y;
+	int width;
+	int height;
+}
+
+
+/**
  * Main Gtk struct.
- * The AtkDocument structure does not contain any fields.
  */
 public struct AtkDocument{}
 
 
 /**
+ * GTypeInterface parent;
+ * get_document_type ()
+ * get_document ()
+ * get_document_locale ()
+ * gets locale. This virtual function is
+ * deprecated since 2.7.90 and it should not be overriden.
+ * get_document_attributes ()
+ * get_document_attribute_value ()
+ * set_document_attribute ()
+ */
+public struct AtkDocumentIface
+{
+	GTypeInterface parent;
+	extern(C) char* function(AtkDocument* document) getDocumentType;
+	extern(C) void* function(AtkDocument* document) getDocument;
+	extern(C) char* function(AtkDocument* document) getDocumentLocale;
+	extern(C) AtkAttributeSet * function(AtkDocument* document) getDocumentAttributes;
+	extern(C) char* function(AtkDocument* document, char* attributeName) getDocumentAttributeValue;
+	extern(C) int function(AtkDocument* document, char* attributeName, char* attributeValue) setDocumentAttribute;
+}
+
+
+/**
  * Main Gtk struct.
- * The AtkEditableText structure does not contain any fields.
  */
 public struct AtkEditableText{}
 
 
 /**
  * Main Gtk struct.
- * The AtkGObjectAccessible structure should not be accessed directly.
  */
 public struct AtkGObjectAccessible{}
 
 
 /**
  * Main Gtk struct.
- * The AtkHyperlink structure should not be accessed directly.
  */
 public struct AtkHyperlink{}
 
 
 /**
  * Main Gtk struct.
- * The AtkHypertext structure does not contain any fields.
  */
 public struct AtkHypertext{}
 
 
 /**
  * Main Gtk struct.
- * The AtkImage structure does not contain any fields.
  */
 public struct AtkImage{}
 
 
 /**
  * Main Gtk struct.
- * The AtkNoOpObject structure should not be accessed directly.
  */
 public struct AtkNoOpObject{}
 
 
 /**
  * Main Gtk struct.
- * The AtkNoOpObjectFactory structure should not be accessed directly.
  */
 public struct AtkNoOpObjectFactory{}
 
 
 /**
  * Main Gtk struct.
- * The AtkObject structure should not be accessed directly.
  */
 public struct AtkObject{}
 
 
-/**
- * The AtkImplementor interface is implemented by objects for which AtkObject peers may be obtained via calls to iface->(ref_accessible)(implementor);
- */
 public struct AtkImplementor{}
 
 
@@ -907,14 +1033,6 @@ public struct AtkImplementor{}
  * with the old_value containing an AtkState value corresponding to focused
  * and the property change handler will be called for the object which
  * received the focus with the new_value containing an AtkState value
- * corresponding to focused.
- * The Atk PropertyValue structure is used when notifying a change in property.
- * Currently, the only property for which old_value is used is
- * accessible-state; for instance if there is a focus change the
- * property change handler will be called for the object which lost the focus
- * with the old_value containing the AtkState value corresponding to focused
- * and the property change handler will be called for the object which
- * received the focus with the new_value containing the AtkState value
  * corresponding to focused.
  * const gchar *property_name;
  * The name of the ATK property which is being presented or which has been changed.
@@ -933,35 +1051,30 @@ public struct AtkPropertyValues
 
 /**
  * Main Gtk struct.
- * The AtkObjectFactory structure should not be accessed directly.
  */
 public struct AtkObjectFactory{}
 
 
 /**
  * Main Gtk struct.
- * The AtkRegistry structure should not be accessed directly.
  */
 public struct AtkRegistry{}
 
 
 /**
  * Main Gtk struct.
- * The AtkRelation structure should not be accessed directly.
  */
 public struct AtkRelation{}
 
 
 /**
  * Main Gtk struct.
- * The AtkRelationSet structure should not be accessed directly.
  */
 public struct AtkRelationSet{}
 
 
 /**
  * Main Gtk struct.
- * The AtkAction structure does not contain any fields.
  */
 public struct AtkSelection{}
 
@@ -974,23 +1087,93 @@ public struct AtkStateSet{}
 
 /**
  * Main Gtk struct.
- * The AtkStreamableContent structure does not contain any fields.
  */
 public struct AtkStreamableContent{}
 
 
 /**
  * Main Gtk struct.
- * The AtkTable structure does not contain any fields.
  */
 public struct AtkTable{}
 
 
 /**
  * Main Gtk struct.
- * The AtkText structure does not contain any fields.
  */
 public struct AtkText{}
+
+
+/**
+ * GTypeInterface parent;
+ * get_text ()
+ * get_text_after_offset ()
+ * Gets specified text. This virtual function
+ * is deprecated and it should not be overridden.
+ * get_text_at_offset ()
+ * Gets specified text. This virtual function
+ * is deprecated and it should not be overridden.
+ * get_character_at_offset ()
+ * get_text_before_offset ()
+ * Gets specified text. This virtual function
+ * is deprecated and it should not be overridden.
+ * get_caret_offset ()
+ * get_run_attributes ()
+ * get_default_attributes ()
+ * get_character_extents ()
+ * get_character_count ()
+ * get_offset_at_point ()
+ * get_n_selections ()
+ * get_selection ()
+ * add_selection ()
+ * remove_selection ()
+ * set_selection ()
+ * set_caret_offset ()
+ * text_changed ()
+ * the signal handler which is executed when there is a
+ * text change. This virtual function is deprecated sice 2.9.4 and
+ * it should not be overriden.
+ * text_caret_moved ()
+ * text_selection_changed ()
+ * text_attributes_changed ()
+ * get_range_extents ()
+ * get_bounded_ranges ()
+ * get_string_at_offset ()
+ * Gets a portion of the text exposed through
+ * an AtkText according to a given offset and a specific
+ * granularity, along with the start and end offsets defining the
+ * boundaries of such a portion of text.
+ */
+public struct AtkTextIface
+{
+	GTypeInterface parent;
+	extern(C) char* function(AtkText* text, int startOffset, int endOffset)  getText;
+	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)  getTextAfterOffset;
+	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)  getTextAtOffset;
+	extern(C) gunichar function(AtkText* text, int offset)  getCharacterAtOffset;
+	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)  getTextBeforeOffset;
+	extern(C) int function(AtkText* text)  getCaretOffset;
+	extern(C) AtkAttributeSet* function(AtkText* text, int offset, int* startOffset, int* endOffset)  getRunAttributes;
+	extern(C) AtkAttributeSet* function(AtkText* text)  getDefaultAttributes;
+	extern(C) void function(AtkText* text, int offset, int* x, int* y, int* width, int* height, AtkCoordType coords)  getCharacterExtents;
+	extern(C) int function(AtkText* text)  getCharacterCount;
+	extern(C) int function(AtkText* text, int x, int y, AtkCoordType coords)  getOffsetAtPoint;
+	extern(C) int function(AtkText* text)  getNSelections;
+	extern(C) char* function(AtkText* text, int selectionNum, int* startOffset, int* endOffset)  getSelection;
+	extern(C) int function(AtkText* text, int startOffset, int endOffset)  addSelection;
+	extern(C) int function(AtkText* text, int selectionNum)  removeSelection;
+	extern(C) int function(AtkText* text, int selectionNum, int startOffset, int endOffset)  setSelection;
+	extern(C) int function(AtkText* text, int offset)  setCaretOffset;
+	/+*
+	 * signal handlers
+	+/
+	extern(C) void function(AtkText* text, int position, int length)  textChanged;
+	extern(C) void function(AtkText* text, int location)  textCaretMoved;
+	extern(C) void function(AtkText* text)  textSelectionChanged;
+	extern(C) void function(AtkText* text)  textAttributesChanged;
+	extern(C) void function(AtkText* text, int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect)  getRangeExtents;
+	extern(C) AtkTextRange** function(AtkText* text, AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)  getBoundedRanges;
+	extern(C) char* function(AtkText* text, int offset, AtkTextGranularity granularity, int* startOffset, int* endOffset)  getStringAtOffset;
+}
 
 
 /**
@@ -1050,9 +1233,6 @@ public struct AtkAttribute
 }
 
 
-/**
- * The AtkUtil struct does not contain any fields.
- */
 public struct AtkUtil{}
 
 
@@ -1096,7 +1276,6 @@ public struct AtkKeyEventStruct
 
 /**
  * Main Gtk struct.
- * The AtkValue structure does not contain any fields.
  */
 public struct AtkValue{}
 
@@ -1184,17 +1363,42 @@ public struct AtkValue{}
 // #define ATK_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) _ATK_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT) {_C_;} _ATK_DEFINE_TYPE_EXTENDED_END()
 
 /*
- * An AtkFunction is a function definition used for padding which has been added
- * to class and interface structures to allow for expansion in the future.
+ * Warning
+ * AtkFocusHandler is deprecated and should not be used in newly-written code. This type is deprecated since ATK version 2.9.4. as
+ * atk_component_add_focus_handler() and
+ * atk_component_remove_focus_handler() are deprecated. See those
+ * methods for more information.
+ * The type of callback function used for
+ * atk_component_add_focus_handler() and
+ * atk_component_remove_focus_handler()
+ * object :
+ * the AtkObject that receives/lose the focus
+ * focus_in :
+ * TRUE if the object receives the focus
+ */
+// void (*AtkFocusHandler) (AtkObject *object,  gboolean focus_in);
+public alias extern(C) void function(AtkObject* object, int focusIn) AtkFocusHandler;
+
+/*
+ * An AtkFunction is a function definition used for padding which has
+ * been added to class and interface structures to allow for expansion
+ * in the future.
+ * user_data :
+ * custom data defined by the user
  * Returns :
- * Nothing useful, this is only a dummy prototype.
+ * not used
  */
 // gboolean (*AtkFunction) (gpointer user_data);
 public alias extern(C) int function(void* userData) AtkFunction;
 
 /*
- * An AtkPropertyChangeHandler is a function which is executed when an AtkObject's property changes value. It is specified in a call to
+ * An AtkPropertyChangeHandler is a function which is executed when an
+ * AtkObject's property changes value. It is specified in a call to
  * atk_object_connect_property_change_handler().
+ * obj :
+ * atkobject which property changes
+ * vals :
+ * values changed
  */
 // void (*AtkPropertyChangeHandler) (AtkObject *obj,  AtkPropertyValues *vals);
 public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) AtkPropertyChangeHandler;

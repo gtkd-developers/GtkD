@@ -296,6 +296,8 @@ out: atk_text_get_run_attributes start_offset
 out: atk_text_get_run_attributes end_offset
 out: atk_text_get_selection start_offset
 out: atk_text_get_selection end_offset
+out: atk_text_get_string_at_offset start_offset
+out: atk_text_get_string_at_offset end_offset
 
 outFile:Text
 
