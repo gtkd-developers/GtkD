@@ -48,6 +48,7 @@
  * 	- std.stdarg
  * 	- glib.Str
  * 	- cairo.Context
+ * 	- cairo.Surface
  * 	- gobject.Value
  * 	- glib.ListG
  * 	- gdk.FrameClock
@@ -78,6 +79,7 @@
  * 	- GtkWidgetPath* -> WidgetPath
  * 	- PangoFontDescription* -> PgFontDescription
  * 	- PangoLayout* -> PgLayout
+ * 	- cairo_surface_t* -> Surface
  * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
@@ -97,6 +99,7 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import cairo.Context;
+private import cairo.Surface;
 private import gobject.Value;
 private import glib.ListG;
 private import gdk.FrameClock;
@@ -776,6 +779,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_style_context_lookup_icon_set has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_icon_theme_lookup_icon() instead.
 	 * Looks up stock_id in the icon factories associated to context and
 	 * the default icon factory, returning an icon set if found, otherwise
 	 * NULL.
@@ -1213,6 +1218,28 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Sets the scale to use when getting image assets for the style .
+	 * Params:
+	 * scale = scale
+	 * Since 3.10
+	 */
+	public void setScale(int scale)
+	{
+		// void gtk_style_context_set_scale (GtkStyleContext *context,  gint scale);
+		gtk_style_context_set_scale(gtkStyleContext, scale);
+	}
+	
+	/**
+	 * Returns the scale used for assets.
+	 * Returns: the scale Since 3.10
+	 */
+	public int getScale()
+	{
+		// gint gtk_style_context_get_scale (GtkStyleContext *context);
+		return gtk_style_context_get_scale(gtkStyleContext);
+	}
+	
+	/**
 	 * Renders an arrow pointing to angle.
 	 * $(DDOC_COMMENT example)
 	 * Params:
@@ -1470,6 +1497,8 @@ public class StyleContext : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_render_icon_pixbuf has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_icon_theme_load_icon() instead.
 	 * Renders the icon specified by source at the given size, returning the result
 	 * in a pixbuf.
 	 * Params:
@@ -1489,6 +1518,21 @@ public class StyleContext : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Renders the icon in surface at the specified x and y coordinates.
+	 * Params:
+	 * cr = a cairo_t
+	 * surface = a cairo_surface_t containing the icon to draw
+	 * x = X position for the icon
+	 * y = Y position for the incon
+	 * Since 3.10
+	 */
+	public void renderIconSurface(Context cr, Surface surface, double x, double y)
+	{
+		// void gtk_render_icon_surface (GtkStyleContext *context,  cairo_t *cr,  cairo_surface_t *surface,  gdouble x,  gdouble y);
+		gtk_render_icon_surface(gtkStyleContext, (cr is null) ? null : cr.getContextStruct(), (surface is null) ? null : surface.getSurfaceStruct(), x, y);
 	}
 	
 	/**

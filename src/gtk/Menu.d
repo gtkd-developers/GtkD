@@ -440,6 +440,8 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_set_title is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the title string for the menu.
 	 * The title is displayed when the menu is shown as a tearoff
 	 * menu. If title is NULL, the menu will see if it is attached
@@ -455,6 +457,8 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_get_title is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the title of the menu. See gtk_menu_set_title().
 	 * Returns: the title of the menu, or NULL if the menu has no title set on it. This string is owned by GTK+ and should not be modified or freed.
 	 */
@@ -496,6 +500,8 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_get_tearoff_state is deprecated and should not be used in newly-written code. 3.10
 	 * Returns whether the menu is torn off.
 	 * See gtk_menu_set_tearoff_state().
 	 * Returns: TRUE if the menu is currently torn off.
@@ -581,6 +587,8 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_set_tearoff_state is deprecated and should not be used in newly-written code. 3.10
 	 * Changes the tearoff state of the menu. A menu is normally
 	 * displayed as drop down menu which persists as long as the menu is
 	 * active. It can also be displayed as a tearoff menu which persists
@@ -598,6 +606,10 @@ public class Menu : MenuShell
 	 * Attaches the menu to the widget and provides a callback function
 	 * that will be invoked when the menu calls gtk_menu_detach() during
 	 * its destruction.
+	 * If the menu is attached to the widget then it will be destroyed
+	 * when the widget is destroyed, as if it was a child widget.
+	 * An attached menu will also move between screens correctly if the
+	 * widgets moves between screens.
 	 * Params:
 	 * attachWidget = the GtkWidget that the menu will be attached to
 	 * detacher = the user supplied callback function

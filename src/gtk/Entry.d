@@ -57,6 +57,7 @@
  * 	- gtk.Widget
  * 	- pango.PgAttributeList
  * 	- pango.PgLayout
+ * 	- pango.PgTabArray
  * 	- gtk.EditableT
  * 	- gtk.EditableIF
  * 	- gtk.CellEditableT
@@ -72,6 +73,7 @@
  * 	- GtkWidget* -> Widget
  * 	- PangoAttrList* -> PgAttributeList
  * 	- PangoLayout* -> PgLayout
+ * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
  * overrides:
@@ -100,6 +102,7 @@ private import gtk.TargetList;
 private import gtk.Widget;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
+private import pango.PgTabArray;
 private import gtk.EditableT;
 private import gtk.EditableIF;
 private import gtk.CellEditableT;
@@ -1350,6 +1353,37 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Gets the tabstops that were set on the entry using gtk_entry_set_tabs(), if
+	 * any.
+	 * Returns: the tabstops, or NULL if none was set. [transfer none] Since 3.10
+	 */
+	public PgTabArray getTabs()
+	{
+		// PangoTabArray * gtk_entry_get_tabs (GtkEntry *entry);
+		auto p = gtk_entry_get_tabs(gtkEntry);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
+	}
+	
+	/**
+	 * Sets a PangoTabArray; the tabstops in the array are applied to the entry
+	 * text.
+	 * Params:
+	 * tabs = a PangoTabArray
+	 * Since 3.10
+	 */
+	public void setTabs(PgTabArray tabs)
+	{
+		// void gtk_entry_set_tabs (GtkEntry *entry,  PangoTabArray *tabs);
+		gtk_entry_set_tabs(gtkEntry, (tabs is null) ? null : tabs.getPgTabArrayStruct());
+	}
+	
+	/**
 	 * Sets the icon shown in the specified position using a pixbuf.
 	 * If pixbuf is NULL, no icon will be shown in the specified position.
 	 * Since 2.16
@@ -1364,6 +1398,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_entry_set_icon_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_entry_set_icon_from_icon_name() instead.
 	 * Sets the icon shown in the entry at the specified position from
 	 * a stock image.
 	 * If stock_id is NULL, no icon will be shown in the specified position.
@@ -1451,6 +1487,8 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_entry_get_icon_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_entry_get_icon_name() instead.
 	 * Retrieves the stock id used for the icon, or NULL if there is
 	 * no icon or if the icon was set by some other method (e.g., by
 	 * pixbuf, icon name or gicon).

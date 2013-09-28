@@ -72,8 +72,7 @@ private import gtk.ToolButton;
  * button.
  *
  * Use gtk_toggle_tool_button_new() to create a new
- * GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
- * create a new GtkToggleToolButton containing a stock item.
+ * GtkToggleToolButton.
  */
 public class ToggleToolButton : ToolButton
 {
@@ -169,6 +168,8 @@ public class ToggleToolButton : ToolButton
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toggle_tool_button_new_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_toggle_tool_button_new() instead.
 	 * Creates a new GtkToggleToolButton containing the image and text from a
 	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
 	 * and GTK_STOCK_APPLY.

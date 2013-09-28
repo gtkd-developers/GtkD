@@ -150,8 +150,6 @@ public class AboutDialog : Dialog
 	 * which is to call gtk_show_uri().
 	 * TRUE if the link has been activated
 	 * Since 2.24
-	 * See Also
-	 * GTK_STOCK_ABOUT
 	 */
 	void addOnActivateLink(bool delegate(string, AboutDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

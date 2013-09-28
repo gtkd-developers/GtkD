@@ -82,8 +82,8 @@ private import gtk.Box;
  * GtkInfoBar is a widget that can be used to show messages to
  * the user without showing a dialog. It is often temporarily shown
  * at the top or bottom of a document. In contrast to GtkDialog, which
- * has a horizontal action area at the bottom, GtkInfoBar has a
- * vertical action area at the side.
+ * has a action area at the bottom, GtkInfoBar has an action area
+ * at the side.
  *
  * The API of GtkInfoBar is very similar to GtkDialog, allowing you
  * to add buttons to the action area with gtk_info_bar_add_button() or
@@ -94,8 +94,8 @@ private import gtk.Box;
  *
  * Similar to GtkMessageDialog, the contents of a GtkInfoBar can by
  * classified as error message, warning, informational message, etc,
- * by using gtk_info_bar_set_message_type(). GTK+ uses the message type
- * to determine the background color of the message area.
+ * by using gtk_info_bar_set_message_type(). GTK+ may use the message type
+ * to determine how the message is displayed.
  *
  * $(DDOC_COMMENT example)
  *
@@ -331,14 +331,14 @@ public class InfoBar : Box
 	}
 	
 	/**
-	 * Adds a button with the given text (or a stock button, if button_text
-	 * is a stock ID) and sets things up so that clicking the button will emit
-	 * the "response" signal with the given response_id. The button is appended
-	 * to the end of the info bars's action area. The button widget is
-	 * returned, but usually you don't need it.
+	 * Adds a button with the given text and sets things up so that
+	 * clicking the button will emit the "response" signal with the given
+	 * response_id. The button is appended to the end of the info bars's
+	 * action area. The button widget is returned, but usually you don't
+	 * need it.
 	 * Since 2.18
 	 * Params:
-	 * buttonText = text of button, or stock ID
+	 * buttonText = text of button
 	 * responseId = response ID for the button
 	 * Returns: the GtkButton widget that was added. [transfer none]
 	 */
@@ -421,5 +421,28 @@ public class InfoBar : Box
 	{
 		// GtkMessageType gtk_info_bar_get_message_type (GtkInfoBar *info_bar);
 		return gtk_info_bar_get_message_type(gtkInfoBar);
+	}
+	
+	/**
+	 * Returns whether the widget will display a standard close button.
+	 * Returns: TRUE if the widget displays standard close button Since 3.10
+	 */
+	public int getShowCloseButton()
+	{
+		// gboolean gtk_info_bar_get_show_close_button (GtkInfoBar *info_bar);
+		return gtk_info_bar_get_show_close_button(gtkInfoBar);
+	}
+	
+	/**
+	 * If true, a standard close button is shown. When clicked it emits
+	 * the response GTK_RESPONSE_CLOSE.
+	 * Params:
+	 * setting = TRUE to include a close button
+	 * Since 3.10
+	 */
+	public void setShowCloseButton(int setting)
+	{
+		// void gtk_info_bar_set_show_close_button (GtkInfoBar *info_bar,  gboolean setting);
+		gtk_info_bar_set_show_close_button(gtkInfoBar, setting);
 	}
 }

@@ -735,6 +735,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_set_add_tearoffs is deprecated and should not be used in newly-written code. 3.10
 	 * Sets whether the popup menu should have a tearoff
 	 * menu item.
 	 * Since 2.6
@@ -748,6 +750,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_get_add_tearoffs is deprecated and should not be used in newly-written code. 3.10
 	 * Gets the current value of the :add-tearoffs property.
 	 * Returns: the current value of the :add-tearoffs property.
 	 */
@@ -758,6 +762,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_set_title is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the menu's title in tearoff mode.
 	 * Since 2.10
 	 * Params:
@@ -770,6 +776,8 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_combo_box_get_title is deprecated and should not be used in newly-written code. 3.10
 	 * Gets the current title of the menu in tearoff mode. See
 	 * gtk_combo_box_set_add_tearoffs().
 	 * Since 2.10

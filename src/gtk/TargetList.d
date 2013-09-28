@@ -272,8 +272,8 @@ public class TargetList : Boxed
 	 * Looks up a given target in a GtkTargetList.
 	 * Params:
 	 * target = an interned atom representing the target to search for
-	 * info = a pointer to the location to store application info for target,
-	 * or NULL
+	 * info = a pointer to the location to store
+	 * application info for target, or NULL. [out][allow-none]
 	 * Returns: TRUE if the target was found, otherwise FALSE
 	 */
 	public int find(GdkAtom target, out uint info)

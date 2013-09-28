@@ -652,6 +652,8 @@ public class Container : Widget
 	}
 	
 	/**
+	 * Warning
+	 * gtk_container_resize_children is deprecated and should not be used in newly-written code. 3.10
 	 */
 	public void resizeChildren()
 	{

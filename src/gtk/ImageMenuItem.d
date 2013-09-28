@@ -175,6 +175,8 @@ public class ImageMenuItem : MenuItem
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_image_menu_item_set_image is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the image of image_menu_item to the given widget.
 	 * Note that it depends on the show-menu-images setting whether
 	 * the image will be displayed or not.
@@ -188,6 +190,8 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_menu_item_get_image is deprecated and should not be used in newly-written code. 3.10
 	 * Gets the widget that is currently set as the image of image_menu_item.
 	 * See gtk_image_menu_item_set_image().
 	 * Returns: the widget set as image of image_menu_item. [transfer none]
@@ -206,6 +210,8 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_menu_item_new has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_menu_item_new() instead.
 	 * Creates a new GtkImageMenuItem with an empty label.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -221,6 +227,8 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_menu_item_get_use_stock is deprecated and should not be used in newly-written code. 3.10
 	 * Checks whether the label set in the menuitem is used as a
 	 * stock id to select the stock item for the item.
 	 * Since 2.16
@@ -233,6 +241,8 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_menu_item_set_use_stock is deprecated and should not be used in newly-written code. 3.10
 	 * If TRUE, the label set in the menuitem is used as a
 	 * stock id to select the stock item for the item.
 	 * Since 2.16
@@ -246,8 +256,9 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
-	 * Returns whether the menu item will ignore the "gtk-menu-images"
-	 * setting and always show the image, if available.
+	 * Warning
+	 * gtk_image_menu_item_get_always_show_image is deprecated and should not be used in newly-written code. 3.10
+	 * Returns whether the menu item will always show the image, if available.
 	 * Since 2.16
 	 * Returns: TRUE if the menu item will always show the image
 	 */
@@ -258,8 +269,9 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
-	 * If TRUE, the menu item will ignore the "gtk-menu-images"
-	 * setting and always show the image, if available.
+	 * Warning
+	 * gtk_image_menu_item_set_always_show_image is deprecated and should not be used in newly-written code. 3.10
+	 * If TRUE, the menu item will always show the image, if available.
 	 * Use this property if the menuitem would be useless or hard to use
 	 * without the image.
 	 * Since 2.16
@@ -273,6 +285,8 @@ public class ImageMenuItem : MenuItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_menu_item_set_accel_group is deprecated and should not be used in newly-written code. 3.10
 	 * Specifies an accel_group to add the menu items accelerator to
 	 * (this only applies to stock items so a stock item must already
 	 * be set, make sure to call gtk_image_menu_item_set_use_stock()

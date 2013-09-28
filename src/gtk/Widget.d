@@ -45,6 +45,7 @@
  * 	- GtkRequisition
  * omit prefixes:
  * 	- gtk_requisition_
+ * 	- gtk_widget_class_
  * omit code:
  * omit signals:
  * imports:
@@ -54,6 +55,7 @@
  * 	- cairo.Region
  * 	- glib.ListG
  * 	- glib.Str
+ * 	- gobject.ObjectG
  * 	- gobject.ParamSpec
  * 	- gobject.Type
  * 	- gobject.Value
@@ -89,6 +91,7 @@
  * 	- CairoContext* -> Context
  * 	- GActionGroup* -> ActionGroupIF
  * 	- GList* -> ListG
+ * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * 	- GdkColor* -> Color
@@ -138,6 +141,7 @@ private import cairo.Context;
 private import cairo.Region;
 private import glib.ListG;
 private import glib.Str;
+private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Type;
 private import gobject.Value;
@@ -200,6 +204,7 @@ private import gobject.ObjectG;
  * GtkWidgetClass.get_preferred_height()
  * GtkWidgetClass.get_preferred_height_for_width()
  * GtkWidgetClass.get_preferred_width_for_height()
+ * GtkWidgetClass.get_preferred_height_and_baseline_for_width()
  *
  * There are some important things to keep in mind when implementing
  * height-for-width and when using it in container implementations.
@@ -319,6 +324,25 @@ private import gobject.ObjectG;
  * Otherwise, you would not properly consider widget margins,
  * GtkSizeGroup, and so forth.
  *
+ * Since 3.10 Gtk+ also supports baseline vertical alignment of widgets. This
+ * means that widgets are positioned such that the typographical baseline of
+ * widgets in the same row are aligned. This happens if a widget supports baselines,
+ * has a vertical alignment of GTK_ALIGN_BASELINE, and is inside a container
+ * that supports baselines and has a natural "row" that it aligns to the baseline,
+ * or a baseline assigned to it by the grandparent.
+ *
+ * Baseline alignment support for a widget is done by the GtkWidgetClass.get_preferred_height_and_baseline_for_width()
+ * virtual function. It allows you to report a baseline in combination with the
+ * minimum and natural height. If there is no baseline you can return -1 to indicate
+ * this. The default implementation of this virtual function calls into the
+ * GtkWidgetClass.get_preferred_height() and GtkWidgetClass.get_preferred_height_for_width(),
+ * so if baselines are not supported it doesn't need to be implemented.
+ *
+ * If a widget ends up baseline aligned it will be allocated all the space in the parent
+ * as if it was GTK_ALIGN_FILL, but the selected baseline can be found via gtk_widget_get_allocated_baseline().
+ * If this has a value other than -1 you need to align the widget such that the baseline
+ * appears at the position.
+ *
  * <hr>
  *
  * Style Properties
@@ -356,6 +380,43 @@ private import gobject.ObjectG;
  *
  * Finally, GtkWidget allows style information such as style classes to
  * be associated with widgets, using the custom <style> element:
+ *
+ * $(DDOC_COMMENT example)
+ *
+ * <hr>
+ *
+ * Building composite widgets from template XML
+ *
+ * GtkWidget exposes some facilities to automate the proceedure
+ * of creating composite widgets using GtkBuilder interface description
+ * language.
+ *
+ * To create composite widgets with GtkBuilder XML, one must associate
+ * the interface description with the widget class at class initialization
+ * time using gtk_widget_class_set_template().
+ *
+ * The interface description semantics expected in composite template descriptions
+ * is slightly different from regulare GtkBuilder XML.
+ *
+ * Unlike regular interface descriptions, gtk_widget_class_set_template() will expect a
+ * <template> tag as a direct child of the toplevel <interface>
+ * tag. The <template> tag must specify the "class" attribute which
+ * must be the type name of the widget. Optionally, the "parent" attribute
+ * may be specified to specify the direct parent type of the widget type, this
+ * is ignored by the GtkBuilder but required for Glade to introspect what kind
+ * of properties and internal children exist for a given type when the actual
+ * type does not exist.
+ *
+ * The XML which is contained inside the <template> tag behaves as if
+ * it were added to the <object> tag defining widget itself. You may set
+ * properties on widget by inserting <property> tags into the <template>
+ * tag, and also add <child> tags to add children and extend widget in the
+ * normal way you would with <object> tags.
+ *
+ * Additionally, <object> tags can also be added before and
+ * after the initial <template> tag in the normal way, allowing
+ * one to define auxilary objects which might be referenced by other
+ * widgets declared as children of the <template> tag.
  *
  * $(DDOC_COMMENT example)
  */
@@ -1149,6 +1210,8 @@ public class Widget : ObjectG, BuildableIF
 	 * signal is expected to process the received data and then call
 	 * gtk_drag_finish(), setting the success parameter depending on
 	 * whether the data was processed successfully.
+	 * Applications must create some means to determine why the signal was emitted
+	 * and therefore whether to call gdk_drag_status() or gtk_drag_finish().
 	 * The handler may inspect the selected action with
 	 * gdk_drag_context_get_selected_action() before calling
 	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as
@@ -1290,7 +1353,10 @@ public class Widget : ObjectG, BuildableIF
 	 * The ::drag-leave signal is emitted on the drop site when the cursor
 	 * leaves the widget. A typical reason to connect to this signal is to
 	 * undo things done in "drag-motion", e.g. undo highlighting
-	 * with gtk_drag_unhighlight()
+	 * with gtk_drag_unhighlight().
+	 * Likewise, the "drag-leave" signal is also emitted before the
+	 * ::drag-drop signal, for instance to allow cleaning up of a preview item
+	 * created in the "drag-motion" signal handler.
 	 */
 	void addOnDragLeave(void delegate(DragContext, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1734,6 +1800,8 @@ public class Widget : ObjectG, BuildableIF
 	
 	void delegate(Widget)[] onHideListeners;
 	/**
+	 * The ::hide signal is emitted when widget is hidden, for example with
+	 * gtk_widget_hide().
 	 */
 	void addOnHide(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1944,6 +2012,14 @@ public class Widget : ObjectG, BuildableIF
 	
 	void delegate(Widget)[] onMapListeners;
 	/**
+	 * The ::map signal is emitted when widget is going to be mapped, that is
+	 * when the widget is visible (which is controlled with
+	 * gtk_widget_set_visible()) and all its parents up to the toplevel widget
+	 * are also visible. Once the map has occurred, "map-event" will
+	 * be emitted.
+	 * The ::map signal can be used to determine whether a widget will be drawn,
+	 * for instance it can resume an animation that was stopped during the
+	 * emission of "unmap".
 	 */
 	void addOnMap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2284,7 +2360,7 @@ public class Widget : ObjectG, BuildableIF
 	
 	bool delegate(gint, gint, gboolean, Tooltip, Widget)[] onQueryTooltipListeners;
 	/**
-	 * Emitted when "has-tooltip" is TRUE and the "gtk-tooltip-timeout"
+	 * Emitted when "has-tooltip" is TRUE and the hover timeout
 	 * has expired with the cursor hovering "above" widget; or emitted when widget got
 	 * focus in keyboard mode.
 	 * Using the given coordinates, the signal handler should determine
@@ -2328,6 +2404,9 @@ public class Widget : ObjectG, BuildableIF
 	
 	void delegate(Widget)[] onRealizeListeners;
 	/**
+	 * The ::realize signal is emitted when widget is associated with a
+	 * GdkWindow, which means that gtk_wiget_realize() has been called or the
+	 * widget has been mapped (that is, it is going to be drawn).
 	 */
 	void addOnRealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2577,6 +2656,8 @@ public class Widget : ObjectG, BuildableIF
 	
 	void delegate(Widget)[] onShowListeners;
 	/**
+	 * The ::show signal is emitted when widget is shown, for example with
+	 * gtk_widget_show().
 	 */
 	void addOnShow(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2816,6 +2897,11 @@ public class Widget : ObjectG, BuildableIF
 	
 	void delegate(Widget)[] onUnmapListeners;
 	/**
+	 * The ::unmap signal is emitted when widget is going to be unmapped, which
+	 * means that either it or any of its parents up to the toplevel widget have
+	 * been set as hidden.
+	 * As ::unmap indicates that a widget will not be shown any longer, it can be
+	 * used to, for example, stop an animation on the widget.
 	 */
 	void addOnUnmap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2880,6 +2966,10 @@ public class Widget : ObjectG, BuildableIF
 	
 	void delegate(Widget)[] onUnrealizeListeners;
 	/**
+	 * The ::unrealize signal is emitted when the GdkWindow associated with
+	 * widget is destroyed, which means that gtk_widget_unrealize() has been
+	 * called or the widget has been unmapped (that is, it is going to be
+	 * hidden).
 	 */
 	void addOnUnrealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -3237,7 +3327,7 @@ public class Widget : ObjectG, BuildableIF
 	 * mapped. Reparenting a widget (which implies a temporary unmap) can
 	 * change the widget's frame clock.
 	 * Unrealized widgets do not have a frame clock.
-	 * Returns: a GdkFrameClock (or NULL if widget is unrealized). [transfer none] Since 3.0
+	 * Returns: a GdkFrameClock (or NULL if widget is unrealized). [transfer none] Since 3.8
 	 */
 	public FrameClock getFrameClock()
 	{
@@ -3253,10 +3343,18 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * Queues a animation frame update and adds a callback to be called
+	 */
+	public int getScaleFactor()
+	{
+		// gint gtk_widget_get_scale_factor (GtkWidget *widget);
+		return gtk_widget_get_scale_factor(gtkWidget);
+	}
+	
+	/**
+	 * Queues an animation frame update and adds a callback to be called
 	 * before each frame. Until the tick callback is removed, it will be
 	 * called frequently (usually at the frame rate of the output device
-	 * or as quickly as the application an be repainted, whichever is
+	 * or as quickly as the application can be repainted, whichever is
 	 * slower). For this reason, is most suitable for handling graphics
 	 * that change every frame or every few frames. The tick callback does
 	 * not automatically imply a relayout or repaint. If you want a
@@ -3354,6 +3452,8 @@ public class Widget : ObjectG, BuildableIF
 	 * method on the child will be used to adjust the allocation. Standard
 	 * adjustments include removing the widget's margins, and applying the
 	 * widget's "halign" and "valign" properties.
+	 * For baseline support in containers you need to use gtk_widget_size_allocate_with_baseline()
+	 * instead.
 	 * Params:
 	 * allocation = position and size to be allocated to widget
 	 */
@@ -3361,6 +3461,29 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// void gtk_widget_size_allocate (GtkWidget *widget,  GtkAllocation *allocation);
 		gtk_widget_size_allocate(gtkWidget, &allocation);
+	}
+	
+	/**
+	 * This function is only used by GtkContainer subclasses, to assign a size,
+	 * position and (optionally) baseline to their child widgets.
+	 * In this function, the allocation and baseline may be adjusted. It
+	 * will be forced to a 1x1 minimum size, and the
+	 * adjust_size_allocation virtual and adjust_baseline_allocation
+	 * methods on the child will be used to adjust the allocation and
+	 * baseline. Standard adjustments include removing the widget's
+	 * margins, and applying the widget's "halign" and
+	 * "valign" properties.
+	 * If the child widget does not have a valign of GTK_ALIGN_BASELINE the
+	 * baseline argument is ignored and -1 is used instead.
+	 * Params:
+	 * allocation = position and size to be allocated to widget
+	 * baseline = The baseline of the child, or -1
+	 * Since 3.10
+	 */
+	public void sizeAllocateWithBaseline(ref GtkAllocation allocation, int baseline)
+	{
+		// void gtk_widget_size_allocate_with_baseline  (GtkWidget *widget,  GtkAllocation *allocation,  gint baseline);
+		gtk_widget_size_allocate_with_baseline(gtkWidget, &allocation, baseline);
 	}
 	
 	/**
@@ -4171,30 +4294,7 @@ public class Widget : ObjectG, BuildableIF
 	
 	/**
 	 * Warning
-	 * gtk_widget_class_path has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_path() instead
-	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
-	 * never uses a custom name set with gtk_widget_set_name().
-	 * Params:
-	 * pathLength = location to store the length of the
-	 * class path, or NULL. [out][allow-none]
-	 * path = location to store the class path as an
-	 * allocated string, or NULL. [out][allow-none]
-	 * pathReversed = location to store the reverse
-	 * class path as an allocated string, or NULL. [out][allow-none]
-	 */
-	public void classPath(out uint pathLength, out string path, out string pathReversed)
-	{
-		// void gtk_widget_class_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
-		char* outpath = null;
-		char* outpathReversed = null;
-		
-		gtk_widget_class_path(gtkWidget, &pathLength, &outpath, &outpathReversed);
-		
-		path = Str.toString(outpath);
-		pathReversed = Str.toString(outpathReversed);
-	}
-	
-	/**
+	 * gtk_widget_get_composite_name has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_widget_class_set_template(), or don't use this API at all.
 	 * Obtains the composite name of a widget.
 	 * Returns: the composite name of widget, or NULL if widget is not a composite child. The string should be freed when it is no longer needed.
 	 */
@@ -4599,6 +4699,8 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_render_icon_pixbuf has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_icon_theme_load_icon() instead.
 	 * A convenience function that uses the theme engine and style
 	 * settings for widget to look up stock_id and render it to
 	 * a pixbuf. stock_id should be a stock icon ID such as
@@ -4628,6 +4730,8 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_pop_composite_child has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_widget_class_set_template(), or don't use this API at all.
 	 * Cancels the effect of a previous call to gtk_widget_push_composite_child().
 	 */
 	public static void popCompositeChild()
@@ -4637,6 +4741,9 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_push_composite_child has been deprecated since version 3.10 and should not be used in newly-written code. This API never really worked well and was mostly unused, now
+	 * we have a more complete mechanism for composite children, see gtk_widget_class_set_template().
 	 * Makes all newly-created widgets as composite children until
 	 * the corresponding gtk_widget_pop_composite_child() call.
 	 * A composite child is a child that's an implementation detail of the
@@ -4672,12 +4779,12 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
-	 * Invalidates the rectangular area of widget defined by region by
-	 * calling gdk_window_invalidate_region() on the widget's window and
-	 * all its child windows. Once the main loop becomes idle (after the
-	 * current batch of events has been processed, roughly), the window
-	 * will receive expose events for the union of all regions that have
-	 * been invalidated.
+	 * Invalidates the area of widget defined by region by calling
+	 * gdk_window_invalidate_region() on the widget's window and all its
+	 * child windows. Once the main loop becomes idle (after the current
+	 * batch of events has been processed, roughly), the window will
+	 * receive expose events for the union of all regions that have been
+	 * invalidated.
 	 * Normally you would only use this function in widget
 	 * implementations. You might also use it to schedule a redraw of a
 	 * GtkDrawingArea or some portion thereof.
@@ -4727,6 +4834,8 @@ public class Widget : ObjectG, BuildableIF
 	 * expose events, since even the clearing to the background color or
 	 * pixmap will not happen automatically (as it is done in
 	 * gdk_window_begin_paint_region()).
+	 * Since 3.10 this function only works for widgets with native
+	 * windows.
 	 * Params:
 	 * doubleBuffered = TRUE to double-buffer a widget
 	 */
@@ -4762,6 +4871,8 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_widget_set_composite_name has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_widget_class_set_template(), or don't use this API at all.
 	 * Sets a widgets composite name. The widget must be
 	 * a composite child of its parent; see gtk_widget_push_composite_child().
 	 * Params:
@@ -4786,80 +4897,6 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// gboolean gtk_widget_mnemonic_activate (GtkWidget *widget,  gboolean group_cycling);
 		return gtk_widget_mnemonic_activate(gtkWidget, groupCycling);
-	}
-	
-	/**
-	 * Installs a style property on a widget class. The parser for the
-	 * style property is determined by the value type of pspec.
-	 * Params:
-	 * klass = a GtkWidgetClass
-	 * pspec = the GParamSpec for the property
-	 */
-	public static void classInstallStyleProperty(GtkWidgetClass* klass, ParamSpec pspec)
-	{
-		// void gtk_widget_class_install_style_property  (GtkWidgetClass *klass,  GParamSpec *pspec);
-		gtk_widget_class_install_style_property(klass, (pspec is null) ? null : pspec.getParamSpecStruct());
-	}
-	
-	/**
-	 * Installs a style property on a widget class.
-	 * Params:
-	 * klass = a GtkWidgetClass
-	 * pspec = the GParamSpec for the style property
-	 * parser = the parser for the style property
-	 */
-	public static void classInstallStylePropertyParser(GtkWidgetClass* klass, ParamSpec pspec, GtkRcPropertyParser parser)
-	{
-		// void gtk_widget_class_install_style_property_parser  (GtkWidgetClass *klass,  GParamSpec *pspec,  GtkRcPropertyParser parser);
-		gtk_widget_class_install_style_property_parser(klass, (pspec is null) ? null : pspec.getParamSpecStruct(), parser);
-	}
-	
-	/**
-	 * Finds a style property of a widget class by name.
-	 * Since 2.2
-	 * Params:
-	 * klass = a GtkWidgetClass
-	 * propertyName = the name of the style property to find
-	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name. [transfer none]
-	 */
-	public static ParamSpec classFindStyleProperty(GtkWidgetClass* klass, string propertyName)
-	{
-		// GParamSpec * gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
-		auto p = gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
-	}
-	
-	/**
-	 * Returns all style properties of a widget class.
-	 * Since 2.2
-	 * Params:
-	 * klass = a GtkWidgetClass
-	 * Returns: a newly allocated array of GParamSpec*. The array must be freed with g_free(). [array length=n_properties][transfer container]
-	 */
-	public static ParamSpec[] classListStyleProperties(GtkWidgetClass* klass)
-	{
-		// GParamSpec ** gtk_widget_class_list_style_properties  (GtkWidgetClass *klass,  guint *n_properties);
-		uint nProperties;
-		auto p = gtk_widget_class_list_style_properties(klass, &nProperties);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		ParamSpec[] arr = new ParamSpec[nProperties];
-		for(int i = 0; i < nProperties; i++)
-		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
-		}
-		
-		return arr;
 	}
 	
 	/**
@@ -4967,45 +5004,6 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// void gtk_widget_style_attach (GtkWidget *widget);
 		gtk_widget_style_attach(gtkWidget);
-	}
-	
-	/**
-	 * Sets the type to be used for creating accessibles for widgets of
-	 * widget_class. The given type must be a subtype of the type used for
-	 * accessibles of the parent class.
-	 * This function should only be called from class init functions of widgets.
-	 * Params:
-	 * widgetClass = class to set the accessible type for
-	 * type = The object type that implements the accessible for widget_class
-	 * Since 3.2
-	 */
-	public static void classSetAccessibleType(GtkWidgetClass* widgetClass, GType type)
-	{
-		// void gtk_widget_class_set_accessible_type  (GtkWidgetClass *widget_class,  GType type);
-		gtk_widget_class_set_accessible_type(widgetClass, type);
-	}
-	
-	/**
-	 * Sets the default AtkRole to be set on accessibles created for
-	 * widgets of widget_class. Accessibles may decide to not honor this
-	 * setting if their role reporting is more refined. Calls to
-	 * gtk_widget_class_set_accessible_type() will reset this value.
-	 * In cases where you want more fine-grained control over the role of
-	 * accessibles created for widget_class, you should provide your own
-	 * accessible type and use gtk_widget_class_set_accessible_type()
-	 * instead.
-	 * If role is ATK_ROLE_INVALID, the default role will not be changed
-	 * and the accessible's default role will be used instead.
-	 * This function should only be called from class init functions of widgets.
-	 * Params:
-	 * widgetClass = class to set the accessible role for
-	 * role = The role to use for accessibles created for widget_class
-	 * Since 3.2
-	 */
-	public static void classSetAccessibleRole(GtkWidgetClass* widgetClass, AtkRole role)
-	{
-		// void gtk_widget_class_set_accessible_role  (GtkWidgetClass *widget_class,  AtkRole role);
-		gtk_widget_class_set_accessible_role(widgetClass, role);
 	}
 	
 	/**
@@ -5618,7 +5616,7 @@ public class Widget : ObjectG, BuildableIF
 	
 	/**
 	 * Registers a GdkWindow with the widget and sets it up so that
-	 * the widget recieves events for it. Call gtk_widget_unregister_window()
+	 * the widget receives events for it. Call gtk_widget_unregister_window()
 	 * when destroying the window.
 	 * Before 3.8 you needed to call gdk_window_set_user_data() directly to set
 	 * this up. This is now deprecated and you should use gtk_widget_register_window()
@@ -5758,6 +5756,19 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// void gtk_widget_set_allocation (GtkWidget *widget,  const GtkAllocation *allocation);
 		gtk_widget_set_allocation(gtkWidget, &allocation);
+	}
+	
+	/**
+	 * Returns the baseline that has currently been allocated to widget.
+	 * This function is intended to be used when implementing handlers
+	 * for the "draw" function, and when allocating child
+	 * widgets in "size_allocate".
+	 * Returns: the baseline of the widget, or -1 if none Since 3.10
+	 */
+	public int getAllocatedBaseline()
+	{
+		// int gtk_widget_get_allocated_baseline (GtkWidget *widget);
+		return gtk_widget_get_allocated_baseline(gtkWidget);
 	}
 	
 	/**
@@ -6277,9 +6288,11 @@ public class Widget : ObjectG, BuildableIF
 	 * GtkActionable can then be associated with actions in group by
 	 * setting their 'action-name' to
 	 * prefix.action-name.
+	 * If group is NULL, a previously inserted group for name is removed
+	 * from widget.
 	 * Params:
 	 * name = the prefix for actions in group
-	 * group = a GActionGroup
+	 * group = a GActionGroup, or NULL. [allow-none]
 	 * Since 3.6
 	 */
 	public void insertActionGroup(string name, ActionGroupIF group)
@@ -6444,6 +6457,29 @@ public class Widget : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Retrieves a widget's minimum and natural height and the corresponding baselines if it would be given
+	 * the specified width, or the default height if width is -1. The baselines may be -1 which means
+	 * that no baseline is requested for this widget.
+	 * The returned request will be modified by the
+	 * GtkWidgetClass::adjust_size_request and GtkWidgetClass::adjust_baseline_request virtual methods
+	 * and by any GtkSizeGroups that have been applied. That is, the returned request
+	 * is the one that should be used for layout, not necessarily the one
+	 * returned by the widget itself.
+	 * Params:
+	 * width = the width which is available for allocation, or -1 if none
+	 * minimumHeight = location for storing the minimum height, or NULL. [out][allow-none]
+	 * naturalHeight = location for storing the natural height, or NULL. [out][allow-none]
+	 * minimumBaseline = location for storing the baseline for the minimum height, or NULL. [out][allow-none]
+	 * naturalBaseline = location for storing the baseline for the natural height, or NULL. [out][allow-none]
+	 * Since 3.10
+	 */
+	public void getPreferredHeightAndBaselineForWidth(int width, out int minimumHeight, out int naturalHeight, out int minimumBaseline, out int naturalBaseline)
+	{
+		// void gtk_widget_get_preferred_height_and_baseline_for_width  (GtkWidget *widget,  gint width,  gint *minimum_height,  gint *natural_height,  gint *minimum_baseline,  gint *natural_baseline);
+		gtk_widget_get_preferred_height_and_baseline_for_width(gtkWidget, width, &minimumHeight, &naturalHeight, &minimumBaseline, &naturalBaseline);
+	}
+	
+	/**
 	 * Gets whether the widget prefers a height-for-width layout
 	 * or a width-for-height layout.
 	 * Note
@@ -6471,6 +6507,8 @@ public class Widget : ObjectG, BuildableIF
 	 * widget will generally be a smaller size than the minimum height, since the required
 	 * height for the natural width is generally smaller than the required height for
 	 * the minimum width.
+	 * Use gtk_widget_get_preferred_size_and_baseline() if you want to support
+	 * baseline alignment.
 	 * Params:
 	 * minimumSize = location for storing the minimum size, or NULL. [out][allow-none]
 	 * naturalSize = location for storing the natural size, or NULL. [out][allow-none]
@@ -6503,6 +6541,10 @@ public class Widget : ObjectG, BuildableIF
 	
 	/**
 	 * Gets the value of the "halign" property.
+	 * For backwards compatibility reasons this method will never return
+	 * GTK_ALIGN_BASELINE, but instead it will convert it to
+	 * GTK_ALIGN_FILL. Baselines are not supported for horizontal
+	 * alignment.
 	 * Returns: the horizontal alignment of widget
 	 */
 	public GtkAlign getHalign()
@@ -6525,12 +6567,27 @@ public class Widget : ObjectG, BuildableIF
 	
 	/**
 	 * Gets the value of the "valign" property.
-	 * Returns: the vertical alignment of widget
+	 * For backwards compatibility reasons this method will never return
+	 * GTK_ALIGN_BASELINE, but instead it will convert it to
+	 * GTK_ALIGN_FILL. If your widget want to support baseline aligned
+	 * children it must use gtk_widget_get_valign_with_baseline().
+	 * Returns: the vertical alignment of widget, ignoring baseline alignment
 	 */
 	public GtkAlign getValign()
 	{
 		// GtkAlign gtk_widget_get_valign (GtkWidget *widget);
 		return gtk_widget_get_valign(gtkWidget);
+	}
+	
+	/**
+	 * Gets the value of the "valign" property, including
+	 * GTK_ALIGN_BASELINE.
+	 * Returns: the vertical alignment of widget Since 3.10
+	 */
+	public GtkAlign getValignWithBaseline()
+	{
+		// GtkAlign gtk_widget_get_valign_with_baseline (GtkWidget *widget);
+		return gtk_widget_get_valign_with_baseline(gtkWidget);
 	}
 	
 	/**
@@ -6808,5 +6865,51 @@ public class Widget : ObjectG, BuildableIF
 	{
 		// gboolean gtk_widget_compute_expand (GtkWidget *widget,  GtkOrientation orientation);
 		return gtk_widget_compute_expand(gtkWidget, orientation);
+	}
+	
+	/**
+	 * Creates and initializes child widgets defined in templates. This
+	 * function must be called in the instance initializer for any
+	 * class which assigned itself a template using gtk_widget_class_set_template()
+	 * It is important to call this function in the instance initializer
+	 * of a GtkWidget subclass and not in GObject.constructed() or
+	 * GObject.constructor() for two reasons.
+	 * One reason is that generally derived widgets will assume that parent
+	 * class composite widgets have been created in their instance
+	 * initializers.
+	 * Another reason is that when calling g_object_new() on a widget with
+	 * composite templates, it's important to build the composite widgets
+	 * before the construct properties are set. Properties passed to g_object_new()
+	 * should take precedence over properties set in the private template XML.
+	 */
+	public void initTemplate()
+	{
+		// void gtk_widget_init_template (GtkWidget *widget);
+		gtk_widget_init_template(gtkWidget);
+	}
+	
+	/**
+	 * Fetch an object build from the template XML for widget_type in this widget instance.
+	 * This will only report children which were previously declared with gtk_widget_class_bind_template_child_private_full() or one of its variants.
+	 * This function is only meant to be called for code which is private to the widget_type which
+	 * declared the child and is meant for language bindings which cannot easily make use
+	 * of the GObject structure offsets.
+	 * Params:
+	 * widget = A GtkWidget
+	 * widgetType = The GType to get a template child for
+	 * name = The "id" of the child defined in the template XML
+	 * Returns: The object built in the template XML with the id name. [transfer none]
+	 */
+	public ObjectG getTemplateChild(GType widgetType, string name)
+	{
+		// GObject * gtk_widget_get_template_child (GtkWidget *widget,  GType widget_type,  const gchar *name);
+		auto p = gtk_widget_get_template_child(gtkWidget, widgetType, Str.toStringz(name));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 }

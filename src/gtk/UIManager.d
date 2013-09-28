@@ -318,6 +318,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	void delegate(UIManager)[] onActionsChangedListeners;
 	/**
+	 * Warning
+	 * GtkUIManager::actions-changed is deprecated and should not be used in newly-written code. 3.10
 	 * The ::actions-changed signal is emitted whenever the set of actions
 	 * changes.
 	 * Since 2.4
@@ -347,6 +349,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	void delegate(Widget, UIManager)[] onAddWidgetListeners;
 	/**
+	 * Warning
+	 * GtkUIManager::add-widget is deprecated and should not be used in newly-written code. 3.10
 	 * The ::add-widget signal is emitted for each generated menubar and toolbar.
 	 * It is not emitted for generated popup menus, which can be obtained by
 	 * gtk_ui_manager_get_widget().
@@ -377,6 +381,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	void delegate(Action, Widget, UIManager)[] onConnectProxyListeners;
 	/**
+	 * Warning
+	 * GtkUIManager::connect-proxy is deprecated and should not be used in newly-written code. 3.10
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
 	 * an action in the group.
 	 * This is intended for simple customizations for which a custom action
@@ -409,6 +415,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	void delegate(Action, Widget, UIManager)[] onDisconnectProxyListeners;
 	/**
+	 * Warning
+	 * GtkUIManager::disconnect-proxy is deprecated and should not be used in newly-written code. 3.10
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
 	 * from an action in the group.
 	 * Since 2.4
@@ -438,6 +446,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	void delegate(Action, UIManager)[] onPostActivateListeners;
 	/**
+	 * Warning
+	 * GtkUIManager::post-activate is deprecated and should not be used in newly-written code. 3.10
 	 * The ::post-activate signal is emitted just after the action
 	 * is activated.
 	 * This is intended for applications to get notification
@@ -469,6 +479,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	void delegate(Action, UIManager)[] onPreActivateListeners;
 	/**
+	 * Warning
+	 * GtkUIManager::pre-activate is deprecated and should not be used in newly-written code. 3.10
 	 * The ::pre-activate signal is emitted just before the action
 	 * is activated.
 	 * This is intended for applications to get notification
@@ -502,6 +514,8 @@ public class UIManager : ObjectG, BuildableIF
 	
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_new is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new ui manager object.
 	 * Since 2.4
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -551,6 +565,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_insert_action_group is deprecated and should not be used in newly-written code. 3.10
 	 * Inserts an action group into the list of action groups associated
 	 * with manager. Actions in earlier groups hide actions with the same
 	 * name in later groups.
@@ -569,6 +585,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_remove_action_group is deprecated and should not be used in newly-written code. 3.10
 	 * Removes an action group from the list of action groups associated
 	 * with manager.
 	 * Since 2.4
@@ -582,6 +600,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_get_action_groups is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the list of action groups associated with manager.
 	 * Since 2.4
 	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified. [element-type GtkActionGroup][transfer none]
@@ -600,6 +620,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_get_accel_group is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the GtkAccelGroup associated with manager.
 	 * Since 2.4
 	 * Returns: the GtkAccelGroup. [transfer none]
@@ -618,6 +640,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_get_widget is deprecated and should not be used in newly-written code. 3.10
 	 * Looks up a widget by following a path.
 	 * The path consists of the names specified in the XML description of the UI.
 	 * separated by '/'. Elements which don't have a name or action attribute in
@@ -648,6 +672,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_get_toplevels is deprecated and should not be used in newly-written code. 3.10
 	 * Obtains a list of all toplevel widgets of the requested types.
 	 * Since 2.4
 	 * Params:
@@ -670,6 +696,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_get_action is deprecated and should not be used in newly-written code. 3.10
 	 * Looks up an action by following a path. See gtk_ui_manager_get_widget()
 	 * for more information about paths.
 	 * Since 2.4
@@ -691,6 +719,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_add_ui_from_resource is deprecated and should not be used in newly-written code. 3.10
 	 * Parses a resource file containing a UI definition and
 	 * merges it with the current contents of manager.
 	 * Params:
@@ -714,6 +744,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_add_ui_from_string is deprecated and should not be used in newly-written code. 3.10
 	 * Parses a string containing a UI definition and
 	 * merges it with the current contents of manager. An enclosing <ui>
 	 * element is added if it is missing.
@@ -739,6 +771,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_add_ui_from_file is deprecated and should not be used in newly-written code. 3.10
 	 * Parses a file containing a UI definition and
 	 * merges it with the current contents of manager.
 	 * Since 2.4
@@ -763,6 +797,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_new_merge_id is deprecated and should not be used in newly-written code. 3.10
 	 * Returns an unused merge id, suitable for use with
 	 * gtk_ui_manager_add_ui().
 	 * Since 2.4
@@ -775,6 +811,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_add_ui is deprecated and should not be used in newly-written code. 3.10
 	 * Adds a UI element to the current contents of manager.
 	 * If type is GTK_UI_MANAGER_AUTO, GTK+ inserts a menuitem, toolitem or
 	 * separator if such an element can be inserted at the place determined by
@@ -799,6 +837,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_remove_ui is deprecated and should not be used in newly-written code. 3.10
 	 * Unmerges the part of managers content identified by merge_id.
 	 * Since 2.4
 	 * Params:
@@ -811,6 +851,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_get_ui is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a UI definition of the merged UI.
 	 * Since 2.4
 	 * Returns: A newly allocated string containing an XML representation of the merged UI.
@@ -822,6 +864,8 @@ public class UIManager : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_ui_manager_ensure_update is deprecated and should not be used in newly-written code. 3.10
 	 * Makes sure that all pending updates to the UI have been completed.
 	 * This may occasionally be necessary, since GtkUIManager updates the
 	 * UI in an idle function. A typical example where this function is

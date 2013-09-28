@@ -363,11 +363,14 @@ private import gobject.ObjectG;
  * parameters. The optional blur radius is parsed, but it is currently not rendered by
  * the GTK+ theming engine.
  *
+ * To set a shadow on an icon, use the icon-shadow property instead,
+ * with the same syntax.
+ *
  * To set multiple shadows on an element, you can specify a comma-separated list
- * of shadow elements in the text-shadow property. Shadows are always rendered
- * front-back, i.e. the first shadow specified is on top of the others. Shadows
- * can thus overlay each other, but they can never overlay the text itself,
- * which is always rendered on top of the shadow layer.
+ * of shadow elements in the text-shadow or icon-shadow property. Shadows are
+ * always rendered front-back, i.e. the first shadow specified is on top of the
+ * others. Shadows can thus overlay each other, but they can never overlay the
+ * text or icon itself, which is always rendered on top of the shadow layer.
  *
  * <hr>
  *
@@ -387,8 +390,7 @@ private import gobject.ObjectG;
  * The optional blur radius parameter is parsed, but it is currently not rendered by
  * the GTK+ theming engine.
  * The inset parameter defines whether the drop shadow should be rendered inside or outside
- * the box canvas. Only inset box-shadows are currently supported by the GTK+ theming engine,
- * non-inset elements are currently ignored.
+ * the box canvas.
  *
  * To set multiple box-shadows on an element, you can specify a comma-separated list
  * of shadow elements in the box-shadow property. Shadows are always rendered
@@ -474,15 +476,15 @@ private import gobject.ObjectG;
  * The option after the duration determines the transition function from a
  * small set of predefined functions.
  *
- * Figure 3. Linear transition
+ * Figure 6. Linear transition
  *
- * Figure 4. Ease transition
+ * Figure 7. Ease transition
  *
- * Figure 5. Ease-in-out transition
+ * Figure 8. Ease-in-out transition
  *
- * Figure 6. Ease-in transition
+ * Figure 9. Ease-in transition
  *
- * Figure 7. Ease-out transition
+ * Figure 10. Ease-out transition
  *
  * <hr>
  *

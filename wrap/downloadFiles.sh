@@ -2,11 +2,6 @@
 mkdir gtkdocs
 cd gtkdocs
 
-#GDK
-curl https://developer.gnome.org/gdk3/gdk3-html-3.10.0.tar.gz | tar xvfz -
-ln -s gdk3-html-3.10.0 gdk
-exit
-
 #GLIB
 curl https://developer.gnome.org/glib/glib-html-2.38.0.tar.gz | tar xvfz -
 ln -s glib-html-2.38.0 gthread
@@ -30,8 +25,12 @@ ln -s gdk-pixbuf-html-2.30.0 gdk-pixbuf
 curl https://developer.gnome.org/gdk3/gdk3-html-3.10.0.tar.gz | tar xvfz -
 ln -s gdk3-html-3.10.0 gdk
 #GTK
-curl https://developer.gnome.org/gtk3/gtk3-html-3.8.0.tar.gz | tar xvfz -
-ln -s gtk3-html-3.8.0 gtk
+curl https://developer.gnome.org/gtk3/gtk3-html-3.10.0.tar.gz | tar xvfz -
+ln -s gtk3-html-3.10.0 gtk
+cd gtk
+wget https://developer.gnome.org/gtk3/3.8/GtkPlug.html
+wget https://developer.gnome.org/gtk3/3.8/GtkSocket.html
+cd ..
 #CAIRO
 curl http://cairographics.org/releases/cairo-1.12.2.tar.xz | tar xvfJ -
 ln -s cairo-1.12.2/doc/public/html cairo

@@ -128,6 +128,11 @@ public enum GtkTargetFlags
 }
 alias GtkTargetFlags TargetFlags;
 
+/**
+ * GTK_ACCEL_VISIBLE
+ * GTK_ACCEL_LOCKED
+ * GTK_ACCEL_MASK
+ */
 public enum GtkAccelFlags
 {
 	VISIBLE = 1 << 0, /+* display inn GtkAccelLabel? +/
@@ -247,6 +252,16 @@ public enum GtkCornerType
 }
 alias GtkCornerType CornerType;
 
+/**
+ * GTK_DELETE_CHARS
+ * GTK_DELETE_WORD_ENDS
+ * GTK_DELETE_WORDS
+ * GTK_DELETE_DISPLAY_LINES
+ * GTK_DELETE_DISPLAY_LINE_ENDS
+ * GTK_DELETE_PARAGRAPH_ENDS
+ * GTK_DELETE_PARAGRAPHS
+ * GTK_DELETE_WHITESPACE
+ */
 public enum GtkDeleteType
 {
 	CHARS,
@@ -262,6 +277,14 @@ public enum GtkDeleteType
 }
 alias GtkDeleteType DeleteType;
 
+/**
+ * GTK_DIR_TAB_FORWARD
+ * GTK_DIR_TAB_BACKWARD
+ * GTK_DIR_UP
+ * GTK_DIR_DOWN
+ * GTK_DIR_LEFT
+ * GTK_DIR_RIGHT
+ */
 public enum GtkDirectionType
 {
 	TAB_FORWARD,
@@ -293,6 +316,11 @@ public enum GtkExpanderStyle
 }
 alias GtkExpanderStyle ExpanderStyle;
 
+/**
+ * GTK_IM_PREEDIT_NOTHING
+ * GTK_IM_PREEDIT_CALLBACK
+ * GTK_IM_PREEDIT_NONE
+ */
 public enum GtkIMPreeditStyle
 {
 	NOTHING,
@@ -301,6 +329,11 @@ public enum GtkIMPreeditStyle
 }
 alias GtkIMPreeditStyle IMPreeditStyle;
 
+/**
+ * GTK_IM_STATUS_NOTHING
+ * GTK_IM_STATUS_CALLBACK
+ * GTK_IM_STATUS_NONE
+ */
 public enum GtkIMStatusStyle
 {
 	NOTHING,
@@ -397,6 +430,14 @@ public enum GtkPackType
 }
 alias GtkPackType PackType;
 
+/**
+ * GTK_PATH_PRIO_LOWEST
+ * GTK_PATH_PRIO_GTK
+ * GTK_PATH_PRIO_APPLICATION
+ * GTK_PATH_PRIO_THEME
+ * GTK_PATH_PRIO_RC
+ * GTK_PATH_PRIO_HIGHEST
+ */
 public enum GtkPathPriorityType
 {
 	LOWEST = 0,
@@ -408,6 +449,11 @@ public enum GtkPathPriorityType
 }
 alias GtkPathPriorityType PathPriorityType;
 
+/**
+ * GTK_PATH_WIDGET
+ * GTK_PATH_WIDGET_CLASS
+ * GTK_PATH_CLASS
+ */
 public enum GtkPathType
 {
 	WIDGET,
@@ -489,6 +535,14 @@ public enum GtkResizeMode
 }
 alias GtkResizeMode ResizeMode;
 
+/**
+ * GTK_SCROLL_STEPS
+ * GTK_SCROLL_PAGES
+ * GTK_SCROLL_ENDS
+ * GTK_SCROLL_HORIZONTAL_STEPS
+ * GTK_SCROLL_HORIZONTAL_PAGES
+ * GTK_SCROLL_HORIZONTAL_ENDS
+ */
 public enum GtkScrollStep
 {
 	STEPS,
@@ -500,6 +554,24 @@ public enum GtkScrollStep
 }
 alias GtkScrollStep ScrollStep;
 
+/**
+ * GTK_SCROLL_NONE
+ * GTK_SCROLL_JUMP
+ * GTK_SCROLL_STEP_BACKWARD
+ * GTK_SCROLL_STEP_FORWARD
+ * GTK_SCROLL_PAGE_BACKWARD
+ * GTK_SCROLL_PAGE_FORWARD
+ * GTK_SCROLL_STEP_UP
+ * GTK_SCROLL_STEP_DOWN
+ * GTK_SCROLL_PAGE_UP
+ * GTK_SCROLL_PAGE_DOWN
+ * GTK_SCROLL_STEP_LEFT
+ * GTK_SCROLL_STEP_RIGHT
+ * GTK_SCROLL_PAGE_LEFT
+ * GTK_SCROLL_PAGE_RIGHT
+ * GTK_SCROLL_START
+ * GTK_SCROLL_END
+ */
 public enum GtkScrollType
 {
 	NONE,
@@ -868,6 +940,14 @@ public enum GtkRegionFlags
 }
 alias GtkRegionFlags RegionFlags;
 
+/**
+ * GTK_CSS_PROVIDER_ERROR_FAILED
+ * GTK_CSS_PROVIDER_ERROR_SYNTAX
+ * GTK_CSS_PROVIDER_ERROR_IMPORT
+ * GTK_CSS_PROVIDER_ERROR_NAME
+ * GTK_CSS_PROVIDER_ERROR_DEPRECATED
+ * GTK_CSS_PROVIDER_ERROR_UNKNOWN_VALUE
+ */
 public enum GtkCssProviderError
 {
 	FAILED,
@@ -927,7 +1007,6 @@ public enum GtkCssSectionType
 alias GtkCssSectionType CssSectionType;
 
 /**
- * Used to specify options for gtk_icon_theme_lookup_icon()
  * GTK_ICON_LOOKUP_NO_SVG
  * Never return SVG icons, even if gdk-pixbuf
  *  supports them. Cannot be used together with GTK_ICON_LOOKUP_FORCE_SVG.
@@ -939,14 +1018,8 @@ alias GtkCssSectionType CssSectionType;
  * When passed to
  *  gtk_icon_theme_lookup_icon() includes builtin icons
  *  as well as files. For a builtin icon, gtk_icon_info_get_filename()
- *  returns NULL and you need to call gtk_icon_info_get_builtin_pixbuf().
  * GTK_ICON_LOOKUP_GENERIC_FALLBACK
- * Try to shorten icon name at '-'
- *  characters before looking at inherited themes. For more general
- *  fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
  * GTK_ICON_LOOKUP_FORCE_SIZE
- * Always return the icon scaled to the
- *  requested size. Since 2.14.
  */
 public enum GtkIconLookupFlags
 {
@@ -972,6 +1045,15 @@ public enum GtkIconThemeError
 }
 alias GtkIconThemeError IconThemeError;
 
+/**
+ * GTK_ICON_SIZE_INVALID
+ * GTK_ICON_SIZE_MENU
+ * GTK_ICON_SIZE_SMALL_TOOLBAR
+ * GTK_ICON_SIZE_LARGE_TOOLBAR
+ * GTK_ICON_SIZE_BUTTON
+ * GTK_ICON_SIZE_DND
+ * GTK_ICON_SIZE_DIALOG
+ */
 public enum GtkIconSize
 {
 	INVALID,
@@ -984,67 +1066,80 @@ public enum GtkIconSize
 }
 alias GtkIconSize IconSize;
 
-public enum GtkRcFlags
+/**
+ * Types of user actions that may be blocked by gtk_application_inhibit().
+ * GTK_APPLICATION_INHIBIT_LOGOUT
+ * Inhibit ending the user session
+ *  by logging out or by shutting down the computer
+ * GTK_APPLICATION_INHIBIT_SWITCH
+ * Inhibit user switching
+ * GTK_APPLICATION_INHIBIT_SUSPEND
+ * Inhibit suspending the
+ *  session or computer
+ * GTK_APPLICATION_INHIBIT_IDLE
+ * Inhibit the session being
+ *  marked as idle (and possibly locked)
+ * Since 3.4
+ */
+public enum GtkApplicationInhibitFlags
 {
-	FG = 1 << 0,
-	BG = 1 << 1,
-	TEXT = 1 << 2,
-	BASE = 1 << 3
+	LOGOUT = (1 << 0),
+	SWITCH = (1 << 1),
+	SUSPEND = (1 << 2),
+	IDLE = (1 << 3)
 }
-alias GtkRcFlags RcFlags;
+alias GtkApplicationInhibitFlags ApplicationInhibitFlags;
 
 /**
- * Warning
- * GtkRcTokenType has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
- * The GtkRcTokenType enumeration represents the tokens
- * in the RC file. It is exposed so that theme engines
- * can reuse these tokens when parsing the theme-engine
- * specific portions of a RC file.
+ * Error codes that identify various errors that can occur while using
+ * GtkBuilder.
+ * GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION
+ * A type-func attribute didn't name
+ *  a function that returns a GType.
+ * GTK_BUILDER_ERROR_UNHANDLED_TAG
+ * The input contained a tag that GtkBuilder
+ *  can't handle.
+ * GTK_BUILDER_ERROR_MISSING_ATTRIBUTE
+ * An attribute that is required by
+ *  GtkBuilder was missing.
+ * GTK_BUILDER_ERROR_INVALID_ATTRIBUTE
+ * GtkBuilder found an attribute that
+ *  it doesn't understand.
+ * GTK_BUILDER_ERROR_INVALID_TAG
+ * GtkBuilder found a tag that
+ *  it doesn't understand.
+ * GTK_BUILDER_ERROR_MISSING_PROPERTY_VALUE
+ * A required property value was
+ *  missing.
+ * GTK_BUILDER_ERROR_INVALID_VALUE
+ * GtkBuilder couldn't parse
+ *  some attribute value.
+ * GTK_BUILDER_ERROR_VERSION_MISMATCH
+ * The input file requires a newer version
+ *  of GTK+.
+ * GTK_BUILDER_ERROR_DUPLICATE_ID
+ * An object id occurred twice.
+ * GTK_BUILDER_ERROR_OBJECT_TYPE_REFUSED
+ * A specified object type is of the same type or
+ *  derived from the type of the composite class being extended with builder XML.
+ * GTK_BUILDER_ERROR_TEMPLATE_MISMATCH
+ * The wrong type was specified in a composite class's template XML
  */
-public enum GtkRcTokenType
+public enum GtkBuilderError
 {
-	INVALID = cast(int)TokenType.LAST,
-	INCLUDE,
-	NORMAL,
-	ACTIVE,
-	PRELIGHT,
-	SELECTED,
-	INSENSITIVE,
-	FG,
-	BG,
-	TEXT,
-	BASE,
-	XTHICKNESS,
-	YTHICKNESS,
-	FONT,
-	FONTSET,
-	FONT_NAME,
-	BG_PIXMAP,
-	PIXMAP_PATH,
-	STYLE,
-	BINDING,
-	BIND,
-	WIDGET,
-	WIDGET_CLASS,
-	CLASS,
-	LOWEST,
-	GTK,
-	APPLICATION,
-	THEME,
-	RC,
-	HIGHEST,
-	ENGINE,
-	MODULE_PATH,
-	IM_MODULE_PATH,
-	IM_MODULE_FILE,
-	STOCK,
-	LTR,
-	RTL,
-	COLOR,
-	UNBIND,
-	LAST
+	INVALID_TYPE_FUNCTION,
+	UNHANDLED_TAG,
+	MISSING_ATTRIBUTE,
+	INVALID_ATTRIBUTE,
+	INVALID_TAG,
+	MISSING_PROPERTY_VALUE,
+	INVALID_VALUE,
+	VERSION_MISMATCH,
+	DUPLICATE_ID,
+	OBJECT_TYPE_REFUSED,
+	TEMPLATE_MISMATCH
 }
-alias GtkRcTokenType RcTokenType;
+alias GtkBuilderError BuilderError;
 
 /**
  * Flags used to influence dialog construction.
@@ -1241,6 +1336,66 @@ public enum GtkAssistantPageType
 alias GtkAssistantPageType AssistantPageType;
 
 /**
+ * These enumeration values describe the possible transitions
+ * when the child of a GtkRevealer widget is shown or hidden.
+ * GTK_REVEALER_TRANSITION_TYPE_NONE
+ * No transition
+ * GTK_REVEALER_TRANSITION_TYPE_CROSSFADE
+ * Fade in
+ * GTK_REVEALER_TRANSITION_TYPE_SLIDE_RIGHT
+ * Slide in from the left
+ * GTK_REVEALER_TRANSITION_TYPE_SLIDE_LEFT
+ * Slide in from the right
+ * GTK_REVEALER_TRANSITION_TYPE_SLIDE_UP
+ * Slide in from the bottom
+ * GTK_REVEALER_TRANSITION_TYPE_SLIDE_DOWN
+ * Slide in from the top
+ */
+public enum GtkRevealerTransitionType
+{
+	TYPE_NONE,
+	TYPE_CROSSFADE,
+	TYPE_SLIDE_RIGHT,
+	TYPE_SLIDE_LEFT,
+	TYPE_SLIDE_UP,
+	TYPE_SLIDE_DOWN
+}
+alias GtkRevealerTransitionType RevealerTransitionType;
+
+/**
+ * These enumeration values describe the possible transitions
+ * between pages in a GtkStack widget.
+ * GTK_STACK_TRANSITION_TYPE_NONE
+ * No transition
+ * GTK_STACK_TRANSITION_TYPE_CROSSFADE
+ * A cross-fade
+ * GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT
+ * Slide from left to right
+ * GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT
+ * Slide from right to left
+ * GTK_STACK_TRANSITION_TYPE_SLIDE_UP
+ * Slide from bottom up
+ * GTK_STACK_TRANSITION_TYPE_SLIDE_DOWN
+ * Slide from top down
+ * GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT
+ * Slide from left or right according to the children order
+ * GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN
+ * Slide from top down or bottom up according to the order
+ */
+public enum GtkStackTransitionType
+{
+	TYPE_NONE,
+	TYPE_CROSSFADE,
+	TYPE_SLIDE_RIGHT,
+	TYPE_SLIDE_LEFT,
+	TYPE_SLIDE_UP,
+	TYPE_SLIDE_DOWN,
+	TYPE_SLIDE_LEFT_RIGHT,
+	TYPE_SLIDE_UP_DOWN
+}
+alias GtkStackTransitionType StackTransitionType;
+
+/**
  * Describes the image data representation used by a GtkImage. If you
  * want to get the image from the widget, you can only get the
  * currently-stored representation. e.g. if the
@@ -1265,6 +1420,9 @@ alias GtkAssistantPageType AssistantPageType;
  * GTK_IMAGE_GICON
  * the widget contains a GIcon.
  *  This image type was added in GTK+ 2.14
+ * GTK_IMAGE_SURFACE
+ * the widget contains a cairo_surface_t.
+ *  This image type was added in GTK+ 3.10
  */
 public enum GtkImageType
 {
@@ -1274,7 +1432,8 @@ public enum GtkImageType
 	ICON_SET,
 	ANIMATION,
 	ICON_NAME,
-	GICON
+	GICON,
+	SURFACE
 }
 alias GtkImageType ImageType;
 
@@ -1457,6 +1616,21 @@ public enum GtkSpinType
 }
 alias GtkSpinType SpinType;
 
+/**
+ * Flags affecting how a search is done.
+ * If neither GTK_TEXT_SEARCH_VISIBLE_ONLY nor GTK_TEXT_SEARCH_TEXT_ONLY are
+ * enabled, the match must be exact; the special 0xFFFC character will match
+ * embedded pixbufs or child widgets.
+ * GTK_TEXT_SEARCH_VISIBLE_ONLY
+ * Search only visible data. A search match may
+ * have invisible text interspersed.
+ * GTK_TEXT_SEARCH_TEXT_ONLY
+ * Search only text. A match may have pixbufs or
+ * child widgets mixed inside the matched range.
+ * GTK_TEXT_SEARCH_CASE_INSENSITIVE
+ * The text will be matched regardless of
+ * what case it is in.
+ */
 public enum GtkTextSearchFlags
 {
 	VISIBLE_ONLY = 1 << 0,
@@ -1466,6 +1640,11 @@ public enum GtkTextSearchFlags
 }
 alias GtkTextSearchFlags TextSearchFlags;
 
+/**
+ * GTK_TEXT_BUFFER_TARGET_INFO_BUFFER_CONTENTS
+ * GTK_TEXT_BUFFER_TARGET_INFO_RICH_TEXT
+ * GTK_TEXT_BUFFER_TARGET_INFO_TEXT
+ */
 public enum GtkTextBufferTargetInfo
 {
 	BUFFER_CONTENTS = - 1,
@@ -1473,6 +1652,27 @@ public enum GtkTextBufferTargetInfo
 	TEXT = - 3
 }
 alias GtkTextBufferTargetInfo TextBufferTargetInfo;
+
+/**
+ * GTK_TEXT_WINDOW_PRIVATE
+ * GTK_TEXT_WINDOW_WIDGET
+ * GTK_TEXT_WINDOW_TEXT
+ * GTK_TEXT_WINDOW_LEFT
+ * GTK_TEXT_WINDOW_RIGHT
+ * GTK_TEXT_WINDOW_TOP
+ * GTK_TEXT_WINDOW_BOTTOM
+ */
+public enum GtkTextWindowType
+{
+	PRIVATE,
+	WIDGET,
+	TEXT,
+	LEFT,
+	RIGHT,
+	TOP,
+	BOTTOM
+}
+alias GtkTextWindowType TextWindowType;
 
 /**
  * Describes a type of line wrapping.
@@ -1496,18 +1696,6 @@ public enum GtkWrapMode
 	WORD_CHAR
 }
 alias GtkWrapMode WrapMode;
-
-public enum GtkTextWindowType
-{
-	PRIVATE,
-	WIDGET,
-	TEXT,
-	LEFT,
-	RIGHT,
-	TOP,
-	BOTTOM
-}
-alias GtkTextWindowType TextWindowType;
 
 /**
  * These flags indicate various properties of a GtkTreeModel.
@@ -1668,6 +1856,10 @@ public enum GtkCellRendererMode
 }
 alias GtkCellRendererMode CellRendererMode;
 
+/**
+ * GTK_CELL_RENDERER_ACCEL_MODE_GTK
+ * GTK_CELL_RENDERER_ACCEL_MODE_OTHER
+ */
 public enum GtkCellRendererAccelMode
 {
 	MODE_GTK,
@@ -1696,6 +1888,10 @@ public enum GtkPackDirection
 }
 alias GtkPackDirection PackDirection;
 
+/**
+ * GTK_TOOLBAR_SPACE_EMPTY
+ * GTK_TOOLBAR_SPACE_LINE
+ */
 public enum GtkToolbarSpaceStyle
 {
 	EMPTY,
@@ -1716,49 +1912,6 @@ public enum GtkToolPaletteDragTargets
 	GROUPS = (1 << 1)
 }
 alias GtkToolPaletteDragTargets ToolPaletteDragTargets;
-
-/**
- * These enumeration values are used by gtk_ui_manager_add_ui() to determine
- * what UI element to create.
- * GTK_UI_MANAGER_AUTO
- * Pick the type of the UI element according to context.
- * GTK_UI_MANAGER_MENUBAR
- * Create a menubar.
- * GTK_UI_MANAGER_MENU
- * Create a menu.
- * GTK_UI_MANAGER_TOOLBAR
- * Create a toolbar.
- * GTK_UI_MANAGER_PLACEHOLDER
- * Insert a placeholder.
- * GTK_UI_MANAGER_POPUP
- * Create a popup menu.
- * GTK_UI_MANAGER_MENUITEM
- * Create a menuitem.
- * GTK_UI_MANAGER_TOOLITEM
- * Create a toolitem.
- * GTK_UI_MANAGER_SEPARATOR
- * Create a separator.
- * GTK_UI_MANAGER_ACCELERATOR
- * Install an accelerator.
- * GTK_UI_MANAGER_POPUP_WITH_ACCELS
- * Same as GTK_UI_MANAGER_POPUP, but the
- *  actions' accelerators are shown.
- */
-public enum GtkUIManagerItemType
-{
-	AUTO = 0,
-	MENUBAR = 1 << 0,
-	MENU = 1 << 1,
-	TOOLBAR = 1 << 2,
-	PLACEHOLDER = 1 << 3,
-	POPUP = 1 << 4,
-	MENUITEM = 1 << 5,
-	TOOLITEM = 1 << 6,
-	SEPARATOR = 1 << 7,
-	ACCELERATOR = 1 << 8,
-	POPUP_WITH_ACCELS = 1 << 9
-}
-alias GtkUIManagerItemType UIManagerItemType;
 
 /**
  * Describes whether a GtkFileChooser is being used to open existing files
@@ -1856,6 +2009,40 @@ public enum GtkFileFilterFlags
 	MIME_TYPE = 1 << 3
 }
 alias GtkFileFilterFlags FileFilterFlags;
+
+/**
+ * These flags serve two purposes. First, the application can call gtk_places_sidebar_set_open_flags()
+ * using these flags as a bitmask. This tells the sidebar that the application is able to open
+ * folders selected from the sidebar in various ways, for example, in new tabs or in new windows in
+ * addition to the normal mode.
+ * Second, when one of these values gets passed back to the application in the
+ * "open-location" signal, it means that the application should
+ * open the selected location in the normal way, in a new tab, or in a new
+ * window. The sidebar takes care of determining the desired way to open the location,
+ * based on the modifier keys that the user is pressing at the time the selection is made.
+ * If the application never calls gtk_places_sidebar_set_open_flags(), then the sidebar will only
+ * use GTK_PLACES_OPEN_NORMAL in the "open-location" signal. This is the
+ * default mode of operation.
+ * GTK_PLACES_OPEN_NORMAL
+ * This is the default mode that GtkPlacesSidebar uses if no other flags
+ *  are specified. It indicates that the calling application should open the selected location
+ *  in the normal way, for example, in the folder view beside the sidebar.
+ * GTK_PLACES_OPEN_NEW_TAB
+ * When passed to gtk_places_sidebar_set_open_flags(), this indicates
+ *  that the application can open folders selected from the sidebar in new tabs. This value
+ *  will be passed to the "open-location" signal when the user selects
+ *  that a location be opened in a new tab instead of in the standard fashion.
+ * GTK_PLACES_OPEN_NEW_WINDOW
+ * Similar to GTK_PLACES_OPEN_NEW_TAB, but indicates that the application
+ *  can open folders in new windows.
+ */
+public enum GtkPlacesOpenFlags
+{
+	NORMAL = 1 << 0,
+	NEW_TAB = 1 << 1,
+	NEW_WINDOW = 1 << 2
+}
+alias GtkPlacesOpenFlags PlacesOpenFlags;
 
 /**
  * Defines the policy to be used in a scrollable widget when updating
@@ -1981,6 +2168,12 @@ public enum GtkPrintError
 }
 alias GtkPrintError PrintError;
 
+/**
+ * GTK_PAGE_ORIENTATION_PORTRAIT
+ * GTK_PAGE_ORIENTATION_LANDSCAPE
+ * GTK_PAGE_ORIENTATION_REVERSE_PORTRAIT
+ * GTK_PAGE_ORIENTATION_REVERSE_LANDSCAPE
+ */
 public enum GtkPageOrientation
 {
 	PORTRAIT,
@@ -1990,6 +2183,11 @@ public enum GtkPageOrientation
 }
 alias GtkPageOrientation PageOrientation;
 
+/**
+ * GTK_PRINT_DUPLEX_SIMPLEX
+ * GTK_PRINT_DUPLEX_HORIZONTAL
+ * GTK_PRINT_DUPLEX_VERTICAL
+ */
 public enum GtkPrintDuplex
 {
 	SIMPLEX,
@@ -1998,6 +2196,12 @@ public enum GtkPrintDuplex
 }
 alias GtkPrintDuplex PrintDuplex;
 
+/**
+ * GTK_PRINT_QUALITY_LOW
+ * GTK_PRINT_QUALITY_NORMAL
+ * GTK_PRINT_QUALITY_HIGH
+ * GTK_PRINT_QUALITY_DRAFT
+ */
 public enum GtkPrintQuality
 {
 	LOW,
@@ -2032,6 +2236,12 @@ public enum GtkNumberUpLayout
 }
 alias GtkNumberUpLayout NumberUpLayout;
 
+/**
+ * GTK_PRINT_PAGES_ALL
+ * GTK_PRINT_PAGES_CURRENT
+ * GTK_PRINT_PAGES_RANGES
+ * GTK_PRINT_PAGES_SELECTION
+ */
 public enum GtkPrintPages
 {
 	ALL,
@@ -2041,6 +2251,11 @@ public enum GtkPrintPages
 }
 alias GtkPrintPages PrintPages;
 
+/**
+ * GTK_PAGE_SET_ALL
+ * GTK_PAGE_SET_EVEN
+ * GTK_PAGE_SET_ODD
+ */
 public enum GtkPageSet
 {
 	ALL,
@@ -2049,6 +2264,12 @@ public enum GtkPageSet
 }
 alias GtkPageSet PageSet;
 
+/**
+ * GTK_UNIT_NONE
+ * GTK_UNIT_POINTS
+ * GTK_UNIT_INCH
+ * GTK_UNIT_MM
+ */
 public enum GtkUnit
 {
 	NONE,
@@ -2149,6 +2370,10 @@ public enum GtkSizeGroupMode
 }
 alias GtkSizeGroupMode SizeGroupMode;
 
+/**
+ * GTK_WIDGET_HELP_TOOLTIP
+ * GTK_WIDGET_HELP_WHATS_THIS
+ */
 public enum GtkWidgetHelpType
 {
 	TOOLTIP,
@@ -2156,6 +2381,11 @@ public enum GtkWidgetHelpType
 }
 alias GtkWidgetHelpType WidgetHelpType;
 
+/**
+ * GTK_TEXT_DIR_NONE
+ * GTK_TEXT_DIR_LTR
+ * GTK_TEXT_DIR_RTL
+ */
 public enum GtkTextDirection
 {
 	NONE,
@@ -2193,6 +2423,9 @@ alias GtkSizeRequestMode SizeRequestMode;
  * positioned to one side of the space.
  * Note that in horizontal context GTK_ALIGN_START and GTK_ALIGN_END
  * are interpreted relative to text direction.
+ * GTK_ALIGN_BASELINE support for it is optional for containers and widgets, and
+ * it is only supported for vertical alignment. When its not supported by
+ * a child or a container it is treated as GTK_ALIGN_FILL.
  * GTK_ALIGN_FILL
  * stretch to fill all space if possible, center if
  *  no meaningful way to stretch
@@ -2205,13 +2438,16 @@ alias GtkSizeRequestMode SizeRequestMode;
  * GTK_ALIGN_CENTER
  * center natural width of widget inside the
  *  allocation
+ * GTK_ALIGN_BASELINE
+ * align the widget according to the baseline. Since 3.10.
  */
 public enum GtkAlign
 {
 	FILL,
 	START,
 	END,
-	CENTER
+	CENTER,
+	BASELINE
 }
 alias GtkAlign Align;
 
@@ -2383,72 +2619,157 @@ public enum GtkRecentFilterFlags
 alias GtkRecentFilterFlags RecentFilterFlags;
 
 /**
- * Error codes that identify various errors that can occur while using
- * GtkBuilder.
- * GTK_BUILDER_ERROR_INVALID_TYPE_FUNCTION
- * A type-func attribute didn't name
- *  a function that returns a GType.
- * GTK_BUILDER_ERROR_UNHANDLED_TAG
- * The input contained a tag that GtkBuilder
- *  can't handle.
- * GTK_BUILDER_ERROR_MISSING_ATTRIBUTE
- * An attribute that is required by
- *  GtkBuilder was missing.
- * GTK_BUILDER_ERROR_INVALID_ATTRIBUTE
- * GtkBuilder found an attribute that
- *  it doesn't understand.
- * GTK_BUILDER_ERROR_INVALID_TAG
- * GtkBuilder found a tag that
- *  it doesn't understand.
- * GTK_BUILDER_ERROR_MISSING_PROPERTY_VALUE
- * A required property value was
- *  missing.
- * GTK_BUILDER_ERROR_INVALID_VALUE
- * GtkBuilder couldn't parse
- *  some attribute value.
- * GTK_BUILDER_ERROR_VERSION_MISMATCH
- * The input file requires a newer version
- *  of GTK+.
- * GTK_BUILDER_ERROR_DUPLICATE_ID
- * An object id occurred twice.
+ * GTK_RC_FG
+ * GTK_RC_BG
+ * GTK_RC_TEXT
+ * GTK_RC_BASE
  */
-public enum GtkBuilderError
+public enum GtkRcFlags
 {
-	INVALID_TYPE_FUNCTION,
-	UNHANDLED_TAG,
-	MISSING_ATTRIBUTE,
-	INVALID_ATTRIBUTE,
-	INVALID_TAG,
-	MISSING_PROPERTY_VALUE,
-	INVALID_VALUE,
-	VERSION_MISMATCH,
-	DUPLICATE_ID
+	FG = 1 << 0,
+	BG = 1 << 1,
+	TEXT = 1 << 2,
+	BASE = 1 << 3
 }
-alias GtkBuilderError BuilderError;
+alias GtkRcFlags RcFlags;
 
 /**
- * Types of user actions that may be blocked by gtk_application_inhibit().
- * GTK_APPLICATION_INHIBIT_LOGOUT
- * Inhibit ending the user session
- *  by logging out or by shutting down the computer
- * GTK_APPLICATION_INHIBIT_SWITCH
- * Inhibit user switching
- * GTK_APPLICATION_INHIBIT_SUSPEND
- * Inhibit suspending the
- *  session or computer
- * GTK_APPLICATION_INHIBIT_IDLE
- * Inhibit the session being
- *  marked as idle (and possibly locked)
- * Since 3.4
+ * Warning
+ * GtkRcTokenType has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkCssProvider instead.
+ * The GtkRcTokenType enumeration represents the tokens
+ * in the RC file. It is exposed so that theme engines
+ * can reuse these tokens when parsing the theme-engine
+ * specific portions of a RC file.
+ * GTK_RC_TOKEN_INVALID
+ * GTK_RC_TOKEN_INCLUDE
+ * GTK_RC_TOKEN_NORMAL
+ * GTK_RC_TOKEN_ACTIVE
+ * GTK_RC_TOKEN_PRELIGHT
+ * GTK_RC_TOKEN_SELECTED
+ * GTK_RC_TOKEN_INSENSITIVE
+ * GTK_RC_TOKEN_FG
+ * GTK_RC_TOKEN_BG
+ * GTK_RC_TOKEN_TEXT
+ * GTK_RC_TOKEN_BASE
+ * GTK_RC_TOKEN_XTHICKNESS
+ * GTK_RC_TOKEN_YTHICKNESS
+ * GTK_RC_TOKEN_FONT
+ * GTK_RC_TOKEN_FONTSET
+ * GTK_RC_TOKEN_FONT_NAME
+ * GTK_RC_TOKEN_BG_PIXMAP
+ * GTK_RC_TOKEN_PIXMAP_PATH
+ * GTK_RC_TOKEN_STYLE
+ * GTK_RC_TOKEN_BINDING
+ * GTK_RC_TOKEN_BIND
+ * GTK_RC_TOKEN_WIDGET
+ * GTK_RC_TOKEN_WIDGET_CLASS
+ * GTK_RC_TOKEN_CLASS
+ * GTK_RC_TOKEN_LOWEST
+ * GTK_RC_TOKEN_GTK
+ * GTK_RC_TOKEN_APPLICATION
+ * GTK_RC_TOKEN_THEME
+ * GTK_RC_TOKEN_RC
+ * GTK_RC_TOKEN_HIGHEST
+ * GTK_RC_TOKEN_ENGINE
+ * GTK_RC_TOKEN_MODULE_PATH
+ * GTK_RC_TOKEN_IM_MODULE_PATH
+ * GTK_RC_TOKEN_IM_MODULE_FILE
+ * GTK_RC_TOKEN_STOCK
+ * GTK_RC_TOKEN_LTR
+ * GTK_RC_TOKEN_RTL
+ * GTK_RC_TOKEN_COLOR
+ * GTK_RC_TOKEN_UNBIND
+ * GTK_RC_TOKEN_LAST
  */
-public enum GtkApplicationInhibitFlags
+public enum GtkRcTokenType
 {
-	LOGOUT = (1 << 0),
-	SWITCH = (1 << 1),
-	SUSPEND = (1 << 2),
-	IDLE = (1 << 3)
+	INVALID = cast(int)TokenType.LAST,
+	INCLUDE,
+	NORMAL,
+	ACTIVE,
+	PRELIGHT,
+	SELECTED,
+	INSENSITIVE,
+	FG,
+	BG,
+	TEXT,
+	BASE,
+	XTHICKNESS,
+	YTHICKNESS,
+	FONT,
+	FONTSET,
+	FONT_NAME,
+	BG_PIXMAP,
+	PIXMAP_PATH,
+	STYLE,
+	BINDING,
+	BIND,
+	WIDGET,
+	WIDGET_CLASS,
+	CLASS,
+	LOWEST,
+	GTK,
+	APPLICATION,
+	THEME,
+	RC,
+	HIGHEST,
+	ENGINE,
+	MODULE_PATH,
+	IM_MODULE_PATH,
+	IM_MODULE_FILE,
+	STOCK,
+	LTR,
+	RTL,
+	COLOR,
+	UNBIND,
+	LAST
 }
-alias GtkApplicationInhibitFlags ApplicationInhibitFlags;
+alias GtkRcTokenType RcTokenType;
+
+/**
+ * Warning
+ * GtkUIManagerItemType is deprecated and should not be used in newly-written code. 3.10
+ * These enumeration values are used by gtk_ui_manager_add_ui() to determine
+ * what UI element to create.
+ * GTK_UI_MANAGER_AUTO
+ * Pick the type of the UI element according to context.
+ * GTK_UI_MANAGER_MENUBAR
+ * Create a menubar.
+ * GTK_UI_MANAGER_MENU
+ * Create a menu.
+ * GTK_UI_MANAGER_TOOLBAR
+ * Create a toolbar.
+ * GTK_UI_MANAGER_PLACEHOLDER
+ * Insert a placeholder.
+ * GTK_UI_MANAGER_POPUP
+ * Create a popup menu.
+ * GTK_UI_MANAGER_MENUITEM
+ * Create a menuitem.
+ * GTK_UI_MANAGER_TOOLITEM
+ * Create a toolitem.
+ * GTK_UI_MANAGER_SEPARATOR
+ * Create a separator.
+ * GTK_UI_MANAGER_ACCELERATOR
+ * Install an accelerator.
+ * GTK_UI_MANAGER_POPUP_WITH_ACCELS
+ * Same as GTK_UI_MANAGER_POPUP, but the
+ *  actions' accelerators are shown.
+ */
+public enum GtkUIManagerItemType
+{
+	AUTO = 0,
+	MENUBAR = 1 << 0,
+	MENU = 1 << 1,
+	TOOLBAR = 1 << 2,
+	PLACEHOLDER = 1 << 3,
+	POPUP = 1 << 4,
+	MENUITEM = 1 << 5,
+	TOOLITEM = 1 << 6,
+	SEPARATOR = 1 << 7,
+	ACCELERATOR = 1 << 8,
+	POPUP_WITH_ACCELS = 1 << 9
+}
+alias GtkUIManagerItemType UIManagerItemType;
 
 
 struct GtkWidgetClass
@@ -2663,19 +2984,6 @@ public struct GtkAccelMap{}
  * Main Gtk struct.
  */
 public struct GtkClipboard{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkStockItem
-{
-	char *stockId;
-	char *label;
-	GdkModifierType modifier;
-	uint keyval;
-	char *translationDomain;
-}
 
 
 /**
@@ -2972,6 +3280,8 @@ public struct GtkStyleProperties
  * Renders an icon as a GdkPixbuf.
  * render_icon ()
  * Renders an icon given as a GdkPixbuf.
+ * render_icon_surface ()
+ * Renders an icon given as a cairo_surface_t.
  */
 public struct GtkThemingEngineClass
 {
@@ -2992,6 +3302,7 @@ public struct GtkThemingEngineClass
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height)  renderActivity;
 	extern(C) GdkPixbuf * function(GtkThemingEngine* engine, GtkIconSource* source, GtkIconSize size)  renderIconPixbuf;
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, GdkPixbuf* pixbuf, double x, double y)  renderIcon;
+	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, cairo_surface_t* surface, double x, double y)  renderIconSurface;
 }
 
 
@@ -3005,18 +3316,6 @@ public struct GtkThemingEngine{}
  * Main Gtk struct.
  */
 public struct GtkWidgetPath{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSymbolicColor{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkGradient{}
 
 
 /**
@@ -3059,57 +3358,130 @@ public struct GtkNumerableIcon{}
 
 /**
  * Main Gtk struct.
- * The GtkRcStyle structure is used to represent a set
- * of information about the appearance of a widget.
- * This can later be composited together with other
- * GtkRcStyle structures to form a GtkStyle.
  */
-public struct GtkRcStyle
+public struct GtkApplication{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkApplicationWindow{}
+
+
+/**
+ * Main Gtk struct.
+ * An opaque pointer type.
+ */
+public struct GtkActionable{}
+
+
+/**
+ * The interface vtable for GtkActionable.
+ * GTypeInterface g_iface;
+ * get_action_name ()
+ * virtual pointer for gtk_actionable_get_action_name()
+ * set_action_name ()
+ * virtual pointer for gtk_actionable_set_action_name()
+ * get_action_target_value ()
+ * virtual pointer for gtk_actionable_get_action_target_value()
+ * set_action_target_value ()
+ * virtual pointer for gtk_actionable_set_action_target_value
+ */
+public struct GtkActionableInterface
 {
-	char *name;
-	char *bgPixmapName[5];
-	PangoFontDescription *fontDesc;
-	GtkRcFlags colorFlags[5];
-	GdkColor fg[5];
-	GdkColor bg[5];
-	GdkColor text[5];
-	GdkColor base[5];
-	int xthickness;
-	int ythickness;
+	GTypeInterface gIface;
+	extern(C) char * function(GtkActionable* actionable)  getActionName;
+	extern(C) void function(GtkActionable* actionable, char* actionName)  setActionName;
+	extern(C) GVariant * function(GtkActionable* actionable)  getActionTargetValue;
+	extern(C) void function(GtkActionable* actionable, GVariant* targetValue)  setActionTargetValue;
 }
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkStyle
+public struct GtkBuildable{}
+
+
+/**
+ * The GtkBuildableIface interface contains method that are
+ * necessary to allow GtkBuilder to construct an object from
+ * a GtkBuilder UI definition.
+ * GTypeInterface g_iface;
+ * the parent class
+ * set_name ()
+ * Stores the name attribute given in the GtkBuilder UI definition.
+ * GtkWidget stores the name as object data. Implement this method if your
+ * object has some notion of "name" and it makes sense to map the XML name
+ * attribute to it.
+ * get_name ()
+ * The getter corresponding to set_name. Implement this
+ * if you implement set_name.
+ * add_child ()
+ * Adds a child. The type parameter can be used to
+ * differentiate the kind of child. GtkContainer implements this
+ * to add add a child widget to the container, GtkNotebook uses
+ * the type to distinguish between page labels (of type "page-label")
+ * and normal children.
+ * set_buildable_property ()
+ * Sets a property of a buildable object.
+ * It is normally not necessary to implement this, g_object_set_property()
+ * is used by default. GtkWindow implements this to delay showing itself
+ * (i.e. setting the "visible" property) until the whole interface
+ * is created.
+ * construct_child ()
+ * Constructs a child of a buildable that has been
+ * specified as "constructor" in the UI definition. GtkUIManager implements
+ * this to reference to a widget created in a <ui> tag which is outside
+ * of the normal GtkBuilder UI definition hierarchy. A reference to the
+ * constructed object is returned and becomes owned by the caller.
+ * custom_tag_start ()
+ * Implement this if the buildable needs to parse
+ * content below <child>. To handle an element, the implementation
+ * must fill in the parser structure and user_data and return TRUE.
+ * GtkWidget implements this to parse keyboard accelerators specified
+ * in <accelerator> elements. GtkContainer implements it to map
+ * properties defined via <packing> elements to child properties.
+ * Note that user_data must be freed in custom_tag_end or custom_finished.
+ * custom_tag_end ()
+ * Called for the end tag of each custom element that is
+ * handled by the buildable (see custom_tag_start).
+ * custom_finished ()
+ * Called for each custom tag handled by the buildable
+ * when the builder finishes parsing (see custom_tag_start)
+ * parser_finished ()
+ * Called when a builder finishes the parsing
+ * of a UI definition. It is normally not necessary to implement this,
+ * unless you need to perform special cleanup actions. GtkWindow sets
+ * the "visible" property here.
+ * get_internal_child ()
+ * Returns an internal child of a buildable.
+ * GtkDialog implements this to give access to its vbox, making
+ * it possible to add children to the vbox in a UI definition.
+ * Implement this if the buildable has internal children that may
+ * need to be accessed from a UI definition.
+ */
+public struct GtkBuildableIface
 {
-	GdkColor fg[5];
-	GdkColor bg[5];
-	GdkColor light[5];
-	GdkColor dark[5];
-	GdkColor mid[5];
-	GdkColor text[5];
-	GdkColor base[5];
-	GdkColor textAa[5]; /+* Halfway between text/base +/
-	GdkColor black;
-	GdkColor white;
-	PangoFontDescription *fontDesc;
-	int xthickness;
-	int ythickness;
-	cairo_pattern_t *background[5];
+	GTypeInterface gIface;
+	/+* virtual table +/
+	extern(C) void function(GtkBuildable* buildable, char* name)  setName;
+	extern(C) char * function(GtkBuildable* buildable)  getName;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* type)  addChild;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, char* name, GValue* value)  setBuildableProperty;
+	extern(C) GObject * function(GtkBuildable* buildable, GtkBuilder* builder, char* name)  constructChild;
+	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, GMarkupParser* parser, void** data)  customTagStart;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, void** data)  customTagEnd;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, void* data)  customFinished;
+	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder)  parserFinished;
+	extern(C) GObject * function(GtkBuildable* buildable, GtkBuilder* builder, char* childname)  getInternalChild;
 }
 
 
-public struct GtkRcProperty
-{
-	/+* quark-ified property identifier like "GtkScrollbar::spacing" +/
-	GQuark typeName;
-	GQuark propertyName;
-	/+* fields similar to GtkSettingsValue +/
-	char *origin;
-	GValue value;
-}
+/**
+ * Main Gtk struct.
+ */
+public struct GtkBuilder{}
 
 
 /**
@@ -3123,25 +3495,7 @@ public struct GtkDialog{}
 /**
  * Main Gtk struct.
  */
-public struct GtkInvisible{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkMessageDialog{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkWindow{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkWindowGroup{}
 
 
 /**
@@ -3161,15 +3515,136 @@ public struct GtkAssistant{}
 /**
  * Main Gtk struct.
  */
+public struct GtkWindow{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkWindowGroup{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkInvisible{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkOffscreenWindow{}
 
 
 /**
  * Main Gtk struct.
- * The GtkAccelLabel struct contains private data only, and
- * should be accessed using the functions below.
  */
-public struct GtkAccelLabel{}
+public struct GtkBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkGrid{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRevealer{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkListBox{}
+
+
+public struct GtkListBoxRow{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStack{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStackSwitcher{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHeaderBar{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkOverlay{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAlignment{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkButtonBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPaned{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkLayout{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkNotebook{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkExpander{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkOrientable{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAspectFrame{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkFixed{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkLabel{}
 
 
 /**
@@ -3183,25 +3658,7 @@ public struct GtkImage{}
 /**
  * Main Gtk struct.
  */
-public struct GtkLabel{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkProgressBar{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkStatusbar{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkLevelBar{}
+public struct GtkSpinner{}
 
 
 /**
@@ -3213,13 +3670,33 @@ public struct GtkInfoBar{}
 /**
  * Main Gtk struct.
  */
-public struct GtkStatusIcon{}
+public struct GtkProgressBar{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkSpinner{}
+public struct GtkLevelBar{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStatusbar{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkAccelLabel struct contains private data only, and
+ * should be accessed using the functions below.
+ */
+public struct GtkAccelLabel{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStatusIcon{}
 
 
 /**
@@ -3257,13 +3734,7 @@ public struct GtkLinkButton{}
 /**
  * Main Gtk struct.
  */
-public struct GtkScaleButton{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkVolumeButton{}
+public struct GtkMenuButton{}
 
 
 /**
@@ -3277,13 +3748,19 @@ public struct GtkSwitch{}
 /**
  * Main Gtk struct.
  */
-public struct GtkLockButton{}
+public struct GtkScaleButton{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkMenuButton{}
+public struct GtkVolumeButton{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkLockButton{}
 
 
 /**
@@ -3312,20 +3789,6 @@ public struct GtkScale{}
 
 /**
  * Main Gtk struct.
- */
-public struct GtkHScale{}
-
-
-/**
- * Main Gtk struct.
- * The GtkVScale struct contains private data only, and
- * should be accessed using the functions below.
- */
-public struct GtkVScale{}
-
-
-/**
- * Main Gtk struct.
  * The GtkSpinButton struct contains only private data and should
  * not be directly modified.
  */
@@ -3336,6 +3799,12 @@ public struct GtkSpinButton{}
  * Main Gtk struct.
  */
 public struct GtkSearchEntry{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSearchBar{}
 
 
 /**
@@ -3913,12 +4382,6 @@ public struct GtkMenuItem{}
 /**
  * Main Gtk struct.
  */
-public struct GtkImageMenuItem{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkRadioMenuItem{}
 
 
@@ -3932,12 +4395,6 @@ public struct GtkCheckMenuItem{}
  * Main Gtk struct.
  */
 public struct GtkSeparatorMenuItem{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkTearoffMenuItem{}
 
 
 /**
@@ -4043,170 +4500,6 @@ public struct GtkRadioToolButton{}
 /**
  * Main Gtk struct.
  */
-public struct GtkUIManager{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkActionGroup{}
-
-
-/**
- * GtkActionEntry structs are used with gtk_action_group_add_actions() to
- * construct actions.
- * const gchar *name;
- * The name of the action.
- * const gchar *stock_id;
- * The stock id for the action, or the name of an icon from the
- * icon theme.
- * const gchar *label;
- * The label for the action. This field should typically be marked
- * for translation, see gtk_action_group_set_translation_domain(). If
- * label is NULL, the label of the stock item with id stock_id is used.
- * const gchar *accelerator;
- * The accelerator for the action, in the format understood by
- * gtk_accelerator_parse().
- * const gchar *tooltip;
- * The tooltip for the action. This field should typically be
- * marked for translation, see gtk_action_group_set_translation_domain().
- * GCallback callback;
- * The function to call when the action is activated.
- */
-public struct GtkActionEntry
-{
-	char *name;
-	char *stockId;
-	char *label;
-	char *accelerator;
-	char *tooltip;
-	GCallback callback;
-}
-
-
-/**
- * GtkToggleActionEntry structs are used with
- * gtk_action_group_add_toggle_actions() to construct toggle actions.
- * const gchar *name;
- * The name of the action.
- * const gchar *stock_id;
- * The stock id for the action, or the name of an icon from the
- * icon theme.
- * const gchar *label;
- * The label for the action. This field should typically be marked
- * for translation, see gtk_action_group_set_translation_domain().
- * const gchar *accelerator;
- * The accelerator for the action, in the format understood by
- * gtk_accelerator_parse().
- * const gchar *tooltip;
- * The tooltip for the action. This field should typically be
- * marked for translation, see gtk_action_group_set_translation_domain().
- * GCallback callback;
- * The function to call when the action is activated.
- * gboolean is_active;
- * The initial state of the toggle action.
- */
-public struct GtkToggleActionEntry
-{
-	char *name;
-	char *stockId;
-	char *label;
-	char *accelerator;
-	char *tooltip;
-	GCallback callback;
-	int isActive;
-}
-
-
-/**
- * GtkRadioActionEntry structs are used with
- * gtk_action_group_add_radio_actions() to construct groups of radio actions.
- * const gchar *name;
- * The name of the action.
- * const gchar *stock_id;
- * The stock id for the action, or the name of an icon from the
- * icon theme.
- * const gchar *label;
- * The label for the action. This field should typically be marked
- * for translation, see gtk_action_group_set_translation_domain().
- * const gchar *accelerator;
- * The accelerator for the action, in the format understood by
- * gtk_accelerator_parse().
- * const gchar *tooltip;
- * The tooltip for the action. This field should typically be
- * marked for translation, see gtk_action_group_set_translation_domain().
- * gint value;
- * The value to set on the radio action. See
- * gtk_radio_action_get_current_value().
- */
-public struct GtkRadioActionEntry
-{
-	char *name;
-	char *stockId;
-	char *label;
-	char *accelerator;
-	char *tooltip;
-	int value;
-}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkAction{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkToggleAction{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkRadioAction{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkRecentAction{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkActivatable{}
-
-
-/**
- * GTypeInterface g_iface;
- * update ()
- * Called to update the activatable when its related action's properties change.
- * You must check the "use-action-appearance" property only apply action
- * properties that are meant to effect the appearance accordingly.
- * sync_action_properties ()
- * Called to update the activatable completely, this is called internally when
- * "related-action" property is set or unset and by the implementor when
- * "use-action-appearance" changes.
- * Note
- * This method can be called
- * with a NULL action at times
- * Since 2.16
- */
-public struct GtkActivatableIface
-{
-	GTypeInterface gIface;
-	/+* virtual table +/
-	extern(C) void function(GtkActivatable* activatable, GtkAction* action, char* propertyName)  update;
-	extern(C) void function(GtkActivatable* activatable, GtkAction* action)  syncActionProperties;
-}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkColorChooser{}
 
 
@@ -4226,24 +4519,6 @@ public struct GtkColorChooserWidget{}
  * Main Gtk struct.
  */
 public struct GtkColorChooserDialog{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkColorSelection{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkColorSelectionDialog{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkHSV{}
 
 
 /**
@@ -4329,127 +4604,7 @@ public struct GtkFontChooserDialog{}
 /**
  * Main Gtk struct.
  */
-public struct GtkFontSelection{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkFontSelectionDialog{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkGrid{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkAlignment{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkAspectFrame{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkHBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkVBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkButtonBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkHButtonBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkVButtonBox{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkFixed{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkPaned{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkHPaned{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkVPaned{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkLayout{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkNotebook{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkTable{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkExpander{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkOverlay{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkOrientable{}
+public struct GtkPlacesSidebar{}
 
 
 /**
@@ -4467,35 +4622,7 @@ public struct GtkSeparator{}
 /**
  * Main Gtk struct.
  */
-public struct GtkHSeparator{}
-
-
-/**
- * Main Gtk struct.
- * The GtkVSeparator struct contains private data only, and
- * should be accessed using the functions below.
- */
-public struct GtkVSeparator{}
-
-
-/**
- * Main Gtk struct.
- */
 public struct GtkScrollbar{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkHScrollbar{}
-
-
-/**
- * Main Gtk struct.
- * The GtkVScrollbar struct contains private data and should be accessed
- * using the functions below.
- */
-public struct GtkVScrollbar{}
 
 
 /**
@@ -5009,128 +5136,378 @@ public struct GtkAppChooserWidget{}
 /**
  * Main Gtk struct.
  */
-public struct GtkBuildable{}
+public struct GtkSymbolicColor{}
 
 
 /**
- * The GtkBuildableIface interface contains method that are
- * necessary to allow GtkBuilder to construct an object from
- * a GtkBuilder UI definition.
- * GTypeInterface g_iface;
- * the parent class
- * set_name ()
- * Stores the name attribute given in the GtkBuilder UI definition.
- * GtkWidget stores the name as object data. Implement this method if your
- * object has some notion of "name" and it makes sense to map the XML name
- * attribute to it.
- * get_name ()
- * The getter corresponding to set_name. Implement this
- * if you implement set_name.
- * add_child ()
- * Adds a child. The type parameter can be used to
- * differentiate the kind of child. GtkContainer implements this
- * to add add a child widget to the container, GtkNotebook uses
- * the type to distinguish between page labels (of type "page-label")
- * and normal children.
- * set_buildable_property ()
- * Sets a property of a buildable object.
- * It is normally not necessary to implement this, g_object_set_property()
- * is used by default. GtkWindow implements this to delay showing itself
- * (i.e. setting the "visible" property) until the whole interface
- * is created.
- * construct_child ()
- * Constructs a child of a buildable that has been
- * specified as "constructor" in the UI definition. GtkUIManager implements
- * this to reference to a widget created in a <ui> tag which is outside
- * of the normal GtkBuilder UI definition hierarchy. A reference to the
- * constructed object is returned and becomes owned by the caller.
- * custom_tag_start ()
- * Implement this if the buildable needs to parse
- * content below <child>. To handle an element, the implementation
- * must fill in the parser structure and user_data and return TRUE.
- * GtkWidget implements this to parse keyboard accelerators specified
- * in <accelerator> elements. GtkContainer implements it to map
- * properties defined via <packing> elements to child properties.
- * Note that user_data must be freed in custom_tag_end or custom_finished.
- * custom_tag_end ()
- * Called for the end tag of each custom element that is
- * handled by the buildable (see custom_tag_start).
- * custom_finished ()
- * Called for each custom tag handled by the buildable
- * when the builder finishes parsing (see custom_tag_start)
- * parser_finished ()
- * Called when a builder finishes the parsing
- * of a UI definition. It is normally not necessary to implement this,
- * unless you need to perform special cleanup actions. GtkWindow sets
- * the "visible" property here.
- * get_internal_child ()
- * Returns an internal child of a buildable.
- * GtkDialog implements this to give access to its vbox, making
- * it possible to add children to the vbox in a UI definition.
- * Implement this if the buildable has internal children that may
- * need to be accessed from a UI definition.
+ * Main Gtk struct.
  */
-public struct GtkBuildableIface
+public struct GtkGradient{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkRcStyle structure is used to represent a set
+ * of information about the appearance of a widget.
+ * This can later be composited together with other
+ * GtkRcStyle structures to form a GtkStyle.
+ */
+public struct GtkRcStyle
 {
-	GTypeInterface gIface;
-	/+* virtual table +/
-	extern(C) void function(GtkBuildable* buildable, char* name)  setName;
-	extern(C) char * function(GtkBuildable* buildable)  getName;
-	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* type)  addChild;
-	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, char* name, GValue* value)  setBuildableProperty;
-	extern(C) GObject * function(GtkBuildable* buildable, GtkBuilder* builder, char* name)  constructChild;
-	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, GMarkupParser* parser, void** data)  customTagStart;
-	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, void** data)  customTagEnd;
-	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* tagname, void* data)  customFinished;
-	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder)  parserFinished;
-	extern(C) GObject * function(GtkBuildable* buildable, GtkBuilder* builder, char* childname)  getInternalChild;
+	char *name;
+	char *bgPixmapName[5];
+	PangoFontDescription *fontDesc;
+	GtkRcFlags colorFlags[5];
+	GdkColor fg[5];
+	GdkColor bg[5];
+	GdkColor text[5];
+	GdkColor base[5];
+	int xthickness;
+	int ythickness;
 }
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkBuilder{}
+public struct GtkStyle
+{
+	GdkColor fg[5];
+	GdkColor bg[5];
+	GdkColor light[5];
+	GdkColor dark[5];
+	GdkColor mid[5];
+	GdkColor text[5];
+	GdkColor base[5];
+	GdkColor textAa[5]; /+* Halfway between text/base +/
+	GdkColor black;
+	GdkColor white;
+	PangoFontDescription *fontDesc;
+	int xthickness;
+	int ythickness;
+	cairo_pattern_t *background[5];
+}
+
+
+public struct GtkRcProperty
+{
+	/+* quark-ified property identifier like "GtkScrollbar::spacing" +/
+	GQuark typeName;
+	GQuark propertyName;
+	/+* fields similar to GtkSettingsValue +/
+	char *origin;
+	GValue value;
+}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkApplication{}
+public struct GtkHScale{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkVScale struct contains private data only, and
+ * should be accessed using the functions below.
+ */
+public struct GtkVScale{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkApplicationWindow{}
+public struct GtkTearoffMenuItem{}
 
 
 /**
  * Main Gtk struct.
- * An opaque pointer type.
  */
-public struct GtkActionable{}
+public struct GtkColorSelection{}
 
 
 /**
- * The interface vtable for GtkActionable.
+ * Main Gtk struct.
+ */
+public struct GtkColorSelectionDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHSV{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkFontSelection{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkFontSelectionDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkVBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHButtonBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkVButtonBox{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHPaned{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkVPaned{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkTable{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHSeparator{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkVSeparator struct contains private data only, and
+ * should be accessed using the functions below.
+ */
+public struct GtkVSeparator{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkHScrollbar{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkVScrollbar struct contains private data and should be accessed
+ * using the functions below.
+ */
+public struct GtkVScrollbar{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkUIManager{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkActionGroup{}
+
+
+/**
+ * Warning
+ * GtkActionEntry is deprecated and should not be used in newly-written code. 3.10
+ * GtkActionEntry structs are used with gtk_action_group_add_actions() to
+ * construct actions.
+ * const gchar *name;
+ * The name of the action.
+ * const gchar *stock_id;
+ * The stock id for the action, or the name of an icon from the
+ * icon theme.
+ * const gchar *label;
+ * The label for the action. This field should typically be marked
+ * for translation, see gtk_action_group_set_translation_domain(). If
+ * label is NULL, the label of the stock item with id stock_id is used.
+ * const gchar *accelerator;
+ * The accelerator for the action, in the format understood by
+ * gtk_accelerator_parse().
+ * const gchar *tooltip;
+ * The tooltip for the action. This field should typically be
+ * marked for translation, see gtk_action_group_set_translation_domain().
+ * GCallback callback;
+ * The function to call when the action is activated.
+ */
+public struct GtkActionEntry
+{
+	char *name;
+	char *stockId;
+	char *label;
+	char *accelerator;
+	char *tooltip;
+	GCallback callback;
+}
+
+
+/**
+ * Warning
+ * GtkToggleActionEntry is deprecated and should not be used in newly-written code. 3.10
+ * GtkToggleActionEntry structs are used with
+ * gtk_action_group_add_toggle_actions() to construct toggle actions.
+ * const gchar *name;
+ * The name of the action.
+ * const gchar *stock_id;
+ * The stock id for the action, or the name of an icon from the
+ * icon theme.
+ * const gchar *label;
+ * The label for the action. This field should typically be marked
+ * for translation, see gtk_action_group_set_translation_domain().
+ * const gchar *accelerator;
+ * The accelerator for the action, in the format understood by
+ * gtk_accelerator_parse().
+ * const gchar *tooltip;
+ * The tooltip for the action. This field should typically be
+ * marked for translation, see gtk_action_group_set_translation_domain().
+ * GCallback callback;
+ * The function to call when the action is activated.
+ * gboolean is_active;
+ * The initial state of the toggle action.
+ */
+public struct GtkToggleActionEntry
+{
+	char *name;
+	char *stockId;
+	char *label;
+	char *accelerator;
+	char *tooltip;
+	GCallback callback;
+	int isActive;
+}
+
+
+/**
+ * Warning
+ * GtkRadioActionEntry is deprecated and should not be used in newly-written code. 3.10
+ * GtkRadioActionEntry structs are used with
+ * gtk_action_group_add_radio_actions() to construct groups of radio actions.
+ * const gchar *name;
+ * The name of the action.
+ * const gchar *stock_id;
+ * The stock id for the action, or the name of an icon from the
+ * icon theme.
+ * const gchar *label;
+ * The label for the action. This field should typically be marked
+ * for translation, see gtk_action_group_set_translation_domain().
+ * const gchar *accelerator;
+ * The accelerator for the action, in the format understood by
+ * gtk_accelerator_parse().
+ * const gchar *tooltip;
+ * The tooltip for the action. This field should typically be
+ * marked for translation, see gtk_action_group_set_translation_domain().
+ * gint value;
+ * The value to set on the radio action. See
+ * gtk_radio_action_get_current_value().
+ */
+public struct GtkRadioActionEntry
+{
+	char *name;
+	char *stockId;
+	char *label;
+	char *accelerator;
+	char *tooltip;
+	int value;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAction{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkToggleAction{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRadioAction{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRecentAction{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkActivatable{}
+
+
+/**
+ * Warning
+ * GtkActivatableIface is deprecated and should not be used in newly-written code. 3.10
  * GTypeInterface g_iface;
- * get_action_name ()
- * virtual pointer for gtk_actionable_get_action_name()
- * set_action_name ()
- * virtual pointer for gtk_actionable_set_action_name()
- * get_action_target_value ()
- * virtual pointer for gtk_actionable_get_action_target_value()
- * set_action_target_value ()
- * virtual pointer for gtk_actionable_set_action_target_value
+ * update ()
+ * Called to update the activatable when its related action's properties change.
+ * You must check the "use-action-appearance" property only apply action
+ * properties that are meant to effect the appearance accordingly.
+ * sync_action_properties ()
+ * Called to update the activatable completely, this is called internally when
+ * "related-action" property is set or unset and by the implementor when
+ * "use-action-appearance" changes.
+ * Note
+ * This method can be called
+ * with a NULL action at times
+ * Since 2.16
  */
-public struct GtkActionableInterface
+public struct GtkActivatableIface
 {
 	GTypeInterface gIface;
-	extern(C) char * function(GtkActionable* actionable)  getActionName;
-	extern(C) void function(GtkActionable* actionable, char* actionName)  setActionName;
-	extern(C) GVariant * function(GtkActionable* actionable)  getActionTargetValue;
-	extern(C) void function(GtkActionable* actionable, GVariant* targetValue)  setActionTargetValue;
+	/+* virtual table +/
+	extern(C) void function(GtkActivatable* activatable, GtkAction* action, char* propertyName)  update;
+	extern(C) void function(GtkActivatable* activatable, GtkAction* action)  syncActionProperties;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkImageMenuItem{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkStockItem
+{
+	char *stockId;
+	char *label;
+	GdkModifierType modifier;
+	uint keyval;
+	char *translationDomain;
 }
 
 
@@ -5149,13 +5526,15 @@ public struct GtkActionableInterface
 // #define GTK_CHECK_VERSION(major,minor,micro)
 
 /*
- * style :
- * a GtkStyle.
- * Returns :
- * whether the style is attached to a window.
+ * This macro should be used to emit a warning about and unexpected type value
+ * in a GtkBuildable add_child implementation.
+ * object :
+ * the GtkBuildable on which the warning ocurred
+ * type :
+ * the unexpected type value
  */
 // TODO
-// #define GTK_STYLE_ATTACHED(style) (GTK_STYLE (style)->attach_count > 0)
+// #define GTK_BUILDER_WARN_INVALID_CHILD_TYPE(object, type)
 
 /*
  * This macro should be used to emit a standard warning about unexpected
@@ -5191,15 +5570,13 @@ public struct GtkActionableInterface
 // #define GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID(object, property_id, pspec)
 
 /*
- * This macro should be used to emit a warning about and unexpected type value
- * in a GtkBuildable add_child implementation.
- * object :
- * the GtkBuildable on which the warning ocurred
- * type :
- * the unexpected type value
+ * style :
+ * a GtkStyle.
+ * Returns :
+ * whether the style is attached to a window.
  */
 // TODO
-// #define GTK_BUILDER_WARN_INVALID_CHILD_TYPE(object, type)
+// #define GTK_STYLE_ATTACHED(style) (GTK_STYLE (style)->attach_count > 0)
 
 /*
  * Each GTK+ module must have a function gtk_module_init()
@@ -5384,26 +5761,30 @@ public alias extern(C) void function(GtkClipboard* clipboard, void* userDataOrOw
 public alias extern(C) int function(char* string, GValue* value, GError** error) GtkStylePropertyParser;
 
 /*
- * Property Details
- * The "context" property
- *  "context" GtkStyleContext* : Read / Write / Construct Only
- * GtkStyleContext to get style from.
- * Signal Details
- * The "realize" signal
- * void user_function (GtkStyle *style,
- *  gpointer user_data) : Run First
- * Emitted when the style has been initialized for a particular
- * visual. Connecting to this signal is probably seldom
- * useful since most of the time applications and widgets only
- * deal with styles that have been already realized.
- * style :
- * the object which received the signal
+ * This is the signature of a function used to connect signals. It is used
+ * by the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
+ * methods. It is mainly intended for interpreted language bindings, but
+ * could be useful where the programmer wants more control over the signal
+ * connection process. Note that this function can only be called once,
+ * subsequent calls will do nothing.
+ * builder :
+ * a GtkBuilder
+ * object :
+ * object to connect a signal to
+ * signal_name :
+ * name of the signal
+ * handler_name :
+ * name of the handler
+ * connect_object :
+ * a GObject, if non-NULL, use g_signal_connect_object()
+ * flags :
+ * GConnectFlags to use
  * user_data :
- * user data set when the signal handler was connected.
- * Since 2.4
+ * user data
+ * Since 2.12
  */
-// gboolean (*GtkRcPropertyParser) (const GParamSpec *pspec,  const GString *rc_string,  GValue *property_value);
-public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue* propertyValue) GtkRcPropertyParser;
+// void (*GtkBuilderConnectFunc) (GtkBuilder *builder,  GObject *object,  const gchar *signal_name,  const gchar *handler_name,  GObject *connect_object,  GConnectFlags flags,  gpointer user_data);
+public alias extern(C) void function(GtkBuilder* builder, GObject* object, char* signalName, char* handlerName, GObject* connectObject, GConnectFlags flags, void* userData) GtkBuilderConnectFunc;
 
 /*
  * A function used by gtk_assistant_set_forward_page_func() to know which
@@ -5419,6 +5800,52 @@ public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue
  */
 // gint (*GtkAssistantPageFunc) (gint current_page,  gpointer data);
 public alias extern(C) int function(int currentPage, void* data) GtkAssistantPageFunc;
+
+/*
+ * Will be called whenever the row changes or is added and lets you control
+ * if the row should be visible or not.
+ * row :
+ * the row that may be filtered
+ * user_data :
+ * user data. [closure]
+ * Returns :
+ * TRUE if the row should be visible, FALSE otherwise
+ * Since 3.10
+ */
+// gboolean (*GtkListBoxFilterFunc) (GtkListBoxRow *row,  gpointer user_data);
+public alias extern(C) int function(GtkListBoxRow* row, void* userData) GtkListBoxFilterFunc;
+
+/*
+ * Compare two rows to determine which should be first.
+ * row1 :
+ * the first row
+ * row2 :
+ * the second row
+ * user_data :
+ * user data. [closure]
+ * Returns :
+ * < 0 if row1 should be before row2, 0 if they are
+ * equal and > 0 otherwise
+ * Since 3.10
+ */
+// gint (*GtkListBoxSortFunc) (GtkListBoxRow *row1,  GtkListBoxRow *row2,  gpointer user_data);
+public alias extern(C) int function(GtkListBoxRow* row1, GtkListBoxRow* row2, void* userData) GtkListBoxSortFunc;
+
+/*
+ * Whenever row changes or which row is before row changes this
+ * is called, which lets you update the header on row. You may
+ * remove or set a new one via gtk_list_box_row_set_header() or
+ * just change the state of the current header widget.
+ * row :
+ * the row to update
+ * before :
+ * the row before row, or NULL if it is first. [allow-none]
+ * user_data :
+ * user data. [closure]
+ * Since 3.10
+ */
+// void (*GtkListBoxUpdateHeaderFunc) (GtkListBoxRow *row,  GtkListBoxRow *before,  gpointer user_data);
+public alias extern(C) void function(GtkListBoxRow* row, GtkListBoxRow* before, void* userData) GtkListBoxUpdateHeaderFunc;
 
 /*
  * A function which decides whether the row indicated by iter matches
@@ -5835,28 +6262,6 @@ public alias extern(C) void function(GtkMenu* menu, gint* x, gint* y, gboolean* 
 public alias extern(C) void function(GtkWidget* attachWidget, GtkMenu* menu) GtkMenuDetachFunc;
 
 /*
- */
-// gchar * (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
-public alias extern(C) char * function(char* path, void* funcData) GtkTranslateFunc;
-
-/*
- */
-// void (*GtkColorSelectionChangePaletteFunc)  (const GdkColor *colors,  gint n_colors);
-public alias extern(C) void function(GdkColor* colors, int nColors) GtkColorSelectionChangePaletteFunc;
-
-/*
- * Since 2.2
- * Property Details
- * The "current-alpha" property
- *  "current-alpha" guint : Read / Write
- * The current opacity value (0 fully transparent, 65535 fully opaque).
- * Allowed values: <= 65535
- * Default value: 65535
- */
-// void (*GtkColorSelectionChangePaletteWithScreenFunc)  (GdkScreen *screen,  const GdkColor *colors,  gint n_colors);
-public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nColors) GtkColorSelectionChangePaletteWithScreenFunc;
-
-/*
  * The type of function that is used with custom filters, see
  * gtk_file_filter_add_custom().
  * filter_info :
@@ -6002,721 +6407,45 @@ public alias extern(C) int function(GtkRecentInfo* a, GtkRecentInfo* b, void* us
 public alias extern(C) int function(GtkRecentFilterInfo* filterInfo, void* userData) GtkRecentFilterFunc;
 
 /*
- * This is the signature of a function used to connect signals. It is used
- * by the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
- * methods. It is mainly intended for interpreted language bindings, but
- * could be useful where the programmer wants more control over the signal
- * connection process. Note that this function can only be called once,
- * subsequent calls will do nothing.
- * builder :
- * a GtkBuilder
- * object :
- * object to connect a signal to
- * signal_name :
- * name of the signal
- * handler_name :
- * name of the handler
- * connect_object :
- * a GObject, if non-NULL, use g_signal_connect_object()
- * flags :
- * GConnectFlags to use
+ * Property Details
+ * The "context" property
+ *  "context" GtkStyleContext* : Read / Write / Construct Only
+ * GtkStyleContext to get style from.
+ * Signal Details
+ * The "realize" signal
+ * void user_function (GtkStyle *style,
+ *  gpointer user_data) : Run First
+ * Emitted when the style has been initialized for a particular
+ * visual. Connecting to this signal is probably seldom
+ * useful since most of the time applications and widgets only
+ * deal with styles that have been already realized.
+ * style :
+ * the object which received the signal
  * user_data :
- * user data
- * Since 2.12
+ * user data set when the signal handler was connected.
+ * Since 2.4
  */
-// void (*GtkBuilderConnectFunc) (GtkBuilder *builder,  GObject *object,  const gchar *signal_name,  const gchar *handler_name,  GObject *connect_object,  GConnectFlags flags,  gpointer user_data);
-public alias extern(C) void function(GtkBuilder* builder, GObject* object, char* signalName, char* handlerName, GObject* connectObject, GConnectFlags flags, void* userData) GtkBuilderConnectFunc;
+// gboolean (*GtkRcPropertyParser) (const GParamSpec *pspec,  const GString *rc_string,  GValue *property_value);
+public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue* propertyValue) GtkRcPropertyParser;
 
+/*
+ */
+// void (*GtkColorSelectionChangePaletteFunc)  (const GdkColor *colors,  gint n_colors);
+public alias extern(C) void function(GdkColor* colors, int nColors) GtkColorSelectionChangePaletteFunc;
 
-// StockIDs
-enum StockID
-{
-	
-	/**
-	 * The "About" item.
-	 * Since 2.6
-	 */
-	ABOUT,
-	
-	/**
-	 * The "Add" item.
-	 */
-	ADD,
-	
-	/**
-	 * The "Apply" item.
-	 */
-	APPLY,
-	
-	/**
-	 * The "Bold" item.
-	 */
-	BOLD,
-	
-	/**
-	 * The "Cancel" item.
-	 */
-	CANCEL,
-	
-	/**
-	 * The "Caps Lock Warning" icon.
-	 * Since 2.16
-	 */
-	CAPS_LOCK_WARNING,
-	
-	/**
-	 * The "CD-Rom" item.
-	 */
-	CDROM,
-	
-	/**
-	 * The "Clear" item.
-	 */
-	CLEAR,
-	
-	/**
-	 * The "Close" item.
-	 */
-	CLOSE,
-	
-	/**
-	 * The "Color Picker" item.
-	 * Since 2.2
-	 */
-	COLOR_PICKER,
-	
-	/**
-	 * The "Convert" item.
-	 */
-	CONVERT,
-	
-	/**
-	 * The "Connect" icon.
-	 * Since 2.6
-	 */
-	CONNECT,
-	
-	/**
-	 * The "Copy" item.
-	 */
-	COPY,
-	
-	/**
-	 * The "Cut" item.
-	 */
-	CUT,
-	
-	/**
-	 * The "Delete" item.
-	 */
-	DELETE,
-	
-	/**
-	 * The "Authentication" item.
-	 * Since 2.4
-	 */
-	DIALOG_AUTHENTICATION,
-	
-	/**
-	 * The "Error" item.
-	 */
-	DIALOG_ERROR,
-	
-	/**
-	 * The "Information" item.
-	 */
-	DIALOG_INFO,
-	
-	/**
-	 * The "Question" item.
-	 */
-	DIALOG_QUESTION,
-	
-	/**
-	 * The "Warning" item.
-	 */
-	DIALOG_WARNING,
-	
-	/**
-	 * The "Directory" icon.
-	 * Since 2.6
-	 */
-	DIRECTORY,
-	
-	/**
-	 * The "Discard" item.
-	 * Since 2.12
-	 */
-	DISCARD,
-	
-	/**
-	 * The "Disconnect" icon.
-	 * Since 2.6
-	 */
-	DISCONNECT,
-	
-	/**
-	 * The "Drag-And-Drop" icon.
-	 */
-	DND,
-	
-	/**
-	 * The "Drag-And-Drop multiple" icon.
-	 */
-	DND_MULTIPLE,
-	
-	/**
-	 * The "Edit" item.
-	 * Since 2.6
-	 */
-	EDIT,
-	
-	/**
-	 * The "Execute" item.
-	 */
-	EXECUTE,
-	
-	/**
-	 * The "File" item.
-	 * Since 3.0, this item has a label, before it only had an icon.
-	 * Since 2.6
-	 */
-	FILE,
-	
-	/**
-	 * The "Find" item.
-	 */
-	FIND,
-	
-	/**
-	 * The "Find and Replace" item.
-	 */
-	FIND_AND_REPLACE,
-	
-	/**
-	 * The "Floppy" item.
-	 */
-	FLOPPY,
-	
-	/**
-	 * The "Fullscreen" item.
-	 * Since 2.8
-	 */
-	FULLSCREEN,
-	
-	/**
-	 * The "Bottom" item.
-	 */
-	GOTO_BOTTOM,
-	
-	/**
-	 * The "First" item.
-	 * RTL variant
-	 */
-	GOTO_FIRST,
-	
-	/**
-	 * The "Last" item.
-	 * RTL variant
-	 */
-	GOTO_LAST,
-	
-	/**
-	 * The "Top" item.
-	 */
-	GOTO_TOP,
-	
-	/**
-	 * The "Back" item.
-	 * RTL variant
-	 */
-	GO_BACK,
-	
-	/**
-	 * The "Down" item.
-	 */
-	GO_DOWN,
-	
-	/**
-	 * The "Forward" item.
-	 * RTL variant
-	 */
-	GO_FORWARD,
-	
-	/**
-	 * The "Up" item.
-	 */
-	GO_UP,
-	
-	/**
-	 * The "Harddisk" item.
-	 * Since 2.4
-	 */
-	HARDDISK,
-	
-	/**
-	 * The "Help" item.
-	 */
-	HELP,
-	
-	/**
-	 * The "Home" item.
-	 */
-	HOME,
-	
-	/**
-	 * The "Indent" item.
-	 * RTL variant
-	 * Since 2.4
-	 */
-	INDENT,
-	
-	/**
-	 * The "Index" item.
-	 */
-	INDEX,
-	
-	/**
-	 * The "Info" item.
-	 * Since 2.8
-	 */
-	INFO,
-	
-	/**
-	 * The "Italic" item.
-	 */
-	ITALIC,
-	
-	/**
-	 * The "Jump to" item.
-	 * RTL-variant
-	 */
-	JUMP_TO,
-	
-	/**
-	 * The "Center" item.
-	 */
-	JUSTIFY_CENTER,
-	
-	/**
-	 * The "Fill" item.
-	 */
-	JUSTIFY_FILL,
-	
-	/**
-	 * The "Left" item.
-	 */
-	JUSTIFY_LEFT,
-	
-	/**
-	 * The "Right" item.
-	 */
-	JUSTIFY_RIGHT,
-	
-	/**
-	 * The "Leave Fullscreen" item.
-	 * Since 2.8
-	 */
-	LEAVE_FULLSCREEN,
-	
-	/**
-	 * The "Media Forward" item.
-	 * RTL variant
-	 * Since 2.6
-	 */
-	MEDIA_FORWARD,
-	
-	/**
-	 * The "Media Next" item.
-	 * RTL variant
-	 * Since 2.6
-	 */
-	MEDIA_NEXT,
-	
-	/**
-	 * The "Media Pause" item.
-	 * Since 2.6
-	 */
-	MEDIA_PAUSE,
-	
-	/**
-	 * The "Media Play" item.
-	 * RTL variant
-	 * Since 2.6
-	 */
-	MEDIA_PLAY,
-	
-	/**
-	 * The "Media Previous" item.
-	 * RTL variant
-	 * Since 2.6
-	 */
-	MEDIA_PREVIOUS,
-	
-	/**
-	 * The "Media Record" item.
-	 * Since 2.6
-	 */
-	MEDIA_RECORD,
-	
-	/**
-	 * The "Media Rewind" item.
-	 * RTL variant
-	 * Since 2.6
-	 */
-	MEDIA_REWIND,
-	
-	/**
-	 * The "Media Stop" item.
-	 * Since 2.6
-	 */
-	MEDIA_STOP,
-	
-	/**
-	 * The "Missing image" icon.
-	 */
-	MISSING_IMAGE,
-	
-	/**
-	 * The "Network" item.
-	 * Since 2.4
-	 */
-	NETWORK,
-	
-	/**
-	 * The "New" item.
-	 */
-	NEW,
-	
-	/**
-	 * The "No" item.
-	 */
-	NO,
-	
-	/**
-	 * The "OK" item.
-	 */
-	OK,
-	
-	/**
-	 * The "Open" item.
-	 */
-	OPEN,
-	
-	/**
-	 * The "Landscape Orientation" item.
-	 * Since 2.10
-	 */
-	ORIENTATION_LANDSCAPE,
-	
-	/**
-	 * The "Portrait Orientation" item.
-	 * Since 2.10
-	 */
-	ORIENTATION_PORTRAIT,
-	
-	/**
-	 * The "Reverse Landscape Orientation" item.
-	 * Since 2.10
-	 */
-	ORIENTATION_REVERSE_LANDSCAPE,
-	
-	/**
-	 * The "Reverse Portrait Orientation" item.
-	 * Since 2.10
-	 */
-	ORIENTATION_REVERSE_PORTRAIT,
-	
-	/**
-	 * The "Page Setup" item.
-	 * Since 2.14
-	 */
-	PAGE_SETUP,
-	
-	/**
-	 * The "Paste" item.
-	 */
-	PASTE,
-	
-	/**
-	 * The "Preferences" item.
-	 */
-	PREFERENCES,
-	
-	/**
-	 * The "Print" item.
-	 */
-	PRINT,
-	
-	/**
-	 * The "Print Error" icon.
-	 * Since 2.14
-	 */
-	PRINT_ERROR,
-	
-	/**
-	 * The "Print Paused" icon.
-	 * Since 2.14
-	 */
-	PRINT_PAUSED,
-	
-	/**
-	 * The "Print Preview" item.
-	 */
-	PRINT_PREVIEW,
-	
-	/**
-	 * The "Print Report" icon.
-	 * Since 2.14
-	 */
-	PRINT_REPORT,
-	
-	/**
-	 * The "Print Warning" icon.
-	 * Since 2.14
-	 */
-	PRINT_WARNING,
-	
-	/**
-	 * The "Properties" item.
-	 */
-	PROPERTIES,
-	
-	/**
-	 * The "Quit" item.
-	 */
-	QUIT,
-	
-	/**
-	 * The "Redo" item.
-	 * RTL variant
-	 */
-	REDO,
-	
-	/**
-	 * The "Refresh" item.
-	 */
-	REFRESH,
-	
-	/**
-	 * The "Remove" item.
-	 */
-	REMOVE,
-	
-	/**
-	 * The "Revert" item.
-	 * RTL variant
-	 */
-	REVERT_TO_SAVED,
-	
-	/**
-	 * The "Save" item.
-	 */
-	SAVE,
-	
-	/**
-	 * The "Save As" item.
-	 */
-	SAVE_AS,
-	
-	/**
-	 * The "Select All" item.
-	 * Since 2.10
-	 */
-	SELECT_ALL,
-	
-	/**
-	 * The "Color" item.
-	 */
-	SELECT_COLOR,
-	
-	/**
-	 * The "Font" item.
-	 */
-	SELECT_FONT,
-	
-	/**
-	 * The "Ascending" item.
-	 */
-	SORT_ASCENDING,
-	
-	/**
-	 * The "Descending" item.
-	 */
-	SORT_DESCENDING,
-	
-	/**
-	 * The "Spell Check" item.
-	 */
-	SPELL_CHECK,
-	
-	/**
-	 * The "Stop" item.
-	 */
-	STOP,
-	
-	/**
-	 * The "Strikethrough" item.
-	 */
-	STRIKETHROUGH,
-	
-	/**
-	 * The "Undelete" item.
-	 * RTL variant
-	 */
-	UNDELETE,
-	
-	/**
-	 * The "Underline" item.
-	 */
-	UNDERLINE,
-	
-	/**
-	 * The "Undo" item.
-	 * RTL variant
-	 */
-	UNDO,
-	
-	/**
-	 * The "Unindent" item.
-	 * RTL variant
-	 * Since 2.4
-	 */
-	UNINDENT,
-	
-	/**
-	 * The "Yes" item.
-	 */
-	YES,
-	
-	/**
-	 * The "Zoom 100%" item.
-	 */
-	ZOOM_100,
-	
-	/**
-	 * The "Zoom to Fit" item.
-	 */
-	ZOOM_FIT,
-	
-	/**
-	 * The "Zoom In" item.
-	 */
-	ZOOM_IN,
-	
-	/**
-	 * The "Zoom Out" item.
-	 */
-	ZOOM_OUT,
+/*
+ * Since 2.2
+ * Property Details
+ * The "current-alpha" property
+ *  "current-alpha" guint : Read / Write
+ * The current opacity value (0 fully transparent, 65535 fully opaque).
+ * Allowed values: <= 65535
+ * Default value: 65535
+ */
+// void (*GtkColorSelectionChangePaletteWithScreenFunc)  (GdkScreen *screen,  const GdkColor *colors,  gint n_colors);
+public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nColors) GtkColorSelectionChangePaletteWithScreenFunc;
 
-}
-
-// Stock strings
-string[] StockDesc = 
-[	"gtk-about",
-	"gtk-add",
-	"gtk-apply",
-	"gtk-bold",
-	"gtk-cancel",
-	"gtk-caps-lock-warning",
-	"gtk-cdrom",
-	"gtk-clear",
-	"gtk-close",
-	"gtk-color-picker",
-	"gtk-convert",
-	"gtk-connect",
-	"gtk-copy",
-	"gtk-cut",
-	"gtk-delete",
-	"gtk-dialog-authentication",
-	"gtk-dialog-error",
-	"gtk-dialog-info",
-	"gtk-dialog-question",
-	"gtk-dialog-warning",
-	"gtk-directory",
-	"gtk-discard",
-	"gtk-disconnect",
-	"gtk-dnd",
-	"gtk-dnd-multiple",
-	"gtk-edit",
-	"gtk-execute",
-	"gtk-file",
-	"gtk-find",
-	"gtk-find-and-replace",
-	"gtk-floppy",
-	"gtk-fullscreen",
-	"gtk-goto-bottom",
-	"gtk-goto-first",
-	"gtk-goto-last",
-	"gtk-goto-top",
-	"gtk-go-back",
-	"gtk-go-down",
-	"gtk-go-forward",
-	"gtk-go-up",
-	"gtk-harddisk",
-	"gtk-help",
-	"gtk-home",
-	"gtk-indent",
-	"gtk-index",
-	"gtk-info",
-	"gtk-italic",
-	"gtk-jump-to",
-	"gtk-justify-center",
-	"gtk-justify-fill",
-	"gtk-justify-left",
-	"gtk-justify-right",
-	"gtk-leave-fullscreen",
-	"gtk-media-forward",
-	"gtk-media-next",
-	"gtk-media-pause",
-	"gtk-media-play",
-	"gtk-media-previous",
-	"gtk-media-record",
-	"gtk-media-rewind",
-	"gtk-media-stop",
-	"gtk-missing-image",
-	"gtk-network",
-	"gtk-new",
-	"gtk-no",
-	"gtk-ok",
-	"gtk-open",
-	"gtk-orientation-landscape",
-	"gtk-orientation-portrait",
-	"gtk-orientation-reverse-landscape",
-	"gtk-orientation-reverse-portrait",
-	"gtk-page-setup",
-	"gtk-paste",
-	"gtk-preferences",
-	"gtk-print",
-	"gtk-print-error",
-	"gtk-print-paused",
-	"gtk-print-preview",
-	"gtk-print-report",
-	"gtk-print-warning",
-	"gtk-properties",
-	"gtk-quit",
-	"gtk-redo",
-	"gtk-refresh",
-	"gtk-remove",
-	"gtk-revert-to-saved",
-	"gtk-save",
-	"gtk-save-as",
-	"gtk-select-all",
-	"gtk-select-color",
-	"gtk-select-font",
-	"gtk-sort-ascending",
-	"gtk-sort-descending",
-	"gtk-spell-check",
-	"gtk-stop",
-	"gtk-strikethrough",
-	"gtk-undelete",
-	"gtk-underline",
-	"gtk-undo",
-	"gtk-unindent",
-	"gtk-yes",
-	"gtk-zoom-100",
-	"gtk-zoom-fit",
-	"gtk-zoom-in",
-	"gtk-zoom-out",
-
-];
+/*
+ */
+// gchar * (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
+public alias extern(C) char * function(char* path, void* funcData) GtkTranslateFunc;

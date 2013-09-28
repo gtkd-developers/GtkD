@@ -187,6 +187,8 @@ public class Image : Misc
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_image_get_icon_set has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_image_get_icon_name() instead.
 	 * Gets the icon set and size being displayed by the GtkImage.
 	 * The storage type of the image must be GTK_IMAGE_EMPTY or
 	 * GTK_IMAGE_ICON_SET (see gtk_image_get_storage_type()).
@@ -228,6 +230,8 @@ public class Image : Misc
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_get_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_image_get_icon_name() instead.
 	 * Gets the stock icon name and size being displayed by the GtkImage.
 	 * The storage type of the image must be GTK_IMAGE_EMPTY or
 	 * GTK_IMAGE_STOCK (see gtk_image_get_storage_type()).
@@ -358,6 +362,8 @@ public class Image : Misc
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_new_from_icon_set has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_image_new_from_icon_name() instead.
 	 * Creates a GtkImage displaying an icon set. Sample stock sizes are
 	 * GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_SMALL_TOOLBAR. Instead of using
 	 * this function, usually it's better to create a GtkIconFactory, put
@@ -391,7 +397,7 @@ public class Image : Misc
 	 * GtkImage will add its own reference rather than adopting yours.
 	 * Note that this function just creates an GtkImage from the pixbuf. The
 	 * GtkImage created will not react to state changes. Should you want that,
-	 * you should use gtk_image_new_from_icon_set().
+	 * you should use gtk_image_new_from_icon_name().
 	 * Params:
 	 * pixbuf = a GdkPixbuf, or NULL. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -487,6 +493,8 @@ public class Image : Misc
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_set_from_icon_set has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_image_set_from_icon_name() instead.
 	 * See gtk_image_new_from_icon_set() for details.
 	 * Params:
 	 * iconSet = a GtkIconSet
@@ -510,6 +518,8 @@ public class Image : Misc
 	}
 	
 	/**
+	 * Warning
+	 * gtk_image_set_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_image_set_from_icon_name() instead.
 	 * See gtk_image_new_from_stock() for details.
 	 * Params:
 	 * stockId = a stock icon name

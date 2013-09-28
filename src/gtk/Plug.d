@@ -34,7 +34,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GtkWindow
  * implements:
  * prefixes:
  * 	- gtk_plug_

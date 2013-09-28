@@ -46,10 +46,12 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- cairo.Surface
  * 	- gio.AsyncResultIF
  * 	- gio.Cancellable
  * 	- gdk.Pixbuf
  * 	- gdk.RGBA
+ * 	- gdk.Window
  * 	- gtk.IconTheme
  * 	- gtk.Style
  * 	- gtk.StyleContext
@@ -60,10 +62,12 @@
  * 	- GCancellable* -> Cancellable
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRGBA* -> RGBA
+ * 	- GdkWindow* -> Window
  * 	- GtkIconInfo* -> IconInfo
  * 	- GtkIconTheme* -> IconTheme
  * 	- GtkStyle* -> Style
  * 	- GtkStyleContext* -> StyleContext
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -83,10 +87,12 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import cairo.Surface;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gdk.Pixbuf;
 private import gdk.RGBA;
+private import gdk.Window;
 private import gtk.IconTheme;
 private import gtk.Style;
 private import gtk.StyleContext;
@@ -277,6 +283,8 @@ public class IconInfo
 	 * to a larger icon. These icons will be given
 	 * the same base size as the larger icons to which
 	 * they are attached.
+	 * Note that for scaled icons the base size does
+	 * not include the base scale.
 	 * Since 2.4
 	 * Returns: the base size, or 0, if no base size is known for the icon.
 	 */
@@ -284,6 +292,19 @@ public class IconInfo
 	{
 		// gint gtk_icon_info_get_base_size (GtkIconInfo *icon_info);
 		return gtk_icon_info_get_base_size(gtkIconInfo);
+	}
+	
+	/**
+	 * Gets the base scale for the icon. The base scale is a scale for the
+	 * icon that was specified by the icon theme creator. For instance an
+	 * icon drawn for a high-dpi screen with window-scale 2 for a base
+	 * size of 32 will be 64 pixels tall and have a base_scale of 2.
+	 * Returns: the base scale. Since 3.10
+	 */
+	public int getBaseScale()
+	{
+		// gint gtk_icon_info_get_base_scale (GtkIconInfo *icon_info);
+		return gtk_icon_info_get_base_scale(gtkIconInfo);
 	}
 	
 	/**
@@ -357,6 +378,44 @@ public class IconInfo
 		}
 		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Renders an icon previously looked up in an icon theme using
+	 * gtk_icon_theme_lookup_icon(); the size will be based on the size
+	 * passed to gtk_icon_theme_lookup_icon(). Note that the resulting
+	 * surface may not be exactly this size; an icon theme may have icons
+	 * that differ slightly from their nominal sizes, and in addition GTK+
+	 * will avoid scaling icons that it considers sufficiently close to the
+	 * requested size or for which the source image would have to be scaled
+	 * up too far. (This maintains sharpness.). This behaviour can be changed
+	 * by passing the GTK_ICON_LOOKUP_FORCE_SIZE flag when obtaining
+	 * the GtkIconInfo. If this flag has been specified, the pixbuf
+	 * returned by this function will be scaled to the exact size.
+	 * Params:
+	 * forWindow = GdkWindow to optimize drawing for, or NULL. [allow-none]
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use cairo_surface_destroy() to release your reference to the icon. [transfer full] Since 3.10
+	 * Throws: GException on failure.
+	 */
+	public Surface loadSurface(Window forWindow)
+	{
+		// cairo_surface_t * gtk_icon_info_load_surface (GtkIconInfo *icon_info,  GdkWindow *for_window,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_info_load_surface(gtkIconInfo, (forWindow is null) ? null : forWindow.getWindowStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 	}
 	
 	/**

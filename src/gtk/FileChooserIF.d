@@ -106,9 +106,8 @@ private import gtk.Widget;
  *
  * Shortcuts
  *
- *  can be provided by the application or by the underlying filesystem
- *  abstraction (e.g. both the gnome-vfs and the Windows filesystems
- *  provide "Desktop" shortcuts). Shortcuts cannot be modified by the
+ *  can be provided by the application. For example, a Paint program may
+ *  want to add a shortcut for a Clipart folder. Shortcuts cannot be modified by the
  *  user.
  *
  * Volumes
@@ -569,7 +568,7 @@ public interface FileChooserIF
 	 * Sets whether a file chooser in GTK_FILE_CHOOSER_ACTION_SAVE mode will present
 	 * a confirmation dialog if the user types a file name that already exists. This
 	 * is FALSE by default.
-	 * Regardless of this setting, the chooser will emit the
+	 * If set to TRUE, the chooser will emit the
 	 * "confirm-overwrite" signal when appropriate.
 	 * If all you need is the stock confirmation dialog, set this property to TRUE.
 	 * You can override the way confirmation is done by actually handling the
@@ -622,6 +621,18 @@ public interface FileChooserIF
 	 * name = the filename to use, as a UTF-8 string. [type filename]
 	 */
 	public void setCurrentName(string name);
+	
+	/**
+	 * Gets the current name in the file selector, as entered by the user in the
+	 * text entry for "Name".
+	 * This is meant to be used in save dialogs, to get the currently typed filename
+	 * when the file itself does not exist yet. For example, an application that
+	 * adds a custom extra widget to the file chooser for "file format" may want to
+	 * change the extension of the typed filename based on the chosen format, say,
+	 * from ".jpg" to ".png".
+	 * Returns: The raw text from the file chooser's "Name" entry. Free this with g_free(). Note that this string is not a full pathname or URI; it is whatever the contents of the entry are. Note also that this string is in UTF-8 encoding, which is not necessarily the system's encoding for filenames. Since 3.10
+	 */
+	public string getCurrentName();
 	
 	/**
 	 * Gets the filename for the currently selected file in
@@ -826,8 +837,7 @@ public interface FileChooserIF
 	 * Otherwise, set the preview inactive.
 	 * When there is no application-supplied preview widget, or the
 	 * application-supplied preview widget is not active, the file chooser
-	 * may display an internally generated preview of the current file or
-	 * it may display no preview at all.
+	 * will display no preview at all.
 	 * Since 2.4
 	 * Params:
 	 * previewWidget = widget for displaying preview.

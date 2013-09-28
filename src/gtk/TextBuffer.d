@@ -327,7 +327,6 @@ public class TextBuffer : ObjectG
 	 * Applying actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the start and end iters (or has to revalidate them).
-	 * See also:
 	 * gtk_text_buffer_apply_tag(),
 	 * gtk_text_buffer_insert_with_tags(),
 	 * gtk_text_buffer_insert_range().
@@ -359,7 +358,6 @@ public class TextBuffer : ObjectG
 	/**
 	 * The ::begin-user-action signal is emitted at the beginning of a single
 	 * user-visible operation on a GtkTextBuffer.
-	 * See also:
 	 * gtk_text_buffer_begin_user_action(),
 	 * gtk_text_buffer_insert_interactive(),
 	 * gtk_text_buffer_insert_range_interactive(),
@@ -425,7 +423,7 @@ public class TextBuffer : ObjectG
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the start and end iters (or has to revalidate them).
 	 * The default signal handler revalidates the start and end iters to
-	 * both point point to the location where text was deleted. Handlers
+	 * both point to the location where text was deleted. Handlers
 	 * which run after the default handler (see g_signal_connect_after())
 	 * do not have access to the deleted text.
 	 * See also: gtk_text_buffer_delete().
@@ -457,7 +455,6 @@ public class TextBuffer : ObjectG
 	/**
 	 * The ::end-user-action signal is emitted at the end of a single
 	 * user-visible operation on the GtkTextBuffer.
-	 * See also:
 	 * gtk_text_buffer_end_user_action(),
 	 * gtk_text_buffer_insert_interactive(),
 	 * gtk_text_buffer_insert_range_interactive(),
@@ -564,7 +561,6 @@ public class TextBuffer : ObjectG
 	 * invalidate the location iter (or has to revalidate it).
 	 * The default signal handler revalidates it to point to the end of the
 	 * inserted text.
-	 * See also:
 	 * gtk_text_buffer_insert(),
 	 * gtk_text_buffer_insert_range().
 	 */
@@ -623,7 +619,6 @@ public class TextBuffer : ObjectG
 	/**
 	 * The ::mark-set signal is emitted as notification
 	 * after a GtkTextMark is set.
-	 * See also:
 	 * gtk_text_buffer_create_mark(),
 	 * gtk_text_buffer_move_mark().
 	 */
@@ -700,11 +695,11 @@ public class TextBuffer : ObjectG
 		}
 		onPasteDoneListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteDone(GtkTextBuffer* textbufferStruct, GtkClipboard* arg1, TextBuffer _textBuffer)
+	extern(C) static void callBackPasteDone(GtkTextBuffer* textbufferStruct, GtkClipboard* clipboard, TextBuffer _textBuffer)
 	{
 		foreach ( void delegate(Clipboard, TextBuffer) dlg ; _textBuffer.onPasteDoneListeners )
 		{
-			dlg(ObjectG.getDObject!(Clipboard)(arg1), _textBuffer);
+			dlg(ObjectG.getDObject!(Clipboard)(clipboard), _textBuffer);
 		}
 	}
 	
@@ -715,7 +710,6 @@ public class TextBuffer : ObjectG
 	 * Removal actually occurs in the default handler.
 	 * Note that if your handler runs before the default handler it must not
 	 * invalidate the start and end iters (or has to revalidate them).
-	 * See also:
 	 * gtk_text_buffer_remove_tag().
 	 * See Also
 	 * GtkTextView, GtkTextIter, GtkTextMark
@@ -1099,8 +1093,8 @@ public class TextBuffer : ObjectG
 	 * reference to the returned GtkTextMark, so you can ignore the
 	 * return value if you like. Marks are owned by the buffer and go
 	 * away when the buffer does.
-	 * Emits the "mark-set" signal as notification of the mark's initial
-	 * placement.
+	 * Emits the "mark-set" signal as notification of the mark's
+	 * initial placement.
 	 * Params:
 	 * markName = name for mark, or NULL. [allow-none]
 	 * where = location to place mark
@@ -1121,8 +1115,8 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Moves mark to the new location where. Emits the "mark-set" signal
-	 * as notification of the move.
+	 * Moves mark to the new location where. Emits the "mark-set"
+	 * signal as notification of the move.
 	 * Params:
 	 * mark = a GtkTextMark
 	 * where = new location for mark in buffer
@@ -1150,8 +1144,8 @@ public class TextBuffer : ObjectG
 	 * Adds the mark at position where. The mark must not be added to
 	 * another buffer, and if its name is not NULL then there must not
 	 * be another mark in the buffer with the same name.
-	 * Emits the "mark-set" signal as notification of the mark's initial
-	 * placement.
+	 * Emits the "mark-set" signal as notification of the mark's
+	 * initial placement.
 	 * Since 2.12
 	 * Params:
 	 * mark = the mark to add
@@ -1413,7 +1407,8 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Initializes iter to the start of the given line.
+	 * Initializes iter to the start of the given line. If line_number is greater
+	 * than the number of lines in the buffer, the end iterator is returned.
 	 * Params:
 	 * iter = iterator to initialize. [out]
 	 * lineNumber = line number counting from 0
@@ -1524,7 +1519,7 @@ public class TextBuffer : ObjectG
 	 * last time it was saved. Whenever the buffer is saved to disk, call
 	 * gtk_text_buffer_set_modified (buffer, FALSE). When the buffer is modified,
 	 * it will automatically toggled on the modified bit again. When the modified
-	 * bit flips, the buffer emits a "modified-changed" signal.
+	 * bit flips, the buffer emits the "modified-changed" signal.
 	 * Params:
 	 * setting = modification flag setting
 	 */
@@ -1551,14 +1546,15 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
-	 * Pastes the contents of a clipboard at the insertion point, or
-	 * at override_location. (Note: pasting is asynchronous, that is,
-	 * we'll ask for the paste data and return, and at some point later
-	 * after the main loop runs, the paste data will be inserted.)
+	 * Pastes the contents of a clipboard. If override_location is NULL, the
+	 * pasted text will be inserted at the cursor position, or the buffer selection
+	 * will be replaced if the selection is non-empty.
+	 * Note: pasting is asynchronous, that is, we'll ask for the paste data and
+	 * return, and at some point later after the main loop runs, the paste data will
+	 * be inserted.
 	 * Params:
 	 * clipboard = the GtkClipboard to paste from
-	 * overrideLocation = location to insert pasted text, or NULL for
-	 * at the cursor. [allow-none]
+	 * overrideLocation = location to insert pasted text, or NULL. [allow-none]
 	 * defaultEditable = whether the buffer is editable by default
 	 */
 	public void pasteClipboard(Clipboard clipboard, TextIter overrideLocation, int defaultEditable)

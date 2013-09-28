@@ -66,8 +66,8 @@ private import gtk.CellRenderer;
 /**
  * A GtkCellRendererPixbuf can be used to render an image in a cell. It allows
  * to render either a given GdkPixbuf (set via the
- * "pixbuf" property) or a stock icon (set via the
- * "stock-id" property).
+ * "pixbuf" property) or a named icon (set via the
+ * "icon-name" property).
  *
  * To support the tree view, GtkCellRendererPixbuf also supports rendering two
  * alternative pixbufs, when the "is-expander" property is TRUE.

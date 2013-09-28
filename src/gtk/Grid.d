@@ -234,6 +234,38 @@ public class Grid : Container, OrientableIF
 	}
 	
 	/**
+	 * Removes a row from the grid.
+	 * Children that are placed in this row are removed,
+	 * spanning children that overlap this row have their
+	 * height reduced by one, and children below the row
+	 * are moved up.
+	 * Params:
+	 * position = the position of the row to remove
+	 * Since 3.10
+	 */
+	public void removeRow(int position)
+	{
+		// void gtk_grid_remove_row (GtkGrid *grid,  gint position);
+		gtk_grid_remove_row(gtkGrid, position);
+	}
+	
+	/**
+	 * Removes a column from the grid.
+	 * Children that are placed in this column are removed,
+	 * spanning children that overlap this column have their
+	 * width reduced by one, and children after the column
+	 * are moved to the left.
+	 * Params:
+	 * position = the position of the column to remove
+	 * Since 3.10
+	 */
+	public void removeColumn(int position)
+	{
+		// void gtk_grid_remove_column (GtkGrid *grid,  gint position);
+		gtk_grid_remove_column(gtkGrid, position);
+	}
+	
+	/**
 	 * Inserts a row or column at the specified position.
 	 * The new row or column is placed next to sibling, on the side
 	 * determined by side. If side is GTK_POS_TOP or GTK_POS_BOTTOM,
@@ -333,5 +365,58 @@ public class Grid : Container, OrientableIF
 	{
 		// guint gtk_grid_get_column_spacing (GtkGrid *grid);
 		return gtk_grid_get_column_spacing(gtkGrid);
+	}
+	
+	/**
+	 * Returns which row defines the global baseline of grid.
+	 * Returns: the row index defining the global baseline Since 3.10
+	 */
+	public int getBaselineRow()
+	{
+		// gint gtk_grid_get_baseline_row (GtkGrid *grid);
+		return gtk_grid_get_baseline_row(gtkGrid);
+	}
+	
+	/**
+	 * Sets which row defines the global baseline for the entire grid.
+	 * Each row in the grid can have its own local baseline, but only
+	 * one of those is global, meaning it will be the baseline in the
+	 * parent of the grid.
+	 * Params:
+	 * row = the row index
+	 * Returns: the row index defining the global baseline Since 3.10
+	 */
+	public void setBaselineRow(int row)
+	{
+		// void gtk_grid_set_baseline_row (GtkGrid *grid,  gint row);
+		gtk_grid_set_baseline_row(gtkGrid, row);
+	}
+	
+	/**
+	 * Returns the baseline position of row as set
+	 * by gtk_grid_set_row_baseline_position() or the default value
+	 * GTK_BASELINE_POSITION_CENTER.
+	 * Params:
+	 * row = a row index
+	 * Returns: the baseline position of row Since 3.10
+	 */
+	public GtkBaselinePosition getRowBaselinePosition(int row)
+	{
+		// GtkBaselinePosition gtk_grid_get_row_baseline_position (GtkGrid *grid,  gint row);
+		return gtk_grid_get_row_baseline_position(gtkGrid, row);
+	}
+	
+	/**
+	 * Sets how the baseline should be positioned on row of the
+	 * grid, in case that row is assigned more space than is requested.
+	 * Params:
+	 * row = a row index
+	 * pos = a GtkBaselinePosition
+	 * Since 3.10
+	 */
+	public void setRowBaselinePosition(int row, GtkBaselinePosition pos)
+	{
+		// void gtk_grid_set_row_baseline_position (GtkGrid *grid,  gint row,  GtkBaselinePosition pos);
+		gtk_grid_set_row_baseline_position(gtkGrid, row, pos);
 	}
 }

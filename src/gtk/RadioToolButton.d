@@ -77,10 +77,7 @@ private import gtk.ToggleToolButton;
  * Use gtk_radio_tool_button_new() to create a new
  * GtkRadioToolButton. Use gtk_radio_tool_button_new_from_widget() to
  * create a new GtkRadioToolButton that is part of the same group as an
- * existing GtkRadioToolButton. Use
- * gtk_radio_tool_button_new_from_stock() or
- * gtk_radio_tool_button_new_with_stock_from_widget() create a new
- * GtkRadioToolButton containing a stock item.
+ * existing GtkRadioToolButton.
  */
 public class RadioToolButton : ToggleToolButton
 {
@@ -139,6 +136,8 @@ public class RadioToolButton : ToggleToolButton
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_tool_button_new_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_radio_tool_button_new() instead.
 	 * Creates a new GtkRadioToolButton, adding it to group.
 	 * The new GtkRadioToolButton will contain an icon and label from the
 	 * stock item indicated by stock_id.
@@ -179,6 +178,8 @@ public class RadioToolButton : ToggleToolButton
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_tool_button_new_with_stock_from_widget has been deprecated since version 3.10 and should not be used in newly-written code. gtk_radio_tool_button_new_from_widget
 	 * Creates a new GtkRadioToolButton adding it to the same group as group.
 	 * The new GtkRadioToolButton will contain an icon and label from the
 	 * stock item indicated by stock_id.

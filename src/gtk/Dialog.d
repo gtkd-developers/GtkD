@@ -405,13 +405,13 @@ public class Dialog : Window
 	}
 	
 	/**
-	 * Adds a button with the given text (or a stock button, if button_text is a
-	 * stock ID) and sets things up so that clicking the button will emit the
-	 * "response" signal with the given response_id. The button is
-	 * appended to the end of the dialog's action area. The button widget is
-	 * returned, but usually you don't need it.
+	 * Adds a button with the given text and sets things up so that
+	 * clicking the button will emit the "response" signal with
+	 * the given response_id. The button is appended to the end of the
+	 * dialog's action area. The button widget is returned, but usually
+	 * you don't need it.
 	 * Params:
-	 * buttonText = text of button, or stock ID
+	 * buttonText = text of button
 	 * responseId = response ID for the button
 	 * Returns: the GtkButton widget that was added. [transfer none]
 	 */

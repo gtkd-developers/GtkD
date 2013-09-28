@@ -434,31 +434,6 @@ array: gtk_drag_dest_set targets n_targets
 array: gtk_drag_source_set targets n_targets
 outFile: DragAndDrop
 
-file: gtk3-Stock-Items.html
-struct: GtkStockItem
-class: StockItem
-prefix: gtk_stock_item_
-prefix: gtk_stock_
-import: glib.Str
-import: gtkc.paths
-import: gtkc.Loader
-import: glib.ListSG
-structWrap: GSList* ListSG
-structWrap: GtkStockItem* StockItem
-
-array: gtk_stock_add items n_items
-array: gtk_stock_add_static items n_items
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
-		{
-			gtk_stock_item_free(gtkStockItem);
-		}
-	}
-code: end
-outFile: StockItem
-
 file: GtkSettings.html
 struct: GtkSettings
 class: Settings
@@ -670,6 +645,7 @@ noprefix: gtk_border_
 import: std.stdarg
 import: glib.Str
 import: cairo.Context
+import: cairo.Surface
 import: gobject.Value
 import: glib.ListG
 import: gdk.FrameClock
@@ -685,6 +661,7 @@ import: gtk.WidgetPath
 import: pango.PgFontDescription
 import: pango.PgLayout
 structWrap: cairo_t* Context
+structWrap: cairo_surface_t* Surface
 structWrap: GValue* Value
 structWrap: GList* ListG
 structWrap: GdkFrameClock* FrameClock
@@ -880,101 +857,6 @@ code: start
 code: end
 outFile: WidgetPath
 
-file: gtk3-GtkSymbolicColor.html
-struct: GtkSymbolicColor
-class: SymbolicColor
-prefix: gtk_symbolic_color_
-import: glib.Str
-import: gdk.RGBA
-import: gtk.StyleProperties
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GdkRGBA* RGBA
-structWrap: GtkStyleProperties* StyleProperties
-structWrap: GtkSymbolicColor* SymbolicColor
-
-override: toString
-
-nocode: gtk_symbolic_color_new_shade
-nocode: gtk_symbolic_color_new_alpha
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
-		{
-			gtk_symbolic_color_unref(gtkSymbolicColor);
-		}
-	}
-
-	/**
-	 * Creates a symbolic color defined as a shade of another color.
-	 * A factor > 1.0 would resolve to a brighter or more transparent color,
-	 * while < 1.0 would resolve to a darker or more opaque color.
-	 * 
-	 * Params:
-	 *     color    = another GtkSymbolicColor.
-	 *     factor   = shading factor to apply to color.
-	 *     useAlpha = if true change the relative alpha value of the color,
-	 *                otherwise change the shade.
-	 * 
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (SymbolicColor color, double factor, bool useAlpha = true)
-	{
-		GtkSymbolicColor* p;
-
-		if ( useAlpha )
-		{
-			p = gtk_symbolic_color_new_alpha((color is null) ? null : color.getSymbolicColorStruct(), factor);
-		}
-		else
-		{
-			p = gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor);
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor)");
-		}
-
-		this(cast(GtkSymbolicColor*) p);
-	}
-code: end
-outFile: SymbolicColor
-
-file: gtk3-GtkGradient.html
-struct: GtkGradient
-class: Gradient
-prefix: gtk_gradient_
-import: glib.Str
-import: cairo.Pattern
-import: gtk.StyleContext
-import: gtk.StyleProperties
-import: gtk.SymbolicColor
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: cairo_pattern_t* Pattern
-structWrap: GtkGradient* Gradient
-structWrap: GtkStyleContext* StyleContext
-structWrap: GtkStyleProperties* StyleProperties
-structWrap: GtkSymbolicColor* SymbolicColor
-
-override: toString
-
-out: gtk_gradient_resolve resolved_gradient
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
-		{
-			gtk_gradient_unref(gtkGradient);
-		}
-	}
-code: end
-outFile: Gradient
-
 file: GtkIconTheme.html
 struct: GtkIconTheme
 class: IconTheme
@@ -983,18 +865,22 @@ noprefix: gtk_icon_info_
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: cairo.Surface
 import: glib.ListG
 import: gio.IconIF
 import: gdk.Pixbuf
 import: gdk.RGBA
 import: gdk.Screen
+import: gdk.Window
 import: gtk.IconInfo
 import: gtk.StyleContext
+structWrap: cairo_surface_t* Surface
 structWrap: GList* ListG
 structWrap: GIcon* IconIF
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
 structWrap: GdkScreen* Screen
+structWrap: GdkWindow* Window
 structWrap: GtkIconInfo* IconInfo
 structWrap: GtkIconTheme* IconTheme
 structWrap: GtkStyleContext* StyleContext
@@ -1003,6 +889,7 @@ array: gtk_icon_theme_set_search_path path n_elements
 out: gtk_icon_theme_get_search_path path
 array: gtk_icon_theme_get_search_path path n_elements
 array: gtk_icon_theme_choose_icon icon_names
+array: gtk_icon_theme_choose_icon_for_scale icon_names
 outFile: IconTheme
 
 struct: GtkIconInfo
@@ -1012,19 +899,23 @@ strictPrefix: Y
 import: glib.Str
 import: glib.ErrorG
 import: glib.GException
+import: cairo.Surface
 import: gio.AsyncResultIF
 import: gio.Cancellable
 import: gdk.Pixbuf
 import: gdk.RGBA
+import: gdk.Window
 import: gtk.IconTheme
 import: gtk.Style
 import: gtk.StyleContext
 import: gtkc.paths
 import: gtkc.Loader
+structWrap: cairo_surface_t* Surface
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GdkRGBA* RGBA
+structWrap: GdkWindow* Window
 structWrap: GtkIconInfo* IconInfo
 structWrap: GtkIconTheme* IconTheme
 structWrap: GtkStyle* Style
@@ -1099,19 +990,23 @@ extend: GBoxed
 prefix: gtk_icon_set_
 strictPrefix: Y
 import: glib.Str
+import: cairo.Surface
 import: gdk.Pixbuf
 import: gtk.IconSource
 import: gtk.Style
 import: gtk.StyleContext
 import: gtk.Widget
+import: gdk.Window
 import: gtkc.paths
 import: gtkc.Loader
+structWrap: cairo_surface_t* Surface
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkIconSet* IconSet
 structWrap: GtkIconSource* IconSource
 structWrap: GtkStyle* Style
 structWrap: GtkStyleContext* StyleContext
 structWrap: GtkWidget* Widget
+structWrap: GdkWindow* Window
 
 out: gtk_icon_set_get_sizes sizes
 array: gtk_icon_set_get_sizes sizes n_sizes
@@ -1154,67 +1049,396 @@ structWrap: GIcon* IconIF
 structWrap: GtkStyleContext* StyleContext
 outFile: NumerableIcon
 
-file: gtk3-Resource-Files.html
-struct: GtkRcStyle
-class: RcStyle
-prefix: gtk_rc_
-import: glib.Str
-import: glib.ScannerG
-import: gdk.Color
-import: gtk.Settings
-import: gtk.Style
-import: gtk.Widget
-structWrap: GScanner* ScannerG
-structWrap: GdkColor* Color
-structWrap: GtkRcStyle* RcStyle
-structWrap: GtkSettings* Settings
-structWrap: GtkStyle* Style
-structWrap: GtkWidget* Widget
+###########################################################
+### Application support ###################################
+###########################################################
 
-array: gtk_rc_set_default_files filenames
-out: gtk_rc_parse_state state
-out: gtk_rc_parse_priority priority
+file: GtkApplication.html
+struct: GtkApplication
+class: Application
+extend: GioApplication
+prefix: gtk_application_
+import: glib.Str
+import: glib.ListG
+import: glib.Variant
+import: gio.Application : GioApplication = Application
+import: gio.MenuModel
+import: gtk.Window
+structWrap: GList* ListG
+structWrap: GVariant* Variant
+structWrap: GMenuModel* MenuModel
+structWrap: GtkWindow* Window
+outFile: Application
+
+file: GtkApplicationWindow.html
+struct: GtkApplicationWindow
+class: ApplicationWindow
+implements: ActionGroupIF
+implements: ActionMapIF
+prefix: gtk_application_window_
+import: gtk.Application
+structWrap: GtkApplication* Application
+
+#imports for ActionGroup Interface.
+import: gio.ActionGroupIF
+import: gio.ActionGroupT
+
+#imports for ActionMap Interface.
+import: gio.ActionMapIF
+import: gio.ActionMapT
 
 code: start
-	deprecated:
-code: end
-outFile: RcStyle
+	// add the ActionGroup capabilities
+	mixin ActionGroupT!(GtkApplicationWindow);
 
-file: GtkStyle.html
-struct: GtkStyle
-class: Style
-prefix: gtk_style_
-prefix: gtk_
-import: std.stdarg
+	// add the ActionMap capabilities
+	mixin ActionMapT!(GtkApplicationWindow);
+code: end
+outFile: ApplicationWindow
+
+file: GtkActionable.html
+struct: GtkActionable
+class: ActionableT
+template: TStruct
+prefix: gtk_actionable_
 import: glib.Str
-import: cairo.Context
+import: glib.Variant
+structWrap: GVariant* Variant
+interface: ActionableIF
+outFile: ActionableT
+
+###########################################################
+### Interface builder #####################################
+###########################################################
+
+file: GtkBuildable.html
+struct: GtkBuildable
+class: BuildableT
+template: TStruct
+prefix: gtk_buildable_
+import: glib.Str
+import: gobject.ObjectG
 import: gobject.Value
-import: gdk.Color
-import: gdk.Pixbuf
-import: gdk.Window
-import: gtk.IconSet
-import: gtk.IconSource
-import: gtk.Widget
-import: pango.PgLayout
-structWrap: cairo_t* Context
+import: gtk.Builder
+structWrap: GObject* ObjectG
 structWrap: GValue* Value
-structWrap: GdkColor* Color
-structWrap: GdkPixbuf* Pixbuf
-structWrap: GdkWindow* Window
-structWrap: GtkIconSet* IconSet
-structWrap: GtkIconSource* IconSource
-structWrap: GtkStyle* Style
-structWrap: GtkWidget* Widget
-structWrap: PangoLayout* PgLayout
+structWrap: GtkBuilder* Builder
 
-array: gtk_draw_polygon points npoints
-array: gtk_paint_polygon points npoints
-inout: gtk_draw_insertion_cursor location
+alias: setName buildableSetName
+alias: getName buildableGetName
 
+interface: BuildableIF
+outFile: BuildableT
+
+file: GtkBuilder.html
+struct: GtkBuilder
+class: Builder
+prefix: gtk_builder_
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListSG
+import: glib.Str
+import: gobject.ObjectG
+import: gobject.ParamSpec
+import: gobject.Value
+import: std.string
+import: gtkc.glib;
+structWrap: GObject* ObjectG
+structWrap: GParamSpec* ParamSpec
+structWrap: GSList* ListSG
+structWrap: GValue* Value
+
+nocode: gtk_builder_get_object
+nocode: gtk_builder_get_objects
+
+#There are now 3 constructors that have a single string parameter, disable 2 of them.
+nocode: gtk_builder_new_from_resource
+nocode: gtk_builder_new_from_string
+
+#imports for gtk_builder_real_get_type_from_name_override
+import: gtkc.gobject
+import: gtkc.paths
+import: glib.Module
+import: gobject.Type
+
+array: gtk_builder_add_from_string buffer length
+array: gtk_builder_add_objects_from_file object_ids
+array: gtk_builder_add_objects_from_string object_ids
+array: gtk_builder_add_objects_from_resource object_ids
+
+nocode: gtk_builder_new
 code: start
-	deprecated:
+	private struct GtkBuilderClass
+	{
+		GObjectClass parentClass;
+		extern(C) GType function( GtkBuilder*, char* ) get_type_from_name;
+		
+		/* Padding for future expansion */
+		extern(C) void  function()  _gtk_reserved1;
+		extern(C) void  function()  _gtk_reserved2;
+		extern(C) void  function()  _gtk_reserved3;
+		extern(C) void  function()  _gtk_reserved4;
+		extern(C) void  function()  _gtk_reserved5;
+		extern(C) void  function()  _gtk_reserved6;
+		extern(C) void  function()  _gtk_reserved7;
+		extern(C) void  function()  _gtk_reserved8;
+	}
+
+	/**
+	 * Creates a new builder object.
+	 * Since 2.12
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this ()
+	{
+		// GtkBuilder* gtk_builder_new (void);
+		auto p = gtk_builder_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_builder_new()");
+		}
+		this(cast(GtkBuilder*) p);
+
+		GtkBuilderClass* klass = Type.getInstanceClass!(GtkBuilderClass)( this );
+		klass.get_type_from_name = &gtk_builder_real_get_type_from_name_override;
+	}
+
+	/**
+	 * This function is a modification of _gtk_builder_resolve_type_lazily from "gtk/gtkbuilder.c".
+	 * It is needed because it assumes we are linking at compile time to the gtk libs.
+	 * specifically the NULL in g_module_open( NULL, 0 );
+	 * It replaces the default function pointer "get_type_from_name" in GtkBuilderClass.
+	 */
+	extern(C) private static GType gtk_builder_real_get_type_from_name_override ( GtkBuilder* builder, char *name )
+	{
+		GType gtype;
+		gtype = g_type_from_name( name );
+		if (gtype != GType.INVALID)
+		{
+			return gtype;
+		}
+		
+		/*
+		 * Try to map a type name to a _get_type function
+		 * and call it, eg:
+		 *
+		 * GtkWindow -> gtk_window_get_type
+		 * GtkHBox -> gtk_hbox_get_type
+		 * GtkUIManager -> gtk_ui_manager_get_type
+		 *
+		 */
+		char   c;
+		string symbol_name;
+
+		for (int i = 0; name[i] != '\0'; i++)
+		{
+			c = name[i];
+			/* skip if uppercase, first or previous is uppercase */
+			if ((c == Str.asciiToupper (c) &&
+			   i > 0 && name[i-1] != Str.asciiToupper (name[i-1])) ||
+			  (i > 2 && name[i]   == Str.asciiToupper (name[i]) &&
+			   name[i-1] == Str.asciiToupper (name[i-1]) &&
+			   name[i-2] == Str.asciiToupper (name[i-2]))
+			   )
+
+			symbol_name ~= '_';
+			symbol_name ~= Str.asciiTolower (c);
+		}
+		symbol_name ~=  "_get_type" ;
+
+		/* scan linked librarys for function symbol */
+		foreach ( lib; importLibs )
+		{
+			GType function() func;
+			Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
+			if( mod is null )
+				continue;
+			
+			scope(exit) mod.close();
+
+			if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
+				return func();
+			}
+		}
+
+		return GType.INVALID;
+	}
+
+	/**
+	 * Gets the object named name. Note that this function does not
+	 * increment the reference count of the returned object.
+	 * Since 2.12
+	 * Params:
+	 * name = name of object to get
+	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
+	 */
+	public ObjectG getObject(string name)
+	{
+		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
+		return newFromObject( gtk_builder_get_object(gtkBuilder, Str.toStringz(name)) );
+	}
+
+	/**
+	 * Gets all objects that have been constructed by builder.
+	 * Since 2.12
+	 * Returns: an array containing all the objects constructed by the GtkBuilder instance.
+	 */
+	public ObjectG[] getObjects()
+	{
+		ObjectG[] objects;
+
+		// GSList* gtk_builder_get_objects (GtkBuilder *builder);
+		GSList* list = gtk_builder_get_objects(gtkBuilder);
+
+		while ( list.next !is null )
+		{
+			objects ~= newFromObject( cast(GObject*)list.data );
+			list = list.next;
+		}
+
+		g_slist_free(list);
+
+		return objects;
+	}
+
+	/**
+	 * This function creates an D object corresponding to the Struct pointer passed in.
+	 */
+	public ObjectG newFromObject(GObject* cobj)
+	{
+		version(LDC)
+		{
+			version(D_Version2)
+			{
+				alias ClassInfo.find findClassInfo;
+			}
+		}
+		else
+		{
+			alias ClassInfo.find findClassInfo;
+		}
+
+		if(cobj is null)
+		{
+			return null;
+		}
+
+		void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
+
+		if ( dObj !is null )
+		{
+			return cast(ObjectG)dObj;
+		}
+
+		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
+		ClassInfo ci = cast(ClassInfo)findClassInfo(type);
+
+		//Gobject and Gio types both start with g, so try both.
+		if(ci is null && startsWith(type, "gobject"))
+		{
+				ci = cast(ClassInfo)findClassInfo("gio"~ type[7..$]);
+		}
+
+		if(ci is null)
+		{
+			return null;
+		}
+
+		ObjectG obj = cast(ObjectG)_d_newclass(ci);
+
+		version(D_Version2)
+		{
+			obj.__ctor(cobj);
+		}
+		else
+		{
+			obj._ctor(cobj);
+		}
+
+		return obj;
+	}
+
+	/**
+	 * Turn the name of a C Type in to the name of the corresponding D type.
+	 * Note: If the prefix of the type is "G" this always usses "gobject" as
+	 *     the prefix, extra care should be taken for types from GIO.
+	 */
+	private string convertClassName(string gName)
+	{
+		string conv;
+		string prefix;
+
+		version(Tango)
+		{
+			alias toUpper toupper;
+			alias toLower tolower;
+		}
+		version(D_Version2)
+		{
+			alias toUpper toupper;
+			alias toLower tolower;
+		}
+
+		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
+		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
+		else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )        prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )        prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )        prefix = "Atk";
+		else if ( startsWith(gName, "G") )          prefix = "G";
+		else if ( startsWith(gName, "Pango") )      prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )      prefix = "cairo";
+
+		conv = gName[prefix.length..gName.length];
+
+		if ( conv == "Object" ) conv ~= prefix;
+		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
+		if ( prefix == "cairo") conv = toupper(gName[6..7]) ~ gName[7..gName.length - 2];
+
+		prefix = tolower(prefix);
+
+		if( prefix == "gst") prefix = "gstreamer";
+		if( prefix == "g")   prefix = "gobject";
+		if( prefix == "pg" ) prefix = "pango";
+
+		return prefix ~"."~ conv ~"."~ conv;
+	}
+
+	private bool startsWith(string str, string prefix)
+	{
+		return str.length >= prefix.length && str[0..prefix.length] == prefix;
+	}
+
+	version(LDC)
+	{
+		//version( !D_Version2 )
+		version(D_Version2) {} else
+		{
+			private Object _d_newclass(ClassInfo ci)
+			{
+				void* p = cast(void*)_d_allocclass(ci);
+				(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
+			
+				return cast(Object) p;
+			}
+
+			private ClassInfo findClassInfo(string classname)
+			{
+				foreach ( m; ModuleInfo )
+				{
+					foreach ( c; m.localClasses )
+					{
+						if ( c.name == classname )
+						return c;
+					}
+				}
+
+				return null;
+			}
+		}
+	}
 code: end
-outFile: Style
+outFile: Builder
 
 ###########################################################
 ### Windows ###############################################
@@ -1340,16 +1564,6 @@ code: start
 	}
 code: end
 outFile: Dialog
-
-file: GtkInvisible.html
-struct: GtkInvisible
-class: Invisible
-prefix: gtk_invisible_
-prefix: gtk_
-import: gdk.Screen
-structWrap: GdkScreen* Screen
-override: getScreen
-outFile: Invisible
 
 file: GtkMessageDialog.html
 struct: GtkMessageDialog
@@ -1621,6 +1835,38 @@ code: start
 code: end
 outFile: PopupBox
 
+file: GtkAboutDialog.html
+struct: GtkAboutDialog
+class: AboutDialog
+prefix: gtk_about_dialog_
+prefix: gtk_
+import: glib.Str
+import: gdk.Pixbuf
+import: gtk.Window
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkWindow* Window
+
+override: getName
+override: setName
+
+array: gtk_about_dialog_set_authors authors
+array: gtk_about_dialog_set_artists artists
+array: gtk_about_dialog_set_documenters documenters
+array: gtk_about_dialog_add_credit_section people
+
+outFile: AboutDialog
+
+file: GtkAssistant.html
+struct: GtkAssistant
+class: Assistant
+prefix: gtk_assistant_
+import: glib.Str
+import: gdk.Pixbuf
+import: gtk.Widget
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GtkWidget* Widget
+outFile: Assistant
+
 file: GtkWindow.html
 struct: GtkWindow
 class: Window
@@ -1755,37 +2001,15 @@ structWrap: GtkWidget* Widget
 structWrap: GtkWindow* Window
 outFile: WindowGroup
 
-file: GtkAboutDialog.html
-struct: GtkAboutDialog
-class: AboutDialog
-prefix: gtk_about_dialog_
+file: GtkInvisible.html
+struct: GtkInvisible
+class: Invisible
+prefix: gtk_invisible_
 prefix: gtk_
-import: glib.Str
-import: gdk.Pixbuf
-import: gtk.Window
-structWrap: GdkPixbuf* Pixbuf
-structWrap: GtkWindow* Window
-
-override: getName
-override: setName
-
-array: gtk_about_dialog_set_authors authors
-array: gtk_about_dialog_set_artists artists
-array: gtk_about_dialog_set_documenters documenters
-array: gtk_about_dialog_add_credit_section people
-
-outFile: AboutDialog
-
-file: GtkAssistant.html
-struct: GtkAssistant
-class: Assistant
-prefix: gtk_assistant_
-import: glib.Str
-import: gdk.Pixbuf
-import: gtk.Widget
-structWrap: GdkPixbuf* Pixbuf
-structWrap: GtkWidget* Widget
-outFile: Assistant
+import: gdk.Screen
+structWrap: GdkScreen* Screen
+override: getScreen
+outFile: Invisible
 
 file: GtkOffscreenWindow.html
 struct: GtkOffscreenWindow
@@ -1798,73 +2022,427 @@ structWrap: GdkPixbuf* Pixbuf
 outFile: OffscreenWindow
 
 ###########################################################
-### Display Widgets #######################################
+### Layout Containers #####################################
 ###########################################################
 
-file: GtkAccelLabel.html
-struct: GtkAccelLabel
-class: AccelLabel
-prefix: gtk_accel_label_
-import: glib.Str
-import: gobject.Closure
+file: GtkBox.html
+struct: GtkBox
+class: Box
+implements: OrientableIF
+prefix: gtk_box_
 import: gtk.Widget
-structWrap: GClosure* Closure
 structWrap: GtkWidget* Widget
-outFile: AccelLabel
 
-file: GtkImage.html
-struct: GtkImage
-class: Image
-prefix: gtk_image_
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+out: gtk_box_query_child_packing expand
+out: gtk_box_query_child_packing fill
+out: gtk_box_query_child_packing padding
+out: gtk_box_query_child_packing pack_type
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkBox);
+code: end
+outFile: Box
+
+file: GtkGrid.html
+struct: GtkGrid
+class: Grid
+implements: OrientableIF
+prefix: gtk_grid_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkGrid);
+code: end
+outFile: Grid
+
+file: GtkRevealer.html
+struct: GtkRevealer
+class: Revealer
+prefix: gtk_revealer_
+outFile: Revealer
+
+file: GtkListBox.html
+struct: GtkListBox
+class: ListBox
+prefix: gtk_list_box_
+noprefix: gtk_list_box_row_
+nosignal: activate 
+import: gtk.Adjustment
+import: gtk.ListBoxRow
+import: gtk.Widget
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkListBoxRow* ListBoxRow
+structWrap: GtkWidget* Widget
+outFile: ListBox
+
+struct: GtkListBoxRow
+class: ListBoxRow
+prefix: gtk_list_box_row_
+strictPrefix: Y
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+nosignal: activate-cursor-row
+nosignal: move-cursor
+nosignal: row-activated
+nosignal: row-selected
+nosignal: toggle-cursor-row
+
+outFile: ListBoxRow
+
+file: GtkStack.html
+struct: GtkStack
+class: Stack
+prefix: gtk_stack_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: Stack
+
+file: GtkStackSwitcher.html
+struct: GtkStackSwitcher
+class: StackSwitcher
+prefix: gtk_stack_switcher_
+import: gtk.Stack
+structWrap: GtkStack* Stack
+outFile: StackSwitcher
+
+file: GtkHeaderBar.html
+struct: GtkHeaderBar
+class: HeaderBar
+prefix: gtk_header_bar_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: HeaderBar
+
+file: GtkOverlay.html
+struct: GtkOverlay
+class: Overlay
+prefix: gtk_overlay_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: Overlay
+
+file: GtkAlignment.html
+struct: GtkAlignment
+class: Alignment
+prefix: gtk_alignment_
+import: gtk.Widget
+
+out: gtk_alignment_get_padding padding_top
+out: gtk_alignment_get_padding padding_bottom
+out: gtk_alignment_get_padding padding_left
+out: gtk_alignment_get_padding padding_right
+
+code: start
+	/** */
+	public static Alignment center(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */	
+	public static Alignment north(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */	
+	public static Alignment south(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */	
+	public static Alignment east(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	/** */
+	public static Alignment west(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */	
+	public static Alignment northWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment southWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment northEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment southEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+code: end
+outFile: Alignment
+
+file: GtkButtonBox.html
+struct: GtkButtonBox
+class: ButtonBox
+prefix: gtk_button_box_
+import: gtk.Button
+import: gtk.HButtonBox
+import: gtk.VButtonBox
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+out: gtk_button_box_get_child_size min_width
+out: gtk_button_box_get_child_size min_height
+out: gtk_button_box_get_child_ipadding ipad_x
+out: gtk_button_box_get_child_ipadding ipad_y
+
+code: start
+	/** */
+	static ButtonBox createActionBox(
+			void delegate(Button) onClicked, 
+			StockID[] stocks, 
+			string[] actions,
+			bool vertical=false
+		)
+	{
+		ButtonBox bBox;
+		if ( vertical )
+		{
+			bBox = VButtonBox.createActionBox();
+		}
+		else
+		{
+			bBox = HButtonBox.createActionBox();
+		}
+
+		Button button;
+		for( int i=0 ; i<stocks.length && i<actions.length ; i++)
+		{
+			button =  new Button(stocks[i]);
+			bBox.packEnd(button, false, false, 7);
+			button.setActionName(actions[i]);
+			button.addOnClicked(onClicked);
+		}
+		return bBox;
+	}
+
+	/** */
+	static ButtonBox createOkBox(void delegate(Button) onClicked)
+	{
+		static StockID[] stocks = [StockID.OK];
+		string[] actions;
+		actions ~= "action.ok";
+		return createActionBox(onClicked, stocks, actions);
+	}
+
+	/** */
+	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
+	{
+		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
+		string[] actions;
+		actions ~= "action.ok";
+		actions ~= "action.cancel";
+		return createActionBox(onClicked, stocks, actions);
+	}
+code: end
+outFile: ButtonBox
+
+file: GtkPaned.html
+struct: GtkPaned
+class: Paned
+implements: OrientableIF
+prefix: gtk_paned_
+import: gdk.Window
+import: gtk.Widget
+structWrap: GdkWindow* Window
+structWrap: GtkWidget* Widget
+
+#imports for Orientable Interface.
+import: gtk.OrientableIF
+import: gtk.OrientableT
+
+code: start
+	// add the Orientable capabilities
+	mixin OrientableT!(GtkPaned);
+
+	/** */
+	public void add(Widget child1, Widget child2)
+	{
+		add1(child1);
+		add2(child2);
+	}
+code: end
+outFile: Paned
+
+file: GtkLayout.html
+struct: GtkLayout
+class: Layout
+implements: ScrollableIF
+prefix: gtk_layout_
+import: gdk.Window
+import: gtk.Adjustment
+import: gtk.Widget
+structWrap: GdkWindow* Window
+structWrap: GtkAdjustment* Adjustment
+structWrap: GtkWidget* Widget
+
+nocode: gtk_layout_get_hadjustment
+nocode: gtk_layout_get_vadjustment
+nocode: gtk_layout_set_hadjustment
+nocode: gtk_layout_set_vadjustment
+
+#imports for Scrollable Interface.
+import: gtk.ScrollableIF
+import: gtk.ScrollableT
+
+out: gtk_layout_get_size width
+out: gtk_layout_get_size height
+
+code: start
+	// add the Scrollable capabilities
+	mixin ScrollableT!(GtkLayout);
+code: end
+outFile: Layout
+
+file: GtkNotebook.html
+struct: GtkNotebook
+class: Notebook
+prefix: gtk_notebook_
 import: glib.Str
-import: gio.Icon
-import: gio.IconIF
-import: gdk.Pixbuf
-import: gdkpixbuf.PixbufAnimation
-import: gtk.IconSet
-structWrap: GIcon* IconIF
-structWrap: GdkPixbuf* Pixbuf
-structWrap: GdkPixbufAnimation* PixbufAnimation
-structWrap: GtkIconSet* IconSet
-
-out: gtk_image_get_icon_set icon_set
-out: gtk_image_get_icon_set size
-out: gtk_image_get_stock stock_id
-out: gtk_image_get_stock size
-out: gtk_image_get_icon_name icon_name
-out: gtk_image_get_icon_name size
-out: gtk_image_get_gicon gicon
-out: gtk_image_get_gicon size
-
-nocode: gtk_image_new_from_stock
+import: gtk.Label
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 
 code: start
 	/**
-	 * Creates a GtkImage displaying a stock icon. Sample stock icon
-	 * names are GTK_STOCK_OPEN, GTK_STOCK_EXIT. Sample stock sizes
-	 * are GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_SMALL_TOOLBAR. If the stock
-	 * icon name isn't known, the image will be empty.
-	 * You can register your own stock icon names, see
-	 * gtk_icon_factory_add_default() and gtk_icon_factory_add().
-	 * Params:
-	 *  StockID = a stock icon name
-	 *  size = a stock icon size
-	 * Returns:
-	 *  a new GtkImage displaying the stock icon
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * Append a page with a widget and a text for a label
 	 */
-	public this (StockID stockID, GtkIconSize size)
+	public int appendPage(Widget child, string tabLabel)
 	{
-		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		auto p = gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
-		}
-		this(cast(GtkImage*)p);
+		return appendPage(child, new Label(tabLabel));
+	}
+
+	/** */
+	void setCurrentPage(Widget child)
+	{
+		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
 	}
 code: end
-outFile: Image
+outFile: Notebook
+
+file: GtkExpander.html
+struct: GtkExpander
+class: Expander
+prefix: gtk_expander_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+nocode: gtk_expander_new
+nocode: gtk_expander_new_with_mnemonic
+
+code: start
+	/**
+	 * Creates a new expander using label as the text of the label.
+	 * Since 2.4
+	 * Params:
+	 *  label = the text of the label
+	 *  mnemonic = if true characters in label that are preceded by an underscore,
+	 *  are underlined.
+	 *  If you need a literal underscore character in a label, use '__' (two
+	 *  underscores). The first underlined character represents a keyboard
+	 *  accelerator called a mnemonic.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkExpander* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_expander_new_with_mnemonic (const gchar *label);
+			p = cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_expander_new (const gchar *label);
+			p = cast(GtkExpander*)gtk_expander_new(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_expander_new");
+		}
+
+		this(p);
+	}
+code: end
+outFile: Expander
+
+file: gtk3-Orientable.html
+struct: GtkOrientable
+class: OrientableT
+template: TStruct
+prefix: gtk_orientable_
+interface: OrientableIF
+outFile: OrientableT
+
+file: GtkAspectFrame.html
+struct: GtkAspectFrame
+class: AspectFrame
+prefix: gtk_aspect_frame_
+import: glib.Str
+outFile: AspectFrame
+
+file: GtkFixed.html
+struct: GtkFixed
+class: Fixed
+prefix: gtk_fixed_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: Fixed
+
+###########################################################
+### Display Widgets #######################################
+###########################################################
 
 file: GtkLabel.html
 struct: GtkLabel
@@ -1934,50 +2512,65 @@ code: start
 code: end
 outFile: Label
 
-file: GtkProgressBar.html
-struct: GtkProgressBar
-class: ProgressBar
-prefix: gtk_progress_bar_
+file: GtkImage.html
+struct: GtkImage
+class: Image
+prefix: gtk_image_
 import: glib.Str
-outFile: ProgressBar
+import: gio.Icon
+import: gio.IconIF
+import: gdk.Pixbuf
+import: gdkpixbuf.PixbufAnimation
+import: gtk.IconSet
+structWrap: GIcon* IconIF
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkPixbufAnimation* PixbufAnimation
+structWrap: GtkIconSet* IconSet
 
-file: GtkStatusbar.html
-struct: GtkStatusbar
-class: Statusbar
-prefix: gtk_statusbar_
-import: glib.Str
-import: gtk.Box
-import: gtk.Widget
-structWrap: GtkWidget* Widget
+out: gtk_image_get_icon_set icon_set
+out: gtk_image_get_icon_set size
+out: gtk_image_get_stock stock_id
+out: gtk_image_get_stock size
+out: gtk_image_get_icon_name icon_name
+out: gtk_image_get_icon_name size
+out: gtk_image_get_gicon gicon
+out: gtk_image_get_gicon size
 
-nocode:  gtk_statusbar_get_message_area
+nocode: gtk_image_new_from_stock
 
 code: start
 	/**
-	 * Retrieves the box containing the label widget.
-	 * Since 2.20
-	 * Returns: a GtkBox. [transfer none]
+	 * Creates a GtkImage displaying a stock icon. Sample stock icon
+	 * names are GTK_STOCK_OPEN, GTK_STOCK_EXIT. Sample stock sizes
+	 * are GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_SMALL_TOOLBAR. If the stock
+	 * icon name isn't known, the image will be empty.
+	 * You can register your own stock icon names, see
+	 * gtk_icon_factory_add_default() and gtk_icon_factory_add().
+	 * Params:
+	 *  StockID = a stock icon name
+	 *  size = a stock icon size
+	 * Returns:
+	 *  a new GtkImage displaying the stock icon
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public Box getMessageArea()
+	public this (StockID stockID, GtkIconSize size)
 	{
-		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
-		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
+		auto p = gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size);
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
 		}
-		return new Box(cast(GtkBox*) p);
+		this(cast(GtkImage*)p);
 	}
 code: end
-outFile: Statusbar
+outFile: Image
 
-file: GtkLevelBar.html
-struct: GtkLevelBar
-class: LevelBar
-prefix: gtk_level_bar_
-import: glib.Str
-out: gtk_level_bar_get_offset_value value
-outFile: LevelBar
+file: GtkSpinner.html
+struct: GtkSpinner
+class: Spinner
+prefix: gtk_spinner_
+outFile: Spinner
 
 file: GtkInfoBar.html
 struct: GtkInfoBar
@@ -2082,6 +2675,62 @@ code: start
 code: end
 outFile: InfoBar
 
+file: GtkProgressBar.html
+struct: GtkProgressBar
+class: ProgressBar
+prefix: gtk_progress_bar_
+import: glib.Str
+outFile: ProgressBar
+
+file: GtkLevelBar.html
+struct: GtkLevelBar
+class: LevelBar
+prefix: gtk_level_bar_
+import: glib.Str
+out: gtk_level_bar_get_offset_value value
+outFile: LevelBar
+
+file: GtkStatusbar.html
+struct: GtkStatusbar
+class: Statusbar
+prefix: gtk_statusbar_
+import: glib.Str
+import: gtk.Box
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+nocode:  gtk_statusbar_get_message_area
+
+code: start
+	/**
+	 * Retrieves the box containing the label widget.
+	 * Since 2.20
+	 * Returns: a GtkBox. [transfer none]
+	 */
+	public Box getMessageArea()
+	{
+		// GtkWidget * gtk_statusbar_get_message_area (GtkStatusbar *statusbar);
+		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Box(cast(GtkBox*) p);
+	}
+code: end
+outFile: Statusbar
+
+file: GtkAccelLabel.html
+struct: GtkAccelLabel
+class: AccelLabel
+prefix: gtk_accel_label_
+import: glib.Str
+import: gobject.Closure
+import: gtk.Widget
+structWrap: GClosure* Closure
+structWrap: GtkWidget* Widget
+outFile: AccelLabel
+
 file: GtkStatusIcon.html
 struct: GtkStatusIcon
 class: StatusIcon
@@ -2171,12 +2820,6 @@ code: start
 	}
 code: end
 outFile: StatusIcon
-
-file: GtkSpinner.html
-struct: GtkSpinner
-class: Spinner
-prefix: gtk_spinner_
-outFile: Spinner
 
 ###########################################################
 ### Buttons and Toggles ###################################
@@ -2539,6 +3182,46 @@ prefix: gtk_
 import: glib.Str
 outFile: LinkButton
 
+file: GtkMenuButton.html
+struct: GtkMenuButton
+class: MenuButton
+prefix: gtk_menu_button_
+import: gio.MenuModel
+import: gtk.Menu
+import: gtk.Widget
+structWrap: GMenuModel* MenuModel
+structWrap: GtkMenu* Menu
+structWrap: GtkWidget* Widget
+
+alias: setDirection setMenuDirection
+alias: getDirection getMenuDirection
+
+outFile: MenuButton
+
+file: GtkSwitch.html
+struct: GtkSwitch
+class: Switch
+implements: ActionableIF
+implements: ActivatableIF
+prefix: gtk_switch_
+
+#imports for Actionable Interface.
+import: gtk.ActionableIF
+import: gtk.ActionableT
+
+# imports for Activatable Interface
+import: gtk.ActivatableT
+import: gtk.ActivatableIF
+
+code: start
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkSwitch);
+
+	// add the Activatable capabilities
+	mixin ActivatableT!(GtkSwitch);
+code: end
+outFile: Switch
+
 file: GtkScaleButton.html
 struct: GtkScaleButton
 class: ScaleButton
@@ -2573,30 +3256,6 @@ prefix: gtk_volume_button_
 import: glib.Str
 outFile: VolumeButton
 
-file: GtkSwitch.html
-struct: GtkSwitch
-class: Switch
-implements: ActionableIF
-implements: ActivatableIF
-prefix: gtk_switch_
-
-#imports for Actionable Interface.
-import: gtk.ActionableIF
-import: gtk.ActionableT
-
-# imports for Activatable Interface
-import: gtk.ActivatableT
-import: gtk.ActivatableIF
-
-code: start
-	// add the Actionable capabilities
-	mixin ActionableT!(GtkSwitch);
-
-	// add the Activatable capabilities
-	mixin ActivatableT!(GtkSwitch);
-code: end
-outFile: Switch
-
 file: GtkLockButton.html
 struct: GtkLockButton
 class: LockButton
@@ -2604,22 +3263,6 @@ prefix: gtk_switch_
 import: gio.Permission
 structWrap: GPermission* Permission
 outFile: LockButton
-
-file: GtkMenuButton.html
-struct: GtkMenuButton
-class: MenuButton
-prefix: gtk_menu_button_
-import: gio.MenuModel
-import: gtk.Menu
-import: gtk.Widget
-structWrap: GMenuModel* MenuModel
-structWrap: GtkMenu* Menu
-structWrap: GtkWidget* Widget
-
-alias: setDirection setMenuDirection
-alias: getDirection getMenuDirection
-
-outFile: MenuButton
 
 ###########################################################
 ### numeric/text Data Entry ###############################
@@ -2643,6 +3286,7 @@ import: gtk.TargetList
 import: gtk.Widget
 import: pango.PgAttributeList
 import: pango.PgLayout
+import: pango.PgTabArray
 structWrap: GIcon* IconIF
 structWrap: GdkPixbuf* Pixbuf
 structWrap: GtkAdjustment* Adjustment
@@ -2653,6 +3297,7 @@ structWrap: GtkTargetList* TargetList
 structWrap: GtkWidget* Widget
 structWrap: PangoAttrList* PgAttributeList
 structWrap: PangoLayout* PgLayout
+structWrap: PangoTabArray* PgTabArray
 
 # imports for TreeModel Interface
 import: gtk.EditableT
@@ -2780,22 +3425,6 @@ out: gtk_scale_get_layout_offsets x
 out: gtk_scale_get_layout_offsets y
 outFile: Scale
 
-file: GtkHScale.html
-struct: GtkHScale
-class: HScale
-prefix: gtk_hscale_
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-outFile: HScale
-
-file: GtkVScale.html
-struct: GtkVScale
-class: VScale
-prefix: gtk_vscale_
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-outFile: VScale
-
 file: GtkSpinButton.html
 struct: GtkSpinButton
 class: SpinButton
@@ -2814,6 +3443,16 @@ struct: GtkSearchEntry
 class: SearchEntry
 prefix: gtk_search_entry_
 outFile: SearchEntry
+
+file: GtkSearchBar.html
+struct: GtkSearchBar
+class: SearchBar
+prefix: gtk_search_bar_
+import: gdk.Event
+import: gtk.Entry
+structWrap: GdkEvent* Event
+structWrap: GtkEntry* Entry
+outFile: SearchBar
 
 file: GtkEditable.html
 struct: GtkEditable
@@ -5842,80 +6481,6 @@ code: start
 code: end
 outFile: MenuItem
 
-file: GtkImageMenuItem.html
-struct: GtkImageMenuItem
-class: ImageMenuItem
-prefix: gtk_image_menu_item_
-import: glib.Str
-import: gtk.AccelGroup
-import: gtk.Widget
-structWrap: GtkAccelGroup* AccelGroup
-structWrap: GtkWidget* Widget
-
-nocode: gtk_image_menu_item_new_with_label
-nocode: gtk_image_menu_item_new_with_mnemonic
-nocode: gtk_image_menu_item_new_from_stock
-
-code: start
-	/**
-	 * Creates a new GtkImageMenuItem containing a label.
-	 * If mnemonic it true the label will be created using
-	 * gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the menu item.
-	 * Params:
-	 *  label = the text of the menu item.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string label, bool mnemonic=true)
-	{
-		GtkImageMenuItem* p;
-
-		if ( mnemonic )
-		{
-			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
-			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label));
-		}
-		else
-		{
-			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
-			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label));
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_image_menu_item_new_with_");
-		}
-
-		this(p);
-	}
-
-	/**
-	 * Creates a new GtkImageMenuItem containing the image and text from a
-	 * stock item.
-	 * If you want this menu item to have changeable accelerators, then pass in
-	 * null for accelGroup. Next call setAccelPath() with an appropriate path
-	 * for the menu item, use gtk.StockItem.StockItem.lookup() to look up the
-	 * standard accelerator for the stock item, and if one is found, call
-	 * gtk.AccelMap.AccelMap.addEntry() to register it.
-	 * Params:
-	 *   StockID    = the name of the stock item
-	 *   accelGroup = the GtkAccelGroup to add the menu items accelerator to,
-	 *                or NULL.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (StockID stockID, AccelGroup accelGroup)
-	{
-		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
-		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_image_menu_item_new_from_stock");
-		}
-		this(cast(GtkImageMenuItem*) p);
-	}
-code: end
-outFile: ImageMenuItem
-
 file: GtkRadioMenuItem.html
 struct: GtkRadioMenuItem
 class: RadioMenuItem
@@ -6054,12 +6619,6 @@ struct: GtkSeparatorMenuItem
 class: SeparatorMenuItem
 prefix: gtk_separator_menu_item_
 outFile: SeparatorMenuItem
-
-file: GtkTearoffMenuItem.html
-struct: GtkTearoffMenuItem
-class: TearoffMenuItem
-prefix: gtk_tearoff_menu_item_
-outFile: TearoffMenuItem
 
 file: GtkToolShell.html
 struct: GtkToolShell
@@ -6347,351 +6906,6 @@ structWrap: GtkRadioToolButton* RadioToolButton
 outFile: RadioToolButton
 
 ###########################################################
-### Action-based menus and toolbars #######################
-###########################################################
-
-file: GtkUIManager.html
-struct: GtkUIManager
-class: UIManager
-implements: BuildableIF
-prefix: gtk_ui_manager_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListG
-import: glib.ListSG
-import: gtk.Action
-import: gtk.ActionGroup
-import: gtk.AccelGroup
-import: gtk.Widget
-structWrap: GList* ListG
-structWrap: GSList* ListSG
-structWrap: GtkAction* Action
-structWrap: GtkActionGroup* ActionGroup
-structWrap: GtkAccelGroup* AccelGroup
-structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-array: gtk_ui_manager_add_ui_from_string buffer length
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkUIManager);
-code: end
-outFile: UIManager
-
-file: GtkActionGroup.html
-struct: GtkActionGroup
-class: ActionGroup
-implements: BuildableIF
-prefix: gtk_action_group_
-import: glib.Str
-import: glib.ListG
-import: gtk.AccelGroup
-import: gtk.Action
-import: gtk.Widget
-structWrap: GList* ListG
-structWrap: GtkAccelGroup* AccelGroup
-structWrap: GtkAction* Action
-structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-array: gtk_action_group_add_actions entries n_entries
-array: gtk_action_group_add_actions_full entries n_entries
-array: gtk_action_group_add_toggle_actions entries n_entries
-array: gtk_action_group_add_toggle_actions_full entries n_entries
-array: gtk_action_group_add_radio_actions entries n_entries
-array: gtk_action_group_add_radio_actions_full entries n_entries
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkActionGroup);
-code: end
-outFile: ActionGroup
-
-file: GtkAction.html
-struct: GtkAction
-class: Action
-implements: BuildableIF
-prefix: gtk_action_
-import: glib.Str
-import: gio.Icon
-import: gio.IconIF
-import: gobject.Closure
-import: glib.ListSG
-import: gtk.AccelGroup
-import: gtk.Image
-import: gtk.Menu
-import: gtk.MenuItem
-import: gtk.ToolItem
-import: gtk.Widget
-structWrap: GIcon* IconIF
-structWrap: GClosure* Closure
-structWrap: GSList* ListSG
-structWrap: GtkAccelGroup* AccelGroup
-structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-nocode: gtk_action_get_stock_id
-nocode: gtk_action_create_icon
-nocode: gtk_action_create_menu_item
-nocode: gtk_action_create_tool_item
-nocode: gtk_action_create_menu
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAction);
-
-	/**
-	 * Creates a new GtkAction object. To add the action to a
-	 * GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * See the section called UI Definitions for information on allowed action
-	 * names.
-	 * Since 2.4
-	 * Params:
-	 * name =  A unique name for the action
-	 * label =  the label displayed in menu items and on buttons, or NULL
-	 * tooltip =  a tooltip for the action, or NULL
-	 * stockId =  the stock icon to display in widgets representing the
-	 *  action.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, string label, string tooltip, StockID stockId)
-	{
-		this(name, label, tooltip, StockDesc[stockId]);
-	}
-
-	/**
-	 * Gets the stock id of action.
-	 * Since 2.16
-	 * Returns: the stock id
-	 */
-	public StockID getStockId()
-	{
-		// const gchar * gtk_action_get_stock_id (GtkAction *action);
-		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
-
-		foreach(i, desc; StockDesc)
-		{
-			if(desc == id)
-				return cast(StockID)i;
-		}
-
-		return StockID.DISCARD;
-	}
-
-	/**
-	 * Sets the stock id on action
-	 * Since 2.16
-	 * Params:
-	 * stockId =  the stock id
-	 */
-	public void setStockId(StockID stockId)
-	{
-		setStockId(StockDesc[stockId]);
-	}
-
-	/**
-	 * This function is intended for use by action implementations to
-	 * create icons displayed in the proxy widgets.
-	 * Since 2.4
-	 * Params:
-	 * iconSize = the size of the icon that should be created. [type int]
-	 * Returns: a widget that displays the icon for this action.
-	 */
-	public Image createIcon(GtkIconSize iconSize)
-	{
-		// GtkWidget * gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
-		auto p = gtk_action_create_icon(gtkAction, iconSize);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Image(cast(GtkImage*) p);
-	}
-	
-	/**
-	 * Creates a menu item widget that proxies for the given action.
-	 * Since 2.4
-	 * Returns: a menu item connected to the action.
-	 */
-	public MenuItem createMenuItem()
-	{
-		// GtkWidget * gtk_action_create_menu_item (GtkAction *action);
-		auto p = gtk_action_create_menu_item(gtkAction);
-		if(p is null)
-		{
-			return null;
-		}
-		return new MenuItem(cast(GtkMenuItem*) p);
-	}
-	
-	/**
-	 * Creates a toolbar item widget that proxies for the given action.
-	 * Since 2.4
-	 * Returns: a toolbar item connected to the action.
-	 */
-	public ToolItem createToolItem()
-	{
-		// GtkWidget * gtk_action_create_tool_item (GtkAction *action);
-		auto p = gtk_action_create_tool_item(gtkAction);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ToolItem(cast(GtkToolItem*) p);
-	}
-	
-	/**
-	 * If action provides a GtkMenu widget as a submenu for the menu
-	 * item or the toolbar item it creates, this function returns an
-	 * instance of that menu.
-	 * Since 2.12
-	 * Returns: the menu item provided by the action, or NULL.
-	 */
-	public Menu createMenu()
-	{
-		// GtkWidget * gtk_action_create_menu (GtkAction *action);
-		auto p = gtk_action_create_menu(gtkAction);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Menu(cast(GtkMenu*) p);
-	}
-code: end
-outFile: Action
-
-file: GtkToggleAction.html
-struct: GtkToggleAction
-class: ToggleAction
-prefix: gtk_toggle_action_
-import: glib.Str
-
-code: start
-/**
-	 * Creates a new GtkToggleAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.4
-	 * Params:
-	 * name =  A unique name for the action
-	 * label =  The label displayed in menu items and on buttons, or NULL
-	 * tooltip =  A tooltip for the action, or NULL
-	 * stockId =  The stock icon to display in widgets representing the
-	 *  action, or NULL
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, string label, string tooltip, StockID stockId)
-	{
-		this(name, label, tooltip, StockDesc[stockId]);
-	}
-code: end
-outFile: ToggleAction
-
-file: GtkRadioAction.html
-struct: GtkRadioAction
-class: RadioAction
-prefix: gtk_radio_action_
-import: glib.Str
-import: glib.ListSG
-structWrap: GSList* ListSG
-
-code: start
-	/**
-	 * Creates a new GtkRadioAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.4
-	 * Params:
-	 * name =  A unique name for the action
-	 * label =  The label displayed in menu items and on buttons, or NULL
-	 * tooltip =  A tooltip for this action, or NULL
-	 * stockId =  The stock icon to display in widgets representing this
-	 *  action, or NULL
-	 * value =  The value which gtk_radio_action_get_current_value() should
-	 *  return if this action is selected.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, string label, string tooltip, StockID stockId, int value)
-	{
-		this(name, label, tooltip, StockDesc[stockId], value);
-	}
-code: end
-outFile: RadioAction
-
-file: GtkRecentAction.html
-struct: GtkRecentAction
-ctorStruct: GtkAction
-class: RecentAction
-prefix: gtk_recent_action_
-prefix: gtk_
-import: glib.Str
-import: gtk.RecentManager
-structWrap: GtkRecentManager* RecentManager
-
-code: start
-	/**
-	 * Creates a new GtkRecentAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.12
-	 * Params:
-	 * name =  a unique name for the action
-	 * label =  the label displayed in menu items and on buttons, or NULL
-	 * tooltip =  a tooltip for the action, or NULL
-	 * stockID =  the stock icon to display in widgets representing the
-	 *  action, or NULL
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, string label, string tooltip, StockID stockID)
-	{
-		this(name, label, tooltip, StockDesc[stockID]);
-	}
-	
-	/**
-	 * Creates a new GtkRecentAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.12
-	 * Params:
-	 * name =  a unique name for the action
-	 * label =  the label displayed in menu items and on buttons, or NULL
-	 * tooltip =  a tooltip for the action, or NULL
-	 * stockID =  the stock icon to display in widgets representing the
-	 *  action, or NULL
-	 * manager =  a GtkRecentManager, or NULL for using the default
-	 *  GtkRecentManager
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
-	{
-		this(name, label, tooltip, StockDesc[stockID], manager);
-	}
-code: end
-outFile: RecentAction
-
-file: GtkActivatable.html
-struct: GtkActivatable
-class: ActivatableT
-template: TStruct
-prefix: gtk_activatable_
-import: gtk.Action
-structWrap: GtkAction* Action
-interface: ActivatableIF
-outFile: ActivatableT
-
-###########################################################
 ###  Selectors (File/Font/Color/Input Devices) ############
 ###########################################################
 
@@ -6836,69 +7050,6 @@ code: start
 	mixin ColorChooserT!(GtkColorChooserDialog);
 code: end
 outFile: ColorChooserDialog
-
-file: GtkColorSelection.html
-struct: GtkColorSelection
-class: ColorSelection
-prefix: gtk_color_selection_
-import: glib.Str
-import: gdk.Color
-import: gdk.RGBA
-structWrap: GdkColor* Color
-structWrap: GdkRGBA* RGBA
-
-out: gtk_color_selection_palette_from_string colors
-array: gtk_color_selection_palette_from_string colors n_colors
-array: gtk_color_selection_palette_to_string colors n_colors
-outFile: ColorSelection
-
-file: GtkColorSelectionDialog.html
-struct: GtkColorSelectionDialog
-class: ColorSelectionDialog
-prefix: gtk_color_selection_dialog_
-import: glib.Str
-import: gtk.ColorSelection
-
-nocode: gtk_color_selection_dialog_get_color_selection
-
-code: start
-	/**
-	 * Retrieves the GtkColorSelection widget embedded in the dialog.
-	 * Since 2.14
-	 * Returns: the embedded GtkColorSelection
-	 */
-	public ColorSelection getColorSelection()
-	{
-		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
-		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new ColorSelection(cast(GtkColorSelection*) p);
-	}
-code: end
-outFile: ColorSelectionDialog
-
-file: GtkHSV.html
-struct: GtkHSV
-class: HSV
-prefix: gtk_hsv_
-prefix: gtk_
-
-out: gtk_hsv_get_color h
-out: gtk_hsv_get_color s
-out: gtk_hsv_get_color v
-out: gtk_hsv_get_metrics size
-out: gtk_hsv_get_metrics ring_width
-out: gtk_hsv_to_rgb r
-out: gtk_hsv_to_rgb g
-out: gtk_hsv_to_rgb b
-out: gtk_rgb_to_hsv h
-out: gtk_rgb_to_hsv s
-out: gtk_rgb_to_hsv v
-
-outFile: HSV
 
 file: GtkFileChooser.html
 struct: GtkFileChooser
@@ -7106,590 +7257,20 @@ code: start
 cade: end
 outFile: FontChooserDialog
 
-file: GtkFontSelection.html
-struct: GtkFontSelection
-class: FontSelection
-prefix: gtk_font_selection_
+file: GtkPlacesSidebar.html
+struct: GtkPlacesSidebar
+class: PlacesSidebar
+prefix: gtk_places_sidebar_
 import: glib.Str
-import: gtk.Widget
-import: pango.PgFontFace
-import:  pango.PgFontFamily
-structWrap: GtkWidget* Widget
-structWrap: PangoFontFace* PgFontFace
-structWrap: PangoFontFamily* PgFontFamily
-outFile: FontSelection
-
-file: GtkFontSelectionDialog.html
-struct: GtkFontSelectionDialog
-class: FontSelectionDialog
-prefix: gtk_font_selection_dialog_
-import: glib.Str
-import: gtk.FontSelection
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-nocode: gtk_font_selection_dialog_get_font_selection
-
-code: start
-	/**
-	 * Retrieves the GtkFontSelection widget embedded in the dialog.
-	 * Since 2.22
-	 * Returns: the embedded GtkFontSelection
-	 */
-	public FontSelection getFontSelection()
-	{
-		// GtkWidget * gtk_font_selection_dialog_get_font_selection  (GtkFontSelectionDialog *fsd);
-		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
-		if(p is null)
-		{
-			return null;
-		}
-		return new FontSelection(cast(GtkFontSelection*) p);
-	}
-code: end
-outFile: FontSelectionDialog
-
-###########################################################
-### Layout Containers #####################################
-###########################################################
-
-file: GtkGrid.html
-struct: GtkGrid
-class: Grid
-implements: OrientableIF
-prefix: gtk_grid_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkGrid);
-code: end
-outFile: Grid
-
-file: GtkAlignment.html
-struct: GtkAlignment
-class: Alignment
-prefix: gtk_alignment_
-import: gtk.Widget
-
-out: gtk_alignment_get_padding padding_top
-out: gtk_alignment_get_padding padding_bottom
-out: gtk_alignment_get_padding padding_left
-out: gtk_alignment_get_padding padding_right
-
-code: start
-	/** */
-	public static Alignment center(Widget widget)
-	{
-		Alignment a = new Alignment(0.5, 0.5, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */	
-	public static Alignment north(Widget widget)
-	{
-		Alignment a = new Alignment(0.5, 0.0, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */	
-	public static Alignment south(Widget widget)
-	{
-		Alignment a = new Alignment(0.5, 1.0, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */	
-	public static Alignment east(Widget widget)
-	{
-		Alignment a = new Alignment(1.0, 0.5, 0, 0);
-		a.add(widget);
-		return a;
-	}
-	
-	/** */
-	public static Alignment west(Widget widget)
-	{
-		Alignment a = new Alignment(0.0, 0.5, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */	
-	public static Alignment northWest(Widget widget)
-	{
-		Alignment a = new Alignment(0.0, 0.0, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */
-	public static Alignment southWest(Widget widget)
-	{
-		Alignment a = new Alignment(0.0, 0.5, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */
-	public static Alignment northEast(Widget widget)
-	{
-		Alignment a = new Alignment(1.0, 0.0, 0, 0);
-		a.add(widget);
-		return a;
-	}
-
-	/** */
-	public static Alignment southEast(Widget widget)
-	{
-		Alignment a = new Alignment(1.0, 1.0, 0, 0);
-		a.add(widget);
-		return a;
-	}
-code: end
-outFile: Alignment
-
-file: GtkAspectFrame.html
-struct: GtkAspectFrame
-class: AspectFrame
-prefix: gtk_aspect_frame_
-import: glib.Str
-outFile: AspectFrame
-
-file: GtkBox.html
-struct: GtkBox
-class: Box
-implements: OrientableIF
-prefix: gtk_box_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-out: gtk_box_query_child_packing expand
-out: gtk_box_query_child_packing fill
-out: gtk_box_query_child_packing padding
-out: gtk_box_query_child_packing pack_type
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkBox);
-code: end
-outFile: Box
-
-file: GtkHBox.html
-struct: GtkHBox
-class: HBox
-prefix: gtk_hbox_
-outFile: HBox
-
-file: GtkVBox.html
-struct: GtkVBox
-class: VBox
-prefix: gtk_vbox_
-outFile: VBox
-
-file: GtkButtonBox.html
-struct: GtkButtonBox
-class: ButtonBox
-prefix: gtk_button_box_
-import: gtk.Button
-import: gtk.HButtonBox
-import: gtk.VButtonBox
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-out: gtk_button_box_get_child_size min_width
-out: gtk_button_box_get_child_size min_height
-out: gtk_button_box_get_child_ipadding ipad_x
-out: gtk_button_box_get_child_ipadding ipad_y
-
-code: start
-	/** */
-	static ButtonBox createActionBox(
-			void delegate(Button) onClicked, 
-			StockID[] stocks, 
-			string[] actions,
-			bool vertical=false
-		)
-	{
-		ButtonBox bBox;
-		if ( vertical )
-		{
-			bBox = VButtonBox.createActionBox();
-		}
-		else
-		{
-			bBox = HButtonBox.createActionBox();
-		}
-
-		Button button;
-		for( int i=0 ; i<stocks.length && i<actions.length ; i++)
-		{
-			button =  new Button(stocks[i]);
-			bBox.packEnd(button, false, false, 7);
-			button.setActionName(actions[i]);
-			button.addOnClicked(onClicked);
-		}
-		return bBox;
-	}
-
-	/** */
-	static ButtonBox createOkBox(void delegate(Button) onClicked)
-	{
-		static StockID[] stocks = [StockID.OK];
-		string[] actions;
-		actions ~= "action.ok";
-		return createActionBox(onClicked, stocks, actions);
-	}
-
-	/** */
-	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
-	{
-		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
-		string[] actions;
-		actions ~= "action.ok";
-		actions ~= "action.cancel";
-		return createActionBox(onClicked, stocks, actions);
-	}
-code: end
-outFile: ButtonBox
-
-file: GtkHButtonBox.html
-struct: GtkHButtonBox
-class: HButtonBox
-prefix: gtk_hbutton_box_
-
-code: start
-	/**
-	 * Creates a new HButtonBox and sets comon parameters
-	 */
-	static HButtonBox createActionBox()
-	{
-		HButtonBox bBox = new HButtonBox();
-		bBox.setLayout(ButtonBoxStyle.END);
-		bBox.setBorderWidth(5);
-		bBox.setSpacing(7);
-		return bBox;
-	}
-code: end
-outFile: HButtonBox
-
-file: GtkVButtonBox.html
-struct: GtkVButtonBox
-class: VButtonBox
-prefix: gtk_vbutton_box_
-code: start
-    /**
-     * Creates a new vertical button box and sets standart values for it's comon parameters
-     * Returns: a new vertical button box
-     */
-	static VButtonBox createActionBox()
-	{
-		VButtonBox bBox = new VButtonBox();
-		bBox.setLayout(ButtonBoxStyle.START);
-		bBox.setBorderWidth(5);
-		bBox.setSpacing(7);
-		return bBox;
-	}
-code: end
-outFile: VButtonBox
-
-file: GtkFixed.html
-struct: GtkFixed
-class: Fixed
-prefix: gtk_fixed_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-outFile: Fixed
-
-file: GtkPaned.html
-struct: GtkPaned
-class: Paned
-implements: OrientableIF
-prefix: gtk_paned_
-import: gdk.Window
-import: gtk.Widget
-structWrap: GdkWindow* Window
-structWrap: GtkWidget* Widget
-
-#imports for Orientable Interface.
-import: gtk.OrientableIF
-import: gtk.OrientableT
-
-code: start
-	// add the Orientable capabilities
-	mixin OrientableT!(GtkPaned);
-
-	/** */
-	public void add(Widget child1, Widget child2)
-	{
-		add1(child1);
-		add2(child2);
-	}
-code: end
-outFile: Paned
-
-file: GtkHPaned.html
-struct: GtkHPaned
-class: HPaned
-prefix: gtk_hpaned_
-import: gtk.Widget
-
-code: start
-	/**
-	 * Creates a new HPaned and adds two widgets as it's children
-	 * Params:
-	 *  child1 =
-	 *  child2 =
-	 */
-	this(Widget child1, Widget child2)
-	{
-		this();
-		add1(child1);
-		add2(child2);
-	}
-	
-code: end
-outFile: HPaned
-
-file: GtkVPaned.html
-struct: GtkVPaned
-class: VPaned
-prefix: gtk_vpaned_
-import: gtk.Widget
-
-code: start
-	/**
-	 * Creates a new HPaned and adds two widgets as it's children
-	 * Params:
-	 *  child1 =
-	 *  child2 =
-	 */
-	this(Widget child1, Widget child2)
-	{
-		this();
-		add1(child1);
-		add2(child2);
-	}
-	
-code: end
-outFile: VPaned
-
-file: GtkLayout.html
-struct: GtkLayout
-class: Layout
-implements: ScrollableIF
-prefix: gtk_layout_
-import: gdk.Window
-import: gtk.Adjustment
-import: gtk.Widget
-structWrap: GdkWindow* Window
-structWrap: GtkAdjustment* Adjustment
-structWrap: GtkWidget* Widget
-
-nocode: gtk_layout_get_hadjustment
-nocode: gtk_layout_get_vadjustment
-nocode: gtk_layout_set_hadjustment
-nocode: gtk_layout_set_vadjustment
-
-#imports for Scrollable Interface.
-import: gtk.ScrollableIF
-import: gtk.ScrollableT
-
-out: gtk_layout_get_size width
-out: gtk_layout_get_size height
-
-code: start
-	// add the Scrollable capabilities
-	mixin ScrollableT!(GtkLayout);
-code: end
-outFile: Layout
-
-file: GtkNotebook.html
-struct: GtkNotebook
-class: Notebook
-prefix: gtk_notebook_
-import: glib.Str
-import: gtk.Label
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-code: start
-	/**
-	 * Append a page with a widget and a text for a label
-	 */
-	public int appendPage(Widget child, string tabLabel)
-	{
-		return appendPage(child, new Label(tabLabel));
-	}
-
-	/** */
-	void setCurrentPage(Widget child)
-	{
-		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
-	}
-code: end
-outFile: Notebook
-
-file: GtkTable.html
-struct: GtkTable
-class: Table
-prefix: gtk_table_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-out: gtk_table_get_size rows
-out: gtk_table_get_size columns
-
-nocode: gtk_table_new
-
-code: start
-	int row;
-	int col;
-	int maxRows;
-	int maxCols;
-
-	public AttachOptions defaultXOption = AttachOptions.SHRINK;
-	public AttachOptions defaultYOption = AttachOptions.SHRINK;
-	
-	/**
-	 * Removes all children and resizes the table to 1,1
-	 */
-	override void removeAll()
-	{
-		super.removeAll();
-		resize(1,1);
-
-		row = 0;
-		col = 0;
-		maxRows = 1;
-		maxCols = 1;
-	}
-	
-	/**
-	 * Used to create a new table widget. An initial size must be given by
-	 * specifying how many rows and columns the table should have, although
-	 * this can be changed later with gtk_table_resize(). rows and columns
-	 * must both be in the range 0 .. 65535.
-	 * Params:
-	 *  rows = The number of rows the new table should have.
-	 *  columns = The number of columns the new table should have.
-	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
-	 *  containing the largest widget.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (uint rows, uint columns, int homogeneous)
-	{
-		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
-		auto p = gtk_table_new(rows, columns, homogeneous);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_table_new");
-		}
-
-		this(cast(GtkTable*) p);
-
-		row = 0;
-		col = 0;
-		maxRows = rows;
-		maxCols = columns;
-	}
-	
-
-	/**
-	 * Attach a new widget creating a new row if necessary
-	 */
-	void attach(Widget child)
-	{
-		attach(child, col, col + 1, row, row + 1,
-				defaultXOption, defaultYOption,
-				getDefaultColSpacing(), getDefaultRowSpacing());
-		++col;
-		if (col >= maxCols)
-		{
-			col = 0;
-			++row;
-		}
-	}
-code: end
-outFile: Table
-
-file: GtkExpander.html
-struct: GtkExpander
-class: Expander
-prefix: gtk_expander_
-import: glib.Str
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-
-nocode: gtk_expander_new
-nocode: gtk_expander_new_with_mnemonic
-
-code: start
-	/**
-	 * Creates a new expander using label as the text of the label.
-	 * Since 2.4
-	 * Params:
-	 *  label = the text of the label
-	 *  mnemonic = if true characters in label that are preceded by an underscore,
-	 *  are underlined.
-	 *  If you need a literal underscore character in a label, use '__' (two
-	 *  underscores). The first underlined character represents a keyboard
-	 *  accelerator called a mnemonic.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string label, bool mnemonic=true)
-	{
-		GtkExpander* p;
-
-		if ( mnemonic )
-		{
-			// GtkWidget* gtk_expander_new_with_mnemonic (const gchar *label);
-			p = cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label));
-		}
-		else
-		{
-			// GtkWidget* gtk_expander_new (const gchar *label);
-			p = cast(GtkExpander*)gtk_expander_new(Str.toStringz(label));
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_expander_new");
-		}
-
-		this(p);
-	}
-code: end
-outFile: Expander
-
-file: GtkOverlay.html
-struct: GtkOverlay
-class: Overlay
-prefix: gtk_overlay_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-outFile: Overlay
-
-file: gtk3-Orientable.html
-struct: GtkOrientable
-class: OrientableT
-template: TStruct
-prefix: gtk_orientable_
-interface: OrientableIF
-outFile: OrientableT
+import: glib.ListSG
+import: gio.File
+import: gobject.ObjectG
+import: gtk.DragContext
+structWrap: GSList* ListSG
+structWrap: GFile* File
+structWrap: GObject* ObjectG
+structWrap: GdkDragContext* DragContext
+outFile: PlacesSidebar
 
 ###########################################################
 ### Ornaments #############################################
@@ -7734,18 +7315,6 @@ code: start
 code: end
 outFile: Separator
 
-file: GtkHSeparator.html
-struct: GtkHSeparator
-class: HSeparator
-prefix: gtk_hseparator_
-outFile: HSeparator
-
-file: GtkVSeparator.html
-struct: GtkVSeparator
-class: VSeparator
-prefix: gtk_vseparator_
-outFile: VSeparator
-
 ###########################################################
 ### Scrolling #############################################
 ###########################################################
@@ -7757,22 +7326,6 @@ prefix: gtk_scrollbar_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: Scrollbar
-
-file: GtkHScrollbar.html
-struct: GtkHScrollbar
-class: HScrollbar
-prefix: gtk_hscrollbar_
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-outFile: HScrollbar
-
-file: GtkVScrollbar.html
-struct: GtkVScrollbar
-class: VScrollbar
-prefix: gtk_vscrollbar_
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-outFile: VScrollbar
 
 file: GtkScrolledWindow.html
 struct: GtkScrolledWindow
@@ -8193,6 +7746,7 @@ implements: BuildableIF
 prefix: gtk_widget_
 prefix: gtk_
 noprefix: gtk_requisition_
+noprefix: gtk_widget_class_
 
 import: std.conv
 import: atk.ObjectAtk
@@ -8200,6 +7754,7 @@ import: cairo.Context
 import: cairo.Region
 import: glib.ListG
 import: glib.Str
+import: gobject.ObjectG
 import: gobject.ParamSpec
 import: gobject.Type
 import: gobject.Value
@@ -8233,6 +7788,7 @@ structWrap: cairo_t* Context
 structWrap: CairoContext* Context
 structWrap: cairo_region_t* Region
 structWrap: GList* ListG
+structWrap: GObject* ObjectG
 structWrap: GParamSpec* ParamSpec
 structWrap: GValue* Value
 structWrap: GActionGroup* ActionGroupIF
@@ -8280,10 +7836,6 @@ out: gtk_widget_translate_coordinates dest_y
 out: gtk_widget_path path_length
 out: gtk_widget_path path
 out: gtk_widget_path path_reversed
-out: gtk_widget_class_path path_length
-out: gtk_widget_class_path path
-out: gtk_widget_class_path path_reversed
-array: gtk_widget_class_list_style_properties Return n_properties
 out: gtk_widget_get_size_request width
 out: gtk_widget_get_size_request height
 out: gtk_widget_get_allocation allocation
@@ -8300,6 +7852,11 @@ out: gtk_widget_get_preferred_width_for_height natural_width
 out: gtk_widget_get_preferred_size minimum_size
 out: gtk_widget_get_preferred_size natural_size
 array: gtk_distribute_natural_allocation sizes n_requested_sizes
+out: gtk_widget_get_preferred_height_and_baseline_for_width minimum_height
+out: gtk_widget_get_preferred_height_and_baseline_for_width natural_height
+out: gtk_widget_get_preferred_height_and_baseline_for_width minimum_baseline
+out: gtk_widget_get_preferred_height_and_baseline_for_width natural_baseline
+inout: gtk_widget_size_allocate_with_baseline allocation
 
 code: start
 	// add the Buildable capabilities
@@ -8632,6 +8189,95 @@ code: start
 code: end
 outFile: Requisition
 
+struct: GtkWidgetClass
+class: WidgetClass
+prefix: gtk_widget_class_
+strictPrefix: Y
+import: glib.Str
+import: glib.Bytes
+import: gobject.ParamSpec
+import: gtk.Widget
+structWrap: GBytes* Bytes
+structWrap: GParamSpec* ParamSpec
+structWrap: GtkWidget*
+
+nosignal: accel-closures-changed
+nosignal: button-press-event
+nosignal: button-release-event
+nosignal: can-activate-accel
+nosignal: child-notify
+nosignal: composited-changed
+nosignal: configure-event
+nosignal: damage-event
+nosignal: delete-event
+nosignal: destroy
+nosignal: destroy-event
+nosignal: direction-changed
+nosignal: drag-begin
+nosignal: drag-data-delete
+nosignal: drag-data-get
+nosignal: drag-data-received
+nosignal: drag-drop
+nosignal: drag-end
+nosignal: drag-failed
+nosignal: drag-leave
+nosignal: drag-motion
+nosignal: draw
+nosignal: enter-notify-event
+nosignal: event 
+nosignal: event-after
+nosignal: focus
+nosignal: focus-in-event
+nosignal: focus-out-event
+nosignal: grab-broken-event
+nosignal: grab-focus
+nosignal: grab-notify
+nosignal: hide
+nosignal: hierarchy-changed
+nosignal: key-press-event
+nosignal: key-release-event
+nosignal: keynav-failed
+nosignal: leave-notify-event
+nosignal: map
+nosignal: map-event
+nosignal: mnemonic-activate
+nosignal: motion-notify-event
+nosignal: move-focus
+nosignal: parent-set
+nosignal: popup-menu
+nosignal: property-notify-event
+nosignal: proximity-in-event
+nosignal: proximity-out-event
+nosignal: query-tooltip
+nosignal: realize
+nosignal: screen-changed
+nosignal: scroll-event
+nosignal: selection-clear-event
+nosignal: selection-get
+nosignal: selection-notify-event
+nosignal: selection-received
+nosignal: selection-request-event
+nosignal: show
+nosignal: show-help
+nosignal: size-allocate
+nosignal: state-changed
+nosignal: state-flags-changed
+nosignal: style-set
+nosignal: style-updated
+nosignal: unmap
+nosignal: unmap-event
+nosignal: unrealize
+nosignal: visibility-notify-event
+nosignal: window-state-event
+nosignal: touch-event
+
+out: gtk_widget_class_path path_length
+out: gtk_widget_class_path path
+out: gtk_widget_class_path path_reversed
+array: gtk_widget_class_list_style_properties Return n_properties
+
+outFile: WidgetClass
+
 file: GtkContainer.html
 struct: GtkContainer
 class: Container
@@ -8754,6 +8400,7 @@ outFile: IMContext
 file: GtkPlug.html
 struct: GtkPlug
 class: Plug
+extend: GtkWindow
 prefix: gtk_plug_
 import: gdk.Display
 #import: gdk.Window
@@ -9053,388 +8700,940 @@ code: end
 outFile: AppChooserWidget
 
 ###########################################################
-### Interface builder #####################################
+### Deprecated ###########################################
 ###########################################################
 
-file: GtkBuildable.html
-struct: GtkBuildable
-class: BuildableT
-template: TStruct
-prefix: gtk_buildable_
+file: gtk3-GtkSymbolicColor.html
+struct: GtkSymbolicColor
+class: SymbolicColor
+prefix: gtk_symbolic_color_
 import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-structWrap: GObject* ObjectG
-structWrap: GValue* Value
-structWrap: GtkBuilder* Builder
-
-alias: setName buildableSetName
-alias: getName buildableGetName
-
-interface: BuildableIF
-outFile: BuildableT
-
-file: GtkBuilder.html
-struct: GtkBuilder
-class: Builder
-prefix: gtk_builder_
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListSG
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.ParamSpec
-import: gobject.Value
-import: std.string
-import: gtkc.glib;
-structWrap: GObject* ObjectG
-structWrap: GParamSpec* ParamSpec
-structWrap: GSList* ListSG
-structWrap: GValue* Value
-
-nocode: gtk_builder_get_object
-nocode: gtk_builder_get_objects
-
-#imports for gtk_builder_real_get_type_from_name_override
-import: gtkc.gobject
+import: gdk.RGBA
+import: gtk.StyleProperties
+import: gtkc.Loader
 import: gtkc.paths
-import: glib.Module
-import: gobject.Type
+structWrap: GdkRGBA* RGBA
+structWrap: GtkStyleProperties* StyleProperties
+structWrap: GtkSymbolicColor* SymbolicColor
 
-array: gtk_builder_add_objects_from_file object_ids
-array: gtk_builder_add_objects_from_string object_ids
-array: gtk_builder_add_objects_from_resource object_ids
+override: toString
 
-nocode: gtk_builder_new
+nocode: gtk_symbolic_color_new_shade
+nocode: gtk_symbolic_color_new_alpha
+
 code: start
-	private struct GtkBuilderClass
+	~this ()
 	{
-		GObjectClass parentClass;
-		extern(C) GType function( GtkBuilder*, char* ) get_type_from_name;
-		
-		/* Padding for future expansion */
-		extern(C) void  function()  _gtk_reserved1;
-		extern(C) void  function()  _gtk_reserved2;
-		extern(C) void  function()  _gtk_reserved3;
-		extern(C) void  function()  _gtk_reserved4;
-		extern(C) void  function()  _gtk_reserved5;
-		extern(C) void  function()  _gtk_reserved6;
-		extern(C) void  function()  _gtk_reserved7;
-		extern(C) void  function()  _gtk_reserved8;
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
+		{
+			gtk_symbolic_color_unref(gtkSymbolicColor);
+		}
 	}
 
 	/**
-	 * Creates a new builder object.
-	 * Since 2.12
+	 * Creates a symbolic color defined as a shade of another color.
+	 * A factor > 1.0 would resolve to a brighter or more transparent color,
+	 * while < 1.0 would resolve to a darker or more opaque color.
+	 * 
+	 * Params:
+	 *     color    = another GtkSymbolicColor.
+	 *     factor   = shading factor to apply to color.
+	 *     useAlpha = if true change the relative alpha value of the color,
+	 *                otherwise change the shade.
+	 * 
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this (SymbolicColor color, double factor, bool useAlpha = true)
 	{
-		// GtkBuilder* gtk_builder_new (void);
-		auto p = gtk_builder_new();
+		GtkSymbolicColor* p;
+
+		if ( useAlpha )
+		{
+			p = gtk_symbolic_color_new_alpha((color is null) ? null : color.getSymbolicColorStruct(), factor);
+		}
+		else
+		{
+			p = gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor);
+		}
+
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_builder_new()");
-		}
-		this(cast(GtkBuilder*) p);
-
-		GtkBuilderClass* klass = Type.getInstanceClass!(GtkBuilderClass)( this );
-		klass.get_type_from_name = &gtk_builder_real_get_type_from_name_override;
-	}
-
-	/**
-	 * This function is a modification of _gtk_builder_resolve_type_lazily from "gtk/gtkbuilder.c".
-	 * It is needed because it assumes we are linking at compile time to the gtk libs.
-	 * specifically the NULL in g_module_open( NULL, 0 );
-	 * It replaces the default function pointer "get_type_from_name" in GtkBuilderClass.
-	 */
-	extern(C) private static GType gtk_builder_real_get_type_from_name_override ( GtkBuilder* builder, char *name )
-	{
-		GType gtype;
-		gtype = g_type_from_name( name );
-		if (gtype != GType.INVALID)
-		{
-			return gtype;
-		}
-		
-		/*
-		 * Try to map a type name to a _get_type function
-		 * and call it, eg:
-		 *
-		 * GtkWindow -> gtk_window_get_type
-		 * GtkHBox -> gtk_hbox_get_type
-		 * GtkUIManager -> gtk_ui_manager_get_type
-		 *
-		 */
-		char   c;
-		string symbol_name;
-
-		for (int i = 0; name[i] != '\0'; i++)
-		{
-			c = name[i];
-			/* skip if uppercase, first or previous is uppercase */
-			if ((c == Str.asciiToupper (c) &&
-			   i > 0 && name[i-1] != Str.asciiToupper (name[i-1])) ||
-			  (i > 2 && name[i]   == Str.asciiToupper (name[i]) &&
-			   name[i-1] == Str.asciiToupper (name[i-1]) &&
-			   name[i-2] == Str.asciiToupper (name[i-2]))
-			   )
-
-			symbol_name ~= '_';
-			symbol_name ~= Str.asciiTolower (c);
-		}
-		symbol_name ~=  "_get_type" ;
-
-		/* scan linked librarys for function symbol */
-		foreach ( lib; importLibs )
-		{
-			GType function() func;
-			Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
-			if( mod is null )
-				continue;
-			
-			scope(exit) mod.close();
-
-			if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
-				return func();
-			}
+			throw new ConstructionException("null returned by gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor)");
 		}
 
-		return GType.INVALID;
-	}
-
-	/**
-	 * Gets the object named name. Note that this function does not
-	 * increment the reference count of the returned object.
-	 * Since 2.12
-	 * Params:
-	 * name = name of object to get
-	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
-	 */
-	public ObjectG getObject(string name)
-	{
-		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
-		return newFromObject( gtk_builder_get_object(gtkBuilder, Str.toStringz(name)) );
-	}
-
-	/**
-	 * Gets all objects that have been constructed by builder.
-	 * Since 2.12
-	 * Returns: an array containing all the objects constructed by the GtkBuilder instance.
-	 */
-	public ObjectG[] getObjects()
-	{
-		ObjectG[] objects;
-
-		// GSList* gtk_builder_get_objects (GtkBuilder *builder);
-		GSList* list = gtk_builder_get_objects(gtkBuilder);
-
-		while ( list.next !is null )
-		{
-			objects ~= newFromObject( cast(GObject*)list.data );
-			list = list.next;
-		}
-
-		g_slist_free(list);
-
-		return objects;
-	}
-
-	/**
-	 * This function creates an D object corresponding to the Struct pointer passed in.
-	 */
-	public ObjectG newFromObject(GObject* cobj)
-	{
-		version(LDC)
-		{
-			version(D_Version2)
-			{
-				alias ClassInfo.find findClassInfo;
-			}
-		}
-		else
-		{
-			alias ClassInfo.find findClassInfo;
-		}
-
-		if(cobj is null)
-		{
-			return null;
-		}
-
-		void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
-
-		if ( dObj !is null )
-		{
-			return cast(ObjectG)dObj;
-		}
-
-		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-		ClassInfo ci = cast(ClassInfo)findClassInfo(type);
-
-		//Gobject and Gio types both start with g, so try both.
-		if(ci is null && startsWith(type, "gobject"))
-		{
-				ci = cast(ClassInfo)findClassInfo("gio"~ type[7..$]);
-		}
-
-		if(ci is null)
-		{
-			return null;
-		}
-
-		ObjectG obj = cast(ObjectG)_d_newclass(ci);
-
-		version(D_Version2)
-		{
-			obj.__ctor(cobj);
-		}
-		else
-		{
-			obj._ctor(cobj);
-		}
-
-		return obj;
-	}
-
-	/**
-	 * Turn the name of a C Type in to the name of the corresponding D type.
-	 * Note: If the prefix of the type is "G" this always usses "gobject" as
-	 *     the prefix, extra care should be taken for types from GIO.
-	 */
-	private string convertClassName(string gName)
-	{
-		string conv;
-		string prefix;
-
-		version(Tango)
-		{
-			alias toUpper toupper;
-			alias toLower tolower;
-		}
-		version(D_Version2)
-		{
-			alias toUpper toupper;
-			alias toLower tolower;
-		}
-
-		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
-		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
-		else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
-		else if ( startsWith(gName, "Gst") )        prefix = "Gst";
-		else if ( startsWith(gName, "Gda") )        prefix = "Gda";
-		else if ( startsWith(gName, "Atk") )        prefix = "Atk";
-		else if ( startsWith(gName, "G") )          prefix = "G";
-		else if ( startsWith(gName, "Pango") )      prefix = "Pg";
-		else if ( startsWith(gName, "cairo") )      prefix = "cairo";
-
-		conv = gName[prefix.length..gName.length];
-
-		if ( conv == "Object" ) conv ~= prefix;
-		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
-		if ( prefix == "cairo") conv = toupper(gName[6..7]) ~ gName[7..gName.length - 2];
-
-		prefix = tolower(prefix);
-
-		if( prefix == "gst") prefix = "gstreamer";
-		if( prefix == "g")   prefix = "gobject";
-		if( prefix == "pg" ) prefix = "pango";
-
-		return prefix ~"."~ conv ~"."~ conv;
-	}
-
-	private bool startsWith(string str, string prefix)
-	{
-		return str.length >= prefix.length && str[0..prefix.length] == prefix;
-	}
-
-	version(LDC)
-	{
-		//version( !D_Version2 )
-		version(D_Version2) {} else
-		{
-			private Object _d_newclass(ClassInfo ci)
-			{
-				void* p = cast(void*)_d_allocclass(ci);
-				(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
-			
-				return cast(Object) p;
-			}
-
-			private ClassInfo findClassInfo(string classname)
-			{
-				foreach ( m; ModuleInfo )
-				{
-					foreach ( c; m.localClasses )
-					{
-						if ( c.name == classname )
-						return c;
-					}
-				}
-
-				return null;
-			}
-		}
+		this(cast(GtkSymbolicColor*) p);
 	}
 code: end
-outFile: Builder
+outFile: SymbolicColor
 
-###########################################################
-### Application support ###################################
-###########################################################
-
-file: GtkApplication.html
-struct: GtkApplication
-class: Application
-extend: GioApplication
-prefix: gtk_application_
+file: gtk3-GtkGradient.html
+struct: GtkGradient
+class: Gradient
+prefix: gtk_gradient_
 import: glib.Str
-import: glib.ListG
-import: glib.Variant
-import: gio.Application : GioApplication = Application
-import: gio.MenuModel
-import: gtk.Window
-structWrap: GList* ListG
-structWrap: GVariant* Variant
-structWrap: GMenuModel* MenuModel
-structWrap: GtkWindow* Window
-outFile: Application
+import: cairo.Pattern
+import: gtk.StyleContext
+import: gtk.StyleProperties
+import: gtk.SymbolicColor
+import: gtkc.paths
+import: gtkc.Loader
+structWrap: cairo_pattern_t* Pattern
+structWrap: GtkGradient* Gradient
+structWrap: GtkStyleContext* StyleContext
+structWrap: GtkStyleProperties* StyleProperties
+structWrap: GtkSymbolicColor* SymbolicColor
 
-file: GtkApplicationWindow.html
-struct: GtkApplicationWindow
-class: ApplicationWindow
-implements: ActionGroupIF
-implements: ActionMapIF
-prefix: gtk_application_window_
-import: gtk.Application
-structWrap: GtkApplication* Application
+override: toString
 
-#imports for ActionGroup Interface.
-import: gio.ActionGroupIF
-import: gio.ActionGroupT
-
-#imports for ActionMap Interface.
-import: gio.ActionMapIF
-import: gio.ActionMapT
+out: gtk_gradient_resolve resolved_gradient
 
 code: start
-	// add the ActionGroup capabilities
-	mixin ActionGroupT!(GtkApplicationWindow);
-
-	// add the ActionMap capabilities
-	mixin ActionMapT!(GtkApplicationWindow);
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
+		{
+			gtk_gradient_unref(gtkGradient);
+		}
+	}
 code: end
-outFile: ApplicationWindow
+outFile: Gradient
 
-file: GtkActionable.html
-struct: GtkActionable
-class: ActionableT
-template: TStruct
-prefix: gtk_actionable_
+file: gtk3-Resource-Files.html
+struct: GtkRcStyle
+class: RcStyle
+prefix: gtk_rc_
 import: glib.Str
-import: glib.Variant
-structWrap: GVariant* Variant
-interface: ActionableIF
-outFile: ActionableT
+import: glib.ScannerG
+import: gdk.Color
+import: gtk.Settings
+import: gtk.Style
+import: gtk.Widget
+structWrap: GScanner* ScannerG
+structWrap: GdkColor* Color
+structWrap: GtkRcStyle* RcStyle
+structWrap: GtkSettings* Settings
+structWrap: GtkStyle* Style
+structWrap: GtkWidget* Widget
 
+array: gtk_rc_set_default_files filenames
+out: gtk_rc_parse_state state
+out: gtk_rc_parse_priority priority
+
+code: start
+	deprecated:
+code: end
+outFile: RcStyle
+
+file: GtkStyle.html
+struct: GtkStyle
+class: Style
+prefix: gtk_style_
+prefix: gtk_
+import: std.stdarg
+import: glib.Str
+import: cairo.Context
+import: gobject.Value
+import: gdk.Color
+import: gdk.Pixbuf
+import: gdk.Window
+import: gtk.IconSet
+import: gtk.IconSource
+import: gtk.Widget
+import: pango.PgLayout
+structWrap: cairo_t* Context
+structWrap: GValue* Value
+structWrap: GdkColor* Color
+structWrap: GdkPixbuf* Pixbuf
+structWrap: GdkWindow* Window
+structWrap: GtkIconSet* IconSet
+structWrap: GtkIconSource* IconSource
+structWrap: GtkStyle* Style
+structWrap: GtkWidget* Widget
+structWrap: PangoLayout* PgLayout
+
+array: gtk_draw_polygon points npoints
+array: gtk_paint_polygon points npoints
+inout: gtk_draw_insertion_cursor location
+
+code: start
+	deprecated:
+code: end
+outFile: Style
+
+file: GtkHScale.html
+struct: GtkHScale
+class: HScale
+prefix: gtk_hscale_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: HScale
+
+file: GtkVScale.html
+struct: GtkVScale
+class: VScale
+prefix: gtk_vscale_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: VScale
+
+file: GtkTearoffMenuItem.html
+struct: GtkTearoffMenuItem
+class: TearoffMenuItem
+prefix: gtk_tearoff_menu_item_
+outFile: TearoffMenuItem
+
+file: GtkColorSelection.html
+struct: GtkColorSelection
+class: ColorSelection
+prefix: gtk_color_selection_
+import: glib.Str
+import: gdk.Color
+import: gdk.RGBA
+structWrap: GdkColor* Color
+structWrap: GdkRGBA* RGBA
+
+out: gtk_color_selection_palette_from_string colors
+array: gtk_color_selection_palette_from_string colors n_colors
+array: gtk_color_selection_palette_to_string colors n_colors
+outFile: ColorSelection
+
+file: GtkColorSelectionDialog.html
+struct: GtkColorSelectionDialog
+class: ColorSelectionDialog
+prefix: gtk_color_selection_dialog_
+import: glib.Str
+import: gtk.ColorSelection
+
+nocode: gtk_color_selection_dialog_get_color_selection
+
+code: start
+	/**
+	 * Retrieves the GtkColorSelection widget embedded in the dialog.
+	 * Since 2.14
+	 * Returns: the embedded GtkColorSelection
+	 */
+	public ColorSelection getColorSelection()
+	{
+		// GtkWidget* gtk_color_selection_dialog_get_color_selection  (GtkColorSelectionDialog *colorsel);
+		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ColorSelection(cast(GtkColorSelection*) p);
+	}
+code: end
+outFile: ColorSelectionDialog
+
+file: GtkHSV.html
+struct: GtkHSV
+class: HSV
+prefix: gtk_hsv_
+prefix: gtk_
+
+out: gtk_hsv_get_color h
+out: gtk_hsv_get_color s
+out: gtk_hsv_get_color v
+out: gtk_hsv_get_metrics size
+out: gtk_hsv_get_metrics ring_width
+out: gtk_hsv_to_rgb r
+out: gtk_hsv_to_rgb g
+out: gtk_hsv_to_rgb b
+out: gtk_rgb_to_hsv h
+out: gtk_rgb_to_hsv s
+out: gtk_rgb_to_hsv v
+
+outFile: HSV
+
+file: GtkFontSelection.html
+struct: GtkFontSelection
+class: FontSelection
+prefix: gtk_font_selection_
+import: glib.Str
+import: gtk.Widget
+import: pango.PgFontFace
+import:  pango.PgFontFamily
+structWrap: GtkWidget* Widget
+structWrap: PangoFontFace* PgFontFace
+structWrap: PangoFontFamily* PgFontFamily
+outFile: FontSelection
+
+file: GtkFontSelectionDialog.html
+struct: GtkFontSelectionDialog
+class: FontSelectionDialog
+prefix: gtk_font_selection_dialog_
+import: glib.Str
+import: gtk.FontSelection
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+nocode: gtk_font_selection_dialog_get_font_selection
+
+code: start
+	/**
+	 * Retrieves the GtkFontSelection widget embedded in the dialog.
+	 * Since 2.22
+	 * Returns: the embedded GtkFontSelection
+	 */
+	public FontSelection getFontSelection()
+	{
+		// GtkWidget * gtk_font_selection_dialog_get_font_selection  (GtkFontSelectionDialog *fsd);
+		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new FontSelection(cast(GtkFontSelection*) p);
+	}
+code: end
+outFile: FontSelectionDialog
+
+file: GtkHBox.html
+struct: GtkHBox
+class: HBox
+prefix: gtk_hbox_
+outFile: HBox
+
+file: GtkVBox.html
+struct: GtkVBox
+class: VBox
+prefix: gtk_vbox_
+outFile: VBox
+
+file: GtkHButtonBox.html
+struct: GtkHButtonBox
+class: HButtonBox
+prefix: gtk_hbutton_box_
+
+code: start
+	/**
+	 * Creates a new HButtonBox and sets comon parameters
+	 */
+	static HButtonBox createActionBox()
+	{
+		HButtonBox bBox = new HButtonBox();
+		bBox.setLayout(ButtonBoxStyle.END);
+		bBox.setBorderWidth(5);
+		bBox.setSpacing(7);
+		return bBox;
+	}
+code: end
+outFile: HButtonBox
+
+file: GtkVButtonBox.html
+struct: GtkVButtonBox
+class: VButtonBox
+prefix: gtk_vbutton_box_
+code: start
+    /**
+     * Creates a new vertical button box and sets standart values for it's comon parameters
+     * Returns: a new vertical button box
+     */
+	static VButtonBox createActionBox()
+	{
+		VButtonBox bBox = new VButtonBox();
+		bBox.setLayout(ButtonBoxStyle.START);
+		bBox.setBorderWidth(5);
+		bBox.setSpacing(7);
+		return bBox;
+	}
+code: end
+outFile: VButtonBox
+
+file: GtkHPaned.html
+struct: GtkHPaned
+class: HPaned
+prefix: gtk_hpaned_
+import: gtk.Widget
+
+code: start
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * Params:
+	 *  child1 =
+	 *  child2 =
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+	
+code: end
+outFile: HPaned
+
+file: GtkVPaned.html
+struct: GtkVPaned
+class: VPaned
+prefix: gtk_vpaned_
+import: gtk.Widget
+
+code: start
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * Params:
+	 *  child1 =
+	 *  child2 =
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+	
+code: end
+outFile: VPaned
+
+file: GtkTable.html
+struct: GtkTable
+class: Table
+prefix: gtk_table_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+
+out: gtk_table_get_size rows
+out: gtk_table_get_size columns
+
+nocode: gtk_table_new
+
+code: start
+	int row;
+	int col;
+	int maxRows;
+	int maxCols;
+
+	public AttachOptions defaultXOption = AttachOptions.SHRINK;
+	public AttachOptions defaultYOption = AttachOptions.SHRINK;
+	
+	/**
+	 * Removes all children and resizes the table to 1,1
+	 */
+	override void removeAll()
+	{
+		super.removeAll();
+		resize(1,1);
+
+		row = 0;
+		col = 0;
+		maxRows = 1;
+		maxCols = 1;
+	}
+	
+	/**
+	 * Used to create a new table widget. An initial size must be given by
+	 * specifying how many rows and columns the table should have, although
+	 * this can be changed later with gtk_table_resize(). rows and columns
+	 * must both be in the range 0 .. 65535.
+	 * Params:
+	 *  rows = The number of rows the new table should have.
+	 *  columns = The number of columns the new table should have.
+	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
+	 *  containing the largest widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (uint rows, uint columns, int homogeneous)
+	{
+		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
+		auto p = gtk_table_new(rows, columns, homogeneous);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_table_new");
+		}
+
+		this(cast(GtkTable*) p);
+
+		row = 0;
+		col = 0;
+		maxRows = rows;
+		maxCols = columns;
+	}
+	
+
+	/**
+	 * Attach a new widget creating a new row if necessary
+	 */
+	void attach(Widget child)
+	{
+		attach(child, col, col + 1, row, row + 1,
+				defaultXOption, defaultYOption,
+				getDefaultColSpacing(), getDefaultRowSpacing());
+		++col;
+		if (col >= maxCols)
+		{
+			col = 0;
+			++row;
+		}
+	}
+code: end
+outFile: Table
+
+file: GtkHSeparator.html
+struct: GtkHSeparator
+class: HSeparator
+prefix: gtk_hseparator_
+outFile: HSeparator
+
+file: GtkVSeparator.html
+struct: GtkVSeparator
+class: VSeparator
+prefix: gtk_vseparator_
+outFile: VSeparator
+
+file: GtkHScrollbar.html
+struct: GtkHScrollbar
+class: HScrollbar
+prefix: gtk_hscrollbar_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: HScrollbar
+
+file: GtkVScrollbar.html
+struct: GtkVScrollbar
+class: VScrollbar
+prefix: gtk_vscrollbar_
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: VScrollbar
+
+file: GtkUIManager.html
+struct: GtkUIManager
+class: UIManager
+implements: BuildableIF
+prefix: gtk_ui_manager_
+import: glib.Str
+import: glib.ErrorG
+import: glib.GException
+import: glib.ListG
+import: glib.ListSG
+import: gtk.Action
+import: gtk.ActionGroup
+import: gtk.AccelGroup
+import: gtk.Widget
+structWrap: GList* ListG
+structWrap: GSList* ListSG
+structWrap: GtkAction* Action
+structWrap: GtkActionGroup* ActionGroup
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+array: gtk_ui_manager_add_ui_from_string buffer length
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkUIManager);
+code: end
+outFile: UIManager
+
+file: GtkActionGroup.html
+struct: GtkActionGroup
+class: ActionGroup
+implements: BuildableIF
+prefix: gtk_action_group_
+import: glib.Str
+import: glib.ListG
+import: gtk.AccelGroup
+import: gtk.Action
+import: gtk.Widget
+structWrap: GList* ListG
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkAction* Action
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+array: gtk_action_group_add_actions entries n_entries
+array: gtk_action_group_add_actions_full entries n_entries
+array: gtk_action_group_add_toggle_actions entries n_entries
+array: gtk_action_group_add_toggle_actions_full entries n_entries
+array: gtk_action_group_add_radio_actions entries n_entries
+array: gtk_action_group_add_radio_actions_full entries n_entries
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkActionGroup);
+code: end
+outFile: ActionGroup
+
+file: GtkAction.html
+struct: GtkAction
+class: Action
+implements: BuildableIF
+prefix: gtk_action_
+import: glib.Str
+import: gio.Icon
+import: gio.IconIF
+import: gobject.Closure
+import: glib.ListSG
+import: gtk.AccelGroup
+import: gtk.Image
+import: gtk.Menu
+import: gtk.MenuItem
+import: gtk.ToolItem
+import: gtk.Widget
+structWrap: GIcon* IconIF
+structWrap: GClosure* Closure
+structWrap: GSList* ListSG
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkWidget* Widget
+
+#imports for Buildable Interface.
+import: gtk.BuildableIF
+import: gtk.BuildableT
+
+nocode: gtk_action_get_stock_id
+nocode: gtk_action_create_icon
+nocode: gtk_action_create_menu_item
+nocode: gtk_action_create_tool_item
+nocode: gtk_action_create_menu
+
+code: start
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAction);
+
+	/**
+	 * Creates a new GtkAction object. To add the action to a
+	 * GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * See the section called UI Definitions for information on allowed action
+	 * names.
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockId =  the stock icon to display in widgets representing the
+	 *  action.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
+	}
+
+	/**
+	 * Gets the stock id of action.
+	 * Since 2.16
+	 * Returns: the stock id
+	 */
+	public StockID getStockId()
+	{
+		// const gchar * gtk_action_get_stock_id (GtkAction *action);
+		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
+
+		foreach(i, desc; StockDesc)
+		{
+			if(desc == id)
+				return cast(StockID)i;
+		}
+
+		return StockID.DISCARD;
+	}
+
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId =  the stock id
+	 */
+	public void setStockId(StockID stockId)
+	{
+		setStockId(StockDesc[stockId]);
+	}
+
+	/**
+	 * This function is intended for use by action implementations to
+	 * create icons displayed in the proxy widgets.
+	 * Since 2.4
+	 * Params:
+	 * iconSize = the size of the icon that should be created. [type int]
+	 * Returns: a widget that displays the icon for this action.
+	 */
+	public Image createIcon(GtkIconSize iconSize)
+	{
+		// GtkWidget * gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
+		auto p = gtk_action_create_icon(gtkAction, iconSize);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Image(cast(GtkImage*) p);
+	}
+	
+	/**
+	 * Creates a menu item widget that proxies for the given action.
+	 * Since 2.4
+	 * Returns: a menu item connected to the action.
+	 */
+	public MenuItem createMenuItem()
+	{
+		// GtkWidget * gtk_action_create_menu_item (GtkAction *action);
+		auto p = gtk_action_create_menu_item(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MenuItem(cast(GtkMenuItem*) p);
+	}
+	
+	/**
+	 * Creates a toolbar item widget that proxies for the given action.
+	 * Since 2.4
+	 * Returns: a toolbar item connected to the action.
+	 */
+	public ToolItem createToolItem()
+	{
+		// GtkWidget * gtk_action_create_tool_item (GtkAction *action);
+		auto p = gtk_action_create_tool_item(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ToolItem(cast(GtkToolItem*) p);
+	}
+	
+	/**
+	 * If action provides a GtkMenu widget as a submenu for the menu
+	 * item or the toolbar item it creates, this function returns an
+	 * instance of that menu.
+	 * Since 2.12
+	 * Returns: the menu item provided by the action, or NULL.
+	 */
+	public Menu createMenu()
+	{
+		// GtkWidget * gtk_action_create_menu (GtkAction *action);
+		auto p = gtk_action_create_menu(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Menu(cast(GtkMenu*) p);
+	}
+code: end
+outFile: Action
+
+file: GtkToggleAction.html
+struct: GtkToggleAction
+class: ToggleAction
+prefix: gtk_toggle_action_
+import: glib.Str
+
+code: start
+/**
+	 * Creates a new GtkToggleAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for the action, or NULL
+	 * stockId =  The stock icon to display in widgets representing the
+	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
+	}
+code: end
+outFile: ToggleAction
+
+file: GtkRadioAction.html
+struct: GtkRadioAction
+class: RadioAction
+prefix: gtk_radio_action_
+import: glib.Str
+import: glib.ListSG
+structWrap: GSList* ListSG
+
+code: start
+	/**
+	 * Creates a new GtkRadioAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for this action, or NULL
+	 * stockId =  The stock icon to display in widgets representing this
+	 *  action, or NULL
+	 * value =  The value which gtk_radio_action_get_current_value() should
+	 *  return if this action is selected.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId, int value)
+	{
+		this(name, label, tooltip, StockDesc[stockId], value);
+	}
+code: end
+outFile: RadioAction
+
+file: GtkRecentAction.html
+struct: GtkRecentAction
+ctorStruct: GtkAction
+class: RecentAction
+prefix: gtk_recent_action_
+prefix: gtk_
+import: glib.Str
+import: gtk.RecentManager
+structWrap: GtkRecentManager* RecentManager
+
+code: start
+	/**
+	 * Creates a new GtkRecentAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.12
+	 * Params:
+	 * name =  a unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockID =  the stock icon to display in widgets representing the
+	 *  action, or NULL
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockID)
+	{
+		this(name, label, tooltip, StockDesc[stockID]);
+	}
+	
+	/**
+	 * Creates a new GtkRecentAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.12
+	 * Params:
+	 * name =  a unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockID =  the stock icon to display in widgets representing the
+	 *  action, or NULL
+	 * manager =  a GtkRecentManager, or NULL for using the default
+	 *  GtkRecentManager
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
+	{
+		this(name, label, tooltip, StockDesc[stockID], manager);
+	}
+code: end
+outFile: RecentAction
+
+file: GtkActivatable.html
+struct: GtkActivatable
+class: ActivatableT
+template: TStruct
+prefix: gtk_activatable_
+import: gtk.Action
+structWrap: GtkAction* Action
+interface: ActivatableIF
+outFile: ActivatableT
+
+file: GtkImageMenuItem.html
+struct: GtkImageMenuItem
+class: ImageMenuItem
+prefix: gtk_image_menu_item_
+import: glib.Str
+import: gtk.AccelGroup
+import: gtk.Widget
+structWrap: GtkAccelGroup* AccelGroup
+structWrap: GtkWidget* Widget
+
+nocode: gtk_image_menu_item_new_with_label
+nocode: gtk_image_menu_item_new_with_mnemonic
+nocode: gtk_image_menu_item_new_from_stock
+
+code: start
+	/**
+	 * Creates a new GtkImageMenuItem containing a label.
+	 * If mnemonic it true the label will be created using
+	 * gtk_label_new_with_mnemonic(), so underscores
+	 * in label indicate the mnemonic for the menu item.
+	 * Params:
+	 *  label = the text of the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkImageMenuItem* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_with_");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new GtkImageMenuItem containing the image and text from a
+	 * stock item.
+	 * If you want this menu item to have changeable accelerators, then pass in
+	 * null for accelGroup. Next call setAccelPath() with an appropriate path
+	 * for the menu item, use gtk.StockItem.StockItem.lookup() to look up the
+	 * standard accelerator for the stock item, and if one is found, call
+	 * gtk.AccelMap.AccelMap.addEntry() to register it.
+	 * Params:
+	 *   StockID    = the name of the stock item
+	 *   accelGroup = the GtkAccelGroup to add the menu items accelerator to,
+	 *                or NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (StockID stockID, AccelGroup accelGroup)
+	{
+		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
+		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_from_stock");
+		}
+		this(cast(GtkImageMenuItem*) p);
+	}
+code: end
+outFile: ImageMenuItem
+
+file: gtk3-Stock-Items.html
+struct: GtkStockItem
+class: StockItem
+prefix: gtk_stock_item_
+prefix: gtk_stock_
+import: glib.Str
+import: gtkc.paths
+import: gtkc.Loader
+import: glib.ListSG
+structWrap: GSList* ListSG
+structWrap: GtkStockItem* StockItem
+
+array: gtk_stock_add items n_items
+array: gtk_stock_add_static items n_items
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
+		{
+			gtk_stock_item_free(gtkStockItem);
+		}
+	}
+code: end
+outFile: StockItem

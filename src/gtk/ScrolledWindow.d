@@ -407,7 +407,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Unsets the placement of the contents with respect to the scrollbars
 	 * for the scrolled window. If no window placement is set for a scrolled
-	 * window, it obeys the "gtk-scrolled-window-placement" XSETTING.
+	 * window, it defaults to GTK_CORNER_TOP_LEFT.
 	 * See also gtk_scrolled_window_set_placement() and
 	 * gtk_scrolled_window_get_placement().
 	 * Since 2.10

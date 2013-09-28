@@ -91,10 +91,7 @@ private import gtk.Widget;
 
 /**
  * GTK+ has a rich set of functions for doing inter-process
- * communication via the drag-and-drop metaphor. GTK+
- * can do drag-and-drop (DND) via multiple protocols.
- * The currently supported protocols are the Xdnd and
- * Motif protocols.
+ * communication via the drag-and-drop metaphor.
  *
  * As well as the functions listed here, applications
  * may need to use some facilities provided for
@@ -412,16 +409,10 @@ public class DragAndDrop
 	}
 	
 	/**
-	 * Initiates a drag on the source side. The function
-	 * only needs to be used when the application is
-	 * starting drags itself, and is not needed when
-	 * gtk_drag_source_set() is used.
-	 * The event is used to retrieve the timestamp that will be used internally to
-	 * grab the pointer. If event is NULL, then GDK_CURRENT_TIME will be used.
-	 * However, you should try to pass a real event in all cases, since that can be
-	 * used by GTK+ to get information about the start position of the drag, for
-	 * example if the event is a GDK_MOTION_NOTIFY.
-	 * Generally there are three cases when you want to start a drag by hand by
+	 * Warning
+	 * gtk_drag_begin has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_drag_begin_with_coordinates() instead.
+	 * This is equivalent to gtk_drag_begin_with_coordinates(), passing -1, -1
+	 * as coordinates.
 	 * Params:
 	 * widget = the source widget.
 	 * targets = The targets (data formats) in which the
@@ -474,6 +465,8 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Warning
+	 * gtk_drag_set_icon_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_drag_set_icon_name() instead.
 	 * Sets the icon for a given drag from a stock ID.
 	 * Params:
 	 * stockId = the ID of the stock icon to use for the drag.
@@ -596,6 +589,8 @@ public class DragAndDrop
 	}
 	
 	/**
+	 * Warning
+	 * gtk_drag_source_set_icon_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_drag_source_set_icon_name() instead.
 	 * Sets the icon that will be used for drags from a particular source
 	 * to a stock icon.
 	 * Params:

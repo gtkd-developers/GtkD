@@ -330,4 +330,31 @@ public class Box : Container, OrientableIF
 		// void gtk_box_set_child_packing (GtkBox *box,  GtkWidget *child,  gboolean expand,  gboolean fill,  guint padding,  GtkPackType pack_type);
 		gtk_box_set_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding, packType);
 	}
+	
+	/**
+	 * Gets the value set by gtk_box_set_baseline_position().
+	 * Returns: the baseline position Since 3.10
+	 */
+	public GtkBaselinePosition getBaselinePosition()
+	{
+		// GtkBaselinePosition gtk_box_get_baseline_position (GtkBox *box);
+		return gtk_box_get_baseline_position(gtkBox);
+	}
+	
+	/**
+	 * Sets the baseline position of a box. This affects
+	 * only horizontal boxes with at least one baseline aligned
+	 * child. If there is more vertical space availible than requested,
+	 * and the baseline is not allocated by the parent then
+	 * position is used to allocate the baseline wrt the
+	 * extra space available.
+	 * Params:
+	 * position = a GtkBaselinePosition
+	 * Since 3.10
+	 */
+	public void setBaselinePosition(GtkBaselinePosition position)
+	{
+		// void gtk_box_set_baseline_position (GtkBox *box,  GtkBaselinePosition position);
+		gtk_box_set_baseline_position(gtkBox, position);
+	}
 }

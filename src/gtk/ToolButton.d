@@ -78,9 +78,7 @@ private import gtk.ToolItem;
 /**
  * GtkToolButtons are GtkToolItems containing buttons.
  *
- * Use gtk_tool_button_new() to create a new GtkToolButton. Use
- * gtk_tool_button_new_from_stock() to create a GtkToolButton
- * containing a stock item.
+ * Use gtk_tool_button_new() to create a new GtkToolButton.
  *
  * The label of a GtkToolButton is determined by the properties
  * "label-widget", "label", and
@@ -197,6 +195,8 @@ public class ToolButton : ToolItem, ActionableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tool_button_new_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_tool_button_new() instead.
 	 * Creates a new GtkToolButton containing the image and text from a
 	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
 	 * and GTK_STOCK_APPLY.
@@ -277,6 +277,8 @@ public class ToolButton : ToolItem, ActionableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tool_button_set_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_tool_button_set_icon_name() instead.
 	 * Sets the name of the stock item. See gtk_tool_button_new_from_stock().
 	 * The stock_id property only has an effect if not
 	 * overridden by non-NULL "label" and "icon_widget" properties.
@@ -291,6 +293,8 @@ public class ToolButton : ToolItem, ActionableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tool_button_get_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_tool_button_get_icon_name() instead.
 	 * Returns the name of the stock item. See gtk_tool_button_set_stock_id().
 	 * The returned string is owned by GTK+ and must not be freed or modifed.
 	 * Since 2.4

@@ -130,6 +130,8 @@ public class StockItem
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_stock_add is deprecated and should not be used in newly-written code. 3.10
 	 * Registers each of the stock items in items. If an item already
 	 * exists with the same stock ID as one of the items, the old item
 	 * gets replaced. The stock items are copied, so GTK+ does not hold
@@ -146,6 +148,8 @@ public class StockItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_stock_add_static is deprecated and should not be used in newly-written code. 3.10
 	 * Same as gtk_stock_add(), but doesn't copy items, so
 	 * items must persist until application exit.
 	 * Params:
@@ -158,6 +162,8 @@ public class StockItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_stock_item_copy is deprecated and should not be used in newly-written code. 3.10
 	 * Copies a stock item, mostly useful for language bindings and not in applications.
 	 * Returns: a new GtkStockItem
 	 */
@@ -175,6 +181,8 @@ public class StockItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_stock_item_free is deprecated and should not be used in newly-written code. 3.10
 	 * Frees a stock item allocated on the heap, such as one returned by
 	 * gtk_stock_item_copy(). Also frees the fields inside the stock item,
 	 * if they are not NULL.
@@ -186,6 +194,8 @@ public class StockItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_stock_list_ids is deprecated and should not be used in newly-written code. 3.10
 	 * Retrieves a list of all known stock IDs added to a GtkIconFactory
 	 * or registered with gtk_stock_add(). The list must be freed with g_slist_free(),
 	 * and each string in the list must be freed with g_free().
@@ -205,6 +215,8 @@ public class StockItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_stock_lookup is deprecated and should not be used in newly-written code. 3.10
 	 * Fills item with the registered values for stock_id, returning TRUE
 	 * if stock_id was known.
 	 * Params:
@@ -219,6 +231,8 @@ public class StockItem
 	}
 	
 	/**
+	 * Warning
+	 * gtk_stock_set_translate_func is deprecated and should not be used in newly-written code. 3.10
 	 * Sets a function to be used for translating the label of
 	 * a stock item.
 	 * If no function is registered for a translation domain,

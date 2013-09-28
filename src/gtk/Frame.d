@@ -135,7 +135,7 @@ public class Frame : Bin
 	 * Creates a new GtkFrame, with optional label label.
 	 * If label is NULL, the label is omitted.
 	 * Params:
-	 * label = the text to use as the label of the frame
+	 * label = the text to use as the label of the frame. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string label)

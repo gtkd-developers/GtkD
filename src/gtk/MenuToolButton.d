@@ -79,8 +79,7 @@ private import gtk.ToolButton;
  * button pops up a dropdown menu.
  *
  * Use gtk_menu_tool_button_new() to create a new
- * GtkMenuToolButton. Use gtk_menu_tool_button_new_from_stock() to
- * create a new GtkMenuToolButton containing a stock item.
+ * GtkMenuToolButton.
  *
  * GtkMenuToolButton as GtkBuildable
  *
@@ -217,6 +216,8 @@ public class MenuToolButton : ToolButton
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_tool_button_new_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_menu_tool_button_new() instead.
 	 * Creates a new GtkMenuToolButton.
 	 * The new GtkMenuToolButton will contain an icon and label from
 	 * the stock item indicated by stock_id.
@@ -265,8 +266,8 @@ public class MenuToolButton : ToolButton
 	
 	/**
 	 * Sets the tooltip markup text to be used as tooltip for the arrow button
-	 * which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting a
-	 * tooltip on the whole GtkMenuToolButton.
+	 * which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting
+	 * a tooltip on the whole GtkMenuToolButton.
 	 * Since 2.12
 	 * Params:
 	 * markup = markup text to be used as tooltip text for button's arrow button

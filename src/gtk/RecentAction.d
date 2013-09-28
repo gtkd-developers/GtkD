@@ -155,6 +155,8 @@ public class RecentAction : Action
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_recent_action_new is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new GtkRecentAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
@@ -180,6 +182,8 @@ public class RecentAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_recent_action_new_for_manager is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new GtkRecentAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
@@ -207,6 +211,8 @@ public class RecentAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_recent_action_get_show_numbers is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
 	 * Since 2.12
 	 * Returns: TRUE if numbers should be shown.
@@ -218,6 +224,8 @@ public class RecentAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_recent_action_set_show_numbers is deprecated and should not be used in newly-written code. 3.10
 	 * Sets whether a number should be added to the items shown by the
 	 * widgets representing action. The numbers are shown to provide
 	 * a unique character for a mnemonic to be used inside the menu item's

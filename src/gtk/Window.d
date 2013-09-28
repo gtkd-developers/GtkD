@@ -103,7 +103,7 @@ private import gtk.Bin;
  * (resize it, move it, close it,...).
  *
  * GTK+ also allows windows to have a resize grip (a small area in the lower
- * right or left corner) which can be clicked to reszie the window. To
+ * right or left corner) which can be clicked to resize the window. To
  * control whether a window has a resize grip, use
  * gtk_window_set_has_resize_grip().
  *
@@ -116,6 +116,10 @@ private import gtk.Bin;
  * gtk_window_add_accel_group().
  *
  * $(DDOC_COMMENT example)
+ *
+ * The GtkWindow implementation of the GtkBuildable interface
+ * supports setting a child as the titlebar by specifying "titlebar" as
+ * the "type" attribute of a <child> element.
  */
 public class Window : Bin
 {
@@ -877,6 +881,18 @@ public class Window : Bin
 	{
 		// void gtk_window_present_with_time (GtkWindow *window,  guint32 timestamp);
 		gtk_window_present_with_time(gtkWindow, timestamp);
+	}
+	
+	/**
+	 * Requests that the window is closed, similar to what happens
+	 * when a window manager close button is clicked.
+	 * This function can be used with close buttons in custom
+	 * titlebars.
+	 */
+	public void close()
+	{
+		// void gtk_window_close (GtkWindow *window);
+		gtk_window_close(gtkWindow);
 	}
 	
 	/**
@@ -1751,6 +1767,10 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Warning
+	 * gtk_window_reshow_with_initial_size has been deprecated since version 3.10 and should not be used in newly-written code. GUI builders can call gtk_widget_hide(),
+	 *  gtk_widget_unrealize() and then gtk_widget_show() on window
+	 *  themselves, if they still need this functionality.
 	 * Hides window, then reshows it, resetting the
 	 * default size and position of the window. Used
 	 * by GUI builders only.
@@ -2152,5 +2172,22 @@ public class Window : Bin
 	{
 		// void gtk_window_set_has_user_ref_count (GtkWindow *window,  gboolean setting);
 		gtk_window_set_has_user_ref_count(gtkWindow, setting);
+	}
+	
+	/**
+	 * Sets a custom titlebar for window.
+	 * If you set a custom titlebar, GTK+ will do its best to convince
+	 * the window manager not to put its own titlebar on the window.
+	 * Depending on the system, this function may not work for a window
+	 * that is already visible, so you set the titlebar before calling
+	 * gtk_widget_show().
+	 * Params:
+	 * titlebar = the widget to use as titlebar
+	 * Since 3.10
+	 */
+	public void setTitlebar(Widget titlebar)
+	{
+		// void gtk_window_set_titlebar (GtkWindow *window,  GtkWidget *titlebar);
+		gtk_window_set_titlebar(gtkWindow, (titlebar is null) ? null : titlebar.getWidgetStruct());
 	}
 }

@@ -349,7 +349,7 @@ public class StatusIcon : ObjectG
 	
 	bool delegate(gint, gint, gboolean, Tooltip, StatusIcon)[] onQueryTooltipListeners;
 	/**
-	 * Emitted when the "gtk-tooltip-timeout" has expired with the
+	 * Emitted when the hover timeout has expired with the
 	 * cursor hovering above status_icon; or emitted when status_icon got
 	 * focus in keyboard mode.
 	 * Using the given coordinates, the signal handler should determine
@@ -550,6 +550,8 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_status_icon_set_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_status_icon_set_from_icon_name() instead.
 	 * Makes status_icon display the stock icon with the id stock_id.
 	 * See gtk_status_icon_new_from_stock() for details.
 	 * Since 2.10
@@ -625,6 +627,8 @@ public class StatusIcon : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_status_icon_get_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_status_icon_get_icon_name() instead.
 	 * Gets the id of the stock icon being displayed by the GtkStatusIcon.
 	 * The storage type of the status icon must be GTK_IMAGE_EMPTY or
 	 * GTK_IMAGE_STOCK (see gtk_status_icon_get_storage_type()).

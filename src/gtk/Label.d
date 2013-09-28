@@ -630,6 +630,21 @@ public class Label : Misc
 	}
 	
 	/**
+	 * Sets the number of lines to which an ellipsized, wrapping label
+	 * should be limited. This has no effect if the label is not wrapping
+	 * or ellipsized. Set this to -1 if you don't want to limit the
+	 * number of lines.
+	 * Params:
+	 * lines = the desired number of lines, or -1
+	 * Since 3.10
+	 */
+	public void setLines(int lines)
+	{
+		// void gtk_label_set_lines (GtkLabel *label,  gint lines);
+		gtk_label_set_lines(gtkLabel, lines);
+	}
+	
+	/**
 	 * Obtains the coordinates where the label will draw the PangoLayout
 	 * representing the text in the label; useful to convert mouse events
 	 * into coordinates inside the PangoLayout, e.g. to take some action
@@ -868,6 +883,17 @@ public class Label : Misc
 	{
 		// PangoWrapMode gtk_label_get_line_wrap_mode (GtkLabel *label);
 		return gtk_label_get_line_wrap_mode(gtkLabel);
+	}
+	
+	/**
+	 * Gets the number of lines to which an ellipsized, wrapping
+	 * label should be limited. See gtk_label_set_lines().
+	 * Returns: The number of lines Since 3.10
+	 */
+	public int getLines()
+	{
+		// gint gtk_label_get_lines (GtkLabel *label);
+		return gtk_label_get_lines(gtkLabel);
 	}
 	
 	/**

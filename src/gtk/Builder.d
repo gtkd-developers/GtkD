@@ -43,6 +43,8 @@
  * omit code:
  * 	- gtk_builder_get_object
  * 	- gtk_builder_get_objects
+ * 	- gtk_builder_new_from_resource
+ * 	- gtk_builder_new_from_string
  * 	- gtk_builder_new
  * omit signals:
  * imports:
@@ -104,10 +106,16 @@ private import gobject.ObjectG;
 
 /**
  * A GtkBuilder is an auxiliary object that reads textual descriptions
- * of a user interface and instantiates the described objects. To pass a
- * description to a GtkBuilder, call gtk_builder_add_from_file() or
- * gtk_builder_add_from_string(). These functions can be called multiple
- * times; the builder merges the content of all descriptions.
+ * of a user interface and instantiates the described objects. To create
+ * a GtkBuilder from a user interface description, call
+ * gtk_builder_new_from_file(), gtk_builder_new_from_resource() or
+ * gtk_builder_new_from_string().
+ *
+ * In the (unusual) case that you want to add user interface
+ * descriptions from multiple sources to the same GtkBuilder you can
+ * call gtk_builder_new() to get an empty builder and populate it by
+ * (multiple) calls to gtk_builder_add_from_file(),
+ * gtk_builder_add_from_resource() or gtk_builder_add_from_string().
  *
  * A GtkBuilder holds a reference to all objects that it has constructed
  * and drops these references when it is finalized. This finalization can
@@ -142,7 +150,7 @@ private import gobject.ObjectG;
  *
  * start = element interface {
 	 *  attribute domain { text } ?,
-	 *  ( requires | object | menu ) *
+	 *  ( requires | object | template | menu ) *
  * }
  *
  * requires = element requires {
@@ -155,6 +163,12 @@ private import gobject.ObjectG;
 	 *  attribute class { text },
 	 *  attribute type-func { text } ?,
 	 *  attribute constructor { text } ?,
+	 *  (property | signal | child | ANY) *
+ * }
+ *
+ * template = element template {
+	 *  attribute class { text },
+	 *  attribute parent { text },
 	 *  (property | signal | child | ANY) *
  * }
  *
@@ -218,7 +232,7 @@ private import gobject.ObjectG;
 	 *  (attribute_ | item | submenu | section) *
  * }
  *
- * ANY = element * - (interface | requires | object | property | signal | child | menu | item | attribute | link | submenu | section) {
+ * ANY = element * - (interface | requires | object | template | property | signal | child | menu | item | attribute | link | submenu | section) {
 	 *  attribute * { text } *,
 	 *  (ALL *  text ?)
  * }
@@ -350,6 +364,9 @@ private import gobject.ObjectG;
  * GtkRecentFilter,
  * GtkFileFilter,
  * GtkTextTagTable.
+ *
+ * Additionally, since 3.10 a special <template> tag has been added to the format
+ * allowing one to define a widget class's components.
  *
  * <hr>
  *
@@ -669,11 +686,67 @@ public class Builder : ObjectG
 	 */
 	
 	/**
+	 * Builds the GtkBuilder UI definition
+	 * in the file filename.
+	 * If there is an error opening the file or parsing the description then
+	 * the program will be aborted. You should only ever attempt to parse
+	 * user interface descriptions that are shipped as part of your program.
+	 * Params:
+	 * filename = filename of user interface description file
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string filename)
+	{
+		// GtkBuilder * gtk_builder_new_from_file (const gchar *filename);
+		auto p = gtk_builder_new_from_file(Str.toStringz(filename));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_builder_new_from_file(Str.toStringz(filename))");
+		}
+		this(cast(GtkBuilder*) p);
+	}
+	
+	/**
+	 * Adds the callback_symbol to the scope of builder under the given callback_name.
+	 * Using this function overrides the behavior of gtk_builder_connect_signals()
+	 * for any callback symbols that are added. Using this method allows for better
+	 * encapsulation as it does not require that callback symbols be declared in
+	 * the global namespace.
+	 * Params:
+	 * callbackName = The name of the callback, as expected in the XML
+	 * callbackSymbol = The callback pointer. [scope async]
+	 * Since 3.10
+	 */
+	public void addCallbackSymbol(string callbackName, GCallback callbackSymbol)
+	{
+		// void gtk_builder_add_callback_symbol (GtkBuilder *builder,  const gchar *callback_name,  GCallback callback_symbol);
+		gtk_builder_add_callback_symbol(gtkBuilder, Str.toStringz(callbackName), callbackSymbol);
+	}
+	
+	/**
+	 * Fetches a symbol previously added to builder
+	 * with gtk_builder_add_callback_symbols()
+	 * This function is intended for possible use in language bindings
+	 * or for any case that one might be cusomizing signal connections
+	 * using gtk_builder_connect_signals_full()
+	 * Params:
+	 * callbackName = The name of the callback
+	 * Returns: The callback symbol in builder for callback_name, or NULL Since 3.10
+	 */
+	public GCallback lookupCallbackSymbol(string callbackName)
+	{
+		// GCallback gtk_builder_lookup_callback_symbol (GtkBuilder *builder,  const gchar *callback_name);
+		return gtk_builder_lookup_callback_symbol(gtkBuilder, Str.toStringz(callbackName));
+	}
+	
+	/**
 	 * Parses a file containing a GtkBuilder
 	 * UI definition and merges it with the current contents of builder.
+	 * Most users will probably want to use gtk_builder_new_from_file().
 	 * Upon errors 0 will be returned and error will be assigned a
 	 * GError from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_FILE_ERROR
 	 * domain.
+	 * It's not really reasonable to attempt to handle failures of this
 	 * Since 2.12
 	 * Params:
 	 * filename = the name of the file to parse
@@ -698,9 +771,13 @@ public class Builder : ObjectG
 	/**
 	 * Parses a resource file containing a GtkBuilder
 	 * UI definition and merges it with the current contents of builder.
+	 * Most users will probably want to use gtk_builder_new_from_resource().
 	 * Upon errors 0 will be returned and error will be assigned a
 	 * GError from the GTK_BUILDER_ERROR, G_MARKUP_ERROR or G_RESOURCE_ERROR
 	 * domain.
+	 * It's not really reasonable to attempt to handle failures of this
+	 * call. The only reasonable thing to do when an error is detected is
+	 * to call g_error().
 	 * Params:
 	 * resourcePath = the path of the resource file to parse
 	 * Returns: A positive value on success, 0 if an error occurred Since 3.4
@@ -724,21 +801,24 @@ public class Builder : ObjectG
 	/**
 	 * Parses a string containing a GtkBuilder
 	 * UI definition and merges it with the current contents of builder.
+	 * Most users will probably want to use gtk_builder_new_from_string().
 	 * Upon errors 0 will be returned and error will be assigned a
 	 * GError from the GTK_BUILDER_ERROR or G_MARKUP_ERROR domain.
+	 * It's not really reasonable to attempt to handle failures of this
+	 * call. The only reasonable thing to do when an error is detected is
+	 * to call g_error().
 	 * Since 2.12
 	 * Params:
 	 * buffer = the string to parse
-	 * length = the length of buffer (may be -1 if buffer is nul-terminated)
 	 * Returns: A positive value on success, 0 if an error occurred
 	 * Throws: GException on failure.
 	 */
-	public uint addFromString(string buffer, gsize length)
+	public uint addFromString(string buffer)
 	{
 		// guint gtk_builder_add_from_string (GtkBuilder *builder,  const gchar *buffer,  gsize length,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), length, &err);
+		auto p = gtk_builder_add_from_string(gtkBuilder, cast(char*)buffer.ptr, cast(int) buffer.length, &err);
 		
 		if (err !is null)
 		{
@@ -862,18 +942,17 @@ public class Builder : ObjectG
 	
 	/**
 	 * This method is a simpler variation of gtk_builder_connect_signals_full().
-	 * It uses GModule's introspective features (by opening the module NULL)
+	 * It uses symbols explicitly added to builder with prior calls to
+	 * gtk_builder_add_callback_symbol(). In the case that symbols are not
+	 * explicitly added; it uses GModule's introspective features (by opening the module NULL)
 	 * to look at the application's symbol table. From here it tries to match
 	 * the signal handler names given in the interface description with
 	 * symbols in the application and connects the signals. Note that this
 	 * function can only be called once, subsequent calls will do nothing.
-	 * Note that this function will not work correctly if GModule is not
-	 * supported on the platform.
-	 * When compiling applications for Windows, you must declare signal callbacks
-	 * with G_MODULE_EXPORT, or they will not be put in the symbol table.
-	 * On Linux and Unices, this is not necessary; applications should instead
-	 * be compiled with the -Wl,--export-dynamic CFLAGS, and linked against
-	 * gmodule-export-2.0.
+	 * Note that unless gtk_builder_add_callback_symbol() is called for
+	 * all signal callbacks which are referenced by the loaded XML, this
+	 * function will require that GModule be supported on the platform.
+	 * If you rely on GModule support to lookup callbacks in the symbol table,
 	 * Since 2.12
 	 * Params:
 	 * userData = a pointer to a structure sent in as user data to all signals

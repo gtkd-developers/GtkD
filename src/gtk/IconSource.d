@@ -173,6 +173,8 @@ public class IconSource
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_copy has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Creates a copy of source; mostly useful for language bindings.
 	 * Returns: a new GtkIconSource
 	 */
@@ -190,6 +192,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_free has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Frees a dynamically-allocated icon source, along with its
 	 * filename, size, and pixbuf fields if those are not NULL.
 	 */
@@ -200,6 +204,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_direction has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Obtains the text direction this icon source applies to. The return
 	 * value is only useful/meaningful if the text direction is not
 	 * wildcarded.
@@ -212,6 +218,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_direction_wildcarded has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Gets the value set by gtk_icon_source_set_direction_wildcarded().
 	 * Returns: TRUE if this icon source is a base for any text direction variant
 	 */
@@ -222,6 +230,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_filename has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Retrieves the source filename, or NULL if none is set. The
 	 * filename is not a copy, and should not be modified or expected to
 	 * persist beyond the lifetime of the icon source.
@@ -234,6 +244,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_pixbuf has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Retrieves the source pixbuf, or NULL if none is set.
 	 * In addition, if a filename source is in use, this
 	 * function in some cases will return the pixbuf from
@@ -257,6 +269,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_icon_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Retrieves the source icon name, or NULL if none is set. The
 	 * icon_name is not a copy, and should not be modified or expected to
 	 * persist beyond the lifetime of the icon source.
@@ -269,6 +283,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_size has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Obtains the icon size this source applies to. The return value
 	 * is only useful/meaningful if the icon size is not wildcarded.
 	 * Returns: icon size this source matches. [type int]
@@ -280,6 +296,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_size_wildcarded has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Gets the value set by gtk_icon_source_set_size_wildcarded().
 	 * Returns: TRUE if this icon source is a base for any icon size variant
 	 */
@@ -290,6 +308,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_state has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Obtains the widget state this icon source applies to. The return
 	 * value is only useful/meaningful if the widget state is not
 	 * wildcarded.
@@ -302,6 +322,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_get_state_wildcarded has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Gets the value set by gtk_icon_source_set_state_wildcarded().
 	 * Returns: TRUE if this icon source is a base for any widget state variant
 	 */
@@ -312,6 +334,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_new has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Creates a new GtkIconSource. A GtkIconSource contains a GdkPixbuf (or
 	 * image filename) that serves as the base image for one or more of the
 	 * icons in a GtkIconSet, along with a specification for which icons in the
@@ -350,6 +374,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_direction has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Sets the text direction this icon source is intended to be used
 	 * with.
 	 * Setting the text direction on an icon source makes no difference
@@ -366,6 +392,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_direction_wildcarded has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * If the text direction is wildcarded, this source can be used
 	 * as the base image for an icon in any GtkTextDirection.
 	 * If the text direction is not wildcarded, then the
@@ -384,6 +412,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_filename has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Sets the name of an image file to use as a base image when creating
 	 * icon variants for GtkIconSet. The filename must be absolute.
 	 * Params:
@@ -396,6 +426,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_pixbuf has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Sets a pixbuf to use as a base image when creating icon variants
 	 * for GtkIconSet.
 	 * Params:
@@ -408,6 +440,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_icon_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Sets the name of an icon to look up in the current icon theme
 	 * to use as a base image when creating icon variants for GtkIconSet.
 	 * Params:
@@ -420,6 +454,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_size has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Sets the icon size this icon source is intended to be used
 	 * with.
 	 * Setting the icon size on an icon source makes no difference
@@ -436,6 +472,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_size_wildcarded has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * If the icon size is wildcarded, this source can be used as the base
 	 * image for an icon of any size. If the size is not wildcarded, then
 	 * the size the source applies to should be set with
@@ -456,6 +494,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_state has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Sets the widget state this icon source is intended to be used
 	 * with.
 	 * Setting the widget state on an icon source makes no difference
@@ -472,6 +512,8 @@ public class IconSource
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_source_set_state_wildcarded has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * If the widget state is wildcarded, this source can be used as the
 	 * base image for an icon in any GtkStateType. If the widget state
 	 * is not wildcarded, then the state the source applies to should be

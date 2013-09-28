@@ -133,21 +133,10 @@ public class IconSize
 	 */
 	
 	/**
-	 * Obtains the pixel size of a semantic icon size, possibly
-	 * modified by user preferences for the default GtkSettings.
-	 * (See gtk_icon_size_lookup_for_settings().)
-	 * Normally size would be
-	 * GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_BUTTON, etc. This function
-	 * isn't normally needed, gtk_widget_render_icon_pixbuf() is the usual
-	 * way to get an icon for rendering, then just look at the size of
-	 * the rendered pixbuf. The rendered pixbuf may not even correspond to
-	 * the width/height returned by gtk_icon_size_lookup(), because themes
-	 * are free to render the pixbuf however they like, including changing
-	 * the usual size.
 	 * Params:
 	 * size = an icon size. [type int]
-	 * width = location to store icon width. [out]
-	 * height = location to store icon height. [out]
+	 * width = location to store icon width. [out][allow-none]
+	 * height = location to store icon height. [out][allow-none]
 	 * Returns: TRUE if size was a valid size
 	 */
 	public static int lookup(GtkIconSize size, out int width, out int height)
@@ -157,6 +146,8 @@ public class IconSize
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_size_lookup_for_settings has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_icon_size_lookup() instead.
 	 * Obtains the pixel size of a semantic icon size, possibly
 	 * modified by user preferences for a particular
 	 * GtkSettings. Normally size would be
@@ -172,8 +163,8 @@ public class IconSize
 	 * settings = a GtkSettings object, used to determine
 	 * which set of user preferences to used.
 	 * size = an icon size. [type int]
-	 * width = location to store icon width. [out]
-	 * height = location to store icon height. [out]
+	 * width = location to store icon width. [out][allow-none]
+	 * height = location to store icon height. [out][allow-none]
 	 * Returns: TRUE if size was a valid size
 	 */
 	public static int lookupForSettings(Settings settings, GtkIconSize size, out int width, out int height)
@@ -183,6 +174,8 @@ public class IconSize
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_size_register has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Registers a new icon size, along the same lines as GTK_ICON_SIZE_MENU,
 	 * etc. Returns the integer value for the size.
 	 * Params:
@@ -198,6 +191,8 @@ public class IconSize
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_size_register_alias has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Registers alias as another name for target.
 	 * So calling gtk_icon_size_from_name() with alias as argument
 	 * will return target.
@@ -211,6 +206,8 @@ public class IconSize
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_size_from_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Looks up the icon size associated with name.
 	 * Params:
 	 * name = the name to look up.
@@ -223,6 +220,8 @@ public class IconSize
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_size_get_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Gets the canonical name of the given icon size. The returned string
 	 * is statically allocated and should not be freed.
 	 * Params:

@@ -231,9 +231,10 @@ public class TextTagTable : ObjectG
 	}
 	
 	/**
-	 * Remove a tag from the table. This will remove the table's
-	 * reference to the tag, so be careful - the tag will end
-	 * up destroyed if you don't have a reference to it.
+	 * Remove a tag from the table. If a GtkTextBuffer has table as its tag table,
+	 * the tag is removed from the buffer. The table's reference to the tag is
+	 * removed, so the tag will end up destroyed if you don't have a reference to
+	 * it.
 	 * Params:
 	 * tag = a GtkTextTag
 	 */

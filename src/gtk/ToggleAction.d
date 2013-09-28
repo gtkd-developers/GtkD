@@ -129,6 +129,8 @@ public class ToggleAction : Action
 	
 	void delegate(ToggleAction)[] onToggledListeners;
 	/**
+	 * Warning
+	 * GtkToggleAction::toggled is deprecated and should not be used in newly-written code. 3.10
 	 * Should be connected if you wish to perform an action
 	 * whenever the GtkToggleAction state is changed.
 	 */
@@ -157,6 +159,8 @@ public class ToggleAction : Action
 	
 	
 	/**
+	 * Warning
+	 * gtk_toggle_action_new is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new GtkToggleAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
@@ -182,6 +186,8 @@ public class ToggleAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toggle_action_toggled is deprecated and should not be used in newly-written code. 3.10
 	 * Emits the "toggled" signal on the toggle action.
 	 * Since 2.4
 	 */
@@ -192,6 +198,8 @@ public class ToggleAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toggle_action_set_active is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the checked state on the toggle action.
 	 * Since 2.4
 	 * Params:
@@ -204,6 +212,8 @@ public class ToggleAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toggle_action_get_active is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the checked state of the toggle action.
 	 * Since 2.4
 	 * Returns: the checked state of the toggle action
@@ -215,6 +225,8 @@ public class ToggleAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toggle_action_set_draw_as_radio is deprecated and should not be used in newly-written code. 3.10
 	 * Sets whether the action should have proxies like a radio action.
 	 * Since 2.4
 	 * Params:
@@ -228,6 +240,8 @@ public class ToggleAction : Action
 	}
 	
 	/**
+	 * Warning
+	 * gtk_toggle_action_get_draw_as_radio is deprecated and should not be used in newly-written code. 3.10
 	 * Returns whether the action should have proxies like a radio action.
 	 * Since 2.4
 	 * Returns: whether the action should have proxies like a radio action.

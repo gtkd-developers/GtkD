@@ -601,7 +601,7 @@ public template RecentChooserT(TStruct)
 	 * to affect the displayed recently used resources.
 	 * Since 2.10
 	 * Params:
-	 * filter = a GtkRecentFilter
+	 * filter = a GtkRecentFilter. [allow-none]
 	 */
 	public void setFilter(RecentFilter filter)
 	{

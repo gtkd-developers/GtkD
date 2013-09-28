@@ -114,7 +114,7 @@ public class AspectFrame : Frame
 	/**
 	 * Create a new GtkAspectFrame.
 	 * Params:
-	 * label = Label text.
+	 * label = Label text. [allow-none]
 	 * xalign = Horizontal alignment of the child within the allocation of
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)

@@ -94,7 +94,7 @@ private import gobject.ObjectG;
  * to the signal handler is a GtkTooltip object. This is the object that we
  * are about to display as a tooltip, and can be manipulated in your callback
  * using functions like gtk_tooltip_set_icon(). There are functions for setting
- * the tooltip's markup, setting an image from a stock icon, or even putting in
+ * the tooltip's markup, setting an image from a named icon, or even putting in
  * a custom widget.
  *
  * Return TRUE from your query-tooltip handler. This causes the tooltip to be
@@ -202,6 +202,8 @@ public class Tooltip : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltip_set_icon_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_tooltip_set_icon_from_icon_name() instead.
 	 * Sets the icon of the tooltip (which is in front of the text) to be
 	 * the stock item indicated by stock_id with the size indicated
 	 * by size. If stock_id is NULL, the image will be hidden.

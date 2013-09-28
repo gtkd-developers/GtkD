@@ -100,6 +100,8 @@ public interface ActivatableIF
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_activatable_do_set_related_action is deprecated and should not be used in newly-written code. 3.10
 	 * This is a utility function for GtkActivatable implementors.
 	 * When implementing GtkActivatable you must call this when
 	 * handling changes of the "related-action", and
@@ -120,6 +122,8 @@ public interface ActivatableIF
 	public void doSetRelatedAction(Action action);
 	
 	/**
+	 * Warning
+	 * gtk_activatable_get_related_action is deprecated and should not be used in newly-written code. 3.10
 	 * Gets the related GtkAction for activatable.
 	 * Since 2.16
 	 * Returns: the related GtkAction if one is set. [transfer none]
@@ -127,6 +131,8 @@ public interface ActivatableIF
 	public Action getRelatedAction();
 	
 	/**
+	 * Warning
+	 * gtk_activatable_get_use_action_appearance is deprecated and should not be used in newly-written code. 3.10
 	 * Gets whether this activatable should reset its layout
 	 * and appearance when setting the related action or when
 	 * the action changes appearance.
@@ -136,6 +142,8 @@ public interface ActivatableIF
 	public int getUseActionAppearance();
 	
 	/**
+	 * Warning
+	 * gtk_activatable_sync_action_properties is deprecated and should not be used in newly-written code. 3.10
 	 * This is called to update the activatable completely, this is called
 	 * internally when the "related-action" property is set
 	 * or unset and by the implementing class when
@@ -147,6 +155,8 @@ public interface ActivatableIF
 	public void syncActionProperties(Action action);
 	
 	/**
+	 * Warning
+	 * gtk_activatable_set_related_action is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the related action on the activatable object.
 	 * Note
 	 * GtkActivatable implementors need to handle the "related-action"
@@ -158,6 +168,8 @@ public interface ActivatableIF
 	public void setRelatedAction(Action action);
 	
 	/**
+	 * Warning
+	 * gtk_activatable_set_use_action_appearance is deprecated and should not be used in newly-written code. 3.10
 	 * Sets whether this activatable should reset its layout and appearance
 	 * when setting the related action or when the action changes appearance
 	 * Note

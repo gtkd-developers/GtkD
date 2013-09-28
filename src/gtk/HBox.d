@@ -77,10 +77,10 @@ private import gtk.Box;
  * from GtkBox. No further changes are needed, since the default
  * value of the "orientation" property is
  * GTK_ORIENTATION_HORIZONTAL.
- * If you want your code to be future-proof, the recommendation is to
- * switch to GtkGrid, since GtkBox is going to be deprecated in favor
- * of the more flexible grid widget eventually. For more information
- * about migrating to GtkGrid, see Migrating from other containers to GtkGrid
+ * If you don't need first-child or last-child styling, and want your code
+ * to be future-proof, the recommendation is to switch to GtkGrid instead
+ * of nested boxes. For more information about migrating to GtkGrid,
+ * see Migrating from other containers to GtkGrid
  */
 public class HBox : Box
 {

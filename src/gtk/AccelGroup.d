@@ -505,6 +505,8 @@ public class AccelGroup : ObjectG
 	 * gtk_accelerator_parse() but handles keycodes as well. This is only
 	 * useful for system-level components, applications should use
 	 * gtk_accelerator_parse() instead.
+	 * If accelerator_codes is given and the result stored in it is non-NULL,
+	 * the result must be freed with g_free().
 	 * If a keycode is present in the accelerator and no accelerator_codes
 	 * is given, the parse will fail.
 	 * If the parse fails, accelerator_key, accelerator_mods and
@@ -513,8 +515,7 @@ public class AccelGroup : ObjectG
 	 * accelerator = string representing an accelerator
 	 * acceleratorKey = return location for accelerator
 	 * keyval, or NULL. [out][allow-none]
-	 * acceleratorCodes = return location for accelerator
-	 * keycodes, or NULL. [out][allow-none]
+	 * acceleratorCodes = return location for accelerator keycodes, or NULL. [out][array zero-terminated=1][transfer full][allow-none]
 	 * acceleratorMods = return location for accelerator
 	 * modifier mask, NULL. [out][allow-none]
 	 * Since 3.4

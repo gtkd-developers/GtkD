@@ -44,20 +44,24 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- cairo.Surface
  * 	- gdk.Pixbuf
  * 	- gtk.IconSource
  * 	- gtk.Style
  * 	- gtk.StyleContext
  * 	- gtk.Widget
+ * 	- gdk.Window
  * 	- gtkc.paths
  * 	- gtkc.Loader
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GdkWindow* -> Window
  * 	- GtkIconSet* -> IconSet
  * 	- GtkIconSource* -> IconSource
  * 	- GtkStyle* -> Style
  * 	- GtkStyleContext* -> StyleContext
  * 	- GtkWidget* -> Widget
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -73,11 +77,13 @@ private import gobject.ObjectG;
 
 
 private import glib.Str;
+private import cairo.Surface;
 private import gdk.Pixbuf;
 private import gtk.IconSource;
 private import gtk.Style;
 private import gtk.StyleContext;
 private import gtk.Widget;
+private import gdk.Window;
 private import gtkc.paths;
 private import gtkc.Loader;
 
@@ -183,6 +189,8 @@ public class IconSet : Boxed
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_add_source has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Icon sets have a list of GtkIconSource, which they use as base
 	 * icons for rendering icons in different states and sizes. Icons are
 	 * scaled, made to look insensitive, etc. in
@@ -214,6 +222,8 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_copy has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Copies icon_set by value.
 	 * Returns: a new GtkIconSet identical to the first.
 	 */
@@ -231,6 +241,8 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_new has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Creates a new GtkIconSet. A GtkIconSet represents a single icon
 	 * in various sizes and widget states. It can provide a GdkPixbuf
 	 * for a given size and state on request, and automatically caches
@@ -253,6 +265,8 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_new_from_pixbuf has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Creates a new GtkIconSet with pixbuf as the default/fallback
 	 * source image. If you don't add any additional GtkIconSource to the
 	 * icon set, all variants of the icon will be created from pixbuf,
@@ -274,6 +288,8 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_ref has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Increments the reference count on icon_set.
 	 * Returns: icon_set.
 	 */
@@ -327,6 +343,8 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_render_icon_pixbuf has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Renders an icon using gtk_render_icon_pixbuf(). In most cases,
 	 * gtk_widget_render_icon_pixbuf() is better, since it automatically provides
 	 * most of the arguments from the current widget settings. This
@@ -353,6 +371,37 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_render_icon_surface has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
+	 * Renders an icon using gtk_render_icon_pixbuf() and converts it to a
+	 * cairo surface.
+	 * This function never returns NULL; if the icon can't be rendered
+	 * (perhaps because an image file fails to load), a default "missing
+	 * image" icon will be returned instead.
+	 * Params:
+	 * context = a GtkStyleContext
+	 * size = icon size. A size of (GtkIconSize)-1
+	 * means render at the size of the source and don't scale. [type int]
+	 * scale = the window scale to render for
+	 * forWindow = GdkWindow to optimize drawing for, or NULL. [allow-none]
+	 * Returns: a cairo_surface_t to be displayed. [transfer full] Since 3.10
+	 */
+	public Surface renderIconSurface(StyleContext context, GtkIconSize size, int scale, Window forWindow)
+	{
+		// cairo_surface_t * gtk_icon_set_render_icon_surface (GtkIconSet *icon_set,  GtkStyleContext *context,  GtkIconSize size,  int scale,  GdkWindow *for_window);
+		auto p = gtk_icon_set_render_icon_surface(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size, scale, (forWindow is null) ? null : forWindow.getWindowStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_icon_set_unref has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Decrements the reference count on icon_set, and frees memory
 	 * if the reference count reaches 0.
 	 */
@@ -363,6 +412,8 @@ public class IconSet : Boxed
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_set_get_sizes has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Obtains a list of icon sizes this icon set can render. The returned
 	 * array must be freed with g_free().
 	 * Params:

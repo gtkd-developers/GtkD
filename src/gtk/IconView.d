@@ -688,9 +688,10 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * The returned GtkTreePath must be freed with gtk_tree_path_free().
 	 * Since 2.8
 	 * Params:
-	 * path = Return location for the current cursor path,
-	 * or NULL. [out][allow-none]
-	 * cell = Return location the current focus cell, or NULL. [out][allow-none]
+	 * path = Return location for the current
+	 * cursor path, or NULL. [out][allow-none][transfer full]
+	 * cell = Return location the current
+	 * focus cell, or NULL. [out][allow-none][transfer none]
 	 * Returns: TRUE if the cursor is set.
 	 */
 	public int getCursor(out TreePath path, out CellRenderer cell)

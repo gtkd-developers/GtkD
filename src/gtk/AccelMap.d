@@ -176,7 +176,7 @@ public class AccelMap : ObjectG
 	 * changed::accel_path.
 	 * Since 2.4
 	 * See Also
-	 * GtkAccelGroup, GtkAccelKey, GtkUIManager, gtk_widget_set_accel_path(), gtk_menu_item_set_accel_path(), "gtk-can-change-accels"
+	 * GtkAccelGroup, GtkAccelKey, GtkUIManager, gtk_widget_set_accel_path(), gtk_menu_item_set_accel_path()
 	 */
 	void addOnChanged(void delegate(string, guint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

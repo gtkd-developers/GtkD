@@ -700,7 +700,8 @@ public class TreeView : Container, ScrollableIF
 	bool delegate(TreeView)[] onUnselectAllListeners;
 	/**
 	 * See Also
-	 * GtkTreeViewColumn, GtkTreeSelection, GtkTreeDnd, GtkTreeMode,
+	 * GtkTreeViewColumn, GtkTreeSelection, GtkTreeModel,
+	 *  GtkTreeView drag-and-drop,
 	 *  GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore,
 	 *  GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf,
 	 *  GtkCellRendererText, GtkCellRendererToggle

@@ -257,8 +257,8 @@ public class RecentInfo
 	}
 	
 	/**
-	 * Gets the timestamp (seconds from system's Epoch) when the resource
-	 * was last modified.
+	 * Gets the timestamp (seconds from system's Epoch) when the meta-data
+	 * for the resource was last modified.
 	 * Since 2.10
 	 * Returns: the number of seconds elapsed from system's Epoch when the resource was last modified, or -1 on failure.
 	 */
@@ -269,8 +269,8 @@ public class RecentInfo
 	}
 	
 	/**
-	 * Gets the timestamp (seconds from system's Epoch) when the resource
-	 * was last visited.
+	 * Gets the timestamp (seconds from system's Epoch) when the meta-data
+	 * for the resource was last visited.
 	 * Since 2.10
 	 * Returns: the number of seconds elapsed from system's Epoch when the resource was last visited, or -1 on failure.
 	 */

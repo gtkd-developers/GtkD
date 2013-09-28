@@ -82,11 +82,17 @@ private import gtk.Bin;
 
 /**
  * The GtkMenuItem widget and the derived widgets are the only valid
- * childs for menus. Their function is to correctly handle highlighting,
+ * children for menus. Their function is to correctly handle highlighting,
  * alignment, events and submenus.
  *
- * As it derives from GtkBin it can hold any valid child widget, altough
- * only a few are really useful.
+ * As a GtkMenuItem derives from GtkBin it can hold any valid child widget,
+ * although only a few are really useful.
+ *
+ * By default, a GtkMenuItem sets a GtkAccelLabel as its child.
+ * GtkMenuItem has direct functions to set the label and its mnemonic.
+ * For more advanced label settings, you can fetch the child widget from the GtkBin.
+ *
+ * $(DDOC_COMMENT example)
  *
  * GtkMenuItem as GtkBuildable
  *
@@ -584,7 +590,7 @@ public class MenuItem : Bin, ActivatableIF
 	/**
 	 * Emits the "toggle-size-request" signal on the given item.
 	 * Params:
-	 * requisition = the requisition to use as signal data.
+	 * requisition = the requisition to use as signal data. [inout]
 	 */
 	public void toggleSizeRequest(ref int requisition)
 	{

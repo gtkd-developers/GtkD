@@ -165,6 +165,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, Widget, ActionGroup)[] onConnectProxyListeners;
 	/**
+	 * Warning
+	 * GtkActionGroup::connect-proxy is deprecated and should not be used in newly-written code. 3.10
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
 	 * an action in the group. Note that the proxy may have been connected
 	 * to a different action before.
@@ -201,6 +203,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, Widget, ActionGroup)[] onDisconnectProxyListeners;
 	/**
+	 * Warning
+	 * GtkActionGroup::disconnect-proxy is deprecated and should not be used in newly-written code. 3.10
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
 	 * from an action in the group.
 	 * GtkUIManager proxies the signal and provides global notification
@@ -233,6 +237,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, ActionGroup)[] onPostActivateListeners;
 	/**
+	 * Warning
+	 * GtkActionGroup::post-activate is deprecated and should not be used in newly-written code. 3.10
 	 * The ::post-activate signal is emitted just after the action in the
 	 * action_group is activated
 	 * This is intended for GtkUIManager to proxy the signal and provide global
@@ -264,6 +270,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	void delegate(Action, ActionGroup)[] onPreActivateListeners;
 	/**
+	 * Warning
+	 * GtkActionGroup::pre-activate is deprecated and should not be used in newly-written code. 3.10
 	 * The ::pre-activate signal is emitted just before the action in the
 	 * action_group is activated
 	 * This is intended for GtkUIManager to proxy the signal and provide global
@@ -295,6 +303,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	
 	
 	/**
+	 * Warning
+	 * gtk_action_group_new is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new GtkActionGroup object. The name of the action group
 	 * is used when associating keybindings
 	 * with the actions.
@@ -315,6 +325,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_get_name is deprecated and should not be used in newly-written code. 3.10
 	 * Gets the name of the action group.
 	 * Since 2.4
 	 * Returns: the name of the action group.
@@ -326,6 +338,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_get_sensitive is deprecated and should not be used in newly-written code. 3.10
 	 * Returns TRUE if the group is sensitive. The constituent actions
 	 * can only be logically sensitive (see gtk_action_is_sensitive()) if
 	 * they are sensitive (see gtk_action_get_sensitive()) and their group
@@ -340,6 +354,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_set_sensitive is deprecated and should not be used in newly-written code. 3.10
 	 * Changes the sensitivity of action_group
 	 * Since 2.4
 	 * Params:
@@ -352,6 +368,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_get_visible is deprecated and should not be used in newly-written code. 3.10
 	 * Returns TRUE if the group is visible. The constituent actions
 	 * can only be logically visible (see gtk_action_is_visible()) if
 	 * they are visible (see gtk_action_get_visible()) and their group
@@ -366,6 +384,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_set_visible is deprecated and should not be used in newly-written code. 3.10
 	 * Changes the visible of action_group.
 	 * Since 2.4
 	 * Params:
@@ -378,6 +398,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_get_accel_group is deprecated and should not be used in newly-written code. 3.10
 	 * Gets the accelerator group.
 	 * Returns: the accelerator group associated with this action group or NULL if there is none. [transfer none] Since 3.6
 	 */
@@ -395,6 +417,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_set_accel_group is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the accelerator group to be used by every action in this group.
 	 * Params:
 	 * accelGroup = a GtkAccelGroup to set or NULL. [allow-none]
@@ -407,6 +431,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_get_action is deprecated and should not be used in newly-written code. 3.10
 	 * Looks up an action in the action group by name.
 	 * Since 2.4
 	 * Params:
@@ -427,6 +453,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_list_actions is deprecated and should not be used in newly-written code. 3.10
 	 * Lists the actions in the action group.
 	 * Since 2.4
 	 * Returns: an allocated list of the action objects in the action group. [element-type GtkAction][transfer container]
@@ -445,6 +473,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_action is deprecated and should not be used in newly-written code. 3.10
 	 * Adds an action object to the action group. Note that this function
 	 * does not set up the accel path of the action, which can lead to problems
 	 * if a user tries to modify the accelerator of a menuitem associated with
@@ -462,6 +492,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_action_with_accel is deprecated and should not be used in newly-written code. 3.10
 	 * Adds an action object to the action group and sets up the accelerator.
 	 * If accelerator is NULL, attempts to use the accelerator associated
 	 * with the stock_id of the action.
@@ -481,6 +513,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_remove_action is deprecated and should not be used in newly-written code. 3.10
 	 * Removes an action object from the action group.
 	 * Since 2.4
 	 * Params:
@@ -493,6 +527,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_actions is deprecated and should not be used in newly-written code. 3.10
 	 * This is a convenience function to create a number of actions and add them
 	 * to the action group.
 	 * The "activate" signals of the actions are connected to the callbacks and
@@ -510,6 +546,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_actions_full is deprecated and should not be used in newly-written code. 3.10
 	 * This variant of gtk_action_group_add_actions() adds a GDestroyNotify
 	 * callback for user_data.
 	 * Since 2.4
@@ -525,6 +563,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_toggle_actions is deprecated and should not be used in newly-written code. 3.10
 	 * This is a convenience function to create a number of toggle actions and add them
 	 * to the action group.
 	 * The "activate" signals of the actions are connected to the callbacks and
@@ -542,6 +582,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_toggle_actions_full is deprecated and should not be used in newly-written code. 3.10
 	 * This variant of gtk_action_group_add_toggle_actions() adds a
 	 * GDestroyNotify callback for user_data.
 	 * Since 2.4
@@ -557,6 +599,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_radio_actions is deprecated and should not be used in newly-written code. 3.10
 	 * This is a convenience routine to create a group of radio actions and
 	 * add them to the action group.
 	 * The "changed" signal of the first radio action is connected to the
@@ -577,6 +621,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_add_radio_actions_full is deprecated and should not be used in newly-written code. 3.10
 	 * This variant of gtk_action_group_add_radio_actions() adds a
 	 * GDestroyNotify callback for user_data.
 	 * Since 2.4
@@ -595,6 +641,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_set_translate_func is deprecated and should not be used in newly-written code. 3.10
 	 * Sets a function to be used for translating the label and tooltip of
 	 * GtkActionEntrys added by gtk_action_group_add_actions().
 	 * If you're using gettext(), it is enough to set the translation domain
@@ -613,6 +661,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_set_translation_domain is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the translation domain and uses g_dgettext() for translating the
 	 * label and tooltip of GtkActionEntrys added by
 	 * gtk_action_group_add_actions().
@@ -630,6 +680,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_action_group_translate_string is deprecated and should not be used in newly-written code. 3.10
 	 * Translates a string using the function set with
 	 * gtk_action_group_set_translate_func(). This
 	 * is mainly intended for language bindings.

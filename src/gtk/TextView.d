@@ -477,7 +477,7 @@ public class TextView : Container, ScrollableIF
 	 * If you need to add items to the context menu, connect
 	 * to this signal and append your items to the popup, which
 	 * will be a GtkMenu in this case.
-	 * If "populate-toolbar" is TRUE, this signal will
+	 * If "populate-all" is TRUE, this signal will
 	 * also be emitted to populate touch popups. In this case,
 	 * popup will be a different container, e.g. a GtkToolbar.
 	 * The signal handler should not make assumptions about the

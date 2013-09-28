@@ -438,6 +438,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
+	 * Creates a new button containing an icon from the current icon theme.
+	 * If the icon name isn't known, a "broken image" icon will be
+	 * displayed instead. If the current icon theme is changed, the icon
+	 * will be updated appropriately.
+	 * This function is a convenience wrapper around gtk_button_new() and
+	 * gtk_button_set_image().
+	 * Params:
+	 * iconName = an icon name
+	 * size = an icon size. [type int]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string iconName, GtkIconSize size)
+	{
+		// GtkWidget * gtk_button_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
+		auto p = gtk_button_new_from_icon_name(Str.toStringz(iconName), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new_from_icon_name(Str.toStringz(iconName), size)");
+		}
+		this(cast(GtkButton*) p);
+	}
+	
+	/**
 	 * Warning
 	 * gtk_button_pressed has been deprecated since version 2.20 and should not be used in newly-written code. Use the "button-press-event" signal.
 	 * Emits a "pressed" signal to the given GtkButton.
@@ -542,6 +565,8 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_button_get_use_stock is deprecated and should not be used in newly-written code. 3.10
 	 * Returns whether the button label is a stock item.
 	 * Returns: TRUE if the button label is used to select a stock item instead of being used directly as the label text.
 	 */
@@ -552,6 +577,8 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_button_set_use_stock is deprecated and should not be used in newly-written code. 3.10
 	 * If TRUE, the label set on the button is used as a
 	 * stock id to select the stock item for the button.
 	 * Params:
@@ -643,9 +670,9 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
-	 * Set the image of button to the given widget. Note that
-	 * it depends on the "gtk-button-images" setting whether the
-	 * image will be displayed or not, you don't have to call
+	 * Set the image of button to the given widget. The image will be
+	 * displayed if the label text is NULL or if
+	 * "always-show-image" is TRUE. You don't have to call
 	 * gtk_widget_show() on image yourself.
 	 * Since 2.6
 	 * Params:
@@ -703,8 +730,8 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
-	 * If TRUE, the button will ignore the "gtk-button-images"
-	 * setting and always show the image, if available.
+	 * If TRUE, the button will always show the image in addition to the
+	 * label, if available.
 	 * Use this property if the button would be useless or hard to use
 	 * without the image.
 	 * Params:
@@ -718,8 +745,8 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	}
 	
 	/**
-	 * Returns whether the button will ignore the "gtk-button-images"
-	 * setting and always show the image, if available.
+	 * Returns whether the button will always show the image in addition
+	 * to the label, if available.
 	 * Returns: TRUE if the button will always show the image Since 3.6
 	 */
 	public int getAlwaysShowImage()

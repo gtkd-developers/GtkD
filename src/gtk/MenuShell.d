@@ -81,6 +81,26 @@ private import gtk.Container;
  * in a list which can be navigated, selected, and activated by the
  * user to perform application functions. A GtkMenuItem can have a
  * submenu associated with it, allowing for nested hierarchical menus.
+ *
+ * Terminology
+ *
+ * A menu item can be "selected", this means that it is displayed
+ * in the prelight state, and if it has a submenu, that submenu
+ * will be popped up.
+ *
+ * A menu is "active" when it is visible onscreen and the user
+ * is selecting from it. A menubar is not active until the user
+ * clicks on one of its menuitems. When a menu is active,
+ * passing the mouse over a submenu will pop it up.
+ *
+ * There is also is a concept of the current menu and a current
+ * menu item. The current menu item is the selected menu item
+ * that is furthest down in the hierarchy. (Every active menu shell
+ * does not necessarily contain a selected menu item, but if
+ * it does, then the parent menu shell must also contain
+ * a selected menu item.) The current menu is the menu that
+ * contains the current menu item. It will always have a GTK
+ * grab and receive all key presses.
  */
 public class MenuShell : Container
 {
@@ -553,6 +573,15 @@ public class MenuShell : Container
 	 * namespace, plus a dot. For example, if the action "quit" is
 	 * mentioned and action_namespace is "app" then the effective action
 	 * name is "app.quit".
+	 * This function uses GtkActionable to define the action name and
+	 * target values on the created menu items. If you want to use an
+	 * action group other than "app" and "win", or if you want to use a
+	 * GtkMenuShell outside of a GtkApplicationWindow, then you will need
+	 * to attach your own action group to the widget hierarchy using
+	 * gtk_widget_insert_action_group(). As an example, if you created a
+	 * group with a "quit" action and inserted it with the name "mygroup"
+	 * then you would use the action name "mygroup.quit" in your
+	 * GMenuModel.
 	 * For most cases you are probably better off using
 	 * gtk_menu_new_from_model() or gtk_menu_bar_new_from_model() or just
 	 * directly passing the GMenuModel to gtk_application_set_app_menu() or

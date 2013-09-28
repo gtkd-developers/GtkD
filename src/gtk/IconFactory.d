@@ -173,6 +173,8 @@ public class IconFactory : ObjectG, BuildableIF
 	 */
 	
 	/**
+	 * Warning
+	 * gtk_icon_factory_add has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Adds the given icon_set to the icon factory, under the name
 	 * stock_id. stock_id should be namespaced for your application,
 	 * e.g. "myapp-whatever-icon". Normally applications create a
@@ -194,6 +196,8 @@ public class IconFactory : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_factory_add_default has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Adds an icon factory to the list of icon factories searched by
 	 * gtk_style_lookup_icon_set(). This means that, for example,
 	 * gtk_image_new_from_stock() will be able to find icons in factory.
@@ -208,6 +212,8 @@ public class IconFactory : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_factory_lookup has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Looks up stock_id in the icon factory, returning an icon set
 	 * if found, otherwise NULL. For display to the user, you should
 	 * use gtk_style_lookup_icon_set() on the GtkStyle for the
@@ -231,6 +237,8 @@ public class IconFactory : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_factory_lookup_default has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Looks for an icon in the list of default icon factories. For
 	 * display to the user, you should use gtk_style_lookup_icon_set() on
 	 * the GtkStyle for the widget that will display the icon, instead of
@@ -254,6 +262,8 @@ public class IconFactory : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_factory_new has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Creates a new GtkIconFactory. An icon factory manages a collection
 	 * of GtkIconSets; a GtkIconSet manages a set of variants of a
 	 * particular icon (i.e. a GtkIconSet contains variants for different
@@ -281,6 +291,8 @@ public class IconFactory : ObjectG, BuildableIF
 	}
 	
 	/**
+	 * Warning
+	 * gtk_icon_factory_remove_default has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
 	 * Removes an icon factory from the list of default icon
 	 * factories. Not normally used; you might use it for a library that
 	 * can be unloaded or shut down.

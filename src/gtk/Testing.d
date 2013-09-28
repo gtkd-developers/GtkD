@@ -358,4 +358,21 @@ public class Testing
 		// gboolean gtk_test_widget_send_key (GtkWidget *widget,  guint keyval,  GdkModifierType modifiers);
 		return gtk_test_widget_send_key((widget is null) ? null : widget.getWidgetStruct(), keyval, modifiers);
 	}
+	
+	/**
+	 * Enters the main loop and waits for widget to be "drawn". In this
+	 * context that means it waits for the frame clock of widget to have
+	 * run a full styling, layout and drawing cycle.
+	 * This function is intended to be used for syncing with actions that
+	 * depend on widget relayouting or on interaction with the display
+	 * server.
+	 * Params:
+	 * widget = the widget to wait for
+	 * Since 3.10
+	 */
+	public static void widgetWaitForDraw(Widget widget)
+	{
+		// void gtk_test_widget_wait_for_draw (GtkWidget *widget);
+		gtk_test_widget_wait_for_draw((widget is null) ? null : widget.getWidgetStruct());
+	}
 }

@@ -25,19 +25,19 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gtk
- * outFile = Requisition
- * strct   = GtkRequisition
+ * outFile = WidgetClass
+ * strct   = GtkWidgetClass
  * realStrct=
  * ctorStrct=
- * clss    = Requisition
+ * clss    = WidgetClass
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
- * 	- gtk_requisition_
+ * 	- gtk_widget_class_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -112,16 +112,20 @@
  * 	- window-state-event
  * 	- touch-event
  * imports:
- * 	- gtkc.Loader
- * 	- gtkc.paths
+ * 	- glib.Str
+ * 	- glib.Bytes
+ * 	- gobject.ParamSpec
+ * 	- gtk.Widget
  * structWrap:
- * 	- GtkRequisition* -> Requisition
+ * 	- GBytes* -> Bytes
+ * 	- GParamSpec* -> ParamSpec
+ * 	- GtkWidget* -> 
  * module aliases:
  * local aliases:
  * overrides:
  */
 
-module gtk.Requisition;
+module gtk.WidgetClass;
 
 public  import gtkc.gtktypes;
 
@@ -132,8 +136,10 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtkc.Loader;
-private import gtkc.paths;
+private import glib.Str;
+private import glib.Bytes;
+private import gobject.ParamSpec;
+private import gtk.Widget;
 
 
 
@@ -375,82 +381,266 @@ private import gtkc.paths;
  *
  * $(DDOC_COMMENT example)
  */
-public class Requisition
+public class WidgetClass
 {
 	
 	/** the main Gtk struct */
-	protected GtkRequisition* gtkRequisition;
+	protected GtkWidgetClass* gtkWidgetClass;
 	
 	
-	public GtkRequisition* getRequisitionStruct()
+	public GtkWidgetClass* getWidgetClassStruct()
 	{
-		return gtkRequisition;
+		return gtkWidgetClass;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
-		return cast(void*)gtkRequisition;
+		return cast(void*)gtkWidgetClass;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GtkRequisition* gtkRequisition)
+	public this (GtkWidgetClass* gtkWidgetClass)
 	{
-		this.gtkRequisition = gtkRequisition;
-	}
-	
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRequisition !is null )
-		{
-			gtk_requisition_free(gtkRequisition);
-		}
+		this.gtkWidgetClass = gtkWidgetClass;
 	}
 	
 	/**
 	 */
 	
 	/**
-	 * Allocates a new GtkRequisition structure and initializes its elements to zero.
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * Warning
+	 * gtk_widget_class_path has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_path() instead
+	 * Same as gtk_widget_path(), but always uses the name of a widget's type,
+	 * never uses a custom name set with gtk_widget_set_name().
+	 * Params:
+	 * widget = a GtkWidget
+	 * pathLength = location to store the length of the
+	 * class path, or NULL. [out][allow-none]
+	 * path = location to store the class path as an
+	 * allocated string, or NULL. [out][allow-none]
+	 * pathReversed = location to store the reverse
+	 * class path as an allocated string, or NULL. [out][allow-none]
 	 */
-	public this ()
+	public static void path( widget, out uint pathLength, out string path, out string pathReversed)
 	{
-		// GtkRequisition * gtk_requisition_new (void);
-		auto p = gtk_requisition_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_requisition_new()");
-		}
-		this(cast(GtkRequisition*) p);
+		// void gtk_widget_class_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
+		char* outpath = null;
+		char* outpathReversed = null;
+		
+		gtk_widget_class_path((widget is null) ? null : widget.getStruct(), &pathLength, &outpath, &outpathReversed);
+		
+		path = Str.toString(outpath);
+		pathReversed = Str.toString(outpathReversed);
 	}
 	
 	/**
-	 * Copies a GtkRequisition.
-	 * Returns: a copy of requisition
+	 * Installs a style property on a widget class. The parser for the
+	 * style property is determined by the value type of pspec.
+	 * Params:
+	 * pspec = the GParamSpec for the property
 	 */
-	public Requisition copy()
+	public void installStyleProperty(ParamSpec pspec)
 	{
-		// GtkRequisition * gtk_requisition_copy (const GtkRequisition *requisition);
-		auto p = gtk_requisition_copy(gtkRequisition);
+		// void gtk_widget_class_install_style_property  (GtkWidgetClass *klass,  GParamSpec *pspec);
+		gtk_widget_class_install_style_property(gtkWidgetClass, (pspec is null) ? null : pspec.getParamSpecStruct());
+	}
+	
+	/**
+	 * Installs a style property on a widget class.
+	 * Params:
+	 * pspec = the GParamSpec for the style property
+	 * parser = the parser for the style property
+	 */
+	public void installStylePropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
+	{
+		// void gtk_widget_class_install_style_property_parser  (GtkWidgetClass *klass,  GParamSpec *pspec,  GtkRcPropertyParser parser);
+		gtk_widget_class_install_style_property_parser(gtkWidgetClass, (pspec is null) ? null : pspec.getParamSpecStruct(), parser);
+	}
+	
+	/**
+	 * Finds a style property of a widget class by name.
+	 * Since 2.2
+	 * Params:
+	 * propertyName = the name of the style property to find
+	 * Returns: the GParamSpec of the style property or NULL if class has no style property with that name. [transfer none]
+	 */
+	public ParamSpec findStyleProperty(string propertyName)
+	{
+		// GParamSpec * gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
+		auto p = gtk_widget_class_find_style_property(gtkWidgetClass, Str.toStringz(propertyName));
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Requisition)(cast(GtkRequisition*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 	
 	/**
-	 * Frees a GtkRequisition.
+	 * Returns all style properties of a widget class.
+	 * Since 2.2
+	 * Returns: a newly allocated array of GParamSpec*. The array must be freed with g_free(). [array length=n_properties][transfer container]
 	 */
-	public void free()
+	public ParamSpec[] listStyleProperties()
 	{
-		// void gtk_requisition_free (GtkRequisition *requisition);
-		gtk_requisition_free(gtkRequisition);
+		// GParamSpec ** gtk_widget_class_list_style_properties  (GtkWidgetClass *klass,  guint *n_properties);
+		uint nProperties;
+		auto p = gtk_widget_class_list_style_properties(gtkWidgetClass, &nProperties);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		ParamSpec[] arr = new ParamSpec[nProperties];
+		for(int i = 0; i < nProperties; i++)
+		{
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+		}
+		
+		return arr;
+	}
+	
+	/**
+	 * Sets the type to be used for creating accessibles for widgets of
+	 * widget_class. The given type must be a subtype of the type used for
+	 * accessibles of the parent class.
+	 * This function should only be called from class init functions of widgets.
+	 * Params:
+	 * type = The object type that implements the accessible for widget_class
+	 * Since 3.2
+	 */
+	public void setAccessibleType(GType type)
+	{
+		// void gtk_widget_class_set_accessible_type  (GtkWidgetClass *widget_class,  GType type);
+		gtk_widget_class_set_accessible_type(gtkWidgetClass, type);
+	}
+	
+	/**
+	 * Sets the default AtkRole to be set on accessibles created for
+	 * widgets of widget_class. Accessibles may decide to not honor this
+	 * setting if their role reporting is more refined. Calls to
+	 * gtk_widget_class_set_accessible_type() will reset this value.
+	 * In cases where you want more fine-grained control over the role of
+	 * accessibles created for widget_class, you should provide your own
+	 * accessible type and use gtk_widget_class_set_accessible_type()
+	 * instead.
+	 * If role is ATK_ROLE_INVALID, the default role will not be changed
+	 * and the accessible's default role will be used instead.
+	 * This function should only be called from class init functions of widgets.
+	 * Params:
+	 * role = The role to use for accessibles created for widget_class
+	 * Since 3.2
+	 */
+	public void setAccessibleRole(AtkRole role)
+	{
+		// void gtk_widget_class_set_accessible_role  (GtkWidgetClass *widget_class,  AtkRole role);
+		gtk_widget_class_set_accessible_role(gtkWidgetClass, role);
+	}
+	
+	/**
+	 * This should be called at class initialization time to specify
+	 * the GtkBuilder XML to be used to extend a widget.
+	 * For convenience, gtk_widget_class_set_template_from_resource() is also provided.
+	 * Note
+	 * Any class that installs templates must call gtk_widget_init_template()
+	 * in the widget's instance initializer
+	 * Params:
+	 * templateBytes = A GBytes holding the GtkBuilder XML
+	 * Since 3.10
+	 */
+	public void setTemplate(Bytes templateBytes)
+	{
+		// void gtk_widget_class_set_template (GtkWidgetClass *widget_class,  GBytes *template_bytes);
+		gtk_widget_class_set_template(gtkWidgetClass, (templateBytes is null) ? null : templateBytes.getBytesStruct());
+	}
+	
+	/**
+	 * A convenience function to call gtk_widget_class_set_template().
+	 * Note
+	 * Any class that installs templates must call gtk_widget_init_template()
+	 * in the widget's instance initializer
+	 * Params:
+	 * resourceName = The name of the resource to load the template from
+	 * Since 3.10
+	 */
+	public void setTemplateFromResource(string resourceName)
+	{
+		// void gtk_widget_class_set_template_from_resource  (GtkWidgetClass *widget_class,  const gchar *resource_name);
+		gtk_widget_class_set_template_from_resource(gtkWidgetClass, Str.toStringz(resourceName));
+	}
+	
+	/**
+	 * Automatically assign an object declared in the class template XML to be set to a location
+	 * on a freshly built instance's private data, or alternatively accessible via gtk_widget_get_automated_child().
+	 * The struct can point either into the public instance, then you should use G_STRUCT_OFFSET(WidgetType, member)
+	 * for struct_offset, or in the private struct, then you should use G_PRIVATE_OFFSET(WidgetType, member).
+	 * An explicit strong reference will be held automatically for the duration of your
+	 * instance's life cycle, it will be released automatically when GObjectClass.dispose() runs
+	 * on your instance and if a struct_offset that is >= 0 is specified, then the automatic location
+	 * in your instance private data will be set to NULL. You can however access an automated child
+	 * pointer the first time your classes GObjectClass.dispose() runs, or alternatively in
+	 * GtkWidgetClass.destroy().
+	 * If internal_child is specified, GtkBuildableIface.get_internal_child() will be automatically
+	 * implemented by the GtkWidget class so there is no need to implement it manually.
+	 * The wrapper macros gtk_widget_class_bind_template_child(), gtk_widget_class_bind_template_child_internal(),
+	 * gtk_widget_class_bind_template_child_private() and gtk_widget_class_bind_private_template_child_internal()
+	 * might be more convenient to use.
+	 * Note
+	 * This must be called from a composite widget classes class
+	 * initializer after calling gtk_widget_class_set_template()
+	 * Params:
+	 * name = The "id" of the child defined in the template XML
+	 * internalChild = Whether the child should be accessible as an "internal-child"
+	 * when this class is used in GtkBuilder XML
+	 * structOffset = The structure offset into the composite widget's instance public or private structure
+	 * where the automated child pointer should be set, or -1 to not assign the pointer.
+	 * Since 3.10
+	 */
+	public void bindTemplateChildFull(string name, int internalChild, gssize structOffset)
+	{
+		// void gtk_widget_class_bind_template_child_full  (GtkWidgetClass *widget_class,  const gchar *name,  gboolean internal_child,  gssize struct_offset);
+		gtk_widget_class_bind_template_child_full(gtkWidgetClass, Str.toStringz(name), internalChild, structOffset);
+	}
+	
+	/**
+	 * Declares a callback_symbol to handle callback_name from the template XML
+	 * defined for widget_type. See gtk_builder_add_callback_symbol().
+	 * Note
+	 * This must be called from a composite widget classes class
+	 * initializer after calling gtk_widget_class_set_template()
+	 * Params:
+	 * callbackName = The name of the callback as expected in the template XML
+	 * callbackSymbol = The callback symbol. [scope async]
+	 * Since 3.10
+	 */
+	public void bindTemplateCallbackFull(string callbackName, GCallback callbackSymbol)
+	{
+		// void gtk_widget_class_bind_template_callback_full  (GtkWidgetClass *widget_class,  const gchar *callback_name,  GCallback callback_symbol);
+		gtk_widget_class_bind_template_callback_full(gtkWidgetClass, Str.toStringz(callbackName), callbackSymbol);
+	}
+	
+	/**
+	 * For use in lanuage bindings, this will override the default GtkBuilderConnectFunc to be
+	 * used when parsing GtkBuilder xml from this class's template data.
+	 * Note
+	 * This must be called from a composite widget classes class
+	 * initializer after calling gtk_widget_class_set_template()
+	 * Params:
+	 * connectFunc = The GtkBuilderConnectFunc to use when connecting signals in the class template
+	 * connectData = The data to pass to connect_func
+	 * connectDataDestroy = The GDestroyNotify to free connect_data, this will only be used at
+	 * class finalization time, when no classes of type widget_type are in use anymore.
+	 * Since 3.10
+	 */
+	public void setConnectFunc(GtkBuilderConnectFunc connectFunc, void* connectData, GDestroyNotify connectDataDestroy)
+	{
+		// void gtk_widget_class_set_connect_func (GtkWidgetClass *widget_class,  GtkBuilderConnectFunc connect_func,  gpointer connect_data,  GDestroyNotify connect_data_destroy);
+		gtk_widget_class_set_connect_func(gtkWidgetClass, connectFunc, connectData, connectDataDestroy);
 	}
 }

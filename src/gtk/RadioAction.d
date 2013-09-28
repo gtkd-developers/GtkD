@@ -135,6 +135,8 @@ public class RadioAction : ToggleAction
 	
 	void delegate(GtkRadioAction*, RadioAction)[] onChangedListeners;
 	/**
+	 * Warning
+	 * GtkRadioAction::changed is deprecated and should not be used in newly-written code. 3.10
 	 * The ::changed signal is emitted on every member of a radio group when the
 	 * active member is changed. The signal gets emitted after the ::activate signals
 	 * for the previous and current active members.
@@ -165,6 +167,8 @@ public class RadioAction : ToggleAction
 	
 	
 	/**
+	 * Warning
+	 * gtk_radio_action_new is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new GtkRadioAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
@@ -192,6 +196,8 @@ public class RadioAction : ToggleAction
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_action_get_group is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the list representing the radio group for this object.
 	 * Note that the returned list is only valid until the next change
 	 * to the group.
@@ -212,6 +218,8 @@ public class RadioAction : ToggleAction
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_action_set_group is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the radio group for the radio action object.
 	 * Since 2.4
 	 * Params:
@@ -224,6 +232,8 @@ public class RadioAction : ToggleAction
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_action_join_group is deprecated and should not be used in newly-written code. 3.10
 	 * Joins a radio action object to the group of another radio action object.
 	 * Use this in language bindings instead of the gtk_radio_action_get_group()
 	 * and gtk_radio_action_set_group() methods
@@ -239,6 +249,8 @@ public class RadioAction : ToggleAction
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_action_get_current_value is deprecated and should not be used in newly-written code. 3.10
 	 * Obtains the value property of the currently active member of
 	 * the group to which action belongs.
 	 * Since 2.4
@@ -251,6 +263,8 @@ public class RadioAction : ToggleAction
 	}
 	
 	/**
+	 * Warning
+	 * gtk_radio_action_set_current_value is deprecated and should not be used in newly-written code. 3.10
 	 * Sets the currently active group member to the member with value
 	 * property current_value.
 	 * Since 2.10

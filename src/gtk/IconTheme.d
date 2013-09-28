@@ -47,11 +47,13 @@
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
+ * 	- cairo.Surface
  * 	- glib.ListG
  * 	- gio.IconIF
  * 	- gdk.Pixbuf
  * 	- gdk.RGBA
  * 	- gdk.Screen
+ * 	- gdk.Window
  * 	- gtk.IconInfo
  * 	- gtk.StyleContext
  * structWrap:
@@ -60,9 +62,11 @@
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRGBA* -> RGBA
  * 	- GdkScreen* -> Screen
+ * 	- GdkWindow* -> Window
  * 	- GtkIconInfo* -> IconInfo
  * 	- GtkIconTheme* -> IconTheme
  * 	- GtkStyleContext* -> StyleContext
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  * overrides:
@@ -82,11 +86,13 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import cairo.Surface;
 private import glib.ListG;
 private import gio.IconIF;
 private import gdk.Pixbuf;
 private import gdk.RGBA;
 private import gdk.Screen;
+private import gdk.Window;
 private import gtk.IconInfo;
 private import gtk.StyleContext;
 
@@ -424,6 +430,32 @@ public class IconTheme : ObjectG
 	}
 	
 	/**
+	 * Looks up a named icon for a particular window scale and returns a
+	 * structure containing information such as the filename of the
+	 * icon. The icon can then be rendered into a pixbuf using
+	 * gtk_icon_info_load_icon(). (gtk_icon_theme_load_icon() combines
+	 * these two steps if all you need is the pixbuf.)
+	 * Params:
+	 * iconName = the name of the icon to lookup
+	 * size = desired icon size
+	 * scale = the desired scale
+	 * flags = flags modifying the behavior of the icon lookup
+	 * Returns: a GtkIconInfo object containing information about the icon, or NULL if the icon wasn't found. [transfer full] Since 3.10
+	 */
+	public IconInfo lookupIconForScale(string iconName, int size, int scale, GtkIconLookupFlags flags)
+	{
+		// GtkIconInfo * gtk_icon_theme_lookup_icon_for_scale  (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  gint scale,  GtkIconLookupFlags flags);
+		auto p = gtk_icon_theme_lookup_icon_for_scale(gtkIconTheme, Str.toStringz(iconName), size, scale, flags);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p);
+	}
+	
+	/**
 	 * Looks up a named icon and returns a structure containing
 	 * information such as the filename of the icon. The icon
 	 * can then be rendered into a pixbuf using
@@ -454,6 +486,36 @@ public class IconTheme : ObjectG
 	}
 	
 	/**
+	 * Looks up a named icon for a particular window scale and returns a
+	 * structure containing information such as the filename of the
+	 * icon. The icon can then be rendered into a pixbuf using
+	 * gtk_icon_info_load_icon(). (gtk_icon_theme_load_icon() combines
+	 * these two steps if all you need is the pixbuf.)
+	 * If icon_names contains more than one name, this function
+	 * tries them all in the given order before falling back to
+	 * inherited icon themes.
+	 * Params:
+	 * iconNames = NULL-terminated array of
+	 * icon names to lookup. [array zero-terminated=1]
+	 * size = desired icon size
+	 * scale = desired scale
+	 * flags = flags modifying the behavior of the icon lookup
+	 * Returns: a GtkIconInfo object containing information about the icon, or NULL if the icon wasn't found. [transfer full] Since 3.10
+	 */
+	public IconInfo chooseIconForScale(string[] iconNames, int size, int scale, GtkIconLookupFlags flags)
+	{
+		// GtkIconInfo * gtk_icon_theme_choose_icon_for_scale  (GtkIconTheme *icon_theme,  const gchar *icon_names[],  gint size,  gint scale,  GtkIconLookupFlags flags);
+		auto p = gtk_icon_theme_choose_icon_for_scale(gtkIconTheme, Str.toStringzArray(iconNames), size, scale, flags);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p);
+	}
+	
+	/**
 	 * Looks up an icon and returns a structure containing
 	 * information such as the filename of the icon.
 	 * The icon can then be rendered into a pixbuf using
@@ -469,6 +531,31 @@ public class IconTheme : ObjectG
 	{
 		// GtkIconInfo * gtk_icon_theme_lookup_by_gicon (GtkIconTheme *icon_theme,  GIcon *icon,  gint size,  GtkIconLookupFlags flags);
 		auto p = gtk_icon_theme_lookup_by_gicon(gtkIconTheme, (icon is null) ? null : icon.getIconTStruct(), size, flags);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p);
+	}
+	
+	/**
+	 * Looks up an icon and returns a structure containing
+	 * information such as the filename of the icon.
+	 * The icon can then be rendered into a pixbuf using
+	 * gtk_icon_info_load_icon_for_scale().
+	 * Params:
+	 * icon = the GIcon to look up
+	 * size = desired icon size
+	 * scale = the desired scale
+	 * flags = flags modifying the behavior of the icon lookup
+	 * Returns: a GtkIconInfo structure containing information about the icon, or NULL if the icon wasn't found. Unref with g_object_unref(). [transfer full] Since 3.10
+	 */
+	public IconInfo lookupByGiconForScale(IconIF icon, int size, int scale, GtkIconLookupFlags flags)
+	{
+		// GtkIconInfo * gtk_icon_theme_lookup_by_gicon_for_scale  (GtkIconTheme *icon_theme,  GIcon *icon,  gint size,  gint scale,  GtkIconLookupFlags flags);
+		auto p = gtk_icon_theme_lookup_by_gicon_for_scale(gtkIconTheme, (icon is null) ? null : icon.getIconTStruct(), size, scale, flags);
 		
 		if(p is null)
 		{
@@ -518,6 +605,89 @@ public class IconTheme : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Looks up an icon in an icon theme for a particular window scale,
+	 * scales it to the given size and renders it into a pixbuf. This is a
+	 * convenience function; if more details about the icon are needed,
+	 * use gtk_icon_theme_lookup_icon() followed by
+	 * gtk_icon_info_load_icon().
+	 * Note that you probably want to listen for icon theme changes and
+	 * update the icon. This is usually done by connecting to the
+	 * GtkWidget::style-set signal. If for some reason you do not want to
+	 * update the icon when the icon theme changes, you should consider
+	 * using gdk_pixbuf_copy() to make a private copy of the pixbuf
+	 * returned by this function. Otherwise GTK+ may need to keep the old
+	 * icon theme loaded, which would be a waste of memory.
+	 * Params:
+	 * iconName = the name of the icon to lookup
+	 * size = the desired icon size. The resulting icon may not be
+	 * exactly this size; see gtk_icon_info_load_icon().
+	 * scale = desired scale
+	 * flags = flags modifying the behavior of the icon lookup
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon. NULL if the icon isn't found. [transfer full] Since 3.10
+	 * Throws: GException on failure.
+	 */
+	public Pixbuf loadIconForScale(string iconName, int size, int scale, GtkIconLookupFlags flags)
+	{
+		// GdkPixbuf * gtk_icon_theme_load_icon_for_scale (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  gint scale,  GtkIconLookupFlags flags,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_theme_load_icon_for_scale(gtkIconTheme, Str.toStringz(iconName), size, scale, flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+	
+	/**
+	 * Looks up an icon in an icon theme for a particular window scale,
+	 * scales it to the given size and renders it into a cairo surface. This is a
+	 * convenience function; if more details about the icon are needed,
+	 * use gtk_icon_theme_lookup_icon() followed by
+	 * gtk_icon_info_load_surface().
+	 * Note that you probably want to listen for icon theme changes and
+	 * update the icon. This is usually done by connecting to the
+	 * GtkWidget::style-set signal.
+	 * Params:
+	 * iconName = the name of the icon to lookup
+	 * size = the desired icon size. The resulting icon may not be
+	 * exactly this size; see gtk_icon_info_load_icon().
+	 * scale = desired scale
+	 * forWindow = GdkWindow to optimize drawing for, or NULL. [allow-none]
+	 * flags = flags modifying the behavior of the icon lookup
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use cairo_surface_destroy() to release your reference to the icon. NULL if the icon isn't found. [transfer full] Since 3.10
+	 * Throws: GException on failure.
+	 */
+	public Surface loadSurface(string iconName, int size, int scale, Window forWindow, GtkIconLookupFlags flags)
+	{
+		// cairo_surface_t * gtk_icon_theme_load_surface (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  gint scale,  GdkWindow *for_window,  GtkIconLookupFlags flags,  GError **error);
+		GError* err = null;
+		
+		auto p = gtk_icon_theme_load_surface(gtkIconTheme, Str.toStringz(iconName), size, scale, (forWindow is null) ? null : forWindow.getWindowStruct(), flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
 	}
 	
 	/**
