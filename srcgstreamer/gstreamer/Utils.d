@@ -445,6 +445,18 @@ public class Utils
 	}
 	
 	/**
+	 * Return a constantly incrementing group id.
+	 * This function is used to generate a new group-id for the
+	 * stream-start event.
+	 * Returns: A constantly incrementing unsigned integer, which might overflow back to 0 at some point.
+	 */
+	public static uint groupIdNext()
+	{
+		// guint gst_util_group_id_next (void);
+		return gst_util_group_id_next();
+	}
+	
+	/**
 	 * Convertes the string value to the type of the objects argument and
 	 * sets the argument with it.
 	 * Note that this function silently returns if object has no property named

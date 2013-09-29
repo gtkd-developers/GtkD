@@ -162,7 +162,7 @@ public class ProxyPad : Pad
 	/**
 	 * Invoke the default iterate internal links function of the proxy pad.
 	 * Params:
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * Returns: a GstIterator of GstPad, or NULL if pad has no parent. Unref each returned pad with gst_object_unref().
 	 */
 	public override Iterator iterateInternalLinksDefault(ObjectGst parent)
@@ -181,7 +181,7 @@ public class ProxyPad : Pad
 	/**
 	 * Invoke the default chain function of the proxy pad.
 	 * Params:
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * buffer = the GstBuffer to send, return GST_FLOW_ERROR
 	 * if not. [transfer full]
 	 * Returns: a GstFlowReturn from the pad.
@@ -195,7 +195,7 @@ public class ProxyPad : Pad
 	/**
 	 * Invoke the default chain list function of the proxy pad.
 	 * Params:
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * list = the GstBufferList to send, return GST_FLOW_ERROR
 	 * if not. [transfer full]
 	 * Returns: a GstFlowReturn from the pad.
@@ -207,13 +207,13 @@ public class ProxyPad : Pad
 	}
 	
 	/**
+	 * returns GST_FLOW_ERROR if NULL.
 	 * Invoke the default getrange function of the proxy pad.
 	 * Params:
 	 * parent = the parent of pad
 	 * offset = The start offset of the buffer
 	 * size = The length of the buffer
-	 * buffer = a pointer to hold the GstBuffer,
-	 * returns GST_FLOW_ERROR if NULL. [out callee-allocates]
+	 * buffer = a pointer to hold the GstBuffer,. [out callee-allocates]
 	 * Returns: a GstFlowReturn from the pad.
 	 */
 	public GstFlowReturn getrangeDefault(ObjectGst parent, ulong offset, uint size, out Buffer buffer)

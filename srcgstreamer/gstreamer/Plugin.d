@@ -431,13 +431,13 @@ public class Plugin : ObjectGst
 	 * paths where to look for additional modules/plugins of a library),
 	 * or NULL. Environment variable names may be followed by a path component
 	 * which will be added to the content of the environment variable, e.g.
-	 * "HOME/.mystuff/plugins".
+	 * "HOME/.mystuff/plugins". [allow-none]
 	 * paths = NULL-terminated array of directories/paths where dependent files
-	 * may be.
+	 * may be, or NULL. [allow-none]
 	 * names = NULL-terminated array of file names (or file name suffixes,
 	 * depending on flags) to be used in combination with the paths from
 	 * paths and/or the paths extracted from the environment variables in
-	 * env_vars, or NULL.
+	 * env_vars, or NULL. [allow-none]
 	 * flags = optional flags, or GST_PLUGIN_DEPENDENCY_FLAG_NONE
 	 */
 	public void addDependency(string[] envVars, string[] paths, string[] names, GstPluginDependencyFlags flags)
@@ -462,11 +462,11 @@ public class Plugin : ObjectGst
 	 * envVars = one or more environment variables (separated by ':', ';' or ','),
 	 * or NULL. Environment variable names may be followed by a path component
 	 * which will be added to the content of the environment variable, e.g.
-	 * "HOME/.mystuff/plugins:MYSTUFF_PLUGINS_PATH"
+	 * "HOME/.mystuff/plugins:MYSTUFF_PLUGINS_PATH". [allow-none]
 	 * paths = one ore more directory paths (separated by ':' or ';' or ','),
-	 * or NULL. Example: "/usr/lib/mystuff/plugins"
+	 * or NULL. Example: "/usr/lib/mystuff/plugins". [allow-none]
 	 * names = one or more file names or file name suffixes (separated by commas),
-	 * or NULL
+	 * or NULL. [allow-none]
 	 * flags = optional flags, or GST_PLUGIN_DEPENDENCY_FLAG_NONE
 	 */
 	public void addDependencySimple(string envVars, string paths, string names, GstPluginDependencyFlags flags)

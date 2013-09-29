@@ -154,6 +154,17 @@ public class PluginFeature : ObjectGst
 	}
 	
 	/**
+	 * Get the name of the plugin that provides this feature.
+	 * Since 1.2.0
+	 * Returns: the name of the plugin that provides this feature, or NULL if the feature is not associated with a plugin.
+	 */
+	public string getPluginName()
+	{
+		// const gchar * gst_plugin_feature_get_plugin_name (GstPluginFeature *feature);
+		return Str.toString(gst_plugin_feature_get_plugin_name(gstPluginFeature));
+	}
+	
+	/**
 	 * Loads the plugin containing feature if it's not already loaded. feature is
 	 * unaffected; use the return value instead.
 	 * Returns: a reference to the loaded feature, or NULL on error. [transfer full]
@@ -225,7 +236,7 @@ public class PluginFeature : ObjectGst
 	 * Params:
 	 * p1 = a GstPluginFeature
 	 * p2 = a GstPluginFeature
-	 * Returns: negative value if the rank of p1 > the rank of p2 or the ranks are equal but the name of p1 comes before the name of p2; zero if the rank and names are equal; positive value if the rank of p1 < the rank of p2 or the ranks are equal but the name of p2 comes after the name of p1
+	 * Returns: negative value if the rank of p1 > the rank of p2 or the ranks are equal but the name of p1 comes before the name of p2; zero if the rank and names are equal; positive value if the rank of p1 < the rank of p2 or the ranks are equal but the name of p2 comes before the name of p1
 	 */
 	public static int rankCompareFunc(void* p1, void* p2)
 	{

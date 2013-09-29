@@ -109,7 +109,7 @@ private import gobject.ObjectG;
  *
  * Controlled properties offers a lightweight way to adjust gobject
  * properties over stream-time. It works by using time-stamped value pairs that
- * are queued for element-properties. At run-time the elements continously pull
+ * are queued for element-properties. At run-time the elements continuously pull
  * values changes for the current stream-time.
  *
  * What needs to be changed in a GstElement?
@@ -490,12 +490,12 @@ public class ObjectGst : ObjectG
 	}
 	
 	/**
-	 * Sets the GstControlBinding. If there already was a GstControlBinding
-	 * for this property it will be replaced.
+	 * Attach the GstControlBinding to the object. If there already was a
+	 * GstControlBinding for this property it will be replaced.
 	 * The object will take ownership of the binding.
 	 * Params:
 	 * binding = the GstControlBinding that should be used. [transfer full]
-	 * Returns: FALSE if the given binding has not been setup for this object or TRUE otherwise.
+	 * Returns: FALSE if the given binding has not been setup for this object or has been setup for a non suitable property, TRUE otherwise.
 	 */
 	public int addControlBinding(ControlBinding binding)
 	{

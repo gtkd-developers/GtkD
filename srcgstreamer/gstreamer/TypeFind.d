@@ -156,7 +156,7 @@ public class TypeFind
 	 * registering this function will be available for typefinding.
 	 * This function is typically called during an element's plugin initialization.
 	 * Params:
-	 * plugin = A GstPlugin, or NULL for a static typefind function
+	 * plugin = A GstPlugin, or NULL for a static typefind function. [allow-none]
 	 * name = The name for registering
 	 * rank = The rank (or importance) of this typefind function
 	 * func = The GstTypeFindFunction to use

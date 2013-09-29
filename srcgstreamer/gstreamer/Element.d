@@ -50,6 +50,7 @@
  * 	- gstreamer.Bus
  * 	- gstreamer.Caps
  * 	- gstreamer.Clock
+ * 	- gstreamer.Context
  * 	- gstreamer.ElementFactory
  * 	- gstreamer.Event
  * 	- gstreamer.Iterator
@@ -62,6 +63,7 @@
  * 	- GstBus* -> Bus
  * 	- GstCaps* -> Caps
  * 	- GstClock* -> Clock
+ * 	- GstContext* -> Context
  * 	- GstElement* -> Element
  * 	- GstElementFactory* -> ElementFactory
  * 	- GstEvent* -> Event
@@ -93,6 +95,7 @@ private import gobject.Type;
 private import gstreamer.Bus;
 private import gstreamer.Caps;
 private import gstreamer.Clock;
+private import gstreamer.Context;
 private import gstreamer.ElementFactory;
 private import gstreamer.Event;
 private import gstreamer.Iterator;
@@ -698,7 +701,7 @@ public class Element : ObjectGst
 	 * gst_element_iterate_src_pads() or gst_element_iterate_sink_pads().
 	 * The order of pads returned by the iterator will be the order in which
 	 * the pads were added to the element.
-	 * Returns: the GstIterator of GstPad. Unref each pad after use. MT safe. [transfer full]
+	 * Returns: the GstIterator of GstPad. MT safe. [transfer full]
 	 */
 	public Iterator iteratePads()
 	{
@@ -717,7 +720,7 @@ public class Element : ObjectGst
 	 * Retrieves an iterator of element's sink pads.
 	 * The order of pads returned by the iterator will be the order in which
 	 * the pads were added to the element.
-	 * Returns: the GstIterator of GstPad. Unref each pad after use. MT safe. [transfer full]
+	 * Returns: the GstIterator of GstPad. MT safe. [transfer full]
 	 */
 	public Iterator iterateSinkPads()
 	{
@@ -736,7 +739,7 @@ public class Element : ObjectGst
 	 * Retrieves an iterator of element's source pads.
 	 * The order of pads returned by the iterator will be the order in which
 	 * the pads were added to the element.
-	 * Returns: the GstIterator of GstPad. Unref each pad after use. MT safe. [transfer full]
+	 * Returns: the GstIterator of GstPad. MT safe. [transfer full]
 	 */
 	public Iterator iterateSrcPads()
 	{
@@ -989,6 +992,18 @@ public class Element : ObjectGst
 	}
 	
 	/**
+	 * Sets the context of the element. Increases the refcount of the context.
+	 * MT safe.
+	 * Params:
+	 * context = the GstContext to set. [transfer none]
+	 */
+	public void setContext(Context context)
+	{
+		// void gst_element_set_context (GstElement *element,  GstContext *context);
+		gst_element_set_context(gstElement, (context is null) ? null : context.getContextStruct());
+	}
+	
+	/**
 	 * Retrieves the factory that was used to create this element.
 	 * Returns: the GstElementFactory used for creating this element. no refcounting is needed. [transfer none]
 	 */
@@ -1065,7 +1080,8 @@ public class Element : ObjectGst
 	 * element will perform the remainder of the state change asynchronously in
 	 * another thread.
 	 * An application can use gst_element_get_state() to wait for the completion
-	 * of the state change or it can wait for a state change message on the bus.
+	 * of the state change or it can wait for a GST_MESSAGE_ASYNC_DONE or
+	 * GST_MESSAGE_STATE_CHANGED on the bus.
 	 * State changes to GST_STATE_READY or GST_STATE_NULL never return
 	 * GST_STATE_CHANGE_ASYNC.
 	 * Params:
@@ -1310,8 +1326,14 @@ public class Element : ObjectGst
 	}
 	
 	/**
-	 * Queries an element for the stream position. If one repeatedly calls this
-	 * function one can also create and reuse it in gst_element_query().
+	 * Queries an element (usually top-level pipeline or playbin element) for the
+	 * stream position in nanoseconds. This will be a value between 0 and the
+	 * stream duration (if the stream duration is known). This query will usually
+	 * only work once the pipeline is prerolled (i.e. reached PAUSED or PLAYING
+	 * state). The application will receive an ASYNC_DONE message on the pipeline
+	 * bus when that is the case.
+	 * If one repeatedly calls this function one can also create a query and reuse
+	 * it in gst_element_query().
 	 * Params:
 	 * format = the GstFormat requested
 	 * cur = a location in which to store the current
@@ -1325,10 +1347,16 @@ public class Element : ObjectGst
 	}
 	
 	/**
-	 * Queries an element for the total stream duration.
+	 * Queries an element (usually top-level pipeline or playbin element) for the
+	 * total stream duration in nanoseconds. This query will only work once the
+	 * pipeline is prerolled (i.e. reached PAUSED or PLAYING state). The application
+	 * will receive an ASYNC_DONE message on the pipeline bus when that is the case.
+	 * If the duration changes for some reason, you will get a DURATION_CHANGED
+	 * message on the pipeline bus, in which case you should re-query the duration
+	 * using this function.
 	 * Params:
 	 * format = the GstFormat requested
-	 * duration = A location in which to store the total duration, or NULL. [out]
+	 * duration = A location in which to store the total duration, or NULL. [out][allow-none]
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryDuration(GstFormat format, ref long duration)

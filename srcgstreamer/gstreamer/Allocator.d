@@ -125,7 +125,7 @@ public class Allocator : ObjectGst
 	 * Find a previously registered allocator with name. When name is NULL, the
 	 * default allocator will be returned.
 	 * Params:
-	 * name = the name of the allocator
+	 * name = the name of the allocator. [allow-none]
 	 * Returns: a GstAllocator or NULL when the allocator with name was not registered. Use gst_object_unref() to release the allocator after usage. [transfer full]
 	 */
 	public static Allocator find(string name)
@@ -245,13 +245,14 @@ public class Allocator : ObjectGst
 	 * GST_MEMORY_FLAG_ZERO_PREFIXED and GST_MEMORY_FLAG_ZERO_PADDED respectively.
 	 * Params:
 	 * flags = GstMemoryFlags
-	 * data = data to wrap
+	 * data = data to
+	 * wrap. [array length=size][element-type guint8][transfer none]
 	 * maxsize = allocated size of data
 	 * offset = offset in data
 	 * size = size of valid data
-	 * userData = user_data
-	 * notify = called with user_data when the memory is freed
-	 * Returns: a new GstMemory.
+	 * userData = user_data. [allow-none]
+	 * notify = called with user_data when the memory is freed. [allow-none][scope async][closure user_data]
+	 * Returns: a new GstMemory. [transfer full]
 	 */
 	public static Memory gstMemoryNewWrapped(GstMemoryFlags flags, void* data, gsize maxsize, gsize offset, gsize size, void* userData, GDestroyNotify notify)
 	{

@@ -38,6 +38,7 @@
  * implements:
  * prefixes:
  * 	- gst_video_overlay_
+ * 	- gst_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -46,7 +47,9 @@
  * 	- gtkc.glibtypes
  * 	- glib.Str
  * 	- gstreamer.Element
+ * 	- gstreamer.Message
  * structWrap:
+ * 	- GstMessage* -> Message
  * module aliases:
  * local aliases:
  * overrides:
@@ -64,6 +67,7 @@ private import gobject.ObjectG;
 private import gtkc.glibtypes;
 private import glib.Str;
 private import gstreamer.Element;
+private import gstreamer.Message;
 
 
 
@@ -273,5 +277,18 @@ public class VideoOverlay
 	{
 		// gboolean gst_video_overlay_set_render_rectangle  (GstVideoOverlay *overlay,  gint x,  gint y,  gint width,  gint height);
 		return gst_video_overlay_set_render_rectangle(gstVideoOverlay, x, y, width, height);
+	}
+	
+	/**
+	 * Convenience function to check if the given message is a
+	 * "prepare-window-handle" message from a GstVideoOverlay.
+	 * Params:
+	 * msg = a GstMessage
+	 * Returns: whether msg is a "prepare-window-handle" message
+	 */
+	public static int isVideoOverlayPrepareWindowHandleMessage(Message msg)
+	{
+		// gboolean gst_is_video_overlay_prepare_window_handle_message  (GstMessage *msg);
+		return gst_is_video_overlay_prepare_window_handle_message((msg is null) ? null : msg.getMessageStruct());
 	}
 }

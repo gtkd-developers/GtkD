@@ -152,6 +152,15 @@ addEnums: start
 		DRAIN       = (180 << 8) | GstQueryTypeFlags.DOWNSTREAM | GstQueryTypeFlags.SERIALIZED,
 	}
 	alias GstQueryType QueryType;
+
+	enum GstStreamFlags
+	{
+		NONE,
+		SPARSE   = (1 << 0),
+		SELECT   = (1 << 1),
+		UNSELECT = (1 << 2)
+	}
+	alias GstStreamFlags StreamFlags;
 addEnums: end
 
 addStructs: start
@@ -352,6 +361,32 @@ array: gst_buffer_memcmp mem size
 array: gst_buffer_extract dest size
 array: gst_buffer_fill src size
 inout: gst_buffer_replace obuf
+out: gst_buffer_extract_dup dest
+array: gst_buffer_extract_dup dest dest_size
+
+nocode: gst_buffer_extract_dup
+code: start
+	/**
+	 * Extracts a copy of at most size bytes the data at offset into a GBytes.
+	 * dest must be freed using g_free() when done.
+	 * Since 1.0.10
+	 * Params:
+	 * offset = the offset to extract
+	 * size = the size to extract
+	 * dest = A pointer where
+	 * the destination array will be written. [array length=dest_size][element-type guint8][out]
+	 */
+	public void extractDup(gsize offset, gsize size, out void[] dest)
+	{
+		// void gst_buffer_extract_dup (GstBuffer *buffer,  gsize offset,  gsize size,  gpointer *dest,  gsize *dest_size);
+		void* outdest = null;
+		gsize destSize;
+		
+		gst_buffer_extract_dup(gstBuffer, offset, size, &outdest, &destSize);
+		
+		dest = outdest[0 .. destSize];
+	}
+code: end
 outFile: Buffer
 
 file: gstreamer-GstBufferList.html
@@ -463,9 +498,11 @@ prefix: gst_
 override: toString
 import: glib.Str
 import: gobject.Value
+import: gstreamer.CapsFeatures
 import: gstreamer.Structure
 structWrap: GValue* Value
 structWrap: GstCaps* Caps
+structWrap: GstCapsFeatures* CapsFeatures
 structWrap: GstStructure* Structure
 
 inout: gst_caps_replace caps
@@ -493,6 +530,16 @@ code: start
 	}
 code: end
 outFile: Caps
+
+file: gstreamer-GstCapsFeatures.html
+struct: GstCapsFeatures
+class: CapsFeatures
+prefix: gst_caps_features_
+override: toString
+import: glib.Str
+structWrap: GstCapsFeatures* CapsFeatures
+nocode: gst_caps_features_new_any
+outFile: CapsFeatures
 
 file: gstreamer-GstSample.html
 struct: GstSample
@@ -543,6 +590,17 @@ inout: gst_clock_id_wait jitter
 outFile: Clock
 
 #file: gstreamer-gstconfig.html
+
+file: gstreamer-GstContext.html
+struct: GstContext
+class: Context
+prefix: gst_context_
+import: glib.Str
+import: gstreamer.Structure
+structWrap: GstContext* Context
+structWrap: GstStructure* Structure
+inout: gst_context_replace old_context
+outFile: Context
 
 file: GstControlBinding.html
 struct: GstControlBinding
@@ -650,6 +708,7 @@ import: gobject.Type
 import: gstreamer.Bus
 import: gstreamer.Caps
 import: gstreamer.Clock
+import: gstreamer.Context
 import: gstreamer.ElementFactory
 import: gstreamer.Event
 import: gstreamer.Iterator
@@ -661,6 +720,7 @@ structWrap: GList ListG
 structWrap: GstBus* Bus
 structWrap: GstCaps* Caps
 structWrap: GstClock* Clock
+structWrap: GstContext* Context
 structWrap: GstElement* Element
 structWrap: GstElementFactory* ElementFactory
 structWrap: GstEvent* Event
@@ -857,6 +917,8 @@ out: gst_event_parse_toc updated
 out: gst_event_parse_toc_select uid
 out: gst_event_parse_segment_done format
 out: gst_event_parse_segment_done position
+out: gst_event_parse_stream_flags flags
+out: gst_event_parse_group_id group_id
 
 nocode: gst_event_new_eos
 code: start
@@ -1027,8 +1089,8 @@ file: gstreamer-GstMemory.html
 struct: GstMemory
 class: Memory
 prefix: gst_memory_
+import: glib.Str
 import: gstreamer.Allocator
-import: gstreamer.Memory
 structWrap: GstAllocator* Allocator
 structWrap: GstMemory* Memory
 
@@ -1049,6 +1111,7 @@ import: glib.Str
 import: glib.ErrorG
 import: gobject.Value
 import: gstreamer.Clock
+import: gstreamer.Context
 import: gstreamer.Element
 import: gstreamer.ObjectGst
 import: gstreamer.Structure
@@ -1057,6 +1120,7 @@ import: gstreamer.Toc
 structWrap: GError* ErrorG
 structWrap: GValue* Value
 structWrap: GstClock* Clock
+structWrap: GstContext* Context
 structWrap: GstElement* Element
 structWrap: GstMessage* Message
 structWrap: GstObject* ObjectGst
@@ -1124,6 +1188,9 @@ out: gst_message_parse_stream_status owner
 out: gst_message_parse_progress type
 out: gst_message_parse_progress code
 out: gst_message_parse_progress text
+out: gst_message_parse_group_id group_id
+out: gst_message_parse_context_type context_type
+out: gst_message_parse_have_context context
 
 #TODO: use the messagetype enum to consolidate the constructors.
 
@@ -1776,10 +1843,12 @@ import: glib.Str
 import: gstreamer.Allocator
 import: gstreamer.BufferPool
 import: gstreamer.Caps
+import: gstreamer.Context
 import: gstreamer.Structure
 structWrap: GstAllocator* Allocator
 structWrap: GstBufferPool* BufferPool
 structWrap: GstCaps* Caps
+structWrap: GstContext* Context
 structWrap: GstQuery* Query
 structWrap: GstStructure* Structure
 
@@ -1839,6 +1908,8 @@ out: gst_query_parse_scheduling flags
 out: gst_query_parse_scheduling minsize
 out: gst_query_parse_scheduling maxsize
 out: gst_query_parse_scheduling align
+out: gst_query_parse_context context
+out: gst_query_parse_context_type context_type
 
 nocode: gst_query_new_position
 code: start
@@ -2105,6 +2176,20 @@ out: gst_structure_get_enum value
 out: gst_structure_get_fraction value_numerator
 out: gst_structure_get_fraction value_denominator
 out: gst_structure_from_string end
+
+nocode: gst_structure_new_from_string
+code: start
+	public static Structure fromString(string name)
+	{
+		// GstStructure* gst_structure_new_from_string(const gchar *string);
+		auto p = gst_structure_new_from_string(Str.toStringz(name));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_structure_new_from_string(Str.toStringz(name))");
+		}
+		return new Structure(cast(GstStructure*) p);
+	}
+code: end
 outFile: Structure
 
 file: GstSystemClock.html
@@ -2320,9 +2405,11 @@ prefix: gst_value_
 import: glib.Str
 import: gobject.Value
 import: gstreamer.Caps
+import: gstreamer.CapsFeatures
 import: gstreamer.Structure
 structWrap: GValue* Value
 structWrap: GstCaps* Caps
+structWrap: GstCapsFeatures* CapsFeatures
 structWrap: GstStructure* Structure
 inout: gst_value_register table
 outFile: Value

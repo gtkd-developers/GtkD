@@ -46,10 +46,12 @@
  * 	- glib.Str
  * 	- gobject.Value
  * 	- gstreamer.Caps
+ * 	- gstreamer.CapsFeatures
  * 	- gstreamer.Structure
  * structWrap:
  * 	- GValue* -> Value
  * 	- GstCaps* -> Caps
+ * 	- GstCapsFeatures* -> CapsFeatures
  * 	- GstStructure* -> Structure
  * module aliases:
  * local aliases:
@@ -68,6 +70,7 @@ private import gobject.ObjectG;
 private import glib.Str;
 private import gobject.Value;
 private import gstreamer.Caps;
+private import gstreamer.CapsFeatures;
 private import gstreamer.Structure;
 
 
@@ -153,7 +156,7 @@ public class ValueGst
 	/**
 	 * Sets value to the bitmask specified by bitmask.
 	 * Params:
-	 * value = a GValue initialized to GST_TYPE_FRACTION
+	 * value = a GValue initialized to GST_TYPE_BITMASK
 	 * bitmask = the bitmask
 	 */
 	public static void setBitmask(Value value, ulong bitmask)
@@ -165,7 +168,7 @@ public class ValueGst
 	/**
 	 * Gets the bitmask specified by value.
 	 * Params:
-	 * value = a GValue initialized to GST_TYPE_FRACTION
+	 * value = a GValue initialized to GST_TYPE_BITMASK
 	 * Returns: the bitmask.
 	 */
 	public static ulong getBitmask(Value value)
@@ -278,7 +281,7 @@ public class ValueGst
 	 * Appends append_value to the GstValueList in value.
 	 * Params:
 	 * value = a GValue of type GST_TYPE_LIST
-	 * appendValue = the value to append
+	 * appendValue = the value to append. [transfer none]
 	 */
 	public static void listAppendValue(Value value, Value appendValue)
 	{
@@ -530,6 +533,37 @@ public class ValueGst
 		}
 		
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+	}
+	
+	/**
+	 * Sets the contents of value to features.
+	 * Params:
+	 * value = a GValue initialized to GST_TYPE_CAPS_FEATURES
+	 * features = the features to set the value to
+	 */
+	public static void setCapsFeatures(Value value, CapsFeatures features)
+	{
+		// void gst_value_set_caps_features (GValue *value,  const GstCapsFeatures *features);
+		gst_value_set_caps_features((value is null) ? null : value.getValueStruct(), (features is null) ? null : features.getCapsFeaturesStruct());
+	}
+	
+	/**
+	 * Gets the contents of value.
+	 * Params:
+	 * value = a GValue initialized to GST_TYPE_CAPS_FEATURES
+	 * Returns: the contents of value. [transfer none]
+	 */
+	public static CapsFeatures getCapsFeatures(Value value)
+	{
+		// const GstCapsFeatures * gst_value_get_caps_features (const GValue *value);
+		auto p = gst_value_get_caps_features((value is null) ? null : value.getValueStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
 	}
 	
 	/**

@@ -259,7 +259,7 @@ public class GhostPad : ProxyPad
 	 * Invoke the default activate mode function of a ghost pad.
 	 * Params:
 	 * pad = the GstPad to activate or deactivate.
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * mode = the requested activation mode
 	 * active = whether the pad should be active or not.
 	 * Returns: TRUE if the operation was successful.
@@ -275,7 +275,7 @@ public class GhostPad : ProxyPad
 	 * owned by a ghost pad.
 	 * Params:
 	 * pad = the GstPad to activate or deactivate.
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * mode = the requested activation mode
 	 * active = whether the pad should be active or not.
 	 * Returns: TRUE if the operation was successful.

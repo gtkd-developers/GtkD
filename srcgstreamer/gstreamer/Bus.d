@@ -244,9 +244,8 @@ public class Bus : ObjectGst
 	/**
 	 * A message has been posted on the bus. This signal is emitted from the
 	 * thread that posted the message so one has to be careful with locking.
-	 * This signal will not be emitted by default, you have to set up
-	 * gst_bus_sync_signal_handler() as a sync handler if you want this
-	 * gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, yourdata);
+	 * This signal will not be emitted by default, you have to call
+	 * gst_bus_enable_sync_message_emission() before.
 	 * See Also
 	 * GstMessage, GstElement
 	 */

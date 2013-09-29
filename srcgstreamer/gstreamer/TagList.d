@@ -141,7 +141,7 @@ public class TagList
 	 * type = the type this data is in
 	 * nick = human-readable name
 	 * blurb = a human-readable description about this tag
-	 * func = function for merging multiple values of this tag, or NULL
+	 * func = function for merging multiple values of this tag, or NULL. [allow-none]
 	 */
 	public static void register(string name, GstTagFlag flag, GType type, string nick, string blurb, GstTagMergeFunc func)
 	{
@@ -161,7 +161,7 @@ public class TagList
 	 * type = the type this data is in
 	 * nick = human-readable name or short description (string constant)
 	 * blurb = a human-readable description for this tag (string constant)
-	 * func = function for merging multiple values of this tag, or NULL
+	 * func = function for merging multiple values of this tag, or NULL. [allow-none]
 	 */
 	public static void registerStatic(string name, GstTagFlag flag, GType type, string nick, string blurb, GstTagMergeFunc func)
 	{

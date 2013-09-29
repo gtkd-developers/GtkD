@@ -47,10 +47,12 @@
  * imports:
  * 	- glib.Str
  * 	- gobject.Value
+ * 	- gstreamer.CapsFeatures
  * 	- gstreamer.Structure
  * structWrap:
  * 	- GValue* -> Value
  * 	- GstCaps* -> Caps
+ * 	- GstCapsFeatures* -> CapsFeatures
  * 	- GstStructure* -> Structure
  * module aliases:
  * local aliases:
@@ -69,6 +71,7 @@ private import gobject.ObjectG;
 
 private import glib.Str;
 private import gobject.Value;
+private import gstreamer.CapsFeatures;
 private import gstreamer.Structure;
 
 
@@ -325,6 +328,20 @@ public class Caps
 	}
 	
 	/**
+	 * Appends structure with features to caps. The structure is not copied; caps
+	 * becomes the owner of structure.
+	 * Since 1.2
+	 * Params:
+	 * structure = the GstStructure to append. [transfer full]
+	 * features = the GstCapsFeatures to append. [transfer full][allow-none]
+	 */
+	public void appendStructureFull(Structure structure, CapsFeatures features)
+	{
+		// void gst_caps_append_structure_full (GstCaps *caps,  GstStructure *structure,  GstCapsFeatures *features);
+		gst_caps_append_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(), (features is null) ? null : features.getCapsFeaturesStruct());
+	}
+	
+	/**
 	 * removes the stucture with the given index from the list of structures
 	 * contained in caps.
 	 * Params:
@@ -376,6 +393,27 @@ public class Caps
 	}
 	
 	/**
+	 * Appends structure with features to caps if its not already expressed by caps.
+	 * Since 1.2
+	 * Params:
+	 * structure = the GstStructure to merge. [transfer full]
+	 * features = the GstCapsFeatures to merge. [transfer full][allow-none]
+	 * Returns: the merged caps. [transfer full]
+	 */
+	public Caps mergeStructureFull(Structure structure, CapsFeatures features)
+	{
+		// GstCaps * gst_caps_merge_structure_full (GstCaps *caps,  GstStructure *structure,  GstCapsFeatures *features);
+		auto p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(), (features is null) ? null : features.getCapsFeaturesStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+	}
+	
+	/**
 	 * Gets the number of structures contained in caps.
 	 * Returns: the number of structures that caps contains
 	 */
@@ -413,6 +451,50 @@ public class Caps
 		}
 		
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+	}
+	
+	/**
+	 * Finds the features in caps that has the index index, and
+	 * returns it.
+	 * WARNING: This function takes a const GstCaps *, but returns a
+	 * non-const GstCapsFeatures *. This is for programming convenience --
+	 * the caller should be aware that structures inside a constant
+	 * GstCaps should not be modified. However, if you know the caps
+	 * are writable, either because you have just copied them or made
+	 * them writable with gst_caps_make_writable(), you may modify the
+	 * features returned in the usual way, e.g. with functions like
+	 * gst_caps_features_add().
+	 * You do not need to free or unref the structure returned, it
+	 * belongs to the GstCaps.
+	 * Since 1.2
+	 * Params:
+	 * index = the index of the structure
+	 * Returns: a pointer to the GstCapsFeatures corresponding to index. [transfer none]
+	 */
+	public CapsFeatures getFeatures(uint index)
+	{
+		// GstCapsFeatures * gst_caps_get_features (const GstCaps *caps,  guint index);
+		auto p = gst_caps_get_features(gstCaps, index);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
+	}
+	
+	/**
+	 * Sets the GstCapsFeatures features for the structure at index.
+	 * Since 1.2
+	 * Params:
+	 * index = the index of the structure
+	 * features = the GstFeatures to set. [allow-none][transfer full]
+	 */
+	public void setFeatures(uint index, CapsFeatures features)
+	{
+		// void gst_caps_set_features (GstCaps *caps,  guint index,  GstCapsFeatures *features);
+		gst_caps_set_features(gstCaps, index, (features is null) ? null : features.getCapsFeaturesStruct());
 	}
 	
 	/**
@@ -476,9 +558,6 @@ public class Caps
 	
 	/**
 	 * Checks if the given caps represent the same set of caps.
-	 * Note
-	 * This function does not work reliably if optional properties for caps
-	 * are included on one caps and omitted on the other.
 	 * Params:
 	 * caps2 = another GstCaps
 	 * Returns: TRUE if both caps are equal.
@@ -530,9 +609,6 @@ public class Caps
 	
 	/**
 	 * Checks if all caps represented by subset are also represented by superset.
-	 * Note
-	 * This function does not work reliably if optional properties for caps
-	 * are included on one caps and omitted on the other.
 	 * Params:
 	 * superset = a potentially greater GstCaps
 	 * Returns: TRUE if subset is a subset of superset
@@ -554,6 +630,21 @@ public class Caps
 	{
 		// gboolean gst_caps_is_subset_structure (const GstCaps *caps,  const GstStructure *structure);
 		return gst_caps_is_subset_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct());
+	}
+	
+	/**
+	 * Checks if structure is a subset of caps. See gst_caps_is_subset()
+	 * for more information.
+	 * Since 1.2
+	 * Params:
+	 * structure = a potential GstStructure subset of caps
+	 * features = a GstCapsFeatures for structure. [allow-none]
+	 * Returns: TRUE if structure is a subset of caps
+	 */
+	public int isSubsetStructureFull(Structure structure, CapsFeatures features)
+	{
+		// gboolean gst_caps_is_subset_structure_full (const GstCaps *caps,  const GstStructure *structure,  const GstCapsFeatures *features);
+		return gst_caps_is_subset_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(), (features is null) ? null : features.getCapsFeaturesStruct());
 	}
 	
 	/**

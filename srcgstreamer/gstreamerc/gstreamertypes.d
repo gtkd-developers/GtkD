@@ -160,6 +160,15 @@ public enum GstQueryType
 	DRAIN       = (180 << 8) | GstQueryTypeFlags.DOWNSTREAM | GstQueryTypeFlags.SERIALIZED,
 }
 alias GstQueryType QueryType;
+
+enum GstStreamFlags
+{
+	NONE,
+	SPARSE   = (1 << 0),
+	SELECT   = (1 << 1),
+	UNSELECT = (1 << 2)
+}
+alias GstStreamFlags StreamFlags;
 /**
  * Flags for allocators.
  * GST_ALLOCATOR_FLAG_CUSTOM_ALLOC
@@ -180,7 +189,7 @@ alias GstAllocatorFlags AllocatorFlags;
  * and (un)set using GST_OBJECT_FLAG_SET() and GST_OBJECT_FLAG_UNSET().
  * GST_BIN_FLAG_NO_RESYNC
  * don't resync a state change when elements are
- *  added or linked in the bin (Since 1.0.5)
+ *  added or linked in the bin.
  * GST_BIN_FLAG_LAST
  * the last enum in the series of flags for bins.
  * Derived classes can use this as first value in a list of flags.
@@ -258,16 +267,21 @@ alias GstBufferFlags BufferFlags;
  * flag indicating that buffer flags should be copied
  * GST_BUFFER_COPY_TIMESTAMPS
  * flag indicating that buffer pts, dts,
- * duration, offset and offset_end should be copied
+ *  duration, offset and offset_end should be copied
  * GST_BUFFER_COPY_META
  * flag indicating that buffer meta should be
- * copied
+ *  copied
  * GST_BUFFER_COPY_MEMORY
- * flag indicating that buffer memory should be copied
- * and appended to already existing memory
+ * flag indicating that buffer memory should be reffed
+ *  and appended to already existing memory. Unless the memory is marked as
+ *  NO_SHARE, no actual copy of the memory is made but it is simply reffed.
+ *  Add GST_BUFFER_COPY_DEEP to force a real copy.
  * GST_BUFFER_COPY_MERGE
  * flag indicating that buffer memory should be
- * merged
+ *  merged
+ * GST_BUFFER_COPY_DEEP
+ * flag indicating that memory should always be
+ *  copied instead of reffed (Since 1.2)
  */
 public enum GstBufferCopyFlags
 {
@@ -276,7 +290,8 @@ public enum GstBufferCopyFlags
 	TIMESTAMPS = (1 << 1),
 	META = (1 << 2),
 	MEMORY = (1 << 3),
-	MERGE = (1 << 4)
+	MERGE = (1 << 4),
+	DEEP = (1 << 5)
 }
 alias GstBufferCopyFlags BufferCopyFlags;
 
@@ -1011,6 +1026,10 @@ alias GstIteratorResult IteratorResult;
  * the memory prefix is filled with 0 bytes
  * GST_MEMORY_FLAG_ZERO_PADDED
  * the memory padding is filled with 0 bytes
+ * GST_MEMORY_FLAG_PHYSICALLY_CONTIGUOUS
+ * the memory is physically contiguous. Since 1.2
+ * GST_MEMORY_FLAG_NOT_MAPPABLE
+ * the memory can't be mapped via gst_memory_map() without any preconditions. Since 1.2
  * GST_MEMORY_FLAG_LAST
  * first flag that can be used for custom purposes
  */
@@ -1020,6 +1039,8 @@ public enum GstMemoryFlags
 	NO_SHARE = (GstMiniObjectFlags.LAST << 0),
 	ZERO_PREFIXED = (GstMiniObjectFlags.LAST << 1),
 	ZERO_PADDED = (GstMiniObjectFlags.LAST << 2),
+	PHYSICALLY_CONTIGUOUS = (GstMiniObjectFlags.LAST << 3),
+	NOT_MAPPABLE = (GstMiniObjectFlags.LAST << 4),
 	LAST = (GstMiniObjectFlags.LAST << 16)
 }
 alias GstMemoryFlags MemoryFlags;
@@ -1142,6 +1163,10 @@ alias GstMapFlags MapFlags;
  *  e.g. when using playbin in gapless playback mode, to get notified when
  *  the next title actually starts playing (which will be some time after
  *  the URI for the next title has been set).
+ * GST_MESSAGE_NEED_CONTEXT
+ * Message indicating that an element wants a specific context (Since 1.2)
+ * GST_MESSAGE_HAVE_CONTEXT
+ * Message indicating that an element created a context (Since 1.2)
  * GST_MESSAGE_ANY
  * mask for all of the above messages.
  */
@@ -1177,6 +1202,8 @@ public enum GstMessageType
 	TOC = (1 << 26),
 	RESET_TIME = (1 << 27),
 	STREAM_START = (1 << 28),
+	NEED_CONTEXT = (1 << 29),
+	HAVE_CONTEXT = (1 << 30),
 	ANY = ~0
 }
 alias GstMessageType MessageType;
@@ -1342,7 +1369,6 @@ public enum GstPadDirection
 alias GstPadDirection PadDirection;
 
 /**
- * Pad state flags
  * GST_PAD_FLAG_BLOCKED
  * is dataflow on a pad blocked
  * GST_PAD_FLAG_FLUSHING
@@ -1363,21 +1389,10 @@ alias GstPadDirection PadDirection;
  * GST_PAD_FLAG_FIXED_CAPS
  * the pad is using fixed caps this means that once the
  *  caps are set on the pad, the caps query function only
- *  returns those caps.
  * GST_PAD_FLAG_PROXY_CAPS
- * the default event and query handler will forward
- *  all events and queries to the internally linked pads
- *  instead of discarding them.
  * GST_PAD_FLAG_PROXY_ALLOCATION
- * the default query handler will forward
- *  allocation queries to the internally linked pads
- *  instead of discarding them.
  * GST_PAD_FLAG_PROXY_SCHEDULING
- * the default query handler will forward
- *  scheduling queries to the internally linked pads
- *  instead of discarding them.
  * GST_PAD_FLAG_LAST
- * offset to define more flags
  */
 public enum GstPadFlags
 {
@@ -1544,19 +1559,14 @@ public enum GstPadMode
 alias GstPadMode PadMode;
 
 /**
- * Different return values for the GstPadProbeCallback.
  * GST_PAD_PROBE_DROP
  * drop data in data probes. For push mode this means that
  *  the data item is not sent downstream. For pull mode, it means that the
  *  data item is not passed upstream. In both cases, this result code
- *  returns GST_FLOW_OK or TRUE to the caller.
  * GST_PAD_PROBE_OK
  * normal probe return value
  * GST_PAD_PROBE_REMOVE
- * remove probe
  * GST_PAD_PROBE_PASS
- * pass the data item in the block probe and block on
- *  the next item
  */
 public enum GstPadProbeReturn
 {
@@ -1716,11 +1726,15 @@ alias GstParseError ParseError;
  * Always return NULL when an error occurs
  *  (default behaviour is to return partially constructed bins or elements
  *  in some cases)
+ * GST_PARSE_FLAG_NO_SINGLE_ELEMENT_BINS
+ * If a bin only has a single element,
+ *  just return the element.
  */
 public enum GstParseFlags
 {
 	NONE = 0,
-	FATAL_ERRORS = (1 << 0)
+	FATAL_ERRORS = (1 << 0),
+	NO_SINGLE_ELEMENT_BINS = (1 << 1)
 }
 alias GstParseFlags ParseFlags;
 
@@ -1864,11 +1878,14 @@ alias GstBufferingMode BufferingMode;
  * if seeking is possible
  * GST_SCHEDULING_FLAG_SEQUENTIAL
  * if sequential access is recommended
+ * GST_SCHEDULING_FLAG_BANDWIDTH_LIMITED
+ * if bandwidth is limited and buffering possible (since 1.2)
  */
 public enum GstSchedulingFlags
 {
 	SEEKABLE = (1 << 0),
-	SEQUENTIAL = (1 << 1)
+	SEQUENTIAL = (1 << 1),
+	BANDWIDTH_LIMITED = (1 << 2)
 }
 alias GstSchedulingFlags SchedulingFlags;
 
@@ -2481,6 +2498,12 @@ public struct GstStaticCaps
 
 /**
  * Main Gtk struct.
+ */
+public struct GstCapsFeatures{}
+
+
+/**
+ * Main Gtk struct.
  * The opaque structure of a GstSample. A sample contains a typed memory
  * block and the associated timing information. It is mainly used to
  * exchange buffers with an application.
@@ -2571,6 +2594,12 @@ public struct GstClockEntry
 {
 	int refcount;
 }
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GstContext{}
 
 
 /**
@@ -2778,6 +2807,8 @@ public struct GstElement
  * post_message ()
  * called when a message is posted on the element. Chain up to
  * the parent class' handler to have it posted on the bus.
+ * set_context ()
+ * set a GstContext on the element
  */
 public struct GstElementClass
 {
@@ -2808,6 +2839,7 @@ public struct GstElementClass
 	extern(C) int function(GstElement* element, GstEvent* event) sendEvent;
 	extern(C) int function(GstElement* element, GstQuery* query) query;
 	extern(C) int function(GstElement* element, GstMessage* message) postMessage;
+	extern(C) void function(GstElement* element, GstContext* context) setContext;
 }
 
 
@@ -3553,6 +3585,16 @@ public struct GstValueTable
 
 
 /*
+ * Check if bin will resync its state change when elements are added and
+ * removed.
+ * bin :
+ * A GstBin
+ * Since 1.1.1
+ */
+// TODO
+// #define GST_BIN_IS_NO_RESYNC(bin) (GST_OBJECT_FLAG_IS_SET(bin,GST_BIN_FLAG_NO_RESYNC))
+
+/*
  * Gets the list with children in a bin.
  * bin :
  * a GstBin
@@ -4027,6 +4069,27 @@ public struct GstValueTable
 // #define GST_CLOCK_FLAGS(clock) GST_OBJECT_FLAGS(clock)
 
 /*
+ * Checks if a context is writable. If not, a writable copy is made and
+ * returned.
+ * context :
+ * the context to make writable. [transfer full]
+ * Returns :
+ * a context (possibly a duplicate) that is writable.
+ * MT safe. [transfer full]
+ */
+// TODO
+// #define gst_context_make_writable(context) GST_CONTEXT_CAST (gst_mini_object_make_writable (GST_MINI_OBJECT_CAST (context)))
+
+/*
+ * Tests if you can safely write into a context's structure or validly
+ * modify the seqnum and timestamp fields.
+ * context :
+ * a GstContext
+ */
+// TODO
+// #define gst_context_is_writable(context) gst_mini_object_is_writable (GST_MINI_OBJECT_CAST (context))
+
+/*
  * This macro returns the current GstState of the element.
  * elem :
  * a GstElement to return state for.
@@ -4483,6 +4546,24 @@ public struct GstValueTable
 // #define GST_MEMORY_IS_ZERO_PREFIXED(mem) GST_MEMORY_FLAG_IS_SET(mem,GST_MEMORY_FLAG_ZERO_PREFIXED)
 
 /*
+ * Check if mem is physically contiguous.
+ * mem :
+ * a GstMemory.
+ * Since 1.2
+ */
+// TODO
+// #define GST_MEMORY_IS_PHYSICALLY_CONTIGUOUS(mem) GST_MEMORY_FLAG_IS_SET(mem,GST_MEMORY_FLAG_PHYSICALLY_CONTIGUOUS)
+
+/*
+ * Check if mem can't be mapped via gst_memory_map() without any preconditions
+ * mem :
+ * a GstMemory.
+ * Since 1.2
+ */
+// TODO
+// #define GST_MEMORY_IS_NOT_MAPPABLE(mem) GST_MEMORY_FLAG_IS_SET(mem,GST_MEMORY_FLAG_NOT_MAPPABLE)
+
+/*
  */
 // TODO
 // #define gst_memory_lock(m,f) gst_mini_object_lock (GST_MINI_OBJECT_CAST (m), (f))
@@ -4496,6 +4577,11 @@ public struct GstValueTable
  */
 // TODO
 // #define gst_memory_is_writable(m) gst_mini_object_is_writable (GST_MINI_OBJECT_CAST (m))
+
+/*
+ */
+// TODO
+// #define gst_memory_make_writable(m) GST_MEMORY_CAST (gst_mini_object_make_writable (GST_MINI_OBJECT_CAST (m)))
 
 /*
  * Get the object that posted message.
@@ -5218,6 +5304,8 @@ public struct GstValueTable
 // #define gst_query_is_writable(q) gst_mini_object_is_writable (GST_MINI_OBJECT_CAST (q))
 
 /*
+ * Warning
+ * gst_tag_list_free is deprecated and should not be used in newly-written code.
  */
 // TODO
 // #define gst_tag_list_free(taglist) gst_tag_list_unref(taglist)
@@ -5407,7 +5495,7 @@ public struct GstValueTable
  * memory location
  */
 // TODO
-// #define GST_READ_UINT24_LE(data)
+// #define GST_READ_UINT24_LE(data) __gst_slow_read24_le((const guint8 *)(data))
 
 /*
  * Read a 24 bit unsigned integer value in big endian format from the memory buffer.
@@ -5415,7 +5503,7 @@ public struct GstValueTable
  * memory location
  */
 // TODO
-// #define GST_READ_UINT24_BE(data)
+// #define GST_READ_UINT24_BE(data) __gst_slow_read24_be((const guint8 *)(data))
 
 /*
  */
@@ -5833,6 +5921,14 @@ public struct GstValueTable
 // #define GST_VALUE_HOLDS_CAPS(x) (G_VALUE_HOLDS((x), GST_TYPE_CAPS))
 
 /*
+ * Checks if the given GValue contains a GST_TYPE_CAPS_FEATURES value.
+ * x :
+ * the GValue to check
+ */
+// TODO
+// #define GST_VALUE_HOLDS_CAPS_FEATURES(x) (G_VALUE_HOLDS((x), GST_TYPE_CAPS_FEATURES))
+
+/*
  * Checks if the given GValue contains a GST_TYPE_STRUCTURE value.
  * x :
  * the GValue to check
@@ -6013,18 +6109,6 @@ public alias extern(C) GstBusSyncReply function(GstBus* bus, GstMessage* message
  */
 // gboolean (*GstClockCallback) (GstClock *clock,  GstClockTime time,  GstClockID id,  gpointer user_data);
 public alias extern(C) int function(GstClock* clock, GstClockTime time, GstClockID id, void* userData) GstClockCallback;
-
-/*
- * Function to map a control-value to the target GValue.
- * binding :
- * the GstControlBinding instance
- * src_value :
- * the value returned by the cotnrol source
- * dest_value :
- * the target GValue
- */
-// void (*GstControlBindingConvert) (GstControlBinding *binding,  gdouble src_value,  GValue *dest_value);
-public alias extern(C) void function(GstControlBinding* binding, double srcValue, GValue* destValue) GstControlBindingConvert;
 
 /*
  * Function for returning a value for a given timestamp.
@@ -6320,8 +6404,8 @@ public alias extern(C) void function(void* userData, GstMiniObject* obj) GstMini
  * When this function returns TRUE, the next event will be
  * returned. When FALSE is returned, gst_pad_sticky_events_foreach() will return.
  * When event is set to NULL, the item will be removed from the list of sticky events.
- * When event has been made writable, the new buffer reference can be assigned
- * to event. This function is responsible for unreffing the old event when
+ * event can be replaced by assigning a new reference to it.
+ * This function is responsible for unreffing the old event when
  * removing or modifying.
  * pad :
  * the GstPad.

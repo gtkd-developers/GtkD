@@ -163,7 +163,7 @@ public class Pipeline : Bin
 	/**
 	 * Create a new pipeline with the given name.
 	 * Params:
-	 * name = name of new pipeline
+	 * name = name of new pipeline. [allow-none]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name)
@@ -233,7 +233,7 @@ public class Pipeline : Bin
 	 * the pipeline run as fast as possible.
 	 * MT safe.
 	 * Params:
-	 * clock = the clock to use. [transfer none]
+	 * clock = the clock to use. [transfer none][allow-none]
 	 */
 	public void useClock(Clock clock)
 	{

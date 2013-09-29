@@ -590,6 +590,57 @@ public class Event
 	}
 	
 	/**
+	 * Since 1.2
+	 * Params:
+	 * flags = the stream flags to set
+	 */
+	public void setStreamFlags(GstStreamFlags flags)
+	{
+		// void gst_event_set_stream_flags (GstEvent *event,  GstStreamFlags flags);
+		gst_event_set_stream_flags(gstEvent, flags);
+	}
+	
+	/**
+	 * Since 1.2
+	 * Params:
+	 * flags = address of variable where to store the stream flags. [out]
+	 */
+	public void parseStreamFlags(out GstStreamFlags flags)
+	{
+		// void gst_event_parse_stream_flags (GstEvent *event,  GstStreamFlags *flags);
+		gst_event_parse_stream_flags(gstEvent, &flags);
+	}
+	
+	/**
+	 * All streams that have the same group id are supposed to be played
+	 * together, i.e. all streams inside a container file should have the
+	 * same group id but different stream ids. The group id should change
+	 * each time the stream is started, resulting in different group ids
+	 * each time a file is played for example.
+	 * Use gst_util_group_id_next() to get a new group id.
+	 * Since 1.2
+	 * Params:
+	 * groupId = the group id to set
+	 */
+	public void setGroupId(uint groupId)
+	{
+		// void gst_event_set_group_id (GstEvent *event,  guint group_id);
+		gst_event_set_group_id(gstEvent, groupId);
+	}
+	
+	/**
+	 * Since 1.2
+	 * Params:
+	 * groupId = address of variable where to store the group id. [out]
+	 * Returns: TRUE if a group id was set on the event and could be parsed, FALSE otherwise.
+	 */
+	public int parseGroupId(out uint groupId)
+	{
+		// gboolean gst_event_parse_group_id (GstEvent *event,  guint *group_id);
+		return gst_event_parse_group_id(gstEvent, &groupId);
+	}
+	
+	/**
 	 * Create a new SEGMENT event for segment. The segment event can only travel
 	 * downstream synchronized with the buffer flow and contains timing information
 	 * and playback properties for the buffers that will follow.
@@ -1124,8 +1175,8 @@ public class Event
 	/**
 	 * Extracts the position and format from the segment done message.
 	 * Params:
-	 * format = Result location for the format, or NULL. [out]
-	 * position = Result location for the position, or NULL. [out]
+	 * format = Result location for the format, or NULL. [out][allow-none]
+	 * position = Result location for the position, or NULL. [out][allow-none]
 	 */
 	public void parseSegmentDone(out GstFormat format, out long position)
 	{

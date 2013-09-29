@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Buffer
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,6 +42,7 @@
  * 	- GstBuffer
  * omit prefixes:
  * omit code:
+ * 	- gst_buffer_extract_dup
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -176,6 +177,27 @@ public class Buffer
 	}
 	
 	/**
+	 * Extracts a copy of at most size bytes the data at offset into a GBytes.
+	 * dest must be freed using g_free() when done.
+	 * Since 1.0.10
+	 * Params:
+	 * offset = the offset to extract
+	 * size = the size to extract
+	 * dest = A pointer where
+	 * the destination array will be written. [array length=dest_size][element-type guint8][out]
+	 */
+	public void extractDup(gsize offset, gsize size, out void[] dest)
+	{
+		// void gst_buffer_extract_dup (GstBuffer *buffer,  gsize offset,  gsize size,  gpointer *dest,  gsize *dest_size);
+		void* outdest = null;
+		gsize destSize;
+		
+		gst_buffer_extract_dup(gstBuffer, offset, size, &outdest, &destSize);
+		
+		dest = outdest[0 .. destSize];
+	}
+	
+	/**
 	 */
 	
 	/**
@@ -224,7 +246,7 @@ public class Buffer
 	 * with g_free and will be marked writable.
 	 * MT safe.
 	 * Params:
-	 * data = data to wrap. [array length=size][element-type guint8]
+	 * data = data to wrap. [array length=size][element-type guint8][transfer full]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (void[] data)
@@ -247,12 +269,12 @@ public class Buffer
 	 * GST_MEMORY_FLAG_ZERO_PREFIXED and GST_MEMORY_FLAG_ZERO_PADDED respectively.
 	 * Params:
 	 * flags = GstMemoryFlags
-	 * data = data to wrap. [array length=size][element-type guint8]
+	 * data = data to wrap. [array length=size][element-type guint8][transfer none]
 	 * maxsize = allocated size of data
 	 * offset = offset in data
 	 * size = size of valid data
-	 * userData = user_data
-	 * notify = called with user_data when the memory is freed
+	 * userData = user_data. [allow-none]
+	 * notify = called with user_data when the memory is freed. [allow-none][scope async][closure user_data]
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (GstMemoryFlags flags, void* data, gsize maxsize, gsize offset, gsize size, void* userData, GDestroyNotify notify)
@@ -355,11 +377,12 @@ public class Buffer
 	 * length = a length
 	 * offset = the offset adjustement
 	 * size = the new size or -1 to just adjust the offset
+	 * Returns: TRUE if resizing succeeded, FALSE otherwise.
 	 */
-	public void resizeRange(uint idx, int length, gssize offset, gssize size)
+	public int resizeRange(uint idx, int length, gssize offset, gssize size)
 	{
-		// void gst_buffer_resize_range (GstBuffer *buffer,  guint idx,  gint length,  gssize offset,  gssize size);
-		gst_buffer_resize_range(gstBuffer, idx, length, offset, size);
+		// gboolean gst_buffer_resize_range (GstBuffer *buffer,  guint idx,  gint length,  gssize offset,  gssize size);
+		return gst_buffer_resize_range(gstBuffer, idx, length, offset, size);
 	}
 	
 	/**
@@ -410,7 +433,8 @@ public class Buffer
 	}
 	
 	/**
-	 * Get the amount of memory blocks that this buffer has.
+	 * Get the amount of memory blocks that this buffer has. This amount is never
+	 * larger than what gst_buffer_get_max_memory() returns.
 	 * Returns: the amount of memory block in this buffer. [transfer full]
 	 */
 	public uint nMemory()
@@ -422,6 +446,9 @@ public class Buffer
 	/**
 	 * Insert the memory block mem to buffer at idx. This function takes ownership
 	 * of mem and thus doesn't increase its refcount.
+	 * Only gst_buffer_get_max_memory() can be added to a buffer. If more memory is
+	 * added, existing memory blocks will automatically be merged to make room for
+	 * the new memory.
 	 * Params:
 	 * idx = the index to add the memory at, or -1 to append it to the end
 	 * mem = a GstMemory. [transfer full]
@@ -509,6 +536,8 @@ public class Buffer
 	/**
 	 * Prepend the memory block mem to buffer. This function takes
 	 * ownership of mem and thus doesn't increase its refcount.
+	 * This function is identical to gst_buffer_insert_memory() with an index of 0.
+	 * See gst_buffer_insert_memory() for more details.
 	 * Params:
 	 * mem = a GstMemory. [transfer full]
 	 */
@@ -521,6 +550,8 @@ public class Buffer
 	/**
 	 * Append the memory block mem to buffer. This function takes
 	 * ownership of mem and thus doesn't increase its refcount.
+	 * This function is identical to gst_buffer_insert_memory() with an index of -1.
+	 * See gst_buffer_insert_memory() for more details.
 	 * Params:
 	 * mem = a GstMemory. [transfer full]
 	 */
@@ -671,7 +702,7 @@ public class Buffer
 	 * Compare size bytes starting from offset in buffer with the memory in mem.
 	 * Params:
 	 * offset = the offset in buffer
-	 * mem = the memory to compare
+	 * mem = the memory to compare. [array length=size][element-type guint8]
 	 * size = the size to compare
 	 * Returns: 0 if the memory is equal.
 	 */
@@ -699,7 +730,7 @@ public class Buffer
 	 * Copy size bytes from src to buffer at offset.
 	 * Params:
 	 * offset = the offset to fill
-	 * src = the source address
+	 * src = the source address. [array length=size][element-type guint8]
 	 * size = the size to fill
 	 * Returns: The amount of bytes copied. This value can be lower than size when buffer did not contain enough data.
 	 */
@@ -751,11 +782,12 @@ public class Buffer
 	 * flags = flags indicating what metadata fields should be copied.
 	 * offset = offset to copy from
 	 * size = total size to copy. If -1, all data is copied.
+	 * Returns: TRUE if the copying succeeded, FALSE otherwise.
 	 */
-	public void copyInto(Buffer src, GstBufferCopyFlags flags, gsize offset, gsize size)
+	public int copyInto(Buffer src, GstBufferCopyFlags flags, gsize offset, gsize size)
 	{
-		// void gst_buffer_copy_into (GstBuffer *dest,  GstBuffer *src,  GstBufferCopyFlags flags,  gsize offset,  gsize size);
-		gst_buffer_copy_into(gstBuffer, (src is null) ? null : src.getBufferStruct(), flags, offset, size);
+		// gboolean gst_buffer_copy_into (GstBuffer *dest,  GstBuffer *src,  GstBufferCopyFlags flags,  gsize offset,  gsize size);
+		return gst_buffer_copy_into(gstBuffer, (src is null) ? null : src.getBufferStruct(), flags, offset, size);
 	}
 	
 	/**

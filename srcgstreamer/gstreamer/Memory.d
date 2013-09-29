@@ -62,8 +62,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 
 
+private import glib.Str;
 private import gstreamer.Allocator;
-private import gstreamer.Memory;
 
 
 
@@ -153,6 +153,20 @@ public class Memory
 	{
 		// void gst_memory_init (GstMemory *mem,  GstMemoryFlags flags,  GstAllocator *allocator,  GstMemory *parent,  gsize maxsize,  gsize align,  gsize offset,  gsize size);
 		gst_memory_init(gstMemory, flags, (allocator is null) ? null : allocator.getAllocatorStruct(), (parent is null) ? null : parent.getMemoryStruct(), maxsize, alig, offset, size);
+	}
+	
+	/**
+	 * Check if mem if allocated with an allocator for mem_type.
+	 * Since 1.2
+	 * Params:
+	 * mem = a GstMemory
+	 * memType = a memory type
+	 * Returns: TRUE if mem was allocated from an allocator for mem_type.
+	 */
+	public int isType(string memType)
+	{
+		// gboolean gst_memory_is_type (GstMemory *mem,  const gchar *mem_type);
+		return gst_memory_is_type(gstMemory, Str.toStringz(memType));
 	}
 	
 	/**

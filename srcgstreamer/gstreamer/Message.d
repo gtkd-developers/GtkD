@@ -62,6 +62,7 @@
  * 	- glib.ErrorG
  * 	- gobject.Value
  * 	- gstreamer.Clock
+ * 	- gstreamer.Context
  * 	- gstreamer.Element
  * 	- gstreamer.ObjectGst
  * 	- gstreamer.Structure
@@ -71,6 +72,7 @@
  * 	- GError* -> ErrorG
  * 	- GValue* -> Value
  * 	- GstClock* -> Clock
+ * 	- GstContext* -> Context
  * 	- GstElement* -> Element
  * 	- GstMessage* -> Message
  * 	- GstObject* -> ObjectGst
@@ -95,6 +97,7 @@ private import glib.Str;
 private import glib.ErrorG;
 private import gobject.Value;
 private import gstreamer.Clock;
+private import gstreamer.Context;
 private import gstreamer.Element;
 private import gstreamer.ObjectGst;
 private import gstreamer.Structure;
@@ -999,8 +1002,8 @@ public class Message
 	 * Extracts the position and format from the segment start message.
 	 * MT safe.
 	 * Params:
-	 * format = Result location for the format, or NULL. [out]
-	 * position = Result location for the position, or NULL. [out]
+	 * format = Result location for the format, or NULL. [out][allow-none]
+	 * position = Result location for the position, or NULL. [out][allow-none]
 	 */
 	public void parseSegmentStart(out GstFormat format, out long position)
 	{
@@ -1009,11 +1012,11 @@ public class Message
 	}
 	
 	/**
-	 * Extracts the position and format from the segment start message.
+	 * Extracts the position and format from the segment done message.
 	 * MT safe.
 	 * Params:
-	 * format = Result location for the format, or NULL. [out]
-	 * position = Result location for the position, or NULL. [out]
+	 * format = Result location for the format, or NULL. [out][allow-none]
+	 * position = Result location for the position, or NULL. [out][allow-none]
 	 */
 	public void parseSegmentDone(out GstFormat format, out long position)
 	{
@@ -1047,7 +1050,7 @@ public class Message
 	 * Extract the running_time from the async_done message.
 	 * MT safe.
 	 * Params:
-	 * runningTime = Result location for the running_time or NULL. [out]
+	 * runningTime = Result location for the running_time or NULL. [out][allow-none]
 	 */
 	public void parseAsyncDone(out GstClockTime runningTime)
 	{
@@ -1277,7 +1280,8 @@ public class Message
 	 * Extract the running-time from the RESET_TIME message.
 	 * MT safe.
 	 * Params:
-	 * runningTime = Result location for the running_time or NULL. [out]
+	 * runningTime = Result location for the running_time or
+	 * NULL. [out][allow-none]
 	 */
 	public void parseResetTime(GstClockTime* runningTime)
 	{
@@ -1302,6 +1306,38 @@ public class Message
 			throw new ConstructionException("null returned by gst_message_new_stream_start((src is null) ? null : src.getObjectGstStruct())");
 		}
 		this(cast(GstMessage*) p);
+	}
+	
+	/**
+	 * Sets the group id on the stream-start message.
+	 * All streams that have the same group id are supposed to be played
+	 * together, i.e. all streams inside a container file should have the
+	 * same group id but different stream ids. The group id should change
+	 * each time the stream is started, resulting in different group ids
+	 * each time a file is played for example.
+	 * MT safe.
+	 * Since 1.2
+	 * Params:
+	 * groupId = the group id
+	 */
+	public void setGroupId(uint groupId)
+	{
+		// void gst_message_set_group_id (GstMessage *message,  guint group_id);
+		gst_message_set_group_id(gstMessage, groupId);
+	}
+	
+	/**
+	 * Extract the group from the STREAM_START message.
+	 * Since 1.2
+	 * Params:
+	 * groupId = Result location for the group id or
+	 * NULL. [out][allow-none]
+	 * Returns: TRUE if the message had a group id set, FALSE otherwise MT safe.
+	 */
+	public int parseGroupId(out uint groupId)
+	{
+		// gboolean gst_message_parse_group_id (GstMessage *message,  guint *group_id);
+		return gst_message_parse_group_id(gstMessage, &groupId);
 	}
 	
 	/**
@@ -1371,7 +1407,7 @@ public class Message
 	 * Extract the requested state from the request_state message.
 	 * MT safe.
 	 * Params:
-	 * state = Result location for the requested state or NULL. [out]
+	 * state = Result location for the requested state or NULL. [out][allow-none]
 	 */
 	public void parseRequestState(out GstState state)
 	{
@@ -1487,5 +1523,79 @@ public class Message
 		
 		code = Str.toString(outcode);
 		text = Str.toString(outtext);
+	}
+	
+	/**
+	 * This message is posted when an element needs a specific GstContext.
+	 * Since 1.2
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * contextType = The context type that is needed
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ObjectGst src, string contextType)
+	{
+		// GstMessage * gst_message_new_need_context (GstObject *src,  const gchar *context_type);
+		auto p = gst_message_new_need_context((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(contextType));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_need_context((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(contextType))");
+		}
+		this(cast(GstMessage*) p);
+	}
+	
+	/**
+	 * Parse a context type from an existing GST_MESSAGE_NEED_CONTEXT message.
+	 * Since 1.2
+	 * Params:
+	 * contextType = the context type, or NULL. [out][allow-none]
+	 * Returns: a gboolean indicating if the parsing succeeded.
+	 */
+	public int parseContextType(out string contextType)
+	{
+		// gboolean gst_message_parse_context_type (GstMessage *message,  const gchar **context_type);
+		char* outcontextType = null;
+		
+		auto p = gst_message_parse_context_type(gstMessage, &outcontextType);
+		
+		contextType = Str.toString(outcontextType);
+		return p;
+	}
+	
+	/**
+	 * This message is posted when an element has a new local GstContext.
+	 * Since 1.2
+	 * Params:
+	 * src = The object originating the message. [transfer none]
+	 * context = the context. [transfer full]
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ObjectGst src, Context context)
+	{
+		// GstMessage * gst_message_new_have_context (GstObject *src,  GstContext *context);
+		auto p = gst_message_new_have_context((src is null) ? null : src.getObjectGstStruct(), (context is null) ? null : context.getContextStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_message_new_have_context((src is null) ? null : src.getObjectGstStruct(), (context is null) ? null : context.getContextStruct())");
+		}
+		this(cast(GstMessage*) p);
+	}
+	
+	/**
+	 * Extract the context from the HAVE_CONTEXT message.
+	 * MT safe.
+	 * Since 1.2
+	 * Params:
+	 * context = Result location for the
+	 * context or NULL. [out][transfer full][allow-none]
+	 */
+	public void parseHaveContext(out Context context)
+	{
+		// void gst_message_parse_have_context (GstMessage *message,  GstContext **context);
+		GstContext* outcontext = null;
+		
+		gst_message_parse_have_context(gstMessage, &outcontext);
+		
+		context = ObjectG.getDObject!(Context)(outcontext);
 	}
 }

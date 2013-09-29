@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Structure
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gst_structure_new_from_string
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -134,6 +135,17 @@ public class Structure
 		this.gstStructure = gstStructure;
 	}
 	
+	public static Structure fromString(string name)
+	{
+		// GstStructure* gst_structure_new_from_string(const gchar *string);
+		auto p = gst_structure_new_from_string(Str.toStringz(name));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_structure_new_from_string(Str.toStringz(name))");
+		}
+		return new Structure(cast(GstStructure*) p);
+	}
+	
 	/**
 	 */
 	
@@ -200,7 +212,7 @@ public class Structure
 	/**
 	 * Duplicates a GstStructure and all its fields and values.
 	 * Free-function: gst_structure_free
-	 * Returns: a new GstStructure. [transfer none]
+	 * Returns: a new GstStructure. [transfer full]
 	 */
 	public Structure copy()
 	{
@@ -827,7 +839,7 @@ public class Structure
 	 * Free-function: gst_structure_free
 	 * Params:
 	 * string = a string representation of a GstStructure.
-	 * end = pointer to store the end of the string in. [out][allow-none][transfer none]
+	 * end = pointer to store the end of the string in. [out][allow-none][transfer none][skip]
 	 * Returns: a new GstStructure or NULL when the string could not be parsed. Free with gst_structure_free() after use. [transfer full]
 	 */
 	public static Structure fromString(string string, out string end)

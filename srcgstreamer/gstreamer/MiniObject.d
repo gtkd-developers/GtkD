@@ -129,9 +129,9 @@ public class MiniObject
 	 * Params:
 	 * flags = initial GstMiniObjectFlags
 	 * type = the GType of the mini-object to create
-	 * copyFunc = the copy function, or NULL
-	 * disposeFunc = the dispose function, or NULL
-	 * freeFunc = the free function or NULL
+	 * copyFunc = the copy function, or NULL. [allow-none]
+	 * disposeFunc = the dispose function, or NULL. [allow-none]
+	 * freeFunc = the free function or NULL. [allow-none]
 	 */
 	public void init(uint flags, GType type, GstMiniObjectCopyFunction copyFunc, GstMiniObjectDisposeFunction disposeFunc, GstMiniObjectFreeFunction freeFunc)
 	{

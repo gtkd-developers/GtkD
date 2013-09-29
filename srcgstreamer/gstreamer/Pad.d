@@ -819,6 +819,7 @@ public class Pad : ObjectGst
 	}
 	
 	/**
+	 * returns GST_FLOW_ERROR if NULL.
 	 * When pad is flushing this function returns GST_FLOW_FLUSHING
 	 * immediately and buffer is NULL.
 	 * Calls the getrange function of pad, see GstPadGetRangeFunction for a
@@ -842,8 +843,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 * offset = The start offset of the buffer
 	 * size = The length of the buffer
-	 * buffer = a pointer to hold the GstBuffer,
-	 * returns GST_FLOW_ERROR if NULL. [out callee-allocates]
+	 * buffer = a pointer to hold the GstBuffer,. [out callee-allocates]
 	 * Returns: a GstFlowReturn from the pad. MT safe.
 	 */
 	public GstFlowReturn getRange(ulong offset, uint size, ref Buffer buffer)
@@ -1160,7 +1160,7 @@ public class Pad : ObjectGst
 	 * The the event is sent to all pads internally linked to pad. This function
 	 * takes ownership of event.
 	 * Params:
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * event = the GstEvent to handle. [transfer full]
 	 * Returns: TRUE if the event was sent successfully.
 	 */
@@ -1210,7 +1210,7 @@ public class Pad : ObjectGst
 	 * pad, only one will be sent the query.
 	 * Multi-sinkpad elements should implement custom query handlers.
 	 * Params:
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * query = the GstQuery to handle. [transfer none]
 	 * Returns: TRUE if the query was performed successfully.
 	 */
@@ -1224,7 +1224,7 @@ public class Pad : ObjectGst
 	 * Queries a pad for the stream position.
 	 * Params:
 	 * format = the GstFormat requested
-	 * cur = A location in which to store the current position, or NULL. [out]
+	 * cur = A location in which to store the current position, or NULL. [out][allow-none]
 	 * Returns: TRUE if the query could be performed.
 	 */
 	public int queryPosition(GstFormat format, out long cur)
@@ -1276,8 +1276,8 @@ public class Pad : ObjectGst
 	
 	/**
 	 * Gets the capabilities this pad can produce or consume.
-	 * Note that this method doesn't necessarily return the caps set by
-	 * gst_pad_set_caps() - use gst_pad_get_current_caps() for that instead.
+	 * Note that this method doesn't necessarily return the caps set by sending a
+	 * gst_event_new_caps() - use gst_pad_get_current_caps() for that instead.
 	 * gst_pad_query_caps returns all possible caps a pad can operate with, using
 	 * the pad's CAPS query function, If the query fails, this function will return
 	 * filter, if not NULL, otherwise ANY.
@@ -1441,7 +1441,7 @@ public class Pad : ObjectGst
 	 * pads inside the parent element with opposite direction.
 	 * The caller must free this iterator after use with gst_iterator_free().
 	 * Params:
-	 * parent = the parent of pad or NULL
+	 * parent = the parent of pad or NULL. [allow-none]
 	 * Returns: a GstIterator of GstPad, or NULL if pad has no parent. Unref each returned pad with gst_object_unref().
 	 */
 	public Iterator iterateInternalLinksDefault(ObjectGst parent)
@@ -1494,6 +1494,9 @@ public class Pad : ObjectGst
 	 * a random number. Source elements that don't implement the URI
 	 * handler interface should ideally generate a unique, deterministic
 	 * stream-id manually instead.
+	 * Since stream IDs are sorted alphabetically, any numbers in the
+	 * stream ID should be printed with a fixed number of characters,
+	 * preceded by 0's, such as by using the format %03u instead of %u.
 	 * Params:
 	 * parent = Parent GstElement of pad
 	 * streamId = The stream-id. [allow-none]
@@ -1528,6 +1531,22 @@ public class Pad : ObjectGst
 	{
 		// gchar * gst_pad_create_stream_id_printf_valist  (GstPad *pad,  GstElement *parent,  const gchar *stream_id,  va_list var_args);
 		return Str.toString(gst_pad_create_stream_id_printf_valist(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId), varArgs));
+	}
+	
+	/**
+	 * Returns the current stream-id for the pad, or NULL if none has been
+	 * set yet, i.e. the pad has not received a stream-start event yet.
+	 * This is a convenience wrapper around gst_pad_get_sticky_event() and
+	 * gst_event_parse_stream_start().
+	 * The returned stream-id string should be treated as an opaque string, its
+	 * contents should not be interpreted.
+	 * Since 1.2
+	 * Returns: a newly-allocated copy of the stream-idfor pad, or NULL. g_free() the returned string when no longer needed.
+	 */
+	public string getStreamId()
+	{
+		// gchar * gst_pad_get_stream_id (GstPad *pad);
+		return Str.toString(gst_pad_get_stream_id(gstPad));
 	}
 	
 	/**

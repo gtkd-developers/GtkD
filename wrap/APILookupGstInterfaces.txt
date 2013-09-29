@@ -29,6 +29,7 @@
 addTypedefs: start
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
+public import gstreamerc.gstreamertypes;
 addTypedefs: end
 
 addAliases: start
@@ -66,9 +67,12 @@ file: gst-plugins-base-libs-gstvideooverlay.html
 struct: GstVideoOverlay
 class: VideoOverlay
 prefix: gst_video_overlay_
+prefix: gst_
 import: gtkc.glibtypes
 import: glib.Str
 import: gstreamer.Element
+import: gstreamer.Message
+structWrap: GstMessage* Message
 code: start
 	/**
 	* The Element parameter should usually be

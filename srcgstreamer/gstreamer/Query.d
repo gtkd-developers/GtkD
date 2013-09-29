@@ -57,11 +57,13 @@
  * 	- gstreamer.Allocator
  * 	- gstreamer.BufferPool
  * 	- gstreamer.Caps
+ * 	- gstreamer.Context
  * 	- gstreamer.Structure
  * structWrap:
  * 	- GstAllocator* -> Allocator
  * 	- GstBufferPool* -> BufferPool
  * 	- GstCaps* -> Caps
+ * 	- GstContext* -> Context
  * 	- GstQuery* -> Query
  * 	- GstStructure* -> Structure
  * module aliases:
@@ -82,6 +84,7 @@ private import glib.Str;
 private import gstreamer.Allocator;
 private import gstreamer.BufferPool;
 private import gstreamer.Caps;
+private import gstreamer.Context;
 private import gstreamer.Structure;
 
 
@@ -744,7 +747,7 @@ public class Query
 	 * Get the filter from the caps query. The caps remains valid as long as
 	 * query remains valid.
 	 * Params:
-	 * filter = A pointer to the caps filter. [out]
+	 * filter = A pointer to the caps filter. [out][transfer none]
 	 */
 	public void parseCaps(out Caps filter)
 	{
@@ -771,7 +774,7 @@ public class Query
 	 * Get the caps result from query. The caps remains valid as long as
 	 * query remains valid.
 	 * Params:
-	 * caps = A pointer to the caps. [out]
+	 * caps = A pointer to the caps. [out][transfer none]
 	 */
 	public void parseCapsResult(out Caps caps)
 	{
@@ -787,7 +790,7 @@ public class Query
 	 * Get the caps from query. The caps remains valid as long as query remains
 	 * valid.
 	 * Params:
-	 * caps = A pointer to the caps. [out]
+	 * caps = A pointer to the caps. [out][transfer none]
 	 */
 	public void parseAcceptCaps(out Caps caps)
 	{
@@ -901,7 +904,8 @@ public class Query
 	 * format = the format to set for the start and stop values
 	 * start = the start to set
 	 * stop = the stop to set
-	 * estimatedTotal = estimated total amount of download time
+	 * estimatedTotal = estimated total amount of download time remaining in
+	 * miliseconds
 	 */
 	public void setBufferingRange(GstFormat format, long start, long stop, long estimatedTotal)
 	{
@@ -919,7 +923,7 @@ public class Query
 	 * start = the start to set, or NULL. [out][allow-none]
 	 * stop = the stop to set, or NULL. [out][allow-none]
 	 * estimatedTotal = estimated total amount of download
-	 * time, or NULL. [out][allow-none]
+	 * time remaining in miliseconds, or NULL. [out][allow-none]
 	 */
 	public void parseBufferingRange(out GstFormat format, out long start, out long stop, out long estimatedTotal)
 	{
@@ -973,7 +977,7 @@ public class Query
 	 * Free the string with g_free() after usage.
 	 * Params:
 	 * uri = the storage for the current URI
-	 * (may be NULL). [out callee-allocates][allow-none]
+	 * (may be NULL). [out][transfer full][allow-none]
 	 */
 	public void parseUri(out string uri)
 	{
@@ -1094,6 +1098,18 @@ public class Query
 	}
 	
 	/**
+	 * Remove the allocation pool at index of the allocation pool array.
+	 * Since 1.2
+	 * Params:
+	 * index = position in the allocation pool array to remove
+	 */
+	public void removeNthAllocationPool(uint index)
+	{
+		// void gst_query_remove_nth_allocation_pool  (GstQuery *query,  guint index);
+		gst_query_remove_nth_allocation_pool(gstQuery, index);
+	}
+	
+	/**
 	 * Add allocator and its params as a supported memory allocator.
 	 * Params:
 	 * allocator = the memory allocator. [transfer none][allow-none]
@@ -1109,7 +1125,9 @@ public class Query
 	 * Retrieve the number of values currently stored in the
 	 * allocator params array of the query's structure.
 	 * If no memory allocator is specified, the downstream element can handle
-	 * the default memory allocator.
+	 * the default memory allocator. The first memory allocator in the query
+	 * should be generic and allow mapping to system memory, all following
+	 * allocators should be ordered by preference with the preferred one first.
 	 * Returns: the allocator array size as a guint.
 	 */
 	public uint getNAllocationParams()
@@ -1123,7 +1141,7 @@ public class Query
 	 * at index of the allocator array.
 	 * Params:
 	 * index = position in the allocator array to read
-	 * allocator = variable to hold the result. [out][transfer none][allow-none]
+	 * allocator = variable to hold the result. [out][transfer full][allow-none]
 	 * params = parameters for the allocator. [out][allow-none]
 	 */
 	public void parseNthAllocationParam(uint index, out Allocator allocator, out GstAllocationParams params)
@@ -1148,6 +1166,18 @@ public class Query
 	{
 		// void gst_query_set_nth_allocation_param (GstQuery *query,  guint index,  GstAllocator *allocator,  const GstAllocationParams *params);
 		gst_query_set_nth_allocation_param(gstQuery, index, &allocator, &params);
+	}
+	
+	/**
+	 * Remove the allocation param at index of the allocation param array.
+	 * Since 1.2
+	 * Params:
+	 * index = position in the allocation param array to remove
+	 */
+	public void removeNthAllocationParam(uint index)
+	{
+		// void gst_query_remove_nth_allocation_param  (GstQuery *query,  guint index);
+		gst_query_remove_nth_allocation_param(gstQuery, index);
 	}
 	
 	/**
@@ -1178,7 +1208,7 @@ public class Query
 	 * at index of the metadata API array.
 	 * Params:
 	 * index = position in the metadata API array to read
-	 * params = API specific flags. [out][allow-none]
+	 * params = API specific flags. [out][transfer none][allow-none]
 	 * Returns: a GType of the metadata API at index.
 	 */
 	public GType parseNthAllocationMeta(uint index, out Structure params)
@@ -1209,7 +1239,7 @@ public class Query
 	 * found.
 	 * Params:
 	 * api = the metadata API
-	 * index = the index. [out][allow-none]
+	 * index = the index. [out][transfer none][allow-none]
 	 * Returns: TRUE when api is in the list of metadata.
 	 */
 	public int findAllocationMeta(GType api, out uint index)
@@ -1309,5 +1339,71 @@ public class Query
 	{
 		// gboolean gst_query_has_scheduling_mode_with_flags  (GstQuery *query,  GstPadMode mode,  GstSchedulingFlags flags);
 		return gst_query_has_scheduling_mode_with_flags(gstQuery, mode, flags);
+	}
+	
+	/**
+	 * Constructs a new query object for querying the pipeline-local context.
+	 * Free-function: gst_query_unref
+	 * Since 1.2
+	 * Params:
+	 * contextType = Context type to query
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string contextType)
+	{
+		// GstQuery * gst_query_new_context (const gchar *context_type);
+		auto p = gst_query_new_context(Str.toStringz(contextType));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gst_query_new_context(Str.toStringz(contextType))");
+		}
+		this(cast(GstQuery*) p);
+	}
+	
+	/**
+	 * Answer a context query by setting the requested context.
+	 * Since 1.2
+	 * Params:
+	 * context = the requested GstContext
+	 */
+	public void setContext(Context context)
+	{
+		// void gst_query_set_context (GstQuery *query,  GstContext *context);
+		gst_query_set_context(gstQuery, (context is null) ? null : context.getContextStruct());
+	}
+	
+	/**
+	 * Get the context from the context query. The context remains valid as long as
+	 * query remains valid.
+	 * Since 1.2
+	 * Params:
+	 * context = A pointer to store the GstContext. [out][transfer none]
+	 */
+	public void parseContext(out Context context)
+	{
+		// void gst_query_parse_context (GstQuery *query,  GstContext **context);
+		GstContext* outcontext = null;
+		
+		gst_query_parse_context(gstQuery, &outcontext);
+		
+		context = ObjectG.getDObject!(Context)(outcontext);
+	}
+	
+	/**
+	 * Parse a context type from an existing GST_QUERY_CONTEXT query.
+	 * Since 1.2
+	 * Params:
+	 * contextType = the context type, or NULL. [out][transfer none][allow-none]
+	 * Returns: a gboolean indicating if the parsing succeeded.
+	 */
+	public int parseContextType(out string contextType)
+	{
+		// gboolean gst_query_parse_context_type (GstQuery *query,  const gchar **context_type);
+		char* outcontextType = null;
+		
+		auto p = gst_query_parse_context_type(gstQuery, &outcontextType);
+		
+		contextType = Str.toString(outcontextType);
+		return p;
 	}
 }

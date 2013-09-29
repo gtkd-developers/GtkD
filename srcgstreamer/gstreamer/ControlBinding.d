@@ -70,7 +70,10 @@ private import gstreamer.ObjectGst;
 private import gstreamer.ObjectGst;
 
 /**
- * A value mapping object that attaches control sources to gobject properties.
+ * A base class for value mapping objects that attaches control sources to gobject
+ * properties. Such an object is taking one or more GstControlSource instances,
+ * combines them and maps the resulting value to the type and value range of the
+ * bound property.
  */
 public class ControlBinding : ObjectGst
 {
@@ -153,7 +156,7 @@ public class ControlBinding : ObjectGst
 	 * curve or apply a control curve sample by sample.
 	 * The values are unboxed and ready to be used. The similar function
 	 * gst_control_binding_get_g_value_array() returns the array as GValues and is
-	 * better suites for bindings.
+	 * more suitable for bindings.
 	 * Params:
 	 * timestamp = the time that should be processed
 	 * interval = the time spacing between subsequent values

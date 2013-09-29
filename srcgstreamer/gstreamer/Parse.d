@@ -282,7 +282,7 @@ public class Parse
 	 * context = a parse context allocated with
 	 * gst_parse_context_new(), or NULL. [transfer none][allow-none]
 	 * flags = parsing options, or GST_PARSE_FLAG_NONE
-	 * Returns: a newly-created bin, or NULL if an error occurred. [transfer full][type Gst.Bin]
+	 * Returns: a newly-created element, which is guaranteed to be a bin unless GST_FLAG_NO_SINGLE_ELEMENT_BINS was passed, or NULL if an error occurred. [transfer full][type Gst.Element]
 	 * Throws: GException on failure.
 	 */
 	public static Element binFromDescriptionFull(string binDescription, int ghostUnlinkedPads, ParseContext context, GstParseFlags flags)
