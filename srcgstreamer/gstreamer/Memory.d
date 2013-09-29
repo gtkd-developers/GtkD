@@ -43,8 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gstreamer.Allocator
- * 	- gstreamer.Memory
  * structWrap:
  * 	- GstAllocator* -> Allocator
  * 	- GstMemory* -> Memory

@@ -136,19 +136,6 @@ public class Str
 	 * copied from phobos
 	 */
 	public static char* toStringz(string s)
-	in
-	{
-	}
-	out (result)
-	{
-		//	if (result)
-		//	{
-			//		// TODO this one fails in some case???
-			//		assert(strlen(result) == s.length);
-			//		assert(memcmp(result, s, s.length) == 0);
-		//	}
-	}
-	body
 	{
 		if ( s is null ) return null;
 		char[] copy;
@@ -161,7 +148,7 @@ public class Str
 		{
 			// Need to make a copy
 			copy = new char[s.length + 1];
-			copy[0..s.length] = s.dup[];
+			copy[0..s.length] = s[];
 			copy[s.length] = 0;
 		}
 		
@@ -195,13 +182,10 @@ public class Str
 		}
 		string[] argv;
 		
-		char* arg = args[0];
-		int i=0;
-		while( (arg) != null && i<10)
+		while ( *args !is null )
 		{
-			argv ~= toString(arg);
-			++i;
-			arg = args[i];
+			argv ~= toString(*args);
+			args++;
 		}
 		
 		return argv;
