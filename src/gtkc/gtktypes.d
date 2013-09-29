@@ -6464,150 +6464,206 @@ enum StockID
 {
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ABOUT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "help-about" or the label "_About".
 	 * The "About" item.
 	 * Since 2.6
 	 */
 	ABOUT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ADD has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "list-add" or the label "_Add".
 	 * The "Add" item.
 	 */
 	ADD,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_APPLY has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "_Apply".
 	 * The "Apply" item.
 	 */
 	APPLY,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_BOLD has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-text-bold".
 	 * The "Bold" item.
 	 */
 	BOLD,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CANCEL has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "_Cancel".
 	 * The "Cancel" item.
 	 */
 	CANCEL,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CAPS_LOCK_WARNING has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-warning-symbolic".
 	 * The "Caps Lock Warning" icon.
 	 * Since 2.16
 	 */
 	CAPS_LOCK_WARNING,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CDROM has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-optical".
 	 * The "CD-Rom" item.
 	 */
 	CDROM,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CLEAR has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "edit-clear".
 	 * The "Clear" item.
 	 */
 	CLEAR,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CLOSE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "window-close" or the label "_Close".
 	 * The "Close" item.
 	 */
 	CLOSE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_COLOR_PICKER is deprecated and should not be used in newly-written code. 3.10
 	 * The "Color Picker" item.
 	 * Since 2.2
 	 */
 	COLOR_PICKER,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CONVERT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Convert" item.
 	 */
 	CONVERT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CONNECT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Connect" icon.
 	 * Since 2.6
 	 */
 	CONNECT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_COPY has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "_Copy".
 	 * The "Copy" item.
 	 */
 	COPY,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_CUT has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "Cu_t".
 	 * The "Cut" item.
 	 */
 	CUT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DELETE has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "_Delete".
 	 * The "Delete" item.
 	 */
 	DELETE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DIALOG_AUTHENTICATION has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-password".
 	 * The "Authentication" item.
 	 * Since 2.4
 	 */
 	DIALOG_AUTHENTICATION,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DIALOG_ERROR has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-error".
 	 * The "Error" item.
 	 */
 	DIALOG_ERROR,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DIALOG_INFO has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-information".
 	 * The "Information" item.
 	 */
 	DIALOG_INFO,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DIALOG_QUESTION has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-question".
 	 * The "Question" item.
 	 */
 	DIALOG_QUESTION,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DIALOG_WARNING has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-warning".
 	 * The "Warning" item.
 	 */
 	DIALOG_WARNING,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DIRECTORY has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "folder".
 	 * The "Directory" icon.
 	 * Since 2.6
 	 */
 	DIRECTORY,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DISCARD is deprecated and should not be used in newly-written code. 3.10
 	 * The "Discard" item.
 	 * Since 2.12
 	 */
 	DISCARD,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DISCONNECT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Disconnect" icon.
 	 * Since 2.6
 	 */
 	DISCONNECT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DND is deprecated and should not be used in newly-written code. 3.10
 	 * The "Drag-And-Drop" icon.
 	 */
 	DND,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_DND_MULTIPLE is deprecated and should not be used in newly-written code. 3.10
 	 * The "Drag-And-Drop multiple" icon.
 	 */
 	DND_MULTIPLE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_EDIT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Edit" item.
 	 * Since 2.6
 	 */
 	EDIT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_EXECUTE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "system-run".
 	 * The "Execute" item.
 	 */
 	EXECUTE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_FILE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "text-x-generic".
 	 * The "File" item.
 	 * Since 3.0, this item has a label, before it only had an icon.
 	 * Since 2.6
@@ -6615,87 +6671,119 @@ enum StockID
 	FILE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_FIND has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "edit-find".
 	 * The "Find" item.
 	 */
 	FIND,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_FIND_AND_REPLACE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "edit-find-replace".
 	 * The "Find and Replace" item.
 	 */
 	FIND_AND_REPLACE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_FLOPPY is deprecated and should not be used in newly-written code. 3.10
 	 * The "Floppy" item.
 	 */
 	FLOPPY,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_FULLSCREEN has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "view-fullscreen".
 	 * The "Fullscreen" item.
 	 * Since 2.8
 	 */
 	FULLSCREEN,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GOTO_BOTTOM has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-bottom".
 	 * The "Bottom" item.
 	 */
 	GOTO_BOTTOM,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GOTO_FIRST has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-first".
 	 * The "First" item.
 	 * RTL variant
 	 */
 	GOTO_FIRST,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GOTO_LAST has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-last".
 	 * The "Last" item.
 	 * RTL variant
 	 */
 	GOTO_LAST,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GOTO_TOP has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-top".
 	 * The "Top" item.
 	 */
 	GOTO_TOP,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GO_BACK has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-previous".
 	 * The "Back" item.
 	 * RTL variant
 	 */
 	GO_BACK,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GO_DOWN has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-down".
 	 * The "Down" item.
 	 */
 	GO_DOWN,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GO_FORWARD has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-next".
 	 * The "Forward" item.
 	 * RTL variant
 	 */
 	GO_FORWARD,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_GO_UP has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-up".
 	 * The "Up" item.
 	 */
 	GO_UP,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_HARDDISK has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "drive-harddisk".
 	 * The "Harddisk" item.
 	 * Since 2.4
 	 */
 	HARDDISK,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_HELP has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "help-browser".
 	 * The "Help" item.
 	 */
 	HELP,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_HOME has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-home".
 	 * The "Home" item.
 	 */
 	HOME,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_INDENT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-indent-more".
 	 * The "Indent" item.
 	 * RTL variant
 	 * Since 2.4
@@ -6703,54 +6791,74 @@ enum StockID
 	INDENT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_INDEX is deprecated and should not be used in newly-written code. 3.10
 	 * The "Index" item.
 	 */
 	INDEX,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_INFO has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "dialog-information".
 	 * The "Info" item.
 	 * Since 2.8
 	 */
 	INFO,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ITALIC has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-text-italic".
 	 * The "Italic" item.
 	 */
 	ITALIC,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_JUMP_TO has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "go-jump".
 	 * The "Jump to" item.
 	 * RTL-variant
 	 */
 	JUMP_TO,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_JUSTIFY_CENTER has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-justify-center".
 	 * The "Center" item.
 	 */
 	JUSTIFY_CENTER,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_JUSTIFY_FILL has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-justify-fill".
 	 * The "Fill" item.
 	 */
 	JUSTIFY_FILL,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_JUSTIFY_LEFT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-justify-left".
 	 * The "Left" item.
 	 */
 	JUSTIFY_LEFT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_JUSTIFY_RIGHT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-justify-right".
 	 * The "Right" item.
 	 */
 	JUSTIFY_RIGHT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_LEAVE_FULLSCREEN has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "view-restore".
 	 * The "Leave Fullscreen" item.
 	 * Since 2.8
 	 */
 	LEAVE_FULLSCREEN,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_FORWARD has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-seek-forward" or the label "_Forward".
 	 * The "Media Forward" item.
 	 * RTL variant
 	 * Since 2.6
@@ -6758,6 +6866,8 @@ enum StockID
 	MEDIA_FORWARD,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_NEXT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-skip-forward" or the label "_Next".
 	 * The "Media Next" item.
 	 * RTL variant
 	 * Since 2.6
@@ -6765,12 +6875,16 @@ enum StockID
 	MEDIA_NEXT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_PAUSE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-playback-pause" or the label "P_ause".
 	 * The "Media Pause" item.
 	 * Since 2.6
 	 */
 	MEDIA_PAUSE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_PLAY has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-playback-start" or the label "_Play".
 	 * The "Media Play" item.
 	 * RTL variant
 	 * Since 2.6
@@ -6778,6 +6892,8 @@ enum StockID
 	MEDIA_PLAY,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_PREVIOUS has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-skip-backward" or the label "Pre_vious".
 	 * The "Media Previous" item.
 	 * RTL variant
 	 * Since 2.6
@@ -6785,12 +6901,16 @@ enum StockID
 	MEDIA_PREVIOUS,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_RECORD has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-record" or the label "_Record".
 	 * The "Media Record" item.
 	 * Since 2.6
 	 */
 	MEDIA_RECORD,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_REWIND has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-seek-backward" or the label "R_ewind".
 	 * The "Media Rewind" item.
 	 * RTL variant
 	 * Since 2.6
@@ -6798,217 +6918,297 @@ enum StockID
 	MEDIA_REWIND,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MEDIA_STOP has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "media-playback-stop" or the label "_Stop".
 	 * The "Media Stop" item.
 	 * Since 2.6
 	 */
 	MEDIA_STOP,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_MISSING_IMAGE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "image-missing".
 	 * The "Missing image" icon.
 	 */
 	MISSING_IMAGE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_NETWORK has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "network-workgroup".
 	 * The "Network" item.
 	 * Since 2.4
 	 */
 	NETWORK,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_NEW has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-new" or the label "_New".
 	 * The "New" item.
 	 */
 	NEW,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_NO is deprecated and should not be used in newly-written code. 3.10
 	 * The "No" item.
 	 */
 	NO,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_OK has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "_OK".
 	 * The "OK" item.
 	 */
 	OK,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_OPEN has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-open" or the label "_Open".
 	 * The "Open" item.
 	 */
 	OPEN,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ORIENTATION_LANDSCAPE is deprecated and should not be used in newly-written code. 3.10
 	 * The "Landscape Orientation" item.
 	 * Since 2.10
 	 */
 	ORIENTATION_LANDSCAPE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ORIENTATION_PORTRAIT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Portrait Orientation" item.
 	 * Since 2.10
 	 */
 	ORIENTATION_PORTRAIT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ORIENTATION_REVERSE_LANDSCAPE is deprecated and should not be used in newly-written code. 3.10
 	 * The "Reverse Landscape Orientation" item.
 	 * Since 2.10
 	 */
 	ORIENTATION_REVERSE_LANDSCAPE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ORIENTATION_REVERSE_PORTRAIT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Reverse Portrait Orientation" item.
 	 * Since 2.10
 	 */
 	ORIENTATION_REVERSE_PORTRAIT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PAGE_SETUP has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-page-setup" or the label "Page Set_up".
 	 * The "Page Setup" item.
 	 * Since 2.14
 	 */
 	PAGE_SETUP,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PASTE has been deprecated since version 3.10 and should not be used in newly-written code. Do not use an icon. Use label "_Paste".
 	 * The "Paste" item.
 	 */
 	PASTE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PREFERENCES has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "preferences-system" or the label "_Preferences".
 	 * The "Preferences" item.
 	 */
 	PREFERENCES,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PRINT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-print" or the label "_Print".
 	 * The "Print" item.
 	 */
 	PRINT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PRINT_ERROR has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "printer-error".
 	 * The "Print Error" icon.
 	 * Since 2.14
 	 */
 	PRINT_ERROR,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PRINT_PAUSED is deprecated and should not be used in newly-written code. 3.10
 	 * The "Print Paused" icon.
 	 * Since 2.14
 	 */
 	PRINT_PAUSED,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PRINT_PREVIEW has been deprecated since version 3.10 and should not be used in newly-written code. Use label "Pre_view".
 	 * The "Print Preview" item.
 	 */
 	PRINT_PREVIEW,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PRINT_REPORT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Print Report" icon.
 	 * Since 2.14
 	 */
 	PRINT_REPORT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PRINT_WARNING is deprecated and should not be used in newly-written code. 3.10
 	 * The "Print Warning" icon.
 	 * Since 2.14
 	 */
 	PRINT_WARNING,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_PROPERTIES has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-properties" or the label "_Properties".
 	 * The "Properties" item.
 	 */
 	PROPERTIES,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_QUIT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "application-exit" or the label "_Quit".
 	 * The "Quit" item.
 	 */
 	QUIT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_REDO has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "edit-redo" or the label "_Redo".
 	 * The "Redo" item.
 	 * RTL variant
 	 */
 	REDO,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_REFRESH has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "view-refresh" or the label "_Refresh".
 	 * The "Refresh" item.
 	 */
 	REFRESH,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_REMOVE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "list-remove" or the label "_Remove".
 	 * The "Remove" item.
 	 */
 	REMOVE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_REVERT_TO_SAVED has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-revert" or the label "_Revert".
 	 * The "Revert" item.
 	 * RTL variant
 	 */
 	REVERT_TO_SAVED,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SAVE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-save" or the label "_Save".
 	 * The "Save" item.
 	 */
 	SAVE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SAVE_AS has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "document-save-as" or the label "Save _As".
 	 * The "Save As" item.
 	 */
 	SAVE_AS,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SELECT_ALL has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "edit-select-all" or the label "Select _All".
 	 * The "Select All" item.
 	 * Since 2.10
 	 */
 	SELECT_ALL,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SELECT_COLOR is deprecated and should not be used in newly-written code. 3.10
 	 * The "Color" item.
 	 */
 	SELECT_COLOR,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SELECT_FONT is deprecated and should not be used in newly-written code. 3.10
 	 * The "Font" item.
 	 */
 	SELECT_FONT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SORT_ASCENDING has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "view-sort-ascending".
 	 * The "Ascending" item.
 	 */
 	SORT_ASCENDING,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SORT_DESCENDING has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "view-sort-descending".
 	 * The "Descending" item.
 	 */
 	SORT_DESCENDING,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_SPELL_CHECK has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "tools-check-spelling".
 	 * The "Spell Check" item.
 	 */
 	SPELL_CHECK,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_STOP has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "process-stop" or the label "_Stop".
 	 * The "Stop" item.
 	 */
 	STOP,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_STRIKETHROUGH has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-text-strikethrough" or the label "_Strikethrough".
 	 * The "Strikethrough" item.
 	 */
 	STRIKETHROUGH,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_UNDELETE is deprecated and should not be used in newly-written code. 3.10
 	 * The "Undelete" item.
 	 * RTL variant
 	 */
 	UNDELETE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_UNDERLINE has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-text-underline" or the label "_Underline".
 	 * The "Underline" item.
 	 */
 	UNDERLINE,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_UNDO has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "edit-undo" or the label "_Undo".
 	 * The "Undo" item.
 	 * RTL variant
 	 */
 	UNDO,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_UNINDENT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "format-indent-less".
 	 * The "Unindent" item.
 	 * RTL variant
 	 * Since 2.4
@@ -7016,26 +7216,36 @@ enum StockID
 	UNINDENT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_YES is deprecated and should not be used in newly-written code. 3.10
 	 * The "Yes" item.
 	 */
 	YES,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ZOOM_100 has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "zoom-original" or the label "_Normal Size".
 	 * The "Zoom 100%" item.
 	 */
 	ZOOM_100,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ZOOM_FIT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "zoom-fit-best" or the label "Best _Fit".
 	 * The "Zoom to Fit" item.
 	 */
 	ZOOM_FIT,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ZOOM_IN has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "zoom-in" or the label "Zoom _In".
 	 * The "Zoom In" item.
 	 */
 	ZOOM_IN,
 	
 	/**
+	 * Warning
+	 * GTK_STOCK_ZOOM_OUT has been deprecated since version 3.10 and should not be used in newly-written code. Use named icon "zoom-out" or the label "Zoom _Out".
 	 * The "Zoom Out" item.
 	 */
 	ZOOM_OUT,

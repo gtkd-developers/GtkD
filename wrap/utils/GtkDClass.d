@@ -1325,7 +1325,6 @@ public class GtkDClass
 	// we expect all stock constants to be defined in one file
 	int stockCurrEnum;
 
-
 	private void collectStockItems(string[] lines, ConvParms* convParms)
 	{
 		debug(stockItems)writefln("stock items lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
@@ -1348,7 +1347,8 @@ public class GtkDClass
 				debug(stockItems)writefln("\t\tstockID = %s", stockID);
 				if ( stockID.length>0 )
 				{
-					stockValue = std.string.strip(line[pos+1..line.length]);
+					pos = std.string.indexOf(line,')');
+					stockValue = std.string.strip(line[pos+1..$-1]);
 					debug(stockItems)writefln("\t\tstockValue = %s", stockValue);
 					if ( stockValue.length>2
 						&& stockValue[0] == '"'
