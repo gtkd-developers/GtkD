@@ -111,8 +111,6 @@ version(Tango) {
 public class Str
 {
 	
-	const static char[10] digits    = "0123456789";			/// 0..9
-	
 	/*************************************************
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
@@ -191,45 +189,83 @@ public class Str
 		return argv;
 	}
 	
-	/** */
-	public static string toString(bool b)
+	deprecated ("Use std.conv.to.")
 	{
-		return b ? "true" : "false";
-	}
-	
-	/** */
-	public static char[] toString(char c)
-	{
-		char[] result = new char[2];
-		result[0] = c;
-		result[1] = 0;
-		return result[0 .. 1];
-	}
-	
-	/** */
-	public static string toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
-	/** */
-	public static string toString(ushort us) { return toString(cast(uint) us); } /// ditto
-	
-	/** */
-	public static string toString(uint u)
-	{
-		char[uint.sizeof * 3] buffer = void;
-		int ndigits;
-		char c;
-		string result;
+		const static char[10] digits    = "0123456789";			/// 0..9
 		
-		ndigits = 0;
-		if (u < 10)
+		/** */
+		public static string toString(bool b)
 		{
-			version(D_Version2)
-			result = digits[u .. u + 1].idup;
-			else
-			// Avoid storage allocation for simple stuff
-			result = digits[u .. u + 1];
+			return b ? "true" : "false";
 		}
-		else
+		
+		/** */
+		public static char[] toString(char c)
 		{
+			char[] result = new char[2];
+			result[0] = c;
+			result[1] = 0;
+			return result[0 .. 1];
+		}
+		
+		/** */
+		public static string toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
+		/** */
+		public static string toString(ushort us) { return toString(cast(uint) us); } /// ditto
+		
+		/** */
+		public static string toString(uint u)
+		{
+			char[uint.sizeof * 3] buffer = void;
+			int ndigits;
+			char c;
+			string result;
+			
+			ndigits = 0;
+			if (u < 10)
+			{
+				version(D_Version2)
+				result = digits[u .. u + 1].idup;
+				else
+				// Avoid storage allocation for simple stuff
+				result = digits[u .. u + 1];
+			}
+			else
+			{
+				while (u)
+				{
+					c = cast(char)((u % 10) + '0');
+					u /= 10;
+					ndigits++;
+					buffer[buffer.length - ndigits] = c;
+				}
+				
+				version(D_Version2)
+				{
+					//result = new char[ndigits];
+					result = buffer[buffer.length - ndigits .. buffer.length].idup;
+				}
+				else
+				{
+					result = new char[ndigits];
+					result[] = buffer[buffer.length - ndigits .. buffer.length];
+				}
+			}
+			return result;
+		}
+		
+		/** */
+		public static string toString(ulong u)
+		{
+			char[ulong.sizeof * 3] buffer;
+			int ndigits;
+			char c;
+			string result;
+			
+			if (u < 0x1_0000_0000)
+			return toString(cast(uint)u);
+			
+			ndigits = 0;
 			while (u)
 			{
 				c = cast(char)((u % 10) + '0');
@@ -248,80 +284,47 @@ public class Str
 				result = new char[ndigits];
 				result[] = buffer[buffer.length - ndigits .. buffer.length];
 			}
-		}
-		return result;
-	}
-	
-	/** */
-	public static string toString(ulong u)
-	{
-		char[ulong.sizeof * 3] buffer;
-		int ndigits;
-		char c;
-		string result;
-		
-		if (u < 0x1_0000_0000)
-		return toString(cast(uint)u);
-		
-		ndigits = 0;
-		while (u)
-		{
-			c = cast(char)((u % 10) + '0');
-			u /= 10;
-			ndigits++;
-			buffer[buffer.length - ndigits] = c;
+			return result;
 		}
 		
-		version(D_Version2)
-		{
-			//result = new char[ndigits];
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-		}
-		else
-		{
-			result = new char[ndigits];
-			result[] = buffer[buffer.length - ndigits .. buffer.length];
-		}
-		return result;
-	}
-	
-	/** */
-	public static string toString(byte b)  { return toString(cast(int) b); } /// ditto
-	/** */
-	public static string toString(short s) { return toString(cast(int) s); } /// ditto
-	
-	/** */
-	public static string toString(int i)
-	{
-		char[1 + int.sizeof * 3] buffer;
-		char c;
-		string result;
+		/** */
+		public static string toString(byte b)  { return toString(cast(int) b); } /// ditto
+		/** */
+		public static string toString(short s) { return toString(cast(int) s); } /// ditto
 		
-		if (i >= 0)
-		return toString(cast(uint)i);
-		
-		uint u = -i;
-		int ndigits = 1;
-		while (u)
+		/** */
+		public static string toString(int i)
 		{
-			c = cast(char)((u % 10) + '0');
-			u /= 10;
-			buffer[buffer.length - ndigits] = c;
-			ndigits++;
+			char[1 + int.sizeof * 3] buffer;
+			char c;
+			string result;
+			
+			if (i >= 0)
+			return toString(cast(uint)i);
+			
+			uint u = -i;
+			int ndigits = 1;
+			while (u)
+			{
+				c = cast(char)((u % 10) + '0');
+				u /= 10;
+				buffer[buffer.length - ndigits] = c;
+				ndigits++;
+			}
+			buffer[buffer.length - ndigits] = '-';
+			
+			version(D_Version2)
+			{
+				//result = new char[ndigits];
+				result = buffer[buffer.length - ndigits .. buffer.length].idup;
+			}
+			else
+			{
+				result = new char[ndigits];
+				result[] = buffer[buffer.length - ndigits .. buffer.length];
+			}
+			return result;
 		}
-		buffer[buffer.length - ndigits] = '-';
-		
-		version(D_Version2)
-		{
-			//result = new char[ndigits];
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-		}
-		else
-		{
-			result = new char[ndigits];
-			result[] = buffer[buffer.length - ndigits .. buffer.length];
-		}
-		return result;
 	}
 	
 	/**
