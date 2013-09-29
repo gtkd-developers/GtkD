@@ -24,7 +24,7 @@ endif
 default-goal: libs test
 shared: shared-libs
 
-all: libs shared-libs gda gstreamer vted shared-gda shared-gstreamer shared-vted test
+all: libs shared-libs gda gstreamer vte shared-gda shared-gstreamer shared-vte test
 
 ifeq ("$(DC)","gdc")
     DCFLAGS=-O2
@@ -312,7 +312,7 @@ install-gda: $(LIBNAME_GTKDGDA) install-gtkd install-headers-gda
 install-gstreamer: $(LIBNAME_GSTREAMERD) install-gtkd install-headers-gstreamer
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
-install-vted: $(LIBNAME_VTED) install-gtkd install-headers-vted
+install-vte: $(LIBNAME_VTED) install-gtkd install-headers-vte
 	install -m 644 $(LIBNAME_VTED) $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkd: $(SONAME_GTKD)
@@ -331,7 +331,7 @@ install-shared-gda: $(SONAME_GTKDGDA) install-shared-gtkd
 install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
 	$(install-so)
 
-install-shared-vted: $(SONAME_VTED) install-shared-gtkd
+install-shared-vte: $(SONAME_VTED) install-shared-gtkd
 	$(install-so)
 
 install-headers-gtkd: gtkd-$(MAJOR).pc
@@ -356,7 +356,7 @@ install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
-install-headers-vted: vted-$(MAJOR).pc install-headers-gtkd
+install-headers-vte: vted-$(MAJOR).pc install-headers-gtkd
 	(cd srcvte; echo $(SOURCES_VTED) | sed -e s,srcvte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 

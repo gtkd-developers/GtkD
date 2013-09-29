@@ -47,7 +47,7 @@
  * 	- glib.ListSG
  * 	- gio.File
  * 	- gobject.ObjectG
- * 	- gtk.DragContext
+ * 	- gdk.DragContext
  * structWrap:
  * 	- GFile* -> File
  * 	- GObject* -> ObjectG
@@ -73,7 +73,7 @@ private import glib.Str;
 private import glib.ListSG;
 private import gio.File;
 private import gobject.ObjectG;
-private import gtk.DragContext;
+private import gdk.DragContext;
 
 
 

@@ -70,6 +70,14 @@ public enum GtkNotebookTab
 	LAST
 }
 alias GtkNotebookTab NotebookTab;
+
+public enum GtkBaselinePosition
+{
+	TOP,
+	CENTER,
+	BOTTOM
+}
+alias GtkBaselinePosition BaselinePosition;
 /**
  * The GtkDestDefaults enumeration specifies the various
  * types of action that will be taken on behalf
@@ -6449,3 +6457,697 @@ public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nC
  */
 // gchar * (*GtkTranslateFunc) (const gchar *path,  gpointer func_data);
 public alias extern(C) char * function(char* path, void* funcData) GtkTranslateFunc;
+
+
+// StockIDs
+enum StockID
+{
+	
+	/**
+	 * The "About" item.
+	 * Since 2.6
+	 */
+	ABOUT,
+	
+	/**
+	 * The "Add" item.
+	 */
+	ADD,
+	
+	/**
+	 * The "Apply" item.
+	 */
+	APPLY,
+	
+	/**
+	 * The "Bold" item.
+	 */
+	BOLD,
+	
+	/**
+	 * The "Cancel" item.
+	 */
+	CANCEL,
+	
+	/**
+	 * The "Caps Lock Warning" icon.
+	 * Since 2.16
+	 */
+	CAPS_LOCK_WARNING,
+	
+	/**
+	 * The "CD-Rom" item.
+	 */
+	CDROM,
+	
+	/**
+	 * The "Clear" item.
+	 */
+	CLEAR,
+	
+	/**
+	 * The "Close" item.
+	 */
+	CLOSE,
+	
+	/**
+	 * The "Color Picker" item.
+	 * Since 2.2
+	 */
+	COLOR_PICKER,
+	
+	/**
+	 * The "Convert" item.
+	 */
+	CONVERT,
+	
+	/**
+	 * The "Connect" icon.
+	 * Since 2.6
+	 */
+	CONNECT,
+	
+	/**
+	 * The "Copy" item.
+	 */
+	COPY,
+	
+	/**
+	 * The "Cut" item.
+	 */
+	CUT,
+	
+	/**
+	 * The "Delete" item.
+	 */
+	DELETE,
+	
+	/**
+	 * The "Authentication" item.
+	 * Since 2.4
+	 */
+	DIALOG_AUTHENTICATION,
+	
+	/**
+	 * The "Error" item.
+	 */
+	DIALOG_ERROR,
+	
+	/**
+	 * The "Information" item.
+	 */
+	DIALOG_INFO,
+	
+	/**
+	 * The "Question" item.
+	 */
+	DIALOG_QUESTION,
+	
+	/**
+	 * The "Warning" item.
+	 */
+	DIALOG_WARNING,
+	
+	/**
+	 * The "Directory" icon.
+	 * Since 2.6
+	 */
+	DIRECTORY,
+	
+	/**
+	 * The "Discard" item.
+	 * Since 2.12
+	 */
+	DISCARD,
+	
+	/**
+	 * The "Disconnect" icon.
+	 * Since 2.6
+	 */
+	DISCONNECT,
+	
+	/**
+	 * The "Drag-And-Drop" icon.
+	 */
+	DND,
+	
+	/**
+	 * The "Drag-And-Drop multiple" icon.
+	 */
+	DND_MULTIPLE,
+	
+	/**
+	 * The "Edit" item.
+	 * Since 2.6
+	 */
+	EDIT,
+	
+	/**
+	 * The "Execute" item.
+	 */
+	EXECUTE,
+	
+	/**
+	 * The "File" item.
+	 * Since 3.0, this item has a label, before it only had an icon.
+	 * Since 2.6
+	 */
+	FILE,
+	
+	/**
+	 * The "Find" item.
+	 */
+	FIND,
+	
+	/**
+	 * The "Find and Replace" item.
+	 */
+	FIND_AND_REPLACE,
+	
+	/**
+	 * The "Floppy" item.
+	 */
+	FLOPPY,
+	
+	/**
+	 * The "Fullscreen" item.
+	 * Since 2.8
+	 */
+	FULLSCREEN,
+	
+	/**
+	 * The "Bottom" item.
+	 */
+	GOTO_BOTTOM,
+	
+	/**
+	 * The "First" item.
+	 * RTL variant
+	 */
+	GOTO_FIRST,
+	
+	/**
+	 * The "Last" item.
+	 * RTL variant
+	 */
+	GOTO_LAST,
+	
+	/**
+	 * The "Top" item.
+	 */
+	GOTO_TOP,
+	
+	/**
+	 * The "Back" item.
+	 * RTL variant
+	 */
+	GO_BACK,
+	
+	/**
+	 * The "Down" item.
+	 */
+	GO_DOWN,
+	
+	/**
+	 * The "Forward" item.
+	 * RTL variant
+	 */
+	GO_FORWARD,
+	
+	/**
+	 * The "Up" item.
+	 */
+	GO_UP,
+	
+	/**
+	 * The "Harddisk" item.
+	 * Since 2.4
+	 */
+	HARDDISK,
+	
+	/**
+	 * The "Help" item.
+	 */
+	HELP,
+	
+	/**
+	 * The "Home" item.
+	 */
+	HOME,
+	
+	/**
+	 * The "Indent" item.
+	 * RTL variant
+	 * Since 2.4
+	 */
+	INDENT,
+	
+	/**
+	 * The "Index" item.
+	 */
+	INDEX,
+	
+	/**
+	 * The "Info" item.
+	 * Since 2.8
+	 */
+	INFO,
+	
+	/**
+	 * The "Italic" item.
+	 */
+	ITALIC,
+	
+	/**
+	 * The "Jump to" item.
+	 * RTL-variant
+	 */
+	JUMP_TO,
+	
+	/**
+	 * The "Center" item.
+	 */
+	JUSTIFY_CENTER,
+	
+	/**
+	 * The "Fill" item.
+	 */
+	JUSTIFY_FILL,
+	
+	/**
+	 * The "Left" item.
+	 */
+	JUSTIFY_LEFT,
+	
+	/**
+	 * The "Right" item.
+	 */
+	JUSTIFY_RIGHT,
+	
+	/**
+	 * The "Leave Fullscreen" item.
+	 * Since 2.8
+	 */
+	LEAVE_FULLSCREEN,
+	
+	/**
+	 * The "Media Forward" item.
+	 * RTL variant
+	 * Since 2.6
+	 */
+	MEDIA_FORWARD,
+	
+	/**
+	 * The "Media Next" item.
+	 * RTL variant
+	 * Since 2.6
+	 */
+	MEDIA_NEXT,
+	
+	/**
+	 * The "Media Pause" item.
+	 * Since 2.6
+	 */
+	MEDIA_PAUSE,
+	
+	/**
+	 * The "Media Play" item.
+	 * RTL variant
+	 * Since 2.6
+	 */
+	MEDIA_PLAY,
+	
+	/**
+	 * The "Media Previous" item.
+	 * RTL variant
+	 * Since 2.6
+	 */
+	MEDIA_PREVIOUS,
+	
+	/**
+	 * The "Media Record" item.
+	 * Since 2.6
+	 */
+	MEDIA_RECORD,
+	
+	/**
+	 * The "Media Rewind" item.
+	 * RTL variant
+	 * Since 2.6
+	 */
+	MEDIA_REWIND,
+	
+	/**
+	 * The "Media Stop" item.
+	 * Since 2.6
+	 */
+	MEDIA_STOP,
+	
+	/**
+	 * The "Missing image" icon.
+	 */
+	MISSING_IMAGE,
+	
+	/**
+	 * The "Network" item.
+	 * Since 2.4
+	 */
+	NETWORK,
+	
+	/**
+	 * The "New" item.
+	 */
+	NEW,
+	
+	/**
+	 * The "No" item.
+	 */
+	NO,
+	
+	/**
+	 * The "OK" item.
+	 */
+	OK,
+	
+	/**
+	 * The "Open" item.
+	 */
+	OPEN,
+	
+	/**
+	 * The "Landscape Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_LANDSCAPE,
+	
+	/**
+	 * The "Portrait Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_PORTRAIT,
+	
+	/**
+	 * The "Reverse Landscape Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_REVERSE_LANDSCAPE,
+	
+	/**
+	 * The "Reverse Portrait Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_REVERSE_PORTRAIT,
+	
+	/**
+	 * The "Page Setup" item.
+	 * Since 2.14
+	 */
+	PAGE_SETUP,
+	
+	/**
+	 * The "Paste" item.
+	 */
+	PASTE,
+	
+	/**
+	 * The "Preferences" item.
+	 */
+	PREFERENCES,
+	
+	/**
+	 * The "Print" item.
+	 */
+	PRINT,
+	
+	/**
+	 * The "Print Error" icon.
+	 * Since 2.14
+	 */
+	PRINT_ERROR,
+	
+	/**
+	 * The "Print Paused" icon.
+	 * Since 2.14
+	 */
+	PRINT_PAUSED,
+	
+	/**
+	 * The "Print Preview" item.
+	 */
+	PRINT_PREVIEW,
+	
+	/**
+	 * The "Print Report" icon.
+	 * Since 2.14
+	 */
+	PRINT_REPORT,
+	
+	/**
+	 * The "Print Warning" icon.
+	 * Since 2.14
+	 */
+	PRINT_WARNING,
+	
+	/**
+	 * The "Properties" item.
+	 */
+	PROPERTIES,
+	
+	/**
+	 * The "Quit" item.
+	 */
+	QUIT,
+	
+	/**
+	 * The "Redo" item.
+	 * RTL variant
+	 */
+	REDO,
+	
+	/**
+	 * The "Refresh" item.
+	 */
+	REFRESH,
+	
+	/**
+	 * The "Remove" item.
+	 */
+	REMOVE,
+	
+	/**
+	 * The "Revert" item.
+	 * RTL variant
+	 */
+	REVERT_TO_SAVED,
+	
+	/**
+	 * The "Save" item.
+	 */
+	SAVE,
+	
+	/**
+	 * The "Save As" item.
+	 */
+	SAVE_AS,
+	
+	/**
+	 * The "Select All" item.
+	 * Since 2.10
+	 */
+	SELECT_ALL,
+	
+	/**
+	 * The "Color" item.
+	 */
+	SELECT_COLOR,
+	
+	/**
+	 * The "Font" item.
+	 */
+	SELECT_FONT,
+	
+	/**
+	 * The "Ascending" item.
+	 */
+	SORT_ASCENDING,
+	
+	/**
+	 * The "Descending" item.
+	 */
+	SORT_DESCENDING,
+	
+	/**
+	 * The "Spell Check" item.
+	 */
+	SPELL_CHECK,
+	
+	/**
+	 * The "Stop" item.
+	 */
+	STOP,
+	
+	/**
+	 * The "Strikethrough" item.
+	 */
+	STRIKETHROUGH,
+	
+	/**
+	 * The "Undelete" item.
+	 * RTL variant
+	 */
+	UNDELETE,
+	
+	/**
+	 * The "Underline" item.
+	 */
+	UNDERLINE,
+	
+	/**
+	 * The "Undo" item.
+	 * RTL variant
+	 */
+	UNDO,
+	
+	/**
+	 * The "Unindent" item.
+	 * RTL variant
+	 * Since 2.4
+	 */
+	UNINDENT,
+	
+	/**
+	 * The "Yes" item.
+	 */
+	YES,
+	
+	/**
+	 * The "Zoom 100%" item.
+	 */
+	ZOOM_100,
+	
+	/**
+	 * The "Zoom to Fit" item.
+	 */
+	ZOOM_FIT,
+	
+	/**
+	 * The "Zoom In" item.
+	 */
+	ZOOM_IN,
+	
+	/**
+	 * The "Zoom Out" item.
+	 */
+	ZOOM_OUT,
+
+}
+
+// Stock strings
+string[] StockDesc = 
+[	"gtk-about",
+	"gtk-add",
+	"gtk-apply",
+	"gtk-bold",
+	"gtk-cancel",
+	"gtk-caps-lock-warning",
+	"gtk-cdrom",
+	"gtk-clear",
+	"gtk-close",
+	"gtk-color-picker",
+	"gtk-convert",
+	"gtk-connect",
+	"gtk-copy",
+	"gtk-cut",
+	"gtk-delete",
+	"gtk-dialog-authentication",
+	"gtk-dialog-error",
+	"gtk-dialog-info",
+	"gtk-dialog-question",
+	"gtk-dialog-warning",
+	"gtk-directory",
+	"gtk-discard",
+	"gtk-disconnect",
+	"gtk-dnd",
+	"gtk-dnd-multiple",
+	"gtk-edit",
+	"gtk-execute",
+	"gtk-file",
+	"gtk-find",
+	"gtk-find-and-replace",
+	"gtk-floppy",
+	"gtk-fullscreen",
+	"gtk-goto-bottom",
+	"gtk-goto-first",
+	"gtk-goto-last",
+	"gtk-goto-top",
+	"gtk-go-back",
+	"gtk-go-down",
+	"gtk-go-forward",
+	"gtk-go-up",
+	"gtk-harddisk",
+	"gtk-help",
+	"gtk-home",
+	"gtk-indent",
+	"gtk-index",
+	"gtk-info",
+	"gtk-italic",
+	"gtk-jump-to",
+	"gtk-justify-center",
+	"gtk-justify-fill",
+	"gtk-justify-left",
+	"gtk-justify-right",
+	"gtk-leave-fullscreen",
+	"gtk-media-forward",
+	"gtk-media-next",
+	"gtk-media-pause",
+	"gtk-media-play",
+	"gtk-media-previous",
+	"gtk-media-record",
+	"gtk-media-rewind",
+	"gtk-media-stop",
+	"gtk-missing-image",
+	"gtk-network",
+	"gtk-new",
+	"gtk-no",
+	"gtk-ok",
+	"gtk-open",
+	"gtk-orientation-landscape",
+	"gtk-orientation-portrait",
+	"gtk-orientation-reverse-landscape",
+	"gtk-orientation-reverse-portrait",
+	"gtk-page-setup",
+	"gtk-paste",
+	"gtk-preferences",
+	"gtk-print",
+	"gtk-print-error",
+	"gtk-print-paused",
+	"gtk-print-preview",
+	"gtk-print-report",
+	"gtk-print-warning",
+	"gtk-properties",
+	"gtk-quit",
+	"gtk-redo",
+	"gtk-refresh",
+	"gtk-remove",
+	"gtk-revert-to-saved",
+	"gtk-save",
+	"gtk-save-as",
+	"gtk-select-all",
+	"gtk-select-color",
+	"gtk-select-font",
+	"gtk-sort-ascending",
+	"gtk-sort-descending",
+	"gtk-spell-check",
+	"gtk-stop",
+	"gtk-strikethrough",
+	"gtk-undelete",
+	"gtk-underline",
+	"gtk-undo",
+	"gtk-unindent",
+	"gtk-yes",
+	"gtk-zoom-100",
+	"gtk-zoom-fit",
+	"gtk-zoom-in",
+	"gtk-zoom-out",
+
+];

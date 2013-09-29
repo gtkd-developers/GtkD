@@ -119,7 +119,7 @@
  * structWrap:
  * 	- GBytes* -> Bytes
  * 	- GParamSpec* -> ParamSpec
- * 	- GtkWidget* -> 
+ * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
  * overrides:
@@ -425,13 +425,13 @@ public class WidgetClass
 	 * pathReversed = location to store the reverse
 	 * class path as an allocated string, or NULL. [out][allow-none]
 	 */
-	public static void path( widget, out uint pathLength, out string path, out string pathReversed)
+	public static void path(Widget widget, out uint pathLength, out string path, out string pathReversed)
 	{
 		// void gtk_widget_class_path (GtkWidget *widget,  guint *path_length,  gchar **path,  gchar **path_reversed);
 		char* outpath = null;
 		char* outpathReversed = null;
 		
-		gtk_widget_class_path((widget is null) ? null : widget.getStruct(), &pathLength, &outpath, &outpathReversed);
+		gtk_widget_class_path((widget is null) ? null : widget.getWidgetStruct(), &pathLength, &outpath, &outpathReversed);
 		
 		path = Str.toString(outpath);
 		pathReversed = Str.toString(outpathReversed);

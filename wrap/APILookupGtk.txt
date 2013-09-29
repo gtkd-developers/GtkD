@@ -75,6 +75,14 @@ addEnums: start
 		LAST
 	}
 	alias GtkNotebookTab NotebookTab;
+
+	public enum GtkBaselinePosition
+	{
+		TOP,
+		CENTER,
+		BOTTOM
+	}
+	alias GtkBaselinePosition BaselinePosition;
 addEnums: end
 
 addStructs: start
@@ -2105,6 +2113,7 @@ file: GtkStack.html
 struct: GtkStack
 class: Stack
 prefix: gtk_stack_
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 outFile: Stack
@@ -2121,6 +2130,7 @@ file: GtkHeaderBar.html
 struct: GtkHeaderBar
 class: HeaderBar
 prefix: gtk_header_bar_
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 outFile: HeaderBar
@@ -7265,7 +7275,7 @@ import: glib.Str
 import: glib.ListSG
 import: gio.File
 import: gobject.ObjectG
-import: gtk.DragContext
+import: gdk.DragContext
 structWrap: GSList* ListSG
 structWrap: GFile* File
 structWrap: GObject* ObjectG
@@ -8199,7 +8209,7 @@ import: gobject.ParamSpec
 import: gtk.Widget
 structWrap: GBytes* Bytes
 structWrap: GParamSpec* ParamSpec
-structWrap: GtkWidget*
+structWrap: GtkWidget* Widget
 
 nosignal: accel-closures-changed
 nosignal: button-press-event
