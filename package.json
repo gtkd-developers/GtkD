@@ -14,7 +14,6 @@
         "Mike Wey",
         "hauptmech"
     ],
-    "targetPath": "lib",
     "dependencies": {
         "gtk-d:gtkd": "~master",
         "gtk-d:gtkdgl": "~master",
@@ -25,29 +24,25 @@
     "subPackages" : [
         {
             "name": "gtkd",
-            "targetPath": "lib",
             "sourcePaths": ["src"],
-            "importPaths": ["src"]
+            "libs-posix": ["dl"]
         },
         {
             "name": "gtkdgl",
-            "targetPath": "lib",
             "sourcePaths": ["srcgl"],
-            "importPaths": ["srcgl"]
+            "libs-posix": ["dl"]
         },
         {
             "name": "sv",
-            "targetPath": "lib",
             "outputName": ["gtkdsv"],
             "sourcePaths": ["srcsv"],
-            "importPaths": ["srcsv"]
+            "libs-posix": ["dl"]
         },
         {
             "name": "gstreamer",
-            "targetPath": "lib",
             "outputName": ["gstreamerd"],
             "sourcePaths": ["srcgstreamer"],
-            "importPaths": ["srcgstreamer"]
+            "libs-posix": ["dl"]
         }
     ]
 }
