@@ -1,0 +1,53 @@
+{
+    "name": "gtk-d",
+    "description": "GtkD is the Digital Mars D programing language OO wrapper for Gtk+.",
+    "homepage": "https://github.com/gtkd-developers/GtkD",
+    "license": "LGPL license with additional exceptions",
+    "authors": [
+        "Frank Benoit",
+        "Jake Day",
+        "Jonas Kivi",
+        "Alan Knowles",
+        "Antonio Monteiro",
+        "Sebastián E. Peyrott",
+        "John Reimer",
+        "Mike Wey",
+        "hauptmech"
+    ],
+    "targetPath": "lib",
+    "dependencies": {
+        "gtk-d:gtkd": "~master",
+        "gtk-d:gtkdgl": "~master",
+        "gtk-d:sv": "~master",
+        "gtk-d:gstreamer": "~master"
+    },
+
+    "subPackages" : [
+        {
+            "name": "gtkd",
+            "targetPath": "lib",
+            "sourcePaths": ["src"],
+            "importPaths": ["src"]
+        },
+        {
+            "name": "gtkdgl",
+            "targetPath": "lib",
+            "sourcePaths": ["srcgl"],
+            "importPaths": ["srcgl"]
+        },
+        {
+            "name": "sv",
+            "targetPath": "lib",
+            "outputName": ["gtkdsv"],
+            "sourcePaths": ["srcsv"],
+            "importPaths": ["srcsv"]
+        },
+        {
+            "name": "gstreamer",
+            "targetPath": "lib",
+            "outputName": ["gstreamerd"],
+            "sourcePaths": ["srcgstreamer"],
+            "importPaths": ["srcgstreamer"]
+        }
+    ]
+}
