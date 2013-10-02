@@ -18,7 +18,8 @@
         "gtk-d:gtkd": "~master",
         "gtk-d:gtkdgl": "~master",
         "gtk-d:sv": "~master",
-        "gtk-d:gstreamer": "~master"
+        "gtk-d:gstreamer": "~master",
+        "gtk-d:vte": "~master"
     },
 
     "subPackages" : [
@@ -42,6 +43,12 @@
             "name": "gstreamer",
             "outputName": ["gstreamerd"],
             "sourcePaths": ["srcgstreamer"],
+            "libs-posix": ["dl"]
+        },
+        {
+            "name": "vte",
+            "outputName": ["libvted"],
+            "sourcePaths": ["srcvte"],
             "libs-posix": ["dl"]
         }
     ]
