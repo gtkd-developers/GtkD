@@ -116,8 +116,8 @@ public interface ProxyResolverIF
 	/**
 	 * Looks into the system proxy configuration to determine what proxy,
 	 * if any, to use to connect to uri. The returned proxy URIs are of the
-	 * form <protocol>://[user[:password]@]host:port
-	 * or direct://, where <protocol> could be
+	 * form &lt;protocol&gt;://[user[:password]@]host:port
+	 * or direct://, where &lt;protocol&gt; could be
 	 * http, rtsp, socks or other proxying protocol.
 	 * If you don't know what network protocol is being used on the
 	 * socket, you should use none as the URI protocol.

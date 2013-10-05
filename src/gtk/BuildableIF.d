@@ -160,7 +160,7 @@ public interface BuildableIF
 	public ObjectG constructChild(Builder builder, string name);
 	
 	/**
-	 * This is called for each unknown element under <child>.
+	 * This is called for each unknown element under &lt;child&gt;.
 	 * Since 2.12
 	 * Params:
 	 * builder = a GtkBuilder used to construct this object

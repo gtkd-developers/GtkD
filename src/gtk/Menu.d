@@ -418,7 +418,7 @@ public class Menu : MenuShell
 	 * each menu item of this menu, that contains a label describing its
 	 * purpose, automatically gets an accel path assigned.
 	 * For example, a menu containing menu items "New" and "Exit", will, after
-	 * gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File");
+	 * gtk_menu_set_accel_path (menu, "&lt;Gnumeric-Sheet&gt;/File");
 	 * Params:
 	 * accelPath = a valid accelerator path. [allow-none]
 	 */

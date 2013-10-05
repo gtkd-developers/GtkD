@@ -271,8 +271,8 @@ private import gobject.ObjectG;
 	 *  {
 		 *  gint min_width;
 		 *
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, NULL);
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width (widget, min_width,
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_width (widget, min_width, NULL);
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_height_for_width (widget, min_width,
 		 *  min_height, nat_height);
 	 *  }
 	 *  else
@@ -291,7 +291,7 @@ private import gobject.ObjectG;
  * {
 	 *  if (i_am_in_height_for_width_mode)
 	 *  {
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, nat_width);
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_width (widget, min_width, nat_width);
 	 *  }
 	 *  else
 	 *  {
@@ -366,20 +366,20 @@ private import gobject.ObjectG;
  * GtkWidget as GtkBuildable
  *
  * The GtkWidget implementation of the GtkBuildable interface supports a
- * custom <accelerator> element, which has attributes named key,
+ * custom &lt;accelerator&gt; element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
  *
  * $(DDOC_COMMENT example)
  *
  * In addition to accelerators, GtkWidget also support a
- * custom <accessible> element, which supports actions and relations.
+ * custom &lt;accessible&gt; element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
  *
  * $(DDOC_COMMENT example)
  *
  * Finally, GtkWidget allows style information such as style classes to
- * be associated with widgets, using the custom <style> element:
+ * be associated with widgets, using the custom &lt;style&gt; element:
  *
  * $(DDOC_COMMENT example)
  *
@@ -399,24 +399,24 @@ private import gobject.ObjectG;
  * is slightly different from regulare GtkBuilder XML.
  *
  * Unlike regular interface descriptions, gtk_widget_class_set_template() will expect a
- * <template> tag as a direct child of the toplevel <interface>
- * tag. The <template> tag must specify the "class" attribute which
+ * &lt;template&gt; tag as a direct child of the toplevel &lt;interface&gt;
+ * tag. The &lt;template&gt; tag must specify the "class" attribute which
  * must be the type name of the widget. Optionally, the "parent" attribute
  * may be specified to specify the direct parent type of the widget type, this
  * is ignored by the GtkBuilder but required for Glade to introspect what kind
  * of properties and internal children exist for a given type when the actual
  * type does not exist.
  *
- * The XML which is contained inside the <template> tag behaves as if
- * it were added to the <object> tag defining widget itself. You may set
- * properties on widget by inserting <property> tags into the <template>
- * tag, and also add <child> tags to add children and extend widget in the
- * normal way you would with <object> tags.
+ * The XML which is contained inside the &lt;template&gt; tag behaves as if
+ * it were added to the &lt;object&gt; tag defining widget itself. You may set
+ * properties on widget by inserting &lt;property&gt; tags into the &lt;template&gt;
+ * tag, and also add &lt;child&gt; tags to add children and extend widget in the
+ * normal way you would with &lt;object&gt; tags.
  *
- * Additionally, <object> tags can also be added before and
- * after the initial <template> tag in the normal way, allowing
+ * Additionally, &lt;object&gt; tags can also be added before and
+ * after the initial &lt;template&gt; tag in the normal way, allowing
  * one to define auxilary objects which might be referenced by other
- * widgets declared as children of the <template> tag.
+ * widgets declared as children of the &lt;template&gt; tag.
  *
  * $(DDOC_COMMENT example)
  */
@@ -3209,7 +3209,7 @@ public class Widget : ObjectG, BuildableIF
 	
 	/**
 	 * Creates the GDK (windowing system) resources associated with a
-	 * widget. For example, widget->window will be created when a widget
+	 * widget. For example, widget-&gt;window will be created when a widget
 	 * is realized. Normally realization happens implicitly; if you show
 	 * a widget and all its parent containers, then the widget will be
 	 * realized and mapped automatically.
@@ -3234,7 +3234,7 @@ public class Widget : ObjectG, BuildableIF
 	/**
 	 * This function is only useful in widget implementations.
 	 * Causes a widget to be unrealized (frees all GDK resources
-	 * associated with the widget, such as widget->window).
+	 * associated with the widget, such as widget-&gt;window).
 	 */
 	public void unrealize()
 	{
@@ -3420,17 +3420,17 @@ public class Widget : ObjectG, BuildableIF
 	 * Warning
 	 * gtk_widget_get_child_requisition has been deprecated since version 3.0 and should not be used in newly-written code. Use gtk_widget_get_preferred_size() instead.
 	 * This function is only for use in widget implementations. Obtains
-	 * widget->requisition, unless someone has forced a particular
+	 * widget-&gt;requisition, unless someone has forced a particular
 	 * geometry on the widget (e.g. with gtk_widget_set_size_request()),
 	 * in which case it returns that geometry instead of the widget's
 	 * requisition.
 	 * This function differs from gtk_widget_size_request() in that
-	 * it retrieves the last size request value from widget->requisition,
+	 * it retrieves the last size request value from widget-&gt;requisition,
 	 * while gtk_widget_size_request() actually calls the "size_request" method
-	 * on widget to compute the size request and fill in widget->requisition,
-	 * and only then returns widget->requisition.
+	 * on widget to compute the size request and fill in widget-&gt;requisition,
+	 * and only then returns widget-&gt;requisition.
 	 * Because this function does not call the "size_request" method, it
-	 * can only be used when you know that widget->requisition is
+	 * can only be used when you know that widget-&gt;requisition is
 	 * up-to-date, that is, gtk_widget_size_request() has been called
 	 * since the last time a resize was queued. In general, only container
 	 * implementations have this information; applications should use
@@ -3705,7 +3705,7 @@ public class Widget : ObjectG, BuildableIF
 	 * in the CSS file. See the documentation for the CSS syntax (on the
 	 * same page as the docs for GtkStyleContext).
 	 * Note that the CSS syntax has certain special characters to delimit
-	 * and represent elements in a selector (period, #, >, *...),
+	 * and represent elements in a selector (period, #, &gt;, *...),
 	 * so using these will make your widget impossible to match by name.
 	 * Any combination of alphanumeric symbols, dashes and underscores will
 	 * suffice.
@@ -4028,9 +4028,9 @@ public class Widget : ObjectG, BuildableIF
 	 * gtk_widget_get_pointer has been deprecated since version 3.4 and should not be used in newly-written code. Use gdk_window_get_device_position() instead.
 	 * Obtains the location of the mouse pointer in widget coordinates.
 	 * Widget coordinates are a bit odd; for historical reasons, they are
-	 * defined as widget->window coordinates for widgets that are not
-	 * GTK_NO_WINDOW widgets, and are relative to widget->allocation.x,
-	 * widget->allocation.y for widgets that are GTK_NO_WINDOW widgets.
+	 * defined as widget-&gt;window coordinates for widgets that are not
+	 * GTK_NO_WINDOW widgets, and are relative to widget-&gt;allocation.x,
+	 * widget-&gt;allocation.y for widgets that are GTK_NO_WINDOW widgets.
 	 * Params:
 	 * x = return location for the X coordinate, or NULL. [out][allow-none]
 	 * y = return location for the Y coordinate, or NULL. [out][allow-none]
@@ -4092,7 +4092,7 @@ public class Widget : ObjectG, BuildableIF
 	/**
 	 * Warning
 	 * gtk_widget_set_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
-	 * Used to set the GtkStyle for a widget (widget->style). Since
+	 * Used to set the GtkStyle for a widget (widget-&gt;style). Since
 	 * GTK 3, this function does nothing, the passed in style is ignored.
 	 * Params:
 	 * style = a GtkStyle, or NULL to remove the effect
@@ -4108,7 +4108,7 @@ public class Widget : ObjectG, BuildableIF
 	/**
 	 * Warning
 	 * gtk_widget_ensure_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
-	 * Ensures that widget has a style (widget->style).
+	 * Ensures that widget has a style (widget-&gt;style).
 	 * Not a very useful function; most of the time, if you
 	 * want the style, the widget is realized, and realized
 	 * widgets are guaranteed to have a style already.
@@ -4122,7 +4122,7 @@ public class Widget : ObjectG, BuildableIF
 	/**
 	 * Warning
 	 * gtk_widget_get_style has been deprecated since version 3.0 and should not be used in newly-written code. Use GtkStyleContext instead
-	 * Simply an accessor function that returns widget->style.
+	 * Simply an accessor function that returns widget-&gt;style.
 	 * Returns: the widget's GtkStyle. [transfer none]
 	 */
 	public Style getStyle()
@@ -4763,9 +4763,9 @@ public class Widget : ObjectG, BuildableIF
 	 * the region created from the given coordinates.
 	 * The region here is specified in widget coordinates.
 	 * Widget coordinates are a bit odd; for historical reasons, they are
-	 * defined as widget->window coordinates for widgets that are not
-	 * GTK_NO_WINDOW widgets, and are relative to widget->allocation.x,
-	 * widget->allocation.y for widgets that are GTK_NO_WINDOW widgets.
+	 * defined as widget-&gt;window coordinates for widgets that are not
+	 * GTK_NO_WINDOW widgets, and are relative to widget-&gt;allocation.x,
+	 * widget-&gt;allocation.y for widgets that are GTK_NO_WINDOW widgets.
 	 * Params:
 	 * x = x coordinate of upper-left corner of rectangle to redraw
 	 * y = y coordinate of upper-left corner of rectangle to redraw
@@ -4855,7 +4855,7 @@ public class Widget : ObjectG, BuildableIF
 	 * off all allocation on resizing: the widget will not even redraw if
 	 * its position changes; this is to allow containers that don't draw
 	 * anything to avoid excess invalidations. If you set this flag on a
-	 * NO_WINDOW widget that does draw on widget->window,
+	 * NO_WINDOW widget that does draw on widget-&gt;window,
 	 * you are responsible for invalidating both the old and new allocation
 	 * of the widget when the widget is moved and responsible for invalidating
 	 * regions newly when the widget increases size.
@@ -4993,7 +4993,7 @@ public class Widget : ObjectG, BuildableIF
 	 * gtk_widget_style_attach is deprecated and should not be used in newly-written code. 3.0. This step is unnecessary with GtkStyleContext.
 	 * This function attaches the widget's GtkStyle to the widget's
 	 * GdkWindow. It is a replacement for
-	 * widget->style = gtk_style_attach (widget->style, widget->window);
+	 * widget-&gt;style = gtk_style_attach (widget-&gt;style, widget-&gt;window);
 	 * and should only ever be called in a derived widget's "realize"
 	 * implementation which does not chain up to its parent class'
 	 * "realize" implementation, because one of the parent classes

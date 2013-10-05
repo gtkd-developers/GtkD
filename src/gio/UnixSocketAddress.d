@@ -77,7 +77,7 @@ private import gio.SocketAddress;
  * errors. You can use g_unix_socket_address_abstract_names_supported()
  * to see if abstract names are supported.
  *
- * Note that <gio/gunixsocketaddress.h> belongs to
+ * Note that &lt;gio/gunixsocketaddress.h&gt; belongs to
  * the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.
  */

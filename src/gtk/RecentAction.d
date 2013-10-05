@@ -75,9 +75,9 @@ private import gtk.Action;
  * GtkRecentChooserMenu.
  *
  * To construct a submenu showing recently used files, use a GtkRecentAction
- * as the action for a <menuitem>. To construct a menu toolbutton showing
+ * as the action for a &lt;menuitem&gt;. To construct a menu toolbutton showing
  * the recently used files in the popup menu, use a GtkRecentAction as the
- * action for a <toolitem> element.
+ * action for a &lt;toolitem&gt; element.
  */
 public class RecentAction : Action
 {

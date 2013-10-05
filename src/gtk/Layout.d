@@ -90,8 +90,8 @@ private import gtk.Container;
  * is a better choice since it has lower overhead.
  *
  * When handling expose events on a GtkLayout, you must draw to
- * GTK_LAYOUT (layout)->bin_window, rather than to
- * GTK_WIDGET (layout)->window, as you would for a drawing
+ * GTK_LAYOUT (layout)-&gt;bin_window, rather than to
+ * GTK_WIDGET (layout)-&gt;window, as you would for a drawing
  * area.
  */
 public class Layout : Container, ScrollableIF

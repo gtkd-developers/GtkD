@@ -97,8 +97,8 @@ private import gtk.ComboBox;
  * GtkComboBoxText as GtkBuildable
  *
  * The GtkComboBoxText implementation of the GtkBuildable interface
- * supports adding items directly using the <items> element
- * and specifying <item> elements for each item. Each <item>
+ * supports adding items directly using the &lt;items&gt; element
+ * and specifying &lt;item&gt; elements for each item. Each &lt;item&gt;
  * element can specify the "id" corresponding to the appended text and
  * also supports the regular translation attributes "translatable",
  * "context" and "comments".

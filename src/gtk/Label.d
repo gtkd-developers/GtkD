@@ -89,8 +89,8 @@ private import gtk.Misc;
  * GtkLabel as GtkBuildable
  *
  * The GtkLabel implementation of the GtkBuildable interface supports a
- * custom <attributes> element, which supports any number of <attribute>
- * elements. the <attribute> element has attributes named name, value,
+ * custom &lt;attributes&gt; element, which supports any number of &lt;attribute&gt;
+ * elements. the &lt;attribute&gt; element has attributes named name, value,
  * start and end and allows you to specify PangoAttribute values for this label.
  *
  * $(DDOC_COMMENT example)
@@ -145,7 +145,7 @@ private import gtk.Misc;
  * tags in the Pango manual.)
  *
  * The markup passed to gtk_label_set_markup() must be valid; for example,
- * literal <, > and  characters must be escaped as \<,
+ * literal &lt;, &gt; and  characters must be escaped as \&lt;,
  * \gt;, and \. If you pass text obtained from the user, file,
  * or a network to gtk_label_set_markup(), you'll want to escape it with
  * g_markup_escape_text() or g_markup_printf_escaped().

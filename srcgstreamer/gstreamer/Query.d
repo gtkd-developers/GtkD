@@ -679,7 +679,7 @@ public class Query
 	 * start_value and stop_value will respectively contain the configured
 	 * playback range start and stop values expressed in format.
 	 * The values are always between 0 and the duration of the media and
-	 * start_value <= stop_value. rate will contain the playback rate. For
+	 * start_value &lt;= stop_value. rate will contain the playback rate. For
 	 * negative rates, playback will actually happen from stop_value to
 	 * start_value.
 	 * Params:

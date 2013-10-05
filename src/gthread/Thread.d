@@ -364,7 +364,7 @@ public class Thread
 	 * corresponding bit.
 	 * Attempting to lock on two different bits within the same integer is
 	 * not supported and will very probably cause deadlocks.
-	 * The value of the bit that is set is (1u << bit). If bit is not
+	 * The value of the bit that is set is (1u &lt;&lt; bit). If bit is not
 	 * between 0 and 31 then the result is undefined.
 	 * This function accesses address atomically. All other accesses to
 	 * address must be atomic in order for this function to work
@@ -385,7 +385,7 @@ public class Thread
 	 * successful. If the bit is already set, returns FALSE immediately.
 	 * Attempting to lock on two different bits within the same integer is
 	 * not supported.
-	 * The value of the bit that is set is (1u << bit). If bit is not
+	 * The value of the bit that is set is (1u &lt;&lt; bit). If bit is not
 	 * between 0 and 31 then the result is undefined.
 	 * This function accesses address atomically. All other accesses to
 	 * address must be atomic in order for this function to work

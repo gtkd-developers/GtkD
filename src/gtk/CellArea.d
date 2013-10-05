@@ -1172,7 +1172,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * This is used by GtkCellArea subclasses when handling events
 	 * to activate cells, the base GtkCellArea class activates cells
-	 * for keyboard events for free in its own GtkCellArea->activate()
+	 * for keyboard events for free in its own GtkCellArea-&gt;activate()
 	 * implementation.
 	 * Params:
 	 * widget = the GtkWidget that area is rendering onto

@@ -371,7 +371,7 @@ public class PgCairo
 	 * The origin of the glyphs (the left edge of the baseline) will
 	 * be drawn at the current point of the cairo context.
 	 * Note that text is the start of the text for layout, which is then
-	 * indexed by glyph_item->item->offset.
+	 * indexed by glyph_item-&gt;item-&gt;offset.
 	 * Since 1.22
 	 * Params:
 	 * cr = a Cairo context

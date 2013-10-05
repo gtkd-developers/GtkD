@@ -402,7 +402,7 @@ public class Utils
 	
 	/**
 	 * Compares the fractions a_n/a_d and b_n/b_d and returns
-	 * -1 if a < b, 0 if a = b and 1 if a > b.
+	 * -1 if a &lt; b, 0 if a = b and 1 if a &gt; b.
 	 * Params:
 	 * aN = Numerator of first value
 	 * aD = Denominator of first value

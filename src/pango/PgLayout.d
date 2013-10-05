@@ -773,10 +773,10 @@ public class PgLayout : ObjectG
 	/**
 	 * Converts from an index within a PangoLayout to the onscreen position
 	 * corresponding to the grapheme at that index, which is represented
-	 * as rectangle. Note that pos->x is always the leading
-	 * edge of the grapheme and pos->x + pos->width the trailing
+	 * as rectangle. Note that pos-&gt;x is always the leading
+	 * edge of the grapheme and pos-&gt;x + pos-&gt;width the trailing
 	 * edge of the grapheme. If the directionality of the grapheme is right-to-left,
-	 * then pos->width will be negative.
+	 * then pos-&gt;width will be negative.
 	 * Params:
 	 * index = byte index within layout
 	 * pos = rectangle in which to store the position of the grapheme. [out]

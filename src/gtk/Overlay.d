@@ -86,7 +86,7 @@ private import gtk.Bin;
  *
  * The GtkOverlay implementation of the GtkBuildable interface
  * supports placing a child as an overlay by specifying "overlay" as
- * the "type" attribute of a <child> element.
+ * the "type" attribute of a &lt;child&gt; element.
  */
 public class Overlay : Bin
 {

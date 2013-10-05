@@ -77,7 +77,7 @@ private import gobject.ObjectG;
  * GdkEventKey structure, which is passed to signal handlers for the
  * "key-press-event" and "key-release-event" signals.
  * The complete list of key values can be found in the
- * <gdk/gdkkeysyms.h> header file.
+ * &lt;gdk/gdkkeysyms.h&gt; header file.
  *
  * Key values are regularly updated from the upstream X.org X11 implementation,
  * so new values are added regularly. They will be prefixed with GDK_KEY_ rather
@@ -329,7 +329,7 @@ public class Keymap : ObjectG
 	 * from state when comparing this key press to a hot key. For
 	 * instance, on a US keyboard, the plus
 	 * symbol is shifted, so when comparing a key press to a
-	 * <Control>plus accelerator <Shift> should
+	 * &lt;Control&gt;plus accelerator &lt;Shift&gt; should
 	 * be masked out.
 	 * $(DDOC_COMMENT example)
 	 * An older interpretation consumed_modifiers was that it contained
@@ -523,7 +523,7 @@ public class Keymap : ObjectG
 	/**
 	 * Converts a key value into a symbolic name.
 	 * The names are the same as those in the
-	 * <gdk/gdkkeysyms.h> header file
+	 * &lt;gdk/gdkkeysyms.h&gt; header file
 	 * but without the leading "GDK_KEY_".
 	 * Params:
 	 * keyval = a key value
@@ -538,7 +538,7 @@ public class Keymap : ObjectG
 	/**
 	 * Converts a key name to a key value.
 	 * The names are the same as those in the
-	 * <gdk/gdkkeysyms.h> header file
+	 * &lt;gdk/gdkkeysyms.h&gt; header file
 	 * but without the leading "GDK_KEY_".
 	 * Params:
 	 * keyvalName = a key name

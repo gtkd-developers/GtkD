@@ -433,7 +433,7 @@ public class Unicode
 	 * No composition can have either of a or b equal to zero.
 	 * To be precise, this function composes if and only if
 	 * there exists a Primary Composite P which is canonically
-	 * equivalent to the sequence <a,b>. See the Unicode
+	 * equivalent to the sequence &lt;a,b&gt;. See the Unicode
 	 * Standard for the definition of Primary Composite.
 	 * If a and b do not compose a new character, ch is set to zero.
 	 * See UAX#15

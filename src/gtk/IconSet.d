@@ -114,8 +114,8 @@ private import gobject.Boxed;
  *
  * GtkIconFactory as GtkBuildable
  *
- * GtkIconFactory supports a custom <sources> element, which can contain
- * multiple <source> elements.
+ * GtkIconFactory supports a custom &lt;sources&gt; element, which can contain
+ * multiple &lt;source&gt; elements.
  * The following attributes are allowed:
  *
  * stock-id

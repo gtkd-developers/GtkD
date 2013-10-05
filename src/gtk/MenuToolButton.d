@@ -85,7 +85,7 @@ private import gtk.ToolButton;
  *
  * The GtkMenuToolButton implementation of the GtkBuildable interface
  * supports adding a menu by specifying "menu" as the "type"
- * attribute of a <child> element.
+ * attribute of a &lt;child&gt; element.
  *
  * $(DDOC_COMMENT example)
  */

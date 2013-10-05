@@ -567,7 +567,7 @@ public class Range : Widget, OrientableIF
 	
 	/**
 	 * This function returns the area that contains the range's trough
-	 * and its steppers, in widget->window coordinates.
+	 * and its steppers, in widget-&gt;window coordinates.
 	 * This function is useful mainly for GtkRange subclasses.
 	 * Since 2.20
 	 * Params:
@@ -582,7 +582,7 @@ public class Range : Widget, OrientableIF
 	
 	/**
 	 * This function returns sliders range along the long dimension,
-	 * in widget->window coordinates.
+	 * in widget-&gt;window coordinates.
 	 * This function is useful mainly for GtkRange subclasses.
 	 * Since 2.20
 	 * Params:

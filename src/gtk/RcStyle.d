@@ -97,9 +97,9 @@ private import gobject.ObjectG;
  * file by calling gtk_rc_parse(). In addition to this,
  * certain files will be read at the end of gtk_init().
  * Unless modified, the files looked for will be
- * <SYSCONFDIR>/gtk-2.0/gtkrc
+ * &lt;SYSCONFDIR&gt;/gtk-2.0/gtkrc
  * and .gtkrc-3.0 in the users home directory.
- * (<SYSCONFDIR> defaults to
+ * (&lt;SYSCONFDIR&gt; defaults to
  * /usr/local/etc. It can be changed with the
  * --prefix or --sysconfdir options when
  * configuring GTK+.)
@@ -150,7 +150,7 @@ private import gobject.ObjectG;
  * always used.
  *
  * Since GTK+ 2.10, widget_class paths can also contain
- * <classname> substrings, which are matching
+ * &lt;classname&gt; substrings, which are matching
  * the class with the given name and any derived classes. For instance,
  *
  * $(DDOC_COMMENT example)
@@ -391,9 +391,9 @@ private import gobject.ObjectG;
  *  Sets a background pixmap to be used in place of
  *  the bg color (or for GtkText,
  *  in place of the base color. The special
- *  value "<parent>" may be used to indicate that the widget should
+ *  value "&lt;parent&gt;" may be used to indicate that the widget should
  *  use the same background pixmap as its parent. The special value
- *  "<none>" may be used to indicate no background pixmap.
+ *  "&lt;none&gt;" may be used to indicate no background pixmap.
  *
  * font = font
  *
@@ -560,28 +560,28 @@ private import gobject.ObjectG;
  * series of modifiers followed by the name of a key. The
  * modifiers can be:
  *
- * <alt>
- * <ctl>
- * <control>
- * <meta>
- * <hyper>
- * <super>
- * <mod1>
- * <mod2>
- * <mod3>
- * <mod4>
- * <mod5>
- * <release>
- * <shft>
- * <shift>
+ * &lt;alt&gt;
+ * &lt;ctl&gt;
+ * &lt;control&gt;
+ * &lt;meta&gt;
+ * &lt;hyper&gt;
+ * &lt;super&gt;
+ * &lt;mod1&gt;
+ * &lt;mod2&gt;
+ * &lt;mod3&gt;
+ * &lt;mod4&gt;
+ * &lt;mod5&gt;
+ * &lt;release&gt;
+ * &lt;shft&gt;
+ * &lt;shift&gt;
  *
- * <shft> is an alias for
- * <shift>,
- * <ctl> is an alias for
- * <control>,
+ * &lt;shft&gt; is an alias for
+ * &lt;shift&gt;,
+ * &lt;ctl&gt; is an alias for
+ * &lt;control&gt;,
  *  and
- * <alt> is an alias for
- * <mod1>.
+ * &lt;alt&gt; is an alias for
+ * &lt;mod1&gt;.
  *
  * The action that is bound to the key is a sequence
  * of signal names (strings) followed by parameters for

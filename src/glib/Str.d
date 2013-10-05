@@ -91,7 +91,7 @@ version(Tango) {
  * not included in glib.h
  * (otherwise using glib.h would drag in
  * stdio.h), so you'll have to explicitly include
- * <glib/gprintf.h> in order to use the GLib
+ * &lt;glib/gprintf.h&gt; in order to use the GLib
  * printf() functions.
  *
  * While you may use the printf() functions
@@ -506,7 +506,7 @@ public class Str
 	 * (unless dest_size == 0). This function does not
 	 * allocate memory. Unlike strncpy(), this function doesn't pad dest (so
 	 * it's often faster). It returns the size of the attempted result,
-	 * strlen (src), so if retval >= dest_size, truncation occurred.
+	 * strlen (src), so if retval &gt;= dest_size, truncation occurred.
 	 * Note
 	 * Caveat: strlcpy() is supposedly more secure than
 	 * strcpy() or strncpy(), but if you really want to avoid screwups,

@@ -148,8 +148,8 @@ private import gobject.ObjectG;
  *
  * In the previous example, the GtkButton is matched even
  *  if it occurs deeply nested inside the toolbar. To restrict the match
- *  to direct children of the parent widget, insert a '>' character between
- *  the two selectors. E.g. GtkNotebook > GtkLabel matches
+ *  to direct children of the parent widget, insert a '&gt;' character between
+ *  the two selectors. E.g. GtkNotebook &gt; GtkLabel matches
  *  GtkLabel widgets that are direct children of a GtkNotebook.
  *
  * $(DDOC_COMMENT example)
@@ -298,8 +298,8 @@ private import gobject.ObjectG;
  *
  * alpha(color, f)
  * Modifies passed color's alpha by a factor f. f is a
- *  floating point number. f < 1.0 results in a more transparent
- *  color while f > 1.0 results in a more opaque color.
+ *  floating point number. f &lt; 1.0 results in a more transparent
+ *  color while f &gt; 1.0 results in a more opaque color.
  *
  * alhpa(blue, 0.5)
  *

@@ -494,16 +494,6 @@ public class GtkDClass
 			text ~= "{";
 		}
 
-		// moved from module level
-		//text ~= "private import "~convParms.outPack ~ "."~convParms.outPack~"types;\n\n";
-		//text ~= "private import lib."~convParms.outPack ~ ";\n\n";
-
-		// moved to module level - AND BACK AGAIN
-		//foreach( string imprt ; convParms.imprts )
-		//{
-		//	text ~= "private import "~imprt~";";
-		//}
-
 		string flipG(string inStr)
 		{
 			if ( inStr[0] == 'G' )
@@ -609,40 +599,6 @@ public class GtkDClass
 		return text;
 
 	}
-				
-				/* Deprecated */ /*
-	string[] assertStructNotNull = [
-	]; 
-	
-	private string[] getAssertStructNotNull(string var)
-	{
-		string[] lines = [
-			"version(noAssert)",
-			"{",
-			"	if ( "~var~" is null )",
-			"	{",
-			"		int zero = 0;",
-			"		version(Tango)",
-			"		{",
-			"			Stdout(\"struct "~var~" is null on constructor\").newline;",
-			"		}",
-			"		else",
-			"		{",
-			"			printf(\"struct "~var~" is null on constructor\");",
-			"		}",
-			"		zero = zero / zero;",
-			"	}",
-			"}",
-			"else",
-			"{",
-			"	assert("~var~" !is null, \"struct "~var~" is null on constructor\");",
-			"}"
-			]
-			;
-		return lines;
-	}
-				*/
-
 
 	/**
 	 * Adds the class code from the conversion parameters.
@@ -1365,9 +1321,6 @@ public class GtkDClass
 						stockEnums ~= " */";
 						stockEnums ~= stockID~",";
 						stockChars ~= "\""~stockValue[1..stockValue.length-1]~"\",";
-						//collectedConstants ~=
-						//	"const StockID "~stockID
-						//	~" = cast(StockID)\""~stockValue[1..stockValue.length-1]~"\";";
 					}
 				}
 			}
@@ -1511,7 +1464,6 @@ public class GtkDClass
 		{
 			gtkDEnumName = "C" ~ removeUnderscore(enumName[1 .. $-2]);
 		}
-		//string enumName = removeUnderscore(lines[0][5..lines[0].length]);
 		debug(enums)writefln("enum %s", enumName);
 		string[] values;
 		// skipp until the start of the enumerations
@@ -1542,12 +1494,6 @@ public class GtkDClass
 				value = enumToGtkD(enumName, value, convParms, wrapper);
 				debug(enums)writefln("\tprocessed %s", value);
 
-				//if ( std.string.indexOf(value, ":") >= 0 )
-				//{
-				//	invalidDEnum = true;
-				//	debug(structs)writefln("- INVALID >>>%s<<<", value);
-				//}
-				//else
 				if ( startsWith(value, '#') )
 				{
 					// ignore
@@ -2122,7 +2068,6 @@ public class GtkDClass
 				}
 				else // the regular function
 				{
-					bool tooSoon = false;	// reject for 2.10
 					// comment
 					void addComments()
 					{
@@ -2134,6 +2079,8 @@ public class GtkDClass
 							
 							for(int i; i < comments.length; i++)
 							{
+								comments[i] = escapeAngleBracket(comments[i]);
+
 								if(indexOf(comments[i], ":") == comments[i].length-1 && comments[i].chomp(":").strip() != "Returns" )
 								{
 									//Get the GtkD name of the param
@@ -2226,10 +2173,6 @@ public class GtkDClass
 							string[] comments;
 							while ( line<lines.length )
 							{
-								//if ( !tooSoon )
-								//{
-								//	tooSoon = lines[line]=="Since 2.10";
-								//}
 								comments ~= lines[line++];
 							}
 
@@ -2243,46 +2186,37 @@ public class GtkDClass
 						}
 					}
 
-					if ( tooSoon )
+					if ( !convParms.isInterface )
 					{
-						addComments();
-						member ~= "// next release";
+						string externalDeclaration = fun.getExternal();
+
+						/* Don't add repeated declarations. */
+						bool addme = true;
+
+						foreach(ref string declaration; externalDeclarations)
+						{
+							if(externalDeclaration == declaration){ addme = false; break; }
+						}
+
+						if(addme) externalDeclarations ~= externalDeclaration;
 					}
-					else
+					// body
+					if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(), "...") < 0 )
 					{
+						string gtkDDeclaration = fun.declaration();
+						debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
+						addComments();
+						member ~= gtkDDeclaration~iFaceChar;
 						if ( !convParms.isInterface )
 						{
-							string externalDeclaration = fun.getExternal();
-							
-							/* Don't add repeated declarations. */
-							bool addme = true;
-												                
-							foreach(ref string declaration; externalDeclarations)
-							{
-								if(externalDeclaration == declaration){ addme = false; break; }
-							}
-
-							if(addme) externalDeclarations ~= externalDeclaration;
+							member ~= "{";
+							member ~= "// "~funct;
+							member ~= fun.bod();
+							member ~= "}";
 						}
-						// body
-						if ( !convParms.omitCode(fun.name) && indexOf(fun.declaration(), "...") < 0 )
-						{
-							string gtkDDeclaration = fun.declaration();
-							//string gtkDDeclaration = stringToGtkD(rawDeclaration,convParms,wrapper.getAliases());
-							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
-							addComments();
-							member ~= gtkDDeclaration~iFaceChar;
-							if ( !convParms.isInterface )
-							{
-								member ~= "{";
-								member ~= "// "~funct;
-								member ~= fun.bod();
-								member ~= "}";
-							}
-							/* Duplicated functions are omitted. */
-							if(checkIfDupFunction(fun)) member.length = 0;
-							checkIfGtkStructs(fun);
-						}
+						/* Duplicated functions are omitted. */
+						if(checkIfDupFunction(fun)) member.length = 0;
+						checkIfGtkStructs(fun);
 					}
 				}
 			}
@@ -2359,20 +2293,17 @@ public class GtkDClass
 					{
 						pack = "gtk";
 						dName = strct[3..strct.length-1];
-						//dName[0] = std.ascii.toLower(dName[0]);
 					}
 					else if ( startsWith(strct, "Gdk") )
 					{
 						pack = "gdk";
 						dName = strct[3..strct.length-1];
-						//dName[0] = std.ascii.toLower(dName[0]);
 						if ( dName ==  "Pixbuf") pack = "gdkpixbuf";
 					}
 					else if ( startsWith(strct, "Gst") )
 					{
 						pack = "gstreamer";
 						dName = strct[3..strct.length-1];
-						//dName[0] = std.ascii.toLower(dName[0]);
 					}
 					else if ( startsWith(strct, "G") )
 					{
@@ -2536,6 +2467,8 @@ public class GtkDClass
 			if ( desc.length > 1 && desc[$-1].strip() == "*" && line.strip().length == 0 )
 				continue;
 
+			line = escapeAngleBracket(line);
+
 			desc ~= " * " ~ line;
 		}
 		
@@ -2648,6 +2581,19 @@ public class GtkDClass
 		return block;
 	}
 
+	string escapeAngleBracket(string line)
+	{
+		line = std.array.replace(line, "<", "&lt;");
+		line = std.array.replace(line, ">", "&gt;");
+
+		//Don't escape there html tags.
+		line = std.array.replace(line, "&lt;hr&gt;", "<hr>");
+		line = std.array.replace(line, "&lt;em&gt;", "<em>");
+		line = std.array.replace(line, "&lt;/em&gt;", "</em>");
+
+		return line;
+	}
+
 	/**
 	 * Converts a GTK strin to a GtkD string.
 	 * This removes the "_" and capitalises the next letter and converts the basic types
@@ -2676,13 +2622,7 @@ public class GtkDClass
 				converted ~= tokenToGtkD(gString[start..end], convParms, aliases, caseConvert);
 				if ( c=='*' )
 				{
-					//if ( pc==' ' )
-					//{
-					//	converted.length = converted.length-1;
-					//}
-					//converted ~= "[] ";
 					converted ~= c;
-
 				}
 				else if ( c<=' ' )
 				{
@@ -2951,10 +2891,6 @@ public class GtkDClass
 		{
 			type = type[1..$];
 		}
-//		if ( type == "uchar" )
-//		{
-//			type = "char";
-//		}
 	}
 
 

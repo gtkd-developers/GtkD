@@ -153,14 +153,14 @@ private import gobject.ObjectG;
  * GtkListStore as GtkBuildable
  *
  * The GtkListStore implementation of the GtkBuildable interface allows
- * to specify the model columns with a <columns> element that may
- * contain multiple <column> elements, each specifying one model
+ * to specify the model columns with a &lt;columns&gt; element that may
+ * contain multiple &lt;column&gt; elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
  *
  * Additionally, it is possible to specify content for the list store
- * in the UI definition, with the <data> element. It can contain
- * multiple <row> elements, each specifying to content for one
- * row of the list model. Inside a <row>, the <col> elements
+ * in the UI definition, with the &lt;data&gt; element. It can contain
+ * multiple &lt;row&gt; elements, each specifying to content for one
+ * row of the list model. Inside a &lt;row&gt;, the &lt;col&gt; elements
  * specify the content for individual cells.
  *
  * Note that it is probably more common to define your models

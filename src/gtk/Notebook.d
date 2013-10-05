@@ -88,13 +88,13 @@ private import gtk.Container;
  *
  * The GtkNotebook implementation of the GtkBuildable interface
  * supports placing children into tabs by specifying "tab" as the
- * "type" attribute of a <child> element. Note that the content
+ * "type" attribute of a &lt;child&gt; element. Note that the content
  * of the tab must be created before the tab can be filled.
- * A tab child can be specified without specifying a <child>
+ * A tab child can be specified without specifying a &lt;child&gt;
  * type attribute.
  *
  * To add a child widget in the notebooks action area, specify
- * "action-start" or "action-end" as the "type" attribute of the <child>
+ * "action-start" or "action-end" as the "type" attribute of the &lt;child&gt;
  * element.
  *
  * $(DDOC_COMMENT example)

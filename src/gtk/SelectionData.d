@@ -244,7 +244,7 @@ public class SelectionData : Boxed
 	/**
 	 * Sets the contents of the selection from a UTF-8 encoded string.
 	 * The string is converted to the form determined by
-	 * selection_data->target.
+	 * selection_data-&gt;target.
 	 * Params:
 	 * str = a UTF-8 string
 	 * Returns: TRUE if the selection was successfully set, otherwise FALSE.
@@ -268,7 +268,7 @@ public class SelectionData : Boxed
 	/**
 	 * Sets the contents of the selection from a GdkPixbuf
 	 * The pixbuf is converted to the form determined by
-	 * selection_data->target.
+	 * selection_data-&gt;target.
 	 * Since 2.6
 	 * Params:
 	 * pixbuf = a GdkPixbuf
@@ -301,7 +301,7 @@ public class SelectionData : Boxed
 	/**
 	 * Sets the contents of the selection from a list of URIs.
 	 * The string is converted to the form determined by
-	 * selection_data->target.
+	 * selection_data-&gt;target.
 	 * Since 2.6
 	 * Params:
 	 * uris = a NULL-terminated array of

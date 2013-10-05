@@ -200,9 +200,9 @@ public import gtk.Widget;
  *
  * @binding-set MyOwnFilechooserBindings
  * {
-	 *  bind "<Alt><Shift>Up" { "up-folder" () }
-	 *  bind "<Alt><Shift>Down" { "down-folder" () }
-	 *  bind "<Alt><Shift>Home" { "home-folder" () }
+	 *  bind "&lt;Alt&gt;&lt;Shift&gt;Up" { "up-folder" () }
+	 *  bind "&lt;Alt&gt;&lt;Shift&gt;Down" { "down-folder" () }
+	 *  bind "&lt;Alt&gt;&lt;Shift&gt;Home" { "home-folder" () }
  * }
  *
  * GtkFileChooserDefault
@@ -255,7 +255,7 @@ public import gtk.Widget;
  *
  *  @binding-set MiscShortcut
  *  {
-	 *  bind "<Alt>M" { "location-popup" ("/home/username/misc") }
+	 *  bind "&lt;Alt&gt;M" { "location-popup" ("/home/username/misc") }
  *  }
  *
  *  GtkFileChooserDefault

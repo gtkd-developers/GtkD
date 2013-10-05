@@ -100,7 +100,7 @@ private import gobject.ObjectG;
  *
  * Accelerators are handled by the GTK+ accelerator map. All actions are
  * assigned an accelerator path (which normally has the form
- * <Actions>/group-name/action-name)
+ * &lt;Actions&gt;/group-name/action-name)
  * and a shortcut is associated with this accelerator path. All menuitems
  * and toolitems take on this accelerator path. The GTK+ accelerator map
  * code makes sure that the correct shortcut is displayed next to the menu
@@ -109,15 +109,15 @@ private import gobject.ObjectG;
  * GtkActionGroup as GtkBuildable
  *
  * The GtkActionGroup implementation of the GtkBuildable interface accepts
- * GtkAction objects as <child> elements in UI definitions.
+ * GtkAction objects as &lt;child&gt; elements in UI definitions.
  *
  * Note that it is probably more common to define actions and action groups
  * in the code, since they are directly related to what the code can do.
  *
  * The GtkActionGroup implementation of the GtkBuildable interface supports
- * a custom <accelerator> element, which has attributes named key and
+ * a custom &lt;accelerator&gt; element, which has attributes named key and
  * modifiers and allows to specify accelerators. This is similar to the
- * <accelerator> element of GtkWidget, the main difference is that
+ * &lt;accelerator&gt; element of GtkWidget, the main difference is that
  * it doesn't allow you to specify a signal.
  *
  * $(DDOC_COMMENT example)
@@ -498,7 +498,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * If accelerator is NULL, attempts to use the accelerator associated
 	 * with the stock_id of the action.
 	 * Accel paths are set to
-	 * <Actions>/group-name/action-name.
+	 * &lt;Actions&gt;/group-name/action-name.
 	 * Since 2.4
 	 * Params:
 	 * action = the action to add
@@ -533,7 +533,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * to the action group.
 	 * The "activate" signals of the actions are connected to the callbacks and
 	 * their accel paths are set to
-	 * <Actions>/group-name/action-name.
+	 * &lt;Actions&gt;/group-name/action-name.
 	 * Since 2.4
 	 * Params:
 	 * entries = an array of action descriptions. [array length=n_entries]
@@ -569,7 +569,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * to the action group.
 	 * The "activate" signals of the actions are connected to the callbacks and
 	 * their accel paths are set to
-	 * <Actions>/group-name/action-name.
+	 * &lt;Actions&gt;/group-name/action-name.
 	 * Since 2.4
 	 * Params:
 	 * entries = an array of toggle action descriptions. [array length=n_entries]
@@ -605,7 +605,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * add them to the action group.
 	 * The "changed" signal of the first radio action is connected to the
 	 * on_change callback and the accel paths of the actions are set to
-	 * <Actions>/group-name/action-name.
+	 * &lt;Actions&gt;/group-name/action-name.
 	 * Since 2.4
 	 * Params:
 	 * entries = an array of radio action descriptions. [array length=n_entries]

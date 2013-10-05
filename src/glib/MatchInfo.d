@@ -434,7 +434,7 @@ public class MatchInfo
 	/**
 	 * Retrieves the text matching the capturing parentheses named name.
 	 * If name is a valid sub pattern name but it didn't match anything
-	 * (e.g. sub pattern "X", matching "b" against "(?P<X>a)?b")
+	 * (e.g. sub pattern "X", matching "b" against "(?P&lt;X&gt;a)?b")
 	 * then an empty string is returned.
 	 * The string is fetched from the string passed to the match function,
 	 * so you cannot call this function after freeing the string.
@@ -452,7 +452,7 @@ public class MatchInfo
 	/**
 	 * Retrieves the position in bytes of the capturing parentheses named name.
 	 * If name is a valid sub pattern name but it didn't match anything
-	 * (e.g. sub pattern "X", matching "b" against "(?P<X>a)?b")
+	 * (e.g. sub pattern "X", matching "b" against "(?P&lt;X&gt;a)?b")
 	 * then start_pos and end_pos are set to -1 and TRUE is returned.
 	 * Since 2.14
 	 * Params:

@@ -656,7 +656,7 @@ public class Event
 	 * start. time cannot be -1.
 	 * start cannot be -1, stop can be -1. If there
 	 * is a valid stop given, it must be greater or equal the start, including
-	 * when the indicated playback rate is < 0.
+	 * when the indicated playback rate is &lt; 0.
 	 * The applied_rate value provides information about any rate adjustment that
 	 * has already been made to the timestamps and content on the buffers of the
 	 * stream. (rate * applied_rate) should always equal the rate that has been
@@ -802,8 +802,8 @@ public class Event
 	 * element that generated the QoS event (usually the sink). The value is
 	 * generally computed based on more long term statistics about the streams
 	 * timestamps compared to the clock.
-	 * A value < 1.0 indicates that the upstream element is producing data faster
-	 * than real-time. A value > 1.0 indicates that the upstream element is not
+	 * A value &lt; 1.0 indicates that the upstream element is producing data faster
+	 * than real-time. A value &gt; 1.0 indicates that the upstream element is not
 	 * producing data fast enough. 1.0 is the ideal proportion value. The
 	 * proportion value can safely be used to lower or increase the quality of
 	 * the element.
@@ -817,7 +817,7 @@ public class Event
 	 * increasing value.
 	 * The upstream element can use the diff and timestamp values to decide
 	 * whether to process more buffers. For possitive diff, all buffers with
-	 * timestamp <= timestamp + diff will certainly arrive late in the sink
+	 * timestamp &lt;= timestamp + diff will certainly arrive late in the sink
 	 * as well. A (negative) diff value so that timestamp + diff would yield a
 	 * result smaller than 0 is not allowed.
 	 * The application can use general event probes to intercept the QoS
@@ -972,9 +972,9 @@ public class Event
 	 * Create a new step event. The purpose of the step event is to instruct a sink
 	 * to skip amount (expressed in format) of media. It can be used to implement
 	 * stepping through the video frame by frame or for doing fast trick modes.
-	 * A rate of <= 0.0 is not allowed. Pause the pipeline, for the effect of rate
+	 * A rate of &lt;= 0.0 is not allowed. Pause the pipeline, for the effect of rate
 	 * = 0.0 or first reverse the direction of playback using a seek event to get
-	 * the same effect as rate < 0.0.
+	 * the same effect as rate &lt; 0.0.
 	 * The flush flag will clear any pending data in the pipeline before starting
 	 * the step operation.
 	 * The intermediate flag instructs the pipeline that this step operation is

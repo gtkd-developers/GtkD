@@ -99,8 +99,8 @@ public class Utils
 	 * See also: gtk_source_utils_unescape_search_text().
 	 * Warning
 	 * The escape and unescape functions are not reciprocal! For example,
-	 * escape (unescape (\)) = \\. So avoid cycles such as: search entry -> unescape
-	 * -> search settings -> escape -> search entry. The original search entry text
+	 * escape (unescape (\)) = \\. So avoid cycles such as: search entry -&gt; unescape
+	 * -&gt; search settings -&gt; escape -&gt; search entry. The original search entry text
 	 * may be modified.
 	 * Params:
 	 * text = the text to escape.

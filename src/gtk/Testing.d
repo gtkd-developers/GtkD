@@ -321,7 +321,7 @@ public class Testing
 	 * release event) in the middle of the first GdkWindow found that belongs
 	 * to widget.
 	 * For GTK_NO_WINDOW widgets like GtkButton, this will often be an
-	 * input-only event window. For other widgets, this is usually widget->window.
+	 * input-only event window. For other widgets, this is usually widget-&gt;window.
 	 * Certain caveats should be considered when using this function, in
 	 * particular because the mouse pointer is warped to the button click
 	 * location, see gdk_test_simulate_button() for details.
@@ -342,7 +342,7 @@ public class Testing
 	 * This function will generate keyboard press and release events in
 	 * the middle of the first GdkWindow found that belongs to widget.
 	 * For GTK_NO_WINDOW widgets like GtkButton, this will often be an
-	 * input-only event window. For other widgets, this is usually widget->window.
+	 * input-only event window. For other widgets, this is usually widget-&gt;window.
 	 * Certain caveats should be considered when using this function, in
 	 * particular because the mouse pointer is warped to the key press
 	 * location, see gdk_test_simulate_key() for details.

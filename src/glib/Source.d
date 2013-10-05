@@ -444,8 +444,8 @@ public class Source
 	 * "object". This is used internally. Note that calling
 	 * g_source_set_callback_indirect() assumes
 	 * an initial reference count on callback_data, and thus
-	 * callback_funcs->unref will eventually be called once more
-	 * than callback_funcs->ref.
+	 * callback_funcs-&gt;unref will eventually be called once more
+	 * than callback_funcs-&gt;ref.
 	 * Params:
 	 * callbackData = pointer to callback data "object"
 	 * callbackFuncs = functions for reference counting callback_data

@@ -77,7 +77,7 @@ private import gio.IconIF;
 /**
  * Routines for managing mounted UNIX mount points and paths.
  *
- * Note that <gio/gunixmounts.h> belongs to the
+ * Note that &lt;gio/gunixmounts.h&gt; belongs to the
  * UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.
  */

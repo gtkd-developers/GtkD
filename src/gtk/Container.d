@@ -147,8 +147,8 @@ private import gtk.Widget;
 	 *  {
 		 *  gint min_width;
 		 *
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, NULL);
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width (widget, min_width,
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_width (widget, min_width, NULL);
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_height_for_width (widget, min_width,
 		 *  min_height, nat_height);
 	 *  }
 	 *  else
@@ -168,7 +168,7 @@ private import gtk.Widget;
  * {
 	 *  if (i_am_in_height_for_width_mode)
 	 *  {
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, nat_width);
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_width (widget, min_width, nat_width);
 	 *  }
 	 *  else
 	 *  {
@@ -236,8 +236,8 @@ private import gtk.Widget;
  * GtkContainer as GtkBuildable
  *
  * The GtkContainer implementation of the GtkBuildable interface
- * supports a <packing> element for children, which can
- * contain multiple <property> elements that specify
+ * supports a &lt;packing&gt; element for children, which can
+ * contain multiple &lt;property&gt; elements that specify
  * child properties for the child.
  *
  * $(DDOC_COMMENT example)

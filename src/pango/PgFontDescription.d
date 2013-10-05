@@ -173,7 +173,7 @@ public class PgFontDescription : Boxed
 	/**
 	 * Computes a hash of a PangoFontDescription structure suitable
 	 * to be used, for example, as an argument to g_hash_table_new().
-	 * The hash value is independent of desc->mask.
+	 * The hash value is independent of desc-&gt;mask.
 	 * Returns: the hash value.
 	 */
 	public uint hash()

@@ -74,8 +74,8 @@ private import gtk.Action;
  * Implementing GtkActivatable
  *
  * When extending a class that is already GtkActivatable; it is only
- * necessary to implement the GtkActivatable->sync_action_properties()
- * and GtkActivatable->update() methods and chain up to the parent
+ * necessary to implement the GtkActivatable-&gt;sync_action_properties()
+ * and GtkActivatable-&gt;update() methods and chain up to the parent
  * implementation, however when introducing
  * a new GtkActivatable class; the "related-action" and
  * "use-action-appearance" properties need to be handled by
@@ -105,9 +105,9 @@ public interface ActivatableIF
 	 * This is a utility function for GtkActivatable implementors.
 	 * When implementing GtkActivatable you must call this when
 	 * handling changes of the "related-action", and
-	 * you must also use this to break references in GObject->dispose().
+	 * you must also use this to break references in GObject-&gt;dispose().
 	 * This function adds a reference to the currently set related
-	 * action for you, it also makes sure the GtkActivatable->update()
+	 * action for you, it also makes sure the GtkActivatable-&gt;update()
 	 * method is called when the related GtkAction properties change
 	 * and registers to the action's proxy list.
 	 * Note

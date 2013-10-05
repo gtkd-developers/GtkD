@@ -120,7 +120,7 @@ public class Testing
 	
 	/**
 	 * This function is intended to be used in GTK+ test programs.
-	 * If (x,y) are > (-1,-1), it will warp the mouse pointer to
+	 * If (x,y) are &gt; (-1,-1), it will warp the mouse pointer to
 	 * the given (x,y) coordinates within window and simulate a
 	 * key press or release event.
 	 * When the mouse pointer is warped to the target location, use

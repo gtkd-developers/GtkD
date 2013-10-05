@@ -881,7 +881,7 @@ public class BookmarkFile
 	 * The expansion is done automatically when retrieving the stored
 	 * command line using the g_bookmark_file_get_app_info() function.
 	 * count is the number of times the application has registered the
-	 * bookmark; if is < 0, the current registration count will be increased
+	 * bookmark; if is &lt; 0, the current registration count will be increased
 	 * by one, if is 0, the application with name will be removed from
 	 * the list of registered applications.
 	 * stamp is the Unix time of the last registration; if it is -1, the

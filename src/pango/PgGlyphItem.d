@@ -200,7 +200,7 @@ public class PgGlyphItem
 	 * to that cluster; for instance, if half of a cluster is underlined
 	 * and the other-half strikethrough, then the cluster will end
 	 * up with both underline and strikethrough attributes. In these
-	 * cases, it may happen that item->extra_attrs for some of the
+	 * cases, it may happen that item-&gt;extra_attrs for some of the
 	 * result items can have multiple attributes of the same type.
 	 * This function takes ownership of glyph_item; it will be reused
 	 * as one of the elements in the list.

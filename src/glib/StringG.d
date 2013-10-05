@@ -515,7 +515,7 @@ public class StringG
 	 * the current length, the string will be truncated. If the
 	 * length is greater than the current length, the contents
 	 * of the newly added area are undefined. (However, as
-	 * always, string->str[string->len] will be a nul byte.)
+	 * always, string-&gt;str[string-&gt;len] will be a nul byte.)
 	 * Params:
 	 * len = the new length
 	 * Returns: string

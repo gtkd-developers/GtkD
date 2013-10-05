@@ -515,8 +515,8 @@ public class Application : GioApplication
 	 * to be activated when the key combination specificed by accelerator
 	 * is pressed.
 	 * accelerator must be a string that can be parsed by
-	 * gtk_accelerator_parse(), e.g. "<Primary>q" or
-	 * "<Control><Alt>p".
+	 * gtk_accelerator_parse(), e.g. "&lt;Primary&gt;q" or
+	 * "&lt;Control&gt;&lt;Alt&gt;p".
 	 * action_name must be the name of an action as it would be used
 	 * in the app menu, i.e. actions that have been added to the application
 	 * are referred to with an "app." prefix, and window-specific actions

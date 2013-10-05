@@ -713,7 +713,7 @@ public class Message
 	 * Create a new buffering message. This message can be posted by an element that
 	 * needs to buffer data before it can continue processing. percent should be a
 	 * value between 0 and 100. A value of 100 means that the buffering completed.
-	 * When percent is < 100 the application should PAUSE a PLAYING pipeline. When
+	 * When percent is &lt; 100 the application should PAUSE a PLAYING pipeline. When
 	 * percent is 100, the application can set the pipeline (back) to PLAYING.
 	 * The application must be prepared to receive BUFFERING messages in the
 	 * PREROLLING state and may only set the pipeline to PLAYING after receiving a

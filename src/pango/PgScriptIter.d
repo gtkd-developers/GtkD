@@ -124,7 +124,7 @@ public class PgScriptIter
 	
 	/**
 	 * Gets information about the range to which iter currently points.
-	 * The range is the set of locations p where *start <= p < *end.
+	 * The range is the set of locations p where *start &lt;= p &lt; *end.
 	 * (That is, it doesn't include the character stored at *end)
 	 * Since 1.4
 	 * Params:

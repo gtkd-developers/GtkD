@@ -93,7 +93,7 @@ private import gobject.ObjectG;
  * GDesktopAppInfo is an implementation of GAppInfo based on
  * desktop files.
  *
- * Note that <gio/gdesktopappinfo.h> belongs to
+ * Note that &lt;gio/gdesktopappinfo.h&gt; belongs to
  * the UNIX-specific GIO interfaces, thus you have to use the
  * gio-unix-2.0.pc pkg-config file when using it.
  */

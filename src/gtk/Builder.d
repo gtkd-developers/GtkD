@@ -241,23 +241,23 @@ private import gobject.ObjectG;
 	 *  (ALL *  text ?)
  * }
  *
- * The toplevel element is <interface>. It optionally takes a "domain"
+ * The toplevel element is &lt;interface&gt;. It optionally takes a "domain"
  * attribute, which will make the builder look for translated strings using
  * dgettext() in the domain specified. This can also be done by calling
  * gtk_builder_set_translation_domain() on the builder. Objects are described by
- * <object> elements, which can contain <property> elements to set
- * properties, <signal> elements which connect signals to handlers, and
- * <child> elements, which describe child objects (most often widgets
+ * &lt;object&gt; elements, which can contain &lt;property&gt; elements to set
+ * properties, &lt;signal&gt; elements which connect signals to handlers, and
+ * &lt;child&gt; elements, which describe child objects (most often widgets
  * inside a container, but also e.g. actions in an action group, or columns in a
- * tree model). A <child> element contains an <object> element which
+ * tree model). A &lt;child&gt; element contains an &lt;object&gt; element which
  * describes the child object. The target toolkit version(s) are described by
- * <requires> elements, the "lib" attribute specifies the widget library
+ * &lt;requires&gt; elements, the "lib" attribute specifies the widget library
  * in question (currently the only supported value is "gtk+") and the "version"
  * attribute specifies the target version in the form
- * "<major>.<minor>". The builder will error out if the version
+ * "&lt;major&gt;.&lt;minor&gt;". The builder will error out if the version
  * requirements are not met.
  *
- * Typically, the specific kind of object represented by an <object>
+ * Typically, the specific kind of object represented by an &lt;object&gt;
  * element is specified by the "class" attribute. If the type has not been
  * loaded yet, GTK+ tries to find the _get_type() from the
  * class name by applying heuristics. This works in most cases, but if
@@ -281,7 +281,7 @@ private import gobject.ObjectG;
  * definition.
  *
  * Setting properties of objects is pretty straightforward with the
- * <property> element: the "name" attribute specifies the name of the
+ * &lt;property&gt; element: the "name" attribute specifies the name of the
  * property, and the content of the element specifies the value. If the
  * "translatable" attribute is set to a true value, GTK+ uses gettext() (or
  * dgettext() if the builder has a translation domain set) to find a translation
@@ -306,7 +306,7 @@ private import gobject.ObjectG;
  * The exception to this rule is that an object has to be constructed before
  * it can be used as the value of a construct-only property.
  *
- * Signal handlers are set up with the <signal> element. The "name"
+ * Signal handlers are set up with the &lt;signal&gt; element. The "name"
  * attribute specifies the name of the signal, and the "handler" attribute
  * specifies the function to connect to the signal. By default, GTK+ tries to
  * find the handler using g_module_symbol(), but this can be changed by passing
@@ -319,13 +319,13 @@ private import gobject.ObjectG;
  * Sometimes it is necessary to refer to widgets which have implicitly been
  * constructed by GTK+ as part of a composite widget, to set properties on them
  * or to add further children (e.g. the vbox of a GtkDialog). This can be
- * achieved by setting the "internal-child" propery of the <child> element
- * to a true value. Note that GtkBuilder still requires an <object>
+ * achieved by setting the "internal-child" propery of the &lt;child&gt; element
+ * to a true value. Note that GtkBuilder still requires an &lt;object&gt;
  * element for the internal child, even if it has already been constructed.
  *
  * A number of widgets have different places where a child can be added (e.g.
  * tabs vs. page content in notebooks). This can be reflected in a UI definition
- * by specifying the "type" attribute on a <child>. The possible values
+ * by specifying the "type" attribute on a &lt;child&gt;. The possible values
  * for the "type" attribute are described in the sections describing the
  * widget-specific portions of UI definitions.
  *
@@ -333,8 +333,8 @@ private import gobject.ObjectG;
  *
  * Beyond this general structure, several object classes define their own XML
  * DTD fragments for filling in the ANY placeholders in the DTD above. Note that
- * a custom element in a <child> element gets parsed by the custom tag
- * handler of the parent object, while a custom element in an <object>
+ * a custom element in a &lt;child&gt; element gets parsed by the custom tag
+ * handler of the parent object, while a custom element in an &lt;object&gt;
  * element gets parsed by the custom tag handler of the object.
  *
  * These XML fragments are explained in the documentation of the respective
@@ -365,7 +365,7 @@ private import gobject.ObjectG;
  * GtkFileFilter,
  * GtkTextTagTable.
  *
- * Additionally, since 3.10 a special <template> tag has been added to the format
+ * Additionally, since 3.10 a special &lt;template&gt; tag has been added to the format
  * allowing one to define a widget class's components.
  *
  * <hr>

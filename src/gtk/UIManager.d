@@ -110,40 +110,40 @@ private import gobject.ObjectG;
  * the similarly named GtkBuilder UI
  * Definitions.
  *
- * <!ELEMENT ui (menubar|toolbar|popup|accelerator)* >
- * <!ELEMENT menubar (menuitem|separator|placeholder|menu)* >
- * <!ELEMENT menu (menuitem|separator|placeholder|menu)* >
- * <!ELEMENT popup (menuitem|separator|placeholder|menu)* >
- * <!ELEMENT toolbar (toolitem|separator|placeholder)* >
- * <!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
- * <!ELEMENT menuitem EMPTY >
- * <!ELEMENT toolitem (menu?) >
- * <!ELEMENT separator EMPTY >
- * <!ELEMENT accelerator EMPTY >
- * <!ATTLIST menubar name #IMPLIED
- *  action #IMPLIED >
- * <!ATTLIST toolbar name #IMPLIED
- *  action #IMPLIED >
- * <!ATTLIST popup name #IMPLIED
+ * &lt;!ELEMENT ui (menubar|toolbar|popup|accelerator)* &gt;
+ * &lt;!ELEMENT menubar (menuitem|separator|placeholder|menu)* &gt;
+ * &lt;!ELEMENT menu (menuitem|separator|placeholder|menu)* &gt;
+ * &lt;!ELEMENT popup (menuitem|separator|placeholder|menu)* &gt;
+ * &lt;!ELEMENT toolbar (toolitem|separator|placeholder)* &gt;
+ * &lt;!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* &gt;
+ * &lt;!ELEMENT menuitem EMPTY &gt;
+ * &lt;!ELEMENT toolitem (menu?) &gt;
+ * &lt;!ELEMENT separator EMPTY &gt;
+ * &lt;!ELEMENT accelerator EMPTY &gt;
+ * &lt;!ATTLIST menubar name #IMPLIED
+ *  action #IMPLIED &gt;
+ * &lt;!ATTLIST toolbar name #IMPLIED
+ *  action #IMPLIED &gt;
+ * &lt;!ATTLIST popup name #IMPLIED
  *  action #IMPLIED
- *  accelerators (true|false) #IMPLIED >
- * <!ATTLIST placeholder name #IMPLIED
- *  action #IMPLIED >
- * <!ATTLIST separator name #IMPLIED
+ *  accelerators (true|false) #IMPLIED &gt;
+ * &lt;!ATTLIST placeholder name #IMPLIED
+ *  action #IMPLIED &gt;
+ * &lt;!ATTLIST separator name #IMPLIED
  *  action #IMPLIED
- *  expand (true|false) #IMPLIED >
- * <!ATTLIST menu name #IMPLIED
+ *  expand (true|false) #IMPLIED &gt;
+ * &lt;!ATTLIST menu name #IMPLIED
  *  action #REQUIRED
- *  position (top|bot) #IMPLIED >
- * <!ATTLIST menuitem name #IMPLIED
+ *  position (top|bot) #IMPLIED &gt;
+ * &lt;!ATTLIST menuitem name #IMPLIED
  *  action #REQUIRED
  *  position (top|bot) #IMPLIED
- *  always-show-image (true|false) #IMPLIED >
- * <!ATTLIST toolitem name #IMPLIED
+ *  always-show-image (true|false) #IMPLIED &gt;
+ * &lt;!ATTLIST toolitem name #IMPLIED
  *  action #REQUIRED
- *  position (top|bot) #IMPLIED >
- * <!ATTLIST accelerator name #IMPLIED
- *  action #REQUIRED >
+ *  position (top|bot) #IMPLIED &gt;
+ * &lt;!ATTLIST accelerator name #IMPLIED
+ *  action #REQUIRED &gt;
  *
  * There are some additional restrictions beyond those specified in the
  * DTD, e.g. every toolitem must have a toolbar in its anchestry and
@@ -224,7 +224,7 @@ private import gobject.ObjectG;
  * Accelerators
  *
  * Every action has an accelerator path. Accelerators are installed together with
- * menuitem proxies, but they can also be explicitly added with <accelerator>
+ * menuitem proxies, but they can also be explicitly added with &lt;accelerator&gt;
  * elements in the UI definition. This makes it possible to have accelerators for
  * actions even if they have no visible proxies.
  *
@@ -264,10 +264,10 @@ private import gobject.ObjectG;
  * GtkUIManager as GtkBuildable
  *
  * The GtkUIManager implementation of the GtkBuildable interface accepts
- * GtkActionGroup objects as <child> elements in UI definitions.
+ * GtkActionGroup objects as &lt;child&gt; elements in UI definitions.
  *
  * A GtkUIManager UI definition as described above can be embedded in
- * an GtkUIManager <object> element in a GtkBuilder UI definition.
+ * an GtkUIManager &lt;object&gt; element in a GtkBuilder UI definition.
  *
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
@@ -645,9 +645,9 @@ public class UIManager : ObjectG, BuildableIF
 	 * Looks up a widget by following a path.
 	 * The path consists of the names specified in the XML description of the UI.
 	 * separated by '/'. Elements which don't have a name or action attribute in
-	 * the XML (e.g. <popup>) can be addressed by their XML element name
+	 * the XML (e.g. &lt;popup&gt;) can be addressed by their XML element name
 	 * (e.g. "popup"). The root element ("/ui") can be omitted in the path.
-	 * Note that the widget found by following a path that ends in a <menu>
+	 * Note that the widget found by following a path that ends in a &lt;menu&gt;
 	 * element is the menuitem to which the menu is attached, not the menu itmanager.
 	 * Also note that the widgets constructed by a ui manager are not tied to
 	 * the lifecycle of the ui manager. If you add the widgets returned by this
@@ -747,7 +747,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Warning
 	 * gtk_ui_manager_add_ui_from_string is deprecated and should not be used in newly-written code. 3.10
 	 * Parses a string containing a UI definition and
-	 * merges it with the current contents of manager. An enclosing <ui>
+	 * merges it with the current contents of manager. An enclosing &lt;ui&gt;
 	 * element is added if it is missing.
 	 * Since 2.4
 	 * Params:

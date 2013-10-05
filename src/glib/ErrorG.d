@@ -127,10 +127,10 @@ private import gtkc.Loader;
  * calling function will receive it), and g_clear_error() clears an
  * error location by freeing the error and resetting the location to
  * NULL. To display an error to the user, simply display
- * error->message, perhaps along with additional
+ * error-&gt;message, perhaps along with additional
  * context known only to the calling function (the file being opened,
  * or whatever -- though in the g_file_get_contents() case,
- * error->message already contains a filename).
+ * error-&gt;message already contains a filename).
  *
  * When implementing a function that can report errors, the basic
  * tool is g_set_error(). Typically, if a fatal error occurs you
@@ -178,26 +178,26 @@ private import gtkc.Loader;
  * Error domains and codes are conventionally named as follows:
  *
  *  The error domain is called
- *  <NAMESPACE>_<MODULE>_ERROR,
+ *  &lt;NAMESPACE&gt;_&lt;MODULE&gt;_ERROR,
  *  for example G_SPAWN_ERROR or G_THREAD_ERROR:
  *
  * $(DDOC_COMMENT example)
  *
  *  The quark function for the error domain is called
- *  <namespace>_<module>_error_quark,
+ *  &lt;namespace&gt;_&lt;module&gt;_error_quark,
  *  for example g_spawn_error_quark() or g_thread_error_quark().
  *
  *  The error codes are in an enumeration called
- *  <Namespace><Module>Error;
+ *  &lt;Namespace&gt;&lt;Module&gt;Error;
  *  for example,GThreadError or GSpawnError.
  *
  *  Members of the error code enumeration are called
- *  <NAMESPACE>_<MODULE>_ERROR_<CODE>,
+ *  &lt;NAMESPACE&gt;_&lt;MODULE&gt;_ERROR_&lt;CODE&gt;,
  *  for example G_SPAWN_ERROR_FORK or G_THREAD_ERROR_AGAIN.
  *
  *  If there's a "generic" or "unknown" error code for unrecoverable
  *  errors it doesn't make sense to distinguish with specific codes,
- *  it should be called <NAMESPACE>_<MODULE>_ERROR_FAILED,
+ *  it should be called &lt;NAMESPACE&gt;_&lt;MODULE&gt;_ERROR_FAILED,
  *  for example G_SPAWN_ERROR_FAILED.
  *
  * Summary of rules for use of GError:

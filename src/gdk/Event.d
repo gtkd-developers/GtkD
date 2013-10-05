@@ -302,8 +302,8 @@ public class Event
 	
 	/**
 	 * Appends a copy of the given event onto the front of the event
-	 * queue for event->any.window's display, or the default event
-	 * queue if event->any.window is NULL. See gdk_display_put_event().
+	 * queue for event-&gt;any.window's display, or the default event
+	 * queue if event-&gt;any.window is NULL. See gdk_display_put_event().
 	 */
 	public void put()
 	{
@@ -605,7 +605,7 @@ public class Event
 	 * GDK_MODIFIER_INTENT_CONTEXT_MENU, then the left mouse button will
 	 * also trigger a context menu if this modifier is pressed.
 	 * This function should always be used instead of simply checking for
-	 * event->button == GDK_BUTTON_SECONDARY.
+	 * event-&gt;button == GDK_BUTTON_SECONDARY.
 	 * Returns: TRUE if the event should trigger a context menu. Since 3.4
 	 */
 	public int triggersContextMenu()
@@ -672,12 +672,12 @@ public class Event
 	
 	/**
 	 * Returns the screen for the event. The screen is
-	 * typically the screen for event->any.window, but
+	 * typically the screen for event-&gt;any.window, but
 	 * for events such as mouse events, it is the screen
 	 * where the pointer was when the event occurs -
 	 * that is, the screen which has the root window
-	 * to which event->motion.x_root and
-	 * event->motion.y_root are relative.
+	 * to which event-&gt;motion.x_root and
+	 * event-&gt;motion.y_root are relative.
 	 * Since 2.2
 	 * Returns: the screen for the event. [transfer none]
 	 */

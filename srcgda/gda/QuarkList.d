@@ -112,7 +112,7 @@ public class QuarkList
 	}
 	
 	/**
-	 * Creates a new GdaQuarkList, which is a set of key->value pairs,
+	 * Creates a new GdaQuarkList, which is a set of key-&gt;value pairs,
 	 * very similar to GLib's GHashTable, but with the only purpose to
 	 * make easier the parsing and creation of data source connection
 	 * strings.
@@ -173,7 +173,7 @@ public class QuarkList
 	}
 	
 	/**
-	 * Adds new key->value pairs from the given string. If cleanup is
+	 * Adds new key-&gt;value pairs from the given string. If cleanup is
 	 * set to TRUE, the previous contents will be discarded before adding
 	 * the new pairs.
 	 * Params:

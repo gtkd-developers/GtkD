@@ -138,9 +138,9 @@ private import gobject.ObjectG;
  * localized, but the localized values are stored in gettext catalogs
  * and looked up with the domain that is specified in the
  * gettext-domain attribute of the
- * <schemalist> or <schema>
+ * &lt;schemalist&gt; or &lt;schema&gt;
  * elements and the category that is specified in the l10n attribute of the
- * <key> element.
+ * &lt;key&gt; element.
  *
  * GSettings uses schemas in a compact binary form that is created
  * by the glib-compile-schemas
@@ -153,7 +153,7 @@ private import gobject.ObjectG;
  *
  * At runtime, schemas are identified by their id (as specified
  * in the id attribute of the
- * <schema> element). The
+ * &lt;schema&gt; element). The
  * convention for schema ids is to use a dotted name, similar in
  * style to a D-Bus bus name, e.g. "org.gnome.SessionManager". In particular,
  * if the settings are for a specific service that owns a D-Bus bus name,
@@ -162,8 +162,8 @@ private import gobject.ObjectG;
  * not use StudlyCaps, e.g. "org.gnome.font-rendering".
  *
  * In addition to GVariant types, keys can have types that have enumerated
- * types. These can be described by a <choice>,
- * <enum> or <flags> element, see
+ * types. These can be described by a &lt;choice&gt;,
+ * &lt;enum&gt; or &lt;flags&gt; element, see
  *  Example 16, “Ranges, choices and enumerated types”. The underlying type of
  * such a key is string, but you can use g_settings_get_enum(),
  * g_settings_set_enum(), g_settings_get_flags(), g_settings_set_flags()
@@ -662,7 +662,7 @@ public class Settings : ObjectG
 	 * base-path/name, where
 	 * base-path is the base path of settings.
 	 * The schema for the child settings object must have been declared
-	 * in the schema of settings using a <child> element.
+	 * in the schema of settings using a &lt;child&gt; element.
 	 * Since 2.26
 	 * Params:
 	 * name = the name of the 'child' schema

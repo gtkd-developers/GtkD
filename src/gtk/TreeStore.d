@@ -115,8 +115,8 @@ private import gobject.ObjectG;
  * GtkTreeStore as GtkBuildable
  *
  * The GtkTreeStore implementation of the GtkBuildable interface allows
- * to specify the model columns with a <columns> element that may
- * contain multiple <column> elements, each specifying one model
+ * to specify the model columns with a &lt;columns&gt; element that may
+ * contain multiple &lt;column&gt; elements, each specifying one model
  * column. The "type" attribute specifies the data type for the column.
  *
  * $(DDOC_COMMENT example)

@@ -226,8 +226,8 @@ private import gtkc.paths;
 	 *  {
 		 *  gint min_width;
 		 *
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, NULL);
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_height_for_width (widget, min_width,
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_width (widget, min_width, NULL);
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_height_for_width (widget, min_width,
 		 *  min_height, nat_height);
 	 *  }
 	 *  else
@@ -246,7 +246,7 @@ private import gtkc.paths;
  * {
 	 *  if (i_am_in_height_for_width_mode)
 	 *  {
-		 *  GTK_WIDGET_GET_CLASS (widget)->get_preferred_width (widget, min_width, nat_width);
+		 *  GTK_WIDGET_GET_CLASS (widget)-&gt;get_preferred_width (widget, min_width, nat_width);
 	 *  }
 	 *  else
 	 *  {
@@ -321,20 +321,20 @@ private import gtkc.paths;
  * GtkWidget as GtkBuildable
  *
  * The GtkWidget implementation of the GtkBuildable interface supports a
- * custom <accelerator> element, which has attributes named key,
+ * custom &lt;accelerator&gt; element, which has attributes named key,
  * modifiers and signal and allows to specify accelerators.
  *
  * $(DDOC_COMMENT example)
  *
  * In addition to accelerators, GtkWidget also support a
- * custom <accessible> element, which supports actions and relations.
+ * custom &lt;accessible&gt; element, which supports actions and relations.
  * Properties on the accessible implementation of an object can be set by accessing the
  * internal child "accessible" of a GtkWidget.
  *
  * $(DDOC_COMMENT example)
  *
  * Finally, GtkWidget allows style information such as style classes to
- * be associated with widgets, using the custom <style> element:
+ * be associated with widgets, using the custom &lt;style&gt; element:
  *
  * $(DDOC_COMMENT example)
  *
@@ -354,24 +354,24 @@ private import gtkc.paths;
  * is slightly different from regulare GtkBuilder XML.
  *
  * Unlike regular interface descriptions, gtk_widget_class_set_template() will expect a
- * <template> tag as a direct child of the toplevel <interface>
- * tag. The <template> tag must specify the "class" attribute which
+ * &lt;template&gt; tag as a direct child of the toplevel &lt;interface&gt;
+ * tag. The &lt;template&gt; tag must specify the "class" attribute which
  * must be the type name of the widget. Optionally, the "parent" attribute
  * may be specified to specify the direct parent type of the widget type, this
  * is ignored by the GtkBuilder but required for Glade to introspect what kind
  * of properties and internal children exist for a given type when the actual
  * type does not exist.
  *
- * The XML which is contained inside the <template> tag behaves as if
- * it were added to the <object> tag defining widget itself. You may set
- * properties on widget by inserting <property> tags into the <template>
- * tag, and also add <child> tags to add children and extend widget in the
- * normal way you would with <object> tags.
+ * The XML which is contained inside the &lt;template&gt; tag behaves as if
+ * it were added to the &lt;object&gt; tag defining widget itself. You may set
+ * properties on widget by inserting &lt;property&gt; tags into the &lt;template&gt;
+ * tag, and also add &lt;child&gt; tags to add children and extend widget in the
+ * normal way you would with &lt;object&gt; tags.
  *
- * Additionally, <object> tags can also be added before and
- * after the initial <template> tag in the normal way, allowing
+ * Additionally, &lt;object&gt; tags can also be added before and
+ * after the initial &lt;template&gt; tag in the normal way, allowing
  * one to define auxilary objects which might be referenced by other
- * widgets declared as children of the <template> tag.
+ * widgets declared as children of the &lt;template&gt; tag.
  *
  * $(DDOC_COMMENT example)
  */

@@ -184,7 +184,7 @@ public class PgRenderer : ObjectG
 	 * embedding the text associated with the glyphs in the output if the
 	 * output format supports it (PDF for example).
 	 * Note that text is the start of the text for layout, which is then
-	 * indexed by glyph_item->item->offset.
+	 * indexed by glyph_item-&gt;item-&gt;offset.
 	 * If text is NULL, this simply calls pango_renderer_draw_glyphs().
 	 * The default implementation of this method simply falls back to
 	 * pango_renderer_draw_glyphs().

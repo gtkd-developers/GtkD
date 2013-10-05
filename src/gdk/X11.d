@@ -130,7 +130,7 @@ private import gdk.Window;
 
 /**
  * The functions in this section are specific to the GDK X11 backend.
- * To use them, you need to include the <gdk/gdkx.h>
+ * To use them, you need to include the &lt;gdk/gdkx.h&gt;
  * header and use the X11-specific pkg-config files to build your
  * application (either gdk-x11-3.0 or
  * gtk+-x11-3.0).

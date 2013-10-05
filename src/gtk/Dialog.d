@@ -142,8 +142,8 @@ private import gtk.Window;
  * vbox and action_area as internal children with the names "vbox" and
  * "action_area".
  *
- * GtkDialog supports a custom <action-widgets> element, which
- * can contain multiple <action-widget> elements. The "response"
+ * GtkDialog supports a custom &lt;action-widgets&gt; element, which
+ * can contain multiple &lt;action-widget&gt; elements. The "response"
  * attribute specifies a numeric response, and the content of the element
  * is the id of widget (which should be a child of the dialogs action_area).
  *
@@ -539,7 +539,7 @@ public class Dialog : Window
 	 * The "action-area-border" style property
 	 *  "action-area-border" gint : Read
 	 * Width of border around the button area at the bottom of the dialog.
-	 * Allowed values: >= 0
+	 * Allowed values: &gt;= 0
 	 * Default value: 5
 	 * Params:
 	 * newOrder = an array of response ids of

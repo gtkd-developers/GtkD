@@ -181,7 +181,7 @@ public class TimeZone
 	 * "Jn" (Julian day with n between 1 and 365, leap
 	 * years not counted), "n" (zero-based Julian day
 	 * with n between 0 and 365) or "Mm.w.d" (day d
-	 * (0 <= d <= 6) of week w (1 <= w <= 5) of month m (1 <= m <= 12), day
+	 * (0 &lt;= d &lt;= 6) of week w (1 &lt;= w &lt;= 5) of month m (1 &lt;= m &lt;= 12), day
 	 * 0 is a Sunday). Times are in local wall clock time, the default is
 	 * 02:00:00.
 	 * In Windows, the "tzn[+|–]hh[:mm[:ss]][dzn]" format is used, but also

@@ -128,7 +128,7 @@ private import gtk.Container;
  *
  * Widget coordinates
  *
- * Coordinates relative to the widget (usually widget->window).
+ * Coordinates relative to the widget (usually widget-&gt;window).
  *
  * Bin window coordinates
  *
@@ -149,7 +149,7 @@ private import gtk.Container;
  * GtkTreeView as GtkBuildable
  *
  * The GtkTreeView implementation of the GtkBuildable interface accepts
- * GtkTreeViewColumn objects as <child> elements and exposes the
+ * GtkTreeViewColumn objects as &lt;child&gt; elements and exposes the
  * internal GtkTreeSelection in UI definitions.
  *
  * $(DDOC_COMMENT example)
@@ -1403,7 +1403,7 @@ public class TreeView : Container, ScrollableIF
 	 * Finds the path at the point (x, y), relative to bin_window coordinates
 	 * (please see gtk_tree_view_get_bin_window()).
 	 * That is, x and y are relative to an events coordinates. x and y must
-	 * come from an event on the tree_view only where event->window ==
+	 * come from an event on the tree_view only where event-&gt;window ==
 	 * gtk_tree_view_get_bin_window (). It is primarily for
 	 * things like popup menus. If path is non-NULL, then it will be filled
 	 * with the GtkTreePath at that point. This path should be freed with
@@ -1446,7 +1446,7 @@ public class TreeView : Container, ScrollableIF
 	 * selection, having a custom context menu or starting rubber banding.
 	 * The x and y coordinate that are provided must be relative to bin_window
 	 * coordinates. That is, x and y must come from an event on tree_view
-	 * where event->window == gtk_tree_view_get_bin_window ().
+	 * where event-&gt;window == gtk_tree_view_get_bin_window ().
 	 * For converting widget coordinates (eg. the ones you get from
 	 * GtkWidget::query-tooltip), please see
 	 * gtk_tree_view_convert_widget_to_bin_window_coords().
@@ -1558,7 +1558,7 @@ public class TreeView : Container, ScrollableIF
 	
 	/**
 	 * Returns the window that tree_view renders to.
-	 * This is used primarily to compare to event->window
+	 * This is used primarily to compare to event-&gt;window
 	 * to confirm that the event on tree_view is on the right window.
 	 * Returns: A GdkWindow, or NULL when tree_view hasn't been realized yet. [transfer none]
 	 */
@@ -2236,7 +2236,7 @@ public class TreeView : Container, ScrollableIF
 	 * When enabled, "has-tooltip" will be set to TRUE and
 	 * tree_view will connect a "query-tooltip" signal handler.
 	 * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
-	 * so , <, etc have to be escaped in the text.
+	 * so , &lt;, etc have to be escaped in the text.
 	 * Since 2.12
 	 * Params:
 	 * column = an integer, which is a valid column number for tree_view's model

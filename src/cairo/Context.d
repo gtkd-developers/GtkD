@@ -1370,7 +1370,7 @@ public class Context
 	 * return value from one of cairo_copy_path() or
 	 * cairo_copy_path_flat() or it may be constructed manually. See
 	 * cairo_path_t for details on how the path data structure should be
-	 * initialized, and note that path->status must be
+	 * initialized, and note that path-&gt;status must be
 	 * initialized to CAIRO_STATUS_SUCCESS.
 	 * Since 1.0
 	 * Params:

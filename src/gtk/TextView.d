@@ -1025,7 +1025,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Usually used to find out which window an event corresponds to.
 	 * If you connect to an event signal on text_view, this function
-	 * should be called on event->window to
+	 * should be called on event-&gt;window to
 	 * see which window it was.
 	 * Params:
 	 * window = a window type

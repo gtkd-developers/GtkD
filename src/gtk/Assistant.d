@@ -95,7 +95,7 @@ private import gtk.Window;
  * action_area as internal children with the name "action_area".
  *
  * To add pages to an assistant in GtkBuilder, simply add it as a
- * <child> to the GtkAssistant object, and set its child properties
+ * &lt;child&gt; to the GtkAssistant object, and set its child properties
  * as necessary.
  */
 public class Assistant : Window

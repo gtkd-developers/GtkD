@@ -156,7 +156,7 @@ public class PgVertical
 	 * This function is similar to pango_gravity_get_for_script() except
 	 * that this function makes a distinction between narrow/half-width and
 	 * wide/full-width characters also. Wide/full-width characters always
-	 * stand <emph>upright</emph>, that is, they always take the base gravity,
+	 * stand &lt;emph&gt;upright&lt;/emph&gt;, that is, they always take the base gravity,
 	 * whereas narrow/full-width characters are always rotated in vertical
 	 * context.
 	 * If base_gravity is PANGO_GRAVITY_AUTO, it is first replaced with the

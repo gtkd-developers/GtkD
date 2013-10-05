@@ -79,7 +79,7 @@ private import gobject.ObjectG;
  *
  * The GtkTextTagTable implementation of the GtkBuildable interface
  * supports adding tags by specifying "tag" as the "type"
- * attribute of a <child> element.
+ * attribute of a &lt;child&gt; element.
  *
  * $(DDOC_COMMENT example)
  */

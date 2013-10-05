@@ -1208,7 +1208,7 @@ public class Socket : ObjectG, InitableIF
 	 * getsockopt(). (If you need to fetch a
 	 * non-integer-valued option, you will need to call
 	 * getsockopt() directly.)
-	 * The <gio/gnetworking.h>
+	 * The &lt;gio/gnetworking.h&gt;
 	 * header pulls in system headers that will define most of the
 	 * standard/portable socket options. For unusual socket protocols or
 	 * platform-dependent options, you may need to include additional
@@ -1244,7 +1244,7 @@ public class Socket : ObjectG, InitableIF
 	 * setsockopt(). (If you need to set a
 	 * non-integer-valued option, you will need to call
 	 * setsockopt() directly.)
-	 * The <gio/gnetworking.h>
+	 * The &lt;gio/gnetworking.h&gt;
 	 * header pulls in system headers that will define most of the
 	 * standard/portable socket options. For unusual socket protocols or
 	 * platform-dependent options, you may need to include additional

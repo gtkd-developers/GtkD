@@ -1197,7 +1197,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * When enabled, "has-tooltip" will be set to TRUE and
 	 * icon_view will connect a "query-tooltip" signal handler.
 	 * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
-	 * so , <, etc have to be escaped in the text.
+	 * so , &lt;, etc have to be escaped in the text.
 	 * Since 2.12
 	 * Params:
 	 * column = an integer, which is a valid column number for icon_view's model
