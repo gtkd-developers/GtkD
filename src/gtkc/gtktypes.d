@@ -32,22 +32,6 @@ public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
 
-version(LDC)
-{
-	version(D_Version2)
-	{
-		extern(C) Object _d_newclass(ClassInfo ci);
-	}
-	else
-	{
-		extern (C) void* _d_allocclass(ClassInfo ci);
-	}
-}
-else
-{
-	extern(C) Object _d_newclass(ClassInfo ci);
-}
-
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
