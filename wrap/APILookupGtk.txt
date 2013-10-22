@@ -40,6 +40,22 @@ public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
 
+version(LDC)
+{
+	version(D_Version2)
+	{
+		extern(C) Object _d_newclass(ClassInfo ci);
+	}
+	else
+	{
+		extern (C) void* _d_allocclass(ClassInfo ci);
+	}
+}
+else
+{
+	extern(C) Object _d_newclass(ClassInfo ci);
+}
+
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
@@ -1403,22 +1419,17 @@ code: start
 
 	version(LDC)
 	{
-		version(D_Version2)
+		//version( !D_Version2 )
+		version(D_Version2) {} else
 		{
-			extern(C) Object _d_newclass(ClassInfo ci);
-		}
-		else
-		{
-			extern (C) void* _d_allocclass(ClassInfo ci);
-
 			private Object _d_newclass(ClassInfo ci)
 			{
 				void* p = cast(void*)_d_allocclass(ci);
 				(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
-				
+			
 				return cast(Object) p;
 			}
-			
+
 			private ClassInfo findClassInfo(string classname)
 			{
 				foreach ( m; ModuleInfo )
@@ -1429,14 +1440,10 @@ code: start
 						return c;
 					}
 				}
-				
+
 				return null;
 			}
 		}
-	}
-	else
-	{
-		extern(C) Object _d_newclass(ClassInfo ci);
 	}
 code: end
 outFile: Builder

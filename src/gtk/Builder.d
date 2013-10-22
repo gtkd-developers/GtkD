@@ -655,14 +655,9 @@ public class Builder : ObjectG
 	
 	version(LDC)
 	{
-		version(D_Version2)
+		//version( !D_Version2 )
+		version(D_Version2) {} else
 		{
-			extern(C) Object _d_newclass(ClassInfo ci);
-		}
-		else
-		{
-			extern (C) void* _d_allocclass(ClassInfo ci);
-			
 			private Object _d_newclass(ClassInfo ci)
 			{
 				void* p = cast(void*)_d_allocclass(ci);
@@ -685,10 +680,6 @@ public class Builder : ObjectG
 				return null;
 			}
 		}
-	}
-	else
-	{
-		extern(C) Object _d_newclass(ClassInfo ci);
 	}
 	
 	/**
