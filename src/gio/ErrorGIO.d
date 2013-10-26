@@ -60,8 +60,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * Contains helper functions for reporting errors to the user.
  */

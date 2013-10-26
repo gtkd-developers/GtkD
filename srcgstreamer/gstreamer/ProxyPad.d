@@ -71,14 +71,12 @@ private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gstreamer.Buffer;
 private import gstreamer.BufferList;
 private import gstreamer.Iterator;
 private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
-
 
 
 private import gstreamer.Pad;

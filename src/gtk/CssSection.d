@@ -65,11 +65,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gtkc.paths;
 private import gtkc.Loader;
 private import gio.File;
-
 
 
 private import gobject.Boxed;

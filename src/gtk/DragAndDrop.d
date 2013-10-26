@@ -75,7 +75,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import cairo.Surface;
 private import gdk.DragContext;
@@ -85,7 +84,6 @@ private import gdk.Window;
 private import gio.IconIF;
 private import gtk.TargetList;
 private import gtk.Widget;
-
 
 
 

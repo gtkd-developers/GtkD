@@ -67,11 +67,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.Source;
 private import gstreamer.Message;
-
 
 
 private import gstreamer.ObjectGst;

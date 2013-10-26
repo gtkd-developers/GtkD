@@ -64,11 +64,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.Menu;
 private import gtk.Widget;
-
 
 
 private import gtk.ToolButton;

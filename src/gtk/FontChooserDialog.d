@@ -63,12 +63,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.Window;
 private import gtk.FontChooserT;
 private import gtk.FontChooserIF;
-
 
 
 private import gtk.Dialog;

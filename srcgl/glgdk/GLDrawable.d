@@ -59,10 +59,8 @@ private import gtkglc.glgdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glgdk.GLDrawableT;
 private import glgdk.GLDrawableIF;
-
 
 
 private import gobject.ObjectG;

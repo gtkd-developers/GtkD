@@ -66,12 +66,10 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import pango.PgAttribute;
 private import pango.PgFontDescription;
 private import pango.PgLanguage;
 private import glib.ListSG;
-
 
 
 

@@ -69,7 +69,6 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gobject.ObjectG;
 private import glib.ErrorG;
 private import glib.GException;
@@ -77,7 +76,6 @@ private import glib.Source;
 private import gio.Cancellable;
 private import gio.InputStream;
 private import gio.OutputStream;
-
 
 
 

@@ -75,7 +75,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListG;
 private import gdk.AppLaunchContext;
@@ -84,7 +83,6 @@ private import gdk.Device;
 private import gdk.Event;
 private import gdk.Screen;
 private import gdk.Window;
-
 
 
 private import gobject.ObjectG;

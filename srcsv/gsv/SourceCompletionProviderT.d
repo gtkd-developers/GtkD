@@ -71,7 +71,6 @@ public import gsvc.gsv;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.Str;
 public import gdk.Pixbuf;
 public import gsv.SourceCompletionContext;
@@ -79,7 +78,6 @@ public import gsv.SourceCompletionInfo;
 public import gsv.SourceCompletionProposalIF;
 public import gtk.TextIter;
 public import gtk.Widget;
-
 
 
 

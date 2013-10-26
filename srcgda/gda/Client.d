@@ -69,14 +69,12 @@ private import gdac.gda;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ListG;
 private import gda.Connection;
 private import gda.ErrorGda;
 private import gda.ParameterList;
 private import gda.Transaction;
-
 
 
 private import gobject.ObjectG;

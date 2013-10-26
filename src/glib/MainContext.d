@@ -63,11 +63,9 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import glib.Source;
 private import gthread.Cond;
 private import gthread.Mutex;
-
 
 
 

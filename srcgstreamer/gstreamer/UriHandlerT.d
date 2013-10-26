@@ -63,12 +63,10 @@ public import gstreamerc.gstreamer;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.Str;
 public import glib.ErrorG;
 public import glib.GException;
 public import gstreamer.Element;
-
 
 
 

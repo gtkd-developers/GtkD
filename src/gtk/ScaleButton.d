@@ -69,13 +69,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.Adjustment;
 private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
-
 
 
 private import gtk.Button;

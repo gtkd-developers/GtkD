@@ -61,10 +61,8 @@ private import gtkglc.glgdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gdk.Display;
-
 
 
 

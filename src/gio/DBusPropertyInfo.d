@@ -61,8 +61,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * Various data structures and convenience routines to parse and
  * generate D-Bus introspection XML. Introspection information is

@@ -69,12 +69,10 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import gtkc.paths;
 private import gtkc.Loader;
 private import glib.MainContext;
 private import glib.Source;
-
 
 
 

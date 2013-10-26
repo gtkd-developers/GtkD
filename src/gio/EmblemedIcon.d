@@ -66,13 +66,11 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ListG;
 private import gio.Emblem;
 private import gio.Icon;
 private import gio.IconIF;
 private import gio.IconT;
-
 
 
 private import gobject.ObjectG;

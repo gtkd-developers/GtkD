@@ -65,13 +65,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.ToolShellIF;
 private import gtk.ToolShellT;
-
 
 
 private import gtk.Container;

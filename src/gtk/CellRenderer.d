@@ -69,14 +69,12 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import cairo.Context;
 private import glib.Str;
 private import gdk.Event;
 private import gtk.CellEditable;
 private import gtk.CellEditableIF;
 private import gtk.Widget;
-
 
 
 private import gobject.ObjectG;

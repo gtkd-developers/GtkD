@@ -63,10 +63,8 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ListG;
 private import gdk.Screen;
-
 
 
 private import gobject.ObjectG;

@@ -64,12 +64,10 @@ private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gthread.RecMutex;
 private import gthread.Thread;
 private import gstreamer.TaskPool;
-
 
 
 private import gstreamer.ObjectGst;

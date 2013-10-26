@@ -74,7 +74,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import cairo.Context;
 private import glib.Str;
 private import glib.ListG;
@@ -83,7 +82,6 @@ private import gobject.Value;
 private import gtk.Adjustment;
 private import gtk.Widget;
 private import gtk.WidgetPath;
-
 
 
 private import gtk.Widget;

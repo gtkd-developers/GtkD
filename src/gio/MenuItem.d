@@ -68,13 +68,11 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gio.IconIF;
 private import gio.MenuModel;
-
 
 
 

@@ -58,8 +58,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 class ConstructionException : Exception
 {
 	this(string message)

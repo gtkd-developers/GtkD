@@ -72,7 +72,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -80,7 +79,6 @@ private import gio.File;
 private import glib.ListSG;
 private import gtk.FileFilter;
 private import gtk.Widget;
-
 
 
 

@@ -62,11 +62,9 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtkc.paths;;
 private import gtkc.Loader;;
-
 
 
 

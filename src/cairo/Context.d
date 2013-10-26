@@ -74,7 +74,6 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 private import glib.ConstructionException;
 
-
 private import cairo.FontFace;
 private import cairo.FontOption;
 private import cairo.Matrix;
@@ -84,7 +83,6 @@ private import cairo.Pattern;
 private import glib.Str;
 private import gtkc.paths;;
 private import gtkc.Loader;;
-
 
 
 

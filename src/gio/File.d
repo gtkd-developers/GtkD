@@ -92,7 +92,6 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -112,7 +111,6 @@ private import gio.IconIF;
 private import gio.Mount;
 private import gio.MountIF;
 private import gio.MountOperation;
-
 
 
 private import gobject.ObjectG;

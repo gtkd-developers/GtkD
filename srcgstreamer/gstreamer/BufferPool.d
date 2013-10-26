@@ -66,13 +66,11 @@ private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gstreamer.Allocator;
 private import gstreamer.Buffer;
 private import gstreamer.Caps;
 private import gstreamer.Structure;
-
 
 
 

@@ -59,10 +59,8 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gsv.SourceUndoManagerT;
 private import gsv.SourceUndoManagerIF;
-
 
 
 private import gobject.ObjectG;

@@ -61,10 +61,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import cairo.Surface;
 private import gdk.Pixbuf;
-
 
 
 private import gtk.Window;

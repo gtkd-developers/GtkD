@@ -60,10 +60,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gio.SeekableT;
 private import gio.SeekableIF;
-
 
 
 private import gio.OutputStream;

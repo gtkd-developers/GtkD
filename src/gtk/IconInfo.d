@@ -83,7 +83,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -98,7 +97,6 @@ private import gtk.Style;
 private import gtk.StyleContext;
 private import gtkc.paths;
 private import gtkc.Loader;
-
 
 
 

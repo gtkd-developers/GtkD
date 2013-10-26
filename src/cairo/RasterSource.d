@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 private import cairo.Pattern;
 
 /**

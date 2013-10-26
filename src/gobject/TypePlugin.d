@@ -60,8 +60,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * The GObject type system supports dynamic loading of types. The
  * GTypePlugin interface is used to handle the lifecycle of

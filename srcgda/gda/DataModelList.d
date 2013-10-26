@@ -63,11 +63,9 @@ private import gdac.gda;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ListG;
 private import gda.Value;
 private import gda.Row;
-
 
 
 private import gda.DataModel;

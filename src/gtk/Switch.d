@@ -65,12 +65,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
-
 
 
 private import gtk.Widget;

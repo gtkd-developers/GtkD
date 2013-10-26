@@ -44,10 +44,10 @@
  * 	- g_spawn_async_with_pipes
  * omit signals:
  * imports:
- * 	- std.thread
+ * 	- core.thread
+ * 	- core.stdc.string
  * 	- std.c.stdio
  * 	- std.string
- * 	- std.c.string
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
@@ -64,33 +64,13 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
+private import core.thread;
+private import core.stdc.string;
+private import std.c.stdio;
+private import std.string;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-
-
-version(Tango) {
-	private import tango.core.Thread;
-	private import tango.stdc.stdio;
-	private import tango.text.Util;
-	private import tango.text.Unicode;
-	private import tango.stdc.string;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import core.thread;
-	private import std.c.stdio;
-	private import std.string;
-	private import core.stdc.string;
-
-	version = druntime;
-} else {
-	private import std.thread;
-	private import std.c.stdio;
-	private import std.string;
-	private import std.c.string;
-}
 
 
 
@@ -102,19 +82,9 @@ public class Spawn
 	//we need fdopen.
 	version(Posix)
 	{
-		version(Tango)
-		{
-			private import tango.stdc.posix.stdio;
-		}
-		else version(D_Version2)
-		{
-			private import core.sys.posix.stdio;
-		}
+		private import core.sys.posix.stdio;
 	}
 	//fdopen for Windows is defined in gtkc.glibtypes.
-	
-	version(Tango) alias splitLines splitlines;
-	version(D_Version2) alias splitLines splitlines;
 	
 	string workingDirectory = ".";
 	string[] argv;
@@ -269,45 +239,20 @@ public class Spawn
 			this.file = file;
 			this.read = read;
 			
-			version(druntime)
-			{
-				super(&run);
-			}
+			super(&run);
 		}
 		
-		version(druntime)
+		public void run()
 		{
-			public void run()
+			string line = readLine(file);
+			while( line !is null )
 			{
-				string line = readLine(file);
-				while( line !is null )
+				++lineCount;
+				if ( read !is null )
 				{
-					++lineCount;
-					if ( read !is null )
-					{
-						read(line);
-					}
-					line = readLine(file);
+					read(line);
 				}
-			}
-		}
-		else
-		{
-			public override int run()
-			{
-				string line = readLine(file);
-				while( line !is null )
-				{
-					++lineCount;
-					//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
-					//printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
-					if ( read !is null )
-					{
-						read(line);
-					}
-					line = readLine(file);
-				}
-				return 0;
+				line = readLine(file);
 			}
 		}
 	}
@@ -401,14 +346,14 @@ public class Spawn
 		&error);
 		if ( readOutput != null )
 		{
-			foreach ( string line ; splitlines(Str.toString(strOutput)) )
+			foreach ( string line ; splitLines(Str.toString(strOutput)) )
 			{
 				readOutput(line);
 			}
 		}
 		if ( readError != null )
 		{
-			foreach ( string line ; splitlines(Str.toString(strError)) )
+			foreach ( string line ; splitLines(Str.toString(strError)) )
 			{
 				readError(line);
 			}

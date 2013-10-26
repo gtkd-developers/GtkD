@@ -61,8 +61,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * A GdkFrameTimings object holds timing information for a single frame
  * of the application's displays. To retrieve GdkFrameTimings objects,

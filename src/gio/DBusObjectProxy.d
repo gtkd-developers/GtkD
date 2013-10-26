@@ -63,12 +63,10 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.DBusConnection;
 private import gio.DBusObjectT;
 private import gio.DBusObjectIF;
-
 
 
 private import gobject.ObjectG;

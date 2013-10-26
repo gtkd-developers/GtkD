@@ -81,7 +81,6 @@ public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
-
 public import glib.Str;
 public import glib.ErrorG;
 public import glib.GException;
@@ -96,7 +95,6 @@ public import gio.IconIF;
 public import gio.Mount;
 public import gio.MountIF;
 public import gio.MountOperation;
-
 
 
 

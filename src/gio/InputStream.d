@@ -65,13 +65,11 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Bytes;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-
 
 
 private import gobject.ObjectG;

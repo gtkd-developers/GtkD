@@ -65,13 +65,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.Application;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.ActionMapIF;
 private import gio.ActionMapT;
-
 
 
 private import gtk.Window;

@@ -64,12 +64,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ListG;
 private import gtk.CellArea;
 private import gtk.CellRenderer;
-
 
 
 

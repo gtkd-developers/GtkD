@@ -63,11 +63,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.FontChooserT;
 private import gtk.FontChooserIF;
-
 
 
 private import gtk.Button;

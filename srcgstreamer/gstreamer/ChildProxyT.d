@@ -67,12 +67,10 @@ public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
-
 public import glib.Str;
 public import gobject.ObjectG;
 public import gobject.ParamSpec;
 public import gobject.Value;
-
 
 
 

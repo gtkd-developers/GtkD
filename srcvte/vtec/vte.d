@@ -24,144 +24,140 @@
 
 module vtec.vte;
 
-version(Tango)
-	private import tango.stdc.stdio;
-else
-	private import std.stdio;
-
+private import std.stdio;
 private import vtec.vtetypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-mixin( _shared ~ "static this()
+shared static this()
 {
 	// vte.Terminal
 
-	Linker.link(vte_terminal_new, \"vte_terminal_new\", LIBRARY.VTE);
-	Linker.link(vte_terminal_im_append_menuitems, \"vte_terminal_im_append_menuitems\", LIBRARY.VTE);
-	Linker.link(vte_terminal_feed, \"vte_terminal_feed\", LIBRARY.VTE);
-	Linker.link(vte_terminal_feed_child, \"vte_terminal_feed_child\", LIBRARY.VTE);
-	Linker.link(vte_terminal_feed_child_binary, \"vte_terminal_feed_child_binary\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_child_exit_status, \"vte_terminal_get_child_exit_status\", LIBRARY.VTE);
-	Linker.link(vte_terminal_select_all, \"vte_terminal_select_all\", LIBRARY.VTE);
-	Linker.link(vte_terminal_select_none, \"vte_terminal_select_none\", LIBRARY.VTE);
-	Linker.link(vte_terminal_copy_clipboard, \"vte_terminal_copy_clipboard\", LIBRARY.VTE);
-	Linker.link(vte_terminal_paste_clipboard, \"vte_terminal_paste_clipboard\", LIBRARY.VTE);
-	Linker.link(vte_terminal_copy_primary, \"vte_terminal_copy_primary\", LIBRARY.VTE);
-	Linker.link(vte_terminal_paste_primary, \"vte_terminal_paste_primary\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_size, \"vte_terminal_set_size\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_audible_bell, \"vte_terminal_set_audible_bell\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_audible_bell, \"vte_terminal_get_audible_bell\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_visible_bell, \"vte_terminal_set_visible_bell\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_visible_bell, \"vte_terminal_get_visible_bell\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_allow_bold, \"vte_terminal_set_allow_bold\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_allow_bold, \"vte_terminal_get_allow_bold\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_scroll_on_output, \"vte_terminal_set_scroll_on_output\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_scroll_on_keystroke, \"vte_terminal_set_scroll_on_keystroke\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_bold, \"vte_terminal_set_color_bold\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_bold_rgba, \"vte_terminal_set_color_bold_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_foreground, \"vte_terminal_set_color_foreground\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_foreground_rgba, \"vte_terminal_set_color_foreground_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_background, \"vte_terminal_set_color_background\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_background_rgba, \"vte_terminal_set_color_background_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_dim, \"vte_terminal_set_color_dim\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_dim_rgba, \"vte_terminal_set_color_dim_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_cursor, \"vte_terminal_set_color_cursor\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_cursor_rgba, \"vte_terminal_set_color_cursor_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_highlight, \"vte_terminal_set_color_highlight\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_color_highlight_rgba, \"vte_terminal_set_color_highlight_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_colors, \"vte_terminal_set_colors\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_colors_rgba, \"vte_terminal_set_colors_rgba\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_default_colors, \"vte_terminal_set_default_colors\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_opacity, \"vte_terminal_set_opacity\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_background_image, \"vte_terminal_set_background_image\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_background_image_file, \"vte_terminal_set_background_image_file\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_background_saturation, \"vte_terminal_set_background_saturation\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_background_transparent, \"vte_terminal_set_background_transparent\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_background_tint_color, \"vte_terminal_set_background_tint_color\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_scroll_background, \"vte_terminal_set_scroll_background\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_cursor_shape, \"vte_terminal_set_cursor_shape\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_cursor_shape, \"vte_terminal_get_cursor_shape\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_cursor_blinks, \"vte_terminal_set_cursor_blinks\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_cursor_blink_mode, \"vte_terminal_get_cursor_blink_mode\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_cursor_blink_mode, \"vte_terminal_set_cursor_blink_mode\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_scrollback_lines, \"vte_terminal_set_scrollback_lines\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_font, \"vte_terminal_set_font\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_font_from_string, \"vte_terminal_set_font_from_string\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_font_from_string_full, \"vte_terminal_set_font_from_string_full\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_font_full, \"vte_terminal_set_font_full\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_font, \"vte_terminal_get_font\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_using_xft, \"vte_terminal_get_using_xft\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_has_selection, \"vte_terminal_get_has_selection\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_word_chars, \"vte_terminal_set_word_chars\", LIBRARY.VTE);
-	Linker.link(vte_terminal_is_word_char, \"vte_terminal_is_word_char\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_backspace_binding, \"vte_terminal_set_backspace_binding\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_delete_binding, \"vte_terminal_set_delete_binding\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_mouse_autohide, \"vte_terminal_set_mouse_autohide\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_mouse_autohide, \"vte_terminal_get_mouse_autohide\", LIBRARY.VTE);
-	Linker.link(vte_terminal_reset, \"vte_terminal_reset\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_text, \"vte_terminal_get_text\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_text_include_trailing_spaces, \"vte_terminal_get_text_include_trailing_spaces\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_text_range, \"vte_terminal_get_text_range\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_cursor_position, \"vte_terminal_get_cursor_position\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_clear_all, \"vte_terminal_match_clear_all\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_add, \"vte_terminal_match_add\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_add_gregex, \"vte_terminal_match_add_gregex\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_remove, \"vte_terminal_match_remove\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_check, \"vte_terminal_match_check\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_set_cursor, \"vte_terminal_match_set_cursor\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_set_cursor_type, \"vte_terminal_match_set_cursor_type\", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_set_cursor_name, \"vte_terminal_match_set_cursor_name\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_emulation, \"vte_terminal_set_emulation\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_emulation, \"vte_terminal_get_emulation\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_default_emulation, \"vte_terminal_get_default_emulation\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_encoding, \"vte_terminal_set_encoding\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_encoding, \"vte_terminal_get_encoding\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_status_line, \"vte_terminal_get_status_line\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_padding, \"vte_terminal_get_padding\", LIBRARY.VTE);
-	Linker.link(vte_terminal_write_contents, \"vte_terminal_write_contents\", LIBRARY.VTE);
-	Linker.link(vte_terminal_search_find_next, \"vte_terminal_search_find_next\", LIBRARY.VTE);
-	Linker.link(vte_terminal_search_find_previous, \"vte_terminal_search_find_previous\", LIBRARY.VTE);
-	Linker.link(vte_terminal_search_get_gregex, \"vte_terminal_search_get_gregex\", LIBRARY.VTE);
-	Linker.link(vte_terminal_search_get_wrap_around, \"vte_terminal_search_get_wrap_around\", LIBRARY.VTE);
-	Linker.link(vte_terminal_search_set_gregex, \"vte_terminal_search_set_gregex\", LIBRARY.VTE);
-	Linker.link(vte_terminal_search_set_wrap_around, \"vte_terminal_search_set_wrap_around\", LIBRARY.VTE);
-	Linker.link(vte_get_user_shell, \"vte_get_user_shell\", LIBRARY.VTE);
-	Linker.link(vte_terminal_fork_command, \"vte_terminal_fork_command\", LIBRARY.VTE);
-	Linker.link(vte_terminal_fork_command_full, \"vte_terminal_fork_command_full\", LIBRARY.VTE);
-	Linker.link(vte_terminal_forkpty, \"vte_terminal_forkpty\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_pty, \"vte_terminal_get_pty\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_pty_object, \"vte_terminal_get_pty_object\", LIBRARY.VTE);
-	Linker.link(vte_terminal_pty_new, \"vte_terminal_pty_new\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_pty, \"vte_terminal_set_pty\", LIBRARY.VTE);
-	Linker.link(vte_terminal_set_pty_object, \"vte_terminal_set_pty_object\", LIBRARY.VTE);
-	Linker.link(vte_terminal_watch_child, \"vte_terminal_watch_child\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_adjustment, \"vte_terminal_get_adjustment\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_char_ascent, \"vte_terminal_get_char_ascent\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_char_descent, \"vte_terminal_get_char_descent\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_char_height, \"vte_terminal_get_char_height\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_char_width, \"vte_terminal_get_char_width\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_column_count, \"vte_terminal_get_column_count\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_icon_title, \"vte_terminal_get_icon_title\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_row_count, \"vte_terminal_get_row_count\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_window_title, \"vte_terminal_get_window_title\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_current_directory_uri, \"vte_terminal_get_current_directory_uri\", LIBRARY.VTE);
-	Linker.link(vte_terminal_get_current_file_uri, \"vte_terminal_get_current_file_uri\", LIBRARY.VTE);
+	Linker.link(vte_terminal_new, "vte_terminal_new", LIBRARY.VTE);
+	Linker.link(vte_terminal_im_append_menuitems, "vte_terminal_im_append_menuitems", LIBRARY.VTE);
+	Linker.link(vte_terminal_feed, "vte_terminal_feed", LIBRARY.VTE);
+	Linker.link(vte_terminal_feed_child, "vte_terminal_feed_child", LIBRARY.VTE);
+	Linker.link(vte_terminal_feed_child_binary, "vte_terminal_feed_child_binary", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_child_exit_status, "vte_terminal_get_child_exit_status", LIBRARY.VTE);
+	Linker.link(vte_terminal_select_all, "vte_terminal_select_all", LIBRARY.VTE);
+	Linker.link(vte_terminal_select_none, "vte_terminal_select_none", LIBRARY.VTE);
+	Linker.link(vte_terminal_copy_clipboard, "vte_terminal_copy_clipboard", LIBRARY.VTE);
+	Linker.link(vte_terminal_paste_clipboard, "vte_terminal_paste_clipboard", LIBRARY.VTE);
+	Linker.link(vte_terminal_copy_primary, "vte_terminal_copy_primary", LIBRARY.VTE);
+	Linker.link(vte_terminal_paste_primary, "vte_terminal_paste_primary", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_size, "vte_terminal_set_size", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_audible_bell, "vte_terminal_set_audible_bell", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_audible_bell, "vte_terminal_get_audible_bell", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_visible_bell, "vte_terminal_set_visible_bell", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_visible_bell, "vte_terminal_get_visible_bell", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_allow_bold, "vte_terminal_set_allow_bold", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_allow_bold, "vte_terminal_get_allow_bold", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_scroll_on_output, "vte_terminal_set_scroll_on_output", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_scroll_on_keystroke, "vte_terminal_set_scroll_on_keystroke", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_bold, "vte_terminal_set_color_bold", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_bold_rgba, "vte_terminal_set_color_bold_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_foreground, "vte_terminal_set_color_foreground", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_foreground_rgba, "vte_terminal_set_color_foreground_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_background, "vte_terminal_set_color_background", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_background_rgba, "vte_terminal_set_color_background_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_dim, "vte_terminal_set_color_dim", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_dim_rgba, "vte_terminal_set_color_dim_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_cursor, "vte_terminal_set_color_cursor", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_cursor_rgba, "vte_terminal_set_color_cursor_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_highlight, "vte_terminal_set_color_highlight", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_color_highlight_rgba, "vte_terminal_set_color_highlight_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_colors, "vte_terminal_set_colors", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_colors_rgba, "vte_terminal_set_colors_rgba", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_default_colors, "vte_terminal_set_default_colors", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_opacity, "vte_terminal_set_opacity", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_background_image, "vte_terminal_set_background_image", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_background_image_file, "vte_terminal_set_background_image_file", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_background_saturation, "vte_terminal_set_background_saturation", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_background_transparent, "vte_terminal_set_background_transparent", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_background_tint_color, "vte_terminal_set_background_tint_color", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_scroll_background, "vte_terminal_set_scroll_background", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_cursor_shape, "vte_terminal_set_cursor_shape", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_cursor_shape, "vte_terminal_get_cursor_shape", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_cursor_blinks, "vte_terminal_set_cursor_blinks", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_cursor_blink_mode, "vte_terminal_get_cursor_blink_mode", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_cursor_blink_mode, "vte_terminal_set_cursor_blink_mode", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_scrollback_lines, "vte_terminal_set_scrollback_lines", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_font, "vte_terminal_set_font", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_font_from_string, "vte_terminal_set_font_from_string", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_font_from_string_full, "vte_terminal_set_font_from_string_full", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_font_full, "vte_terminal_set_font_full", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_font, "vte_terminal_get_font", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_using_xft, "vte_terminal_get_using_xft", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_has_selection, "vte_terminal_get_has_selection", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_word_chars, "vte_terminal_set_word_chars", LIBRARY.VTE);
+	Linker.link(vte_terminal_is_word_char, "vte_terminal_is_word_char", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_backspace_binding, "vte_terminal_set_backspace_binding", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_delete_binding, "vte_terminal_set_delete_binding", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_mouse_autohide, "vte_terminal_set_mouse_autohide", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_mouse_autohide, "vte_terminal_get_mouse_autohide", LIBRARY.VTE);
+	Linker.link(vte_terminal_reset, "vte_terminal_reset", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_text, "vte_terminal_get_text", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_text_include_trailing_spaces, "vte_terminal_get_text_include_trailing_spaces", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_text_range, "vte_terminal_get_text_range", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_cursor_position, "vte_terminal_get_cursor_position", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_clear_all, "vte_terminal_match_clear_all", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_add, "vte_terminal_match_add", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_add_gregex, "vte_terminal_match_add_gregex", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_remove, "vte_terminal_match_remove", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_check, "vte_terminal_match_check", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_set_cursor, "vte_terminal_match_set_cursor", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_set_cursor_type, "vte_terminal_match_set_cursor_type", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_set_cursor_name, "vte_terminal_match_set_cursor_name", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_emulation, "vte_terminal_set_emulation", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_emulation, "vte_terminal_get_emulation", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_default_emulation, "vte_terminal_get_default_emulation", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_encoding, "vte_terminal_set_encoding", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_encoding, "vte_terminal_get_encoding", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_status_line, "vte_terminal_get_status_line", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_padding, "vte_terminal_get_padding", LIBRARY.VTE);
+	Linker.link(vte_terminal_write_contents, "vte_terminal_write_contents", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_find_next, "vte_terminal_search_find_next", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_find_previous, "vte_terminal_search_find_previous", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_get_gregex, "vte_terminal_search_get_gregex", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_get_wrap_around, "vte_terminal_search_get_wrap_around", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_set_gregex, "vte_terminal_search_set_gregex", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_set_wrap_around, "vte_terminal_search_set_wrap_around", LIBRARY.VTE);
+	Linker.link(vte_get_user_shell, "vte_get_user_shell", LIBRARY.VTE);
+	Linker.link(vte_terminal_fork_command, "vte_terminal_fork_command", LIBRARY.VTE);
+	Linker.link(vte_terminal_fork_command_full, "vte_terminal_fork_command_full", LIBRARY.VTE);
+	Linker.link(vte_terminal_forkpty, "vte_terminal_forkpty", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_pty, "vte_terminal_get_pty", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_pty_object, "vte_terminal_get_pty_object", LIBRARY.VTE);
+	Linker.link(vte_terminal_pty_new, "vte_terminal_pty_new", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_pty, "vte_terminal_set_pty", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_pty_object, "vte_terminal_set_pty_object", LIBRARY.VTE);
+	Linker.link(vte_terminal_watch_child, "vte_terminal_watch_child", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_adjustment, "vte_terminal_get_adjustment", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_char_ascent, "vte_terminal_get_char_ascent", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_char_descent, "vte_terminal_get_char_descent", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_char_height, "vte_terminal_get_char_height", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_char_width, "vte_terminal_get_char_width", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_column_count, "vte_terminal_get_column_count", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_icon_title, "vte_terminal_get_icon_title", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_row_count, "vte_terminal_get_row_count", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_window_title, "vte_terminal_get_window_title", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_current_directory_uri, "vte_terminal_get_current_directory_uri", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_current_file_uri, "vte_terminal_get_current_file_uri", LIBRARY.VTE);
 
 	// vte.Pty
 
-	Linker.link(vte_pty_new, \"vte_pty_new\", LIBRARY.VTE);
-	Linker.link(vte_pty_new_foreign, \"vte_pty_new_foreign\", LIBRARY.VTE);
-	Linker.link(vte_pty_close, \"vte_pty_close\", LIBRARY.VTE);
-	Linker.link(vte_pty_child_setup, \"vte_pty_child_setup\", LIBRARY.VTE);
-	Linker.link(vte_pty_get_fd, \"vte_pty_get_fd\", LIBRARY.VTE);
-	Linker.link(vte_pty_set_size, \"vte_pty_set_size\", LIBRARY.VTE);
-	Linker.link(vte_pty_get_size, \"vte_pty_get_size\", LIBRARY.VTE);
-	Linker.link(vte_pty_set_term, \"vte_pty_set_term\", LIBRARY.VTE);
-	Linker.link(vte_pty_set_utf8, \"vte_pty_set_utf8\", LIBRARY.VTE);
-}");
+	Linker.link(vte_pty_new, "vte_pty_new", LIBRARY.VTE);
+	Linker.link(vte_pty_new_foreign, "vte_pty_new_foreign", LIBRARY.VTE);
+	Linker.link(vte_pty_close, "vte_pty_close", LIBRARY.VTE);
+	Linker.link(vte_pty_child_setup, "vte_pty_child_setup", LIBRARY.VTE);
+	Linker.link(vte_pty_get_fd, "vte_pty_get_fd", LIBRARY.VTE);
+	Linker.link(vte_pty_set_size, "vte_pty_set_size", LIBRARY.VTE);
+	Linker.link(vte_pty_get_size, "vte_pty_get_size", LIBRARY.VTE);
+	Linker.link(vte_pty_set_term, "vte_pty_set_term", LIBRARY.VTE);
+	Linker.link(vte_pty_set_utf8, "vte_pty_set_utf8", LIBRARY.VTE);
+}
 
-mixin( gshared ~"extern(C)
+__gshared extern(C)
 {
 	// vte.Terminal
 
@@ -287,7 +283,7 @@ mixin( gshared ~"extern(C)
 	gboolean function(VtePty* pty, int* rows, int* columns, GError** error) c_vte_pty_get_size;
 	void function(VtePty* pty, char* emulation) c_vte_pty_set_term;
 	gboolean function(VtePty* pty, gboolean utf8, GError** error) c_vte_pty_set_utf8;
-}");
+}
 
 // vte.Terminal
 

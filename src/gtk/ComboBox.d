@@ -83,7 +83,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import atk.ObjectAtk;
 private import glib.Str;
 private import gdk.Device;
@@ -95,7 +94,6 @@ private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellEditableT;
 private import gtk.CellEditableIF;
-
 
 
 private import gtk.Bin;

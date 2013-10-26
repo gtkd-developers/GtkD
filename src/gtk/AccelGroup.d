@@ -70,13 +70,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gdk.Display;
 private import glib.ListSG;
-
 
 
 private import gobject.ObjectG;

@@ -45,7 +45,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- std.stdarg
+ * 	- core.vararg
  * 	- cairo.Context
  * 	- glib.Str
  * 	- glib.ListG
@@ -91,7 +91,7 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
+private import core.vararg;
 private import cairo.Context;
 private import glib.Str;
 private import glib.ListG;
@@ -110,19 +110,6 @@ private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
-
-
-version(Tango) {
-	private import tango.core.Vararg;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import core.vararg;
-
-	version = druntime;
-} else {
-	private import std.stdarg;
-}
 
 
 private import gobject.ObjectG;

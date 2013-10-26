@@ -64,12 +64,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gobject.Signals;
 private import gtk.TreeIter;
 private import gtk.TreeModelIF;
-
 
 
 private import gtk.ComboBox;

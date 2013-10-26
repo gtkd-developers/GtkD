@@ -64,12 +64,10 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.Variant;
 private import gio.File;
 private import gio.InputStream;
-
 
 
 private import gobject.ObjectG;

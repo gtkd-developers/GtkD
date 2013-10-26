@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * A GRelation is a table of data which can be indexed on any number
  * of fields, rather like simple database tables. A GRelation contains

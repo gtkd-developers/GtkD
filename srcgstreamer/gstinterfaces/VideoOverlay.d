@@ -63,12 +63,10 @@ private import gstreamerc.gstinterfaces;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtkc.glibtypes;
 private import glib.Str;
 private import gstreamer.Element;
 private import gstreamer.Message;
-
 
 
 

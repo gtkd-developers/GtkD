@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = Relation
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,7 +42,6 @@
  * omit prefixes:
  * 	- g_tuples_
  * omit code:
- * 	- g_relation_print
  * omit signals:
  * imports:
  * 	- glib.Tuples
@@ -60,9 +59,7 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import glib.Tuples;
-
 
 
 
@@ -132,35 +129,6 @@ public class Relation
 	public this (GRelation* gRelation)
 	{
 		this.gRelation = gRelation;
-	}
-	
-	/**
-	 * Outputs information about all records in a GRelation, as well as the indexes.
-	 * It is for debugging.
-	 */
-	version(Tango)
-	{
-		public void print()
-		{
-			// void g_relation_print (GRelation *relation);
-			g_relation_print(gRelation);
-		}
-	}
-	else version(D_Version2)
-	{
-		public void print()
-		{
-			// void g_relation_print (GRelation *relation);
-			g_relation_print(gRelation);
-		}
-	}
-	else
-	{
-		public override void print()
-		{
-			// void g_relation_print (GRelation *relation);
-			g_relation_print(gRelation);
-		}
 	}
 	
 	/**
@@ -269,5 +237,17 @@ public class Relation
 	{
 		// void g_relation_destroy (GRelation *relation);
 		g_relation_destroy(gRelation);
+	}
+	
+	/**
+	 * Warning
+	 * g_relation_print has been deprecated since version 2.26 and should not be used in newly-written code. Rarely used API
+	 * Outputs information about all records in a GRelation, as well as
+	 * the indexes. It is for debugging.
+	 */
+	public void print()
+	{
+		// void g_relation_print (GRelation *relation);
+		g_relation_print(gRelation);
 	}
 }

@@ -62,11 +62,9 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 private import glib.ConstructionException;
 
-
 private import glib.Str;
 private import cairo.Script;
 private import cairo.RecordingSurface;
-
 
 
 private import cairo.Device;

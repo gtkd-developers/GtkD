@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * The following is a collection of compiler macros to provide atomic
  * access to integer and pointer-sized values.

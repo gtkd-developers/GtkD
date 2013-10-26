@@ -55,14 +55,6 @@ public alias uint XID;
 public alias uint uid_t;
 public alias int pid_t;
 
-
-version(Tango)
-{
-	//avoid some conflicts with other string aliases.
-	static if( !is(string) )
-	alias char[] string;
-}
-
 version( Windows )
 {
 	alias int glong;
@@ -79,44 +71,18 @@ else
 	alias uint gulong;
 }
 
-version(D_Version2)
-{
-	mixin("enum _shared = \"shared \";");
-	mixin("enum gshared = \"__gshared \";");
-	
-	version( Windows )
-	mixin("enum _utfPostfix = \"_utf8\";");
-	else
-	mixin("enum _utfPostfix = \"\";");
-}
+version( Windows )
+enum _utfPostfix = "_utf8";
 else
-{
-	const char[] _shared = "";
-	const char[] gshared = "";
-	
-	version( Windows )
-	const char[] _utfPostfix = "_utf8";
-	else
-	const char[] _utfPostfix = "";
-}
+enum _utfPostfix = "";
 
 version (Windows)
 {
-	version(Tango)
+	private import core.stdc.stdio;
+	
+	static if( !is(typeof(fdopen(0, null))) )
 	{
-		private import tango.stdc.stdio;
-		
-		//Phobos defines this function in std.c.stdio
 		extern (C) FILE*  fdopen(int, char*);
-	}
-	version(D_Version2)
-	{
-		private import core.stdc.stdio;
-		
-		static if( !is(typeof(fdopen(0, null))) )
-		{
-			extern (C) FILE*  fdopen(int, char*);
-		}
 	}
 }
 

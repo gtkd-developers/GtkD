@@ -72,7 +72,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gdkpixbuf.PixbufFormat;
 private import glib.ErrorG;
 private import glib.GException;
@@ -80,7 +79,6 @@ private import glib.Bytes;
 private import gdk.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import glib.Str;
-
 
 
 private import gobject.ObjectG;

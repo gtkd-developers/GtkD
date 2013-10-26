@@ -59,10 +59,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.CellEditableT;
 private import gtk.CellEditableIF;
-
 
 
 private import gobject.ObjectG;

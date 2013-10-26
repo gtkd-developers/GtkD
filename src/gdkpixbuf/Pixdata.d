@@ -64,13 +64,11 @@ private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gdk.Pixbuf;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.StringG;
 private import glib.Str;
-
 
 
 

@@ -63,11 +63,9 @@ public import gtkc.gio;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import gio.DBusInterfaceInfo;
 public import gio.DBusObject;
 public import gio.DBusObjectIF;
-
 
 
 

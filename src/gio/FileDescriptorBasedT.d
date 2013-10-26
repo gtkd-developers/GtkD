@@ -61,8 +61,6 @@ public import gobject.ObjectG;
 
 
 
-
-
 /**
  * GFileDescriptorBased is implemented by streams (implementations of
  * GInputStream or GOutputStream) that are based on file descriptors.

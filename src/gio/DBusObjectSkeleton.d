@@ -65,12 +65,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gio.DBusInterfaceSkeleton;
 private import gio.DBusObjectT;
 private import gio.DBusObjectIF;
-
 
 
 private import gobject.ObjectG;

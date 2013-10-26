@@ -60,8 +60,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * A GstPoll keeps track of file descriptors much like fd_set (used with
  * select()) or a struct pollfd array (used with poll()). Once created with

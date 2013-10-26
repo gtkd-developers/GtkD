@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * Pointer Arrays are similar to Arrays but are used only for storing
  * pointers.

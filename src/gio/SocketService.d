@@ -61,8 +61,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 
-
-
 private import gio.SocketListener;
 
 /**

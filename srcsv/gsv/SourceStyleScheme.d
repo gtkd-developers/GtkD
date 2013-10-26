@@ -60,10 +60,8 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gsv.SourceStyle;
-
 
 
 private import gobject.ObjectG;

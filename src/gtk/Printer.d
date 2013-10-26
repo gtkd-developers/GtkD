@@ -66,11 +66,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListG;
 private import gtk.PageSetup;
-
 
 
 private import gobject.ObjectG;

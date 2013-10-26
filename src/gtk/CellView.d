@@ -81,7 +81,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gdk.Color;
 private import gdk.RGBA;
@@ -95,7 +94,6 @@ private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
-
 
 
 private import gtk.Widget;

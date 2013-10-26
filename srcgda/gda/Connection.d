@@ -76,7 +76,6 @@ private import gdac.gda;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ListG;
 private import gda.Blob;
@@ -87,7 +86,6 @@ private import gda.ErrorGda;
 private import gda.FieldAttributes;
 private import gda.ParameterList;
 private import gda.Transaction;
-
 
 
 private import gobject.ObjectG;

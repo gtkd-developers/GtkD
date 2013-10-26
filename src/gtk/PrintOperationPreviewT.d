@@ -75,10 +75,8 @@ public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
-
 public import gtk.PageSetup;
 public import gtk.PrintContext;
-
 
 
 

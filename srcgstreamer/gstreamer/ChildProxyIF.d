@@ -66,12 +66,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
-
 
 
 

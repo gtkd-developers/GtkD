@@ -67,11 +67,9 @@ public  import gtkc.gthreadtypes;
 private import gtkc.gthread;
 private import glib.ConstructionException;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-
 
 
 

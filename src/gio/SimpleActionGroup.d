@@ -67,7 +67,6 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.Action;
 private import gio.ActionIF;
@@ -75,7 +74,6 @@ private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.ActionMapIF;
 private import gio.ActionMapT;
-
 
 
 private import gobject.ObjectG;

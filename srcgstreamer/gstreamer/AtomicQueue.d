@@ -60,8 +60,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * The GstAtomicQueue object implements a queue that can be used from multiple
  * threads without performing any blocking operations.

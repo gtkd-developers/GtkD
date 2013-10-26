@@ -62,12 +62,10 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gio.InitableIF;
 private import gio.InitableT;
 private import gio.NetworkMonitorT;
 private import gio.NetworkMonitorIF;
-
 
 
 private import gobject.ObjectG;

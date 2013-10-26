@@ -60,10 +60,8 @@ public import gtkc.gio;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.ErrorG;
 public import glib.GException;
-
 
 
 

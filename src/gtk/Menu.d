@@ -73,7 +73,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListG;
 private import gio.MenuModel;
@@ -82,7 +81,6 @@ private import gdk.Screen;
 private import gtk.AccelGroup;
 private import gtk.MenuItem;
 private import gtk.Widget;
-
 
 
 private import gtk.MenuShell;

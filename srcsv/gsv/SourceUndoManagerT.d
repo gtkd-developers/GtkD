@@ -63,8 +63,6 @@ public  import gtkc.gdktypes;
 
 
 
-
-
 /**
  * The GtkSourceUndoManager interface can be implemented to provide custom
  * undo management to a GtkSourceBuffer. Use

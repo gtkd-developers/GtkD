@@ -68,7 +68,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gobject.Type;
 private import gobject.ObjectG;
@@ -81,7 +80,6 @@ private import gtk.TreeModelIF;
 private import gtkc.gobject;
 private import gtkc.Loader;
 private import gtkc.paths;
-
 
 
 
@@ -100,10 +98,10 @@ public class TreeModel : ObjectG, TreeModelIF
 {
 	static GObjectClass* parentClass = null;
 	
-	mixin( _shared ~ "static this()
+	shared static this()
 	{
-		Linker.link(gtk_tree_model_get_type, \"gtk_tree_model_get_type\", LIBRARY.GTK);
-	}");
+		Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
+	}
 	
 	// Minimal implementation.
 	mixin TreeModelT!(GtkTreeModel);

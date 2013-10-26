@@ -69,13 +69,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gobject.ObjectG;
 private import gdk.Display;
 private import gdk.Pixbuf;
 private import gtk.TextBuffer;
-
 
 
 private import gobject.ObjectG;

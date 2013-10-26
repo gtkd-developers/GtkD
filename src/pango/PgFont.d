@@ -77,14 +77,12 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import pango.PgEngineShape;
 private import pango.PgFontDescription;
 private import pango.PgCoverage;
 private import pango.PgFontMetrics;
 private import pango.PgFontMap;
 private import pango.PgLanguage;
-
 
 
 private import gobject.ObjectG;

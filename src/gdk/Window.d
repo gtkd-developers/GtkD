@@ -88,7 +88,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import cairo.Pattern;
 private import cairo.Region;
@@ -103,7 +102,6 @@ private import gdk.Rectangle;
 private import gdk.RGBA;
 private import gdk.Screen;
 private import gdk.Visual;
-
 
 
 private import gobject.ObjectG;

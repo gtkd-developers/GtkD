@@ -69,7 +69,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
@@ -77,7 +76,6 @@ private import gtk.TreePath;
 private import gtk.TreeModelT;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeDragSourceIF;
-
 
 
 private import gobject.ObjectG;

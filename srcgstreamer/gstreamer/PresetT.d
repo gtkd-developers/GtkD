@@ -59,9 +59,7 @@ public import gstreamerc.gstreamer;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.Str;
-
 
 
 

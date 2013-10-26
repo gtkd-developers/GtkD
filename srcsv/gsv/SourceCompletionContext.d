@@ -66,11 +66,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.ListG;
 private import gsv.SourceCompletionProviderIF;
 private import gtk.TextIter;
-
 
 
 private import gobject.ObjectG;

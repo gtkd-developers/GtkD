@@ -62,12 +62,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gio.MenuModel;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.Widget;
-
 
 
 private import gtk.MenuShell;

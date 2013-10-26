@@ -67,12 +67,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gobject.ObjectG;
 private import gdk.Event;
 private import gtk.TextIter;
-
 
 
 private import gobject.ObjectG;

@@ -58,10 +58,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.MessageDialog;;
 private import gtk.Window;;
-
 
 
 

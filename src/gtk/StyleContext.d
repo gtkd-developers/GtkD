@@ -45,7 +45,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- std.stdarg
+ * 	- core.vararg
  * 	- glib.Str
  * 	- cairo.Context
  * 	- cairo.Surface
@@ -96,7 +96,7 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
+private import core.vararg;
 private import glib.Str;
 private import cairo.Context;
 private import cairo.Surface;
@@ -114,19 +114,6 @@ private import gtk.StyleProviderIF;
 private import gtk.WidgetPath;
 private import pango.PgFontDescription;
 private import pango.PgLayout;
-
-
-version(Tango) {
-	private import tango.core.Vararg;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import core.vararg;
-
-	version = druntime;
-} else {
-	private import std.stdarg;
-}
 
 
 private import gobject.ObjectG;

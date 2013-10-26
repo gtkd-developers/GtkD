@@ -67,12 +67,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.TextBuffer;
 private import gtk.TargetEntry;
 private import gtkc.Loader;
 private import gtkc.paths;
-
 
 
 private import gobject.Boxed;

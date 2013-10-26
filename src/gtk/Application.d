@@ -69,14 +69,12 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListG;
 private import glib.Variant;
 private import gio.Application : GioApplication = Application;
 private import gio.MenuModel;
 private import gtk.Window;
-
 
 
 

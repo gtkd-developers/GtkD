@@ -69,13 +69,11 @@ private import gtkc.gobject;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gobject.ParamSpec;
 private import gdk.Pixbuf;
 private import glib.Variant;
 private import glib.VariantType;
-
 
 
 

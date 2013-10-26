@@ -65,13 +65,11 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.DBusConnection;
 private import gio.DBusObjectSkeleton;
 private import gio.DBusObjectManagerT;
 private import gio.DBusObjectManagerIF;
-
 
 
 private import gobject.ObjectG;

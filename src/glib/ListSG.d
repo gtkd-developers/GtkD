@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * The GSList structure and its associated functions provide a
  * standard singly-linked list data structure.

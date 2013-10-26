@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  */
 

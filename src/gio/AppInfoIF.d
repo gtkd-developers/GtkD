@@ -72,7 +72,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -81,7 +80,6 @@ private import gio.AppInfoIF;
 private import gio.AppLaunchContext;
 private import gio.Icon;
 private import gio.IconIF;
-
 
 
 

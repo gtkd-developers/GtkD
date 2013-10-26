@@ -65,11 +65,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Widget;
-
 
 
 private import gtk.Window;

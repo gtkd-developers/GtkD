@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * Threads act almost like processes, but unlike processes all threads
  * of one process share the same memory. This is good, as it provides

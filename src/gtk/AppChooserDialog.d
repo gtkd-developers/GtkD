@@ -67,14 +67,12 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.File;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.AppChooserIF;
 private import gtk.AppChooserT;
-
 
 
 private import gtk.Dialog;

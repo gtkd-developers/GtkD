@@ -76,7 +76,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.Button;
 private import gtk.ToolItem;
@@ -85,7 +84,6 @@ private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.ToolShellIF;
 private import gtk.ToolShellT;
-
 
 
 private import gtk.Container;

@@ -77,7 +77,6 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import cairo.Context;
 private import cairo.ScaledFont;
@@ -88,7 +87,6 @@ private import pango.PgGlyphItem;
 private import pango.PgGlyphString;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
-
 
 
 

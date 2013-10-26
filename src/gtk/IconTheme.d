@@ -82,7 +82,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -95,7 +94,6 @@ private import gdk.Screen;
 private import gdk.Window;
 private import gtk.IconInfo;
 private import gtk.StyleContext;
-
 
 
 private import gobject.ObjectG;

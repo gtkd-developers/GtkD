@@ -75,7 +75,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -86,7 +85,6 @@ private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.ActionMapIF;
 private import gio.ActionMapT;
-
 
 
 private import gobject.ObjectG;

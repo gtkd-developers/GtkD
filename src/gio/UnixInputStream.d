@@ -60,10 +60,8 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gio.PollableInputStreamT;
 private import gio.PollableInputStreamIF;
-
 
 
 private import gio.InputStream;

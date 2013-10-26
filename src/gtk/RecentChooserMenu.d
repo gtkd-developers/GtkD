@@ -66,14 +66,12 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.RecentManager;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
-
 
 
 private import gtk.Menu;

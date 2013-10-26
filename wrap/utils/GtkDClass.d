@@ -58,7 +58,7 @@ private import utils.IndentedStringBuilder;
 private import utils.convparms;
 private import utils.funct;
 
-//private import std.ascii;
+private import std.ascii;
 private import std.path;
 private import std.stdio;
 private import std.array;
@@ -260,86 +260,11 @@ public class GtkDClass
 			}	
 		}	
 		
-		// the use of phobs is limited, maybe we can get by with this...
-		
-		string[][string] tangoImportConvs;
-		tangoImportConvs["std.stdio"] = ["tango.io.Stdout"];
-		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
-		tangoImportConvs["std.string"] = ["tango.text.Util", "tango.text.Unicode"];
-		tangoImportConvs["std.c.string"] = ["tango.stdc.string"];
-		tangoImportConvs["std.c.stdio"] = ["tango.stdc.stdio"];
-		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
-		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
-		tangoImportConvs["std.conv"] = ["tango.text.convert.Integer"];
-
-		string[][string] druntimeImportConvs;
-		druntimeImportConvs["std.thread"] = ["core.thread"];
-		druntimeImportConvs["std.c.string"] = ["core.stdc.string"];
-		druntimeImportConvs["std.gc"] = ["core.memory"];
-		druntimeImportConvs["std.stdarg"] = ["core.vararg"];
-
-		string[][string] phobos2ImportConvs;
-		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
-		phobos2ImportConvs["std.c.stdio"] = ["std.c.stdio"];
-		phobos2ImportConvs["std.string"] = ["std.string"];
-		phobos2ImportConvs["std.conv"] = ["std.conv"];
-		
-		string importTango = "\nversion(Tango) {\n";
-		string importDruntime = "} else version(D_Version2) {\n";
-		string importElse = "} else {\n";
-		string importCommon = "\n";
-		
-		int countTango;
-		int countDruntime;
-		
 		foreach( string imprt ; convParms.imprts )
 		{
-			if ( imprt in druntimeImportConvs )
-			{
-				++countDruntime;
-				foreach ( string d2Imp ; druntimeImportConvs[imprt] )
-				{ 
-					importDruntime ~= "\t"~ privPub ~" import "~d2Imp~";\n";
-				}
-			}
-			if ( imprt in phobos2ImportConvs )
-			{
-				foreach ( string phobos2Imp ; phobos2ImportConvs[imprt] )
-				{ 
-					importDruntime ~= "\t"~ privPub ~" import "~phobos2Imp~";\n";
-				}
-			}
-
-			if ( imprt in tangoImportConvs )
-			{
-				++countTango;
-				foreach ( string tangoImp ; tangoImportConvs[imprt] )
-				{ 
-					importTango ~= "\t"~ privPub ~" import "~tangoImp~";\n";
-				}
-				importElse ~= "\t"~ privPub ~" import "~imprt~";\n";
-			}
-			else
-			{
-				importCommon ~= privPub ~" import "~imprt~";\n";
-			}
+			gtkDText ~= privPub ~" import "~imprt~";\n";
 		}
 		
-		gtkDText ~= importCommon~"\n";
-		if ( countTango > 0 )
-		{
-			gtkDText ~= importTango;
-			
-			if ( countDruntime > 0 )
-			{
-				gtkDText ~= "\n\tversion = druntime;\n";
-				gtkDText ~= importDruntime;
-				gtkDText ~= "\n\tversion = druntime;\n";
-			}
-
-			gtkDText ~= importElse~"}\n";
-		}
-
 		properties.length = 0;
 		styleProperties.length = 0;
 		signals.length = 0;

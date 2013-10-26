@@ -47,7 +47,7 @@
  * omit signals:
  * imports:
  * 	- std.stdio
- * 	- std.stdarg
+ * 	- core.vararg
  * 	- gtkc.gobject;
  * 	- glib.Str
  * 	- glib.ErrorG
@@ -88,7 +88,8 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
+private import std.stdio;
+private import core.vararg;
 private import gtkc.gobject;;
 private import glib.Str;
 private import glib.ErrorG;
@@ -104,22 +105,6 @@ private import gtk.TextTag;
 private import gtk.TextTagTable;
 private import pango.PgFontDescription;
 private import pango.PgTabArray;
-
-
-version(Tango) {
-	private import tango.io.Stdout;
-	private import tango.core.Vararg;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import std.stdio;
-	private import core.vararg;
-
-	version = druntime;
-} else {
-	private import std.stdio;
-	private import std.stdarg;
-}
 
 
 private import gobject.ObjectG;
@@ -243,15 +228,6 @@ public class TextBuffer : ObjectG
 			
 			string name = va_arg!(string)(_argptr);
 			
-			version(D_Version2)
-			{
-				mixin("if ( _arguments[i+1] == typeid(const(double)) )
-				{
-					g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
-					continue;
-				}");
-			}
-			
 			if ( _arguments[i+1] == typeid(bool) ||
 			_arguments[i+1] == typeid(int) ||
 			_arguments[i+1] == typeid(GtkJustification) ||
@@ -274,6 +250,10 @@ public class TextBuffer : ObjectG
 			{
 				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
 			}
+			else if ( _arguments[i+1] == typeid(const(double)) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
 			else if ( _arguments[i+1] == typeid(PgFontDescription) )
 			{
 				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
@@ -288,16 +268,10 @@ public class TextBuffer : ObjectG
 			}
 			else
 			{
-				version(Tango)
-				Stderr.formatln("TextBuffer.CreateTag: Unsuported type: \"{}\" for property: \"{}\"", _arguments[i+1], name);
-				else version(D_Version2)
 				stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
-				else
-				fwritefln(stderr, "TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
 				
 				//TODO: throw segfaults, druntime bug?
 				throw new Exception("TextBuffer.CreateTag: Unsuported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
-				
 			}
 		}
 		

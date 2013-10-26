@@ -24,36 +24,32 @@
 
 module gtkglc.glgtk;
 
-version(Tango)
-	private import tango.stdc.stdio;
-else
-	private import std.stdio;
-
+private import std.stdio;
 private import gtkglc.glgtktypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-mixin( _shared ~ "static this()
+shared static this()
 {
 	// glgtk.GLtInit
 
-	Linker.link(gtk_gl_init, \"gtk_gl_init\", LIBRARY.GLGTK);
-	Linker.link(gtk_gl_init_check, \"gtk_gl_init_check\", LIBRARY.GLGTK);
+	Linker.link(gtk_gl_init, "gtk_gl_init", LIBRARY.GLGTK);
+	Linker.link(gtk_gl_init_check, "gtk_gl_init_check", LIBRARY.GLGTK);
 
 	// glgtk.
 
-	Linker.link(gtk_widget_set_gl_capability, \"gtk_widget_set_gl_capability\", LIBRARY.GLGTK);
-	Linker.link(gtk_widget_is_gl_capable, \"gtk_widget_is_gl_capable\", LIBRARY.GLGTK);
-	Linker.link(gtk_widget_get_gl_config, \"gtk_widget_get_gl_config\", LIBRARY.GLGTK);
-	Linker.link(gtk_widget_create_gl_context, \"gtk_widget_create_gl_context\", LIBRARY.GLGTK);
-	Linker.link(gtk_widget_get_gl_context, \"gtk_widget_get_gl_context\", LIBRARY.GLGTK);
-	Linker.link(gtk_widget_get_gl_window, \"gtk_widget_get_gl_window\", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_set_gl_capability, "gtk_widget_set_gl_capability", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_is_gl_capable, "gtk_widget_is_gl_capable", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_get_gl_config, "gtk_widget_get_gl_config", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_create_gl_context, "gtk_widget_create_gl_context", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_get_gl_context, "gtk_widget_get_gl_context", LIBRARY.GLGTK);
+	Linker.link(gtk_widget_get_gl_window, "gtk_widget_get_gl_window", LIBRARY.GLGTK);
 
 	// glgtk.
 
-}");
+}
 
-mixin( gshared ~"extern(C)
+__gshared extern(C)
 {
 	// glgtk.GLtInit
 
@@ -71,7 +67,7 @@ mixin( gshared ~"extern(C)
 
 	// glgtk.
 
-}");
+}
 
 // glgtk.GLtInit
 

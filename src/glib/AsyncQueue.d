@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * Often you need to communicate between different threads. In general
  * it's safer not to do this by shared memory, but by explicit message

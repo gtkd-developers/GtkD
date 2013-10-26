@@ -76,7 +76,6 @@ private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ErrorG;
 private import glib.GException;
 private import gdkpixbuf.PixbufAnimationIter;
@@ -85,7 +84,6 @@ private import glib.Str;
 private import gio.InputStream;
 private import gio.Cancellable;
 private import gio.AsyncResultIF;
-
 
 
 private import gobject.ObjectG;

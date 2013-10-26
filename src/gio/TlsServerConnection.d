@@ -63,12 +63,10 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ErrorG;
 private import glib.GException;
 private import gio.IOStream;
 private import gio.TlsCertificate;
-
 
 
 private import gio.TlsConnection;

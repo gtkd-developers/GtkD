@@ -62,12 +62,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.Button;
 private import gtk.HButtonBox;
 private import gtk.VButtonBox;
 private import gtk.Widget;
-
 
 
 private import gtk.Box;

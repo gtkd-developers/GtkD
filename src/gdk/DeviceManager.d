@@ -64,10 +64,8 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gdk.Device;
 private import gdk.Display;
-
 
 
 private import gobject.ObjectG;

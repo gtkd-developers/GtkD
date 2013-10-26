@@ -88,7 +88,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -105,7 +104,6 @@ private import pango.PgFontDescription;
 private import vte.Pty;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
-
 
 
 private import gtk.Widget;

@@ -87,7 +87,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gtkc.gobject;
 private import glib.Str;
 private import glib.ListG;
@@ -103,7 +102,6 @@ private import gstreamer.Message;
 private import gstreamer.Pad;
 private import gstreamer.PadTemplate;
 private import gstreamer.Query;
-
 
 
 private import gstreamer.ObjectGst;

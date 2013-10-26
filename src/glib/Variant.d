@@ -77,14 +77,12 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Bytes;
 private import glib.StringG;
 private import glib.VariantType;
-
 
 
 

@@ -44,7 +44,7 @@
  * omit signals:
  * imports:
  * 	- std.c.stdio
- * 	- std.c.string
+ * 	- core.stdc.string
  * 	- glib.StringG
  * structWrap:
  * 	- GString* -> StringG
@@ -60,24 +60,9 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
+private import std.c.stdio;
+private import core.stdc.string;
 private import glib.StringG;
-
-
-version(Tango) {
-	private import tango.stdc.stdio;
-	private import tango.stdc.string;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import std.c.stdio;
-	private import core.stdc.string;
-
-	version = druntime;
-} else {
-	private import std.c.stdio;
-	private import std.c.string;
-}
 
 
 
@@ -123,10 +108,7 @@ public class Str
 		if ( len == 0 )
 		len = strlen(s);
 		
-		version(D_Version2)
 		return s[0 .. len].idup;
-		else
-		return s[0 .. len].dup;
 	}
 	
 	/*********************************
@@ -224,11 +206,7 @@ public class Str
 			ndigits = 0;
 			if (u < 10)
 			{
-				version(D_Version2)
 				result = digits[u .. u + 1].idup;
-				else
-				// Avoid storage allocation for simple stuff
-				result = digits[u .. u + 1];
 			}
 			else
 			{
@@ -240,16 +218,7 @@ public class Str
 					buffer[buffer.length - ndigits] = c;
 				}
 				
-				version(D_Version2)
-				{
-					//result = new char[ndigits];
-					result = buffer[buffer.length - ndigits .. buffer.length].idup;
-				}
-				else
-				{
-					result = new char[ndigits];
-					result[] = buffer[buffer.length - ndigits .. buffer.length];
-				}
+				result = buffer[buffer.length - ndigits .. buffer.length].idup;
 			}
 			return result;
 		}
@@ -274,16 +243,8 @@ public class Str
 				buffer[buffer.length - ndigits] = c;
 			}
 			
-			version(D_Version2)
-			{
-				//result = new char[ndigits];
-				result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			}
-			else
-			{
-				result = new char[ndigits];
-				result[] = buffer[buffer.length - ndigits .. buffer.length];
-			}
+			result = buffer[buffer.length - ndigits .. buffer.length].idup;
+			
 			return result;
 		}
 		
@@ -313,16 +274,8 @@ public class Str
 			}
 			buffer[buffer.length - ndigits] = '-';
 			
-			version(D_Version2)
-			{
-				//result = new char[ndigits];
-				result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			}
-			else
-			{
-				result = new char[ndigits];
-				result[] = buffer[buffer.length - ndigits .. buffer.length];
-			}
+			result = buffer[buffer.length - ndigits .. buffer.length].idup;
+			
 			return result;
 		}
 	}

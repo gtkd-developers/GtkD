@@ -59,8 +59,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * TreeNode interface
  */

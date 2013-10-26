@@ -135,12 +135,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.Bytes;
 private import gobject.ParamSpec;
 private import gtk.Widget;
-
 
 
 

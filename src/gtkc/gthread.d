@@ -24,85 +24,81 @@
 
 module gtkc.gthread;
 
-version(Tango)
-	private import tango.stdc.stdio;
-else
-	private import std.stdio;
-
+private import std.stdio;
 private import gtkc.gthreadtypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-mixin( _shared ~ "static this()
+shared static this()
 {
 	// gthread.Thread
 
-	Linker.link(g_thread_new, \"g_thread_new\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_try_new, \"g_thread_try_new\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_ref, \"g_thread_ref\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_unref, \"g_thread_unref\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_join, \"g_thread_join\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_yield, \"g_thread_yield\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_exit, \"g_thread_exit\", LIBRARY.GTHREAD);
-	Linker.link(g_thread_self, \"g_thread_self\", LIBRARY.GTHREAD);
-	Linker.link(g_bit_lock, \"g_bit_lock\", LIBRARY.GTHREAD);
-	Linker.link(g_bit_trylock, \"g_bit_trylock\", LIBRARY.GTHREAD);
-	Linker.link(g_bit_unlock, \"g_bit_unlock\", LIBRARY.GTHREAD);
-	Linker.link(g_pointer_bit_lock, \"g_pointer_bit_lock\", LIBRARY.GTHREAD);
-	Linker.link(g_pointer_bit_trylock, \"g_pointer_bit_trylock\", LIBRARY.GTHREAD);
-	Linker.link(g_pointer_bit_unlock, \"g_pointer_bit_unlock\", LIBRARY.GTHREAD);
-	Linker.link(g_get_num_processors, \"g_get_num_processors\", LIBRARY.GTHREAD);
+	Linker.link(g_thread_new, "g_thread_new", LIBRARY.GTHREAD);
+	Linker.link(g_thread_try_new, "g_thread_try_new", LIBRARY.GTHREAD);
+	Linker.link(g_thread_ref, "g_thread_ref", LIBRARY.GTHREAD);
+	Linker.link(g_thread_unref, "g_thread_unref", LIBRARY.GTHREAD);
+	Linker.link(g_thread_join, "g_thread_join", LIBRARY.GTHREAD);
+	Linker.link(g_thread_yield, "g_thread_yield", LIBRARY.GTHREAD);
+	Linker.link(g_thread_exit, "g_thread_exit", LIBRARY.GTHREAD);
+	Linker.link(g_thread_self, "g_thread_self", LIBRARY.GTHREAD);
+	Linker.link(g_bit_lock, "g_bit_lock", LIBRARY.GTHREAD);
+	Linker.link(g_bit_trylock, "g_bit_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_bit_unlock, "g_bit_unlock", LIBRARY.GTHREAD);
+	Linker.link(g_pointer_bit_lock, "g_pointer_bit_lock", LIBRARY.GTHREAD);
+	Linker.link(g_pointer_bit_trylock, "g_pointer_bit_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_pointer_bit_unlock, "g_pointer_bit_unlock", LIBRARY.GTHREAD);
+	Linker.link(g_get_num_processors, "g_get_num_processors", LIBRARY.GTHREAD);
 
 	// gthread.Mutex
 
-	Linker.link(g_mutex_init, \"g_mutex_init\", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_clear, \"g_mutex_clear\", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_lock, \"g_mutex_lock\", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_trylock, \"g_mutex_trylock\", LIBRARY.GTHREAD);
-	Linker.link(g_mutex_unlock, \"g_mutex_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_init, "g_mutex_init", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_clear, "g_mutex_clear", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_lock, "g_mutex_lock", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_trylock, "g_mutex_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_mutex_unlock, "g_mutex_unlock", LIBRARY.GTHREAD);
 
 	// gthread.RecMutex
 
-	Linker.link(g_rec_mutex_init, \"g_rec_mutex_init\", LIBRARY.GTHREAD);
-	Linker.link(g_rec_mutex_clear, \"g_rec_mutex_clear\", LIBRARY.GTHREAD);
-	Linker.link(g_rec_mutex_lock, \"g_rec_mutex_lock\", LIBRARY.GTHREAD);
-	Linker.link(g_rec_mutex_trylock, \"g_rec_mutex_trylock\", LIBRARY.GTHREAD);
-	Linker.link(g_rec_mutex_unlock, \"g_rec_mutex_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_rec_mutex_init, "g_rec_mutex_init", LIBRARY.GTHREAD);
+	Linker.link(g_rec_mutex_clear, "g_rec_mutex_clear", LIBRARY.GTHREAD);
+	Linker.link(g_rec_mutex_lock, "g_rec_mutex_lock", LIBRARY.GTHREAD);
+	Linker.link(g_rec_mutex_trylock, "g_rec_mutex_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_rec_mutex_unlock, "g_rec_mutex_unlock", LIBRARY.GTHREAD);
 
 	// gthread.RWLock
 
-	Linker.link(g_rw_lock_init, \"g_rw_lock_init\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_clear, \"g_rw_lock_clear\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_writer_lock, \"g_rw_lock_writer_lock\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_writer_trylock, \"g_rw_lock_writer_trylock\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_writer_unlock, \"g_rw_lock_writer_unlock\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_reader_lock, \"g_rw_lock_reader_lock\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_reader_trylock, \"g_rw_lock_reader_trylock\", LIBRARY.GTHREAD);
-	Linker.link(g_rw_lock_reader_unlock, \"g_rw_lock_reader_unlock\", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_init, "g_rw_lock_init", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_clear, "g_rw_lock_clear", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_writer_lock, "g_rw_lock_writer_lock", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_writer_trylock, "g_rw_lock_writer_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_writer_unlock, "g_rw_lock_writer_unlock", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_reader_lock, "g_rw_lock_reader_lock", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_reader_trylock, "g_rw_lock_reader_trylock", LIBRARY.GTHREAD);
+	Linker.link(g_rw_lock_reader_unlock, "g_rw_lock_reader_unlock", LIBRARY.GTHREAD);
 
 	// gthread.Cond
 
-	Linker.link(g_cond_init, \"g_cond_init\", LIBRARY.GTHREAD);
-	Linker.link(g_cond_clear, \"g_cond_clear\", LIBRARY.GTHREAD);
-	Linker.link(g_cond_wait, \"g_cond_wait\", LIBRARY.GTHREAD);
-	Linker.link(g_cond_timed_wait, \"g_cond_timed_wait\", LIBRARY.GTHREAD);
-	Linker.link(g_cond_wait_until, \"g_cond_wait_until\", LIBRARY.GTHREAD);
-	Linker.link(g_cond_signal, \"g_cond_signal\", LIBRARY.GTHREAD);
-	Linker.link(g_cond_broadcast, \"g_cond_broadcast\", LIBRARY.GTHREAD);
+	Linker.link(g_cond_init, "g_cond_init", LIBRARY.GTHREAD);
+	Linker.link(g_cond_clear, "g_cond_clear", LIBRARY.GTHREAD);
+	Linker.link(g_cond_wait, "g_cond_wait", LIBRARY.GTHREAD);
+	Linker.link(g_cond_timed_wait, "g_cond_timed_wait", LIBRARY.GTHREAD);
+	Linker.link(g_cond_wait_until, "g_cond_wait_until", LIBRARY.GTHREAD);
+	Linker.link(g_cond_signal, "g_cond_signal", LIBRARY.GTHREAD);
+	Linker.link(g_cond_broadcast, "g_cond_broadcast", LIBRARY.GTHREAD);
 
 	// gthread.Private
 
-	Linker.link(g_private_get, \"g_private_get\", LIBRARY.GTHREAD);
-	Linker.link(g_private_set, \"g_private_set\", LIBRARY.GTHREAD);
-	Linker.link(g_private_replace, \"g_private_replace\", LIBRARY.GTHREAD);
+	Linker.link(g_private_get, "g_private_get", LIBRARY.GTHREAD);
+	Linker.link(g_private_set, "g_private_set", LIBRARY.GTHREAD);
+	Linker.link(g_private_replace, "g_private_replace", LIBRARY.GTHREAD);
 
 	// gthread.Once
 
-	Linker.link(g_once_init_enter, \"g_once_init_enter\", LIBRARY.GTHREAD);
-	Linker.link(g_once_init_leave, \"g_once_init_leave\", LIBRARY.GTHREAD);
-}");
+	Linker.link(g_once_init_enter, "g_once_init_enter", LIBRARY.GTHREAD);
+	Linker.link(g_once_init_leave, "g_once_init_leave", LIBRARY.GTHREAD);
+}
 
-mixin( gshared ~"extern(C)
+__gshared extern(C)
 {
 	// gthread.Thread
 
@@ -169,7 +165,7 @@ mixin( gshared ~"extern(C)
 
 	gboolean function(void* location) c_g_once_init_enter;
 	void function(void* location, gsize result) c_g_once_init_leave;
-}");
+}
 
 // gthread.Thread
 

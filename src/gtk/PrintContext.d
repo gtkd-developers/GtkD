@@ -67,13 +67,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import cairo.Context;
 private import pango.PgContext;
 private import pango.PgLayout;
 private import pango.PgFontMap;
 private import gtk.PageSetup;
-
 
 
 private import gobject.ObjectG;

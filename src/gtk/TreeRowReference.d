@@ -74,13 +74,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gobject.ObjectG;
 private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-
 
 
 

@@ -78,7 +78,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -89,7 +88,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.PrintOperationPreviewT;
 private import gtk.PrintOperationPreviewIF;
-
 
 
 private import gobject.ObjectG;

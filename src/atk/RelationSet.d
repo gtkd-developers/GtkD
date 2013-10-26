@@ -63,11 +63,9 @@ private import gtkc.atk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import atk.ObjectAtk;
 private import atk.Relation;
 private import glib.PtrArray;
-
 
 
 private import gobject.ObjectG;

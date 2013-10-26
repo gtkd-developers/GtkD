@@ -62,11 +62,9 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import glib.ListG;
 private import gtkc.paths;
 private import gtkc.Loader;
-
 
 
 

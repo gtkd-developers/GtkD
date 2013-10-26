@@ -70,7 +70,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -78,7 +77,6 @@ private import cairo.Surface;
 private import gtk.PageSetup;
 private import gtk.Printer;
 private import gtk.PrintSettings;
-
 
 
 private import gobject.ObjectG;

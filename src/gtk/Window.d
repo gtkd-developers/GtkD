@@ -80,7 +80,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -91,7 +90,6 @@ private import gtk.AccelGroup;
 private import gtk.Application;
 private import gtk.Widget;
 private import gtk.WindowGroup;
-
 
 
 private import gtk.Bin;

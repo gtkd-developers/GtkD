@@ -73,7 +73,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gdk.Screen;
 private import gtk.Button;
@@ -81,7 +80,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.HButtonBox;
 private import gtk.VBox;
-
 
 
 private import gtk.Window;

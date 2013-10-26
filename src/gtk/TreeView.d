@@ -92,7 +92,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import cairo.Surface;
 private import glib.Str;
 private import glib.ListG;
@@ -109,7 +108,6 @@ private import gtk.TreeSelection;
 private import gtk.TreeViewColumn;
 private import gtk.ScrollableT;
 private import gtk.ScrollableIF;
-
 
 
 private import gtk.Container;

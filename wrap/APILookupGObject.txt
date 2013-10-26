@@ -256,7 +256,7 @@ import: gobject.Value
 structWrap: GValue* Value
 import: gobject.Closure
 structWrap: GClosure* Closure
-import: std.gc
+import: core.memory
 import: glib.Str
 import: gtkc.paths
 import: gtkc.Loader
@@ -287,8 +287,7 @@ code: start
 			//If the refCount is largeer then 1 toggleNotify isn't called
 			if (gObject.refCount > 1 && !isGcRoot)
 			{
-				version(druntime) GC.addRoot(cast(void*)this);
-				else std.gc.addRoot(cast(void*)this);
+				GC.addRoot(cast(void*)this);
 
 				isGcRoot = true;
 			}
@@ -314,8 +313,7 @@ code: start
 		{
 			if ( obj.isGcRoot )
 			{
-				version(druntime) GC.removeRoot(cast(void*)obj);
-				else std.gc.removeRoot(cast(void*)obj);
+				GC.removeRoot(cast(void*)obj);
 
 				obj.isGcRoot = false;
 			}
@@ -327,15 +325,13 @@ code: start
 		{
 			if ( isLastRef && obj.isGcRoot )
 			{
-				version(druntime) GC.removeRoot(cast(void*)obj);
-				else std.gc.removeRoot(cast(void*)obj);
+				GC.removeRoot(cast(void*)obj);
 
 				obj.isGcRoot = false;
 			}
 			else if ( !obj.isGcRoot )
 			{
-				version(druntime) GC.addRoot(cast(void*)obj);
-				else std.gc.addRoot(cast(void*)obj);
+				GC.addRoot(cast(void*)obj);
 
 				obj.isGcRoot = true;
 			}

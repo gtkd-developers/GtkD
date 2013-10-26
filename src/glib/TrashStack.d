@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * A GTrashStack is an efficient way to keep a stack of unused allocated
  * memory chunks. Each memory chunk is required to be large enough to hold

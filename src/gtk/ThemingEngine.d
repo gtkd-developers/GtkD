@@ -43,7 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- std.stdarg
+ * 	- core.vararg
  * 	- glib.Str
  * 	- gobject.ParamSpec
  * 	- gobject.Value
@@ -72,7 +72,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
+private import core.vararg;
 private import glib.Str;
 private import gobject.ParamSpec;
 private import gobject.Value;
@@ -80,19 +80,6 @@ private import gdk.RGBA;
 private import gdk.Screen;
 private import gtk.WidgetPath;
 private import pango.PgFontDescription;
-
-
-version(Tango) {
-	private import tango.core.Vararg;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import core.vararg;
-
-	version = druntime;
-} else {
-	private import std.stdarg;
-}
 
 
 private import gobject.ObjectG;

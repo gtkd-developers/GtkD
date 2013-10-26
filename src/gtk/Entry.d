@@ -89,7 +89,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
@@ -107,7 +106,6 @@ private import gtk.EditableT;
 private import gtk.EditableIF;
 private import gtk.CellEditableT;
 private import gtk.CellEditableIF;
-
 
 
 private import gtk.Widget;

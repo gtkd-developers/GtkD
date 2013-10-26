@@ -68,7 +68,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -76,7 +75,6 @@ private import glib.Source;
 private import glib.StringG;
 private import gtkc.paths;
 private import gtkc.Loader;
-
 
 
 
@@ -182,10 +180,7 @@ public class IOChannel
 		
 		if ( str !is null )
 		{
-			version(D_Version2)
 			strReturn = str[0 .. len-1].idup;
-			else
-			strReturn = str[0 .. len-1];
 		}
 		
 		return p;
@@ -219,10 +214,7 @@ public class IOChannel
 		
 		if ( str !is null )
 		{
-			version(D_Version2)
 			strReturn = str[0 .. len-1].idup;
-			else
-			strReturn = str[0 .. len-1];
 		}
 		
 		return p;

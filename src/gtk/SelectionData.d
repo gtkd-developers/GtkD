@@ -69,7 +69,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gdk.Display;
 private import gdk.Pixbuf;
@@ -77,7 +76,6 @@ private import gtk.TextBuffer;
 private import gtk.Widget;
 private import gtkc.Loader;
 private import gtkc.paths;
-
 
 
 private import gobject.Boxed;

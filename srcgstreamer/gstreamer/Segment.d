@@ -61,8 +61,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * This helper structure holds the relevant values for tracking the region of
  * interest in a media file, called a segment.

@@ -64,8 +64,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 private import gobject.Boxed;
 
 /**

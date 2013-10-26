@@ -63,11 +63,9 @@ private import gtkc.gdkpixbuf;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gdk.Pixbuf;
 private import glib.ListSG;
 private import glib.Str;
-
 
 
 

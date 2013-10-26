@@ -61,10 +61,8 @@ private import gtkc.atk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import atk.ObjectFactory;
 private import atk.Registry;
-
 
 
 private import gobject.ObjectG;

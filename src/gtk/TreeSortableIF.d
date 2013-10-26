@@ -62,8 +62,6 @@ public  import gtkc.gdktypes;
 
 
 
-
-
 /**
  * GtkTreeSortable is an interface to be implemented by tree models which
  * support sorting. The GtkTreeView uses the methods provided by this interface

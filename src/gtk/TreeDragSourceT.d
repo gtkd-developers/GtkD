@@ -67,12 +67,10 @@ public import gtkc.gtk;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import gtk.SelectionData;
 public import gtk.TreeModelIF;
 public import gtk.TreeModel;
 public import gtk.TreePath;
-
 
 
 

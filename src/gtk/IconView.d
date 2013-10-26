@@ -82,7 +82,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import cairo.Surface;
 private import glib.ListG;
 private import gtk.CellArea;
@@ -96,7 +95,6 @@ private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.ScrollableT;
 private import gtk.ScrollableIF;
-
 
 
 private import gtk.Container;

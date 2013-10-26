@@ -79,7 +79,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gstreamer.Buffer;
 private import gstreamer.BufferList;
@@ -90,7 +89,6 @@ private import gstreamer.Iterator;
 private import gstreamer.ObjectGst;
 private import gstreamer.PadTemplate;
 private import gstreamer.Query;
-
 
 
 private import gstreamer.ObjectGst;

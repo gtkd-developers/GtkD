@@ -66,12 +66,10 @@ private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ListG;
 private import gthread.Mutex;
 private import gobject.ObjectG;
 private import gobject.Value;
-
 
 
 

@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * The font options specify how fonts should be rendered. Most of the
  * time the font options implied by a surface are just right and do not

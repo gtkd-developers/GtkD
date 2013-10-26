@@ -60,11 +60,9 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gobject.ObjectG;
 private import gio.VolumeT;
 private import gio.VolumeIF;
-
 
 
 

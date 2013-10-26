@@ -59,9 +59,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gio.Permission;
-
 
 
 private import gtk.Button;

@@ -61,10 +61,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gdk.Event;
 private import gtk.Entry;
-
 
 
 private import gtk.Bin;

@@ -73,7 +73,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gdk.Event;
 private import gsv.SourceBuffer;
@@ -82,7 +81,6 @@ private import gsv.SourceGutter;
 private import gsv.SourceMarkAttributes;
 private import gtk.TextIter;
 private import gtkc.gtk;
-
 
 
 private import gtk.TextView;

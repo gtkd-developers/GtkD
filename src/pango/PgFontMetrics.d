@@ -61,8 +61,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * Pango supports a flexible architecture where a
  * particular rendering architecture can supply an

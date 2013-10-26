@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * The user-font feature allows the cairo user to provide drawings for glyphs
  * in a font. This is most useful in implementing fonts in non-standard

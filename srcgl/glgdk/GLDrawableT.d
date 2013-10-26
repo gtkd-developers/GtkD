@@ -60,9 +60,7 @@ public import gtkglc.glgdk;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glgdk.GLConfig;
-
 
 
 

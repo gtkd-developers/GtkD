@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * Devices are the abstraction Cairo employs for the rendering system
  * used by a cairo_surface_t. You can get the device of a surface using

@@ -66,12 +66,10 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import cairo.Surface;
 private import gdk.Display;
 private import gdk.Pixbuf;
-
 
 
 private import gobject.ObjectG;

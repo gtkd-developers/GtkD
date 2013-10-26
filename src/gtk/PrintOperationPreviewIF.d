@@ -74,10 +74,8 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gtk.PageSetup;
 private import gtk.PrintContext;
-
 
 
 

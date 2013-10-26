@@ -62,11 +62,9 @@ private import gtkc.gobject;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gobject.ParamSpec;
 private import glib.ListG;
-
 
 
 

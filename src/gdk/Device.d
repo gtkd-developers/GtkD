@@ -71,14 +71,12 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.ListG;
 private import glib.Str;
 private import gdk.Cursor;
 private import gdk.Display;
 private import gdk.Screen;
 private import gdk.Window;
-
 
 
 private import gobject.ObjectG;

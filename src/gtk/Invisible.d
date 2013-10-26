@@ -61,9 +61,7 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gdk.Screen;
-
 
 
 private import gtk.Widget;

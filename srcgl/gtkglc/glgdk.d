@@ -24,90 +24,86 @@
 
 module gtkglc.glgdk;
 
-version(Tango)
-	private import tango.stdc.stdio;
-else
-	private import std.stdio;
-
+private import std.stdio;
 private import gtkglc.glgdktypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-mixin( _shared ~ "static this()
+shared static this()
 {
 	// glgdk.GLdInit
 
-	Linker.link(gdk_gl_init, \"gdk_gl_init\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_init_check, \"gdk_gl_init_check\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_init, "gdk_gl_init", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_init_check, "gdk_gl_init_check", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
 
 	// glgdk.GLQuery
 
-	Linker.link(gdk_gl_query_extension, \"gdk_gl_query_extension\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_query_extension_for_display, \"gdk_gl_query_extension_for_display\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_query_version, \"gdk_gl_query_version\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_query_version_for_display, \"gdk_gl_query_version_for_display\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_query_gl_extension, \"gdk_gl_query_gl_extension\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_get_proc_address, \"gdk_gl_get_proc_address\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_query_extension, "gdk_gl_query_extension", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_query_extension_for_display, "gdk_gl_query_extension_for_display", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_query_version, "gdk_gl_query_version", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_query_version_for_display, "gdk_gl_query_version_for_display", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_query_gl_extension, "gdk_gl_query_gl_extension", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_get_proc_address, "gdk_gl_get_proc_address", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
 
 	// glgdk.GLConfig
 
-	Linker.link(gdk_gl_config_new, \"gdk_gl_config_new\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_new_for_screen, \"gdk_gl_config_new_for_screen\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_new_by_mode, \"gdk_gl_config_new_by_mode\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_new_by_mode_for_screen, \"gdk_gl_config_new_by_mode_for_screen\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_screen, \"gdk_gl_config_get_screen\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_attrib, \"gdk_gl_config_get_attrib\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_visual, \"gdk_gl_config_get_visual\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_depth, \"gdk_gl_config_get_depth\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_layer_plane, \"gdk_gl_config_get_layer_plane\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_n_aux_buffers, \"gdk_gl_config_get_n_aux_buffers\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_get_n_sample_buffers, \"gdk_gl_config_get_n_sample_buffers\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_is_rgba, \"gdk_gl_config_is_rgba\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_is_double_buffered, \"gdk_gl_config_is_double_buffered\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_is_stereo, \"gdk_gl_config_is_stereo\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_has_alpha, \"gdk_gl_config_has_alpha\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_has_depth_buffer, \"gdk_gl_config_has_depth_buffer\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_has_stencil_buffer, \"gdk_gl_config_has_stencil_buffer\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_config_has_accum_buffer, \"gdk_gl_config_has_accum_buffer\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_new, "gdk_gl_config_new", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_new_for_screen, "gdk_gl_config_new_for_screen", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_new_by_mode, "gdk_gl_config_new_by_mode", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_new_by_mode_for_screen, "gdk_gl_config_new_by_mode_for_screen", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_screen, "gdk_gl_config_get_screen", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_attrib, "gdk_gl_config_get_attrib", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_visual, "gdk_gl_config_get_visual", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_depth, "gdk_gl_config_get_depth", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_layer_plane, "gdk_gl_config_get_layer_plane", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_n_aux_buffers, "gdk_gl_config_get_n_aux_buffers", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_get_n_sample_buffers, "gdk_gl_config_get_n_sample_buffers", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_is_rgba, "gdk_gl_config_is_rgba", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_is_double_buffered, "gdk_gl_config_is_double_buffered", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_is_stereo, "gdk_gl_config_is_stereo", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_has_alpha, "gdk_gl_config_has_alpha", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_has_depth_buffer, "gdk_gl_config_has_depth_buffer", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_has_stencil_buffer, "gdk_gl_config_has_stencil_buffer", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_config_has_accum_buffer, "gdk_gl_config_has_accum_buffer", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
 
 	// glgdk.GLContext
 
-	Linker.link(gdk_gl_context_make_current, \"gdk_gl_context_make_current\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_release_current, \"gdk_gl_context_release_current\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_new, \"gdk_gl_context_new\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_copy, \"gdk_gl_context_copy\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_get_gl_drawable, \"gdk_gl_context_get_gl_drawable\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_get_gl_config, \"gdk_gl_context_get_gl_config\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_get_share_list, \"gdk_gl_context_get_share_list\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_is_direct, \"gdk_gl_context_is_direct\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_get_render_type, \"gdk_gl_context_get_render_type\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_context_get_current, \"gdk_gl_context_get_current\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_make_current, "gdk_gl_context_make_current", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_release_current, "gdk_gl_context_release_current", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_new, "gdk_gl_context_new", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_copy, "gdk_gl_context_copy", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_get_gl_drawable, "gdk_gl_context_get_gl_drawable", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_get_gl_config, "gdk_gl_context_get_gl_config", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_get_share_list, "gdk_gl_context_get_share_list", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_is_direct, "gdk_gl_context_is_direct", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_get_render_type, "gdk_gl_context_get_render_type", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_context_get_current, "gdk_gl_context_get_current", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
 
 	// glgdk.GLDrawableT
 
 
 	// glgdk.GLDrawableT
 
-	Linker.link(gdk_gl_drawable_is_double_buffered, \"gdk_gl_drawable_is_double_buffered\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_drawable_swap_buffers, \"gdk_gl_drawable_swap_buffers\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_drawable_wait_gl, \"gdk_gl_drawable_wait_gl\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_drawable_wait_gdk, \"gdk_gl_drawable_wait_gdk\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_drawable_get_gl_config, \"gdk_gl_drawable_get_gl_config\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_drawable_is_double_buffered, "gdk_gl_drawable_is_double_buffered", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_drawable_swap_buffers, "gdk_gl_drawable_swap_buffers", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_drawable_wait_gl, "gdk_gl_drawable_wait_gl", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_drawable_wait_gdk, "gdk_gl_drawable_wait_gdk", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_drawable_get_gl_config, "gdk_gl_drawable_get_gl_config", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
 
 	// glgdk.GLDrawable
 
 
 	// glgdk.GLWindow
 
-	Linker.link(gdk_gl_window_new, \"gdk_gl_window_new\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_gl_window_get_window, \"gdk_gl_window_get_window\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_window_set_gl_capability, \"gdk_window_set_gl_capability\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_window_unset_gl_capability, \"gdk_window_unset_gl_capability\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_window_is_gl_capable, \"gdk_window_is_gl_capable\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_window_get_gl_window, \"gdk_window_get_gl_window\", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
-}");
+	Linker.link(gdk_gl_window_new, "gdk_gl_window_new", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_gl_window_get_window, "gdk_gl_window_get_window", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_set_gl_capability, "gdk_window_set_gl_capability", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_unset_gl_capability, "gdk_window_unset_gl_capability", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_is_gl_capable, "gdk_window_is_gl_capable", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_gl_window, "gdk_window_get_gl_window", LIBRARY.GLGDK, LIBRARY.GDKPIXBUF);
+}
 
-mixin( gshared ~"extern(C)
+__gshared extern(C)
 {
 	// glgdk.GLdInit
 
@@ -179,7 +175,7 @@ mixin( gshared ~"extern(C)
 	void function(GdkWindow* window) c_gdk_window_unset_gl_capability;
 	gboolean function(GdkWindow* window) c_gdk_window_is_gl_capable;
 	GdkGLWindow* function(GdkWindow* window) c_gdk_window_get_gl_window;
-}");
+}
 
 // glgdk.GLdInit
 

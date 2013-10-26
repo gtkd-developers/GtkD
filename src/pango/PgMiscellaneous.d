@@ -63,17 +63,10 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
+private import std.c.stdio;
 private import glib.Str;
 private import glib.StringG;
 private import pango.PgLanguage;
-
-
-version(Tango) {
-	private import tango.stdc.stdio;
-} else {
-	private import std.c.stdio;
-}
 
 
 

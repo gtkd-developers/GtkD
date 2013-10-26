@@ -575,7 +575,7 @@ public class GtkWrapper : WrapperIF
 
 		string keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
 			" openFile mergeFile closeFile outFile"
-			" copy import import(tango) structWrap alias moduleAlias override"
+			" copy import structWrap alias moduleAlias override"
 			" noprefix nostruct nocode nosignal"
 			" code interfaceCode"
 			" srcout out inout array"
@@ -607,7 +607,6 @@ public class GtkWrapper : WrapperIF
 				case "nosignal": convParms.noSignals ~= defReader.getValue(); break;
 				case "nostruct": convParms.noStructs ~= defReader.getValue(); break;
 				case "import": convParms.imprts ~= defReader.getValue(); break;
-				case "import(tango)": /*ignore for now*/defReader.getValue(); break;
 				case "structWrap": loadAA(convParms.structWrap, defReader, errors); break;
 				case "alias": loadAA(convParms.aliases, defReader, errors); break;
 				case "moduleAlias": loadAA(convParms.mAliases, defReader, errors); break;
@@ -861,10 +860,7 @@ public class GtkWrapper : WrapperIF
 		string externalText = license;
 
 		externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";\n"
-			"\nversion(Tango)"
-			"\n	private import tango.stdc.stdio;"
-			"\nelse"
-			"\n	private import std.stdio;\n"
+			"\nprivate import std.stdio;"
 			"\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
 
 		if ( loaderTableName == "glib" )
@@ -883,7 +879,7 @@ public class GtkWrapper : WrapperIF
 		{
 			externalText ~= "\nprivate import gtkc.Loader;"
 				"\nprivate import gtkc.paths;\n"
-				"\nmixin( _shared ~ \"static this()"
+				"\nshared static this()"
 				"\n{";
 
 			string library = "LIBRARY."~ toUpper(loaderTableName);
@@ -933,17 +929,21 @@ public class GtkWrapper : WrapperIF
 					else
 					{
 						string functName = std.string.strip(dec[pos+1..$]);
-						if ( functName.length > 0 )
+						if ( functName.length > 0 && (functName == "g_module_open" || functName == "g_module_name") )
 						{
-							externalText ~= "Linker.link("~ functName ~", \\\""~ functName ~ getUtfPostfix(functName) ~"\\\", "~ getLibrary(functName) ~");";
+							externalText ~= "mixin(\"Linker.link("~ functName ~", \\\""~ functName ~ "\"~ _utfPostfix ~\"\\\", "~ getLibrary(functName) ~");\");";
+						}
+						else if ( functName.length > 0 )
+						{
+							externalText ~= "Linker.link("~ functName ~", \""~ functName ~"\", "~ getLibrary(functName) ~");";
 						}
 					}
 					externalText ~= '\n';
 				}
 			}
 
-			externalText ~= "}\");\n\n"
-				"mixin( gshared ~\"extern(C)\n"
+			externalText ~= "}\n\n"
+				"__gshared extern(C)\n"
 				"{";
 
 			//Generate the functions.
@@ -977,7 +977,7 @@ public class GtkWrapper : WrapperIF
 				externalText ~= '\n';
 			}
 
-			externalText ~= "}\");\n";
+			externalText ~= "}\n";
 
 			//Generate the aliases.
 			foreach ( string declaration; declarations )

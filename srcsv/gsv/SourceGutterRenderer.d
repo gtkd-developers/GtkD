@@ -72,14 +72,12 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import cairo.Context;
 private import gdk.Event;
 private import gdk.RGBA;
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Tooltip;
-
 
 
 private import gobject.ObjectG;

@@ -60,10 +60,8 @@ private import gtkc.atk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.IOChannel;
 private import glib.Str;
-
 
 
 

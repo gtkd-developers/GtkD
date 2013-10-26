@@ -64,12 +64,10 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 private import glib.ConstructionException;
 
-
 private import cairo.FontFace;
 private import cairo.FontOption;
 private import cairo.Matrix;
 private import glib.Str;
-
 
 
 

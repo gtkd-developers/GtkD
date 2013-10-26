@@ -65,13 +65,11 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 private import glib.ConstructionException;
 
-
 private import glib.Str;
 private import cairo.Device;
 private import cairo.FontOption;
 private import gdk.Window;
 private import gtkc.gdk;
-
 
 
 

@@ -78,7 +78,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -91,7 +90,6 @@ private import gio.SocketAddress;
 private import gio.SocketConnection;
 private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
-
 
 
 private import gobject.ObjectG;

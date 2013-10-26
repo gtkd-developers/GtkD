@@ -74,7 +74,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.ListG;
@@ -82,7 +81,6 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import gstreamer.ControlBinding;
-
 
 
 private import gobject.ObjectG;

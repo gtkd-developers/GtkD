@@ -62,11 +62,9 @@ public import gtkc.gio;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.Str;
 public import gio.Action;
 public import gio.ActionIF;
-
 
 
 

@@ -65,12 +65,10 @@ public import gtkc.gtk;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.Str;
 public import glib.ListG;
 public import gtk.CellArea;
 public import gtk.CellRenderer;
-
 
 
 

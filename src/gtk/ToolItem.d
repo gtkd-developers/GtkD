@@ -69,13 +69,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.SizeGroup;
 private import gtk.Widget;
 private import gtk.ActivatableT;
 private import gtk.ActivatableIF;
-
 
 
 private import gtk.Bin;

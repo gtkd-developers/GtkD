@@ -67,12 +67,10 @@ public import gtkc.gtk;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import glib.Str;
 public import gobject.ObjectG;
 public import gobject.Value;
 public import gtk.Builder;
-
 
 
 

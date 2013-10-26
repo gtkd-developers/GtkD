@@ -72,13 +72,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gobject.Value;
 private import gtk.TreeIterError;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-
 
 
 

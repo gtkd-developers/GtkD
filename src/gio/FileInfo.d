@@ -69,14 +69,12 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.DateTime;
 private import gobject.ObjectG;
 private import gio.Icon;
 private import gio.IconIF;
 private import gio.FileAttributeMatcher;
-
 
 
 private import gobject.ObjectG;

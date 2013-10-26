@@ -71,13 +71,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gio.MenuAttributeIter;
 private import gio.MenuLinkIter;
-
 
 
 private import gobject.ObjectG;

@@ -86,7 +86,6 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ListG;
 private import pango.PgFont;
@@ -100,7 +99,6 @@ private import pango.PgMatrix;
 private import pango.PgAttributeList;
 private import pango.PgAttributeIterator;
 private import pango.PgGlyphString;
-
 
 
 private import gobject.ObjectG;

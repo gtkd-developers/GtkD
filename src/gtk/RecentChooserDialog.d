@@ -65,13 +65,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.Window;
 private import gtk.RecentManager;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
-
 
 
 private import gtk.Dialog;

@@ -63,17 +63,10 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
+private import std.c.stdio;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-
-
-version(Tango) {
-	private import tango.stdc.stdio;
-} else {
-	private import std.c.stdio;
-}
 
 
 

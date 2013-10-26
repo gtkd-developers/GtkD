@@ -64,11 +64,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gdk.Window;
 private import pango.PgAttributeList;
-
 
 
 private import gobject.ObjectG;

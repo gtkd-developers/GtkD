@@ -71,7 +71,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gobject.ParamSpec;
 private import gobject.Value;
@@ -79,7 +78,6 @@ private import glib.StringG;
 private import gdk.Screen;
 private import gtk.StyleProviderT;
 private import gtk.StyleProviderIF;
-
 
 
 private import gobject.ObjectG;

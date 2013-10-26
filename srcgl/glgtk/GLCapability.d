@@ -59,8 +59,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 // SNEAKY MIXIN PROBLEM:
 //
 // These need to be public imports
@@ -74,15 +72,6 @@ public import glgtk.GLWidget;
 public import glgtk.GLWidget : widgetSetGLCapability = setGLCapability;
 public import glgdk.GLWindow;
 public import gdk.Event;
-
-version(Tango) {
-	private import tango.core.Memory;
-	} else version(D_Version2) {
-	private import core.memory;
-	} else {
-	private import std.gc;
-}
-
 
 template GLCapability()
 {

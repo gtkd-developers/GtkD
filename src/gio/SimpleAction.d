@@ -67,13 +67,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gio.ActionIF;
 private import gio.ActionT;
-
 
 
 private import gobject.ObjectG;

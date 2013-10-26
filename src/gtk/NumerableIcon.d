@@ -64,13 +64,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.EmblemedIcon : GioEmblemedIcon = EmblemedIcon;
 private import gio.Icon;
 private import gio.IconIF;
 private import gtk.StyleContext;
-
 
 
 

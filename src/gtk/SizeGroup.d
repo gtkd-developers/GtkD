@@ -64,12 +64,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ListSG;
 private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-
 
 
 private import gobject.ObjectG;

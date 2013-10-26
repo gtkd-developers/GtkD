@@ -70,7 +70,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import cairo.Pattern;
 private import gtk.StyleContext;
@@ -78,7 +77,6 @@ private import gtk.StyleProperties;
 private import gtk.SymbolicColor;
 private import gtkc.paths;
 private import gtkc.Loader;
-
 
 
 

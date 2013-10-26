@@ -73,7 +73,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -81,7 +80,6 @@ private import gio.File;
 private import gtk.CssSection;
 private import gtk.StyleProviderT;
 private import gtk.StyleProviderIF;
-
 
 
 private import gobject.ObjectG;

@@ -76,7 +76,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ListSG;
 private import gdk.Pixbuf;
@@ -87,7 +86,6 @@ private import gtk.TextTag;
 private import gtkc.Loader;
 private import gtkc.paths;
 private import pango.PgLanguage;
-
 
 
 private import gobject.Boxed;

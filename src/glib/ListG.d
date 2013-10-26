@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * The GList structure and its associated functions provide a standard
  * doubly-linked list data structure.

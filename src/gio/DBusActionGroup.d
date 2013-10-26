@@ -67,14 +67,12 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.DBusConnection;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.RemoteActionGroupIF;
 private import gio.RemoteActionGroupT;
-
 
 
 private import gobject.ObjectG;

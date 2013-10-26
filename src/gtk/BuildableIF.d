@@ -66,12 +66,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gtk.Builder;
-
 
 
 

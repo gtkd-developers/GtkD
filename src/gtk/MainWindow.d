@@ -60,12 +60,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.Main;
 private import gdk.Event;
-
 
 
 

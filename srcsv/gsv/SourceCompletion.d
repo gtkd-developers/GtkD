@@ -73,7 +73,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
@@ -82,7 +81,6 @@ private import gsv.SourceCompletionInfo;
 private import gsv.SourceCompletionProviderIF;
 private import gsv.SourceView;
 private import gtk.TextIter;
-
 
 
 private import gobject.ObjectG;

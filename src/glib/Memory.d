@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * These functions provide support for allocating and freeing memory.
  *

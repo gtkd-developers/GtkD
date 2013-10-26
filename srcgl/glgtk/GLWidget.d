@@ -65,12 +65,10 @@ private import gtkglc.glgtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.Widget;
 private import glgdk.GLConfig;
 private import glgdk.GLContext;
 private import glgdk.GLWindow;
-
 
 
 

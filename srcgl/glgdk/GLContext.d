@@ -63,11 +63,9 @@ private import gtkglc.glgdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glgdk.GLConfig;
 private import glgdk.GLDrawable;
 private import glgdk.GLDrawableIF;
-
 
 
 private import gobject.ObjectG;

@@ -66,12 +66,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gdk.Window;
 private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
-
 
 
 private import gtk.Container;

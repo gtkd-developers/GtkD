@@ -52,7 +52,7 @@
  * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- gobject.Closure
- * 	- std.gc
+ * 	- core.memory
  * 	- glib.Str
  * 	- gtkc.paths
  * 	- gtkc.Loader
@@ -76,27 +76,14 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import gobject.Closure;
+private import core.memory;
 private import glib.Str;
 private import gtkc.paths;
 private import gtkc.Loader;
-
-
-version(Tango) {
-	private import tango.core.Memory;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import core.memory;
-
-	version = druntime;
-} else {
-	private import std.gc;
-}
 
 
 
@@ -177,8 +164,7 @@ public class ObjectG
 			//If the refCount is largeer then 1 toggleNotify isn't called
 			if (gObject.refCount > 1 && !isGcRoot)
 			{
-				version(druntime) GC.addRoot(cast(void*)this);
-				else std.gc.addRoot(cast(void*)this);
+				GC.addRoot(cast(void*)this);
 				
 				isGcRoot = true;
 			}
@@ -204,8 +190,7 @@ public class ObjectG
 		{
 			if ( obj.isGcRoot )
 			{
-				version(druntime) GC.removeRoot(cast(void*)obj);
-				else std.gc.removeRoot(cast(void*)obj);
+				GC.removeRoot(cast(void*)obj);
 				
 				obj.isGcRoot = false;
 			}
@@ -217,15 +202,13 @@ public class ObjectG
 		{
 			if ( isLastRef && obj.isGcRoot )
 			{
-				version(druntime) GC.removeRoot(cast(void*)obj);
-				else std.gc.removeRoot(cast(void*)obj);
+				GC.removeRoot(cast(void*)obj);
 				
 				obj.isGcRoot = false;
 			}
 			else if ( !obj.isGcRoot )
 			{
-				version(druntime) GC.addRoot(cast(void*)obj);
-				else std.gc.addRoot(cast(void*)obj);
+				GC.addRoot(cast(void*)obj);
 				
 				obj.isGcRoot = true;
 			}

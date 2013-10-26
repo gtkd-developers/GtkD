@@ -79,7 +79,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListSG;
@@ -87,19 +86,12 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;
+private import std.string;
 private import gtkc.glib;;
 private import gtkc.gobject;
 private import gtkc.paths;
 private import glib.Module;
 private import gobject.Type;
-
-
-version(Tango) {
-	private import tango.text.Util;
-	private import tango.text.Unicode;
-} else {
-	private import std.string;
-}
 
 
 private import gobject.ObjectG;
@@ -550,18 +542,6 @@ public class Builder : ObjectG
 	 */
 	public ObjectG newFromObject(GObject* cobj)
 	{
-		version(LDC)
-		{
-			version(D_Version2)
-			{
-				alias ClassInfo.find findClassInfo;
-			}
-		}
-		else
-		{
-			alias ClassInfo.find findClassInfo;
-		}
-		
 		if(cobj is null)
 		{
 			return null;
@@ -575,12 +555,12 @@ public class Builder : ObjectG
 		}
 		
 		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-		ClassInfo ci = cast(ClassInfo)findClassInfo(type);
+		ClassInfo ci = cast(ClassInfo)ClassInfo.find(type);
 		
 		//Gobject and Gio types both start with g, so try both.
 		if(ci is null && startsWith(type, "gobject"))
 		{
-			ci = cast(ClassInfo)findClassInfo("gio"~ type[7..$]);
+			ci = cast(ClassInfo)ClassInfo.find("gio"~ type[7..$]);
 		}
 		
 		if(ci is null)
@@ -590,14 +570,7 @@ public class Builder : ObjectG
 		
 		ObjectG obj = cast(ObjectG)_d_newclass(ci);
 		
-		version(D_Version2)
-		{
-			obj.__ctor(cobj);
-		}
-		else
-		{
-			obj._ctor(cobj);
-		}
+		obj.__ctor(cobj);
 		
 		return obj;
 	}
@@ -611,17 +584,6 @@ public class Builder : ObjectG
 	{
 		string conv;
 		string prefix;
-		
-		version(Tango)
-		{
-			alias toUpper toupper;
-			alias toLower tolower;
-		}
-		version(D_Version2)
-		{
-			alias toUpper toupper;
-			alias toLower tolower;
-		}
 		
 		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
 		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
@@ -637,9 +599,9 @@ public class Builder : ObjectG
 		
 		if ( conv == "Object" ) conv ~= prefix;
 		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
-		if ( prefix == "cairo") conv = toupper(gName[6..7]) ~ gName[7..gName.length - 2];
+		if ( prefix == "cairo") conv = toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
 		
-		prefix = tolower(prefix);
+		prefix = toLower(prefix);
 		
 		if( prefix == "gst") prefix = "gstreamer";
 		if( prefix == "g")   prefix = "gobject";
@@ -651,35 +613,6 @@ public class Builder : ObjectG
 	private bool startsWith(string str, string prefix)
 	{
 		return str.length >= prefix.length && str[0..prefix.length] == prefix;
-	}
-	
-	version(LDC)
-	{
-		//version( !D_Version2 )
-		version(D_Version2) {} else
-		{
-			private Object _d_newclass(ClassInfo ci)
-			{
-				void* p = cast(void*)_d_allocclass(ci);
-				(cast(byte*) p)[0 .. ci.init.length] = ci.init[];
-				
-				return cast(Object) p;
-			}
-			
-			private ClassInfo findClassInfo(string classname)
-			{
-				foreach ( m; ModuleInfo )
-				{
-					foreach ( c; m.localClasses )
-					{
-						if ( c.name == classname )
-						return c;
-					}
-				}
-				
-				return null;
-			}
-		}
 	}
 	
 	/**

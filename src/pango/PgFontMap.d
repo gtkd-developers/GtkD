@@ -70,7 +70,6 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import pango.PgFont;
 private import pango.PgFontset;
@@ -78,7 +77,6 @@ private import pango.PgContext;
 private import pango.PgFontDescription;
 private import pango.PgLanguage;
 private import pango.PgFontFamily;
-
 
 
 private import gobject.ObjectG;

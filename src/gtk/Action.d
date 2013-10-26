@@ -83,7 +83,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
@@ -97,7 +96,6 @@ private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-
 
 
 private import gobject.ObjectG;

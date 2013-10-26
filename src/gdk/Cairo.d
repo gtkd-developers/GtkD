@@ -73,7 +73,6 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import cairo.Context;
 private import cairo.Region;
 private import cairo.Surface;
@@ -81,7 +80,6 @@ private import gdk.Color;
 private import gdk.Pixbuf;
 private import gdk.RGBA;
 private import gdk.Window;
-
 
 
 

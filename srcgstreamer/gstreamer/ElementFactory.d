@@ -68,13 +68,11 @@ private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ListG;
 private import gstreamer.Caps;
 private import gstreamer.Element;
 private import gstreamer.Plugin;
-
 
 
 private import gstreamer.PluginFeature;

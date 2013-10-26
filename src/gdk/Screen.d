@@ -73,7 +73,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import cairo.FontOption;
 private import glib.ListG;
 private import glib.Str;
@@ -81,7 +80,6 @@ private import gobject.Value;
 private import gdk.Display;
 private import gdk.Visual;
 private import gdk.Window;
-
 
 
 private import gobject.ObjectG;

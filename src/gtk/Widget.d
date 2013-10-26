@@ -135,7 +135,7 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
+private import std.conv;
 private import atk.ObjectAtk;
 private import cairo.Context;
 private import cairo.Region;
@@ -172,13 +172,6 @@ private import pango.PgFontDescription;
 private import pango.PgLayout;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-
-
-version(Tango) {
-	private import tango.text.convert.Integer;
-} else {
-	private import std.conv;
-}
 
 
 private import gobject.ObjectG;
@@ -507,33 +500,12 @@ public class Widget : ObjectG, BuildableIF
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
 		
-		version(Tango)
-		{
-			char[10] s;
-			modifyFont(
-			PgFontDescription.fromString(
-			family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
-			)
-			);
-		}
-		else version(D_Version2)
-		{
-			modifyFont(
-			PgFontDescription.fromString(
-			family ~ " " ~ to!(string)(size)
-			)
-			);
-		}
-		else
-		{
-			modifyFont(
-			PgFontDescription.fromString(
-			family ~ " " ~ std.string.toString(size)
-			)
-			);
-		}
+		modifyFont(
+		PgFontDescription.fromString(
+		family ~ " " ~ to!(string)(size)
+		)
+		);
 	}
-	
 	
 	/** */
 	public bool onEvent(GdkEvent* event)

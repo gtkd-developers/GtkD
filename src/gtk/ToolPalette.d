@@ -79,7 +79,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.Adjustment;
 private import gtk.SelectionData;
@@ -91,7 +90,6 @@ private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
-
 
 
 private import gtk.Container;

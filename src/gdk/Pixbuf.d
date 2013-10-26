@@ -73,7 +73,6 @@ private import gtkc.gdk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import cairo.Surface;
 private import glib.Str;
 private import glib.ErrorG;
@@ -83,7 +82,6 @@ private import gio.Cancellable;
 private import gio.InputStream;
 private import gdk.Window;
 private import gdkpixbuf.PixbufFormat;
-
 
 
 private import gobject.ObjectG;

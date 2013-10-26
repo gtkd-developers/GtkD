@@ -62,8 +62,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * GstMiniObject is a simple structure that can be used to implement refcounted
  * types.

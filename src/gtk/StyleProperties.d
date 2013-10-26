@@ -43,7 +43,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- std.stdarg
+ * 	- core.vararg
  * 	- glib.Str
  * 	- glib.ErrorG
  * 	- glib.GException
@@ -72,26 +72,13 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
+private import core.vararg;
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import gtk.SymbolicColor;
-
-
-version(Tango) {
-	private import tango.core.Vararg;
-
-	version = druntime;
-} else version(D_Version2) {
-	private import core.vararg;
-
-	version = druntime;
-} else {
-	private import std.stdarg;
-}
 
 
 private import gobject.ObjectG;

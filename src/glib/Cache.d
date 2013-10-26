@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * A GCache allows sharing of complex data structures, in order to
  * save system resources.

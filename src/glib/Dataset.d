@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * Datasets associate groups of data elements with particular memory
  * locations. These are useful if you need to associate data with a

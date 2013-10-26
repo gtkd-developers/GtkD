@@ -60,8 +60,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * The GtkOrientable interface is implemented by all widgets that can be
  * oriented horizontally or vertically. Historically, such widgets have been

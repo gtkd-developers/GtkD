@@ -70,14 +70,12 @@ public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
-
 public import glib.ErrorG;
 public import glib.GException;
 public import gio.AsyncResultIF;
 public import gio.Cancellable;
 public import gio.NetworkMonitorIF;
 public import gio.SocketConnectableIF;
-
 
 
 

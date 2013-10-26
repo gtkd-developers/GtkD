@@ -72,7 +72,6 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import pango.PgColor;
 private import pango.PgFont;
@@ -81,7 +80,6 @@ private import pango.PgGlyphString;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 private import pango.PgMatrix;
-
 
 
 private import gobject.ObjectG;

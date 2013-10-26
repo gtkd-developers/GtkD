@@ -68,13 +68,11 @@ public import gtkc.gtk;
 public import glib.ConstructionException;
 public import gobject.ObjectG;
 
-
 public import gobject.ParamSpec;
 public import gobject.Value;
 public import gtk.IconFactory;
 public import gtk.StyleProperties;
 public import gtk.WidgetPath;
-
 
 
 

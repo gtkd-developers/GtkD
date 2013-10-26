@@ -76,7 +76,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -87,7 +86,6 @@ private import gdk.Threads;
 private import gthread.Thread;
 private import gtk.Widget;
 private import pango.PgLanguage;
-
 
 
 

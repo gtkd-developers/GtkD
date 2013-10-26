@@ -62,11 +62,9 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.Widget;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
-
 
 
 private import gtk.Container;

@@ -61,8 +61,6 @@ private import gobject.ObjectG;
 
 
 
-
-
 /**
  * While complete access to the layout capabilities of Pango is provided
  * using the detailed interfaces for itemization and shaping, using

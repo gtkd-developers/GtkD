@@ -79,7 +79,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -92,7 +91,6 @@ private import gio.DBusObjectManagerT;
 private import gio.DBusObjectManagerIF;
 private import gio.InitableT;
 private import gio.InitableIF;
-
 
 
 private import gobject.ObjectG;

@@ -65,12 +65,10 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gsv.SourceCompletionProposalIF;
 private import gsv.SourceCompletionProposalT;
-
 
 
 private import gobject.ObjectG;

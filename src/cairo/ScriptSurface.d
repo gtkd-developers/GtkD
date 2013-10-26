@@ -60,10 +60,8 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 private import glib.ConstructionException;
 
-
 private import cairo.Device;
 private import cairo.Surface;
-
 
 
 private import cairo.Surface;

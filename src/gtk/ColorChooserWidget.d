@@ -60,10 +60,8 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.ColorChooserIF;
 private import gtk.ColorChooserT;
-
 
 
 private import gtk.Box;

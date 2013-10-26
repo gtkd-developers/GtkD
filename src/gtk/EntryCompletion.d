@@ -75,7 +75,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.CellArea;
 private import gtk.TreeIter;
@@ -86,7 +85,6 @@ private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
-
 
 
 private import gobject.ObjectG;

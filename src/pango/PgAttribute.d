@@ -74,7 +74,6 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -82,7 +81,6 @@ private import glib.SimpleXML;
 private import pango.PgAttributeList;
 private import pango.PgLanguage;
 private import pango.PgFontDescription;
-
 
 
 

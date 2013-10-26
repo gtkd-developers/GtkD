@@ -64,11 +64,9 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
-
 
 
 private import gobject.ObjectG;

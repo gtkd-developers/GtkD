@@ -75,7 +75,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListSG;
 private import gsv.SourceLanguage;
@@ -85,7 +84,6 @@ private import gsv.SourceUndoManager;
 private import gsv.SourceUndoManagerIF;
 private import gtk.TextIter;
 private import gtk.TextTagTable;
-
 
 
 private import gtk.TextBuffer;

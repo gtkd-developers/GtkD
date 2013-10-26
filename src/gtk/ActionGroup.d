@@ -71,7 +71,6 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListG;
 private import gtk.AccelGroup;
@@ -79,7 +78,6 @@ private import gtk.Action;
 private import gtk.Widget;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-
 
 
 private import gobject.ObjectG;

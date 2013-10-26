@@ -66,12 +66,10 @@ public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
-
 public import glib.Str;
 public import glib.ListG;
 public import gio.DBusInterface;
 public import gio.DBusInterfaceIF;
-
 
 
 

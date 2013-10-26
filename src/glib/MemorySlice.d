@@ -59,8 +59,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * Memory slices provide a space-efficient and multi-processing scalable
  * way to allocate equal-sized pieces of memory, just like the original

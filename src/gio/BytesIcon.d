@@ -62,11 +62,9 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Bytes;
 private import gio.LoadableIconT;
 private import gio.LoadableIconIF;
-
 
 
 

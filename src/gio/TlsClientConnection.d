@@ -67,7 +67,6 @@ private import gtkc.gio;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
@@ -75,7 +74,6 @@ private import glib.ListG;
 private import gio.IOStream;
 private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
-
 
 
 private import gio.TlsConnection;

@@ -76,7 +76,6 @@ private import gtkc.pango;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import pango.PgLayoutLine;
 private import pango.PgContext;
@@ -85,7 +84,6 @@ private import pango.PgFontDescription;
 private import pango.PgTabArray;
 private import pango.PgLayoutIter;
 private import glib.ListSG;
-
 
 
 private import gobject.ObjectG;

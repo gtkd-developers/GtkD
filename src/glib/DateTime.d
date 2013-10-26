@@ -72,12 +72,10 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 private import glib.ConstructionException;
 
-
 private import glib.Str;
 private import glib.TimeZone;
 private import gtkc.Loader;
 private import gtkc.paths;
-
 
 
 
@@ -218,29 +216,14 @@ public class DateTime
 		}
 	}
 	
-	version(D_Version2)
+	override bool opEquals(Object rhs)
 	{
-		override bool opEquals(Object rhs)
-		{
-			DateTime date = cast(DateTime)rhs;
-			
-			if ( date is null )
-			return false;
-			
-			return equal(this, date) != 0;
-		}
-	}
-	else
-	{
-		override int opEquals(Object rhs)
-		{
-			DateTime date = cast(DateTime)rhs;
-			
-			if ( date is null )
-			return false;
-			
-			return equal(this, date);
-		}
+		DateTime date = cast(DateTime)rhs;
+		
+		if ( date is null )
+		return false;
+		
+		return equal(this, date) != 0;
 	}
 	
 	override int opCmp(Object rhs)
@@ -258,41 +241,23 @@ public class DateTime
 		return hash(this);
 	}
 	
-	version(D_Version2)
+	/**
+	 * Hashes datetime into a guint, suitable for use within GHashTable.
+	 * Since 2.26
+	 * Params:
+	 * datetime = a GDateTime
+	 * Returns: a guint containing the hash
+	 */
+	public static nothrow @trusted uint hash(DateTime datetime)
 	{
-		/**
-		 * Hashes datetime into a guint, suitable for use within GHashTable.
-		 * Since 2.26
-		 * Params:
-		 * datetime = a GDateTime
-		 * Returns: a guint containing the hash
-		 */
-		mixin("public static nothrow @trusted uint hash(DateTime datetime)
-		{
-			try
-			{
-				// guint g_date_time_hash (gconstpointer datetime);
-				return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
-			}
-			catch(Exception e)
-			{
-				return 0;
-			}
-		}");
-	}
-	else
-	{
-		/**
-		 * Hashes datetime into a guint, suitable for use within GHashTable.
-		 * Since 2.26
-		 * Params:
-		 * datetime = a GDateTime
-		 * Returns: a guint containing the hash
-		 */
-		public static uint hash(DateTime datetime)
+		try
 		{
 			// guint g_date_time_hash (gconstpointer datetime);
 			return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
+		}
+		catch(Exception e)
+		{
+			return 0;
 		}
 	}
 	

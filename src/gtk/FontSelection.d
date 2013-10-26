@@ -64,12 +64,10 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.Widget;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;
-
 
 
 private import gtk.Box;

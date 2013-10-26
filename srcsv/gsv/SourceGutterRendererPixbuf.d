@@ -63,12 +63,10 @@ private import gsvc.gsv;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
 private import gdk.Pixbuf;
-
 
 
 private import gsv.SourceGutterRenderer;

@@ -24,29 +24,25 @@
 
 module gstreamerc.gstinterfaces;
 
-version(Tango)
-	private import tango.stdc.stdio;
-else
-	private import std.stdio;
-
+private import std.stdio;
 private import gstreamerc.gstinterfacestypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 
-mixin( _shared ~ "static this()
+shared static this()
 {
 	// gstinterfaces.VideoOverlay
 
-	Linker.link(gst_video_overlay_got_window_handle, \"gst_video_overlay_got_window_handle\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_set_window_handle, \"gst_video_overlay_set_window_handle\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_prepare_window_handle, \"gst_video_overlay_prepare_window_handle\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_expose, \"gst_video_overlay_expose\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_handle_events, \"gst_video_overlay_handle_events\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_set_render_rectangle, \"gst_video_overlay_set_render_rectangle\", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_is_video_overlay_prepare_window_handle_message, \"gst_is_video_overlay_prepare_window_handle_message\", LIBRARY.GSTINTERFACES);
-}");
+	Linker.link(gst_video_overlay_got_window_handle, "gst_video_overlay_got_window_handle", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_window_handle, "gst_video_overlay_set_window_handle", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_prepare_window_handle, "gst_video_overlay_prepare_window_handle", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_expose, "gst_video_overlay_expose", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_handle_events, "gst_video_overlay_handle_events", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_render_rectangle, "gst_video_overlay_set_render_rectangle", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_is_video_overlay_prepare_window_handle_message, "gst_is_video_overlay_prepare_window_handle_message", LIBRARY.GSTINTERFACES);
+}
 
-mixin( gshared ~"extern(C)
+__gshared extern(C)
 {
 	// gstinterfaces.VideoOverlay
 
@@ -57,7 +53,7 @@ mixin( gshared ~"extern(C)
 	void function(GstVideoOverlay* overlay, gboolean handleEvents) c_gst_video_overlay_handle_events;
 	gboolean function(GstVideoOverlay* overlay, gint x, gint y, gint width, gint height) c_gst_video_overlay_set_render_rectangle;
 	gboolean function(GstMessage* msg) c_gst_is_video_overlay_prepare_window_handle_message;
-}");
+}
 
 // gstinterfaces.VideoOverlay
 

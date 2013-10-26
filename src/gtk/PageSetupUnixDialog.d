@@ -66,13 +66,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.PageSetup;
 private import gtk.PrintSettings;
 private import gtk.Widget;
 private import gtk.Window;
-
 
 
 private import gtk.Dialog;

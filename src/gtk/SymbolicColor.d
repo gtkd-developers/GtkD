@@ -68,13 +68,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gdk.RGBA;
 private import gtk.StyleProperties;
 private import gtkc.Loader;
 private import gtkc.paths;
-
 
 
 

@@ -73,7 +73,6 @@ public import gobject.ObjectG;
 
 public import gobject.Signals;
 public  import gtkc.gdktypes;
-
 public import glib.Str;
 public import glib.ErrorG;
 public import glib.GException;
@@ -81,7 +80,6 @@ public import gio.File;
 public import glib.ListSG;
 public import gtk.FileFilter;
 public import gtk.Widget;
-
 
 
 

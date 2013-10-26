@@ -67,12 +67,10 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import atk.ObjectAtk;
 private import atk.RelationSet;
 private import atk.StateSet;
 private import glib.Str;
-
 
 
 private import gobject.ObjectG;

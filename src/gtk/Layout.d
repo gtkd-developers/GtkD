@@ -70,13 +70,11 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gdk.Window;
 private import gtk.Adjustment;
 private import gtk.Widget;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
-
 
 
 private import gtk.Container;

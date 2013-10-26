@@ -67,10 +67,8 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import glib.ListSG;
-
 
 
 private import gtk.CheckMenuItem;

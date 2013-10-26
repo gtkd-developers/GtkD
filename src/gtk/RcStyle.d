@@ -69,14 +69,12 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import glib.ScannerG;
 private import gdk.Color;
 private import gtk.Settings;
 private import gtk.Style;
 private import gtk.Widget;
-
 
 
 private import gobject.ObjectG;

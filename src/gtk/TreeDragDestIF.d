@@ -62,11 +62,9 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import gtk.SelectionData;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-
 
 
 

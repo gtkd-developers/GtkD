@@ -67,13 +67,11 @@ private import gobject.ObjectG;
 
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-
 private import glib.Str;
 private import gtk.Button;
 private import gtk.HBox;;
 private import gtk.VButtonBox;
 private import gtk.Widget;
-
 
 
 private import gtk.Box;

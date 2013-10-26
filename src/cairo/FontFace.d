@@ -60,8 +60,6 @@ private import glib.ConstructionException;
 
 
 
-
-
 /**
  * cairo_font_face_t represents a particular font at a particular weight,
  * slant, and other characteristic but no size, transformation, or size.

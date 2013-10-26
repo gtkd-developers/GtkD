@@ -81,7 +81,6 @@ private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 
-
 private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;
@@ -98,7 +97,6 @@ private import gtk.TreeDragDestT;
 private import gtk.TreeDragDestIF;
 private import gtk.TreeSortableT;
 private import gtk.TreeSortableIF;
-
 
 
 private import gobject.ObjectG;
