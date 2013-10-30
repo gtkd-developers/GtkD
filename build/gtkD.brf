@@ -5,6 +5,7 @@
 -I../srcgl
 -I../srcsv
 -I../srcgda
+-I../srcvte
 -I../srcgstreamer
 -allobj
 -cleanup
