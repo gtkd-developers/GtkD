@@ -104,7 +104,7 @@ public class ErrorGda : ObjectG
 	
 	/** */
 	this (ListG glist) {
-		this( cast(GdaError*)glist.data );
+		this( cast(GdaError*)glist.data() );
 	}
 	
 	/**

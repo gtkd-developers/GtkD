@@ -98,7 +98,7 @@ public interface DBusObjectManagerIF
 	/**
 	 */
 	
-	void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners();
+	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners();
 	/**
 	 * Emitted when interface is added to object.
 	 * This signal exists purely as a convenience to avoid having to
@@ -106,7 +106,7 @@ public interface DBusObjectManagerIF
 	 * Since 2.30
 	 */
 	void addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners();
+	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners();
 	/**
 	 * Emitted when interface has been removed from object.
 	 * This signal exists purely as a convenience to avoid having to
@@ -114,13 +114,13 @@ public interface DBusObjectManagerIF
 	 * Since 2.30
 	 */
 	void addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners();
+	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners();
 	/**
 	 * Emitted when object is added to manager.
 	 * Since 2.30
 	 */
 	void addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners();
+	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners();
 	/**
 	 * Emitted when object is removed from manager.
 	 * Since 2.30

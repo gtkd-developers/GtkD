@@ -86,7 +86,7 @@ public template TreeSortableT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(TreeSortableIF)[] _onSortColumnChangedListeners;
-	void delegate(TreeSortableIF)[] onSortColumnChangedListeners()
+	@property void delegate(TreeSortableIF)[] onSortColumnChangedListeners()
 	{
 		return  _onSortColumnChangedListeners;
 	}

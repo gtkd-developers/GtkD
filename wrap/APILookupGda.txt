@@ -188,7 +188,7 @@ import: glib.ListG
 code: start
 	/** */
 	this (ListG glist) {
-		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
+		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data();
 	}
 	/** */
 	string id() { return Str.toString(this.gdaProviderInfo.id); }
@@ -210,7 +210,7 @@ import: glib.Str
 code: start
 	/** */
 	this (ListG glist) {
-		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data;
+		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data();
 	}
 	/** */
 	string name() { return Str.toString(this.gdaDataSourceInfo.name); }
@@ -309,7 +309,7 @@ import: gda.Value
 code: start
 	/** */
 	this (ListG glist) {
-		this( cast(GdaDataModel*)glist.data );
+		this( cast(GdaDataModel*)glist.data() );
 	}
 code: end
 outFile: DataModel
@@ -327,7 +327,7 @@ import: glib.ListG
 code: start
 	/** */
 	this (ListG glist) {
-		this( cast(GdaError*)glist.data );
+		this( cast(GdaError*)glist.data() );
 	}
 code: end
 outFile: ErrorGda

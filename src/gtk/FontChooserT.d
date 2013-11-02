@@ -98,7 +98,7 @@ public template FontChooserT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(string, FontChooserIF)[] _onFontActivatedListeners;
-	void delegate(string, FontChooserIF)[] onFontActivatedListeners()
+	@property void delegate(string, FontChooserIF)[] onFontActivatedListeners()
 	{
 		return  _onFontActivatedListeners;
 	}

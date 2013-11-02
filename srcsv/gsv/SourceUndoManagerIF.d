@@ -85,13 +85,13 @@ public interface SourceUndoManagerIF
 	/**
 	 */
 	
-	void delegate(SourceUndoManagerIF)[] onCanRedoChangedListeners();
+	@property void delegate(SourceUndoManagerIF)[] onCanRedoChangedListeners();
 	/**
 	 * Emitted when the ability to redo has changed.
 	 * Since 2.10
 	 */
 	void addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(SourceUndoManagerIF)[] onCanUndoChangedListeners();
+	@property void delegate(SourceUndoManagerIF)[] onCanUndoChangedListeners();
 	/**
 	 * Emitted when the ability to undo has changed.
 	 * Since 2.10

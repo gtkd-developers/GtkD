@@ -151,12 +151,12 @@ public interface VolumeIF
 	/**
 	 */
 	
-	void delegate(VolumeIF)[] onChangedListeners();
+	@property void delegate(VolumeIF)[] onChangedListeners();
 	/**
 	 * Emitted when the volume has been changed.
 	 */
 	void addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(VolumeIF)[] onRemovedListeners();
+	@property void delegate(VolumeIF)[] onRemovedListeners();
 	/**
 	 * This signal is emitted when the GVolume have been removed. If
 	 * the recipient is holding references to the object they should

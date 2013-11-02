@@ -124,7 +124,7 @@ public interface PrintOperationPreviewIF
 	/**
 	 */
 	
-	void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners();
+	@property void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners();
 	/**
 	 * The ::got-page-size signal is emitted once for each page
 	 * that gets rendered to the preview.
@@ -133,7 +133,7 @@ public interface PrintOperationPreviewIF
 	 * context, using gtk_print_context_set_cairo_context().
 	 */
 	void addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(PrintContext, PrintOperationPreviewIF)[] onReadyListeners();
+	@property void delegate(PrintContext, PrintOperationPreviewIF)[] onReadyListeners();
 	/**
 	 * The ::ready signal gets emitted once per preview operation,
 	 * before the first page is rendered.

@@ -275,7 +275,7 @@ public template TreeModelT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowChangedListeners;
-	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners()
+	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners()
 	{
 		return  _onRowChangedListeners;
 	}
@@ -306,7 +306,7 @@ public template TreeModelT(TStruct)
 	}
 	
 	void delegate(TreePath, TreeModelIF)[] _onRowDeletedListeners;
-	void delegate(TreePath, TreeModelIF)[] onRowDeletedListeners()
+	@property void delegate(TreePath, TreeModelIF)[] onRowDeletedListeners()
 	{
 		return  _onRowDeletedListeners;
 	}
@@ -342,7 +342,7 @@ public template TreeModelT(TStruct)
 	}
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowHasChildToggledListeners;
-	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners()
+	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners()
 	{
 		return  _onRowHasChildToggledListeners;
 	}
@@ -374,7 +374,7 @@ public template TreeModelT(TStruct)
 	}
 	
 	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowInsertedListeners;
-	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowInsertedListeners()
+	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowInsertedListeners()
 	{
 		return  _onRowInsertedListeners;
 	}
@@ -409,7 +409,7 @@ public template TreeModelT(TStruct)
 	}
 	
 	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] _onRowsReorderedListeners;
-	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners()
+	@property void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners()
 	{
 		return  _onRowsReorderedListeners;
 	}

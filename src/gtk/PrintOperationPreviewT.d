@@ -130,7 +130,7 @@ public template PrintOperationPreviewT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] _onGotPageSizeListeners;
-	void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners()
+	@property void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners()
 	{
 		return  _onGotPageSizeListeners;
 	}
@@ -165,7 +165,7 @@ public template PrintOperationPreviewT(TStruct)
 	}
 	
 	void delegate(PrintContext, PrintOperationPreviewIF)[] _onReadyListeners;
-	void delegate(PrintContext, PrintOperationPreviewIF)[] onReadyListeners()
+	@property void delegate(PrintContext, PrintOperationPreviewIF)[] onReadyListeners()
 	{
 		return  _onReadyListeners;
 	}

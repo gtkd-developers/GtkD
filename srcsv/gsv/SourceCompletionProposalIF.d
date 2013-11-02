@@ -86,7 +86,7 @@ public interface SourceCompletionProposalIF
 	/**
 	 */
 	
-	void delegate(SourceCompletionProposalIF)[] onChangedListeners();
+	@property void delegate(SourceCompletionProposalIF)[] onChangedListeners();
 	/**
 	 * Emitted when the proposal has changed. The completion popup
 	 * will react to this by updating the shown information.

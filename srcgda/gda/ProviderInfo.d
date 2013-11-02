@@ -99,7 +99,7 @@ public class ProviderInfo
 	
 	/** */
 	this (ListG glist) {
-		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data;
+		this.gdaProviderInfo = cast(GdaProviderInfo *) glist.data();
 	}
 	/** */
 	string id() { return Str.toString(this.gdaProviderInfo.id); }

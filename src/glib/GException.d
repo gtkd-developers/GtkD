@@ -70,7 +70,7 @@ class GException : Exception
 	
 	this(ErrorG error)
 	{
-		super( Str.toString(error.getErrorGStruct.message) );
+		super( Str.toString(error.getErrorGStruct().message) );
 		this.error = error;
 	}
 }

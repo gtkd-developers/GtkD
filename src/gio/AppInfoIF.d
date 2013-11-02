@@ -146,11 +146,11 @@ public interface AppInfoIF
 	/**
 	 */
 	
-	void delegate(string, AppInfoIF)[] onLaunchFailedListeners();
+	@property void delegate(string, AppInfoIF)[] onLaunchFailedListeners();
 	/**
 	 */
 	void addOnLaunchFailed(void delegate(string, AppInfoIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(AppInfoIF, GVariant*, AppInfoIF)[] onLaunchedListeners();
+	@property void delegate(AppInfoIF, GVariant*, AppInfoIF)[] onLaunchedListeners();
 	/**
 	 */
 	void addOnLaunched(void delegate(AppInfoIF, GVariant*, AppInfoIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);

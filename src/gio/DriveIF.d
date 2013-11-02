@@ -128,12 +128,12 @@ public interface DriveIF
 	/**
 	 */
 	
-	void delegate(DriveIF)[] onChangedListeners();
+	@property void delegate(DriveIF)[] onChangedListeners();
 	/**
 	 * Emitted when the drive's state has changed.
 	 */
 	void addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DriveIF)[] onDisconnectedListeners();
+	@property void delegate(DriveIF)[] onDisconnectedListeners();
 	/**
 	 * This signal is emitted when the GDrive have been
 	 * disconnected. If the recipient is holding references to the
@@ -141,13 +141,13 @@ public interface DriveIF
 	 * finalized.
 	 */
 	void addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DriveIF)[] onEjectButtonListeners();
+	@property void delegate(DriveIF)[] onEjectButtonListeners();
 	/**
 	 * Emitted when the physical eject button (if any) of a drive has
 	 * been pressed.
 	 */
 	void addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DriveIF)[] onStopButtonListeners();
+	@property void delegate(DriveIF)[] onStopButtonListeners();
 	/**
 	 * Emitted when the physical stop button (if any) of a drive has
 	 * been pressed.

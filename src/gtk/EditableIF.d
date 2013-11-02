@@ -90,7 +90,7 @@ public interface EditableIF
 	/**
 	 */
 	
-	void delegate(EditableIF)[] onChangedListeners();
+	@property void delegate(EditableIF)[] onChangedListeners();
 	/**
 	 * The ::changed signal is emitted at the end of a single
 	 * user-visible operation on the contents of the GtkEditable.
@@ -101,7 +101,7 @@ public interface EditableIF
 	 * to be emitted).
 	 */
 	void addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(gint, gint, EditableIF)[] onDeleteTextListeners();
+	@property void delegate(gint, gint, EditableIF)[] onDeleteTextListeners();
 	/**
 	 * This signal is emitted when text is deleted from
 	 * the widget by the user. The default handler for
@@ -114,7 +114,7 @@ public interface EditableIF
 	 * gtk_editable_delete_text().
 	 */
 	void addOnDeleteText(void delegate(gint, gint, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(string, gint, void*, EditableIF)[] onInsertTextListeners();
+	@property void delegate(string, gint, void*, EditableIF)[] onInsertTextListeners();
 	/**
 	 * This signal is emitted when text is inserted into
 	 * the widget by the user. The default handler for

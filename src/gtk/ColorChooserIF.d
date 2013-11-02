@@ -115,7 +115,7 @@ public interface ColorChooserIF
 	/**
 	 */
 	
-	void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners();
+	@property void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners();
 	/**
 	 * Emitted when a color is activated from the color chooser.
 	 * This usually happens when the user clicks a color swatch,

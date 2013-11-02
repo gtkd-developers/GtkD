@@ -389,7 +389,7 @@ public template FileChooserT(TStruct)
 	int[string] connectedSignals;
 	
 	GtkFileChooserConfirmation delegate(FileChooserIF)[] _onConfirmOverwriteListeners;
-	GtkFileChooserConfirmation delegate(FileChooserIF)[] onConfirmOverwriteListeners()
+	@property GtkFileChooserConfirmation delegate(FileChooserIF)[] onConfirmOverwriteListeners()
 	{
 		return  _onConfirmOverwriteListeners;
 	}
@@ -444,7 +444,7 @@ public template FileChooserT(TStruct)
 	}
 	
 	void delegate(FileChooserIF)[] _onCurrentFolderChangedListeners;
-	void delegate(FileChooserIF)[] onCurrentFolderChangedListeners()
+	@property void delegate(FileChooserIF)[] onCurrentFolderChangedListeners()
 	{
 		return  _onCurrentFolderChangedListeners;
 	}
@@ -485,7 +485,7 @@ public template FileChooserT(TStruct)
 	}
 	
 	void delegate(FileChooserIF)[] _onFileActivatedListeners;
-	void delegate(FileChooserIF)[] onFileActivatedListeners()
+	@property void delegate(FileChooserIF)[] onFileActivatedListeners()
 	{
 		return  _onFileActivatedListeners;
 	}
@@ -524,7 +524,7 @@ public template FileChooserT(TStruct)
 	}
 	
 	void delegate(FileChooserIF)[] _onSelectionChangedListeners;
-	void delegate(FileChooserIF)[] onSelectionChangedListeners()
+	@property void delegate(FileChooserIF)[] onSelectionChangedListeners()
 	{
 		return  _onSelectionChangedListeners;
 	}
@@ -566,7 +566,7 @@ public template FileChooserT(TStruct)
 	}
 	
 	void delegate(FileChooserIF)[] _onUpdatePreviewListeners;
-	void delegate(FileChooserIF)[] onUpdatePreviewListeners()
+	@property void delegate(FileChooserIF)[] onUpdatePreviewListeners()
 	{
 		return  _onUpdatePreviewListeners;
 	}

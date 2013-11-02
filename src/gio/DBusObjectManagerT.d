@@ -104,7 +104,7 @@ public template DBusObjectManagerT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] _onInterfaceAddedListeners;
-	void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners()
+	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners()
 	{
 		return  _onInterfaceAddedListeners;
 	}
@@ -138,7 +138,7 @@ public template DBusObjectManagerT(TStruct)
 	}
 	
 	void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] _onInterfaceRemovedListeners;
-	void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners()
+	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners()
 	{
 		return  _onInterfaceRemovedListeners;
 	}
@@ -172,7 +172,7 @@ public template DBusObjectManagerT(TStruct)
 	}
 	
 	void delegate(DBusObjectIF, DBusObjectManagerIF)[] _onObjectAddedListeners;
-	void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners()
+	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners()
 	{
 		return  _onObjectAddedListeners;
 	}
@@ -204,7 +204,7 @@ public template DBusObjectManagerT(TStruct)
 	}
 	
 	void delegate(DBusObjectIF, DBusObjectManagerIF)[] _onObjectRemovedListeners;
-	void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners()
+	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners()
 	{
 		return  _onObjectRemovedListeners;
 	}
