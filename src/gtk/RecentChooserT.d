@@ -111,7 +111,7 @@ public template RecentChooserT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(RecentChooserIF)[] _onItemActivatedListeners;
-	void delegate(RecentChooserIF)[] onItemActivatedListeners()
+	@property void delegate(RecentChooserIF)[] onItemActivatedListeners()
 	{
 		return  _onItemActivatedListeners;
 	}
@@ -146,7 +146,7 @@ public template RecentChooserT(TStruct)
 	}
 	
 	void delegate(RecentChooserIF)[] _onSelectionChangedListeners;
-	void delegate(RecentChooserIF)[] onSelectionChangedListeners()
+	@property void delegate(RecentChooserIF)[] onSelectionChangedListeners()
 	{
 		return  _onSelectionChangedListeners;
 	}

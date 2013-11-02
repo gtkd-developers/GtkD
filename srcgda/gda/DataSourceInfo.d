@@ -100,7 +100,7 @@ public class DataSourceInfo
 	
 	/** */
 	this (ListG glist) {
-		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data;
+		this.gdaDataSourceInfo = cast(GdaDataSourceInfo *) glist.data();
 	}
 	/** */
 	string name() { return Str.toString(this.gdaDataSourceInfo.name); }

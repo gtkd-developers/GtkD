@@ -132,7 +132,7 @@ public interface ActionGroupIF
 	/**
 	 */
 	
-	void delegate(string, ActionGroupIF)[] onActionAddedListeners();
+	@property void delegate(string, ActionGroupIF)[] onActionAddedListeners();
 	/**
 	 * Signals that a new action was just added to the group.
 	 * This signal is emitted after the action has been added
@@ -140,13 +140,13 @@ public interface ActionGroupIF
 	 * Since 2.28
 	 */
 	void addOnActionAdded(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(string, gboolean, ActionGroupIF)[] onActionEnabledChangedListeners();
+	@property void delegate(string, gboolean, ActionGroupIF)[] onActionEnabledChangedListeners();
 	/**
 	 * Signals that the enabled status of the named action has changed.
 	 * Since 2.28
 	 */
 	void addOnActionEnabledChanged(void delegate(string, gboolean, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(string, ActionGroupIF)[] onActionRemovedListeners();
+	@property void delegate(string, ActionGroupIF)[] onActionRemovedListeners();
 	/**
 	 * Signals that an action is just about to be removed from the group.
 	 * This signal is emitted before the action is removed, so the action
@@ -154,7 +154,7 @@ public interface ActionGroupIF
 	 * Since 2.28
 	 */
 	void addOnActionRemoved(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(string, Variant, ActionGroupIF)[] onActionStateChangedListeners();
+	@property void delegate(string, Variant, ActionGroupIF)[] onActionStateChangedListeners();
 	/**
 	 * Signals that the state of the named action has changed.
 	 * Since 2.28

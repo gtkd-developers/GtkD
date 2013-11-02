@@ -90,7 +90,7 @@ public template CellEditableT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(CellEditableIF)[] _onEditingDoneListeners;
-	void delegate(CellEditableIF)[] onEditingDoneListeners()
+	@property void delegate(CellEditableIF)[] onEditingDoneListeners()
 	{
 		return  _onEditingDoneListeners;
 	}
@@ -127,7 +127,7 @@ public template CellEditableT(TStruct)
 	}
 	
 	void delegate(CellEditableIF)[] _onRemoveWidgetListeners;
-	void delegate(CellEditableIF)[] onRemoveWidgetListeners()
+	@property void delegate(CellEditableIF)[] onRemoveWidgetListeners()
 	{
 		return  _onRemoveWidgetListeners;
 	}

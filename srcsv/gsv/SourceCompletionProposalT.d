@@ -94,7 +94,7 @@ public template SourceCompletionProposalT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(SourceCompletionProposalIF)[] _onChangedListeners;
-	void delegate(SourceCompletionProposalIF)[] onChangedListeners()
+	@property void delegate(SourceCompletionProposalIF)[] onChangedListeners()
 	{
 		return  _onChangedListeners;
 	}

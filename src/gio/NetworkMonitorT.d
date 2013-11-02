@@ -104,7 +104,7 @@ public template NetworkMonitorT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(gboolean, NetworkMonitorIF)[] _onNetworkChangedListeners;
-	void delegate(gboolean, NetworkMonitorIF)[] onNetworkChangedListeners()
+	@property void delegate(gboolean, NetworkMonitorIF)[] onNetworkChangedListeners()
 	{
 		return  _onNetworkChangedListeners;
 	}

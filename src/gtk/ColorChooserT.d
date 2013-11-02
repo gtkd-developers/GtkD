@@ -134,7 +134,7 @@ public template ColorChooserT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(RGBA, ColorChooserIF)[] _onColorActivatedListeners;
-	void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners()
+	@property void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners()
 	{
 		return  _onColorActivatedListeners;
 	}

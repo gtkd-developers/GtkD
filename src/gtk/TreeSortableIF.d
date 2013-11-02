@@ -82,7 +82,7 @@ public interface TreeSortableIF
 	/**
 	 */
 	
-	void delegate(TreeSortableIF)[] onSortColumnChangedListeners();
+	@property void delegate(TreeSortableIF)[] onSortColumnChangedListeners();
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column
 	 * or sort order of sortable is changed. The signal is emitted before

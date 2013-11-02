@@ -139,7 +139,7 @@ public template MountT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(MountIF)[] _onChangedListeners;
-	void delegate(MountIF)[] onChangedListeners()
+	@property void delegate(MountIF)[] onChangedListeners()
 	{
 		return  _onChangedListeners;
 	}
@@ -170,7 +170,7 @@ public template MountT(TStruct)
 	}
 	
 	void delegate(MountIF)[] _onPreUnmountListeners;
-	void delegate(MountIF)[] onPreUnmountListeners()
+	@property void delegate(MountIF)[] onPreUnmountListeners()
 	{
 		return  _onPreUnmountListeners;
 	}
@@ -203,7 +203,7 @@ public template MountT(TStruct)
 	}
 	
 	void delegate(MountIF)[] _onUnmountedListeners;
-	void delegate(MountIF)[] onUnmountedListeners()
+	@property void delegate(MountIF)[] onUnmountedListeners()
 	{
 		return  _onUnmountedListeners;
 	}

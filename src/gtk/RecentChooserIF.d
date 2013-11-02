@@ -105,7 +105,7 @@ public interface RecentChooserIF
 	/**
 	 */
 	
-	void delegate(RecentChooserIF)[] onItemActivatedListeners();
+	@property void delegate(RecentChooserIF)[] onItemActivatedListeners();
 	/**
 	 * This signal is emitted when the user "activates" a recent item
 	 * in the recent chooser. This can happen by double-clicking on an item
@@ -114,7 +114,7 @@ public interface RecentChooserIF
 	 * Since 2.10
 	 */
 	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(RecentChooserIF)[] onSelectionChangedListeners();
+	@property void delegate(RecentChooserIF)[] onSelectionChangedListeners();
 	/**
 	 * This signal is emitted when there is a change in the set of
 	 * selected recently used resources. This can happen when a user

@@ -246,12 +246,12 @@ public interface TreeModelIF
 	/**
 	 */
 	
-	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners();
+	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners();
 	/**
 	 * This signal is emitted when a row in the model has changed.
 	 */
 	void addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(TreePath, TreeModelIF)[] onRowDeletedListeners();
+	@property void delegate(TreePath, TreeModelIF)[] onRowDeletedListeners();
 	/**
 	 * This signal is emitted when a row has been deleted.
 	 * Note that no iterator is passed to the signal handler,
@@ -261,13 +261,13 @@ public interface TreeModelIF
 	 * the row previously was at. It may not be a valid location anymore.
 	 */
 	void addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners();
+	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners();
 	/**
 	 * This signal is emitted when a row has gotten the first child
 	 * row or lost its last child row.
 	 */
 	void addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(TreePath, TreeIter, TreeModelIF)[] onRowInsertedListeners();
+	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowInsertedListeners();
 	/**
 	 * This signal is emitted when a new row has been inserted in
 	 * the model.
@@ -276,7 +276,7 @@ public interface TreeModelIF
 	 * then fill it with the desired values.
 	 */
 	void addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners();
+	@property void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners();
 	/**
 	 * This signal is emitted when the children of a node in the
 	 * GtkTreeModel have been reordered.

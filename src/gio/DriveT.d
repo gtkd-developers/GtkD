@@ -136,7 +136,7 @@ public template DriveT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(DriveIF)[] _onChangedListeners;
-	void delegate(DriveIF)[] onChangedListeners()
+	@property void delegate(DriveIF)[] onChangedListeners()
 	{
 		return  _onChangedListeners;
 	}
@@ -167,7 +167,7 @@ public template DriveT(TStruct)
 	}
 	
 	void delegate(DriveIF)[] _onDisconnectedListeners;
-	void delegate(DriveIF)[] onDisconnectedListeners()
+	@property void delegate(DriveIF)[] onDisconnectedListeners()
 	{
 		return  _onDisconnectedListeners;
 	}
@@ -201,7 +201,7 @@ public template DriveT(TStruct)
 	}
 	
 	void delegate(DriveIF)[] _onEjectButtonListeners;
-	void delegate(DriveIF)[] onEjectButtonListeners()
+	@property void delegate(DriveIF)[] onEjectButtonListeners()
 	{
 		return  _onEjectButtonListeners;
 	}
@@ -233,7 +233,7 @@ public template DriveT(TStruct)
 	}
 	
 	void delegate(DriveIF)[] _onStopButtonListeners;
-	void delegate(DriveIF)[] onStopButtonListeners()
+	@property void delegate(DriveIF)[] onStopButtonListeners()
 	{
 		return  _onStopButtonListeners;
 	}

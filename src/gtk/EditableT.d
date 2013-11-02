@@ -98,7 +98,7 @@ public template EditableT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(EditableIF)[] _onChangedListeners;
-	void delegate(EditableIF)[] onChangedListeners()
+	@property void delegate(EditableIF)[] onChangedListeners()
 	{
 		return  _onChangedListeners;
 	}
@@ -135,7 +135,7 @@ public template EditableT(TStruct)
 	}
 	
 	void delegate(gint, gint, EditableIF)[] _onDeleteTextListeners;
-	void delegate(gint, gint, EditableIF)[] onDeleteTextListeners()
+	@property void delegate(gint, gint, EditableIF)[] onDeleteTextListeners()
 	{
 		return  _onDeleteTextListeners;
 	}
@@ -174,7 +174,7 @@ public template EditableT(TStruct)
 	}
 	
 	void delegate(string, gint, void*, EditableIF)[] _onInsertTextListeners;
-	void delegate(string, gint, void*, EditableIF)[] onInsertTextListeners()
+	@property void delegate(string, gint, void*, EditableIF)[] onInsertTextListeners()
 	{
 		return  _onInsertTextListeners;
 	}

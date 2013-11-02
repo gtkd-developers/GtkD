@@ -109,7 +109,7 @@ public template ChildProxyT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(ObjectG, string, ChildProxyIF)[] _onChildAddedListeners;
-	void delegate(ObjectG, string, ChildProxyIF)[] onChildAddedListeners()
+	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildAddedListeners()
 	{
 		return  _onChildAddedListeners;
 	}
@@ -140,7 +140,7 @@ public template ChildProxyT(TStruct)
 	}
 	
 	void delegate(ObjectG, string, ChildProxyIF)[] _onChildRemovedListeners;
-	void delegate(ObjectG, string, ChildProxyIF)[] onChildRemovedListeners()
+	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildRemovedListeners()
 	{
 		return  _onChildRemovedListeners;
 	}

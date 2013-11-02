@@ -159,7 +159,7 @@ public template VolumeT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(VolumeIF)[] _onChangedListeners;
-	void delegate(VolumeIF)[] onChangedListeners()
+	@property void delegate(VolumeIF)[] onChangedListeners()
 	{
 		return  _onChangedListeners;
 	}
@@ -190,7 +190,7 @@ public template VolumeT(TStruct)
 	}
 	
 	void delegate(VolumeIF)[] _onRemovedListeners;
-	void delegate(VolumeIF)[] onRemovedListeners()
+	@property void delegate(VolumeIF)[] onRemovedListeners()
 	{
 		return  _onRemovedListeners;
 	}

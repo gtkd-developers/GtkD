@@ -99,7 +99,7 @@ public template DBusObjectT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(DBusInterfaceIF, DBusObjectIF)[] _onInterfaceAddedListeners;
-	void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceAddedListeners()
+	@property void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceAddedListeners()
 	{
 		return  _onInterfaceAddedListeners;
 	}
@@ -131,7 +131,7 @@ public template DBusObjectT(TStruct)
 	}
 	
 	void delegate(DBusInterfaceIF, DBusObjectIF)[] _onInterfaceRemovedListeners;
-	void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceRemovedListeners()
+	@property void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceRemovedListeners()
 	{
 		return  _onInterfaceRemovedListeners;
 	}

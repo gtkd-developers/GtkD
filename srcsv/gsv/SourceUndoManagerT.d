@@ -93,7 +93,7 @@ public template SourceUndoManagerT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(SourceUndoManagerIF)[] _onCanRedoChangedListeners;
-	void delegate(SourceUndoManagerIF)[] onCanRedoChangedListeners()
+	@property void delegate(SourceUndoManagerIF)[] onCanRedoChangedListeners()
 	{
 		return  _onCanRedoChangedListeners;
 	}
@@ -125,7 +125,7 @@ public template SourceUndoManagerT(TStruct)
 	}
 	
 	void delegate(SourceUndoManagerIF)[] _onCanUndoChangedListeners;
-	void delegate(SourceUndoManagerIF)[] onCanUndoChangedListeners()
+	@property void delegate(SourceUndoManagerIF)[] onCanUndoChangedListeners()
 	{
 		return  _onCanUndoChangedListeners;
 	}

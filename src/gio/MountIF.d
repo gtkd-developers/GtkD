@@ -133,19 +133,19 @@ public interface MountIF
 	/**
 	 */
 	
-	void delegate(MountIF)[] onChangedListeners();
+	@property void delegate(MountIF)[] onChangedListeners();
 	/**
 	 * Emitted when the mount has been changed.
 	 */
 	void addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(MountIF)[] onPreUnmountListeners();
+	@property void delegate(MountIF)[] onPreUnmountListeners();
 	/**
 	 * This signal is emitted when the GMount is about to be
 	 * unmounted.
 	 * Since 2.22
 	 */
 	void addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(MountIF)[] onUnmountedListeners();
+	@property void delegate(MountIF)[] onUnmountedListeners();
 	/**
 	 * This signal is emitted when the GMount have been
 	 * unmounted. If the recipient is holding references to the

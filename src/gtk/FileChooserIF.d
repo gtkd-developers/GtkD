@@ -385,7 +385,7 @@ public interface FileChooserIF
 	/**
 	 */
 	
-	GtkFileChooserConfirmation delegate(FileChooserIF)[] onConfirmOverwriteListeners();
+	@property GtkFileChooserConfirmation delegate(FileChooserIF)[] onConfirmOverwriteListeners();
 	/**
 	 * This signal gets emitted whenever it is appropriate to present a
 	 * confirmation dialog when the user has selected a file name that
@@ -414,7 +414,7 @@ public interface FileChooserIF
 	 * Since 2.8
 	 */
 	void addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(FileChooserIF)[] onCurrentFolderChangedListeners();
+	@property void delegate(FileChooserIF)[] onCurrentFolderChangedListeners();
 	/**
 	 * This signal is emitted when the current folder in a GtkFileChooser
 	 * changes. This can happen due to the user performing some action that
@@ -429,7 +429,7 @@ public interface FileChooserIF
 	 * gtk_file_chooser_get_current_folder_uri().
 	 */
 	void addOnCurrentFolderChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(FileChooserIF)[] onFileActivatedListeners();
+	@property void delegate(FileChooserIF)[] onFileActivatedListeners();
 	/**
 	 * This signal is emitted when the user "activates" a file in the file
 	 * chooser. This can happen by double-clicking on a file in the file list, or
@@ -442,7 +442,7 @@ public interface FileChooserIF
 	 * gtk_file_chooser_get_uris().
 	 */
 	void addOnFileActivated(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(FileChooserIF)[] onSelectionChangedListeners();
+	@property void delegate(FileChooserIF)[] onSelectionChangedListeners();
 	/**
 	 * This signal is emitted when there is a change in the set of selected files
 	 * in a GtkFileChooser. This can happen when the user modifies the selection
@@ -458,7 +458,7 @@ public interface FileChooserIF
 	 * gtk_file_chooser_get_uris().
 	 */
 	void addOnSelectionChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(FileChooserIF)[] onUpdatePreviewListeners();
+	@property void delegate(FileChooserIF)[] onUpdatePreviewListeners();
 	/**
 	 * This signal is emitted when the preview in a file chooser should be
 	 * regenerated. For example, this can happen when the currently selected file

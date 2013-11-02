@@ -93,13 +93,13 @@ public interface DBusObjectIF
 	/**
 	 */
 	
-	void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceAddedListeners();
+	@property void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceAddedListeners();
 	/**
 	 * Emitted when interface is added to object.
 	 * Since 2.30
 	 */
 	void addOnInterfaceAdded(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceRemovedListeners();
+	@property void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceRemovedListeners();
 	/**
 	 * Emitted when interface is removed from object.
 	 * Since 2.30

@@ -115,7 +115,7 @@ public class DataModel : ObjectG
 	
 	/** */
 	this (ListG glist) {
-		this( cast(GdaDataModel*)glist.data );
+		this( cast(GdaDataModel*)glist.data() );
 	}
 	
 	/**

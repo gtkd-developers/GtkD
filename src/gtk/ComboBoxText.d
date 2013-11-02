@@ -172,7 +172,7 @@ public class ComboBoxText : ComboBox
 	{
 		int active = 0;
 		setActive(0);
-		while ( getActive >= 0 ) // returns -1 if end of list if reached
+		while ( getActive() >= 0 ) // returns -1 if end of list if reached
 		{
 			if( text == getActiveText() ) return;
 			++active;

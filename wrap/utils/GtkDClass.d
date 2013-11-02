@@ -916,13 +916,13 @@ public class GtkDClass
 
 				if(convParms.isInterface)
 				{
-					text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners();" ;
+					text ~= "@property "~ delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners();" ;
 					text ~= comments;
 				}
 				else if(!convParms.isInterface && convParms.templ.length > 0)
 				{
-					text ~= delegateDeclaration ~ "[] _on" ~ gtkDSignal~"Listeners;";
-					text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners()";
+					text ~= delegateDeclaration ~"[] _on"~ gtkDSignal ~"Listeners;";
+					text ~= "@property "~ delegateDeclaration ~"[] on"~ gtkDSignal ~"Listeners()";
 					text ~= "{";
 					text ~= "	return  _on" ~ gtkDSignal~"Listeners;";
 					text ~= "}";

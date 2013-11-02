@@ -84,7 +84,7 @@ public interface CellEditableIF
 	/**
 	 */
 	
-	void delegate(CellEditableIF)[] onEditingDoneListeners();
+	@property void delegate(CellEditableIF)[] onEditingDoneListeners();
 	/**
 	 * This signal is a sign for the cell renderer to update its
 	 * value from the cell_editable.
@@ -95,7 +95,7 @@ public interface CellEditableIF
 	 * for emitting "editing-done".
 	 */
 	void addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(CellEditableIF)[] onRemoveWidgetListeners();
+	@property void delegate(CellEditableIF)[] onRemoveWidgetListeners();
 	/**
 	 * This signal is meant to indicate that the cell is finished
 	 * editing, and the widget may now be destroyed.

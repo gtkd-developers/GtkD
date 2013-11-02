@@ -138,7 +138,7 @@ public template ActionGroupT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(string, ActionGroupIF)[] _onActionAddedListeners;
-	void delegate(string, ActionGroupIF)[] onActionAddedListeners()
+	@property void delegate(string, ActionGroupIF)[] onActionAddedListeners()
 	{
 		return  _onActionAddedListeners;
 	}
@@ -172,7 +172,7 @@ public template ActionGroupT(TStruct)
 	}
 	
 	void delegate(string, gboolean, ActionGroupIF)[] _onActionEnabledChangedListeners;
-	void delegate(string, gboolean, ActionGroupIF)[] onActionEnabledChangedListeners()
+	@property void delegate(string, gboolean, ActionGroupIF)[] onActionEnabledChangedListeners()
 	{
 		return  _onActionEnabledChangedListeners;
 	}
@@ -204,7 +204,7 @@ public template ActionGroupT(TStruct)
 	}
 	
 	void delegate(string, ActionGroupIF)[] _onActionRemovedListeners;
-	void delegate(string, ActionGroupIF)[] onActionRemovedListeners()
+	@property void delegate(string, ActionGroupIF)[] onActionRemovedListeners()
 	{
 		return  _onActionRemovedListeners;
 	}
@@ -238,7 +238,7 @@ public template ActionGroupT(TStruct)
 	}
 	
 	void delegate(string, Variant, ActionGroupIF)[] _onActionStateChangedListeners;
-	void delegate(string, Variant, ActionGroupIF)[] onActionStateChangedListeners()
+	@property void delegate(string, Variant, ActionGroupIF)[] onActionStateChangedListeners()
 	{
 		return  _onActionStateChangedListeners;
 	}

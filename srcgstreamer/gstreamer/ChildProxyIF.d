@@ -103,12 +103,12 @@ public interface ChildProxyIF
 	/**
 	 */
 	
-	void delegate(ObjectG, string, ChildProxyIF)[] onChildAddedListeners();
+	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildAddedListeners();
 	/**
 	 * Will be emitted after the object was added to the child_proxy.
 	 */
 	void addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	void delegate(ObjectG, string, ChildProxyIF)[] onChildRemovedListeners();
+	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildRemovedListeners();
 	/**
 	 * Will be emitted after the object was removed from the child_proxy.
 	 * See Also

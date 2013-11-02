@@ -98,7 +98,7 @@ public interface NetworkMonitorIF
 	/**
 	 */
 	
-	void delegate(gboolean, NetworkMonitorIF)[] onNetworkChangedListeners();
+	@property void delegate(gboolean, NetworkMonitorIF)[] onNetworkChangedListeners();
 	/**
 	 * Emitted when the network configuration changes. If available is
 	 * TRUE, then some hosts may be reachable that were not reachable

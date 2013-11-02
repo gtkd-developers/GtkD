@@ -154,7 +154,7 @@ public template AppInfoT(TStruct)
 	int[string] connectedSignals;
 	
 	void delegate(string, AppInfoIF)[] _onLaunchFailedListeners;
-	void delegate(string, AppInfoIF)[] onLaunchFailedListeners()
+	@property void delegate(string, AppInfoIF)[] onLaunchFailedListeners()
 	{
 		return  _onLaunchFailedListeners;
 	}
@@ -184,7 +184,7 @@ public template AppInfoT(TStruct)
 	}
 	
 	void delegate(AppInfoIF, GVariant*, AppInfoIF)[] _onLaunchedListeners;
-	void delegate(AppInfoIF, GVariant*, AppInfoIF)[] onLaunchedListeners()
+	@property void delegate(AppInfoIF, GVariant*, AppInfoIF)[] onLaunchedListeners()
 	{
 		return  _onLaunchedListeners;
 	}

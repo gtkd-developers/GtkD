@@ -94,7 +94,7 @@ public interface FontChooserIF
 	/**
 	 */
 	
-	void delegate(string, FontChooserIF)[] onFontActivatedListeners();
+	@property void delegate(string, FontChooserIF)[] onFontActivatedListeners();
 	/**
 	 * Emitted when a font is activated.
 	 * This usually happens when the user double clicks an item,
