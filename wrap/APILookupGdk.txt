@@ -61,6 +61,12 @@ public alias GdkModifierIntent ModifierIntent;
 addEnums: end
 
 addStructs: start
+/**
+ * An opaque type representing a string as an index into a table
+ * of strings on the X server.
+ */
+alias _GdkAtom* GdkAtom;
+public struct _GdkAtom;
 addStructs: end
 
 addTypes: start
@@ -1050,6 +1056,7 @@ outFile: DragContext
 
 file: gdk3-Properties-and-Atoms.html
 prefix: gdk_
+nostruct: GdkAtom
 import: glib.Str
 import: gdk.Display
 import: gdk.Window

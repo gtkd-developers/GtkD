@@ -1626,6 +1626,12 @@ public enum GdkPropMode
 }
 alias GdkPropMode PropMode;
 
+/**
+ * An opaque type representing a string as an index into a table
+ * of strings on the X server.
+ */
+alias _GdkAtom* GdkAtom;
+public struct _GdkAtom;
 
 /**
  * Main Gtk struct.
@@ -2709,13 +2715,6 @@ public struct GdkKeymapKey
  * Main Gtk struct.
  */
 public struct GdkDragContext{}
-
-
-/**
- * An opaque type representing a string as an index into a table
- * of strings on the X server.
- */
-public struct GdkAtom{}
 
 
 /**
