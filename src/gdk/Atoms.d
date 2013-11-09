@@ -39,6 +39,7 @@
  * prefixes:
  * 	- gdk_
  * omit structs:
+ * 	- GdkAtom
  * omit prefixes:
  * omit code:
  * omit signals:
