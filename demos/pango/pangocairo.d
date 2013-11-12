@@ -12,16 +12,8 @@ import pango.PgCairo;
 import pango.PgLayout;
 import pango.PgFontDescription;
 
-version(Tango)
-{
-	import tango.io.Stdout;
-	import tango.math.Math;
-}
-else
-{
-	import std.stdio;
-	import std.math;
-}
+import std.stdio;
+import std.math;
 
 class PangoText : DrawingArea
 {

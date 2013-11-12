@@ -4,10 +4,7 @@ import gtkglc.gl;
 import gtkglc.glu;
 import gtkc.glibtypes;
 
-version (Tango)
-    private import tango.math.Math;
-else
-    private import std.math;
+import std.math;
 
 /* 
  * The following code is imported from GLUT.

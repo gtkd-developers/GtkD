@@ -1,10 +1,7 @@
 module text_image;
 
-version(Tango) import tango.io.Stdout;
-else import std.stdio;
-
-version(Tango) import tango.math.Math;
-else import std.math;
+import std.stdio;
+import std.math;
 
 import gtk.Main;
 import gtk.MainWindow;
@@ -22,8 +19,6 @@ class CairoText : DrawingArea
 public:
 	this()
 	{
-		//doesn't work, and isn't even the desired API:
-		//image = cast(ImageSurface) ImageSurface.createFromPng("gtkD_logo.png");
 		image = ImageSurface.createFromPng("gtkD_logo.png");
 	
 		//Attach our expose callback, which will draw the window.
@@ -139,5 +134,4 @@ void main(string[] args)
 
 	Main.run();
 }
-
 

@@ -17,25 +17,9 @@
 
 module clock;
 
-version(Tango) import tango.io.Stdout;
-else import std.stdio;
-
-version(Tango) import tango.math.Math;
-else import std.math;
-
-version(Tango)
-{
-	import tango.time.Time;
-	import tangoClock = tango.time.WallClock;
-}
-else version(D_Version2)
-{
-	import std.datetime;
-}
-else
-{
-	import std.date;
-}
+import std.stdio;
+import std.math;
+import std.datetime;
 
 import glib.Timeout;
 
@@ -123,42 +107,13 @@ protected:
 			cr.restore(); // stack-pen-size
 		}
 
-		version(Tango)
-		{
-			auto time = tangoClock.WallClock.now.time;
+		SysTime lNow = std.datetime.Clock.currTime();
 
-			double minutes = time.minutes * PI / 30;
-			double hours = time.hours * PI / 6;
-			double seconds = time.seconds * PI / 30;
-		}
-		else version(D_Version2)
-		{
-			SysTime lNow = std.datetime.Clock.currTime();
-
-			// compute the angles of the indicators of our clock
-			double minutes = lNow.minute * PI / 30; 
-			double hours = lNow.hour * PI / 6; 
-			double seconds= lNow.second * PI / 30; 
-		}
-		else
-		{
-			d_time lNow;
-			string lNowString;
-
-			// Grab the date and time relative to UTC
-			lNow = std.date.getUTCtime();
-			// Convert this into the local date and time for display.
-			lNowString = std.date.toString(lNow);
-
-			Date timeinfo;
-			timeinfo.parse(lNowString);
-
-			// compute the angles of the indicators of our clock
-			double minutes = timeinfo.minute * PI / 30;
-			double hours = timeinfo.hour * PI / 6;
-			double seconds= timeinfo.second * PI / 30;
-		}
-
+		// compute the angles of the indicators of our clock
+		double minutes = lNow.minute * PI / 30; 
+		double hours = lNow.hour * PI / 6; 
+		double seconds= lNow.second * PI / 30; 
+		
 		cr.save();
 			cr.setLineCap(cairo_line_cap_t.ROUND);
 

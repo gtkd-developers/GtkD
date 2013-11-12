@@ -53,15 +53,7 @@
 
 module TrackBall;
 
-//private import tango.stdc.math;//std.math;
-version (Tango)
-{
-    private import tango.math.Math;
-}
-else
-{
-    private import std.math;
-}
+import std.math;
 
 public:
 const float TRACKBALLSIZE = 0.8;

@@ -32,23 +32,8 @@ private import gsv.SourceLanguage;
 private import gsv.SourceLanguageManager;
 private import gsv.SourceBuffer;
 
-version(Tango)
-{
-	private import tango.io.Stdout;
-	private import tango.text.Util;
-	private import tango.io.device.File;
-	private import tango.core.Vararg;
-
-    void writefln( string frm, ... ){
-        string frm2 = substitute( frm, "%s", "{}" );
-        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
-    }
-}
-else
-{
-	private import std.stdio;
-	private import std.file;
-}
+private import std.stdio;
+private import std.file;
 
 /**
  * Demos for SourceView.
@@ -73,25 +58,12 @@ class HelloWorld : MainWindow
 	{
 		string text;
 
-		version(Tango)
+		try
 		{
-			try
-			{
-				auto file = new File ("SVTest.d");
-				text = new char[file.length];
-				file.read(text);
-			}
-			catch (Exception) { }
+			text = cast(string)std.file.read("SVTest.d");
 		}
-		else
-		{
-			try
-			{
-				text = cast(string)std.file.read("SVTest.d");
-			}
-			catch ( FileException fe ) { }
-		}
-
+		catch ( FileException fe ) { }
+		
 		return text;
 	}
 	
@@ -136,5 +108,4 @@ void main(string[] args)
 	Main.init(args);
 	new HelloWorld();
 	Main.run();
-
 }

@@ -33,20 +33,9 @@ private import gtk.MainWindow;
 private import gtk.Button;
 private import gtk.Image;
 
-version(Tango){
-    import tango.text.Util;
-    import tango.io.Stdout;
-	import tango.core.Vararg;
+import std.string;
+import std.stdio;
 
-    void writefln( string frm, ... ){
-        string frm2 = substitute( frm, "%s", "{}" );
-        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
-    }
-}
-else{
-    import std.string;
-    import std.stdio;
-}
 class SpawnWindow : MainWindow
 {
 
@@ -84,11 +73,7 @@ class SpawnWindow : MainWindow
 
 	private void execInput(Button button)
 	{
-		version(Tango)
-			string[] args = split( viewInput.getBuffer().getText(), " " );
-        else
-			string[] args = std.string.split(viewInput.getBuffer().getText());
-
+		string[] args = std.string.split(viewInput.getBuffer().getText());
 		exec(args);
 	}
 

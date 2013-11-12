@@ -56,16 +56,8 @@ import gtkglc.glu;
 import gtkglc.glgdktypes;
 import gtkglc.glgtktypes;
 
-version (Tango)
-{
-    import tango.io.Stdout;
-    import tango.math.Math;
-}
-else
-{
-    import std.math;
-	import std.stdio;
-}
+import std.math;
+import std.stdio;
 
 const float DIG_2_RAD = (PI / 180.0);
 const float RAD_2_DIG = (180.0 / PI);
@@ -615,15 +607,8 @@ class ShapesGL : DrawingArea
 	void activateItemCallback(MenuItem menuItem)
 	{
 		string action = menuItem.getActionName();
-		version(Tango)
-		{
-			Stdout("activateItemCallback action = %s ")( action).newline;
-		}
-		else //version(Phobos)
-		{
-			writefln("activateItemCallback action = %s ", action);
-		}
-		
+		writefln("activateItemCallback action = %s ", action);
+				
 		switch(action)
 		{
 			case "shapes.Cube":shape_current = Shapes.cube; break;

@@ -13,27 +13,8 @@ import gda.Value;
 import gda.ErrorGda;
 import glib.ListG;
 
-version(Tango)
-{
-	import tango.io.Stdout;
-	import tango.text.Util : substitute;
-	import tango.stdc.stdlib : exit;
-
-    void writef( string frm, ... ){
-        string frm2 = substitute( frm, "%s", "{}" );
-        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 ))();
-    }
-
-    void writefln( string frm, ... ){
-        string frm2 = substitute( frm, "%s", "{}" );
-        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
-    }
-}
-else
-{
-	import std.stdio;
-	import std.c.process;
-}
+import std.stdio;
+import std.c.process;
 
 void main (string[] args)
 {

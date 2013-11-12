@@ -8,23 +8,9 @@ import gtk.Window;
 
 import gobject.Type;
 
-version(Tango)
-{
-	import tango.stdc.stdlib : exit;
-	import tango.io.Stdout;
-	import tango.text.Util;
-	import tango.core.Vararg;
+import std.stdio;
+import std.c.process;
 
-	void writefln( string frm, ... ){
-		string frm2 = substitute( frm, "%s", "{}" );
-		Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
-	}
-}
-else
-{
-	import std.stdio;
-	import std.c.process;
-}
 
 /**
  * Usage ./gladeText /path/to/your/glade/file.glade
@@ -66,7 +52,7 @@ int main(string[] args)
 		Button b = cast(Button)g.getObject("button1");
 		if(b !is null)
 		{
-			b.addOnClicked( delegate void(Button aux){ exit(0); } );
+			b.addOnClicked( &Main.quit );
 		}
 	}
 	else
