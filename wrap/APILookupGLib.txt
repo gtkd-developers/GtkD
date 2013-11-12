@@ -2333,7 +2333,7 @@ structWrap: GList* ListG
 
 code: start
   	/** */ 
-	void* data()
+	@property void* data()
 	{
 		return gList.data;
 	}
@@ -2342,7 +2342,7 @@ code: start
 	 * get the next element
 	 * Returns: the next element, or NULL if there are no more elements.
 	 */ 
-	ListG next()
+	@property ListG next()
 	{
 		if ( gList.next is null )
 		{
@@ -2356,7 +2356,7 @@ code: start
 	 * get the previous element
 	 * Returns: the previous element, or NULL if there are no more elements.
 	 */ 
-	ListG previous()
+	@property ListG previous()
 	{
 		if ( gList.prev is null )
 		{
@@ -2364,6 +2364,26 @@ code: start
 		}
 
 		return new ListG(gList.prev);
+	}
+
+	/**
+	 * Turn the list into a D array of the desiered type.
+	 * Type T wraps should match the type of the data.
+	 */
+	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
+	{
+		T[] arr = new T[length()];
+		ListSG list = this;
+		size_t count;
+
+		while(list !is null && count < arr.length)
+		{
+			arr[count] = new T(cast(TC)list.data);
+			list = next();
+			count++;
+		}
+
+		return arr;
 	}
 code: end
 outFile: ListG
@@ -2376,7 +2396,7 @@ structWrap: GSList* ListSG
 
 code: start
   	/** */ 
-	void* data()
+	@property void* data()
 	{
 		return gSList.data;
 	}
@@ -2385,7 +2405,7 @@ code: start
 	 * get the next element
 	 * Returns: the next element, or NULL if there are no more elements.
 	 */ 
-	ListSG next()
+	@property ListSG next()
 	{
 		if ( gSList.next is null )
 		{
@@ -2393,6 +2413,26 @@ code: start
 		}
 
 		return new ListSG(gSList.next);
+	}
+
+	/**
+	 * Turn the list into a D array of the desiered type.
+	 * Type T wraps should match the type of the data.
+	 */
+	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
+	{
+		T[] arr = new T[length()];
+		ListSG list = this;
+		size_t count;
+
+		while(list !is null && count < arr.length)
+		{
+			arr[count] = new T(cast(TC)list.data);
+			list = next();
+			count++;
+		}
+
+		return arr;
 	}
 code: end
 outFile: ListSG

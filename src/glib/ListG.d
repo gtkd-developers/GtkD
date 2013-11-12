@@ -128,7 +128,7 @@ public class ListG
 	}
 	
 	/** */
-	void* data()
+	@property void* data()
 	{
 		return gList.data;
 	}
@@ -137,7 +137,7 @@ public class ListG
 	 * get the next element
 	 * Returns: the next element, or NULL if there are no more elements.
 	 */
-	ListG next()
+	@property ListG next()
 	{
 		if ( gList.next is null )
 		{
@@ -151,7 +151,7 @@ public class ListG
 	 * get the previous element
 	 * Returns: the previous element, or NULL if there are no more elements.
 	 */
-	ListG previous()
+	@property ListG previous()
 	{
 		if ( gList.prev is null )
 		{
@@ -159,6 +159,26 @@ public class ListG
 		}
 		
 		return new ListG(gList.prev);
+	}
+	
+	/**
+	 * Turn the list into a D array of the desiered type.
+	 * Type T wraps should match the type of the data.
+	 */
+	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
+	{
+		T[] arr = new T[length()];
+		ListSG list = this;
+		size_t count;
+		
+		while(list !is null && count < arr.length)
+		{
+			arr[count] = new T(cast(TC)list.data);
+			list = next();
+			count++;
+		}
+		
+		return arr;
 	}
 	
 	/**
