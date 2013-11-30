@@ -96,6 +96,7 @@ public class DataList
 	protected GData* gData;
 	
 	
+	/** Get the main Gtk struct */
 	public GData* getDataListStruct()
 	{
 		return gData;

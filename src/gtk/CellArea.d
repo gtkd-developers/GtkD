@@ -313,6 +313,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	protected GtkCellArea* gtkCellArea;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellArea* getCellAreaStruct()
 	{
 		return gtkCellArea;

@@ -76,6 +76,7 @@ public template FileDescriptorBasedT(TStruct)
 	protected GFileDescriptorBased* gFileDescriptorBased;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileDescriptorBased* getFileDescriptorBasedTStruct()
 	{
 		return cast(GFileDescriptorBased*)getStruct();

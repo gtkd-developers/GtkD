@@ -137,6 +137,7 @@ public interface AppInfoIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GAppInfo* getAppInfoTStruct();
 	
 	/** the main Gtk struct as a void* */

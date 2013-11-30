@@ -179,6 +179,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	protected GDBusObjectManagerClient* gDBusObjectManagerClient;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusObjectManagerClient* getDBusObjectManagerClientStruct()
 	{
 		return gDBusObjectManagerClient;

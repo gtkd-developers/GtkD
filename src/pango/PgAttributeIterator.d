@@ -87,6 +87,7 @@ public class PgAttributeIterator
 	protected PangoAttrIterator* pangoAttrIterator;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoAttrIterator* getPgAttributeIteratorStruct()
 	{
 		return pangoAttrIterator;

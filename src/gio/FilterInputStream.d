@@ -77,6 +77,7 @@ public class FilterInputStream : InputStream
 	protected GFilterInputStream* gFilterInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GFilterInputStream* getFilterInputStreamStruct()
 	{
 		return gFilterInputStream;

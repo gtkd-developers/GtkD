@@ -77,6 +77,7 @@ public class Vfs : ObjectG
 	protected GVfs* gVfs;
 	
 	
+	/** Get the main Gtk struct */
 	public GVfs* getVfsStruct()
 	{
 		return gVfs;

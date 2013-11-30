@@ -142,6 +142,7 @@ public interface VolumeIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GVolume* getVolumeTStruct();
 	
 	/** the main Gtk struct as a void* */

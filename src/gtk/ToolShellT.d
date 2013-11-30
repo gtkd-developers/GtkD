@@ -77,6 +77,7 @@ public template ToolShellT(TStruct)
 	protected GtkToolShell* gtkToolShell;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolShell* getToolShellTStruct()
 	{
 		return cast(GtkToolShell*)getStruct();

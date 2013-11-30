@@ -126,6 +126,7 @@ public template MountT(TStruct)
 	protected GMount* gMount;
 	
 	
+	/** Get the main Gtk struct */
 	public GMount* getMountTStruct()
 	{
 		return cast(GMount*)getStruct();

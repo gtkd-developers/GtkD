@@ -118,6 +118,7 @@ public class RadioButton : CheckButton
 	protected GtkRadioButton* gtkRadioButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRadioButton* getRadioButtonStruct()
 	{
 		return gtkRadioButton;

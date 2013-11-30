@@ -73,6 +73,7 @@ public class FontOption
 	protected cairo_font_options_t* cairo_font_options;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_font_options_t* getFontOptionStruct()
 	{
 		return cairo_font_options;

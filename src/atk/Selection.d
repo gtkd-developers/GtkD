@@ -84,6 +84,7 @@ public class Selection
 	protected AtkSelection* atkSelection;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkSelection* getSelectionStruct()
 	{
 		return atkSelection;

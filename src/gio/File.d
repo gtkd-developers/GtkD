@@ -203,6 +203,7 @@ public class File : ObjectG
 	protected GFile* gFile;
 	
 	
+	/** Get the main Gtk struct */
 	public GFile* getFileStruct()
 	{
 		return gFile;

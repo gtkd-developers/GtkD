@@ -137,6 +137,7 @@ public interface CellLayoutIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellLayout* getCellLayoutTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -83,6 +83,7 @@ public class DataModelHash : DataModel
 	protected GdaDataModelHash* gdaDataModelHash;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaDataModelHash* getDataModelHashStruct()
 	{
 		return gdaDataModelHash;

@@ -86,6 +86,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	protected GtkFileChooserWidget* gtkFileChooserWidget;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFileChooserWidget* getFileChooserWidgetStruct()
 	{
 		return gtkFileChooserWidget;

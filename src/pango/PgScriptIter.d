@@ -75,6 +75,7 @@ public class PgScriptIter
 	protected PangoScriptIter* pangoScriptIter;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoScriptIter* getPgScriptIterStruct()
 	{
 		return pangoScriptIter;

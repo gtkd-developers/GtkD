@@ -92,6 +92,7 @@ public interface RemoteActionGroupIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GRemoteActionGroup* getRemoteActionGroupTStruct();
 	
 	/** the main Gtk struct as a void* */

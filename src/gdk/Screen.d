@@ -104,6 +104,7 @@ public class Screen : ObjectG
 	protected GdkScreen* gdkScreen;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkScreen* getScreenStruct()
 	{
 		return gdkScreen;

@@ -83,6 +83,7 @@ public class BufferList
 	protected GstBufferList* gstBufferList;
 	
 	
+	/** Get the main Gtk struct */
 	public GstBufferList* getBufferListStruct()
 	{
 		return gstBufferList;

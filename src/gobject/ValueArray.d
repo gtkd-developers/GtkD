@@ -89,6 +89,7 @@ public class ValueArray
 	protected GValueArray* gValueArray;
 	
 	
+	/** Get the main Gtk struct */
 	public GValueArray* getValueArrayStruct()
 	{
 		return gValueArray;

@@ -77,6 +77,7 @@ public class Timer
 	protected GTimer* gTimer;
 	
 	
+	/** Get the main Gtk struct */
 	public GTimer* getTimerStruct()
 	{
 		return gTimer;

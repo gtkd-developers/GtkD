@@ -79,6 +79,7 @@ public class TlsFileDatabase : TlsDatabase
 	protected GTlsFileDatabase* gTlsFileDatabase;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsFileDatabase* getTlsFileDatabaseStruct()
 	{
 		return gTlsFileDatabase;

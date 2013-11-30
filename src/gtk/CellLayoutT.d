@@ -141,6 +141,7 @@ public template CellLayoutT(TStruct)
 	protected GtkCellLayout* gtkCellLayout;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellLayout* getCellLayoutTStruct()
 	{
 		return cast(GtkCellLayout*)getStruct();

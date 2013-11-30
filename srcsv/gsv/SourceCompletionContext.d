@@ -116,6 +116,7 @@ public class SourceCompletionContext : ObjectG
 	protected GtkSourceCompletionContext* gtkSourceCompletionContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionContext* getSourceCompletionContextStruct()
 	{
 		return gtkSourceCompletionContext;

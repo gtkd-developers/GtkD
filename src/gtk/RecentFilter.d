@@ -101,6 +101,7 @@ public class RecentFilter : ObjectG
 	protected GtkRecentFilter* gtkRecentFilter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentFilter* getRecentFilterStruct()
 	{
 		return gtkRecentFilter;

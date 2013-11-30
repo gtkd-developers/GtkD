@@ -98,6 +98,7 @@ public class FileAttributeMatcher : Boxed
 	protected GFileAttributeMatcher* gFileAttributeMatcher;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileAttributeMatcher* getFileAttributeMatcherStruct()
 	{
 		return gFileAttributeMatcher;

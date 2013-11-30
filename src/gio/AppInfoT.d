@@ -141,6 +141,7 @@ public template AppInfoT(TStruct)
 	protected GAppInfo* gAppInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GAppInfo* getAppInfoTStruct()
 	{
 		return cast(GAppInfo*)getStruct();

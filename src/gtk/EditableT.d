@@ -85,6 +85,7 @@ public template EditableT(TStruct)
 	protected GtkEditable* gtkEditable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkEditable* getEditableTStruct()
 	{
 		return cast(GtkEditable*)getStruct();

@@ -72,6 +72,7 @@ public interface FileDescriptorBasedIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GFileDescriptorBased* getFileDescriptorBasedTStruct();
 	
 	/** the main Gtk struct as a void* */

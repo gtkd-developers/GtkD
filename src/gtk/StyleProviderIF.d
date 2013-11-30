@@ -83,6 +83,7 @@ public interface StyleProviderIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStyleProvider* getStyleProviderTStruct();
 	
 	/** the main Gtk struct as a void* */

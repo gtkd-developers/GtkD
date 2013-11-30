@@ -100,6 +100,7 @@ public class ToolButton : ToolItem, ActionableIF
 	protected GtkToolButton* gtkToolButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolButton* getToolButtonStruct()
 	{
 		return gtkToolButton;

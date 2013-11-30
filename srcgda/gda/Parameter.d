@@ -81,6 +81,7 @@ public class Parameter
 	protected GdaParameter* gdaParameter;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaParameter* getParameterStruct()
 	{
 		return gdaParameter;

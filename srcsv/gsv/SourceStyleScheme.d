@@ -83,6 +83,7 @@ public class SourceStyleScheme : ObjectG
 	protected GtkSourceStyleScheme* gtkSourceStyleScheme;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceStyleScheme* getSourceStyleSchemeStruct()
 	{
 		return gtkSourceStyleScheme;

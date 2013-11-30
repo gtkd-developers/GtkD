@@ -100,6 +100,7 @@ public class Pixbuf : ObjectG
 	protected GdkPixbuf* gdkPixbuf;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixbuf* getPixbufStruct()
 	{
 		return gdkPixbuf;

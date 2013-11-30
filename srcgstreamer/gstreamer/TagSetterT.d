@@ -100,6 +100,7 @@ public template TagSetterT(TStruct)
 	protected GstTagSetter* gstTagSetter;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTagSetter* getTagSetterTStruct()
 	{
 		return cast(GstTagSetter*)getStruct();

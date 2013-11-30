@@ -98,6 +98,7 @@ public template TreeDragSourceT(TStruct)
 	protected GtkTreeDragSource* gtkTreeDragSource;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeDragSource* getTreeDragSourceTStruct()
 	{
 		return cast(GtkTreeDragSource*)getStruct();

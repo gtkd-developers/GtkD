@@ -87,6 +87,7 @@ public class ByteArray
 	protected GByteArray* gByteArray;
 	
 	
+	/** Get the main Gtk struct */
 	public GByteArray* getByteArrayStruct()
 	{
 		return gByteArray;

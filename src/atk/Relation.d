@@ -82,6 +82,7 @@ public class Relation : ObjectG
 	protected AtkRelation* atkRelation;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkRelation* getRelationStruct()
 	{
 		return atkRelation;

@@ -144,6 +144,7 @@ public class RWLock
 	protected GRWLock* gRWLock;
 	
 	
+	/** Get the main Gtk struct */
 	public GRWLock* getRWLockStruct()
 	{
 		return gRWLock;

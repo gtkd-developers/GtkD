@@ -120,6 +120,7 @@ public class Tooltip : ObjectG
 	protected GtkTooltip* gtkTooltip;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTooltip* getTooltipStruct()
 	{
 		return gtkTooltip;

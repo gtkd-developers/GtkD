@@ -113,6 +113,7 @@ public class ScrolledWindow : Bin
 	protected GtkScrolledWindow* gtkScrolledWindow;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkScrolledWindow* getScrolledWindowStruct()
 	{
 		return gtkScrolledWindow;

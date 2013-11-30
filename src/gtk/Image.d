@@ -129,6 +129,7 @@ public class Image : Misc
 	protected GtkImage* gtkImage;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkImage* getImageStruct()
 	{
 		return gtkImage;

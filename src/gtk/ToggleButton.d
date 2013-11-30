@@ -92,6 +92,7 @@ public class ToggleButton : Button
 	protected GtkToggleButton* gtkToggleButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToggleButton* getToggleButtonStruct()
 	{
 		return gtkToggleButton;

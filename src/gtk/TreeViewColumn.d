@@ -113,6 +113,7 @@ public class TreeViewColumn : ObjectG, CellLayoutIF
 	protected GtkTreeViewColumn* gtkTreeViewColumn;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeViewColumn* getTreeViewColumnStruct()
 	{
 		return gtkTreeViewColumn;

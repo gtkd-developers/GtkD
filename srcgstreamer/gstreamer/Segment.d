@@ -119,6 +119,7 @@ public class Segment
 	protected GstSegment* gstSegment;
 	
 	
+	/** Get the main Gtk struct */
 	public GstSegment* getSegmentStruct()
 	{
 		return gstSegment;

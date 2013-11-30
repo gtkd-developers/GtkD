@@ -96,6 +96,7 @@ public template ChildProxyT(TStruct)
 	protected GstChildProxy* gstChildProxy;
 	
 	
+	/** Get the main Gtk struct */
 	public GstChildProxy* getChildProxyTStruct()
 	{
 		return cast(GstChildProxy*)getStruct();

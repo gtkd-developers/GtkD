@@ -128,6 +128,7 @@ public class Pipeline : Bin
 	protected GstPipeline* gstPipeline;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPipeline* getPipelineStruct()
 	{
 		return gstPipeline;

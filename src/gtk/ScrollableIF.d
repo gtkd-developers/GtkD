@@ -95,6 +95,7 @@ public interface ScrollableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkScrollable* getScrollableTStruct();
 	
 	/** the main Gtk struct as a void* */

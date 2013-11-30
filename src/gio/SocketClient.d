@@ -116,6 +116,7 @@ public class SocketClient : ObjectG
 	protected GSocketClient* gSocketClient;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketClient* getSocketClientStruct()
 	{
 		return gSocketClient;

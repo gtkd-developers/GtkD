@@ -140,6 +140,7 @@ public class SourceCompletion : ObjectG
 	protected GtkSourceCompletion* gtkSourceCompletion;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletion* getSourceCompletionStruct()
 	{
 		return gtkSourceCompletion;

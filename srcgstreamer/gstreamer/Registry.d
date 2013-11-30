@@ -147,6 +147,7 @@ public class Registry : ObjectGst
 	protected GstRegistry* gstRegistry;
 	
 	
+	/** Get the main Gtk struct */
 	public GstRegistry* getRegistryStruct()
 	{
 		return gstRegistry;

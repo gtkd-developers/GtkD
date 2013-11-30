@@ -147,6 +147,7 @@ public class Cond
 	protected GCond* gCond;
 	
 	
+	/** Get the main Gtk struct */
 	public GCond* getCondStruct()
 	{
 		return gCond;

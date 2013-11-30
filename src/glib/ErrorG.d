@@ -258,6 +258,7 @@ public class ErrorG
 	protected GError* gError;
 	
 	
+	/** Get the main Gtk struct */
 	public GError* getErrorGStruct()
 	{
 		return gError;

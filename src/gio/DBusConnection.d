@@ -162,6 +162,7 @@ public class DBusConnection : ObjectG, InitableIF, AsyncInitableIF
 	protected GDBusConnection* gDBusConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusConnection* getDBusConnectionStruct()
 	{
 		return gDBusConnection;

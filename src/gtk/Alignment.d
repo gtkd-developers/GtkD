@@ -90,6 +90,7 @@ public class Alignment : Bin
 	protected GtkAlignment* gtkAlignment;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAlignment* getAlignmentStruct()
 	{
 		return gtkAlignment;

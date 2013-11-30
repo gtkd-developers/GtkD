@@ -291,6 +291,7 @@ public class VariantIter
 	protected GVariantIter* gVariantIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GVariantIter* getVariantIterStruct()
 	{
 		return gVariantIter;

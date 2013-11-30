@@ -139,6 +139,7 @@ public class KeyFile
 	protected GKeyFile* gKeyFile;
 	
 	
+	/** Get the main Gtk struct */
 	public GKeyFile* getKeyFileStruct()
 	{
 		return gKeyFile;

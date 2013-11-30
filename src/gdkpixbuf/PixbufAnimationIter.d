@@ -81,6 +81,7 @@ public class PixbufAnimationIter : ObjectG
 	protected GdkPixbufAnimationIter* gdkPixbufAnimationIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixbufAnimationIter* getPixbufAnimationIterStruct()
 	{
 		return gdkPixbufAnimationIter;

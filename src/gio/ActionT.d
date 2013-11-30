@@ -111,6 +111,7 @@ public template ActionT(TStruct)
 	protected GAction* gAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GAction* getActionTStruct()
 	{
 		return cast(GAction*)getStruct();

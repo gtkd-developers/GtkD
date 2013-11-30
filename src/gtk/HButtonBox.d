@@ -89,6 +89,7 @@ public class HButtonBox : ButtonBox
 	protected GtkHButtonBox* gtkHButtonBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHButtonBox* getHButtonBoxStruct()
 	{
 		return gtkHButtonBox;

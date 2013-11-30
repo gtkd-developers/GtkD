@@ -77,6 +77,7 @@ public class Revealer : Bin
 	protected GtkRevealer* gtkRevealer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRevealer* getRevealerStruct()
 	{
 		return gtkRevealer;

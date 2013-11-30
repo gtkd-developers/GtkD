@@ -96,6 +96,7 @@ public interface TagSetterIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GstTagSetter* getTagSetterTStruct();
 	
 	/** the main Gtk struct as a void* */

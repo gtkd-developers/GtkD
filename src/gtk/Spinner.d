@@ -76,6 +76,7 @@ public class Spinner : Widget
 	protected GtkSpinner* gtkSpinner;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSpinner* getSpinnerStruct()
 	{
 		return gtkSpinner;

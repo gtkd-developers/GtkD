@@ -94,6 +94,7 @@ public class MenuToolButton : ToolButton
 	protected GtkMenuToolButton* gtkMenuToolButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMenuToolButton* getMenuToolButtonStruct()
 	{
 		return gtkMenuToolButton;

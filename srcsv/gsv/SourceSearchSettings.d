@@ -75,6 +75,7 @@ public class SourceSearchSettings : ObjectG
 	protected GtkSourceSearchSettings* gtkSourceSearchSettings;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceSearchSettings* getSourceSearchSettingsStruct()
 	{
 		return gtkSourceSearchSettings;

@@ -126,6 +126,7 @@ public class Toc
 	protected GstToc* gstToc;
 	
 	
+	/** Get the main Gtk struct */
 	public GstToc* getTocStruct()
 	{
 		return gstToc;

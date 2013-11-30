@@ -97,6 +97,7 @@ public class Client : ObjectG
 	protected GdaClient* gdaClient;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaClient* getClientStruct()
 	{
 		return gdaClient;

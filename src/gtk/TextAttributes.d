@@ -91,6 +91,7 @@ public class TextAttributes
 	protected GtkTextAttributes* gtkTextAttributes;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextAttributes* getTextAttributesStruct()
 	{
 		return gtkTextAttributes;

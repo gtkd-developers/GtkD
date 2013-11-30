@@ -155,6 +155,7 @@ public class MainContext
 	protected GMainContext* gMainContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GMainContext* getMainContextStruct()
 	{
 		return gMainContext;

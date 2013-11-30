@@ -141,6 +141,7 @@ public class SourceBuffer : TextBuffer
 	protected GtkSourceBuffer* gtkSourceBuffer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceBuffer* getSourceBufferStruct()
 	{
 		return gtkSourceBuffer;

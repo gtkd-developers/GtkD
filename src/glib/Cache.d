@@ -76,6 +76,7 @@ public class Cache
 	protected GCache* gCache;
 	
 	
+	/** Get the main Gtk struct */
 	public GCache* getCacheStruct()
 	{
 		return gCache;

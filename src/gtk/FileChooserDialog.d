@@ -167,6 +167,7 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	protected GtkFileChooserDialog* gtkFileChooserDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFileChooserDialog* getFileChooserDialogStruct()
 	{
 		return gtkFileChooserDialog;

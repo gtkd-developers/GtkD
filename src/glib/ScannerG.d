@@ -77,6 +77,7 @@ public class ScannerG
 	protected GScanner* gScanner;
 	
 	
+	/** Get the main Gtk struct */
 	public GScanner* getScannerGStruct()
 	{
 		return gScanner;

@@ -87,6 +87,7 @@ public class TearoffMenuItem : MenuItem
 	protected GtkTearoffMenuItem* gtkTearoffMenuItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTearoffMenuItem* getTearoffMenuItemStruct()
 	{
 		return gtkTearoffMenuItem;

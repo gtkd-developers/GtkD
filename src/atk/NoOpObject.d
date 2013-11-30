@@ -80,6 +80,7 @@ public class NoOpObject : ObjectAtk
 	protected AtkNoOpObject* atkNoOpObject;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkNoOpObject* getNoOpObjectStruct()
 	{
 		return atkNoOpObject;

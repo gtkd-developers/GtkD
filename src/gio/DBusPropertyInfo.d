@@ -76,6 +76,7 @@ public class DBusPropertyInfo
 	protected GDBusPropertyInfo* gDBusPropertyInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusPropertyInfo* getDBusPropertyInfoStruct()
 	{
 		return gDBusPropertyInfo;

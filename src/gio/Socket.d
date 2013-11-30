@@ -148,6 +148,7 @@ public class Socket : ObjectG, InitableIF
 	protected GSocket* gSocket;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocket* getSocketStruct()
 	{
 		return gSocket;

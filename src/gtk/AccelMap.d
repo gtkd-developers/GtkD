@@ -135,6 +135,7 @@ public class AccelMap : ObjectG
 	protected GtkAccelMap* gtkAccelMap;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAccelMap* getAccelMapStruct()
 	{
 		return gtkAccelMap;

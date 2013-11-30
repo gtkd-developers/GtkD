@@ -76,6 +76,7 @@ public class DBusArgInfo
 	protected GDBusArgInfo* gDBusArgInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusArgInfo* getDBusArgInfoStruct()
 	{
 		return gDBusArgInfo;

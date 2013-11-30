@@ -94,6 +94,7 @@ public class StringG
 	protected GString* gString;
 	
 	
+	/** Get the main Gtk struct */
 	public GString* getStringGStruct()
 	{
 		return gString;

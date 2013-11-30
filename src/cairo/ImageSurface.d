@@ -77,6 +77,7 @@ public class ImageSurface : Surface
 	protected cairo_surface_t* cairo_surface;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_surface_t* getImageSurfaceStruct()
 	{
 		return cairo_surface;

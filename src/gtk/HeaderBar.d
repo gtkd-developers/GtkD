@@ -80,6 +80,7 @@ public class HeaderBar : Container
 	protected GtkHeaderBar* gtkHeaderBar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHeaderBar* getHeaderBarStruct()
 	{
 		return gtkHeaderBar;

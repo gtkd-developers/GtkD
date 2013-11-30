@@ -85,6 +85,7 @@ public class Adjustment : ObjectG
 	protected GtkAdjustment* gtkAdjustment;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAdjustment* getAdjustmentStruct()
 	{
 		return gtkAdjustment;

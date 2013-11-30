@@ -75,6 +75,7 @@ public class FieldAttributes
 	protected GdaFieldAttributes* gdaFieldAttributes;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaFieldAttributes* getFieldAttributesStruct()
 	{
 		return gdaFieldAttributes;

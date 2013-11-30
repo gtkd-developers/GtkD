@@ -70,6 +70,7 @@ public class DataModelArray : DataModel
 	protected GdaDataModelArray* gdaDataModelArray;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaDataModelArray* getDataModelArrayStruct()
 	{
 		return gdaDataModelArray;

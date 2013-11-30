@@ -90,6 +90,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	protected GEmblemedIcon* gEmblemedIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GEmblemedIcon* getEmblemedIconStruct()
 	{
 		return gEmblemedIcon;

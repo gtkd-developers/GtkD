@@ -84,6 +84,7 @@ public class DataModel : ObjectG
 	protected GdaDataModel* gdaDataModel;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaDataModel* getDataModelStruct()
 	{
 		return gdaDataModel;

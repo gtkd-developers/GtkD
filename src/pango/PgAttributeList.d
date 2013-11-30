@@ -81,6 +81,7 @@ public class PgAttributeList
 	protected PangoAttrList* pangoAttrList;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoAttrList* getPgAttributeListStruct()
 	{
 		return pangoAttrList;

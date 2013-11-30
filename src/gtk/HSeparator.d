@@ -82,6 +82,7 @@ public class HSeparator : Separator
 	protected GtkHSeparator* gtkHSeparator;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHSeparator* getHSeparatorStruct()
 	{
 		return gtkHSeparator;

@@ -83,6 +83,7 @@ public interface TocSetterIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GstTocSetter* getTocSetterTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -99,6 +99,7 @@ public class FileInputStream : InputStream, SeekableIF
 	protected GFileInputStream* gFileInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileInputStream* getFileInputStreamStruct()
 	{
 		return gFileInputStream;

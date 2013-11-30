@@ -78,6 +78,7 @@ public template OrientableT(TStruct)
 	protected GtkOrientable* gtkOrientable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkOrientable* getOrientableTStruct()
 	{
 		return cast(GtkOrientable*)getStruct();

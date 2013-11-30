@@ -135,6 +135,7 @@ public class PixbufLoader : ObjectG
 	protected GdkPixbufLoader* gdkPixbufLoader;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixbufLoader* getPixbufLoaderStruct()
 	{
 		return gdkPixbufLoader;

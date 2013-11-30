@@ -139,6 +139,7 @@ public class IconSource
 	protected GtkIconSource* gtkIconSource;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIconSource* getIconSourceStruct()
 	{
 		return gtkIconSource;

@@ -92,6 +92,7 @@ public class CapsFeatures
 	protected GstCapsFeatures* gstCapsFeatures;
 	
 	
+	/** Get the main Gtk struct */
 	public GstCapsFeatures* getCapsFeaturesStruct()
 	{
 		return gstCapsFeatures;

@@ -79,6 +79,7 @@ public class PgGlyphString
 	protected PangoGlyphString* pangoGlyphString;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoGlyphString* getPgGlyphStringStruct()
 	{
 		return pangoGlyphString;

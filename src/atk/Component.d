@@ -84,6 +84,7 @@ public class Component
 	protected AtkComponent* atkComponent;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkComponent* getComponentStruct()
 	{
 		return atkComponent;

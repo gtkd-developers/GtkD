@@ -113,6 +113,7 @@ public class Structure
 	protected GstStructure* gstStructure;
 	
 	
+	/** Get the main Gtk struct */
 	public GstStructure* getStructureStruct()
 	{
 		return gstStructure;

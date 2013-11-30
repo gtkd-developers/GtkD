@@ -86,6 +86,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	protected GtkToolItemGroup* gtkToolItemGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolItemGroup* getToolItemGroupStruct()
 	{
 		return gtkToolItemGroup;

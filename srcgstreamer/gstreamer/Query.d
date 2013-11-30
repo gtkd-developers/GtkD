@@ -110,6 +110,7 @@ public class Query
 	protected GstQuery* gstQuery;
 	
 	
+	/** Get the main Gtk struct */
 	public GstQuery* getQueryStruct()
 	{
 		return gstQuery;

@@ -76,6 +76,7 @@ public class DBusSignalInfo
 	protected GDBusSignalInfo* gDBusSignalInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusSignalInfo* getDBusSignalInfoStruct()
 	{
 		return gDBusSignalInfo;

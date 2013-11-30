@@ -107,6 +107,7 @@ public class Caps
 	protected GstCaps* gstCaps;
 	
 	
+	/** Get the main Gtk struct */
 	public GstCaps* getCapsStruct()
 	{
 		return gstCaps;

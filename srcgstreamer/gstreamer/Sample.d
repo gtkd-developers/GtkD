@@ -86,6 +86,7 @@ public class Sample
 	protected GstSample* gstSample;
 	
 	
+	/** Get the main Gtk struct */
 	public GstSample* getSampleStruct()
 	{
 		return gstSample;

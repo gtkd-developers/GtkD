@@ -79,6 +79,7 @@ public class CellRendererProgress : CellRenderer, OrientableIF
 	protected GtkCellRendererProgress* gtkCellRendererProgress;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererProgress* getCellRendererProgressStruct()
 	{
 		return gtkCellRendererProgress;

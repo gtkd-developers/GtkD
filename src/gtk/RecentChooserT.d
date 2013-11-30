@@ -98,6 +98,7 @@ public template RecentChooserT(TStruct)
 	protected GtkRecentChooser* gtkRecentChooser;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentChooser* getRecentChooserTStruct()
 	{
 		return cast(GtkRecentChooser*)getStruct();

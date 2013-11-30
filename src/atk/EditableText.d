@@ -80,6 +80,7 @@ public class EditableText
 	protected AtkEditableText* atkEditableText;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkEditableText* getEditableTextStruct()
 	{
 		return atkEditableText;

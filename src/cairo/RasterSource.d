@@ -83,6 +83,7 @@ public class RasterSource : Pattern
 	protected cairo_pattern_t* cairo_pattern;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_pattern_t* getRasterSourceStruct()
 	{
 		return cairo_pattern;

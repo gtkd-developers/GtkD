@@ -83,6 +83,7 @@ public class MemoryInputStream : InputStream, SeekableIF
 	protected GMemoryInputStream* gMemoryInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GMemoryInputStream* getMemoryInputStreamStruct()
 	{
 		return gMemoryInputStream;

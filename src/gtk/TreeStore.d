@@ -126,6 +126,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	protected GtkTreeStore* gtkTreeStore;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeStore* getTreeStoreStruct()
 	{
 		return gtkTreeStore;

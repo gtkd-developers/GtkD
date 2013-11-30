@@ -102,6 +102,7 @@ public class FileFilter : ObjectG, BuildableIF
 	protected GtkFileFilter* gtkFileFilter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFileFilter* getFileFilterStruct()
 	{
 		return gtkFileFilter;

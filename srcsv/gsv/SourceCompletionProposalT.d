@@ -81,6 +81,7 @@ public template SourceCompletionProposalT(TStruct)
 	protected GtkSourceCompletionProposal* gtkSourceCompletionProposal;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionProposal* getSourceCompletionProposalTStruct()
 	{
 		return cast(GtkSourceCompletionProposal*)getStruct();

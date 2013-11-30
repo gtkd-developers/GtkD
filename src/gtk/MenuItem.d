@@ -107,6 +107,7 @@ public class MenuItem : Bin, ActivatableIF
 	protected GtkMenuItem* gtkMenuItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMenuItem* getMenuItemStruct()
 	{
 		return gtkMenuItem;

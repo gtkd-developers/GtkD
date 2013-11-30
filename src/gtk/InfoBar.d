@@ -115,6 +115,7 @@ public class InfoBar : Box
 	protected GtkInfoBar* gtkInfoBar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkInfoBar* getInfoBarStruct()
 	{
 		return gtkInfoBar;

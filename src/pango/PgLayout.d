@@ -103,6 +103,7 @@ public class PgLayout : ObjectG
 	protected PangoLayout* pangoLayout;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoLayout* getPgLayoutStruct()
 	{
 		return pangoLayout;

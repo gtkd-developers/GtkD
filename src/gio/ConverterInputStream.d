@@ -80,6 +80,7 @@ public class ConverterInputStream : FilterInputStream
 	protected GConverterInputStream* gConverterInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GConverterInputStream* getConverterInputStreamStruct()
 	{
 		return gConverterInputStream;

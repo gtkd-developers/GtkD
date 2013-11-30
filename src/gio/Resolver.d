@@ -96,6 +96,7 @@ public class Resolver : ObjectG
 	protected GResolver* gResolver;
 	
 	
+	/** Get the main Gtk struct */
 	public GResolver* getResolverStruct()
 	{
 		return gResolver;

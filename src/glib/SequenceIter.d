@@ -106,6 +106,7 @@ public class SequenceIter
 	protected GSequenceIter* gSequenceIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GSequenceIter* getSequenceIterStruct()
 	{
 		return gSequenceIter;

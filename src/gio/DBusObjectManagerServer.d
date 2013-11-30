@@ -95,6 +95,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	protected GDBusObjectManagerServer* gDBusObjectManagerServer;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusObjectManagerServer* getDBusObjectManagerServerStruct()
 	{
 		return gDBusObjectManagerServer;

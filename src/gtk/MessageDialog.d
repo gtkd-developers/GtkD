@@ -107,6 +107,7 @@ public class MessageDialog : Dialog
 	protected GtkMessageDialog* gtkMessageDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMessageDialog* getMessageDialogStruct()
 	{
 		return gtkMessageDialog;

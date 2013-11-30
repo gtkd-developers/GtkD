@@ -80,6 +80,7 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	protected GZlibCompressor* gZlibCompressor;
 	
 	
+	/** Get the main Gtk struct */
 	public GZlibCompressor* getZlibCompressorStruct()
 	{
 		return gZlibCompressor;

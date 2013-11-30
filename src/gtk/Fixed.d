@@ -109,6 +109,7 @@ public class Fixed : Container
 	protected GtkFixed* gtkFixed;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFixed* getFixedStruct()
 	{
 		return gtkFixed;

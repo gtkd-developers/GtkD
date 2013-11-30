@@ -86,6 +86,7 @@ public template ActionMapT(TStruct)
 	protected GActionMap* gActionMap;
 	
 	
+	/** Get the main Gtk struct */
 	public GActionMap* getActionMapTStruct()
 	{
 		return cast(GActionMap*)getStruct();

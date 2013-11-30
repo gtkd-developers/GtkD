@@ -80,6 +80,7 @@ public class CellRendererAccel : CellRendererText
 	protected GtkCellRendererAccel* gtkCellRendererAccel;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererAccel* getCellRendererAccelStruct()
 	{
 		return gtkCellRendererAccel;

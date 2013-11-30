@@ -87,6 +87,7 @@ public class Hmac
 	protected GHmac* gHmac;
 	
 	
+	/** Get the main Gtk struct */
 	public GHmac* getHmacStruct()
 	{
 		return gHmac;

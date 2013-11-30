@@ -71,6 +71,7 @@ public interface TreeSortableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeSortable* getTreeSortableTStruct();
 	
 	/** the main Gtk struct as a void* */

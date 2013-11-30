@@ -97,6 +97,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	protected GDBusInterfaceSkeleton* gDBusInterfaceSkeleton;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusInterfaceSkeleton* getDBusInterfaceSkeletonStruct()
 	{
 		return gDBusInterfaceSkeleton;

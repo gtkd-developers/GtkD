@@ -79,6 +79,7 @@ public class DataModelList : DataModel
 	protected GdaDataModelList* gdaDataModelList;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaDataModelList* getDataModelListStruct()
 	{
 		return gdaDataModelList;

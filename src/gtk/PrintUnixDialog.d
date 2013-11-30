@@ -122,6 +122,7 @@ public class PrintUnixDialog : Dialog
 	protected GtkPrintUnixDialog* gtkPrintUnixDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintUnixDialog* getPrintUnixDialogStruct()
 	{
 		return gtkPrintUnixDialog;

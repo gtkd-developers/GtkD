@@ -104,6 +104,7 @@ public class Notebook : Container
 	protected GtkNotebook* gtkNotebook;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkNotebook* getNotebookStruct()
 	{
 		return gtkNotebook;

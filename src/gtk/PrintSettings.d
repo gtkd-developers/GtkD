@@ -95,6 +95,7 @@ public class PrintSettings : ObjectG
 	protected GtkPrintSettings* gtkPrintSettings;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintSettings* getPrintSettingsStruct()
 	{
 		return gtkPrintSettings;

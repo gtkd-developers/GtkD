@@ -119,6 +119,7 @@ public class TreeModelSort : ObjectG, TreeModelIF, TreeDragSourceIF, TreeSortabl
 	protected GtkTreeModelSort* gtkTreeModelSort;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeModelSort* getTreeModelSortStruct()
 	{
 		return gtkTreeModelSort;

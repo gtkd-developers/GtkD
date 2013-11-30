@@ -199,6 +199,7 @@ public class MenuModel : ObjectG
 	protected GMenuModel* gMenuModel;
 	
 	
+	/** Get the main Gtk struct */
 	public GMenuModel* getMenuModelStruct()
 	{
 		return gMenuModel;

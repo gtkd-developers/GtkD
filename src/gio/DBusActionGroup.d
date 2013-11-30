@@ -89,6 +89,7 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	protected GDBusActionGroup* gDBusActionGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusActionGroup* getDBusActionGroupStruct()
 	{
 		return gDBusActionGroup;

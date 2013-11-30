@@ -100,6 +100,7 @@ public class Surface
 	protected cairo_surface_t* cairo_surface;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_surface_t* getSurfaceStruct()
 	{
 		return cairo_surface;

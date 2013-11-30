@@ -79,6 +79,7 @@ public class GLContext : ObjectG
 	protected GdkGLContext* gdkGLContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkGLContext* getGLContextStruct()
 	{
 		return gdkGLContext;

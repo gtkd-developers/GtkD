@@ -78,6 +78,7 @@ public class FontFace
 	protected cairo_font_face_t* cairo_font_face;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_font_face_t* getFontFaceStruct()
 	{
 		return cairo_font_face;

@@ -77,6 +77,7 @@ public class FilenameCompleter : ObjectG
 	protected GFilenameCompleter* gFilenameCompleter;
 	
 	
+	/** Get the main Gtk struct */
 	public GFilenameCompleter* getFilenameCompleterStruct()
 	{
 		return gFilenameCompleter;

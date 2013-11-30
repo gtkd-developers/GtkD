@@ -118,6 +118,7 @@ public class CClosure
 	protected GCClosure* gCClosure;
 	
 	
+	/** Get the main Gtk struct */
 	public GCClosure* getCClosureStruct()
 	{
 		return gCClosure;

@@ -91,6 +91,7 @@ public template NetworkMonitorT(TStruct)
 	protected GNetworkMonitor* gNetworkMonitor;
 	
 	
+	/** Get the main Gtk struct */
 	public GNetworkMonitor* getNetworkMonitorTStruct()
 	{
 		return cast(GNetworkMonitor*)getStruct();

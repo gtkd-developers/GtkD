@@ -90,6 +90,7 @@ public class StreamableContent
 	protected AtkStreamableContent* atkStreamableContent;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkStreamableContent* getStreamableContentStruct()
 	{
 		return atkStreamableContent;

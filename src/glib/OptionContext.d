@@ -136,6 +136,7 @@ public class OptionContext
 	protected GOptionContext* gOptionContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GOptionContext* getOptionContextStruct()
 	{
 		return gOptionContext;

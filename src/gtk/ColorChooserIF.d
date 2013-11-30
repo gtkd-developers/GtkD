@@ -78,6 +78,7 @@ public interface ColorChooserIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkColorChooser* getColorChooserTStruct();
 	
 	/** the main Gtk struct as a void* */

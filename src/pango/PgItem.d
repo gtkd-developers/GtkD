@@ -70,6 +70,7 @@ public class PgItem
 	protected PangoItem* pangoItem;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoItem* getPgItemStruct()
 	{
 		return pangoItem;

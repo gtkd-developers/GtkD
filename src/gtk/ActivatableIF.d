@@ -88,6 +88,7 @@ public interface ActivatableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkActivatable* getActivatableTStruct();
 	
 	/** the main Gtk struct as a void* */

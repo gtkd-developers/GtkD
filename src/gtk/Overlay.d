@@ -93,6 +93,7 @@ public class Overlay : Bin
 	protected GtkOverlay* gtkOverlay;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkOverlay* getOverlayStruct()
 	{
 		return gtkOverlay;

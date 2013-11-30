@@ -127,6 +127,7 @@ public class TestDBus : ObjectG
 	protected GTestDBus* gTestDBus;
 	
 	
+	/** Get the main Gtk struct */
 	public GTestDBus* getTestDBusStruct()
 	{
 		return gTestDBus;

@@ -92,6 +92,7 @@ public template AppChooserT(TStruct)
 	protected GtkAppChooser* gtkAppChooser;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAppChooser* getAppChooserTStruct()
 	{
 		return cast(GtkAppChooser*)getStruct();

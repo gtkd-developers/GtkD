@@ -98,6 +98,7 @@ public class SourceCompletionInfo : Window
 	protected GtkSourceCompletionInfo* gtkSourceCompletionInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionInfo* getSourceCompletionInfoStruct()
 	{
 		return gtkSourceCompletionInfo;

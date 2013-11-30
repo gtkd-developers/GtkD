@@ -76,6 +76,7 @@ public class SourceLanguage : ObjectG
 	protected GtkSourceLanguage* gtkSourceLanguage;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceLanguage* getSourceLanguageStruct()
 	{
 		return gtkSourceLanguage;

@@ -134,6 +134,7 @@ public class ObjectG
 	protected GObject* gObject;
 	
 	
+	/** Get the main Gtk struct */
 	public GObject* getObjectGStruct()
 	{
 		return gObject;

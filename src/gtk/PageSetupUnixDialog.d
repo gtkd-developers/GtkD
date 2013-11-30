@@ -90,6 +90,7 @@ public class PageSetupUnixDialog : Dialog
 	protected GtkPageSetupUnixDialog* gtkPageSetupUnixDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPageSetupUnixDialog* getPageSetupUnixDialogStruct()
 	{
 		return gtkPageSetupUnixDialog;

@@ -151,6 +151,7 @@ public class Source
 	protected GSource* gSource;
 	
 	
+	/** Get the main Gtk struct */
 	public GSource* getSourceStruct()
 	{
 		return gSource;

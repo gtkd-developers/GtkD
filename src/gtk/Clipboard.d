@@ -144,6 +144,7 @@ public class Clipboard : ObjectG
 	protected GtkClipboard* gtkClipboard;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkClipboard* getClipboardStruct()
 	{
 		return gtkClipboard;

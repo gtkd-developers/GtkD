@@ -732,6 +732,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	protected GtkCssProvider* gtkCssProvider;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCssProvider* getCssProviderStruct()
 	{
 		return gtkCssProvider;

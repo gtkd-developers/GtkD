@@ -93,6 +93,7 @@ public template TreeDragDestT(TStruct)
 	protected GtkTreeDragDest* gtkTreeDragDest;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeDragDest* getTreeDragDestTStruct()
 	{
 		return cast(GtkTreeDragDest*)getStruct();

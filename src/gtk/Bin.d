@@ -79,6 +79,7 @@ public class Bin : Container
 	protected GtkBin* gtkBin;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBin* getBinStruct()
 	{
 		return gtkBin;

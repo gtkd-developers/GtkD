@@ -80,6 +80,7 @@ public class MemoryOutputStream : OutputStream, SeekableIF
 	protected GMemoryOutputStream* gMemoryOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GMemoryOutputStream* getMemoryOutputStreamStruct()
 	{
 		return gMemoryOutputStream;

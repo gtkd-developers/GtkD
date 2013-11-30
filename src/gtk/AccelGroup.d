@@ -103,6 +103,7 @@ public class AccelGroup : ObjectG
 	protected GtkAccelGroup* gtkAccelGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAccelGroup* getAccelGroupStruct()
 	{
 		return gtkAccelGroup;

@@ -96,6 +96,7 @@ public class TlsConnection : IOStream
 	protected GTlsConnection* gTlsConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsConnection* getTlsConnectionStruct()
 	{
 		return gTlsConnection;

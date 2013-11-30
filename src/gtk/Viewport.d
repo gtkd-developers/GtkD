@@ -100,6 +100,7 @@ public class Viewport : Bin, ScrollableIF
 	protected GtkViewport* gtkViewport;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkViewport* getViewportStruct()
 	{
 		return gtkViewport;

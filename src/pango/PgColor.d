@@ -78,6 +78,7 @@ public class PgColor
 	protected PangoColor* pangoColor;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoColor* getPgColorStruct()
 	{
 		return pangoColor;

@@ -149,6 +149,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	protected GDBusProxy* gDBusProxy;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusProxy* getDBusProxyStruct()
 	{
 		return gDBusProxy;

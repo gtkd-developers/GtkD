@@ -123,6 +123,7 @@ public class Box : Container, OrientableIF
 	protected GtkBox* gtkBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBox* getBoxStruct()
 	{
 		return gtkBox;

@@ -97,6 +97,7 @@ public class TargetList : Boxed
 	protected GtkTargetList* gtkTargetList;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTargetList* getTargetListStruct()
 	{
 		return gtkTargetList;

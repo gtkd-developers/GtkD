@@ -108,6 +108,7 @@ public class DBusError
 	protected GError* gError;
 	
 	
+	/** Get the main Gtk struct */
 	public GError* getDBusErrorStruct()
 	{
 		return gError;

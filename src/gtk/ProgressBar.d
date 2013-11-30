@@ -94,6 +94,7 @@ public class ProgressBar : Widget
 	protected GtkProgressBar* gtkProgressBar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkProgressBar* getProgressBarStruct()
 	{
 		return gtkProgressBar;

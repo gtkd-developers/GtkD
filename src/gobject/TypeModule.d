@@ -105,6 +105,7 @@ public class TypeModule : ObjectG
 	protected GTypeModule* gTypeModule;
 	
 	
+	/** Get the main Gtk struct */
 	public GTypeModule* getTypeModuleStruct()
 	{
 		return gTypeModule;

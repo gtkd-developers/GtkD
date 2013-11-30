@@ -86,6 +86,7 @@ public class Scrollbar : Range
 	protected GtkScrollbar* gtkScrollbar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkScrollbar* getScrollbarStruct()
 	{
 		return gtkScrollbar;

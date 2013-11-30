@@ -122,6 +122,7 @@ public interface MountIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GMount* getMountTStruct();
 	
 	/** the main Gtk struct as a void* */

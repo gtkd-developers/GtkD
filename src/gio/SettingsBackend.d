@@ -106,6 +106,7 @@ public class SettingsBackend : ObjectG
 	protected GSettingsBackend* gSettingsBackend;
 	
 	
+	/** Get the main Gtk struct */
 	public GSettingsBackend* getSettingsBackendStruct()
 	{
 		return gSettingsBackend;

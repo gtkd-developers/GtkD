@@ -98,6 +98,7 @@ public class PgRenderer : ObjectG
 	protected PangoRenderer* pangoRenderer;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoRenderer* getPgRendererStruct()
 	{
 		return pangoRenderer;

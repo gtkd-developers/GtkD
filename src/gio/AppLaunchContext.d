@@ -78,6 +78,7 @@ public class AppLaunchContext : ObjectG
 	protected GAppLaunchContext* gAppLaunchContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GAppLaunchContext* getAppLaunchContextStruct()
 	{
 		return gAppLaunchContext;

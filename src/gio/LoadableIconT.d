@@ -87,6 +87,7 @@ public template LoadableIconT(TStruct)
 	protected GLoadableIcon* gLoadableIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GLoadableIcon* getLoadableIconTStruct()
 	{
 		return cast(GLoadableIcon*)getStruct();

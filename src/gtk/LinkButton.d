@@ -90,6 +90,7 @@ public class LinkButton : Button
 	protected GtkLinkButton* gtkLinkButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkLinkButton* getLinkButtonStruct()
 	{
 		return gtkLinkButton;

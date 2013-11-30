@@ -82,6 +82,7 @@ public class CellRendererPixbuf : CellRenderer
 	protected GtkCellRendererPixbuf* gtkCellRendererPixbuf;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererPixbuf* getCellRendererPixbufStruct()
 	{
 		return gtkCellRendererPixbuf;

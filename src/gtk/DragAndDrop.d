@@ -104,6 +104,7 @@ public class DragAndDrop
 	protected GdkDragContext* gdkDragContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkDragContext* getDragAndDropStruct()
 	{
 		return gdkDragContext;

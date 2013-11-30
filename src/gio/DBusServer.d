@@ -99,6 +99,7 @@ public class DBusServer : ObjectG, InitableIF
 	protected GDBusServer* gDBusServer;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusServer* getDBusServerStruct()
 	{
 		return gDBusServer;

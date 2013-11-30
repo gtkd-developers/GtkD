@@ -73,6 +73,7 @@ public template GLDrawableT(TStruct)
 	protected GdkGLDrawable* gdkGLDrawable;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkGLDrawable* getGLDrawableTStruct()
 	{
 		return cast(GdkGLDrawable*)getStruct();

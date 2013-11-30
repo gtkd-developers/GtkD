@@ -72,6 +72,7 @@ public class TcpConnection : SocketConnection
 	protected GTcpConnection* gTcpConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GTcpConnection* getTcpConnectionStruct()
 	{
 		return gTcpConnection;

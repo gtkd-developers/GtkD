@@ -78,6 +78,7 @@ public class Table : DataModelArray
 	protected GdaTable* gdaTable;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaTable* getTableStruct()
 	{
 		return gdaTable;

@@ -97,6 +97,7 @@ public class Permission : ObjectG
 	protected GPermission* gPermission;
 	
 	
+	/** Get the main Gtk struct */
 	public GPermission* getPermissionStruct()
 	{
 		return gPermission;

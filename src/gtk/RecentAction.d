@@ -84,6 +84,7 @@ public class RecentAction : Action
 	protected GtkRecentAction* gtkRecentAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentAction* getRecentActionStruct()
 	{
 		return gtkRecentAction;

@@ -86,6 +86,7 @@ public class Flags
 	protected GFlagsValue* gFlagsValue;
 	
 	
+	/** Get the main Gtk struct */
 	public GFlagsValue* getFlagsStruct()
 	{
 		return gFlagsValue;

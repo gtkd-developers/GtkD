@@ -109,6 +109,7 @@ public class Statusbar : Box
 	protected GtkStatusbar* gtkStatusbar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStatusbar* getStatusbarStruct()
 	{
 		return gtkStatusbar;

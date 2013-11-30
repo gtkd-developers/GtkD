@@ -72,6 +72,7 @@ public class Transaction : ObjectG
 	protected GdaTransaction* gdaTransaction;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaTransaction* getTransactionStruct()
 	{
 		return gdaTransaction;

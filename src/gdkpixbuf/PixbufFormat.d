@@ -120,6 +120,7 @@ public class PixbufFormat
 	protected GdkPixbufFormat* gdkPixbufFormat;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixbufFormat* getPixbufFormatStruct()
 	{
 		return gdkPixbufFormat;

@@ -98,6 +98,7 @@ public class MiniObject
 	protected GstMiniObject* gstMiniObject;
 	
 	
+	/** Get the main Gtk struct */
 	public GstMiniObject* getMiniObjectStruct()
 	{
 		return gstMiniObject;

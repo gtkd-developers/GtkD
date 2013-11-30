@@ -198,6 +198,7 @@ public class Bin : Element
 	protected GstBin* gstBin;
 	
 	
+	/** Get the main Gtk struct */
 	public GstBin* getBinStruct()
 	{
 		return gstBin;

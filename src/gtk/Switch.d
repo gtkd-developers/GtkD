@@ -85,6 +85,7 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	protected GtkSwitch* gtkSwitch;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSwitch* getSwitchStruct()
 	{
 		return gtkSwitch;

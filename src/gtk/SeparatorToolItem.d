@@ -79,6 +79,7 @@ public class SeparatorToolItem : ToolItem
 	protected GtkSeparatorToolItem* gtkSeparatorToolItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSeparatorToolItem* getSeparatorToolItemStruct()
 	{
 		return gtkSeparatorToolItem;

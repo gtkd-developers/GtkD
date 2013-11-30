@@ -97,6 +97,7 @@ public class Cursor : ObjectG
 	protected GdkCursor* gdkCursor;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkCursor* getCursorStruct()
 	{
 		return gdkCursor;

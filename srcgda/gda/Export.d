@@ -78,6 +78,7 @@ public class Export : ObjectG
 	protected GdaExport* gdaExport;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaExport* getExportStruct()
 	{
 		return gdaExport;

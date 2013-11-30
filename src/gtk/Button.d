@@ -102,6 +102,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	protected GtkButton* gtkButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkButton* getButtonStruct()
 	{
 		return gtkButton;

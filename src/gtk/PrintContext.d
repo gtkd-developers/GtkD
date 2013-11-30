@@ -98,6 +98,7 @@ public class PrintContext : ObjectG
 	protected GtkPrintContext* gtkPrintContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintContext* getPrintContextStruct()
 	{
 		return gtkPrintContext;

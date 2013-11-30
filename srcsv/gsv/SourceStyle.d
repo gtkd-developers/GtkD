@@ -73,6 +73,7 @@ public class SourceStyle : ObjectG
 	protected GtkSourceStyle* gtkSourceStyle;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceStyle* getSourceStyleStruct()
 	{
 		return gtkSourceStyle;

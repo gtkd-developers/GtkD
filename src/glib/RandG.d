@@ -114,6 +114,7 @@ public class RandG
 	protected GRand* gRand;
 	
 	
+	/** Get the main Gtk struct */
 	public GRand* getRandGStruct()
 	{
 		return gRand;

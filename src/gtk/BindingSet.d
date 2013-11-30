@@ -141,6 +141,7 @@ public class BindingSet
 	protected GtkBindingSet* gtkBindingSet;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBindingSet* getBindingSetStruct()
 	{
 		return gtkBindingSet;

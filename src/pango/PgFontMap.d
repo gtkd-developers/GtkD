@@ -96,6 +96,7 @@ public class PgFontMap : ObjectG
 	protected PangoFontMap* pangoFontMap;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoFontMap* getPgFontMapStruct()
 	{
 		return pangoFontMap;

@@ -176,6 +176,7 @@ public class ListStore : ObjectG, BuildableIF, TreeModelIF, TreeDragSourceIF, Tr
 	protected GtkListStore* gtkListStore;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkListStore* getListStoreStruct()
 	{
 		return gtkListStore;

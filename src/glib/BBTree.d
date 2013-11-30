@@ -93,6 +93,7 @@ public class BBTree
 	protected GTree* gTree;
 	
 	
+	/** Get the main Gtk struct */
 	public GTree* getBBTreeStruct()
 	{
 		return gTree;

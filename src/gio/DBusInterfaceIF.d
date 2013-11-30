@@ -77,6 +77,7 @@ public interface DBusInterfaceIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusInterface* getDBusInterfaceTStruct();
 	
 	/** the main Gtk struct as a void* */

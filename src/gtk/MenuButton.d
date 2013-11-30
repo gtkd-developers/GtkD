@@ -114,6 +114,7 @@ public class MenuButton : ToggleButton
 	protected GtkMenuButton* gtkMenuButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMenuButton* getMenuButtonStruct()
 	{
 		return gtkMenuButton;

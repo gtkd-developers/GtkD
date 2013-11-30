@@ -81,6 +81,7 @@ public class PixbufSimpleAnimation : ObjectG
 	protected GdkPixbufSimpleAnim* gdkPixbufSimpleAnim;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixbufSimpleAnim* getPixbufSimpleAnimationStruct()
 	{
 		return gdkPixbufSimpleAnim;

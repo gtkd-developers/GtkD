@@ -119,6 +119,7 @@ public class SettingsSchemaSource
 	protected GSettingsSchemaSource* gSettingsSchemaSource;
 	
 	
+	/** Get the main Gtk struct */
 	public GSettingsSchemaSource* getSettingsSchemaSourceStruct()
 	{
 		return gSettingsSchemaSource;

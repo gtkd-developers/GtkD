@@ -110,6 +110,7 @@ public class WeakRef
 	protected GWeakRef* gWeakRef;
 	
 	
+	/** Get the main Gtk struct */
 	public GWeakRef* getWeakRefStruct()
 	{
 		return gWeakRef;

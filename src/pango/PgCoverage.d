@@ -74,6 +74,7 @@ public class PgCoverage
 	protected PangoCoverage* pangoCoverage;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoCoverage* getPgCoverageStruct()
 	{
 		return pangoCoverage;

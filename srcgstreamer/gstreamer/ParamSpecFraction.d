@@ -75,6 +75,7 @@ public class ParamSpecFraction
 	protected GstParamSpecFraction* gstParamSpecFraction;
 	
 	
+	/** Get the main Gtk struct */
 	public GstParamSpecFraction* getParamSpecFractionStruct()
 	{
 		return gstParamSpecFraction;

@@ -90,6 +90,7 @@ public class NumerableIcon : GioEmblemedIcon
 	protected GtkNumerableIcon* gtkNumerableIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkNumerableIcon* getNumerableIconStruct()
 	{
 		return gtkNumerableIcon;

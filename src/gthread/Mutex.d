@@ -144,6 +144,7 @@ public class Mutex
 	protected GMutex* gMutex;
 	
 	
+	/** Get the main Gtk struct */
 	public GMutex* getMutexStruct()
 	{
 		return gMutex;

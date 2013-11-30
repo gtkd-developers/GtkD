@@ -144,6 +144,7 @@ public class Once
 	protected GOnce* gOnce;
 	
 	
+	/** Get the main Gtk struct */
 	public GOnce* getOnceStruct()
 	{
 		return gOnce;

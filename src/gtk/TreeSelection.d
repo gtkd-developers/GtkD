@@ -113,6 +113,7 @@ public class TreeSelection : ObjectG
 	protected GtkTreeSelection* gtkTreeSelection;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeSelection* getTreeSelectionStruct()
 	{
 		return gtkTreeSelection;

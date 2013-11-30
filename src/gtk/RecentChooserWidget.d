@@ -87,6 +87,7 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	protected GtkRecentChooserWidget* gtkRecentChooserWidget;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentChooserWidget* getRecentChooserWidgetStruct()
 	{
 		return gtkRecentChooserWidget;

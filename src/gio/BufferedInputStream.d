@@ -97,6 +97,7 @@ public class BufferedInputStream : FilterInputStream
 	protected GBufferedInputStream* gBufferedInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GBufferedInputStream* getBufferedInputStreamStruct()
 	{
 		return gBufferedInputStream;

@@ -100,6 +100,7 @@ public class SymbolicColor
 	protected GtkSymbolicColor* gtkSymbolicColor;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSymbolicColor* getSymbolicColorStruct()
 	{
 		return gtkSymbolicColor;

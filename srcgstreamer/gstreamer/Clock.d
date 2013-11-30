@@ -147,6 +147,7 @@ public class Clock : ObjectGst
 	protected GstClock* gstClock;
 	
 	
+	/** Get the main Gtk struct */
 	public GstClock* getClockStruct()
 	{
 		return gstClock;

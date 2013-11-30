@@ -90,6 +90,7 @@ public template ProxyResolverT(TStruct)
 	protected GProxyResolver* gProxyResolver;
 	
 	
+	/** Get the main Gtk struct */
 	public GProxyResolver* getProxyResolverTStruct()
 	{
 		return cast(GProxyResolver*)getStruct();

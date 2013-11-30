@@ -101,6 +101,7 @@ public class VolumeMonitor : ObjectG
 	protected GVolumeMonitor* gVolumeMonitor;
 	
 	
+	/** Get the main Gtk struct */
 	public GVolumeMonitor* getVolumeMonitorStruct()
 	{
 		return gVolumeMonitor;

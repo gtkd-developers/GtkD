@@ -82,6 +82,7 @@ public interface ActionableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkActionable* getActionableTStruct();
 	
 	/** the main Gtk struct as a void* */

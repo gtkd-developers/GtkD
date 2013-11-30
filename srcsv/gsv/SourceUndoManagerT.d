@@ -80,6 +80,7 @@ public template SourceUndoManagerT(TStruct)
 	protected GtkSourceUndoManager* gtkSourceUndoManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceUndoManager* getSourceUndoManagerTStruct()
 	{
 		return cast(GtkSourceUndoManager*)getStruct();

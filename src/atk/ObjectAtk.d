@@ -104,6 +104,7 @@ public class ObjectAtk : ObjectG
 	protected AtkObject* atkObject;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkObject* getObjectAtkStruct()
 	{
 		return atkObject;

@@ -89,6 +89,7 @@ public class CellRendererCombo : CellRendererText
 	protected GtkCellRendererCombo* gtkCellRendererCombo;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererCombo* getCellRendererComboStruct()
 	{
 		return gtkCellRendererCombo;

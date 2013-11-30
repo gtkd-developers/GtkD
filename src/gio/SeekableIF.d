@@ -75,6 +75,7 @@ public interface SeekableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GSeekable* getSeekableTStruct();
 	
 	/** the main Gtk struct as a void* */

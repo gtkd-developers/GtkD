@@ -98,6 +98,7 @@ public class PgAttribute
 	protected PangoAttribute* pangoAttribute;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoAttribute* getPgAttributeStruct()
 	{
 		return pangoAttribute;

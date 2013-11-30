@@ -84,6 +84,7 @@ public class RadioToolButton : ToggleToolButton
 	protected GtkRadioToolButton* gtkRadioToolButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRadioToolButton* getRadioToolButtonStruct()
 	{
 		return gtkRadioToolButton;

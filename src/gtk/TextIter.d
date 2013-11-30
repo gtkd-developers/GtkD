@@ -102,6 +102,7 @@ public class TextIter : Boxed
 	protected GtkTextIter* gtkTextIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextIter* getTextIterStruct()
 	{
 		return gtkTextIter;

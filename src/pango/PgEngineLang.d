@@ -73,6 +73,7 @@ public class PgEngineLang : PgEngine
 	protected PangoEngineLang* pangoEngineLang;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoEngineLang* getPgEngineLangStruct()
 	{
 		return pangoEngineLang;

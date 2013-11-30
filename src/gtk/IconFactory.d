@@ -137,6 +137,7 @@ public class IconFactory : ObjectG, BuildableIF
 	protected GtkIconFactory* gtkIconFactory;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIconFactory* getIconFactoryStruct()
 	{
 		return gtkIconFactory;

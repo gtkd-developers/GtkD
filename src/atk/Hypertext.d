@@ -82,6 +82,7 @@ public class Hypertext
 	protected AtkHypertext* atkHypertext;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkHypertext* getHypertextStruct()
 	{
 		return atkHypertext;

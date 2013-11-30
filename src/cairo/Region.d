@@ -72,6 +72,7 @@ public class Region
 	protected cairo_region_t* cairo_region;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_region_t* getRegionStruct()
 	{
 		return cairo_region;

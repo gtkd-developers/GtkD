@@ -106,6 +106,7 @@ public class Connection : ObjectG
 	protected GdaConnection* gdaConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaConnection* getConnectionStruct()
 	{
 		return gdaConnection;

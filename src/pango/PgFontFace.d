@@ -81,6 +81,7 @@ public class PgFontFace : ObjectG
 	protected PangoFontFace* pangoFontFace;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoFontFace* getPgFontFaceStruct()
 	{
 		return pangoFontFace;

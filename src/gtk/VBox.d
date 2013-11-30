@@ -90,6 +90,7 @@ public class VBox : Box
 	protected GtkVBox* gtkVBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVBox* getVBoxStruct()
 	{
 		return gtkVBox;

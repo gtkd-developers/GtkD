@@ -81,6 +81,7 @@ public class SourceCompletionWords : ObjectG
 	protected GtkSourceCompletionWords* gtkSourceCompletionWords;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionWords* getSourceCompletionWordsStruct()
 	{
 		return gtkSourceCompletionWords;

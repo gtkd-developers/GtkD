@@ -110,6 +110,7 @@ public class AsyncQueue
 	protected GAsyncQueue* gAsyncQueue;
 	
 	
+	/** Get the main Gtk struct */
 	public GAsyncQueue* getAsyncQueueStruct()
 	{
 		return gAsyncQueue;

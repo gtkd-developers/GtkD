@@ -81,6 +81,7 @@ public class VScrollbar : Scrollbar
 	protected GtkVScrollbar* gtkVScrollbar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVScrollbar* getVScrollbarStruct()
 	{
 		return gtkVScrollbar;

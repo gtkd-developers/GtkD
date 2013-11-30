@@ -97,6 +97,7 @@ public class Context
 	protected GstContext* gstContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GstContext* getContextStruct()
 	{
 		return gstContext;

@@ -89,6 +89,7 @@ public class TlsCertificate : ObjectG
 	protected GTlsCertificate* gTlsCertificate;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsCertificate* getTlsCertificateStruct()
 	{
 		return gTlsCertificate;

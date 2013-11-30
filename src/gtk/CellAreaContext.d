@@ -83,6 +83,7 @@ public class CellAreaContext : ObjectG
 	protected GtkCellAreaContext* gtkCellAreaContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellAreaContext* getCellAreaContextStruct()
 	{
 		return gtkCellAreaContext;

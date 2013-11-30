@@ -83,6 +83,7 @@ public interface FontChooserIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFontChooser* getFontChooserTStruct();
 	
 	/** the main Gtk struct as a void* */

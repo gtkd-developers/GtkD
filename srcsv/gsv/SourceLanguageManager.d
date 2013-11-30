@@ -83,6 +83,7 @@ public class SourceLanguageManager : ObjectG
 	protected GtkSourceLanguageManager* gtkSourceLanguageManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceLanguageManager* getSourceLanguageManagerStruct()
 	{
 		return gtkSourceLanguageManager;

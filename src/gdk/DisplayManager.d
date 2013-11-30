@@ -102,6 +102,7 @@ public class DisplayManager : ObjectG
 	protected GdkDisplayManager* gdkDisplayManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkDisplayManager* getDisplayManagerStruct()
 	{
 		return gdkDisplayManager;

@@ -99,6 +99,7 @@ public class PrintJob : ObjectG
 	protected GtkPrintJob* gtkPrintJob;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintJob* getPrintJobStruct()
 	{
 		return gtkPrintJob;

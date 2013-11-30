@@ -95,6 +95,7 @@ public class TargetEntry
 	protected GtkTargetEntry* gtkTargetEntry;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTargetEntry* getTargetEntryStruct()
 	{
 		return gtkTargetEntry;

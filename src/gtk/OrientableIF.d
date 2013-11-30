@@ -74,6 +74,7 @@ public interface OrientableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkOrientable* getOrientableTStruct();
 	
 	/** the main Gtk struct as a void* */

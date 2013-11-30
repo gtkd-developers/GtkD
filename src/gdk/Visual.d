@@ -98,6 +98,7 @@ public class Visual : ObjectG
 	protected GdkVisual* gdkVisual;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkVisual* getVisualStruct()
 	{
 		return gdkVisual;

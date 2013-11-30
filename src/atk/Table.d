@@ -94,6 +94,7 @@ public class Table
 	protected AtkTable* atkTable;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkTable* getTableStruct()
 	{
 		return atkTable;

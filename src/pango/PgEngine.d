@@ -92,6 +92,7 @@ public class PgEngine : ObjectG
 	protected PangoEngine* pangoEngine;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoEngine* getPgEngineStruct()
 	{
 		return pangoEngine;

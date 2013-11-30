@@ -90,6 +90,7 @@ public class DBusInterfaceInfo
 	protected GDBusInterfaceInfo* gDBusInterfaceInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusInterfaceInfo* getDBusInterfaceInfoStruct()
 	{
 		return gDBusInterfaceInfo;

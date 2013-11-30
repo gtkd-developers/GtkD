@@ -88,6 +88,7 @@ public class Bytes
 	protected GBytes* gBytes;
 	
 	
+	/** Get the main Gtk struct */
 	public GBytes* getBytesStruct()
 	{
 		return gBytes;

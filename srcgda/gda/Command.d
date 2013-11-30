@@ -95,6 +95,7 @@ public class Command
 	protected GdaCommand* gdaCommand;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaCommand* getCommandStruct()
 	{
 		return gdaCommand;

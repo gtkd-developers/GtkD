@@ -92,6 +92,7 @@ public class MountOperation : ObjectG
 	protected GMountOperation* gMountOperation;
 	
 	
+	/** Get the main Gtk struct */
 	public GMountOperation* getMountOperationStruct()
 	{
 		return gMountOperation;

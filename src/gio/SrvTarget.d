@@ -90,6 +90,7 @@ public class SrvTarget : Boxed
 	protected GSrvTarget* gSrvTarget;
 	
 	
+	/** Get the main Gtk struct */
 	public GSrvTarget* getSrvTargetStruct()
 	{
 		return gSrvTarget;

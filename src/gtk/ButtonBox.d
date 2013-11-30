@@ -97,6 +97,7 @@ public class ButtonBox : Box
 	protected GtkButtonBox* gtkButtonBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkButtonBox* getButtonBoxStruct()
 	{
 		return gtkButtonBox;

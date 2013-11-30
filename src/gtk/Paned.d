@@ -114,6 +114,7 @@ public class Paned : Container, OrientableIF
 	protected GtkPaned* gtkPaned;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPaned* getPanedStruct()
 	{
 		return gtkPaned;

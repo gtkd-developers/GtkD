@@ -187,6 +187,7 @@ public class MenuAttributeIter
 	protected GMenuAttributeIter* gMenuAttributeIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GMenuAttributeIter* getMenuAttributeIterStruct()
 	{
 		return gMenuAttributeIter;

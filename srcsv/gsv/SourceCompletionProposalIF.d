@@ -77,6 +77,7 @@ public interface SourceCompletionProposalIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionProposal* getSourceCompletionProposalTStruct();
 	
 	/** the main Gtk struct as a void* */

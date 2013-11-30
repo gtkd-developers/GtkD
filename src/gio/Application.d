@@ -208,6 +208,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	protected GApplication* gApplication;
 	
 	
+	/** Get the main Gtk struct */
 	public GApplication* getApplicationStruct()
 	{
 		return gApplication;

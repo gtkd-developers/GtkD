@@ -88,6 +88,7 @@ public interface AppChooserIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAppChooser* getAppChooserTStruct();
 	
 	/** the main Gtk struct as a void* */

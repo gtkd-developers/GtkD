@@ -110,6 +110,7 @@ public class ComboBoxText : ComboBox
 	protected GtkComboBoxText* gtkComboBoxText;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkComboBoxText* getComboBoxTextStruct()
 	{
 		return gtkComboBoxText;

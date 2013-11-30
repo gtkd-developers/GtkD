@@ -91,6 +91,7 @@ public class SourceGutterRenderer : ObjectG
 	protected GtkSourceGutterRenderer* gtkSourceGutterRenderer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceGutterRenderer* getSourceGutterRendererStruct()
 	{
 		return gtkSourceGutterRenderer;

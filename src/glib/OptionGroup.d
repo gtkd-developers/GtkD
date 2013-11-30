@@ -128,6 +128,7 @@ public class OptionGroup
 	protected GOptionGroup* gOptionGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GOptionGroup* getOptionGroupStruct()
 	{
 		return gOptionGroup;

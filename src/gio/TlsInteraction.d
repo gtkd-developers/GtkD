@@ -103,6 +103,7 @@ public class TlsInteraction : ObjectG
 	protected GTlsInteraction* gTlsInteraction;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsInteraction* getTlsInteractionStruct()
 	{
 		return gTlsInteraction;

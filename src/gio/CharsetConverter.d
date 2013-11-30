@@ -83,6 +83,7 @@ public class CharsetConverter : ObjectG, ConverterIF
 	protected GCharsetConverter* gCharsetConverter;
 	
 	
+	/** Get the main Gtk struct */
 	public GCharsetConverter* getCharsetConverterStruct()
 	{
 		return gCharsetConverter;

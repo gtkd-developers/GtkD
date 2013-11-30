@@ -76,6 +76,7 @@ public class DBusMethodInfo
 	protected GDBusMethodInfo* gDBusMethodInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusMethodInfo* getDBusMethodInfoStruct()
 	{
 		return gDBusMethodInfo;

@@ -720,6 +720,7 @@ public class CssSection : Boxed
 	protected GtkCssSection* gtkCssSection;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCssSection* getCssSectionStruct()
 	{
 		return gtkCssSection;

@@ -104,6 +104,7 @@ public class Context
 	protected cairo_t* cairo;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_t* getContextStruct()
 	{
 		return cairo;

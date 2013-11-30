@@ -187,6 +187,7 @@ public class MenuLinkIter
 	protected GMenuLinkIter* gMenuLinkIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GMenuLinkIter* getMenuLinkIterStruct()
 	{
 		return gMenuLinkIter;

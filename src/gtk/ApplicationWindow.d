@@ -140,6 +140,7 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	protected GtkApplicationWindow* gtkApplicationWindow;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkApplicationWindow* getApplicationWindowStruct()
 	{
 		return gtkApplicationWindow;

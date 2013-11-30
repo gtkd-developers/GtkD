@@ -75,6 +75,7 @@ public class TrashStack
 	protected GTrashStack* gTrashStack;
 	
 	
+	/** Get the main Gtk struct */
 	public GTrashStack* getTrashStackStruct()
 	{
 		return gTrashStack;

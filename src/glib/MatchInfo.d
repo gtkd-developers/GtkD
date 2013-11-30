@@ -146,6 +146,7 @@ public class MatchInfo
 	protected GMatchInfo* gMatchInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GMatchInfo* getMatchInfoStruct()
 	{
 		return gMatchInfo;

@@ -374,6 +374,7 @@ public interface FileChooserIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFileChooser* getFileChooserTStruct();
 	
 	/** the main Gtk struct as a void* */

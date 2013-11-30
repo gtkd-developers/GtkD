@@ -86,6 +86,7 @@ public class DBusAnnotationInfo : Boxed
 	protected GDBusAnnotationInfo* gDBusAnnotationInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusAnnotationInfo* getDBusAnnotationInfoStruct()
 	{
 		return gDBusAnnotationInfo;

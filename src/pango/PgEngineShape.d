@@ -73,6 +73,7 @@ public class PgEngineShape : PgEngine
 	protected PangoEngineShape* pangoEngineShape;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoEngineShape* getPgEngineShapeStruct()
 	{
 		return pangoEngineShape;

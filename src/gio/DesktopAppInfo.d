@@ -102,6 +102,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	protected GDesktopAppInfo* gDesktopAppInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDesktopAppInfo* getDesktopAppInfoStruct()
 	{
 		return gDesktopAppInfo;

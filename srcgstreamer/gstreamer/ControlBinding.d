@@ -80,6 +80,7 @@ public class ControlBinding : ObjectGst
 	protected GstControlBinding* gstControlBinding;
 	
 	
+	/** Get the main Gtk struct */
 	public GstControlBinding* getControlBindingStruct()
 	{
 		return gstControlBinding;

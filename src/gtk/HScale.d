@@ -80,6 +80,7 @@ public class HScale : Scale
 	protected GtkHScale* gtkHScale;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHScale* getHScaleStruct()
 	{
 		return gtkHScale;

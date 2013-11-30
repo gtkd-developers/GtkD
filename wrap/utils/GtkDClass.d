@@ -58,7 +58,7 @@ private import utils.IndentedStringBuilder;
 private import utils.convparms;
 private import utils.funct;
 
-private import std.ascii;
+//private import std.ascii;
 private import std.path;
 private import std.stdio;
 private import std.array;
@@ -446,6 +446,7 @@ public class GtkDClass
 			if ( convParms.clss.length > 0 )
 			{
 				text ~= "";
+				text ~= "/** Get the main Gtk struct */";
 
 				if ( convParms.templ.length > 0 )
 				{

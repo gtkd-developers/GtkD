@@ -122,6 +122,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	protected GtkToolPalette* gtkToolPalette;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolPalette* getToolPaletteStruct()
 	{
 		return gtkToolPalette;

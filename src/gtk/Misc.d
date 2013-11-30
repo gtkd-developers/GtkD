@@ -86,6 +86,7 @@ public class Misc : Widget
 	protected GtkMisc* gtkMisc;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMisc* getMiscStruct()
 	{
 		return gtkMisc;

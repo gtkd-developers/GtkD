@@ -147,6 +147,7 @@ public class Regex
 	protected GRegex* gRegex;
 	
 	
+	/** Get the main Gtk struct */
 	public GRegex* getRegexStruct()
 	{
 		return gRegex;

@@ -98,6 +98,7 @@ public class Plug : Window
 	protected GtkPlug* gtkPlug;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPlug* getPlugStruct()
 	{
 		return gtkPlug;

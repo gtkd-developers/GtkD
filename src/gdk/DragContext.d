@@ -93,6 +93,7 @@ public class DragContext : ObjectG
 	protected GdkDragContext* gdkDragContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkDragContext* getDragContextStruct()
 	{
 		return gdkDragContext;

@@ -83,6 +83,7 @@ public class CheckMenuItem : MenuItem
 	protected GtkCheckMenuItem* gtkCheckMenuItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCheckMenuItem* getCheckMenuItemStruct()
 	{
 		return gtkCheckMenuItem;

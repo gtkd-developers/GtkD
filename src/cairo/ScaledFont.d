@@ -82,6 +82,7 @@ public class ScaledFont
 	protected cairo_scaled_font_t* cairo_scaled_font;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_scaled_font_t* getScaledFontStruct()
 	{
 		return cairo_scaled_font;

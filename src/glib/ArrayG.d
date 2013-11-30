@@ -91,6 +91,7 @@ public class ArrayG
 	protected GArray* gArray;
 	
 	
+	/** Get the main Gtk struct */
 	public GArray* getArrayGStruct()
 	{
 		return gArray;

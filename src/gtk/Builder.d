@@ -377,6 +377,7 @@ public class Builder : ObjectG
 	protected GtkBuilder* gtkBuilder;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBuilder* getBuilderStruct()
 	{
 		return gtkBuilder;

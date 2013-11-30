@@ -75,6 +75,7 @@ public class PostScriptSurface : Surface
 	protected cairo_surface_t* cairo_surface;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_surface_t* getPostScriptSurfaceStruct()
 	{
 		return cairo_surface;

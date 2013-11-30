@@ -158,6 +158,7 @@ public class Thread
 	protected GThread* gThread;
 	
 	
+	/** Get the main Gtk struct */
 	public GThread* getThreadStruct()
 	{
 		return gThread;

@@ -99,6 +99,7 @@ public template ScrollableT(TStruct)
 	protected GtkScrollable* gtkScrollable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkScrollable* getScrollableTStruct()
 	{
 		return cast(GtkScrollable*)getStruct();

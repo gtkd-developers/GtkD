@@ -127,6 +127,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	protected GtkActionGroup* gtkActionGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkActionGroup* getActionGroupStruct()
 	{
 		return gtkActionGroup;

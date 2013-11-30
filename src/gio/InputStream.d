@@ -91,6 +91,7 @@ public class InputStream : ObjectG
 	protected GInputStream* gInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GInputStream* getInputStreamStruct()
 	{
 		return gInputStream;

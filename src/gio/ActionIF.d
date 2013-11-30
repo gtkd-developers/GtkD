@@ -107,6 +107,7 @@ public interface ActionIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GAction* getActionTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -87,6 +87,7 @@ public class Range : Widget, OrientableIF
 	protected GtkRange* gtkRange;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRange* getRangeStruct()
 	{
 		return gtkRange;

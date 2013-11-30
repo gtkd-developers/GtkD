@@ -82,6 +82,7 @@ public class PgLayoutIter
 	protected PangoLayoutIter* pangoLayoutIter;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoLayoutIter* getPgLayoutIterStruct()
 	{
 		return pangoLayoutIter;

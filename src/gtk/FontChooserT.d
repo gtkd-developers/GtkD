@@ -87,6 +87,7 @@ public template FontChooserT(TStruct)
 	protected GtkFontChooser* gtkFontChooser;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFontChooser* getFontChooserTStruct()
 	{
 		return cast(GtkFontChooser*)getStruct();

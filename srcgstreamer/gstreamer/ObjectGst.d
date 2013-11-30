@@ -146,6 +146,7 @@ public class ObjectGst : ObjectG
 	protected GstObject* gstObject;
 	
 	
+	/** Get the main Gtk struct */
 	public GstObject* getObjectGstStruct()
 	{
 		return gstObject;

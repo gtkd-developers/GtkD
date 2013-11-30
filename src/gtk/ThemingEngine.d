@@ -106,6 +106,7 @@ public class ThemingEngine : ObjectG
 	protected GtkThemingEngine* gtkThemingEngine;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkThemingEngine* getThemingEngineStruct()
 	{
 		return gtkThemingEngine;

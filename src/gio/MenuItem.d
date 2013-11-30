@@ -93,6 +93,7 @@ public class MenuItem
 	protected GMenuItem* gMenuItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GMenuItem* getMenuItemStruct()
 	{
 		return gMenuItem;

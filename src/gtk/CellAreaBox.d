@@ -95,6 +95,7 @@ public class CellAreaBox : CellArea, OrientableIF
 	protected GtkCellAreaBox* gtkCellAreaBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellAreaBox* getCellAreaBoxStruct()
 	{
 		return gtkCellAreaBox;

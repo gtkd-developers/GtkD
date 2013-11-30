@@ -124,6 +124,7 @@ public class SourceMarkAttributes : ObjectG
 	protected GtkSourceMarkAttributes* gtkSourceMarkAttributes;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceMarkAttributes* getSourceMarkAttributesStruct()
 	{
 		return gtkSourceMarkAttributes;

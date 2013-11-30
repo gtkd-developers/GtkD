@@ -99,6 +99,7 @@ public class ListBox : Container
 	protected GtkListBox* gtkListBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkListBox* getListBoxStruct()
 	{
 		return gtkListBox;

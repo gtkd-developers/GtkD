@@ -380,6 +380,7 @@ public class Requisition
 	protected GtkRequisition* gtkRequisition;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRequisition* getRequisitionStruct()
 	{
 		return gtkRequisition;

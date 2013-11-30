@@ -162,6 +162,7 @@ public class MainLoop
 	protected GMainLoop* gMainLoop;
 	
 	
+	/** Get the main Gtk struct */
 	public GMainLoop* getMainLoopStruct()
 	{
 		return gMainLoop;

@@ -89,6 +89,7 @@ public interface TreeDragDestIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeDragDest* getTreeDragDestTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -85,6 +85,7 @@ public class EntryBuffer : ObjectG
 	protected GtkEntryBuffer* gtkEntryBuffer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkEntryBuffer* getEntryBufferStruct()
 	{
 		return gtkEntryBuffer;

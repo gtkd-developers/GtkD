@@ -100,6 +100,7 @@ public class Table : Container
 	protected GtkTable* gtkTable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTable* getTableStruct()
 	{
 		return gtkTable;

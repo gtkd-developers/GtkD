@@ -125,6 +125,7 @@ public class SourceSearchContext : ObjectG
 	protected GtkSourceSearchContext* gtkSourceSearchContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceSearchContext* getSourceSearchContextStruct()
 	{
 		return gtkSourceSearchContext;

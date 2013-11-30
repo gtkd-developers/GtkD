@@ -86,6 +86,7 @@ public interface PresetIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GstPreset* getPresetTStruct();
 	
 	/** the main Gtk struct as a void* */

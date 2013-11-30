@@ -84,6 +84,7 @@ public class SourceMark : TextMark
 	protected GtkSourceMark* gtkSourceMark;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceMark* getSourceMarkStruct()
 	{
 		return gtkSourceMark;

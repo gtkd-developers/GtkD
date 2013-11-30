@@ -73,6 +73,7 @@ public class SeparatorMenuItem : MenuItem
 	protected GtkSeparatorMenuItem* gtkSeparatorMenuItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSeparatorMenuItem* getSeparatorMenuItemStruct()
 	{
 		return gtkSeparatorMenuItem;

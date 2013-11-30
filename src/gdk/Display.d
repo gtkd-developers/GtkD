@@ -115,6 +115,7 @@ public class Display : ObjectG
 	protected GdkDisplay* gdkDisplay;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkDisplay* getDisplayStruct()
 	{
 		return gdkDisplay;

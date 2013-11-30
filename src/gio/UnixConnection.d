@@ -92,6 +92,7 @@ public class UnixConnection : SocketConnection
 	protected GUnixConnection* gUnixConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixConnection* getUnixConnectionStruct()
 	{
 		return gUnixConnection;

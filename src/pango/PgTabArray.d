@@ -73,6 +73,7 @@ public class PgTabArray : Boxed
 	protected PangoTabArray* pangoTabArray;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoTabArray* getPgTabArrayStruct()
 	{
 		return pangoTabArray;

@@ -92,6 +92,7 @@ public template ActivatableT(TStruct)
 	protected GtkActivatable* gtkActivatable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkActivatable* getActivatableTStruct()
 	{
 		return cast(GtkActivatable*)getStruct();

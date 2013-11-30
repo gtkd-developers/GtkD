@@ -75,6 +75,7 @@ public class VolumeButton : ScaleButton
 	protected GtkVolumeButton* gtkVolumeButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVolumeButton* getVolumeButtonStruct()
 	{
 		return gtkVolumeButton;

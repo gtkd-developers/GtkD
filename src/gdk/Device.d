@@ -96,6 +96,7 @@ public class Device : ObjectG
 	protected GdkDevice* gdkDevice;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkDevice* getDeviceStruct()
 	{
 		return gdkDevice;

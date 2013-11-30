@@ -83,6 +83,7 @@ public class CellRendererSpin : CellRendererText
 	protected GtkCellRendererSpin* gtkCellRendererSpin;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererSpin* getCellRendererSpinStruct()
 	{
 		return gtkCellRendererSpin;

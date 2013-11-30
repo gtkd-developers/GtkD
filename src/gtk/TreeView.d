@@ -159,6 +159,7 @@ public class TreeView : Container, ScrollableIF
 	protected GtkTreeView* gtkTreeView;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeView* getTreeViewStruct()
 	{
 		return gtkTreeView;

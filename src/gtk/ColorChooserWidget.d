@@ -91,6 +91,7 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	protected GtkColorChooserWidget* gtkColorChooserWidget;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkColorChooserWidget* getColorChooserWidgetStruct()
 	{
 		return gtkColorChooserWidget;

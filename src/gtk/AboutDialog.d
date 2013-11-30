@@ -110,6 +110,7 @@ public class AboutDialog : Dialog
 	protected GtkAboutDialog* gtkAboutDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAboutDialog* getAboutDialogStruct()
 	{
 		return gtkAboutDialog;

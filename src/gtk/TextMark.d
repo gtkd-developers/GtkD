@@ -100,6 +100,7 @@ public class TextMark : ObjectG
 	protected GtkTextMark* gtkTextMark;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextMark* getTextMarkStruct()
 	{
 		return gtkTextMark;

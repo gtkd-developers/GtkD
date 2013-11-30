@@ -89,6 +89,7 @@ public class SearchEntry : Entry
 	protected GtkSearchEntry* gtkSearchEntry;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSearchEntry* getSearchEntryStruct()
 	{
 		return gtkSearchEntry;

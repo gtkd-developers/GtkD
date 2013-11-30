@@ -105,6 +105,7 @@ public class WidgetPath
 	protected GtkWidgetPath* gtkWidgetPath;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkWidgetPath* getWidgetPathStruct()
 	{
 		return gtkWidgetPath;

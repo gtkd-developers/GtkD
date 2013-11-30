@@ -82,6 +82,7 @@ public class PluginFeature : ObjectGst
 	protected GstPluginFeature* gstPluginFeature;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPluginFeature* getPluginFeatureStruct()
 	{
 		return gstPluginFeature;

@@ -86,6 +86,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	protected GNetworkService* gNetworkService;
 	
 	
+	/** Get the main Gtk struct */
 	public GNetworkService* getNetworkServiceStruct()
 	{
 		return gNetworkService;

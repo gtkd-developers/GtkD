@@ -111,6 +111,7 @@ public class Relation
 	protected GRelation* gRelation;
 	
 	
+	/** Get the main Gtk struct */
 	public GRelation* getRelationStruct()
 	{
 		return gRelation;

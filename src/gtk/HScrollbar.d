@@ -81,6 +81,7 @@ public class HScrollbar : Scrollbar
 	protected GtkHScrollbar* gtkHScrollbar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHScrollbar* getHScrollbarStruct()
 	{
 		return gtkHScrollbar;

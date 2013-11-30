@@ -84,6 +84,7 @@ public class SystemClock : Clock
 	protected GstSystemClock* gstSystemClock;
 	
 	
+	/** Get the main Gtk struct */
 	public GstSystemClock* getSystemClockStruct()
 	{
 		return gstSystemClock;

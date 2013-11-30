@@ -89,6 +89,7 @@ public class SpinButton : Entry
 	protected GtkSpinButton* gtkSpinButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSpinButton* getSpinButtonStruct()
 	{
 		return gtkSpinButton;

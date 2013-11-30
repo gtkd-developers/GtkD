@@ -111,6 +111,7 @@ public class IOExtension
 	protected GIOExtension* gIOExtension;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOExtension* getIOExtensionStruct()
 	{
 		return gIOExtension;

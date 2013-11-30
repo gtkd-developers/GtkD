@@ -246,6 +246,7 @@ public class Border : Boxed
 	protected GtkBorder* gtkBorder;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBorder* getBorderStruct()
 	{
 		return gtkBorder;

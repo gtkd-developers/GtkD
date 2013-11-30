@@ -87,6 +87,7 @@ public template PollableInputStreamT(TStruct)
 	protected GPollableInputStream* gPollableInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GPollableInputStream* getPollableInputStreamTStruct()
 	{
 		return cast(GPollableInputStream*)getStruct();

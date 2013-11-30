@@ -138,6 +138,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	protected GtkSizeGroup* gtkSizeGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSizeGroup* getSizeGroupStruct()
 	{
 		return gtkSizeGroup;

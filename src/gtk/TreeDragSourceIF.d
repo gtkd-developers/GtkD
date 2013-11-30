@@ -94,6 +94,7 @@ public interface TreeDragSourceIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeDragSource* getTreeDragSourceTStruct();
 	
 	/** the main Gtk struct as a void* */

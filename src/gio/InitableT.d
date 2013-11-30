@@ -106,6 +106,7 @@ public template InitableT(TStruct)
 	protected GInitable* gInitable;
 	
 	
+	/** Get the main Gtk struct */
 	public GInitable* getInitableTStruct()
 	{
 		return cast(GInitable*)getStruct();

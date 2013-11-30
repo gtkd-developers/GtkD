@@ -92,6 +92,7 @@ public class Pattern
 	protected GPatternSpec* gPatternSpec;
 	
 	
+	/** Get the main Gtk struct */
 	public GPatternSpec* getPatternStruct()
 	{
 		return gPatternSpec;

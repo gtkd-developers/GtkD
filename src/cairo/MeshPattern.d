@@ -80,6 +80,7 @@ public class MeshPattern : Pattern
 	protected cairo_pattern_t* cairo_pattern;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_pattern_t* getMeshPatternStruct()
 	{
 		return cairo_pattern;

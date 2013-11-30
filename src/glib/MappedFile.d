@@ -99,6 +99,7 @@ public class MappedFile
 	protected GMappedFile* gMappedFile;
 	
 	
+	/** Get the main Gtk struct */
 	public GMappedFile* getMappedFileStruct()
 	{
 		return gMappedFile;

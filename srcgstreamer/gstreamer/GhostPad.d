@@ -97,6 +97,7 @@ public class GhostPad : ProxyPad
 	protected GstGhostPad* gstGhostPad;
 	
 	
+	/** Get the main Gtk struct */
 	public GstGhostPad* getGhostPadStruct()
 	{
 		return gstGhostPad;

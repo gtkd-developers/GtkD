@@ -97,6 +97,7 @@ public class TimeZone
 	protected GTimeZone* gTimeZone;
 	
 	
+	/** Get the main Gtk struct */
 	public GTimeZone* getTimeZoneStruct()
 	{
 		return gTimeZone;

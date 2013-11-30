@@ -121,6 +121,7 @@ public interface ActionGroupIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GActionGroup* getActionGroupTStruct();
 	
 	/** the main Gtk struct as a void* */

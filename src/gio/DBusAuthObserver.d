@@ -91,6 +91,7 @@ public class DBusAuthObserver : ObjectG
 	protected GDBusAuthObserver* gDBusAuthObserver;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusAuthObserver* getDBusAuthObserverStruct()
 	{
 		return gDBusAuthObserver;

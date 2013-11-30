@@ -84,6 +84,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	protected GUnixCredentialsMessage* gUnixCredentialsMessage;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixCredentialsMessage* getUnixCredentialsMessageStruct()
 	{
 		return gUnixCredentialsMessage;

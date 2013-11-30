@@ -116,6 +116,7 @@ public class IOExtensionPoint
 	protected GIOExtensionPoint* gIOExtensionPoint;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOExtensionPoint* getIOExtensionPointStruct()
 	{
 		return gIOExtensionPoint;

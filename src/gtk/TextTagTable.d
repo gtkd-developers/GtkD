@@ -88,6 +88,7 @@ public class TextTagTable : ObjectG
 	protected GtkTextTagTable* gtkTextTagTable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextTagTable* getTextTagTableStruct()
 	{
 		return gtkTextTagTable;

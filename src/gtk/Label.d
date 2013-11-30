@@ -219,6 +219,7 @@ public class Label : Misc
 	protected GtkLabel* gtkLabel;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkLabel* getLabelStruct()
 	{
 		return gtkLabel;

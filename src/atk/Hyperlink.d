@@ -83,6 +83,7 @@ public class Hyperlink : ObjectG
 	protected AtkHyperlink* atkHyperlink;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkHyperlink* getHyperlinkStruct()
 	{
 		return atkHyperlink;

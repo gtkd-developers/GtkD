@@ -89,6 +89,7 @@ public template UriHandlerT(TStruct)
 	protected GstURIHandler* gstURIHandler;
 	
 	
+	/** Get the main Gtk struct */
 	public GstURIHandler* getUriHandlerTStruct()
 	{
 		return cast(GstURIHandler*)getStruct();

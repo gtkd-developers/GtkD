@@ -153,6 +153,7 @@ public class TreeModelFilter : ObjectG, TreeModelIF, TreeDragSourceIF
 	protected GtkTreeModelFilter* gtkTreeModelFilter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeModelFilter* getTreeModelFilterStruct()
 	{
 		return gtkTreeModelFilter;

@@ -80,6 +80,7 @@ public class Invisible : Widget
 	protected GtkInvisible* gtkInvisible;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkInvisible* getInvisibleStruct()
 	{
 		return gtkInvisible;

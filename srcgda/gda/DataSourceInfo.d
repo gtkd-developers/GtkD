@@ -76,6 +76,7 @@ public class DataSourceInfo
 	protected GdaDataSourceInfo* gdaDataSourceInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaDataSourceInfo* getDataSourceInfoStruct()
 	{
 		return gdaDataSourceInfo;

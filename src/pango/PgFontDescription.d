@@ -80,6 +80,7 @@ public class PgFontDescription : Boxed
 	protected PangoFontDescription* pangoFontDescription;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoFontDescription* getPgFontDescriptionStruct()
 	{
 		return pangoFontDescription;

@@ -75,6 +75,7 @@ public class SimplePermission : Permission
 	protected GSimplePermission* gSimplePermission;
 	
 	
+	/** Get the main Gtk struct */
 	public GSimplePermission* getSimplePermissionStruct()
 	{
 		return gSimplePermission;

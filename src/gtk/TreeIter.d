@@ -206,6 +206,7 @@ public class TreeIter
 	protected GtkTreeIter* gtkTreeIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeIter* getTreeIterStruct()
 	{
 		return gtkTreeIter;

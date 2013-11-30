@@ -110,6 +110,7 @@ public class PgCairoFontMap : PgFontMap
 	protected PangoCairoFontMap* pangoCairoFontMap;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoCairoFontMap* getPgCairoFontMapStruct()
 	{
 		return pangoCairoFontMap;

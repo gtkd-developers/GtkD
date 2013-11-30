@@ -90,6 +90,7 @@ public class AppLaunchContext : GioAppLaunchContext
 	protected GdkAppLaunchContext* gdkAppLaunchContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkAppLaunchContext* getGdkAppLaunchContextStruct()
 	{
 		return gdkAppLaunchContext;

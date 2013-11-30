@@ -87,6 +87,7 @@ public template StyleProviderT(TStruct)
 	protected GtkStyleProvider* gtkStyleProvider;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStyleProvider* getStyleProviderTStruct()
 	{
 		return cast(GtkStyleProvider*)getStruct();

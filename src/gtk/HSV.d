@@ -81,6 +81,7 @@ public class HSV : Widget
 	protected GtkHSV* gtkHSV;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHSV* getHSVStruct()
 	{
 		return gtkHSV;

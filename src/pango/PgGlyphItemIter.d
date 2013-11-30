@@ -79,6 +79,7 @@ public class PgGlyphItemIter
 	protected PangoGlyphItemIter* pangoGlyphItemIter;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoGlyphItemIter* getPgGlyphItemIterStruct()
 	{
 		return pangoGlyphItemIter;

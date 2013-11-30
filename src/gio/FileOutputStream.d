@@ -104,6 +104,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	protected GFileOutputStream* gFileOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileOutputStream* getFileOutputStreamStruct()
 	{
 		return gFileOutputStream;

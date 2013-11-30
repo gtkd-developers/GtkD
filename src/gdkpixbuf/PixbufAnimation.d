@@ -105,6 +105,7 @@ public class PixbufAnimation : ObjectG
 	protected GdkPixbufAnimation* gdkPixbufAnimation;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixbufAnimation* getPixbufAnimationStruct()
 	{
 		return gdkPixbufAnimation;

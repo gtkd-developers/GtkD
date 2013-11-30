@@ -120,6 +120,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	protected GtkCellView* gtkCellView;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellView* getCellViewStruct()
 	{
 		return gtkCellView;

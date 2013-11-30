@@ -97,6 +97,7 @@ public class SourceView : TextView
 	protected GtkSourceView* gtkSourceView;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceView* getSourceViewStruct()
 	{
 		return gtkSourceView;

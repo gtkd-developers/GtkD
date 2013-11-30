@@ -84,6 +84,7 @@ public class Matrix
 	protected cairo_matrix_t* cairo_matrix;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_matrix_t* getMatrixStruct()
 	{
 		return cairo_matrix;

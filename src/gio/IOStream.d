@@ -111,6 +111,7 @@ public class IOStream : ObjectG
 	protected GIOStream* gIOStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOStream* getIOStreamStruct()
 	{
 		return gIOStream;

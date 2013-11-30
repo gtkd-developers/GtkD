@@ -92,6 +92,7 @@ public class ColorSelectionDialog : Dialog
 	protected GtkColorSelectionDialog* gtkColorSelectionDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkColorSelectionDialog* getColorSelectionDialogStruct()
 	{
 		return gtkColorSelectionDialog;

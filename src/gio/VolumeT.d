@@ -146,6 +146,7 @@ public template VolumeT(TStruct)
 	protected GVolume* gVolume;
 	
 	
+	/** Get the main Gtk struct */
 	public GVolume* getVolumeTStruct()
 	{
 		return cast(GVolume*)getStruct();

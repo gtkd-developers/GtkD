@@ -115,6 +115,7 @@ public class HashTableIter
 	protected GHashTableIter* gHashTableIter;
 	
 	
+	/** Get the main Gtk struct */
 	public GHashTableIter* getHashTableIterStruct()
 	{
 		return gHashTableIter;

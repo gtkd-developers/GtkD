@@ -420,6 +420,7 @@ public class Widget : ObjectG, BuildableIF
 	protected GtkWidget* gtkWidget;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkWidget* getWidgetStruct()
 	{
 		return gtkWidget;

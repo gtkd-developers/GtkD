@@ -72,6 +72,7 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	protected GtkSourceGutterRendererText* gtkSourceGutterRendererText;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceGutterRendererText* getSourceGutterRendererTextStruct()
 	{
 		return gtkSourceGutterRendererText;

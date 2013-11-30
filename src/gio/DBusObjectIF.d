@@ -82,6 +82,7 @@ public interface DBusObjectIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusObject* getDBusObjectTStruct();
 	
 	/** the main Gtk struct as a void* */

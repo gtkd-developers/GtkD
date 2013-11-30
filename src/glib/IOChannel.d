@@ -122,6 +122,7 @@ public class IOChannel
 	protected GIOChannel* gIOChannel;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOChannel* getIOChannelStruct()
 	{
 		return gIOChannel;

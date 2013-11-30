@@ -89,6 +89,7 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	protected GSimpleActionGroup* gSimpleActionGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GSimpleActionGroup* getSimpleActionGroupStruct()
 	{
 		return gSimpleActionGroup;

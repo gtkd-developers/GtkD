@@ -312,6 +312,7 @@ public class VariantType
 	protected GVariantType* gVariantType;
 	
 	
+	/** Get the main Gtk struct */
 	public GVariantType* getVariantTypeStruct()
 	{
 		return gVariantType;

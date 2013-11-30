@@ -93,6 +93,7 @@ public template DBusObjectManagerT(TStruct)
 	protected GDBusObjectManager* gDBusObjectManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusObjectManager* getDBusObjectManagerTStruct()
 	{
 		return cast(GDBusObjectManager*)getStruct();

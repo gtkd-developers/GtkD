@@ -78,6 +78,7 @@ public class VPaned : Paned
 	protected GtkVPaned* gtkVPaned;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVPaned* getVPanedStruct()
 	{
 		return gtkVPaned;

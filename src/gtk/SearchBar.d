@@ -93,6 +93,7 @@ public class SearchBar : Bin
 	protected GtkSearchBar* gtkSearchBar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSearchBar* getSearchBarStruct()
 	{
 		return gtkSearchBar;

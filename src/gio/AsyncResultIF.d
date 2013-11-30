@@ -115,6 +115,7 @@ public interface AsyncResultIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GAsyncResult* getAsyncResultTStruct();
 	
 	/** the main Gtk struct as a void* */

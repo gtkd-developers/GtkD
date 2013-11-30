@@ -103,6 +103,7 @@ public class Plugin : ObjectGst
 	protected GstPlugin* gstPlugin;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPlugin* getPluginStruct()
 	{
 		return gstPlugin;

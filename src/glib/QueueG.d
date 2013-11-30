@@ -91,6 +91,7 @@ public class QueueG
 	protected GQueue* gQueue;
 	
 	
+	/** Get the main Gtk struct */
 	public GQueue* getQueueGStruct()
 	{
 		return gQueue;

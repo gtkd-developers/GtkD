@@ -94,6 +94,7 @@ public interface RecentChooserIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentChooser* getRecentChooserTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -80,6 +80,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	protected GtkSourceGutterRendererPixbuf* gtkSourceGutterRendererPixbuf;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceGutterRendererPixbuf* getSourceGutterRendererPixbufStruct()
 	{
 		return gtkSourceGutterRendererPixbuf;

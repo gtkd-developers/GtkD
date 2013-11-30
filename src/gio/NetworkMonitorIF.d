@@ -87,6 +87,7 @@ public interface NetworkMonitorIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GNetworkMonitor* getNetworkMonitorTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -90,6 +90,7 @@ public class FontChooserWidget : Box, FontChooserIF
 	protected GtkFontChooserWidget* gtkFontChooserWidget;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFontChooserWidget* getFontChooserWidgetStruct()
 	{
 		return gtkFontChooserWidget;

@@ -122,6 +122,7 @@ public class CellRenderer : ObjectG
 	protected GtkCellRenderer* gtkCellRenderer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRenderer* getCellRendererStruct()
 	{
 		return gtkCellRenderer;

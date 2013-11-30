@@ -131,6 +131,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	protected GtkPrintOperation* gtkPrintOperation;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintOperation* getPrintOperationStruct()
 	{
 		return gtkPrintOperation;

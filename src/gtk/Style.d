@@ -122,6 +122,7 @@ public class Style : ObjectG
 	protected GtkStyle* gtkStyle;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStyle* getStyleStruct()
 	{
 		return gtkStyle;

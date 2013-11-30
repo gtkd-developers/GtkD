@@ -114,6 +114,7 @@ public class SettingsSchema : Boxed
 	protected GSettingsSchema* gSettingsSchema;
 	
 	
+	/** Get the main Gtk struct */
 	public GSettingsSchema* getSettingsSchemaStruct()
 	{
 		return gSettingsSchema;

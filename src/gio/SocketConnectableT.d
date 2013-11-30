@@ -81,6 +81,7 @@ public template SocketConnectableT(TStruct)
 	protected GSocketConnectable* gSocketConnectable;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketConnectable* getSocketConnectableTStruct()
 	{
 		return cast(GSocketConnectable*)getStruct();

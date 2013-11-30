@@ -162,6 +162,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	protected GSimpleAsyncResult* gSimpleAsyncResult;
 	
 	
+	/** Get the main Gtk struct */
 	public GSimpleAsyncResult* getSimpleAsyncResultStruct()
 	{
 		return gSimpleAsyncResult;

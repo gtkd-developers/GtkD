@@ -82,6 +82,7 @@ public class SocketAddressEnumerator
 	protected GSocketAddressEnumerator* gSocketAddressEnumerator;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketAddressEnumerator* getSocketAddressEnumeratorStruct()
 	{
 		return gSocketAddressEnumerator;

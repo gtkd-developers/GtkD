@@ -128,6 +128,7 @@ public class PropertyAction : ActionIF
 	protected GPropertyAction* gPropertyAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GPropertyAction* getPropertyActionStruct()
 	{
 		return gPropertyAction;

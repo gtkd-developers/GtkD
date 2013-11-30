@@ -115,6 +115,7 @@ public interface PrintOperationPreviewIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintOperationPreview* getPrintOperationPreviewTStruct();
 	
 	/** the main Gtk struct as a void* */

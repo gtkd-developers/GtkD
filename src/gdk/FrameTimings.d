@@ -76,6 +76,7 @@ public class FrameTimings
 	protected GdkFrameTimings* gdkFrameTimings;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkFrameTimings* getFrameTimingsStruct()
 	{
 		return gdkFrameTimings;

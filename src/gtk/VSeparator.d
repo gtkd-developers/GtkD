@@ -75,6 +75,7 @@ public class VSeparator : Separator
 	protected GtkVSeparator* gtkVSeparator;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVSeparator* getVSeparatorStruct()
 	{
 		return gtkVSeparator;

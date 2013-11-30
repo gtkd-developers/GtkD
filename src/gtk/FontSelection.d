@@ -96,6 +96,7 @@ public class FontSelection : Box
 	protected GtkFontSelection* gtkFontSelection;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFontSelection* getFontSelectionStruct()
 	{
 		return gtkFontSelection;

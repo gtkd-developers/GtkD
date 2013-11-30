@@ -79,6 +79,7 @@ public class FileIcon : LoadableIconIF
 	protected GBytesIcon* gBytesIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GBytesIcon* getFileIconStruct()
 	{
 		return gBytesIcon;

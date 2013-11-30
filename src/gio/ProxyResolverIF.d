@@ -86,6 +86,7 @@ public interface ProxyResolverIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GProxyResolver* getProxyResolverTStruct();
 	
 	/** the main Gtk struct as a void* */

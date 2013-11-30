@@ -81,6 +81,7 @@ public interface EditableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkEditable* getEditableTStruct();
 	
 	/** the main Gtk struct as a void* */

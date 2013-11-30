@@ -116,6 +116,7 @@ public class Socket : Container
 	protected GtkSocket* gtkSocket;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSocket* getSocketStruct()
 	{
 		return gtkSocket;

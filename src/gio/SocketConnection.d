@@ -101,6 +101,7 @@ public class SocketConnection : IOStream
 	protected GSocketConnection* gSocketConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketConnection* getSocketConnectionStruct()
 	{
 		return gSocketConnection;

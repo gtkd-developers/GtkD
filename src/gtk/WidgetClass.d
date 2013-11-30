@@ -386,6 +386,7 @@ public class WidgetClass
 	protected GtkWidgetClass* gtkWidgetClass;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkWidgetClass* getWidgetClassStruct()
 	{
 		return gtkWidgetClass;

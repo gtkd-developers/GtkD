@@ -116,6 +116,7 @@ public class ApplicationCommandLine : ObjectG
 	protected GApplicationCommandLine* gApplicationCommandLine;
 	
 	
+	/** Get the main Gtk struct */
 	public GApplicationCommandLine* getApplicationCommandLineStruct()
 	{
 		return gApplicationCommandLine;

@@ -76,6 +76,7 @@ public class PgLanguage
 	protected PangoLanguage* pangoLanguage;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoLanguage* getPgLanguageStruct()
 	{
 		return pangoLanguage;

@@ -96,6 +96,7 @@ public class StringGChunk
 	protected GStringChunk* gStringChunk;
 	
 	
+	/** Get the main Gtk struct */
 	public GStringChunk* getStringGChunkStruct()
 	{
 		return gStringChunk;

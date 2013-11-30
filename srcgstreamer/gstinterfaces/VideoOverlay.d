@@ -157,6 +157,7 @@ public class VideoOverlay
 	protected GstVideoOverlay* gstVideoOverlay;
 	
 	
+	/** Get the main Gtk struct */
 	public GstVideoOverlay* getVideoOverlayStruct()
 	{
 		return gstVideoOverlay;

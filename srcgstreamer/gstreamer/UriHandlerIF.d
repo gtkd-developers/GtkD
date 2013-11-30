@@ -85,6 +85,7 @@ public interface UriHandlerIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GstURIHandler* getUriHandlerTStruct();
 	
 	/** the main Gtk struct as a void* */

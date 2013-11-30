@@ -294,6 +294,7 @@ public class VariantBuilder
 	protected GVariantBuilder* gVariantBuilder;
 	
 	
+	/** Get the main Gtk struct */
 	public GVariantBuilder* getVariantBuilderStruct()
 	{
 		return gVariantBuilder;

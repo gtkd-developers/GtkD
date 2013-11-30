@@ -82,6 +82,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	protected GFileIcon* gFileIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileIcon* getFileIconStruct()
 	{
 		return gFileIcon;

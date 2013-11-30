@@ -121,6 +121,7 @@ public class HashTable
 	protected GHashTable* gHashTable;
 	
 	
+	/** Get the main Gtk struct */
 	public GHashTable* getHashTableStruct()
 	{
 		return gHashTable;

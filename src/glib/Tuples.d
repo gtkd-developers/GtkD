@@ -107,6 +107,7 @@ public class Tuples
 	protected GTuples* gTuples;
 	
 	
+	/** Get the main Gtk struct */
 	public GTuples* getTuplesStruct()
 	{
 		return gTuples;

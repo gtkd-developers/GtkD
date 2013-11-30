@@ -73,6 +73,7 @@ public class TlsBackend
 	protected GTlsBackend* gTlsBackend;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsBackend* getTlsBackendStruct()
 	{
 		return gTlsBackend;

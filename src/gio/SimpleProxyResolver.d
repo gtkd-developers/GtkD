@@ -83,6 +83,7 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	protected GSimpleProxyResolver* gSimpleProxyResolver;
 	
 	
+	/** Get the main Gtk struct */
 	public GSimpleProxyResolver* getSimpleProxyResolverStruct()
 	{
 		return gSimpleProxyResolver;

@@ -88,6 +88,7 @@ public class DBusNodeInfo
 	protected GDBusNodeInfo* gDBusNodeInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusNodeInfo* getDBusNodeInfoStruct()
 	{
 		return gDBusNodeInfo;

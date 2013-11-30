@@ -97,6 +97,7 @@ public interface AsyncInitableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GAsyncInitable* getAsyncInitableTStruct();
 	
 	/** the main Gtk struct as a void* */

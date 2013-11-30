@@ -138,6 +138,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	protected GtkEntryCompletion* gtkEntryCompletion;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkEntryCompletion* getEntryCompletionStruct()
 	{
 		return gtkEntryCompletion;

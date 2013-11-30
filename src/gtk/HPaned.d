@@ -78,6 +78,7 @@ public class HPaned : Paned
 	protected GtkHPaned* gtkHPaned;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHPaned* getHPanedStruct()
 	{
 		return gtkHPaned;

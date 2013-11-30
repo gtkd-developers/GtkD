@@ -91,6 +91,7 @@ public class TagList
 	protected GstTagList* gstTagList;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTagList* getTagListStruct()
 	{
 		return gstTagList;

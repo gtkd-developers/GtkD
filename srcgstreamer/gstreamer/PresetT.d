@@ -90,6 +90,7 @@ public template PresetT(TStruct)
 	protected GstPreset* gstPreset;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPreset* getPresetTStruct()
 	{
 		return cast(GstPreset*)getStruct();

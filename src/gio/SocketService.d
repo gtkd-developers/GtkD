@@ -97,6 +97,7 @@ public class SocketService : SocketListener
 	protected GSocketService* gSocketService;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketService* getSocketServiceStruct()
 	{
 		return gSocketService;

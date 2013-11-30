@@ -118,6 +118,7 @@ public class Terminal : Widget, ScrollableIF
 	protected VteTerminal* vteTerminal;
 	
 	
+	/** Get the main Gtk struct */
 	public VteTerminal* getTerminalStruct()
 	{
 		return vteTerminal;

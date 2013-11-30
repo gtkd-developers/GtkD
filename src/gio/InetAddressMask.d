@@ -85,6 +85,7 @@ public class InetAddressMask : ObjectG
 	protected GInetAddressMask* gInetAddressMask;
 	
 	
+	/** Get the main Gtk struct */
 	public GInetAddressMask* getInetAddressMaskStruct()
 	{
 		return gInetAddressMask;

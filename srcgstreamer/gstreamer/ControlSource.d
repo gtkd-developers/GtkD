@@ -83,6 +83,7 @@ public class ControlSource : ObjectGst
 	protected GstControlSource* gstControlSource;
 	
 	
+	/** Get the main Gtk struct */
 	public GstControlSource* getControlSourceStruct()
 	{
 		return gstControlSource;

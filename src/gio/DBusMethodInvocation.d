@@ -99,6 +99,7 @@ public class DBusMethodInvocation : ObjectG
 	protected GDBusMethodInvocation* gDBusMethodInvocation;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusMethodInvocation* getDBusMethodInvocationStruct()
 	{
 		return gDBusMethodInvocation;

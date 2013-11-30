@@ -153,6 +153,7 @@ public class Resource
 	protected GResource* gResource;
 	
 	
+	/** Get the main Gtk struct */
 	public GResource* getResourceStruct()
 	{
 		return gResource;

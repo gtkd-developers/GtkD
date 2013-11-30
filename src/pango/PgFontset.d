@@ -83,6 +83,7 @@ public class PgFontset : ObjectG
 	protected PangoFontset* pangoFontset;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoFontset* getPgFontsetStruct()
 	{
 		return pangoFontset;

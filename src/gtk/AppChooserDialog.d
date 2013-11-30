@@ -95,6 +95,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	protected GtkAppChooserDialog* gtkAppChooserDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAppChooserDialog* getAppChooserDialogStruct()
 	{
 		return gtkAppChooserDialog;

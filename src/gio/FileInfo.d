@@ -112,6 +112,7 @@ public class FileInfo : ObjectG
 	protected GFileInfo* gFileInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileInfo* getFileInfoStruct()
 	{
 		return gFileInfo;

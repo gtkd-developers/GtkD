@@ -102,6 +102,7 @@ public class Value
 	protected GValue* gValue;
 	
 	
+	/** Get the main Gtk struct */
 	public GValue* getValueStruct()
 	{
 		return gValue;

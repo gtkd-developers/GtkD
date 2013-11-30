@@ -75,6 +75,7 @@ public class InetSocketAddress : SocketAddress
 	protected GInetSocketAddress* gInetSocketAddress;
 	
 	
+	/** Get the main Gtk struct */
 	public GInetSocketAddress* getInetSocketAddressStruct()
 	{
 		return gInetSocketAddress;

@@ -83,6 +83,7 @@ public interface PollableInputStreamIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GPollableInputStream* getPollableInputStreamTStruct();
 	
 	/** the main Gtk struct as a void* */

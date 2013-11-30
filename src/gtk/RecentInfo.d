@@ -137,6 +137,7 @@ public class RecentInfo
 	protected GtkRecentInfo* gtkRecentInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentInfo* getRecentInfoStruct()
 	{
 		return gtkRecentInfo;

@@ -82,6 +82,7 @@ public class TlsServerConnection : TlsConnection
 	protected GTlsServerConnection* gTlsServerConnection;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsServerConnection* getTlsServerConnectionStruct()
 	{
 		return gTlsServerConnection;

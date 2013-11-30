@@ -94,6 +94,7 @@ public interface BuildableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBuildable* getBuildableTStruct();
 	
 	/** the main Gtk struct as a void* */

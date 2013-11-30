@@ -92,6 +92,7 @@ public class ColorButton : Button, ColorChooserIF
 	protected GtkColorButton* gtkColorButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkColorButton* getColorButtonStruct()
 	{
 		return gtkColorButton;

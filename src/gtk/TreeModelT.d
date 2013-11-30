@@ -206,6 +206,7 @@ public template TreeModelT(TStruct)
 	protected GtkTreeModel* gtkTreeModel;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeModel* getTreeModelTStruct()
 	{
 		return cast(GtkTreeModel*)getStruct();

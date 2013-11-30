@@ -208,6 +208,7 @@ public class TreeRowReference
 	protected GtkTreeRowReference* gtkTreeRowReference;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeRowReference* getTreeRowReferenceStruct()
 	{
 		return gtkTreeRowReference;

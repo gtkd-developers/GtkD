@@ -104,6 +104,7 @@ public class StyleProperties : ObjectG
 	protected GtkStyleProperties* gtkStyleProperties;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStyleProperties* getStylePropertiesStruct()
 	{
 		return gtkStyleProperties;

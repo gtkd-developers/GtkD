@@ -84,6 +84,7 @@ public class PgGlyphItem
 	protected PangoGlyphItem* pangoGlyphItem;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoGlyphItem* getPgGlyphItemStruct()
 	{
 		return pangoGlyphItem;

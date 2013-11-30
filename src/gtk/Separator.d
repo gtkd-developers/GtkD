@@ -79,6 +79,7 @@ public class Separator : Widget, OrientableIF
 	protected GtkSeparator* gtkSeparator;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSeparator* getSeparatorStruct()
 	{
 		return gtkSeparator;

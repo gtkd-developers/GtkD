@@ -83,6 +83,7 @@ public interface LoadableIconIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GLoadableIcon* getLoadableIconTStruct();
 	
 	/** the main Gtk struct as a void* */

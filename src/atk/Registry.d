@@ -76,6 +76,7 @@ public class Registry : ObjectG
 	protected AtkRegistry* atkRegistry;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkRegistry* getRegistryStruct()
 	{
 		return atkRegistry;

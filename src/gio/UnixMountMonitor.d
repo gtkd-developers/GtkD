@@ -77,6 +77,7 @@ public class UnixMountMonitor : ObjectG
 	protected GUnixMountMonitor* gUnixMountMonitor;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixMountMonitor* getUnixMountMonitorStruct()
 	{
 		return gUnixMountMonitor;

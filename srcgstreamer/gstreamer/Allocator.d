@@ -89,6 +89,7 @@ public class Allocator : ObjectGst
 	protected GstAllocator* gstAllocator;
 	
 	
+	/** Get the main Gtk struct */
 	public GstAllocator* getAllocatorStruct()
 	{
 		return gstAllocator;

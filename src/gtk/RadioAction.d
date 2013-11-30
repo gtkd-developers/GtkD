@@ -80,6 +80,7 @@ public class RadioAction : ToggleAction
 	protected GtkRadioAction* gtkRadioAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRadioAction* getRadioActionStruct()
 	{
 		return gtkRadioAction;

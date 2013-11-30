@@ -81,6 +81,7 @@ public template DBusInterfaceT(TStruct)
 	protected GDBusInterface* gDBusInterface;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusInterface* getDBusInterfaceTStruct()
 	{
 		return cast(GDBusInterface*)getStruct();

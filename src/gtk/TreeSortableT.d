@@ -75,6 +75,7 @@ public template TreeSortableT(TStruct)
 	protected GtkTreeSortable* gtkTreeSortable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeSortable* getTreeSortableTStruct()
 	{
 		return cast(GtkTreeSortable*)getStruct();

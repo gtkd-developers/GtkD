@@ -103,6 +103,7 @@ public class PageSetup : ObjectG
 	protected GtkPageSetup* gtkPageSetup;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPageSetup* getPageSetupStruct()
 	{
 		return gtkPageSetup;

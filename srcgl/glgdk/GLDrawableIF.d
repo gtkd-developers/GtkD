@@ -69,6 +69,7 @@ public interface GLDrawableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GdkGLDrawable* getGLDrawableTStruct();
 	
 	/** the main Gtk struct as a void* */

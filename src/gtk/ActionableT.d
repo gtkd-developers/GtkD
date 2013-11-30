@@ -86,6 +86,7 @@ public template ActionableT(TStruct)
 	protected GtkActionable* gtkActionable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkActionable* getActionableTStruct()
 	{
 		return cast(GtkActionable*)getStruct();

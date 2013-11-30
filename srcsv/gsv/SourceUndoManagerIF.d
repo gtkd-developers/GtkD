@@ -76,6 +76,7 @@ public interface SourceUndoManagerIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceUndoManager* getSourceUndoManagerTStruct();
 	
 	/** the main Gtk struct as a void* */

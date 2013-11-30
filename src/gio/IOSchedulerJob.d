@@ -80,6 +80,7 @@ public class IOSchedulerJob
 	protected GIOSchedulerJob* gIOSchedulerJob;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOSchedulerJob* getIOSchedulerJobStruct()
 	{
 		return gIOSchedulerJob;

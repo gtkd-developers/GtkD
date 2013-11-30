@@ -79,6 +79,7 @@ public class ScriptSurface : Surface
 	protected cairo_surface_t* cairo_surface;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_surface_t* getScriptSurfaceStruct()
 	{
 		return cairo_surface;

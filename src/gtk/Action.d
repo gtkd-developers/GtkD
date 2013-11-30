@@ -156,6 +156,7 @@ public class Action : ObjectG, BuildableIF
 	protected GtkAction* gtkAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAction* getActionStruct()
 	{
 		return gtkAction;

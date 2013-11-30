@@ -73,6 +73,7 @@ public class TlsPassword : ObjectG
 	protected GTlsPassword* gTlsPassword;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsPassword* getTlsPasswordStruct()
 	{
 		return gTlsPassword;

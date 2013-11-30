@@ -84,6 +84,7 @@ public class Image
 	protected AtkImage* atkImage;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkImage* getImageStruct()
 	{
 		return atkImage;

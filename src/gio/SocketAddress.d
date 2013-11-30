@@ -86,6 +86,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	protected GSocketAddress* gSocketAddress;
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketAddress* getSocketAddressStruct()
 	{
 		return gSocketAddress;

@@ -98,6 +98,7 @@ public template BuildableT(TStruct)
 	protected GtkBuildable* gtkBuildable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkBuildable* getBuildableTStruct()
 	{
 		return cast(GtkBuildable*)getStruct();

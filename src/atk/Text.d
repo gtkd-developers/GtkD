@@ -92,6 +92,7 @@ public class Text
 	protected AtkText* atkText;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkText* getTextStruct()
 	{
 		return atkText;

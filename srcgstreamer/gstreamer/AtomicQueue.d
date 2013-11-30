@@ -71,6 +71,7 @@ public class AtomicQueue
 	protected GstAtomicQueue* gstAtomicQueue;
 	
 	
+	/** Get the main Gtk struct */
 	public GstAtomicQueue* getAtomicQueueStruct()
 	{
 		return gstAtomicQueue;

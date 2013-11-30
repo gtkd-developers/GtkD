@@ -119,6 +119,7 @@ public template PrintOperationPreviewT(TStruct)
 	protected GtkPrintOperationPreview* gtkPrintOperationPreview;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrintOperationPreview* getPrintOperationPreviewTStruct()
 	{
 		return cast(GtkPrintOperationPreview*)getStruct();

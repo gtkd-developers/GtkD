@@ -86,6 +86,7 @@ public class UnixMountPoint
 	protected GUnixMountPoint* gUnixMountPoint;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixMountPoint* getUnixMountPointStruct()
 	{
 		return gUnixMountPoint;

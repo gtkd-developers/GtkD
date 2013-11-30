@@ -119,6 +119,7 @@ public template AsyncResultT(TStruct)
 	protected GAsyncResult* gAsyncResult;
 	
 	
+	/** Get the main Gtk struct */
 	public GAsyncResult* getAsyncResultTStruct()
 	{
 		return cast(GAsyncResult*)getStruct();

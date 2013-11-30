@@ -93,6 +93,7 @@ public class StringCompletion
 	protected GCompletion* gCompletion;
 	
 	
+	/** Get the main Gtk struct */
 	public GCompletion* getStringCompletionStruct()
 	{
 		return gCompletion;

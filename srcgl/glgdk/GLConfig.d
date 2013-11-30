@@ -80,6 +80,7 @@ public class GLConfig : ObjectG
 	protected GdkGLConfig* gdkGLConfig;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkGLConfig* getGLConfigStruct()
 	{
 		return gdkGLConfig;

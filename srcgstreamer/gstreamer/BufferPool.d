@@ -122,6 +122,7 @@ public class BufferPool
 	protected GstBufferPool* gstBufferPool;
 	
 	
+	/** Get the main Gtk struct */
 	public GstBufferPool* getBufferPoolStruct()
 	{
 		return gstBufferPool;

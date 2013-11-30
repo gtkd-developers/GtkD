@@ -81,6 +81,7 @@ public template ConverterT(TStruct)
 	protected GConverter* gConverter;
 	
 	
+	/** Get the main Gtk struct */
 	public GConverter* getConverterTStruct()
 	{
 		return cast(GConverter*)getStruct();

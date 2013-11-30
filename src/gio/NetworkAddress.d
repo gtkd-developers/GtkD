@@ -91,6 +91,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	protected GNetworkAddress* gNetworkAddress;
 	
 	
+	/** Get the main Gtk struct */
 	public GNetworkAddress* getNetworkAddressStruct()
 	{
 		return gNetworkAddress;

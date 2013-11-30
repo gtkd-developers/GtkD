@@ -84,6 +84,7 @@ public class UnixInputStream : InputStream, PollableInputStreamIF
 	protected GUnixInputStream* gUnixInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixInputStream* getUnixInputStreamStruct()
 	{
 		return gUnixInputStream;

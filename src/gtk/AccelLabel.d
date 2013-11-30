@@ -104,6 +104,7 @@ public class AccelLabel : Label
 	protected GtkAccelLabel* gtkAccelLabel;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAccelLabel* getAccelLabelStruct()
 	{
 		return gtkAccelLabel;

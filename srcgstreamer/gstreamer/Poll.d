@@ -92,6 +92,7 @@ public class Poll
 	protected GstPoll* gstPoll;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPoll* getPollStruct()
 	{
 		return gstPoll;

@@ -105,6 +105,7 @@ public class ProxyPad : Pad
 	protected GstProxyPad* gstProxyPad;
 	
 	
+	/** Get the main Gtk struct */
 	public GstProxyPad* getProxyPadStruct()
 	{
 		return gstProxyPad;

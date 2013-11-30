@@ -80,6 +80,7 @@ public class Document
 	protected AtkDocument* atkDocument;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkDocument* getDocumentStruct()
 	{
 		return atkDocument;

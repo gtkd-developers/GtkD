@@ -122,6 +122,7 @@ public class Task : ObjectGst
 	protected GstTask* gstTask;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTask* getTaskStruct()
 	{
 		return gstTask;

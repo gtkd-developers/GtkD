@@ -91,6 +91,7 @@ public template SourceCompletionProviderT(TStruct)
 	protected GtkSourceCompletionProvider* gtkSourceCompletionProvider;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionProvider* getSourceCompletionProviderTStruct()
 	{
 		return cast(GtkSourceCompletionProvider*)getStruct();

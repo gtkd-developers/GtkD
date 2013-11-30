@@ -87,6 +87,7 @@ public class Pixdata
 	protected GdkPixdata* gdkPixdata;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkPixdata* getPixdataStruct()
 	{
 		return gdkPixdata;

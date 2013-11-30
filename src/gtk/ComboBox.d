@@ -130,6 +130,7 @@ public class ComboBox : Bin, CellLayoutIF, CellEditableIF
 	protected GtkComboBox* gtkComboBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkComboBox* getComboBoxStruct()
 	{
 		return gtkComboBox;

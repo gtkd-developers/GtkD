@@ -87,6 +87,7 @@ public class ParamSpec
 	protected GParamSpec* gParamSpec;
 	
 	
+	/** Get the main Gtk struct */
 	public GParamSpec* getParamSpecStruct()
 	{
 		return gParamSpec;

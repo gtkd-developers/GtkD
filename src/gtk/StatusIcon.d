@@ -115,6 +115,7 @@ public class StatusIcon : ObjectG
 	protected GtkStatusIcon* gtkStatusIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStatusIcon* getStatusIconStruct()
 	{
 		return gtkStatusIcon;

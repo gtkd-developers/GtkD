@@ -96,6 +96,7 @@ public class Directory
 	protected GDir* gDir;
 	
 	
+	/** Get the main Gtk struct */
 	public GDir* getDirectoryStruct()
 	{
 		return gDir;

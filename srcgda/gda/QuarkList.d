@@ -77,6 +77,7 @@ public class QuarkList
 	protected GdaQuarkList* gdaQuarkList;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaQuarkList* getQuarkListStruct()
 	{
 		return gdaQuarkList;

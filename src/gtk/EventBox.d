@@ -73,6 +73,7 @@ public class EventBox : Bin
 	protected GtkEventBox* gtkEventBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkEventBox* getEventBoxStruct()
 	{
 		return gtkEventBox;

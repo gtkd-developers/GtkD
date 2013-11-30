@@ -77,6 +77,7 @@ public class SourceStyleSchemeManager : ObjectG
 	protected GtkSourceStyleSchemeManager* gtkSourceStyleSchemeManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceStyleSchemeManager* getSourceStyleSchemeManagerStruct()
 	{
 		return gtkSourceStyleSchemeManager;

@@ -456,6 +456,7 @@ public class FileAttributeInfoList
 	protected GFileAttributeInfoList* gFileAttributeInfoList;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileAttributeInfoList* getFileAttributeInfoListStruct()
 	{
 		return gFileAttributeInfoList;

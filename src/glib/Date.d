@@ -114,6 +114,7 @@ public class Date
 	protected GDate* gDate;
 	
 	
+	/** Get the main Gtk struct */
 	public GDate* getDateStruct()
 	{
 		return gDate;

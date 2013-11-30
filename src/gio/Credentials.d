@@ -103,6 +103,7 @@ public class Credentials : ObjectG
 	protected GCredentials* gCredentials;
 	
 	
+	/** Get the main Gtk struct */
 	public GCredentials* getCredentialsStruct()
 	{
 		return gCredentials;

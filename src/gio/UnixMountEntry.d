@@ -92,6 +92,7 @@ public class UnixMountEntry
 	protected GUnixMountEntry* gUnixMountEntry;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixMountEntry* getUnixMountEntryStruct()
 	{
 		return gUnixMountEntry;

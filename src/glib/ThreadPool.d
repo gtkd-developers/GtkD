@@ -101,6 +101,7 @@ public class ThreadPool
 	protected GThreadPool* gThreadPool;
 	
 	
+	/** Get the main Gtk struct */
 	public GThreadPool* getThreadPoolStruct()
 	{
 		return gThreadPool;

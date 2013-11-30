@@ -159,6 +159,7 @@ public class IconInfo
 	protected GtkIconInfo* gtkIconInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIconInfo* getIconInfoStruct()
 	{
 		return gtkIconInfo;

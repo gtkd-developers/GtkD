@@ -80,6 +80,7 @@ public interface PollableOutputStreamIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GPollableOutputStream* getPollableOutputStreamTStruct();
 	
 	/** the main Gtk struct as a void* */

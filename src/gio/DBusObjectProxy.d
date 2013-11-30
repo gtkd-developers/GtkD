@@ -84,6 +84,7 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	protected GDBusObjectProxy* gDBusObjectProxy;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusObjectProxy* getDBusObjectProxyStruct()
 	{
 		return gDBusObjectProxy;

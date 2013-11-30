@@ -73,6 +73,7 @@ public class ProxyAddress : InetSocketAddress
 	protected GProxyAddress* gProxyAddress;
 	
 	
+	/** Get the main Gtk struct */
 	public GProxyAddress* getProxyAddressStruct()
 	{
 		return gProxyAddress;

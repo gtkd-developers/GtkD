@@ -103,6 +103,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	protected GtkRecentChooserMenu* gtkRecentChooserMenu;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentChooserMenu* getRecentChooserMenuStruct()
 	{
 		return gtkRecentChooserMenu;

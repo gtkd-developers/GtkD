@@ -87,6 +87,7 @@ public class HBox : Box
 	protected GtkHBox* gtkHBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHBox* getHBoxStruct()
 	{
 		return gtkHBox;

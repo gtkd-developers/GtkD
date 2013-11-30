@@ -87,6 +87,7 @@ public class Stack : Container
 	protected GtkStack* gtkStack;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStack* getStackStruct()
 	{
 		return gtkStack;

@@ -76,6 +76,7 @@ public class ToggleAction : Action
 	protected GtkToggleAction* gtkToggleAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToggleAction* getToggleActionStruct()
 	{
 		return gtkToggleAction;

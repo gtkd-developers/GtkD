@@ -121,6 +121,7 @@ public class TextBuffer : ObjectG
 	protected GtkTextBuffer* gtkTextBuffer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextBuffer* getTextBufferStruct()
 	{
 		return gtkTextBuffer;

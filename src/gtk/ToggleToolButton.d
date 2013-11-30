@@ -79,6 +79,7 @@ public class ToggleToolButton : ToolButton
 	protected GtkToggleToolButton* gtkToggleToolButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToggleToolButton* getToggleToolButtonStruct()
 	{
 		return gtkToggleToolButton;

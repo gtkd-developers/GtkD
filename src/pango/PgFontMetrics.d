@@ -76,6 +76,7 @@ public class PgFontMetrics
 	protected PangoFontMetrics* pangoFontMetrics;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoFontMetrics* getPgFontMetricsStruct()
 	{
 		return pangoFontMetrics;

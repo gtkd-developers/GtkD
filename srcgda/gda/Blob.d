@@ -69,6 +69,7 @@ public class Blob
 	protected GdaBlob* gdaBlob;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaBlob* getBlobStruct()
 	{
 		return gdaBlob;

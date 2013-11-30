@@ -84,6 +84,7 @@ public class Emblem : ObjectG, IconIF
 	protected GEmblem* gEmblem;
 	
 	
+	/** Get the main Gtk struct */
 	public GEmblem* getEmblemStruct()
 	{
 		return gEmblem;

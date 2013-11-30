@@ -94,6 +94,7 @@ public class RecordingSurface : Surface
 	protected cairo_surface_t* cairo_surface;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_surface_t* getRecordingSurfaceStruct()
 	{
 		return cairo_surface;

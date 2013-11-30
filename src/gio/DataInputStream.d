@@ -88,6 +88,7 @@ public class DataInputStream : BufferedInputStream
 	protected GDataInputStream* gDataInputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GDataInputStream* getDataInputStreamStruct()
 	{
 		return gDataInputStream;

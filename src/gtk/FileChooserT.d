@@ -378,6 +378,7 @@ public template FileChooserT(TStruct)
 	protected GtkFileChooser* gtkFileChooser;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFileChooser* getFileChooserTStruct()
 	{
 		return cast(GtkFileChooser*)getStruct();

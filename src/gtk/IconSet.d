@@ -155,6 +155,7 @@ public class IconSet : Boxed
 	protected GtkIconSet* gtkIconSet;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIconSet* getIconSetStruct()
 	{
 		return gtkIconSet;

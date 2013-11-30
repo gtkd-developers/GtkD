@@ -73,6 +73,7 @@ public interface ToolShellIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolShell* getToolShellTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -80,6 +80,7 @@ public class TaskPool : ObjectGst
 	protected GstTaskPool* gstTaskPool;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTaskPool* getTaskPoolStruct()
 	{
 		return gstTaskPool;

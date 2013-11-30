@@ -101,6 +101,7 @@ public class MountOperation : GioMountOperation
 	protected GtkMountOperation* gtkMountOperation;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMountOperation* getGtkMountOperationStruct()
 	{
 		return gtkMountOperation;

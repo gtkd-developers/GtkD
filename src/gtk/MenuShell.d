@@ -107,6 +107,7 @@ public class MenuShell : Container
 	protected GtkMenuShell* gtkMenuShell;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMenuShell* getMenuShellStruct()
 	{
 		return gtkMenuShell;

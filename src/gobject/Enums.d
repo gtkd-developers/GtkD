@@ -87,6 +87,7 @@ public class Enums
 	protected GEnumValue* gEnumValue;
 	
 	
+	/** Get the main Gtk struct */
 	public GEnumValue* getEnumsStruct()
 	{
 		return gEnumValue;

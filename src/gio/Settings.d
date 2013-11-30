@@ -212,6 +212,7 @@ public class Settings : ObjectG
 	protected GSettings* gSettings;
 	
 	
+	/** Get the main Gtk struct */
 	public GSettings* getSettingsStruct()
 	{
 		return gSettings;

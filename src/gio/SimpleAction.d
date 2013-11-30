@@ -90,6 +90,7 @@ public class SimpleAction : ObjectG, ActionIF
 	protected GSimpleAction* gSimpleAction;
 	
 	
+	/** Get the main Gtk struct */
 	public GSimpleAction* getSimpleActionStruct()
 	{
 		return gSimpleAction;

@@ -92,6 +92,7 @@ public class Calendar : Widget
 	protected GtkCalendar* gtkCalendar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCalendar* getCalendarStruct()
 	{
 		return gtkCalendar;

@@ -92,6 +92,7 @@ public class Printer : ObjectG
 	protected GtkPrinter* gtkPrinter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPrinter* getPrinterStruct()
 	{
 		return gtkPrinter;

@@ -138,6 +138,7 @@ public class Keymap : ObjectG
 	protected GdkKeymap* gdkKeymap;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkKeymap* getKeymapStruct()
 	{
 		return gdkKeymap;

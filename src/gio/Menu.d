@@ -87,6 +87,7 @@ public class Menu : MenuModel
 	protected GMenu* gMenu;
 	
 	
+	/** Get the main Gtk struct */
 	public GMenu* getMenuStruct()
 	{
 		return gMenu;

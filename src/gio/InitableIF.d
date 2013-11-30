@@ -102,6 +102,7 @@ public interface InitableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GInitable* getInitableTStruct();
 	
 	/** the main Gtk struct as a void* */

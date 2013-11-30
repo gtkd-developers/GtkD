@@ -102,6 +102,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	protected GtkAppChooserWidget* gtkAppChooserWidget;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAppChooserWidget* getAppChooserWidgetStruct()
 	{
 		return gtkAppChooserWidget;

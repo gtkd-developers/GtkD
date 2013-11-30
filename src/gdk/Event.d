@@ -92,6 +92,7 @@ public class Event
 	protected GdkEvent* gdkEvent;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkEvent* getEventStruct()
 	{
 		return gdkEvent;

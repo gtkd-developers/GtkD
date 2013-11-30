@@ -76,6 +76,7 @@ public class PgLayoutLine
 	protected PangoLayoutLine* pangoLayoutLine;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoLayoutLine* getPgLayoutLineStruct()
 	{
 		return pangoLayoutLine;

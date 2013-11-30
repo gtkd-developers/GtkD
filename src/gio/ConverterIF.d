@@ -77,6 +77,7 @@ public interface ConverterIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GConverter* getConverterTStruct();
 	
 	/** the main Gtk struct as a void* */

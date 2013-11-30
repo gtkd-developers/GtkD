@@ -84,6 +84,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	protected GtkSourceCompletionItem* gtkSourceCompletionItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionItem* getSourceCompletionItemStruct()
 	{
 		return gtkSourceCompletionItem;

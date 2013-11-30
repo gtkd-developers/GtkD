@@ -103,6 +103,7 @@ public class Assistant : Window
 	protected GtkAssistant* gtkAssistant;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAssistant* getAssistantStruct()
 	{
 		return gtkAssistant;

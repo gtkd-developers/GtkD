@@ -87,6 +87,7 @@ public interface SourceCompletionProviderIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceCompletionProvider* getSourceCompletionProviderTStruct();
 	
 	/** the main Gtk struct as a void* */

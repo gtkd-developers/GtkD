@@ -104,6 +104,7 @@ public class Node
 	protected GNode* gNode;
 	
 	
+	/** Get the main Gtk struct */
 	public GNode* getNodeStruct()
 	{
 		return gNode;

@@ -95,6 +95,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	protected GtkRecentChooserDialog* gtkRecentChooserDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentChooserDialog* getRecentChooserDialogStruct()
 	{
 		return gtkRecentChooserDialog;

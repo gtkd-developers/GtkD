@@ -82,6 +82,7 @@ public class Pty : InitableIF
 	protected VtePty* vtePty;
 	
 	
+	/** Get the main Gtk struct */
 	public VtePty* getPtyStruct()
 	{
 		return vtePty;

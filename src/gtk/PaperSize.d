@@ -94,6 +94,7 @@ public class PaperSize : Boxed
 	protected GtkPaperSize* gtkPaperSize;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPaperSize* getPaperSizeStruct()
 	{
 		return gtkPaperSize;

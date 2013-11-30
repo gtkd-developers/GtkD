@@ -91,6 +91,7 @@ public class TextChildAnchor
 	protected GtkTextChildAnchor* gtkTextChildAnchor;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextChildAnchor* getTextChildAnchorStruct()
 	{
 		return gtkTextChildAnchor;

@@ -114,6 +114,7 @@ public template IconT(TStruct)
 	protected GIcon* gIcon;
 	
 	
+	/** Get the main Gtk struct */
 	public GIcon* getIconTStruct()
 	{
 		return cast(GIcon*)getStruct();

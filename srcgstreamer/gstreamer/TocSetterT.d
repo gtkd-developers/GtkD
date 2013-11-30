@@ -87,6 +87,7 @@ public template TocSetterT(TStruct)
 	protected GstTocSetter* gstTocSetter;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTocSetter* getTocSetterTStruct()
 	{
 		return cast(GstTocSetter*)getStruct();

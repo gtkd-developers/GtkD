@@ -84,6 +84,7 @@ public class Accessible : ObjectAtk
 	protected GtkAccessible* gtkAccessible;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkAccessible* getAccessibleStruct()
 	{
 		return gtkAccessible;

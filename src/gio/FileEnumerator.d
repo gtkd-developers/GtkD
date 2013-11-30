@@ -117,6 +117,7 @@ public class FileEnumerator : ObjectG
 	protected GFileEnumerator* gFileEnumerator;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileEnumerator* getFileEnumeratorStruct()
 	{
 		return gFileEnumerator;

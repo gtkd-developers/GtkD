@@ -113,6 +113,7 @@ public class DateTime
 	protected GDateTime* gDateTime;
 	
 	
+	/** Get the main Gtk struct */
 	public GDateTime* getDateTimeStruct()
 	{
 		return gDateTime;

@@ -144,6 +144,7 @@ public class Private
 	protected GPrivate* gPrivate;
 	
 	
+	/** Get the main Gtk struct */
 	public GPrivate* getPrivateStruct()
 	{
 		return gPrivate;

@@ -77,6 +77,7 @@ public template CellEditableT(TStruct)
 	protected GtkCellEditable* gtkCellEditable;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellEditable* getCellEditableTStruct()
 	{
 		return cast(GtkCellEditable*)getStruct();

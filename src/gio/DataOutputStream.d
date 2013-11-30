@@ -84,6 +84,7 @@ public class DataOutputStream : FilterOutputStream
 	protected GDataOutputStream* gDataOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GDataOutputStream* getDataOutputStreamStruct()
 	{
 		return gDataOutputStream;

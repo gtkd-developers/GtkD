@@ -159,6 +159,7 @@ public class DeviceManager : ObjectG
 	protected GdkDeviceManager* gdkDeviceManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkDeviceManager* getDeviceManagerStruct()
 	{
 		return gdkDeviceManager;

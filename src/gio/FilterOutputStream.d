@@ -77,6 +77,7 @@ public class FilterOutputStream : OutputStream
 	protected GFilterOutputStream* gFilterOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GFilterOutputStream* getFilterOutputStreamStruct()
 	{
 		return gFilterOutputStream;

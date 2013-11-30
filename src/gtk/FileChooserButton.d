@@ -101,6 +101,7 @@ public class FileChooserButton : Box, FileChooserIF
 	protected GtkFileChooserButton* gtkFileChooserButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFileChooserButton* getFileChooserButtonStruct()
 	{
 		return gtkFileChooserButton;

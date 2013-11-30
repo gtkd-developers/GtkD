@@ -77,6 +77,7 @@ public interface SocketConnectableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GSocketConnectable* getSocketConnectableTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -79,6 +79,7 @@ public class ValueAtk
 	protected AtkValue* atkValue;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkValue* getValueAtkStruct()
 	{
 		return atkValue;

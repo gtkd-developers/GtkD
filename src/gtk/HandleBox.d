@@ -99,6 +99,7 @@ public class HandleBox : Bin
 	protected GtkHandleBox* gtkHandleBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkHandleBox* getHandleBoxStruct()
 	{
 		return gtkHandleBox;

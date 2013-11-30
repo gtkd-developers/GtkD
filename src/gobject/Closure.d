@@ -120,6 +120,7 @@ public class Closure
 	protected GClosure* gClosure;
 	
 	
+	/** Get the main Gtk struct */
 	public GClosure* getClosureStruct()
 	{
 		return gClosure;

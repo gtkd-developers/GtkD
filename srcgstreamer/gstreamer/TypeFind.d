@@ -82,6 +82,7 @@ public class TypeFind
 	protected GstTypeFind* gstTypeFind;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTypeFind* getTypeFindStruct()
 	{
 		return gstTypeFind;

@@ -110,6 +110,7 @@ public class Expander : Bin
 	protected GtkExpander* gtkExpander;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkExpander* getExpanderStruct()
 	{
 		return gtkExpander;

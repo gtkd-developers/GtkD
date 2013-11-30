@@ -103,6 +103,7 @@ public class LockButton : Button
 	protected GtkLockButton* gtkLockButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkLockButton* getLockButtonStruct()
 	{
 		return gtkLockButton;

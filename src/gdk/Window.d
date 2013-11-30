@@ -149,6 +149,7 @@ public class Window : ObjectG
 	protected GdkWindow* gdkWindow;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkWindow* getWindowStruct()
 	{
 		return gdkWindow;

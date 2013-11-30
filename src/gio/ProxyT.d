@@ -95,6 +95,7 @@ public template ProxyT(TStruct)
 	protected GProxy* gProxy;
 	
 	
+	/** Get the main Gtk struct */
 	public GProxy* getProxyTStruct()
 	{
 		return cast(GProxy*)getStruct();

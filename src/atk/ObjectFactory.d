@@ -81,6 +81,7 @@ public class ObjectFactory : ObjectG
 	protected AtkObjectFactory* atkObjectFactory;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkObjectFactory* getObjectFactoryStruct()
 	{
 		return atkObjectFactory;

@@ -76,6 +76,7 @@ public class Select : DataModelArray
 	protected GdaSelect* gdaSelect;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaSelect* getSelectStruct()
 	{
 		return gdaSelect;

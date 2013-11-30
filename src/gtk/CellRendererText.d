@@ -80,6 +80,7 @@ public class CellRendererText : CellRenderer
 	protected GtkCellRendererText* gtkCellRendererText;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererText* getCellRendererTextStruct()
 	{
 		return gtkCellRendererText;

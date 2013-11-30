@@ -97,6 +97,7 @@ public class ToolItem : Bin, ActivatableIF
 	protected GtkToolItem* gtkToolItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolItem* getToolItemStruct()
 	{
 		return gtkToolItem;

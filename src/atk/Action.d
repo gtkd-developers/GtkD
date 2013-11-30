@@ -88,6 +88,7 @@ public class Action
 	protected AtkAction* atkAction;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkAction* getActionStruct()
 	{
 		return atkAction;

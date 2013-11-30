@@ -82,6 +82,7 @@ public template ColorChooserT(TStruct)
 	protected GtkColorChooser* gtkColorChooser;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkColorChooser* getColorChooserTStruct()
 	{
 		return cast(GtkColorChooser*)getStruct();

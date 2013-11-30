@@ -79,6 +79,7 @@ public class DBusMenuModel : MenuModel
 	protected GDBusMenuModel* gDBusMenuModel;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusMenuModel* getDBusMenuModelStruct()
 	{
 		return gDBusMenuModel;

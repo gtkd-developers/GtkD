@@ -77,6 +77,7 @@ public class ParseContext
 	protected GstParseContext* gstParseContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GstParseContext* getParseContextStruct()
 	{
 		return gstParseContext;

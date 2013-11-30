@@ -115,6 +115,7 @@ public class SimpleXML
 	protected GMarkupParseContext* gMarkupParseContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GMarkupParseContext* getSimpleXMLStruct()
 	{
 		return gMarkupParseContext;

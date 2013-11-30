@@ -84,6 +84,7 @@ public class DateTime
 	protected GstDateTime* gstDateTime;
 	
 	
+	/** Get the main Gtk struct */
 	public GstDateTime* getDateTimeStruct()
 	{
 		return gstDateTime;

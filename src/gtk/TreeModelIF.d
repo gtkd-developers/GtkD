@@ -202,6 +202,7 @@ public interface TreeModelIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreeModel* getTreeModelTStruct();
 	
 	/** the main Gtk struct as a void* */

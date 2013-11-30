@@ -143,6 +143,7 @@ public class Binding : ObjectG
 	protected GBinding* gBinding;
 	
 	
+	/** Get the main Gtk struct */
 	public GBinding* getBindingStruct()
 	{
 		return gBinding;

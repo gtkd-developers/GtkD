@@ -91,6 +91,7 @@ public interface ProxyIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GProxy* getProxyTStruct();
 	
 	/** the main Gtk struct as a void* */

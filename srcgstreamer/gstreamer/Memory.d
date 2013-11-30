@@ -113,6 +113,7 @@ public class Memory
 	protected GstMemory* gstMemory;
 	
 	
+	/** Get the main Gtk struct */
 	public GstMemory* getMemoryStruct()
 	{
 		return gstMemory;

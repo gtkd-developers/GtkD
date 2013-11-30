@@ -115,6 +115,7 @@ public class DrawingArea : Widget
 	protected GtkDrawingArea* gtkDrawingArea;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkDrawingArea* getDrawingAreaStruct()
 	{
 		return gtkDrawingArea;

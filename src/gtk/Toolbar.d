@@ -111,6 +111,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	protected GtkToolbar* gtkToolbar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkToolbar* getToolbarStruct()
 	{
 		return gtkToolbar;

@@ -101,6 +101,7 @@ public template AsyncInitableT(TStruct)
 	protected GAsyncInitable* gAsyncInitable;
 	
 	
+	/** Get the main Gtk struct */
 	public GAsyncInitable* getAsyncInitableTStruct()
 	{
 		return cast(GAsyncInitable*)getStruct();

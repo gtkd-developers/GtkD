@@ -144,6 +144,7 @@ public class RecMutex
 	protected GRecMutex* gRecMutex;
 	
 	
+	/** Get the main Gtk struct */
 	public GRecMutex* getRecMutexStruct()
 	{
 		return gRecMutex;

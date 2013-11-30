@@ -93,6 +93,7 @@ public class TypeFindFactory : PluginFeature
 	protected GstTypeFindFactory* gstTypeFindFactory;
 	
 	
+	/** Get the main Gtk struct */
 	public GstTypeFindFactory* getTypeFindFactoryStruct()
 	{
 		return gstTypeFindFactory;

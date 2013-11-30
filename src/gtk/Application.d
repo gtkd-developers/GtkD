@@ -140,6 +140,7 @@ public class Application : GioApplication
 	protected GtkApplication* gtkApplication;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkApplication* getGtkApplicationStruct()
 	{
 		return gtkApplication;

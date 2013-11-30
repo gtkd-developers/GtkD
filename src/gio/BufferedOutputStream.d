@@ -87,6 +87,7 @@ public class BufferedOutputStream : FilterOutputStream
 	protected GBufferedOutputStream* gBufferedOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GBufferedOutputStream* getBufferedOutputStreamStruct()
 	{
 		return gBufferedOutputStream;

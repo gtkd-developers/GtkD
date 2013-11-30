@@ -82,6 +82,7 @@ public class Arrow : Misc
 	protected GtkArrow* gtkArrow;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkArrow* getArrowStruct()
 	{
 		return gtkArrow;

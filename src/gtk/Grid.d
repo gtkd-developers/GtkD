@@ -92,6 +92,7 @@ public class Grid : Container, OrientableIF
 	protected GtkGrid* gtkGrid;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkGrid* getGridStruct()
 	{
 		return gtkGrid;

@@ -94,6 +94,7 @@ public class PtrArray
 	protected GPtrArray* gPtrArray;
 	
 	
+	/** Get the main Gtk struct */
 	public GPtrArray* getPtrArrayStruct()
 	{
 		return gPtrArray;

@@ -93,6 +93,7 @@ public class SourcePrintCompositor : ObjectG
 	protected GtkSourcePrintCompositor* gtkSourcePrintCompositor;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourcePrintCompositor* getSourcePrintCompositorStruct()
 	{
 		return gtkSourcePrintCompositor;

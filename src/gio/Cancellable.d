@@ -83,6 +83,7 @@ public class Cancellable : ObjectG
 	protected GCancellable* gCancellable;
 	
 	
+	/** Get the main Gtk struct */
 	public GCancellable* getCancellableStruct()
 	{
 		return gCancellable;

@@ -92,6 +92,7 @@ public class RadioMenuItem : CheckMenuItem
 	protected GtkRadioMenuItem* gtkRadioMenuItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRadioMenuItem* getRadioMenuItemStruct()
 	{
 		return gtkRadioMenuItem;

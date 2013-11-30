@@ -95,6 +95,7 @@ public class ListBoxRow
 	protected GtkListBoxRow* gtkListBoxRow;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkListBoxRow* getListBoxRowStruct()
 	{
 		return gtkListBoxRow;

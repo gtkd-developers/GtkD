@@ -73,6 +73,7 @@ public interface CellEditableIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellEditable* getCellEditableTStruct();
 	
 	/** the main Gtk struct as a void* */

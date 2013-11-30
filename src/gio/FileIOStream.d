@@ -110,6 +110,7 @@ public class FileIOStream : IOStream, SeekableIF
 	protected GFileIOStream* gFileIOStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GFileIOStream* getFileIOStreamStruct()
 	{
 		return gFileIOStream;

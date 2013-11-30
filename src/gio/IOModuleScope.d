@@ -79,6 +79,7 @@ public class IOModuleScope
 	protected GIOModuleScope* gIOModuleScope;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOModuleScope* getIOModuleScopeStruct()
 	{
 		return gIOModuleScope;

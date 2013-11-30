@@ -102,6 +102,7 @@ public class PgFont : ObjectG
 	protected PangoFont* pangoFont;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoFont* getPgFontStruct()
 	{
 		return pangoFont;

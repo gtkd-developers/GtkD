@@ -87,6 +87,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	protected GDBusObjectSkeleton* gDBusObjectSkeleton;
 	
 	
+	/** Get the main Gtk struct */
 	public GDBusObjectSkeleton* getDBusObjectSkeletonStruct()
 	{
 		return gDBusObjectSkeleton;

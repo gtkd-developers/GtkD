@@ -108,6 +108,7 @@ public class PlacesSidebar : ScrolledWindow
 	protected GtkPlacesSidebar* gtkPlacesSidebar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkPlacesSidebar* getPlacesSidebarStruct()
 	{
 		return gtkPlacesSidebar;

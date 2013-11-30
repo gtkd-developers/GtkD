@@ -96,6 +96,7 @@ public template RemoteActionGroupT(TStruct)
 	protected GRemoteActionGroup* gRemoteActionGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GRemoteActionGroup* getRemoteActionGroupTStruct()
 	{
 		return cast(GRemoteActionGroup*)getStruct();

@@ -88,6 +88,7 @@ public class Pattern
 	protected cairo_pattern_t* cairo_pattern;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_pattern_t* getPatternStruct()
 	{
 		return cairo_pattern;

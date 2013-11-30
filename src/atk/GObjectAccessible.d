@@ -80,6 +80,7 @@ public class GObjectAccessible : ObjectAtk
 	protected AtkGObjectAccessible* atkGObjectAccessible;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkGObjectAccessible* getGObjectAccessibleStruct()
 	{
 		return atkGObjectAccessible;

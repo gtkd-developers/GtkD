@@ -94,6 +94,7 @@ public class OutputStream : ObjectG
 	protected GOutputStream* gOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GOutputStream* getOutputStreamStruct()
 	{
 		return gOutputStream;

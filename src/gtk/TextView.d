@@ -115,6 +115,7 @@ public class TextView : Container, ScrollableIF
 	protected GtkTextView* gtkTextView;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTextView* getTextViewStruct()
 	{
 		return gtkTextView;

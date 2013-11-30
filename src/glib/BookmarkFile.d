@@ -116,6 +116,7 @@ public class BookmarkFile
 	protected GBookmarkFile* gBookmarkFile;
 	
 	
+	/** Get the main Gtk struct */
 	public GBookmarkFile* getBookmarkFileStruct()
 	{
 		return gBookmarkFile;

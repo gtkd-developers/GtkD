@@ -75,6 +75,7 @@ public class IMMulticontext : IMContext
 	protected GtkIMMulticontext* gtkIMMulticontext;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIMMulticontext* getIMMulticontextStruct()
 	{
 		return gtkIMMulticontext;

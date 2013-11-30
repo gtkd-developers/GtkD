@@ -119,6 +119,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	protected GtkIconView* gtkIconView;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIconView* getIconViewStruct()
 	{
 		return gtkIconView;

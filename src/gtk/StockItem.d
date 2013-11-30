@@ -96,6 +96,7 @@ public class StockItem
 	protected GtkStockItem* gtkStockItem;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStockItem* getStockItemStruct()
 	{
 		return gtkStockItem;

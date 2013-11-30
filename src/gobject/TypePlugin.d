@@ -113,6 +113,7 @@ public class TypePlugin
 	protected GTypePlugin* gTypePlugin;
 	
 	
+	/** Get the main Gtk struct */
 	public GTypePlugin* getTypePluginStruct()
 	{
 		return gTypePlugin;

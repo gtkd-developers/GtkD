@@ -203,6 +203,7 @@ public class TreePath
 	protected GtkTreePath* gtkTreePath;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkTreePath* getTreePathStruct()
 	{
 		return gtkTreePath;

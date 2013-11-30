@@ -167,6 +167,7 @@ public class Element : ObjectGst
 	protected GstElement* gstElement;
 	
 	
+	/** Get the main Gtk struct */
 	public GstElement* getElementStruct()
 	{
 		return gstElement;

@@ -154,6 +154,7 @@ public class Buffer
 	protected GstBuffer* gstBuffer;
 	
 	
+	/** Get the main Gtk struct */
 	public GstBuffer* getBufferStruct()
 	{
 		return gstBuffer;

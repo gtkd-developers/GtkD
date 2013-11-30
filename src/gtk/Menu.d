@@ -113,6 +113,7 @@ public class Menu : MenuShell
 	protected GtkMenu* gtkMenu;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkMenu* getMenuStruct()
 	{
 		return gtkMenu;

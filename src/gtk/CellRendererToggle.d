@@ -78,6 +78,7 @@ public class CellRendererToggle : CellRenderer
 	protected GtkCellRendererToggle* gtkCellRendererToggle;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererToggle* getCellRendererToggleStruct()
 	{
 		return gtkCellRendererToggle;

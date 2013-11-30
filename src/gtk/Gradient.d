@@ -105,6 +105,7 @@ public class Gradient
 	protected GtkGradient* gtkGradient;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkGradient* getGradientStruct()
 	{
 		return gtkGradient;

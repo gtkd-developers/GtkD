@@ -90,6 +90,7 @@ public class UnixFDMessage : SocketControlMessage
 	protected GUnixFDMessage* gUnixFDMessage;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixFDMessage* getUnixFDMessageStruct()
 	{
 		return gUnixFDMessage;

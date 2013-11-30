@@ -97,6 +97,7 @@ public class Iterator
 	protected GstIterator* gstIterator;
 	
 	
+	/** Get the main Gtk struct */
 	public GstIterator* getIteratorStruct()
 	{
 		return gstIterator;

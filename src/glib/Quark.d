@@ -91,6 +91,7 @@ public class Quark
 	protected GQuark* gQuark;
 	
 	
+	/** Get the main Gtk struct */
 	public GQuark* getQuarkStruct()
 	{
 		return gQuark;

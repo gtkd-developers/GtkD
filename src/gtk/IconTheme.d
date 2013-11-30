@@ -157,6 +157,7 @@ public class IconTheme : ObjectG
 	protected GtkIconTheme* gtkIconTheme;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIconTheme* getIconThemeStruct()
 	{
 		return gtkIconTheme;

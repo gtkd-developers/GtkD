@@ -116,6 +116,7 @@ public class PgContext : ObjectG
 	protected PangoContext* pangoContext;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoContext* getPgContextStruct()
 	{
 		return pangoContext;

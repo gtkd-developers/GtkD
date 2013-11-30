@@ -280,6 +280,7 @@ public class UIManager : ObjectG, BuildableIF
 	protected GtkUIManager* gtkUIManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkUIManager* getUIManagerStruct()
 	{
 		return gtkUIManager;

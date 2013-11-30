@@ -107,6 +107,7 @@ public class ListG
 	protected GList* gList;
 	
 	
+	/** Get the main Gtk struct */
 	public GList* getListGStruct()
 	{
 		return gList;

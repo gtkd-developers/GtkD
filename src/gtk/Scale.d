@@ -100,6 +100,7 @@ public class Scale : Range
 	protected GtkScale* gtkScale;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkScale* getScaleStruct()
 	{
 		return gtkScale;

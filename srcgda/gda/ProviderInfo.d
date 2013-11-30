@@ -77,6 +77,7 @@ public class ProviderInfo
 	protected GdaProviderInfo* gdaProviderInfo;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaProviderInfo* getProviderInfoStruct()
 	{
 		return gdaProviderInfo;

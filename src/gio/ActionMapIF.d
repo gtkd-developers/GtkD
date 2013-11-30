@@ -82,6 +82,7 @@ public interface ActionMapIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GActionMap* getActionMapTStruct();
 	
 	/** the main Gtk struct as a void* */

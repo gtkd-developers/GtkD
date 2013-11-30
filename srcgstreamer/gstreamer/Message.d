@@ -130,6 +130,7 @@ public class Message
 	protected GstMessage* gstMessage;
 	
 	
+	/** Get the main Gtk struct */
 	public GstMessage* getMessageStruct()
 	{
 		return gstMessage;

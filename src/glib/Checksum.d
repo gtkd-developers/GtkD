@@ -97,6 +97,7 @@ public class Checksum
 	protected GChecksum* gChecksum;
 	
 	
+	/** Get the main Gtk struct */
 	public GChecksum* getChecksumStruct()
 	{
 		return gChecksum;

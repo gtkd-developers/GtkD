@@ -107,6 +107,7 @@ public class Sequence
 	protected GSequence* gSequence;
 	
 	
+	/** Get the main Gtk struct */
 	public GSequence* getSequenceStruct()
 	{
 		return gSequence;

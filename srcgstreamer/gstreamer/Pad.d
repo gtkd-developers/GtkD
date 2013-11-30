@@ -163,6 +163,7 @@ public class Pad : ObjectGst
 	protected GstPad* gstPad;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPad* getPadStruct()
 	{
 		return gstPad;

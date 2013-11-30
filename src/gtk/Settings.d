@@ -121,6 +121,7 @@ public class Settings : ObjectG, StyleProviderIF
 	protected GtkSettings* gtkSettings;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSettings* getSettingsStruct()
 	{
 		return gtkSettings;

@@ -75,6 +75,7 @@ public class StateSet : ObjectG
 	protected AtkStateSet* atkStateSet;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkStateSet* getStateSetStruct()
 	{
 		return atkStateSet;

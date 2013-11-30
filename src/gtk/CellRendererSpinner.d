@@ -80,6 +80,7 @@ public class CellRendererSpinner : CellRenderer
 	protected GtkCellRendererSpinner* gtkCellRendererSpinner;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCellRendererSpinner* getCellRendererSpinnerStruct()
 	{
 		return gtkCellRendererSpinner;

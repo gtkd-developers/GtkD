@@ -80,6 +80,7 @@ public class ParameterList
 	protected GdaParameterList* gdaParameterList;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaParameterList* getParameterListStruct()
 	{
 		return gdaParameterList;

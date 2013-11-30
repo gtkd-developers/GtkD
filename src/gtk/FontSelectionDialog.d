@@ -97,6 +97,7 @@ public class FontSelectionDialog : Dialog
 	protected GtkFontSelectionDialog* gtkFontSelectionDialog;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkFontSelectionDialog* getFontSelectionDialogStruct()
 	{
 		return gtkFontSelectionDialog;

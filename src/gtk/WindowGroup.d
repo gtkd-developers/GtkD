@@ -89,6 +89,7 @@ public class WindowGroup : ObjectG
 	protected GtkWindowGroup* gtkWindowGroup;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkWindowGroup* getWindowGroupStruct()
 	{
 		return gtkWindowGroup;

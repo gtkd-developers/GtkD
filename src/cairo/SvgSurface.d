@@ -75,6 +75,7 @@ public class SvgSurface : Surface
 	protected cairo_surface_t* cairo_surface;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_surface_t* getSvgSurfaceStruct()
 	{
 		return cairo_surface;

@@ -218,6 +218,7 @@ public class Task : ObjectG, AsyncResultIF
 	protected GTask* gTask;
 	
 	
+	/** Get the main Gtk struct */
 	public GTask* getTaskStruct()
 	{
 		return gTask;

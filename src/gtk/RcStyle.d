@@ -603,6 +603,7 @@ public class RcStyle : ObjectG
 	protected GtkRcStyle* gtkRcStyle;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRcStyle* getRcStyleStruct()
 	{
 		return gtkRcStyle;

@@ -129,6 +129,7 @@ public class RecentManager : ObjectG
 	protected GtkRecentManager* gtkRecentManager;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkRecentManager* getRecentManagerStruct()
 	{
 		return gtkRecentManager;

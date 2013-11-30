@@ -126,6 +126,7 @@ public class Window : Bin
 	protected GtkWindow* gtkWindow;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkWindow* getWindowStruct()
 	{
 		return gtkWindow;

@@ -84,6 +84,7 @@ public class StackSwitcher : Box
 	protected GtkStackSwitcher* gtkStackSwitcher;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkStackSwitcher* getStackSwitcherStruct()
 	{
 		return gtkStackSwitcher;

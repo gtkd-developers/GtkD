@@ -84,6 +84,7 @@ public class UnixFDList : ObjectG
 	protected GUnixFDList* gUnixFDList;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixFDList* getUnixFDListStruct()
 	{
 		return gUnixFDList;

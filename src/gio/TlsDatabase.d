@@ -103,6 +103,7 @@ public class TlsDatabase : ObjectG
 	protected GTlsDatabase* gTlsDatabase;
 	
 	
+	/** Get the main Gtk struct */
 	public GTlsDatabase* getTlsDatabaseStruct()
 	{
 		return gTlsDatabase;

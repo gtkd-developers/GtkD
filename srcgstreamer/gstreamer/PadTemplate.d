@@ -117,6 +117,7 @@ public class PadTemplate : ObjectGst
 	protected GstPadTemplate* gstPadTemplate;
 	
 	
+	/** Get the main Gtk struct */
 	public GstPadTemplate* getPadTemplateStruct()
 	{
 		return gstPadTemplate;

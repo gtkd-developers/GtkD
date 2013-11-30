@@ -88,6 +88,7 @@ public class SourceGutter : ObjectG
 	protected GtkSourceGutter* gtkSourceGutter;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSourceGutter* getSourceGutterStruct()
 	{
 		return gtkSourceGutter;

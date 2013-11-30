@@ -83,6 +83,7 @@ public class IOModule : TypeModule
 	protected GIOModule* gIOModule;
 	
 	
+	/** Get the main Gtk struct */
 	public GIOModule* getIOModuleStruct()
 	{
 		return gIOModule;

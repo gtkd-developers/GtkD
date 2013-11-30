@@ -83,6 +83,7 @@ public class RGBA
 	protected GdkRGBA* gdkRGBA;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkRGBA* getRGBAStruct()
 	{
 		return gdkRGBA;

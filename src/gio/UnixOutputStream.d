@@ -84,6 +84,7 @@ public class UnixOutputStream : OutputStream, PollableOutputStreamIF
 	protected GUnixOutputStream* gUnixOutputStream;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixOutputStream* getUnixOutputStreamStruct()
 	{
 		return gUnixOutputStream;

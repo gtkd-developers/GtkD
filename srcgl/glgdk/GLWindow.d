@@ -82,6 +82,7 @@ public class GLWindow : ObjectG, GLDrawableIF
 	protected GdkGLWindow* gdkGLWindow;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkGLWindow* getGLWindowStruct()
 	{
 		return gdkGLWindow;

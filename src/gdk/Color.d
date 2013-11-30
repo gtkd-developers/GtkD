@@ -81,6 +81,7 @@ public class Color
 	protected GdkColor* gdkColor;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkColor* getColorStruct()
 	{
 		return gdkColor;

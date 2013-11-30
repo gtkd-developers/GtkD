@@ -80,6 +80,7 @@ public class VScale : Scale
 	protected GtkVScale* gtkVScale;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVScale* getVScaleStruct()
 	{
 		return gtkVScale;

@@ -92,6 +92,7 @@ public interface ChildProxyIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GstChildProxy* getChildProxyTStruct();
 	
 	/** the main Gtk struct as a void* */

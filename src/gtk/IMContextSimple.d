@@ -70,6 +70,7 @@ public class IMContextSimple : IMContext
 	protected GtkIMContextSimple* gtkIMContextSimple;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIMContextSimple* getIMContextSimpleStruct()
 	{
 		return gtkIMContextSimple;

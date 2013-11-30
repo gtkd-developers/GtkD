@@ -137,6 +137,7 @@ public class IMContext : ObjectG
 	protected GtkIMContext* gtkIMContext;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkIMContext* getIMContextStruct()
 	{
 		return gtkIMContext;

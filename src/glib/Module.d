@@ -100,6 +100,7 @@ public class Module
 	protected GModule* gModule;
 	
 	
+	/** Get the main Gtk struct */
 	public GModule* getModuleStruct()
 	{
 		return gModule;

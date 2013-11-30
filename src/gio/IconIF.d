@@ -110,6 +110,7 @@ public interface IconIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GIcon* getIconTStruct();
 	
 	/** the main Gtk struct as a void* */

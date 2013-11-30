@@ -82,6 +82,7 @@ public class Script : Device
 	protected cairo_device_t* cairo_device;
 	
 	
+	/** Get the main Gtk struct */
 	public cairo_device_t* getScriptStruct()
 	{
 		return cairo_device;

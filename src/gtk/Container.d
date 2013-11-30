@@ -251,6 +251,7 @@ public class Container : Widget
 	protected GtkContainer* gtkContainer;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkContainer* getContainerStruct()
 	{
 		return gtkContainer;

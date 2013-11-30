@@ -119,6 +119,7 @@ public interface DriveIF
 {
 	
 	
+	/** Get the main Gtk struct */
 	public GDrive* getDriveTStruct();
 	
 	/** the main Gtk struct as a void* */

@@ -105,6 +105,7 @@ public class FrameClock
 	protected GdkFrameClock* gdkFrameClock;
 	
 	
+	/** Get the main Gtk struct */
 	public GdkFrameClock* getFrameClockStruct()
 	{
 		return gdkFrameClock;

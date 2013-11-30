@@ -79,6 +79,7 @@ public class PgMatrix : Boxed
 	protected PangoMatrix* pangoMatrix;
 	
 	
+	/** Get the main Gtk struct */
 	public PangoMatrix* getPgMatrixStruct()
 	{
 		return pangoMatrix;

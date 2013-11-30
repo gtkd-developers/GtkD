@@ -82,6 +82,7 @@ public class CheckButton : ToggleButton
 	protected GtkCheckButton* gtkCheckButton;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkCheckButton* getCheckButtonStruct()
 	{
 		return gtkCheckButton;

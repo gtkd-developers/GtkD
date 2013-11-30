@@ -123,6 +123,7 @@ public template DriveT(TStruct)
 	protected GDrive* gDrive;
 	
 	
+	/** Get the main Gtk struct */
 	public GDrive* getDriveTStruct()
 	{
 		return cast(GDrive*)getStruct();

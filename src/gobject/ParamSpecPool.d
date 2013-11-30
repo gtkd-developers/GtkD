@@ -85,6 +85,7 @@ public class ParamSpecPool
 	protected GParamSpecPool* gParamSpecPool;
 	
 	
+	/** Get the main Gtk struct */
 	public GParamSpecPool* getParamSpecPoolStruct()
 	{
 		return gParamSpecPool;

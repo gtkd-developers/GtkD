@@ -121,6 +121,7 @@ public class Event
 	protected GstEvent* gstEvent;
 	
 	
+	/** Get the main Gtk struct */
 	public GstEvent* getEventStruct()
 	{
 		return gstEvent;

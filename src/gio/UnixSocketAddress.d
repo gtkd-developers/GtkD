@@ -86,6 +86,7 @@ public class UnixSocketAddress : SocketAddress
 	protected GUnixSocketAddress* gUnixSocketAddress;
 	
 	
+	/** Get the main Gtk struct */
 	public GUnixSocketAddress* getUnixSocketAddressStruct()
 	{
 		return gUnixSocketAddress;

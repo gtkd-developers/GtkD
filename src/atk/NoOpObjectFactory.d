@@ -73,6 +73,7 @@ public class NoOpObjectFactory : ObjectFactory
 	protected AtkNoOpObjectFactory* atkNoOpObjectFactory;
 	
 	
+	/** Get the main Gtk struct */
 	public AtkNoOpObjectFactory* getNoOpObjectFactoryStruct()
 	{
 		return atkNoOpObjectFactory;

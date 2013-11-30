@@ -89,6 +89,7 @@ public class VButtonBox : ButtonBox
 	protected GtkVButtonBox* gtkVButtonBox;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkVButtonBox* getVButtonBoxStruct()
 	{
 		return gtkVButtonBox;

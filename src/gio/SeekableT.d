@@ -79,6 +79,7 @@ public template SeekableT(TStruct)
 	protected GSeekable* gSeekable;
 	
 	
+	/** Get the main Gtk struct */
 	public GSeekable* getSeekableTStruct()
 	{
 		return cast(GSeekable*)getStruct();

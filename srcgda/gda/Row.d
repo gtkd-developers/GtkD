@@ -78,6 +78,7 @@ public class Row
 	protected GdaRow* gdaRow;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaRow* getRowStruct()
 	{
 		return gdaRow;

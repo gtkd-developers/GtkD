@@ -102,6 +102,7 @@ public class SelectionData : Boxed
 	protected GtkSelectionData* gtkSelectionData;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkSelectionData* getSelectionDataStruct()
 	{
 		return gtkSelectionData;

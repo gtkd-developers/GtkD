@@ -80,6 +80,7 @@ public class Value
 	protected GdaValue* gdaValue;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaValue* getValueStruct()
 	{
 		return gdaValue;

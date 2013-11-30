@@ -154,6 +154,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 	protected GtkEntry* gtkEntry;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkEntry* getEntryStruct()
 	{
 		return gtkEntry;

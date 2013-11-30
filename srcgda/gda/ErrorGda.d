@@ -75,6 +75,7 @@ public class ErrorGda : ObjectG
 	protected GdaError* gdaError;
 	
 	
+	/** Get the main Gtk struct */
 	public GdaError* getErrorGdaStruct()
 	{
 		return gdaError;

@@ -87,6 +87,7 @@ public class ThreadedSocketService : SocketService
 	protected GThreadedSocketService* gThreadedSocketService;
 	
 	
+	/** Get the main Gtk struct */
 	public GThreadedSocketService* getThreadedSocketServiceStruct()
 	{
 		return gThreadedSocketService;

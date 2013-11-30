@@ -98,6 +98,7 @@ public class LevelBar : Widget
 	protected GtkLevelBar* gtkLevelBar;
 	
 	
+	/** Get the main Gtk struct */
 	public GtkLevelBar* getLevelBarStruct()
 	{
 		return gtkLevelBar;
