@@ -109,7 +109,7 @@ public class RGBA
 	 */
 	this()
 	{
-		GdkRGBA rgba;
+		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
 		
 		this(gdk_rgba_copy(&rgba));
 	}
