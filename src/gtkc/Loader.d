@@ -19,19 +19,8 @@
 
 module gtkc.Loader;
 
-version(Tango)
-{
-	import tango.io.Stdout;
-	import tango.stdc.stringz;
-
-	import gtkc.glibtypes;
-//	private alias char[] string;
-}
-else
-{
-	import std.stdio;
-	import std.string;
-}
+import std.stdio;
+import std.string;
 
 import gtkc.paths;
 
@@ -172,10 +161,7 @@ public struct Linker
 	{
 		foreach ( lib; getLoadLibraries() )
 		{
-			version(Tango)
-				Stdout.formatln("Loaded lib = {}", lib);
-			else
-				writefln("Loaded lib = %s", lib);
+			writefln("Loaded lib = %s", lib);
 		}
 	}
 
@@ -232,10 +218,7 @@ public struct Linker
 		{
 			foreach ( symbol; getLoadFailures(library) )
 			{
-				version(Tango)
-					Stdout.formatln("failed ({}) {}", library, symbol);
-				else
-					writefln("failed (%s) %s", library, symbol);
+				writefln("failed (%s) %s", library, symbol);
 			}
 		}
 	}
@@ -256,10 +239,38 @@ version(Windows)
 		void* LoadLibraryA(char*);
 		void* GetProcAddress(void*, char*);
 		void FreeLibrary(void*);
+
+		int SetDllDirectoryA(const(char)* path);
+
+		enum MachineType : ushort
+		{
+			UNKNOWN = 0x0,
+			AM33 = 0x1d3,
+			AMD64 = 0x8664,
+			ARM = 0x1c0,
+			EBC = 0xebc,
+			I386 = 0x14c,
+			IA64 = 0x200,
+			M32R = 0x9041,
+			MIPS16 = 0x266,
+			MIPSFPU = 0x366,
+			MIPSFPU16 = 0x466,
+			POWERPC = 0x1f0,
+			POWERPCFP = 0x1f1,
+			R4000 = 0x166,
+			SH3 = 0x1a2,
+			SH3DSP = 0x1a3,
+			SH4 = 0x1a6,
+			SH5 = 0x1a8,
+			THUMB = 0x1c2,
+			WCEMIPSV2 = 0x169,
+		}
 	}
 
 	private void* pLoadLibrary(string libraryName)
 	{
+		setDllPath();
+
 		return LoadLibraryA(cast(char*)toStringz(libraryName));
 	}
 
@@ -269,6 +280,74 @@ version(Windows)
 	}
 
 	private alias FreeLibrary pUnloadLibrary;
+
+	private void setDllPath()
+	{
+		static bool isSet;
+
+		if ( isSet )
+			return;
+
+		string gtkPath = getGtkPath();
+
+		if ( gtkPath.length > 0 )
+			SetDllDirectoryA((gtkPath~'\0').ptr);
+
+		isSet = true;
+	}
+	
+	private string getGtkPath()
+	{
+		import std.algorithm;
+		import std.path;
+		import std.process;
+		import std.file;
+
+		foreach (path; splitter(environment.get("PATH"), ';'))
+		{
+			string dllPath = buildNormalizedPath(path, "libgtk-3-0.dll");
+
+			if ( !exists(dllPath) )
+				continue;
+
+			if ( checkArchitecture(dllPath) )
+				return path;
+		}
+
+		return null;
+	}
+
+	private bool checkArchitecture(string dllPath)
+	{
+		import std.stdio;
+
+		File dll = File(dllPath);
+
+		dll.seek(0x3c);
+		int offset = dll.rawRead(new int[1])[0];
+
+		dll.seek(offset);
+		uint peHead = dll.rawRead(new uint[1])[0];
+
+		//Not a PE Header.
+		if( peHead != 0x00004550)
+			return false;
+
+		MachineType type = dll.rawRead(new MachineType[1])[0];
+
+		version(Win32)
+		{
+			if ( type == MachineType.I386 )
+				return true;
+		}
+		else version(Win64)
+		{
+			if ( type == MachineType.AMD64 )
+				return true;
+		}
+
+		return false;		
+	}
 }
 else
 {
@@ -282,7 +361,6 @@ else
 
 	enum RTLD
 	{
-	GDC_BUG_WORKAROUND,
 		LAZY     = 0x00001,  // Lazy function call binding
 		NOW      = 0x00002,  // Immediate function call binding
 		NOLOAD   = 0x00004,  // No object load
@@ -314,9 +392,4 @@ else
 	{
 		return dlclose(libraryHandle);
 	}
-
-    version(build) version(linux)
-    {
-			pragma(link, "dl"); // tell dsss to link libdl
-    }
 }

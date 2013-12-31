@@ -24,9 +24,6 @@
 
 module gtkc.paths;
 
-//version(Tango) private alias char[] string;
-version(Tango) import gtkc.glibtypes;
-
 /*
  * Define the Libraries that gtkD will be using.
  *   This is a growable list, as long as the programmer
