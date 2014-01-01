@@ -282,6 +282,8 @@ file: gdk3-Pixbufs.html
 struct: GdkPixbuf
 class: Pixbuf
 extend: GObject
+implements: IconIF
+implements: LoadableIconIF
 prefix: gdk_pixbuf_
 import: cairo.Surface
 import: glib.Str
@@ -293,6 +295,14 @@ import: gio.InputStream
 import: gdk.Window
 import: gdkpixbuf.PixbufFormat
 
+#imports for Icon Interface.
+import: gio.IconT
+import: gio.IconIF
+
+#imports for LoadableIcon Interface.
+import: gio.LoadableIconT
+import: gio.LoadableIconIF
+
 structWrap: cairo_surface_t* Surface
 structWrap: GAsyncResult* AsyncResultIF
 structWrap: GCancellable* Cancellable
@@ -303,6 +313,12 @@ structWrap: GdkPixbufFormat* PixbufFormat
 
 
 code: start
+	// Minimal implementation.
+	mixin IconT!(GdkPixbuf);
+
+	// add the LoadableIcon capabilities
+	mixin LoadableIconT!(GdkPixbuf);
+
 	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
 	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.

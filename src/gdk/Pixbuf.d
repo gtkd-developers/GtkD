@@ -36,6 +36,8 @@
  * template for:
  * extend  = GObject
  * implements:
+ * 	- IconIF
+ * 	- LoadableIconIF
  * prefixes:
  * 	- gdk_pixbuf_
  * omit structs:
@@ -52,6 +54,10 @@
  * 	- gio.InputStream
  * 	- gdk.Window
  * 	- gdkpixbuf.PixbufFormat
+ * 	- gio.IconT
+ * 	- gio.IconIF
+ * 	- gio.LoadableIconT
+ * 	- gio.LoadableIconIF
  * structWrap:
  * 	- GAsyncResult* -> AsyncResultIF
  * 	- GCancellable* -> Cancellable
@@ -82,6 +88,10 @@ private import gio.Cancellable;
 private import gio.InputStream;
 private import gdk.Window;
 private import gdkpixbuf.PixbufFormat;
+private import gio.IconT;
+private import gio.IconIF;
+private import gio.LoadableIconT;
+private import gio.LoadableIconIF;
 
 
 private import gobject.ObjectG;
@@ -93,7 +103,7 @@ private import gobject.ObjectG;
  * The functions described here allow to obtain pixbufs from
  * GdkWindows and cairo surfaces.
  */
-public class Pixbuf : ObjectG
+public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 {
 	
 	/** the main Gtk struct */
@@ -127,6 +137,12 @@ public class Pixbuf : ObjectG
 		super.setStruct(obj);
 		gdkPixbuf = cast(GdkPixbuf*)obj;
 	}
+	
+	// Minimal implementation.
+	mixin IconT!(GdkPixbuf);
+	
+	// add the LoadableIcon capabilities
+	mixin LoadableIconT!(GdkPixbuf);
 	
 	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
