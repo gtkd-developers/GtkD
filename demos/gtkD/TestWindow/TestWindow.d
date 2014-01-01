@@ -27,30 +27,9 @@ version(cairo)private import cairo.clock;
 private import gtk.Version;
 private import gtk.Table;
 
-version(Tango)
-{
-	private import stdlib = tango.stdc.stdlib : exit;
-	private import tango.text.convert.Layout;
-	private import tango.io.Stdout;
-	private import tango.core.Thread;
-	private import tango.math.random.Kiss;
-
-	version = DRuntime;
-}
-else version(D_Version2)
-{
-	private import stdlib = core.stdc.stdlib : exit;
-	private import core.thread;
-	private import std.random;
-
-	version = DRuntime;
-}
-else
-{
-	private import stdlib = std.c.stdlib : exit;
-	private import std.thread;
-	private import std.random;
-}
+private import stdlib = core.stdc.stdlib : exit;
+private import core.thread;
+private import std.random;
 
 import gdk.Threads;
 
@@ -119,11 +98,7 @@ private import gtk.Window;
 private import gtk.ScrolledWindow;
 private import gtk.MessageDialog;
 
-
-
-version(Tango) private import tango.core.Memory;
-else version(D_Version2) private import core.memory;
-else private import std.gc;
+private import core.memory;
 
 private import glib.ListSG;
 
@@ -135,8 +110,7 @@ private import gtk.HPaned;
 private import gtk.VPaned;
 
 private import gtk.Calendar;
-version(Tango) private import tango.io.Stdout;
-else private import std.stdio;
+private import std.stdio;
 private import gtk.VButtonBox;
 private import gtk.FileChooserButton;
 
@@ -162,10 +136,10 @@ class TestWindow : MainWindow
 	 * Executed when the user tries to close the window
 	 * @return true to refuse to close the window
 	 */
-	public: int windowDelete(GdkEvent* event, Widget widget)
+	int windowDelete(GdkEvent* event, Widget widget)
 	{
 
-		debug(events) printf("TestWindow.widgetDelete : this and widget to delete %X %X\n",this,window);
+		debug(events) writeln("TestWindow.widgetDelete : this and widget to delete %X %X",this,window);
 		MessageDialog d = new MessageDialog(
 										this,
 										GtkDialogFlags.MODAL,
@@ -387,9 +361,7 @@ class TestWindow : MainWindow
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
 		// fullCollect helps finding objects that shouldn't have been collected
-		version(Tango) GC.collect();
-		else version(D_Version2) GC.collect();
-		else std.gc.fullCollect();
+		GC.collect();
 		//writefln("exiting Notebook switch to page %s", pageNumber);
 	}
 
@@ -447,33 +419,27 @@ class TestWindow : MainWindow
 
 		void bActivate(Button button)
 		{
-			version(Tango) Stdout("button Activate").newline;
-			else printf("button Activate\n");
+			writeln("button Activate");
 		}
 		void bClicked(Button button)
 		{
-			version(Tango) Stdout("button Clicked").newline;
-			else printf("button Clicked\n");
+			writeln("button Clicked");
 		}
 		void bEnter(Button button)
 		{
-			version(Tango) Stdout("button Enter").newline;
-			else printf("button Enter\n");
+			writeln("button Enter");
 		}
 		void bLeave(Button button)
 		{
-			version(Tango) Stdout("button Leave").newline;
-			else printf("button Leave\n");
+			writeln("button Leave");
 		}
 		void bPressed(Button button)
 		{
-			version(Tango) Stdout("button Pressed").newline;
-			else printf("button Pressed\n");
+			writeln("button Pressed");
 		}
 		void bReleased(Button button)
 		{
-			version(Tango) Stdout("button Released").newline;
-			else printf("button Released\n");
+			writeln("button Released");
 		}
 		button.addOnActivate(&bActivate);
 		button.addOnClicked(&bClicked);
@@ -614,22 +580,19 @@ class TestWindow : MainWindow
 
 	void showTextCombo(Button button)
 	{
-		version(Tango) Stdout("Combo selected text = ")(comboText.getActiveText()).newline;
-		else printf("Combo selected text = %.*s\n",comboText.getActiveText());
+		writeln("Combo selected text = %s",comboText.getActiveText());
 	}
 
 	void showSimpleCombo(Button button)
 	{
-		version(Tango) Stdout("Combo selected text = ")(simpleCombo.getActiveText()).newline;
-		else printf("Combo selected text = %.*s\n",simpleCombo.getActiveText());
+		writeln("Combo selected text = %s",simpleCombo.getActiveText());
 	}
 
 	class NB : Notebook
 	{
 		void itemActivated(MenuItem menu_item)
 		{
-			version(Tango) Stdout("NB.activateCallback").newline;
-			else printf("NB.activateCallback\n");
+			writeln("NB.activateCallback");
 		}
 		void buttonClicked(Button button)
 		{
@@ -638,8 +601,7 @@ class TestWindow : MainWindow
 
 		void switchPage(Notebook notebook, /*NotebookPage page,*/ guint pageNumber)
 		{
-			version(Tango) Stdout("new page = ")(pageNumber).newline;
-			else printf("new page = %d\n",pageNumber);
+			writeln("new page = %d",pageNumber);
 		}
 	}
 
@@ -797,7 +759,7 @@ class TestWindow : MainWindow
 //
 //		foreach ( int i, string selection ; fs.getSelections())
 //		{
-//			printf("File(s) selected [%d] %.*s\n",i,selection);
+//			writeln("File(s) selected [%d] %s",i,selection);
 //		}
 		fcd.hide();
 	}
@@ -863,11 +825,7 @@ class TestWindow : MainWindow
 
 	}
 
-	version(D_Version2)
-		mixin("__gshared Button[] threadTestButtons;");
-	else
-		Button[] threadTestButtons;
-
+	__gshared Button[] threadTestButtons;
 	static T1[] t1s;
 
 	class T1 : Thread
@@ -880,29 +838,21 @@ class TestWindow : MainWindow
 			this.num = num;
 		}
 
-		version(DRuntime) void run()
+		void run()
 		{
 			runCommon();
 		}
-		else override int run()
-		{
-			return runCommon();
-		}
-
-
+		
 		int runCommon()
 		{
 			while(1)
 			{
-				version(Tango) size_t buttonNum = Kiss.instance.natural(threadTestButtons.length);
-				else version(D_Version2) size_t buttonNum = uniform(0, threadTestButtons.length);
-				else size_t buttonNum = rand()%threadTestButtons.length;
+				size_t buttonNum = uniform(0, threadTestButtons.length);
 				Button button = threadTestButtons[buttonNum];
 
 				threadsEnter();
 				button.removeAll();
-				version(Tango) button.setLabel( (new Layout!(char))("{}", num));
-				else           button.setLabel(std.string.format("%s", num));
+				button.setLabel(std.string.format("%s", num));
 				threadsLeave();
 				yield();
 			}
@@ -918,8 +868,7 @@ class TestWindow : MainWindow
 		{
 			for ( int j = 0 ; j<8; j++)
 			{
-				version(Tango) Button button = new Button((new Layout!(char))("{}",(j+8*i)));
-				else Button button = new Button(std.string.format("%s",(j+8*i)));
+				Button button = new Button(std.string.format("%s",(j+8*i)));
 				threadTestButtons ~= button;
 				grid.attach( button,
 							i,i+1,
@@ -934,28 +883,9 @@ class TestWindow : MainWindow
 		{
 			foreach ( T1 t ; t1s )
 			{
-				version(Tango)
+				if ( t.isRunning() )
 				{
-					if ( t.isRunning() )
-					{
-						t.sleep(100.0);
-					}
-				}
-				else version(D_Version2)
-				{
-					if ( t.isRunning() )
-					{
-						t.sleep(dur!("hnsecs")(100));
-					}
-				}
-				else switch( t.getState() )
-				{
-					case Thread.TS.RUNNING:
-						t.pause();
-						break;
-
-					default:
-						break;
+					t.sleep(dur!("hnsecs")(100));
 				}
 			}
 		}
@@ -964,22 +894,9 @@ class TestWindow : MainWindow
 		{
 			foreach ( T1 t ; t1s )
 			{
-				version(DRuntime)
+				if ( !t.isRunning() )
 				{
-					if ( !t.isRunning() )
-					{
-						t.start();
-					}
-				}
-				else switch( t.getState() )
-				{
-					case Thread.TS.INITIAL:
-						t.start();
-						break;
-
-					default:
-						t.resume();
-						break;
+					t.start();
 				}
 			}
 		}
@@ -1036,8 +953,6 @@ class TestWindow : MainWindow
 
 	void testList(Notebook notebook)
 	{
-		debug(Tango) Stdout("TestWindow.testList 1").newline;
-
 		class TestListStore : ListStore
 		{
 			this()
@@ -1113,8 +1028,6 @@ class TestWindow : MainWindow
 		ScrolledWindow sw = new ScrolledWindow(null,null);
 		sw.addWithViewport(treeView);
 		notebook.appendPage(sw,"ListView");
-
-		debug(Tango) Stdout("TestWindow.testList END").newline;
 	}
 
 	void testDelete(Notebook notebook)
@@ -1131,45 +1044,35 @@ class TestWindow : MainWindow
 //				++i;
 //			}
 //			++l;
-//			printf("testDelete count = %d\n\0",l*i);
+//			write("testDelete count = %d\n\0",l*i);
 //		}
 
 	}
 
 	void gtkDemo(Notebook notebook)
 	{
-		debug(Tango) Stdout("TestWindow.gtkDemo 1").newline;
 		void showTTextView(Button button)
 		{
 			new TTextView();
 		}
 
-		debug(Tango) Stdout("TestWindow.gtkDemo 2").newline;
 		void showTEditableCells(Button button)
 		{
 		//	new TEditableCells();
 		}
 
-		debug(Tango) Stdout("TestWindow.gtkDemo 3").newline;
 		ButtonBox vBBox = VButtonBox.createActionBox();
 
-		debug(Tango) Stdout("TestWindow.gtkDemo 4").newline;
 		Button button = new Button("Text View");
 		button.addOnClicked(&showTTextView);
 		vBBox.packStart(button,false,false,4);
 
-		debug(Tango) Stdout("TestWindow.gtkDemo 5").newline;
 		button = new Button("Editable Cells");
 		button.addOnClicked(&showTEditableCells);
 		vBBox.packStart(button,false,false,4);
 
-		debug(Tango) Stdout("TestWindow.gtkDemo 6").newline;
 		notebook.appendPage(vBBox,"gtk-demo");
-
-		debug(Tango) Stdout("TestWindow.gtkDemo 7").newline;
-
 	}
-
 }
 
 private import gtkc.Loader;

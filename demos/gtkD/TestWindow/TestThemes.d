@@ -39,7 +39,7 @@ class TestThemes : VBox
 		this.window = window;
 		debug(1)
 		{
-			printf("instantiating TestThemes\n");
+			writeln("instantiating TestThemes");
 		}
 
 		super(false,8);

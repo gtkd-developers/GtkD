@@ -33,9 +33,7 @@ private import gtk.Image;
 
 private import gtk.Window;
 
-version(Tango) private import tango.io.Stdout;
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+private import std.stdio;
 
 private import glib.Str;
 
@@ -55,7 +53,7 @@ class TestImage : VBox
 		this.window = window;
 		debug(1)
 		{
-			printf("instantiating TestImage\n");
+			writeln("instantiating TestImage");
 		}
 
 		super(false,8);
@@ -127,8 +125,7 @@ class TestImage : VBox
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);
 			//image.addOnLeaveNotify(&onLeave);
-			debug(trace) version(Tango) Stdout.format("adding image {} to table at {},{}", fileName, col, row).newline;
-			else writefln("adding image %s to table at %s,%s", fileName, col, row);
+			debug(trace) writefln("adding image %s to table at %s,%s", fileName, col, row);
 			table.resize(col+1, row+1);
 			table.attach(image,col,col+1,row,row+1,AttachOptions.FILL,AttachOptions.FILL,4,4);
 			++col;
@@ -166,9 +163,7 @@ private import glib.ListSG;
 
 			for ( int i = 0; i<list.length() ; i++)
 			{
-				debug(trace) version(Tango) Stdout.format("Testmage.loadImages.File selected = {}",
-						Str.toString(cast(char*)list.nthData(i))).newline;
-				else writefln("Testmage.loadImages.File selected = %s",
+				debug(trace) writefln("Testmage.loadImages.File selected = %s",
 						Str.toString(cast(char*)list.nthData(i)));
 				fileNames ~= Str.toString(cast(char*)list.nthData(i));
 			}
@@ -180,12 +175,12 @@ private import glib.ListSG;
 
 	void onEnter(Widget widget)
 	{
-		printf("TestImage.mouseEnterNotify\n");
+		writeln("TestImage.mouseEnterNotify");
 		//return true;
 	}
 	void onLeave(Widget widget)
 	{
-		printf("TestImage.mouseLeaveNotify\n");
+		writeln("TestImage.mouseLeaveNotify");
 		//return true;
 	}
 

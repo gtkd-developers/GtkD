@@ -35,9 +35,7 @@ private import gtk.Image;
 
 private import gtk.TreeNode;
 
-version(Tango) private import tango.io.Stdout;
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+private import std.stdio;
 
 
 /* Don't copy this bad example; inline RGB data is always a better
@@ -108,14 +106,14 @@ class TestTreeView : ScrolledWindow
 
 	void rowActivatedCallback(TreePath path, TreeViewColumn column, TreeView treeView)
 	{
-		printf("rowActivateCallback for %X \n",treeView);
-		printf("rowActivateCallback for path %.*s\n",path.toString());
+		writeln("rowActivateCallback for %X",treeView);
+		writeln("rowActivateCallback for path %s",path.toString());
 	}
 
 	bool moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
 	{
-		printf("moveCursorCallBack for %X \n",treeView);
-		printf("moveCursorCallBack row = %d \n",direction);
+		writeln("moveCursorCallBack for %X",treeView);
+		writeln("moveCursorCallBack row = %d",direction);
 		return false;
 	}
 

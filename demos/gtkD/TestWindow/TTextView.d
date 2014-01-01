@@ -40,14 +40,7 @@ private import gtk.ComboBoxText;
 
 private import glib.GException;
 
-version(Tango)
-{
-	private import tango.io.Stdout;
-	private import tango.text.convert.Layout;
-	private import tango.core.Vararg;
-}
-else
-	private import std.stdio;
+private import std.stdio;
 
 /**
  * reproduces the gtk-demo TextView
@@ -90,7 +83,7 @@ class TTextView : Window
 //
 //	bit windowDestroyCallback(Window window, Event event)
 //	{
-//		printf("TTextView windowDestroyCallback\n");
+//		writeln("TTextView windowDestroyCallback");
 //		return false;
 //	}
 

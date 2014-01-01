@@ -40,7 +40,7 @@ class TestText : VBox
 
 		debug(1)
 		{
-			printf("instantiating TestText\n");
+			writeln("instantiating TestText");
 		}
 
 		ScrolledWindow sw = new ScrolledWindow(null, null);

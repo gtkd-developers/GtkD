@@ -41,7 +41,7 @@ class TestStock : ScrolledWindow
 		super(null, null);
 		debug(1)
 		{
-			printf("instantiating TestStock\n");
+			writeln("instantiating TestStock");
 		}
 
 		Table table = new Table(2,2,false);
@@ -82,14 +82,14 @@ class TestStock : ScrolledWindow
 
 //	bit enterNotify(Widget widget, EventCrossing event)
 //	{
-//		printf("TestStock.mouseEnterNotify %X\n",widget);
+//		writeln("TestStock.mouseEnterNotify %X",widget);
 //		Cursor cursor = new Cursor(CursorType.MAN);
 //		widget.setCursor(cursor);
 //		return true;
 //	}
 //	bit leaveNotify(Widget widget, EventCrossing event)
 //	{
-//		printf("TestStock.mouseLeaveNotify\n");
+//		writeln("TestStock.mouseLeaveNotify");
 //		widget.resetCursor();
 //		return true;
 //	}

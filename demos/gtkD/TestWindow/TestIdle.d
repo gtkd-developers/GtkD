@@ -39,9 +39,7 @@ private import gdk.Cairo;
 private import gtk.SpinButton;
 private import gtk.Adjustment;
 
-version(Tango) private import tango.io.Stdout;
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+private import std.stdio;
 
 private import glib.Idle;
 private import glib.Timeout;
@@ -60,7 +58,7 @@ class TestIdle : VBox
 
 		debug(1)
 		{
-			printf("instantiating TestTimeout\n");
+			writeln("instantiating TestTimeout");
 		}
 
 		super(false,7);
@@ -151,8 +149,7 @@ class TestIdle : VBox
 
 		public void onMap(Widget widget)
 		{
-			debug(trace) version(Tango) Stdout("idle.onMap").newline;
-			else writefln("idle.onMap");
+			debug(trace) writefln("idle.onMap");
 			continueIdleCallback = true;
 			x = 0;
 			y = 0;
@@ -163,8 +160,7 @@ class TestIdle : VBox
 
 		public void onUnmap(Widget widget)
 		{
-			debug(trace) version(Tango) Stdout("idle.onUnmap").newline;
-			else writefln("idle.onUnmap");
+			debug(trace) writefln("idle.onUnmap");
 			continueIdleCallback = false;
 		}
 
@@ -251,8 +247,7 @@ class TestIdle : VBox
 
 		void onCallTypeChanged(ComboBoxText comboBoxText)
 		{
-			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBoxText.getActiveText()).newline;
-			else writefln("gcOptions = %s", comboBoxText.getActiveText());
+			debug(trace) writefln("gcOptions = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
 			{
 				case "Idle":    callType = CallType.Idle;    break;
@@ -264,8 +259,7 @@ class TestIdle : VBox
 
 		void onOperatorChanged(ComboBoxText comboBoxText)
 		{
-			debug(trace) version(Tango) Stdout.format("CairoOperator = {}", comboBoxText.getActiveText()).newline;
-			else writefln("CairoOperator = %s", comboBoxText.getActiveText());
+			debug(trace) writefln("CairoOperator = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
 			{
 				case "CLEAR":          operator = CairoOperator.CLEAR;          break;

@@ -53,7 +53,7 @@ class TestScales : Table //, MenuItemListener
 
 		debug(1)
 		{
-			printf("instantiating TestScales\n");
+			writeln("instantiating TestScales");
 		}
 
 		super(1,1,0);

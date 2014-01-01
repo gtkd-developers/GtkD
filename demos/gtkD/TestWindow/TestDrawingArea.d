@@ -27,12 +27,8 @@ private import gtk.VBox;
 private import pango.PgContext;
 private import pango.PgLayout;
 
-version(Tango) private import tango.io.Stdout;
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
-
-version(Tango) private import tango.math.Math;
-else private import std.math;
+private import std.stdio;
+private import std.math;
 
 private import gtk.Widget;
 private import gtk.MenuItem;
@@ -62,13 +58,9 @@ class TestDrawingArea : VBox
 
 	this()
 	{
-		debug(Tango) Stdout("TestDrawingArea.this() 1").newline;
 		super(false,4);
 
-		debug(Tango) Stdout("TestDrawingArea.this() 2").newline;
 		TestDrawing drawingArea = new TestDrawing();
-
-		debug(Tango) Stdout("TestDrawingArea.this() 3").newline;
 
 		ComboBoxText operators = new ComboBoxText();
 		operators.appendText("CLEAR");
@@ -103,8 +95,6 @@ class TestDrawingArea : VBox
 		operators.setActive(1);
 		operators.addOnChanged(&drawingArea.onOperatorsChanged);
 
-		debug(Tango) Stdout("TestDrawingArea.this() 4").newline;
-
 		ComboBoxText primOption = new ComboBoxText();
 		primOption.appendText("Filled Arc");
 		primOption.appendText("Arc");
@@ -119,8 +109,6 @@ class TestDrawingArea : VBox
 		primOption.setActive(0);
 		primOption.addOnChanged(&drawingArea.onPrimOptionChanged);
 
-		debug(Tango) Stdout("TestDrawingArea.this() 5").newline;
-
 		packStart(drawingArea,true,true,0);
 
 		HBox hbox = new HBox(false,4);
@@ -129,13 +117,8 @@ class TestDrawingArea : VBox
 		hbox.packStart(drawingArea.spin,false,false,2);
 		hbox.packStart(drawingArea.backSpin,false,false,2);
 
-		debug(Tango) Stdout("TestDrawingArea.this() 6").newline;
-
 		packStart(hbox, false, false, 0);
-
-		debug(Tango) Stdout("TestDrawingArea.this() END").newline;
 	}
-
 
 	class TestDrawing : DrawingArea
 	{
@@ -169,13 +152,9 @@ class TestDrawingArea : VBox
 
 		this()
 		{
-			debug(Tango) Stdout("TestDrawing.this() 1").newline;
-
 			setSizeRequest(333,333);
 			width = getWidth();
 			height = getHeight();
-
-			debug(Tango) Stdout("TestDrawing.this() 2").newline;
 
 			primitiveType = "Filled Arc";
 			font = PgFontDescription.fromString("Courier 48");
@@ -184,8 +163,7 @@ class TestDrawingArea : VBox
 			scaledPixbuf = image.getPixbuf();
 			if (scaledPixbuf is null)
 			{
-				version(Tango) Stdout("\nFailed to load image gtkDlogo_a_small.png").newline;
-				else printf("\nFailed to load image file gtkDlogo_a_small.png\n");
+				writeln("\nFailed to load image file gtkDlogo_a_small.png");
 			}
 
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
@@ -215,12 +193,10 @@ class TestDrawingArea : VBox
 
 		public bool onButtonPress(Event event, Widget widget)
 		{
-			debug(trace) version(Tango) Stdout("button DOWN").newline;
-			else writefln("button DOWN");
+			debug(trace) writefln("button DOWN");
 			if ( event.type == EventType.BUTTON_PRESS && event.button.button == 1 )
 			{
-				debug(trace) version(Tango) Stdout("Button 1 down").newline;
-				else writefln("Button 1 down");
+				debug(trace) writefln("Button 1 down");
 				buttonIsDown = true;
 
 				drawPrimitive(cast(int)event.button.x, cast(int)event.button.y);
@@ -230,12 +206,10 @@ class TestDrawingArea : VBox
 
 		public bool onButtonRelease(Event event, Widget widget)
 		{
-			debug(trace) version(Tango) Stdout("button UP").newline;
-			else writefln("button UP");
+			debug(trace) writefln("button UP");
 			if ( event.type == EventType.BUTTON_RELEASE && event.button.button == 1 )
 			{
-				debug(trace) version(Tango) Stdout("button 1 UP").newline;
-				else writefln("Button 1 UP");
+				debug(trace) writefln("Button 1 UP");
 				buttonIsDown = false;
 			}
 			return false;
@@ -256,7 +230,7 @@ class TestDrawingArea : VBox
 
 		public bool onMotionNotify(Event event, Widget widget)
 		{
-			//printf("testWindow.mouseMoved ----------------------------- \n");
+			//writeln("testWindow.mouseMoved -----------------------------");
 			if ( buttonIsDown && event.type == EventType.MOTION_NOTIFY )
 			{
 				drawPrimitive(cast(int)event.motion.x, cast(int)event.motion.y);
@@ -270,14 +244,12 @@ class TestDrawingArea : VBox
 		public void backSpinChanged(SpinButton spinButton)
 		{
 
-			debug(trace) version(Tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
-			else writefln("backSpinChanged - entry %s", ++backSpinCount);
+			debug(trace) writefln("backSpinChanged - entry %s", ++backSpinCount);
 
 			drawPoints(Context.create(surface));
 			this.queueDraw();
 
-			debug(trace) version(Tango) Stdout("backSpinChanged - exit").newline;
-			else writefln("backSpinChanged - exit");
+			debug(trace) writefln("backSpinChanged - exit");
 		}
 
 		public void sizeSpinChanged(SpinButton spinButton)
@@ -302,8 +274,7 @@ class TestDrawingArea : VBox
 			Context context = Context.create(surface);
 			context.setOperator(operator);
 
-			debug(trace) version(Tango) Stdout.format("primitiveType = {}", primitiveType).newline;
-			else writefln("primitiveType = %s", primitiveType);
+			debug(trace) writefln("primitiveType = %s", primitiveType);
 
 			switch ( primitiveType )
 			{
@@ -359,10 +330,7 @@ class TestDrawingArea : VBox
 				case "Image":
 					if ( !(scaledPixbuf is null))
 					{
-						version(D_Version2)
-							context.setSourcePixbuf(scaledPixbuf, x, y);
-						else
-							setSourcePixbuf(context, scaledPixbuf, x, y);
+						context.setSourcePixbuf(scaledPixbuf, x, y);
 						context.paint();
 					}
 					break;
@@ -405,8 +373,7 @@ class TestDrawingArea : VBox
 			int x = 0;
 			int y = 0;
 
-			debug(trace) version(Tango) Stdout.format("w,h = {} {}",width ,height).newline;
-			else writefln("w,h = %s %s",width ,height);
+			debug(trace) writefln("w,h = %s %s",width ,height);
 
 			float dx = 256.0 / width;
 			float dy = 256.0 / height ;
@@ -455,8 +422,7 @@ class TestDrawingArea : VBox
 
 		void onOperatorsChanged(ComboBoxText comboBoxText)
 		{
-			debug(trace) version(Tango) Stdout.format("CairoOperator = {}", comboBoxText.getActiveText()).newline;
-			else writefln("CairoOperator = %s", comboBoxText.getActiveText());
+			debug(trace) writefln("CairoOperator = %s", comboBoxText.getActiveText());
 			switch ( comboBoxText.getActiveText() )
 			{
 				case "CLEAR":          operator = CairoOperator.CLEAR;          break;
