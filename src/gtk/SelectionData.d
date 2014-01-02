@@ -31,7 +31,7 @@
  * ctorStrct=
  * clss    = SelectionData
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
@@ -121,14 +121,6 @@ public class SelectionData : Boxed
 	public this (GtkSelectionData* gtkSelectionData)
 	{
 		this.gtkSelectionData = gtkSelectionData;
-	}
-	
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSelectionData !is null )
-		{
-			gtk_selection_data_free(gtkSelectionData);
-		}
 	}
 	
 	/**
