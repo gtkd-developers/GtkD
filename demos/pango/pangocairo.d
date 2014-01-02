@@ -26,7 +26,7 @@ class PangoText : DrawingArea
 		addOnDraw(&drawText);
 	}
 
-	public bool drawText (Context cr, Widget widget)
+	public bool drawText (Scoped!Context cr, Widget widget)
 	{
 		PgLayout layout;
 		PgFontDescription desc;

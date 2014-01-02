@@ -90,6 +90,12 @@ version (Windows)
 		extern (C) FILE*  fdopen(int, char*);
 	}
 }
+
+public import std.typecons : scoped;
+template Scoped(T)
+{
+	alias typeof(scoped!T(null)) Scoped;
+}
 addTypedefs: end
 
 addAliases: start

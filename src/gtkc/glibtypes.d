@@ -86,6 +86,12 @@ version (Windows)
 	}
 }
 
+public import std.typecons : scoped;
+template Scoped(T)
+{
+	alias typeof(scoped!T(null)) Scoped;
+}
+
 const uint G_MAXUINT = 4294967295;
 
 

@@ -202,7 +202,7 @@ class TestIdle : VBox
 			}
 		}
 
-		bool onDraw(Context context, Widget widget)
+		bool onDraw(Scoped!Context context, Widget widget)
 		{
 			//Fill the Widget with the surface we are drawing on.
 			context.setSourceSurface(surface, 0, 0);

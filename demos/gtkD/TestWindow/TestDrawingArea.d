@@ -219,7 +219,7 @@ class TestDrawingArea : VBox
 		 * This will be called from the expose event call back.
 		 * \bug this is called on get or loose focus - review
 		 */
-		public bool drawCallback(Context context, Widget widget)
+		public bool drawCallback(Scoped!Context context, Widget widget)
 		{
 			//Fill the Widget with the surface we are drawing on.
 			context.setSourceSurface(surface, 0, 0);

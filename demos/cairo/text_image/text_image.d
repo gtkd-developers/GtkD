@@ -27,7 +27,7 @@ public:
 
 protected:
 	//Override default signal handler:
-	bool drawCallback(Context cr, Widget widget)
+	bool drawCallback(Scoped!Context cr, Widget widget)
 	{
 		// This is where we draw on the window
 		cr.translate(10, 10);

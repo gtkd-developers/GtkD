@@ -40,7 +40,7 @@ public:
 
 protected:
 	//Override default signal handler:
-	bool drawCallback(Context cr, Widget widget)
+	bool drawCallback(Scoped!Context cr, Widget widget)
 	{
 		if ( m_timeout is null )
 		{
