@@ -29,6 +29,11 @@ public struct Linker
 	private static void*[string]    loadedLibraries;
 	private static string[][string] loadFailures;
 
+	extern(C) static void unsuportedSymbol()
+	{
+		throw new Error("The funcion your calling is not pressent in your version of Gtk+.");
+	}
+
 	/*
 	 * Links the provided symbol
 	 * Params:
@@ -96,6 +101,8 @@ public struct Linker
 		{
 			foreach ( library; libraries )
 				loadFailures[library] ~= symbol;
+
+			handle = &unsuportedSymbol;
 		}
 
 		return handle;
