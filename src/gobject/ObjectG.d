@@ -240,6 +240,11 @@ public class ObjectG
 	 */
 	public static T getDObject(T, U)(U obj)
 	{
+		if ( obj is null )
+		{
+			return null;
+		}
+		
 		static if ( is(T : ObjectG) )
 		{
 			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
