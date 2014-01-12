@@ -47,12 +47,12 @@ int main(string[] args)
 	if (w !is null)
 	{
 		w.setTitle("This is a glade window");
-		w.addOnHide( delegate void(Widget aux){ exit(0); } );
+		w.addOnHide( delegate void(Widget aux){ Main.quit(); } );
 
 		Button b = cast(Button)g.getObject("button1");
 		if(b !is null)
 		{
-			b.addOnClicked( &Main.quit );
+			b.addOnClicked( delegate void(Button aux){ Main.quit(); } );
 		}
 	}
 	else
