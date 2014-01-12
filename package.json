@@ -37,9 +37,6 @@
             "targetName": "gtkdgl-2",
             "sourcePaths": ["srcgl"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~master"
-            }
         },
         {
             "name": "sv",
@@ -47,9 +44,6 @@
 			"targetName": "gtkdsv-2",
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~master"
-            }
         },
         {
             "name": "gstreamer",
@@ -57,9 +51,6 @@
 			"targetName": "gstreamerd-2",
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~master"
-            }
         },
         {
             "name": "vte",
@@ -67,9 +58,6 @@
 			"targetName": "vted-2",
             "sourcePaths": ["srcvte"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~master"
-            }
         }
     ]
 }
