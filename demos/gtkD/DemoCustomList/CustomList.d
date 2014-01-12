@@ -280,7 +280,7 @@ class CustomList : TreeModel
 		CustomRecord  *record;
 
 		/* a list has only top-level rows */
-		if( parent is null )
+		if( parent !is null )
 			return false;
 
 		if( n >= numRows )
