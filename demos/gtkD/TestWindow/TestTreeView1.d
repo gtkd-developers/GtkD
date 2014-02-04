@@ -240,8 +240,16 @@ public class TestTreeView1 : VBox
 
 	void rowActivatedCallback(TreeView treeView, TreePath path, TreeViewColumn column)
 	{
-		printf("rowActivateCallback for %X \n",treeView);
-		printf("rowActivateCallback for path %.*s\n",path.toString());
+		version(Tango)
+		{
+			Stdout("rowActivateCallback for {}",treeView).newline;
+			Stdout("rowActivateCallback for path {}",path.toString()).newline;
+		}
+		else
+		{
+			writefln("rowActivateCallback for %X",treeView);
+			writefln("rowActivateCallback for path %s",path.toString());
+		}
 	}
 
 

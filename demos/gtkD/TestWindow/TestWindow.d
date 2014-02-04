@@ -615,13 +615,13 @@ class TestWindow : MainWindow
 	void showTextCombo(Button button)
 	{
 		version(Tango) Stdout("Combo selected text = ")(comboText.getActiveText()).newline;
-		else printf("Combo selected text = %.*s\n",comboText.getActiveText());
+		else writefln("Combo selected text = %s",comboText.getActiveText());
 	}
 
 	void showSimpleCombo(Button button)
 	{
 		version(Tango) Stdout("Combo selected text = ")(simpleCombo.getActiveText()).newline;
-		else printf("Combo selected text = %.*s\n",simpleCombo.getActiveText());
+		else writefln("Combo selected text = %s",simpleCombo.getActiveText());
 	}
 
 	class NB : Notebook
