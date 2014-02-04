@@ -108,14 +108,30 @@ class TestTreeView : ScrolledWindow
 
 	void rowActivatedCallback(TreePath path, TreeViewColumn column, TreeView treeView)
 	{
-		printf("rowActivateCallback for %X \n",treeView);
-		printf("rowActivateCallback for path %.*s\n",path.toString());
+		version(Tango)
+		{
+			Stdout("rowActivateCallback for {}",treeView).newline;
+			Stdout("rowActivateCallback for path {}",path.toString()).newline;
+		}
+		else
+		{
+			writefln("rowActivateCallback for %X",treeView);
+			writefln("rowActivateCallback for path %s",path.toString());
+		}
 	}
 
 	bool moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
 	{
-		printf("moveCursorCallBack for %X \n",treeView);
-		printf("moveCursorCallBack row = %d \n",direction);
+		version(Tango)
+		{
+			Stdout("moveCursorCallBack for {}",treeView).newline;
+			Stdout("moveCursorCallBack row = {}",direction).newline;
+		}
+		else
+		{
+			writefln("moveCursorCallBack for %X",treeView);
+			writefln("moveCursorCallBack row = %d",direction);
+		}
 		return false;
 	}
 
