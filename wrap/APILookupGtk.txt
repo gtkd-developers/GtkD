@@ -9297,52 +9297,36 @@ code: start
 		{
 			case "GtkCheckMenuItem":
 				return ObjectG.getDObject!(CheckMenuItem)(cast(GtkCheckMenuItem*) p);
-				break;
 			case "GtkImageMenuItem":
 				return ObjectG.getDObject!(ImageMenuItem)(cast(GtkImageMenuItem*) p);
-				break;
 			case "GtkMenu":
 				return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
-				break;
 			case "GtkMenuBar":
 				return ObjectG.getDObject!(MenuBar)(cast(GtkMenuBar*) p);
-				break;
 			case "GtkMenuItem":
 				return ObjectG.getDObject!(MenuItem)(cast(GtkMenuItem*) p);
-				break;
 			case "GtkMenuToolButton":
 				return ObjectG.getDObject!(MenuToolButton)(cast(GtkMenuToolButton*) p);
-				break;
 			case "GtkRadioMenuItem":
 				return ObjectG.getDObject!(RadioMenuItem)(cast(GtkRadioMenuItem*) p);
-				break;
 			case "GtkRadioToolButton":
 				return ObjectG.getDObject!(RadioToolButton)(cast(GtkRadioToolButton*) p);
-				break;
 			case "GtkSeparatorMenuItem":
 				return ObjectG.getDObject!(SeparatorMenuItem)(cast(GtkSeparatorMenuItem*) p);
-				break;
 			case "GtkSeparatorToolItem":
 				return ObjectG.getDObject!(SeparatorToolItem)(cast(GtkSeparatorToolItem*) p);
-				break;
 			case "GtkTearoffMenuItem":
 				return ObjectG.getDObject!(TearoffMenuItem)(cast(GtkTearoffMenuItem*) p);
-				break;
 			case "GtkToggleToolButton":
 				return ObjectG.getDObject!(ToggleToolButton)(cast(GtkToggleToolButton*) p);
-				break;
 			case "GtkToolbar":
 				return ObjectG.getDObject!(Toolbar)(cast(GtkToolbar*) p);
-				break;
 			case "GtkToolButton":
 				return ObjectG.getDObject!(ToolButton)(cast(GtkToolButton*) p);
-				break;
 			case "GtkToolItem":
 				return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
-				break;
 			default:
 				return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-				break;
 		}
 	}
 code: end
