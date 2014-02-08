@@ -190,7 +190,7 @@ public class TreeSelection : ObjectG
 				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
 			}
 		}
-		model = new TreeModel(outmodel);
+		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
 		
 		return paths;
 	}
