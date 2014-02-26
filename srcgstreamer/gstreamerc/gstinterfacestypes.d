@@ -50,7 +50,7 @@ public struct GstVideoOverlay{}
 public struct GstVideoOverlayInterface
 {
 	GTypeInterface iface;
-	/+* virtual functions +/
+	/+* virtua functions +/
 	extern(C) void function(GstVideoOverlay* overlay) expose;
 	extern(C) void function(GstVideoOverlay* overlay, int handleEvents) handleEvents;
 	extern(C) void function(GstVideoOverlay* overlay, int x, int y, int width, int height) setRenderRectangle;

@@ -162,16 +162,15 @@ public class Printer : ObjectG
 	 * Params:
 	 * name = the name of the printer
 	 * backend = a GtkPrintBackend
-	 * virtual = whether the printer is virtual
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, GtkPrintBackend* backend, int virtual)
+	public this (string name, GtkPrintBackend* backend, int virtua)
 	{
 		// GtkPrinter * gtk_printer_new (const gchar *name,  GtkPrintBackend *backend,  gboolean virtual_);
-		auto p = gtk_printer_new(Str.toStringz(name), backend, virtual);
+		auto p = gtk_printer_new(Str.toStringz(name), backend, virtua);
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_printer_new(Str.toStringz(name), backend, virtual)");
+			throw new ConstructionException("null returned by gtk_printer_new(Str.toStringz(name), backend, virtua)");
 		}
 		this(cast(GtkPrinter*) p);
 	}

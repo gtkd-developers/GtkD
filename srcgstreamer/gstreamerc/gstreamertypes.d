@@ -2356,7 +2356,7 @@ public struct GstBin
 public struct GstBinClass
 {
 	GstElementClass parentClass;
-	/+* virtual methods for subclasses +/
+	/+* virtua methods for subclasses +/
 	extern(C) int function(GstBin* bin, GstElement* element) addElement;
 	extern(C) int function(GstBin* bin, GstElement* element) removeElement;
 	extern(C) void function(GstBin* bin, GstMessage* message) handleMessage;
@@ -2629,7 +2629,7 @@ public struct GstControlBinding
 public struct GstControlBindingClass
 {
 	GstObjectClass parentClass;
-	/+* virtual methods +/
+	/+* virtua methods +/
 	extern(C) int function(GstControlBinding* binding, GstObject* object, GstClockTime timestamp, GstClockTime lastSync)  syncValues;
 	extern(C) GValue * function(GstControlBinding* binding, GstClockTime timestamp)  getValue;
 	extern(C) int function(GstControlBinding* binding, GstClockTime timestamp, GstClockTime interval, uint nValues, void* values)  getValueArray;
@@ -2821,7 +2821,7 @@ public struct GstElementClass
 	GList *padtemplates;
 	int numpadtemplates;
 	uint padTemplCookie;
-	/+* virtual methods for subclasses +/
+	/+* virtua methods for subclasses +/
 	/+* request/release pads +/
 	extern(C) GstPad* function(GstElement* element, GstPadTemplate* templ, char* name, GstCaps* caps) requestNewPad;
 	extern(C) void function(GstElement* element, GstPad* pad) releasePad;
@@ -3408,7 +3408,7 @@ public struct GstTagSetterInterface
 {
 	GTypeInterface gIface;
 	/+* signals +/
-	/+* virtual table +/
+	/+* virtua table +/
 }
 
 
@@ -3497,7 +3497,7 @@ public struct GstTocSetterInterface
 {
 	GTypeInterface gIface;
 	/+* signals +/
-	/+* virtual table +/
+	/+* virtua table +/
 }
 
 

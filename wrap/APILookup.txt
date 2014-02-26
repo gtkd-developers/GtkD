@@ -104,6 +104,7 @@ alias: scope scop
 alias: switch switc
 alias: union unio
 alias: version versio
+alias: virtual virtua
 
 alias: GLIB_SYSDEF_POLLIN =1
 alias: GLIB_SYSDEF_POLLOUT =4

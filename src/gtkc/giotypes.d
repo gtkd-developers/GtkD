@@ -4473,7 +4473,7 @@ public struct GApplicationClass
 	 * @arguments: (inout) (array zero-terminated=1): array of command line arguments
 	 * @exitStatus: (out): exit status to fill after processing the command line.
 	 *
-	 * This virtual funct is always invoked inn the local instance. It
+	 * This virtua funct is always invoked inn the local instance. It
 	 * gets passed a pointer to a %NULL-terminated copy of @argv and is
 	 * expected to remove arguments that it handled (shifting up remaining
 	 * arguments).
@@ -4554,7 +4554,7 @@ public struct GActionGroup{}
 public struct GActionGroupInterface
 {
 	GTypeInterface gIface;
-	/+* virtual functions +/
+	/+* virtua functions +/
 	extern(C) int function(GActionGroup* actionGroup, char* actionName)  hasAction;
 	extern(C) char ** function(GActionGroup* actionGroup)  listActions;
 	extern(C) int function(GActionGroup* actionGroup, char* actionName)  getActionEnabled;
@@ -4569,7 +4569,7 @@ public struct GActionGroupInterface
 	extern(C) void function(GActionGroup* actionGroup, char* actionName)  actionRemoved;
 	extern(C) void function(GActionGroup* actionGroup, char* actionName, int enabled)  actionEnabledChanged;
 	extern(C) void function(GActionGroup* actionGroup, char* actionName, GVariant* state)  actionStateChanged;
-	/+* more virtual functions +/
+	/+* more virtua functions +/
 	extern(C) int function(GActionGroup* actionGroup, char* actionName, int* enabled, GVariantType** parameterType, GVariantType** stateType, GVariant** stateHint, GVariant** state)  queryAction;
 }
 
@@ -4676,7 +4676,7 @@ public struct GAction{}
 public struct GActionInterface
 {
 	GTypeInterface gIface;
-	/+* virtual functions +/
+	/+* virtua functions +/
 	extern(C) char * function(GAction* action)  getName;
 	extern(C) GVariantType * function(GAction* action)  getParameterType;
 	extern(C) GVariantType * function(GAction* action)  getStateType;

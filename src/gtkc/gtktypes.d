@@ -3458,7 +3458,7 @@ public struct GtkBuildable{}
 public struct GtkBuildableIface
 {
 	GTypeInterface gIface;
-	/+* virtual table +/
+	/+* virtua table +/
 	extern(C) void function(GtkBuildable* buildable, char* name)  setName;
 	extern(C) char * function(GtkBuildable* buildable)  getName;
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, char* type)  addChild;
@@ -4030,7 +4030,7 @@ public struct GtkTreeSortableIface
 	GTypeInterface gIface;
 	/+* signals +/
 	extern(C) void function(GtkTreeSortable* sortable)  sortColumnChanged;
-	/+* virtual table +/
+	/+* virtua table +/
 	extern(C) int function(GtkTreeSortable* sortable, int* sortColumnId, GtkSortType* order)  getSortColumnId;
 	extern(C) void function(GtkTreeSortable* sortable, int sortColumnId, GtkSortType order)  setSortColumnId;
 	extern(C) void function(GtkTreeSortable* sortable, int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy)  setSortFunc;
@@ -4278,7 +4278,7 @@ public struct GtkCellEditableIface
 	/+* signals +/
 	extern(C) void function(GtkCellEditable* cellEditable)  editingDone;
 	extern(C) void function(GtkCellEditable* cellEditable)  removeWidget;
-	/+* virtual table +/
+	/+* virtua table +/
 	extern(C) void function(GtkCellEditable* cellEditable, GdkEvent* event)  startEditing;
 }
 
@@ -5480,7 +5480,7 @@ public struct GtkActivatable{}
 public struct GtkActivatableIface
 {
 	GTypeInterface gIface;
-	/+* virtual table +/
+	/+* virtua table +/
 	extern(C) void function(GtkActivatable* activatable, GtkAction* action, char* propertyName)  update;
 	extern(C) void function(GtkActivatable* activatable, GtkAction* action)  syncActionProperties;
 }
