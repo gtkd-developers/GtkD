@@ -99,6 +99,7 @@ alias: union unio
 alias: version versio
 alias: in inn
 alias: continue continu
+alias: virtual virtua
 
 alias: GLIB_SYSDEF_POLLIN =1
 alias: GLIB_SYSDEF_POLLOUT =4

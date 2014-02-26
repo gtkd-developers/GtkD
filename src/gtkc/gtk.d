@@ -6947,7 +6947,7 @@ mixin( gshared ~"extern(C)
 
 	// gtk.Printer
 
-	GtkPrinter* function(gchar* name, GtkPrintBackend* backend, gboolean virtual) c_gtk_printer_new;
+	GtkPrinter* function(gchar* name, GtkPrintBackend* backend, gboolean virtua) c_gtk_printer_new;
 	GtkPrintBackend* function(GtkPrinter* printer) c_gtk_printer_get_backend;
 	gchar* function(GtkPrinter* printer) c_gtk_printer_get_name;
 	gchar* function(GtkPrinter* printer) c_gtk_printer_get_state_message;
