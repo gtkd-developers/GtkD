@@ -733,7 +733,7 @@ public struct Funct
 		{
 			if ( convParms.outPack == "cairo" || convParms.outPack == "glib" || convParms.outPack == "gthread" )
 				return "new "~ type;
-			else if( GtkDClass.endsWith(typeWrap, "IF") )
+			else if( GtkDClass.endsWith(type, "IF") )
 				return "ObjectG.getDObject!("~ type[0..$-2] ~", "~ type ~")";
 			else
 				return "ObjectG.getDObject!("~ type ~")";
@@ -904,10 +904,7 @@ public struct Funct
 
 				gtkCall ~= "&out" ~ id;
 				
-				if( GtkDClass.endsWith(param.typeWrap, "IF") )
-					end ~= id ~" = "~ construct(split(param.typeWrap)[1][0 .. $-2]) ~"(out"~ id ~");";
-				else
-					end ~= id ~" = "~ construct(split(param.typeWrap)[1]) ~"(out"~ id ~");";
+				end ~= id ~" = "~ construct(split(param.typeWrap)[1]) ~"(out"~ id ~");";
 			}
 			else if ( param.arrayParam && param.type[0 .. $-1] != param.typeWrap[0 .. $-2] &&
 				 !GtkDClass.endsWith(param.type, "[]") && param.typeWrap != "string[]" )
