@@ -695,6 +695,26 @@ mixin( _shared ~ "static this()
 
 	// gdk.
 
+	Linker.link(gdk_text_property_to_text_list, \"gdk_text_property_to_text_list\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_text_property_to_text_list_for_display, \"gdk_text_property_to_text_list_for_display\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_free_text_list, \"gdk_free_text_list\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_text_property_to_utf8_list, \"gdk_text_property_to_utf8_list\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_text_property_to_utf8_list_for_display, \"gdk_text_property_to_utf8_list_for_display\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_string_to_compound_text, \"gdk_string_to_compound_text\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_string_to_compound_text_for_display, \"gdk_string_to_compound_text_for_display\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_free_compound_text, \"gdk_free_compound_text\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_utf8_to_string_target, \"gdk_utf8_to_string_target\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_utf8_to_compound_text, \"gdk_utf8_to_compound_text\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_utf8_to_compound_text_for_display, \"gdk_utf8_to_compound_text_for_display\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_atom_intern, \"gdk_atom_intern\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_atom_intern_static_string, \"gdk_atom_intern_static_string\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_atom_name, \"gdk_atom_name\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_property_get, \"gdk_property_get\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_property_change, \"gdk_property_change\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_property_delete, \"gdk_property_delete\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+
+	// gdk.
+
 	Linker.link(gdk_threads_init, \"gdk_threads_init\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_threads_enter, \"gdk_threads_enter\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_threads_leave, \"gdk_threads_leave\", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -1442,6 +1462,26 @@ mixin( gshared ~"extern(C)
 
 	// gdk.
 
+	gint function(GdkAtom encoding, gint format, guchar* text, gint length, gchar*** list) c_gdk_text_property_to_text_list;
+	gint function(GdkDisplay* display, GdkAtom encoding, gint format, guchar* text, gint length, gchar*** list) c_gdk_text_property_to_text_list_for_display;
+	void function(gchar** list) c_gdk_free_text_list;
+	gint function(GdkAtom encoding, gint format, guchar* text, gint length, gchar*** list) c_gdk_text_property_to_utf8_list;
+	gint function(GdkDisplay* display, GdkAtom encoding, gint format, guchar* text, gint length, gchar*** list) c_gdk_text_property_to_utf8_list_for_display;
+	gint function(gchar* str, GdkAtom* encoding, gint* format, guchar** ctext, gint* length) c_gdk_string_to_compound_text;
+	gint function(GdkDisplay* display, gchar* str, GdkAtom* encoding, gint* format, guchar** ctext, gint* length) c_gdk_string_to_compound_text_for_display;
+	void function(guchar* ctext) c_gdk_free_compound_text;
+	gchar* function(gchar* str) c_gdk_utf8_to_string_target;
+	gboolean function(gchar* str, GdkAtom* encoding, gint* format, guchar** ctext, gint* length) c_gdk_utf8_to_compound_text;
+	gboolean function(GdkDisplay* display, gchar* str, GdkAtom* encoding, gint* format, guchar** ctext, gint* length) c_gdk_utf8_to_compound_text_for_display;
+	GdkAtom function(gchar* atomName, gboolean onlyIfExists) c_gdk_atom_intern;
+	GdkAtom function(gchar* atomName) c_gdk_atom_intern_static_string;
+	gchar* function(GdkAtom atom) c_gdk_atom_name;
+	gboolean function(GdkWindow* window, GdkAtom property, GdkAtom type, gulong offset, gulong length, gint pdelete, GdkAtom* actualPropertyType, gint* actualFormat, gint* actualLength, guchar** data) c_gdk_property_get;
+	void function(GdkWindow* window, GdkAtom property, GdkAtom type, gint format, GdkPropMode mode, guchar* data, gint nelements) c_gdk_property_change;
+	void function(GdkWindow* window, GdkAtom property) c_gdk_property_delete;
+
+	// gdk.
+
 	void function() c_gdk_threads_init;
 	void function() c_gdk_threads_enter;
 	void function() c_gdk_threads_leave;
@@ -2184,6 +2224,26 @@ alias c_gdk_drag_get_protocol_for_display  gdk_drag_get_protocol_for_display;
 alias c_gdk_drag_context_unref  gdk_drag_context_unref;
 alias c_gdk_drag_status  gdk_drag_status;
 alias c_gdk_drag_drop_succeeded  gdk_drag_drop_succeeded;
+
+// gdk.
+
+alias c_gdk_text_property_to_text_list  gdk_text_property_to_text_list;
+alias c_gdk_text_property_to_text_list_for_display  gdk_text_property_to_text_list_for_display;
+alias c_gdk_free_text_list  gdk_free_text_list;
+alias c_gdk_text_property_to_utf8_list  gdk_text_property_to_utf8_list;
+alias c_gdk_text_property_to_utf8_list_for_display  gdk_text_property_to_utf8_list_for_display;
+alias c_gdk_string_to_compound_text  gdk_string_to_compound_text;
+alias c_gdk_string_to_compound_text_for_display  gdk_string_to_compound_text_for_display;
+alias c_gdk_free_compound_text  gdk_free_compound_text;
+alias c_gdk_utf8_to_string_target  gdk_utf8_to_string_target;
+alias c_gdk_utf8_to_compound_text  gdk_utf8_to_compound_text;
+alias c_gdk_utf8_to_compound_text_for_display  gdk_utf8_to_compound_text_for_display;
+alias c_gdk_atom_intern  gdk_atom_intern;
+alias c_gdk_atom_intern_static_string  gdk_atom_intern_static_string;
+alias c_gdk_atom_name  gdk_atom_name;
+alias c_gdk_property_get  gdk_property_get;
+alias c_gdk_property_change  gdk_property_change;
+alias c_gdk_property_delete  gdk_property_delete;
 
 // gdk.
 

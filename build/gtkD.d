@@ -372,6 +372,7 @@ private import gdk.EventStruct;
 private import gdk.Keymap;
 private import gdk.Selection;
 private import gdk.DragContext;
+private import gdk.Atoms;
 private import gdk.Threads;
 private import gdk.Input;
 private import gdk.Device;

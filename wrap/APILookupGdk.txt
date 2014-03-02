@@ -35,8 +35,6 @@ public import gtkc.giotypes;
 public import gtkc.pangotypes;
 public import gtkc.gdkpixbuftypes;
 
-alias void* GdkAtom;
-
 const int GDK_MAX_TIMECOORD_AXES = 128;
 
 addTypedefs: end
@@ -48,6 +46,12 @@ addEnums: start
 addEnums: end
 
 addStructs: start
+/**
+ * An opaque type representing a string as an index into a table
+ * of strings on the X server.
+ */
+alias _GdkAtom* GdkAtom;
+public struct _GdkAtom;
 addStructs: end
 
 addTypes: start
@@ -1120,12 +1124,49 @@ out: gdk_drag_get_protocol_for_display protocol
 
 outFile: DragContext
 
-# no struct
-#file: gdk-Properties-and-Atoms.html
-#struct: 
-#class: 
-#prefix: 
-#outFile: 
+file: gdk-Properties-and-Atoms.html
+prefix: gdk_
+nostruct: GdkAtom
+import: glib.Str
+import: gdk.Display
+import: gdk.Window
+structWrap: GdkDisplay* Display
+structWrap: GdkWindow* Window
+
+array: gdk_text_property_to_text_list text length
+out: gdk_text_property_to_text_list list
+array: gdk_text_property_to_text_list list Return
+array: gdk_text_property_to_text_list_for_display text length
+out: gdk_text_property_to_text_list_for_display list
+array: gdk_text_property_to_text_list_for_display list Return
+array: gdk_free_text_list list
+array: gdk_text_property_to_utf8_list text length
+out: gdk_text_property_to_utf8_list list
+array: gdk_text_property_to_utf8_list list Return
+array: gdk_text_property_to_utf8_list_for_display text length
+out: gdk_text_property_to_utf8_list_for_display list
+array: gdk_text_property_to_utf8_list_for_display list Return
+out: gdk_string_to_compound_text encoding
+out: gdk_string_to_compound_text format
+out: gdk_string_to_compound_text ctext
+array: gdk_string_to_compound_text ctext length
+out: gdk_string_to_compound_text_for_display encoding
+out: gdk_string_to_compound_text_for_display format
+out: gdk_string_to_compound_text_for_display ctext
+array: gdk_string_to_compound_text_for_display ctext length
+out: gdk_utf8_to_compound_text encoding
+out: gdk_utf8_to_compound_text format
+out: gdk_utf8_to_compound_text ctext
+array: gdk_utf8_to_compound_text ctext length
+out: gdk_utf8_to_compound_text_for_display encoding
+out: gdk_utf8_to_compound_text_for_display format
+out: gdk_utf8_to_compound_text_for_display ctext
+array: gdk_utf8_to_compound_text_for_display ctext length
+out: gdk_property_get actual_property_type
+out: gdk_property_get actual_format
+out: gdk_property_get data actual_length
+array: gdk_property_get data
+outFile: Atoms
 
 file: gdk-Threads.html
 #class: 

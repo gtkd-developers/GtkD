@@ -797,6 +797,10 @@ public struct Funct
 
 				gtkCall ~= "&out"~ id;
 
+				if ( convParms.array[name][param.name] == "Return" )
+					lenid = "p";
+
+
 				if ( lenid.length > 0 )
 				{
 					end ~= id ~" = null;";

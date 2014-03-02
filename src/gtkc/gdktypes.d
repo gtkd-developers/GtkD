@@ -30,8 +30,6 @@ public import gtkc.giotypes;
 public import gtkc.pangotypes;
 public import gtkc.gdkpixbuftypes;
 
-alias void* GdkAtom;
-
 const int GDK_MAX_TIMECOORD_AXES = 128;
 
 
@@ -1712,6 +1710,24 @@ public enum GdkDragAction
 alias GdkDragAction DragAction;
 
 /**
+ * Describes how existing data is combined with new data when
+ * using gdk_property_change().
+ * GDK_PROP_MODE_REPLACE
+ * the new data replaces the existing data.
+ * GDK_PROP_MODE_PREPEND
+ * the new data is prepended to the existing data.
+ * GDK_PROP_MODE_APPEND
+ * the new data is appended to the existing data.
+ */
+public enum GdkPropMode
+{
+	MODE_REPLACE,
+	MODE_PREPEND,
+	MODE_APPEND
+}
+alias GdkPropMode PropMode;
+
+/**
  * A set of bit flags used to specify conditions for which
  * an input callback will be triggered. The three members
  * of this enumeration correspond to the readfds,
@@ -1832,6 +1848,12 @@ public enum GdkExtensionMode
 }
 alias GdkExtensionMode ExtensionMode;
 
+/**
+ * An opaque type representing a string as an index into a table
+ * of strings on the X server.
+ */
+alias _GdkAtom* GdkAtom;
+public struct _GdkAtom;
 
 /**
  * Main Gtk struct.
@@ -3286,6 +3308,23 @@ public struct GdkAppLaunchContext{}
  */
 // TODO
 // #define gdk_window_copy_area(drawable,gc,x,y,source_drawable,source_x,source_y,width,height)
+
+/*
+ * Converts a GdkAtom into a pointer type.
+ * atom :
+ * a GdkAtom.
+ */
+// TODO
+// #define GDK_ATOM_TO_POINTER(atom) (atom)
+
+/*
+ * Extracts a GdkAtom from a pointer. The GdkAtom must have been
+ * stored in the pointer with GDK_ATOM_TO_POINTER().
+ * ptr :
+ * a pointer containing a GdkAtom.
+ */
+// TODO
+// #define GDK_POINTER_TO_ATOM(ptr) ((GdkAtom)(ptr))
 
 /*
  * Returns the display of a GdkWindow.
