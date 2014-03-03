@@ -674,7 +674,7 @@ public struct Funct
 			}
 			else if (GtkDClass.endsWith(param.typeWrap, "IF"))
 			{
-				parmToGtkD = "ObjectG.getDObject!("~param.typeWrap[0..$-2]~")("~ param.convName ~")";
+				parmToGtkD = "ObjectG.getDObject!("~param.typeWrap[0..$-2]~", "~param.typeWrap~")("~ param.convName ~")";
 			}
 			else
 			{
@@ -733,6 +733,8 @@ public struct Funct
 		{
 			if ( convParms.outPack == "cairo" || convParms.outPack == "glib" || convParms.outPack == "gthread" )
 				return "new "~ type;
+			else if( GtkDClass.endsWith(type, "IF") )
+				return "ObjectG.getDObject!("~ type[0..$-2] ~", "~ type ~")";
 			else
 				return "ObjectG.getDObject!("~ type ~")";
 		}
@@ -906,10 +908,7 @@ public struct Funct
 
 				gtkCall ~= "&out" ~ id;
 				
-				if( GtkDClass.endsWith(param.typeWrap, "IF") )
-					end ~= id ~" = "~ construct(split(param.typeWrap)[1][0 .. $-2]) ~"(out"~ id ~");";
-				else
-					end ~= id ~" = "~ construct(split(param.typeWrap)[1]) ~"(out"~ id ~");";
+				end ~= id ~" = "~ construct(split(param.typeWrap)[1]) ~"(out"~ id ~");";
 			}
 			else if ( param.arrayParam && param.type[0 .. $-1] != param.typeWrap[0 .. $-2] &&
 				 !GtkDClass.endsWith(param.type, "[]") && param.typeWrap != "string[]" )
@@ -1137,8 +1136,6 @@ public struct Funct
 						/* What's with all the casting? */
 						/* A; Casting is needed because some GTK+
 						 *    functions can return void pointers. */
-						else if( GtkDClass.endsWith(typeWrap, "IF") )
-							bd ~= "return " ~ construct(typeWrap[0..$-2]) ~ "(cast(" ~ type ~ ") p);";
 						else
 							bd ~= "return " ~ construct(typeWrap) ~ "(cast(" ~ type ~ ") p);";
 						

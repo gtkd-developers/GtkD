@@ -850,7 +850,7 @@ public class TreeView : Container
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -2243,7 +2243,7 @@ public class TreeView : Container
 		
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, &outmodel, &outpath, (iter is null) ? null : iter.getTreeIterStruct());
 		
-		model = ObjectG.getDObject!(TreeModel)(outmodel);
+		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		return p;
 	}

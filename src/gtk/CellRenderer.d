@@ -216,7 +216,7 @@ public class CellRenderer : ObjectGtk
 	{
 		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg ; _cellRenderer.onEditingStartedListeners )
 		{
-			dlg(ObjectG.getDObject!(CellEditable)(editable), Str.toString(path), _cellRenderer);
+			dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), _cellRenderer);
 		}
 	}
 	
@@ -311,7 +311,7 @@ public class CellRenderer : ObjectGtk
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CellEditable)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditable, CellEditableIF)(cast(GtkCellEditable*) p);
 	}
 	
 	/**

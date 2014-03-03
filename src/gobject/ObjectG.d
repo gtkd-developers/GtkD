@@ -238,7 +238,7 @@ public class ObjectG
 	 *  obj = GObject containing the associations.
 	 * Returns: the D Object if found, or a newly constructed object if no such Object exists.
 	 */
-	public static T getDObject(T, U)(U obj)
+	public static RT getDObject(T, RT=T, U)(U obj)
 	{
 		if ( obj is null )
 		{
@@ -251,7 +251,14 @@ public class ObjectG
 			
 			if ( p !is null )
 			{
-				return cast(T)p;
+				static if ( is(RT == interface ) )
+				{
+					return cast(RT)cast(ObjectG)p;
+				}
+				else
+				{
+					return cast(RT)p;
+				}
 			}
 			else
 			{

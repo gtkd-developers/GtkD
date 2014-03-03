@@ -398,7 +398,7 @@ public class Image : Misc
 		
 		gtk_image_get_gicon(gtkImage, &outgicon, &size);
 		
-		gicon = ObjectG.getDObject!(Icon)(outgicon);
+		gicon = ObjectG.getDObject!(Icon, IconIF)(outgicon);
 	}
 	
 	/**

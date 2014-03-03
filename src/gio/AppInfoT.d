@@ -171,7 +171,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -188,7 +188,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -286,7 +286,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 	
 	/**
@@ -619,7 +619,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
 	}
 	
 	/**
@@ -641,7 +641,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
 	}
 	
 	/**

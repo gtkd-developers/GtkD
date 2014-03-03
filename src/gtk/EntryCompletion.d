@@ -203,7 +203,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	{
 		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; _entryCompletion.onCursorOnMatchListeners )
 		{
-			if ( dlg(ObjectG.getDObject!(TreeModel)(model), iter, _entryCompletion) )
+			if ( dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), iter, _entryCompletion) )
 			{
 				return 1;
 			}
@@ -280,7 +280,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 	{
 		foreach ( bool delegate(TreeModelIF, GtkTreeIter*, EntryCompletion) dlg ; _entryCompletion.onMatchSelectedListeners )
 		{
-			if ( dlg(ObjectG.getDObject!(TreeModel)(model), iter, _entryCompletion) )
+			if ( dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), iter, _entryCompletion) )
 			{
 				return 1;
 			}
@@ -354,7 +354,7 @@ public class EntryCompletion : ObjectG, CellLayoutIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreeModel)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 	
 	/**

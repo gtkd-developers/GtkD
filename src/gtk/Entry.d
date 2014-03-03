@@ -1450,7 +1450,7 @@ public class Entry : Widget, EditableIF, CellEditableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 	
 	/**
