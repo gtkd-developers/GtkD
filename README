@@ -1,4 +1,4 @@
-GtkD is the Digital Mars D programing language OO wrapper for Gtk+.
+GtkD is the Digital Mars D programing language OO wrapper for Gtk+ 3.10.
 GtkD is release on the LGPL license with additional exceptions.
 
 Please view COPYING for GtkD's license.
@@ -11,13 +11,13 @@ Requirements:
 
 optional:
 - OpenGL libs (mesa is fine on linux)
-- GtkGLext
+- GtkGLext 3
 
 Who are you?
 ------------
 
 If you want to write some wicked cool D and Gtk+ apps, grab the gtkD release 
-archive at dsource.org/projects/gtkd.
+archive at http://gtkd.org/download.html.
 
 If you want to tweak the automatic wrapper or help with it, use git...
 https://github.com/gtkd-developers/GtkD
@@ -78,3 +78,19 @@ Building with bud/build:
 
 You can also build GtkD using build/bud http://www.dsource.org/projects/build
 see the README in the build directory.
+
+Wraped Versions:
+----------------
+
+GtkD wraps Gtk+ 3.10 the versions of the associated libraries are:
+Gtk+          3.10
+Gdk           3.10
+Glib          2.38
+GObject       2.38
+Gio           2.38
+Pango         1.36
+Gdk-pixbuf    2.30
+Cairo         1.12.2
+GtksourceView 3.10
+GStreamer     1.2
+Vte           0.37.4
