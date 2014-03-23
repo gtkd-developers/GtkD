@@ -8028,59 +8028,56 @@ code: start
 		return 0;
 	}
 
-	static if ( __VERSION__ >= 2063 )
+	bool delegate(Scoped!Context, Widget)[] scopedOnDrawListeners;
+	/**
+	 * This signal is emitted when a widget is supposed to render itself.
+	 * The widget's top left corner must be painted at the origin of
+	 * the passed in context and be sized to the values returned by
+	 * getAllocatedWidth() and getAllocatedHeight().
+	 * 
+	 * Signal handlers connected to this signal can modify the cairo
+	 * context passed as cr in any way they like and don't need to
+	 * restore it. The signal emission takes care of calling Context.save()
+	 * before and Context.restore() after invoking the handler.
+	 * 
+	 * The signal handler will get a cr with a clip region already set to the
+	 * widget's dirty region, i.e. to the area that needs repainting. Complicated
+	 * widgets that want to avoid redrawing themselves completely can get the full
+	 * extents of the clip region with gdk.cairo.getClipRectangle(), or they can
+	 * get a finer-grained representation of the dirty region with
+	 * Context.copyClipRectangleList().
+	 * 
+	 * Return true to stop other handlers from being invoked for the event,
+	 * false to propagate the event further.
+	 *
+	 * Since 3.0
+	 */
+	void addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		bool delegate(Scoped!Context, Widget)[] scopedOnDrawListeners;
-		/**
-		 * This signal is emitted when a widget is supposed to render itself.
-		 * The widget's top left corner must be painted at the origin of
-		 * the passed in context and be sized to the values returned by
-		 * getAllocatedWidth() and getAllocatedHeight().
-		 * 
-		 * Signal handlers connected to this signal can modify the cairo
-		 * context passed as cr in any way they like and don't need to
-		 * restore it. The signal emission takes care of calling Context.save()
-		 * before and Context.restore() after invoking the handler.
-		 * 
-		 * The signal handler will get a cr with a clip region already set to the
-		 * widget's dirty region, i.e. to the area that needs repainting. Complicated
-		 * widgets that want to avoid redrawing themselves completely can get the full
-		 * extents of the clip region with gdk.cairo.getClipRectangle(), or they can
-		 * get a finer-grained representation of the dirty region with
-		 * Context.copyClipRectangleList().
-		 * 
-		 * Return true to stop other handlers from being invoked for the event,
-		 * false to propagate the event further.
-		 *
-		 * Since 3.0
-		 */
-		void addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		if ( !("draw-scoped" in connectedSignals) )
 		{
-			if ( !("draw-scoped" in connectedSignals) )
-			{
-				Signals.connectData(
-				getStruct(),
-				"draw",
-				cast(GCallback)&callBackScopedDraw,
-				cast(void*)this,
-				null,
-				connectFlags);
-				connectedSignals["draw-scoped"] = 1;
-			}
-			scopedOnDrawListeners ~= dlg;
+			Signals.connectData(
+			getStruct(),
+			"draw",
+			cast(GCallback)&callBackScopedDraw,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["draw-scoped"] = 1;
 		}
-		extern(C) static gboolean callBackScopedDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget _widget)
+		scopedOnDrawListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackScopedDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget _widget)
+	{
+		foreach ( bool delegate(Scoped!Context, Widget) dlg ; _widget.scopedOnDrawListeners )
 		{
-			foreach ( bool delegate(Scoped!Context, Widget) dlg ; _widget.scopedOnDrawListeners )
+			if ( dlg(scoped!Context(cr), _widget) )
 			{
-				if ( dlg(scoped!Context(cr), _widget) )
-				{
-					return 1;
-				}
+				return 1;
 			}
-		
-			return 0;
 		}
+	
+		return 0;
 	}
 
 	alias cairo_t CairoContext;
