@@ -27,37 +27,30 @@
         {
             "name": "gtkd",
             "targetType": "library",
-			"targetName": "gtkd-2",
+			"targetName": "gtkd-1",
             "sourcePaths": ["src"],
             "libs-posix": ["dl"]
         },
         {
             "name": "gtkdgl",
             "targetType": "library",
-            "targetName": "gtkdgl-2",
+            "targetName": "gtkdgl-1",
             "sourcePaths": ["srcgl"],
             "libs-posix": ["dl"],
         },
         {
             "name": "sv",
             "targetType": "library",
-			"targetName": "gtkdsv-2",
+			"targetName": "gtkdsv-1",
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
         },
         {
             "name": "gstreamer",
             "targetType": "library",
-			"targetName": "gstreamerd-2",
+			"targetName": "gstreamerd-1",
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
         },
-        {
-            "name": "vte",
-            "targetType": "library",
-			"targetName": "vted-2",
-            "sourcePaths": ["srcvte"],
-            "libs-posix": ["dl"],
-        }
     ]
 }
