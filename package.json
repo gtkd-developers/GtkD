@@ -16,11 +16,11 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:gtkd": "~GtkD_2.3",
-        "gtk-d:gtkdgl": "~GtkD_2.3",
-        "gtk-d:sv": "~GtkD_2.3",
-        "gtk-d:gstreamer": "~GtkD_2.3",
-        "gtk-d:vte": "~GtkD_2.3"
+        "gtk-d:gtkd": "~>2.3",
+        "gtk-d:gtkdgl": "~>2.3",
+        "gtk-d:sv": "~>2.3",
+        "gtk-d:gstreamer": "~>2.3",
+        "gtk-d:vte": "~>2.3"
     },
 
     "subPackages" : [
@@ -37,9 +37,6 @@
             "targetName": "gtkdgl-2",
             "sourcePaths": ["srcgl"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~GtkD_2.3"
-            }
         },
         {
             "name": "sv",
@@ -47,9 +44,6 @@
 			"targetName": "gtkdsv-2",
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~GtkD_2.3"
-            }
         },
         {
             "name": "gstreamer",
@@ -57,9 +51,6 @@
 			"targetName": "gstreamerd-2",
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~GtkD_2.3"
-            }
         },
         {
             "name": "vte",
@@ -67,9 +58,6 @@
 			"targetName": "vted-2",
             "sourcePaths": ["srcvte"],
             "libs-posix": ["dl"],
-            "dependencies": {
-		        "gtk-d:gtkd": "~GtkD_2.3"
-            }
         }
     ]
 }
