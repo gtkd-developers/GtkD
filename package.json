@@ -16,18 +16,17 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:gtkd": "~>1.7",
-        "gtk-d:gtkdgl": "~>1.7",
-        "gtk-d:sv": "~>1.7",
-        "gtk-d:gstreamer": "~>1.7",
-        "gtk-d:vte": "~>1.7"
+        "gtk-d:gtkd": "~Gtk2",
+        "gtk-d:gtkdgl": "~Gtk2",
+        "gtk-d:sv": "~Gtk2",
+        "gtk-d:gstreamer": "~Gtk2"
     },
 
     "subPackages" : [
         {
             "name": "gtkd",
             "targetType": "library",
-			"targetName": "gtkd-1",
+            "targetName": "gtkd-1",
             "sourcePaths": ["src"],
             "libs-posix": ["dl"]
         },
@@ -41,14 +40,14 @@
         {
             "name": "sv",
             "targetType": "library",
-			"targetName": "gtkdsv-1",
+            "targetName": "gtkdsv-1",
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
         },
         {
             "name": "gstreamer",
             "targetType": "library",
-			"targetName": "gstreamerd-1",
+            "targetName": "gstreamerd-1",
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
         },
