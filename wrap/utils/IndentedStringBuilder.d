@@ -19,23 +19,68 @@
 
 module utils.IndentedStringBuilder;
 
-import std.algorithm;
-import std.string;
+import std.algorithm: canFind, startsWith, endsWith;
+import std.string: strip;
 
-/* Keeps track of indentation level while building up a string */
-
+/** Keeps track of indentation level while building up a string */
 public class IndentedStringBuilder
 {
 	string tabs;
+	bool statement;
+
+	this()
+	{
+		this("");
+	}
 	
 	this(string t)
 	{
 		tabs = t;
 	}
-	
-	this()
+
+	/**
+	 * Formats the input line while keeping track of indentation.
+	 * Params:
+	 *    	lines = The lines to format
+	 */
+	public string format(string line)
 	{
-		this("");
+		string text;
+		line = line.strip();
+
+		//Don't change the indentation when the line is a comment.
+		if ( startsWith(line, '*') )
+		{
+			return tabs ~" "~ line ~ "\n";
+		}
+
+		if ( endsWith(line, "}", "};", "));") || startsWith(line, "}", "};") )
+		{
+			if ( !canFind(line, '{') && tabs.length > 0 )
+				tabs.length = tabs.length -1;
+		}
+
+		if ( statement )
+		{
+			text = tabs ~"\t"~ line ~"\n";
+			statement = false;
+		}
+		else
+		{
+			text = tabs ~ line ~"\n";
+		}
+
+		if ( startsWith(line, "if", "else", "version", "debug", "do", "while") && !endsWith(line, "}", ";") )
+		{
+			statement = true;
+		}
+		else if ( (endsWith(line, '{') && !startsWith(line, "}")) || endsWith(line, "(") )
+		{
+			tabs ~= '\t';
+			statement = false;
+		}
+
+		return text;
 	}
 	
 	/**
@@ -47,32 +92,7 @@ public class IndentedStringBuilder
 	{
 		string text = "";
 		foreach(string line ; lines )
-		{
-			string ln = std.string.strip(line);
-			if ( endsWith(ln, '}')
-			    || endsWith(ln, "};")
-			    || startsWith(ln, "}")
-			    || startsWith(ln, "* }")
-			    || startsWith(ln, "// }")
-			    || endsWith(ln, "));")
-			    )
-			{
-				if ( !canFind(ln, '{') && tabs.length > 0 ) tabs.length = tabs.length -1;
-			}
-			if ( startsWith(ln, '*') )
-			{
-				text ~= tabs ~" "~ ln ~ "\n";
-			}
-			else
-			{
-				text ~= tabs ~ ln ~ "\n";
-			}
-			if ( (endsWith(ln,'{') && !startsWith(ln, "}")) || endsWith(ln, "(") )
-			{
-				tabs ~= '\t';
-			}
-		}
-		
+			text ~= format(line);
 		return text;
 	}
 	
