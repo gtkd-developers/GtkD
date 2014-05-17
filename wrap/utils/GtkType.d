@@ -22,6 +22,7 @@ module utils.GtkType;
 import utils.GtkWrapper;
 import utils.XML;
 
+import std.algorithm: canFind, skipOver;
 import std.conv: to;
 
 /**
@@ -32,6 +33,7 @@ final class GtkType
 	string name;
 	string cType;
 	string doc;
+	bool constType;
 
 	int size = -1;   /// The size of a fixed size array.
 	int length = -1; /// The index of the param representing the length, not counting the instance param.
@@ -61,6 +63,12 @@ final class GtkType
 			name = reader.front.attributes["name"];
 		}
 
+		if ( cType.canFind("const ") )
+		{
+			constType = true;
+			fixType();
+		}
+
 		if ( reader.front.type == XMLNodeType.EmptyTag )
 			return;
 
@@ -72,5 +80,16 @@ final class GtkType
 		if ( cType.length < elementType.cType.length && 
 		    !(name == "GLib.List" || name == "GLib.SList" || name == "GLib.Array") )
 				cType = elementType.cType;
+	}
+
+	private void fixType()
+	{
+		if ( name == "utf8" )
+		{
+			cType = "const(char)*";
+			return;
+		}
+
+		cType.skipOver("const ");
 	}
 }

@@ -35,6 +35,12 @@ void main()
 {
 	GtkWrapper wrapper = new GtkWrapper("./");
 	wrapper.proccess("APILookup.txt");
+
+	foreach(pack; GtkWrapper.packages)
+	{
+		pack.writeTypes();
+		pack.writeLoaderTable();
+	}
 }
 
 class GtkWrapper
@@ -262,8 +268,6 @@ class GtkWrapper
 			
 			defReader.popFront();
 		}
-
-		buildTypedefs(pack);
 	}
 	
 	private void loadAA (ref string[string] aa, DefReader defReader)
@@ -317,44 +321,6 @@ class GtkWrapper
 		
 		if ( !exists(to) )
 			throw new Exception("Cannot copy  file: "~from);
-	}
-
-	void buildTypedefs(GtkPackage pack)
-	{
-		string buff = licence;
-		auto indenter = new IndentedStringBuilder();
-
-		buff ~= "module "~ bindDir ~"."~ pack.name ~"types;\n\n";
-
-		buff ~= indenter.format(pack.collectedAliases);
-
-		foreach ( e; pack.collectedEnums )
-		{
-			buff ~= "\n";
-			buff ~= indenter.format(e.getEnumDeclaration());
-		}
-
-		foreach ( s; pack.collectedStructs )
-		{
-			buff ~= "\n";
-			buff ~= indenter.format(s.getStructDeclaration());
-		}
-
-		foreach ( f; pack.collectedCallbacks )
-		{
-			buff ~= "\n";
-			buff ~= indenter.format(f.getCallbackDeclaration());
-		}
-
-		if ( pack.stockIDs.members !is null )
-		{
-			pack.stockIDs.cName = "StockID";
-			pack.stockIDs.doc = "StockIds";
-			buff ~= "\n";
-			buff ~= indenter.format(pack.stockIDs.getEnumDeclaration());
-		}
-
-		std.file.write(buildPath(outputRoot, srcDir, bindDir, pack.name ~"types.d"), buff);
 	}
 }
 

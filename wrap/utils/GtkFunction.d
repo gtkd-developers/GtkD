@@ -188,6 +188,38 @@ final class GtkFunction
 		buff ~= func;
 		return buff;
 	}
+
+	string getExternal()
+	{
+		assert(type != GtkFunctionType.Callback);
+		assert(type != GtkFunctionType.Signal);
+
+		string ext = tokenToGtkD(returnType.cType, wrapper.aliasses);
+		ext ~= " function(";
+
+		if ( instanceParam )
+		{
+			ext ~= tokenToGtkD(instanceParam.type.cType, wrapper.aliasses);
+			ext ~= " ";
+			ext ~= tokenToGtkD(instanceParam.name, wrapper.aliasses);
+		}
+
+		size_t i;
+		foreach ( param; params )
+		{
+			if ( i > 0 || instanceParam )
+				ext ~= ", ";
+
+			ext ~= tokenToGtkD(param.type.cType, wrapper.aliasses);
+			ext ~= " ";
+			if ( param.name != "..." )
+				ext ~= tokenToGtkD(param.name, wrapper.aliasses);
+		}
+
+		ext ~= ") c_"~ cType ~";";
+
+		return ext;
+	}
 }
 
 final class GtkParam
@@ -209,7 +241,7 @@ final class GtkParam
 
 		reader.popFront();
 
-		while( !reader.empty && !(reader.endTag("parameter") || reader.endTag("instance-parameter")) )
+		while( !reader.empty && !reader.endTag(["parameter", "instance-parameter"]) )
 		{
 			if ( reader.front.type == XMLNodeType.EndTag )
 			{
@@ -235,8 +267,9 @@ final class GtkParam
 					type.parse(reader);
 					break;
 				case "varargs":
-					//TODO
-					reader.skipTag();
+					type = new GtkType(wrapper);
+					type.name = "...";
+					type.cType = "...";
 					break;
 				default:
 					assert(false, name ~": Unexpected tag: "~ reader.front.value);

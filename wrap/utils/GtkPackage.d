@@ -30,6 +30,7 @@ import utils.GtkEnum;
 import utils.GtkFunction;
 import utils.GtkStruct;
 import utils.GtkWrapper;
+import utils.IndentedStringBuilder;
 import utils.XML;
 import utils.LinkedHasMap: Map = LinkedHashMap;
 
@@ -215,5 +216,132 @@ class GtkPackage
 
 		//TODO: other constants.
 		reader.skipTag();
+	}
+
+	void writeTypes()
+	{
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
+
+		buff ~= "module "~ wrapper.bindDir ~"."~ name ~"types;\n\n";
+
+		buff ~= indenter.format(collectedAliases);
+
+		foreach ( e; collectedEnums )
+		{
+			buff ~= "\n";
+			buff ~= indenter.format(e.getEnumDeclaration());
+		}
+
+		foreach ( s; collectedStructs )
+		{
+			buff ~= "\n";
+			buff ~= indenter.format(s.getStructDeclaration());
+		}
+
+		foreach ( f; collectedCallbacks )
+		{
+			buff ~= "\n";
+			buff ~= indenter.format(f.getCallbackDeclaration());
+		}
+
+		if ( stockIDs.members !is null )
+		{
+			stockIDs.cName = "StockID";
+			stockIDs.doc = "StockIds";
+			buff ~= "\n";
+			buff ~= indenter.format(stockIDs.getEnumDeclaration());
+		}
+
+		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir, name ~"types.d"), buff);
+	}
+
+	void writeLoaderTable()
+	{
+		string buff = wrapper.licence;
+
+		buff ~= "module "~ wrapper.bindDir ~"."~ name ~";\n\n";
+		buff ~= "import std.stdio;\n";
+		buff ~= "import "~ wrapper.bindDir ~"."~ name ~"types;\n";
+
+		if ( name == "glib" )
+			buff ~= "import gtkc.gthreadtypes;\n";
+		if ( name == "gdk" || name == "pango" )
+			buff ~= "import gtkc.cairotypes;\n";
+
+		buff ~= "import gtkc.Loader;\n"
+			"import gtkc.paths;\n\n"
+			"shared static this()\n"
+			"{";
+
+		foreach ( strct; collectedStructs )
+		{
+			if ( strct.functions.empty )
+				continue;
+
+			buff ~= "\n\t// "~ name ~"."~ strct.name ~"\n\n";
+
+			foreach ( funct; strct.functions )
+			{
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal )
+					continue;
+
+				buff ~= "\tLinker.link("~ funct.cType ~", \""~ funct.cType ~"\", "~ getLibrary(funct.cType) ~");\n";
+			}
+		}
+
+		buff ~= "}\n\n"
+			"__gshared extern(C)\n"
+			"{\n";
+
+		foreach ( strct; collectedStructs )
+		{
+			if ( strct.functions.empty )
+				continue;
+
+			buff ~= "\n\t// "~ name ~"."~ strct.name ~"\n\n";
+
+			foreach ( funct; strct.functions )
+			{
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal )
+					continue;
+
+				buff ~= "\t"~ funct.getExternal() ~"\n";
+			}
+		}
+
+		buff ~= "}\n\n";
+
+		foreach ( strct; collectedStructs )
+		{
+			if ( strct.functions.empty )
+				continue;
+
+			buff ~= "\n// "~ name ~"."~ strct.name ~"\n\n";
+
+			foreach ( funct; strct.functions )
+			{
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal )
+					continue;
+
+				buff ~= "alias c_"~ funct.cType ~" "~ funct.cType ~";\n";
+			}
+		}
+
+		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir, name ~".d"), buff);
+	}
+
+	private string getLibrary(string funct)
+	{
+		string library = "LIBRARY."~ name.toUpper();
+
+		if ( startsWith(funct, "gdk") )
+			return library ~ ", LIBRARY.GDKPIXBUF";
+		else if	( startsWith(funct, "pango_cairo") )
+			return library ~ ", LIBRARY.PANGOCAIRO";
+		else if	( startsWith(funct, "g_module") )
+			return library ~ ", LIBRARY.GMODULE";
+		else
+			return library;
 	}
 }
