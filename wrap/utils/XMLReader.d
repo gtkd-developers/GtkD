@@ -414,6 +414,12 @@ class XMLReader(T)
 				throw new XMLException("Unregonized escape secuence");
 		}
 	}
+
+	unittest
+	{
+		auto reader = new XMLReader("&lt;test&gt;");
+		assert(reader.front.value == "<test>");
+	}
 }
 
 /**
