@@ -388,8 +388,6 @@ class XMLReader(T)
 			document.popFront();
 		}
 
-		document.popFront();
-
 		switch ( sequence[0 .. index] )
 		{
 			case "#34":

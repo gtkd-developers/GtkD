@@ -32,11 +32,13 @@ final class GtkType
 {
 	string name;
 	string cType;
+	string dType;
 	string doc;
 	bool constType;
 
 	int size = -1;   /// The size of a fixed size array.
 	int length = -1; /// The index of the param representing the length, not counting the instance param.
+	bool zeroTerminated; /// Is this array zero-terminated.
 	GtkType elementType; /// The type of the array elements, also set for Glib.List, Glib.SList and Glib.Array.
 
 	GtkWrapper wrapper;
@@ -55,6 +57,8 @@ final class GtkType
 		{
 			if ( "length" in reader.front.attributes )
 				length = to!int(reader.front.attributes["length"]);
+			if ( "zero-terminated" in reader.front.attributes )
+				length = to!int(reader.front.attributes["zero-terminated"]) == 1;
 			if ( "fixed-size" in reader.front.attributes )
 				size = to!int(reader.front.attributes["fixed-size"]);
 		}

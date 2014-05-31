@@ -22,7 +22,7 @@ module utils.GtkPackage;
 import std.algorithm;
 import std.file;
 import std.path;
-import std.string : splitLines, strip;
+import std.string : splitLines, strip, split;
 import std.uni;
 import std.stdio;
 
@@ -136,7 +136,7 @@ class GtkPackage
 					collectedStructs[gtkStruct.name] = gtkStruct;
 					break;
 				case "callback":
-					GtkFunction callback = new GtkFunction(wrapper);
+					GtkFunction callback = new GtkFunction(wrapper, null);
 					callback.parse(reader);
 					collectedCallbacks[callback.name] = callback;
 					break;
@@ -144,7 +144,7 @@ class GtkPackage
 					parseConstant(reader);
 					break;
 				case "function":
-					GtkFunction funct = new GtkFunction(wrapper);
+					GtkFunction funct = new GtkFunction(wrapper, null);
 					funct.parse(reader);
 					collectedFunctions[funct.name] = funct;
 					break;
@@ -216,6 +216,29 @@ class GtkPackage
 
 		//TODO: other constants.
 		reader.skipTag();
+	}
+
+	GtkStruct getStruct(string name)
+	{
+		GtkPackage pack = this;
+
+		if ( name.canFind(".") )
+		{
+			string[] vals = name.split(".");
+
+			if ( vals[0].toLower() !in wrapper.packages )
+				return null;
+
+			pack = wrapper.packages[vals[0].toLower()];
+			name = vals[1];
+		}
+		return pack.collectedStructs.get(name, null);
+	}
+
+	void writeClasses()
+	{
+		foreach ( strct; collectedStructs )
+			strct.writeClass();
 	}
 
 	void writeTypes()

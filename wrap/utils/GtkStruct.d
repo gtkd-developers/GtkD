@@ -20,6 +20,8 @@
 module utils.GtkStruct;
 
 import std.conv;
+import std.file : write;
+import std.path: buildPath;
 import std.uni: toUpper;
 import std.range;
 import std.string: splitLines, strip;
@@ -30,8 +32,9 @@ import utils.GtkType;
 import utils.GtkWrapper;
 import utils.XML;
 import utils.LinkedHasMap: Map = LinkedHashMap;
+import utils.IndentedStringBuilder;
 
-enum GtkStructType
+enum GtkStructType : string
 {
 	Class = "class",
 	Interface = "interface",
@@ -47,7 +50,13 @@ final class GtkStruct
 	string parent;
 	string libVersion;
 
+	string[string] structWrap;
+	string[string] aliases;
+	string[] lookupCode;
+	string[] lookupInterfaceCode;
+
 	string[] implements;
+	string[] imports;
 	GtkField[] fields;
 	string[] virtualFunctions;
 	Map!(string, GtkFunction) functions;
@@ -68,7 +77,7 @@ final class GtkStruct
 		cType = reader.front.attributes["c:type"];
 
 		if ( "parent" in reader.front.attributes )
-			libVersion = reader.front.attributes["parent"];
+			parent = reader.front.attributes["parent"];
 		if ( "version" in reader.front.attributes )
 			libVersion = reader.front.attributes["version"];
 
@@ -104,7 +113,7 @@ final class GtkStruct
 				case "function":
 				case "method":
 				case "glib:signal":
-					GtkFunction func = new GtkFunction(wrapper);
+					GtkFunction func = new GtkFunction(wrapper, this);
 					func.parse(reader);
 					functions[func.name] = func;
 					break;
@@ -115,7 +124,7 @@ final class GtkStruct
 					reader.skipTag();
 					break;
 				case "implements":
-					implements ~= reader.front.value;
+					implements ~= reader.front.attributes["name"];
 					break;
 				case "prerequisite": // Determines whitch base class the implementor of an interface must implement.
 				case "property":
@@ -167,6 +176,88 @@ final class GtkStruct
 		}
 
 		return buff;
+	}
+
+	void writeClass()
+	{
+		if ( type == GtkStructType.Record )
+			return;
+
+		GtkStruct parentStruct = pack.getStruct(parent);
+		resolveDTypes();
+
+		if ( type == GtkStructType.Interface )
+			writeInterface();
+
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
+
+		if ( type == GtkStructType.Interface )
+			buff ~= "module "~ pack.name ~"."~ name ~"T;\n\n";
+		else
+			buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
+
+		foreach ( imp; imports )
+			buff ~= "import "~ imp ~";\n";
+
+		if ( doc !is null && wrapper.includeComments )
+		{
+			buff ~= "/**\n";
+			foreach ( line; doc.splitLines() )
+				buff ~= " * "~ line.strip() ~"\n";
+			
+			if ( libVersion )
+			{
+				buff ~= " *\n * Since: "~ libVersion ~"\n";
+			}
+			
+			buff ~= " */\n";
+		}
+
+		if ( type == GtkStructType.Interface )
+			buff ~= "public template "~ name ~"T(TStruct)";
+		else
+			buff ~= "public class "~ name;
+
+		if ( parentStruct )
+			buff ~= " : "~ parentStruct.pack.name ~"."~ parentStruct.name;
+
+		bool first = !parentStruct;
+
+		foreach ( interf; implements )
+		{
+			if ( parentStruct && parentStruct.implements.canFind(interf) )
+				continue;
+
+			GtkStruct strct = pack.getStruct(interf);
+
+			if ( strct && first )
+			{
+				buff ~= " :";
+				first = false;
+			}
+
+			if ( strct )
+				buff ~= " "~ strct.name ~"IF";
+		}
+
+		buff ~= "\n";
+		buff ~= indenter.format("{");
+
+		if ( type == GtkStructType.Interface )
+			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"T.d"), buff);
+		else
+			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~".d"), buff);
+	}
+
+	void writeInterface()
+	{
+
+	}
+
+	void resolveDTypes()
+	{
+
 	}
 }
 
@@ -224,7 +315,7 @@ final class GtkField
 					type.parse(reader);
 					break;
 				case "callback":
-					callback = new GtkFunction(wrapper);
+					callback = new GtkFunction(wrapper, null);
 					callback.parse(reader);
 					break;
 				default:

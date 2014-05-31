@@ -29,6 +29,8 @@ import std.stdio;
 import utils.DefReader;
 import utils.IndentedStringBuilder;
 import utils.GtkPackage;
+import utils.GtkStruct;
+import utils.GtkFunction;
 import utils.WrapError;
 
 void main()
@@ -40,6 +42,7 @@ void main()
 	{
 		pack.writeTypes();
 		pack.writeLoaderTable();
+		pack.writeClasses();
 	}
 }
 
@@ -133,8 +136,8 @@ class GtkWrapper
 
 	public void wrapPackage(DefReader defReader)
 	{
-		//ConvParms convParms;
 		GtkPackage pack;
+		GtkStruct currentStruct;
 
 		try
 		{
@@ -177,74 +180,82 @@ class GtkWrapper
 					pack.parseGIR(defReader.value);
 					break;
 				case "struct":
-					//convParms.strct = defReader.value;
-					break;
-				case "ctorStruct":
-					//convParms.ctorStrct = defReader.value;
+					currentStruct = pack.collectedStructs[defReader.value];
 					break;
 				case "class":
-					//convParms.clss = defReader.value;
-					break;
-				case "template":
-					//convParms.templ = defReader.value;
-					break;
-				case "interface":
-					//convParms.interf = defReader.value;
+					currentStruct.name = defReader.value;
 					break;
 				case "extend":
-					//convParms.extend = defReader.value;
+					currentStruct.parent = defReader.value;
 					break;
 				case "implements":
-					//convParms.impl ~= defReader.value;
-					break;
-				case "prefix":
-					//convParms.prefixes ~= defReader.value;
-					break;
-				case "strictPrefix":
-					//convParms.strictPrefix = defReader.valueBool;
+					currentStruct.implements ~= defReader.value;
 					break;
 				case "import":
-					//convParms.imports ~= defReader.value;
+					currentStruct.imports ~= defReader.value;
 					break;
 				case "structWrap":
-					//loadAA(convParms.structWrap, defReader);
+					loadAA(currentStruct.structWrap, defReader);
 					break;
 				case "alias":
-					//loadAA(convParms.aliases, defReader);
-					break;
-				case "moduleAlias":
-					//loadAA(convParms.mAliases, defReader);
+					loadAA(currentStruct.aliases, defReader);
 					break;
 				case "override":
-					//convParms.overrides ~= defReader.value;
-					break;
-				case "noprefix":
-					//convParms.noPrefixes ~= defReader.value;
-					break;
-				case "nostruct":
-					//convParms.noStructs ~= defReader.value;
+					currentStruct.functions[defReader.value].lookupOverride = true;
 					break;
 				case "nocode":
-					//convParms.noCode ~= defReader.value;
-					break;
 				case "nosignal":
-					//convParms.noSignals ~= defReader.value;
+					currentStruct.functions[defReader.value].noCode = true;
 					break;
 				case "code":
-					//convParms.classCode ~= defReader.readBlock;
+					currentStruct.lookupCode ~= defReader.readBlock;
 					break;
 				case "interfaceCode":
-					//convParms.interfaceCode ~= defReader.readBlock;
+					currentStruct.lookupInterfaceCode ~= defReader.readBlock;
 					break;
 				case "out":
-					//loadAA(convParms.outParms, defReader);
+					string[] vals = defReader.value.split();
+					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.Out;
 					break;
-				case "ref":
 				case "inout":
-					//loadAA(convParms.inoutParms, defReader);
+				case "ref":
+					string[] vals = defReader.value.split();
+					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.InOut;
 					break;
 				case "array":
-					//loadAA(convParms.array, defReader);
+					string[] vals = defReader.value.split();
+					GtkFunction func = currentStruct.functions[vals[0]];
+
+					if ( vals[1] == "Return" )
+					{
+						if ( vals.length < 3 )
+						{
+							func.returnType.zeroTerminated = true;
+							break;
+						}
+
+						foreach( i, p; func.params )
+						{
+							if ( p.name == vals[2] )
+								func.returnType.length = cast(int)i;
+						}
+					}
+					else
+					{
+						GtkParam param = findParam(currentStruct, vals[0], vals[1]);
+
+						if ( vals.length < 3 )
+						{
+							param.type.zeroTerminated = true;
+							break;
+						}
+
+						foreach( i, p; func.params )
+						{
+							if ( p.name == vals[2] )
+								param.type.length = cast(int)i;
+						}
+					}
 					break;
 				case "copy":
 					if ( srcDir.empty )
@@ -253,21 +264,23 @@ class GtkWrapper
 					
 					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
 					break;
-				case "openFile":
-				case "mergeFile":
-					
-					break;
-				case "closeFile":
-				case "outFile":
-					
-					//convParms.clear();
-					break;
 				default:
 					throw new WrapError(defReader, "Unknown key: "~defReader.key);
 			}
 			
 			defReader.popFront();
 		}
+	}
+
+	private GtkParam findParam(GtkStruct strct, string func, string name)
+	{
+		foreach( param; strct.functions[func].params )
+		{
+			if ( param.name == name )
+				return param;
+		}
+
+		return null;
 	}
 	
 	private void loadAA (ref string[string] aa, DefReader defReader)
@@ -279,34 +292,6 @@ class GtkWrapper
 
 		if ( vals.length == 2 )
 			aa[vals[0]] = vals[1];
-		else
-			throw new WrapError(defReader, "Unknown key: "~defReader.key);
-	}
-	
-	private void loadAA (ref string[][string] aa, DefReader defReader)
-	{
-		string[] vals = defReader.value.split();
-		
-		if ( vals.length == 1 )
-			vals ~= "";
-
-		if ( vals.length == 2 )
-			aa[vals[0]] ~= vals[1];
-		else
-			throw new WrapError(defReader, "Unknown key: "~defReader.key);
-	}
-	
-	private void loadAA (ref string[string][string] aa, DefReader defReader)
-	{
-		string[] vals = defReader.value.split();
-		
-		if ( vals.length == 1 )
-			vals ~= "";
-		if ( vals.length == 2 )
-			vals ~= "";
-		
-		if ( vals.length == 3 )
-			aa[vals[0]][vals[1]] ~= vals[2];
 		else
 			throw new WrapError(defReader, "Unknown key: "~defReader.key);
 	}

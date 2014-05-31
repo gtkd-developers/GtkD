@@ -23,11 +23,12 @@ import std.conv;
 import std.range;
 import std.string: splitLines, strip;
 
+import utils.GtkStruct;
 import utils.GtkType;
 import utils.GtkWrapper;
 import utils.XML;
 
-enum GtkFunctionType
+enum GtkFunctionType : string
 {
 	Constructor = "constructor",
 	Method = "method",
@@ -44,16 +45,21 @@ final class GtkFunction
 	string cType;
 	string libVersion;
 	bool virtual = false;
+	bool throws = false;
+	bool lookupOverride; /// Force marking this function with overrride.
+	bool noCode; /// Don't generate any class code for this function.
 
 	GtkType returnType;
 	GtkParam instanceParam;
 	GtkParam[] params;
 
 	GtkWrapper wrapper;
+	GtkStruct strct;
 
-	this (GtkWrapper wrapper)
+	this (GtkWrapper wrapper, GtkStruct strct)
 	{
 		this.wrapper = wrapper;
+		this.strct = strct;
 	}
 
 	void parse(T)(XMLReader!T reader)
@@ -71,6 +77,8 @@ final class GtkFunction
 			cType = reader.front.attributes["c:identifier"];
 		if ( "version" in reader.front.attributes )
 			libVersion = reader.front.attributes["version"];
+		if ( "throws" in reader.front.attributes )
+			throws = reader.front.attributes["throws"] == "1";
 
 		reader.popFront();
 
@@ -216,10 +224,20 @@ final class GtkFunction
 				ext ~= tokenToGtkD(param.name, wrapper.aliasses);
 		}
 
+		if ( throws )
+			ext ~= ", GError** err";
+
 		ext ~= ") c_"~ cType ~";";
 
 		return ext;
 	}
+}
+
+enum GtkParamDirection
+{
+	Default = "",
+	Out = "out",
+	InOut = "inout",
 }
 
 final class GtkParam
@@ -227,6 +245,7 @@ final class GtkParam
 	string doc;
 	string name;
 	GtkType type;
+	GtkParamDirection direction;
 
 	GtkWrapper wrapper;
 
@@ -238,6 +257,9 @@ final class GtkParam
 	void parse(T)(XMLReader!T reader)
 	{
 		name = reader.front.attributes["name"];
+
+		if ( "direction" in reader.front.attributes )
+			direction = cast(GtkParamDirection)reader.front.attributes["direction"];
 
 		reader.popFront();
 

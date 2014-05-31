@@ -32,8 +32,6 @@ struct LinkedHashMap(Key, Value)
 		Key key;
 		Node* next;
 		Node* previous;
-
-		alias val this;
 	}
 
 	private Node*[Key] data;

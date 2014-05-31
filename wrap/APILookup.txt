@@ -121,9 +121,9 @@ outputRoot: ../
 ### predifined: lib
 ###########################################################
 
-#srcDir: src/gtkc
-#copy: paths.d
-#copy: Loader.d
+srcDir: src/gtkc
+copy: paths.d
+copy: Loader.d
 
 srcDir: src
 bindDir: gtkc
