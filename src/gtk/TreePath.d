@@ -265,14 +265,6 @@ public class TreePath
 		appendIndex(index);
 	}
 	
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTreePath !is null )
-		{
-			gtk_tree_path_free(gtkTreePath);
-		}
-	}
-	
 	/**
 	 */
 	

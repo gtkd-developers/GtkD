@@ -3968,14 +3968,6 @@ code: start
 		foreach( index; indices )
 			appendIndex(index);
 	}
-
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTreePath !is null )
-		{
-			gtk_tree_path_free(gtkTreePath);
-		}
-	}
 code: end
 outFile: TreePath
 
