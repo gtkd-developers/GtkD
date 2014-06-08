@@ -19,10 +19,11 @@
 
 module utils.GtkStruct;
 
+import std.algorithm: sort, uniq, endsWith;
 import std.conv;
 import std.file : write;
 import std.path: buildPath;
-import std.uni: toUpper;
+import std.uni: toUpper, toLower;
 import std.range;
 import std.string: splitLines, strip;
 
@@ -184,7 +185,8 @@ final class GtkStruct
 			return;
 
 		GtkStruct parentStruct = pack.getStruct(parent);
-		resolveDTypes();
+		if ( parentStruct )
+			imports ~= parentStruct.pack.name ~"."~ parentStruct.name;
 
 		if ( type == GtkStructType.Interface )
 			writeInterface();
@@ -197,8 +199,7 @@ final class GtkStruct
 		else
 			buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
 
-		foreach ( imp; imports )
-			buff ~= "import "~ imp ~";\n";
+		writeImports(buff);
 
 		if ( doc !is null && wrapper.includeComments )
 		{
@@ -244,6 +245,76 @@ final class GtkStruct
 		buff ~= "\n";
 		buff ~= indenter.format("{");
 
+		if ( cType )
+		{
+			if ( type != GtkStructType.Interface )
+			{
+				buff ~= indenter.format("/** the main Gtk struct */");
+				buff ~= indenter.format("protected "~ cType ~" "~ getHandleVar() ~";");
+				buff ~= "\n";
+			}
+			buff ~= indenter.format("/** Get the main Gtk struct */");
+			buff ~= indenter.format("public "~ cType ~" "~ getHandleFunc() ~"()");
+			buff ~= indenter.format("{");
+
+			if ( type == GtkStructType.Interface )
+				buff ~= indenter.format("return cast("~ cType ~")getStruct();");
+			else
+				buff ~= indenter.format("return "~ getHandleVar ~";");
+
+			buff ~= indenter.format("}");
+			buff ~= "\n";
+			buff ~= indenter.format("/** the main Gtk struct as a void* */");
+
+			if ( parentStruct )
+				buff ~= indenter.format("protected override void* getStruct()");
+			else
+				buff ~= indenter.format("protected void* getStruct()");
+
+			buff ~= indenter.format("{");
+			buff ~= indenter.format("return cast(void*)"~ getHandleVar ~";");
+			buff ~= indenter.format("}");
+			buff ~= "\n";
+
+			if ( type != GtkStructType.Interface && cType != "GObject*" && cType != "cairo_t*" )
+			{
+				if ( parentStruct && pack.name != "cairo" )
+				{
+					buff ~= indenter.format("protected override void setStruct(GObject* obj)");
+					buff ~= indenter.format("{");
+					buff ~= indenter.format(getHandleVar ~" = cast("~ cType ~")obj;");
+					buff ~= indenter.format("}");
+					buff ~= "\n";
+				}
+
+				buff ~= indenter.format("/**");
+				buff ~= indenter.format(" * Sets our main struct and passes it to the parent class.");
+				buff ~= indenter.format(" */");
+				buff ~= indenter.format("public this ("~ cType ~" "~ getHandleVar() ~")");
+				buff ~= indenter.format("{");
+				if ( parentStruct )
+					buff ~= indenter.format("super(cast("~ parentStruct.cType ~")"~ getHandleVar() ~");");
+				buff ~= indenter.format("this."~ getHandleVar() ~" = "~ getHandleVar() ~";");
+				buff ~= indenter.format("}");
+				buff ~= "\n";
+			}
+
+			if ( !lookupCode.empty )
+			{
+				buff ~= indenter.format(lookupCode);
+				buff ~= "\n";
+			}
+
+			buff ~= indenter.format(["/**", "*/", ""]);
+
+			foreach ( func; functions )
+			{
+
+			}
+
+			buff ~= indenter.format("}");
+		}
+
 		if ( type == GtkStructType.Interface )
 			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"T.d"), buff);
 		else
@@ -252,12 +323,192 @@ final class GtkStruct
 
 	void writeInterface()
 	{
+		GtkStruct parentStruct = pack.getStruct(parent);
+				
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
+		
+		buff ~= "module "~ pack.name ~"."~ name ~"IF;\n\n";
 
+		writeImports(buff);
+		
+		if ( doc !is null && wrapper.includeComments )
+		{
+			buff ~= "/**\n";
+			foreach ( line; doc.splitLines() )
+				buff ~= " * "~ line.strip() ~"\n";
+			
+			if ( libVersion )
+			{
+				buff ~= " *\n * Since: "~ libVersion ~"\n";
+			}
+			
+			buff ~= " */\n";
+		}
+		
+		buff ~= "public interface "~ name;
+		buff ~= indenter.format("{");
+		
+		if ( cType )
+		{
+			buff ~= indenter.format("/** Get the main Gtk struct */");
+			buff ~= indenter.format("public "~ cType ~" "~ getHandleFunc() ~"();");
+			buff ~= "\n";
+
+			buff ~= indenter.format("/** the main Gtk struct as a void* */");
+			buff ~= indenter.format("protected void* getStruct();");
+			buff ~= "\n";
+			
+			if ( !lookupInterfaceCode.empty )
+			{
+				buff ~= indenter.format(lookupInterfaceCode);
+				buff ~= "\n";
+			}
+			
+			buff ~= indenter.format(["/**", "*/", ""]);
+			
+			foreach ( func; functions )
+			{
+				
+			}
+			
+			buff ~= indenter.format("}");
+		}
+		
+		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"IF.d"), buff);
 	}
 
-	void resolveDTypes()
+	/**
+	 * Return the variable name the c type is stored in.
+	 */
+	string getHandleVar()
 	{
+		if (cType.length == 0)
+			return "";
+		
+		string p = to!string(toLower(cType[0]));
+		if ( cType.endsWith("_t") )
+		{
+			return p ~ cType[1 .. $ - 2];
+		} else {
+			return p ~ cType[1 .. $];
+		}
+	}
 
+	/**
+	 * Returns the name of the function that returns the cType.
+	 */
+	string getHandleFunc()
+	{
+		GtkStruct parentStruct = pack.getStruct(parent);
+
+		if ( parentStruct && parentStruct.name == name )
+			return "get"~ cast(char)pack.name[0].toUpper ~ pack.name[1..$] ~ name ~"Struct";
+		else
+			return "get"~ name ~"Struct";
+	}
+
+	private void writeImports(ref string buff, bool _public = false)
+	{
+		imports ~= "gtkc."~ pack.name;
+		imports ~= "gtkc."~ pack.name ~"types";
+
+		foreach( func; functions )
+		{
+			if ( func.noCode )
+				continue;
+
+			if ( func.throws )
+			{
+				imports ~= "glib.ErrorG";
+				imports ~= "glib.GException";
+			}
+
+			void getReturnImport(GtkType type)
+			{
+				GtkStruct dType = pack.getStruct(type.name);
+
+				if ( dType )
+				{
+					imports ~= dType.pack.name ~"."~ dType.name;
+					
+					if ( dType.type == GtkStructType.Interface )
+						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
+				}
+				else if ( type.name == "utf8" )
+					imports ~= "glib.Str";
+			}
+
+			if ( func.returnType && func.returnType.cType !in structWrap )
+			{
+				getReturnImport(func.returnType);
+
+				if ( func.returnType.elementType )
+					getReturnImport(func.returnType.elementType);
+			}
+
+			void getParamImport(GtkType type)
+			{
+				GtkStruct dType = pack.getStruct(type.name);
+				
+				if ( dType )
+				{
+					if ( dType.type == GtkStructType.Interface )
+						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
+					else
+						imports ~= dType.pack.name ~"."~ dType.name;
+				}
+				else if ( type.name == "utf8" )
+					imports ~= "glib.Str";
+			}
+
+			foreach ( param; func.params )
+			{
+				if ( param.type.cType in structWrap )
+					continue;
+
+				getParamImport(param.type);
+
+				if ( param.type.elementType )
+					getParamImport(param.type.elementType);
+			}
+
+			if ( func.type == GtkFunctionType.Signal )
+			{
+				imports ~= "gobject.Signals";
+				imports ~= "gtkc.gdktypes";
+			}
+
+			if ( func.type == GtkFunctionType.Constructor )
+				imports ~= "glib.ConstructionException";
+		}
+
+		GtkStruct parentStruct = pack.getStruct(parent);
+		foreach ( interf; implements )
+		{
+			if ( parentStruct && parentStruct.implements.canFind(interf) )
+				continue;
+			
+			GtkStruct strct = pack.getStruct(interf);
+
+			if ( strct )
+			{
+				imports ~= strct.pack.name ~"."~ strct.name ~"IF";
+				imports ~= strct.pack.name ~"."~ strct.name ~"T";
+			}
+		}
+
+		imports = uniq(sort(imports)).array;
+
+		foreach ( imp; imports )
+		{
+			if ( _public || imp.endsWith("types") )
+				buff ~= "public  import "~ imp ~";\n";
+			else
+				buff ~= "private import "~ imp ~";\n";
+		}
+
+		buff ~= "\n\n";
 	}
 }
 
