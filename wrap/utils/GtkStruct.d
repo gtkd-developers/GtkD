@@ -25,7 +25,7 @@ import std.file : write;
 import std.path: buildPath;
 import std.uni: toUpper, toLower;
 import std.range;
-import std.string: splitLines, strip;
+import std.string: splitLines, strip, chomp;
 
 import utils.GtkFunction;
 import utils.GtkPackage;
@@ -64,6 +64,7 @@ final class GtkStruct
 
 	GtkWrapper wrapper;
 	GtkPackage pack;
+	GtkStruct parentStruct;
 
 	this(GtkWrapper wrapper, GtkPackage pack)
 	{
@@ -184,15 +185,14 @@ final class GtkStruct
 		if ( type == GtkStructType.Record )
 			return;
 
-		GtkStruct parentStruct = pack.getStruct(parent);
-		if ( parentStruct )
-			imports ~= parentStruct.pack.name ~"."~ parentStruct.name;
+		parentStruct = pack.getStruct(parent);
+
+		resolveImports();
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
 
 		if ( type == GtkStructType.Interface )
 			writeInterface();
-
-		string buff = wrapper.licence;
-		auto indenter = new IndentedStringBuilder();
 
 		if ( type == GtkStructType.Interface )
 			buff ~= "module "~ pack.name ~"."~ name ~"T;\n\n";
@@ -200,20 +200,7 @@ final class GtkStruct
 			buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
 
 		writeImports(buff);
-
-		if ( doc !is null && wrapper.includeComments )
-		{
-			buff ~= "/**\n";
-			foreach ( line; doc.splitLines() )
-				buff ~= " * "~ line.strip() ~"\n";
-			
-			if ( libVersion )
-			{
-				buff ~= " *\n * Since: "~ libVersion ~"\n";
-			}
-			
-			buff ~= " */\n";
-		}
+		writeDocs(buff);
 
 		if ( type == GtkStructType.Interface )
 			buff ~= "public template "~ name ~"T(TStruct)";
@@ -237,6 +224,8 @@ final class GtkStruct
 				buff ~= " :";
 				first = false;
 			}
+			else if ( strct )
+				buff ~= ",";
 
 			if ( strct )
 				buff ~= " "~ strct.name ~"IF";
@@ -299,6 +288,21 @@ final class GtkStruct
 				buff ~= "\n";
 			}
 
+			foreach ( interf; implements )
+			{
+				if ( parentStruct && parentStruct.implements.canFind(interf) )
+					continue;
+
+				GtkStruct strct = pack.getStruct(interf);
+
+				if ( strct )
+				{
+					buff ~= indenter.format("// add the "~ strct.name ~" capabilities");
+					buff ~= indenter.format("mixin "~ strct.name ~"T!("~ cType.chomp("*") ~");");
+					buff ~= "\n";
+				}
+			}
+
 			if ( !lookupCode.empty )
 			{
 				buff ~= indenter.format(lookupCode);
@@ -309,7 +313,12 @@ final class GtkStruct
 
 			foreach ( func; functions )
 			{
+				buff ~= indenter.format(func.getDeclaration());
+				buff ~= indenter.format("{");
 
+
+				buff ~= indenter.format("}");
+				buff ~= "\n";
 			}
 
 			buff ~= indenter.format("}");
@@ -323,32 +332,17 @@ final class GtkStruct
 
 	void writeInterface()
 	{
-		GtkStruct parentStruct = pack.getStruct(parent);
-				
 		string buff = wrapper.licence;
 		auto indenter = new IndentedStringBuilder();
-		
+
 		buff ~= "module "~ pack.name ~"."~ name ~"IF;\n\n";
 
 		writeImports(buff);
-		
-		if ( doc !is null && wrapper.includeComments )
-		{
-			buff ~= "/**\n";
-			foreach ( line; doc.splitLines() )
-				buff ~= " * "~ line.strip() ~"\n";
-			
-			if ( libVersion )
-			{
-				buff ~= " *\n * Since: "~ libVersion ~"\n";
-			}
-			
-			buff ~= " */\n";
-		}
-		
+		writeDocs(buff);
+
 		buff ~= "public interface "~ name;
 		buff ~= indenter.format("{");
-		
+
 		if ( cType )
 		{
 			buff ~= indenter.format("/** Get the main Gtk struct */");
@@ -358,23 +352,27 @@ final class GtkStruct
 			buff ~= indenter.format("/** the main Gtk struct as a void* */");
 			buff ~= indenter.format("protected void* getStruct();");
 			buff ~= "\n";
-			
+
 			if ( !lookupInterfaceCode.empty )
 			{
 				buff ~= indenter.format(lookupInterfaceCode);
 				buff ~= "\n";
 			}
-			
+
 			buff ~= indenter.format(["/**", "*/", ""]);
-			
+
 			foreach ( func; functions )
 			{
-				
+				string[] dec = func.getDeclaration();
+				dec[$-1] ~= ";";
+
+				buff ~= indenter.format(dec);
+				buff ~= "\n";
 			}
-			
+
 			buff ~= indenter.format("}");
 		}
-		
+
 		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"IF.d"), buff);
 	}
 
@@ -385,7 +383,7 @@ final class GtkStruct
 	{
 		if (cType.length == 0)
 			return "";
-		
+
 		string p = to!string(toLower(cType[0]));
 		if ( cType.endsWith("_t") )
 		{
@@ -400,16 +398,17 @@ final class GtkStruct
 	 */
 	string getHandleFunc()
 	{
-		GtkStruct parentStruct = pack.getStruct(parent);
-
 		if ( parentStruct && parentStruct.name == name )
 			return "get"~ cast(char)pack.name[0].toUpper ~ pack.name[1..$] ~ name ~"Struct";
 		else
 			return "get"~ name ~"Struct";
 	}
 
-	private void writeImports(ref string buff, bool _public = false)
+	private void resolveImports()
 	{
+		if ( parentStruct )
+			imports ~= parentStruct.pack.name ~"."~ parentStruct.name;
+
 		imports ~= "gtkc."~ pack.name;
 		imports ~= "gtkc."~ pack.name ~"types";
 
@@ -431,7 +430,7 @@ final class GtkStruct
 				if ( dType )
 				{
 					imports ~= dType.pack.name ~"."~ dType.name;
-					
+
 					if ( dType.type == GtkStructType.Interface )
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
 				}
@@ -450,7 +449,7 @@ final class GtkStruct
 			void getParamImport(GtkType type)
 			{
 				GtkStruct dType = pack.getStruct(type.name);
-				
+
 				if ( dType )
 				{
 					if ( dType.type == GtkStructType.Interface )
@@ -483,12 +482,11 @@ final class GtkStruct
 				imports ~= "glib.ConstructionException";
 		}
 
-		GtkStruct parentStruct = pack.getStruct(parent);
 		foreach ( interf; implements )
 		{
 			if ( parentStruct && parentStruct.implements.canFind(interf) )
 				continue;
-			
+
 			GtkStruct strct = pack.getStruct(interf);
 
 			if ( strct )
@@ -499,7 +497,10 @@ final class GtkStruct
 		}
 
 		imports = uniq(sort(imports)).array;
+	}
 
+	private void writeImports(ref string buff, bool _public = false)
+	{
 		foreach ( imp; imports )
 		{
 			if ( _public || imp.endsWith("types") )
@@ -509,6 +510,23 @@ final class GtkStruct
 		}
 
 		buff ~= "\n\n";
+	}
+
+	private void writeDocs(ref string buff)
+	{
+		if ( doc !is null && wrapper.includeComments )
+		{
+			buff ~= "/**\n";
+			foreach ( line; doc.splitLines() )
+				buff ~= " * "~ line.strip() ~"\n";
+			
+			if ( libVersion )
+			{
+				buff ~= " *\n * Since: "~ libVersion ~"\n";
+			}
+			
+			buff ~= " */\n";
+		}
 	}
 }
 

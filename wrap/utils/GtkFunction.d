@@ -19,6 +19,7 @@
 
 module utils.GtkFunction;
 
+import std.algorithm: canFind;
 import std.conv;
 import std.range;
 import std.string: splitLines, strip;
@@ -150,31 +151,7 @@ final class GtkFunction
 	{
 		string[] buff;
 
-		if ( (doc || returnType.doc) && wrapper.includeComments )
-		{
-			buff ~= "/**";
-			foreach ( line; doc.splitLines() )
-				buff ~= " * "~ line.strip();
-
-			if ( returnType.doc )
-			{
-				string[] lines = returnType.doc.splitLines();
-				if ( doc )
-					buff ~= " *";
-				buff ~= " * Return: "~ lines[0];
-
-				foreach( line; lines[1..$] )
-					buff ~= " * "~ line.strip();
-			}
-
-			if ( libVersion )
-			{
-				buff ~= " *";
-				buff ~= " * Since: "~ libVersion;
-			}
-
-			buff ~= " */";
-		}
+		writeDocs(buff);
 
 		string func = "extern(C) "~ tokenToGtkD(returnType.cType, wrapper.aliasses) ~" function(";
 		
@@ -231,6 +208,152 @@ final class GtkFunction
 
 		return ext;
 	}
+
+	string[] getDeclaration()
+	{
+		string[] buff;
+		string dec = "public ";
+
+		resolveLength();
+		writeDocs(buff);
+
+		if ( type == GtkFunctionType.Constructor )
+		{
+			dec ~= "this(";
+		}
+		else
+		{
+			if ( type == GtkFunctionType.Function )
+				dec ~= "static ";
+
+			if ( strct.parentStruct && name in strct.parentStruct.functions )
+				dec ~= "override ";
+
+			dec ~= getType(returnType) ~" ";
+			dec ~= tokenToGtkD(name, wrapper.aliasses) ~"(";
+
+		}
+
+		size_t i;
+		foreach( param; params )
+		{
+			if ( param.lengthFor )
+				continue;
+
+			if ( i++ > 0 )
+				dec ~= ", ";
+				
+			dec ~= getType(param.type) ~" ";
+			dec ~= tokenToGtkD(param.name, wrapper.aliasses);
+		}
+
+		dec ~= ")";
+		buff ~= dec;
+
+		return buff;
+	}
+
+	void writeDocs(ref string[] buff)
+	{
+		if ( (doc || returnType.doc) && wrapper.includeComments )
+		{
+			buff ~= "/**";
+			foreach ( line; doc.splitLines() )
+				buff ~= " * "~ line.strip();
+			
+			if ( !params.empty )
+			{
+				buff ~= " *";
+				buff ~= " * Params:";
+				
+				foreach ( param; params )
+				{
+					if ( param.doc.empty )
+						continue;
+
+					string[] lines = param.doc.splitLines();
+					buff ~= " *     "~ tokenToGtkD(param.name, wrapper.aliasses) ~" = "~ lines[0];
+					foreach( line; lines[1..$] )
+						buff ~= " *         "~ line.strip();
+				}
+			}
+			
+			if ( returnType.doc )
+			{
+				string[] lines = returnType.doc.splitLines();
+				if ( doc )
+					buff ~= " *";
+				buff ~= " * Return: "~ lines[0];
+				
+				foreach( line; lines[1..$] )
+					buff ~= " *     "~ line.strip();
+			}
+			
+			if ( libVersion )
+			{
+				buff ~= " *";
+				buff ~= " * Since: "~ libVersion;
+			}
+			
+			if ( throws || type == GtkFunctionType.Constructor )
+				buff ~= " *";
+			
+			if ( throws )
+				buff ~= " * Throws: GException on failure.";
+			
+			if ( type == GtkFunctionType.Constructor )
+				buff ~= " * Throws: ConstructionException GTK+ fails to create the object.";
+			
+			buff ~= " */";
+		}
+	}
+
+	private void resolveLength()
+	{
+		foreach( param; params )
+		{
+			if ( param.type.length > -1 )
+				params[param.type.length].lengthFor = param;
+		}
+	}
+
+	/**
+	 * Gen an string representation of the type.
+	 */
+	private string getType(GtkType type)
+	{
+		if ( type.elementType )
+		{
+			string size;
+
+			if ( ["GLib.List", "GLib.SList", "GLib.Array"].canFind(type.name) )
+				goto NoArray;
+
+			if ( type.size > -1 )
+				size = to!string(type.size);
+
+			return getType(type.elementType) ~"["~ size ~"]";
+		}
+		else if ( !type.elementType && type.zeroTerminated )
+		{
+			return getType(type.elementType) ~"[]";
+		}
+		else NoArray:
+		{
+			if ( type is null || type.name == "none" )
+				return "void";
+			else if ( type.name in strct.structWrap )
+				return strct.structWrap[type.name];
+			else if ( type.name == "utf8" )
+				return "string";
+			else if ( type.name == type.cType )
+				return tokenToGtkD(type.name, wrapper.aliasses);
+			else if ( auto dType = strct.pack.getStruct(type.name) )
+				return dType.name;
+		}
+
+		return type.cType;
+	}
 }
 
 enum GtkParamDirection
@@ -247,6 +370,7 @@ final class GtkParam
 	GtkType type;
 	GtkParamDirection direction;
 
+	GtkParam lengthFor;
 	GtkWrapper wrapper;
 
 	this(GtkWrapper wrapper)
