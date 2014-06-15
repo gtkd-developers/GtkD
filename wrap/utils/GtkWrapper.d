@@ -250,6 +250,12 @@ class GtkWrapper
 							break;
 						}
 
+						if ( vals[2] == "Return" )
+						{
+							param.type.length = -2;
+							break;
+						}
+
 						foreach( i, p; func.params )
 						{
 							if ( p.name == vals[2] )

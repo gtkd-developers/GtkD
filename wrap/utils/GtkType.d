@@ -22,7 +22,7 @@ module utils.GtkType;
 import utils.GtkWrapper;
 import utils.XML;
 
-import std.algorithm: canFind, skipOver;
+import std.algorithm: among, canFind, skipOver;
 import std.conv: to;
 
 /**
@@ -58,7 +58,7 @@ final class GtkType
 			if ( "length" in reader.front.attributes )
 				length = to!int(reader.front.attributes["length"]);
 			if ( "zero-terminated" in reader.front.attributes )
-				length = to!int(reader.front.attributes["zero-terminated"]) == 1;
+				zeroTerminated = to!int(reader.front.attributes["zero-terminated"]) == 1;
 			if ( "fixed-size" in reader.front.attributes )
 				size = to!int(reader.front.attributes["fixed-size"]);
 		}
@@ -73,6 +73,9 @@ final class GtkType
 			fixType();
 		}
 
+		if ( cType is null && (name == "filename" || name == "utf8") )
+			cType = "gchar*"; 
+
 		if ( reader.front.type == XMLNodeType.EmptyTag )
 			return;
 
@@ -81,8 +84,11 @@ final class GtkType
 		elementType.parse(reader);
 		reader.popFront();
 
+		import std.stdio;
+		writeln(elementType.cType);
+
 		if ( cType.length < elementType.cType.length && 
-		    !(name == "GLib.List" || name == "GLib.SList" || name == "GLib.Array") )
+		    !name.among("GLib.List", "GLib.SList", "GLib.Array") )
 				cType = elementType.cType;
 	}
 

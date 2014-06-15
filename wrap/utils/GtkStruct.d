@@ -309,16 +309,25 @@ final class GtkStruct
 				buff ~= "\n";
 			}
 
-			buff ~= indenter.format(["/**", "*/", ""]);
+			buff ~= indenter.format(["/**", "*/"]);
 
 			foreach ( func; functions )
 			{
-				buff ~= indenter.format(func.getDeclaration());
-				buff ~= indenter.format("{");
+				if ( func.isVariadic() || func.type == GtkFunctionType.Callback )
+					continue;
 
+				if ( func.type == GtkFunctionType.Signal )
+				{
 
-				buff ~= indenter.format("}");
-				buff ~= "\n";
+				}
+				else
+				{
+					buff ~= "\n";
+					buff ~= indenter.format(func.getDeclaration());
+					buff ~= indenter.format("{");
+					buff ~= indenter.format(func.getBody());
+					buff ~= indenter.format("}");
+				}
 			}
 
 			buff ~= indenter.format("}");
@@ -359,15 +368,25 @@ final class GtkStruct
 				buff ~= "\n";
 			}
 
-			buff ~= indenter.format(["/**", "*/", ""]);
+			buff ~= indenter.format(["/**", "*/"]);
 
 			foreach ( func; functions )
 			{
-				string[] dec = func.getDeclaration();
-				dec[$-1] ~= ";";
+				if ( func.isVariadic() || func.type == GtkFunctionType.Callback )
+					continue;
+				
+				if ( func.type == GtkFunctionType.Signal )
+				{
+					
+				}
+				else
+				{
+					string[] dec = func.getDeclaration();
+					dec[$-1] ~= ";";
 
-				buff ~= indenter.format(dec);
-				buff ~= "\n";
+					buff ~= "\n";
+					buff ~= indenter.format(dec);
+				}
 			}
 
 			buff ~= indenter.format("}");
