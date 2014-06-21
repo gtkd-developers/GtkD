@@ -48,13 +48,18 @@ public class IndentedStringBuilder
 		string text;
 		line = line.strip();
 
+		if ( (endsWith(line, '{') && !startsWith(line, "}")) || endsWith(line, "(") )
+		{
+			statement = false;
+		}
+
 		//Don't change the indentation when the line is a comment.
 		if ( startsWith(line, '*') )
 		{
 			return tabs ~" "~ line ~ "\n";
 		}
 
-		if ( endsWith(line, "}", "};", "));") || startsWith(line, "}", "};") )
+		if ( endsWith(line, "}", "};") || startsWith(line, "}", "};") || line == "));")
 		{
 			if ( !canFind(line, '{') && tabs.length > 0 )
 				tabs.length = tabs.length -1;
@@ -77,7 +82,6 @@ public class IndentedStringBuilder
 		else if ( (endsWith(line, '{') && !startsWith(line, "}")) || endsWith(line, "(") )
 		{
 			tabs ~= '\t';
-			statement = false;
 		}
 
 		return text;

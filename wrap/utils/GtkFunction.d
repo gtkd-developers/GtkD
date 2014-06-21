@@ -19,7 +19,7 @@
 
 module utils.GtkFunction;
 
-import std.algorithm: among;
+import std.algorithm: among, startsWith;
 import std.conv;
 import std.range;
 import std.string: splitLines, strip;
@@ -276,6 +276,13 @@ final class GtkFunction
 		string[] outToD;
 		string gtkCall = cType ~"(";
 
+		GtkStruct returnDType;
+
+		if ( returnType.elementType && !returnType.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+			returnDType = strct.pack.getStruct(returnType.elementType.name);
+		else
+			returnDType = strct.pack.getStruct(returnType.name);
+
 		if ( instanceParam )
 		{
 			GtkStruct dType = strct.pack.getStruct(instanceParam.type.name);
@@ -283,45 +290,87 @@ final class GtkFunction
 			if ( dType.type == GtkStructType.Interface )
 				gtkCall ~= dType.getHandleFunc() ~"()";
 			else
-				gtkCall ~= dType.getHandleVar() ~"()";
+				gtkCall ~= dType.getHandleVar();
 		}
 
 		foreach( i, param; params )
 		{
-			GtkStruct dType = strct.pack.getStruct(param.type.name);
+			GtkStruct dType;
 			string id = tokenToGtkD(param.name, wrapper.aliasses);
+
+			if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+				dType = strct.pack.getStruct(param.type.elementType.name);
+			else
+				dType = strct.pack.getStruct(param.type.name);
 
 			if ( instanceParam || i > 0 )
 				gtkCall ~= ", ";
 
-			if ( param.type.elementType && !param.type.elementType.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+			if ( isStringType(param.type) )
 			{
-				GtkType elementType = param.type.elementType;
-				GtkStruct dElementType = strct.pack.getStruct(elementType.name);
-
-				if ( param.direction == GtkParamDirection.Out || param.direction == GtkParamDirection.InOut )
+				if ( param.type.elementType )
 				{
-					if ( elementType.cType == "gchar**" )
+					// out string[], ref string[]
+					if ( param.direction != GtkParamDirection.Default )
 					{
 						buff ~= "char** out"~ id ~" = ";
-
+						
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= "null;";
 						else
 							buff[$-1] ~= "Str.toStringzArray("~ id ~");";
+						
+						string len = lenId(param.type);
+						if ( !len.empty )
+							len = ", "~ len;
 
-						string len;
-
-						if ( param.type.length > -1 )
-							len = ", "~ to!string(param.type.length);
-
+						gtkCall ~= "&out"~ id;
 						outToD ~= id ~" = Str.toStringArray(out"~ id ~ len ~");";
 					}
-					else if ( elementType.cType == "gchar*" || elementType.cType == "const(char)*" )
+					// string, string[]
+					else
 					{
-						goto OutStringParam;
+						if ( param.type.elementType.cType == "char" )
+							gtkCall ~= "Str.toStringz("~ id ~")";
+						else
+							gtkCall ~= "Str.toStringzArray("~ id ~")";
 					}
-					else if ( dElementType && dElementType.type != GtkStructType.Record )
+				}
+				else
+				{
+					// out string, ref string
+					if ( param.direction != GtkParamDirection.Default )
+					{
+						buff ~= "char* out"~ id ~" = ";
+						
+						if ( param.direction == GtkParamDirection.Out )
+							buff[$-1] ~= "null;";
+						else
+							buff[$-1] ~= "Str.toStringz("~ id ~");";
+
+						string len = lenId(param.type);
+						if ( !len.empty )
+							len = ", "~ len;
+
+						gtkCall ~= "&out"~ id;
+						outToD ~= id ~" = Str.toString(out"~ id ~ len ~");";
+					}
+					// string
+					else
+					{
+						gtkCall ~= "Str.toStringz("~ id ~")";
+					}
+				}
+			}
+			else if ( dType && dType.type != GtkStructType.Record )
+			{
+				if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+				{
+					GtkType elementType = param.type.elementType;
+					GtkStruct dElementType = strct.pack.getStruct(elementType.name);
+					
+					// out gtkdType[], ref gtkdType[] 
+					if ( param.direction != GtkParamDirection.Default )
 					{
 						if ( param.direction == GtkParamDirection.Out )
 						{
@@ -339,90 +388,111 @@ final class GtkFunction
 							buff ~= elementType.cType.chomp("*") ~ "** out"~ id ~" = inout"~ id ~".ptr;";
 						}
 
-
+						gtkCall ~= "out"~ id ~".ptr";
+						
+						outToD ~= "";
+						outToD ~= id ~" = new "~ dElementType.name ~"["~ lenId(param.type) ~"];";
+						outToD ~= "for(int i = 0; i < "~ lenId(param.type) ~"; i++)";
+						outToD ~= "{";
+						outToD ~= id ~"[i] = " ~ construct(dType) ~ "(cast(" ~ param.type.elementType.cType ~ ") out"~ id ~"[i]);";
+						outToD ~= "}";
 					}
-
-					gtkCall ~= "out"~ id ~".ptr";
-				}
-				else if ( dElementType && dElementType.type != GtkStructType.Record )
-				{
-					buff ~= "";
-					buff ~= elementType.cType.chomp("*") ~ "*[] "~ id ~"Array = new "~ elementType.cType.chomp("*") ~"*["~ id ~".length];";
-					buff ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
-					buff ~= "{";
-					buff ~= id ~"Array[i] = "~ id~ "[i]."~ dElementType.getHandleFunc() ~"();";
-					buff ~= "}";
-					buff ~= "";
-
-					gtkCall ~= id ~"Array.ptr";
-				}
-				else if ( elementType.cType == "gchar*" || elementType.cType == "const(char)*" )
-				{
-					gtkCall ~= "Str.toStringzArray("~ id ~")";
-				}
-				else if ( elementType.cType == "gchar" || elementType.cType == "const(char)" )
-				{
-					goto StringParam;
-				}
-				else
-				{
-					gtkCall ~= id ~".ptr";
-				}
-			}
-			else if ( (param.direction == GtkParamDirection.Out || param.direction == GtkParamDirection.InOut) )
-			{
-				if ( dType && dType.type != GtkStructType.Record)
-				{
-					buff ~= param.type.cType.chomp("*") ~"* out"~ id ~" = ";
-
-					if ( param.direction == GtkParamDirection.Out )
-						buff[$-1] ~= "null;";
-					else 
-						buff[$-1] ~= "id."~ dType.getHandleFunc() ~"();";
-
-					gtkCall ~= "&out"~ id;
-				}
-				else if ( param.type.cType == "gchar**" )
-				{
-				OutStringParam:
-					buff ~= "char* out"~ id ~" = ";
-
-					if ( param.direction == GtkParamDirection.Out )
-						buff[$-1] ~= "null;";
+					// gtkdType[]
 					else
-						buff[$-1] ~= "Str.toStringz("~ id ~");";
+					{
+						buff ~= "";
+						buff ~= elementType.cType ~ "[] "~ id ~"Array = new "~ elementType.cType ~"["~ id ~".length];";
+						buff ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
+						buff ~= "{";
+						buff ~= id ~"Array[i] = "~ id ~"[i]."~ dElementType.getHandleFunc() ~"();";
+						buff ~= "}";
+						buff ~= "";
 
-					gtkCall ~= "&out"~ id;
+						gtkCall ~= id ~"Array.ptr";
+					}
 				}
 				else
 				{
-					if ( param.lengthFor || (returnType.elementType && returnType.elementType.length == i) )
-					{		
-						if ( param.direction == GtkParamDirection.Out )
-							buff ~= "int "~ id ~";";
-						else
-							buff ~= "int "~ id ~" = cast(int)"~ tokenToGtkD(param.lengthFor.name, wrapper.aliasses) ~";";
-					}
+					// out gtkdType, ref gtkdType
+					if ( param.direction != GtkParamDirection.Default )
+					{
+						buff ~= param.type.cType.chomp("*") ~"* out"~ id ~" = ";
 
-					gtkCall ~= "&"~id;
+						if ( param.direction == GtkParamDirection.Out )
+							buff[$-1] ~= "null;";
+						else 
+							buff[$-1] ~= id ~"."~ dType.getHandleFunc() ~"();";
+
+						gtkCall ~= "&out"~ id;
+
+						outToD ~= id ~" = "~ construct(dType) ~"(out"~ id ~");";
+					}
+					// gtkdType
+					else
+					{
+						gtkCall ~= "("~ id ~" is null) ? null : "~ id ~"."~ dType.getHandleFunc ~"()";
+					}
 				}
 			}
-			else if ( dType && dType.type != GtkStructType.Record)
+			else if ( param.lengthFor || returnType.length == i )
 			{
-				gtkCall ~= "("~ id ~" is null) ? null : "~ id ~"."~ dType.getHandleFunc ~"()";
-			}
-			else if ( param.type.cType == "gchar*" || param.type.cType == "const(char)*" )
-			{
-			StringParam:
-				gtkCall ~= "Str.toStringz("~ id ~")";
-			}
-			else if ( param.lengthFor )
-			{
-				gtkCall ~= "cast(int)"~ tokenToGtkD(param.lengthFor.name, wrapper.aliasses) ~".length";
+				string arrId;
+
+				if ( param.lengthFor )
+					arrId = tokenToGtkD(param.lengthFor.name, wrapper.aliasses);
+
+				final switch ( param.direction ) with (GtkParamDirection)
+				{
+					case Default:
+						gtkCall ~= "cast(int)"~ arrId ~".length";
+						break;
+					case Out:
+						buff ~= "int "~ id ~";";
+						gtkCall ~= "&"~id;
+						break;
+					case InOut:
+						buff ~= "int "~ id ~" = cast(int)"~ arrId ~".length;";
+						gtkCall ~= "&"~id;
+						break;
+				}
 			}
 			else
 			{
-				gtkCall ~= id;
+				if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+				{
+					// out T[], ref T[] 
+					if ( param.direction != GtkParamDirection.Default )
+					{
+						buff ~= param.type.cType.chomp("*") ~"* out"~ id ~" = ";
+						
+						if ( param.direction == GtkParamDirection.Out )
+							buff[$-1] ~= "null;";
+						else 
+							buff[$-1] ~= id ~".ptr";
+
+						gtkCall ~= "&out"~ id ~"";
+
+						outToD ~= id ~" = out"~ id ~"[0 .. "~ lenId(param.type) ~"];";
+					}
+					// T[]
+					else
+					{
+						gtkCall ~= id ~".ptr";
+					}
+				}
+				else
+				{
+					// out T, ref T
+					if ( param.direction != GtkParamDirection.Default )
+					{
+						gtkCall ~= "&"~ id;
+					}
+					// T
+					else
+					{
+						gtkCall ~= id;
+					}
+				}
 			}
 		}
 
@@ -430,19 +500,154 @@ final class GtkFunction
 		{
 			buff ~= "GError* err = null;";
 			gtkCall ~= ", &err";
+
+			string[] check;
+			check ~= "";
+			check ~= "if (err !is null)";
+			check ~= "{";
+			check ~= "throw new GException( new ErrorG(err) );";
+			check ~= "}";
+
+			outToD = check ~ outToD;
 		}
 
-		gtkCall ~= ");";
+		gtkCall ~= ")";
 
 		if ( !buff.empty )
 			buff ~= "";
 
 		if ( returnType.name == "none" )
 		{
-			buff ~= gtkCall;
+			buff ~= gtkCall ~";";
+
+			if ( !outToD.empty )
+			{
+				buff ~= "";
+				buff ~= outToD;
+			}
+
+			return buff;
+		}
+		else if ( type == GtkFunctionType.Constructor )
+		{
+			buff ~= "auto p = " ~ gtkCall ~";";
+
+			buff ~= "";
+			buff ~= "if(p is null)";
+			buff ~= "{";
+			buff ~= "throw new ConstructionException(\"null returned by " ~ name ~ "\");";
+			buff ~= "}";
+			buff ~= "";
+
+			if ( !outToD.empty )
+			{
+				buff ~= outToD;
+				buff ~= "";
+			}
+
+			/*
+			 * Casting is needed because some GTK+ functions
+			 * can return void pointers or base types.
+			 */
+			buff ~= "this(cast(" ~ strct.cType ~ ") p);";
+			
+			return buff;
+		}
+		else if ( isStringType(returnType) )
+		{
+			if ( outToD.empty )
+			{
+				if ( returnType.elementType && returnType.elementType.cType != "char" )
+					buff ~= "return Str.toStringArray(" ~ gtkCall ~");";
+				else
+					buff ~= "return Str.toString(" ~ gtkCall ~");";
+
+				return buff;
+			}
+
+			buff ~= "auto p = "~ gtkCall ~";";
+			buff ~= "";
+
+			if ( !outToD.empty )
+			{
+				buff ~= "";
+				buff ~= outToD;
+			}
+
+			string len = lenId(returnType);
+			if ( !len.empty )
+				len = ", "~ len;
+
+			if ( returnType.elementType && returnType.elementType.cType != "char" )
+				buff ~= "return Str.toStringArray(p"~ len ~");";
+			else
+				buff ~= "return Str.toString(p"~ len ~");";
+
+			return buff;
+		}
+		else if ( returnDType && returnDType.type != GtkStructType.Record )
+		{
+			buff ~= "auto p = "~ gtkCall ~";";
+
+			if ( !outToD.empty )
+			{
+				buff ~= "";
+				buff ~= outToD;
+			}
+
+			buff ~= "";
+			buff ~= "if(p is null)";
+			buff ~= "{";
+			buff ~= "return null;";
+			buff ~= "}";
+			buff ~= "";
+
+			if ( returnType.elementType && !returnType.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+			{
+				buff ~= returnDType.name ~"[] arr = new "~ returnDType.name ~"["~ lenId(returnType) ~"];";
+				buff ~= "for(int i = 0; i < "~ lenId(returnType) ~"; i++)";
+				buff ~= "{";
+				buff ~= "\tarr[i] = "~ construct(returnDType) ~"(cast("~ returnType.elementType.cType ~") p[i]);";
+				buff ~= "}";
+				buff ~= "";
+				buff ~= "return arr;";
+			}
+			else
+			{
+				buff ~= "return "~ construct(returnDType) ~"(cast("~ returnDType.cType ~") p);";
+			}
+
+			return buff;
+		}
+		else
+		{
+			if ( returnType.name == "gboolean" )
+				gtkCall ~= " != 0";
+
+			if ( returnType.elementType is null && outToD.empty )
+			{
+				buff ~= "return "~ gtkCall ~";";
+				return buff;
+			}
+
+			buff ~= "auto p = "~ gtkCall ~";";
+			buff ~= "";
+
+			if ( !outToD.empty )
+			{
+				buff ~= "";
+				buff ~= outToD;
+			}
+
+			if ( returnType.elementType )
+				buff ~= "return p[0 .. "~ lenId(returnType) ~"];";
+			else
+				buff ~= "return p;";
+
+			return buff;
 		}
 
-		return buff;
+		assert(false, "Unexpected function: "~ name);
 	}
 
 	void writeDocs(ref string[] buff)
@@ -524,7 +729,12 @@ final class GtkFunction
 			if ( type.size > -1 )
 				size = to!string(type.size);
 
-			return getType(type.elementType, direction) ~"["~ size ~"]";
+			string elmType = getType(type.elementType, direction);
+
+			if ( elmType == "char" || elmType == "const(char)" )
+				return "string";
+
+			return elmType ~"["~ size ~"]";
 		}
 		else if ( !type.elementType && type.zeroTerminated )
 		{
@@ -536,7 +746,7 @@ final class GtkFunction
 				return "void";
 			else if ( type.name in strct.structWrap )
 				return strct.structWrap[type.name];
-			else if ( type.name == "utf8" || type.cType == "gchar*")
+			else if ( type.cType == "gchar*" || type.cType == "const(char)*" )
 				return "string";
 			else if ( type.name == type.cType )
 				return stringToGtkD(type.name, wrapper.aliasses);
@@ -551,6 +761,43 @@ final class GtkFunction
 			return stringToGtkD(type.cType[0..$-1], wrapper.aliasses);
 
 		return stringToGtkD(type.cType, wrapper.aliasses);
+	}
+
+	private bool isStringType(GtkType type)
+	{
+		if ( type.cType.startsWith("gchar*", "char*", "const(char)*") )
+			return true;
+		else if ( type.name.among("utf8", "filename") )
+			return true;
+		else if ( type.elementType && type.elementType.cType.startsWith("gchar", "char", "const(char)") )
+			return true;
+		else
+			return false;
+	}
+
+	private string lenId(GtkType type)
+	{
+		if ( type.length > -1 )
+			return tokenToGtkD(params[type.length].name, wrapper.aliasses);
+		//The c function returns the length.
+		else if ( type.length == -2 )
+			return "p";
+		else if ( type.size > -1 )
+			return to!string(type.size);
+		
+		//TODO: zero-terminated?
+		
+		return null;
+	}
+
+	private string construct(GtkStruct type)
+	{
+		if ( type.pack.name.among("cairo", "glib", "gthread") )
+			return "new "~ type.name;
+		else if( type.type == GtkStructType.Interface )
+			return "ObjectG.getDObject!("~ type.name ~", "~ type.name ~"IF)";
+		else
+			return "ObjectG.getDObject!("~ type.name ~")";
 	}
 }
 

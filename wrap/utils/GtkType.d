@@ -84,9 +84,6 @@ final class GtkType
 		elementType.parse(reader);
 		reader.popFront();
 
-		import std.stdio;
-		writeln(elementType.cType);
-
 		if ( cType.length < elementType.cType.length && 
 		    !name.among("GLib.List", "GLib.SList", "GLib.Array") )
 				cType = elementType.cType;
