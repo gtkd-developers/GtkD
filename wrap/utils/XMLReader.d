@@ -463,7 +463,7 @@ bool endTag(T)(XMLReader!T reader, string tagName)
 }
 
 /// ditto.
-bool endTag(T)(XMLReader!T reader, string[] tagNames)
+bool endTag(T)(XMLReader!T reader, string[] tagNames ...)
 {
 	return reader.front.type == XMLNodeType.EndTag && tagNames.canFind(reader.front.value);
 }

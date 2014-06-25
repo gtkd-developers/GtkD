@@ -39,7 +39,8 @@ enum GtkStructType : string
 {
 	Class = "class",
 	Interface = "interface",
-	Record = "record"
+	Record = "record",
+	Union = "union"
 }
 
 final class GtkStruct
@@ -85,7 +86,7 @@ final class GtkStruct
 
 		reader.popFront();
 
-		while( !reader.empty && !reader.endTag(["class", "interface", "record"]) )
+		while( !reader.empty && !reader.endTag("class", "interface", "record", "union") )
 		{
 			switch(reader.front.value)
 			{
@@ -143,6 +144,17 @@ final class GtkStruct
 		{
 			if ( auto vFunc = func in functions )
 				vFunc.virtual = true;
+		}
+
+		if ( type == GtkStructType.Union )
+		{
+			GtkField field = new GtkField(wrapper);
+			GtkUnion uni = new GtkUnion(wrapper);
+			uni.fields = fields;
+			field.gtkUnion = uni;
+			fields = [field];
+
+			type = GtkStructType.Record;
 		}
 	}
 
@@ -310,6 +322,7 @@ final class GtkStruct
 			}
 
 			buff ~= indenter.format(["/**", "*/"]);
+			bool firstSignal = true;
 
 			foreach ( func; functions )
 			{
@@ -318,7 +331,35 @@ final class GtkStruct
 
 				if ( func.type == GtkFunctionType.Signal )
 				{
+					buff ~= "\n";
 
+					if ( firstSignal )
+					{
+						buff ~= indenter.format("int[string] connectedSignals;");
+						buff ~= "\n";
+						firstSignal = false;
+					}
+
+					if ( type == GtkStructType.Interface )
+					{
+						string[] prop;
+
+						prop ~= func.getDelegateDecleration() ~"[] _on"~ func.getSignalName() ~"Listeners;";
+						prop ~= "@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners()";
+						prop ~= "{";
+						prop ~= "return _on"~ func.getSignalName() ~"Listeners;";
+						prop ~= "}";
+
+						buff ~= indenter.format(prop);
+					}
+					else
+					{
+						buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
+					}
+
+					buff ~= indenter.format(func.getAddListenerdeclaration());
+					buff ~= indenter.format(func.getAddListenerBody());
+					buff ~= indenter.format(func.getSignalCallback());
 				}
 				else
 				{
@@ -377,7 +418,12 @@ final class GtkStruct
 				
 				if ( func.type == GtkFunctionType.Signal )
 				{
-					
+					buff ~= indenter.format("@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners();");
+					string[] dec = func.getAddListenerdeclaration();
+					dec[$-1] ~= ";";
+
+					buff ~= indenter.format(dec);
+					buff ~= "\n";
 				}
 				else
 				{

@@ -83,7 +83,7 @@ final class GtkFunction
 
 		reader.popFront();
 
-		while( !reader.empty && !reader.endTag(["constructor", "method", "function", "callback", "glib:signal"]) )
+		while( !reader.empty && !reader.endTag("constructor", "method", "function", "callback", "glib:signal") )
 		{
 			switch ( reader.front.value )
 			{
@@ -189,23 +189,35 @@ final class GtkFunction
 		assert(type != GtkFunctionType.Callback);
 		assert(type != GtkFunctionType.Signal);
 
-		string ext = tokenToGtkD(returnType.cType, wrapper.aliasses);
+		string ext;
+		string type = stringToGtkD(returnType.cType, wrapper.aliasses);
+
+		if ( type.startsWith("bool") )
+			ext ~= type.replaceFirst("bool", "int");
+		else
+			ext ~= type;
+
 		ext ~= " function(";
 
 		if ( instanceParam )
 		{
-			ext ~= tokenToGtkD(instanceParam.type.cType, wrapper.aliasses);
+			ext ~= stringToGtkD(instanceParam.type.cType, wrapper.aliasses);
 			ext ~= " ";
 			ext ~= tokenToGtkD(instanceParam.name, wrapper.aliasses);
 		}
 
-		size_t i;
-		foreach ( param; params )
+		foreach ( i, param; params )
 		{
 			if ( i > 0 || instanceParam )
 				ext ~= ", ";
 
-			ext ~= tokenToGtkD(param.type.cType, wrapper.aliasses);
+			type = stringToGtkD(param.type.cType, wrapper.aliasses);
+
+			if ( type.startsWith("bool") )
+				ext ~= type.replaceFirst("bool", "int");
+			else
+				ext ~= type;
+
 			ext ~= " ";
 			if ( param.name != "..." )
 				ext ~= tokenToGtkD(param.name, wrapper.aliasses);
@@ -314,12 +326,12 @@ final class GtkFunction
 					if ( param.direction != GtkParamDirection.Default )
 					{
 						buff ~= "char** out"~ id ~" = ";
-						
+
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= "null;";
 						else
 							buff[$-1] ~= "Str.toStringzArray("~ id ~");";
-						
+
 						string len = lenId(param.type);
 						if ( !len.empty )
 							len = ", "~ len;
@@ -342,7 +354,7 @@ final class GtkFunction
 					if ( param.direction != GtkParamDirection.Default )
 					{
 						buff ~= "char* out"~ id ~" = ";
-						
+
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= "null;";
 						else
@@ -368,8 +380,8 @@ final class GtkFunction
 				{
 					GtkType elementType = param.type.elementType;
 					GtkStruct dElementType = strct.pack.getStruct(elementType.name);
-					
-					// out gtkdType[], ref gtkdType[] 
+
+					// out gtkdType[], ref gtkdType[]
 					if ( param.direction != GtkParamDirection.Default )
 					{
 						if ( param.direction == GtkParamDirection.Out )
@@ -389,7 +401,7 @@ final class GtkFunction
 						}
 
 						gtkCall ~= "out"~ id ~".ptr";
-						
+
 						outToD ~= "";
 						outToD ~= id ~" = new "~ dElementType.name ~"["~ lenId(param.type) ~"];";
 						outToD ~= "for(int i = 0; i < "~ lenId(param.type) ~"; i++)";
@@ -420,7 +432,7 @@ final class GtkFunction
 
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= "null;";
-						else 
+						else
 							buff[$-1] ~= id ~"."~ dType.getHandleFunc() ~"();";
 
 						gtkCall ~= "&out"~ id;
@@ -460,14 +472,14 @@ final class GtkFunction
 			{
 				if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
 				{
-					// out T[], ref T[] 
+					// out T[], ref T[]
 					if ( param.direction != GtkParamDirection.Default )
 					{
 						buff ~= param.type.cType.chomp("*") ~"* out"~ id ~" = ";
-						
+
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= "null;";
-						else 
+						else
 							buff[$-1] ~= id ~".ptr";
 
 						gtkCall ~= "&out"~ id ~"";
@@ -650,6 +662,159 @@ final class GtkFunction
 		assert(false, "Unexpected function: "~ name);
 	}
 
+	string getSignalName()
+	{
+		assert(type == GtkFunctionType.Signal);
+
+		char pc;
+		string signalName;
+
+		foreach ( size_t count, char c; name )
+		{
+			if ( count == 0 )
+			{
+				signalName ~= std.ascii.toUpper(c);
+			}
+			else
+			{
+				if ( c!='-' && c!='_' )
+				{
+					if ( pc=='-' || pc=='_' )
+						signalName ~= toUpper(c);
+					else
+						signalName ~= c;
+				}
+			}
+			pc = c;
+		}
+
+		if ( !signalName.among("MapEvent", "UnmapEvent", "DestroyEvent") &&
+		    endsWith(signalName, "Event") )
+		{
+			signalName = signalName[0..signalName.length-5];
+		}
+
+		return signalName;
+	}
+
+	string getDelegateDecleration()
+	{
+		assert(type == GtkFunctionType.Signal);
+
+		string buff = getType(returnType) ~ " delegate(";
+
+		foreach ( param; params )
+		{
+			buff ~= getType(param.type) ~ ", ";
+		}
+
+		if ( strct.type == GtkStructType.Interface )
+			buff ~= strct.name ~"IF)";
+		else
+			buff ~= strct.name ~")";
+
+		return buff;
+	}
+
+	string[] getAddListenerdeclaration()
+	{
+		string[] buff;
+
+		writeDocs(buff);
+		buff ~= "void addOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)";
+
+		return buff;
+	}
+
+	string[] getAddListenerBody()
+	{
+		string[] buff;
+
+		buff ~= "{";
+		buff ~= "if ( \""~ getSignalName() ~"\" !in connectedSignals )";
+		buff ~= "{";
+
+		if ( strct.name != "StatusIcon")
+		{
+			switch ( name )
+			{
+				case  "button-press-event":      buff ~= "addEvents(EventMask.BUTTON_PRESS_MASK);";      break;
+				case  "button-release-event":    buff ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);";    break;
+				case  "enter-notify-event":      buff ~= "addEvents(EventMask.ENTER_NOTIFY_MASK);";      break;
+				case  "focus-in-event":          buff ~= "addEvents(EventMask.FOCUS_CHANGE_MASK);";      break;
+				case  "focus-out-event":         buff ~= "addEvents(EventMask.FOCUS_CHANGE_MASK);";      break;
+				case  "key-press-event":         buff ~= "addEvents(EventMask.KEY_PRESS_MASK);";         break;
+				case  "key-release-event":       buff ~= "addEvents(EventMask.KEY_RELEASE_MASK);";       break;
+				case  "leave-notify-event":      buff ~= "addEvents(EventMask.LEAVE_NOTIFY_MASK);";      break;
+				case  "motion-notify-event":     buff ~= "addEvents(EventMask.POINTER_MOTION_MASK);";    break;
+				case  "property-notify-event":   buff ~= "addEvents(EventMask.PROPERTY_CHANGE_MASK);";   break;
+				case  "proximity-in-event":      buff ~= "addEvents(EventMask.PROXIMITY_IN_MASK);";      break;
+				case  "proximity-out-event":     buff ~= "addEvents(EventMask.PROXIMITY_OUT_MASK);";     break;
+				case  "scroll-event":            buff ~= "addEvents(EventMask.SCROLL_MASK);";            break;
+				case  "visibility-notify-event": buff ~= "addEvents(EventMask.VISIBILITY_NOTIFY_MASK);"; break;
+
+				default: break;
+			}
+		}
+
+		buff ~= "Signals.connectData(";
+		buff ~= "getStruct(),";
+		buff ~= "\""~ name ~"\",";
+		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
+
+		if ( strct.type == GtkStructType.Interface )
+			buff ~= "cast(void*)cast("~ strct.name ~"IF)this,";
+		else
+			buff ~= "cast(void*)this,";
+
+		buff ~= "null,";
+		buff ~= "connectFlags);";
+		buff ~= "connectedSignals[\""~ name ~"\"] = 1;";
+		buff ~= "}";
+
+		if ( strct.type == GtkStructType.Interface )
+			buff ~= "_on"~ getSignalName() ~"Listeners ~= dlg;";
+		else
+			buff ~= "on"~ getSignalName() ~"Listeners ~= dlg;";
+
+		buff ~= "}";
+
+		return buff;
+	}
+
+	string[] getSignalCallback()
+	{
+		string[] buff;
+
+		buff ~= "extern(C) static "
+			~ tokenToGtkD(returnType.cType, wrapper.aliasses)
+			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
+
+		buff ~= "{";
+		buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
+		buff ~= "{";
+
+		if ( strct.type == GtkStructType.Interface )
+		{
+			buff ~= "if ( dlg("~ getCallbackVars() ~") )";
+			buff ~= "{";
+			buff ~= "return 1;";
+			buff ~= "}";
+			buff ~= "}";
+			buff ~= "";
+			buff ~= "return 0;";
+		}
+		else
+		{
+			buff ~= "dlg("~ getCallbackVars() ~");";
+			buff ~= "}";
+		}
+
+		buff ~= "}";
+
+		return buff;
+	}
+
 	void writeDocs(ref string[] buff)
 	{
 		if ( (doc || returnType.doc) && wrapper.includeComments )
@@ -784,9 +949,9 @@ final class GtkFunction
 			return "p";
 		else if ( type.size > -1 )
 			return to!string(type.size);
-		
+
 		//TODO: zero-terminated?
-		
+
 		return null;
 	}
 
@@ -798,6 +963,55 @@ final class GtkFunction
 			return "ObjectG.getDObject!("~ type.name ~", "~ type.name ~"IF)";
 		else
 			return "ObjectG.getDObject!("~ type.name ~")";
+	}
+
+	private string getCallbackParams()
+	{
+		string buff;
+
+		buff = strct.cType ~" "~ strct.name.toLower() ~"Struct";
+		foreach( param; params )
+		{
+			GtkStruct par = strct.pack.getStruct(param.type.name);
+
+			if ( par && par.type == GtkStructType.Record )
+				buff ~= ", "~ par.cType ~"* "~ tokenToGtkD(param.name, wrapper.aliasses);
+			else if ( par )
+				buff ~= ", "~ par.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses);
+			else
+				buff ~= ", "~ param.type.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses);
+		}
+
+		if ( strct.type == GtkStructType.Interface )
+			buff ~= ", "~ strct.name ~"IF _"~ strct.name.toLower();
+		else
+			buff ~= ", "~ strct.name ~" _"~ strct.name.toLower();
+
+		return buff;
+	}
+
+	private string getCallbackVars()
+	{
+		string buff;
+
+		foreach( i, param; params )
+		{
+			if ( i < 0 )
+				buff ~= ", ";
+
+			GtkStruct par = strct.pack.getStruct(param.type.name);
+
+			if ( par && par.type != GtkStructType.Record )
+				buff ~= construct(par);
+			else
+				buff ~= tokenToGtkD(param.name, wrapper.aliasses);
+		}
+
+		if ( !buff.empty )
+			buff ~= ", ";
+		buff ~= strct.name.toLower() ~"Struct";
+
+		return buff;
 	}
 }
 
@@ -832,7 +1046,7 @@ final class GtkParam
 
 		reader.popFront();
 
-		while( !reader.empty && !reader.endTag(["parameter", "instance-parameter"]) )
+		while( !reader.empty && !reader.endTag("parameter", "instance-parameter") )
 		{
 			if ( reader.front.type == XMLNodeType.EndTag )
 			{

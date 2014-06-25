@@ -109,7 +109,7 @@ class GtkPackage
 
 		reader.popFront();
 
-		while ( !reader.empty && !(reader.front.type == XMLNodeType.EndTag && reader.front.value == "namespace") )
+		while ( !reader.empty && !reader.endTag("namespace") )
 		{
 			if ( reader.front.type == XMLNodeType.EndTag )
 			{
@@ -131,6 +131,7 @@ class GtkPackage
 				case "class":
 				case "interface":
 				case "record":
+				case "union":
 					GtkStruct gtkStruct = new GtkStruct(wrapper, this);
 					gtkStruct.parse(reader);
 					collectedStructs[gtkStruct.name] = gtkStruct;

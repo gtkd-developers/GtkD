@@ -51,7 +51,7 @@ struct GtkEnum
 			libVersion = reader.front.attributes["version"];
 		reader.popFront();
 
-		while ( !reader.empty && !(reader.endTag("bitfield") || reader.endTag("enumeration")) )
+		while ( !reader.empty && !reader.endTag("bitfield", "enumeration") )
 		{
 			switch (reader.front.value)
 			{
@@ -143,7 +143,7 @@ struct GtkEnumMember
 
 		reader.popFront();
 
-		while ( !reader.empty && !(reader.endTag("member") || reader.endTag("constant") ) )
+		while ( !reader.empty && !reader.endTag("member", "constant") )
 		{
 			switch (reader.front.value)
 			{
