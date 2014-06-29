@@ -77,12 +77,24 @@ final class GtkStruct
 	{
 		name = reader.front.attributes["name"];
 		type = cast(GtkStructType)reader.front.value;
-		cType = reader.front.attributes["c:type"];
 
+		if ( "c:type" in reader.front.attributes )
+			cType = reader.front.attributes["c:type"];
 		if ( "parent" in reader.front.attributes )
 			parent = reader.front.attributes["parent"];
 		if ( "version" in reader.front.attributes )
 			libVersion = reader.front.attributes["version"];
+
+		if ( !parent.empty )
+		{
+			if ( parent == "GObject.InitiallyUnowned" )
+				parent = "GObject.Object";
+			else if ( parent == "InitiallyUnowned" )
+				parent = "Object";
+		}
+
+		if ( reader.front.type == XMLNodeType.EmptyTag )
+			return;
 
 		reader.popFront();
 
@@ -103,6 +115,14 @@ final class GtkStruct
 				case "field":
 					GtkField field = new GtkField(wrapper);
 					field.parse(reader);
+					fields ~= field;
+					break;
+				case "record":
+					GtkField field = new GtkField(wrapper);
+					GtkStruct strct = new GtkStruct(wrapper, null);
+					strct.parse(reader);
+					strct.name =strct.name.toUpper()[0..1] ~ strct.name[1 .. $];
+					field.gtkStruct = strct;
 					fields ~= field;
 					break;
 				case "union":
@@ -220,7 +240,7 @@ final class GtkStruct
 			buff ~= "public class "~ name;
 
 		if ( parentStruct )
-			buff ~= " : "~ parentStruct.pack.name ~"."~ parentStruct.name;
+			buff ~= " : "~ parentStruct.name;
 
 		bool first = !parentStruct;
 
@@ -492,7 +512,7 @@ final class GtkStruct
 			{
 				GtkStruct dType = pack.getStruct(type.name);
 
-				if ( dType )
+				if ( dType && dType.type != GtkStructType.Record )
 				{
 					imports ~= dType.pack.name ~"."~ dType.name;
 
@@ -515,7 +535,7 @@ final class GtkStruct
 			{
 				GtkStruct dType = pack.getStruct(type.name);
 
-				if ( dType )
+				if ( dType && dType.type != GtkStructType.Record )
 				{
 					if ( dType.type == GtkStructType.Interface )
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
@@ -604,6 +624,7 @@ final class GtkField
 
 	GtkFunction callback;
 	GtkUnion gtkUnion;
+	GtkStruct gtkStruct;
 
 	GtkWrapper wrapper;
 
@@ -702,6 +723,15 @@ final class GtkField
 				if ( bitcount > 0 )
 					endBitfield();
 				buff ~= field.gtkUnion.getUnionDeclaration();
+				continue;
+			}
+
+			if ( field.gtkStruct )
+			{
+				if ( bitcount > 0 )
+					endBitfield();
+				buff ~= field.gtkStruct.getStructDeclaration();
+				buff ~= stringToGtkD(field.gtkStruct.cType ~" "~ field.gtkStruct.name ~";", wrapper.aliasses);
 				continue;
 			}
 

@@ -100,6 +100,7 @@ final class GtkFunction
 				case "return-value":
 					returnType = new GtkType(wrapper);
 					reader.popFront();
+
 					while( !reader.empty && !reader.endTag("return-value") )
 					{
 						switch ( reader.front.value )
@@ -290,7 +291,7 @@ final class GtkFunction
 
 		GtkStruct returnDType;
 
-		if ( returnType.elementType && !returnType.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+		if ( returnType.isArray() )
 			returnDType = strct.pack.getStruct(returnType.elementType.name);
 		else
 			returnDType = strct.pack.getStruct(returnType.name);
@@ -310,7 +311,7 @@ final class GtkFunction
 			GtkStruct dType;
 			string id = tokenToGtkD(param.name, wrapper.aliasses);
 
-			if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+			if ( param.type.isArray() )
 				dType = strct.pack.getStruct(param.type.elementType.name);
 			else
 				dType = strct.pack.getStruct(param.type.name);
@@ -376,7 +377,7 @@ final class GtkFunction
 			}
 			else if ( dType && dType.type != GtkStructType.Record )
 			{
-				if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+				if ( param.type.isArray() )
 				{
 					GtkType elementType = param.type.elementType;
 					GtkStruct dElementType = strct.pack.getStruct(elementType.name);
@@ -470,7 +471,7 @@ final class GtkFunction
 			}
 			else
 			{
-				if ( param.type.elementType && !param.type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+				if ( param.type.isArray() )
 				{
 					// out T[], ref T[]
 					if ( param.direction != GtkParamDirection.Default )
@@ -614,7 +615,7 @@ final class GtkFunction
 			buff ~= "}";
 			buff ~= "";
 
-			if ( returnType.elementType && !returnType.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+			if ( returnType.isArray() )
 			{
 				buff ~= returnDType.name ~"[] arr = new "~ returnDType.name ~"["~ lenId(returnType) ~"];";
 				buff ~= "for(int i = 0; i < "~ lenId(returnType) ~"; i++)";
@@ -888,7 +889,7 @@ final class GtkFunction
 		{
 			string size;
 
-			if ( type.name.among("GLib.List", "GLib.SList", "GLib.Array") )
+			if ( !type.isArray() )
 				goto NoArray;
 
 			if ( type.size > -1 )
@@ -920,7 +921,12 @@ final class GtkFunction
 
 			if ( dType && dType.type != GtkStructType.Record )
 				return dType.name;
+			else if ( type.cType.empty && dType && dType.type == GtkStructType.Record )
+				return dType.cType ~ "*";
 		}
+
+		if ( type.cType.empty )
+			return stringToGtkD(type.name, wrapper.aliasses);
 
 		if ( direction != GtkParamDirection.Default )
 			return stringToGtkD(type.cType[0..$-1], wrapper.aliasses);

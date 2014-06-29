@@ -132,6 +132,11 @@ class GtkPackage
 				case "interface":
 				case "record":
 				case "union":
+					if ( "name" in reader.front.attributes && reader.front.attributes["name"].among("InitiallyUnowned", "InitiallyUnownedClass") )
+					{
+						reader.skipTag();
+						break;
+					}
 					GtkStruct gtkStruct = new GtkStruct(wrapper, this);
 					gtkStruct.parse(reader);
 					collectedStructs[gtkStruct.name] = gtkStruct;

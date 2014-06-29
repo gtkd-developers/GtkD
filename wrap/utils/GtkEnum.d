@@ -141,6 +141,9 @@ struct GtkEnumMember
 		name = reader.front.attributes["name"];
 		value = reader.front.attributes["value"];
 
+		if ( reader.front.type == XMLNodeType.EmptyTag )
+			return;
+
 		reader.popFront();
 
 		while ( !reader.empty && !reader.endTag("member", "constant") )

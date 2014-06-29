@@ -59,10 +59,13 @@ public class IndentedStringBuilder
 			return tabs ~" "~ line ~ "\n";
 		}
 
-		if ( endsWith(line, "}", "};") || startsWith(line, "}", "};") || line == "));")
+		if ( endsWith(line, "}", "};") || startsWith(line, "}", "};") || line == "));" || line == "connectFlags);" )
 		{
 			if ( !canFind(line, '{') && tabs.length > 0 )
 				tabs.length = tabs.length -1;
+
+			if ( line == "connectFlags);" )
+				statement = true;
 		}
 
 		if ( statement )

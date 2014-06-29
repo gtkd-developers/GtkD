@@ -38,9 +38,11 @@ public class DefReader
 	public this(string filename)
 	{
 		this.filename = filename;
-		
+
 		lines = readText(filename).splitLines();
-		
+		//Skip utf8 BOM.
+		lines[0].skipOver(x"efbbbf");
+
 		this.popFront();
 	}
 	
@@ -53,7 +55,7 @@ public class DefReader
 			line = lines.front.strip();
 			lines.popFront();
 			lineNumber++;
-			
+
 			while ( !lines.empty && ( line.empty || line.startsWith("#") ) )
 			{
 				line = lines.front.strip();
@@ -65,7 +67,7 @@ public class DefReader
 		if ( !line.empty )
 		{
 			size_t index = line.indexOf(':');
-			
+
 			key   = line[0 .. max(index, 0)].strip();
 			value = line[index +1 .. $].strip();
 		}

@@ -55,7 +55,7 @@ alias: volatile
 alias: G_CONST_RETURN
 alias: gint int
 alias: guint uint
-alias: gboolean int
+alias: gboolean bool
 alias: gpointer void*
 alias: gconstpointer void*
 alias: gchar char
@@ -127,4 +127,13 @@ copy: Loader.d
 
 srcDir: src
 bindDir: gtkc
+lookup: APILookupGLib.txt
+#lookup: APILookupGThread.txt
+lookup: APILookupGObject.txt
+lookup: APILookupGio.txt
+lookup: APILookupCairo.txt
+lookup: APILookupPango.txt
+lookup: APILookupAtk.txt
+lookup: APILookupGdkPixbuf.txt
+lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
