@@ -515,12 +515,13 @@ final class GtkFunction
 			gtkCall ~= ", &err";
 
 			string[] check;
-			check ~= "";
 			check ~= "if (err !is null)";
 			check ~= "{";
 			check ~= "throw new GException( new ErrorG(err) );";
 			check ~= "}";
 
+			if ( !outToD.empty )
+				check ~= "";
 			outToD = check ~ outToD;
 		}
 
@@ -562,7 +563,7 @@ final class GtkFunction
 			 * Casting is needed because some GTK+ functions
 			 * can return void pointers or base types.
 			 */
-			buff ~= "this(cast(" ~ strct.cType ~ ") p);";
+			buff ~= "this(cast(" ~ strct.cType ~ "*) p);";
 			
 			return buff;
 		}
@@ -627,7 +628,7 @@ final class GtkFunction
 			}
 			else
 			{
-				buff ~= "return "~ construct(returnDType) ~"(cast("~ returnDType.cType ~") p);";
+				buff ~= "return "~ construct(returnDType) ~"(cast("~ returnDType.cType ~"*) p);";
 			}
 
 			return buff;
@@ -644,7 +645,6 @@ final class GtkFunction
 			}
 
 			buff ~= "auto p = "~ gtkCall ~";";
-			buff ~= "";
 
 			if ( !outToD.empty )
 			{
@@ -652,6 +652,7 @@ final class GtkFunction
 				buff ~= outToD;
 			}
 
+			buff ~= "";
 			if ( returnType.elementType )
 				buff ~= "return p[0 .. "~ lenId(returnType) ~"];";
 			else
@@ -1008,7 +1009,7 @@ final class GtkFunction
 			GtkStruct par = strct.pack.getStruct(param.type.name);
 
 			if ( par && par.type != GtkStructType.Record )
-				buff ~= construct(par);
+				buff ~= construct(par) ~"("~ tokenToGtkD(param.name, wrapper.aliasses) ~")";
 			else
 				buff ~= tokenToGtkD(param.name, wrapper.aliasses);
 		}

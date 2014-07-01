@@ -183,6 +183,11 @@ class GtkWrapper
 					currentStruct = pack.collectedStructs[defReader.value];
 					break;
 				case "class":
+					currentStruct.type = GtkStructType.Class;
+					currentStruct.name = defReader.value;
+					break;
+				case "interface":
+					currentStruct.type = GtkStructType.Interface;
 					currentStruct.name = defReader.value;
 					break;
 				case "extend":
@@ -206,6 +211,9 @@ class GtkWrapper
 				case "nocode":
 				case "nosignal":
 					currentStruct.functions[defReader.value].noCode = true;
+					break;
+				case "nostruct":
+					packages.remove(defReader.value);
 					break;
 				case "code":
 					currentStruct.lookupCode ~= defReader.readBlock;

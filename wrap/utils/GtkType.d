@@ -22,7 +22,7 @@ module utils.GtkType;
 import utils.GtkWrapper;
 import utils.XML;
 
-import std.algorithm: among, canFind, find, skipOver;
+import std.algorithm: among, canFind, skipOver;
 import std.conv: to;
 
 /**
@@ -95,7 +95,7 @@ final class GtkType
 			reader.popFront();
 		}
 
-		if ( cType.length < elementType.cType.length && !isArray() )
+		if ( cType.length < elementType.cType.length && isArray() )
 				cType = elementType.cType;
 	}
 

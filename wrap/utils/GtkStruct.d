@@ -133,9 +133,12 @@ final class GtkStruct
 					fields ~= field;
 					break;
 				case "constructor":
-				case "function":
 				case "method":
 				case "glib:signal":
+					if ( type == GtkStructType.Record )
+						type = GtkStructType.Class;
+					goto case "function";
+				case "function":
 					GtkFunction func = new GtkFunction(wrapper, this);
 					func.parse(reader);
 					functions[func.name] = func;
@@ -512,6 +515,9 @@ final class GtkStruct
 			{
 				GtkStruct dType = pack.getStruct(type.name);
 
+				if ( dType is this )
+					return;
+
 				if ( dType && dType.type != GtkStructType.Record )
 				{
 					imports ~= dType.pack.name ~"."~ dType.name;
@@ -534,6 +540,9 @@ final class GtkStruct
 			void getParamImport(GtkType type)
 			{
 				GtkStruct dType = pack.getStruct(type.name);
+
+				if ( dType is this )
+					return;
 
 				if ( dType && dType.type != GtkStructType.Record )
 				{
