@@ -25,3 +25,7 @@ file: /usr/share/gir-1.0/GObject-2.0.gir
 
 struct: Object
 class: ObjectG
+merge: InitiallyUnowned
+
+struct: ObjectClass
+merge: InitiallyUnownedClass

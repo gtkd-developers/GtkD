@@ -50,7 +50,7 @@ includeComments: y
 
 # defines the simple token substitution
 # TODO allow to create real aliases on the code and simple static token replacement
-alias: const
+#alias: const
 alias: volatile
 alias: G_CONST_RETURN
 alias: gint int

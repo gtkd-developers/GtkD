@@ -22,3 +22,6 @@
 # must start with wrap
 wrap: glib
 file: /usr/share/gir-1.0/GLib-2.0.gir
+
+struct: List
+class: ListG

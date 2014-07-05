@@ -22,3 +22,7 @@
 # must start with wrap
 wrap: atk
 file: /usr/share/gir-1.0/Atk-1.0.gir
+
+struct: Implementor
+interface: Implementor
+merge: ImplementorIface

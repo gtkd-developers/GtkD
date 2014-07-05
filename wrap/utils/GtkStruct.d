@@ -52,6 +52,9 @@ final class GtkStruct
 	string parent;
 	string libVersion;
 
+	bool lookupClass = false;
+	bool lookupInterface = false;
+	bool noCode = false;
 	string[string] structWrap;
 	string[string] aliases;
 	string[] lookupCode;
@@ -217,7 +220,10 @@ final class GtkStruct
 
 	void writeClass()
 	{
-		if ( type == GtkStructType.Record )
+		if ( noCode )
+			return;
+
+		if ( type == GtkStructType.Record && !(lookupClass || lookupInterface) )
 			return;
 
 		parentStruct = pack.getStruct(parent);
@@ -226,10 +232,10 @@ final class GtkStruct
 		string buff = wrapper.licence;
 		auto indenter = new IndentedStringBuilder();
 
-		if ( type == GtkStructType.Interface )
+		if ( type == GtkStructType.Interface || lookupInterface )
 			writeInterface();
 
-		if ( type == GtkStructType.Interface )
+		if ( type == GtkStructType.Interface || lookupInterface )
 			buff ~= "module "~ pack.name ~"."~ name ~"T;\n\n";
 		else
 			buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
@@ -237,7 +243,7 @@ final class GtkStruct
 		writeImports(buff);
 		writeDocs(buff);
 
-		if ( type == GtkStructType.Interface )
+		if ( type == GtkStructType.Interface || lookupInterface )
 			buff ~= "public template "~ name ~"T(TStruct)";
 		else
 			buff ~= "public class "~ name;
@@ -271,7 +277,7 @@ final class GtkStruct
 
 		if ( cType )
 		{
-			if ( type != GtkStructType.Interface )
+			if ( type != GtkStructType.Interface || lookupInterface )
 			{
 				buff ~= indenter.format("/** the main Gtk struct */");
 				buff ~= indenter.format("protected "~ cType ~" "~ getHandleVar() ~";");
@@ -281,7 +287,7 @@ final class GtkStruct
 			buff ~= indenter.format("public "~ cType ~" "~ getHandleFunc() ~"()");
 			buff ~= indenter.format("{");
 
-			if ( type == GtkStructType.Interface )
+			if ( type == GtkStructType.Interface || lookupInterface )
 				buff ~= indenter.format("return cast("~ cType ~")getStruct();");
 			else
 				buff ~= indenter.format("return "~ getHandleVar ~";");
@@ -300,7 +306,7 @@ final class GtkStruct
 			buff ~= indenter.format("}");
 			buff ~= "\n";
 
-			if ( type != GtkStructType.Interface && cType != "GObject*" && cType != "cairo_t*" )
+			if ( (type != GtkStructType.Interface || lookupInterface) && cType != "GObject*" && cType != "cairo_t*" )
 			{
 				if ( parentStruct && pack.name != "cairo" )
 				{
@@ -363,7 +369,7 @@ final class GtkStruct
 						firstSignal = false;
 					}
 
-					if ( type == GtkStructType.Interface )
+					if ( type == GtkStructType.Interface || lookupInterface )
 					{
 						string[] prop;
 
@@ -397,7 +403,7 @@ final class GtkStruct
 			buff ~= indenter.format("}");
 		}
 
-		if ( type == GtkStructType.Interface )
+		if ( type == GtkStructType.Interface || lookupInterface )
 			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"T.d"), buff);
 		else
 			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~".d"), buff);

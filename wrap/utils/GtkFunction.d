@@ -246,7 +246,7 @@ final class GtkFunction
 		}
 		else
 		{
-			if ( type == GtkFunctionType.Function )
+			if ( type == GtkFunctionType.Function && !(!params.empty && isInstanceParam(params[0])) )
 				dec ~= "static ";
 
 			if ( strct.parentStruct && name in strct.parentStruct.functions )
@@ -263,6 +263,9 @@ final class GtkFunction
 				continue;
 
 			if ( returnType.length > -1 && param == params[returnType.length] )
+				continue;
+
+			if ( i == 0 && strct.type == GtkStructType.Record && isInstanceParam(param) )
 				continue;
 
 			if ( i++ > 0 )
@@ -296,9 +299,14 @@ final class GtkFunction
 		else
 			returnDType = strct.pack.getStruct(returnType.name);
 
-		if ( instanceParam )
+		if ( instanceParam || ( !params.empty && isInstanceParam(params[0])) )
 		{
-			GtkStruct dType = strct.pack.getStruct(instanceParam.type.name);
+			GtkStruct dType;
+
+			if ( instanceParam )
+				dType = strct.pack.getStruct(instanceParam.type.name);
+			else
+				dType = strct.pack.getStruct(params[0].type.name);
 
 			if ( dType.type == GtkStructType.Interface )
 				gtkCall ~= dType.getHandleFunc() ~"()";
@@ -315,6 +323,9 @@ final class GtkFunction
 				dType = strct.pack.getStruct(param.type.elementType.name);
 			else
 				dType = strct.pack.getStruct(param.type.name);
+
+			if ( i == 0 && isInstanceParam(param) )
+				continue;
 
 			if ( instanceParam || i > 0 )
 				gtkCall ~= ", ";
@@ -375,7 +386,7 @@ final class GtkFunction
 					}
 				}
 			}
-			else if ( dType && dType.type != GtkStructType.Record )
+			else if ( isDType(dType) )
 			{
 				if ( param.type.isArray() )
 				{
@@ -599,7 +610,7 @@ final class GtkFunction
 
 			return buff;
 		}
-		else if ( returnDType && returnDType.type != GtkStructType.Record )
+		else if ( isDType(returnDType) )
 		{
 			buff ~= "auto p = "~ gtkCall ~";";
 
@@ -835,11 +846,17 @@ final class GtkFunction
 					if ( param.doc.empty )
 						continue;
 
+					if ( isInstanceParam(param) )
+						continue;
+
 					string[] lines = param.doc.splitLines();
 					buff ~= " *     "~ tokenToGtkD(param.name, wrapper.aliasses) ~" = "~ lines[0];
 					foreach( line; lines[1..$] )
 						buff ~= " *         "~ line.strip();
 				}
+
+				if ( buff.endsWith(" * Params:") )
+					buff = buff[0 .. $-2];
 			}
 
 			if ( returnType.doc )
@@ -886,12 +903,9 @@ final class GtkFunction
 	 */
 	private string getType(GtkType type, GtkParamDirection direction = GtkParamDirection.Default)
 	{
-		if ( type.elementType )
+		if ( type.isArray() )
 		{
 			string size;
-
-			if ( !type.isArray() )
-				goto NoArray;
 
 			if ( type.size > -1 )
 				size = to!string(type.size);
@@ -907,7 +921,7 @@ final class GtkFunction
 		{
 			return getType(type, GtkParamDirection.Out) ~"[]";
 		}
-		else NoArray:
+		else
 		{
 			if ( type is null || type.name == "none" )
 				return "void";
@@ -917,10 +931,10 @@ final class GtkFunction
 				return "string";
 			else if ( type.name == type.cType )
 				return stringToGtkD(type.name, wrapper.aliasses);
-
+		
 			GtkStruct dType = strct.pack.getStruct(type.name);
 
-			if ( dType && dType.type != GtkStructType.Record )
+			if ( isDType(dType) )
 				return dType.name;
 			else if ( type.cType.empty && dType && dType.type == GtkStructType.Record )
 				return dType.cType ~ "*";
@@ -935,16 +949,48 @@ final class GtkFunction
 		return stringToGtkD(type.cType, wrapper.aliasses);
 	}
 
+	private bool isDType(GtkStruct dType)
+	{
+		if ( dType is null )
+			return false;
+		if ( dType.type.among(GtkStructType.Class, GtkStructType.Interface) )
+			return true;
+		if ( dType.type == GtkStructType.Record && (dType.lookupClass || dType.lookupInterface) )
+			return true;
+
+		return false;
+	}
+
 	private bool isStringType(GtkType type)
 	{
 		if ( type.cType.startsWith("gchar*", "char*", "const(char)*") )
 			return true;
-		else if ( type.name.among("utf8", "filename") )
+		if ( type.name.among("utf8", "filename") )
 			return true;
-		else if ( type.elementType && type.elementType.cType.startsWith("gchar", "char", "const(char)") )
+		if ( type.elementType && type.elementType.cType.startsWith("gchar", "char", "const(char)") )
 			return true;
-		else
+
+		return false;
+	}
+
+	private bool isInstanceParam(GtkParam param)
+	{
+		if ( param !is params[0] )
 			return false;
+		if ( strct is null || strct.type != GtkStructType.Record )
+			return false;
+		if ( !(strct.lookupClass || strct.lookupInterface) )
+			return false;
+		if ( param.direction != GtkParamDirection.Default )
+			return false;
+		if ( param.lengthFor !is null )
+			return false;
+		if ( strct.cType is null )
+			return false;
+		if ( param.type.cType == strct.cType ~"*" )
+			return true;
+
+		return false;
 	}
 
 	private string lenId(GtkType type)
@@ -981,7 +1027,7 @@ final class GtkFunction
 		{
 			GtkStruct par = strct.pack.getStruct(param.type.name);
 
-			if ( par && par.type == GtkStructType.Record )
+			if ( par && !isDType(par) )
 				buff ~= ", "~ par.cType ~"* "~ tokenToGtkD(param.name, wrapper.aliasses);
 			else if ( par )
 				buff ~= ", "~ par.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses);
@@ -1008,7 +1054,7 @@ final class GtkFunction
 
 			GtkStruct par = strct.pack.getStruct(param.type.name);
 
-			if ( par && par.type != GtkStructType.Record )
+			if ( isDType(par) )
 				buff ~= construct(par) ~"("~ tokenToGtkD(param.name, wrapper.aliasses) ~")";
 			else
 				buff ~= tokenToGtkD(param.name, wrapper.aliasses);

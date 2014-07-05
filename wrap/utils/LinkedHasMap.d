@@ -128,7 +128,18 @@ struct LinkedHashMap(Key, Value)
 	/// ditto
 	void opIndexAssign(Value value, Key key) @safe
 	{
-		Node* node = new Node;
+		Node* node;
+
+		if ( key !in data )
+		{
+			node = new Node;
+		}
+		else
+		{
+			node = data[key];
+			node.val = value;
+			return;
+		}
 
 		node.val = value;
 		node.key = key;

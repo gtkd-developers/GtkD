@@ -40,6 +40,9 @@ void main()
 
 	foreach(pack; GtkWrapper.packages)
 	{
+		if ( pack.name == "cairo" )
+			continue;
+
 		pack.writeTypes();
 		pack.writeLoaderTable();
 		pack.writeClasses();
@@ -180,14 +183,27 @@ class GtkWrapper
 					pack.parseGIR(defReader.value);
 					break;
 				case "struct":
-					currentStruct = pack.collectedStructs[defReader.value];
+					if ( defReader.value.empty )
+						currentStruct = null;
+					else
+						currentStruct = pack.collectedStructs[defReader.value];
 					break;
 				case "class":
-					currentStruct.type = GtkStructType.Class;
+					if ( currentStruct is null )
+					{
+						currentStruct = new GtkStruct(this, pack);
+						pack.collectedStructs["lookup"~defReader.value] = currentStruct;
+					}
+					currentStruct.lookupClass = true;
 					currentStruct.name = defReader.value;
 					break;
 				case "interface":
-					currentStruct.type = GtkStructType.Interface;
+					if ( currentStruct is null )
+					{
+						currentStruct = new GtkStruct(this, pack);
+						pack.collectedStructs["lookup"~defReader.value] = currentStruct;
+					}
+					currentStruct.lookupInterface = true;
 					currentStruct.name = defReader.value;
 					break;
 				case "extend":
@@ -195,6 +211,14 @@ class GtkWrapper
 					break;
 				case "implements":
 					currentStruct.implements ~= defReader.value;
+					break;
+				case "merge":
+					auto mergeStruct = pack.getStruct(defReader.value);
+					foreach ( func; mergeStruct.functions )
+					{
+						currentStruct.functions[func.name] = func;
+					}
+					mergeStruct.pack.collectedStructs[mergeStruct.name] = currentStruct;
 					break;
 				case "import":
 					currentStruct.imports ~= defReader.value;
@@ -209,6 +233,12 @@ class GtkWrapper
 					currentStruct.functions[defReader.value].lookupOverride = true;
 					break;
 				case "nocode":
+					if ( currentStruct is null )
+					{
+						pack.collectedStructs[defReader.value].noCode = true;
+						break;
+					}
+					goto case "nosignal";
 				case "nosignal":
 					currentStruct.functions[defReader.value].noCode = true;
 					break;
