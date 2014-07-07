@@ -37,6 +37,7 @@ import utils.LinkedHasMap: Map = LinkedHashMap;
 class GtkPackage
 {
 	string name;
+	string cTypePrefix;
 	GtkWrapper wrapper;
 	
 	string[] publicImports;
@@ -60,7 +61,7 @@ class GtkPackage
 	{
 		this.name = pack;
 		this.wrapper = wrapper;
-		this.stockIDs = GtkEnum(wrapper);
+		this.stockIDs = GtkEnum(wrapper, this);
 		
 		try
 		{
@@ -107,6 +108,7 @@ class GtkPackage
 		while ( !reader.empty && reader.front.value != "namespace" )
 			reader.popFront();
 
+		cTypePrefix = reader.front.attributes["c:identifier-prefixes"];
 		reader.popFront();
 
 		while ( !reader.empty && !reader.endTag("namespace") )
@@ -124,7 +126,7 @@ class GtkPackage
 					break;
 				case "bitfield":
 				case "enumeration":
-					GtkEnum gtkEnum = GtkEnum(wrapper);
+					GtkEnum gtkEnum = GtkEnum(wrapper, this);
 					gtkEnum.parse(reader);
 					collectedEnums ~= gtkEnum;
 					break;
@@ -145,9 +147,7 @@ class GtkPackage
 					parseConstant(reader);
 					break;
 				case "function":
-					GtkFunction funct = new GtkFunction(wrapper, null);
-					funct.parse(reader);
-					collectedFunctions[funct.name] = funct;
+					parseFunction(reader);
 					break;
 				default:
 					assert(false, "Unexpected tag: "~ reader.front.value);
@@ -219,6 +219,13 @@ class GtkPackage
 		reader.skipTag();
 	}
 
+	void parseFunction(T)(XMLReader!T reader)
+	{
+		GtkFunction funct = new GtkFunction(wrapper, null);
+		funct.parse(reader);
+		collectedFunctions[funct.name] = funct;
+	}
+
 	GtkStruct getStruct(string name)
 	{
 		GtkPackage pack = this;
@@ -259,6 +266,9 @@ class GtkPackage
 
 		foreach ( s; collectedStructs )
 		{
+			if ( s.noExternal )
+				continue;
+
 			buff ~= "\n";
 			buff ~= indenter.format(s.getStructDeclaration());
 		}

@@ -22,6 +22,7 @@ module utils.GtkEnum;
 import std.algorithm;
 import std.string : splitLines, strip, toUpper;
 
+import utils.GtkPackage;
 import utils.GtkWrapper;
 import utils.XML;
 
@@ -34,12 +35,14 @@ struct GtkEnum
 
 	GtkEnumMember[] members;
 	GtkWrapper wrapper;
+	GtkPackage pack;
 
 	@disable this();
 
-	this(GtkWrapper wrapper)
+	this(GtkWrapper wrapper, GtkPackage pack)
 	{
 		this.wrapper = wrapper;
+		this.pack = pack;
 	}
 
 	void parse(T)(XMLReader!T reader)
@@ -78,7 +81,7 @@ struct GtkEnum
 
 					break;
 				case "function":
-					reader.skipTag();
+					pack.parseFunction(reader);
 					break;
 				default:
 					assert(false, "Unexpected tag: "~ reader.front.value);

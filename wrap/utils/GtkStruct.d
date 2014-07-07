@@ -55,6 +55,7 @@ final class GtkStruct
 	bool lookupClass = false;
 	bool lookupInterface = false;
 	bool noCode = false;
+	bool noExternal = false;
 	string[string] structWrap;
 	string[string] aliases;
 	string[] lookupCode;
@@ -74,6 +75,16 @@ final class GtkStruct
 	{
 		this.wrapper = wrapper;
 		this.pack = pack;
+	}
+
+	GtkStruct dup()
+	{
+		GtkStruct copy = new GtkStruct(wrapper, pack);
+
+		foreach ( i, field; this.tupleof )
+			copy.tupleof[i] = field;
+
+		return copy;
 	}
 
 	void parse(T)(XMLReader!T reader)
@@ -186,6 +197,9 @@ final class GtkStruct
 
 	string[] getStructDeclaration()
 	{
+		if ( noExternal )
+			return null;
+
 		string buff[];
 
 		if ( doc !is null && wrapper.includeComments && type == GtkStructType.Record )

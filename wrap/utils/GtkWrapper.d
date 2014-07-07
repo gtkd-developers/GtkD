@@ -190,19 +190,13 @@ class GtkWrapper
 					break;
 				case "class":
 					if ( currentStruct is null )
-					{
-						currentStruct = new GtkStruct(this, pack);
-						pack.collectedStructs["lookup"~defReader.value] = currentStruct;
-					}
+						currentStruct = createClass(pack, defReader.value);
 					currentStruct.lookupClass = true;
 					currentStruct.name = defReader.value;
 					break;
 				case "interface":
 					if ( currentStruct is null )
-					{
-						currentStruct = new GtkStruct(this, pack);
-						pack.collectedStructs["lookup"~defReader.value] = currentStruct;
-					}
+						currentStruct = createClass(pack, defReader.value);
 					currentStruct.lookupInterface = true;
 					currentStruct.name = defReader.value;
 					break;
@@ -213,12 +207,15 @@ class GtkWrapper
 					currentStruct.implements ~= defReader.value;
 					break;
 				case "merge":
-					auto mergeStruct = pack.getStruct(defReader.value);
+					GtkStruct mergeStruct = pack.getStruct(defReader.value);
 					foreach ( func; mergeStruct.functions )
 					{
 						currentStruct.functions[func.name] = func;
 					}
-					mergeStruct.pack.collectedStructs[mergeStruct.name] = currentStruct;
+					GtkStruct copy = currentStruct.dup();
+					copy.noCode = true;
+					copy.noExternal = true;
+					mergeStruct.pack.collectedStructs[mergeStruct.name] = copy;
 					break;
 				case "import":
 					currentStruct.imports ~= defReader.value;
@@ -350,6 +347,18 @@ class GtkWrapper
 		
 		if ( !exists(to) )
 			throw new Exception("Cannot copy  file: "~from);
+	}
+
+	private GtkStruct createClass(GtkPackage pack, string name)
+	{
+		GtkStruct strct = new GtkStruct(this, pack);
+		strct.name = name;
+		strct.cType = pack.cTypePrefix ~ name;
+		strct.type = GtkStructType.Record;
+		strct.noExternal = true;
+		pack.collectedStructs["lookup"~name] = strct;
+
+		return strct;
 	}
 }
 
