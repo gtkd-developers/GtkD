@@ -117,7 +117,7 @@ struct GtkEnum
 		}
 
 		buff ~= "}";
-		if ( name !is null )
+		if ( name !is null && pack.name != "pango" )
 			buff ~= "alias "~ cName ~" "~ name ~";";
 
 		return buff;

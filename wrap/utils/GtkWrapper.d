@@ -186,17 +186,21 @@ class GtkWrapper
 					if ( defReader.value.empty )
 						currentStruct = null;
 					else
-						currentStruct = pack.collectedStructs[defReader.value];
+						currentStruct = pack.collectedStructs.get(defReader.value, createClass(pack, defReader.value));
 					break;
 				case "class":
-					if ( currentStruct is null )
-						currentStruct = createClass(pack, defReader.value);
-					currentStruct.lookupClass = true;
-					currentStruct.name = defReader.value;
+					if ( defReader.value.empty )
+					{
+						currentStruct.type = GtkStructType.Record;
+						currentStruct.noNamespace = true;
+					}
+					else
+					{
+						currentStruct.lookupClass = true;
+						currentStruct.name = defReader.value;
+					}
 					break;
 				case "interface":
-					if ( currentStruct is null )
-						currentStruct = createClass(pack, defReader.value);
 					currentStruct.lookupInterface = true;
 					currentStruct.name = defReader.value;
 					break;
@@ -216,6 +220,17 @@ class GtkWrapper
 					copy.noCode = true;
 					copy.noExternal = true;
 					mergeStruct.pack.collectedStructs[mergeStruct.name] = copy;
+					break;
+				case "move":
+					string[] vals = defReader.value.split();
+					string newFuncName = ( vals.length == 3 ) ? vals[2] : vals[0];
+					GtkStruct dest = pack.getStruct(vals[1]);
+					if ( dest is null )
+						dest = createClass(pack, vals[1]);
+					pack.collectedFunctions[vals[0]].strct = dest;
+					dest.functions[newFuncName] = pack.collectedFunctions[vals[0]];
+					dest.functions[newFuncName].name = newFuncName;
+					pack.collectedFunctions.remove(vals[0]);
 					break;
 				case "import":
 					currentStruct.imports ~= defReader.value;

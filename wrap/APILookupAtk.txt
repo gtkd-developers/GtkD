@@ -23,6 +23,13 @@
 wrap: atk
 file: /usr/share/gir-1.0/Atk-1.0.gir
 
+move: for_name State type_for_name
+move: get_name State type_get_name
+move: register State type_register
+
 struct: Implementor
 interface: Implementor
 merge: ImplementorIface
+
+struct: Object
+class: ObjectAtk

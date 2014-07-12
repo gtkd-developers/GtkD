@@ -137,6 +137,9 @@ class GtkPackage
 					GtkStruct gtkStruct = new GtkStruct(wrapper, this);
 					gtkStruct.parse(reader);
 					collectedStructs[gtkStruct.name] = gtkStruct;
+
+					if ( name == "pango" )
+						gtkStruct.name = "Pg"~gtkStruct.name;
 					break;
 				case "callback":
 					GtkFunction callback = new GtkFunction(wrapper, null);
@@ -240,7 +243,7 @@ class GtkPackage
 			pack = wrapper.packages[vals[0].toLower()];
 			name = vals[1];
 		}
-		return pack.collectedStructs.get(name, null);
+		return pack.collectedStructs.get(name, pack.collectedStructs.get("lookup"~name, null));
 	}
 
 	void writeClasses()

@@ -22,3 +22,27 @@
 # must start with wrap
 wrap: cairo
 file: /usr/share/gir-1.0/cairo-1.0.gir
+
+struct: Context
+class: Context
+
+struct: Surface
+class: Surface
+
+struct: Matrix
+class: Matrix
+
+struct: Pattern
+class: Pattern
+
+struct: Region
+class: Region
+
+struct: FontOptions
+class: FontOption
+
+struct: FontFace
+class: FontFace
+
+struct: ScaledFont
+class: ScaledFont

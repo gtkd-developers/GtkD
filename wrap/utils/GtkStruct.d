@@ -56,6 +56,7 @@ final class GtkStruct
 	bool lookupInterface = false;
 	bool noCode = false;
 	bool noExternal = false;
+	bool noNamespace = false;
 	string[string] structWrap;
 	string[string] aliases;
 	string[] lookupCode;
@@ -237,17 +238,23 @@ final class GtkStruct
 		if ( noCode )
 			return;
 
-		if ( type == GtkStructType.Record && !(lookupClass || lookupInterface) )
+		if ( type == GtkStructType.Record && !(lookupClass || lookupInterface) && functions.empty )
 			return;
 
 		parentStruct = pack.getStruct(parent);
-
 		resolveImports();
-		string buff = wrapper.licence;
-		auto indenter = new IndentedStringBuilder();
+
+		if ( type == GtkStructType.Record )
+		{
+			writeDStruct();
+			return;
+		}
 
 		if ( type == GtkStructType.Interface || lookupInterface )
 			writeInterface();
+
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
 
 		if ( type == GtkStructType.Interface || lookupInterface )
 			buff ~= "module "~ pack.name ~"."~ name ~"T;\n\n";
@@ -294,15 +301,15 @@ final class GtkStruct
 			if ( type != GtkStructType.Interface || lookupInterface )
 			{
 				buff ~= indenter.format("/** the main Gtk struct */");
-				buff ~= indenter.format("protected "~ cType ~" "~ getHandleVar() ~";");
+				buff ~= indenter.format("protected "~ cType ~"* "~ getHandleVar() ~";");
 				buff ~= "\n";
 			}
 			buff ~= indenter.format("/** Get the main Gtk struct */");
-			buff ~= indenter.format("public "~ cType ~" "~ getHandleFunc() ~"()");
+			buff ~= indenter.format("public "~ cType ~"* "~ getHandleFunc() ~"()");
 			buff ~= indenter.format("{");
 
 			if ( type == GtkStructType.Interface || lookupInterface )
-				buff ~= indenter.format("return cast("~ cType ~")getStruct();");
+				buff ~= indenter.format("return cast("~ cType ~"*)getStruct();");
 			else
 				buff ~= indenter.format("return "~ getHandleVar ~";");
 
@@ -326,7 +333,7 @@ final class GtkStruct
 				{
 					buff ~= indenter.format("protected override void setStruct(GObject* obj)");
 					buff ~= indenter.format("{");
-					buff ~= indenter.format(getHandleVar ~" = cast("~ cType ~")obj;");
+					buff ~= indenter.format(getHandleVar ~" = cast("~ cType ~"*)obj;");
 					buff ~= indenter.format("}");
 					buff ~= "\n";
 				}
@@ -334,10 +341,10 @@ final class GtkStruct
 				buff ~= indenter.format("/**");
 				buff ~= indenter.format(" * Sets our main struct and passes it to the parent class.");
 				buff ~= indenter.format(" */");
-				buff ~= indenter.format("public this ("~ cType ~" "~ getHandleVar() ~")");
+				buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~")");
 				buff ~= indenter.format("{");
 				if ( parentStruct )
-					buff ~= indenter.format("super(cast("~ parentStruct.cType ~")"~ getHandleVar() ~");");
+					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~");");
 				buff ~= indenter.format("this."~ getHandleVar() ~" = "~ getHandleVar() ~";");
 				buff ~= indenter.format("}");
 				buff ~= "\n";
@@ -439,7 +446,7 @@ final class GtkStruct
 		if ( cType )
 		{
 			buff ~= indenter.format("/** Get the main Gtk struct */");
-			buff ~= indenter.format("public "~ cType ~" "~ getHandleFunc() ~"();");
+			buff ~= indenter.format("public "~ cType ~"* "~ getHandleFunc() ~"();");
 			buff ~= "\n";
 
 			buff ~= indenter.format("/** the main Gtk struct as a void* */");
@@ -482,6 +489,48 @@ final class GtkStruct
 		}
 
 		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"IF.d"), buff);
+	}
+
+	void writeDStruct()
+	{
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
+
+		buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
+
+		writeImports(buff);
+		writeDocs(buff);
+
+		if ( !noNamespace )
+		{
+			buff ~= "public struct "~ name ~"\n";
+			buff ~= indenter.format("{");
+		}
+
+		if ( !lookupCode.empty )
+		{
+			buff ~= indenter.format(lookupCode);
+			buff ~= "\n";
+		}
+
+		buff ~= indenter.format(["/**", "*/"]);
+
+		foreach ( func; functions )
+		{
+			if ( func.isVariadic() || func.type != GtkFunctionType.Function )
+				continue;
+
+			buff ~= "\n";
+			buff ~= indenter.format(func.getDeclaration());
+			buff ~= indenter.format("{");
+			buff ~= indenter.format(func.getBody());
+			buff ~= indenter.format("}");
+		}
+
+		if ( !noNamespace )
+			buff ~= indenter.format("}");
+
+		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~".d"), buff);
 	}
 
 	/**
@@ -564,9 +613,9 @@ final class GtkStruct
 				if ( dType is this )
 					return;
 
-				if ( dType && dType.type != GtkStructType.Record )
+				if ( dType && (dType.type != GtkStructType.Record || dType.lookupClass || dType.lookupInterface) )
 				{
-					if ( dType.type == GtkStructType.Interface )
+					if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
 					else
 						imports ~= dType.pack.name ~"."~ dType.name;

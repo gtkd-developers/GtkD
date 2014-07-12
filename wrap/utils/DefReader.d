@@ -49,7 +49,7 @@ public class DefReader
 	public void popFront()
 	{
 		string line;
-		
+
 		if ( !lines.empty )
 		{
 			line = lines.front.strip();
@@ -64,7 +64,7 @@ public class DefReader
 			}
 		}
 		
-		if ( !line.empty )
+		if ( !line.empty && !line.startsWith("#") )
 		{
 			size_t index = line.indexOf(':');
 

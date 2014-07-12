@@ -63,13 +63,15 @@ struct LinkedHashMap(Key, Value)
 
 		Node* node = *nodeP;
 
-		if ( node is front )
+		if ( node is front && node.next )
 			front = node.next;
-		if ( node is back )
+		if ( node is back && node.previous )
 			back = node.previous;
 
-		node.previous.next = node.next;
-		node.next.previous = node.previous;
+		if ( node.previous )
+			node.previous.next = node.next;
+		if ( node.next )
+			node.next.previous = node.previous;
 
 		data.remove(key);
 		GC.free(node);
