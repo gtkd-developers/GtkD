@@ -189,20 +189,24 @@ class GtkWrapper
 						currentStruct = pack.collectedStructs.get(defReader.value, createClass(pack, defReader.value));
 					break;
 				case "class":
-					if ( defReader.value.empty )
-					{
-						currentStruct.type = GtkStructType.Record;
-						currentStruct.noNamespace = true;
-					}
-					else
-					{
-						currentStruct.lookupClass = true;
-						currentStruct.name = defReader.value;
-					}
+					currentStruct.lookupClass = true;
+					currentStruct.name = defReader.value;
 					break;
 				case "interface":
 					currentStruct.lookupInterface = true;
 					currentStruct.name = defReader.value;
+					break;
+				case "namespace":
+					currentStruct.type = GtkStructType.Record;
+					if ( defReader.value.empty )
+					{
+						currentStruct.noNamespace = true;
+					}
+					else
+					{
+						currentStruct.noNamespace = false;
+						currentStruct.name = defReader.value;
+					}
 					break;
 				case "extend":
 					currentStruct.parent = defReader.value;
@@ -245,9 +249,9 @@ class GtkWrapper
 					currentStruct.functions[defReader.value].lookupOverride = true;
 					break;
 				case "nocode":
-					if ( currentStruct is null )
+					if ( defReader.valueBool )
 					{
-						pack.collectedStructs[defReader.value].noCode = true;
+						currentStruct.noCode = true;
 						break;
 					}
 					goto case "nosignal";

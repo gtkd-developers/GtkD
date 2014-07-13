@@ -649,7 +649,7 @@ final class GtkFunction
 			if ( returnType.name == "gboolean" )
 				gtkCall ~= " != 0";
 
-			if ( returnType.elementType is null && outToD.empty )
+			if ( !returnType.isArray && outToD.empty )
 			{
 				buff ~= "return "~ gtkCall ~";";
 				return buff;
@@ -664,7 +664,7 @@ final class GtkFunction
 			}
 
 			buff ~= "";
-			if ( returnType.elementType )
+			if ( returnType.isArray() )
 				buff ~= "return p[0 .. "~ lenId(returnType) ~"];";
 			else
 				buff ~= "return p;";

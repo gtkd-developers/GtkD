@@ -23,9 +23,8 @@
 wrap: atk
 file: /usr/share/gir-1.0/Atk-1.0.gir
 
-move: for_name State type_for_name
-move: get_name State type_get_name
-move: register State type_register
+struct: Attribute
+nocode: true
 
 struct: Implementor
 interface: Implementor
@@ -33,3 +32,50 @@ merge: ImplementorIface
 
 struct: Object
 class: ObjectAtk
+
+struct: Util
+namespace: Util
+
+#
+# Move functions defined as global into there respective classes
+#
+
+move: add_focus_tracker Util
+move: add_global_event_listener Util
+move: add_key_event_listener Util
+move: focus_tracker_init Util
+move: focus_tracker_notify Util
+move: get_focus_object Util
+move: get_root Util
+move: remove_focus_tracker Util
+move: remove_global_event_listener Util
+move: remove_key_event_listener Util
+
+move: attribute_set_free Text
+move: text_attribute_for_name Text attribute_for_name
+move: text_attribute_get_name Text attribute_get_name
+move: text_attribute_get_value Text attribute_get_value
+move: text_attribute_register Text attribute_register
+
+move: get_binary_age Version
+move: get_interface_age Version
+move: get_major_version Version
+move: get_micro_version Version
+move: get_minor_version Version
+move: get_toolkit_version Version
+move: get_version Version
+
+move: get_default_registry Registry
+
+move: relation_type_for_name Relation type_for_name
+move: relation_type_get_name Relation type_get_name
+move: relation_type_register Relation type_register
+
+move: role_for_name Object
+move: role_get_localized_name Object
+move: role_get_name Object
+move: role_register Object
+
+move: state_type_for_name State type_for_name
+move: state_type_get_name State type_get_name
+move: state_type_register State type_register

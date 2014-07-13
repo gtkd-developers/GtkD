@@ -261,7 +261,7 @@ final class GtkStruct
 		else
 			buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
 
-		writeImports(buff);
+		writeImports(buff, (type == GtkStructType.Interface || lookupInterface) );
 		writeDocs(buff);
 
 		if ( type == GtkStructType.Interface || lookupInterface )

@@ -81,7 +81,10 @@ struct GtkEnum
 
 					break;
 				case "function":
-					pack.parseFunction(reader);
+					//Skip these functions for now
+					//as they are also availabe as global functions.
+					//pack.parseFunction(reader);
+					reader.skipTag();
 					break;
 				default:
 					assert(false, "Unexpected tag: "~ reader.front.value);

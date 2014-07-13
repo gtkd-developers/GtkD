@@ -104,10 +104,10 @@ final class GtkType
 		if ( elementType is null )
 			return false;
 
-		if ( name.among("GLib.List", "GLib.SList", "GLib.Array", "GLib.HashTable") )
+		if ( name.among("GLib.List", "GLib.SList", "GLib.Array", "GLib.HashTable", "GLib.PtrArray") )
 			return false;
 
-		if ( name.among("List", "SList", "Array", "HashTable") )
+		if ( name.among("List", "SList", "Array", "HashTable", ".PtrArray") )
 			return false;
 
 		if ( elementType )

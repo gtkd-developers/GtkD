@@ -29,3 +29,80 @@ merge: InitiallyUnowned
 
 struct: ObjectClass
 merge: InitiallyUnownedClass
+
+struct: ParamSpecBoolean
+nocode: true
+
+struct: ParamSpecBoxed
+nocode: true
+
+struct: ParamSpecChar
+nocode: true
+
+struct: ParamSpecDouble
+nocode: true
+
+struct: ParamSpecEnum
+nocode: true
+
+struct: ParamSpecFlags
+nocode: true
+
+struct: ParamSpecFloat
+nocode: true
+
+struct: ParamSpecGType
+nocode: true
+
+struct: ParamSpecInt
+nocode: true
+
+struct: ParamSpecInt64
+nocode: true
+
+struct: ParamSpecLong
+nocode: true
+
+struct: ParamSpecObject
+nocode: true
+
+struct: ParamSpecOverride
+nocode: true
+
+struct: ParamSpecParam
+nocode: true
+
+struct: ParamSpecPointer
+nocode: true
+
+struct: ParamSpecPool
+nocode: true
+
+struct: ParamSpecString
+nocode: true
+
+struct: ParamSpecUChar
+nocode: true
+
+struct: ParamSpecUInt
+nocode: true
+
+struct: ParamSpecUInt64
+nocode: true
+
+struct: ParamSpecULong
+nocode: true
+
+struct: ParamSpecUnichar
+nocode: true
+
+struct: ParamSpecValueArray
+nocode: true
+
+struct: ParamSpecVariant
+nocode: true
+
+move: boxed_copy Boxed copy
+move: boxed_free Boxed free
+move: boxed_type_register_static Boxed type_register_static
+move: pointer_type_register_static Boxed
