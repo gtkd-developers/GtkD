@@ -107,7 +107,7 @@ final class GtkType
 		if ( name.among("GLib.List", "GLib.SList", "GLib.Array", "GLib.HashTable", "GLib.PtrArray") )
 			return false;
 
-		if ( name.among("List", "SList", "Array", "HashTable", ".PtrArray") )
+		if ( name.among("List", "SList", "Array", "HashTable", "PtrArray") )
 			return false;
 
 		if ( elementType )

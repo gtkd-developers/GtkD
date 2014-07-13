@@ -26,6 +26,216 @@ file: /usr/share/gir-1.0/GObject-2.0.gir
 struct: Object
 class: ObjectG
 merge: InitiallyUnowned
+nosignal: notify
+
+code: start
+	protected bool isGcRoot;
+
+	/**
+	 * Sets our main struct and passes store it on the gobject.
+	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
+	 */
+	public this (GObject* gObject)
+	{
+		this.gObject = gObject;
+		if ( gObject !is  null )
+		{
+			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
+			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
+
+			//If the refCount is largeer then 1 toggleNotify isn't called
+			if (gObject.refCount > 1 && !isGcRoot)
+			{
+				GC.addRoot(cast(void*)this);
+				isGcRoot = true;
+			}
+
+			//Remove the floating reference if there is one.
+			if (isFloating(gObject))
+			{
+				refSink(gObject);
+				unref(gObject);
+			}
+
+			//When constructed via GtkBuilder set the structs.
+			if ( getStruct() is null)
+			{
+				setStruct(gObject);
+			}
+		}
+	}
+
+	extern(C)
+	{
+		static void destroyNotify(ObjectG obj)
+		{
+			if ( obj.isGcRoot )
+			{
+				GC.removeRoot(cast(void*)obj);
+
+				obj.isGcRoot = false;
+			}
+
+			obj.gObject = null;
+		}
+
+		static void toggleNotify(ObjectG obj, GObject* object, int isLastRef)
+		{
+			if ( isLastRef && obj.isGcRoot )
+			{
+				GC.removeRoot(cast(void*)obj);
+
+				obj.isGcRoot = false;
+			}
+			else if ( !obj.isGcRoot )
+			{
+				GC.addRoot(cast(void*)obj);
+
+				obj.isGcRoot = true;
+			}
+		}
+	}
+
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GOBJECT) && gObject !is null )
+		{
+			unref();
+		}
+	}
+
+	/**
+	 * Gets a D Object from the objects table of associations.
+	 * Params:
+	 *  obj = GObject containing the associations.
+	 * Returns: the D Object if found, or a newly constructed object if no such Object exists.
+	 */
+	public static RT getDObject(T, RT=T, U)(U obj)
+	{
+		if ( obj is null )
+		{
+			return null;
+		}
+
+		static if ( is(T : ObjectG) )
+		{
+			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
+
+			if ( p !is null )
+			{
+				static if ( is(RT == interface ) )
+				{
+					return cast(RT)cast(ObjectG)p;
+				}
+				else
+				{
+					return cast(RT)p;
+				}
+			}
+			else
+			{
+				return new T(obj);
+			}
+		}
+		else
+		{
+			return new T(obj);
+		}
+	}
+
+	protected void setStruct(GObject* obj)
+	{
+		gObject = cast(GObject*)obj;
+	}
+
+	/** */
+	public void setProperty(string propertyName, int value)
+	{
+		setProperty(propertyName, new Value(value));
+	}
+
+	/** */
+	public void setProperty(string propertyName, string value)
+	{
+		setProperty(propertyName, new Value(value));
+	}
+
+	/** */
+	public void setProperty(string propertyName, long value)
+	{
+		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
+		g_object_set( gObject, Str.toStringz(propertyName), value, null);
+	}
+
+	/** */
+	public void setProperty(string propertyName, ulong value)
+	{
+		g_object_set( gObject, Str.toStringz(propertyName), value, null);
+	}
+
+	deprecated("Use the member function")
+	public static void unref(ObjectG obj)
+	{
+		obj.unref();
+	}
+
+	deprecated("Use the member function")
+	public static ObjectG doref(ObjectG obj)
+	{
+		return obj.doref();
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
+	/**
+	 * The notify signal is emitted on an object when one of its
+	 * properties has been changed. Note that getting this signal
+	 * doesn't guarantee that the value of the property has actually
+	 * changed, it may also be emitted when the setter for the property
+	 * is called to reinstate the previous value.
+	 *
+	 * This signal is typically used to obtain change notification for a
+	 * single property.
+	 *
+	 * It is important to note that you must use
+	 * canonical parameter names for the property.
+	 *
+	 * Params:
+	 *     dlg          = The callback.
+	 *     property     = Set this if you only want to receive the signal for a specific property.
+	 *     connectFlags = The behavior of the signal's connection.
+	 */
+	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		string signalName;
+
+		if ( property == "" )
+			signalName = "notify";
+		else
+			signalName = "notify::"~ property;
+
+		if ( !(signalName in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			signalName,
+			cast(GCallback)&callBackNotify,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals[signalName] = 1;
+		}
+		onNotifyListeners ~= dlg;
+	}
+	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, ObjectG _objectG)
+	{
+		foreach ( void delegate(ParamSpec, ObjectG) dlg ; _objectG.onNotifyListeners )
+		{
+			dlg(ObjectG.getDObject!(ParamSpec)(pspec), _objectG);
+		}
+	}
+code: end
 
 struct: ObjectClass
 merge: InitiallyUnownedClass

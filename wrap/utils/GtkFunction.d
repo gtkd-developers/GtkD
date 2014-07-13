@@ -744,7 +744,7 @@ final class GtkFunction
 		string[] buff;
 
 		buff ~= "{";
-		buff ~= "if ( \""~ getSignalName() ~"\" !in connectedSignals )";
+		buff ~= "if ( \""~ name ~"\" !in connectedSignals )";
 		buff ~= "{";
 
 		if ( strct.name != "StatusIcon")

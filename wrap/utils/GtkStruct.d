@@ -156,7 +156,10 @@ final class GtkStruct
 				case "function":
 					GtkFunction func = new GtkFunction(wrapper, this);
 					func.parse(reader);
-					functions[func.name] = func;
+					if ( func.type == GtkFunctionType.Signal )
+						functions[func.name~"-signal"] = func;
+					else
+						functions[func.name] = func;
 					break;
 				case "virtual-method":
 					// Virtual methods in the gir file are mirrored
@@ -327,7 +330,7 @@ final class GtkStruct
 			buff ~= indenter.format("}");
 			buff ~= "\n";
 
-			if ( (type != GtkStructType.Interface || lookupInterface) && cType != "GObject*" && cType != "cairo_t*" )
+			if ( (type != GtkStructType.Interface || lookupInterface) && cType != "GObject" && cType != "cairo_t" )
 			{
 				if ( parentStruct && pack.name != "cairo" )
 				{
@@ -376,7 +379,7 @@ final class GtkStruct
 
 			foreach ( func; functions )
 			{
-				if ( func.isVariadic() || func.type == GtkFunctionType.Callback )
+				if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
 					continue;
 
 				if ( func.type == GtkFunctionType.Signal )
@@ -463,7 +466,7 @@ final class GtkStruct
 
 			foreach ( func; functions )
 			{
-				if ( func.isVariadic() || func.type == GtkFunctionType.Callback )
+				if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
 					continue;
 				
 				if ( func.type == GtkFunctionType.Signal )
@@ -517,7 +520,7 @@ final class GtkStruct
 
 		foreach ( func; functions )
 		{
-			if ( func.isVariadic() || func.type != GtkFunctionType.Function )
+			if ( func.noCode || func.isVariadic() || func.type != GtkFunctionType.Function )
 				continue;
 
 			buff ~= "\n";

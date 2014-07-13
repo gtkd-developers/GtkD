@@ -254,9 +254,10 @@ class GtkWrapper
 						currentStruct.noCode = true;
 						break;
 					}
-					goto case "nosignal";
-				case "nosignal":
 					currentStruct.functions[defReader.value].noCode = true;
+					break;
+				case "nosignal":
+					currentStruct.functions[defReader.value~"-signal"].noCode = true;
 					break;
 				case "nostruct":
 					packages.remove(defReader.value);
