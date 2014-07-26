@@ -247,7 +247,7 @@ final class GtkStruct
 		parentStruct = pack.getStruct(parent);
 		resolveImports();
 
-		if ( type == GtkStructType.Record )
+		if ( type == GtkStructType.Record && !(lookupClass || lookupInterface) )
 		{
 			writeDStruct();
 			return;

@@ -22,3 +22,7 @@
 # must start with wrap
 wrap: gio
 file: /usr/share/gir-1.0/Gio-2.0.gir
+
+struct: SimpleProxyResolver
+array: new ignore_hosts
+array: set_ignore_hosts ignore_hosts

@@ -81,6 +81,9 @@ final class GtkFunction
 		if ( "throws" in reader.front.attributes )
 			throws = reader.front.attributes["throws"] == "1";
 
+		if ( name == "new" && isDType(strct) )
+			type = GtkFunctionType.Constructor;
+
 		reader.popFront();
 
 		while( !reader.empty && !reader.endTag("constructor", "method", "function", "callback", "glib:signal") )
@@ -402,7 +405,8 @@ final class GtkFunction
 						}
 						else
 						{
-							buff ~= "";
+							if ( !buff.empty )
+								buff ~= "";
 							buff ~= elementType.cType.chomp("*") ~ "*[] inout"~ id ~" = new "~ elementType.cType.chomp("*") ~"*["~ id ~".length];";
 							buff ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
 							buff ~= "{";
@@ -424,7 +428,9 @@ final class GtkFunction
 					// gtkdType[]
 					else
 					{
-						buff ~= "";
+						//TODO: zero-terminated see: g_signal_chain_from_overridden
+						if ( !buff.empty )
+							buff ~= "";
 						buff ~= elementType.cType ~ "[] "~ id ~"Array = new "~ elementType.cType ~"["~ id ~".length];";
 						buff ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
 						buff ~= "{";
@@ -538,7 +544,7 @@ final class GtkFunction
 
 		gtkCall ~= ")";
 
-		if ( !buff.empty )
+		if ( !buff.empty && buff[$-1] != "" )
 			buff ~= "";
 
 		if ( returnType.name == "none" )
@@ -935,7 +941,12 @@ final class GtkFunction
 			GtkStruct dType = strct.pack.getStruct(type.name);
 
 			if ( isDType(dType) )
-				return dType.name;
+			{
+			    if ( dType.type == GtkStructType.Interface )
+					return dType.name ~"IF";
+			    else
+			    	return dType.name;
+			}
 			else if ( type.cType.empty && dType && dType.type == GtkStructType.Record )
 				return dType.cType ~ "*";
 		}

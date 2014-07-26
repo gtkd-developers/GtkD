@@ -285,9 +285,6 @@ nocode: true
 struct: ParamSpecPointer
 nocode: true
 
-struct: ParamSpecPool
-nocode: true
-
 struct: ParamSpecString
 nocode: true
 
@@ -312,7 +309,155 @@ nocode: true
 struct: ParamSpecVariant
 nocode: true
 
+struct:
+class: TypePlugin
+extend: Object
+implements: TypePlugin
+
+#
+# Move functions defined as global into there respective classes
+#
+
 move: boxed_copy Boxed copy
 move: boxed_free Boxed free
 move: boxed_type_register_static Boxed type_register_static
 move: pointer_type_register_static Boxed
+
+move: clear_object Object
+
+move: enum_complete_type_info Enums complete_type_info
+move: enum_get_value Enums get_value
+move: enum_get_value_by_name Enums get_value_by_name
+move: enum_get_value_by_nick Enums get_value_by_nick
+move: enum_register_static Enums register_static
+
+move: flags_complete_type_info Flags complete_type_info
+move: flags_get_first_value Flags get_first_value
+move: flags_get_value_by_name Flags get_value_by_name
+move: flags_get_value_by_nick Flags get_value_by_nick
+move: flags_register_static Flags register_static
+
+# ParamSpec Constructors?
+move: param_spec_boolean Value
+move: param_spec_boxed Value
+move: param_spec_char Value
+move: param_spec_double Value
+move: param_spec_enum Value
+move: param_spec_flags Value
+move: param_spec_float Value
+move: param_spec_gtype Value
+move: param_spec_int Value
+move: param_spec_int64 Value
+move: param_spec_long Value
+move: param_spec_object Value
+move: param_spec_override Value
+move: param_spec_param Value
+move: param_spec_pointer Value
+move: param_spec_string Value
+move: param_spec_uchar Value
+move: param_spec_uint Value
+move: param_spec_uint64 Value
+move: param_spec_ulong Value
+move: param_spec_unichar Value
+move: param_spec_value_array Value
+move: param_spec_variant Value
+
+move: param_type_register_static ParamSpec
+move: param_value_convert ParamSpec
+move: param_value_defaults ParamSpec
+move: param_value_validate ParamSpec
+move: param_values_cmp ParamSpec
+
+move: signal_accumulator_first_wins Signals accumulator_first_wins
+move: signal_accumulator_true_handled Signals accumulator_true_handled
+move: signal_add_emission_hook Signals add_emission_hook
+move: signal_chain_from_overridden Signals chain_from_overridden
+move: signal_chain_from_overridden_handler Signals chain_from_overridden_handler
+move: signal_connect_closure Signals connect_closure
+move: signal_connect_closure_by_id Signals connect_closure_by_id
+move: signal_connect_data Signals connect_data
+move: signal_connect_object Signals connect_object
+move: signal_emit Signals emit
+move: signal_emit_by_name Signals emit_by_name
+move: signal_emit_valist Signals emit_valist
+move: signal_emitv Signals emitv
+move: signal_get_invocation_hint Signals get_invocation_hint
+move: signal_handler_block Signals handler_block
+move: signal_handler_disconnect Signals handler_disconnect
+move: signal_handler_find Signals handler_find
+move: signal_handler_is_connected Signals handler_is_connected
+move: signal_handler_unblock Signals handler_unblock
+move: signal_handlers_block_matched Signals handlers_block_matched
+move: signal_handlers_destroy Signals handlers_destroy
+move: signal_handlers_disconnect_matched Signals handlers_disconnect_matched
+move: signal_handlers_unblock_matched Signals handlers_unblock_matched
+move: signal_has_handler_pending Signals has_handler_pending
+move: signal_list_ids Signals list_ids
+move: signal_lookup Signals lookup
+move: signal_name Signals name
+move: signal_new Signals new
+move: signal_new_class_handler Signals new_class_handler
+move: signal_new_valist Signals new_valist
+move: signal_newv Signals newv
+move: signal_override_class_closure Signals override_class_closure
+move: signal_override_class_handler Signals override_class_handler
+move: signal_parse_name Signals parse_name
+move: signal_query Signals query
+move: signal_remove_emission_hook Signals remove_emission_
+move: signal_set_va_marshaller Signals set_va_marshaller
+move: signal_stop_emission Signals stop_emission
+move: signal_stop_emission_by_name Signals stop_emission_by_name
+move: signal_type_cclosure_new Signals type_cclosure_new
+
+move: source_set_closure Closure
+move: source_set_dummy_callback Closure
+
+move: strdup_value_contents Value
+
+move: type_add_class_cache_func Type add_class_cache_func
+move: type_add_class_private Type add_class_private
+move: type_add_instance_private Type add_instance_private
+move: type_add_interface_check Type add_interface_check
+move: type_add_interface_dynamic Type add_interface_dynamic
+move: type_add_interface_static Type add_interface_static
+move: type_check_class_cast Type check_class_cast
+move: type_check_class_is_a Type check_class_is_a
+move: type_check_instance_cast Type check_instance_cast
+move: type_check_instance_is_a Type check_instance_is_a
+move: type_check_is_value_type Type check_is_value_type
+move: type_check_value Type check_value
+move: type_check_value_holds Type check_value_holds
+move: type_children Type children
+move: type_create_instance Type create_instance
+move: type_default_interface_peek Type default_interface_peek
+move: type_default_interface_ref Type default_interface_ref
+move: type_default_interface_unref Type default_interface_unref
+move: type_depth Type depth
+move: type_ensure Type ensure
+move: type_free_instance Type free_instance
+move: type_from_name Type from_name
+move: type_fundamental Type fundamental
+move: type_fundamental_next Type fundamental_next
+move: type_get_plugin Type get_plugin
+move: type_get_qdata Type get_qdata
+move: type_get_type_registration_serial Type get_type_registration_serial
+move: type_init Type init
+move: type_init_with_debug_flags Type init_with_debug_flags
+move: type_interfaces Type interfaces
+move: type_is_a Type is_a
+move: type_name Type name
+move: type_name_from_class Type name_from_class
+move: type_name_from_instance Type name_from_instance
+move: type_next_base Type next_base
+move: type_parent Type parent
+move: type_qname Type qname
+move: type_query Type query
+move: type_register_dynamic Type register_dynamic
+move: type_register_fundamental Type register_fundamental
+move: type_register_static Type register_static
+move: type_register_static_simple Type register_static_simple
+move: type_remove_class_cache_func Type remove_class_cache_func
+move: type_remove_interface_check Type remove_interface_check
+move: type_set_qdata Type set_qdata
+move: type_test_flags Type test_flags
+move: type_value_table_peek Type value_table_peek

@@ -31,6 +31,7 @@ import utils.IndentedStringBuilder;
 import utils.GtkPackage;
 import utils.GtkStruct;
 import utils.GtkFunction;
+import utils.GtkType;
 import utils.WrapError;
 
 void main()
@@ -189,10 +190,16 @@ class GtkWrapper
 						currentStruct = pack.collectedStructs.get(defReader.value, createClass(pack, defReader.value));
 					break;
 				case "class":
+					if ( currentStruct is null )
+						currentStruct = createClass(pack, defReader.value);
+
 					currentStruct.lookupClass = true;
 					currentStruct.name = defReader.value;
 					break;
 				case "interface":
+					if ( currentStruct is null )
+						currentStruct = createClass(pack, defReader.value);
+
 					currentStruct.lookupInterface = true;
 					currentStruct.name = defReader.value;
 					break;
@@ -298,6 +305,11 @@ class GtkWrapper
 					else
 					{
 						GtkParam param = findParam(currentStruct, vals[0], vals[1]);
+						GtkType elementType = new GtkType(this);
+
+						elementType.name = param.type.name;
+						elementType.cType = param.type.cType[0..$-1];
+						param.type.elementType = elementType;
 
 						if ( vals.length < 3 )
 						{
