@@ -41,13 +41,10 @@ class GtkPackage
 	GtkWrapper wrapper;
 	
 	string[] publicImports;
-	string[] lookupTypedefs;    /// Typedefs defined in the lookupfile.
 	string[] lookupAliases;     /// Aliases defined in the lookupfile.
 	string[] lookupEnums;       /// Enums defined in the lookupfile.
 	string[] lookupStructs;     /// Structs defined in the lookupfile.
-	string[] lookupTypes;       /// Types defined in the lookupfile.
 	string[] lookupFuncts;      /// Functions defined in the lookupfile.
-	string[] lookupUnions;      /// Unions defined in the lookupfile.
 	string[] lookupConstants;   /// Constants defined in the lookupfile.
 
 	string[] collectedAliases;  /// Aliases defined in the gir file.
@@ -259,14 +256,17 @@ class GtkPackage
 
 		buff ~= "module "~ wrapper.bindDir ~"."~ name ~"types;\n\n";
 
+		buff ~= indenter.format(lookupAliases);
 		buff ~= indenter.format(collectedAliases);
 
+		buff ~= indenter.format(lookupEnums);
 		foreach ( e; collectedEnums )
 		{
 			buff ~= "\n";
 			buff ~= indenter.format(e.getEnumDeclaration());
 		}
 
+		buff ~= indenter.format(lookupStructs);
 		foreach ( s; collectedStructs )
 		{
 			if ( s.noExternal )
@@ -276,12 +276,14 @@ class GtkPackage
 			buff ~= indenter.format(s.getStructDeclaration());
 		}
 
+		buff ~= indenter.format(lookupFuncts);
 		foreach ( f; collectedCallbacks )
 		{
 			buff ~= "\n";
 			buff ~= indenter.format(f.getCallbackDeclaration());
 		}
 
+		buff ~= indenter.format(lookupConstants);
 		if ( stockIDs.members !is null )
 		{
 			stockIDs.cName = "StockID";

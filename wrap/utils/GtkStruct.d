@@ -195,6 +195,10 @@ final class GtkStruct
 			field.gtkUnion = uni;
 			fields = [field];
 
+			//special case for "_Value__data__union"
+			if ( cType.empty )
+				cType = name;
+
 			type = GtkStructType.Record;
 		}
 	}

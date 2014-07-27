@@ -156,9 +156,6 @@ class GtkWrapper
 		{
 			switch ( defReader.key )
 			{
-				case "addTypedefs":
-					pack.lookupTypedefs ~= defReader.readBlock();
-					break;
 				case "addAliases":
 					pack.lookupAliases ~= defReader.readBlock();
 					break;
@@ -168,14 +165,8 @@ class GtkWrapper
 				case "addStructs":
 					pack.lookupStructs ~= defReader.readBlock();
 					break;
-				case "addTypes":
-					pack.lookupTypes ~= defReader.readBlock();
-					break;
 				case "addFuncts":
 					pack.lookupFuncts ~= defReader.readBlock();
-					break;
-				case "addUnions":
-					pack.lookupUnions ~= defReader.readBlock();
 					break;
 				case "addConstants":
 					pack.lookupConstants ~= defReader.readBlock();

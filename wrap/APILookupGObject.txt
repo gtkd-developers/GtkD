@@ -23,6 +23,35 @@
 wrap: gobject
 file: /usr/share/gir-1.0/GObject-2.0.gir
 
+addEnums: start
+
+	enum GType : size_t
+	{
+		INVALID = 0<<2,
+		NONE = 1<<2,
+		INTERFACE = 2<<2,
+		CHAR = 3<<2,
+		UCHAR = 4<<2,
+		BOOLEAN = 5<<2,
+		INT = 6<<2,
+		UINT = 7<<2,
+		LONG = 8<<2,
+		ULONG = 9<<2,
+		INT64 = 10<<2,
+		UINT64 = 11<<2,
+		ENUM = 12<<2,
+		FLAGS = 13<<2,
+		FLOAT = 14<<2,
+		DOUBLE = 15<<2,
+		STRING = 16<<2,
+		POINTER = 17<<2,
+		BOXED = 18<<2,
+		PARAM = 19<<2,
+		OBJECT = 20<<2,
+		VARIANT = 21<<2,
+	}
+addEnums: end
+
 struct: Object
 class: ObjectG
 merge: InitiallyUnowned
@@ -309,10 +338,96 @@ nocode: true
 struct: ParamSpecVariant
 nocode: true
 
+struct: Signals
+code: start
+	/** */
+	public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	{
+		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
+	}
+code: end
+
+struct: Type
+code: start
+	public static T* getInstanceClass(T)(ObjectG obj)
+	{
+		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
+	}
+
+	/**
+	 * Get the unique name that is assigned to the Objects type.
+	 * Returns: Static type name or NULL.
+	 */
+	public static string name(ObjectG obj)
+	{
+		GType type = (cast(GTypeInstance*)obj.getObjectGStruct()).gClass.gType;
+
+		return name(type);
+	}
+code: end
+
 struct:
 class: TypePlugin
 extend: Object
 implements: TypePlugin
+
+struct: Value
+code: start
+	/** */
+	public this()
+	{
+		this(new GValue);
+	}
+
+	/** */	
+	this(Pixbuf pixbuf)
+	{
+		this();
+		init(Pixbuf.getType());
+		setPointer( cast(void*)(pixbuf.getPixbufStruct()) );
+	}
+
+	/** */
+	this(string value)
+	{
+		this();
+		init(GType.STRING);
+		setString(value);
+	}
+
+	/** */
+	this(int value)
+	{
+		this();
+		init(GType.INT);
+		setInt(value);
+	}
+
+	/** */
+	this(float value)
+	{
+		this();
+		init(GType.FLOAT);
+		setFloat(value);
+	}
+
+	/** */
+	this(double value)
+	{
+		this();
+		init(GType.DOUBLE);
+		setDouble(value);
+	}
+code: end
+
+struct: WeakRef
+code: start
+	/** */
+	this(void* object)
+	{
+		g_weak_ref_init(gWeakRef, object);
+	}
+code: end
 
 #
 # Move functions defined as global into there respective classes
