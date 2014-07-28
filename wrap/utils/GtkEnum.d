@@ -26,7 +26,7 @@ import utils.GtkPackage;
 import utils.GtkWrapper;
 import utils.XML;
 
-struct GtkEnum
+final class GtkEnum
 {
 	string name;
 	string cName;
@@ -36,8 +36,6 @@ struct GtkEnum
 	GtkEnumMember[] members;
 	GtkWrapper wrapper;
 	GtkPackage pack;
-
-	@disable this();
 
 	this(GtkWrapper wrapper, GtkPackage pack)
 	{

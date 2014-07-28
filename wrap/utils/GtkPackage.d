@@ -26,6 +26,7 @@ import std.string : splitLines, strip, split;
 import std.uni;
 import std.stdio;
 
+import utils.GtkAlias;
 import utils.GtkEnum;
 import utils.GtkFunction;
 import utils.GtkStruct;
@@ -47,8 +48,8 @@ class GtkPackage
 	string[] lookupFuncts;      /// Functions defined in the lookupfile.
 	string[] lookupConstants;   /// Constants defined in the lookupfile.
 
-	string[] collectedAliases;  /// Aliases defined in the gir file.
-	GtkEnum[] collectedEnums;   /// Enums defined in the gir file.
+	Map!(string, GtkAlias)    collectedAliases; /// Aliases defined in the gir file.
+	Map!(string, GtkEnum)     collectedEnums;   /// Enums defined in the gir file.
 	Map!(string, GtkStruct)   collectedStructs;
 	Map!(string, GtkFunction) collectedCallbacks;
 	Map!(string, GtkFunction) collectedFunctions;
@@ -58,7 +59,7 @@ class GtkPackage
 	{
 		this.name = pack;
 		this.wrapper = wrapper;
-		this.stockIDs = GtkEnum(wrapper, this);
+		this.stockIDs = new GtkEnum(wrapper, this);
 		
 		try
 		{
@@ -119,13 +120,15 @@ class GtkPackage
 			switch (reader.front.value)
 			{
 				case "alias":
-					parseAlias(reader);
+					GtkAlias gtkAlias = new GtkAlias(wrapper);
+					gtkAlias.parse(reader);
+					collectedAliases[gtkAlias.name] = gtkAlias;
 					break;
 				case "bitfield":
 				case "enumeration":
-					GtkEnum gtkEnum = GtkEnum(wrapper, this);
+					GtkEnum gtkEnum = new GtkEnum(wrapper, this);
 					gtkEnum.parse(reader);
-					collectedEnums ~= gtkEnum;
+					collectedEnums[gtkEnum.name] = gtkEnum;
 					break;
 				case "class":
 				case "interface":
@@ -154,53 +157,6 @@ class GtkPackage
 			}
 			reader.popFront();
 		}
-	}
-
-	void parseAlias(T)(XMLReader!T reader)
-	{
-		string base;
-		string indentifier = reader.front.attributes["c:type"];
-		reader.popFront();
-
-		collectedAliases ~= "";
-
-		while( !reader.empty && !reader.endTag("alias") )
-		{
-			if ( reader.front.type == XMLNodeType.EndTag )
-			{
-				reader.popFront();
-				continue;
-			}
-
-			switch(reader.front.value)
-			{
-				case "type":
-					base = reader.front.attributes["c:type"];
-					break;
-				case "doc":
-					if ( !wrapper.includeComments )
-					{
-						reader.skipTag();
-						break;
-					}
-
-					reader.popFront();
-
-					collectedAliases ~= "/**";
-					foreach ( line; reader.front.value.splitLines() )
-						collectedAliases ~= " * "~ line;
-					collectedAliases ~= " */";
-
-					reader.popFront();
-					break;
-				default:
-					assert(false, "Unexpected tag: "~ reader.front.value);
-			}
-
-			reader.popFront();
-		}
-
-		collectedAliases ~= "public alias "~ tokenToGtkD(base, wrapper.aliasses) ~" "~ tokenToGtkD(indentifier, wrapper.aliasses) ~";";
 	}
 
 	void parseConstant(T)(XMLReader!T reader)
@@ -257,7 +213,11 @@ class GtkPackage
 		buff ~= "module "~ wrapper.bindDir ~"."~ name ~"types;\n\n";
 
 		buff ~= indenter.format(lookupAliases);
-		buff ~= indenter.format(collectedAliases);
+		foreach ( a; collectedAliases )
+		{
+			buff ~= "\n";
+			buff ~= indenter.format(a.getAliasDeclaration());
+		}
 
 		buff ~= indenter.format(lookupEnums);
 		foreach ( e; collectedEnums )

@@ -93,6 +93,7 @@ public class DefReader
 			if ( startsWith(lines.front.strip(), key) )
 			{
 				lines.popFront();
+				lineNumber++;
 				return block;
 			}
 			

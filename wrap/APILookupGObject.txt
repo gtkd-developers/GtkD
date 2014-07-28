@@ -23,8 +23,12 @@
 wrap: gobject
 file: /usr/share/gir-1.0/GObject-2.0.gir
 
+noAlias: Type
 addEnums: start
 
+	/**
+	 * A value which represents the unique identifier of a registered type.
+	 */
 	enum GType : size_t
 	{
 		INVALID = 0<<2,
@@ -55,7 +59,7 @@ addEnums: end
 struct: Object
 class: ObjectG
 merge: InitiallyUnowned
-nosignal: notify
+noSignal: notify
 
 code: start
 	protected bool isGcRoot;
@@ -270,73 +274,73 @@ struct: ObjectClass
 merge: InitiallyUnownedClass
 
 struct: ParamSpecBoolean
-nocode: true
+noCode: true
 
 struct: ParamSpecBoxed
-nocode: true
+noCode: true
 
 struct: ParamSpecChar
-nocode: true
+noCode: true
 
 struct: ParamSpecDouble
-nocode: true
+noCode: true
 
 struct: ParamSpecEnum
-nocode: true
+noCode: true
 
 struct: ParamSpecFlags
-nocode: true
+noCode: true
 
 struct: ParamSpecFloat
-nocode: true
+noCode: true
 
 struct: ParamSpecGType
-nocode: true
+noCode: true
 
 struct: ParamSpecInt
-nocode: true
+noCode: true
 
 struct: ParamSpecInt64
-nocode: true
+noCode: true
 
 struct: ParamSpecLong
-nocode: true
+noCode: true
 
 struct: ParamSpecObject
-nocode: true
+noCode: true
 
 struct: ParamSpecOverride
-nocode: true
+noCode: true
 
 struct: ParamSpecParam
-nocode: true
+noCode: true
 
 struct: ParamSpecPointer
-nocode: true
+noCode: true
 
 struct: ParamSpecString
-nocode: true
+noCode: true
 
 struct: ParamSpecUChar
-nocode: true
+noCode: true
 
 struct: ParamSpecUInt
-nocode: true
+noCode: true
 
 struct: ParamSpecUInt64
-nocode: true
+noCode: true
 
 struct: ParamSpecULong
-nocode: true
+noCode: true
 
 struct: ParamSpecUnichar
-nocode: true
+noCode: true
 
 struct: ParamSpecValueArray
-nocode: true
+noCode: true
 
 struct: ParamSpecVariant
-nocode: true
+noCode: true
 
 struct: Signals
 code: start

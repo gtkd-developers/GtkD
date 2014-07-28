@@ -25,19 +25,8 @@ import utils.DefReader;
 
 class WrapError : Error
 {
-	string file;
-	uint line;
-	
 	this(DefReader defReader, string msg)
 	{
-		super(msg);
-		
-		this.file = defReader.filename;
-		this.line = defReader.lineNumber;
-	}
-	
-	public override string toString()
-	{
-		return format("%s(%s): %s", file, line, msg);
+		super(msg, defReader.filename, defReader.lineNumber);
 	}
 }

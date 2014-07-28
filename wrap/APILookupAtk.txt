@@ -24,7 +24,7 @@ wrap: atk
 file: /usr/share/gir-1.0/Atk-1.0.gir
 
 struct: Attribute
-nocode: true
+noCode: true
 
 struct: Implementor
 interface: Implementor

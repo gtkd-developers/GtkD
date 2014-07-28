@@ -246,7 +246,13 @@ class GtkWrapper
 				case "override":
 					currentStruct.functions[defReader.value].lookupOverride = true;
 					break;
-				case "nocode":
+				case "noAlias":
+					pack.collectedAliases.remove(defReader.value);
+					break;
+				case "noEnum":
+					pack.collectedEnums.remove(defReader.value);
+					break;
+				case "noCode":
 					if ( defReader.valueBool )
 					{
 						currentStruct.noCode = true;
@@ -254,11 +260,11 @@ class GtkWrapper
 					}
 					currentStruct.functions[defReader.value].noCode = true;
 					break;
-				case "nosignal":
+				case "noSignal":
 					currentStruct.functions[defReader.value~"-signal"].noCode = true;
 					break;
-				case "nostruct":
-					packages.remove(defReader.value);
+				case "noStruct":
+					pack.collectedStructs.remove(defReader.value);
 					break;
 				case "code":
 					currentStruct.lookupCode ~= defReader.readBlock;
