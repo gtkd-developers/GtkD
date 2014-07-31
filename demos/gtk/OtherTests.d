@@ -123,7 +123,7 @@ public class OtherTests : Window
 		return false;
 	}
 
-	string toString()
+	override string toString()
 	{
 		return "I Am HelloWorld";
 	}
