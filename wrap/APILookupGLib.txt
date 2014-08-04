@@ -25,3 +25,131 @@ file: /usr/share/gir-1.0/GLib-2.0.gir
 
 struct: List
 class: ListG
+
+struct: SList
+class: ListSG
+
+move: ascii_digit_value Str
+move: ascii_formatd Str
+move: ascii_strcasecmp Str
+move: ascii_strdown Str
+move: ascii_strncasecmp Str
+move: ascii_strtod Str
+move: ascii_strtoll Str
+move: ascii_strtoull Str
+move: ascii_strup Str
+move: ascii_tolower Str
+move: ascii_toupper Str
+move: ascii_xdigit_value Str
+
+move: atomic_int_add Atomic int_add
+move: atomic_int_and Atomic int_and
+move: atomic_int_compare_and_exchange Atomic int_compare_and_exchange
+move: atomic_int_dec_and_test Atomic int_dec_and_test
+move: atomic_int_exchange_and_add Atomic int_exchange_and_add
+move: atomic_int_get Atomic int_get
+move: atomic_int_inc Atomic int_inc
+move: atomic_int_or Atomic int_or
+move: atomic_int_set Atomic int_set
+move: atomic_int_xor Atomic int_xor
+move: atomic_pointer_add Atomic pointer_add
+move: atomic_pointer_and Atomic pointer_and
+move: atomic_pointer_compare_and_exchange Atomic pointer_compare_and_exchange
+move: atomic_pointer_get Atomic pointer_get
+move: atomic_pointer_or Atomic pointer_or
+move: atomic_pointer_set Atomic pointer_set
+move: atomic_pointer_xor Atomic pointer_xor
+
+move: base64_decode Base64 decode
+move: base64_decode_inplace Base64 decode_inplace
+move: base64_decode_step Base64 decode_step
+move: base64_encode Base64 encode
+move: base64_encode_close Base64 encode_close
+move: base64_encode_step Base64 encode_step
+
+move: bit_lock Thread
+move: bit_trylock Thread
+move: bit_unlock Thread
+
+move: check_version Version
+
+move: child_watch_add Child
+move: child_watch_add_full Child
+move: child_watch_source_new Child
+
+move: clear_error Error
+
+move: clear_pointer Memory
+
+move: compute_checksum_for_bytes Checksum
+move: compute_checksum_for_data Checksum
+move: compute_checksum_for_string Checksum
+
+move: compute_hmac_for_data Hmac
+move: compute_hmac_for_string Hmac
+
+move: datalist_clear DataList clear
+move: datalist_foreach DataList foreach
+move: datalist_get_data DataList get_data
+move: datalist_get_flags DataList get_flags
+move: datalist_id_dup_data DataList id_dup_data
+move: datalist_id_get_data DataList id_get_data
+move: datalist_id_remove_no_notify DataList id_remove_no_notify
+move: datalist_id_replace_data DataList id_replace_data
+move: datalist_id_set_data_full DataList id_set_data_full
+move: datalist_init DataList init
+move: datalist_set_flags DataList set_flags
+move: datalist_unset_flags DataList unset_flags
+
+move: dataset_destroy DataSet destroy
+move: dataset_foreach DataSet foreach
+move: dataset_id_get_data DataSet id_get_data
+move: dataset_id_remove_no_notify DataSet id_remove_no_notify
+move: dataset_id_set_data_full DataSet id_set_data_full
+
+move: dcgettext Internationalization
+move: dgettext Internationalization
+move: dngettext Internationalization
+move: dpgettext Internationalization
+move: dpgettext2 Internationalization
+
+move: direct_equal HashTable
+move: direct_hash HashTable
+move: double_equal HashTable
+move: double_hash HashTable
+
+move: atexit Util
+move: basename Util
+move: bit_nth_lsf Util
+move: bit_nth_msf Util
+move: bit_storage Util
+move: build_filenamev Util
+move: build_path Util
+move: build_pathv Util
+move: environ_getenv Util
+move: environ_setenv Util
+move: environ_unsetenv Util
+
+move: access FileUtils
+move: chdir FileUtils
+move: close FileUtils
+move: file_error_from_errno FileUtils
+move: file_error_quark FileUtils
+move: file_get_contents FileUtils
+move: file_open_tmp FileUtils
+move: file_read_link FileUtils
+move: file_set_contents FileUtils
+move: file_test FileUtils
+
+move: convert CharacterSet
+move: convert_error_quark CharacterSet
+move: convert_with_fallback CharacterSet
+move: convert_with_iconv CharacterSet
+move: filename_display_basename CharacterSet
+move: filename_display_name CharacterSet
+
+move: filename_from_uri URI
+move: 
+move: 
+move: 
+move: 
