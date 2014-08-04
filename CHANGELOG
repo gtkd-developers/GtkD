@@ -1,0 +1,22 @@
+GtkD ChangeLog
+==============
+
+Release: 2.4.0
+--------------
+- Calling unsupported functions now throws an Error.
+- Add a Scoped overload for addOnDraw.
+    Since the GC can keep a lot of Contexts alive before a collection cycle
+    starts, some memory and GDI/X11 handles arn't released when no longer
+    needed.
+    The Scoped overload destroys the Context at the end of the call
+    releasing there resources.
+- Avoid DLL issues on Windows.
+    GtkD now searches for the correct copy of Gtk+.
+- Add a toArray function to glib.ListG and glib.ListSG.
+- Add VTE binding, provided by Deadalnix.
+- Remove D1 support.
+    There are a few reasons to do this:
+    1. All three compilers have discontinued there D1 version.
+    2. GtkD with D1 + Tango has been broken for a year now, without any complain
+    3. I hope to better support D2 features like const, imutable, nothrow, pure.
+- bug fixes.
