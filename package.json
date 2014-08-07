@@ -16,11 +16,11 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:gtkd": "~master",
-        "gtk-d:gtkdgl": "~master",
-        "gtk-d:sv": "~master",
-        "gtk-d:gstreamer": "~master",
-        "gtk-d:vte": "~master"
+        "gtk-d:gtkd": "==2.4.0",
+        "gtk-d:gtkdgl": "==2.4.0",
+        "gtk-d:sv": "==2.4.0",
+        "gtk-d:gstreamer": "==2.4.0",
+        "gtk-d:vte": "==2.4.0"
     },
 
     "subPackages" : [
