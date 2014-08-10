@@ -29,18 +29,11 @@ class: ListG
 struct: SList
 class: ListSG
 
-move: ascii_digit_value Str
-move: ascii_formatd Str
-move: ascii_strcasecmp Str
-move: ascii_strdown Str
-move: ascii_strncasecmp Str
-move: ascii_strtod Str
-move: ascii_strtoll Str
-move: ascii_strtoull Str
-move: ascii_strup Str
-move: ascii_tolower Str
-move: ascii_toupper Str
-move: ascii_xdigit_value Str
+struct: MarkupParseContext
+class: SimpleXML
+
+struct: PatternSpec
+class: Pattern
 
 move: atomic_int_add Atomic int_add
 move: atomic_int_and Atomic int_and
@@ -67,19 +60,11 @@ move: base64_encode Base64 encode
 move: base64_encode_close Base64 encode_close
 move: base64_encode_step Base64 encode_step
 
-move: bit_lock Thread
-move: bit_trylock Thread
-move: bit_unlock Thread
-
 move: check_version Version
 
 move: child_watch_add Child
 move: child_watch_add_full Child
 move: child_watch_source_new Child
-
-move: clear_error Error
-
-move: clear_pointer Memory
 
 move: compute_checksum_for_bytes Checksum
 move: compute_checksum_for_data Checksum
@@ -112,23 +97,13 @@ move: dgettext Internationalization
 move: dngettext Internationalization
 move: dpgettext Internationalization
 move: dpgettext2 Internationalization
+move: get_language_names Internationalization
+move: get_locale_variants Internationalization
 
 move: direct_equal HashTable
 move: direct_hash HashTable
 move: double_equal HashTable
 move: double_hash HashTable
-
-move: atexit Util
-move: basename Util
-move: bit_nth_lsf Util
-move: bit_nth_msf Util
-move: bit_storage Util
-move: build_filenamev Util
-move: build_path Util
-move: build_pathv Util
-move: environ_getenv Util
-move: environ_setenv Util
-move: environ_unsetenv Util
 
 move: access FileUtils
 move: chdir FileUtils
@@ -141,15 +116,244 @@ move: file_read_link FileUtils
 move: file_set_contents FileUtils
 move: file_test FileUtils
 
+move: filename_from_uri URI
+move: filename_to_uri URI
+
+move: get_current_time TimeVal
+move: get_monotonic_time TimeVal
+move: get_real_time TimeVal
+
+move: atexit Util
+move: basename Util
+move: bit_nth_lsf Util
+move: bit_nth_msf Util
+move: bit_storage Util
+move: build_filenamev Util
+move: build_path Util
+move: build_pathv Util
+move: environ_getenv Util
+move: environ_setenv Util
+move: environ_unsetenv Util
+move: find_program_in_path Util
+move: format_size Util
+move: format_size_for_display Util
+move: format_size_full Util
+move: get_application_name Util
+move: get_environ Util
+move: get_home_dir Util
+move: get_host_name Util
+move: get_prgname Util
+move: get_real_name Util
+move: get_system_config_dirs Util
+move: get_system_data_dirs Util
+move: get_tmp_dir Util
+move: get_user_cache_dir Util
+move: get_user_config_dir Util
+move: get_user_data_dir Util
+move: get_user_name Util
+move: get_user_runtime_dir Util
+move: get_user_special_dir Util
+move: getenv Util
+move: listenv Util
+
+move: hostname_is_ascii_encoded Hostname is_ascii_encoded
+move: hostname_is_ip_address Hostname is_ip_address
+move: hostname_is_non_ascii Hostname is_non_ascii
+move: hostname_to_ascii HostName to_ascii
+move: hostname_to_unicode Hostname to_unicode
+
+move: idle_add Idle add
+move: idle_add_full Idle add_full
+move: idle_remove_by_data Idle remove_by_data
+move: idle_source_new Idle source_new
+
+move: direct_equal HashTable
+move: direct_hash HashTable
+move: double_equal HashTable
+move: double_hash HashTable
+move: int64_equal HashTable
+move: int64_hash HashTable
+move: int_equal HashTable
+move: int_hash HashTable
+
+move: io_add_watch IOChannel
+move: io_add_watch_full IOChannel
+move: io_create_watch IOChannel
+
 move: convert CharacterSet
 move: convert_error_quark CharacterSet
 move: convert_with_fallback CharacterSet
 move: convert_with_iconv CharacterSet
 move: filename_display_basename CharacterSet
 move: filename_display_name CharacterSet
+move: filename_to_utf8 CharacterSet
+move: get_charset CharacterSet
+move: get_codeset CharacterSet
+move: get_filename_charsets CharacterSet
+move: iconv CharacterSet
+move: locale_from_utf8 CharacterSet
+move: locale_to_utf8 CharacterSet
 
-move: filename_from_uri URI
-move: 
-move: 
-move: 
-move: 
+move: log MessageLog
+move: log_default_handler MessageLog
+move: log_remove_handler MessageLog
+move: log_set_always_fatal MessageLog
+move: log_set_default_handler MessageLog
+move: log_set_fatal_mask MessageLog
+move: log_set_handler MessageLog
+move: logv MessageLog
+
+move: markup_collect_attributes MarkupParseContext
+move: markup_error_quark MarkupParseContext
+move: markup_escape_text MarkupParseContext
+move: markup_printf_escaped MarkupParseContext
+move: markup_vprintf_escaped MarkupParseContext
+
+move: option_error_quark OptionContext
+
+move: pattern_match PatternSpec
+move: pattern_match_simple PatternSpec
+move: pattern_match_string PatternSpec
+
+move: bit_lock Thread
+move: bit_trylock Thread
+move: bit_unlock Thread
+move: get_num_processors Thread
+move: pointer_bit_lock Thread
+move: pointer_bit_trylock Thread
+move: pointer_bit_unlock Thread
+
+move: main_current_source MainLoop
+move: main_depth MainLoop
+move: poll MainLoop
+
+move: ascii_digit_value Str
+move: ascii_formatd Str
+move: ascii_strcasecmp Str
+move: ascii_strdown Str
+move: ascii_strncasecmp Str
+move: ascii_strtod Str
+move: ascii_strtoll Str
+move: ascii_strtoull Str
+move: ascii_strup Str
+move: ascii_tolower Str
+move: ascii_toupper Str
+move: ascii_xdigit_value Str
+move: fprintf Str
+move: printf Str
+move: printf_string_upper_bound Str
+
+move: intern_static_string Quark
+move: intern_string Quark
+move: quark_from_static_string Quark
+move: quark_from_string Quark
+move: quark_to_string Quark
+move: quark_try_string Quark
+
+move: random_double Rand
+move: random_double_range Rand
+move: random_int Rand
+move: random_int_range Rand
+move: random_set_seed Rand
+
+move: clear_pointer Memory
+move: free Memory
+move: malloc Memory
+move: malloc0 Memory
+move: malloc0_n Memory
+move: malloc_n Memory
+move: mem_is_system_malloc Memory
+move: mem_profile Memory
+move: mem_set_vtable Memory
+move: memdup Memory
+move: realloc Memory
+move: realloc_n Memory
+
+move: access FileUtils
+move: chdir FileUtils
+move: close FileUtils
+move: file_error_from_errno FileUtils
+move: file_error_quark FileUtils
+move: file_get_contents FileUtils
+move: file_open_tmp FileUtils
+move: file_read_link FileUtils
+move: file_set_contents FileUtils
+move: file_test FileUtils
+move: mkdir_with_parents FileUtils
+move: mkdtemp FileUtils
+move: mkdtemp_full FileUtils
+move: mkstemp FileUtils
+move: mkstemp_full FileUtils
+move: rmdir FileUtils
+
+move: clear_error Error
+move: prefix_error Error
+move: propagate_error Error
+move: propagate_prefixed_error Error
+move: set_error Error
+move: set_error_literal Error
+
+move: atexit Util
+move: basename Util
+move: bit_nth_lsf Util
+move: bit_nth_msf Util
+move: bit_storage Util
+move: build_filenamev Util
+move: build_path Util
+move: build_pathv Util
+move: environ_getenv Util
+move: environ_setenv Util
+move: environ_unsetenv Util
+move: find_program_in_path Util
+move: format_size Util
+move: format_size_for_display Util
+move: format_size_full Util
+move: get_application_name Util
+move: get_environ Util
+move: get_home_dir Util
+move: get_host_name Util
+move: get_prgname Util
+move: get_real_name Util
+move: get_system_config_dirs Util
+move: get_system_data_dirs Util
+move: get_tmp_dir Util
+move: get_user_cache_dir Util
+move: get_user_config_dir Util
+move: get_user_data_dir Util
+move: get_user_name Util
+move: get_user_runtime_dir Util
+move: get_user_special_dir Util
+move: getenv Util
+move: listenv Util
+move: nullify_pointer Util
+move: parse_debug_string Util
+move: path_get_basename Util
+move: path_get_dirname Util
+move: path_is_absolute Util
+move: path_skip_root Util
+move: qsort_with_data Util
+move: reload_user_special_dirs_cache Util
+move: set_application_name Util
+move: set_prgname Util
+move: setenv Util
+
+move: on_error_query Messages
+move: on_error_stack_trace Messages
+move: print Messages
+move: printerr Messages
+move: set_print_handler Messages
+move: set_printerr_handler Messages
+
+move: shell_error_quark ShellUtils
+move: shell_parse_argv ShellUtils
+move: shell_quote ShellUtils
+move: shell_unquote ShellUtils
+
+move: slice_alloc MemorySlice
+move: slice_alloc0 MemorySlice
+move: slice_copy MemorySlice
+move: slice_free1 MemorySlice
+move: slice_free_chain_with_offset MemorySlice
+move: slice_get_config MemorySlice
+move: slice_get_config_state MemorySlice
+move: slice_set_config MemorySlice
