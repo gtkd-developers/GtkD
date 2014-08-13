@@ -99,6 +99,7 @@ move: dpgettext Internationalization
 move: dpgettext2 Internationalization
 move: get_language_names Internationalization
 move: get_locale_variants Internationalization
+move: strip_context Internationalization
 
 move: direct_equal HashTable
 move: direct_hash HashTable
@@ -116,12 +117,10 @@ move: file_read_link FileUtils
 move: file_set_contents FileUtils
 move: file_test FileUtils
 
-move: filename_from_uri URI
-move: filename_to_uri URI
-
 move: get_current_time TimeVal
 move: get_monotonic_time TimeVal
 move: get_real_time TimeVal
+move: usleep TimeVal
 
 move: atexit Util
 move: basename Util
@@ -166,15 +165,6 @@ move: idle_add Idle add
 move: idle_add_full Idle add_full
 move: idle_remove_by_data Idle remove_by_data
 move: idle_source_new Idle source_new
-
-move: direct_equal HashTable
-move: direct_hash HashTable
-move: double_equal HashTable
-move: double_hash HashTable
-move: int64_equal HashTable
-move: int64_hash HashTable
-move: int_equal HashTable
-move: int_hash HashTable
 
 move: io_add_watch IOChannel
 move: io_add_watch_full IOChannel
@@ -227,22 +217,6 @@ move: main_current_source MainLoop
 move: main_depth MainLoop
 move: poll MainLoop
 
-move: ascii_digit_value Str
-move: ascii_formatd Str
-move: ascii_strcasecmp Str
-move: ascii_strdown Str
-move: ascii_strncasecmp Str
-move: ascii_strtod Str
-move: ascii_strtoll Str
-move: ascii_strtoull Str
-move: ascii_strup Str
-move: ascii_tolower Str
-move: ascii_toupper Str
-move: ascii_xdigit_value Str
-move: fprintf Str
-move: printf Str
-move: printf_string_upper_bound Str
-
 move: intern_static_string Quark
 move: intern_string Quark
 move: quark_from_static_string Quark
@@ -256,6 +230,66 @@ move: random_int Rand
 move: random_int_range Rand
 move: random_set_seed Rand
 
+move: clear_error Error
+move: prefix_error Error
+move: propagate_error Error
+move: propagate_prefixed_error Error
+move: set_error Error
+move: set_error_literal Error
+
+move: on_error_query Messages
+move: on_error_stack_trace Messages
+move: print Messages
+move: printerr Messages
+move: set_print_handler Messages
+move: set_printerr_handler Messages
+
+move: shell_error_quark ShellUtils
+move: shell_parse_argv ShellUtils
+move: shell_quote ShellUtils
+move: shell_unquote ShellUtils
+
+move: slice_alloc MemorySlice
+move: slice_alloc0 MemorySlice
+move: slice_copy MemorySlice
+move: slice_free1 MemorySlice
+move: slice_free_chain_with_offset MemorySlice
+move: slice_get_config MemorySlice
+move: slice_get_config_state MemorySlice
+move: slice_set_config MemorySlice
+
+move: spawn_async Spawn
+move: spawn_async_with_pipes Spawn
+move: spawn_check_exit_status Spawn
+move: spawn_close_pid Spawn
+move: spawn_command_line_async Spawn
+move: spawn_command_line_sync Spawn
+move: spawn_error_quark Spawn
+move: spawn_exit_error_quark Spawn
+move: spawn_sync Spawn
+
+move: direct_equal HashTable
+move: direct_hash HashTable
+move: double_equal HashTable
+move: double_hash HashTable
+move: int64_equal HashTable
+move: int64_hash HashTable
+move: int_equal HashTable
+move: int_hash HashTable
+move: str_equal HashTable
+move: str_hash HashTable
+
+move: string_new String
+move: string_new_len String
+move: string_sized_new String
+
+move: timeout_add Timeout add
+move: timeout_add_full Timeout add_full
+move: timeout_add_seconds Timeout add_seconds
+move: timeout_add_seconds_full Timeout add_seconds_full
+move: timeout_source_new Timeout source_new
+move: timeout_source_new_seconds Timeout source_new_seconds
+
 move: clear_pointer Memory
 move: free Memory
 move: malloc Memory
@@ -268,6 +302,87 @@ move: mem_set_vtable Memory
 move: memdup Memory
 move: realloc Memory
 move: realloc_n Memory
+move: try_malloc Memory
+move: try_malloc0 Memory
+move: try_malloc0_n Memory
+move: try_malloc_n Memory
+move: try_realloc Memory
+move: try_realloc_n Memory
+
+move: ucs4_to_utf16 Unicode
+move: ucs4_to_utf8 Unicode
+move: unichar_break_type Unicode
+move: unichar_combining_class Unicode
+move: unichar_compose Unicode
+move: unichar_decompose Unicode
+move: unichar_digit_value Unicode
+move: unichar_fully_decompose Unicode
+move: unichar_get_mirror_char Unicode
+move: unichar_get_script Unicode
+move: unichar_isalnum Unicode
+move: unichar_isalpha Unicode
+move: unichar_iscntrl Unicode
+move: unichar_isdefined Unicode
+move: unichar_isdigit Unicode
+move: unichar_isgraph Unicode
+move: unichar_islower Unicode
+move: unichar_ismark Unicode
+move: unichar_isprint Unicode
+move: unichar_ispunct Unicode
+move: unichar_isspace Unicode
+move: unichar_istitle Unicode
+move: unichar_isupper Unicode
+move: unichar_iswide Unicode
+move: unichar_iswide_cjk Unicode
+move: unichar_isxdigit Unicode
+move: unichar_iszerowidth Unicode
+move: unichar_to_utf8 Unicode
+move: unichar_tolower Unicode
+move: unichar_totitle Unicode
+move: unichar_toupper Unicode
+move: unichar_type Unicode
+move: unichar_validate Unicode
+move: unichar_xdigit_value Unicode
+move: unicode_canonical_decomposition Unicode
+move: unicode_canonical_ordering Unicode
+move: unicode_script_from_iso15924 Unicode
+move: unicode_script_to_iso15924 Unicode
+move: utf16_to_ucs4 Unicode
+move: utf16_to_utf8 Unicode
+move: utf8_casefold Unicode
+move: utf8_collate Unicode
+move: utf8_collate_key Unicode
+move: utf8_collate_key_for_filename Unicode
+move: utf8_find_next_char Unicode
+move: utf8_find_prev_char Unicode
+move: utf8_get_char Unicode
+move: utf8_get_char_validated Unicode
+move: utf8_normalize Unicode
+move: utf8_offset_to_pointer Unicode
+move: utf8_pointer_to_offset Unicode
+move: utf8_prev_char Unicode
+move: utf8_strchr Unicode
+move: utf8_strdown Unicode
+move: utf8_strlen Unicode
+move: utf8_strncpy Unicode
+move: utf8_strrchr Unicode
+move: utf8_strreverse Unicode
+move: utf8_strup Unicode
+move: utf8_substring Unicode
+move: utf8_to_ucs4 Unicode
+move: utf8_to_ucs4_fast Unicode
+move: utf8_to_utf16 Unicode
+move: utf8_validate Unicode
+
+move: unix_error_quark UnixUtils error_quark
+move: unix_fd_add UnixUtils fd_add
+move: unix_fd_add_full UnixUtils fd_add_full
+move: unix_fd_source_new UnixUtils fd_source_new
+move: unix_open_pipe UnixUtils open_pipe
+move: unix_set_fd_nonblocking UnixUtils set_fd_nonblocking
+move: unix_signal_add UnixUtils signal_add
+move: unix_signal_add_full UnixUtils signal_add_full
+move: unix_signal_source_new UnixUtils signal_source_new
 
 move: access FileUtils
 move: chdir FileUtils
@@ -285,13 +400,7 @@ move: mkdtemp_full FileUtils
 move: mkstemp FileUtils
 move: mkstemp_full FileUtils
 move: rmdir FileUtils
-
-move: clear_error Error
-move: prefix_error Error
-move: propagate_error Error
-move: propagate_prefixed_error Error
-move: set_error Error
-move: set_error_literal Error
+move: unlink FileUtils
 
 move: atexit Util
 move: basename Util
@@ -336,24 +445,77 @@ move: reload_user_special_dirs_cache Util
 move: set_application_name Util
 move: set_prgname Util
 move: setenv Util
+move: spaced_primes_closest Util
+move: unsetenv Util
 
-move: on_error_query Messages
-move: on_error_stack_trace Messages
-move: print Messages
-move: printerr Messages
-move: set_print_handler Messages
-move: set_printerr_handler Messages
+move: filename_from_uri URI
+move: filename_to_uri URI
+move: uri_escape_string URI
+move: uri_list_extract_uris URI
+move: uri_parse_scheme URI
+move: uri_unescape_segment URI
+move: uri_unescape_string URI
 
-move: shell_error_quark ShellUtils
-move: shell_parse_argv ShellUtils
-move: shell_quote ShellUtils
-move: shell_unquote ShellUtils
-
-move: slice_alloc MemorySlice
-move: slice_alloc0 MemorySlice
-move: slice_copy MemorySlice
-move: slice_free1 MemorySlice
-move: slice_free_chain_with_offset MemorySlice
-move: slice_get_config MemorySlice
-move: slice_get_config_state MemorySlice
-move: slice_set_config MemorySlice
+move: ascii_digit_value Str
+move: ascii_formatd Str
+move: ascii_strcasecmp Str
+move: ascii_strdown Str
+move: ascii_strncasecmp Str
+move: ascii_strtod Str
+move: ascii_strtoll Str
+move: ascii_strtoull Str
+move: ascii_strup Str
+move: ascii_tolower Str
+move: ascii_toupper Str
+move: ascii_xdigit_value Str
+move: fprintf Str
+move: printf Str
+move: printf_string_upper_bound Str
+move: snprintf Str
+move: sprintf Str
+move: stpcpy Str
+move: str_has_prefix Str has_prefix
+move: str_has_suffix Str has_suffix
+move: str_is_ascii Str is_ascii
+move: str_match_string Str match_string
+move: str_to_ascii Str to_ascii
+move: str_tokenize_and_fold Str tokenize_and_fold
+move: strcanon Str
+move: strcasecmp Str
+move: strchomp Str
+move: strchug Str
+move: strcmp0 Str
+move: strcompress Str
+move: strconcat Str
+move: strdelimit Str
+move: strdown Str
+move: strdup Str
+move: strdup_printf Str
+move: strdup_vprintf Str
+move: strdupv Str
+move: strerror Str
+move: strescape Str
+move: strfreev Str
+move: strjoin Str
+move: strjoinv Str
+move: strlcat Str
+move: strlcpy Str
+move: strncasecmp Str
+move: strndup Str
+move: strnfill Str
+move: strreverse Str
+move: strrstr Str
+move: strrstr_len Str
+move: strsignal Str
+move: strsplit Str
+move: strsplit_set Str
+move: strstr_len Str
+move: strtod Str
+move: strup Str
+move: strv_get_type Str
+move: strv_length Str
+move: vasprintf Str
+move: vfprintf Str
+move: vprintf Str
+move: vsnprintf Str
+move: vsprintf Str
