@@ -66,6 +66,10 @@ final class GtkFunction
 	void parse(T)(XMLReader!T reader)
 	{
 		name = reader.front.attributes["name"];
+		// Special case for g_iconv wich doesnt have a name.
+		//if ( name.empty && "moved-to" in reader.front.attributes )
+		//	name = reader.front.attributes["moved-to"];
+
 		type = cast(GtkFunctionType)reader.front.value;
 
 		if ( "c:type" in reader.front.attributes )
@@ -249,7 +253,10 @@ final class GtkFunction
 		}
 		else
 		{
-			if ( type == GtkFunctionType.Function && !(!params.empty && isInstanceParam(params[0])) )
+			if ( type == GtkFunctionType.Function && !(!params.empty && isInstanceParam(params[0])) && !strct.noNamespace )
+				dec ~= "static ";
+
+			if ( type == GtkFunctionType.Method && strct.isNamespace() )
 				dec ~= "static ";
 
 			if ( strct.parentStruct && name in strct.parentStruct.functions )
@@ -259,7 +266,14 @@ final class GtkFunction
 			dec ~= tokenToGtkD(name, wrapper.aliasses) ~"(";
 		}
 
-		size_t i;
+		size_t paramCount;
+
+		if ( instanceParam && type == GtkFunctionType.Method && (strct.isNamespace() || strct.noNamespace ) )
+		{
+			dec ~= strct.cType ~" "~ tokenToGtkD(instanceParam.name, wrapper.aliasses);
+			paramCount++;
+		}
+
 		foreach( param; params )
 		{
 			if ( param.lengthFor )
@@ -268,10 +282,10 @@ final class GtkFunction
 			if ( returnType.length > -1 && param == params[returnType.length] )
 				continue;
 
-			if ( i == 0 && strct.type == GtkStructType.Record && isInstanceParam(param) )
+			if ( paramCount == 0 && strct.type == GtkStructType.Record && isInstanceParam(param) )
 				continue;
 
-			if ( i++ > 0 )
+			if ( paramCount++ > 0 )
 				dec ~= ", ";
 
 			if ( param.direction == GtkParamDirection.Out )
@@ -311,7 +325,9 @@ final class GtkFunction
 			else
 				dType = strct.pack.getStruct(params[0].type.name);
 
-			if ( dType.type == GtkStructType.Interface )
+			if ( strct.isNamespace() || strct.noNamespace )
+				gtkCall ~= tokenToGtkD(instanceParam.name, wrapper.aliasses);
+			else if ( dType.type == GtkStructType.Interface )
 				gtkCall ~= dType.getHandleFunc() ~"()";
 			else
 				gtkCall ~= dType.getHandleVar();
@@ -335,7 +351,7 @@ final class GtkFunction
 
 			if ( isStringType(param.type) )
 			{
-				if ( param.type.elementType )
+				if ( param.type.elementType && param.type.elementType.cType.endsWith("*") && !(param.direction != GtkParamDirection.Default && param.type.cType.among("char**", "gchar**")) )
 				{
 					// out string[], ref string[]
 					if ( param.direction != GtkParamDirection.Default )
@@ -354,13 +370,10 @@ final class GtkFunction
 						gtkCall ~= "&out"~ id;
 						outToD ~= id ~" = Str.toStringArray(out"~ id ~ len ~");";
 					}
-					// string, string[]
+					// string[]
 					else
 					{
-						if ( param.type.elementType.cType == "char" )
-							gtkCall ~= "Str.toStringz("~ id ~")";
-						else
-							gtkCall ~= "Str.toStringzArray("~ id ~")";
+						gtkCall ~= "Str.toStringzArray("~ id ~")";
 					}
 				}
 				else
@@ -601,8 +614,8 @@ final class GtkFunction
 
 			if ( !outToD.empty )
 			{
-				buff ~= "";
 				buff ~= outToD;
+				buff ~= "";
 			}
 
 			string len = lenId(returnType);
@@ -921,6 +934,10 @@ final class GtkFunction
 			if ( elmType == "char" || elmType == "const(char)" )
 				return "string";
 
+			// Some strings are defined with guint8 elements.
+			if ( type.cType.among("char*", "gchar*") || ( type.cType.among("char**", "gchar**") && direction != GtkParamDirection.Default ) )
+				return "string";
+
 			return elmType ~"["~ size ~"]";
 		}
 		else if ( !type.elementType && type.zeroTerminated )
@@ -933,7 +950,9 @@ final class GtkFunction
 				return "void";
 			else if ( type.name in strct.structWrap )
 				return strct.structWrap[type.name];
-			else if ( type.cType == "gchar*" || type.cType == "const(char)*" )
+			else if ( type.cType.among("char*", "gchar*", "const(char)*") )
+				return "string";
+			else if ( direction != GtkParamDirection.Default && type.cType.among("char**", "gchar**") )
 				return "string";
 			else if ( type.name == type.cType )
 				return stringToGtkD(type.name, wrapper.aliasses);

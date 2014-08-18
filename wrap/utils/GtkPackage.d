@@ -269,9 +269,9 @@ class GtkPackage
 			buff ~= "import gtkc.cairotypes;\n";
 
 		buff ~= "import gtkc.Loader;\n"
-			"import gtkc.paths;\n\n"
-			"shared static this()\n"
-			"{";
+			~ "import gtkc.paths;\n\n"
+			~ "shared static this()\n"
+			~ "{";
 
 		foreach ( strct; collectedStructs )
 		{
@@ -290,8 +290,8 @@ class GtkPackage
 		}
 
 		buff ~= "}\n\n"
-			"__gshared extern(C)\n"
-			"{\n";
+			~ "__gshared extern(C)\n"
+			~ "{\n";
 
 		foreach ( strct; collectedStructs )
 		{

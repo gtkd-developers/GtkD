@@ -229,6 +229,8 @@ class GtkWrapper
 					GtkStruct dest = pack.getStruct(vals[1]);
 					if ( dest is null )
 						dest = createClass(pack, vals[1]);
+					if ( vals[0] !in pack.collectedFunctions )
+						throw new WrapError(defReader, "unknown function "~ vals[0]);
 					pack.collectedFunctions[vals[0]].strct = dest;
 					dest.functions[newFuncName] = pack.collectedFunctions[vals[0]];
 					dest.functions[newFuncName].name = newFuncName;
@@ -258,6 +260,9 @@ class GtkWrapper
 						currentStruct.noCode = true;
 						break;
 					}
+					if ( defReader.value !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ defReader.value);
+
 					currentStruct.functions[defReader.value].noCode = true;
 					break;
 				case "noSignal":
@@ -274,15 +279,23 @@ class GtkWrapper
 					break;
 				case "out":
 					string[] vals = defReader.value.split();
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
 					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.Out;
 					break;
 				case "inout":
 				case "ref":
 					string[] vals = defReader.value.split();
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
 					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.InOut;
 					break;
 				case "array":
 					string[] vals = defReader.value.split();
+
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
+
 					GtkFunction func = currentStruct.functions[vals[0]];
 
 					if ( vals[1] == "Return" )

@@ -110,7 +110,7 @@ public class DefReader
 	 */
 	public @property bool valueBool()
 	{
-		return !find(" 1 ok OK Ok true TRUE True Y y yes YES Yes ", value).empty;
+		return !!value.among("1", "ok", "OK", "Ok", "true", "TRUE", "True", "Y", "y", "yes", "YES", "Yes");
 	}
 	
 	public @property bool empty()

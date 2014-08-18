@@ -73,7 +73,7 @@ final class GtkAlias
 
 	string[] getAliasDeclaration()
 	{
-		string buff[];
+		string[] buff;
 		if ( doc !is null && wrapper.includeComments )
 		{
 			buff ~= "/**";

@@ -77,7 +77,7 @@ final class GtkType
 		removeInitialyUnowned();
 
 		if ( cType is null && (name == "filename" || name == "utf8") )
-			cType = "gchar*"; 
+			cType = "gchar*";
 
 		if ( reader.front.type == XMLNodeType.EmptyTag )
 			return;
@@ -95,8 +95,8 @@ final class GtkType
 			reader.popFront();
 		}
 
-		if ( cType.length < elementType.cType.length && isArray() )
-				cType = elementType.cType;
+//		if ( cType.length < elementType.cType.length && isArray() )
+//				cType = elementType.cType;
 	}
 
 	bool isArray()

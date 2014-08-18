@@ -27,6 +27,7 @@ public class IndentedStringBuilder
 {
 	string tabs;
 	bool statement;
+	bool paramList;
 
 	this()
 	{
@@ -59,13 +60,18 @@ public class IndentedStringBuilder
 			return tabs ~" "~ line ~ "\n";
 		}
 
-		if ( endsWith(line, "}", "};") || startsWith(line, "}", "};") || line == "));" || line == "connectFlags);" )
+		if ( endsWith(line, "}", "};") || startsWith(line, "}", "};") || line == "));" || line == "connectFlags);" || (paramList && endsWith(line, ");", ")")) )
 		{
 			if ( !canFind(line, '{') && tabs.length > 0 )
 				tabs.length = tabs.length -1;
 
 			if ( line == "connectFlags);" )
 				statement = true;
+
+			if ( endsWith(line, ");") && !endsWith(line, "));") && line != ");" )
+				statement = true;
+
+			paramList = false;
 		}
 
 		if ( statement )
@@ -82,9 +88,14 @@ public class IndentedStringBuilder
 		{
 			statement = true;
 		}
-		else if ( (endsWith(line, '{') && !startsWith(line, "}")) || endsWith(line, "(") )
+		else if ( (endsWith(line, '{') && !startsWith(line, "}")) )
 		{
 			tabs ~= '\t';
+		}
+		else if ( endsWith(line, "(") )
+		{
+			tabs ~= '\t';
+			paramList = true;
 		}
 
 		return text;

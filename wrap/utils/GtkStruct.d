@@ -200,6 +200,12 @@ final class GtkStruct
 				cType = name;
 
 			type = GtkStructType.Record;
+
+			foreach ( funct; functions )
+			{
+				if ( funct.type != GtkFunctionType.Function )
+					type = GtkStructType.Class;
+			}
 		}
 	}
 
@@ -208,7 +214,7 @@ final class GtkStruct
 		if ( noExternal )
 			return null;
 
-		string buff[];
+		string[] buff;
 
 		if ( doc !is null && wrapper.includeComments && type == GtkStructType.Record )
 		{
@@ -245,7 +251,7 @@ final class GtkStruct
 		if ( noCode )
 			return;
 
-		if ( type == GtkStructType.Record && !(lookupClass || lookupInterface) && functions.empty )
+		if ( type == GtkStructType.Record && !(lookupClass || lookupInterface) && (functions.empty && lookupCode.empty ) )
 			return;
 
 		parentStruct = pack.getStruct(parent);
@@ -524,7 +530,7 @@ final class GtkStruct
 
 		foreach ( func; functions )
 		{
-			if ( func.noCode || func.isVariadic() || func.type != GtkFunctionType.Function )
+			if ( func.noCode || func.isVariadic() || !( func.type == GtkFunctionType.Function || func.type == GtkFunctionType.Method ) )
 				continue;
 
 			buff ~= "\n";
@@ -566,6 +572,11 @@ final class GtkStruct
 			return "get"~ cast(char)pack.name[0].toUpper ~ pack.name[1..$] ~ name ~"Struct";
 		else
 			return "get"~ name ~"Struct";
+	}
+
+	bool isNamespace()
+	{
+		return type == GtkStructType.Record && !(lookupClass || lookupInterface) && !noNamespace;
 	}
 
 	private void resolveImports()
@@ -849,10 +860,23 @@ final class GtkField
 				buff ~= " */";
 			}
 
-			string dType = tokenToGtkD(field.type.cType, wrapper.aliasses);
+			string dType;
 
-			if ( field.type.size != -1 )
+			if ( field.type.size == -1 )
+			{
+				dType = tokenToGtkD(field.type.cType, wrapper.aliasses);
+			}
+			else if ( field.type.elementType.cType.empty )
+			{
+				//Special case for GObject.Value.
+				dType = tokenToGtkD(field.type.elementType.name, wrapper.aliasses);
 				dType ~= "["~ to!string(field.type.size) ~"]";
+			}
+			else
+			{
+				dType = tokenToGtkD(field.type.elementType.cType, wrapper.aliasses);
+				dType ~= "["~ to!string(field.type.size) ~"]";
+			}
 
 			buff ~= dType ~" "~ tokenToGtkD(field.name, wrapper.aliasses) ~";";
 		}
@@ -914,7 +938,7 @@ final class GtkUnion
 
 	string[] getUnionDeclaration()
 	{
-		string buff[];
+		string[] buff;
 		if ( doc !is null && wrapper.includeComments )
 		{
 			buff ~= "/**";

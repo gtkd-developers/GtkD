@@ -93,7 +93,7 @@ final class GtkEnum
 
 	string[] getEnumDeclaration()
 	{
-		string buff[];
+		string[] buff;
 		if ( doc !is null && wrapper.includeComments )
 		{
 			buff ~= "/**";
@@ -179,7 +179,7 @@ struct GtkEnumMember
 
 	string[] getEnumMemberDeclaration()
 	{
-		string buff[];
+		string[] buff;
 		if ( doc !is null && wrapper.includeComments )
 		{
 			buff ~= "/**";
