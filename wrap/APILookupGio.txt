@@ -23,6 +23,100 @@
 wrap: gio
 file: /usr/share/gir-1.0/Gio-2.0.gir
 
+struct: PollableUtils
+namespace:
+
 struct: SimpleProxyResolver
 array: new ignore_hosts
 array: set_ignore_hosts ignore_hosts
+
+move: bus_get DBusConnection get
+move: bus_get_finish DBusConnection get_finish
+move: bus_get_sync DBusConnection get_sync
+
+move: bus_own_name DBusNames own_name
+move: bus_own_name_on_connection DBusNames own_name_on_connection
+move: bus_own_name_on_connection_with_closures DBusNames own_name_on_connection_with_closures
+move: bus_own_name_with_closures DBusNames own_name_with_closures
+move: bus_unown_name DBusNames unown_name
+move: bus_unwatch_name DBusNames unwatch_name
+move: bus_watch_name DBusNames watch_name
+move: bus_watch_name_on_connection DBusNames watch_name_on_connection
+move: bus_watch_name_on_connection_with_closures DBusNames watch_name_on_connection_with_closures
+
+move: content_type_can_be_executable ContentType can_be_executable
+move: content_type_equals ContentType equals
+move: content_type_from_mime_type ContentType from_mime_type
+move: content_type_get_description ContentType get_description
+move: content_type_get_generic_icon_name ContentType get_generic_icon_name
+move: content_type_get_icon ContentType get_icon
+move: content_type_get_mime_type ContentType get_mime_type
+move: content_type_get_symbolic_icon ContentType get_symbolic_icon
+move: content_type_guess ContentType type_guess
+move: content_type_guess_for_tree ContentType guess_for_tree
+move: content_type_is_a ContentType is_a
+move: content_type_is_unknown ContentType is_unknown
+move: content_types_get_registered ContentType
+
+move: dbus_address_escape_value DBusUtilities address_escape_value
+move: dbus_address_get_for_bus_sync DBusUtilities address_get_for_bus_sync
+move: dbus_address_get_stream DBusUtilities address_get_stream
+move: dbus_address_get_stream_finish DBusUtilities address_get_stream_finish
+move: dbus_address_get_stream_sync DBusUtilities address_get_stream_sync
+move: dbus_generate_guid DBusUtilities generate_guid
+move: dbus_gvalue_to_gvariant DBusUtilities gvalue_to_gvariant
+move: dbus_gvariant_to_gvalue DBusUtilities gvariant_to_gvalue
+move: dbus_is_address DBusUtilities is_address
+move: dbus_is_guid DBusUtilities is_guid
+move: dbus_is_interface_name DBusUtilities is_interface_name
+move: dbus_is_member_name DBusUtilities is_member_name
+move: dbus_is_name DBusUtilities is_name
+move: dbus_is_supported_address DBusUtilities is_supported_address
+move: dbus_is_unique_name DBusUtilities is_unique_name
+
+move: io_error_from_errno ErrorGIO
+move: io_error_quark ErrorGIO
+
+move: io_modules_load_all_in_directory IOModule load_all_in_directory
+move: io_modules_load_all_in_directory_with_scope IOModule load_all_in_directory_with_scope
+move: io_modules_scan_all_in_directory IOModule scan_all_in_directory
+move: io_modules_scan_all_in_directory_with_scope IOModule scan_all_in_directory_with_scope
+
+move: io_scheduler_cancel_all_jobs IOSchedulerJob cancel_all_jobs
+move: io_scheduler_push_job IOSchedulerJob push_job
+
+move: pollable_source_new PollableUtils
+move: pollable_source_new_full PollableUtils
+move: pollable_stream_read PollableUtils
+move: pollable_stream_write PollableUtils
+move: pollable_stream_write_all PollableUtils
+
+move: resources_enumerate_children Resource
+move: resources_get_info Resource
+move: resources_lookup_data Resource
+move: resources_open_stream Resource
+move: resources_register Resource
+move: resources_unregister Resource
+
+move: simple_async_report_error_in_idle SimpleAsyncResult
+move: simple_async_report_gerror_in_idle SimpleAsyncResult
+move: simple_async_report_take_gerror_in_idle SimpleAsyncResult
+
+move: unix_is_mount_path_system_internal UnixMountEntry is_mount_path_system_internal
+move: unix_mount_at UnixMountEntry at
+move: unix_mount_compare UnixMountEntry compare
+move: unix_mount_free UnixMountEntry free
+move: unix_mount_get_device_path UnixMountEntry get_device_path
+move: unix_mount_get_fs_type UnixMountEntry get_fs_type
+move: unix_mount_get_mount_path UnixMountEntry get_mount_path
+move: unix_mount_guess_can_eject UnixMountEntry guess_can_eject
+move: unix_mount_guess_icon UnixMountEntry guess_icon
+move: unix_mount_guess_name UnixMountEntry guess_name
+move: unix_mount_guess_should_display UnixMountEntry guess_should_display
+move: unix_mount_guess_symbolic_icon UnixMountEntry guess_symbolic_icon
+move: unix_mount_is_readonly UnixMountEntry is_readonly
+move: unix_mount_is_system_internal UnixMountEntry is_system_internal
+move: unix_mount_points_changed_since UnixMountEntry points_changed_since
+move: unix_mount_points_get UnixMountEntry mount_points_get
+move: unix_mounts_changed_since UnixMountEntry mounts_changed_since
+move: unix_mounts_get UnixMountEntry mounts_get
