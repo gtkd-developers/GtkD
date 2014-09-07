@@ -310,9 +310,18 @@ version(Windows)
 		import std.process;
 		import std.file;
 
+		string exePath = buildNormalizedPath(thisExePath().dirName(), "gtk", "bin");
+		string dllPath = buildNormalizedPath(exePath, "libgtk-3-0.dll");
+		
+		if ( exists(dllPath) )
+		{
+			if ( checkArchitecture(dllPath) )
+				return exePath;
+		}
+
 		foreach (path; splitter(environment.get("PATH"), ';'))
 		{
-			string dllPath = buildNormalizedPath(path, "libgtk-3-0.dll");
+			dllPath = buildNormalizedPath(path, "libgtk-3-0.dll");
 
 			if ( !exists(dllPath) )
 				continue;
