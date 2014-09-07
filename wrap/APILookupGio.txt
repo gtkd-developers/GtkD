@@ -1,15 +1,15 @@
 ﻿# This file is part of gtkD.
-# 
+#
 # gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2.1 of the License, or
 # (at your option) any later version.
-# 
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -23,12 +23,414 @@
 wrap: gio
 file: /usr/share/gir-1.0/Gio-2.0.gir
 
+struct:
+class: Action
+extend: GObject.Object
+implements: Action
+
+struct:
+class: AppInfo
+extend: GObject.Object
+implements: AppInfo
+
+struct:
+class: Converter
+extend: GObject.Object
+implements: Converter
+
+struct: DBusActionGroup
+code: start
+	/**
+	 * See_Also: get().
+	 */
+	this(DBusConnection connection, string busName, string objectPath)
+	{
+		auto p =  g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_action_group_get");
+		}
+		this(cast(GDBusActionGroup*) p);
+	}
+code: end
+
+struct: DBusAnnotationInfo
+noCode: lookup
+code: start
+	/**
+	 * Looks up the value of an annotation.
+	 *
+	 * The cost of this function is O(n) in number of annotations.
+	 *
+	 * Params:
+	 *     annotations = A %NULL-terminated array of annotations or %NULL.
+	 *     name = The name of the annotation to look up.
+	 *
+	 * Return: The value or %NULL if not found. Do not free, it is owned by @annotations.
+	 *
+	 * Since: 2.26
+	 */
+	public static string lookup(DBusAnnotationInfo[] annotations, string name)
+	{
+		GDBusAnnotationInfo*[] annotationsArray = new GDBusAnnotationInfo*[annotations.length+1];
+		for ( int i = 0; i < annotations.length ; i++ )
+		{
+			annotationsArray[i] = annotations[i].getDBusAnnotationInfoStruct();
+		}
+		annotationsArray[$-1] = null;
+
+		return Str.toString(g_dbus_annotation_info_lookup(annotationsArray.ptr, Str.toStringz(name)));
+	}
+code: end
+
+struct: DBusConnection
+noCode: new_finish
+noCode: new_for_address_finish
+code: start
+	/**
+	 * Finishes an operation started with g_dbus_connection_new().
+	 *
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *               passed to g_dbus_connection_new().
+	 *     address = If true finish an address.
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.26
+	 */
+	public this (AsyncResultIF res, bool address = false)
+	{
+		GError* err = null;
+		GDBusConnection* p;
+
+		if ( address )
+		{
+			p = g_dbus_connection_new_for_address_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusConnection*) p);
+	}
+code: end
+
+struct: DBusMenuModel
+code: start
+	/**
+	 * See_Also: get().
+	 */
+	this(DBusConnection connection, string busName, string objectPath)
+	{
+		auto p =  g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_menu_model_get");
+		}
+
+		this(cast(GDBusMenuModel*) p);
+	}
+code: end
+
+struct:
+class: DBusObject
+extend: GObject.Object
+implements: DBusObject
+
+struct: DBusObjectManagerClient
+noCode: new_finish
+noCode: new_for_bus_finish
+code: start
+	/**
+	 * Finishes an operation started with g_dbus_object_manager_client_new().
+	 *
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback passed to the DBusObjectManager constructor.
+	 *     forBus = If true finish an address.
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.30
+	 */
+	public this (AsyncResultIF res, bool forBus = false)
+	{
+		GError* err = null;
+		GDBusObjectManager* p;
+
+		if ( forBus )
+		{
+			p = g_dbus_object_manager_client_new_for_bus_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusObjectManagerClient*) p);
+	}
+code: end
+
+struct:
+class: DBusInterface
+extend: GObject.Object
+implements: DBusInterface
+
+struct: DBusProxy
+noCode: new_finish
+noCode: new_for_bus_finish
+code: start
+	/**
+	 * Finishes creating a GDBusProxy.
+	 *
+	 * Params:
+	 *     res    = A GAsyncResult obtained from the GAsyncReadyCallback
+	 *              function passed to g_dbus_proxy_new().
+	 *     forBus = If true finish an address.
+	 *
+	 * Throws: GException on failure.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.26
+	 */
+	public this (AsyncResultIF res, bool forBus = false)
+	{
+		GError* err = null;
+		GDBusProxy* p;
+
+		if ( forBus )
+		{
+			p = g_dbus_proxy_new_for_bus_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+		else
+		{
+			p = g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+		}
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+		}
+		this(cast(GDBusProxy*) p);
+	}
+code: end
+
+struct: DesktopAppInfo
+noCode: new_from_filename
+code: start
+	/**
+	 * Creates a new #GDesktopAppInfo.
+	 *
+	 * Params:
+	 *     filename = the path of a desktop file, in the GLib filename encoding
+	 *
+	 * Return: a new #GDesktopAppInfo or %NULL on error.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static DesktopAppInfo createFromFilename(string filename)
+	{
+		auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
+		}
+
+		return new DesktopAppInfo(p);
+	}
+code: end
+
+struct:
+class: Drive
+extend: GObject.Object
+implements: Drive
+
+struct:
+class: File
+extend: GObject.Object
+implements: File
+
+struct:
+class: Icon
+extend: GObject.Object
+implements: Icon
+
+struct: InetAddress
+noCode: new_any
+noCode: new_loopback
+code: start
+	/**
+	 * Creates a InetAddress for the "any" address (unassigned/"don't
+	 * care") for family.
+	 *
+	 * Params:
+	 *     family = the address family
+	 *     loopback = If true create an InetAddress for the loopback address.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.22
+	 */
+	public this (GSocketFamily family, bool loopback = false)
+	{
+		GInetAddress* p;
+
+		if ( loopback )
+		{
+			p = g_inet_address_new_loopback(family);
+		}
+		else
+		{
+			p = g_inet_address_new_any(family);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
+		}
+		this(cast(GInetAddress*) p);
+	}
+code: end
+
+struct: IOModuleScope
+import: gtkc.Loader
+import: gtkc.paths
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gIOModuleScope != null)
+		{
+			g_io_module_scope_free(gIOModuleScope);
+		}
+	}
+code: end
+
+struct:
+class: Mount
+extend: GObject.Object
+implements: Mount
+
+struct:
+class: NetworkMonitor
+extend: GObject.Object
+implements: NetworkMonitor
+
 struct: PollableUtils
 namespace:
+
+struct:
+class: Proxy
+extend: GObject.Object
+implements: Proxy
+
+struct:
+class: ProxyResolver
+extend: GObject.Object
+implements: ProxyResolver
+
+struct: Resource
+import: gtkc.Loader
+import: gtkc.paths
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gResource != null)
+		{
+			g_resource_unref(gResource);
+		}
+	}
+code: end
+
+struct: SettingsSchema
+import: gtkc.Loader
+import: gtkc.paths
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gSettingsSchema != null)
+		{
+			g_settings_schema_unref(gSettingsSchema);
+		}
+	}
+code: end
+
+struct: SettingsSchemaSource
+import: gtkc.Loader
+import: gtkc.paths
+code: start
+	~this()
+	{
+		if ( Linker.isLoaded(LIBRARY.GIO) && gSettingsSchemaSource !is null )
+		{
+			g_settings_schema_source_unref(gSettingsSchemaSource);
+		}
+	}
+code: end
 
 struct: SimpleProxyResolver
 array: new ignore_hosts
 array: set_ignore_hosts ignore_hosts
+
+struct:
+class: SocketConnectable
+extend: GObject.Object
+implements: SocketConnectable
+
+struct:
+class: Volume
+extend: GObject.Object
+implements: Volume
+
+struct: VolumeMonitor
+noCode: get
+code: start
+	/**
+	 * Gets the volume monitor used by gio.
+	 *
+	 * Return: a reference to the #GVolumeMonitor used by gio. Call
+	 *     g_object_unref() when done with it.
+	 */
+	public this()
+	{
+		auto p = g_volume_monitor_get();
+
+		if(p is null)
+		{
+			throw new ConstructionException("g_volume_monitor_get()");
+		}
+
+		this(cast(GVolumeMonitor*) p);
+	}
+code: end
 
 move: bus_get DBusConnection get
 move: bus_get_finish DBusConnection get_finish
@@ -57,6 +459,16 @@ move: content_type_guess_for_tree ContentType guess_for_tree
 move: content_type_is_a ContentType is_a
 move: content_type_is_unknown ContentType is_unknown
 move: content_types_get_registered ContentType
+
+move: dbus_error_encode_gerror DBusError encode_gerror
+move: dbus_error_get_remote_error DBusError get_remote_error
+move: dbus_error_is_remote_error DBusError is_remote_error
+move: dbus_error_new_for_dbus_error DBusError new_for_dbus_error
+move: dbus_error_quark DBusError quark
+move: dbus_error_register_error DBusError register_error
+move: dbus_error_register_error_domain DBusError register_error_domain
+move: dbus_error_strip_remote_error DBusError strip_remote_error
+move: dbus_error_unregister_error DBusError unregister_error
 
 move: dbus_address_escape_value DBusUtilities address_escape_value
 move: dbus_address_get_for_bus_sync DBusUtilities address_get_for_bus_sync
