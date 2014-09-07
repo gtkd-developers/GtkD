@@ -23,3 +23,9 @@
 # must start with wrap
 wrap: gdk
 file: /usr/share/gir-1.0/Gdk-3.0.gir
+
+struct: Pixbuf
+namespace: 
+code: start
+	public  import gdkpixbuf.Pixbuf;
+code: end

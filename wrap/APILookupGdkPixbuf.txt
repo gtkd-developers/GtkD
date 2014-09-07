@@ -22,3 +22,9 @@
 # must start with wrap
 wrap: gdkpixbuf
 file: /usr/share/gir-1.0/GdkPixbuf-2.0.gir
+
+struct: PixbufSimpleAnim
+class: PixbufSimpleAnimation
+
+struct: PixbufSimpleAnimIter
+class: PixbufSimpleAnimationIter
