@@ -54,12 +54,14 @@ class GtkPackage
 	Map!(string, GtkFunction) collectedCallbacks;
 	Map!(string, GtkFunction) collectedFunctions;
 	GtkEnum stockIDs;           /// The StockID enum (Deprecated).
+	GtkEnum GdkKeys;            /// The GdkKey enum.
 
 	public this(string pack, GtkWrapper wrapper)
 	{
 		this.name = pack;
 		this.wrapper = wrapper;
 		this.stockIDs = new GtkEnum(wrapper, this);
+		this.GdkKeys  = new GtkEnum(wrapper, this);
 		
 		try
 		{
@@ -170,6 +172,15 @@ class GtkPackage
 			stockIDs.members ~= member;
 			return;
 		}
+		else if ( reader.front.attributes["c:type"].startsWith("GDK_KEY_") )
+		{
+			GtkEnumMember member = GtkEnumMember(wrapper);
+			member.parse(reader);
+			member.name = "GDK_"~ member.name[4..$];
+			
+			GdkKeys.members ~= member;
+			return;
+		}
 
 		//TODO: other constants.
 		reader.skipTag();
@@ -252,7 +263,24 @@ class GtkPackage
 			buff ~= indenter.format(stockIDs.getEnumDeclaration());
 		}
 
+		if ( GdkKeys.members !is null )
+			writeGdkKeys();
+
 		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir, name ~"types.d"), buff);
+	}
+
+	void writeGdkKeys()
+	{
+		string buff = wrapper.licence;
+		auto indenter = new IndentedStringBuilder();
+		
+		buff ~= "module "~ name ~".Keysyms;\n\n";
+
+		GdkKeys.cName = "GdkKeysyms";
+		GdkKeys.doc = "GdkKeysyms";
+		buff ~= indenter.format(GdkKeys.getEnumDeclaration());
+
+		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, name, "Keysyms.d"), buff);
 	}
 
 	void writeLoaderTable()

@@ -24,8 +24,129 @@
 wrap: gdk
 file: /usr/share/gir-1.0/Gdk-3.0.gir
 
+struct: Cairo
+namespace:
+
+struct: Pango
+namespace:
+
 struct: Pixbuf
 namespace: 
 code: start
 	public  import gdkpixbuf.Pixbuf;
 code: end
+
+struct: Rectangle
+namespace:
+
+move: property_change Atom
+move: property_delete Atom
+move: property_get Atom
+move: text_property_to_utf8_list_for_display Atom
+move: utf8_to_string_target Atom
+
+move: cairo_create Cairo create_context
+move: cairo_get_clip_rectangle Cairo get_clip_rectangle
+move: cairo_rectangle Cairo rectangle
+move: cairo_region Cairo region
+move: cairo_region_create_from_surface Cairo region_create_from_surface
+move: cairo_set_source_color Cairo set_source_color
+move: cairo_set_source_pixbuf Cairo set_source_pixbuf
+move: cairo_set_source_rgba Cairo set_source_rgba
+move: cairo_set_source_window Cairo set_source_window
+move: cairo_surface_create_from_pixbuf Cairo surface_create_from_pixbuf
+
+move: disable_multidevice DeviceManager
+
+move: drag_abort DragContext
+move: drag_begin DragContext
+move: drag_begin_for_device DragContext
+move: drag_drop DragContext
+move: drag_drop_succeeded DragContext
+move: drag_find_window_for_screen DragContext
+move: drag_get_selection DragContext
+move: drag_motion DragContext
+move: drag_status DragContext
+move: drop_finish DragContext
+move: drop_reply DragContext
+
+move: events_pending Event pending
+move: get_show_events Event
+move: set_show_events Event
+move: setting_get Event
+
+move: beep Gdk
+move: error_trap_pop Gda
+move: error_trap_pop_ignored Gda
+move: error_trap_push Gda
+move: get_display Gdk
+move: get_display_arg_name Gdk
+move: get_program_class Gdk
+move: init Gdk
+move: init_check Gdk
+move: keyboard_grab Gdk
+move: keyboard_ungrab Gdk
+move: notify_startup_complete Gdk
+move: notify_startup_complete_with_id Gdk
+move: parse_args Gdk
+move: pointer_grab Gdk
+move: pointer_is_grabbed Gdk
+move: pointer_ungrab Gdk
+move: set_allowed_backends Gdk
+move: set_double_click_time Gdk
+move: set_program_class Gdk
+
+move: keyval_convert_case Keymap
+move: keyval_from_name Keymap
+move: keyval_is_lower Keymap
+move: keyval_is_upper Keymap
+move: keyval_name Keymap
+move: keyval_to_lower Keymap
+move: keyval_to_unicode Keymap
+move: keyval_to_upper Keymap
+move: unicode_to_keyval Keymap
+
+move: pango_context_get Pango context_get
+move: pango_context_get_for_screen Pango context_get_for_screen
+move: pango_layout_get_clip_region Pango layout_get_clip_region
+move: pango_layout_line_get_clip_region Pango layout_line_get_clip_region
+
+move: pixbuf_get_from_surface Pixbuf get_from_surface
+move: pixbuf_get_from_window Pixbuf get_from_window
+
+move: rectangle_get_type Rectangle get_type
+move: rectangle_intersect Rectangle intersect
+move: rectangle_union Rectangle union
+
+move: selection_convert Selection convert
+move: selection_owner_get Selection owner_get
+move: selection_owner_get_for_display Selection owner_get_for_display
+move: selection_owner_set Selection owner_set
+move: selection_owner_set_for_display Selection owner_set_for_display 
+move: selection_property_get Selection property_get
+move: selection_send_notify Selection send_notify
+move: selection_send_notify_for_display Selection send_notify_for_display
+
+move: test_render_sync Testing
+move: test_simulate_button Testing
+move: test_simulate_key Testing
+
+move: threads_add_idle Threads
+move: threads_add_idle_full Threads
+move: threads_add_timeout Threads
+move: threads_add_timeout_full Threads
+move: threads_add_timeout_seconds Threads
+move: threads_add_timeout_seconds_full Threads
+move: threads_enter Threads
+move: threads_init Threads
+move: threads_leave Threads
+move: threads_set_lock_functions Threads
+
+move: list_visuals Visual
+move: query_depths Visual
+move: query_visual_types Visual
+
+move: get_default_root_window Window
+move: offscreen_window_get_embedder Window
+move: offscreen_window_get_surface Window
+move: offscreen_window_set_embedder Window
