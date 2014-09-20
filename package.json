@@ -16,10 +16,10 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:gtkd": "~Gtk2",
-        "gtk-d:gtkdgl": "~Gtk2",
-        "gtk-d:sv": "~Gtk2",
-        "gtk-d:gstreamer": "~Gtk2"
+        "gtk-d:gtkd": "~>1.7.0",
+        "gtk-d:gtkdgl": "~>1.7.0",
+        "gtk-d:sv": "~>1.7.0",
+        "gtk-d:gstreamer": "~>1.7.0"
     },
 
     "subPackages" : [
@@ -28,7 +28,8 @@
             "targetType": "library",
             "targetName": "gtkd-1",
             "sourcePaths": ["src"],
-            "libs-posix": ["dl"]
+            "libs-posix": ["dl"],
+            "importPaths": ["src"],
         },
         {
             "name": "gtkdgl",
@@ -36,6 +37,8 @@
             "targetName": "gtkdgl-1",
             "sourcePaths": ["srcgl"],
             "libs-posix": ["dl"],
+            "importPaths": ["srcgl"],
+            "dependencies": {"gtk-d:gtkd":"~>1.7.0"}
         },
         {
             "name": "sv",
@@ -43,6 +46,8 @@
             "targetName": "gtkdsv-1",
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
+            "importPaths": ["srcsv"],
+            "dependencies": {"gtk-d:gtkd":"~>1.7.0"}
         },
         {
             "name": "gstreamer",
@@ -50,6 +55,8 @@
             "targetName": "gstreamerd-1",
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
+            "importPaths": ["srcgstreamer"],
+            "dependencies": {"gtk-d:gtkd":"~>1.7.0"}
         },
     ]
 }
