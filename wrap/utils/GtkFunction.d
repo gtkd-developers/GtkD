@@ -259,7 +259,7 @@ final class GtkFunction
 			if ( type == GtkFunctionType.Method && strct.isNamespace() )
 				dec ~= "static ";
 
-			if ( strct.parentStruct && name in strct.parentStruct.functions )
+			if ( (strct.parentStruct && name in strct.parentStruct.functions) || lookupOverride )
 				dec ~= "override ";
 
 			dec ~= getType(returnType) ~" ";

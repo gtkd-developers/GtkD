@@ -23,6 +23,125 @@
 wrap: gdkpixbuf
 file: /usr/share/gir-1.0/GdkPixbuf-2.0.gir
 
+struct: Pixbuf
+noCode: save_to_bufferv
+noCode: ref
+noCode: unref
+noCode: new_from_resource
+noCode: new_from_resource_at_scale
+
+code: start
+	/**
+	 * Saves pixbuf to a new buffer in format @type, which is currently "jpeg",
+	 * "tiff", "png", "ico" or "bmp".  See gdk_pixbuf_save_to_buffer()
+	 * for more details.
+	 *
+	 * Params:
+	 *     buffer = location to receive a pointer to the new buffer.
+	 *     bufferSize = location to receive the size of the new buffer.
+	 *     type = name of file format.
+	 *     optionKeys = name of options to set, %NULL-terminated
+	 *     optionValues = values for named options
+	 *
+	 * Return: whether an error was set
+	 *
+	 * Since: 2.4
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool saveToBuffer(out ubyte[] buffer, string type, string[] optionKeys, string[] optionValues)
+	{
+		char* outbuffer = null;
+		int bufferSize;
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		buffer = (cast(ubyte*)outbuffer)[0 .. bufferSize];
+		
+		return p;
+	}
+
+	/**
+	 * Creates a new pixbuf by loading an image from an resource.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * Params:
+	 *     resourcePath = the path of the resource file
+	 *
+	 * Return: A newly-created pixbuf, or null if any of several error
+	 *     conditions occurred: the file could not be opened, the image format is
+	 *     not supported, there was not enough memory to allocate the image buffer,
+	 *     the stream contained invalid data, or the operation was cancelled.
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf newFromResource(string resourcePath)
+	{
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_resource(Str.toStringz(resourcePath), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+
+	/**
+	 * Creates a new pixbuf by loading an image from an resource.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * The image will be scaled to fit in the requested size, optionally
+	 * preserving the image's aspect ratio. When preserving the aspect ratio,
+	 * a width of -1 will cause the image to be scaled to the exact given
+	 * height, and a height of -1 will cause the image to be scaled to the
+	 * exact given width. When not preserving aspect ratio, a width or
+	 * height of -1 means to not scale the image at all in that dimension.
+	 *
+	 * The stream is not closed.
+	 *
+	 * Params:
+	 *     resourcePath = the path of the resource file
+	 *     width = The width the image should have or -1 to not constrain the width
+	 *     height = The height the image should have or -1 to not constrain the height
+	 *     preserveAspectRatio = true to preserve the image's aspect ratio
+	 *
+	 * Return: A newly-created pixbuf, or null if any of several error
+	 *     conditions occurred: the file could not be opened, the image format is
+	 *     not supported, there was not enough memory to allocate the image buffer,
+	 *     the stream contained invalid data, or the operation was cancelled.
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf newFromResource(string resourcePath, int width, int height, bool preserveAspectRatio)
+	{
+		GError* err = null;
+		
+		auto p = gdk_pixbuf_new_from_resource_at_scale(Str.toStringz(resourcePath), width, height, preserveAspectRatio, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return new Pixbuf(cast(GdkPixbuf*) p);
+	}
+code: end
+
 struct: PixbufSimpleAnim
 class: PixbufSimpleAnimation
 

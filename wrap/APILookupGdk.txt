@@ -27,6 +27,237 @@ file: /usr/share/gir-1.0/Gdk-3.0.gir
 struct: Cairo
 namespace:
 
+struct: Color
+override: to_string
+code: start
+	/**
+	 * Creates a new Color
+	 */
+	this()
+	{
+		GdkColor color;
+
+		this(gdk_color_copy(&color));
+	}
+
+	/** ditto */
+	this(ubyte red, ubyte green, ubyte blue)
+	{
+		GdkColor color;
+
+		color.red = cast(ushort)(red * 257);
+		color.green = cast(ushort)(green * 257);
+		color.blue = cast(ushort)(blue * 257);
+
+		this(gdk_color_copy(&color));
+	}
+
+	/** ditto */
+	this(ushort red, ushort green, ushort blue)
+	{
+		GdkColor color;
+
+		color.red = red;
+		color.green = green;
+		color.blue = blue;
+
+		this(gdk_color_copy(&color));
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GDK) && gdkColor !is null )
+		{
+			gdk_color_free(gdkColor);
+		}
+	}
+
+	/**
+	 * The color values.
+	 */
+	ushort red()
+	{
+		return gdkColor.red;
+	}
+
+	/** ditto */
+	void red(ushort value)
+	{
+		gdkColor.red = value;
+		updatePixel();
+	}
+
+	/** ditto */
+	ushort green()
+	{
+		return gdkColor.green;
+	}
+
+	/** ditto */
+	void green(ushort value)
+	{
+		gdkColor.green = value;
+		updatePixel();
+	}
+
+	/** ditto */
+	ushort blue()
+	{
+		return gdkColor.blue;
+	}
+
+	/** ditto */
+	void blue(ushort value)
+	{
+		gdkColor.blue = value;
+		updatePixel();
+	}
+
+	/** ditto */
+	uint pixel()
+	{
+		return gdkColor.pixel;
+	}
+
+	private void updatePixel()
+	{
+		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
+	}
+code: end
+
+struct: Event
+code: start
+	/**
+	 * Specifies the type of the event.
+	 */
+	public EventType type()
+	{
+		return gdkEvent.type;
+	}
+
+	/** Get a specific event. */
+	public GdkEventAny* any()
+	{
+		return cast(GdkEventAny*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventExpose* expose()
+	{
+		return cast(GdkEventExpose*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventVisibility* visibility()
+	{
+		return cast(GdkEventVisibility*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventMotion* motion()
+	{
+		return cast(GdkEventMotion*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventButton* button()
+	{
+		return cast(GdkEventButton*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventScroll* scroll()
+	{
+		return cast(GdkEventScroll*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventKey* key()
+	{
+		return cast(GdkEventKey*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventCrossing* crossing()
+	{
+		return cast(GdkEventCrossing*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventFocus* focus()
+	{
+		return cast(GdkEventFocus*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventConfigure* configure()
+	{
+		return cast(GdkEventConfigure*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventProperty* property()
+	{
+		return cast(GdkEventProperty*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventSelection* selection()
+	{
+		return cast(GdkEventSelection*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventOwnerChange* ownerChange()
+	{
+		return cast(GdkEventOwnerChange*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventProximity* proximity()
+	{
+		return cast(GdkEventProximity*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventDND* dnd()
+	{
+		return cast(GdkEventDND*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventWindowState* windowState()
+	{
+		return cast(GdkEventWindowState*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventSetting* setting()
+	{
+		return cast(GdkEventSetting*)gdkEvent;
+	}
+
+	/** ditto */
+	public GdkEventGrabBroken* grabBroken()
+	{
+		return cast(GdkEventGrabBroken*)gdkEvent;
+	}
+
+	/** */
+	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	{
+		return eventButton.button==buttonNumber 
+				&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
+	}
+
+	/** */
+	public static bool isTripleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	{
+		return eventButton.button==buttonNumber 
+				&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
+	}
+code: end
+
 struct: Pango
 namespace:
 
@@ -38,6 +269,93 @@ code: end
 
 struct: Rectangle
 namespace:
+noCode: get_type
+
+struct: RGBA
+override: to_string
+code: start
+	/**
+	 * Creates a new RGBA Color
+	 */
+	this()
+	{
+		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
+
+		this(gdk_rgba_copy(&rgba));
+	}
+
+	/** ditto */
+	this(double red, double green, double blue, double alpha = 1.0)
+	{
+		GdkRGBA rgba;
+
+		rgba.red = red;
+		rgba.green = green;
+		rgba.blue = blue;
+		rgba.alpha = alpha;
+
+		this(gdk_rgba_copy(&rgba));
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GDK) && gdkRGBA !is null )
+		{
+			gdk_rgba_free(gdkRGBA);
+		}
+	}
+
+	/**
+	 * The color values.
+	 * All values are in the range from 0.0 to 1.0 inclusive.
+	 */
+	double red()
+	{
+		return gdkRGBA.red;
+	}
+
+	/** ditto */
+	void red(double value)
+	{
+		gdkRGBA.red = value;
+	}
+
+	/** ditto */
+	double green()
+	{
+		return gdkRGBA.green;
+	}
+
+	/** ditto */
+	void green(double value)
+	{
+		gdkRGBA.green = value;
+	}
+
+	/** ditto */
+	double blue()
+	{
+		return gdkRGBA.blue;
+	}
+
+	/** ditto */
+	void blue(double value)
+	{
+		gdkRGBA.blue = value;
+	}
+
+	/** ditto */
+	double alpha()
+	{
+		return gdkRGBA.alpha;
+	}
+
+	/** ditto */
+	void alpha(double value)
+	{
+		gdkRGBA.alpha = value;
+	}
+code: end
 
 move: property_change Atom
 move: property_delete Atom
@@ -76,9 +394,9 @@ move: set_show_events Event
 move: setting_get Event
 
 move: beep Gdk
-move: error_trap_pop Gda
-move: error_trap_pop_ignored Gda
-move: error_trap_push Gda
+move: error_trap_pop Gdk
+move: error_trap_pop_ignored Gdk
+move: error_trap_push Gdk
 move: get_display Gdk
 move: get_display_arg_name Gdk
 move: get_program_class Gdk
