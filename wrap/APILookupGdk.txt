@@ -269,7 +269,6 @@ code: end
 
 struct: Rectangle
 namespace:
-noCode: get_type
 
 struct: RGBA
 override: to_string
@@ -432,7 +431,7 @@ move: pango_layout_line_get_clip_region Pango layout_line_get_clip_region
 move: pixbuf_get_from_surface Pixbuf get_from_surface
 move: pixbuf_get_from_window Pixbuf get_from_window
 
-move: rectangle_get_type Rectangle get_type
+#move: rectangle_get_type Rectangle get_type
 move: rectangle_intersect Rectangle intersect
 move: rectangle_union Rectangle union
 

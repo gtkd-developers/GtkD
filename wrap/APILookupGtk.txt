@@ -23,3 +23,184 @@
 # must start with wrap
 wrap: gtk
 file: /usr/share/gir-1.0/Gtk-3.0.gir
+
+move: show_about_dialog AboutDialog
+
+move: accel_groups_activate AccelGroup
+move: accel_groups_from_object AccelGroup
+move: accelerator_get_default_mod_mask AccelGroup
+move: accelerator_get_label AccelGroup
+move: accelerator_get_label_with_keycode AccelGroup
+move: accelerator_name AccelGroup
+move: accelerator_name_with_keycode AccelGroup
+move: accelerator_parse AccelGroup
+move: accelerator_parse_with_keycode AccelGroup
+move: accelerator_set_default_mod_mask AccelGroup
+move: accelerator_valid AccelGroup
+
+move: bindings_activate BindingSet
+move: bindings_activate_event BindingSet
+
+move: alternative_dialog_button_order Dialog
+
+move: drag_finish DragAndDrop
+move: drag_get_source_widget DragAndDrop
+move: drag_set_icon_default DragAndDrop
+move: drag_set_icon_gicon DragAndDrop
+move: drag_set_icon_name DragAndDrop
+move: drag_set_icon_pixbuf DragAndDrop
+move: drag_set_icon_stock DragAndDrop
+move: drag_set_icon_surface DragAndDrop
+move: drag_set_icon_widget DragAndDrop
+move: draw_insertion_cursor DragAndDrop
+
+move: rgb_to_hsv HSV
+
+move: device_grab_add Main
+move: device_grab_remove Main
+move: disable_setlocale Main
+move: events_pending Main
+move: get_current_event Main
+move: get_current_event_device Main
+move: get_current_event_state Main
+move: get_current_event_time Main
+move: get_debug_flags Main
+move: get_default_language Main
+move: get_event_widget Main
+move: get_locale_direction Main
+move: get_option_group Main
+move: grab_get_current Main
+move: init Main
+move: init_check Main
+move: init_with_args Main
+move: key_snooper_install Main
+move: key_snooper_remove Main
+move: main Main
+move: main_do_event Main do_event
+move: main_iteration Main iteration
+move: main_iteration_do Main iteration_do
+move: main_level Main level
+move: main_quit Main quit
+move: parse_args Main
+move: propagate_event Main
+move: set_debug_flags Main
+
+move: show_uri MountOperation
+
+move: print_run_page_setup_dialog PrintOperation
+move: print_run_page_setup_dialog_async  PrintOperation
+
+move: rc_add_default_file RcStyle add_default_file
+move: rc_find_module_in_path RcStyle find_module_in_path
+move: rc_find_pixmap_in_path RcStyle find_pixmap_in_path
+move: rc_get_default_files RcStyle get_default_files
+move: rc_get_im_module_file RcStyle get_im_module_file
+move: rc_get_im_module_path RcStyle get_im_module_path
+move: rc_get_module_dir RcStyle get_module_dir
+move: rc_get_style RcStyle get_style
+move: rc_get_style_by_paths RcStyles get_style_by_path
+move: rc_get_theme_dir RcStyle get_theme_dir
+move: rc_parse RcStyle parse
+move: rc_parse_color RcStyle parse_color
+move: rc_parse_color_full RcStyle parse_color_full
+move: rc_parse_priority RcStyle parse_priority
+move: rc_parse_state RcStyle parse_state
+move: rc_parse_string RcStyle parse_string
+move: rc_reparse_all RcStyle reparse_all
+move: rc_reparse_all_for_settings RcStyle reparse_all_for_settings
+move: rc_reset_styles RcStyle reset_styles
+move: rc_scanner_new RcStyle scanner_new
+move: rc_set_default_files RcStyle set_default_files
+
+move: selection_add_target SelectionData add_target
+move: selection_add_targets SelectionData add_targets
+move: selection_clear_targets SelectionData clear_targets
+move: selection_convert SelectionData convert
+move: selection_owner_set SelectionData owner_set
+move: selection_owner_set_for_display SelectionData owner_set_for_display
+move: selection_remove_all SelectionData remove_all
+
+move: stock_add StockItem
+move: stock_add_static StockItem
+move: stock_list_ids StockItem
+move: stock_lookup StockItem
+move: stock_set_translate_func StockItem
+
+move: paint_arrow Style
+move: paint_box Style
+move: paint_box_gap Style
+move: paint_check Style
+move: paint_diamond Style
+move: paint_expander Style
+move: paint_extension Style
+move: paint_flat_box Style
+move: paint_focus Style
+move: paint_handle Style
+move: paint_hline Style
+move: paint_layout Style
+move: paint_option Style
+move: paint_resize_grip Style
+move: paint_shadow Style
+move: paint_shadow_gap Style
+move: paint_slider Style
+move: paint_spinner Style
+move: paint_tab Style
+move: paint_vline Style
+
+move: render_activity StyleContext
+move: render_arrow StyleContext
+move: render_background StyleContext
+move: render_check StyleContext
+move: render_expander StyleContext
+move: render_extension StyleContext
+move: render_focus StyleContext
+move: render_frame StyleContext
+move: render_frame_gap StyleContext
+move: render_handle StyleContext
+move: render_icon StyleContext
+move: render_icon_pixbuf StyleContext
+move: render_icon_surface StyleContext
+move: render_insertion_cursor StyleContext
+move: render_layout StyleContext
+move: render_line StyleContext
+move: render_option StyleContext
+move: render_slider StyleContext
+
+move: target_table_free TargetList
+move: target_table_new_from_list TargetList
+move: targets_include_image TargetList include_image
+move: targets_include_rich_text TargetList include_rich_tex
+move: targets_include_text TargetList include_text
+move: targets_include_uri TargetList include_uri
+
+move: test_create_simple_window Testing create_simple_window
+move: test_create_widget Testing create_widget
+move: test_display_button_window Testing display_button_window
+move: test_find_label Testing find_label
+move: test_find_sibling Testing find_sibling
+move: test_find_widget Testing find_widget
+move: test_init Testing init
+move: test_list_all_types Testing list_all_types
+move: test_register_all_types Testing register_all_types
+move: test_slider_get_value Testing slider_get_value
+move: test_slider_set_perc Testing slider_set_perc
+move: test_spin_button_click Testing spin_button_click
+move: test_text_get Testing text_get
+move: test_text_set Testing text_set
+move: test_widget_click Testing widget_click
+move: test_widget_send_key Testing widget_send_key
+move: test_widget_wait_for_draw Testing widget_wait_for_draw
+
+move: tree_get_row_drag_data TreeDragSource get_row_drag_data
+move: tree_set_row_drag_data TreeDragSource set_row_drag_data
+
+move: check_version Version
+move: get_binary_age Version
+move: get_interface_age Version
+move: get_major_version Version
+move: get_micro_version Version
+move: get_minor_version Version
+
+move: cairo_should_draw_window Widget
+move: cairo_transform_to_window Widget
+move: distribute_natural_allocation Widget
