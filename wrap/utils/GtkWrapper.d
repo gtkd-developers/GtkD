@@ -53,13 +53,13 @@ void main()
 class GtkWrapper
 {
 	bool includeComments;
-	
+
 	string apiRoot;
 	string inputRoot;
 	string outputRoot;
 	string srcDir;
 	string bindDir;
-	
+
 	static string licence;
 	static string[string] aliasses;
 
@@ -69,7 +69,7 @@ class GtkWrapper
 	{
 		this.apiRoot = apiRoot;
 	}
-	
+
 	public void proccess(string apiLookupDefinition)
 	{
 		DefReader defReader = new DefReader( buildPath(apiRoot, apiLookupDefinition) );
@@ -102,9 +102,9 @@ class GtkWrapper
 				case "copy":
 					if ( srcDir.empty )
 						throw new WrapError(defReader, "Can't copy the file when srcDir is not set");
-					
+
 					string outDir = buildPath(outputRoot, srcDir);
-					
+
 					if ( !exists(outDir) )
 					{
 						try
@@ -112,7 +112,7 @@ class GtkWrapper
 						catch (FileException)
 							throw new WrapError(defReader, "Failed to create directory: "~ outDir);
 					}
-					
+
 					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
 					break;
 				case "lookup":
@@ -127,13 +127,13 @@ class GtkWrapper
 						throw new WrapError(defReader, "Found wrap while srcDir isn't set");
 					if ( bindDir.empty )
 						throw new WrapError(defReader, "Found wrap while bindDir isn't set");
-					
+
 					wrapPackage(defReader);
 					break;
 				default:
 					throw new WrapError(defReader, "Unknown key: "~defReader.key);
 			}
-			
+
 			defReader.popFront();
 		}
 	}
@@ -151,7 +151,7 @@ class GtkWrapper
 		}
 		catch (Exception e)
 			throw new WrapError(defReader, e.msg);
-				
+
 		while ( !defReader.empty )
 		{
 			switch ( defReader.key )
@@ -344,13 +344,13 @@ class GtkWrapper
 					if ( srcDir.empty )
 						throw new WrapError(defReader,
 						                    "Can't copy the file when srcDir is not set");
-					
+
 					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
 					break;
 				default:
 					throw new WrapError(defReader, "Unknown key: "~defReader.key);
 			}
-			
+
 			defReader.popFront();
 		}
 	}
@@ -365,11 +365,11 @@ class GtkWrapper
 
 		return null;
 	}
-	
+
 	private void loadAA (ref string[string] aa, DefReader defReader)
 	{
 		string[] vals = defReader.value.split();
-		
+
 		if ( vals.length == 1 )
 			vals ~= "";
 
@@ -378,15 +378,15 @@ class GtkWrapper
 		else
 			throw new WrapError(defReader, "Unknown key: "~defReader.key);
 	}
-	
+
 	private void copyFile(string srcDir, string destDir, string file)
 	{
 		string from = buildPath(srcDir, file);
 		string to   = buildPath(destDir, file);
-		
+
 		writefln("copying file [%s] to [%s]", from, to);
-		copy(from, to);            
-		
+		copy(from, to);
+
 		if ( !exists(to) )
 			throw new Exception("Cannot copy  file: "~from);
 	}
@@ -408,7 +408,7 @@ class GtkWrapper
  * Apply aliasses to the tokens in the string, and
  * camelCase underscore separated tokens.
  */
-string stringToGtkD(string str, string[string] aliases)
+string stringToGtkD(string str, string[string] aliases, string[string] localAliases = null)
 {
 	size_t pos, start;
 	string seps = " \n\r\t\f\v()[]*,;";
@@ -423,7 +423,7 @@ string stringToGtkD(string str, string[string] aliases)
 			while ( pos < str.length && !seps.canFind(str[pos]) )
 				pos++;
 
-			converted.put(tokenToGtkD(str[start..pos], aliases));
+			converted.put(tokenToGtkD(str[start..pos], aliases, localAliases));
 
 			if ( pos == str.length )
 				break;
@@ -445,7 +445,14 @@ unittest
 
 string tokenToGtkD(string token, string[string] aliases, bool caseConvert=true)
 {
-	if ( token in aliases )
+	return tokenToGtkD(token, aliases, null, caseConvert);
+}
+
+string tokenToGtkD(string token, string[string] aliases, string[string] localAliases, bool caseConvert=true)
+{
+	if ( token in localAliases )
+		return localAliases[token];
+	else if ( token in aliases )
 		return aliases[token];
 	else if ( token.startsWith("cairo_") && token.endsWith("_t", "_t*", "_t**") )
 		return token;

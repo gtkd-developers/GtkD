@@ -40,7 +40,7 @@ class GtkPackage
 	string name;
 	string cTypePrefix;
 	GtkWrapper wrapper;
-	
+
 	string[] publicImports;
 	string[] lookupAliases;     /// Aliases defined in the lookupfile.
 	string[] lookupEnums;       /// Enums defined in the lookupfile.
@@ -62,7 +62,7 @@ class GtkPackage
 		this.wrapper = wrapper;
 		this.stockIDs = new GtkEnum(wrapper, this);
 		this.GdkKeys  = new GtkEnum(wrapper, this);
-		
+
 		try
 		{
 			if ( !exists(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir)) )
@@ -72,7 +72,7 @@ class GtkPackage
 		{
 			throw new Exception("Failed to create directory: "~ buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir));
 		}
-		
+
 		try
 		{
 			if ( !exists(buildPath(wrapper.outputRoot, wrapper.srcDir, pack)) )
@@ -82,7 +82,7 @@ class GtkPackage
 		{
 			throw new Exception("Failed to create directory: "~ buildPath(wrapper.outputRoot, wrapper.srcDir, pack));
 		}
-		
+
 		publicImports ~= wrapper.bindDir ~"."~ pack;
 	}
 
@@ -177,7 +177,7 @@ class GtkPackage
 			GtkEnumMember member = GtkEnumMember(wrapper);
 			member.parse(reader);
 			member.name = "GDK_"~ member.name[4..$];
-			
+
 			GdkKeys.members ~= member;
 			return;
 		}
@@ -273,7 +273,7 @@ class GtkPackage
 	{
 		string buff = wrapper.licence;
 		auto indenter = new IndentedStringBuilder();
-		
+
 		buff ~= "module "~ name ~".Keysyms;\n\n";
 
 		GdkKeys.cName = "GdkKeysyms";

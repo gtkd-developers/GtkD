@@ -31,10 +31,10 @@ public class DefReader
 	string filename;
 	string key;
 	string value;
-	
+
 	int lineNumber;
 	string[] lines;
-	
+
 	public this(string filename)
 	{
 		this.filename = filename;
@@ -45,7 +45,7 @@ public class DefReader
 
 		this.popFront();
 	}
-	
+
 	public void popFront()
 	{
 		string line;
@@ -63,7 +63,7 @@ public class DefReader
 				lineNumber++;
 			}
 		}
-		
+
 		if ( !line.empty && !line.startsWith("#") )
 		{
 			size_t index = line.indexOf(':');
@@ -77,17 +77,17 @@ public class DefReader
 			value.length = 0;
 		}
 	}
-	
+
 	/**
 	 * Gets the contends of a block value
 	 */
 	public string[] readBlock(string key = "")
 	{
 		string[] block;
-		
+
 		if ( key.empty )
 			key = this.key;
-		
+
 		while ( !lines.empty )
 		{
 			if ( startsWith(lines.front.strip(), key) )
@@ -96,15 +96,15 @@ public class DefReader
 				lineNumber++;
 				return block;
 			}
-			
+
 			block ~= lines.front ~ '\n';
 			lines.popFront();
 			lineNumber++;
 		}
-		
+
 		throw new WrapError(this, "Found EOF while expecting: \""~key~": end\"");
 	}
-	
+
 	/**
 	 * Gets the current value as a bool
 	 */
@@ -112,7 +112,7 @@ public class DefReader
 	{
 		return !!value.among("1", "ok", "OK", "Ok", "true", "TRUE", "True", "Y", "y", "yes", "YES", "Yes");
 	}
-	
+
 	public @property bool empty()
 	{
 		return lines.empty && key.empty;

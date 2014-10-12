@@ -33,7 +33,7 @@ public class IndentedStringBuilder
 	{
 		this("");
 	}
-	
+
 	this(string t)
 	{
 		tabs = t;
@@ -100,7 +100,7 @@ public class IndentedStringBuilder
 
 		return text;
 	}
-	
+
 	/**
 	 * Formats the input lines while keeping track of indentation
 	 * Params:
@@ -113,7 +113,7 @@ public class IndentedStringBuilder
 			text ~= format(line);
 		return text;
 	}
-	
+
 	public void setIndent(string t)
 	{
 		tabs = t;

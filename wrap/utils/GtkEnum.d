@@ -134,7 +134,7 @@ struct GtkEnumMember
 	GtkWrapper wrapper;
 
 	@disable this();
-	
+
 	this(GtkWrapper wrapper)
 	{
 		this.wrapper = wrapper;

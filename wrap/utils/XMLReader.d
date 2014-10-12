@@ -30,7 +30,7 @@ import std.uni;
 struct XMLNode
 {
 	XMLNodeType type;
-	
+
 	string value;
 	string[string] attributes;
 }
@@ -143,7 +143,7 @@ class XMLReader(T)
 			if ( document.front == ']' )
 			{
 				document.popFront();
-				
+
 				if ( document.front != ']' )
 				{
 					buff.put(']');
@@ -151,16 +151,16 @@ class XMLReader(T)
 					document.popFront();
 					continue;
 				}
-				
+
 				document.popFront();
-				
+
 				if ( document.front == '>' )
 				{
 					document.popFront();
 					return;
 				}
 			}
-			
+
 			buff.put(document.front);
 			document.popFront();
 		}

@@ -25,7 +25,7 @@ import std.file : write;
 import std.path: buildPath;
 import std.uni: toUpper, toLower;
 import std.range;
-import std.string: splitLines, strip, chomp;
+import std.string: capitalize, splitLines, strip, chomp;
 
 import utils.GtkFunction;
 import utils.GtkPackage;
@@ -282,8 +282,10 @@ final class GtkStruct
 		else
 			buff ~= "public class "~ name;
 
-		if ( parentStruct )
+		if ( parentStruct && parentStruct.name != name )
 			buff ~= " : "~ parentStruct.name;
+		else if ( parentStruct )
+			buff ~= " : "~ parentStruct.pack.name.capitalize() ~ parentStruct.name;
 
 		bool first = !parentStruct;
 
@@ -478,7 +480,7 @@ final class GtkStruct
 			{
 				if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
 					continue;
-				
+
 				if ( func.type == GtkFunctionType.Signal )
 				{
 					buff ~= indenter.format("@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners();");
@@ -581,8 +583,16 @@ final class GtkStruct
 
 	private void resolveImports()
 	{
-		if ( parentStruct )
+		if ( parentStruct && parentStruct.name != name)
+		{
 			imports ~= parentStruct.pack.name ~"."~ parentStruct.name;
+		}
+		else if ( parentStruct )
+		{
+			string QParent = parentStruct.pack.name.capitalize() ~ parentStruct.name;
+			imports ~= parentStruct.pack.name ~"."~ parentStruct.name ~" : "~ QParent ~" = "~ parentStruct.name;
+			structWrap[parent] = QParent;
+		}
 
 		imports ~= "gtkc."~ pack.name;
 		imports ~= "gtkc."~ pack.name ~"types";
@@ -700,12 +710,12 @@ final class GtkStruct
 			buff ~= "/**\n";
 			foreach ( line; doc.splitLines() )
 				buff ~= " * "~ line.strip() ~"\n";
-			
+
 			if ( libVersion )
 			{
 				buff ~= " *\n * Since: "~ libVersion ~"\n";
 			}
-			
+
 			buff ~= " */\n";
 		}
 	}
@@ -789,7 +799,7 @@ final class GtkField
 		{
 			//AFAIK: C bitfields are padded to a multiple of sizeof uint.
 			int padding = 32 - (bitcount % 32);
-				
+
 			if ( padding > 0)
 			{
 				buff[buff.length-1] ~= ",";
@@ -897,7 +907,7 @@ final class GtkUnion
 	GtkField[] fields;
 
 	GtkWrapper wrapper;
-	
+
 	this(GtkWrapper wrapper)
 	{
 		this.wrapper = wrapper;

@@ -50,7 +50,7 @@ final class GtkType
 	}
 
 	void parse(T)(XMLReader!T reader)
-	{	
+	{
 		if ( "c:type" in reader.front.attributes )
 			cType = reader.front.attributes["c:type"];
 		if ( "length" in reader.front.attributes )

@@ -1,16 +1,16 @@
 ﻿#
 # This file is part of gtkD.
-# 
+#
 # gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2.1 of the License, or
 # (at your option) any later version.
-# 
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -246,14 +246,14 @@ code: start
 	/** */
 	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
-		return eventButton.button==buttonNumber 
+		return eventButton.button==buttonNumber
 				&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
 	}
 
 	/** */
 	public static bool isTripleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
-		return eventButton.button==buttonNumber 
+		return eventButton.button==buttonNumber
 				&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
 	}
 code: end
@@ -262,7 +262,7 @@ struct: Pango
 namespace:
 
 struct: Pixbuf
-namespace: 
+namespace:
 code: start
 	public  import gdkpixbuf.Pixbuf;
 code: end
@@ -439,7 +439,7 @@ move: selection_convert Selection convert
 move: selection_owner_get Selection owner_get
 move: selection_owner_get_for_display Selection owner_get_for_display
 move: selection_owner_set Selection owner_set
-move: selection_owner_set_for_display Selection owner_set_for_display 
+move: selection_owner_set_for_display Selection owner_set_for_display
 move: selection_property_get Selection property_get
 move: selection_send_notify Selection send_notify
 move: selection_send_notify_for_display Selection send_notify_for_display

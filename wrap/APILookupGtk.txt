@@ -1,16 +1,16 @@
 #
 # This file is part of gtkD.
-# 
+#
 # gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2.1 of the License, or
 # (at your option) any later version.
-# 
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -23,6 +23,1580 @@
 # must start with wrap
 wrap: gtk
 file: /usr/share/gir-1.0/Gtk-3.0.gir
+
+struct: Alignment
+code: start
+	/** */
+	public static Alignment center(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment north(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment south(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment east(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment west(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment northWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment southWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment northEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	/** */
+	public static Alignment southEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+code: end
+
+struct: Border
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GTK) && gtkBorder !is null )
+		{
+			gtk_border_free(gtkBorder);
+		}
+	}
+code: end
+
+struct: Buildable
+alias: set_name buildableSetName
+alias: get_name buildableGetName
+
+struct: Builder
+noCode: new
+noCode: get_object
+noCode: get_objects
+
+#There are now 3 constructors that have a single string parameter, disable 2 of them.
+noCode: new_from_resource
+noCode: new_from_string
+
+#imports for gtk_builder_real_get_type_from_name_override
+import: gtkc.gobject
+import: gtkc.paths
+import: glib.Module
+import: gobject.Type
+
+code: start
+	/**
+	 * Creates a new builder object.
+	 * Since 2.12
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this ()
+	{
+		// GtkBuilder* gtk_builder_new (void);
+		auto p = gtk_builder_new();
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_builder_new()");
+		}
+		this(cast(GtkBuilder*) p);
+
+		GtkBuilderClass* klass = Type.getInstanceClass!(GtkBuilderClass)( this );
+		klass.get_type_from_name = &gtk_builder_real_get_type_from_name_override;
+	}
+
+	/**
+	 * This function is a modification of _gtk_builder_resolve_type_lazily from "gtk/gtkbuilder.c".
+	 * It is needed because it assumes we are linking at compile time to the gtk libs.
+	 * specifically the NULL in g_module_open( NULL, 0 );
+	 * It replaces the default function pointer "get_type_from_name" in GtkBuilderClass.
+	 */
+	extern(C) private static GType gtk_builder_real_get_type_from_name_override ( GtkBuilder* builder, char *name )
+	{
+		GType gtype;
+		gtype = g_type_from_name( name );
+		if (gtype != GType.INVALID)
+		{
+			return gtype;
+		}
+
+		/*
+		 * Try to map a type name to a _get_type function
+		 * and call it, eg:
+		 *
+		 * GtkWindow -> gtk_window_get_type
+		 * GtkHBox -> gtk_hbox_get_type
+		 * GtkUIManager -> gtk_ui_manager_get_type
+		 *
+		 */
+		char   c;
+		string symbol_name;
+
+		for (int i = 0; name[i] != '\0'; i++)
+		{
+			c = name[i];
+			/* skip if uppercase, first or previous is uppercase */
+			if ((c == Str.asciiToupper (c) &&
+			   i > 0 && name[i-1] != Str.asciiToupper (name[i-1])) ||
+			  (i > 2 && name[i]   == Str.asciiToupper (name[i]) &&
+			   name[i-1] == Str.asciiToupper (name[i-1]) &&
+			   name[i-2] == Str.asciiToupper (name[i-2]))
+			   )
+
+			symbol_name ~= '_';
+			symbol_name ~= Str.asciiTolower (c);
+		}
+		symbol_name ~=  "_get_type" ;
+
+		/* scan linked librarys for function symbol */
+		foreach ( lib; importLibs )
+		{
+			GType function() func;
+			Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
+			if( mod is null )
+				continue;
+
+			scope(exit) mod.close();
+
+			if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
+				return func();
+			}
+		}
+
+		return GType.INVALID;
+	}
+
+	/**
+	 * Gets the object named name. Note that this function does not
+	 * increment the reference count of the returned object.
+	 * Since 2.12
+	 * Params:
+	 * name = name of object to get
+	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
+	 */
+	public ObjectG getObject(string name)
+	{
+		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
+		return newFromObject( gtk_builder_get_object(gtkBuilder, Str.toStringz(name)) );
+	}
+
+	/**
+	 * Gets all objects that have been constructed by builder.
+	 * Since 2.12
+	 * Returns: an array containing all the objects constructed by the GtkBuilder instance.
+	 */
+	public ObjectG[] getObjects()
+	{
+		ObjectG[] objects;
+
+		// GSList* gtk_builder_get_objects (GtkBuilder *builder);
+		GSList* list = gtk_builder_get_objects(gtkBuilder);
+
+		while ( list.next !is null )
+		{
+			objects ~= newFromObject( cast(GObject*)list.data );
+			list = list.next;
+		}
+
+		g_slist_free(list);
+
+		return objects;
+	}
+
+	/**
+	 * This function creates an D object corresponding to the Struct pointer passed in.
+	 */
+	public ObjectG newFromObject(GObject* cobj)
+	{
+		if(cobj is null)
+		{
+			return null;
+		}
+
+		void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
+
+		if ( dObj !is null )
+		{
+			return cast(ObjectG)dObj;
+		}
+
+		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
+		ClassInfo ci = cast(ClassInfo)ClassInfo.find(type);
+
+		//Gobject and Gio types both start with g, so try both.
+		if(ci is null && startsWith(type, "gobject"))
+		{
+				ci = cast(ClassInfo)ClassInfo.find("gio"~ type[7..$]);
+		}
+
+		if(ci is null)
+		{
+			return null;
+		}
+
+		ObjectG obj = cast(ObjectG)_d_newclass(ci);
+
+		obj.__ctor(cobj);
+
+		return obj;
+	}
+
+	/**
+	 * Turn the name of a C Type in to the name of the corresponding D type.
+	 * Note: If the prefix of the type is "G" this always usses "gobject" as
+	 *     the prefix, extra care should be taken for types from GIO.
+	 */
+	private string convertClassName(string gName)
+	{
+		string conv;
+		string prefix;
+
+		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
+		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
+		else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )        prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )        prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )        prefix = "Atk";
+		else if ( startsWith(gName, "G") )          prefix = "G";
+		else if ( startsWith(gName, "Pango") )      prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )      prefix = "cairo";
+
+		conv = gName[prefix.length..gName.length];
+
+		if ( conv == "Object" ) conv ~= prefix;
+		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
+		if ( prefix == "cairo") conv = toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
+
+		prefix = toLower(prefix);
+
+		if( prefix == "gst") prefix = "gstreamer";
+		if( prefix == "g")   prefix = "gobject";
+		if( prefix == "pg" ) prefix = "pango";
+
+		return prefix ~"."~ conv ~"."~ conv;
+	}
+
+	private bool startsWith(string str, string prefix)
+	{
+		return str.length >= prefix.length && str[0..prefix.length] == prefix;
+	}
+code: end
+
+struct: Button
+noCode: new_with_mnemonic
+noCode: new_with_label
+noCode: new_from_stock
+code: start
+	private static IconSize currentIconSize = IconSize.BUTTON;
+
+	/** */
+	public static void setIconSize(IconSize iconSize)
+	{
+		currentIconSize = iconSize;
+	}
+
+	/** */
+	public static IconSize getIconSize()
+	{
+		return currentIconSize;
+	}
+
+	/**
+	 * Creates a new GtkButton containing a label.
+	 * If characters in label are preceded by an underscore, they are underlined.
+	 * If you need a literal underscore character in a label, use '__' (two
+	 * underscores). The first underlined character represents a keyboard
+	 * accelerator called a mnemonic.
+	 * Pressing Alt and that key activates the button.
+	 * Params:
+	 *  label = The text of the button, with an underscore in front of the
+	 *  mnemonic character
+	 *  mnemonic = true if the button has an mnemnonic
+	 * Returns:
+	 *  a new GtkButton
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkButton* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_button_new_with_mnemonic (const gchar *label);
+			p = cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_button_new_with_label (const gchar *label);
+			p = cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new_with_label");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new GtkButton containing the image and text from a stock item.
+	 * Some stock ids have preprocessor macros like GTK_STOCK_OK and
+	 * GTK_STOCK_APPLY.
+	 * If stock_id is unknown, then it will be treated as a mnemonic
+	 * label (as for gtk_button_new_with_mnemonic()).
+	 * Params:
+	 *  StockID = the name of the stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (StockID stockID, bool hideLabel=false)
+	{
+		// GtkWidget* gtk_button_new_from_stock (const gchar *stock_id);
+		if ( hideLabel )
+		{
+			this();
+			Image image = new Image(stockID,currentIconSize);
+			add(image);
+		}
+		else
+		{
+			auto p = gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID]));
+
+			if(p is null)
+			{
+				throw new ConstructionException("null returned by gtk_button_new_from_stock");
+			}
+
+			this(cast(GtkButton*) p);
+		}
+	}
+
+	/** */
+	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
+	{
+		this(stockID, hideLabel);
+		addOnClicked(dlg);
+	}
+
+	/** */
+	public this(string label, void delegate(Button) dlg, bool mnemonic=true)
+	{
+		this(label, mnemonic);
+		addOnClicked(dlg);
+	}
+
+	/** */
+	public this(string label, void delegate(Button) dlg, string action)
+	{
+		this(label);
+		setActionName(action);
+		addOnClicked(dlg);
+	}
+code: end
+
+struct: ButtonBox
+code: start
+	/** */
+	static ButtonBox createActionBox(
+			void delegate(Button) onClicked,
+			StockID[] stocks,
+			string[] actions,
+			bool vertical=false
+		)
+	{
+		ButtonBox bBox;
+		if ( vertical )
+		{
+			bBox = VButtonBox.createActionBox();
+		}
+		else
+		{
+			bBox = HButtonBox.createActionBox();
+		}
+
+		Button button;
+		for( int i=0 ; i<stocks.length && i<actions.length ; i++)
+		{
+			button =  new Button(stocks[i]);
+			bBox.packEnd(button, false, false, 7);
+			button.setActionName(actions[i]);
+			button.addOnClicked(onClicked);
+		}
+		return bBox;
+	}
+
+	/** */
+	static ButtonBox createOkBox(void delegate(Button) onClicked)
+	{
+		static StockID[] stocks = [StockID.OK];
+		string[] actions;
+		actions ~= "action.ok";
+		return createActionBox(onClicked, stocks, actions);
+	}
+
+	/** */
+	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
+	{
+		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
+		string[] actions;
+		actions ~= "action.ok";
+		actions ~= "action.cancel";
+		return createActionBox(onClicked, stocks, actions);
+	}
+code: end
+
+struct: CheckButton
+noCode: new_with_label
+noCode: new_with_mnemonic
+code: start
+	/**
+	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.
+	 * If mnemonic is true the label
+	 * will be created using gtk_label_new_with_mnemonic(), so underscores
+	 * in label indicate the mnemonic for the check button.
+	 * Params:
+	 *  label = The text of the button, with an underscore in front of the
+	 *  mnemonic character
+	 *  mnemonic = true if the button has an mnemnonic
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkCheckButton* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_check_button_new_with_mnemonic  (const gchar *label);
+			p = cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_check_button_new_with_label (const gchar *label);
+			p = cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_check_button_new_");
+		}
+
+		this(p);
+	}
+
+	/** */
+	public this(string label, void delegate(CheckButton) onClicked, bool mnemonic=true)
+	{
+		this(label, mnemonic);
+		addOnClicked(cast(void delegate(Button))onClicked);
+	}
+code: end
+
+struct: CssSection
+code: start
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GTK) && gtkCssSection !is null )
+		{
+			gtk_css_section_unref(gtkCssSection);
+		}
+	}
+code: end
+
+struct: Dialog
+alias: set_alternative_button_order_from_array setAlternativeButtonOrder
+# Make these return the correct class.
+noCode: get_action_area
+noCode: get_content_area
+code: start
+	/**
+	 * Both title and parent can be null.
+	 */
+	this(string title, Window parent, GtkDialogFlags flags, string[] buttonsText, ResponseType[] responses)
+	{
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(buttonsText[0]), responses[0], null);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
+		}
+
+		this(cast(GtkDialog*)p);
+
+		addButtons(buttonsText[1 .. $], responses[1 .. $]);
+	}
+
+	/** ditto */
+	this(string title, Window parent, GtkDialogFlags flags, StockID[] stockIDs, ResponseType[] responses)
+	{
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(StockDesc[stockIDs[0]]), responses[0], null);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
+		}
+
+		this(cast(GtkDialog*)p);
+
+		addButtons(stockIDs[1 .. $], responses[1 .. $]);
+	}
+
+	/** */
+	public Button addButton(StockID stockID, int responseId)
+	{
+		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(StockDesc[stockID]), responseId);
+
+		if ( p is null )
+		{
+			return null;
+		}
+
+		return new Button(cast(GtkButton*)p);
+	}
+
+	/** */
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+
+	/** */
+	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
+		}
+	}
+
+	//Return the corect class instead of Widget
+	/**
+	 * Returns the action area of dialog.
+	 * Since: 2.14
+	 * Returns: the action area.
+	 */
+	public HButtonBox getActionArea()
+	{
+		auto p = gtk_dialog_get_action_area(gtkDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new HButtonBox(cast(GtkHButtonBox*) p);
+	}
+
+	//Return the corect class instead of Widget
+	/**
+	 * Returns the content area of dialog.
+	 * Since: 2.14
+	 * Returns: the content area GtkVBox.
+	 */
+	public VBox getContentArea()
+	{
+		auto p = gtk_dialog_get_content_area(gtkDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VBox(cast(GtkVBox*) p);
+	}
+code: end
+
+struct: Entry
+code: start
+	/** */
+	public this (string text)
+	{
+		this();
+		setText(text);
+	}
+
+	/** */
+	public this (string text, int max)
+	{
+		this(text);
+		setMaxLength(max);
+	}
+
+	/**
+	 * Gets the stock id of action.
+	 * Since 2.16
+	 * Returns: the stock id
+	 */
+	public StockID getStockId(GtkEntryIconPosition iconPos)
+	{
+		// const gchar* gtk_entry_get_icon_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos);
+		string id = Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
+
+		foreach(i, desc; StockDesc)
+		{
+			if(desc == id)
+				return cast(StockID)i;
+		}
+
+		return StockID.DISCARD;
+	}
+
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId =  the stock id
+	 */
+	public void setStockId(GtkEntryIconPosition iconPos, StockID stockId)
+	{
+		// void gtk_entry_set_icon_from_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos, const gchar *stock_id);
+		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(StockDesc[stockId]));
+	}
+code: end
+
+struct: Expander
+noCode: new
+noCode: new_with_mnemonic
+code: start
+	/**
+	 * Creates a new expander using label as the text of the label.
+	 * Since 2.4
+	 * Params:
+	 *  label = the text of the label
+	 *  mnemonic = if true characters in label that are preceded by an underscore,
+	 *  are underlined.
+	 *  If you need a literal underscore character in a label, use '__' (two
+	 *  underscores). The first underlined character represents a keyboard
+	 *  accelerator called a mnemonic.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkExpander* p;
+
+		if ( mnemonic )
+		{
+			p = cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			p = cast(GtkExpander*)gtk_expander_new(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_expander_new");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: IconInfo
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconInfo !is null )
+		{
+			gtk_icon_info_free(gtkIconInfo);
+		}
+	}
+code: end
+
+struct: IconSet
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSet !is null )
+		{
+			gtk_icon_set_unref(gtkIconSet);
+		}
+	}
+code: end
+
+struct: IconSource
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSource !is null )
+		{
+			gtk_icon_source_free(gtkIconSource);
+		}
+	}
+code: end
+
+struct: Image
+noCode: gtk_image_new_from_stock
+code: start
+	/**
+	 * Creates a Image displaying a stock icon. Sample stock icon
+	 * names are StockID.OPEN, StockID.EXIT. Sample stock sizes
+	 * are IconSize.MENU, IconSize.SMALL_TOOLBAR. If the stock
+	 * icon name isn't known, the image will be empty.
+	 * You can register your own stock icon names, see
+	 * gtk.IconFactory.IconFactory.addDefault() and gtk.IconFactory.IconFactory.add().
+	 * Params:
+	 *  StockID = a stock icon name
+	 *  size = a stock icon size
+	 * Returns:
+	 *  a new GtkImage displaying the stock icon
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (StockID stockID, GtkIconSize size)
+	{
+		auto p = gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
+		}
+		this(cast(GtkImage*)p);
+	}
+code: end
+
+struct: InfoBar
+noCode: get_action_area
+noCode: get_content_area
+code: start
+	/** */
+	public this(string[] buttonsText, ResponseType[] responses)
+	{
+		this();
+
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+
+	/** */
+	public this(StockID[] stockIDs, ResponseType[] responses)
+	{
+		this();
+
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
+		}
+	}
+
+	/** */
+	public Button addButton(StockID stockID, int responseId)
+	{
+		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId);
+
+		if ( p is null )
+		{
+			return null;
+		}
+
+		return new Button(cast(GtkButton*)p);
+	}
+
+	/** */
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
+		{
+			addButton(buttonsText[i], responses[i]);
+		}
+	}
+
+	/** */
+	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
+		}
+	}
+
+	/**
+	 * Returns the action area of info_bar.
+	 * Since 2.18
+	 * Returns: the action area.
+	 */
+	public VButtonBox getActionArea()
+	{
+		// GtkWidget * gtk_info_bar_get_action_area (GtkInfoBar *info_bar);
+		auto p = gtk_info_bar_get_action_area(gtkInfoBar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VButtonBox(cast(GtkVButtonBox*) p);
+	}
+
+	/**
+	 * Returns the content area of info_bar.
+	 * Since 2.18
+	 * Returns: the content area.
+	 */
+	public HBox getContentArea()
+	{
+		// GtkWidget * gtk_info_bar_get_content_area (GtkInfoBar *info_bar);
+		auto p = gtk_info_bar_get_content_area(gtkInfoBar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new HBox(cast(GtkHBox*) p);
+	}
+code: end
+
+struct: Label
+noCode: new
+noCode: new_with_mnemonic
+code: start
+	/**
+	 * Creates a new GtkLabel, containing the text in str.
+	 * If characters in str are preceded by an underscore, they are
+	 * underlined. If you need a literal underscore character in a label, use
+	 * '__' (two underscores). The first underlined character represents a
+	 * keyboard accelerator called a mnemonic. The mnemonic key can be used
+	 * to activate another widget, chosen automatically, or explicitly using
+	 * setMnemonicWidget().
+	 *
+	 * If setMnemonicWidget() is not called, then the first activatable ancestor of the Label
+	 * will be chosen as the mnemonic widget. For instance, if the
+	 * label is inside a button or menu item, the button or menu item will
+	 * automatically become the mnemonic widget and be activated by
+	 * the mnemonic.
+	 * Params:
+	 *  str = The text of the label, with an underscore in front of the
+	 *  mnemonic character
+	 *  mnemonic = when false uses the literal text passed in without mnemonic
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string str, bool mnemonic=true)
+	{
+		GtkLabel* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
+			p = cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str));
+		}
+		else
+		{
+			// GtkWidget* gtk_label_new (const gchar *str);
+			p = cast(GtkLabel*)gtk_label_new(Str.toStringz(str));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_label_new");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: Main
+code: start
+	/**
+	 * This initiates GtkD to supports multi threaded programs.
+	 * read full documantation at http://gtk.org/faq/#AEN482
+	 * from the FAQ:
+	 * "There is a single global lock that you must acquire with
+	 * gdk_threads_enter() before making any GDK calls,
+	 * and release with gdk_threads_leave() afterwards throughout your code."
+	 * This is to be used on any call to GDK not executed from the main thread.
+	 */
+	public static void initMultiThread(string[] args)
+	{
+		threadsInit();
+		init(args);
+	}
+code: end
+
+struct: MainWindow
+namespace:
+import: gtk.Widget
+import: gtk.Window
+import: gtk.Main
+import: gdk.Event
+code: start
+
+/**
+ * A top Level window that will stop the main event cycle when it's closed.
+ * Closing the last of the windows of class "MainWindow" will end the application.
+ */
+public class MainWindow : Window
+{
+	private static int countTotalMainWindows = 0;
+
+	/**
+	 * Creates a new MainWindow with a title
+	 */
+	public this(string title)
+	{
+		super(title);
+		countTotalMainWindows++;
+		//printf("MainWindows.this count = %d\n", countTotalMainWindows);
+		addOnDelete(&windowDelete);
+	}
+
+	/**
+	 * Executed when the user tries to close the window
+	 * Returns: true to refuse to close the window
+	 */
+	protected bool windowDelete(Event event, Widget widget)
+	{
+		--countTotalMainWindows;
+		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
+		if ( exit(0, false) || countTotalMainWindows==0 )
+		{
+			Main.quit();
+			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * Allows the application to close and decide if it can exit
+	 * Params:
+	 *  code = the code reason to exit
+	 *  force = if true the application must expect to be closed even against it's will
+	 * Returns: false to refuse to exit
+	 */
+	protected bool exit(int code, bool force)
+	{
+		return force;
+	}
+}
+code: end
+
+struct: MenuButton
+alias: set_direction setMenuDirection
+alias: get_direction getMenuDirection
+
+struct: MessageDialog
+noCode: new
+noCode: new_with_markup
+noCode: get_message_area
+code: start
+	/**
+	 * Creates a new message dialog, which is a simple dialog with an icon
+	 * indicating the dialog type (error, warning, etc.) and some text the
+	 * user may want to see. When the user clicks a button a "response"
+	 * signal is emitted with response IDs from GtkResponseType. See
+	 * GtkDialog for more details.
+	 * Params:
+	 *    	parent = transient parent, or NULL for none
+	 *    	flags = flags
+	 *    	type = type of message
+	 *    	buttons= set of buttons to use
+	 *    	messageFormat = printf()-style format string, or NULL
+	 *    	message = the message - should be null, any formatting should be done prior to call this constructor
+	 *  arguments for message_format
+	 * Returns:
+	 *  a new GtkMessageDialog
+	 */
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, string messageFormat, string message=null )
+	{
+		this(parent, flags, type, buttons, false, messageFormat, message );
+	}
+
+	/**
+	 * Creates a new message dialog, which is a simple dialog with an icon
+	 * indicating the dialog type (error, warning, etc.) and some text which
+	 * is marked up with the Pango text markup language.
+	 * When the user clicks a button a "response" signal is emitted with
+	 * response IDs from GtkResponseType. See GtkDialog for more details.
+	 *
+	 * If Markup is true special XML characters in the printf() arguments passed to this
+	 * function will automatically be escaped as necessary.
+	 * (See g_markup_printf_escaped() for how this is implemented.)
+	 * Usually this is what you want, but if you have an existing
+	 * Pango markup string that you want to use literally as the
+	 * label, then you need to use gtk_message_dialog_set_markup()
+	 * instead, since you can't pass the markup string either
+	 * as the format (it might contain '%' characters) or as a string
+	 * argument.
+	 * Since 2.4
+	 * Examples:
+	 * --------------------
+	 *  GtkWidget *dialog;
+	 *  dialog = gtk_message_dialog_new (main_application_window,
+	 *  GTK_DIALOG_DESTROY_WITH_PARENT,
+	 *  GTK_MESSAGE_ERROR,
+	 *  GTK_BUTTONS_CLOSE,
+	 *  NULL);
+	 *  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
+	 *  markup);
+	 * --------------------
+	 * Params:
+	 *  parent = transient parent, or NULL for none
+	 *  flags = flags
+	 *  type = type of message
+	 *  buttons = set of buttons to use
+	 *  messageFormat = printf()-style format string, or NULL
+	 *  message = the message - should be null, any formatting should be done prior to call this constructor
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, string messageFormat, string message=null )
+	{
+		GtkMessageDialog* p;
+
+		if ( markup )
+		{
+			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
+			p = cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
+					parent is null ? null : parent.getWindowStruct(),
+					flags,
+					type,
+					buttons,
+					Str.toStringz(messageFormat),
+					Str.toStringz(message),	// this should be null
+					null
+				);
+		}
+		else
+		{
+			// GtkWidget* gtk_message_dialog_new (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
+			p = cast(GtkMessageDialog*)gtk_message_dialog_new(
+					parent is null ? null : parent.getWindowStruct(),
+					flags,
+					type,
+					buttons,
+					Str.toStringz(messageFormat),
+					Str.toStringz(message),	// this should be null
+					null
+				);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_button_new()");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Since 2.22
+	 * Returns: A GtkVBox corresponding to the "message area" in the message_dialog. This is the box where the dialog's primary and secondary labels are packed. You can add your own extra content to that box and it will appear below those labels, on the right side of the dialog's image (or on the left for right-to-left languages). See gtk_dialog_get_content_area() for the corresponding function in the parent GtkDialog.
+	 */
+	public VBox getMessageArea()
+	{
+		// GtkWidget * gtk_message_dialog_get_message_area (GtkMessageDialog *message_dialog);
+		auto p = gtk_message_dialog_get_message_area(gtkMessageDialog);
+		if(p is null)
+		{
+			return null;
+		}
+		return new VBox(cast(GtkVBox*) p);
+	}
+code: end
+
+struct: Notebook
+code: start
+	/**
+	 * Append a page with a widget and a text for a label
+	 */
+	public int appendPage(Widget child, string tabLabel)
+	{
+		return appendPage(child, new Label(tabLabel));
+	}
+
+	/** */
+	void setCurrentPage(Widget child)
+	{
+		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
+	}
+code: end
+
+struct: Paned
+code: start
+	/** */
+	public void add(Widget child1, Widget child2)
+	{
+		add1(child1);
+		add2(child2);
+	}
+code: end
+
+struct: PopupBox
+code: start
+	/**
+	 * Create an information popup dialog.
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static void information(string message, string title)
+	{
+		information(null, message, title);
+	}
+
+	/**
+	 * Create an information popup dialog.
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static void information(Window parent, string message, string title)
+	{
+		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
+										MessageType.INFO,
+										ButtonsType.OK ,
+										message);
+		d.setTitle(title);
+		//d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
+		d.run();
+		d.destroy();
+	}
+
+
+	/**
+	 * Create an error popup dialog.
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static void error(string message, string title)
+	{
+		error(null, message, title);
+	}
+
+	/**
+	 * Create an error popup dialog.
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static void error(Window parent, string message, string title)
+	{
+		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
+										MessageType.ERROR,
+										ButtonsType.CANCEL ,
+										message);
+		d.setTitle(title);
+		//d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
+		d.run();
+		d.destroy();
+	}
+
+
+
+	/**
+	 * Create an 'yes' or 'no' popup dialog.
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static bool yesNo(string message, string title)
+	{
+		return yesNo(null, message, title);
+	}
+
+	/**
+	 * Create an 'yes' or 'no' popup dialog.
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static bool yesNo(Window parent, string message, string title)
+	{
+		MessageDialog d = new MessageDialog(
+				parent, cast(GtkDialogFlags)0,
+				MessageType.QUESTION,
+				ButtonsType.NONE,
+				message);
+		d.setTitle(title);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
+		int responce = d.run();
+		d.destroy();
+		return responce == ResponseType.YES;
+	}
+
+
+	/**
+	 * Create an 'yes', 'no' or 'cancel' popup dialog.
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static ResponseType yesNoCancel(string message, string title)
+	{
+		return yesNoCancel(null, message, title);
+	}
+
+	/**
+	 * Create an 'yes', 'no' or 'cancel' popup dialog.
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
+	 */
+	public static ResponseType yesNoCancel(Window parent, string message, string title)
+	{
+		MessageDialog d = new MessageDialog(
+				parent, cast(GtkDialogFlags)0,
+				MessageType.QUESTION,
+				ButtonsType.NONE ,
+				message);
+		d.setTitle(title);
+		d.addButton("gtk-no",ResponseType.NO);
+		d.addButton("gtk-yes",ResponseType.YES);
+		d.addButton("gtk-cancel",ResponseType.CANCEL);
+		ResponseType responce = cast(ResponseType)d.run();
+		d.destroy();
+		return responce;
+	}
+code: end
+
+struct: RadioButton
+noCode: new_with_label
+noCode: new_with_mnemonic
+noCode: new_with_label_from_widget
+noCode: new_with_mnemonic_from_widget
+code: start
+	/**
+	 * Creates a new RadioButton with a text label.
+	 * Params:
+	 *  group = an existing radio button group.
+	 *  label = the text label to display next to the radio button.
+	 *  mnemonic = if true the label will be created using
+	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
+	 *  mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ListSG group, string label, bool mnemonic=true)
+	{
+		GtkRadioButton* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_radio_button_new_with_mnemonic  (GSList *group,  const gchar *label);
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
+						group is null ? null : group.getListSGStruct(),
+						Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_radio_button_new_with_label (GSList *group,  const gchar *label);
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_label(
+						group is null ? null : group.getListSGStruct(),
+						Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_button_new_");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new RadioButton with a text label, adding it to the same group
+	 * as group.
+	 * Params:
+	 *  radioButton = an existing RadioButton.
+	 *  label = a text string to display next to the radio button.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (RadioButton radioButton, string label, bool mnemonic=true)
+	{
+		GtkRadioButton* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_radio_button_new_with_mnemonic_from_widget  (GtkRadioButton *group,  const gchar *label);
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
+						radioButton.getRadioButtonStruct(),
+						Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_radio_button_new_with_label_from_widget  (GtkRadioButton *group,  const gchar *label);
+			p = cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
+						radioButton.getRadioButtonStruct(),
+						Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_button_new_");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new RadioButton with a text label,
+	 * and creates a new group.
+	 * Params:
+	 *  label = a text string to display next to the radio button.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		this(cast(ListSG)null, label, mnemonic);
+	}
+code: end
+
+struct: ScaleButton
+noCode: set_orientation
+noCode: get_orientation
+
+struct: Statusbar
+noCode: get_message_area
+code: start
+	/**
+	 * Retrieves the box containing the label widget.
+	 * Since 2.20
+	 * Returns: a GtkBox. [transfer none]
+	 */
+	public Box getMessageArea()
+	{
+		auto p = gtk_statusbar_get_message_area(gtkStatusbar);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Box(cast(GtkBox*) p);
+	}
+code: end
+
+struct: StatusIcon
+noCode: new_from_stock
+noCode: new_from_file
+noCode: new_from_icon_name
+code: start
+	/**
+	 * Creates a status icon displaying a stock icon. Sample stock icon
+	 * names are StockID.OPEN, StockID.QUIT. You can register your
+	 * own stock icon names, see gtk_icon_factory_add_default() and
+	 * gtk_icon_factory_add().
+	 * Since 2.10
+	 * Params:
+	 *  stock_id = a stock icon id
+	 * Returns:
+	 *  a new GtkStatusIcon
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (StockID stockID)
+	{
+		auto p = gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID]));
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_stock");
+		}
+		this(cast(GtkStatusIcon*)p);
+	}
+
+	/**
+	 * Creates a status icon displaying an icon from the current icon theme.
+	 * If the current icon theme is changed, the icon will be updated
+	 * appropriately.
+	 * Since 2.10
+	 * Params:
+	 *  iconName =  an icon name
+	 *  loadFromFile = treat iconName as a filename and load that image
+	 *  with gtk_status_icon_new_from_file.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string iconName, bool loadFromFile = false)
+	{
+		//TODO: look at a better way to do this.
+		GtkStatusIcon* p;
+
+		if(loadFromFile)
+		{
+			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName));
+		}
+		else
+		{
+			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_status_icon_new_from_");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: TargetEntry
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetEntry !is null )
+		{
+			gtk_target_entry_free(gtkTargetEntry);
+		}
+	}
+code: end
+
+struct: TargetList
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetList !is null )
+		{
+			gtk_target_list_unref(gtkTargetList);
+		}
+	}
+code: end
+
+struct: Testing
+code: start
+	/**
+	 * This function is used to initialize a GTK+ test program.
+	 * It will in turn call testInit() and init() to
+	 * properly initialize the testing framework and graphical toolkit.
+	 * It'll also set the program's locale to "C" and prevent loading of
+	 * rc files and Gtk+ modules. This is done to make the test program environments as deterministic as possible.
+	 * Like init() any known arguments will be processed and stripped from and argv.
+	 * Params:
+	 *  argv = The argv parameter of main(). Any parameters understood by testInit() or init() are stripped before return.
+	 */
+	public static void testInit(ref string[] argv)
+	{
+		// void gtk_test_init(int *argcp, char ***argvp, ...);
+		char** outargv = Str.toStringzArray(argv);
+		int argc = cast(int) argv.length;
+
+		gtk_test_init(&argc, &outargv, null);
+
+		argv = Str.toStringArray(outargv);
+	}
+code: end
+
+struct: TextIter
+code: start
+	/** */
+	public this()
+	{
+		this(new GtkTextIter);
+	}
+code: end
+
+struct: ToggleButton
+noCode: new_with_label
+noCode: new_with_mnemonic
+code: start
+	/**
+	 * Creates a new toggle button with a text label.
+	 * Params:
+	 *  label = a string containing the message to be placed in the toggle button.
+	 *  mnemonic =  if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkToggleButton* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_toggle_button_new_with_mnemonic  (const gchar *label);
+			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_toggle_button_new_with_label  (const gchar *label);
+			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_toggle_button_new_");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: WidgetPath
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkWidgetPath !is null )
+		{
+			gtk_widget_path_free(gtkWidgetPath);
+		}
+	}
+code: end
+
+struct: Window
+code: start
+	/**
+	 * Creates a top level window with a title
+	 * Params:
+	 * 		title = The Window title
+	 */
+	public this(string title)
+	{
+		this(GtkWindowType.TOPLEVEL);
+		setTitle(title);
+	}
+
+	/**
+	 * Move the window to an absolute position.
+	 * just calls move(int, int).
+	 * convinience because GdkEvent structs return the position coords as doubles
+	 */
+	public void move(double x, double y)
+	{
+		move(cast(int)x, cast(int)y);
+	}
+code: end
 
 move: show_about_dialog AboutDialog
 

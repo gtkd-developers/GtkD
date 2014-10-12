@@ -171,22 +171,22 @@ final class GtkFunction
 
 		writeDocs(buff);
 
-		string func = "extern(C) "~ tokenToGtkD(returnType.cType, wrapper.aliasses) ~" function(";
+		string func = "extern(C) "~ tokenToGtkD(returnType.cType, wrapper.aliasses, localAliases()) ~" function(";
 
 		foreach ( size_t i, param; params )
 		{
 			if ( i > 0 )
 				func ~= ", ";
 
-			func ~= tokenToGtkD(param.type.cType, wrapper.aliasses);
+			func ~= tokenToGtkD(param.type.cType, wrapper.aliasses, localAliases());
 
 			if ( param.type.size > -1 )
 				func ~= "["~ to!string(param.type.size) ~"]";
 
-			func ~= " "~ tokenToGtkD(param.name, wrapper.aliasses);
+			func ~= " "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}
 
-		func ~= ") "~ tokenToGtkD(name, wrapper.aliasses) ~";";
+		func ~= ") "~ tokenToGtkD(name, wrapper.aliasses, localAliases()) ~";";
 
 		buff ~= func;
 		return buff;
@@ -198,7 +198,7 @@ final class GtkFunction
 		assert(type != GtkFunctionType.Signal);
 
 		string ext;
-		string type = stringToGtkD(returnType.cType, wrapper.aliasses);
+		string type = stringToGtkD(returnType.cType, wrapper.aliasses, localAliases());
 
 		if ( type.startsWith("bool") )
 			ext ~= type.replaceFirst("bool", "int");
@@ -209,9 +209,9 @@ final class GtkFunction
 
 		if ( instanceParam )
 		{
-			ext ~= stringToGtkD(instanceParam.type.cType, wrapper.aliasses);
+			ext ~= stringToGtkD(instanceParam.type.cType, wrapper.aliasses, localAliases());
 			ext ~= " ";
-			ext ~= tokenToGtkD(instanceParam.name, wrapper.aliasses);
+			ext ~= tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 		}
 
 		foreach ( i, param; params )
@@ -219,7 +219,7 @@ final class GtkFunction
 			if ( i > 0 || instanceParam )
 				ext ~= ", ";
 
-			type = stringToGtkD(param.type.cType, wrapper.aliasses);
+			type = stringToGtkD(param.type.cType, wrapper.aliasses, localAliases());
 
 			if ( type.startsWith("bool") )
 				ext ~= type.replaceFirst("bool", "int");
@@ -228,7 +228,7 @@ final class GtkFunction
 
 			ext ~= " ";
 			if ( param.name != "..." )
-				ext ~= tokenToGtkD(param.name, wrapper.aliasses);
+				ext ~= tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}
 
 		if ( throws )
@@ -263,14 +263,14 @@ final class GtkFunction
 				dec ~= "override ";
 
 			dec ~= getType(returnType) ~" ";
-			dec ~= tokenToGtkD(name, wrapper.aliasses) ~"(";
+			dec ~= tokenToGtkD(name, wrapper.aliasses, localAliases()) ~"(";
 		}
 
 		size_t paramCount;
 
 		if ( instanceParam && type == GtkFunctionType.Method && (strct.isNamespace() || strct.noNamespace ) )
 		{
-			dec ~= strct.cType ~" "~ tokenToGtkD(instanceParam.name, wrapper.aliasses);
+			dec ~= strct.cType ~" "~ tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 			paramCount++;
 		}
 
@@ -294,7 +294,7 @@ final class GtkFunction
 				dec ~= "ref ";
 
 			dec ~= getType(param.type, param.direction) ~" ";
-			dec ~= tokenToGtkD(param.name, wrapper.aliasses);
+			dec ~= tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}
 
 		dec ~= ")";
@@ -326,7 +326,7 @@ final class GtkFunction
 				dType = strct.pack.getStruct(params[0].type.name);
 
 			if ( strct.isNamespace() || strct.noNamespace )
-				gtkCall ~= tokenToGtkD(instanceParam.name, wrapper.aliasses);
+				gtkCall ~= tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 			else if ( dType.type == GtkStructType.Interface )
 				gtkCall ~= dType.getHandleFunc() ~"()";
 			else
@@ -336,7 +336,7 @@ final class GtkFunction
 		foreach( i, param; params )
 		{
 			GtkStruct dType;
-			string id = tokenToGtkD(param.name, wrapper.aliasses);
+			string id = tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 
 			if ( param.type.isArray() )
 				dType = strct.pack.getStruct(param.type.elementType.name);
@@ -482,7 +482,7 @@ final class GtkFunction
 				string arrId;
 
 				if ( param.lengthFor )
-					arrId = tokenToGtkD(param.lengthFor.name, wrapper.aliasses);
+					arrId = tokenToGtkD(param.lengthFor.name, wrapper.aliasses, localAliases());
 
 				final switch ( param.direction ) with (GtkParamDirection)
 				{
@@ -594,7 +594,7 @@ final class GtkFunction
 			 * can return void pointers or base types.
 			 */
 			buff ~= "this(cast(" ~ strct.cType ~ "*) p);";
-			
+
 			return buff;
 		}
 		else if ( isStringType(returnType) )
@@ -819,7 +819,7 @@ final class GtkFunction
 		string[] buff;
 
 		buff ~= "extern(C) static "
-			~ tokenToGtkD(returnType.cType, wrapper.aliasses)
+			~ tokenToGtkD(returnType.cType, wrapper.aliasses, localAliases())
 			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
 
 		buff ~= "{";
@@ -869,7 +869,7 @@ final class GtkFunction
 						continue;
 
 					string[] lines = param.doc.splitLines();
-					buff ~= " *     "~ tokenToGtkD(param.name, wrapper.aliasses) ~" = "~ lines[0];
+					buff ~= " *     "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases()) ~" = "~ lines[0];
 					foreach( line; lines[1..$] )
 						buff ~= " *         "~ line.strip();
 				}
@@ -917,6 +917,14 @@ final class GtkFunction
 		}
 	}
 
+	private string[string] localAliases()
+	{
+		if ( strct )
+			return strct.aliases;
+
+		return null;
+	}
+
 	/**
 	 * Gen an string representation of the type.
 	 */
@@ -955,8 +963,8 @@ final class GtkFunction
 			else if ( direction != GtkParamDirection.Default && type.cType.among("char**", "gchar**") )
 				return "string";
 			else if ( type.name == type.cType )
-				return stringToGtkD(type.name, wrapper.aliasses);
-		
+				return stringToGtkD(type.name, wrapper.aliasses, localAliases());
+
 			GtkStruct dType = strct.pack.getStruct(type.name);
 
 			if ( isDType(dType) )
@@ -971,12 +979,12 @@ final class GtkFunction
 		}
 
 		if ( type.cType.empty )
-			return stringToGtkD(type.name, wrapper.aliasses);
+			return stringToGtkD(type.name, wrapper.aliasses, localAliases());
 
 		if ( direction != GtkParamDirection.Default )
-			return stringToGtkD(type.cType[0..$-1], wrapper.aliasses);
+			return stringToGtkD(type.cType[0..$-1], wrapper.aliasses, localAliases());
 
-		return stringToGtkD(type.cType, wrapper.aliasses);
+		return stringToGtkD(type.cType, wrapper.aliasses, localAliases());
 	}
 
 	private bool isDType(GtkStruct dType)
@@ -1026,7 +1034,7 @@ final class GtkFunction
 	private string lenId(GtkType type)
 	{
 		if ( type.length > -1 )
-			return tokenToGtkD(params[type.length].name, wrapper.aliasses);
+			return tokenToGtkD(params[type.length].name, wrapper.aliasses, localAliases());
 		//The c function returns the length.
 		else if ( type.length == -2 )
 			return "p";
@@ -1058,11 +1066,11 @@ final class GtkFunction
 			GtkStruct par = strct.pack.getStruct(param.type.name);
 
 			if ( par && !isDType(par) )
-				buff ~= ", "~ par.cType ~"* "~ tokenToGtkD(param.name, wrapper.aliasses);
+				buff ~= ", "~ par.cType ~"* "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 			else if ( par )
-				buff ~= ", "~ par.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses);
+				buff ~= ", "~ par.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 			else
-				buff ~= ", "~ param.type.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses);
+				buff ~= ", "~ param.type.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}
 
 		if ( strct.type == GtkStructType.Interface )
@@ -1085,9 +1093,9 @@ final class GtkFunction
 			GtkStruct par = strct.pack.getStruct(param.type.name);
 
 			if ( isDType(par) )
-				buff ~= construct(par) ~"("~ tokenToGtkD(param.name, wrapper.aliasses) ~")";
+				buff ~= construct(par) ~"("~ tokenToGtkD(param.name, wrapper.aliasses, localAliases()) ~")";
 			else
-				buff ~= tokenToGtkD(param.name, wrapper.aliasses);
+				buff ~= tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}
 
 		if ( !buff.empty )

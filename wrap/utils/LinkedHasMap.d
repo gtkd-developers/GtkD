@@ -211,16 +211,16 @@ struct LinkedHashMap(Key, Value)
 	int opApply(scope int delegate(ref Key, ref Value) dg)
 	{
 		Node* node = front;
-		
+
 		while ( node !is null )
 		{
 			int result = dg(node.key, node.val);
 			if ( result )
 				return result;
-			
+
 			node = node.next;
 		}
-		
+
 		return 0;
 	}
 
@@ -233,14 +233,14 @@ struct LinkedHashMap(Key, Value)
 	}
 
 	/**
-	 * Returns: An dynamic array, the elements of which are the keys in the LinkedHashmap. 
+	 * Returns: An dynamic array, the elements of which are the keys in the LinkedHashmap.
 	 */
 	@property inout(Key)[] keys() inout @safe
 	{
 		inout(Key)[] k;
 
 		inout(Node)* node = front;
-		
+
 		while ( node !is null )
 		{
 			k ~= node.key;
@@ -251,20 +251,20 @@ struct LinkedHashMap(Key, Value)
 	}
 
 	/**
-	 * Returns: An dynamic array, the elements of which are the values in the LinkedHashmap. 
+	 * Returns: An dynamic array, the elements of which are the values in the LinkedHashmap.
 	 */
 	@property inout(Value)[] values() inout @safe
 	{
 		inout(Value)[] v;
-		
+
 		inout(Node)* node = front;
-		
+
 		while ( node !is null )
 		{
 			v ~= node.val;
 			node = node.next;
 		}
-		
+
 		return v;
 	}
 
@@ -285,7 +285,7 @@ struct LinkedHashMap(Key, Value)
 	{
 		LinkedHashMap!(Key, Value) copy;
 		Node* node = front;
-		
+
 		while ( node !is null )
 		{
 			copy[node.key] = node.val;
@@ -304,28 +304,28 @@ struct LinkedHashMap(Key, Value)
 		static struct KeyRange
 		{
 			Node* node;
-			
+
 			this(Node* node) pure nothrow @safe
 			{
 				this.node = node;
 			}
-			
+
 			@property Key front() pure nothrow @safe
 			{
 				return node.key;
 			}
-			
+
 			void popFront() pure nothrow @safe
 			{
 				node = node.next;
 			}
-			
+
 			@property bool empty() pure const nothrow @safe
 			{
 				return node is null;
 			}
 		}
-		
+
 		return KeyRange(front);
 	}
 
@@ -338,28 +338,28 @@ struct LinkedHashMap(Key, Value)
 		static struct ValueRange
 		{
 			Node* node;
-			
+
 			this(Node* node) pure nothrow @safe
 			{
 				this.node = node;
 			}
-			
+
 			@property Value front() pure nothrow @safe
 			{
 				return node.val;
 			}
-			
+
 			void popFront() pure nothrow @safe
 			{
 				node = node.next;
 			}
-			
+
 			@property bool empty() pure const nothrow @safe
 			{
 				return node is null;
 			}
 		}
-		
+
 		return ValueRange(front);
 	}
 }
