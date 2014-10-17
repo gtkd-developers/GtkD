@@ -610,6 +610,9 @@ final class GtkStruct
 
 			void getReturnImport(GtkType type)
 			{
+				if ( type.name in structWrap )
+					return;
+
 				GtkStruct dType = pack.getStruct(type.name);
 
 				if ( dType is this )
@@ -636,6 +639,9 @@ final class GtkStruct
 
 			void getParamImport(GtkType type)
 			{
+				if ( type.name in structWrap )
+					return;
+
 				GtkStruct dType = pack.getStruct(type.name);
 
 				if ( dType is this )

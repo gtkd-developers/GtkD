@@ -259,7 +259,7 @@ final class GtkFunction
 			if ( type == GtkFunctionType.Method && strct.isNamespace() )
 				dec ~= "static ";
 
-			if ( (strct.parentStruct && name in strct.parentStruct.functions) || lookupOverride )
+			if ( lookupOverride || checkOverride(name) )
 				dec ~= "override ";
 
 			dec ~= getType(returnType) ~" ";
@@ -1044,6 +1044,24 @@ final class GtkFunction
 		//TODO: zero-terminated?
 
 		return null;
+	}
+
+	/**
+	 * Check if any of the ancestors contain the function functionName.
+	 */
+	private bool checkOverride(string functionName)
+	{
+		GtkStruct ancestor = strct;
+
+		while(ancestor)
+		{
+			if ( name in ancestor.functions )
+				return true;
+
+			ancestor = ancestor.parentStruct;
+		}
+
+		return false;
 	}
 
 	private string construct(GtkStruct type)

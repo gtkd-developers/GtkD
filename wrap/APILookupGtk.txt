@@ -24,6 +24,133 @@
 wrap: gtk
 file: /usr/share/gir-1.0/Gtk-3.0.gir
 
+struct: Action
+noCode: get_stock_id
+noCode: create_icon
+noCode: create_menu_item
+noCode: create_tool_item
+noCode: create_menu
+code: start
+	/**
+	 * Creates a new GtkAction object. To add the action to a
+	 * GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * See the section called UI Definitions for information on allowed action
+	 * names.
+	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockId =  the stock icon to display in widgets representing the
+	 *  action.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
+	}
+
+	/**
+	 * Gets the stock id of action.
+	 * Since 2.16
+	 * Returns: the stock id
+	 */
+	public StockID getStockId()
+	{
+		// const gchar * gtk_action_get_stock_id (GtkAction *action);
+		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
+
+		foreach(i, desc; StockDesc)
+		{
+			if(desc == id)
+				return cast(StockID)i;
+		}
+
+		return StockID.DISCARD;
+	}
+
+	/**
+	 * Sets the stock id on action
+	 * Since 2.16
+	 * Params:
+	 * stockId =  the stock id
+	 */
+	public void setStockId(StockID stockId)
+	{
+		setStockId(StockDesc[stockId]);
+	}
+
+	/**
+	 * This function is intended for use by action implementations to
+	 * create icons displayed in the proxy widgets.
+	 * Since 2.4
+	 * Params:
+	 * iconSize = the size of the icon that should be created. [type int]
+	 * Returns: a widget that displays the icon for this action.
+	 */
+	public Image createIcon(GtkIconSize iconSize)
+	{
+		// GtkWidget * gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
+		auto p = gtk_action_create_icon(gtkAction, iconSize);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Image(cast(GtkImage*) p);
+	}
+
+	/**
+	 * Creates a menu item widget that proxies for the given action.
+	 * Since 2.4
+	 * Returns: a menu item connected to the action.
+	 */
+	public MenuItem createMenuItem()
+	{
+		// GtkWidget * gtk_action_create_menu_item (GtkAction *action);
+		auto p = gtk_action_create_menu_item(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new MenuItem(cast(GtkMenuItem*) p);
+	}
+
+	/**
+	 * Creates a toolbar item widget that proxies for the given action.
+	 * Since 2.4
+	 * Returns: a toolbar item connected to the action.
+	 */
+	public ToolItem createToolItem()
+	{
+		// GtkWidget * gtk_action_create_tool_item (GtkAction *action);
+		auto p = gtk_action_create_tool_item(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new ToolItem(cast(GtkToolItem*) p);
+	}
+
+	/**
+	 * If action provides a GtkMenu widget as a submenu for the menu
+	 * item or the toolbar item it creates, this function returns an
+	 * instance of that menu.
+	 * Since 2.12
+	 * Returns: the menu item provided by the action, or NULL.
+	 */
+	public Menu createMenu()
+	{
+		// GtkWidget * gtk_action_create_menu (GtkAction *action);
+		auto p = gtk_action_create_menu(gtkAction);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Menu(cast(GtkMenu*) p);
+	}
+code: end
+
 struct: Alignment
 code: start
 	/** */
@@ -487,6 +614,51 @@ code: start
 		actions ~= "action.cancel";
 		return createActionBox(onClicked, stocks, actions);
 	}
+
+code: end
+struct:
+class: CellEditable
+extend: GObject.Object
+implements: CellEditable
+
+struct: CellView
+noCode: new_with_text
+noCode: new_with_markup
+code: start
+	/**
+	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
+	 * to it, and makes its show text.
+	 * If markup is true the text can be marked up with the Pango text
+	 * markup language.
+	 * Since: 2.6
+	 * Params:
+	 *  text = the text to display in the cell view
+	 * Returns:
+	 *  A newly created GtkCellView widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string text, bool markup=true)
+	{
+		GtkCellView* p;
+
+		if ( markup )
+		{
+			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
+			p = cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text));
+		}
+		else
+		{
+			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
+			p = cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_cell_view_new_with_");
+		}
+
+		this(p);
+	}
 code: end
 
 struct: CheckButton
@@ -532,6 +704,282 @@ code: start
 	{
 		this(label, mnemonic);
 		addOnClicked(cast(void delegate(Button))onClicked);
+	}
+code: end
+
+struct: CheckMenuItem
+noCode: new_with_label
+noCode: new_with_mnemonic
+code: start
+	/**
+	 * Creates a new GtkCheckMenuItem with a label.
+	 * Params:
+	 *  label = the string to use for the label.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkCheckMenuItem* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_check_menu_item_new_with_mnemonic  (const gchar *label);
+			p = cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_check_menu_item_new_with_label  (const gchar *label);
+			p = cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_check_menu_item_new_with_");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: ColorButton
+noCode: set_rgba
+noCode: get_rgba
+noCode: set_use_alpha
+noCode: get_use_alpha
+
+struct: ColorSelectionDialog
+import: gtk.ColorSelection
+noCode: get_color_selection
+code: start
+	/**
+	 * Retrieves the ColorSelection widget embedded in the dialog.
+	 *
+	 * Return: the embedded ColorSelection
+	 *
+	 * Since: 2.14
+	 */
+	public override ColorSelection getColorSelection()
+	{
+		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ColorSelection)(cast(GtkColorSelection*) p);
+	}
+code: end
+
+struct: ComboBox
+noCode: new
+noCode: new_with_entry
+noCode: new_with_model
+noCode: new_with_model_and_entry
+noCode: new_with_area
+noCode: new_with_area_and_entry
+code: start
+	/**
+	 * Creates a new empty GtkComboBox.
+	 * Params:
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool entry=true)
+	{
+		GtkComboBox* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_text (void);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_entry();
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new (void);
+			p = cast(GtkComboBox*)gtk_combo_box_new();
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new GtkComboBox with the model initialized to model.
+	 * Params:
+	 *   model = A GtkTreeModel.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (TreeModelIF model, bool entry=true)
+	{
+		GtkComboBox* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelTStruct());
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new empty GtkComboBox using area to layout cells.
+	 * Params:
+	 *   area = the GtkCellArea to use to layout cell renderers.
+	 *   entry = If true, create an empty ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (CellArea area, bool entry=true)
+	{
+		GtkComboBox* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_new_with_area_and_entry (GtkCellArea *area);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_area_and_entry((area is null) ? null : area.getCellAreaStruct());
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_new_with_area (GtkCellArea* area);
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: ComboBoxText
+noCode: new
+noCode: new_with_entry
+code: start
+	/**
+	 * Creates a new ComboBoxText, which is a ComboBox just displaying strings.
+	 * Params:
+	 *   entry = If true, create an ComboBox with an entry.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool entry=true)
+	{
+		GtkComboBoxText* p;
+		if ( entry )
+		{
+			// GtkWidget* gtk_combo_box_text_new_with_entry (void);
+			p = cast(GtkComboBoxText*)gtk_combo_box_text_new_with_entry();
+		}
+		else
+		{
+			// GtkWidget* gtk_combo_box_text_new (void);
+			p = cast(GtkComboBoxText*)gtk_combo_box_text_new();
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_combo_box_new");
+		}
+
+		this(p);
+	}
+
+	/** */
+	public void setActiveText(string text, bool insert=false)
+	{
+		int active = 0;
+		setActive(0);
+		while ( getActive() >= 0 ) // returns -1 if end of list if reached
+		{
+			if( text == getActiveText() ) return;
+			++active;
+			setActive(active);
+		}
+		// was not found, the combo has now nothing selected
+		if ( insert )
+		{
+			append("", text);
+			setActive(active);
+		}
+	}
+
+	/** */
+	int getIndex(string text)
+	{
+		TreeIter iter = new TreeIter();
+		TreeModelIF model = getModel();
+		iter.setModel(model);
+		int index = 0;
+		bool found = false;
+		bool end = false;
+		if ( model.getIterFirst(iter) )
+		{
+			while ( !end && iter !is  null && !found )
+			{
+				found = iter.getValueString(0) == text;
+				if ( !found )
+				{
+					end = !model.iterNext(iter);
+					++index;
+				}
+			}
+		}
+		else
+		{
+			end = true;
+		}
+		return end ? -1 : index;
+	}
+
+	/** */
+	void prependOrReplaceText(string text)
+	{
+		int index = getIndex(text);
+		if ( index > 0 )
+		{
+			remove(index);
+			prepend("", text);
+		}
+		else if ( index == -1 )
+		{
+			prepend("", text);
+		}
+	}
+code: end
+
+struct: Container
+code: start
+	/**
+	 * Removes all widgets from the container
+	 */
+	void removeAll()
+	{
+		GList* gList = gtk_container_get_children(getContainerStruct());
+		if ( gList !is null )
+		{
+			ListG children = new ListG(gList);
+			for ( int i=children.length()-1 ; i>=0 ; i-- )
+			{
+				gtk_container_remove(getContainerStruct(), cast(GtkWidget*)children.nthData(i));
+			}
+		}
 	}
 code: end
 
@@ -646,6 +1094,21 @@ code: start
 	}
 code: end
 
+struct: DrawingArea
+code: start
+	/**
+	 * Create a new DrawingArea and sets the SizeRequest
+	 * Params:
+	 *    	width =
+	 *    	height =
+	 */
+	this(int width, int height)
+	{
+		this();
+		setSizeRequest(width, height);
+	}
+code: end
+
 struct: Entry
 code: start
 	/** */
@@ -732,6 +1195,136 @@ code: start
 	}
 code: end
 
+struct: FileChooser
+alias: set_action setFileChooserAction
+alias: get_action getFileChooserAction
+
+struct: FileChooserDialog
+noCode: new
+code: start
+	/**
+	 * Creates a new FileChooserDialog. This function is analogous to
+	 * gtk_dialog_new_with_buttons().
+	 * Since: 2.4
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
+	{
+		if ( buttonsText  is  null )
+		{
+			buttonsText ~= "OK";
+			buttonsText ~= "Cancel";
+		}
+		if ( responses  is  null )
+		{
+			responses ~= ResponseType.OK;
+			responses ~= ResponseType.CANCEL;
+		}
+
+		auto p = gtk_file_chooser_dialog_new(
+				Str.toStringz(title),
+				(parent is null) ? null : parent.getWindowStruct(),
+				action,
+				null,
+				0);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
+		}
+
+		this(cast(GtkFileChooserDialog*) p);
+
+		addButtons(buttonsText, responses);
+	}
+code: end
+
+struct: FontSelectionDialog
+import: gtk.FontSelection
+noCode: get_font_selection
+code: start
+	/**
+	 * Retrieves the FontSelection widget embedded in the dialog.
+	 *
+	 * Deprecated: Use FontChooserDialog
+	 *
+	 * Return: the embedded FontSelection
+	 *
+	 * Since: 2.22
+	 */
+	public override FontSelection getFontSelection()
+	{
+		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(FontSelection)(cast(GtkFontSelection*) p);
+	}
+code: end
+
+struct: Frame
+code: start
+	/**
+	 * Creates frame with label and set it's child widget
+	 */
+	public this(Widget widget, string label)
+	{
+		this(label);
+		add(widget);
+	}
+code: end
+
+struct: Gradient
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
+		{
+			gtk_gradient_unref(gtkGradient);
+		}
+	}
+code: end
+
+struct: HButtonBox
+code: start
+	/**
+	 * Creates a new HButtonBox and sets comon parameters
+	 */
+	static HButtonBox createActionBox()
+	{
+		HButtonBox bBox = new HButtonBox();
+		bBox.setLayout(ButtonBoxStyle.END);
+		bBox.setBorderWidth(5);
+		bBox.setSpacing(7);
+		return bBox;
+	}
+code: end
+
+struct: HPaned
+code: start
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * Params:
+	 *  child1 =
+	 *  child2 =
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+code: end
+
 struct: IconInfo
 code: start
 	~this ()
@@ -766,7 +1359,7 @@ code: start
 code: end
 
 struct: Image
-noCode: gtk_image_new_from_stock
+noCode: new_from_stock
 code: start
 	/**
 	 * Creates a Image displaying a stock icon. Sample stock icon
@@ -790,6 +1383,69 @@ code: start
 			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
 		}
 		this(cast(GtkImage*)p);
+	}
+code: end
+
+struct: ImageMenuItem
+noCode: new_with_label
+noCode: new_with_mnemonic
+noCode: new_from_stock
+code: start
+	/**
+	 * Creates a new GtkImageMenuItem containing a label.
+	 * If mnemonic it true the label will be created using
+	 * gtk_label_new_with_mnemonic(), so underscores
+	 * in label indicate the mnemonic for the menu item.
+	 * Params:
+	 *  label = the text of the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkImageMenuItem* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
+			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_with_");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new GtkImageMenuItem containing the image and text from a
+	 * stock item.
+	 * If you want this menu item to have changeable accelerators, then pass in
+	 * null for accelGroup. Next call setAccelPath() with an appropriate path
+	 * for the menu item, use gtk.StockItem.StockItem.lookup() to look up the
+	 * standard accelerator for the stock item, and if one is found, call
+	 * gtk.AccelMap.AccelMap.addEntry() to register it.
+	 * Params:
+	 *   StockID    = the name of the stock item
+	 *   accelGroup = the GtkAccelGroup to add the menu items accelerator to,
+	 *                or NULL.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (StockID stockID, AccelGroup accelGroup)
+	{
+		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
+		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_image_menu_item_new_from_stock");
+		}
+		this(cast(GtkImageMenuItem*) p);
 	}
 code: end
 
@@ -931,6 +1587,67 @@ code: start
 	}
 code: end
 
+struct: ListStore
+code: start
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter()
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_list_store_append(getListStoreStruct(), iter);
+		return new TreeIter(iter);
+	}
+
+	/**
+	 * sets the values for one row
+	 * Params:
+	 *  iter = the row iteractor
+	 *  columns = an arrays with the columns to set
+	 *  values = an arrays with the values
+	 */
+	void set(TreeIter iter, int[] columns, char*[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			gtk_list_store_set(
+					gtkListStore,
+					iter.getTreeIterStruct(),
+					columns[i],
+					values[i],-1);
+		}
+	}
+
+	/** ditto */
+	void set(TreeIter iter, int[] columns, string[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			gtk_list_store_set(
+					gtkListStore,
+					iter.getTreeIterStruct(),
+					columns[i],
+					Str.toStringz(values[i]),-1);
+		}
+	}
+
+	/** */
+	void setValue(TreeIter iter, int column, string value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));
+	}
+
+	/** */
+	void setValue(TreeIter iter, int column, int value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+code: end
+
 struct: Main
 code: start
 	/**
@@ -1006,9 +1723,207 @@ public class MainWindow : Window
 }
 code: end
 
+struct: Menu
+code: start
+	/**
+	 * Popups up this menu
+	 * Params:
+	 *  button = you can pass a button number here
+	 *  activateTime = you can pass the time from an event here
+	 */
+	void popup(guint button, guint32 activateTime)
+	{
+		popup(null, null, null, null, button, activateTime);
+	}
+
+	/**
+	 * Creates and append a submenu to this menu.
+	 * This menu item that actualy has the sub menu is also created.
+	 * Params:
+	 *  label = the sub menu item label
+	 * Returns: the new menu
+	 */
+	Menu appendSubmenu(string label)
+	{
+		MenuItem item = new MenuItem(label);
+		append(item);
+		Menu submenu = new Menu();
+		item.setSubmenu(submenu);
+		return submenu;
+	}
+
+	/** */
+	void appendSubmenu(string label, Menu submenu)
+	{
+		MenuItem item = new MenuItem(label);
+		append(item);
+		item.setSubmenu(submenu);
+	}
+
+	/** */
+	Menu prependSubmenu(string label)
+	{
+		MenuItem item = new MenuItem(label);
+		prepend(item);
+		Menu submenu = new Menu();
+		item.setSubmenu(submenu);
+		return submenu;
+	}
+code: end
+
+struct: MenuBar
+code: start
+	/** */
+	Menu append(string label, bool rightJustify=false)
+	{
+		MenuItem item = new MenuItem(label);
+		super.append(item);
+		item.setRightJustified(rightJustify);
+		Menu menu= new Menu();
+		item.setSubmenu(menu);
+		return menu;
+	}
+
+	/** */
+	public override void append(Widget widget)
+	{
+		super.append(widget);
+	}
+code: end
+
 struct: MenuButton
 alias: set_direction setMenuDirection
 alias: get_direction getMenuDirection
+
+struct: MenuItem
+noCode: new_with_label
+noCode: new_with_mnemonic
+alias: activate itemActivate
+code: start
+	/** store the action code passed in by the applcation */
+	private string actionLabel;
+
+	/** Gets the application set action code */
+	public string getActionName()
+	{
+		if ( actionLabel is null )
+		{
+			actionLabel = "";
+		}
+		return actionLabel;
+	}
+
+	/**
+	 * Creates a new menu item with a label and a listener and a action.
+	 * used for backward compatibily with DUI.
+	 */
+	this(string label, void delegate(MenuItem)dlg, string action)
+	{
+		this(label);
+		this.actionLabel = action;
+		addOnActivate(dlg);
+	}
+
+	/**
+	 * Creates a new Item associated with a "activate" delegate and with a action code
+	 * and optionally accelGroup
+	 */
+	public this(void delegate(MenuItem) dlg, string label, string action,
+				bool mnemonic=true,
+				AccelGroup accelGroup=null,
+				char accelKey='\0',
+				GdkModifierType modifierType=GdkModifierType.CONTROL_MASK,
+				GtkAccelFlags accelFlags=GtkAccelFlags.VISIBLE
+				)
+	{
+		this(label, mnemonic);
+		this.actionLabel = action;
+		addOnActivate(dlg);
+		if ( accelGroup !is null && accelKey != '\0' )
+		{
+			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags);
+		}
+	}
+
+	/**
+	 * Creates a new Item associated with a "activate" delegate
+	 */
+	public this(void delegate(MenuItem) dlg, string label, bool mnemonic=true)
+	{
+		this(label, mnemonic);
+		addOnActivate(dlg);
+	}
+
+	/**
+	 * Creates a new GtkMenuItem whose child is a GtkLabel.
+	 * Params:
+	 *  label = the text for the label
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, bool mnemonic=true)
+	{
+		GtkMenuItem* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_menu_item_new_with_mnemonic (const gchar *label);
+			p = cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
+			p = cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_menu_item_new_with_");
+		}
+
+		this(p);
+
+		setName(label);
+	}
+code: end
+
+struct: MenuToolButton
+noCode: get_menu
+code: start
+	/**
+	 * Creates a new GtkMenuToolButton.
+	 * The new GtkMenuToolButton will contain an icon and label from
+	 * the stock item indicated by stockID.
+	 * Since: 2.6
+	 * Params:
+	 *     stockID = the name of a stock item
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(StockID stockId)
+	{
+		this(StockDesc[stockId]);
+	}
+
+	/**
+	 * Gets the GtkMenu associated with GtkMenuToolButton.
+	 * Since: 2.6
+	 * Params:
+	 *  button = a GtkMenuToolButton
+	 * Returns:
+	 *  the GtkMenu associated with GtkMenuToolButton
+	 */
+	public Menu getMenu()
+	{
+		auto p =  gtk_menu_tool_button_get_menu(gtkMenuToolButton);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Menu(cast(GtkMenu*)p);
+	}
+code: end
 
 struct: MessageDialog
 noCode: new
@@ -1290,6 +2205,35 @@ code: start
 	}
 code: end
 
+struct: PrintUnixDialog
+alias: set_settings setPrintSettings
+alias: get_settings getPrintSettings
+
+struct: RadioAction
+code: start
+	/**
+	 * Creates a new RadioAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionWithAccel().
+	 *
+	 * Since: 2.4
+	 *
+	 * Params:
+	 *     name    = A unique name for the action
+	 *     label   = The label displayed in menu items and on buttons, or null
+	 *     tooltip = A tooltip for this action, or null
+	 *     stockId = The stock icon to display in widgets representing this
+	 *               action, or null
+	 *     value   = The value which getCurrentValue() should
+	 *               return if this action is selected.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId, int value)
+	{
+		this(name, label, tooltip, StockDesc[stockId], value);
+	}
+code: end
+
 struct: RadioButton
 noCode: new_with_label
 noCode: new_with_mnemonic
@@ -1387,9 +2331,243 @@ code: start
 	}
 code: end
 
-struct: ScaleButton
-noCode: set_orientation
-noCode: get_orientation
+struct: RadioMenuItem
+noCode: new_with_label
+noCode: new_with_mnemonic
+noCode: new_with_mnemonic_from_widget
+noCode: new_with_label_from_widget
+code: start
+	/**
+	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
+	 * The new GtkRadioMenuItem is added to the same group as group.
+	 * If mnemonic is true the label will be
+	 * created using gtk_label_new_with_mnemonic(), so underscores in label
+	 * indicate the mnemonic for the menu item.
+	 * Since 2.4
+	 * Params:
+	 *  group = an existing GtkRadioMenuItem
+	 *  label = the text for the label
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (RadioMenuItem radioMenuItem, string label, bool mnemonic=true)
+	{
+		GtkRadioMenuItem* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
+				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_radio_menu_item_new_with_label_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
+				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
+	 * Params:
+	 *  group = the group to which the radio menu item is to be attached
+	 *  label = the text for the label
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (ListSG group, string label, bool mnemonic=true)
+	{
+		GtkRadioMenuItem* p;
+
+		if ( mnemonic )
+		{
+			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic  (GSList *group,  const gchar *label);
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
+				group is null ? null : group.getListSGStruct(), Str.toStringz(label));
+		}
+		else
+		{
+			// GtkWidget* gtk_radio_menu_item_new_with_label  (GSList *group,  const gchar *label);
+			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
+				group is null ? null : group.getListSGStruct(), Str.toStringz(label));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
+		}
+
+		this(p);
+	}
+code: end
+
+struct: RcStyle
+code: start
+	deprecated:
+code: end
+
+struct: RecentAction
+code: start
+	/**
+	 * Creates a new RecentAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionwWithAccel().
+	 *
+	 * Since: 2.12
+	 *
+	 * Params:
+	 *     name    = a unique name for the action
+	 *     label   = the label displayed in menu items and on buttons, or null
+	 *     tooltip = a tooltip for the action, or null
+	 *     stockID = the stock icon to display in widgets representing the
+	 *               action, or null
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockID)
+	{
+		this(name, label, tooltip, StockDesc[stockID]);
+	}
+
+	/**
+	 * Creates a new RecentAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionwWithAccel().
+	 *
+	 * Since: 2.12
+	 *
+	 * Params:
+	 *     name    = a unique name for the action
+	 *     label   = the label displayed in menu items and on buttons, or null
+	 *     tooltip = a tooltip for the action, or null
+	 *     stockID = the stock icon to display in widgets representing the
+	 *               action, or null
+	 *     manager = a GtkRecentManager, or null for using the default
+	 *               RecentManager
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
+	{
+		this(name, label, tooltip, StockDesc[stockID], manager);
+	}
+code: end
+
+struct: RecentChooser
+alias: set_show_numbers recentChooserSetShowNumbers
+alias: get_show_numbers recentChooserGetShowNumbers
+
+struct: RecentChooserDialog
+noCode: new
+noCode: new_for_manager
+code: start
+	/**
+	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
+	 * This is useful if you have implemented your own recent manager, or if you
+	 * have a customized instance of a GtkRecentManager object.
+	 * Since 2.10
+	 * Params:
+	 *  title =  Title of the dialog, or null
+	 *  parent =  Transient parent of the dialog, or null,
+	 *  manager =  a GtkRecentManager, or null
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string title, Window parent, RecentManager manager,  string[] buttonsText=null, ResponseType[] responses=null )
+	{
+		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
+		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
+		}
+		this(cast(GtkRecentChooserDialog*) p);
+		addButtons(buttonsText, responses);
+	}
+
+	/**
+	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
+	 * This is useful if you have implemented your own recent manager, or if you
+	 * have a customized instance of a GtkRecentManager object.
+	 * Since 2.10
+	 * Params:
+	 *  title =  Title of the dialog, or null
+	 *  parent =  Transient parent of the dialog, or null,
+	 *  manager =  a GtkRecentManager, or null
+	 *  stockIDs = stockIDs of the buttons
+	 *  responses = response ID's for the buttons
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
+	{
+		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
+		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_recent_chooser_dialog_new_for_manager");
+		}
+		this(cast(GtkRecentChooserDialog*) p);
+		addButtons(stockIDs, responses);
+	}
+code: end
+
+struct: RecentInfo
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRecentInfo !is null )
+		{
+			gtk_recent_info_unref(gtkRecentInfo);
+		}
+	}
+code: end
+
+struct: Requisition
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRequisition !is null )
+		{
+			gtk_requisition_free(gtkRequisition);
+		}
+	}
+code: end
+
+struct: ScrolledWindow
+code: start
+	/** */
+	public this()
+	{
+		this(null, null);
+	}
+
+	/** */
+	public this(Widget widget)
+	{
+		this();
+		add(widget);
+	}
+
+	/**
+	 * Creates a new Scrolled window and set the policy type
+	 * Params:
+	 *  hPolicy = the horizontal policy
+	 *  vPolicy = the vertical policy
+	 */
+	this(PolicyType hPolicy, PolicyType vPolicy)
+	{
+		this();
+		setPolicy(hPolicy, vPolicy);
+	}
+code: end
 
 struct: Statusbar
 noCode: get_message_area
@@ -1471,6 +2649,142 @@ code: start
 	}
 code: end
 
+struct: StockItem
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
+		{
+			gtk_stock_item_free(gtkStockItem);
+		}
+	}
+code: end
+
+struct: Style
+code: start
+	deprecated:
+code: end
+
+struct: SymbolicColor
+noCode: new_shade
+noCode: new_alpha
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
+		{
+			gtk_symbolic_color_unref(gtkSymbolicColor);
+		}
+	}
+
+	/**
+	 * Creates a symbolic color defined as a shade of another color.
+	 * A factor > 1.0 would resolve to a brighter or more transparent color,
+	 * while < 1.0 would resolve to a darker or more opaque color.
+	 *
+	 * Params:
+	 *     color    = another GtkSymbolicColor.
+	 *     factor   = shading factor to apply to color.
+	 *     useAlpha = if true change the relative alpha value of the color,
+	 *                otherwise change the shade.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (SymbolicColor color, double factor, bool useAlpha = true)
+	{
+		GtkSymbolicColor* p;
+
+		if ( useAlpha )
+		{
+			p = gtk_symbolic_color_new_alpha((color is null) ? null : color.getSymbolicColorStruct(), factor);
+		}
+		else
+		{
+			p = gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor)");
+		}
+
+		this(cast(GtkSymbolicColor*) p);
+	}
+code: end
+
+struct: Table
+noCode: new
+code: start
+	int row;
+	int col;
+	int maxRows;
+	int maxCols;
+
+	public AttachOptions defaultXOption = AttachOptions.SHRINK;
+	public AttachOptions defaultYOption = AttachOptions.SHRINK;
+
+	/**
+	 * Removes all children and resizes the table to 1,1
+	 */
+	override void removeAll()
+	{
+		super.removeAll();
+		resize(1,1);
+
+		row = 0;
+		col = 0;
+		maxRows = 1;
+		maxCols = 1;
+	}
+
+	/**
+	 * Used to create a new table widget. An initial size must be given by
+	 * specifying how many rows and columns the table should have, although
+	 * this can be changed later with gtk_table_resize(). rows and columns
+	 * must both be in the range 0 .. 65535.
+	 * Params:
+	 *  rows = The number of rows the new table should have.
+	 *  columns = The number of columns the new table should have.
+	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
+	 *  containing the largest widget.
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (uint rows, uint columns, int homogeneous)
+	{
+		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
+		auto p = gtk_table_new(rows, columns, homogeneous);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_table_new");
+		}
+
+		this(cast(GtkTable*) p);
+
+		row = 0;
+		col = 0;
+		maxRows = rows;
+		maxCols = columns;
+	}
+
+
+	/**
+	 * Attach a new widget creating a new row if necessary
+	 */
+	void attach(Widget child)
+	{
+		attach(child, col, col + 1, row, row + 1,
+				defaultXOption, defaultYOption,
+				getDefaultColSpacing(), getDefaultRowSpacing());
+		++col;
+		if (col >= maxCols)
+		{
+			col = 0;
+			++row;
+		}
+	}
+code: end
+
 struct: TargetEntry
 code: start
 	~this ()
@@ -1517,12 +2831,252 @@ code: start
 	}
 code: end
 
+struct: TextAttributes
+code: start
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextAttributes !is null )
+		{
+			gtk_text_attributes_unref(gtkTextAttributes);
+		}
+	}
+
+	//TODO: properties ?
+code: end
+
+struct: TextBuffer
+noCode: insert_with_tags
+noCode: insert_with_tags_by_name
+noCode: create_tag
+code: start
+	/**
+	 * Inserts text into buffer at iter, applying the list of tags to
+	 * the newly-inserted text. The last tag specified must be NULL to
+	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
+	 * then gtk_text_buffer_apply_tag() on the inserted text;
+	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
+	 * Params:
+	 *  iter = an iterator in buffer
+	 *  text = UTF-8 text
+	 *  tags = list of tags to apply
+	 */
+	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTag(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
+	 * to pass in tag names instead of tag objects.
+	 * Params:
+	 *  iter = position in buffer
+	 *  text = UTF-8 text
+	 *  tags = tag names
+	 */
+ 	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
+	{
+		int startOffset = iter.getOffset();
+
+		insert(iter, text);
+
+		if ( tags.length == 0 )
+			return;
+
+		TextIter start = new TextIter();
+		getIterAtOffset(start, startOffset);
+
+		foreach( tag; tags )
+		{
+			applyTagByName(tag, start, iter);
+		}
+	}
+
+	/**
+	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
+	 * adding a new tag to the buffer's tag table.
+	 *
+	 * If tagName is null, the tag is anonymous.
+	 *
+	 * If tagName is non-NULL, a tag called tagName must not already exist
+	 * in the tag table for this buffer.
+	 *
+	 * Params:
+	 *     tagName = the name for the new tag.
+	 *     ...     = A list of property names and there values.
+	 */
+	TextTag createTag(string tagName, ...)
+	{
+		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
+
+		for (size_t i = 0; i < _arguments.length; i+=2)
+		{
+			//TODO: Add a proper eception type for this.
+			if ( _arguments[i] != typeid(string) )
+				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
+
+			string name = va_arg!(string)(_argptr);
+
+			if ( _arguments[i+1] == typeid(bool) ||
+				_arguments[i+1] == typeid(int) ||
+				_arguments[i+1] == typeid(GtkJustification) ||
+				_arguments[i+1] == typeid(GtkTextDirection) ||
+				_arguments[i+1] == typeid(GtkWrapMode) ||
+				_arguments[i+1] == typeid(PangoStretch) ||
+				_arguments[i+1] == typeid(PangoStyle) ||
+				_arguments[i+1] == typeid(PangoUnderline) ||
+				_arguments[i+1] == typeid(PangoVariant) ||
+				_arguments[i+1] == typeid(PangoWeight) )
+			{
+
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(Color) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(Color)(_argptr).getColorStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(double) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(const(double)) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(double)(_argptr), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgFontDescription) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgFontDescription)(_argptr).getPgFontDescriptionStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(PgTabArray) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(PgTabArray)(_argptr).getPgTabArrayStruct(), null);
+			}
+			else if ( _arguments[i+1] == typeid(string) )
+			{
+				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), Str.toStringz(va_arg!(string)(_argptr)), null);
+			}
+			else
+			{
+				stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+
+				//TODO: throw segfaults, druntime bug?
+				throw new Exception("TextBuffer.CreateTag: Unsuported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
+			}
+		}
+
+		return tag;
+	}
+
+	/**
+	 * Obtain the entire text
+	 * Returns: The text string
+	 */
+	string getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
+code: end
+
 struct: TextIter
 code: start
 	/** */
 	public this()
 	{
 		this(new GtkTextIter);
+	}
+code: end
+
+struct: TextView
+noCode: get_hadjustment
+noCode: get_vadjustment
+code: start
+	/**
+	 * Get the text line at the pixel y
+	 */
+	string getLineTextAt(gint y)
+	{
+
+		TextIter iter = new TextIter();
+		int windowX;
+		int windowY;
+		bufferToWindowCoords(TextWindowType.TEXT, 0, y, windowX, windowY);
+
+		gtk_text_view_get_line_at_y(gtkTextView, iter.getTextIterStruct(), y+y-windowY, null);
+
+		TextIter iterEnd = new TextIter();
+		TextBuffer buffer = getBuffer();
+		buffer.getIterAtOffset(iterEnd, iter.getOffset()+iter.getCharsInLine());
+		return buffer.getText(iter, iterEnd, false);
+	}
+
+	/**
+	 * Simply appends some on the cursor position
+	 * Params:
+	 *  text = the text to append
+	 */
+	void insertText(string text)
+	{
+		TextBuffer buf = getBuffer();
+		buf.insertAtCursor(text);
+	}
+
+	/**
+	 * Simply appends some text to this view
+	 * Params:
+	 *  text = the text to append
+	 */
+	void appendText(string text, bool ensureVisible=true)
+	{
+		TextBuffer buf = getBuffer();
+		TextIter iter = new TextIter();
+		buf.getEndIter(iter);
+		buf.insert(iter, text);
+		if ( ensureVisible )
+		{
+			gdouble within_margin = 0.0;
+			bool use_align = false;
+			gdouble xalign = 0.0;
+			gdouble yalign = 0.0;
+			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
+		}
+	}
+code: end
+
+struct: ToggleAction
+code: start
+	/**
+	 * Creates a new ToggleAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionWithAccel().
+	 *
+	 * Since: 2.4
+	 *
+	 * Params:
+	 *     name    = A unique name for the action
+	 *     label   = The label displayed in menu items and on buttons, or null
+	 *     tooltip = A tooltip for the action, or null
+	 *     stockId = The stock icon to display in widgets representing the
+	 *               action, or null
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string name, string label, string tooltip, StockID stockId)
+	{
+		this(name, label, tooltip, StockDesc[stockId]);
 	}
 code: end
 
@@ -1560,6 +3114,1672 @@ code: start
 		}
 
 		this(p);
+	}
+code: end
+
+struct: ToggleToolButton
+code: start
+	/**
+	 * Creates a new GtkToggleToolButton containing the image and text
+	 * from a stock item.
+	 */
+	public this(StockID stockId)
+	{
+		this(StockDesc[stockId]);
+	}
+code: end
+
+struct: Toolbar
+noCode: get_icon_size
+noCode: get_relief_style
+noCode: insert
+alias: get_style getToolbarStyle
+code: start
+	/**
+	 * Insert a GtkToolItem into the toolbar at position pos.
+	 * If pos is 0 the item is prepended to the start of the toolbar. If pos is negative, the item is appended to the end of the toolbar.
+	 * Since 2.4
+	 * Params:
+	 * toolItem  = a GtkToolItem
+	 * pos = the position of the new item
+	 */
+	public void insert(ToolItem toolItem, int pos=-1)
+	{
+		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
+	}
+code: end
+
+struct: ToolButton
+code: start
+	/** */
+	public this (StockID stockID)
+	{
+		this(StockDesc[stockID]);
+	}
+code: end
+
+struct: ToolItemGroup
+code: start
+	/**
+	 * Retrieves the current orientation for the tool shell. Tool items must not
+	 * call this function directly, but rely on gtk_tool_item_get_orientation()
+	 * instead.
+	 * Since 2.14
+	 * Returns: the current orientation of shell
+	 */
+	public GtkOrientation getOrientation()
+	{
+		// GtkOrientation gtk_tool_shell_get_orientation (GtkToolShell *shell);
+		return gtk_tool_shell_get_orientation(getToolShellTStruct());
+	}
+code: end
+
+struct: ToolPalette
+noCode: get_hadjustment
+noCode: get_vadjustment
+alias: get_style getToolbarStyle
+
+struct: ToolShell
+alias: get_style getToolBarStyle
+noCode: get_orientation
+interfaceCode: start
+	/**
+	 * Retrieves the current orientation for the tool shell. Tool items must not
+	 * call this function directly, but rely on gtk_tool_item_get_orientation()
+	 * instead.
+	 * Since: 2.14
+	 * Returns: the current orientation of shell
+	 */
+	public GtkOrientation getOrientation();
+interfaceCode: end
+
+struct: Tooltip
+code: start
+	/**
+	 * Sets the icon of the tooltip (which is in front of the text) to be
+	 * the stock item indicated by stockID with the size indicated by size.
+	 */
+	void setIcon(StockID stockID, GtkIconSize size)
+	{
+		setIconFromStock(StockDesc[stockID], size);
+	}
+code: end
+
+struct: TreeIter
+noCode: copy
+noCode: free
+code: start
+	/**
+	 * this will be set only when the iter
+	 * is created from the model.
+	 */
+	GtkTreeModel* gtkTreeModel;
+
+	/** */
+	public void setModel(GtkTreeModel* gtkTreeModel)
+	{
+		this.gtkTreeModel = gtkTreeModel;
+	}
+
+	/** */
+	public void setModel(TreeModelIF treeModel)
+	{
+		this.gtkTreeModel = treeModel.getTreeModelTStruct();
+	}
+
+	/**
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TreeModelIF treeModel, string treePath)
+	{
+		this(treeModel, new TreePath(treePath));
+	}
+
+	/**
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TreeModelIF treeModel, TreePath treePath)
+	{
+		this();
+		setModel(treeModel);
+		if ( !gtk_tree_model_get_iter_from_string(
+				treeModel.getTreeModelTStruct(),
+				getTreeIterStruct(), Str.toStringz(treePath.toString())) )
+		{
+			throw new ConstructionException("null returned by gtk_tree_model_get_iter_from_string");
+		}
+	}
+
+	/**
+	* creates a new tree iteractor.
+	* used TreeView.createIter and TreeView.append() to create iteractor for a tree or list
+	*/
+	this()
+	{
+		this(new GtkTreeIter);
+	}
+
+	/**
+	 * Creates a dynamically allocated tree iterator as a copy of iter.
+	 */
+	TreeIter copy(TreeIter iter)
+	{
+		TreeIter cp = new TreeIter();
+		*(cp.gtkTreeIter) = *(iter.gtkTreeIter);
+
+		return cp;
+	}
+
+	/**
+	 * Get Value
+	 * Params:
+	 *  column =
+	 *  value =
+	 */
+	void getValue(int column, Value value)
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getValue","Tree model not set");
+		}
+		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
+	}
+
+	/**
+	 * Get the value of a column as a string
+	 * Params:
+	 *  column = the column number
+	 * Returns: a string representing the value of the column
+	 */
+	string getValueString(int column)
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getValueString","Tree model not set");
+		}
+		Value value = new Value();
+		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
+		//printf("TreeIter.getValuaString = %.*s\n", value.getString().toString());
+		return value.getString();
+	}
+
+	/**
+	 * Get the value of a column as an int
+	 * Params:
+	 *  column = the column number
+	 * Returns: a string representing the value of the column
+	 */
+	int getValueInt(int column)
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getValueInt", "Tree model not set");
+		}
+		Value value = new Value();
+		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
+		return value.getInt();
+	}
+
+	/** */
+	TreePath getTreePath()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getTreePath","Tree model not set");
+		}
+		return new TreePath(gtk_tree_model_get_path(gtkTreeModel, gtkTreeIter));
+	}
+
+	/**
+	 * This return the path visible to the user.
+	 */
+	string getVisiblePath(string separator)
+	{
+		string vPath;
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getVisiblePath", "Tree model not set");
+		}
+
+		vPath = getValueString(0);
+		TreeIter parent = getParent();
+		while ( parent !is  null )
+		{
+			//printf("TreeIter.getVisiblePath parent = %.*s\n",parent.getValueString(0).toString());
+			vPath = parent.getValueString(0) ~ separator ~ vPath;
+			parent = parent.getParent();
+		}
+
+		//printf("TreeIter.getVisiblePath = %.*s\n", vPath.toString());
+
+		return vPath;
+	}
+
+	/**
+	 * Gets the parent of this iter
+	 * Returns: the parent iter or null if can't get parent or an error occured
+	 */
+	TreeIter getParent()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getParent", "Tree model not set");
+		}
+		TreeIter parent = new TreeIter();
+		bool gotParent = gtk_tree_model_iter_parent(gtkTreeModel, parent.getTreeIterStruct(), gtkTreeIter) == 0 ? false : true;
+		if ( !gotParent )
+		{
+			return null;
+		}
+		parent.setModel(gtkTreeModel);
+		return parent;
+	}
+
+	/** */
+	TreeIter getGrandParent()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getGrandParent", "Tree model not set");
+		}
+		TreeIter grandParent = this;
+		TreeIter parent = grandParent.getParent();
+		while ( parent !is null )
+		{
+			grandParent = parent;
+			parent = grandParent.getParent();
+		}
+
+		return grandParent;
+	}
+
+	/** A unique stamp to catch invalid iterators */
+	public int stamp()
+	{
+		return gtkTreeIter.stamp;
+	}
+
+	/** Ditto */
+	public void stamp(int stamp)
+	{
+		gtkTreeIter.stamp = stamp;
+	}
+
+	/** Model specific data */
+	public void* userData()
+	{
+		return gtkTreeIter.userData;
+	}
+
+	/** Ditto */
+	public void userData(void* data)
+	{
+		gtkTreeIter.userData = data;
+	}
+
+	public struct IterData
+	{
+		/// Data fields.
+		union
+		{
+			int     dataInt;
+			long    dataLong;
+			double  dataFloat;
+			double  dataDouble;
+			string  dataString;
+
+			void*   dataUser;
+		}
+
+		TypeInfo type = typeid(void);
+	}
+
+	/**
+	 * setUserData and getUserData provide simple boxing
+	 * around the userData field in the TreeIter struct.
+	 * Throws: TreeIterError for unsuported types or a type mismatch.
+	 * Example:
+	 * ---
+	 * Treeiter iter = new TreeIter();
+	 *
+	 * iter.setUserData(20);
+	 * int i = iter.getUserData!(int)();
+	 * ---
+	 */
+	public void setUserData(T)(T data)
+	{
+		IterData* itData = new IterData;
+		itData.type = typeid(T);
+
+		static if(is(T == int))
+		{
+			itData.dataInt = data;
+		}
+		else static if(is(T == long))
+		{
+			itData.dataLong = data;
+		}
+		else static if(is(T == float))
+		{
+			itData.dataFloat = data;
+		}
+		else static if(is(T == double))
+		{
+			itData.dataDouble = data;
+		}
+		else static if(is(T == string))
+		{
+			itData.dataString = data;
+		}
+		else static if(is(T == void*))
+		{
+			itData.dataUser = data;
+		}
+		else
+		{
+			pragma(msg, "IterData Type not Suported");
+
+			throw new TreeIterError("getUserData", "IterData Type not Suported");
+		}
+
+		gtkTreeIter.userData = itData;
+	}
+
+	/** Ditto */
+	public T getUserData(T)()
+	{
+		IterData* itData = cast(IterData*)gtkTreeIter.userData;
+
+		static if(is(T == int))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataInt;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: int");
+			}
+		}
+		else static if(is(T == long))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataLong;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: long");
+			}
+		}
+		else static if(is(T == float))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataFloat;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: float");
+			}
+		}
+		else static if(is(T == double))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataDouble;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: double");
+			}
+		}
+		else static if(is(T == string))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataString;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: string");
+			}
+		}
+		else static if(is(T == void*))
+		{
+			if(itData.type is typeid(T))
+			{
+				return itData.dataUser;
+			}
+			else
+			{
+				throw new TreeIterError("getUserData", "IterData is not: void*");
+			}
+		}
+		else
+		{
+			pragma(msg, "IterData Type not Suported");
+
+			throw new TreeIterError("getUserData", "IterData Type not Suported");
+		}
+	}
+code: end
+
+struct:
+class: TreeIterError
+extend: Exception
+code: start
+	/**
+	 * A TreeIter error.
+	 * thrown<br>
+	 * - trying to access a method that requires a tree model and the tree model was never set
+	 */
+	public this(string method, string message)
+	{
+		super("TreeIter."~method~" : "~message);
+	}
+code: end
+
+struct: TreeModel
+noCode: get_value
+noCode: get_iter
+interfaceCode: start
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the string from the value object
+	 */
+	string getValueString(TreeIter iter, int column);
+
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the int from the value object
+	 */
+	int getValueInt(TreeIter iter, int column);
+
+	/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path);
+
+	/**
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 * Params:
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = (inout) (transfer none) An empty GValue to set.
+	 */
+	public Value getValue(TreeIter iter, int column, Value value = null);
+interfaceCode: end
+code: start
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the string from the value object
+	 */
+	string getValueString(TreeIter iter, int column)
+	{
+		Value value = getValue(iter, column);
+		return value.getString();
+	}
+
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the int from the value object
+	 */
+	int getValueInt(TreeIter iter, int column)
+	{
+		Value value = getValue(iter, column);
+		return value.getInt();
+	}
+
+	/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path)
+	{
+		// gboolean gtk_tree_model_get_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreePath *path);
+		iter.setModel(this);
+		return gtk_tree_model_get_iter(
+				getTreeModelTStruct(),
+				(iter is null) ? null : iter.getTreeIterStruct(),
+				(path is null) ? null : path.getTreePathStruct());
+	}
+
+	/**
+	 * Initializes and sets value to that at column.
+	 * When done with value, g_value_unset() needs to be called
+	 * to free any allocated memory.
+	 * Params:
+	 * iter = The GtkTreeIter.
+	 * column = The column to lookup the value at.
+	 * value = (inout) (transfer none) An empty GValue to set.
+	 */
+	public Value getValue(TreeIter iter, int column, Value value = null)
+	{
+		if ( value is null )
+			value = new Value();
+
+		// void gtk_tree_model_get_value (GtkTreeModel *tree_model,  GtkTreeIter *iter,  gint column,  GValue *value);
+		gtk_tree_model_get_value(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
+
+		return value;
+	}
+code: end
+
+struct:
+class: TreeModel
+namespace:
+import: glib.Str
+import: gobject.Type
+import: gobject.ObjectG
+import: gobject.Signals
+import: gobject.Value
+import: gtk.TreeIter
+import: gtk.TreePath
+import: gtk.TreeModelT
+import: gtk.TreeModelIF
+import: gtkc.gobject
+import: gtkc.Loader
+import: gtkc.paths
+code: start
+struct CustomTreeModelClass
+{
+	GObjectClass parentClass;
+}
+
+//We need this function for the interface implementation.
+extern(C) GType function() c_gtk_tree_model_get_type;
+alias c_gtk_tree_model_get_type gtk_tree_model_get_type;
+
+/**
+ */
+public class TreeModel : ObjectG, TreeModelIF
+{
+	static GObjectClass* parentClass = null;
+
+	shared static this()
+	{
+		Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
+	}
+
+	// Minimal implementation.
+	mixin TreeModelT!(GtkTreeModel);
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkTreeModel;
+	}
+
+	public this ()
+	{
+		auto p =  super(customTreeModelgetType(), null);
+		gtkTreeModel = cast(GtkTreeModel*) p.getObjectGStruct();
+
+		setDataFull("customTreeModel", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (GtkTreeModel* gtkTreeModel)
+	{
+		super(cast(GObject*)gtkTreeModel);
+		this.gtkTreeModel = gtkTreeModel;
+	}
+
+
+	extern(C)
+	{
+		/*
+		 *  here we register our new type and its interfaces
+		 *  with the type system. If you want to implement
+		 *  additional interfaces like GtkTreeSortable, you
+		 *  will need to do it here.
+		 */
+
+		static GType customTreeModelgetType()
+		{
+			GType customTreeModelType = Type.fromName("CustomTreeModel");
+
+			/* Some boilerplate type registration stuff */
+			if (customTreeModelType == GType.INVALID)
+			{
+				GTypeInfo customTreeModelInfo =
+				{
+					CustomTreeModelClass.sizeof,                   /* class size */
+					null,                                          /* base_init */
+					null,                                          /* base_finalize */
+					cast(GClassInitFunc) &customTreeModelClassInit,/* class init function */
+					null,                                          /* class finalize */
+					null,                                          /* class_data */
+					GObject.sizeof,                                /* instance size */
+					0,                                             /* n_preallocs */
+					//cast(GInstanceInitFunc) &customTreeModelInit   /* instance init */
+					null
+				};
+				GInterfaceInfo treeModelInfo =
+				{
+					cast(GInterfaceInitFunc) &customTreeModelInit,
+					null,
+					null
+				};
+
+				/* First register the new derived type with the GObject type system */
+				customTreeModelType = Type.registerStatic (GType.OBJECT, "CustomTreeModel",
+				&customTreeModelInfo, cast(GTypeFlags)0);
+
+				/* Now register our GtkTreeModel interface with the type system */
+				Type.addInterfaceStatic (customTreeModelType, gtk_tree_model_get_type() /*GTK_TYPE_TREE_MODEL*/, &treeModelInfo);
+			}
+
+			return customTreeModelType;
+		}
+
+		/*
+		 *  boilerplate GObject/GType stuff.
+		 *  Init callback for the type system,
+		 *  called once when our new class is created.
+		 */
+
+		static void customTreeModelClassInit (void* klass)
+		{
+			GObjectClass* objectClass;
+
+			parentClass = cast(GObjectClass*) Type.classPeekParent(klass);
+			objectClass = cast(GObjectClass*) klass;
+
+			objectClass.finalize = &customTreeModelFinalize;
+		}
+
+		/*
+		 *  init callback for the interface registration
+		 *  in customTreeModelGetType. Here we override
+		 *  the GtkTreeModel interface functions that
+		 *  we implement.
+		 */
+
+		static void customTreeModelInit (GtkTreeModelIface *iface)
+		{
+			iface.getFlags      = &customTreeModelGetFlags;
+			iface.getNColumns   = &customTreeModelGetNColumns;
+			iface.getColumnType = &customTreeModelGetColumnType;
+			iface.getIter       = &customTreeModelGetIter;
+			iface.getPath       = &customTreeModelGetPath;
+			iface.getValue      = &customTreeModelGetValue;
+			iface.iterNext      = &customTreeModelIterNext;
+			iface.iterChildren  = &customTreeModelIterChildren;
+			iface.iterHasChild  = &customTreeModelIterHasChild;
+			iface.iterNChildren = &customTreeModelIterNChildren;
+			iface.iterNthChild  = &customTreeModelIterNthChild;
+			iface.iterParent    = &customTreeModelIterParent;
+		}
+
+		/*
+		 *  this is called just before a custom list is
+		 *  destroyed. Free dynamically allocated memory here.
+		 */
+
+		static void customTreeModelFinalize (GObject *object)
+		{
+			/* must chain up - finalize parent */
+			parentClass.finalize(object);
+		}
+
+		static GtkTreeModelFlags customTreeModelGetFlags(GtkTreeModel *tree_model)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.getFlags();
+		}
+
+		static int customTreeModelGetNColumns(GtkTreeModel *tree_model)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.getNColumns();
+		}
+
+		static GType customTreeModelGetColumnType(GtkTreeModel *tree_model, int index)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.getColumnType(index);
+		}
+
+		static gboolean customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.getIter(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(gtk_tree_path_copy(path)));
+		}
+
+		static GtkTreePath* customTreeModelGetPath(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+			TreePath path = tm.getPath(ObjectG.getDObject!(TreeIter)(iter));
+
+			return (path is null) ? null : gtk_tree_path_copy(path.getTreePathStruct());
+		}
+
+		static void customTreeModelGetValue(GtkTreeModel *tree_model, GtkTreeIter *iter, int column, GValue *value)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			tm.getValue(ObjectG.getDObject!(TreeIter)(iter), column, ObjectG.getDObject!(Value)(value));
+		}
+
+		static gboolean customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.iterNext(ObjectG.getDObject!(TreeIter)(iter));
+		}
+
+		static gboolean customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.iterChildren(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent));
+		}
+
+		static gboolean customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.iterHasChild(ObjectG.getDObject!(TreeIter)(iter));
+		}
+
+		static int customTreeModelIterNChildren(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.iterNChildren(ObjectG.getDObject!(TreeIter)(iter));
+		}
+
+		static gboolean customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.iterNthChild(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent), n);
+		}
+
+		static gboolean customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
+		{
+			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+
+			return tm.iterParent(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(child));
+		}
+	}
+}
+code: end
+
+struct:
+class: TreeNode
+namespace:
+code: start
+	/**
+	 * TreeNode interface
+	 */
+	public interface TreeNode
+	{
+		string getNodeValue(int column);
+		int columnCount();
+	}
+code: end
+
+struct: TreePath
+noCode: new
+noCode: new_first
+noCode: new_from_indices
+noCode: new_from_indicesv
+code: start
+	/**
+	 * Creates a new GtkTreePath. This structure refers to a row.
+	 * Params:
+	 * firstRow = if true this is the string representation of this path is "0"
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (bool firstRow=false)
+	{
+		GtkTreePath* p;
+
+		if ( firstRow )
+		{
+			// GtkTreePath* gtk_tree_path_new_first (void);
+			p = cast(GtkTreePath*)gtk_tree_path_new_first();
+		}
+		else
+		{
+			// GtkTreePath* gtk_tree_path_new (void);
+			p = cast(GtkTreePath*)gtk_tree_path_new();
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_path_new()");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Creates a new path with "indices" as indices.
+	 */
+	this (int[] indices ... )
+	{
+		this(false);
+
+		foreach( index; indices )
+			appendIndex(index);
+	}
+code: end
+
+struct: TreeSelection
+noCode: get_selected_rows
+code: start
+	/**
+	 * Returns an TreeIter set to the currently selected node if selection
+	 * is set to Selection.SINGLE or Selection.BROWSE.
+	 * This function will not work if you use selection is Selection.MULTIPLE.
+	 * Returns: A TreeIter for the selected node.
+	 */
+	public TreeIter getSelected()
+	{
+		TreeModelIF model;
+		TreeIter iter = new TreeIter();
+
+		if ( getSelected(model, iter) )
+		{
+			iter.setModel(model);
+			return iter;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	/**
+	 * Creates a list of path of all selected rows. Additionally, if you are
+	 * planning on modifying the model after calling this function, you may
+	 * want to convert the returned list into a list of TreeRowReferences.
+	 * Since: 2.2
+	 * Params:
+	 *  model = A pointer to set to the GtkTreeModel, or NULL.
+	 * Returns:
+	 *  A GList containing a GtkTreePath for each selected row.
+	 */
+	TreePath[] getSelectedRows(out TreeModelIF model)
+	{
+		TreePath[] paths;
+		GtkTreeModel* outmodel = null;
+		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &outmodel);
+		if ( gList !is null )
+		{
+			ListG list = new ListG(gList);
+			for ( int i=0 ; i<list.length() ; i++ )
+			{
+				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
+			}
+		}
+		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
+
+		return paths;
+	}
+code: end
+
+struct: TreeStore
+noCode: set
+code: start
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter(TreeIter parent=null)
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
+		return new TreeIter(iter);
+	}
+
+	/**
+	 * Sets one value into one cells.
+	 * \todo confirm we need to destroy the Value instance
+	 * Params:
+	 *  iter = the tree iteractor, effectivly the row
+	 *  column = to column number to set
+	 *  value = the value
+	 */
+	void setValue(TreeIter iter, int column, string value)
+	{
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
+	}
+
+	/** ditto */
+	void setValue(TreeIter iter, int column, int value)
+	{
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, value, -1);
+	}
+
+	/** ditto */
+	//TODO: confirm we need to destroy the Value instance
+	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
+	{
+		Value v = new Value(pixbuf);
+		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+
+	/**
+	 * sets the values for one row
+	 * Params:
+	 *  iter = the row iteractor
+	 *  columns = an arrays with the columns to set
+	 *  values = an arrays with the values
+	 */
+	void set(TreeIter iter, int[] columns, char*[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			gtk_tree_store_set(
+					gtkTreeStore,
+					iter.getTreeIterStruct(),
+					columns[i],
+					values[i],-1);
+		}
+	}
+
+	/** ditto */
+	void set(TreeIter iter, int[] columns, string[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			gtk_tree_store_set(
+					gtkTreeStore,
+					iter.getTreeIterStruct(),
+					columns[i],
+					Str.toStringz(values[i]),-1);
+		}
+	}
+
+	/**
+	 * Sets an iteractor values from a tree node.
+	 * This is the way to add a new row to the tree,
+	 * the iteractor is either a top level iteractor created from createIter()
+	 * or a nested iteractor created from append()
+	 * Params:
+	 *  iter = the iteractor to set
+	 *  treeNode = the tree node
+	 * See_Also: createIter(), append()
+	 */
+	void set(TreeIter iter, TreeNode treeNode)
+	{
+		int[] cols;
+		string[] vals;
+		for ( int i=0 ; i<treeNode.columnCount() ; i++ )
+		{
+			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
+			cols ~= i;
+			string value = treeNode.getNodeValue(i);
+			if ( value  is  null )
+			{
+				vals ~= "";
+			}
+			else
+			{
+				vals ~= value;
+			}
+		}
+		set(iter, cols, vals);
+	}
+
+
+	/**
+	 * Creates and prepends a new row to tree_store. If parent is non-NULL, then it will prepend
+	 * the new row before the first child of parent, otherwise it will prepend a row
+	 * to the top level. iter will be changed to point to this new row. The row
+	 * will be empty after this function is called. To fill in values, you need to
+	 * call gtk_tree_store_set() or gtk_tree_store_set_value().
+	 * Params:
+	 *  parent = A valid GtkTreeIter, or NULL
+	 */
+	public TreeIter prepend(TreeIter parent)
+	{
+		TreeIter iter = new TreeIter();
+		// void gtk_tree_store_prepend (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
+		gtk_tree_store_prepend(gtkTreeStore, iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
+		return iter;
+	}
+
+	/**
+	 * Creates and appends a new row to tree_store. If parent is non-NULL, then it will append the
+	 * new row after the last child of parent, otherwise it will append a row to
+	 * the top level. iter will be changed to point to this new row. The row will
+	 * be empty after this function is called. To fill in values, you need to call
+	 * gtk_tree_store_set() or gtk_tree_store_set_value().
+	 * Params:
+	 *  parent = A valid GtkTreeIter, or NULL
+	 */
+	public TreeIter append(TreeIter parent)
+	{
+		TreeIter iter = new TreeIter();
+		// void gtk_tree_store_append (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
+		gtk_tree_store_append(gtkTreeStore,
+			iter.getTreeIterStruct(),
+			(parent is null) ? null : parent.getTreeIterStruct());
+		return iter;
+	}
+code: end
+
+struct: TreeView
+noCode: get_hadjustment
+noCode: set_hadjustment
+noCode: get_vadjustment
+noCode: set_vadjustment
+code: start
+	/**
+	 * Expands the row of the iter.
+	 * Params:
+	 *  iter =
+	 *  openAll =
+	 *  Returns =
+	 */
+	int expandRow(TreeIter iter, TreeModelIF model, int openAll)
+	{
+		return expandRow(model.getPath(iter), openAll);
+	}
+
+	/**
+	 * gets the first selected iter or null if no rows are selected
+	 */
+	TreeIter getSelectedIter()
+	{
+		TreeIter iter = null;
+		TreeSelection selection = getSelection();
+		TreeModelIF model = getModel();
+		TreePath[] paths = selection.getSelectedRows(model);
+		if ( paths.length > 0 )
+		{
+			iter = new TreeIter();
+			model.getIter(iter,paths[0]);
+		}
+		return iter;
+	}
+
+	/** */
+	TreeIter[] getSelectedIters()
+	{
+		TreeIter[] iters;
+
+		TreeIter iter = new TreeIter();
+		TreeSelection selection = getSelection();
+		TreeModelIF model = getModel();
+		TreePath[] paths = selection.getSelectedRows(model);
+		foreach ( TreePath p; selection.getSelectedRows(model) )
+		{
+			if ( model.getIter(iter,p) )
+			{
+				iters ~= iter;
+				iter = new TreeIter();
+			}
+		}
+
+		return iters;
+	}
+
+	/**
+	 * Inserts a column and sets it's attributes
+	 * Params:
+	 *  position =
+	 *  title =
+	 *  renderer =
+	 *  editable =
+	 * Returns: number of columns including the new one
+	 */
+	gint insertEditableColumn(int position, string title, CellRenderer renderer, bool editable)
+	{
+		// OK, this is a trick because of my ignorance on how to pass variable argument lists
+		if ( position < 0 )
+		{
+			position = getColumns().length();
+		}
+		int tot = gtk_tree_view_insert_column_with_attributes(
+			gtkTreeView,
+			position,
+			Str.toStringz(title),
+			renderer.getCellRendererStruct(),
+			Str.toStringz("text"),position,
+			Str.toStringz("editable"),2,0);
+		return tot;
+	}
+code: end
+
+struct: TreeViewColumn
+#These are also implemented in CellLayoutT
+noCode: pack_start
+noCode: pack_end
+noCode: clear
+noCode: add_attribute
+noCode: clear_attributes
+# Return the correct class.
+noCode: get_button
+noCode: get_tree_view
+noCode: new_with_attributes
+code: start
+	/**
+	 * Creates a new Tree view column
+	 * Params:
+	 *  header = th column header text
+	 *  renderer = the rederer for the column cells
+	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
+	 *  column = the column number
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	this(string header, CellRenderer renderer, string type, int column)
+	{
+		auto p = gtk_tree_view_column_new_with_attributes(
+				Str.toStringz(header),
+				renderer.getCellRendererStruct(),
+				Str.toStringz(type),
+				column,
+				null);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
+		}
+
+		this(p);
+	}
+
+	/**
+	 * Returns the button used in the treeview column header
+	 * Returns: The button for the column header. [transfer none] Since 3.0
+	 */
+	public Button getButton()
+	{
+		// GtkWidget * gtk_tree_view_column_get_button (GtkTreeViewColumn *tree_column);
+		auto p = gtk_tree_view_column_get_button(gtkTreeViewColumn);
+		if(p is null)
+		{
+			return null;
+		}
+		return new Button(cast(GtkButton*) p);
+	}
+
+	/**
+	 * Returns the GtkTreeView wherein tree_column has been inserted.
+	 * If column is currently not inserted in any tree view, NULL is
+	 * returned.
+	 * Since 2.12
+	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise. [transfer none]
+	 */
+	public TreeView getTreeView()
+	{
+		// GtkWidget * gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
+		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
+		if(p is null)
+		{
+			return null;
+		}
+		return new TreeView(cast(GtkTreeView*) p);
+	}
+code: end
+
+struct: UIManager
+import: gobject.Type
+import: gtk.AccelGroup
+import: gtk.Action
+import: gtk.ActionGroup
+import: gtk.CheckMenuItem
+import: gtk.ImageMenuItem
+import: gtk.Menu
+import: gtk.MenuBar
+import: gtk.MenuItem
+import: gtk.MenuToolButton
+import: gtk.RadioMenuItem
+import: gtk.RadioToolButton
+import: gtk.SeparatorMenuItem
+import: gtk.SeparatorToolItem
+import: gtk.TearoffMenuItem
+import: gtk.ToggleToolButton
+import: gtk.Toolbar
+import: gtk.ToolButton
+import: gtk.ToolItem
+import: gtk.Widget
+noCode: get_widget
+code: start
+	/**
+	 * Warning: getWidget is deprecated and should not be used in newly-written code. 3.10
+	 *
+	 * Looks up a widget by following a path.
+	 * The path consists of the names specified in the XML description of the UI.
+	 * separated by '/'. Elements which don't have a name or action attribute in
+	 * the XML (e.g. &lt;popup&gt;) can be addressed by their XML element name
+	 * (e.g. "popup"). The root element ("/ui") can be omitted in the path.
+	 *
+	 * Note that the widget found by following a path that ends in a &lt;menu&gt;
+	 * element is the menuitem to which the menu is attached, not the menu itself.
+	 *
+	 * Also note that the widgets constructed by a ui manager are not tied to
+	 * the lifecycle of the ui manager. If you add the widgets returned by this
+	 * function to some container or explicitly ref them, they will survive the
+	 * destruction of the ui manager.
+	 *
+	 * Since 2.4
+	 *
+	 * Params:
+	 *    path = a path
+	 *
+	 * Returns: the widget found by following the path, or null if no widget was found.
+	 */
+	public Widget getWidget(string path)
+	{
+		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *manager,  const gchar *path);
+		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		string typeName = Type.name((cast(GTypeInstance*)p).gClass.gType);
+
+		switch(typeName)
+		{
+			case "GtkCheckMenuItem":
+				return ObjectG.getDObject!(CheckMenuItem)(cast(GtkCheckMenuItem*) p);
+			case "GtkImageMenuItem":
+				return ObjectG.getDObject!(ImageMenuItem)(cast(GtkImageMenuItem*) p);
+			case "GtkMenu":
+				return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
+			case "GtkMenuBar":
+				return ObjectG.getDObject!(MenuBar)(cast(GtkMenuBar*) p);
+			case "GtkMenuItem":
+				return ObjectG.getDObject!(MenuItem)(cast(GtkMenuItem*) p);
+			case "GtkMenuToolButton":
+				return ObjectG.getDObject!(MenuToolButton)(cast(GtkMenuToolButton*) p);
+			case "GtkRadioMenuItem":
+				return ObjectG.getDObject!(RadioMenuItem)(cast(GtkRadioMenuItem*) p);
+			case "GtkRadioToolButton":
+				return ObjectG.getDObject!(RadioToolButton)(cast(GtkRadioToolButton*) p);
+			case "GtkSeparatorMenuItem":
+				return ObjectG.getDObject!(SeparatorMenuItem)(cast(GtkSeparatorMenuItem*) p);
+			case "GtkSeparatorToolItem":
+				return ObjectG.getDObject!(SeparatorToolItem)(cast(GtkSeparatorToolItem*) p);
+			case "GtkTearoffMenuItem":
+				return ObjectG.getDObject!(TearoffMenuItem)(cast(GtkTearoffMenuItem*) p);
+			case "GtkToggleToolButton":
+				return ObjectG.getDObject!(ToggleToolButton)(cast(GtkToggleToolButton*) p);
+			case "GtkToolbar":
+				return ObjectG.getDObject!(Toolbar)(cast(GtkToolbar*) p);
+			case "GtkToolButton":
+				return ObjectG.getDObject!(ToolButton)(cast(GtkToolButton*) p);
+			case "GtkToolItem":
+				return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
+			default:
+				return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		}
+	}
+code: end
+
+struct: VButtonBox
+code: start
+    /**
+     * Creates a new vertical button box and sets standart values for it's comon parameters
+     * Returns: a new vertical button box
+     */
+	static VButtonBox createActionBox()
+	{
+		VButtonBox bBox = new VButtonBox();
+		bBox.setLayout(ButtonBoxStyle.START);
+		bBox.setBorderWidth(5);
+		bBox.setSpacing(7);
+		return bBox;
+	}
+code: end
+
+struct: VPaned
+code: start
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * Params:
+	 *  child1 =
+	 *  child2 =
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+code: end
+
+struct: Widget
+import: gdk.Window : GdkWin = Window
+structWrap: Gdk.Window GdkWin
+code: start
+	public GtkWidgetClass* getWidgetClass()
+	{
+		return Type.getInstanceClass!(GtkWidgetClass)(this);
+	}
+
+	/** */
+	public int getWidth()
+	{
+		int width;
+		gtk_widget_get_size_request(gtkWidget, &width, null);
+		return width;
+	}
+
+	/** */
+	public int getHeight()
+	{
+		int height;
+		gtk_widget_get_size_request(gtkWidget, null, &height);
+		return height;
+	}
+
+	/**
+	 * Sets  the cursor.
+	 * Params:
+	 *  cursor = the new cursor
+	 * Bugs: the cursor changes to the parent widget also
+	 */
+	void setCursor(Cursor cursor)
+	{
+		getWindow().setCursor(cursor);
+	}
+
+	/**
+	 * Resets the cursor.
+	 * don't know if this is implemented by GTK+. Seems that it's not
+	 * Bugs: does nothing
+	 */
+	public void resetCursor()
+	{
+		getWindow().setCursor(null);
+	}
+
+	/**
+	 * Modifies the font for this widget.
+	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
+	 */
+	public void modifyFont(string family, int size)
+	{
+		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
+
+		modifyFont(
+			PgFontDescription.fromString(
+				family ~ " " ~ to!(string)(size)
+			)
+		);
+	}
+
+	/** */
+	public bool onEvent(GdkEvent* event)
+	{
+		return getWidgetClass().event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onButtonPressEvent(GdkEventButton* event)
+	{
+		return getWidgetClass().button_press_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onButtonReleaseEvent(GdkEventButton* event)
+	{
+		return getWidgetClass().button_release_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onScrollEvent(GdkEventScroll* event)
+	{
+		return getWidgetClass().scroll_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onMotionNotifyEvent(GdkEventMotion* event)
+	{
+		return getWidgetClass().motion_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onDeleteEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().delete_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onDestroyEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().destroy_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onKeyPressEvent(GdkEventKey* event)
+	{
+		return getWidgetClass().key_press_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onKeyReleaseEvent(GdkEventKey* event)
+	{
+		return getWidgetClass().key_release_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onEnterNotifyEvent(GdkEventCrossing* event)
+	{
+		return getWidgetClass().enter_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onLeaveNotifyEvent(GdkEventCrossing* event)
+	{
+		return getWidgetClass().leave_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onConfigureEvent(GdkEventConfigure* event)
+	{
+		return getWidgetClass().configure_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onFocusInEvent(GdkEventFocus* event)
+	{
+		return getWidgetClass().focus_in_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onFocusOutEvent(GdkEventFocus* event)
+	{
+		return getWidgetClass().focus_out_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onMapEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().map_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onUnmapEvent(GdkEventAny* event)
+	{
+		return getWidgetClass().unmap_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onPropertyNotifyEvent(GdkEventProperty* event)
+	{
+		return getWidgetClass().property_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onSelectionClearEvent(GdkEventSelection* event)
+	{
+		return getWidgetClass().selection_clear_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onSelectionRequestEvent(GdkEventSelection* event)
+	{
+		return getWidgetClass().selection_request_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onSelectionNotifyEvent(GdkEventSelection* event)
+	{
+		return getWidgetClass().selection_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onProximityInEvent(GdkEventProximity* event)
+	{
+		return getWidgetClass().proximity_in_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onProximityOutEvent(GdkEventProximity* event)
+	{
+		return getWidgetClass().proximity_out_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onVisibilityNotifyEvent(GdkEventVisibility* event)
+	{
+		return getWidgetClass().visibility_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onWindowStateEvent(GdkEventWindowState* event)
+	{
+		return getWidgetClass().window_state_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onDamageEvent(GdkEventExpose* event)
+	{
+		return getWidgetClass().damage_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/** */
+	public bool onGrabBrokenEvent(GdkEventGrabBroken* event)
+	{
+		return getWidgetClass().grab_broken_event(getWidgetStruct(), event) == 0 ? false : true;
+	}
+
+	/**
+	 * Queues an animation frame update and adds a callback to be called
+	 * before each frame. Until the tick callback is removed, it will be
+	 * called frequently (usually at the frame rate of the output device
+	 * or as quickly as the application can be repainted, whichever is
+	 * slower). For this reason, is most suitable for handling graphics
+	 * that change every frame or every few frames. The tick callback does
+	 * not automatically imply a relayout or repaint. If you want a
+	 * repaint or relayout, and aren't changing widget properties that
+	 * would trigger that (for example, changing the text of a gtk.Label),
+	 * then you will have to call queueResize() or queuDrawArea() yourself.
+	 *
+	 * gdk.FrameClock.FrameClock.getFrameTime() should generally be used for timing
+	 * continuous animations and gdk.FrameTimings.FrameTimings.getPredictedPresentationPime()
+	 * if you are trying to display isolated frames at particular times.
+	 *
+	 * This is a more convenient alternative to connecting directly to the
+	 * "update" signal of GdkFrameClock, since you don't
+	 * have to worry about when a GdkFrameClock is assigned to a widget.
+	 *
+	 * Params:
+	 *     callback = function to call for updating animations
+	 */
+	public void addTickCallback(bool delegate(Widget, FrameClock) callback)
+	{
+		tickCallbackListeners ~= callback;
+		static bool connected;
+
+		if ( connected )
+		{
+			return;
+		}
+
+		addTickCallback(cast(GtkTickCallback)&gtkTickCallback, cast(void*)this, null);
+		connected = true;
+	}
+	bool delegate(Widget, FrameClock)[] tickCallbackListeners;
+	extern(C) static int gtkTickCallback(GtkWidget* widgetStruct, GdkFrameClock* frameClock, Widget _widget)
+	{
+		foreach ( dlg ; _widget.tickCallbackListeners )
+		{
+			if(dlg(_widget, new FrameClock(frameClock)))
+				return 1;
+		}
+		return 0;
+	}
+
+	bool delegate(Scoped!Context, Widget)[] scopedOnDrawListeners;
+	/**
+	 * This signal is emitted when a widget is supposed to render itself.
+	 * The widget's top left corner must be painted at the origin of
+	 * the passed in context and be sized to the values returned by
+	 * getAllocatedWidth() and getAllocatedHeight().
+	 *
+	 * Signal handlers connected to this signal can modify the cairo
+	 * context passed as cr in any way they like and don't need to
+	 * restore it. The signal emission takes care of calling Context.save()
+	 * before and Context.restore() after invoking the handler.
+	 *
+	 * The signal handler will get a cr with a clip region already set to the
+	 * widget's dirty region, i.e. to the area that needs repainting. Complicated
+	 * widgets that want to avoid redrawing themselves completely can get the full
+	 * extents of the clip region with gdk.cairo.getClipRectangle(), or they can
+	 * get a finer-grained representation of the dirty region with
+	 * Context.copyClipRectangleList().
+	 *
+	 * Return true to stop other handlers from being invoked for the event,
+	 * false to propagate the event further.
+	 *
+	 * Since 3.0
+	 */
+	void addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("draw-scoped" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"draw",
+			cast(GCallback)&callBackScopedDraw,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["draw-scoped"] = 1;
+		}
+		scopedOnDrawListeners ~= dlg;
+	}
+	extern(C) static gboolean callBackScopedDraw(GtkWidget* widgetStruct, CairoContext* cr, Widget _widget)
+	{
+		foreach ( bool delegate(Scoped!Context, Widget) dlg ; _widget.scopedOnDrawListeners )
+		{
+			if ( dlg(scoped!Context(cr), _widget) )
+			{
+				return 1;
+			}
+		}
+
+		return 0;
 	}
 code: end
 
