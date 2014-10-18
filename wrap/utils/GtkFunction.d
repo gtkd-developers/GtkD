@@ -1051,7 +1051,7 @@ final class GtkFunction
 	 */
 	private bool checkOverride(string functionName)
 	{
-		GtkStruct ancestor = strct;
+		GtkStruct ancestor = strct.parentStruct;
 
 		while(ancestor)
 		{
