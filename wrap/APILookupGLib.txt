@@ -567,6 +567,7 @@ class: QueueG
 
 struct: Rand
 class: RandG
+array: new_with_seed_array seed seed_length
 
 struct: Scanner
 class: ScannerG

@@ -581,6 +581,14 @@ final class GtkStruct
 		return type == GtkStructType.Record && !(lookupClass || lookupInterface) && !noNamespace;
 	}
 
+	void merge(GtkStruct mergeStruct)
+	{
+		foreach ( func; mergeStruct.functions )
+		{
+			functions[func.name] = func;
+		}
+	}
+
 	private void resolveImports()
 	{
 		if ( parentStruct && parentStruct.name != name)

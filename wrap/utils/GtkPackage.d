@@ -138,6 +138,14 @@ class GtkPackage
 				case "union":
 					GtkStruct gtkStruct = new GtkStruct(wrapper, this);
 					gtkStruct.parse(reader);
+
+					//Workaround: Dont overwrite the regular pango classes.
+					if ( gtkStruct.cType.among("PangoCairoFont", "PangoCairoFontMap") )
+					{
+						collectedStructs["FcFontMap"].merge(gtkStruct);
+						break;
+					}
+
 					collectedStructs[gtkStruct.name] = gtkStruct;
 
 					if ( name == "pango" )

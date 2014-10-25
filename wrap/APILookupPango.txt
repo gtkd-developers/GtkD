@@ -23,3 +23,103 @@
 wrap: pango
 file: /usr/share/gir-1.0/Pango-1.0.gir
 file: /usr/share/gir-1.0/PangoCairo-1.0.gir
+
+struct: FcFontMap
+class: PgCairoFontMap
+
+move: attr_background_new Attribute background_new
+move: attr_fallback_new Attribute fallback_new
+move: attr_family_new Attribute family_new
+move: attr_foreground_new Attribute foreground_new
+move: attr_gravity_hint_new Attribute gravity_hint_new
+move: attr_gravity_new Attribute gravity_new
+move: attr_letter_spacing_new Attribute letter_spacing_new
+move: attr_rise_new Attribute rise_new
+move: attr_scale_new Attribute scale_new
+move: attr_stretch_new Attribute stretch_new
+move: attr_strikethrough_color_new Attribute strikethrough_color_new
+move: attr_strikethrough_new Attribute strikethrough_new
+move: attr_style_new Attribute style_new
+move: attr_type_get_name Attribute type_get_name
+move: attr_type_register Attribute type_register
+move: attr_underline_color_new Attribute underline_color_new
+move: attr_underline_new Attribute underline_new
+move: attr_variant_new Attribute variant_new
+move: attr_weight_new Attribute weight_new
+move: markup_parser_finish Attribute
+move: markup_parser_new Attribute
+move: parse_markup Attribute
+
+move: find_map Map
+move: module_register Map
+
+move: gravity_get_for_matrix PgVertical
+move: gravity_get_for_script PgVertical
+move: gravity_get_for_script_and_width PgVertical
+move: gravity_to_rotation PgVertical
+
+move: script_for_unichar PgScript
+move: script_get_sample_language PgScript
+
+move: bidi_type_for_unichar Context
+move: break Context
+move: default_break Context
+move: find_base_dir Context
+move: find_paragraph_boundary Context
+move: get_log_attrs Context
+move: get_mirror_char Context
+move: itemize Context
+move: itemize_with_base_dir Context
+move: reorder_items Context
+move: shape Context
+move: shape_full Context
+move: unichar_direction Context
+
+move: config_key_get PgMiscellaneous
+move: config_key_get_system PgMiscellaneous
+move: get_lib_subdirectory PgMiscellaneous
+move: get_sysconf_subdirectory PgMiscellaneous
+move: is_zero_width PgMiscellaneous
+move: log2vis_get_embedding_levels PgMiscellaneous
+move: lookup_aliases PgMiscellaneous
+move: parse_enum PgMiscellaneous
+move: parse_stretch PgMiscellaneous
+move: parse_style PgMiscellaneous
+move: parse_variant PgMiscellaneous
+move: parse_weight PgMiscellaneous
+move: quantize_line_geometry PgMiscellaneous
+move: read_line PgMiscellaneous
+move: scan_int PgMiscellaneous
+move: scan_string PgMiscellaneous
+move: scan_word PgMiscellaneous
+move: skip_space PgMiscellaneous
+move: split_file_list PgMiscellaneous
+move: trim_string PgMiscellaneous
+
+move: extents_to_pixels Matrix
+move: units_from_double Matrix
+move: units_to_double Matrix
+
+move: version PgVersion
+move: version_check PgVersion
+move: version_string PgVersion
+
+move: context_get_font_options PgCairo
+move: context_get_resolution PgCairo
+move: context_get_shape_renderer PgCairo
+move: context_set_font_options PgCairo
+move: context_set_resolution PgCairo
+move: context_set_shape_renderer PgCairo
+move: create_context PgCairo
+move: create_layout PgCairo
+move: error_underline_path PgCairo
+move: glyph_string_path PgCairo
+move: layout_line_path PgCairo
+move: layout_path PgCairo
+move: show_error_underline PgCairo
+move: show_glyph_item PgCairo
+move: show_glyph_string PgCairo
+move: show_layout PgCairo
+move: show_layout_line PgCairo
+move: update_context PgCairo
+move: update_layout PgCairo

@@ -85,7 +85,7 @@ final class GtkFunction
 		if ( "throws" in reader.front.attributes )
 			throws = reader.front.attributes["throws"] == "1";
 
-		if ( name == "new" && isDType(strct) )
+		if ( type == GtkFunctionType.Function && name.startsWith("new") && isDType(strct) )
 			type = GtkFunctionType.Constructor;
 
 		reader.popFront();

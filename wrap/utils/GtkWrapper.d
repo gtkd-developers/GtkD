@@ -214,10 +214,7 @@ class GtkWrapper
 					break;
 				case "merge":
 					GtkStruct mergeStruct = pack.getStruct(defReader.value);
-					foreach ( func; mergeStruct.functions )
-					{
-						currentStruct.functions[func.name] = func;
-					}
+					currentStruct.merge(mergeStruct);
 					GtkStruct copy = currentStruct.dup();
 					copy.noCode = true;
 					copy.noExternal = true;
