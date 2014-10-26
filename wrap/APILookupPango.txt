@@ -24,8 +24,61 @@ wrap: pango
 file: /usr/share/gir-1.0/Pango-1.0.gir
 file: /usr/share/gir-1.0/PangoCairo-1.0.gir
 
+addConstants: start
+
+	const int PANGO_SCALE = 1024;
+	const double PANGO_SCALE_XX_SMALL = 0.5787037037037;	/// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
+	const double PANGO_SCALE_X_SMALL  = 0.6444444444444;	/// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
+	const double PANGO_SCALE_SMALL    = 0.8333333333333;	/// The scale factor for one shrinking step (1 / 1.2).
+	const double PANGO_SCALE_MEDIUM   = 1.0;	/// The scale factor for normal size (1.0).
+	const double PANGO_SCALE_LARGE    = 1.2;	/// The scale factor for one magnification step (1.2)
+	const double PANGO_SCALE_X_LARGE  = 1.4399999999999;	/// The scale factor for two magnification steps (1.2 * 1.2).
+	const double PANGO_SCALE_XX_LARGE = 1.728;	/// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+
+addConstants: end
+
+struct: AttrFontDesc
+class: PgAttributeFontDesc
+
+struct: AttrIterator
+class: PgAttributeIterator
+
+struct: AttrLanguage
+class: PgAttributeLanguage
+
+struct: AttrList
+class: PgAttributeList
+
+struct: AttrShape
+class: PgAttributeShape
+
+struct: AttrSize
+class: PgAttributeSize
+
+struct: Context
+alias: break pangoBreak
+
 struct: FcFontMap
 class: PgCairoFontMap
+
+struct: FontDescription
+code: start
+	/**
+	 * Creates a nwe font description and set the family nd the size
+	 * Params:
+	 *  family = Family
+	 *  size = Size
+	 */
+	public this(string family, int size)
+	{
+		this();
+		setFamily(family);
+		setSize(size * PANGO_SCALE);
+	}
+code: end
+
+struct: Layout
+array: set_text text length
 
 move: attr_background_new Attribute background_new
 move: attr_fallback_new Attribute fallback_new
