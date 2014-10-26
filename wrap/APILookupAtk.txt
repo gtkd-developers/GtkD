@@ -47,6 +47,7 @@ move: focus_tracker_init Util
 move: focus_tracker_notify Util
 move: get_focus_object Util
 move: get_root Util
+move: get_toolkit_name Util
 move: remove_focus_tracker Util
 move: remove_global_event_listener Util
 move: remove_key_event_listener Util

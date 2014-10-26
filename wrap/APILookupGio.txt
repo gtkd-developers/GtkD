@@ -445,6 +445,7 @@ move: bus_unwatch_name DBusNames unwatch_name
 move: bus_watch_name DBusNames watch_name
 move: bus_watch_name_on_connection DBusNames watch_name_on_connection
 move: bus_watch_name_on_connection_with_closures DBusNames watch_name_on_connection_with_closures
+move: bus_watch_name_with_closures DBusNames watch_name_with_closures
 
 move: content_type_can_be_executable ContentType can_be_executable
 move: content_type_equals ContentType equals

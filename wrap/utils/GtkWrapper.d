@@ -34,10 +34,13 @@ import utils.GtkFunction;
 import utils.GtkType;
 import utils.WrapError;
 
-void main()
+void main(string[] args)
 {
 	GtkWrapper wrapper = new GtkWrapper("./");
 	wrapper.proccess("APILookup.txt");
+
+	if ( args.length > 1 && args[1].among("-f", "--print-free") )
+		wrapper.printFeeFunctions();
 
 	foreach(pack; GtkWrapper.packages)
 	{
@@ -222,6 +225,8 @@ class GtkWrapper
 					break;
 				case "move":
 					string[] vals = defReader.value.split();
+					if ( vals.length <= 1 )
+						throw new WrapError(defReader, "No destination for move: "~ defReader.value);
 					string newFuncName = ( vals.length == 3 ) ? vals[2] : vals[0];
 					GtkStruct dest = pack.getStruct(vals[1]);
 					if ( dest is null )
@@ -349,6 +354,18 @@ class GtkWrapper
 			}
 
 			defReader.popFront();
+		}
+	}
+
+	void printFeeFunctions()
+	{
+		foreach ( pack; packages )
+		{
+			foreach ( func; pack.collectedFunctions )
+			{
+				if ( func.movedTo.empty )
+					writefln("%s: %s", pack.name, func.name);
+			}
 		}
 	}
 

@@ -484,6 +484,7 @@ move: param_spec_variant Value
 move: param_type_register_static ParamSpec
 move: param_value_convert ParamSpec
 move: param_value_defaults ParamSpec
+move: param_value_set_default ParamSpec
 move: param_value_validate ParamSpec
 move: param_values_cmp ParamSpec
 
@@ -541,8 +542,10 @@ move: type_add_interface_dynamic Type add_interface_dynamic
 move: type_add_interface_static Type add_interface_static
 move: type_check_class_cast Type check_class_cast
 move: type_check_class_is_a Type check_class_is_a
+move: type_check_instance Type check_instance
 move: type_check_instance_cast Type check_instance_cast
 move: type_check_instance_is_a Type check_instance_is_a
+move: type_check_instance_is_fundamentally_a Type check_instance_is_fundamentally_a
 move: type_check_is_value_type Type check_is_value_type
 move: type_check_value Type check_value
 move: type_check_value_holds Type check_value_holds

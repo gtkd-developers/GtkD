@@ -1482,6 +1482,7 @@ move: convert_with_fallback CharacterSet
 move: convert_with_iconv CharacterSet
 move: filename_display_basename CharacterSet
 move: filename_display_name CharacterSet
+move: filename_from_utf8 CharacterSet
 move: filename_to_utf8 CharacterSet
 move: get_charset CharacterSet
 move: get_codeset CharacterSet
@@ -1668,6 +1669,7 @@ move: spawn_exit_error_quark Spawn exit_error_quark
 move: spawn_sync Spawn sync
 
 move: ascii_digit_value Str
+move: ascii_dtostr Str
 move: ascii_formatd Str
 move: ascii_strcasecmp Str
 move: ascii_strdown Str
@@ -1855,6 +1857,7 @@ move: format_size_for_display Util
 move: format_size_full Util
 move: get_application_name Util
 move: get_environ Util
+move: get_current_dir Util
 move: get_home_dir Util
 move: get_host_name Util
 move: get_prgname Util

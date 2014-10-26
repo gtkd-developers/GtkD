@@ -45,6 +45,7 @@ final class GtkFunction
 	string doc;
 	string cType;
 	string libVersion;
+	string movedTo;
 	bool virtual = false;
 	bool throws = false;
 	bool lookupOverride; /// Force marking this function with overrride.
@@ -84,6 +85,8 @@ final class GtkFunction
 			libVersion = reader.front.attributes["version"];
 		if ( "throws" in reader.front.attributes )
 			throws = reader.front.attributes["throws"] == "1";
+		if ( "moved-to" in reader.front.attributes )
+			movedTo = reader.front.attributes["moved-to"];
 
 		if ( type == GtkFunctionType.Function && name.startsWith("new") && isDType(strct) )
 			type = GtkFunctionType.Constructor;

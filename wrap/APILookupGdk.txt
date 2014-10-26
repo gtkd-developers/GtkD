@@ -387,6 +387,9 @@ move: drag_status DragContext
 move: drop_finish DragContext
 move: drop_reply DragContext
 
+move: events_get_angle Event get_angle
+move: events_get_center Event get_center
+move: events_get_distance Event get_distance
 move: events_pending Event pending
 move: get_show_events Event
 move: set_show_events Event
@@ -396,6 +399,7 @@ move: beep Gdk
 move: error_trap_pop Gdk
 move: error_trap_pop_ignored Gdk
 move: error_trap_push Gdk
+move: flush Gdk
 move: get_display Gdk
 move: get_display_arg_name Gdk
 move: get_program_class Gdk
