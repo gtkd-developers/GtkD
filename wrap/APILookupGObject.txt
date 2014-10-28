@@ -56,6 +56,9 @@ addEnums: start
 	}
 addEnums: end
 
+struct: CClosure
+class: CClosure
+
 struct: Object
 class: ObjectG
 merge: InitiallyUnowned

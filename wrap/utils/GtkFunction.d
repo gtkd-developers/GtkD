@@ -88,7 +88,7 @@ final class GtkFunction
 		if ( "moved-to" in reader.front.attributes )
 			movedTo = reader.front.attributes["moved-to"];
 
-		if ( type == GtkFunctionType.Function && name.startsWith("new") && isDType(strct) )
+		if ( type == GtkFunctionType.Function && name.startsWith("new") )
 			type = GtkFunctionType.Constructor;
 
 		reader.popFront();
@@ -1044,9 +1044,10 @@ final class GtkFunction
 		else if ( type.size > -1 )
 			return to!string(type.size);
 
-		//TODO: zero-terminated?
+		if ( isStringType(type) )
+			return null;
 
-		return null;
+		return "getArrayLength(p)";
 	}
 
 	/**
