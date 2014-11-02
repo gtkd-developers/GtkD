@@ -20,6 +20,7 @@
 module utils.GtkPackage;
 
 import std.algorithm;
+import std.array: empty;
 import std.file;
 import std.path;
 import std.string : splitLines, strip, split;
@@ -280,13 +281,21 @@ class GtkPackage
 	void writeGdkKeys()
 	{
 		string buff = wrapper.licence;
-		auto indenter = new IndentedStringBuilder();
 
 		buff ~= "module "~ name ~".Keysyms;\n\n";
 
-		GdkKeys.cName = "GdkKeysyms";
-		GdkKeys.doc = "GdkKeysyms";
-		buff ~= indenter.format(GdkKeys.getEnumDeclaration());
+		buff ~= "/**\n";
+		buff ~= " * GdkKeysyms.\n";
+		buff ~= " */\n";
+		buff ~= "public enum GdkKeysyms\n";
+		buff ~= "{\n";
+
+		foreach ( member; GdkKeys.members )
+		{
+			buff ~= "\t"~ tokenToGtkD(member.name, wrapper.aliasses, false) ~" = "~ member.value ~",\n";
+		}
+
+		buff ~= "}\n";
 
 		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, name, "Keysyms.d"), buff);
 	}
@@ -299,8 +308,8 @@ class GtkPackage
 		buff ~= "import std.stdio;\n";
 		buff ~= "import "~ wrapper.bindDir ~"."~ name ~"types;\n";
 
-		if ( name == "glib" )
-			buff ~= "import gtkc.gthreadtypes;\n";
+		//if ( name == "glib" )
+		//	buff ~= "import gtkc.gthreadtypes;\n";
 		if ( name == "gdk" || name == "pango" )
 			buff ~= "import gtkc.cairotypes;\n";
 
@@ -311,14 +320,14 @@ class GtkPackage
 
 		foreach ( strct; collectedStructs )
 		{
-			if ( strct.functions.empty )
+			if ( strct.functions.empty || strct.noExternal )
 				continue;
 
 			buff ~= "\n\t// "~ name ~"."~ strct.name ~"\n\n";
 
 			foreach ( funct; strct.functions )
 			{
-				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal )
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal || funct.name.empty )
 					continue;
 
 				buff ~= "\tLinker.link("~ funct.cType ~", \""~ funct.cType ~"\", "~ getLibrary(funct.cType) ~");\n";
@@ -331,14 +340,14 @@ class GtkPackage
 
 		foreach ( strct; collectedStructs )
 		{
-			if ( strct.functions.empty )
+			if ( strct.functions.empty || strct.noExternal )
 				continue;
 
 			buff ~= "\n\t// "~ name ~"."~ strct.name ~"\n\n";
 
 			foreach ( funct; strct.functions )
 			{
-				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal )
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal || funct.name.empty )
 					continue;
 
 				buff ~= "\t"~ funct.getExternal() ~"\n";
@@ -349,14 +358,14 @@ class GtkPackage
 
 		foreach ( strct; collectedStructs )
 		{
-			if ( strct.functions.empty )
+			if ( strct.functions.empty || strct.noExternal )
 				continue;
 
 			buff ~= "\n// "~ name ~"."~ strct.name ~"\n\n";
 
 			foreach ( funct; strct.functions )
 			{
-				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal )
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal || funct.name.empty )
 					continue;
 
 				buff ~= "alias c_"~ funct.cType ~" "~ funct.cType ~";\n";

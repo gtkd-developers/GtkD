@@ -50,7 +50,6 @@ includeComments: y
 
 # defines the simple token substitution
 # TODO allow to create real aliases on the code and simple static token replacement
-#alias: const
 alias: volatile
 alias: G_CONST_RETURN
 alias: gint int
@@ -74,6 +73,7 @@ alias: guint64 ulong
 alias: gfloat float
 alias: gdouble double
 alias: goffset long
+alias: gsize size_t
 alias: va_list void*
 alias: unichar dchar
 alias: unichar2 wchar
@@ -87,7 +87,9 @@ alias: time_t uint
 alias: tm* void*
 alias: uid_t uid_t
 
+alias: alias alias_
 alias: align alig
+alias: body bod
 alias: continue continu
 alias: default defaulx
 alias: delete delet
@@ -99,6 +101,7 @@ alias: in inn
 alias: instance instanc
 alias: interface iface
 alias: module modul
+alias: out output
 alias: package p
 alias: ref doref
 alias: scope scop

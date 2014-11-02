@@ -126,6 +126,9 @@ code: start
 code: end
 
 struct: Event
+alias: _get_angle getAngle
+alias: _get_center getCenter
+alias: _get_distance getDistance
 code: start
 	/**
 	 * Specifies the type of the event.
@@ -387,9 +390,9 @@ move: drag_status DragContext
 move: drop_finish DragContext
 move: drop_reply DragContext
 
-move: events_get_angle Event get_angle
-move: events_get_center Event get_center
-move: events_get_distance Event get_distance
+move: events_get_angle Event _get_angle
+move: events_get_center Event _get_center
+move: events_get_distance Event _get_distance
 move: events_pending Event pending
 move: get_show_events Event
 move: set_show_events Event

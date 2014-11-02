@@ -211,7 +211,7 @@ final class GtkStruct
 
 	string[] getStructDeclaration()
 	{
-		if ( noExternal )
+		if ( noExternal || cType.empty )
 			return null;
 
 		string[] buff;
@@ -435,9 +435,9 @@ final class GtkStruct
 					buff ~= indenter.format("}");
 				}
 			}
-
-			buff ~= indenter.format("}");
 		}
+
+		buff ~= indenter.format("}");
 
 		if ( type == GtkStructType.Interface || lookupInterface )
 			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"T.d"), buff);
@@ -814,7 +814,7 @@ final class GtkField
 			//AFAIK: C bitfields are padded to a multiple of sizeof uint.
 			int padding = 32 - (bitcount % 32);
 
-			if ( padding > 0)
+			if ( padding > 0 && padding < 32)
 			{
 				buff[buff.length-1] ~= ",";
 				buff ~= "uint, \"\", "~ to!string(padding);
@@ -888,17 +888,20 @@ final class GtkField
 
 			if ( field.type.size == -1 )
 			{
-				dType = tokenToGtkD(field.type.cType, wrapper.aliasses);
+				if ( field.type.cType.empty )
+					dType = stringToGtkD(field.type.name, wrapper.aliasses);
+				else
+					dType = stringToGtkD(field.type.cType, wrapper.aliasses);
 			}
 			else if ( field.type.elementType.cType.empty )
 			{
 				//Special case for GObject.Value.
-				dType = tokenToGtkD(field.type.elementType.name, wrapper.aliasses);
+				dType = stringToGtkD(field.type.elementType.name, wrapper.aliasses);
 				dType ~= "["~ to!string(field.type.size) ~"]";
 			}
 			else
 			{
-				dType = tokenToGtkD(field.type.elementType.cType, wrapper.aliasses);
+				dType = stringToGtkD(field.type.elementType.cType, wrapper.aliasses);
 				dType ~= "["~ to!string(field.type.size) ~"]";
 			}
 

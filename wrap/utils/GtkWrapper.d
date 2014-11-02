@@ -213,7 +213,10 @@ class GtkWrapper
 					currentStruct.parent = defReader.value;
 					break;
 				case "implements":
-					currentStruct.implements ~= defReader.value;
+					if ( defReader.value.empty )
+						currentStruct.implements = null;
+					else
+						currentStruct.implements ~= defReader.value;
 					break;
 				case "merge":
 					GtkStruct mergeStruct = pack.getStruct(defReader.value);
@@ -266,6 +269,9 @@ class GtkWrapper
 						throw new WrapError(defReader, "Unknown function: "~ defReader.value);
 
 					currentStruct.functions[defReader.value].noCode = true;
+					break;
+				case "noExternal":
+					currentStruct.noExternal = true;
 					break;
 				case "noSignal":
 					currentStruct.functions[defReader.value~"-signal"].noCode = true;
@@ -473,7 +479,7 @@ string tokenToGtkD(string token, string[string] aliases, string[string] localAli
 	else if ( token == "pid_t" )
 		return token;
 	else if ( caseConvert )
-		return removeUnderscore(token);
+		return tokenToGtkD(removeUnderscore(token), aliases, localAliases, false);
 	else
 		return token;
 }
@@ -489,6 +495,7 @@ string removeUnderscore(string token)
 		{
 			pc = token[0];
 			token = token[1..$];
+
 			continue;
 		}
 

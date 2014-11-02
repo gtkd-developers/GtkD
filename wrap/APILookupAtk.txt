@@ -25,6 +25,7 @@ file: /usr/share/gir-1.0/Atk-1.0.gir
 
 struct: Attribute
 noCode: true
+noExternal: true
 
 struct: Implementor
 interface: Implementor

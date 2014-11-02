@@ -60,6 +60,7 @@ alias: break pangoBreak
 
 struct: FcFontMap
 class: PgCairoFontMap
+implements:
 
 struct: FontDescription
 code: start

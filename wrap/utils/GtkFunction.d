@@ -68,8 +68,8 @@ final class GtkFunction
 	{
 		name = reader.front.attributes["name"];
 		// Special case for g_iconv wich doesnt have a name.
-		//if ( name.empty && "moved-to" in reader.front.attributes )
-		//	name = reader.front.attributes["moved-to"];
+		if ( name.empty && "moved-to" in reader.front.attributes )
+			name = reader.front.attributes["moved-to"];
 
 		type = cast(GtkFunctionType)reader.front.value;
 
@@ -174,14 +174,14 @@ final class GtkFunction
 
 		writeDocs(buff);
 
-		string func = "extern(C) "~ tokenToGtkD(returnType.cType, wrapper.aliasses, localAliases()) ~" function(";
+		string func = "public alias extern(C) "~ tokenToGtkD(returnType.cType, wrapper.aliasses, localAliases()) ~" function(";
 
 		foreach ( size_t i, param; params )
 		{
 			if ( i > 0 )
 				func ~= ", ";
 
-			func ~= tokenToGtkD(param.type.cType, wrapper.aliasses, localAliases());
+			func ~= stringToGtkD(param.type.cType, wrapper.aliasses, localAliases());
 
 			if ( param.type.size > -1 )
 				func ~= "["~ to!string(param.type.size) ~"]";
@@ -1008,7 +1008,7 @@ final class GtkFunction
 			return true;
 		if ( type.name.among("utf8", "filename") )
 			return true;
-		if ( type.elementType && type.elementType.cType.startsWith("gchar", "char", "const(char)") )
+		if ( type.isArray() && type.elementType.cType.startsWith("gchar", "char", "const(char)") )
 			return true;
 
 		return false;
@@ -1109,7 +1109,7 @@ final class GtkFunction
 
 		foreach( i, param; params )
 		{
-			if ( i < 0 )
+			if ( i > 0 )
 				buff ~= ", ";
 
 			GtkStruct par = strct.pack.getStruct(param.type.name);

@@ -22,7 +22,8 @@ module utils.GtkType;
 import utils.GtkWrapper;
 import utils.XML;
 
-import std.algorithm: among, canFind, skipOver;
+import std.algorithm: among, canFind;
+import std.array: replace;
 import std.conv: to;
 
 /**
@@ -72,6 +73,11 @@ final class GtkType
 		{
 			constType = true;
 			fixType();
+		}
+
+		if ( cType.canFind("unsigned ") )
+		{
+			cType = cType.replace("unsigned ", "u");
 		}
 
 		removeInitialyUnowned();
@@ -124,7 +130,7 @@ final class GtkType
 			return;
 		}
 
-		cType.skipOver("const ");
+		cType = cType.replace("const ", "").replace(" const", "");
 	}
 
 	private void removeInitialyUnowned()

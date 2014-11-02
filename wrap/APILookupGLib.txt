@@ -101,7 +101,7 @@ else
  */
 size_t getArrayLength(T)(T* arr)
 {
-	T* ptr
+	T* ptr;
 
 	for ( ptr = arr; *ptr; ++ptr ){}
 
@@ -344,6 +344,26 @@ class: Directory
 
 struct: Error
 class: ErrorG
+#The params are missing in the gir file for g_clear_error.
+code: start
+	/**
+	 * If @err is %NULL, does nothing. If @err is non-%NULL,
+	 * calls g_error_free() on *@err and sets *@err to %NULL.
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static void clearError()
+	{
+		GError* err = null;
+		
+		g_clear_error(gError, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+	}
+code: end
 
 struct: GException
 namespace:
@@ -398,8 +418,6 @@ code: end
 
 struct: IConv
 namespace:
-noCode:
-move: iconv IConv
 ref: iconv inbuf
 array: iconv inbuf inbytes_left
 ref: iconv outbuf
@@ -624,6 +642,8 @@ class: QueueG
 
 struct: Rand
 class: RandG
+alias: double randDouble
+alias: int randInt
 array: new_with_seed_array seed seed_length
 
 struct: Scanner
@@ -1574,7 +1594,7 @@ move: dataset_id_get_data DataSet id_get_data
 move: dataset_id_remove_no_notify DataSet id_remove_no_notify
 move: dataset_id_set_data_full DataSet id_set_data_full
 
-move: clear_error Error
+#move: clear_error Error
 move: prefix_error Error
 move: propagate_error Error
 move: propagate_prefixed_error Error

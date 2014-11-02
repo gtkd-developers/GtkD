@@ -358,6 +358,8 @@ extend: GObject.Object
 implements: ProxyResolver
 
 struct: Resource
+alias: _register register
+alias: _unregister unregister
 import: gtkc.Loader
 import: gtkc.paths
 code: start
@@ -508,8 +510,8 @@ move: resources_enumerate_children Resource
 move: resources_get_info Resource
 move: resources_lookup_data Resource
 move: resources_open_stream Resource
-move: resources_register Resource
-move: resources_unregister Resource
+move: resources_register Resource _register
+move: resources_unregister Resource _unregister
 
 move: simple_async_report_error_in_idle SimpleAsyncResult
 move: simple_async_report_gerror_in_idle SimpleAsyncResult

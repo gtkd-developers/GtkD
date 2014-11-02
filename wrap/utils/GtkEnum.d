@@ -67,7 +67,7 @@ final class GtkEnum
 					reader.popFront();
 					break;
 				case "member":
-					if ( reader.front.attributes["name"].startsWith("2bu", "3bu") )
+					if ( reader.front.attributes["name"].startsWith("2bu", "2bi", "3bu") )
 					{
 						reader.skipTag();
 						break;
