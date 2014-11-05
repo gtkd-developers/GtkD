@@ -220,6 +220,16 @@ public class ObjectG
 	{
 		if ( Linker.isLoaded(LIBRARY.GOBJECT) && gObject !is null )
 		{
+			// Remove the GDestroyNotify callback,
+			// for when the D object is destroyed before the C one.
+			stealData("GObject");
+
+			if ( isGcRoot )
+			{
+				GC.removeRoot(cast(void*)this);
+				isGcRoot = false;
+			}
+
 			unref();
 		}
 	}
