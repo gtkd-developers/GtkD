@@ -1110,6 +1110,33 @@ public struct Funct
 								 "}",
 								 "" ];
 
+						//Workaround, to support an destrutor which unrefs the Pixbuf,
+						//These functions need to add an reference.
+						import std.algorithm : among;
+						if ( typeWrap == "Pixbuf" &&
+						    name.among("gdk_pixbuf_animation_get_static_image",
+						               "gdk_pixbuf_animation_iter_get_pixbuf",
+						               "gdk_pixbuf_loader_get_pixbuf",
+						               "gtk_about_dialog_get_logo",
+                                       "gtk_assistant_get_page_header_image",
+                                       "gtk_assistant_get_page_side_image",
+                                       "gtk_entry_get_icon_pixbuf",
+                                       "gtk_icon_info_get_builtin_pixbuf",
+                                       "gtk_image_get_pixbuf",
+                                       "gtk_status_icon_get_pixbuf",
+                                       "gtk_text_iter_get_pixbuf",
+                                       "gtk_window_get_icon",
+                                       "gtk_source_completion_proposal_get_icon",
+                                       "gtk_source_completion_provider_get_icon",
+                                       "gtk_source_gutter_renderer_pixbuf_get_pixbuf",
+                                       "gtk_source_mark_attributes_get_pixbuf",
+                                       "gtk_source_mark_attributes_render_icon") )
+						{
+							bd ~= "import gtkc.gobject : g_object_ref;";
+							bd ~= "g_object_ref(cast(GObject*)p);";
+							bd ~= "";
+						}
+
 						if ( GtkDClass.endsWith(typeWrap, "[]") )
 						{
 							string id = GtkDClass.idsToGtkD(convParms.array[name]["Return"], convParms, aliases);

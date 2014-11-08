@@ -144,6 +144,10 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	// add the LoadableIcon capabilities
 	mixin LoadableIconT!(GdkPixbuf);
 	
+	~this(){
+		unref();
+	}
+	
 	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
 	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.

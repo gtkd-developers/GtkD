@@ -225,6 +225,9 @@ public class Image : Misc
 			return null;
 		}
 		
+		import gtkc.gobject : g_object_ref;
+		g_object_ref(cast(GObject*)p);
+		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 	
