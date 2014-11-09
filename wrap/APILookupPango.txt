@@ -24,6 +24,24 @@ wrap: pango
 file: /usr/share/gir-1.0/Pango-1.0.gir
 file: /usr/share/gir-1.0/PangoCairo-1.0.gir
 
+addAliases: start
+	public import gtkc.cairotypes;
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+
+	alias void* FTLibrary;
+addAliases: end
+
+addStructs: start
+
+	struct PangoFcFontMap
+	{
+		PangoFontMap parentInstance;
+		void* priv;
+	}
+
+addStructs: end
+
 addConstants: start
 
 	const int PANGO_SCALE = 1024;

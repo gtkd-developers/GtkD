@@ -74,14 +74,15 @@ alias: gfloat float
 alias: gdouble double
 alias: goffset long
 alias: gsize size_t
+alias: gssize ptrdiff_t
 alias: va_list void*
 alias: unichar dchar
 alias: unichar2 wchar
 alias: uchar ubyte
 alias: XID uint
 
-#alias: gunichar dchar
-#alias: gunichar2 wchar
+alias: gunichar dchar
+alias: gunichar2 wchar
 
 alias: time_t uint
 alias: tm* void*

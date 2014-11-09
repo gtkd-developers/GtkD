@@ -174,7 +174,7 @@ final class GtkFunction
 
 		writeDocs(buff);
 
-		string func = "public alias extern(C) "~ tokenToGtkD(returnType.cType, wrapper.aliasses, localAliases()) ~" function(";
+		string func = "public alias extern(C) "~ stringToGtkD(returnType.cType, wrapper.aliasses, localAliases()) ~" function(";
 
 		foreach ( size_t i, param; params )
 		{
@@ -226,6 +226,8 @@ final class GtkFunction
 
 			if ( type.startsWith("bool") )
 				ext ~= type.replaceFirst("bool", "int");
+			else if ( type == "tm*" )
+				ext ~= "void*";
 			else
 				ext ~= type;
 
@@ -1055,12 +1057,20 @@ final class GtkFunction
 	 */
 	private bool checkOverride(string functionName)
 	{
+		if ( functionName == "to_string" )
+			return true;
+
 		GtkStruct ancestor = strct.parentStruct;
 
 		while(ancestor)
 		{
 			if ( name in ancestor.functions )
-				return true;
+			{
+				GtkFunction func = ancestor.functions[name];
+
+				if ( !(func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback) )
+					return true;
+			}
 
 			ancestor = ancestor.parentStruct;
 		}
@@ -1082,7 +1092,7 @@ final class GtkFunction
 	{
 		string buff;
 
-		buff = strct.cType ~" "~ strct.name.toLower() ~"Struct";
+		buff = strct.cType ~"* "~ strct.name.toLower() ~"Struct";
 		foreach( param; params )
 		{
 			GtkStruct par = strct.pack.getStruct(param.type.name);

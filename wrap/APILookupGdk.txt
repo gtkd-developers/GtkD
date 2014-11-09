@@ -24,6 +24,27 @@
 wrap: gdk
 file: /usr/share/gir-1.0/Gdk-3.0.gir
 
+addAliases: start
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+	public import gtkc.giotypes;
+	public import gtkc.pangotypes;
+	public import gtkc.gdkpixbuftypes;
+addAliases: end
+
+addStructs: start
+
+	/**
+	 * An opaque type representing a string as an index into a table
+	 * of strings on the X server.
+	 */
+	alias _GdkAtom* GdkAtom;
+	public struct _GdkAtom;
+addStructs: end
+
+struct: Atom
+noStruct: true
+
 struct: Cairo
 namespace:
 

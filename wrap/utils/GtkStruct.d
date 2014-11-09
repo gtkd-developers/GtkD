@@ -20,6 +20,7 @@
 module utils.GtkStruct;
 
 import std.algorithm: sort, uniq, endsWith;
+import std.array : replace;
 import std.conv;
 import std.file : write;
 import std.path: buildPath;
@@ -55,6 +56,7 @@ final class GtkStruct
 	bool lookupClass = false;
 	bool lookupInterface = false;
 	bool noCode = false;
+	bool noDecleration = false;
 	bool noExternal = false;
 	bool noNamespace = false;
 	string[string] structWrap;
@@ -330,17 +332,21 @@ final class GtkStruct
 
 			buff ~= indenter.format("}");
 			buff ~= "\n";
-			buff ~= indenter.format("/** the main Gtk struct as a void* */");
 
-			if ( parentStruct )
-				buff ~= indenter.format("protected override void* getStruct()");
-			else
-				buff ~= indenter.format("protected void* getStruct()");
+			if ( type != GtkStructType.Interface && !lookupInterface )
+			{
+				buff ~= indenter.format("/** the main Gtk struct as a void* */");
 
-			buff ~= indenter.format("{");
-			buff ~= indenter.format("return cast(void*)"~ getHandleVar ~";");
-			buff ~= indenter.format("}");
-			buff ~= "\n";
+				if ( parentStruct )
+					buff ~= indenter.format("protected override void* getStruct()");
+				else
+					buff ~= indenter.format("protected void* getStruct()");
+
+				buff ~= indenter.format("{");
+				buff ~= indenter.format("return cast(void*)"~ getHandleVar ~";");
+				buff ~= indenter.format("}");
+				buff ~= "\n";
+			}
 
 			if ( (type != GtkStructType.Interface || lookupInterface) && cType != "GObject" && cType != "cairo_t" )
 			{
@@ -455,7 +461,7 @@ final class GtkStruct
 		writeImports(buff);
 		writeDocs(buff);
 
-		buff ~= "public interface "~ name;
+		buff ~= "public interface "~ name ~"IF";
 		buff ~= indenter.format("{");
 
 		if ( cType )
@@ -478,7 +484,7 @@ final class GtkStruct
 
 			foreach ( func; functions )
 			{
-				if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
+				if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback || func.type == GtkFunctionType.Constructor )
 					continue;
 
 				if ( func.type == GtkFunctionType.Signal )
@@ -493,6 +499,7 @@ final class GtkStruct
 				else
 				{
 					string[] dec = func.getDeclaration();
+					dec[$-1] = dec[$-1].replace("override ", "");
 					dec[$-1] ~= ";";
 
 					buff ~= "\n";
@@ -626,11 +633,11 @@ final class GtkStruct
 				if ( dType is this )
 					return;
 
-				if ( dType && dType.type != GtkStructType.Record )
+				if ( dType && (dType.type != GtkStructType.Record || dType.lookupClass || dType.lookupInterface) )
 				{
 					imports ~= dType.pack.name ~"."~ dType.name;
 
-					if ( dType.type == GtkStructType.Interface )
+					if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
 				}
 				else if ( type.name == "utf8" )

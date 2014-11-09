@@ -76,7 +76,6 @@ final class GtkEnum
 					GtkEnumMember member = GtkEnumMember(wrapper);
 					member.parse(reader);
 					members ~= member;
-
 					break;
 				case "function":
 					//Skip these functions for now
@@ -109,7 +108,7 @@ final class GtkEnum
 			buff ~= " */";
 		}
 
-		buff ~= "public enum "~ cName;
+		buff ~= "public enum "~ cName ~(name == "ParamFlags" ? " : uint" : "");
 		buff ~= "{";
 
 		foreach ( member; members )

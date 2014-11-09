@@ -125,6 +125,10 @@ class GtkPackage
 				case "alias":
 					GtkAlias gtkAlias = new GtkAlias(wrapper);
 					gtkAlias.parse(reader);
+
+					if ( gtkAlias.cType == "GType" )
+						break;
+
 					collectedAliases[gtkAlias.name] = gtkAlias;
 					break;
 				case "bitfield":
@@ -249,7 +253,7 @@ class GtkPackage
 		buff ~= indenter.format(lookupStructs);
 		foreach ( s; collectedStructs )
 		{
-			if ( s.noExternal )
+			if ( s.noExternal || s.noDecleration )
 				continue;
 
 			buff ~= "\n";

@@ -277,13 +277,19 @@ class GtkWrapper
 					currentStruct.functions[defReader.value~"-signal"].noCode = true;
 					break;
 				case "noStruct":
-					pack.collectedStructs.remove(defReader.value);
+					currentStruct.noDecleration = true;
 					break;
 				case "code":
 					currentStruct.lookupCode ~= defReader.readBlock;
 					break;
 				case "interfaceCode":
 					currentStruct.lookupInterfaceCode ~= defReader.readBlock;
+					break;
+				case "in":
+					string[] vals = defReader.value.split();
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
+					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.Default;
 					break;
 				case "out":
 					string[] vals = defReader.value.split();

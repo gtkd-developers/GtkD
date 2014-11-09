@@ -23,6 +23,10 @@
 wrap: gobject
 file: /usr/share/gir-1.0/GObject-2.0.gir
 
+addAliases: start
+	public import gtkc.glibtypes;
+addAliases: end
+
 noAlias: Type
 addEnums: start
 
@@ -108,7 +112,6 @@ code: start
 			if ( obj.isGcRoot )
 			{
 				GC.removeRoot(cast(void*)obj);
-
 				obj.isGcRoot = false;
 			}
 
@@ -120,13 +123,11 @@ code: start
 			if ( isLastRef && obj.isGcRoot )
 			{
 				GC.removeRoot(cast(void*)obj);
-
 				obj.isGcRoot = false;
 			}
 			else if ( !obj.isGcRoot )
 			{
 				GC.addRoot(cast(void*)obj);
-
 				obj.isGcRoot = true;
 			}
 		}
@@ -136,6 +137,16 @@ code: start
 	{
 		if ( Linker.isLoaded(LIBRARY.GOBJECT) && gObject !is null )
 		{
+			// Remove the GDestroyNotify callback,
+			// for when the D object is destroyed before the C one.
+			stealData("GObject");
+
+			if ( isGcRoot )
+			{
+				GC.removeRoot(cast(void*)this);
+				isGcRoot = false;
+			}
+
 			unref();
 		}
 	}
@@ -379,6 +390,7 @@ extend: Object
 implements: TypePlugin
 
 struct: Value
+import: gdk.Pixbuf
 code: start
 	/** */
 	public this()

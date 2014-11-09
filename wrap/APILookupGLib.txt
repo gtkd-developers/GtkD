@@ -25,93 +25,98 @@ file: /usr/share/gir-1.0/GLib-2.0.gir
 file: /usr/share/gir-1.0/GModule-2.0.gir
 
 addAliases: start
-version( Windows )
-{
-	alias int glong;
-	alias uint gulong;
-}
-else version( X86_64 )
-{
-	alias long glong;
-	alias ulong gulong;
-}
-else
-{
-	alias int glong;
-	alias uint gulong;
-}
+	public alias uint uid_t;
+	public alias int pid_t;
 
-version( Windows )
-	enum _utfPostfix = "_utf8";
-else
-	enum _utfPostfix = "";
-
-version (Windows)
-{
-	private import core.stdc.stdio;
-
-	static if( !is(typeof(fdopen(0, null))) )
+	version( Windows )
 	{
-		extern (C) FILE*  fdopen(int, char*);
+		alias int glong;
+		alias uint gulong;
 	}
-}
-
-static if ( __VERSION__ >= 2063 )
-{
-	public import std.typecons : scoped;
-
-	template Scoped(T)
+	else version( X86_64 )
 	{
-		alias typeof(scoped!T(cast(typeof(T.tupleof[0]))null)) Scoped;
+		alias long glong;
+		alias ulong gulong;
 	}
-}
-else
-{
-	// I'm getting the following error on the older dmd versions:
-	// this for Scoped_store needs to be type Scoped not type inout(Scoped!(T)).
-	// Unlike the phobos version this does use GC alocated memory for the object.
-	// Within GtkD this is used to make sure destroy is called on the object
-	// so it releases the resources it holds.
-	struct Scoped(T)
+	else
 	{
-		T payload;
+		alias int glong;
+		alias uint gulong;
+	}
 
-		alias payload this;
+	version( Windows )
+		enum _utfPostfix = "_utf8";
+	else
+		enum _utfPostfix = "";
 
-		@disable this();
-		@disable this(this);
+	version (Windows)
+	{
+		private import core.stdc.stdio;
 
-		~this()
+		static if( !is(typeof(fdopen(0, null))) )
 		{
-			.destroy(payload);
+			extern (C) FILE*  fdopen(int, char*);
 		}
 	}
 
-	auto scoped(T, Args...)(auto ref Args args) if (is(T == class))
+	static if ( __VERSION__ >= 2063 )
 	{
-		Scoped!(T) result = void;
-		result.payload = new T(args);
+		public import std.typecons : scoped;
 
-		return result;
+		template Scoped(T)
+		{
+			alias typeof(scoped!T(cast(typeof(T.tupleof[0]))null)) Scoped;
+		}
 	}
-}
+	else
+	{
+		// I'm getting the following error on the older dmd versions:
+		// this for Scoped_store needs to be type Scoped not type inout(Scoped!(T)).
+		// Unlike the phobos version this does use GC alocated memory for the object.
+		// Within GtkD this is used to make sure destroy is called on the object
+		// so it releases the resources it holds.
+		struct Scoped(T)
+		{
+			T payload;
 
-/**
- * Get the length of a zero terminated array.
- */
-size_t getArrayLength(T)(T* arr)
-{
-	T* ptr;
+			alias payload this;
 
-	for ( ptr = arr; *ptr; ++ptr ){}
+			@disable this();
+			@disable this(this);
 
-	return ptr - arr;
-}
+			~this()
+			{
+				.destroy(payload);
+			}
+		}
 
-unittest
-{
-	assert(getArrayLength("aaaaaaaaa\0".ptr) == 9);
-}
+		auto scoped(T, Args...)(auto ref Args args) if (is(T == class))
+		{
+			Scoped!(T) result = void;
+			result.payload = new T(args);
+
+			return result;
+		}
+	}
+
+	/**
+	 * Get the length of a zero terminated array.
+	 */
+	size_t getArrayLength(T)(T* arr)
+	{
+		T* ptr;
+
+		for ( ptr = arr; *ptr; ++ptr ){}
+
+		return ptr - arr;
+	}
+
+	unittest
+	{
+		assert(getArrayLength("aaaaaaaaa\0".ptr) == 9);
+	}
+
+	alias void* GIConv;
 addAliases: end
 
 struct: Array
@@ -367,6 +372,7 @@ code: end
 
 struct: GException
 namespace:
+import: glib.ErrorG
 code: start
 	class GException : Exception
 	{
@@ -418,6 +424,7 @@ code: end
 
 struct: IConv
 namespace:
+noStruct: true
 ref: iconv inbuf
 array: iconv inbuf inbytes_left
 ref: iconv outbuf
@@ -604,6 +611,10 @@ code: start
 		return arr;
 	}
 code: end
+
+struct: MainContext
+in: query fds
+in: query n_fds
 
 struct: MarkupParseContext
 class: SimpleXML
@@ -984,6 +995,9 @@ code: start
 code: end
 
 struct: Str
+import: core.stdc.stdio
+import: core.stdc.string
+import: gtkc.gobjecttypes
 code: start
 	/*************************************************
 	 * Convert C-style 0 terminated string s to char[] string.

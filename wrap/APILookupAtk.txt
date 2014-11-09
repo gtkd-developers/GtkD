@@ -23,6 +23,11 @@
 wrap: atk
 file: /usr/share/gir-1.0/Atk-1.0.gir
 
+addAliases: start
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+addAliases: end
+
 struct: Attribute
 noCode: true
 noExternal: true
