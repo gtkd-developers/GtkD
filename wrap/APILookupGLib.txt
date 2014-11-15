@@ -119,6 +119,19 @@ addAliases: start
 	alias void* GIConv;
 addAliases: end
 
+addEnums: start
+
+	enum GPriority
+	{
+		HIGH = -100,
+		DEFAULT = 0,
+		HIGH_IDLE = 100,
+		DEFAULT_IDLE = 200,
+		LOW = 300
+	}
+
+addEnums: end
+
 struct: Array
 class: ArrayG
 
@@ -145,7 +158,7 @@ code: start
 	 *
 	 * Since: 2.12
 	 */
-	public static gsize decodeStep(string inn, out ubyte[] output, ref int state, ref uint save)
+	public static size_t decodeStep(string inn, out ubyte[] output, ref int state, ref uint save)
 	{
 		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, &output.ptr, &state, &save);
 		
@@ -705,6 +718,12 @@ code: start
 code: end
 
 struct: Spawn
+class: Spawn
+cType:
+import: core.thread
+import: core.stdc.string
+import: core.stdc.stdio
+import: std.string
 #noCode: spawn_async_with_pipes
 code: start
 	//we need fdopen.
@@ -1750,7 +1769,7 @@ move: shell_quote ShellUtils
 move: shell_unquote ShellUtils
 
 move: spawn_async Spawn async
-#move: spawn_async_with_pipes Spawn async_with_pipes
+move: spawn_async_with_pipes Spawn async_with_pipes
 move: spawn_check_exit_status Spawn check_exit_status
 move: spawn_close_pid Spawn close_pid
 move: spawn_command_line_async Spawn command_line_async
@@ -1758,6 +1777,9 @@ move: spawn_command_line_sync Spawn command_line_sync
 move: spawn_error_quark Spawn error_quark
 move: spawn_exit_error_quark Spawn exit_error_quark
 move: spawn_sync Spawn sync
+
+struct: Spawn
+noCode: async_with_pipes
 
 move: ascii_digit_value Str
 move: ascii_dtostr Str

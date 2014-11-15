@@ -313,7 +313,7 @@ final class GtkStruct
 		buff ~= "\n";
 		buff ~= indenter.format("{");
 
-		if ( cType )
+		if ( !cType.empty )
 		{
 			if ( type != GtkStructType.Interface || lookupInterface )
 			{
@@ -376,6 +376,9 @@ final class GtkStruct
 				if ( parentStruct && parentStruct.implements.canFind(interf) )
 					continue;
 
+				if ( parentStruct && interf.canFind(".") && parentStruct.implements.canFind(interf.split('.')[1]) )
+					continue;
+
 				GtkStruct strct = pack.getStruct(interf);
 
 				if ( strct )
@@ -386,60 +389,61 @@ final class GtkStruct
 				}
 			}
 
-			if ( !lookupCode.empty )
+		}
+
+		if ( !lookupCode.empty )
+		{
+			buff ~= indenter.format(lookupCode);
+			buff ~= "\n";
+		}
+
+		buff ~= indenter.format(["/**", "*/"]);
+		bool firstSignal = true;
+
+		foreach ( func; functions )
+		{
+			if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
+				continue;
+
+			if ( func.type == GtkFunctionType.Signal )
 			{
-				buff ~= indenter.format(lookupCode);
 				buff ~= "\n";
-			}
 
-			buff ~= indenter.format(["/**", "*/"]);
-			bool firstSignal = true;
-
-			foreach ( func; functions )
-			{
-				if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
-					continue;
-
-				if ( func.type == GtkFunctionType.Signal )
+				if ( firstSignal )
 				{
+					buff ~= indenter.format("int[string] connectedSignals;");
 					buff ~= "\n";
+					firstSignal = false;
+				}
 
-					if ( firstSignal )
-					{
-						buff ~= indenter.format("int[string] connectedSignals;");
-						buff ~= "\n";
-						firstSignal = false;
-					}
+				if ( type == GtkStructType.Interface || lookupInterface )
+				{
+					string[] prop;
 
-					if ( type == GtkStructType.Interface || lookupInterface )
-					{
-						string[] prop;
+					prop ~= func.getDelegateDecleration() ~"[] _on"~ func.getSignalName() ~"Listeners;";
+					prop ~= "@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners()";
+					prop ~= "{";
+					prop ~= "return _on"~ func.getSignalName() ~"Listeners;";
+					prop ~= "}";
 
-						prop ~= func.getDelegateDecleration() ~"[] _on"~ func.getSignalName() ~"Listeners;";
-						prop ~= "@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners()";
-						prop ~= "{";
-						prop ~= "return _on"~ func.getSignalName() ~"Listeners;";
-						prop ~= "}";
-
-						buff ~= indenter.format(prop);
-					}
-					else
-					{
-						buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
-					}
-
-					buff ~= indenter.format(func.getAddListenerdeclaration());
-					buff ~= indenter.format(func.getAddListenerBody());
-					buff ~= indenter.format(func.getSignalCallback());
+					buff ~= indenter.format(prop);
 				}
 				else
 				{
-					buff ~= "\n";
-					buff ~= indenter.format(func.getDeclaration());
-					buff ~= indenter.format("{");
-					buff ~= indenter.format(func.getBody());
-					buff ~= indenter.format("}");
+					buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
 				}
+
+				buff ~= indenter.format(func.getAddListenerdeclaration());
+				buff ~= indenter.format(func.getAddListenerBody());
+				buff ~= indenter.format(func.getSignalCallback());
+			}
+			else
+			{
+				buff ~= "\n";
+				buff ~= indenter.format(func.getDeclaration());
+				buff ~= indenter.format("{");
+				buff ~= indenter.format(func.getBody());
+				buff ~= indenter.format("}");
 			}
 		}
 

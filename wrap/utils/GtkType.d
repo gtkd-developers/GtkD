@@ -80,6 +80,9 @@ final class GtkType
 			cType = cType.replace("unsigned ", "u");
 		}
 
+		if ( cType == "unsigned" )
+			cType = name;
+
 		removeInitialyUnowned();
 
 		if ( cType is null && (name == "filename" || name == "utf8") )
@@ -101,8 +104,8 @@ final class GtkType
 			reader.popFront();
 		}
 
-//		if ( cType.length < elementType.cType.length && isArray() )
-//				cType = elementType.cType;
+		if ( isArray() && cType == "void" )
+			cType = elementType.cType ~"*";
 	}
 
 	bool isArray()

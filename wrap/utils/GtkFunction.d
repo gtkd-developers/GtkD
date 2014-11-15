@@ -24,6 +24,7 @@ import std.conv;
 import std.range;
 import std.string: splitLines, strip;
 
+import utils.GtkEnum;
 import utils.GtkStruct;
 import utils.GtkType;
 import utils.GtkWrapper;
@@ -226,8 +227,6 @@ final class GtkFunction
 
 			if ( type.startsWith("bool") )
 				ext ~= type.replaceFirst("bool", "int");
-			else if ( type == "tm*" )
-				ext ~= "void*";
 			else
 				ext ~= type;
 
@@ -984,7 +983,12 @@ final class GtkFunction
 		}
 
 		if ( type.cType.empty )
+		{
+			if ( auto enum_ = strct.pack.getEnum(type.name) )
+				return enum_.cName;
+
 			return stringToGtkD(type.name, wrapper.aliasses, localAliases());
+		}
 
 		if ( direction != GtkParamDirection.Default )
 			return stringToGtkD(type.cType[0..$-1], wrapper.aliasses, localAliases());
@@ -1095,14 +1099,14 @@ final class GtkFunction
 		buff = strct.cType ~"* "~ strct.name.toLower() ~"Struct";
 		foreach( param; params )
 		{
-			GtkStruct par = strct.pack.getStruct(param.type.name);
-
-			if ( par && !isDType(par) )
-				buff ~= ", "~ par.cType ~"* "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
-			else if ( par )
-				buff ~= ", "~ par.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
+			if ( auto par = strct.pack.getStruct(param.type.name) )
+				buff ~= stringToGtkD(", "~ par.cType ~"* "~ param.name, wrapper.aliasses, localAliases());
+			else if ( auto enum_ = strct.pack.getEnum(param.type.name) )
+				buff ~= stringToGtkD(", "~ enum_.cName ~" "~ param.name, wrapper.aliasses, localAliases());
+			else if ( !param.type.cType.empty )
+				buff ~= stringToGtkD(", "~ param.type.cType ~" "~ param.name, wrapper.aliasses, localAliases());
 			else
-				buff ~= ", "~ param.type.cType ~" "~ tokenToGtkD(param.name, wrapper.aliasses, localAliases());
+				buff ~= stringToGtkD(", "~ param.type.name ~" "~ param.name, wrapper.aliasses, localAliases());
 		}
 
 		if ( strct.type == GtkStructType.Interface )
@@ -1132,7 +1136,7 @@ final class GtkFunction
 
 		if ( !buff.empty )
 			buff ~= ", ";
-		buff ~= strct.name.toLower() ~"Struct";
+		buff ~= "_"~ strct.name.toLower();
 
 		return buff;
 	}

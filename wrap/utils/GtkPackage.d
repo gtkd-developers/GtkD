@@ -223,6 +223,23 @@ class GtkPackage
 		return pack.collectedStructs.get(name, pack.collectedStructs.get("lookup"~name, null));
 	}
 
+	GtkEnum getEnum(string name)
+	{
+		GtkPackage pack = this;
+		
+		if ( name.canFind(".") )
+		{
+			string[] vals = name.split(".");
+			
+			if ( vals[0].toLower() !in wrapper.packages )
+				return null;
+			
+			pack = wrapper.packages[vals[0].toLower()];
+			name = vals[1];
+		}
+		return pack.collectedEnums.get(name, null);
+	}
+
 	void writeClasses()
 	{
 		foreach ( strct; collectedStructs )
@@ -312,8 +329,8 @@ class GtkPackage
 		buff ~= "import std.stdio;\n";
 		buff ~= "import "~ wrapper.bindDir ~"."~ name ~"types;\n";
 
-		//if ( name == "glib" )
-		//	buff ~= "import gtkc.gthreadtypes;\n";
+		if ( name == "glib" )
+			buff ~= "import gtkc.gobjecttypes;\n";
 		if ( name == "gdk" || name == "pango" )
 			buff ~= "import gtkc.cairotypes;\n";
 

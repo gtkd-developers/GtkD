@@ -40,6 +40,10 @@ addStructs: start
 		void* priv;
 	}
 
+	struct PangoCairoFont;
+
+	struct PangoCairoFontMap;
+
 addStructs: end
 
 addConstants: start

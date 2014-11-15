@@ -43,6 +43,9 @@ class: Converter
 extend: GObject.Object
 implements: Converter
 
+struct: DataInputStream
+noCode: read_byte
+
 struct: DBusActionGroup
 code: start
 	/**

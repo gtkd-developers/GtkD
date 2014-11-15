@@ -58,7 +58,6 @@ alias: gboolean bool
 alias: gpointer void*
 alias: gconstpointer void*
 alias: gchar char
-alias: gchar* char*
 alias: guchar char
 alias: gshort short
 alias: gushort ushort
@@ -85,7 +84,6 @@ alias: gunichar dchar
 alias: gunichar2 wchar
 
 alias: time_t uint
-alias: tm* void*
 alias: uid_t uid_t
 
 alias: alias alias_

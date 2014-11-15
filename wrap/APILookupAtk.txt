@@ -32,6 +32,13 @@ struct: Attribute
 noCode: true
 noExternal: true
 
+struct: Component
+override: get_layer
+override: get_mdi_zorder
+
+struct: Document
+override: get_attributes
+
 struct: Implementor
 interface: Implementor
 merge: ImplementorIface

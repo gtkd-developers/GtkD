@@ -179,9 +179,15 @@ class GtkWrapper
 					break;
 				case "struct":
 					if ( defReader.value.empty )
+					{
 						currentStruct = null;
+					}
 					else
-						currentStruct = pack.collectedStructs.get(defReader.value, createClass(pack, defReader.value));
+					{
+						currentStruct = pack.getStruct(defReader.value);
+						if ( currentStruct is null )
+							currentStruct = createClass(pack, defReader.value);
+					}
 					break;
 				case "class":
 					if ( currentStruct is null )
@@ -197,8 +203,14 @@ class GtkWrapper
 					currentStruct.lookupInterface = true;
 					currentStruct.name = defReader.value;
 					break;
+				case "cType":
+					currentStruct.cType = defReader.value;
+					break;
 				case "namespace":
 					currentStruct.type = GtkStructType.Record;
+					currentStruct.lookupClass = false;
+					currentStruct.lookupInterface = false;
+
 					if ( defReader.value.empty )
 					{
 						currentStruct.noNamespace = true;
@@ -423,7 +435,7 @@ class GtkWrapper
 		strct.name = name;
 		strct.cType = pack.cTypePrefix ~ name;
 		strct.type = GtkStructType.Record;
-		strct.noExternal = true;
+		strct.noDecleration = true;
 		pack.collectedStructs["lookup"~name] = strct;
 
 		return strct;
@@ -449,7 +461,11 @@ string stringToGtkD(string str, string[string] aliases, string[string] localAlia
 			while ( pos < str.length && !seps.canFind(str[pos]) )
 				pos++;
 
-			converted.put(tokenToGtkD(str[start..pos], aliases, localAliases));
+			//Workaround for the tm struct, type and variable have the same name.
+			if ( pos < str.length && str[pos] == '*' && str[start..pos] == "tm" )
+				converted.put("void");
+			else
+				converted.put(tokenToGtkD(str[start..pos], aliases, localAliases));
 
 			if ( pos == str.length )
 				break;

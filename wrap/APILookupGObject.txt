@@ -366,6 +366,7 @@ code: start
 code: end
 
 struct: Type
+import: gobject.ObjectG
 code: start
 	public static T* getInstanceClass(T)(ObjectG obj)
 	{
@@ -597,4 +598,4 @@ move: type_remove_class_cache_func Type remove_class_cache_func
 move: type_remove_interface_check Type remove_interface_check
 move: type_set_qdata Type set_qdata
 move: type_test_flags Type test_flags
-move: type_value_table_peek Type value_table_peek
+#move: type_value_table_peek Type value_table_peek
