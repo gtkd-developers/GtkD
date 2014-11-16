@@ -38,6 +38,10 @@ addAliases: start
 addAliases: end
 
 struct: Action
+import: gtk.Image
+import: gtk.Menu
+import: gtk.MenuItem
+import: gtk.ToolItem
 noCode: get_stock_id
 noCode: create_icon
 noCode: create_menu_item
@@ -579,6 +583,7 @@ code: start
 code: end
 
 struct: ButtonBox
+import: gtk.Button
 code: start
 	/** */
 	static ButtonBox createActionBox(
@@ -774,7 +779,7 @@ code: start
 	 *
 	 * Since: 2.14
 	 */
-	public override ColorSelection getColorSelection()
+	public ColorSelection getColorSelection()
 	{
 		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
 
@@ -883,6 +888,7 @@ code: start
 code: end
 
 struct: ComboBoxText
+override: remove_all
 noCode: new
 noCode: new_with_entry
 code: start
@@ -1008,6 +1014,9 @@ code: start
 code: end
 
 struct: Dialog
+import: gtk.Button
+import: gtk.HButtonBox
+import: gtk.VBox
 alias: set_alternative_button_order_from_array setAlternativeButtonOrder
 # Make these return the correct class.
 noCode: get_action_area
@@ -1170,6 +1179,9 @@ code: start
 	}
 code: end
 
+struct: EntryIconAccessible
+noCode: true
+
 struct: Expander
 noCode: new
 noCode: new_with_mnemonic
@@ -1213,6 +1225,7 @@ alias: set_action setFileChooserAction
 alias: get_action getFileChooserAction
 
 struct: FileChooserDialog
+import: gtk.Window
 noCode: new
 code: start
 	/**
@@ -1271,7 +1284,7 @@ code: start
 	 *
 	 * Since: 2.22
 	 */
-	public override FontSelection getFontSelection()
+	public FontSelection getFontSelection()
 	{
 		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
 
@@ -1463,6 +1476,8 @@ code: start
 code: end
 
 struct: InfoBar
+import: gtk.HBox
+import: gtk.VButtonBox
 noCode: get_action_area
 noCode: get_content_area
 code: start
@@ -1744,7 +1759,7 @@ code: start
 	 *  button = you can pass a button number here
 	 *  activateTime = you can pass the time from an event here
 	 */
-	void popup(guint button, guint32 activateTime)
+	void popup(uint button, uint activateTime)
 	{
 		popup(null, null, null, null, button, activateTime);
 	}
@@ -1785,6 +1800,8 @@ code: start
 code: end
 
 struct: MenuBar
+import: gtk.Menu
+import: gtk.MenuItem
 code: start
 	/** */
 	Menu append(string label, bool rightJustify=false)
@@ -1798,9 +1815,9 @@ code: start
 	}
 
 	/** */
-	public override void append(Widget widget)
+	public override void append(MenuItem item)
 	{
-		super.append(widget);
+		super.append(item);
 	}
 code: end
 
@@ -1809,6 +1826,7 @@ alias: set_direction setMenuDirection
 alias: get_direction getMenuDirection
 
 struct: MenuItem
+import: gtk.AccelGroup
 noCode: new_with_label
 noCode: new_with_mnemonic
 alias: activate itemActivate
@@ -1903,6 +1921,7 @@ code: start
 code: end
 
 struct: MenuToolButton
+import: gtk.Menu
 noCode: get_menu
 code: start
 	/**
@@ -1939,6 +1958,8 @@ code: start
 code: end
 
 struct: MessageDialog
+import: gtk.VBox
+import: gtk.Window
 noCode: new
 noCode: new_with_markup
 noCode: get_message_area
@@ -2085,9 +2106,12 @@ code: start
 code: end
 
 struct: Plug
+import: gdk.Window : GdkWin = Window
+structWrap: Gdk.Window GdkWin
 alias: Window ulong
 
 struct: PopupBox
+import: gtk.Window
 code: start
 	/**
 	 * Create an information popup dialog.
@@ -2481,6 +2505,8 @@ alias: set_show_numbers recentChooserSetShowNumbers
 alias: get_show_numbers recentChooserGetShowNumbers
 
 struct: RecentChooserDialog
+import: gtk.RecentManager
+import: gtk.Window
 noCode: new
 noCode: new_for_manager
 code: start
@@ -2770,7 +2796,6 @@ code: start
 	 */
 	public this (uint rows, uint columns, int homogeneous)
 	{
-		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
 		auto p = gtk_table_new(rows, columns, homogeneous);
 
 		if(p is null)
@@ -3027,7 +3052,7 @@ code: start
 	/**
 	 * Get the text line at the pixel y
 	 */
-	string getLineTextAt(gint y)
+	string getLineTextAt(int y)
 	{
 
 		TextIter iter = new TextIter();
@@ -3225,6 +3250,9 @@ code: start
 code: end
 
 struct: TreeIter
+import: gtk.TreeModelIF
+import: gtk.TreePath
+import: gobject.Value
 noCode: copy
 noCode: free
 code: start
@@ -3586,6 +3614,7 @@ code: end
 
 struct:
 class: TreeIterError
+cType:
 extend: Exception
 code: start
 	/**
@@ -3600,6 +3629,7 @@ code: start
 code: end
 
 struct: TreeModel
+import: gobject.Value
 noCode: get_value
 noCode: get_iter
 interfaceCode: start
@@ -3667,7 +3697,6 @@ code: start
 	 */
 	public int getIter(TreeIter iter, TreePath path)
 	{
-		// gboolean gtk_tree_model_get_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreePath *path);
 		iter.setModel(this);
 		return gtk_tree_model_get_iter(
 				getTreeModelTStruct(),
@@ -3689,7 +3718,6 @@ code: start
 		if ( value is null )
 			value = new Value();
 
-		// void gtk_tree_model_get_value (GtkTreeModel *tree_model,  GtkTreeIter *iter,  gint column,  GValue *value);
 		gtk_tree_model_get_value(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 
 		return value;
@@ -3877,7 +3905,7 @@ public class TreeModel : ObjectG, TreeModelIF
 			return tm.getColumnType(index);
 		}
 
-		static gboolean customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
+		static int customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
@@ -3899,21 +3927,21 @@ public class TreeModel : ObjectG, TreeModelIF
 			tm.getValue(ObjectG.getDObject!(TreeIter)(iter), column, ObjectG.getDObject!(Value)(value));
 		}
 
-		static gboolean customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		static int customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
 			return tm.iterNext(ObjectG.getDObject!(TreeIter)(iter));
 		}
 
-		static gboolean customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
+		static int customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
 			return tm.iterChildren(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent));
 		}
 
-		static gboolean customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		static int customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
@@ -3927,14 +3955,14 @@ public class TreeModel : ObjectG, TreeModelIF
 			return tm.iterNChildren(ObjectG.getDObject!(TreeIter)(iter));
 		}
 
-		static gboolean customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
+		static int customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
 			return tm.iterNthChild(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent), n);
 		}
 
-		static gboolean customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
+		static int customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
@@ -4060,6 +4088,8 @@ code: start
 code: end
 
 struct: TreeStore
+import: gdk.Pixbuf
+import: gtk.TreeNode
 noCode: set
 code: start
 	/**
@@ -4266,7 +4296,7 @@ code: start
 	 *  editable =
 	 * Returns: number of columns including the new one
 	 */
-	gint insertEditableColumn(int position, string title, CellRenderer renderer, bool editable)
+	int insertEditableColumn(int position, string title, CellRenderer renderer, bool editable)
 	{
 		// OK, this is a trick because of my ignorance on how to pass variable argument lists
 		if ( position < 0 )
@@ -4285,6 +4315,8 @@ code: start
 code: end
 
 struct: TreeViewColumn
+import: gtk.Button
+import: gtk.TreeView
 #These are also implemented in CellLayoutT
 noCode: pack_start
 noCode: pack_end
@@ -4489,6 +4521,8 @@ struct: Widget
 import: gdk.Cursor
 import: gdk.Window : GdkWin = Window
 structWrap: Gdk.Window GdkWin
+noCode: set_state
+noCode: get_state
 code: start
 	public GtkWidgetClass* getWidgetClass()
 	{

@@ -1022,7 +1022,7 @@ code: start
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
 	 */
-	public static string toString(char *s, size_t len = 0)
+	public static string toString(const(char)* s, size_t len = 0)
 	{
 		if ( s is null )
 			return cast(string)null;
@@ -1076,7 +1076,7 @@ code: start
 	}
 
 	/** */
-	public static string[] toStringArray(char** args)
+	public static string[] toStringArray(const(char)** args)
 	{
 		if ( args is null )
 		{

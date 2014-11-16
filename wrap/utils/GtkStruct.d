@@ -55,6 +55,7 @@ final class GtkStruct
 
 	bool lookupClass = false;
 	bool lookupInterface = false;
+	bool lookupParent = false;  // is the parent set with the lookup file.
 	bool noCode = false;
 	bool noDecleration = false;
 	bool noExternal = false;
@@ -284,7 +285,9 @@ final class GtkStruct
 		else
 			buff ~= "public class "~ name;
 
-		if ( parentStruct && parentStruct.name != name )
+		if ( lookupParent && !parentStruct )
+			buff ~= " : "~ parent;
+		else if ( parentStruct && parentStruct.name != name )
 			buff ~= " : "~ parentStruct.name;
 		else if ( parentStruct )
 			buff ~= " : "~ parentStruct.pack.name.capitalize() ~ parentStruct.name;
@@ -629,7 +632,7 @@ final class GtkStruct
 
 			void getReturnImport(GtkType type)
 			{
-				if ( type.name in structWrap )
+				if ( type.name in structWrap || type.name in aliases )
 					return;
 
 				GtkStruct dType = pack.getStruct(type.name);
@@ -658,7 +661,7 @@ final class GtkStruct
 
 			void getParamImport(GtkType type)
 			{
-				if ( type.name in structWrap )
+				if ( type.name in structWrap || type.name in aliases )
 					return;
 
 				GtkStruct dType = pack.getStruct(type.name);

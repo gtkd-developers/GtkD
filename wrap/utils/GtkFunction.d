@@ -263,7 +263,7 @@ final class GtkFunction
 			if ( type == GtkFunctionType.Method && strct.isNamespace() )
 				dec ~= "static ";
 
-			if ( lookupOverride || checkOverride(name) )
+			if ( lookupOverride || checkOverride() )
 				dec ~= "override ";
 
 			dec ~= getType(returnType) ~" ";
@@ -794,7 +794,7 @@ final class GtkFunction
 		}
 
 		buff ~= "Signals.connectData(";
-		buff ~= "getStruct(),";
+		buff ~= "this,";
 		buff ~= "\""~ name ~"\",";
 		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
 
@@ -821,17 +821,17 @@ final class GtkFunction
 	string[] getSignalCallback()
 	{
 		string[] buff;
+		string type = stringToGtkD(returnType.cType, wrapper.aliasses, localAliases());
 
-		buff ~= "extern(C) static "
-			~ tokenToGtkD(returnType.cType, wrapper.aliasses, localAliases())
+		buff ~= "extern(C) static "~ (type == "bool" ? "int" : type)
 			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
 
 		buff ~= "{";
-		buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
-		buff ~= "{";
 
-		if ( strct.type == GtkStructType.Interface )
+		if ( type == "bool" )
 		{
+			buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
+			buff ~= "{";
 			buff ~= "if ( dlg("~ getCallbackVars() ~") )";
 			buff ~= "{";
 			buff ~= "return 1;";
@@ -840,10 +840,16 @@ final class GtkFunction
 			buff ~= "";
 			buff ~= "return 0;";
 		}
+		else if ( type == "void" )
+		{
+			buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
+			buff ~= "{";
+			buff ~= "dlg("~ getCallbackVars() ~");";
+			buff ~= "}";
+		}
 		else
 		{
 			buff ~= "dlg("~ getCallbackVars() ~");";
-			buff ~= "}";
 		}
 
 		buff ~= "}";
@@ -1059,20 +1065,20 @@ final class GtkFunction
 	/**
 	 * Check if any of the ancestors contain the function functionName.
 	 */
-	private bool checkOverride(string functionName)
+	private bool checkOverride()
 	{
-		if ( functionName == "to_string" )
+		if ( name == "to_string" )
 			return true;
 
 		GtkStruct ancestor = strct.parentStruct;
 
 		while(ancestor)
 		{
-			if ( name in ancestor.functions )
+			if ( name in ancestor.functions && name !in strct.aliases )
 			{
 				GtkFunction func = ancestor.functions[name];
 
-				if ( !(func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback) )
+				if ( !(func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback) && paramsEqual(func) )
 					return true;
 			}
 
@@ -1080,6 +1086,23 @@ final class GtkFunction
 		}
 
 		return false;
+	}
+
+	/**
+	 * Return true if the params of func match the params of this function.
+	 */
+	private bool paramsEqual(GtkFunction func)
+	{
+		if ( params.length != func.params.length )
+			return false;
+
+		foreach ( i, param; params )
+		{
+			if ( getType(param.type) != getType(func.params[i].type) )
+				return false;
+		}
+
+		return true;
 	}
 
 	private string construct(GtkStruct type)
@@ -1130,6 +1153,8 @@ final class GtkFunction
 
 			if ( isDType(par) )
 				buff ~= construct(par) ~"("~ tokenToGtkD(param.name, wrapper.aliasses, localAliases()) ~")";
+			else if ( isStringType(param.type) )
+				buff ~= "Str.toString("~ tokenToGtkD(param.name, wrapper.aliasses, localAliases()) ~")";
 			else
 				buff ~= tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}

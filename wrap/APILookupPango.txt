@@ -83,6 +83,7 @@ alias: break pangoBreak
 struct: FcFontMap
 class: PgCairoFontMap
 implements:
+noCode: create_context
 
 struct: FontDescription
 code: start
@@ -102,6 +103,9 @@ code: end
 
 struct: Layout
 array: set_text text length
+
+struct: PgMiscellaneous
+import: core.stdc.stdio
 
 move: attr_background_new Attribute background_new
 move: attr_fallback_new Attribute fallback_new

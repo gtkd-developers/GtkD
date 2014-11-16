@@ -222,6 +222,7 @@ class GtkWrapper
 					}
 					break;
 				case "extend":
+					currentStruct.lookupParent = true;
 					currentStruct.parent = defReader.value;
 					break;
 				case "implements":
