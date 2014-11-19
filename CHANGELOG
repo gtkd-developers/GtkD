@@ -1,6 +1,11 @@
 GtkD ChangeLog
 ==============
 
+Release: 2.4.1
+--------------
+-Fix memory leak with gdk.Pixbuf.
+-On Windows search for an copy of GTK+ in &lt;exe path&gt;\gtk.
+
 Release: 2.4.0
 --------------
 - Calling unsupported functions now throws an Error.
