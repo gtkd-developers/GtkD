@@ -161,7 +161,7 @@ code: start
 	public static size_t decodeStep(string inn, out ubyte[] output, ref int state, ref uint save)
 	{
 		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, &output.ptr, &state, &save);
-		
+
 		return p;
 	}
 code: end
@@ -373,9 +373,9 @@ code: start
 	public static void clearError()
 	{
 		GError* err = null;
-		
+
 		g_clear_error(gError, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
@@ -1076,7 +1076,7 @@ code: start
 	}
 
 	/** */
-	public static string[] toStringArray(const(char)** args)
+	public static string[] toStringArray(const(char*)* args)
 	{
 		if ( args is null )
 		{
@@ -1087,6 +1087,38 @@ code: start
 		while ( *args !is null )
 		{
 			argv ~= toString(*args);
+			args++;
+		}
+
+		return argv;
+	}
+
+	/** */
+	public static string[] toStringArray(const(char*)* args, size_t len)
+	{
+		string[] argv = new string[len];
+
+		for ( int i; i < len; i++ )
+		{
+			argv[i] = toString(args[i]);
+		}
+
+		return argv;
+	}
+
+	/** */
+	public static string[][] toStringArray(char*** args)
+	{
+		string[][] argv;
+
+		if ( args is null )
+		{
+			return null;
+		}
+
+		while ( *args !is null )
+		{
+			argv ~= toStringArray(*args);
 			args++;
 		}
 

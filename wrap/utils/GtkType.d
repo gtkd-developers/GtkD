@@ -127,7 +127,7 @@ final class GtkType
 
 	private void fixType()
 	{
-		if ( name == "utf8" )
+		if ( name == "utf8" && !cType.canFind("**") )
 		{
 			cType = "const(char)*";
 			return;

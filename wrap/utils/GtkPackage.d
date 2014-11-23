@@ -226,14 +226,14 @@ class GtkPackage
 	GtkEnum getEnum(string name)
 	{
 		GtkPackage pack = this;
-		
+
 		if ( name.canFind(".") )
 		{
 			string[] vals = name.split(".");
-			
+
 			if ( vals[0].toLower() !in wrapper.packages )
 				return null;
-			
+
 			pack = wrapper.packages[vals[0].toLower()];
 			name = vals[1];
 		}

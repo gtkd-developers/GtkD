@@ -408,6 +408,9 @@ final class GtkStruct
 			if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
 				continue;
 
+			if ( type == GtkStructType.Interface && func.name.startsWith("new") )
+				continue;
+
 			if ( func.type == GtkFunctionType.Signal )
 			{
 				buff ~= "\n";
@@ -637,17 +640,23 @@ final class GtkStruct
 
 				GtkStruct dType = pack.getStruct(type.name);
 
-				if ( dType is this )
-					return;
-
 				if ( dType && (dType.type != GtkStructType.Record || dType.lookupClass || dType.lookupInterface) )
 				{
+					if ( !dType.pack.name.among("cairo", "glib", "gthread") )
+						imports ~= "gobject.ObjectG";
+
+					if ( dType.type == GtkStructType.Interface && func.name.startsWith("new") )
+						return;
+
+					if ( dType is this && dType.type != GtkStructType.Interface )
+						return;
+
 					imports ~= dType.pack.name ~"."~ dType.name;
 
 					if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
 				}
-				else if ( type.name == "utf8" )
+				else if ( type.name == "utf8" || type.cType.among("guchar**") )
 					imports ~= "glib.Str";
 			}
 
@@ -655,7 +664,7 @@ final class GtkStruct
 			{
 				getReturnImport(func.returnType);
 
-				if ( func.returnType.elementType )
+				if ( func.returnType.isArray() )
 					getReturnImport(func.returnType.elementType);
 			}
 
@@ -672,11 +681,18 @@ final class GtkStruct
 				if ( dType && (dType.type != GtkStructType.Record || dType.lookupClass || dType.lookupInterface) )
 				{
 					if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
+					{
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
+
+						if ( func.type == GtkFunctionType.Signal )
+							imports ~= dType.pack.name ~"."~ dType.name;
+					}
 					else
+					{
 						imports ~= dType.pack.name ~"."~ dType.name;
+					}
 				}
-				else if ( type.name == "utf8" )
+				else if ( type.name == "utf8" || type.cType.among("guchar**") )
 					imports ~= "glib.Str";
 			}
 

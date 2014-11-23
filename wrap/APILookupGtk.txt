@@ -2245,6 +2245,11 @@ code: start
 	}
 code: end
 
+struct:
+class: PrintOperationPreview
+extend: GObject.Object
+implements: PrintOperationPreview
+
 struct: PrintUnixDialog
 alias: set_settings setPrintSettings
 alias: get_settings getPrintSettings

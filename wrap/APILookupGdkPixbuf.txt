@@ -60,7 +60,7 @@ code: start
 	public bool saveToBuffer(out ubyte[] buffer, string type, string[] optionKeys, string[] optionValues)
 	{
 		char* outbuffer = null;
-		int bufferSize;
+		size_t bufferSize;
 		GError* err = null;
 
 		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;

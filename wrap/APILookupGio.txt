@@ -38,6 +38,29 @@ class: AppInfo
 extend: GObject.Object
 implements: AppInfo
 
+struct: BufferedInputStream
+noCode: peek_buffer
+code: start
+	/**
+	 * Returns the buffer with the currently available bytes. The returned
+	 * buffer must not be modified and will become invalid when reading from
+	 * the stream or filling the buffer.
+	 *
+	 * Params:
+	 *     count = a #gsize to get the number of bytes available in the buffer
+	 *
+	 * Return: read-only buffer
+	 */
+	public ubyte[] peekBuffer()
+	{
+		size_t count;
+
+		auto p = g_buffered_input_stream_peek_buffer(gBufferedInputStream, &count);
+
+		return (cast(ubyte*)p)[0 .. count];
+	}
+code: end
+
 struct:
 class: Converter
 extend: GObject.Object
@@ -47,6 +70,7 @@ struct: DataInputStream
 noCode: read_byte
 
 struct: DBusActionGroup
+import: glib.ConstructionException
 code: start
 	/**
 	 * See_Also: get().
@@ -64,6 +88,7 @@ code: start
 code: end
 
 struct: DBusAnnotationInfo
+import: glib.Str
 noCode: lookup
 code: start
 	/**
@@ -93,6 +118,7 @@ code: start
 code: end
 
 struct: DBusConnection
+alias: new newConnection
 noCode: new_finish
 noCode: new_for_address_finish
 code: start
@@ -116,11 +142,11 @@ code: start
 
 		if ( address )
 		{
-			p = g_dbus_connection_new_for_address_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+			p = g_dbus_connection_new_for_address_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
 		else
 		{
-			p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+			p = g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
 
 		if (err !is null)
@@ -130,13 +156,14 @@ code: start
 
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
 		}
 		this(cast(GDBusConnection*) p);
 	}
 code: end
 
 struct: DBusMenuModel
+import: glib.ConstructionException
 code: start
 	/**
 	 * See_Also: get().
@@ -160,6 +187,7 @@ extend: GObject.Object
 implements: DBusObject
 
 struct: DBusObjectManagerClient
+alias: new newObjectManagerClient
 noCode: new_finish
 noCode: new_for_bus_finish
 code: start
@@ -182,11 +210,11 @@ code: start
 
 		if ( forBus )
 		{
-			p = g_dbus_object_manager_client_new_for_bus_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+			p = g_dbus_object_manager_client_new_for_bus_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
 		else
 		{
-			p = g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+			p = g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
 
 		if (err !is null)
@@ -196,7 +224,7 @@ code: start
 
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
 		}
 		this(cast(GDBusObjectManagerClient*) p);
 	}
@@ -208,6 +236,7 @@ extend: GObject.Object
 implements: DBusInterface
 
 struct: DBusProxy
+alias: new newProxy
 noCode: new_finish
 noCode: new_for_bus_finish
 code: start
@@ -231,11 +260,11 @@ code: start
 
 		if ( forBus )
 		{
-			p = g_dbus_proxy_new_for_bus_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+			p = g_dbus_proxy_new_for_bus_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
 		else
 		{
-			p = g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err);
+			p = g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
 
 		if (err !is null)
@@ -245,7 +274,7 @@ code: start
 
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultTStruct(), &err)");
+			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
 		}
 		this(cast(GDBusProxy*) p);
 	}
@@ -352,6 +381,9 @@ class: NetworkMonitor
 extend: GObject.Object
 implements: NetworkMonitor
 
+struct: OutputStream
+out: vprintf error
+
 struct: PollableUtils
 namespace:
 
@@ -410,10 +442,22 @@ struct: SimpleProxyResolver
 array: new ignore_hosts
 array: set_ignore_hosts ignore_hosts
 
+struct: Socket
+out: receive_message messages
+out: receive_message num_messages
+
 struct:
 class: SocketConnectable
 extend: GObject.Object
 implements: SocketConnectable
+
+struct: SubprocessLauncher
+array: set_environ env
+
+struct:
+class: TlsBackend
+extend: GObject.Object
+implements: TlsBackend
 
 struct:
 class: Volume
@@ -421,6 +465,7 @@ extend: GObject.Object
 implements: Volume
 
 struct: VolumeMonitor
+import: glib.ConstructionException
 noCode: get
 code: start
 	/**
@@ -496,6 +541,10 @@ move: dbus_is_member_name DBusUtilities is_member_name
 move: dbus_is_name DBusUtilities is_name
 move: dbus_is_supported_address DBusUtilities is_supported_address
 move: dbus_is_unique_name DBusUtilities is_unique_name
+
+struct: DBusUtilities
+out: address_get_stream_finish out_guid
+out: address_get_stream_sync out_guid
 
 move: io_error_from_errno ErrorGIO
 move: io_error_quark ErrorGIO

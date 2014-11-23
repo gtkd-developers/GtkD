@@ -43,12 +43,16 @@ addStructs: start
 addStructs: end
 
 struct: Atom
+namespace:
 noStruct: true
 
 struct: Cairo
 namespace:
 
 struct: Color
+import: gobject.ObjectG
+import: gtkc.Loader
+import: gtkc.paths
 override: to_string
 code: start
 	/**
@@ -295,6 +299,8 @@ struct: Rectangle
 namespace:
 
 struct: RGBA
+import: gtkc.Loader
+import: gtkc.paths
 override: to_string
 code: start
 	/**
@@ -471,6 +477,9 @@ move: selection_owner_set_for_display Selection owner_set_for_display
 move: selection_property_get Selection property_get
 move: selection_send_notify Selection send_notify
 move: selection_send_notify_for_display Selection send_notify_for_display
+
+struct: Selection
+out: property_get data
 
 move: test_render_sync Testing
 move: test_simulate_button Testing
