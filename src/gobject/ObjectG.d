@@ -222,7 +222,7 @@ public class ObjectG
 		{
 			// Remove the GDestroyNotify callback,
 			// for when the D object is destroyed before the C one.
-			stealData("GObject");
+			g_object_steal_data(gObject, "GObject");
 			
 			if ( isGcRoot )
 			{
