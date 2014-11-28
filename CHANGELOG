@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 2.4.2
+--------------
+-Fix issue #102, stop allocating in the ObjectG destructor.
+
 Release: 2.4.1
 --------------
 -Fix memory leak with gdk.Pixbuf.
