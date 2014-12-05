@@ -4526,6 +4526,7 @@ struct: Widget
 import: gdk.Cursor
 import: gdk.Window : GdkWin = Window
 structWrap: Gdk.Window GdkWin
+noCode: destroy
 noCode: set_state
 noCode: get_state
 code: start
@@ -4839,6 +4840,29 @@ code: start
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Destroys a widget.
+	 *
+	 * When a widget is
+	 * destroyed, it will break any references it holds to other objects.
+	 * If the widget is inside a container, the widget will be removed
+	 * from the container. If the widget is a toplevel (derived from
+	 * #GtkWindow), it will be removed from the list of toplevels, and the
+	 * reference GTK+ holds to it will be removed. Removing a
+	 * widget from its container or the list of toplevels results in the
+	 * widget being finalized, unless you’ve added additional references
+	 * to the widget with ref().
+	 *
+	 * In most cases, only toplevel widgets (windows) require explicit
+	 * destruction, because when you destroy a toplevel its children will
+	 * be destroyed as well.
+	 */
+	public void destroy()
+	{
+		gtk_widget_destroy(gtkWidget);
+		setStruct(null);
 	}
 code: end
 

@@ -136,6 +136,8 @@ struct: Array
 class: ArrayG
 
 struct: Base64
+move: base64_decode_step Base64 decode_step
+noCode: decode_step
 code: start
 	/**
 	 * Incrementally decode a sequence of binary data from its Base-64 stringified
@@ -158,13 +160,17 @@ code: start
 	 *
 	 * Since: 2.12
 	 */
-	public static size_t decodeStep(string inn, out ubyte[] output, ref int state, ref uint save)
+	public static size_t decodeStep(string inn, ref ubyte[] output, ref int state, ref uint save)
 	{
-		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, &output.ptr, &state, &save);
+		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, cast(char*)output.ptr, &state, &save);
 
 		return p;
 	}
 code: end
+
+struct: BookmarkFile
+out: load_from_data_dirs full_path
+array: set_groups groups length
 
 struct: ByteArray
 class: ByteArray
@@ -1613,7 +1619,6 @@ move: atomic_pointer_xor Atomic pointer_xor
 
 move: base64_decode Base64 decode
 move: base64_decode_inplace Base64 decode_inplace
-#move: base64_decode_step Base64 decode_step
 move: base64_encode Base64 encode
 move: base64_encode_close Base64 encode_close
 move: base64_encode_step Base64 encode_step

@@ -104,6 +104,9 @@ final class GtkType
 			reader.popFront();
 		}
 
+		if ( cType == elementType.cType && !cType.among("void*", "gpointer", "gconstpointer") )
+			cType ~= "*";
+
 		if ( isArray() && cType == "void" )
 			cType = elementType.cType ~"*";
 	}

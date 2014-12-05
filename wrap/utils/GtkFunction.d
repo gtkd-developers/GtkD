@@ -379,22 +379,34 @@ final class GtkFunction
 				}
 				else
 				{
-					// out string, ref string
 					if ( param.direction != GtkParamDirection.Default )
 					{
-						buff ~= "char* out"~ id ~" = ";
-
-						if ( param.direction == GtkParamDirection.Out )
-							buff[$-1] ~= "null;";
-						else
-							buff[$-1] ~= "Str.toStringz("~ id ~");";
-
 						string len = lenId(param.type);
-						if ( !len.empty )
-							len = ", "~ len;
 
-						gtkCall ~= "&out"~ id;
-						outToD ~= id ~" = Str.toString(out"~ id ~ len ~");";
+						// A buffer to fill.
+						if ( !param.type.cType.endsWith("**") )
+						{
+							gtkCall ~= id ~".ptr";
+
+							if ( !len.empty )
+								outToD ~= id ~" = "~ id ~"[0.."~ len ~"];";
+						}
+						// out string, ref string
+						else
+						{
+							buff ~= "char* out"~ id ~" = ";
+
+							if ( param.direction == GtkParamDirection.Out )
+								buff[$-1] ~= "null;";
+							else
+								buff[$-1] ~= "Str.toStringz("~ id ~");";
+
+							if ( !len.empty )
+								len = ", "~ len;
+
+							gtkCall ~= "&out"~ id;
+							outToD ~= id ~" = Str.toString(out"~ id ~ len ~");";
+						}
 					}
 					// string
 					else
@@ -983,11 +995,24 @@ final class GtkFunction
 	}
 
 	/**
-	 * Gen an string representation of the type.
+	 * Get an string representation of the type.
 	 */
 	private string getType(GtkType type, GtkParamDirection direction = GtkParamDirection.Default)
 	{
-		if ( type.isArray() )
+		if ( isStringType(type) )
+		{
+			if ( direction != GtkParamDirection.Default && !type.cType.endsWith("**") )
+				return "char[]";
+			else if ( direction == GtkParamDirection.Default && type.cType.endsWith("***") )
+				return "string[][]";
+			else if ( type.isArray && isStringArray(type.elementType, direction) )
+				return getType(type.elementType, direction) ~"[]";
+			else if ( isStringArray(type, direction) )
+				return "string[]";
+
+			return "string";
+		}
+		else if ( type.isArray() )
 		{
 			string size;
 
@@ -995,13 +1020,6 @@ final class GtkFunction
 				size = to!string(type.size);
 
 			string elmType = getType(type.elementType, direction);
-
-			if ( elmType == "char" || elmType == "const(char)" )
-				return "string";
-
-			// Some strings are defined with guint8 elements.
-			if ( type.cType.among("char*", "guchar*", "gchar*") || ( type.cType.among("char**", "guchar**", "gchar**") && direction != GtkParamDirection.Default ) )
-				return "string";
 
 			if ( elmType == type.cType )
 				elmType = elmType[0..$-1];
@@ -1018,10 +1036,6 @@ final class GtkFunction
 				return "void";
 			else if ( type.name in strct.structWrap )
 				return strct.structWrap[type.name];
-			else if ( type.cType.among("char*", "gchar*", "guchar*", "const(char)*") )
-				return "string";
-			else if ( direction != GtkParamDirection.Default && type.cType.among("char**", "gchar**", "guchar**", "const(char)**") )
-				return "string";
 			else if ( type.name == type.cType )
 				return stringToGtkD(type.name, wrapper.aliasses, localAliases());
 
@@ -1078,6 +1092,8 @@ final class GtkFunction
 
 	private bool isStringArray(GtkType type, GtkParamDirection direction = GtkParamDirection.Default)
 	{
+		if ( direction == GtkParamDirection.Default && type.cType.endsWith("**") )
+			return true;
 		if ( type.elementType is null )
 			return false;
 		if ( !type.elementType.cType.endsWith("*") )

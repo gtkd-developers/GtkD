@@ -104,6 +104,7 @@ alias: out output
 alias: package p
 alias: ref doref
 alias: scope scop
+alias: string str
 alias: switch switc
 alias: union unio
 alias: version versio

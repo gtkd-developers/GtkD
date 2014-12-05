@@ -82,30 +82,28 @@ version (Windows)
 }
 else version(darwin)
 {
-	const string DIRECTORY = "/opt/local/lib/";
-	
 	const string[LIBRARY.max+1] importLibs =
 	[
-		LIBRARY.ATK:           DIRECTORY~"libatk-1.0.dylib",
-		LIBRARY.CAIRO:         DIRECTORY~"libcairo.dylib",
-		LIBRARY.GDK:           DIRECTORY~"libgdk-3.0.dylib",
-		LIBRARY.GDKPIXBUF:     DIRECTORY~"libgdk_pixbuf-2.0.dylib",
-		LIBRARY.GLIB:          DIRECTORY~"libglib-2.0.dylib",
-		LIBRARY.GMODULE:       DIRECTORY~"libgmodule-2.0.dylib",
-		LIBRARY.GOBJECT:       DIRECTORY~"libgobject-2.0.dylib",
-		LIBRARY.GIO:           DIRECTORY~"libgio-2.0.dylib",
-		LIBRARY.GTHREAD:       DIRECTORY~"libgthread-2.0.dylib",
-		LIBRARY.GTK:           DIRECTORY~"libgtk-3.0.dylib",
-		LIBRARY.PANGO:         DIRECTORY~"libpango-1.0.dylib",
-		LIBRARY.PANGOCAIRO:    DIRECTORY~"libpangocairo-1.0.dylib",
-		LIBRARY.GLGDK:         DIRECTORY~"libgdkglext-3.0.dylib",
-		LIBRARY.GLGTK:         DIRECTORY~"libgtkglext-3.0.dylib",
-		LIBRARY.GDA:           DIRECTORY~"libgda-2.dylib",
-		LIBRARY.GSV:           DIRECTORY~"libgtksourceview-3.0.dylib",
-		LIBRARY.GSV1:          DIRECTORY~"libgtksourceview-3.0.dylib",
-		LIBRARY.GSTREAMER:     DIRECTORY~"libgstreamer-1.0.dylib",
-		LIBRARY.GSTINTERFACES: DIRECTORY~"libgstvideo-1.0.dylib",
-		LIBRARY.VTE:           DIRECTORY~"libvte2_90.dylib"
+		LIBRARY.ATK:           "libatk-1.0.dylib",
+		LIBRARY.CAIRO:         "libcairo.dylib",
+		LIBRARY.GDK:           "libgdk-3.0.dylib",
+		LIBRARY.GDKPIXBUF:     "libgdk_pixbuf-2.0.dylib",
+		LIBRARY.GLIB:          "libglib-2.0.dylib",
+		LIBRARY.GMODULE:       "libgmodule-2.0.dylib",
+		LIBRARY.GOBJECT:       "libgobject-2.0.dylib",
+		LIBRARY.GIO:           "libgio-2.0.dylib",
+		LIBRARY.GTHREAD:       "libgthread-2.0.dylib",
+		LIBRARY.GTK:           "libgtk-3.0.dylib",
+		LIBRARY.PANGO:         "libpango-1.0.dylib",
+		LIBRARY.PANGOCAIRO:    "libpangocairo-1.0.dylib",
+		LIBRARY.GLGDK:         "libgdkglext-3.0.dylib",
+		LIBRARY.GLGTK:         "libgtkglext-3.0.dylib",
+		LIBRARY.GDA:           "libgda-2.dylib",
+		LIBRARY.GSV:           "libgtksourceview-3.0.dylib",
+		LIBRARY.GSV1:          "libgtksourceview-3.0.dylib",
+		LIBRARY.GSTREAMER:     "libgstreamer-1.0.dylib",
+		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dylib",
+		LIBRARY.VTE:           "libvte2_90.dylib"
 	];
 }
 else
