@@ -194,7 +194,7 @@ code: start
 	 */
 	public void getDigest(ref ubyte[] buffer)
 	{
-		int digestLen = cast(int)buffer.length;
+		size_t digestLen = buffer.length;
 
 		g_checksum_get_digest(gChecksum, buffer.ptr, &digestLen);
 
@@ -220,6 +220,9 @@ code: start
 code: end
 
 struct: DateTime
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: gpointer DateTime
 noCode: new_now_utc
 noCode: new_now_local
 noCode: new_from_unix_local
@@ -340,7 +343,7 @@ code: start
 	/** */
 	override nothrow @trusted hash_t toHash()
 	{
-		return hash(this);
+		return hash();
 	}
 
 	/**
@@ -368,30 +371,15 @@ class: Directory
 
 struct: Error
 class: ErrorG
-#The params are missing in the gir file for g_clear_error.
-code: start
-	/**
-	 * If @err is %NULL, does nothing. If @err is non-%NULL,
-	 * calls g_error_free() on *@err and sets *@err to %NULL.
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static void clearError()
-	{
-		GError* err = null;
-
-		g_clear_error(gError, &err);
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-	}
-code: end
+move: propagate_error Error
+move: set_error_literal Error
+out: set_error_literal err
+out: propagate_error dest
 
 struct: GException
 namespace:
 import: glib.ErrorG
+import: glib.Str
 code: start
 	class GException : Exception
 	{
@@ -445,11 +433,15 @@ struct: IConv
 namespace:
 noStruct: true
 ref: iconv inbuf
+out: iconv inbytes_left
 array: iconv inbuf inbytes_left
 ref: iconv outbuf
+out: iconv outbytes_left
 array: iconv outbuf outbytes_left
 
 struct: Idle
+class: Idle
+cType:
 code: start
 	/** Holds all idle delegates */
 	bool delegate()[] idleListeners;
@@ -1082,6 +1074,24 @@ code: start
 	}
 
 	/** */
+	public static char*** toStringzArray(string[][] args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char**[] argv = new char**[args.length];
+		int argc = 0;
+		foreach( string[] p; args )
+		{
+			argv[argc++] = toStringzArray(p);
+		}
+		argv[argc] = null;
+
+		return argv.ptr;
+	}
+
+	/** */
 	public static string[] toStringArray(const(char*)* args)
 	{
 		if ( args is null )
@@ -1245,6 +1255,8 @@ struct: String
 class: StringG
 
 struct: Timeout
+class: Timeout
+cType:
 code: start
 	/** Holds all timeout delegates */
 	bool delegate()[] timeoutListeners;
@@ -1417,8 +1429,10 @@ struct: Tree
 class: BBTree
 
 struct: Util
-#noCode: build_filenamev
-#noCode: build_pathv
+move: build_filenamev Util
+move: build_pathv Util
+noCode: build_filenamev
+noCode: build_pathv
 code: start
 	/**
 	 * Behaves exactly like g_build_filename(), but takes the path elements
@@ -1666,10 +1680,8 @@ move: dataset_id_set_data_full DataSet id_set_data_full
 
 #move: clear_error Error
 move: prefix_error Error
-move: propagate_error Error
 move: propagate_prefixed_error Error
 move: set_error Error
-move: set_error_literal Error
 
 move: access FileUtils
 move: chdir FileUtils
@@ -1995,9 +2007,7 @@ move: basename Util
 move: bit_nth_lsf Util
 move: bit_nth_msf Util
 move: bit_storage Util
-#move: build_filenamev Util
 move: build_path Util
-#move: build_pathv Util
 move: environ_getenv Util
 move: environ_setenv Util
 move: environ_unsetenv Util

@@ -1,17 +1,17 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 3
  * of the License, or (at your option) any later version, with
  * some exceptions, please read the COPYING file.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
@@ -28,12 +28,12 @@ public struct Linker
 {
 	private static void*[string]    loadedLibraries;
 	private static string[][string] loadFailures;
-	
+
 	extern(C) static void unsuportedSymbol()
 	{
 		throw new Error("The funcion your calling is not pressent in your version of Gtk+.");
 	}
-	
+
 	/*
 	 * Links the provided symbol
 	 * Params:
@@ -45,7 +45,7 @@ public struct Linker
 	{
 		funct = cast(T)getSymbol(symbol, libraries);
 	}
-	
+
 	/*
 	 * Links the provided symbol
 	 * Params:
@@ -57,7 +57,7 @@ public struct Linker
 	{
 		funct = cast(T)getSymbol(symbol, libraries);
 	}
-	
+
 	/*
 	 * Gets a simbol from one of the provided libraries
 	 * Params:
@@ -67,15 +67,15 @@ public struct Linker
 	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
 	{
 		string[] libStr = new string[libraries.length];
-		
+
 		foreach (i, library; libraries )
 		{
 			libStr[i] = importLibs[library];
 		}
-		
+
 		return getSymbol(symbol, libStr);
 	}
-	
+
 	/*
 	 * Gets a simbol from one of the provided libraries
 	 * Params:
@@ -85,46 +85,46 @@ public struct Linker
 	public static void* getSymbol(string symbol, string[] libraries ...)
 	{
 		void* handle;
-		
+
 		foreach ( library; libraries )
 		{
 			if( !(library in loadedLibraries) )
 				loadLibrary(library);
-			
+
 			handle = pGetSymbol(loadedLibraries[library], symbol);
-			
+
 			if ( handle !is null )
 				break;
 		}
-		
+
 		if ( handle is null )
 		{
 			foreach ( library; libraries )
 				loadFailures[library] ~= symbol;
-			
+
 			handle = &unsuportedSymbol;
 		}
-		
+
 		return handle;
 	}
-	
+
 	/*
 	 * Loads a library
 	 */
 	public static void loadLibrary(string library)
 	{
 		void* handle = pLoadLibrary(library);
-		
+
 		//TODO: A more general way to try more than one version.
 		if ( handle is null && library == importLibs[LIBRARY.GSV] )
 			handle = pLoadLibrary(importLibs[LIBRARY.GSV1]);
-		
+
 		if ( handle is null )
 			throw new Exception("Library load failed: " ~ library);
-		
+
 		loadedLibraries[library] = handle;
 	}
-	
+
 	/*
 	 * Unload a library
 	 */
@@ -132,17 +132,17 @@ public struct Linker
 	{
 		unloadLibrary( importLibs[library] );
 	}
-	
+
 	/*
 	 * Unload a library
 	 */
 	public static void unloadLibrary(string library)
 	{
 		pUnloadLibrary(loadedLibraries[library]);
-		
+
 		loadedLibraries.remove(library);
 	}
-	
+
 	/**
 	 * Checks if any symbol failed to load
 	 * Returns: true if ALL symbols are loaded
@@ -151,7 +151,7 @@ public struct Linker
 	{
 		return loadFailures.keys.length == 0;
 	}
-	
+
 	/**
 	 * Gets all libraries loaded.
 	 * returns: An array with the loaded libraries
@@ -160,7 +160,7 @@ public struct Linker
 	{
 		return loadedLibraries.keys;
 	}
-	
+
 	/**
 	 * Print all libraries loaded.
 	 */
@@ -171,7 +171,7 @@ public struct Linker
 			writefln("Loaded lib = %s", lib);
 		}
 	}
-	
+
 	/**
 	 * Checks if a library is loaded.
 	 * Returns: true is the library was loaded sucsessfully.
@@ -180,7 +180,7 @@ public struct Linker
 	{
 		return isLoaded(importLibs[library]);
 	}
-	
+
 	/**
 	 * Checks if a library is loaded.
 	 * Returns: true is the library was loaded sucsessfully.
@@ -192,7 +192,7 @@ public struct Linker
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Gets all the failed loads for a specific library.
 	 * returns: An array of the names hat failed to load for a specific library
@@ -202,7 +202,7 @@ public struct Linker
 	{
 		return getLoadFailures(importLibs[library]);
 	}
-	
+
 	/**
 	 * Gets all the failed loads for a specific library.
 	 * returns: An array of the names hat failed to load for a specific library
@@ -215,7 +215,7 @@ public struct Linker
 		else
 			return null;
 	}
-	
+
 	/**
 	 * Print all symbols that failed to load
 	 */
@@ -229,7 +229,7 @@ public struct Linker
 			}
 		}
 	}
-	
+
 	static ~this()
 	{
 		foreach ( library; loadedLibraries.keys )
@@ -246,9 +246,9 @@ version(Windows)
 		void* LoadLibraryA(char*);
 		void* GetProcAddress(void*, char*);
 		void FreeLibrary(void*);
-		
+
 		int SetDllDirectoryA(const(char)* path);
-		
+
 		enum MachineType : ushort
 		{
 			UNKNOWN = 0x0,
@@ -273,75 +273,75 @@ version(Windows)
 			WCEMIPSV2 = 0x169,
 		}
 	}
-	
+
 	private void* pLoadLibrary(string libraryName)
 	{
 		setDllPath();
-		
+
 		return LoadLibraryA(cast(char*)toStringz(libraryName));
 	}
-	
+
 	private void* pGetSymbol(void* handle, string symbol)
 	{
 		return GetProcAddress(handle, cast(char*)toStringz(symbol));
 	}
-	
+
 	private alias FreeLibrary pUnloadLibrary;
-	
+
 	private void setDllPath()
 	{
 		static bool isSet;
-		
+
 		if ( isSet )
 			return;
-		
+
 		string gtkPath = getGtkPath();
-		
+
 		if ( gtkPath.length > 0 )
 			SetDllDirectoryA((gtkPath~'\0').ptr);
-		
+
 		isSet = true;
 	}
-	
+
 	private string getGtkPath()
 	{
 		import std.algorithm;
 		import std.path;
 		import std.process;
 		import std.file;
-		
+
 		foreach (path; splitter(environment.get("PATH"), ';'))
 		{
 			string dllPath = buildNormalizedPath(path, "libgtk-3-0.dll");
-			
+
 			if ( !exists(dllPath) )
 				continue;
-			
+
 			if ( checkArchitecture(dllPath) )
 				return path;
 		}
-		
+
 		return null;
 	}
-	
+
 	private bool checkArchitecture(string dllPath)
 	{
 		import std.stdio;
-		
+
 		File dll = File(dllPath);
-		
+
 		dll.seek(0x3c);
 		int offset = dll.rawRead(new int[1])[0];
-		
+
 		dll.seek(offset);
 		uint peHead = dll.rawRead(new uint[1])[0];
-		
+
 		//Not a PE Header.
 		if( peHead != 0x00004550)
 			return false;
-		
+
 		MachineType type = dll.rawRead(new MachineType[1])[0];
-		
+
 		version(Win32)
 		{
 			if ( type == MachineType.I386 )
@@ -352,8 +352,8 @@ version(Windows)
 			if ( type == MachineType.AMD64 )
 				return true;
 		}
-		
-		return false;		
+
+		return false;
 	}
 }
 else
@@ -365,7 +365,7 @@ else
 		void* dlsym(void*,char*);
 		int   dlclose(void*);
 	}
-	
+
 	enum RTLD
 	{
 		LAZY     = 0x00001,  // Lazy function call binding
@@ -374,27 +374,27 @@ else
 		DEEPBIND = 0x00008,  //
 		GLOBAL   = 0x00100   // Make object available to whole program
 	}
-	
+
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
 		void* handle = dlopen(cast(char*)toStringz(libraryName), flag);
-		
+
 		// clear the error buffer
 		dlerror();
-		
+
 		return handle;
 	}
-	
+
 	private void* pGetSymbol(void* libraryHandle, string symbol)
 	{
 		void* symbolHandle = dlsym(libraryHandle, cast(char*)toStringz(symbol));
-		
+
 		// clear the error buffer
 		dlerror();
-		
+
 		return symbolHandle;
 	}
-	
+
 	private int pUnloadLibrary(void* libraryHandle)
 	{
 		return dlclose(libraryHandle);

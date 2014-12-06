@@ -388,7 +388,7 @@ final class GtkFunction
 						{
 							gtkCall ~= id ~".ptr";
 
-							if ( !len.empty )
+							if ( !len.empty && params[param.type.length].direction != GtkParamDirection.Default )
 								outToD ~= id ~" = "~ id ~"[0.."~ len ~"];";
 						}
 						// out string, ref string
@@ -434,7 +434,7 @@ final class GtkFunction
 							if ( !buff.empty )
 								buff ~= "";
 							buff ~= elementType.cType.removechars("*") ~ "*[] inout"~ id ~" = new "~ elementType.cType.removechars("*") ~"*["~ id ~".length];";
-							buff ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
+							buff ~= "for ( int i = 0; i < "~ id ~".length; i++ )";
 							buff ~= "{";
 							buff ~= "inout"~ id ~"[i] = "~ id~ "[i]."~ dElementType.getHandleFunc() ~"();";
 							buff ~= "}";
@@ -446,7 +446,7 @@ final class GtkFunction
 
 						outToD ~= "";
 						outToD ~= id ~" = new "~ dElementType.name ~"["~ lenId(param.type) ~"];";
-						outToD ~= "for(int i = 0; i < "~ lenId(param.type) ~"; i++)";
+						outToD ~= "for(size_t i = 0; i < "~ lenId(param.type) ~"; i++)";
 						outToD ~= "{";
 						outToD ~= id ~"[i] = " ~ construct(dType) ~ "(cast(" ~ param.type.elementType.cType[0..$-1] ~ ") out"~ id ~"[i]);";
 						outToD ~= "}";
@@ -458,7 +458,7 @@ final class GtkFunction
 						if ( !buff.empty )
 							buff ~= "";
 						buff ~= elementType.cType ~ "[] "~ id ~"Array = new "~ elementType.cType ~"["~ id ~".length];";
-						buff ~= "for ( int i = 0; i < "~ id ~".length ; i++ )";
+						buff ~= "for ( int i = 0; i < "~ id ~".length; i++ )";
 						buff ~= "{";
 						buff ~= id ~"Array[i] = "~ id ~"[i]."~ dElementType.getHandleFunc() ~"();";
 						buff ~= "}";
@@ -521,6 +521,76 @@ final class GtkFunction
 						break;
 				}
 			}
+											else if ( param.type.name.among("bool", "gboolean") || ( param.type.isArray && param.type.elementType.name.among("bool", "gboolean") ) )
+			{
+				if ( param.type.isArray() )
+				{
+					// out bool[], ref bool[]
+					if ( param.direction != GtkParamDirection.Default )
+					{
+						if ( param.direction == GtkParamDirection.Out )
+						{
+							buff ~= "int* out"~ id ~" = null;";
+						}
+						else
+						{
+							if ( !buff.empty )
+								buff ~= "";
+							buff ~= "int[] inout"~ id ~" = new int["~ id ~".length];";
+							buff ~= "for ( int i = 0; i < "~ id ~".length; i++ )";
+							buff ~= "{";
+							buff ~= "inout"~ id ~"[i] = "~ id~ "[i] ? 1 : 0;";
+							buff ~= "}";
+							buff ~= "";
+							buff ~= "int* out"~ id ~" = inout"~ id ~".ptr;";
+						}
+
+						gtkCall ~= "&out"~ id;
+
+						outToD ~= "";
+						outToD ~= id ~" = new bool["~ lenId(param.type) ~"];";
+						outToD ~= "for(size_t i = 0; i < "~ lenId(param.type) ~"; i++)";
+						outToD ~= "{";
+						outToD ~= id ~"[i] = out"~ id ~"[i] != 0);";
+						outToD ~= "}";
+					}
+					// bool[]
+					else
+					{
+						if ( !buff.empty )
+							buff ~= "";
+						buff ~= "int[] "~ id ~"Array = new int["~ id ~".length];";
+						buff ~= "for ( int i = 0; i < "~ id ~".length; i++ )";
+						buff ~= "{";
+						buff ~= id ~"Array[i] = "~ id ~"[i] ? 1 : 0;";
+						buff ~= "}";
+						buff ~= "";
+
+						gtkCall ~= id ~"Array.ptr";
+					}
+				}
+				else
+				{
+					// out bool, ref bool
+					if ( param.direction != GtkParamDirection.Default )
+					{
+						buff ~= "int out"~ id;
+
+						if ( param.direction == GtkParamDirection.Out )
+							buff[$-1] ~= ";";
+						else
+							buff[$-1] ~= " = "~ id ~" ? 1 : 0);";
+
+						gtkCall ~= "&out"~ id ~"";
+						outToD ~= id ~" = (out"~ id ~" == 1);";
+					}
+					// bool
+					else
+					{
+						gtkCall ~= id;
+					}
+				}
+			}
 			else
 			{
 				if ( param.type.isArray() )
@@ -546,26 +616,9 @@ final class GtkFunction
 				}
 				else
 				{
-					if ( param.type.name.among("bool", "gboolean") )
+					if ( param.type.name in strct.structWrap )
 					{
-						// out bool, ref bool
-						if ( param.direction != GtkParamDirection.Default )
-						{
-							buff ~= "int out"~ id;
-
-							if ( param.direction == GtkParamDirection.Out )
-								buff[$-1] ~= ";";
-							else
-								buff[$-1] ~= " = "~ id ~" ? 1 : 0);";
-
-							gtkCall ~= "&out"~ id ~"";
-							outToD ~= id ~" = (out"~ id ~" == 1);";
-						}
-						// bool
-						else
-						{
-							gtkCall ~= id;
-						}
+						gtkCall ~= id ~".get"~ strct.structWrap[param.type.name] ~"Struct()";
 					}
 					else
 					{
@@ -729,7 +782,21 @@ final class GtkFunction
 
 			buff ~= "";
 			if ( returnType.isArray() )
-				buff ~= "return p[0 .. "~ lenId(returnType) ~"];";
+			{
+				if ( returnType.elementType.name == "gboolean" )
+				{
+					buff ~= "bool[] r = new bool["~ lenId(returnType) ~"];";
+					buff ~= "for(size_t i = 0; i < "~ lenId(returnType) ~"; i++)";
+					buff ~= "{";
+					buff ~= "r[i] = p[i] != 0;";
+					buff ~= "}";
+					buff ~= "return r;";
+				}
+				else
+				{
+					buff ~= "return p[0 .. "~ lenId(returnType) ~"];";
+				}
+			}
 			else
 				buff ~= "return p;";
 
@@ -1015,6 +1082,10 @@ final class GtkFunction
 		else if ( type.isArray() )
 		{
 			string size;
+
+			//Special case for GBytes and GVariant.
+			if ( type.cType == "gconstpointer" && type.elementType.cType == "gconstpointer" )
+				return "void[]";
 
 			if ( type.size > -1 )
 				size = to!string(type.size);
