@@ -80,6 +80,8 @@ final class GtkType
 			cType = cType.replace("unsigned ", "u");
 		}
 
+		cType = cType.replace("volatile ", "");
+
 		if ( cType == "unsigned" )
 			cType = name;
 

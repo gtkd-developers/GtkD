@@ -65,8 +65,14 @@ class: CClosure
 
 struct: Object
 class: ObjectG
+import: core.memory
+import: gobject.Signals
+import: gtkc.Loader
+import: gtkc.paths
 merge: InitiallyUnowned
 noSignal: notify
+move: clear_object Object
+inout: clear_object object_ptr
 
 code: start
 	protected bool isGcRoot;
@@ -91,10 +97,10 @@ code: start
 			}
 
 			//Remove the floating reference if there is one.
-			if (isFloating(gObject))
+			if (isFloating())
 			{
-				refSink(gObject);
-				unref(gObject);
+				refSink();
+				unref();
 			}
 
 			//When constructed via GtkBuilder set the structs.
@@ -265,7 +271,7 @@ code: start
 		if ( !(signalName in connectedSignals) )
 		{
 			Signals.connectData(
-			getStruct(),
+			this,
 			signalName,
 			cast(GCallback)&callBackNotify,
 			cast(void*)this,
@@ -457,8 +463,6 @@ move: boxed_copy Boxed copy
 move: boxed_free Boxed free
 move: boxed_type_register_static Boxed type_register_static
 move: pointer_type_register_static Boxed
-
-move: clear_object Object
 
 move: enum_complete_type_info Enums complete_type_info
 move: enum_get_value Enums get_value

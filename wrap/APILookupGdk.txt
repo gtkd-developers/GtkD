@@ -386,6 +386,9 @@ code: start
 	}
 code: end
 
+struct: Threads
+namespace:
+
 move: property_change Atom
 move: property_delete Atom
 move: property_get Atom

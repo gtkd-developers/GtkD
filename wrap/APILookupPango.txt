@@ -64,6 +64,8 @@ class: PgAttributeFontDesc
 
 struct: AttrIterator
 class: PgAttributeIterator
+out: get_font language
+out: get_font extra_attrs
 
 struct: AttrLanguage
 class: PgAttributeLanguage
@@ -103,6 +105,10 @@ code: end
 
 struct: Layout
 array: set_text text length
+
+struct: Map
+out: get_engines exact_engines
+out: get_engines fallback_engines
 
 struct: PgMiscellaneous
 import: core.stdc.stdio

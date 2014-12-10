@@ -104,11 +104,11 @@ addAliases: start
 	 */
 	size_t getArrayLength(T)(T* arr)
 	{
-		T* ptr;
+		size_t len;
 
-		for ( ptr = arr; *ptr; ++ptr ){}
+		for ( ; arr[len]; len++ ){}
 
-		return ptr - arr;
+		return len;
 	}
 
 	unittest
@@ -652,6 +652,9 @@ code: start
 		 g_slice_free1(T.sizeof, memBlock);
 	}
 code: end
+
+struct: Module
+in: symbol symbol
 
 struct: PatternSpec
 class: Pattern

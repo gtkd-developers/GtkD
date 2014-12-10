@@ -34,6 +34,8 @@ addAliases: start
 	public import gtkc.gdkpixbuftypes;
 	public import gtkc.gdktypes;
 
+	extern(C) Object _d_newclass(ClassInfo ci);
+
 	alias GtkAllocation Allocation;
 addAliases: end
 
@@ -65,7 +67,7 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockId)
 	{
-		this(name, label, tooltip, StockDesc[stockId]);
+		this(name, label, tooltip, cast(string)stockId);
 	}
 
 	/**
@@ -75,16 +77,7 @@ code: start
 	 */
 	public StockID getStockId()
 	{
-		// const gchar * gtk_action_get_stock_id (GtkAction *action);
-		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
-
-		foreach(i, desc; StockDesc)
-		{
-			if(desc == id)
-				return cast(StockID)i;
-		}
-
-		return StockID.DISCARD;
+		return cast(StockID)Str.toString(gtk_action_get_stock_id(gtkAction));
 	}
 
 	/**
@@ -95,7 +88,7 @@ code: start
 	 */
 	public void setStockId(StockID stockId)
 	{
-		setStockId(StockDesc[stockId]);
+		setStockId(stockId);
 	}
 
 	/**
@@ -244,6 +237,8 @@ code: start
 code: end
 
 struct: Border
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -266,6 +261,9 @@ noCode: get_objects
 #There are now 3 constructors that have a single string parameter, disable 2 of them.
 noCode: new_from_resource
 noCode: new_from_string
+
+import: gtkc.glib
+import: std.string
 
 #imports for gtk_builder_real_get_type_from_name_override
 import: gtkc.gobject
@@ -290,7 +288,7 @@ code: start
 		this(cast(GtkBuilder*) p);
 
 		GtkBuilderClass* klass = Type.getInstanceClass!(GtkBuilderClass)( this );
-		klass.get_type_from_name = &gtk_builder_real_get_type_from_name_override;
+		klass.getTypeFromName = &gtk_builder_real_get_type_from_name_override;
 	}
 
 	/**
@@ -299,7 +297,7 @@ code: start
 	 * specifically the NULL in g_module_open( NULL, 0 );
 	 * It replaces the default function pointer "get_type_from_name" in GtkBuilderClass.
 	 */
-	extern(C) private static GType gtk_builder_real_get_type_from_name_override ( GtkBuilder* builder, char *name )
+	extern(C) private static GType gtk_builder_real_get_type_from_name_override ( GtkBuilder* builder, const(char)* name )
 	{
 		GType gtype;
 		gtype = g_type_from_name( name );
@@ -340,13 +338,13 @@ code: start
 		foreach ( lib; importLibs )
 		{
 			GType function() func;
-			Module mod = Module.open( lib, GModuleFlags.BIND_LAZY );
+			Module mod = Module.open( lib, GModuleFlags.LAZY );
 			if( mod is null )
 				continue;
 
 			scope(exit) mod.close();
 
-			if ( mod.symbol( symbol_name, cast(void**) &func ) ) {
+			if ( mod.symbol( symbol_name, cast(void**)&func ) ) {
 				return func();
 			}
 		}
@@ -471,6 +469,7 @@ code: start
 code: end
 
 struct: Button
+import: gtk.Image
 noCode: new_with_mnemonic
 noCode: new_with_label
 noCode: new_from_stock
@@ -548,7 +547,7 @@ code: start
 		}
 		else
 		{
-			auto p = gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID]));
+			auto p = gtk_button_new_from_stock(Str.toStringz(stockID));
 
 			if(p is null)
 			{
@@ -584,6 +583,8 @@ code: end
 
 struct: ButtonBox
 import: gtk.Button
+import: gtk.HButtonBox
+import: gtk.VButtonBox
 code: start
 	/** */
 	static ButtonBox createActionBox(
@@ -680,6 +681,8 @@ code: start
 code: end
 
 struct: CheckButton
+import: glib.Str
+import: gtk.Button
 noCode: new_with_label
 noCode: new_with_mnemonic
 code: start
@@ -726,6 +729,7 @@ code: start
 code: end
 
 struct: CheckMenuItem
+import: glib.Str
 noCode: new_with_label
 noCode: new_with_mnemonic
 code: start
@@ -793,6 +797,7 @@ code: start
 code: end
 
 struct: ComboBox
+import: glib.ConstructionException
 noCode: new
 noCode: new_with_entry
 noCode: new_with_model
@@ -841,12 +846,12 @@ code: start
 		if ( entry )
 		{
 			// GtkWidget* gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
-			p = cast(GtkComboBox*)gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelTStruct());
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model_and_entry((model is null) ? null : model.getTreeModelStruct());
 		}
 		else
 		{
 			// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
-			p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelTStruct());
+			p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct());
 		}
 
 		if(p is null)
@@ -888,6 +893,9 @@ code: start
 code: end
 
 struct: ComboBoxText
+import: glib.ConstructionException
+import: gtk.TreeIter
+import: gtk.TreeModelIF
 override: remove_all
 noCode: new
 noCode: new_with_entry
@@ -1003,6 +1011,8 @@ code: start
 code: end
 
 struct: CssSection
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -1041,7 +1051,7 @@ code: start
 	/** ditto */
 	this(string title, Window parent, GtkDialogFlags flags, StockID[] stockIDs, ResponseType[] responses)
 	{
-		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(StockDesc[stockIDs[0]]), responses[0], null);
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(stockIDs[0]), responses[0], null);
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
@@ -1055,7 +1065,7 @@ code: start
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(StockDesc[stockID]), responseId);
+		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(stockID), responseId);
 
 		if ( p is null )
 		{
@@ -1154,16 +1164,7 @@ code: start
 	 */
 	public StockID getStockId(GtkEntryIconPosition iconPos)
 	{
-		// const gchar* gtk_entry_get_icon_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos);
-		string id = Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
-
-		foreach(i, desc; StockDesc)
-		{
-			if(desc == id)
-				return cast(StockID)i;
-		}
-
-		return StockID.DISCARD;
+		return cast(StockID)Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
 	}
 
 	/**
@@ -1175,7 +1176,7 @@ code: start
 	public void setStockId(GtkEntryIconPosition iconPos, StockID stockId)
 	{
 		// void gtk_entry_set_icon_from_stock (GtkEntry *entry, GtkEntryIconPosition icon_pos, const gchar *stock_id);
-		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(StockDesc[stockId]));
+		gtk_entry_set_icon_from_stock(gtkEntry, iconPos, Str.toStringz(stockId));
 	}
 code: end
 
@@ -1183,6 +1184,7 @@ struct: EntryIconAccessible
 noCode: true
 
 struct: Expander
+import: glib.ConstructionException
 noCode: new
 noCode: new_with_mnemonic
 code: start
@@ -1225,6 +1227,7 @@ alias: set_action setFileChooserAction
 alias: get_action getFileChooserAction
 
 struct: FileChooserDialog
+import: glib.ConstructionException
 import: gtk.Window
 noCode: new
 code: start
@@ -1310,6 +1313,8 @@ code: start
 code: end
 
 struct: Gradient
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -1352,6 +1357,8 @@ code: start
 code: end
 
 struct: IconInfo
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -1363,6 +1370,8 @@ code: start
 code: end
 
 struct: IconSet
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -1374,6 +1383,8 @@ code: start
 code: end
 
 struct: IconSource
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -1403,7 +1414,7 @@ code: start
 	 */
 	public this (StockID stockID, GtkIconSize size)
 	{
-		auto p = gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size);
+		auto p = gtk_image_new_from_stock(Str.toStringz(stockID), size);
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size)");
@@ -1413,6 +1424,7 @@ code: start
 code: end
 
 struct: ImageMenuItem
+import: glib.Str
 noCode: new_with_label
 noCode: new_with_mnemonic
 noCode: new_from_stock
@@ -1465,8 +1477,7 @@ code: start
 	 */
 	public this (StockID stockID, AccelGroup accelGroup)
 	{
-		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
-		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(StockDesc[stockID]), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(stockID), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_image_menu_item_new_from_stock");
@@ -1506,7 +1517,7 @@ code: start
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId);
+		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(stockID), responseId);
 
 		if ( p is null )
 		{
@@ -1568,6 +1579,7 @@ code: start
 code: end
 
 struct: Label
+import: glib.ConstructionException
 noCode: new
 noCode: new_with_mnemonic
 code: start
@@ -1677,6 +1689,7 @@ code: start
 code: end
 
 struct: Main
+import: gdk.Threads
 code: start
 	/**
 	 * This initiates GtkD to supports multi threaded programs.
@@ -1752,6 +1765,7 @@ public class MainWindow : Window
 code: end
 
 struct: Menu
+import: gtk.MenuItem
 code: start
 	/**
 	 * Popups up this menu
@@ -1935,7 +1949,7 @@ code: start
 	 */
 	public this(StockID stockId)
 	{
-		this(StockDesc[stockId]);
+		this(cast(string)stockId);
 	}
 
 	/**
@@ -1958,6 +1972,7 @@ code: start
 code: end
 
 struct: MessageDialog
+import: glib.ConstructionException
 import: gtk.VBox
 import: gtk.Window
 noCode: new
@@ -2079,6 +2094,7 @@ code: start
 code: end
 
 struct: Notebook
+import: gtk.Label
 code: start
 	/**
 	 * Append a page with a widget and a text for a label
@@ -2111,6 +2127,7 @@ structWrap: Gdk.Window GdkWin
 alias: Window ulong
 
 struct: PopupBox
+import: gtk.MessageDialog
 import: gtk.Window
 code: start
 	/**
@@ -2275,11 +2292,12 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockId, int value)
 	{
-		this(name, label, tooltip, StockDesc[stockId], value);
+		this(name, label, tooltip, cast(string)stockId, value);
 	}
 code: end
 
 struct: RadioButton
+import: glib.Str
 noCode: new_with_label
 noCode: new_with_mnemonic
 noCode: new_with_label_from_widget
@@ -2377,6 +2395,7 @@ code: start
 code: end
 
 struct: RadioMenuItem
+import: glib.Str
 noCode: new_with_label
 noCode: new_with_mnemonic
 noCode: new_with_mnemonic_from_widget
@@ -2479,7 +2498,7 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockID)
 	{
-		this(name, label, tooltip, StockDesc[stockID]);
+		this(name, label, tooltip, cast(string)stockID);
 	}
 
 	/**
@@ -2501,7 +2520,7 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
-		this(name, label, tooltip, StockDesc[stockID], manager);
+		this(name, label, tooltip, cast(string)stockID, manager);
 	}
 code: end
 
@@ -2510,6 +2529,7 @@ alias: set_show_numbers recentChooserSetShowNumbers
 alias: get_show_numbers recentChooserGetShowNumbers
 
 struct: RecentChooserDialog
+import: glib.ConstructionException
 import: gtk.RecentManager
 import: gtk.Window
 noCode: new
@@ -2567,6 +2587,8 @@ code: start
 code: end
 
 struct: RecentInfo
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -2578,6 +2600,8 @@ code: start
 code: end
 
 struct: Requisition
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -2657,7 +2681,7 @@ code: start
 	 */
 	public this (StockID stockID)
 	{
-		auto p = gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID]));
+		auto p = gtk_status_icon_new_from_stock(Str.toStringz(stockID));
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_status_icon_new_from_stock");
@@ -2700,6 +2724,8 @@ code: start
 code: end
 
 struct: StockItem
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -2715,7 +2741,15 @@ code: start
 	deprecated:
 code: end
 
+struct: StyleProperties
+alias: setProperty setStyleProperty
+alias: setValist setStyleValist
+alias: getProperty getStyleProperty
+alias: getValist getStyleValist
+
 struct: SymbolicColor
+import: gtkc.Loader
+import: gtkc.paths
 noCode: new_shade
 noCode: new_alpha
 code: start
@@ -2763,6 +2797,7 @@ code: start
 code: end
 
 struct: Table
+import: glib.ConstructionException
 noCode: new
 code: start
 	int row;
@@ -2835,6 +2870,8 @@ code: start
 code: end
 
 struct: TargetEntry
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -2846,6 +2883,8 @@ code: start
 code: end
 
 struct: TargetList
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -2881,6 +2920,8 @@ code: start
 code: end
 
 struct: TextAttributes
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{
@@ -2894,6 +2935,17 @@ code: start
 code: end
 
 struct: TextBuffer
+import: core.vararg
+import: gdk.Color
+import: gtkc.gobject
+import: pango.PgFontDescription
+import: pango.PgTabArray
+import: std.stdio
+array: insert text len
+array: insert_at_cursor text len
+array: insert_interactive text len
+array: insert_interactive_at_cursor text len
+array: set_text text len
 noCode: insert_with_tags
 noCode: insert_with_tags_by_name
 noCode: create_tag
@@ -3097,10 +3149,10 @@ code: start
 		buf.insert(iter, text);
 		if ( ensureVisible )
 		{
-			gdouble within_margin = 0.0;
+			double within_margin = 0.0;
 			bool use_align = false;
-			gdouble xalign = 0.0;
-			gdouble yalign = 0.0;
+			double xalign = 0.0;
+			double yalign = 0.0;
 			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
 		}
 	}
@@ -3125,11 +3177,12 @@ code: start
 	 */
 	public this (string name, string label, string tooltip, StockID stockId)
 	{
-		this(name, label, tooltip, StockDesc[stockId]);
+		this(name, label, tooltip, cast(string)stockId);
 	}
 code: end
 
 struct: ToggleButton
+import: glib.Str
 noCode: new_with_label
 noCode: new_with_mnemonic
 code: start
@@ -3174,7 +3227,7 @@ code: start
 	 */
 	public this(StockID stockId)
 	{
-		this(StockDesc[stockId]);
+		this(cast(string)stockId);
 	}
 code: end
 
@@ -3203,7 +3256,7 @@ code: start
 	/** */
 	public this (StockID stockID)
 	{
-		this(StockDesc[stockID]);
+		this(cast(string)stockID);
 	}
 code: end
 
@@ -3218,8 +3271,7 @@ code: start
 	 */
 	public GtkOrientation getOrientation()
 	{
-		// GtkOrientation gtk_tool_shell_get_orientation (GtkToolShell *shell);
-		return gtk_tool_shell_get_orientation(getToolShellTStruct());
+		return gtk_tool_shell_get_orientation(getToolShellStruct());
 	}
 code: end
 
@@ -3250,11 +3302,14 @@ code: start
 	 */
 	void setIcon(StockID stockID, GtkIconSize size)
 	{
-		setIconFromStock(StockDesc[stockID], size);
+		setIconFromStock(cast(string)stockID, size);
 	}
 code: end
 
 struct: TreeIter
+import: glib.ConstructionException
+import: glib.Str
+import: gtk.TreeIterError
 import: gtk.TreeModelIF
 import: gtk.TreePath
 import: gobject.Value
@@ -3276,7 +3331,7 @@ code: start
 	/** */
 	public void setModel(TreeModelIF treeModel)
 	{
-		this.gtkTreeModel = treeModel.getTreeModelTStruct();
+		this.gtkTreeModel = treeModel.getTreeModelStruct();
 	}
 
 	/**
@@ -3295,7 +3350,7 @@ code: start
 		this();
 		setModel(treeModel);
 		if ( !gtk_tree_model_get_iter_from_string(
-				treeModel.getTreeModelTStruct(),
+				treeModel.getTreeModelStruct(),
 				getTreeIterStruct(), Str.toStringz(treePath.toString())) )
 		{
 			throw new ConstructionException("null returned by gtk_tree_model_get_iter_from_string");
@@ -3704,7 +3759,7 @@ code: start
 	{
 		iter.setModel(this);
 		return gtk_tree_model_get_iter(
-				getTreeModelTStruct(),
+				getTreeModelStruct(),
 				(iter is null) ? null : iter.getTreeIterStruct(),
 				(path is null) ? null : path.getTreePathStruct());
 	}
@@ -3723,7 +3778,7 @@ code: start
 		if ( value is null )
 			value = new Value();
 
-		gtk_tree_model_get_value(getTreeModelTStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
+		gtk_tree_model_get_value(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 
 		return value;
 	}
@@ -3759,6 +3814,9 @@ alias c_gtk_tree_model_get_type gtk_tree_model_get_type;
 public class TreeModel : ObjectG, TreeModelIF
 {
 	static GObjectClass* parentClass = null;
+
+	/** the main Gtk struct */
+	protected GtkTreeModel* gtkTreeModel;
 
 	shared static this()
 	{
@@ -3849,7 +3907,7 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			GObjectClass* objectClass;
 
-			parentClass = cast(GObjectClass*) Type.classPeekParent(klass);
+			parentClass = cast(GObjectClass*) g_type_class_peek_parent(klass);
 			objectClass = cast(GObjectClass*) klass;
 
 			objectClass.finalize = &customTreeModelFinalize;
@@ -3941,9 +3999,13 @@ public class TreeModel : ObjectG, TreeModelIF
 
 		static int customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
 		{
+			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
-			return tm.iterChildren(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent));
+			auto p = tm.iterChildren(ti, ObjectG.getDObject!(TreeIter)(parent));
+
+			iter = ti.getTreeIterStruct();
+			return p;
 		}
 
 		static int customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
@@ -3962,16 +4024,24 @@ public class TreeModel : ObjectG, TreeModelIF
 
 		static int customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
 		{
+			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
-			return tm.iterNthChild(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent), n);
+			auto p = tm.iterNthChild(ti, ObjectG.getDObject!(TreeIter)(parent), n);
+
+			iter = ti.getTreeIterStruct();
+			return p;
 		}
 
 		static int customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
 		{
+			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 
-			return tm.iterParent(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(child));
+			auto p = tm.iterParent(ti, ObjectG.getDObject!(TreeIter)(child));
+
+			iter = ti.getTreeIterStruct();
+			return p;
 		}
 	}
 }
@@ -4039,6 +4109,7 @@ code: start
 code: end
 
 struct: TreeSelection
+import: glib.ListG
 noCode: get_selected_rows
 code: start
 	/**
@@ -4249,7 +4320,7 @@ code: start
 	 *  openAll =
 	 *  Returns =
 	 */
-	int expandRow(TreeIter iter, TreeModelIF model, int openAll)
+	int expandRow(TreeIter iter, TreeModelIF model, bool openAll)
 	{
 		return expandRow(model.getPath(iter), openAll);
 	}
@@ -4525,6 +4596,8 @@ code: end
 struct: Widget
 import: gdk.Cursor
 import: gdk.Window : GdkWin = Window
+import: gobject.Type
+import: std.conv
 structWrap: Gdk.Window GdkWin
 noCode: destroy
 noCode: set_state
@@ -4596,151 +4669,151 @@ code: start
 	/** */
 	public bool onButtonPressEvent(GdkEventButton* event)
 	{
-		return getWidgetClass().button_press_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onButtonReleaseEvent(GdkEventButton* event)
 	{
-		return getWidgetClass().button_release_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().buttonReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onScrollEvent(GdkEventScroll* event)
 	{
-		return getWidgetClass().scroll_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().scrollEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onMotionNotifyEvent(GdkEventMotion* event)
 	{
-		return getWidgetClass().motion_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().motionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onDeleteEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().delete_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().deleteEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onDestroyEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().destroy_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().destroyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onKeyPressEvent(GdkEventKey* event)
 	{
-		return getWidgetClass().key_press_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().keyPressEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onKeyReleaseEvent(GdkEventKey* event)
 	{
-		return getWidgetClass().key_release_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().keyReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onEnterNotifyEvent(GdkEventCrossing* event)
 	{
-		return getWidgetClass().enter_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().enterNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onLeaveNotifyEvent(GdkEventCrossing* event)
 	{
-		return getWidgetClass().leave_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().leaveNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onConfigureEvent(GdkEventConfigure* event)
 	{
-		return getWidgetClass().configure_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().configureEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onFocusInEvent(GdkEventFocus* event)
 	{
-		return getWidgetClass().focus_in_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().focusInEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onFocusOutEvent(GdkEventFocus* event)
 	{
-		return getWidgetClass().focus_out_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().focusOutEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onMapEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().map_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().mapEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onUnmapEvent(GdkEventAny* event)
 	{
-		return getWidgetClass().unmap_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().unmapEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onPropertyNotifyEvent(GdkEventProperty* event)
 	{
-		return getWidgetClass().property_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().propertyNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onSelectionClearEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selection_clear_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selectionClearEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onSelectionRequestEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selection_request_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selectionRequestEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onSelectionNotifyEvent(GdkEventSelection* event)
 	{
-		return getWidgetClass().selection_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().selectionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onProximityInEvent(GdkEventProximity* event)
 	{
-		return getWidgetClass().proximity_in_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().proximityInEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onProximityOutEvent(GdkEventProximity* event)
 	{
-		return getWidgetClass().proximity_out_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().proximityOutEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onVisibilityNotifyEvent(GdkEventVisibility* event)
 	{
-		return getWidgetClass().visibility_notify_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().visibilityNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onWindowStateEvent(GdkEventWindowState* event)
 	{
-		return getWidgetClass().window_state_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onDamageEvent(GdkEventExpose* event)
 	{
-		return getWidgetClass().damage_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().damageEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/** */
 	public bool onGrabBrokenEvent(GdkEventGrabBroken* event)
 	{
-		return getWidgetClass().grab_broken_event(getWidgetStruct(), event) == 0 ? false : true;
+		return getWidgetClass().grabBrokenEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
 
 	/**
@@ -4819,12 +4892,12 @@ code: start
 		if ( !("draw-scoped" in connectedSignals) )
 		{
 			Signals.connectData(
-			getStruct(),
-			"draw",
-			cast(GCallback)&callBackScopedDraw,
-			cast(void*)this,
-			null,
-			connectFlags);
+				this,
+				"draw",
+				cast(GCallback)&callBackScopedDraw,
+				cast(void*)this,
+				null,
+				connectFlags);
 			connectedSignals["draw-scoped"] = 1;
 		}
 		scopedOnDrawListeners ~= dlg;
@@ -4867,6 +4940,8 @@ code: start
 code: end
 
 struct: WidgetPath
+import: gtkc.Loader
+import: gtkc.paths
 code: start
 	~this ()
 	{

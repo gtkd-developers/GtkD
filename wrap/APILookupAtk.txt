@@ -43,6 +43,23 @@ struct: Implementor
 interface: Implementor
 merge: ImplementorIface
 
+struct: NoOpObject
+code: start
+	/**
+	 * Removes the specified child of the object from the object's selection.
+	 *
+	 * Params:
+	 *     i = a #gint specifying the index in the selection set.  (e.g. the
+	 *         ith selection as opposed to the ith child).
+	 *
+	 * Return: TRUE if success, FALSE otherwise.
+	 */
+	public bool removeSelection(int i)
+	{
+		return atk_selection_remove_selection(getSelectionStruct(), i) != 0;
+	}
+code: end
+
 struct: Object
 class: ObjectAtk
 

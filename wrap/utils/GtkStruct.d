@@ -111,6 +111,9 @@ final class GtkStruct
 				parent = "Object";
 		}
 
+		if ( pack && pack.name != "glib" && "glib:get-type" in reader.front.attributes && reader.front.attributes["glib:get-type"].endsWith("_get_type") )
+			functions["get_type"] = getTypeFunction(reader.front.attributes["glib:get-type"]);
+
 		if ( reader.front.type == XMLNodeType.EmptyTag )
 			return;
 
@@ -299,6 +302,10 @@ final class GtkStruct
 			if ( parentStruct && parentStruct.implements.canFind(interf) )
 				continue;
 
+			// If the parentStruct is in an different package compare without package name.
+			if ( parentStruct && interf.canFind(".") && parentStruct.implements.canFind(interf.split('.')[1]) )
+				continue;
+
 			GtkStruct strct = pack.getStruct(interf);
 
 			if ( strct && first )
@@ -318,7 +325,7 @@ final class GtkStruct
 
 		if ( !cType.empty )
 		{
-			if ( type != GtkStructType.Interface || lookupInterface )
+			if ( type != GtkStructType.Interface && !lookupInterface )
 			{
 				buff ~= indenter.format("/** the main Gtk struct */");
 				buff ~= indenter.format("protected "~ cType ~"* "~ getHandleVar() ~";");
@@ -351,7 +358,7 @@ final class GtkStruct
 				buff ~= "\n";
 			}
 
-			if ( (type != GtkStructType.Interface || lookupInterface) && cType != "GObject" && cType != "cairo_t" )
+			if ( (type != GtkStructType.Interface && !lookupInterface) && cType != "GObject" && cType != "cairo_t" )
 			{
 				if ( parentStruct && pack.name != "cairo" )
 				{
@@ -408,7 +415,7 @@ final class GtkStruct
 			if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
 				continue;
 
-			if ( type == GtkStructType.Interface && func.name.startsWith("new") )
+			if ( type == GtkStructType.Interface && func.type == GtkFunctionType.Constructor )
 				continue;
 
 			if ( func.type == GtkFunctionType.Signal )
@@ -602,6 +609,7 @@ final class GtkStruct
 	{
 		foreach ( func; mergeStruct.functions )
 		{
+			func.strct = this;
 			functions[func.name] = func;
 		}
 	}
@@ -705,6 +713,9 @@ final class GtkStruct
 
 				if ( param.type.elementType )
 					getParamImport(param.type.elementType);
+				
+				if ( param.direction != GtkParamDirection.Default )
+					getReturnImport(param.type);
 			}
 
 			if ( func.type == GtkFunctionType.Signal )
@@ -762,6 +773,24 @@ final class GtkStruct
 
 			buff ~= " */\n";
 		}
+	}
+
+	private GtkFunction getTypeFunction(string cIdentifier)
+	{
+		GtkType returnType = new GtkType(wrapper);
+		returnType.name = "GObject.GType";
+		returnType.cType = "GType";
+
+		GtkFunction func = new GtkFunction(wrapper, this);
+		func.type = GtkFunctionType.Function;
+		func.name = "get_type";
+		func.cType = cIdentifier;
+		func.returnType = returnType;
+		
+		if ( type == GtkStructType.Interface )
+			func.noCode = true;
+
+		return func;
 	}
 }
 
@@ -864,7 +893,7 @@ final class GtkField
 			{
 				if ( bitcount > 0 )
 					endBitfield();
-				buff ~= field.callback.getCallbackDeclaration();
+				buff ~= field.callback.getFunctionPointerDecleration();
 				continue;
 			}
 
