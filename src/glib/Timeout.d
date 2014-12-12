@@ -245,6 +245,7 @@ public class Timeout
 		{
 			g_source_remove(timeoutID);
 		}
+		timeoutID = 0;
 		timeoutListeners.length = 0;
 	}
 	
