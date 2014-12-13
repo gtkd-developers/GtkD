@@ -1689,6 +1689,7 @@ code: start
 code: end
 
 struct: Main
+alias: main run
 import: gdk.Threads
 code: start
 	/**

@@ -371,6 +371,10 @@ code: start
 	}
 code: end
 
+struct: MenuItem
+noCode: new_section
+noCode: new_submenu
+
 struct:
 class: Mount
 extend: GObject.Object

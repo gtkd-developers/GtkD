@@ -175,6 +175,10 @@ array: set_groups groups length
 struct: ByteArray
 class: ByteArray
 
+struct: Bytes
+noCode: new_take
+noCode: new_static
+
 struct: Checksum
 noCode: get_digest
 code: start
@@ -1362,6 +1366,7 @@ code: start
 		{
 			g_source_remove(timeoutID);
 		}
+		timeoutID = 0;
 		timeoutListeners.length = 0;
 	}
 
@@ -1427,6 +1432,10 @@ code: start
 		return runAgain;
 	}
 code: end
+
+struct: TimeZone
+noCode: new_local
+noCode: new_utc
 
 struct: Tree
 class: BBTree
@@ -1587,6 +1596,7 @@ code: start
 code: end
 
 struct: VariantType
+noCode: new_maybe
 code: start
 	/**
 	 * Constructs the type corresponding to a maybe instance containing
