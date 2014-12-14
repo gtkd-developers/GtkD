@@ -254,6 +254,8 @@ final class GtkStruct
 
 	void writeClass()
 	{
+		bool[string] ctors;
+
 		if ( noCode )
 			return;
 
@@ -364,6 +366,7 @@ final class GtkStruct
 				{
 					buff ~= indenter.format("protected override void setStruct(GObject* obj)");
 					buff ~= indenter.format("{");
+					buff ~= indenter.format("super.setStruct(obj);");
 					buff ~= indenter.format(getHandleVar ~" = cast("~ cType ~"*)obj;");
 					buff ~= indenter.format("}");
 					buff ~= "\n";
@@ -713,7 +716,7 @@ final class GtkStruct
 
 				if ( param.type.elementType )
 					getParamImport(param.type.elementType);
-				
+
 				if ( param.direction != GtkParamDirection.Default )
 					getReturnImport(param.type);
 			}
@@ -786,7 +789,7 @@ final class GtkStruct
 		func.name = "get_type";
 		func.cType = cIdentifier;
 		func.returnType = returnType;
-		
+
 		if ( type == GtkStructType.Interface )
 			func.noCode = true;
 

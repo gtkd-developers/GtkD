@@ -150,6 +150,9 @@ code: start
 	}
 code: end
 
+struct: PixbufAnimation
+noCode: new_from_resource
+
 struct: PixbufSimpleAnim
 class: PixbufSimpleAnimation
 

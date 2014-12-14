@@ -442,6 +442,9 @@ code: start
 	}
 code: end
 
+struct: SimpleAsyncResult
+noCode: new_take_error
+
 struct: SimpleProxyResolver
 array: new ignore_hosts
 array: set_ignore_hosts ignore_hosts
@@ -458,10 +461,16 @@ implements: SocketConnectable
 struct: SubprocessLauncher
 array: set_environ env
 
+struct: ThemedIcon
+noCode: new
+
 struct:
 class: TlsBackend
 extend: GObject.Object
 implements: TlsBackend
+
+struct: UnixSocketAddress
+noCode: new_abstract
 
 struct:
 class: Volume

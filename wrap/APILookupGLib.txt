@@ -1261,6 +1261,9 @@ code: end
 struct: String
 class: StringG
 
+struct: Thread
+noCode: new
+
 struct: Timeout
 class: Timeout
 cType:

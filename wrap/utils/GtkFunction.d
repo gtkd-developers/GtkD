@@ -182,10 +182,10 @@ final class GtkFunction
 	string[] getFunctionPointerDecleration()
 	{
 		string[] buff;
-		
+
 		writeDocs(buff);
 		buff ~= "extern(C) "~ getExternalFunctionType() ~" "~ tokenToGtkD(name, wrapper.aliasses, localAliases()) ~";";
-		
+
 		return buff;
 	}
 
@@ -201,44 +201,44 @@ final class GtkFunction
 	{
 		string ext;
 		string type = stringToGtkD(returnType.cType, wrapper.aliasses, localAliases());
-		
+
 		if ( type.startsWith("bool") )
 			ext ~= type.replaceFirst("bool", "int");
 		else
 			ext ~= type;
-		
+
 		ext ~= " function(";
-		
+
 		if ( instanceParam )
 		{
 			ext ~= stringToGtkD(instanceParam.type.cType, wrapper.aliasses, localAliases());
 			ext ~= " ";
 			ext ~= tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 		}
-		
+
 		foreach ( i, param; params )
 		{
 			if ( i > 0 || instanceParam )
 				ext ~= ", ";
-			
+
 			type = stringToGtkD(param.type.cType, wrapper.aliasses, localAliases());
-			
+
 			if ( type.startsWith("bool") )
 				ext ~= type.replaceFirst("bool", "int");
 			else
 				ext ~= type;
-			
+
 			ext ~= " ";
 			//Both name and type are ... for Variadic functions.
 			if ( param.name != "..." )
 				ext ~= tokenToGtkD(param.name, wrapper.aliasses, localAliases());
 		}
-		
+
 		if ( throws )
 			ext ~= ", GError** err";
-		
+
 		ext ~= ")";
-		
+
 		return ext;
 	}
 
@@ -502,7 +502,7 @@ final class GtkFunction
 					else if ( param.direction == GtkParamDirection.Out )
 					{
 						buff ~= param.type.cType.removechars("*") ~"* out"~ id ~" = null;";
-						
+
 						gtkCall ~= "out"~ id;
 
 						outToD ~= id ~" = "~ construct(param.type.name) ~"(out"~ id ~");";

@@ -1396,6 +1396,7 @@ code: start
 code: end
 
 struct: Image
+noCode: new_from_resource
 noCode: new_from_stock
 code: start
 	/**

@@ -62,6 +62,73 @@ addEnums: end
 
 struct: CClosure
 class: CClosure
+import: glib.ConstructionException
+import: gobject.ObjectG
+noCode: new
+noCode: new_swap
+noCode: new_object
+noCode: new_object_swap
+code: start
+	/**
+	 * Creates a new closure which invokes callbackFunc with userData as
+	 * the last parameter.
+	 *
+	 * Params:
+	 *     callbackFunc = the function to invoke
+	 *     userData = user data to pass to callbackFunc
+	 *     destroyData = destroy notify to be called when userData is no longer used
+	 *     swap = if true invoce with usrData as the first parameter
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GCallback callbackFunc, void* userData, GClosureNotify destroyData, bool swap)
+	{
+		GClosure* p;
+
+		if ( swap )
+			p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
+		else
+			p = g_cclosure_new(callbackFunc, userData, destroyData);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GCClosure*) p);
+	}
+
+	/**
+	 * A variant of this() which uses object as userData and
+	 * calls ObjectG.watchClosure() on object and the created
+	 * closure. This function is useful when you have a callback closely
+	 * associated with a gobject.ObjectG, and want the callback to no longer run
+	 * after the object is is freed.
+	 *
+	 * Params:
+	 *     callbackFunc = the function to invoke
+	 *     object = a gobject.ObjectG.ObjectG to pass to callbackFunc
+	 *     swap = if true invoce with usrData as the first parameter
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GCallback callbackFunc, ObjectG object, bool swap)
+	{
+		GClosure* p;
+
+		if ( swap )
+			p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+		else
+			p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_object");
+		}
+
+		this(cast(GCClosure*) p);
+	}
+code: end
 
 struct: Object
 class: ObjectG
