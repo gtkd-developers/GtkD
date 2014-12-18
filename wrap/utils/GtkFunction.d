@@ -65,6 +65,16 @@ final class GtkFunction
 		this.strct = strct;
 	}
 
+	GtkFunction dup()
+	{
+		GtkFunction copy = new GtkFunction(wrapper, strct);
+		
+		foreach ( i, field; this.tupleof )
+			copy.tupleof[i] = field;
+		
+		return copy;
+	}
+
 	void parse(T)(XMLReader!T reader)
 	{
 		name = reader.front.attributes["name"];
@@ -900,6 +910,10 @@ final class GtkFunction
 	string[] getAddListenerBody()
 	{
 		string[] buff;
+		string realName = name;
+		
+		if ( name.endsWith("-generic-event") )
+			realName = name[0..$-14];
 
 		buff ~= "{";
 		buff ~= "if ( \""~ name ~"\" !in connectedSignals )";
@@ -907,7 +921,7 @@ final class GtkFunction
 
 		if ( strct.name != "StatusIcon")
 		{
-			switch ( name )
+			switch ( realName )
 			{
 				case  "button-press-event":      buff ~= "addEvents(EventMask.BUTTON_PRESS_MASK);";      break;
 				case  "button-release-event":    buff ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);";    break;
@@ -930,7 +944,7 @@ final class GtkFunction
 
 		buff ~= "Signals.connectData(";
 		buff ~= "this,";
-		buff ~= "\""~ name ~"\",";
+		buff ~= "\""~ realName ~"\",";
 		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
 
 		if ( strct.type == GtkStructType.Interface )

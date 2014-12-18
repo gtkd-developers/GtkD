@@ -452,6 +452,17 @@ final class GtkStruct
 				buff ~= indenter.format(func.getAddListenerdeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
 				buff ~= indenter.format(func.getSignalCallback());
+
+				foreach ( param; func.params )
+				{
+					if ( param.type.name.startsWith("Gdk.Event") )
+					{
+						buff ~= "\n";
+						buff ~= indenter.format(getGenericEventSignal(func));
+
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -688,6 +699,9 @@ final class GtkStruct
 
 				if ( dType is this )
 					return;
+			
+				if ( func.type == GtkFunctionType.Signal && type.name.startsWith("Gdk.Event") )
+					imports ~= "gdk.Event";
 
 				if ( dType && (dType.type != GtkStructType.Record || dType.lookupClass || dType.lookupInterface) )
 				{
@@ -794,6 +808,46 @@ final class GtkStruct
 			func.noCode = true;
 
 		return func;
+	}
+
+	/**
+	 * Get an overload of events that accept an generic Gdk Event
+	 * instead of the spesific type listed in the gir files.
+	 * 
+	 * This for backwards compatibility with the documentation based wrapper.
+	 */
+	private string[] getGenericEventSignal(GtkFunction func)
+	{
+		GtkFunction signal = func.dup();
+		string[] buff;
+		
+		for ( size_t i; i < signal.params.length; i++ )
+		{
+			if ( signal.params[i].type.name.startsWith("Gdk.Event") )
+			{
+				GtkType eventType = new GtkType(wrapper);
+				eventType.name = "Gdk.Event";
+				
+				GtkParam newParam = new GtkParam(wrapper);
+				newParam.name = signal.params[i].name;
+				newParam.doc  = signal.params[i].doc;
+				newParam.type = eventType;
+				
+				signal.params[i] = newParam;
+				
+				break;
+			}
+		}
+		
+		buff ~= func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"GenericListeners;";
+		buff ~= signal.getAddListenerdeclaration();
+		
+		signal.name = signal.name ~ "-generic-event";
+		
+		buff ~= signal.getAddListenerBody();
+		buff ~= signal.getSignalCallback();
+		
+		return buff;
 	}
 }
 
