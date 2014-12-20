@@ -455,7 +455,7 @@ final class GtkStruct
 
 				foreach ( param; func.params )
 				{
-					if ( param.type.name.startsWith("Gdk.Event") )
+					if ( param.type.name.startsWith("Gdk.Event") && param.type.name != "Gdk.Event" )
 					{
 						buff ~= "\n";
 						buff ~= indenter.format(getGenericEventSignal(func));
@@ -838,12 +838,12 @@ final class GtkStruct
 				break;
 			}
 		}
-		
-		buff ~= func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"GenericListeners;";
-		buff ~= signal.getAddListenerdeclaration();
-		
+
+		string[] declaration = signal.getAddListenerdeclaration();
 		signal.name = signal.name ~ "-generic-event";
 		
+		buff ~= func.getDelegateDecleration() ~"[] on"~ signal.getSignalName() ~"Listeners;";
+		buff ~= declaration;
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();
 		
