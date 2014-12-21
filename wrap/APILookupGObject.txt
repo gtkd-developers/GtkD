@@ -477,7 +477,7 @@ code: start
 	{
 		this();
 		init(Pixbuf.getType());
-		setPointer( cast(void*)(pixbuf.getPixbufStruct()) );
+		setObject(pixbuf);
 	}
 
 	/** */

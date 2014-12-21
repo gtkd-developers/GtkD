@@ -511,7 +511,7 @@ final class GtkFunction
 					}
 					else if ( param.direction == GtkParamDirection.Out )
 					{
-						buff ~= param.type.cType.removechars("*") ~"* out"~ id ~" = null;";
+						buff ~= param.type.cType.removechars("*") ~"* out"~ id ~" = new "~ param.type.cType.removechars("*") ~";";
 
 						gtkCall ~= "out"~ id;
 

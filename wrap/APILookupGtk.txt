@@ -36,7 +36,7 @@ addAliases: start
 
 	extern(C) Object _d_newclass(ClassInfo ci);
 
-	alias GtkAllocation Allocation;
+	alias GtkAllocation* Allocation;
 addAliases: end
 
 struct: Action
@@ -894,8 +894,10 @@ code: end
 
 struct: ComboBoxText
 import: glib.ConstructionException
+import: gobject.Signals
 import: gtk.TreeIter
 import: gtk.TreeModelIF
+import: gtkc.gdktypes
 override: remove_all
 noCode: new
 noCode: new_with_entry
@@ -987,6 +989,210 @@ code: start
 		else if ( index == -1 )
 		{
 			prepend("", text);
+		}
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(ComboBoxText)[] onChangedListeners;
+	/**
+	 * The changed signal is emitted when the active
+	 * item is changed. The can be due to the user selecting
+	 * a different item from the list, or due to a
+	 * call to gtk_combo_box_set_active_iter().
+	 * It will also be emitted while typing into the entry of a combo box
+	 * with an entry.
+	 *
+	 * Since: 2.4
+	 */
+	void addOnChanged(void delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"changed",
+				cast(GCallback)&callBackChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["changed"] = 1;
+		}
+		onChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackChanged(GtkComboBoxText* ComboBoxTextStruct, ComboBoxText _ComboBoxText)
+	{
+		foreach ( void delegate(ComboBoxText) dlg; _ComboBoxText.onChangedListeners )
+		{
+			dlg(_ComboBoxText);
+		}
+	}
+
+	string delegate(string, ComboBoxText)[] onFormatEntryTextListeners;
+	/**
+	 * For combo boxes that are created with an entry (See GtkComboBoxText:has-entry).
+	 *
+	 * A signal which allows you to change how the text displayed in a combo box's
+	 * entry is displayed.
+	 *
+	 * Connect a signal handler which returns an allocated string representing
+	 * @path. That string will then be used to set the text in the combo box's entry.
+	 * The default signal handler uses the text from the GtkComboBoxText::entry-text-column
+	 * model column.
+	 *
+	 * Here's an example signal handler which fetches data from the model and
+	 * displays it in the entry.
+	 * |[<!-- language="C" -->
+	 * static gchar*
+	 * format_entry_text_callback (GtkComboBoxText *combo,
+	 * const gchar *path,
+	 * gpointer     user_data)
+	 * {
+	 * GtkTreeIter iter;
+	 * GtkTreeModel model;
+	 * gdouble      value;
+	 *
+	 * model = gtk_combo_box_get_model (combo);
+	 *
+	 * gtk_tree_model_get_iter_from_string (model, &iter, path);
+	 * gtk_tree_model_get (model, &iter,
+	 * THE_DOUBLE_VALUE_COLUMN, &value,
+	 * -1);
+	 *
+	 * return g_strdup_printf ("%g", value);
+	 * }
+	 * ]|
+	 *
+	 * Params:
+	 *     path = the GtkTreePath string from the combo box's current model to format text for
+	 *
+	 * Return: a newly allocated string representing @path
+	 *     for the current GtkComboBoxText model.
+	 *
+	 * Since: 3.4
+	 */
+	void addOnFormatEntryText(string delegate(string, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "format-entry-text" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"format-entry-text",
+				cast(GCallback)&callBackFormatEntryText,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["format-entry-text"] = 1;
+		}
+		onFormatEntryTextListeners ~= dlg;
+	}
+	extern(C) static string callBackFormatEntryText(GtkComboBoxText* ComboBoxTextStruct, char* path, ComboBoxText _ComboBoxText)
+	{
+		return _ComboBoxText.onFormatEntryTextListeners[0](Str.toString(path), _ComboBoxText);
+	}
+
+	void delegate(GtkScrollType, ComboBoxText)[] onMoveActiveListeners;
+	/**
+	 * The ::move-active signal is a
+	 * [keybinding signal][GtkBindingSignal]
+	 * which gets emitted to move the active selection.
+	 *
+	 * Params:
+	 *     scrollType = a #GtkScrollType
+	 *
+	 * Since: 2.12
+	 */
+	void addOnMoveActive(void delegate(GtkScrollType, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "move-active" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"move-active",
+				cast(GCallback)&callBackMoveActive,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["move-active"] = 1;
+		}
+		onMoveActiveListeners ~= dlg;
+	}
+	extern(C) static void callBackMoveActive(GtkComboBoxText* ComboBoxTextStruct, GtkScrollType scrollType, ComboBoxText _ComboBoxText)
+	{
+		foreach ( void delegate(GtkScrollType, ComboBoxText) dlg; _ComboBoxText.onMoveActiveListeners )
+		{
+			dlg(scrollType, _ComboBoxText);
+		}
+	}
+
+	bool delegate(ComboBoxText)[] onPopdownListeners;
+	/**
+	 * The ::popdown signal is a
+	 * [keybinding signal][GtkBindingSignal]
+	 * which gets emitted to popdown the combo box list.
+	 *
+	 * The default bindings for this signal are Alt+Up and Escape.
+	 *
+	 * Since: 2.12
+	 */
+	void addOnPopdown(bool delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "popdown" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"popdown",
+				cast(GCallback)&callBackPopdown,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["popdown"] = 1;
+		}
+		onPopdownListeners ~= dlg;
+	}
+	extern(C) static int callBackPopdown(GtkComboBoxText* ComboBoxTextStruct, ComboBoxText _ComboBoxText)
+	{
+		foreach ( bool delegate(ComboBoxText) dlg; _ComboBoxText.onPopdownListeners )
+		{
+			if ( dlg(_ComboBoxText) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
+	}
+
+	void delegate(ComboBoxText)[] onPopupListeners;
+	/**
+	 * The ::popup signal is a
+	 * [keybinding signal][GtkBindingSignal]
+	 * which gets emitted to popup the combo box list.
+	 *
+	 * The default binding for this signal is Alt+Down.
+	 *
+	 * Since: 2.12
+	 */
+	void addOnPopup(void delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "popup" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"popup",
+				cast(GCallback)&callBackPopup,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["popup"] = 1;
+		}
+		onPopupListeners ~= dlg;
+	}
+	extern(C) static void callBackPopup(GtkComboBoxText* ComboBoxTextStruct, ComboBoxText _ComboBoxText)
+	{
+		foreach ( void delegate(ComboBoxText) dlg; _ComboBoxText.onPopupListeners )
+		{
+			dlg(_ComboBoxText);
 		}
 	}
 code: end
@@ -3807,10 +4013,6 @@ struct CustomTreeModelClass
 	GObjectClass parentClass;
 }
 
-//We need this function for the interface implementation.
-extern(C) GType function() c_gtk_tree_model_get_type;
-alias c_gtk_tree_model_get_type gtk_tree_model_get_type;
-
 /**
  */
 public class TreeModel : ObjectG, TreeModelIF
@@ -3819,11 +4021,6 @@ public class TreeModel : ObjectG, TreeModelIF
 
 	/** the main Gtk struct */
 	protected GtkTreeModel* gtkTreeModel;
-
-	shared static this()
-	{
-		Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
-	}
 
 	// Minimal implementation.
 	mixin TreeModelT!(GtkTreeModel);
@@ -4068,6 +4265,8 @@ noCode: new
 noCode: new_first
 noCode: new_from_indices
 noCode: new_from_indicesv
+noCode: get_indices
+alias: get_indices_with_depth getIndices
 code: start
 	/**
 	 * Creates a new GtkTreePath. This structure refers to a row.
