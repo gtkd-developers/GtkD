@@ -148,7 +148,7 @@ code: start
 	 * Sets our main struct and passes store it on the gobject.
 	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
 	 */
-	public this (GObject* gObject)
+	public this (GObject* gObject, bool ownedRef = false)
 	{
 		this.gObject = gObject;
 		if ( gObject !is  null )
@@ -156,11 +156,17 @@ code: start
 			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
 
-			//If the refCount is largeer then 1 toggleNotify isn't called
+			//If the refCount is larger then 1 toggleNotify isn't called
 			if (gObject.refCount > 1 && !isGcRoot)
 			{
 				GC.addRoot(cast(void*)this);
 				isGcRoot = true;
+			}
+
+			//If we already owned this reference remove the one added by addToggleRef.
+			if ( ownedRef )
+			{
+				unref();
 			}
 
 			//Remove the floating reference if there is one.
@@ -230,7 +236,7 @@ code: start
 	 *  obj = GObject containing the associations.
 	 * Returns: the D Object if found, or a newly constructed object if no such Object exists.
 	 */
-	public static RT getDObject(T, RT=T, U)(U obj)
+	public static RT getDObject(T, RT=T, U)(U obj, bool ownedRef = false)
 	{
 		if ( obj is null )
 		{
@@ -254,7 +260,7 @@ code: start
 			}
 			else
 			{
-				return new T(obj);
+				return new T(obj, ownedRef);
 			}
 		}
 		else

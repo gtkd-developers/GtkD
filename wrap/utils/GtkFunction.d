@@ -39,6 +39,13 @@ enum GtkFunctionType : string
 	Signal = "glib:signal"
 }
 
+enum GtkTransferOwnership : string
+{
+	None = "none",          /// Gtk owns the returned reference.
+	Full = "full",          /// We own the returned reference.
+	Container = "container" /// The container in which the references reside has ownership.
+}
+
 final class GtkFunction
 {
 	string name;
@@ -53,6 +60,7 @@ final class GtkFunction
 	bool noCode; /// Don't generate any class code for this function.
 
 	GtkType returnType;
+	GtkTransferOwnership returnOwnership = GtkTransferOwnership.None;
 	GtkParam instanceParam;
 	GtkParam[] params;
 
@@ -116,6 +124,9 @@ final class GtkFunction
 					reader.popFront();
 					break;
 				case "return-value":
+					if ( "transfer-ownership" in reader.front.attributes )
+						returnOwnership = cast(GtkTransferOwnership)reader.front.attributes["transfer-ownership"];
+
 					returnType = new GtkType(wrapper);
 					reader.popFront();
 
@@ -721,7 +732,10 @@ final class GtkFunction
 			 * Casting is needed because some GTK+ functions
 			 * can return void pointers or base types.
 			 */
-			buff ~= "this(cast(" ~ strct.cType ~ "*) p);";
+			if ( returnOwnership == GtkTransferOwnership.Full && strct.getAncestor().name == "ObjectG" )
+				buff ~= "this(cast(" ~ strct.cType ~ "*) p, true);";
+			else
+				buff ~= "this(cast(" ~ strct.cType ~ "*) p);";
 
 			return buff;
 		}
@@ -789,7 +803,10 @@ final class GtkFunction
 			}
 			else
 			{
-				buff ~= "return "~ construct(returnType.name) ~"(cast("~ returnDType.cType ~"*) p);";
+				if ( returnOwnership == GtkTransferOwnership.Full && returnDType.getAncestor().name == "ObjectG" )
+					buff ~= "return "~ construct(returnType.name) ~"(cast("~ returnDType.cType ~"*) p, true);";
+				else
+					buff ~= "return "~ construct(returnType.name) ~"(cast("~ returnDType.cType ~"*) p);";
 			}
 
 			return buff;
@@ -1400,7 +1417,8 @@ final class GtkParam
 	string doc;
 	string name;
 	GtkType type;
-	GtkParamDirection direction;
+	GtkTransferOwnership ownerschip = GtkTransferOwnership.None;
+	GtkParamDirection direction = GtkParamDirection.Default;
 
 	GtkParam lengthFor;
 	GtkWrapper wrapper;
@@ -1414,6 +1432,8 @@ final class GtkParam
 	{
 		name = reader.front.attributes["name"];
 
+		if ( "transfer-ownership" in reader.front.attributes )
+			ownerschip = cast(GtkTransferOwnership)reader.front.attributes["transfer-ownership"];
 		if ( "direction" in reader.front.attributes )
 			direction = cast(GtkParamDirection)reader.front.attributes["direction"];
 

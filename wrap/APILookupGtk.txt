@@ -4042,9 +4042,9 @@ public class TreeModel : ObjectG, TreeModelIF
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GtkTreeModel* gtkTreeModel)
+	public this (GtkTreeModel* gtkTreeModel, bool ownedRef = false)
 	{
-		super(cast(GObject*)gtkTreeModel);
+		super(cast(GObject*)gtkTreeModel, ownedRef);
 		this.gtkTreeModel = gtkTreeModel;
 	}
 

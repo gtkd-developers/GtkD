@@ -83,7 +83,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by g_dbus_action_group_get");
 		}
-		this(cast(GDBusActionGroup*) p);
+		this(cast(GDBusActionGroup*) p, true);
 	}
 code: end
 
@@ -158,7 +158,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by g_dbus_connection_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
 		}
-		this(cast(GDBusConnection*) p);
+		this(p, true);
 	}
 code: end
 
@@ -177,7 +177,7 @@ code: start
 			throw new ConstructionException("null returned by g_dbus_menu_model_get");
 		}
 
-		this(cast(GDBusMenuModel*) p);
+		this(cast(GDBusMenuModel*) p, true);
 	}
 code: end
 
@@ -226,7 +226,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
 		}
-		this(cast(GDBusObjectManagerClient*) p);
+		this(cast(GDBusObjectManagerClient*) p, true);
 	}
 code: end
 
@@ -276,7 +276,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
 		}
-		this(cast(GDBusProxy*) p);
+		this(p, true);
 	}
 code: end
 
@@ -302,7 +302,7 @@ code: start
 			throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
 		}
 
-		return new DesktopAppInfo(p);
+		return new DesktopAppInfo(p, true);
 	}
 code: end
 
@@ -354,7 +354,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
 		}
-		this(cast(GInetAddress*) p);
+		this(p, true);
 	}
 code: end
 
@@ -496,7 +496,7 @@ code: start
 			throw new ConstructionException("g_volume_monitor_get()");
 		}
 
-		this(cast(GVolumeMonitor*) p);
+		this(cast(GVolumeMonitor*) p, true);
 	}
 code: end
 

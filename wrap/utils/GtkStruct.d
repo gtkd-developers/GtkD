@@ -375,10 +375,19 @@ final class GtkStruct
 				buff ~= indenter.format("/**");
 				buff ~= indenter.format(" * Sets our main struct and passes it to the parent class.");
 				buff ~= indenter.format(" */");
-				buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~")");
+
+				if ( parentStruct && getAncestor().name == "ObjectG" )
+					buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~", bool ownedRef = false)");
+				else
+					buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~")");
+
 				buff ~= indenter.format("{");
-				if ( parentStruct )
+
+				if ( parentStruct && getAncestor().name == "ObjectG" )
+					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~", ownedRef);");
+				else if ( parentStruct )
 					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~");");
+
 				buff ~= indenter.format("this."~ getHandleVar() ~" = "~ getHandleVar() ~";");
 				buff ~= indenter.format("}");
 				buff ~= "\n";
@@ -626,6 +635,17 @@ final class GtkStruct
 			func.strct = this;
 			functions[func.name] = func;
 		}
+	}
+
+	GtkStruct getAncestor()
+	{
+		if ( parent.empty )
+			return this;
+
+		if ( !parentStruct )
+			parentStruct = pack.getStruct(parent);
+
+		return parentStruct.getAncestor();
 	}
 
 	private void resolveImports()

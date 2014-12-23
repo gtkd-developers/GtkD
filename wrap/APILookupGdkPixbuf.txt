@@ -103,7 +103,7 @@ code: start
 			throw new GException( new ErrorG(err) );
 		}
 
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		return new Pixbuf(cast(GdkPixbuf*) p, true);
 	}
 
 	/**
@@ -146,7 +146,7 @@ code: start
 			throw new GException( new ErrorG(err) );
 		}
 
-		return new Pixbuf(cast(GdkPixbuf*) p);
+		return new Pixbuf(cast(GdkPixbuf*) p, true);
 	}
 code: end
 
