@@ -486,9 +486,9 @@ final class GtkStruct
 		buff ~= indenter.format("}");
 
 		if ( type == GtkStructType.Interface || lookupInterface )
-			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"T.d"), buff);
+			std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"T.d"), buff);
 		else
-			std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~".d"), buff);
+			std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
 	}
 
 	void writeInterface()
@@ -550,7 +550,7 @@ final class GtkStruct
 			buff ~= indenter.format("}");
 		}
 
-		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~"IF.d"), buff);
+		std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"IF.d"), buff);
 	}
 
 	void writeDStruct()
@@ -592,7 +592,7 @@ final class GtkStruct
 		if ( !noNamespace )
 			buff ~= indenter.format("}");
 
-		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, pack.name, name ~".d"), buff);
+		std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
 	}
 
 	/**
@@ -661,8 +661,8 @@ final class GtkStruct
 			structWrap[parent] = QParent;
 		}
 
-		imports ~= "gtkc."~ pack.name;
-		imports ~= "gtkc."~ pack.name ~"types";
+		imports ~= pack.bindDir ~"."~ pack.name;
+		imports ~= pack.bindDir ~"."~ pack.name ~"types";
 
 		foreach( func; functions )
 		{

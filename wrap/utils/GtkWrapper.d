@@ -148,7 +148,10 @@ class GtkWrapper
 
 		try
 		{
-			pack = new GtkPackage(defReader.value, this);
+			if (defReader.value in packages)
+				throw new WrapError(defReader, "Package: "~ defReader.value ~"already defined.");
+
+			pack = new GtkPackage(defReader.value, this, srcDir, bindDir);
 			packages[defReader.value] = pack;
 			defReader.popFront();
 		}

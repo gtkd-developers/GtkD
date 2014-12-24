@@ -40,6 +40,8 @@ class GtkPackage
 {
 	string name;
 	string cTypePrefix;
+	string srcDir;
+	string bindDir;
 	GtkWrapper wrapper;
 
 	string[] publicImports;
@@ -57,34 +59,36 @@ class GtkPackage
 	GtkEnum stockIDs;           /// The StockID enum (Deprecated).
 	GtkEnum GdkKeys;            /// The GdkKey enum.
 
-	public this(string pack, GtkWrapper wrapper)
+	public this(string pack, GtkWrapper wrapper, string srcDir, string bindDir)
 	{
 		this.name = pack;
 		this.wrapper = wrapper;
+		this.srcDir = srcDir;
+		this.bindDir = bindDir;
 		this.stockIDs = new GtkEnum(wrapper, this);
 		this.GdkKeys  = new GtkEnum(wrapper, this);
 
 		try
 		{
-			if ( !exists(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir)) )
-				mkdirRecurse(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir));
+			if ( !exists(buildPath(wrapper.outputRoot, srcDir, bindDir)) )
+				mkdirRecurse(buildPath(wrapper.outputRoot, srcDir, bindDir));
 		}
 		catch (Exception)
 		{
-			throw new Exception("Failed to create directory: "~ buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir));
+			throw new Exception("Failed to create directory: "~ buildPath(wrapper.outputRoot, srcDir, bindDir));
 		}
 
 		try
 		{
-			if ( !exists(buildPath(wrapper.outputRoot, wrapper.srcDir, pack)) )
-				mkdirRecurse(buildPath(wrapper.outputRoot, wrapper.srcDir, pack));
+			if ( !exists(buildPath(wrapper.outputRoot, srcDir, pack)) )
+				mkdirRecurse(buildPath(wrapper.outputRoot, srcDir, pack));
 		}
 		catch (Exception)
 		{
-			throw new Exception("Failed to create directory: "~ buildPath(wrapper.outputRoot, wrapper.srcDir, pack));
+			throw new Exception("Failed to create directory: "~ buildPath(wrapper.outputRoot, srcDir, pack));
 		}
 
-		publicImports ~= wrapper.bindDir ~"."~ pack;
+		publicImports ~= bindDir ~"."~ pack;
 	}
 
 	void parseGIR(string girFile)
@@ -251,7 +255,7 @@ class GtkPackage
 		string buff = wrapper.licence;
 		auto indenter = new IndentedStringBuilder();
 
-		buff ~= "module "~ wrapper.bindDir ~"."~ name ~"types;\n\n";
+		buff ~= "module "~ bindDir ~"."~ name ~"types;\n\n";
 
 		buff ~= indenter.format(lookupAliases);
 		foreach ( a; collectedAliases )
@@ -296,7 +300,7 @@ class GtkPackage
 		if ( GdkKeys.members !is null )
 			writeGdkKeys();
 
-		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir, name ~"types.d"), buff);
+		std.file.write(buildPath(wrapper.outputRoot, srcDir, bindDir, name ~"types.d"), buff);
 	}
 
 	void writeGdkKeys()
@@ -318,16 +322,16 @@ class GtkPackage
 
 		buff ~= "}\n";
 
-		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, name, "Keysyms.d"), buff);
+		std.file.write(buildPath(wrapper.outputRoot, srcDir, name, "Keysyms.d"), buff);
 	}
 
 	void writeLoaderTable()
 	{
 		string buff = wrapper.licence;
 
-		buff ~= "module "~ wrapper.bindDir ~"."~ name ~";\n\n";
+		buff ~= "module "~ bindDir ~"."~ name ~";\n\n";
 		buff ~= "import std.stdio;\n";
-		buff ~= "import "~ wrapper.bindDir ~"."~ name ~"types;\n";
+		buff ~= "import "~ bindDir ~"."~ name ~"types;\n";
 
 		if ( name == "glib" )
 			buff ~= "import gtkc.gobjecttypes;\n";
@@ -393,14 +397,14 @@ class GtkPackage
 			}
 		}
 
-		std.file.write(buildPath(wrapper.outputRoot, wrapper.srcDir, wrapper.bindDir, name ~".d"), buff);
+		std.file.write(buildPath(wrapper.outputRoot, srcDir, bindDir, name ~".d"), buff);
 	}
 
 	private string getLibrary(string funct)
 	{
 		string library = "LIBRARY."~ name.toUpper();
 
-		if ( startsWith(funct, "gdk") )
+		if ( startsWith(funct, "gdk") && !startsWith(funct, "gdk_gl") )
 			return library ~ ", LIBRARY.GDKPIXBUF";
 		else if	( startsWith(funct, "pango_cairo") )
 			return library ~ ", LIBRARY.PANGOCAIRO";

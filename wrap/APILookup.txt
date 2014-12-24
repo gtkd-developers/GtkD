@@ -132,7 +132,7 @@ copy: Loader.d
 srcDir: src
 bindDir: gtkc
 lookup: APILookupGLib.txt
-#lookup: APILookupGThread.txt
+lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
 lookup: APILookupGio.txt
 lookup: APILookupCairo.txt
@@ -141,3 +141,8 @@ lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
+
+srcDir: srcgl
+bindDir: gtkglc
+lookup: APILookupGLd.txt
+lookup: APILookupGLt.txt
