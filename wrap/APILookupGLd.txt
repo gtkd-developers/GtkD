@@ -20,13 +20,19 @@
 #############################################
 
 # must start with wrap
-wrap: gdkglext
+wrap: glgdk
 file: /usr/share/gir-1.0/GdkGLExt-3.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;
 	public import gtkc.gdktypes;
 addAliases: end
+
+addStructs: start
+	struct GdkGLConfigImpl;
+	struct GdkGLContextImpl;
+	struct GdkGLWindowImpl;
+addStructs: end
 
 struct: Config
 class: GLConfig
@@ -69,9 +75,9 @@ cType: GdkGLDrawable
 extend: GObject.Object
 implements: Drawable
 
-struct: GLInit
-move: init GLInit
-move: init_check GLInit
+struct: GLdInit
+move: init GLdInit
+move: init_check GLdInit
 inout: init argv
 inout: init argc
 array: init argv argc

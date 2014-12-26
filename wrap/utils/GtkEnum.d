@@ -117,7 +117,9 @@ final class GtkEnum
 		}
 
 		buff ~= "}";
-		if ( name !is null && pack.name != "pango" )
+		if ( name !is null && pack.name.among("glgdk", "glgtk") )
+			buff ~= "alias "~ cName ~" GL"~ name ~";";
+		else if ( name !is null && pack.name != "pango" )
 			buff ~= "alias "~ cName ~" "~ name ~";";
 
 		return buff;

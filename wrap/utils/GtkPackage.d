@@ -50,6 +50,8 @@ class GtkPackage
 	string[] lookupStructs;     /// Structs defined in the lookupfile.
 	string[] lookupFuncts;      /// Functions defined in the lookupfile.
 	string[] lookupConstants;   /// Constants defined in the lookupfile.
+	
+	static GtkPackage[string] namespaces;
 
 	Map!(string, GtkAlias)    collectedAliases; /// Aliases defined in the gir file.
 	Map!(string, GtkEnum)     collectedEnums;   /// Enums defined in the gir file.
@@ -113,7 +115,9 @@ class GtkPackage
 		while ( !reader.empty && reader.front.value != "namespace" )
 			reader.popFront();
 
+		namespaces[reader.front.attributes["name"]] = this;
 		cTypePrefix = reader.front.attributes["c:identifier-prefixes"];
+
 		reader.popFront();
 
 		while ( !reader.empty && !reader.endTag("namespace") )
@@ -218,10 +222,10 @@ class GtkPackage
 		{
 			string[] vals = name.split(".");
 
-			if ( vals[0].toLower() !in wrapper.packages )
+			if ( vals[0] !in namespaces )
 				return null;
 
-			pack = wrapper.packages[vals[0].toLower()];
+			pack = namespaces[vals[0]];
 			name = vals[1];
 		}
 		return pack.collectedStructs.get(name, pack.collectedStructs.get("lookup"~name, null));
@@ -235,10 +239,10 @@ class GtkPackage
 		{
 			string[] vals = name.split(".");
 
-			if ( vals[0].toLower() !in wrapper.packages )
+			if ( vals[0] !in namespaces )
 				return null;
 
-			pack = wrapper.packages[vals[0].toLower()];
+			pack = namespaces[vals[0]];
 			name = vals[1];
 		}
 		return pack.collectedEnums.get(name, null);

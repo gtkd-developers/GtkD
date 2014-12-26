@@ -20,12 +20,12 @@
 #############################################
 
 # must start with wrap
-wrap: gtkglext
+wrap: glgtk
 file: /usr/share/gir-1.0/GtkGLExt-3.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;
-	public import gtkglc.gdkglexttypes;
+	public import gtkglc.glgdktypes;
 	public import gtkc.gtktypes;
 addAliases: end
 
@@ -34,9 +34,9 @@ namespace:
 code: start
 	public import cairo.Context;
 	public import gdk.Event;
-	public import gdkglext.GLWindow;
-	public import gtkglext.GLWidget;
-	public import gtkglext.GLWidget : widgetSetGlCapability = setGlCapability;
+	public import glgdk.GLWindow;
+	public import glgtk.GLWidget;
+	public import glgtk.GLWidget : widgetSetGlCapability = setGlCapability;
 
 	template GLCapability()
 	{
