@@ -542,10 +542,8 @@ class TestWindow : MainWindow
 
 		ComboBox treeCombo = new ComboBox(comboStore);
 		treeCombo.setWrapWidth(1);
-		CellRenderer renderer = new CellRendererText();
-		treeCombo.packStart(renderer, true);
-		treeCombo.addAttribute(renderer, "text",0);
-		
+		treeCombo.setProperty("entry-text-column", 0);
+
 		// TODO something is wrong gettign the ier from the path
 		//TreePath path = new TreePath("0,0");
 		//comboStore.getIter(iterChild, path);
