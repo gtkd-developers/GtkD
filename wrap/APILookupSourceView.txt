@@ -1,0 +1,192 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gsv
+file: /usr/share/gir-1.0/GtkSource-3.0.gir
+
+addAliases: start
+	public import gtkc.gtktypes;
+addAliases: end
+
+struct: Buffer
+class: SourceBuffer
+
+struct: Completion
+class: SourceCompletion
+
+struct: CompletionContext
+class: SourceCompletionContext
+
+struct: CompletionInfo
+class: SourceCompletionInfo
+
+struct: CompletionItem
+class: SourceCompletionItem
+noCode: new
+noCode: new_with_markup
+code: start
+	/**
+	 * Create a new GtkSourceCompletionItem with label label, icon icon and
+	 * extra information info. Both icon and info can be NULL in which case
+	 * there will be no icon shown and no extra information available.
+	 * Params:
+	 * label = The item label.
+	 * text = The item text.
+	 * icon = The item icon. [allow-none]
+	 * info = The item extra information. [allow-none]
+	 * markup = If true label will be treated as markup. using gtk_source_completion_item_new_with_markup.	
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this (string label, string text, Pixbuf icon, string info, bool markup = false)
+	{
+		GtkSourceCompletionItem* p;
+
+		if ( markup )
+		{
+			p = gtk_source_completion_item_new_with_markup(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+		}
+		else
+		{
+			p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
+		}
+		this(p, true);
+	}
+code: end
+
+struct: CompletionProposal
+interface: SourceCompletionProposal
+
+struct: CompletionProvider
+interface: SourceCompletionProvider
+
+struct:
+class: SourceCompletionProvider
+cType: GtkSourceCompletionProvider
+extend: GObject.Object
+implements: CompletionProvider
+
+struct: CompletionWords
+class: SourceCompletionWords
+
+struct: Encoding
+class: SourceEncoding
+
+struct: File
+class: SourceFile
+
+struct: FileLoader
+class: SourceFileLoader
+
+struct: FileSaver
+class: SourceFileSaver
+
+struct: Gutter
+class: SourceGutter
+
+struct: GutterRenderer
+class: SourceGutterRenderer
+
+struct: GutterRendererPixbuf
+class: SourceGutterRendererPixbuf
+code: start
+	/** */
+	public void setStockId(StockID stockId)
+	{
+		setStockId(cast(string)stockId);
+	}
+code: end
+
+struct: GutterRendererText
+class: SourceGutterRendererText
+
+struct: Language
+class: SourceLanguage
+
+struct: LanguageManager
+class: SourceLanguageManager
+
+struct: Mark
+class: SourceMark
+
+struct: MarkAttributes
+class: SourceMarkAttributes
+code: start
+	/** */
+	public void setStockId(StockID stockId)
+	{
+		setStockId(cast(string)stockId);
+	}
+code: end
+
+struct: PrintCompositor
+class: SourcePrintCompositor
+
+struct: SearchContext
+class: SourceSearchContext
+
+struct: SearchSettings
+class: SourceSearchSettings
+
+struct: Style
+class: SourceStyle
+
+struct: StyleScheme
+class: SourceStyleScheme
+
+struct: StyleSchemeManager
+class: SourceStyleSchemeManager
+	
+struct: UndoManager
+interface: SourceUndoManager
+
+struct:
+class: SourceUndoManager
+cType: GtkSourceUndoManager
+extend: GObject.Object
+implements: UndoManager
+
+struct: View
+class: SourceView
+code: start
+	/**
+	 * Returns the GtkSourceBuffer being displayed by this source view.
+	 * The reference count on the buffer is not incremented; the caller
+	 * of this function won't own a new reference.
+	 *
+	 * Returns:
+	 *  a GtkSourceBuffer
+	 */
+	public override SourceBuffer getBuffer()
+	{
+		auto p = gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView);
+
+		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
+	}
+code: end
+
+move: utils_escape_search_text Utils escape_search_text
+move: utils_unescape_search_text Utils unescape_search_text

@@ -146,3 +146,7 @@ srcDir: srcgl
 bindDir: gtkglc
 lookup: APILookupGLd.txt
 lookup: APILookupGLt.txt
+
+srcDir: srcsv
+bindDir: gsvc
+lookup: APILookupSourceView.txt
