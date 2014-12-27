@@ -150,3 +150,7 @@ lookup: APILookupGLt.txt
 srcDir: srcsv
 bindDir: gsvc
 lookup: APILookupSourceView.txt
+
+srcDir: srcvte
+bindDir: vtec
+lookup: APILookupVte.txt

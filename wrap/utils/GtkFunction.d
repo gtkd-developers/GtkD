@@ -452,6 +452,9 @@ final class GtkFunction
 					GtkType elementType = param.type.elementType;
 					GtkStruct dElementType = strct.pack.getStruct(elementType.name);
 
+					if ( elementType.cType.empty )
+						elementType.cType = dElementType.cType;
+
 					// out gtkdType[], ref gtkdType[]
 					if ( param.direction != GtkParamDirection.Default )
 					{
