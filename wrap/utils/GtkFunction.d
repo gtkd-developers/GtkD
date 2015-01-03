@@ -291,7 +291,7 @@ final class GtkFunction
 
 		if ( instanceParam && type == GtkFunctionType.Method && (strct.isNamespace() || strct.noNamespace ) )
 		{
-			dec ~= strct.cType ~" "~ tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
+			dec ~= getType(instanceParam.type) ~" "~ tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 			paramCount++;
 		}
 
@@ -356,12 +356,29 @@ final class GtkFunction
 					gtkCall ~= "cast("~ stringToGtkD(params[0].type.cType, wrapper.aliasses, localAliases()) ~")";
 			}
 
+			if ( instanceParam && instanceParam.type.name in strct.structWrap )
+			{
+				GtkStruct insType = strct.pack.getStruct(strct.structWrap[instanceParam.type.name]);
+
+				if ( insType )
+					dType = insType;
+			}
+
 			if ( strct.isNamespace() || strct.noNamespace )
-				gtkCall ~= tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
+			{
+				if ( dType && !(dType.isNamespace() || dType.noNamespace) )
+					gtkCall ~= dType.getHandleFunc() ~"()";
+				else
+					gtkCall ~= tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
+			}
 			else if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
+			{
 				gtkCall ~= strct.getHandleFunc() ~"()";
+			}
 			else
+			{
 				gtkCall ~= strct.getHandleVar();
+			}
 		}
 
 		foreach( i, param; params )
@@ -371,6 +388,8 @@ final class GtkFunction
 
 			if ( param.type.isArray() )
 				dType = strct.pack.getStruct(param.type.elementType.name);
+			else if ( auto dStrct = strct.pack.getStruct(strct.structWrap.get(param.type.name, "")) )
+				dType = dStrct;
 			else
 				dType = strct.pack.getStruct(param.type.name);
 
@@ -662,7 +681,7 @@ final class GtkFunction
 				{
 					if ( param.type.name in strct.structWrap )
 					{
-						gtkCall ~= id ~".get"~ strct.structWrap[param.type.name] ~"Struct()";
+						gtkCall ~= "("~ id ~" is null) ? null : "~ id ~".get"~ strct.structWrap[param.type.name] ~"Struct()";
 					}
 					else
 					{

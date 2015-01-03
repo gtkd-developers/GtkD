@@ -23,6 +23,7 @@
 # must start with wrap
 wrap: gdk
 file: /usr/share/gir-1.0/Gdk-3.0.gir
+file: /usr/share/gir-1.0/GdkX11-3.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;
@@ -388,6 +389,100 @@ code: end
 
 struct: Threads
 namespace:
+
+struct: X11AppLaunchContext
+noCode: true
+noExternal: true
+
+struct: X11AppLaunchContextClass
+noExternal: true
+
+struct: X11Cursor
+noCode: true
+noExternal: true
+
+struct: X11CursorClass
+noExternal: true
+
+struct: X11DeviceCore
+noCode: true
+noExternal: true
+
+struct: X11DeviceCoreClass
+noExternal: true
+
+struct: X11DeviceManagerCore
+noCode: true
+noExternal: true
+
+struct: X11DeviceManagerCoreClass
+noExternal: true
+
+struct: X11DeviceManagerXI2
+noCode: true
+noExternal: true
+
+struct: X11DeviceManagerXI2Class
+noExternal: true
+
+struct: X11DeviceXI2
+noCode: true
+noExternal: true
+
+struct: X11DeviceXI2Class
+noExternal: true
+
+struct: X11Display
+noCode: true
+noExternal: true
+
+struct: X11DisplayClass
+noExternal: true
+
+struct: X11DisplayManager
+noCode: true
+noExternal: true
+
+struct: X11DisplayManagerClass
+noExternal: true
+
+struct: X11DragContext
+noCode: true
+noExternal: true
+
+struct: X11DragContextClass
+noExternal: true
+
+struct: X11Keymap
+noCode: true
+noExternal: true
+
+struct: X11KeymapClass
+noExternal: true
+
+struct: X11Screen
+noCode: true
+noExternal: true
+
+struct: X11ScreenClass
+noExternal: true
+
+struct: X11Visual
+noCode: true
+noExternal: true
+
+struct: X11VisualClass
+noExternal: true
+
+struct: X11Window
+namespace: X11
+namespace:
+noCode: get_type
+alias: Window uint
+import: gdk.Display
+import: gdk.Window
+structWrap: X11Display Display
+structWrap: X11Window Window
 
 move: property_change Atom
 move: property_delete Atom
