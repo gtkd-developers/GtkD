@@ -63,9 +63,9 @@ struct LinkedHashMap(Key, Value)
 
 		Node* node = *nodeP;
 
-		if ( node is front && node.next )
+		if ( node is front )
 			front = node.next;
-		if ( node is back && node.previous )
+		if ( node is back )
 			back = node.previous;
 
 		if ( node.previous )
@@ -84,7 +84,7 @@ struct LinkedHashMap(Key, Value)
 	 */
 	void clear() pure nothrow @trusted
 	{
-		Node* node;
+		Node* node = front;
 		Node* previous;
 
 		while ( node !is null )
@@ -94,9 +94,6 @@ struct LinkedHashMap(Key, Value)
 
 			GC.free(previous);
 		}
-
-		if ( previous )
-			GC.free(previous);
 
 		data.destroy();
 		front = null;

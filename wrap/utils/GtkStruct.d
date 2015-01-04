@@ -142,7 +142,7 @@ final class GtkStruct
 					GtkField field = new GtkField(wrapper);
 					GtkStruct strct = new GtkStruct(wrapper, null);
 					strct.parse(reader);
-					strct.name =strct.name.toUpper()[0..1] ~ strct.name[1 .. $];
+					strct.cType = strct.cType.toUpper()[0..1] ~ strct.cType[1 .. $];
 					field.gtkStruct = strct;
 					fields ~= field;
 					break;
@@ -1092,7 +1092,17 @@ final class GtkUnion
 					field.parse(reader);
 					fields ~= field;
 					break;
+				case "record":
+					GtkField field = new GtkField(wrapper);
+					GtkStruct strct = new GtkStruct(wrapper, null);
+					strct.parse(reader);
+					strct.cType = strct.cType.toUpper()[0..1] ~ strct.cType[1 .. $];
+					field.gtkStruct = strct;
+					fields ~= field;
+					break;
 				default:
+					import std.stdio;
+					writeln(name);
 					assert(false, "Unexpected tag: "~ reader.front.value);
 			}
 			reader.popFront();
@@ -1120,7 +1130,7 @@ final class GtkUnion
 		buff ~= "}";
 
 		if ( name )
-			buff ~= tokenToGtkD(name.toUpper()[0..1] ~ name[1 .. $], wrapper.aliasses) ~" "~ tokenToGtkD(name, wrapper.aliasses) ~";";
+			buff ~= tokenToGtkD(name.toUpper()[0..1] ~ name[1 .. $], wrapper.aliasses) ~" "~ tokenToGtkD(name.toLower(), wrapper.aliasses) ~";";
 
 		return buff;
 	}

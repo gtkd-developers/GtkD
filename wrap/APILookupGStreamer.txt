@@ -1,0 +1,195 @@
+﻿#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gstreamer
+file: /usr/share/gir-1.0/Gst-1.0.gir
+
+struct: DebugMessage
+namespace: DebugMessage
+
+move: debug_add_log_function Debug add_log_function
+move: debug_bin_to_dot_file Debug bin_to_dot_file
+move: debug_bin_to_dot_file_with_ts Debug bin_to_dot_file_with_ts
+move: debug_construct_term_color Debug construct_term_color
+move: debug_construct_win_color Debug construct_win_color
+move: debug_get_all_categories Debug get_all_categories
+move: debug_get_color_mode Debug get_color_mode
+move: debug_get_default_threshold Debug get_default_threshold
+move: debug_is_active Debug is_active
+move: debug_is_colored Debug is_colored
+move: debug_level_get_name Debug level_get_name
+move: debug_log Debug log
+move: debug_log_default Debug log_default
+move: debug_log_valist Debug log_valist
+move: debug_print_stack_trace Debug print_stack_trace
+move: debug_remove_log_function Debug remove_log_function
+move: debug_remove_log_function_by_data Debug remove_log_function_by_data
+move: debug_set_active Debug set_active
+move: debug_set_color_mode Debug set_color_mode
+move: debug_set_color_mode_from_string Debug set_color_mode_from_string
+move: debug_set_colored Debug set_colored
+move: debug_set_default_threshold Debug set_default_threshold
+move: debug_set_threshold_for_name Debug set_threshold_for_name
+move: debug_set_threshold_from_string Debug set_threshold_from_string
+move: debug_unset_threshold_for_name Debug unset_threshold_for_name
+
+move: error_get_message GError
+
+move: event_type_get_flags Event type_get_flags
+move: event_type_get_name Event type_get_name
+move: event_type_to_quark Event type_to_quark
+
+move: filename_to_uri URIHandler
+move: uri_construct URIHandler
+move: uri_error_quark URIHandler
+move: uri_get_location URIHandler
+move: uri_get_protocol URIHandler
+move: uri_has_protocol URIHandler
+move: uri_is_valid URIHandler
+move: uri_protocol_is_supported URIHandler
+move: uri_protocol_is_valid URIHandler
+
+move: flow_get_name Pad
+move: flow_to_quark Pad
+move: pad_mode_get_name Pad mode_get_name
+
+move: format_get_by_nick Format get_by_nick
+move: format_get_details Format get_details
+move: format_get_name Format get_name
+move: format_iterate_definitions Format iterate_definitions
+move: format_register Format register
+move: format_to_quark Format to_quark
+move: formats_contains Format contains
+
+move: deinit GStreamer
+move: init GStreamer
+move: init_check GStreamer
+move: init_get_option_group GStreamer
+move: is_initialized GStreamer
+move: segtrap_is_enabled GStreamer
+move: segtrap_set_enabled GStreamer
+move: update_registry GStreamer
+
+move: message_type_get_name Message type_get_name
+move: message_type_to_quark Message type_to_quark
+
+move: param_spec_fraction ParamSpecFraction
+
+move: parse_bin_from_description Parse bin_from_description
+move: parse_bin_from_description_full Parse bin_from_description_full
+move: parse_error_quark Parse error_quark
+move: parse_launch_full Parse launch_full
+move: parse_launchv Parse launchv
+move: parse_launchv_full Parse launchv_full
+
+move: plugin_error_quark Plugin
+
+move: query_type_get_flags Query type_get_flags
+move: query_type_get_name Query type_get_name
+move: query_type_to_quark Query type_to_quark
+
+move: tag_exists TagList exists
+move: tag_get_description TagList get_description
+move: tag_get_flag TagList get_flag
+move: tag_get_nick TagList get_nick
+move: tag_get_type TagList get_type
+move: tag_is_fixed TagList is_fixed
+move: tag_merge_strings_with_comma TagList merge_strings_with_comma
+move: tag_merge_use_first TagList merge_use_first
+move: tag_register TagList register
+move: tag_register_static TagList register_static
+
+move: type_find_get_type TypeFind
+
+move: util_array_binary_search Utils array_binary_search
+move: util_double_to_fraction Utils double_to_fraction
+move: util_dump_mem Utils dump_mem
+move: util_fraction_add Utils fraction_add
+move: util_fraction_compare Utils fraction_compare
+move: util_fraction_multiply Utils fraction_multiply
+move: util_fraction_to_double Utils fraction_to_double
+move: util_gdouble_to_guint64 Utils gdouble_to_guint64
+move: util_get_timestamp Utils get_timestamp
+move: util_greatest_common_divisor Utils greatest_common_divisor
+move: util_greatest_common_divisor_int64 Utils greatest_common_divisor_int64
+move: util_group_id_next Utils group_id_next
+move: util_guint64_to_gdouble Utils guint64_to_gdouble
+move: util_seqnum_compare Utils seqnum_compare
+move: util_seqnum_next Utils seqnum_next
+move: util_set_object_arg Utils set_object_arg
+move: util_set_value_from_string Utils set_value_from_string
+move: util_uint64_scale Utils uint64_scale
+move: util_uint64_scale_ceil Utils uint64_scale_ceil
+move: util_uint64_scale_int Utils uint64_scale_int
+move: util_uint64_scale_int_ceil Utils uint64_scale_int_ceil
+move: util_uint64_scale_int_round Utils uint64_scale_int_round
+move: util_uint64_scale_round Utils uint64_scale_round
+
+move: value_can_compare ValueGst can_compare
+move: value_can_intersect ValueGst can_intersect
+move: value_can_subtract ValueGst can_subtract
+move: value_can_union ValueGst can_union
+move: value_compare ValueGst compare
+move: value_deserialize ValueGst deserialize
+move: value_fixate ValueGst fixate
+move: value_fraction_multiply ValueGst fraction_multiply
+move: value_fraction_subtract ValueGst fraction_subtract
+move: value_get_bitmask ValueGst get_bitmask
+move: value_get_caps ValueGst get_caps
+move: value_get_caps_features ValueGst get_caps_features
+move: value_get_double_range_max ValueGst get_double_range_max
+move: value_get_double_range_min ValueGst get_double_range_min
+move: value_get_fraction_denominator ValueGst get_fraction_denominator
+move: value_get_fraction_numerator ValueGst get_fraction_numerator
+move: value_get_fraction_range_max ValueGst get_fraction_range_max
+move: value_get_fraction_range_min ValueGst get_fraction_range_min
+move: value_get_int64_range_max ValueGst get_int64_range_max
+move: value_get_int64_range_min ValueGst get_int64_range_min
+move: value_get_int64_range_step ValueGst get_int64_range_step
+move: value_get_int_range_max ValueGst get_int_range_max
+move: value_get_int_range_min ValueGst get_int_range_min
+move: value_get_int_range_step ValueGst get_int_range_step
+move: value_get_structure ValueGst get_structure
+move: value_init_and_copy ValueGst init_and_copy
+move: value_intersect ValueGst intersect
+move: value_is_fixed ValueGst is_fixed
+move: value_is_subset ValueGst is_subset
+move: value_register ValueGst register
+move: value_serialize ValueGst serialize
+move: value_set_bitmask ValueGst set_bitmask
+move: value_set_caps ValueGst set_caps
+move: value_set_caps_features ValueGst set_caps_features
+move: value_set_double_range ValueGst set_double_range
+move: value_set_fraction ValueGst set_fraction
+move: value_set_fraction_range ValueGst set_fraction_range
+move: value_set_fraction_range_full ValueGst set_fraction_range_full
+move: value_set_int64_range ValueGst set_int64_range
+move: value_set_int64_range_step ValueGst set_int64_range_step
+move: value_set_int_range ValueGst set_int_range
+move: value_set_int_range_step ValueGst set_int_range_step
+move: value_set_structure ValueGst set_structure
+move: value_subtract ValueGst subtract
+move: value_union ValueGst union
+
+move: version Version
+move: version_string Version

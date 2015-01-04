@@ -151,6 +151,10 @@ srcDir: srcsv
 bindDir: gsvc
 lookup: APILookupSourceView.txt
 
+srcDir: srcgstreamer
+bindDir: gstreamerc
+lookup: APILookupGStreamer.txt
+
 srcDir: srcvte
 bindDir: vtec
 lookup: APILookupVte.txt

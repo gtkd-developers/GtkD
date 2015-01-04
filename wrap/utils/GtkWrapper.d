@@ -40,7 +40,7 @@ void main(string[] args)
 	wrapper.proccess("APILookup.txt");
 
 	if ( args.length > 1 && args[1].among("-f", "--print-free") )
-		wrapper.printFeeFunctions();
+		wrapper.printFreeFunctions();
 
 	foreach(pack; GtkWrapper.packages)
 	{
@@ -385,7 +385,7 @@ class GtkWrapper
 		}
 	}
 
-	void printFeeFunctions()
+	void printFreeFunctions()
 	{
 		foreach ( pack; packages )
 		{
