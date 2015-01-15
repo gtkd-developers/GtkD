@@ -154,6 +154,7 @@ lookup: APILookupSourceView.txt
 srcDir: srcgstreamer
 bindDir: gstreamerc
 lookup: APILookupGStreamer.txt
+lookup: APILookupGstInterfaces.txt
 
 srcDir: srcvte
 bindDir: vtec

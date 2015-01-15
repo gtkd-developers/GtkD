@@ -271,21 +271,21 @@ final class GtkStruct
 			return;
 		}
 
-		if ( type == GtkStructType.Interface || lookupInterface )
+		if ( isInterface() )
 			writeInterface();
 
 		string buff = wrapper.licence;
 		auto indenter = new IndentedStringBuilder();
 
-		if ( type == GtkStructType.Interface || lookupInterface )
+		if ( isInterface() )
 			buff ~= "module "~ pack.name ~"."~ name ~"T;\n\n";
 		else
 			buff ~= "module "~ pack.name ~"."~ name ~";\n\n";
 
-		writeImports(buff, (type == GtkStructType.Interface || lookupInterface) );
+		writeImports(buff, isInterface() );
 		writeDocs(buff);
 
-		if ( type == GtkStructType.Interface || lookupInterface )
+	if ( isInterface() )
 			buff ~= "public template "~ name ~"T(TStruct)";
 		else
 			buff ~= "public class "~ name;
@@ -327,7 +327,7 @@ final class GtkStruct
 
 		if ( !cType.empty )
 		{
-			if ( type != GtkStructType.Interface && !lookupInterface )
+			if ( !isInterface() )
 			{
 				buff ~= indenter.format("/** the main Gtk struct */");
 				buff ~= indenter.format("protected "~ cType ~"* "~ getHandleVar() ~";");
@@ -337,7 +337,7 @@ final class GtkStruct
 			buff ~= indenter.format("public "~ cType ~"* "~ getHandleFunc() ~"()");
 			buff ~= indenter.format("{");
 
-			if ( type == GtkStructType.Interface || lookupInterface )
+			if ( isInterface() )
 				buff ~= indenter.format("return cast("~ cType ~"*)getStruct();");
 			else
 				buff ~= indenter.format("return "~ getHandleVar ~";");
@@ -345,7 +345,7 @@ final class GtkStruct
 			buff ~= indenter.format("}");
 			buff ~= "\n";
 
-			if ( type != GtkStructType.Interface && !lookupInterface )
+			if ( !isInterface() )
 			{
 				buff ~= indenter.format("/** the main Gtk struct as a void* */");
 
@@ -360,7 +360,7 @@ final class GtkStruct
 				buff ~= "\n";
 			}
 
-			if ( (type != GtkStructType.Interface && !lookupInterface) && cType != "GObject" && cType != "cairo_t" )
+			if ( !isInterface() && cType != "GObject" && cType != "cairo_t" )
 			{
 				if ( parentStruct && pack.name != "cairo" )
 				{
@@ -427,7 +427,7 @@ final class GtkStruct
 			if ( func.noCode || func.isVariadic() || func.type == GtkFunctionType.Callback )
 				continue;
 
-			if ( type == GtkStructType.Interface && func.type == GtkFunctionType.Constructor )
+			if ( isInterface() && func.type == GtkFunctionType.Constructor )
 				continue;
 
 			if ( func.type == GtkFunctionType.Signal )
@@ -441,7 +441,7 @@ final class GtkStruct
 					firstSignal = false;
 				}
 
-				if ( type == GtkStructType.Interface || lookupInterface )
+				if ( isInterface() )
 				{
 					string[] prop;
 
@@ -485,7 +485,7 @@ final class GtkStruct
 
 		buff ~= indenter.format("}");
 
-		if ( type == GtkStructType.Interface || lookupInterface )
+		if ( isInterface() )
 			std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"T.d"), buff);
 		else
 			std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
@@ -621,6 +621,18 @@ final class GtkStruct
 			return "get"~ cast(char)pack.name[0].toUpper ~ pack.name[1..$] ~ name ~"Struct";
 		else
 			return "get"~ name ~"Struct";
+	}
+
+	bool isInterface()
+	{
+		if ( lookupInterface )
+			return true;
+		if ( lookupClass )
+			return false;
+		if ( type == GtkStructType.Interface )
+			return true;
+
+		return false;
 	}
 
 	bool isNamespace()
