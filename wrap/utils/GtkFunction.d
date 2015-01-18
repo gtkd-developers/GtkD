@@ -93,11 +93,7 @@ final class GtkFunction
 		type = cast(GtkFunctionType)reader.front.value;
 
 		if ( "c:type" in reader.front.attributes )
-		{
 			cType = reader.front.attributes["c:type"];
-			if ( type == GtkFunctionType.Callback )
-				name = cType;
-		}
 		if ( "c:identifier" in reader.front.attributes )
 			cType = reader.front.attributes["c:identifier"];
 		if ( "version" in reader.front.attributes )
@@ -195,7 +191,7 @@ final class GtkFunction
 		string[] buff;
 
 		writeDocs(buff);
-		buff ~= "public alias extern(C) "~ getExternalFunctionType() ~" "~ tokenToGtkD(name, wrapper.aliasses, localAliases()) ~";";
+		buff ~= "public alias extern(C) "~ getExternalFunctionType() ~" "~ tokenToGtkD(cType, wrapper.aliasses, localAliases()) ~";";
 
 		return buff;
 	}
@@ -661,14 +657,22 @@ final class GtkFunction
 					// out T[], ref T[]
 					if ( param.direction != GtkParamDirection.Default )
 					{
-						buff ~= stringToGtkD(param.type.elementType.cType, wrapper.aliasses, localAliases) ~" out"~ id ~" = ";
+						string outType = param.type.elementType.cType;
+						if ( outType.empty )
+							outType = param.type.elementType.name ~"*";
+
+						buff ~= stringToGtkD(outType, wrapper.aliasses, localAliases) ~" out"~ id ~" = ";
 
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= "null;";
 						else
 							buff[$-1] ~= id ~".ptr";
 
-						gtkCall ~= "&out"~ id ~"";
+						if ( param.type.elementType.cType.empty )
+							gtkCall ~= "cast("~stringToGtkD(param.type.cType, wrapper.aliasses, localAliases) ~")&out"~ id ~"";
+						else
+							gtkCall ~= "&out"~ id ~"";
+
 						outToD ~= id ~" = out"~ id ~"[0 .. "~ lenId(param.type, "out"~ id) ~"];";
 					}
 					// T[]

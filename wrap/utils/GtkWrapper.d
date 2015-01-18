@@ -275,6 +275,9 @@ class GtkWrapper
 				case "noEnum":
 					pack.collectedEnums.remove(defReader.value);
 					break;
+				case "noCallback":
+					pack.collectedCallbacks.remove(defReader.value);
+					break;
 				case "noCode":
 					if ( defReader.valueBool )
 					{

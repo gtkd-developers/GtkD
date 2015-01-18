@@ -69,6 +69,7 @@ alias: gint32 int
 alias: gint64 long
 alias: guint32 uint
 alias: guint64 ulong
+alias: guintptr size_t
 alias: gfloat float
 alias: gdouble double
 alias: goffset long
@@ -90,6 +91,7 @@ alias: alias alias_
 alias: align alig
 alias: body bod
 alias: continue continu
+alias: debug dbg
 alias: default defaulx
 alias: delete delet
 alias: export expor

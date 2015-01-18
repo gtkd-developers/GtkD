@@ -24,6 +24,11 @@
 wrap: gstreamer
 file: /usr/share/gir-1.0/Gst-1.0.gir
 
+addAliases: start
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+addAliases: end
+
 struct: Bin
 code: start
 	/** */
@@ -33,6 +38,9 @@ code: start
 		this.gstBin = cast(GstBin*)elem.getElementStruct();
 	}
 code: end
+
+struct: BufferPool
+inout: config_get_allocator allocator
 
 struct: Bus
 noCode: add_watch
@@ -57,7 +65,7 @@ code: start
 
 	bool delegate(Message) onWatchListener;
 
-	extern(C) static gboolean watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
+	extern(C) static int watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
 	{
 		Message msg_d = new Message( msg );
 
@@ -115,6 +123,11 @@ code: start
 		return new Caps(cast(GstCaps*)p, true);
 	}
 code: end
+
+struct: ChildProxy
+override: get_valist
+override: set_property
+override: set_valist
 
 struct: DateTime
 noCode: new_now_utc
@@ -184,6 +197,7 @@ struct: DebugMessage
 namespace: DebugMessage
 
 struct: Element
+in: query_convert src_format
 code: start
 	/**
 	 * Queries an element for the stream position.
@@ -280,7 +294,7 @@ code: start
 
 		if(p is null)
 		{
-			return null
+			return null;
 		}
 
 		return new Element( p );
@@ -702,7 +716,7 @@ code: start
 code: end
 
 struct: Object
-class: OjectGst
+class: ObjectGst
 
 struct: Pad
 code: start
@@ -744,7 +758,11 @@ code: start
 	}
 code: end
 
+struct: ParamFraction
+noCode: true
+
 struct: ParamSpecFraction
+class: ParamSpecFraction
 move: param_spec_fraction ParamSpecFraction
 noCode: param_spec_fraction
 code: start

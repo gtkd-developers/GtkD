@@ -24,6 +24,11 @@
 wrap: gstinterfaces
 file: /usr/share/gir-1.0/GstVideo-1.0.gir
 
+addAliases: start
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+addAliases: end
+
 struct: ColorBalanceChannel
 noCode: true
 noExternal: true
@@ -179,3 +184,34 @@ noExternal: true
 
 struct: VideoSinkPrivate
 noExternal: true
+
+noEnum: ColorBalanceType
+noEnum: NavigationCommand
+noEnum: NavigationEventType
+noEnum: NavigationMessageType
+noEnum: NavigationQueryType
+noEnum: VideoBufferFlags
+noEnum: VideoChromaFlags
+noEnum: VideoChromaMethod
+noEnum: VideoChromaSite
+noEnum: VideoCodecFrameFlags
+noEnum: VideoColorMatrix
+noEnum: VideoColorPrimaries
+noEnum: VideoColorRange
+noEnum: VideoFlags
+noEnum: VideoFormat
+noEnum: VideoFormatFlags
+noEnum: VideoFrameFlags
+noEnum: VideoGLTextureOrientation
+noEnum: VideoGLTextureType
+noEnum: VideoInterlaceMode
+noEnum: VideoOverlayFormatFlags
+noEnum: VideoPackFlags
+noEnum: VideoTileMode
+noEnum: VideoTileType
+noEnum: VideoTransferFunction
+
+noCallback: VideoConvertSampleCallback
+noCallback: VideoFormatPack
+noCallback: VideoFormatUnpack
+noCallback: VideoGLTextureUpload

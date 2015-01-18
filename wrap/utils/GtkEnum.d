@@ -108,7 +108,7 @@ final class GtkEnum
 			buff ~= " */";
 		}
 
-		buff ~= "public enum "~ cName ~(name == "ParamFlags" ? " : uint" : "");
+		buff ~= "public enum "~ cName ~(name.among("ParamFlags", "MessageType") ? " : uint" : "");
 		buff ~= "{";
 
 		foreach ( member; members )
