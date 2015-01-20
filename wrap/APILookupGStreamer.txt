@@ -27,6 +27,8 @@ file: /usr/share/gir-1.0/Gst-1.0.gir
 addAliases: start
 	public import gtkc.glibtypes;
 	public import gtkc.gobjecttypes;
+
+	enum GST_CLOCK_TIME_NONE = 18446744073709551615UL;
 addAliases: end
 
 struct: Bin
@@ -120,16 +122,19 @@ code: start
 			throw new ConstructionException("null returned by gst_caps_new_any");
 		}
 
-		return new Caps(cast(GstCaps*)p, true);
+		return new Caps(cast(GstCaps*)p); //, true);
 	}
 code: end
 
 struct: ChildProxy
-override: get_valist
-override: set_property
-override: set_valist
+alias: get_property childGetProperty
+alias: get_valist childGetValist
+alias: set_property childSetProperty
+alias: set_valist childSetValist
 
 struct: DateTime
+import: glib.DateTime : GLibDateTime = DateTime
+structWrap: GLib.DateTime GLibDateTime
 noCode: new_now_utc
 noCode: new_now_local_time
 noCode: new_from_unix_epoch_utc
@@ -160,7 +165,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
 		}
-		this(p, true);
+		this(p); //, true);
 	}
 
 	/**
@@ -189,7 +194,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by gst_date_time_new_from_unix_epoch_local_time(secs)");
 		}
-		this(p, true);
+		this(p); //, true);
 	}
 code: end
 
@@ -197,6 +202,8 @@ struct: DebugMessage
 namespace: DebugMessage
 
 struct: Element
+import: gobject.Type
+import: gtkc.gobject
 in: query_convert src_format
 code: start
 	/**
@@ -375,6 +382,9 @@ code: start
 	}
 code: end
 
+struct: Iterator
+inout: new_list list
+
 struct: Message
 #TODO: use the messagetype enum to consolidate the constructors.
 noCode: new_element
@@ -430,7 +440,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_element");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -453,7 +463,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_new_clock");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -479,7 +489,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_segment_done");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -505,7 +515,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_segment_start");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -529,7 +539,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_warning");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -552,7 +562,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_state_dirty");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -575,7 +585,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_eos");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -601,7 +611,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_error");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -626,7 +636,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_info");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -647,7 +657,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_latency");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -672,7 +682,7 @@ code: start
 			throw new ConstructionException("null returned by gst_message_new_duration_changed((src is null) ? null : src.getObjectGstStruct())");
 		}
 
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -689,7 +699,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by gst_message_new_async_start((src is null) ? null : src.getObjectGstStruct())");
 		}
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 
 	/**
@@ -711,7 +721,7 @@ code: start
 		{
 			throw new ConstructionException("null returned by gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime)");
 		}
-		return new Message(cast(GstMessage*)p, true);
+		return new Message(cast(GstMessage*)p); //, true);
 	}
 code: end
 
@@ -763,6 +773,8 @@ noCode: true
 
 struct: ParamSpecFraction
 class: ParamSpecFraction
+import: glib.ConstructionException
+import: glib.Str
 move: param_spec_fraction ParamSpecFraction
 noCode: param_spec_fraction
 code: start
@@ -796,6 +808,8 @@ code: start
 code: end
 
 struct: Query
+inout: parse_accept_caps_result result
+in: parse_nth_format nth
 noCode: new_position
 noCode: new_duration
 noCode: new_seeking
@@ -825,7 +839,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_position");
 		}
 
-		return new Query( cast(GstQuery*)p, true);
+		return new Query( cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -846,7 +860,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_duration");
 		}
 
-		return new Query( cast(GstQuery*)p, true);
+		return new Query( cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -866,7 +880,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_seeking");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -884,7 +898,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_formats");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -905,7 +919,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_segment");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -924,7 +938,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_latency()");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -943,7 +957,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_uri()");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -960,7 +974,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_scheduling()");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -977,7 +991,7 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_drain()");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 
 	/**
@@ -996,9 +1010,12 @@ code: start
 			throw new ConstructionException("null returned by gst_query_new_accept_caps((caps is null) ? null : caps.getCapsStruct())");
 		}
 
-		return new Query(cast(GstQuery*)p, true);
+		return new Query(cast(GstQuery*)p); //, true);
 	}
 code: end
+
+struct: Segment
+inout: do_seek update
 
 struct: Structure
 noCode: new_from_string
@@ -1012,7 +1029,7 @@ code: start
 			throw new ConstructionException("null returned by gst_structure_new_from_string(Str.toStringz(name))");
 		}
 
-		return new Structure(cast(GstStructure*)p, true);
+		return new Structure(cast(GstStructure*)p); //, true);
 	}
 code: end
 

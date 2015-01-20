@@ -638,7 +638,7 @@ final class GtkFunction
 						if ( param.direction == GtkParamDirection.Out )
 							buff[$-1] ~= ";";
 						else
-							buff[$-1] ~= " = "~ id ~" ? 1 : 0);";
+							buff[$-1] ~= " = ("~ id ~" ? 1 : 0);";
 
 						gtkCall ~= "&out"~ id ~"";
 						outToD ~= id ~" = (out"~ id ~" == 1);";
