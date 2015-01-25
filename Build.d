@@ -71,13 +71,13 @@ void build(string dir, string lib)
 	version(Win64)
 	{
 		std.file.write("build.rf", format("-m64 -c -lib %s %s -Isrc -of%s.lib %s", dcflags, ldflags, lib, dFiles(dir)));
-		system("dmd @build.rf");
+		executeShell("dmd @build.rf");
 	}
 	else
 	{
 		std.file.write("build.rf", format("-c %s -Isrc -of%s.obj %s", dcflags, lib, dFiles(dir)));
-		system("dmd @build.rf");
-		system(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
+		executeShell("dmd @build.rf");
+		executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
 		std.file.remove(lib ~".obj");
 	}
 	
