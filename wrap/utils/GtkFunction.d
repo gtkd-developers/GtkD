@@ -174,6 +174,12 @@ final class GtkFunction
 
 		if ( type == GtkFunctionType.Function && name.startsWith("new") && returnType.cType != "void" )
 			type = GtkFunctionType.Constructor;
+
+		if ( cType.among("gst_init", "gst_init_check") )
+		{
+			params[1].type.cType = "char***";
+			params[1].type.elementType.cType = "char**";
+		}
 	}
 
 	bool isVariadic()
@@ -362,10 +368,12 @@ final class GtkFunction
 
 			if ( strct.isNamespace() || strct.noNamespace )
 			{
+				string id = tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
+
 				if ( dType && !(dType.isNamespace() || dType.noNamespace) )
-					gtkCall ~= dType.getHandleFunc() ~"()";
+					gtkCall ~= "("~ id ~" is null) ? null : "~ id ~"."~ dType.getHandleFunc() ~"()";
 				else
-					gtkCall ~= tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
+					gtkCall ~= id;
 			}
 			else if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
 			{

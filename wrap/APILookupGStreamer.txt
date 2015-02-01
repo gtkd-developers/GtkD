@@ -126,6 +126,35 @@ code: start
 	}
 code: end
 
+struct: CapsFeatures
+noCode: new_any
+code: start
+	/**
+	 * Creates a new, ANY #GstCapsFeatures. This will be equal
+	 * to any other #GstCapsFeatures but caps with these are
+	 * unfixed.
+	 *
+	 * Free-function: gst_caps_features_free
+	 *
+	 * Return: a new, ANY #GstCapsFeatures
+	 *
+	 * Since: 1.2
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static newAny()
+	{
+		auto p = gst_caps_features_new_any();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_any");
+		}
+		
+		return new CapsFeatures(cast(GstCapsFeatures*)p);
+	}
+code: end
+
 struct: ChildProxy
 alias: get_property childGetProperty
 alias: get_valist childGetValist
@@ -382,6 +411,12 @@ code: start
 	}
 code: end
 
+struct: gstreamer
+namespace:
+code: start
+	public import gstreamer.GStreamer;
+code: end
+
 struct: Iterator
 inout: new_list list
 
@@ -400,6 +435,8 @@ noCode: new_latency
 noCode: new_duration_changed
 noCode: new_async_start
 noCode: new_reset_time
+noCode: new_device_added
+noCode: new_device_removed
 code: start
 	/**
 	* Get the type of the message.
@@ -721,6 +758,60 @@ code: start
 		{
 			throw new ConstructionException("null returned by gst_message_new_async_done((src is null) ? null : src.getObjectGstStruct(), runningTime)");
 		}
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Creates a new device-added message. The device-added message is produced by
+	 * #GstDeviceProvider or a #GstDeviceMonitor. They announce the appearance
+	 * of monitored devices.
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     device = The new #GstDevice
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newDeviceAdded(ObjectGst src, Device device)
+	{
+		auto p = gst_message_new_device_added((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_device_added");
+		}
+		
+		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Creates a new device-removed message. The device-removed message is produced
+	 * by #GstDeviceProvider or a #GstDeviceMonitor. They announce the
+	 * disappearance of monitored devices.
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     device = The removed #GstDevice
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public  static Message newDeviceRemoved(ObjectGst src, Device device)
+	{
+		auto p = gst_message_new_device_removed((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_device_removed");
+		}
+		
 		return new Message(cast(GstMessage*)p); //, true);
 	}
 code: end
@@ -1117,6 +1208,8 @@ move: is_initialized GStreamer
 move: segtrap_is_enabled GStreamer
 move: segtrap_set_enabled GStreamer
 move: update_registry GStreamer
+move: version GStreamer
+move: version_string GStreamer
 
 move: message_type_get_name Message type_get_name
 move: message_type_to_quark Message type_to_quark
@@ -1216,6 +1309,3 @@ move: value_set_int_range_step ValueGst set_int_range_step
 move: value_set_structure ValueGst set_structure
 move: value_subtract ValueGst subtract
 move: value_union ValueGst union
-
-move: version Version
-move: version_string Version

@@ -483,6 +483,33 @@ import: gdk.Display
 import: gdk.Window
 structWrap: X11Display Display
 structWrap: X11Window Window
+noCode: lookup_for_display
+code: start
+	/**
+	 * Looks up the #GdkWindow that wraps the given native window handle.
+	 *
+	 * Params:
+	 *     display = the #GdkDisplay corresponding to the
+	 *         window handle
+	 *     window = an Xlib Window
+	 *
+	 * Return: the #GdkWindow wrapper for the native
+	 *     window, or %NULL if there is none.
+	 *
+	 * Since: 2.24
+	 */
+	public Window lookupForDisplay(Display display, uint window)
+	{
+		auto p = gdk_x11_window_lookup_for_display((display is null) ? null : display.getDisplayStruct(), window);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+code: end
 
 move: property_change Atom
 move: property_delete Atom
