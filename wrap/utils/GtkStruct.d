@@ -366,8 +366,8 @@ final class GtkStruct
 				{
 					buff ~= indenter.format("protected override void setStruct(GObject* obj)");
 					buff ~= indenter.format("{");
-					buff ~= indenter.format("super.setStruct(obj);");
 					buff ~= indenter.format(getHandleVar ~" = cast("~ cType ~"*)obj;");
+					buff ~= indenter.format("super.setStruct(obj);");
 					buff ~= indenter.format("}");
 					buff ~= "\n";
 				}
@@ -382,13 +382,13 @@ final class GtkStruct
 					buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~")");
 
 				buff ~= indenter.format("{");
+				buff ~= indenter.format("this."~ getHandleVar() ~" = "~ getHandleVar() ~";");
 
 				if ( parentStruct && getAncestor().name == "ObjectG" )
 					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~", ownedRef);");
 				else if ( parentStruct )
 					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~");");
 
-				buff ~= indenter.format("this."~ getHandleVar() ~" = "~ getHandleVar() ~";");
 				buff ~= indenter.format("}");
 				buff ~= "\n";
 			}
