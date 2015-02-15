@@ -153,6 +153,55 @@ code: end
 struct: PixbufAnimation
 noCode: new_from_resource
 
+struct: PixbufLoader
+noCode: new_with_type
+noCode: new_with_mime_type
+code: start
+	/**
+	 * Creates a new pixbuf loader object that always attempts to parse
+	 * image data as if it were an image of type @image_type, instead of
+	 * identifying the type automatically. Useful if you want an error if
+	 * the image isn't the expected type, for loading image formats
+	 * that can't be reliably identified by looking at the data, or if
+	 * the user manually forces a specific type.
+	 *
+	 * The list of supported image formats depends on what image loaders
+	 * are installed, but typically "png", "jpeg", "gif", "tiff" and
+	 * "xpm" are among the supported formats. To obtain the full list of
+	 * supported image formats, call gdk_pixbuf_format_get_name() on each
+	 * of the #GdkPixbufFormat structs returned by gdk_pixbuf_get_formats().
+	 *
+	 * Params:
+	 *     imageType  = name of the image format to be loaded with the image
+	 *     isMimeType = Set to true if type is a mime type
+	 *
+	 * Return: A newly-created pixbuf loader.
+	 *
+	 * Throws: GException on failure.
+	 */
+	public this(string type, bool isMimeType=false)
+	{
+		GError* err = null;
+		GdkPixbufLoader* p;
+
+		if ( isMimeType )
+		{
+			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), &err);
+		}
+		else
+		{
+			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), &err);
+		}
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		this(cast(GdkPixbufLoader*) p, true);
+	}
+code: end
+
 struct: PixbufSimpleAnim
 class: PixbufSimpleAnimation
 
