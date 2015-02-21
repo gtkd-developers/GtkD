@@ -496,5 +496,10 @@ struct ByChar
 		data = data[1 .. $];
 	}
 
+	@property ByChar save()
+	{
+		return this;
+	}
+
 	alias data this;
 }
