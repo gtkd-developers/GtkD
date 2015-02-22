@@ -154,6 +154,7 @@ struct: PixbufAnimation
 noCode: new_from_resource
 
 struct: PixbufLoader
+import: glib.Str
 noCode: new_with_type
 noCode: new_with_mime_type
 code: start
