@@ -1,0 +1,72 @@
+{
+    "name": "gtk-d",
+    "targetType": "none",
+    "description": "GtkD is the Digital Mars D programing language OO wrapper for Gtk+.",
+    "homepage": "http://gtkd.org",
+    "license": "LGPL license with additional exceptions",
+    "authors": [
+        "Frank Benoit",
+        "Jake Day",
+        "Jonas Kivi",
+        "Alan Knowles",
+        "Antonio Monteiro",
+        "Sebastián E. Peyrott",
+        "John Reimer",
+        "Mike Wey",
+        "hauptmech"
+    ],
+    "dependencies": {
+        "gtk-d:gtkdgl": "~>3.0.0-beta",
+        "gtk-d:sv": "~>3.0.0-beta",
+        "gtk-d:vte": "~>3.0.0-beta",
+        "gtk-d:gtkd": "~>3.0.0-beta",
+        "gtk-d:gstreamer": "~>3.0.0-beta"
+    },
+
+    "subPackages" : [
+        {
+            "name": "gtkd",
+            "targetType": "library",
+            "targetName": "gtkd-3",
+            "sourcePaths": ["src"],
+            "libs-posix": ["dl"],
+            "importPaths": ["src"]
+        },
+        {
+            "name": "gtkdgl",
+            "targetType": "library",
+            "targetName": "gtkdgl-3",
+            "sourcePaths": ["srcgl"],
+            "libs-posix": ["dl"],
+            "importPaths": ["srcgl"],
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+        },
+        {
+            "name": "sv",
+            "targetType": "library",
+            "targetName": "gtkdsv-3",
+            "sourcePaths": ["srcsv"],
+            "libs-posix": ["dl"],
+            "importPaths": ["srcsv"],
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+        },
+        {
+            "name": "gstreamer",
+            "targetType": "library",
+            "targetName": "gstreamerd-3",
+            "sourcePaths": ["srcgstreamer"],
+            "libs-posix": ["dl"],
+            "importPaths": ["srcgstreamer"],
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+        },
+        {
+            "name": "vte",
+            "targetType": "library",
+            "targetName": "vted-3",
+            "sourcePaths": ["srcvte"],
+            "libs-posix": ["dl"],
+            "importPaths": ["srcvte"],
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+        }
+    ]
+}
