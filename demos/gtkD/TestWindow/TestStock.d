@@ -18,6 +18,8 @@
 
 module TestStock;
 
+import std.traits;
+
 private import gtk.ScrolledWindow;
 
 private import gtk.Widget;
@@ -52,10 +54,10 @@ class TestStock : ScrolledWindow
 
 		IconSize size = Button.getIconSize();
 		Button.setIconSize(IconSize.DIALOG);
-		for(StockID stockID=StockID.min ; stockID<=StockID.max ; stockID++)
+		foreach(StockID stockID; EnumMembers!StockID)
 		{
 			Button button = new Button(stockID, true);
-			button.setTooltipText(StockDesc[stockID]);
+			button.setTooltipText(cast(string)stockID);
 
 			//button.setCursor(CursorType.BASED_ARROW_DOWN);
 			//button.setBackground(color);

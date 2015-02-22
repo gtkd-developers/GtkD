@@ -597,7 +597,7 @@ class TestWindow : MainWindow
 			setCurrentPage(2);
 		}
 
-		void switchPage(Notebook notebook, /*NotebookPage page,*/ guint pageNumber)
+		void switchPage(Notebook notebook, /*NotebookPage page,*/ uint pageNumber)
 		{
 			writeln("new page = %d",pageNumber);
 		}
