@@ -76,9 +76,9 @@ public:
 		m_videoOverlay = set;
 
 		debug(MonitorOverlay) writeln("Monitor.videoOverlay(set) videoOverlay set. Now setting XwindowId.");
-		m_videoOverlay.setWindowHandle( X11.windowGetXid( getWindow() ) );
+		m_videoOverlay.setWindowHandle( getWindow().getXid() );
 		
-		debug(MonitorOverlay) writeln("X11.drawableGetXid: {}", X11.windowGetXid( getWindow() ) );
+		debug(MonitorOverlay) writeln("X11.drawableGetXid: {}", getWindow().getXid() );
 		
 		return m_videoOverlay;
 	}
@@ -246,7 +246,7 @@ public:
 		
 		Value val = new Value();
 		val.init(GType.OBJECT);
-		val.setObject( videosink.getElementStruct() );
+		val.setObject( videosink );
 		source.setProperty( "video-sink", val );
 	
 		source.setProperty("uri", file);
