@@ -183,7 +183,7 @@ static float view_quat_diff[4] = [ 0.0, 0.0, 0.0, 1.0 ];
 static float view_quat[4] = [ 0.0, 0.0, 0.0, 1.0 ];
 static float view_scale = 1.0;
 
-static gboolean animate = false;
+static bool animate = false;
 
 static void init_view()
 {
@@ -215,7 +215,7 @@ class ShapesGL : DrawingArea
 		mat_current = &mat_silver;
 
 		this.testGL = testGL;
-		setGLCapability();	// set the GL capabilities for this widget
+		setGlCapability();	// set the GL capabilities for this widget
 	
 		setSizeRequest(400,400);		
 		addOnMap(&mapCallback);	                         // dispatcher.addMapListener(this,da);
@@ -539,7 +539,7 @@ class ShapesGL : DrawingArea
 		float h = height;
 		float x = event.motion.x;
 		float y = event.motion.y;
-		gboolean redraw = false;
+		bool redraw = false;
 		
 		/* Rotation. */
 		if (event.motion.state == ModifierType.BUTTON1_MASK )

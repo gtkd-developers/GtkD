@@ -110,7 +110,7 @@ static void drawBox(GLfloat size, GLenum type)
  *     solid = true if the cube should be solid.
  *     size  =  length of cube sides.
  **/
-void drawCube(gboolean solid, double size)
+void drawCube(bool solid, double size)
 {
 	if (solid)
 		drawBox (size, GL_QUADS);
@@ -148,7 +148,7 @@ static void initQuadObj()
  *     stacks = the number of subdivisions along the Z axis
  *              (similar to lines of latitude).
  **/
-void drawSphere(gboolean solid, double radius, int slices, int stacks)
+void drawSphere(bool solid, double radius, int slices, int stacks)
 {
 	initQuadObj();
 
@@ -178,7 +178,7 @@ void drawSphere(gboolean solid, double radius, int slices, int stacks)
  *     slices = the number of subdivisions around the Z axis.
  *     stacks = the number of subdivisions along the Z axis.
  **/
-void drawCone(gboolean solid, double base, double height, int slices, int stacks)
+void drawCone(bool solid, double base, double height, int slices, int stacks)
 {
 	initQuadObj();
 
@@ -249,7 +249,7 @@ static void doughnut(GLfloat r, GLfloat R, GLint nsides, GLint rings)
  *     nsides       = number of sides for each radial section.
  *     rings        = number of radial divisions for the torus.
  **/
-void drawTorus (gboolean solid, double inner_radius, double outer_radius, int nsides, int rings)
+void drawTorus (bool solid, double inner_radius, double outer_radius, int nsides, int rings)
 {
 	if (solid)
 	{
@@ -400,7 +400,7 @@ static void tetrahedron(GLenum shadeType)
  * Params:
  *     solid = true if the tetrahedron should be solid.
  **/
-void drawTetrahedron (gboolean solid)
+void drawTetrahedron (bool solid)
 {
 	if (solid)
 		tetrahedron (GL_TRIANGLES);
@@ -452,7 +452,7 @@ static void octahedron(GLenum shadeType)
  * Params:
  *     solid = true if the octahedron should be solid.
  **/
-void drawOctahedron (gboolean solid)
+void drawOctahedron (bool solid)
 {
 	if (solid)
 		octahedron (GL_TRIANGLES);
@@ -527,7 +527,7 @@ static void icosahedron(GLenum shadeType)
  * Params:
  *     solid = true if the icosahedron should be solid.
  **/
-void drawIcosahedron (gboolean solid)
+void drawIcosahedron (bool solid)
 {
 	if (solid)
 		icosahedron (GL_TRIANGLES);
@@ -621,7 +621,7 @@ static void dodecahedron(GLenum type)
  * Params:
  *     solid = true if the dodecahedron should be solid.
  **/
-void drawDodecahedron (gboolean solid)
+void drawDodecahedron (bool solid)
 {
 	if (solid)
 		dodecahedron (GL_TRIANGLE_FAN);
@@ -784,7 +784,7 @@ static void teapot(GLint grid, GLdouble scale, GLenum type)
  *     solid = true if the teapot should be solid.
  *     scale = relative size of the teapot.
  **/
-void drawTeapot (gboolean solid, double scale)
+void drawTeapot (bool solid, double scale)
 {
 	if (solid)
 		teapot (7, scale, GL_FILL);
