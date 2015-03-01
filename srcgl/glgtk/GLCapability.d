@@ -71,7 +71,8 @@ template GLCapability()
 	 */
 	bool setGlCapability(Widget widget, GLConfig glConfig, GLContext shareList, bool direct, int renderType)
 	{
-		widgetSetGlCapability(widget, glConfig, shareList, direct, renderType);
+		if(!widgetSetGlCapability(widget, glConfig, shareList, direct, renderType))
+			return false;
 		
 		addOnRealize(&realizeFrame);
 		addOnUnrealize(&realizeFrame);
