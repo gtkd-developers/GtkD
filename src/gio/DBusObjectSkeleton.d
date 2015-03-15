@@ -16,230 +16,222 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GDBusObjectSkeleton.html
- * outPack = gio
- * outFile = DBusObjectSkeleton
- * strct   = GDBusObjectSkeleton
- * realStrct=
- * ctorStrct=
- * clss    = DBusObjectSkeleton
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- DBusObjectIF
- * prefixes:
- * 	- g_dbus_object_skeleton_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gio.DBusInterfaceSkeleton
- * 	- gio.DBusObjectT
- * 	- gio.DBusObjectIF
- * structWrap:
- * 	- GDBusInterfaceSkeleton* -> DBusInterfaceSkeleton
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusObjectSkeleton;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.DBusInterfaceSkeleton;
+private import gio.DBusMethodInvocation;
+private import gio.DBusObjectIF;
+private import gio.DBusObjectT;
 private import glib.ConstructionException;
+private import glib.Str;
 private import gobject.ObjectG;
-
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-private import glib.Str;
-private import gio.DBusInterfaceSkeleton;
-private import gio.DBusObjectT;
-private import gio.DBusObjectIF;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-
-private import gobject.ObjectG;
 
 /**
- * A GDBusObjectSkeleton instance is essentially a group of D-Bus
+ * A #GDBusObjectSkeleton instance is essentially a group of D-Bus
  * interfaces. The set of exported interfaces on the object may be
  * dynamic and change at runtime.
+ * 
+ * This type is intended to be used with #GDBusObjectManager.
  *
- * This type is intended to be used with GDBusObjectManager.
+ * Since: 2.30
  */
 public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 {
-	
 	/** the main Gtk struct */
 	protected GDBusObjectSkeleton* gDBusObjectSkeleton;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GDBusObjectSkeleton* getDBusObjectSkeletonStruct()
 	{
 		return gDBusObjectSkeleton;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gDBusObjectSkeleton;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GDBusObjectSkeleton* gDBusObjectSkeleton)
-	{
-		super(cast(GObject*)gDBusObjectSkeleton);
-		this.gDBusObjectSkeleton = gDBusObjectSkeleton;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gDBusObjectSkeleton = cast(GDBusObjectSkeleton*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GDBusObjectSkeleton* gDBusObjectSkeleton, bool ownedRef = false)
+	{
+		this.gDBusObjectSkeleton = gDBusObjectSkeleton;
+		super(cast(GObject*)gDBusObjectSkeleton, ownedRef);
+	}
+
 	// add the DBusObject capabilities
 	mixin DBusObjectT!(GDBusObjectSkeleton);
-	
+
 	/**
 	 */
+
+	public static GType getType()
+	{
+		return g_dbus_object_skeleton_get_type();
+	}
+
+	/**
+	 * Creates a new #GDBusObjectSkeleton.
+	 *
+	 * Params:
+	 *     objectPath = An object path.
+	 *
+	 * Return: A #GDBusObjectSkeleton. Free with g_object_unref().
+	 *
+	 * Since: 2.30
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string objectPath)
+	{
+		auto p = g_dbus_object_skeleton_new(Str.toStringz(objectPath));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GDBusObjectSkeleton*) p, true);
+	}
+
+	/**
+	 * Adds @interface_ to @object.
+	 *
+	 * If @object already contains a #GDBusInterfaceSkeleton with the same
+	 * interface name, it is removed before @interface_ is added.
+	 *
+	 * Note that @object takes its own reference on @interface_ and holds
+	 * it until removed.
+	 *
+	 * Params:
+	 *     iface = A #GDBusInterfaceSkeleton.
+	 *
+	 * Since: 2.30
+	 */
+	public void addInterface(DBusInterfaceSkeleton iface)
+	{
+		g_dbus_object_skeleton_add_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
+	}
+
+	/**
+	 * This method simply calls g_dbus_interface_skeleton_flush() on all
+	 * interfaces belonging to @object. See that method for when flushing
+	 * is useful.
+	 *
+	 * Since: 2.30
+	 */
+	public void flush()
+	{
+		g_dbus_object_skeleton_flush(gDBusObjectSkeleton);
+	}
+
+	/**
+	 * Removes @interface_ from @object.
+	 *
+	 * Params:
+	 *     iface = A #GDBusInterfaceSkeleton.
+	 *
+	 * Since: 2.30
+	 */
+	public void removeInterface(DBusInterfaceSkeleton iface)
+	{
+		g_dbus_object_skeleton_remove_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
+	}
+
+	/**
+	 * Removes the #GDBusInterface with @interface_name from @object.
+	 *
+	 * If no D-Bus interface of the given interface exists, this function
+	 * does nothing.
+	 *
+	 * Params:
+	 *     interfaceName = A D-Bus interface name.
+	 *
+	 * Since: 2.30
+	 */
+	public void removeInterfaceByName(string interfaceName)
+	{
+		g_dbus_object_skeleton_remove_interface_by_name(gDBusObjectSkeleton, Str.toStringz(interfaceName));
+	}
+
+	/**
+	 * Sets the object path for @object.
+	 *
+	 * Params:
+	 *     objectPath = A valid D-Bus object path.
+	 *
+	 * Since: 2.30
+	 */
+	public void setObjectPath(string objectPath)
+	{
+		g_dbus_object_skeleton_set_object_path(gDBusObjectSkeleton, Str.toStringz(objectPath));
+	}
+
 	int[string] connectedSignals;
-	
-	bool delegate(DBusInterfaceSkeleton, GDBusMethodInvocation*, DBusObjectSkeleton)[] onAuthorizeMethodListeners;
+
+	bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton)[] onAuthorizeMethodListeners;
 	/**
 	 * Emitted when a method is invoked by a remote caller and used to
 	 * determine if the method call is authorized.
-	 * This signal is like GDBusInterfaceSkeleton's
-	 * "g-authorize-method" signal, except that it is
-	 * for the enclosing object.
-	 * The default class handler just returns TRUE.
-	 * TRUE if the call is authorized, FALSE otherwise.
-	 * Since 2.30
+	 *
+	 * This signal is like #GDBusInterfaceSkeleton's
+	 * #GDBusInterfaceSkeleton::g-authorize-method signal,
+	 * except that it is for the enclosing object.
+	 *
+	 * The default class handler just returns %TRUE.
+	 *
+	 * Params:
+	 *     iface = The #GDBusInterfaceSkeleton that @invocation is for.
+	 *     invocation = A #GDBusMethodInvocation.
+	 *
+	 * Return: %TRUE if the call is authorized, %FALSE otherwise.
+	 *
+	 * Since: 2.30
 	 */
-	void addOnAuthorizeMethod(bool delegate(DBusInterfaceSkeleton, GDBusMethodInvocation*, DBusObjectSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAuthorizeMethod(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( !("authorize-method" in connectedSignals) )
+		if ( "authorize-method" !in connectedSignals )
 		{
 			Signals.connectData(
-			getStruct(),
-			"authorize-method",
-			cast(GCallback)&callBackAuthorizeMethod,
-			cast(void*)this,
-			null,
-			connectFlags);
+				this,
+				"authorize-method",
+				cast(GCallback)&callBackAuthorizeMethod,
+				cast(void*)this,
+				null,
+				connectFlags);
 			connectedSignals["authorize-method"] = 1;
 		}
 		onAuthorizeMethodListeners ~= dlg;
 	}
-	extern(C) static gboolean callBackAuthorizeMethod(GDBusObjectSkeleton* objectStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation, DBusObjectSkeleton _dBusObjectSkeleton)
+	extern(C) static int callBackAuthorizeMethod(GDBusObjectSkeleton* dbusobjectskeletonStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation, DBusObjectSkeleton _dbusobjectskeleton)
 	{
-		foreach ( bool delegate(DBusInterfaceSkeleton, GDBusMethodInvocation*, DBusObjectSkeleton) dlg ; _dBusObjectSkeleton.onAuthorizeMethodListeners )
+		foreach ( bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg; _dbusobjectskeleton.onAuthorizeMethodListeners )
 		{
-			if ( dlg(ObjectG.getDObject!(DBusInterfaceSkeleton)(iface), invocation, _dBusObjectSkeleton) )
+			if ( dlg(ObjectG.getDObject!(DBusInterfaceSkeleton)(iface), ObjectG.getDObject!(DBusMethodInvocation)(invocation), _dbusobjectskeleton) )
 			{
 				return 1;
 			}
 		}
 		
 		return 0;
-	}
-	
-	
-	/**
-	 * Creates a new GDBusObjectSkeleton.
-	 * Since 2.30
-	 * Params:
-	 * objectPath = An object path.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string objectPath)
-	{
-		// GDBusObjectSkeleton * g_dbus_object_skeleton_new (const gchar *object_path);
-		auto p = g_dbus_object_skeleton_new(Str.toStringz(objectPath));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_dbus_object_skeleton_new(Str.toStringz(objectPath))");
-		}
-		this(cast(GDBusObjectSkeleton*) p);
-	}
-	
-	/**
-	 * This method simply calls g_dbus_interface_skeleton_flush() on all
-	 * interfaces belonging to object. See that method for when flushing
-	 * is useful.
-	 * Since 2.30
-	 */
-	public void flush()
-	{
-		// void g_dbus_object_skeleton_flush (GDBusObjectSkeleton *object);
-		g_dbus_object_skeleton_flush(gDBusObjectSkeleton);
-	}
-	
-	/**
-	 * Adds interface_ to object.
-	 * If object already contains a GDBusInterfaceSkeleton with the same
-	 * interface name, it is removed before interface_ is added.
-	 * Note that object takes its own reference on interface_ and holds
-	 * it until removed.
-	 * Since 2.30
-	 */
-	public void addInterface(DBusInterfaceSkeleton iface)
-	{
-		// void g_dbus_object_skeleton_add_interface  (GDBusObjectSkeleton *object,  GDBusInterfaceSkeleton *interface_);
-		g_dbus_object_skeleton_add_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
-	}
-	
-	/**
-	 * Removes interface_ from object.
-	 * Since 2.30
-	 */
-	public void removeInterface(DBusInterfaceSkeleton iface)
-	{
-		// void g_dbus_object_skeleton_remove_interface  (GDBusObjectSkeleton *object,  GDBusInterfaceSkeleton *interface_);
-		g_dbus_object_skeleton_remove_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
-	}
-	
-	/**
-	 * Removes the GDBusInterface with interface_name from object.
-	 * If no D-Bus interface of the given interface exists, this function
-	 * does nothing.
-	 * Since 2.30
-	 * Params:
-	 * interfaceName = A D-Bus interface name.
-	 */
-	public void removeInterfaceByName(string interfaceName)
-	{
-		// void g_dbus_object_skeleton_remove_interface_by_name  (GDBusObjectSkeleton *object,  const gchar *interface_name);
-		g_dbus_object_skeleton_remove_interface_by_name(gDBusObjectSkeleton, Str.toStringz(interfaceName));
-	}
-	
-	/**
-	 * Sets the object path for object.
-	 * Since 2.30
-	 * Params:
-	 * object = A GDBusObjectSkeleton.
-	 * objectPath = A valid D-Bus object path.
-	 */
-	public void setObjectPath(string objectPath)
-	{
-		// void g_dbus_object_skeleton_set_object_path  (GDBusObjectSkeleton *object,  const gchar *object_path);
-		g_dbus_object_skeleton_set_object_path(gDBusObjectSkeleton, Str.toStringz(objectPath));
 	}
 }

@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = Drive
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Drive
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- DriveIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.DriveT
- * 	- gio.DriveIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Drive;
 
+private import gio.DriveIF;
+private import gio.DriveT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.DriveT;
-private import gio.DriveIF;
-
-
-
-/**
- */
 public class Drive : ObjectG, DriveIF
 {
-	
-	// Minimal implementation.
-	mixin DriveT!(GDrive);
-	
+	/** the main Gtk struct */
+	protected GDrive* gDrive;
+
+	/** Get the main Gtk struct */
+	public GDrive* getDriveStruct()
+	{
+		return gDrive;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gDrive;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GDrive* gDrive)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gDrive);
-		this.gDrive = gDrive;
+		gDrive = cast(GDrive*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GDrive* gDrive, bool ownedRef = false)
+	{
+		this.gDrive = gDrive;
+		super(cast(GObject*)gDrive, ownedRef);
+	}
+
+	// add the Drive capabilities
+	mixin DriveT!(GDrive);
+
 	/**
 	 */
 }

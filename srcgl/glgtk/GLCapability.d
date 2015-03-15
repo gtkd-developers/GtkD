@@ -16,105 +16,63 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = glgtk
- * outFile = GLCapability
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = 
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glgtk.GLCapability;
 
+private import gtkglc.glgtk;
 public  import gtkglc.glgtktypes;
 
-private import gtkglc.glgtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-
-
-
-// SNEAKY MIXIN PROBLEM:
-//
-// These need to be public imports
-// or GLCompatibility will not compile
-// as a mixin in other modules!
-
-// May as well be explicit about it:
 
 public import cairo.Context;
-public import glgtk.GLWidget;
-public import glgtk.GLWidget : widgetSetGLCapability = setGLCapability;
-public import glgdk.GLWindow;
 public import gdk.Event;
+public import glgdk.GLWindow;
+public import glgtk.GLWidget;
+public import glgtk.GLWidget : widgetSetGlCapability = setGlCapability;
 
 template GLCapability()
 {
-	
 	GLfloat width = 0;
 	GLfloat height = 0;
 	
-	GLfloat getGLWidth()
+	GLfloat getGlWidth()
 	{
 		return width;
 	}
-	GLfloat getGLHeight()
+	GLfloat getGlHeight()
 	{
 		return height;
 	}
 	
-	
 	/**
 	 * Sets the GL capabilities for the widget
 	 */
-	bool setGLCapability(GLConfig glConfig = null, int renderType = GLRenderType.RGBA_TYPE)
+	bool setGlCapability(GLConfig glConfig = null, int renderType = GdkGLRenderType.RGBA_TYPE)
 	{
 		if ( glConfig is null )
 		{
 			glConfig = new GLConfig(
-			GLConfigMode.MODE_RGB
-			| GLConfigMode.MODE_DEPTH
-			| GLConfigMode.MODE_DOUBLE,
-			GLConfigMode.MODE_RGB
-			| GLConfigMode.MODE_DEPTH
+				GdkGLConfigMode.RGB
+				| GdkGLConfigMode.DEPTH
+				| GdkGLConfigMode.DOUBLE,
+				GdkGLConfigMode.RGB
+				| GdkGLConfigMode.DEPTH
 			);
 		}
-		bool ok = setGLCapability(this, glConfig, null, true, renderType);
-		
-		return ok;
+		return setGlCapability(this, glConfig, null, true, renderType);
 	}
 	
 	/**
 	 * Set the GL capabilities for the widget
 	 */
-	bool setGLCapability(Widget widget, GLConfig glConfig, GLContext shareList, bool direct, int renderType)
+	bool setGlCapability(Widget widget, GLConfig glConfig, GLContext shareList, bool direct, int renderType)
 	{
-		widgetSetGLCapability(widget, glConfig, shareList, direct, renderType);
+		if(!widgetSetGlCapability(widget, glConfig, shareList, direct, renderType))
+			return false;
 		
 		addOnRealize(&realizeFrame);
 		addOnUnrealize(&realizeFrame);
@@ -145,9 +103,8 @@ template GLCapability()
 	{
 		alreadyRealized = true;
 		
-		//printf("GLCapabilityT.realizeFrame \n" );
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
+		GLContext context = getGlContext(widget);
+		GLWindow drawable = getGlWindow(widget);
 		
 		/*** OpenGL BEGIN ***/
 		if ( !context.makeCurrent(drawable, drawable) )
@@ -174,9 +131,8 @@ template GLCapability()
 	
 	bool drawFrame(Context cr, Widget widget)
 	{
-		//printf("GLCapabilityT.exposeFrame exposeFrame\n" );
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
+		GLContext context = getGlContext(widget);
+		GLWindow drawable = getGlWindow(widget);
 		
 		/*** OpenGL BEGIN ***/
 		if ( !context.makeCurrent(drawable, drawable) )
@@ -211,8 +167,8 @@ template GLCapability()
 			height = event.configure.height;
 		}
 		
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
+		GLContext context = getGlContext(widget);
+		GLWindow drawable = getGlWindow(widget);
 		
 		/*** OpenGL BEGIN ***/
 		if ( !context.makeCurrent(drawable, drawable) )
@@ -247,8 +203,8 @@ template GLCapability()
 	
 	void mapFrame(Widget widget)
 	{
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
+		GLContext context = getGlContext(widget);
+		GLWindow drawable = getGlWindow(widget);
 		
 		/*** OpenGL BEGIN ***/
 		if ( !context.makeCurrent(drawable, drawable) )
@@ -275,8 +231,8 @@ template GLCapability()
 	
 	void unmapFrame(Widget widget)
 	{
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
+		GLContext context = getGlContext(widget);
+		GLWindow drawable = getGlWindow(widget);
 		
 		/*** OpenGL BEGIN ***/
 		if ( !context.makeCurrent(drawable, drawable) )
@@ -303,8 +259,8 @@ template GLCapability()
 	
 	bool visibilityFrame(Event event, Widget widget)
 	{
-		GLContext context = getGLContext(widget);
-		GLWindow drawable = getGLWindow(widget);
+		GLContext context = getGlContext(widget);
+		GLWindow drawable = getGlWindow(widget);
 		
 		/*** OpenGL BEGIN ***/
 		if ( !context.makeCurrent(drawable, drawable) )
@@ -349,4 +305,3 @@ template GLCapability()
 
 /**
  */
-

@@ -16,78 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = glgdk
- * outFile = GLDrawable
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = GLDrawable
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = GObject
- * implements:
- * 	- GLDrawableIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glgdk.GLDrawableT
- * 	- glgdk.GLDrawableIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glgdk.GLDrawable;
 
+private import glgdk.GLDrawableIF;
+private import glgdk.GLDrawableT;
+private import gobject.ObjectG;
+private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
-private import gtkglc.glgdk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import glgdk.GLDrawableT;
-private import glgdk.GLDrawableIF;
-
-
-private import gobject.ObjectG;
-
-/**
- */
 public class GLDrawable : ObjectG, GLDrawableIF
 {
-	
-	// Minimal implementation.
-	mixin GLDrawableT!(GdkGLDrawable);
-	
+	/** the main Gtk struct */
+	protected GdkGLDrawable* gdkGLDrawable;
+
+	/** Get the main Gtk struct */
+	public GdkGLDrawable* getGLDrawableStruct()
+	{
+		return gdkGLDrawable;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gdkGLDrawable;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GdkGLDrawable* gdkGLDrawable)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gdkGLDrawable);
-		this.gdkGLDrawable = gdkGLDrawable;
+		gdkGLDrawable = cast(GdkGLDrawable*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GdkGLDrawable* gdkGLDrawable, bool ownedRef = false)
+	{
+		this.gdkGLDrawable = gdkGLDrawable;
+		super(cast(GObject*)gdkGLDrawable, ownedRef);
+	}
+
+	// add the GLDrawable capabilities
+	mixin GLDrawableT!(GdkGLDrawable);
+
 	/**
 	 */
 }

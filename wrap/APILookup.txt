@@ -1,17 +1,17 @@
 #
 # This file is part of gtkD.
-# 
+#
 # gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License
 # as published by the Free Software Foundation; either version 3
 # of the License, or (at your option) any later version, with
 # some exceptions, please read the COPYING file.
-# 
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
@@ -38,7 +38,7 @@ license: start
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -50,16 +50,14 @@ includeComments: y
 
 # defines the simple token substitution
 # TODO allow to create real aliases on the code and simple static token replacement
-alias: const
 alias: volatile
 alias: G_CONST_RETURN
 alias: gint int
 alias: guint uint
-alias: gboolean int
+alias: gboolean bool
 alias: gpointer void*
 alias: gconstpointer void*
 alias: gchar char
-alias: gchar* char*
 alias: guchar char
 alias: gshort short
 alias: gushort ushort
@@ -71,24 +69,29 @@ alias: gint32 int
 alias: gint64 long
 alias: guint32 uint
 alias: guint64 ulong
+alias: guintptr size_t
 alias: gfloat float
 alias: gdouble double
 alias: goffset long
+alias: gsize size_t
+alias: gssize ptrdiff_t
 alias: va_list void*
 alias: unichar dchar
 alias: unichar2 wchar
 alias: uchar ubyte
 alias: XID uint
 
-#alias: gunichar dchar
-#alias: gunichar2 wchar
+alias: gunichar dchar
+alias: gunichar2 wchar
 
 alias: time_t uint
-alias: tm* void*
 alias: uid_t uid_t
 
+alias: alias alias_
 alias: align alig
+alias: body bod
 alias: continue continu
+alias: debug dbg
 alias: default defaulx
 alias: delete delet
 alias: export expor
@@ -99,12 +102,14 @@ alias: in inn
 alias: instance instanc
 alias: interface iface
 alias: module modul
+alias: out output
 alias: package p
+alias: ref doref
 alias: scope scop
+alias: string str
 alias: switch switc
 alias: union unio
 alias: version versio
-alias: virtual virtua
 
 alias: GLIB_SYSDEF_POLLIN =1
 alias: GLIB_SYSDEF_POLLOUT =4
@@ -113,99 +118,20 @@ alias: GLIB_SYSDEF_POLLHUP =16
 alias: GLIB_SYSDEF_POLLERR =8
 alias: GLIB_SYSDEF_POLLNVAL =32
 
-# ok, I'm not sure how to do this but I need to know the enum type for some enum entries
-enumType: G_TOKEN_LAST (int)TokenType.LAST
-enumType: G_SIGNAL_RUN_FIRST SignalFlags.RUN_FIRST
-enumType: G_SIGNAL_RUN_LAST SignalFlags.RUN_LAST
-enumType: G_SIGNAL_NO_RECURSE SignalFlags.NO_RECURSE
-enumType: G_SIGNAL_ACTION SignalFlags.ACTION
-enumType: G_SIGNAL_NO_HOOKS SignalFlags.NO_HOOKS
-enumType: G_PARAM_READABLE ParamFlags.READABLE
-enumType: G_PARAM_WRITABLE ParamFlags.WRITABLE
-enumType: G_PARAM_CONSTRUCT ParamFlags.CONSTRUCT
-enumType: G_PARAM_CONSTRUCT_ONLY ParamFlags.CONSTRUCT_ONLY
-
-
 # define the lookup and destination directories
-# "src" and "obj" will be added to outputRoot
+# "src" will be added to outputRoot
 inputRoot: ./gtkdocs
-outputRoot:../ 
-
-# define the packages to process
-srcdir: src
-package: glib glib
-package: gthread gthread
-package: gobject gobject
-package: gio gio
-package: cairo cairo
-package: pango pango
-package: atk atk
-package: gdk-pixbuf gdkpixbuf
-package: gdk gdk
-package: gtk gtk
-bind: gtkc
-
-srcdir: srcgl
-package: glgdk glgdk
-package: glgtk glgtk
-bind: gtkglc
-
-srcdir: srcsv
-package: sourceview gsv
-bind: gsvc
-
-srcdir: srcgda
-package: gda gda
-bind: gdac
-
-srcdir: srcgstreamer
-package: gstreamer gstreamer
-package: gstinterfaces gstinterfaces
-bind: gstreamerc
-
-srcdir: srcvte
-package: vte vte
-bind: vtec
-
-# define other packages to create
-
-# define package by package, file by file
-# sections with extra definitions for the typedefs.d package file
-# these sections start with "<token>: start"
-# and end with "<token>: end"
-# addTypedefs	// any definition on the top of the file
-# addAliases	// aliases definitions 
-# addEnums	// enum definitions 
-# addStructs	// struct definitions 
-# addTypes	// type definitions 
-# addFuncts	// functs definitions 
-# addUnions	// unions definitions 
-# addConstants	// constants definitions 
-
-# wrap: the current package
-# file: the current file - must be the first no a new processing group
-# struct: the main strcuture to be wrapped
-# nostruct: the structs not to declare (probably will be declared on another file)
-# class: - the output class (empty when output is not a class)
-#          More then one class is valid but each class needs a correspondent prefix
-# prefix: - the gtk prefix that members to include (and to be omited)
-#          More then one prefix is valid and at least ont prefix must exist pre class
-# noPrefix: Do not include functions that start with the prefix
-# alias: define a local alias table
-# import: create import
-# strcutWrap: the strcut to wrap/unwrap in a GtkD class
-# outFile: the output file - need to be present to write the source code out
-
+outputRoot: ../
 
 ###########################################################
 ### predifined: lib
 ###########################################################
-wrap: gtkc
-srcout: ../src
+
+srcDir: src/gtkc
 copy: paths.d
 copy: Loader.d
 
-srcdir: src
+srcDir: src
 bindDir: gtkc
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
@@ -218,27 +144,20 @@ lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
 
-srcdir: srcgl
+srcDir: srcgl
 bindDir: gtkglc
 lookup: APILookupGLd.txt
 lookup: APILookupGLt.txt
 
-srcdir: srcsv
+srcDir: srcsv
 bindDir: gsvc
 lookup: APILookupSourceView.txt
 
-srcdir: srcgda
-bindDir: gdac
-lookup: APILookupGda.txt
-
-srcdir: srcgstreamer
+srcDir: srcgstreamer
 bindDir: gstreamerc
-lookup: APILookupGstInterfaces.txt
 lookup: APILookupGStreamer.txt
+lookup: APILookupGstInterfaces.txt
 
-srcdir: srcvte
+srcDir: srcvte
 bindDir: vtec
 lookup: APILookupVte.txt
-
-#Hack to put the build text in the correct place.
-srcdir: .

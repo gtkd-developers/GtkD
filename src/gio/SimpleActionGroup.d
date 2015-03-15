@@ -16,145 +16,155 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GSimpleActionGroup.html
- * outPack = gio
- * outFile = SimpleActionGroup
- * strct   = GSimpleActionGroup
- * realStrct=
- * ctorStrct=
- * clss    = SimpleActionGroup
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- ActionGroupIF
- * 	- ActionMapIF
- * prefixes:
- * 	- g_simple_action_group_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gio.Action
- * 	- gio.ActionIF
- * 	- gio.ActionGroupIF
- * 	- gio.ActionGroupT
- * 	- gio.ActionMapIF
- * 	- gio.ActionMapT
- * structWrap:
- * 	- GAction* -> ActionIF
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.SimpleActionGroup;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
 private import gio.Action;
-private import gio.ActionIF;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
+private import gio.ActionIF;
 private import gio.ActionMapIF;
 private import gio.ActionMapT;
-
-
+private import glib.ConstructionException;
+private import glib.Str;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
+
 
 /**
- * GSimpleActionGroup is a hash table filled with GAction objects,
- * implementing the GActionGroup and GActionMap interfaces.
+ * #GSimpleActionGroup is a hash table filled with #GAction objects,
+ * implementing the #GActionGroup and #GActionMap interfaces.
+ *
+ * Since: 2.28
  */
 public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 {
-	
 	/** the main Gtk struct */
 	protected GSimpleActionGroup* gSimpleActionGroup;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GSimpleActionGroup* getSimpleActionGroupStruct()
 	{
 		return gSimpleActionGroup;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gSimpleActionGroup;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GSimpleActionGroup* gSimpleActionGroup)
-	{
-		super(cast(GObject*)gSimpleActionGroup);
-		this.gSimpleActionGroup = gSimpleActionGroup;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gSimpleActionGroup = cast(GSimpleActionGroup*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GSimpleActionGroup* gSimpleActionGroup, bool ownedRef = false)
+	{
+		this.gSimpleActionGroup = gSimpleActionGroup;
+		super(cast(GObject*)gSimpleActionGroup, ownedRef);
+	}
+
 	// add the ActionGroup capabilities
 	mixin ActionGroupT!(GSimpleActionGroup);
-	
+
 	// add the ActionMap capabilities
 	mixin ActionMapT!(GSimpleActionGroup);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_simple_action_group_get_type();
+	}
+
 	/**
-	 * Creates a new, empty, GSimpleActionGroup.
-	 * Since 2.28
+	 * Creates a new, empty, #GSimpleActionGroup.
+	 *
+	 * Return: a new #GSimpleActionGroup
+	 *
+	 * Since: 2.28
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GSimpleActionGroup * g_simple_action_group_new (void);
 		auto p = g_simple_action_group_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_simple_action_group_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GSimpleActionGroup*) p);
+		
+		this(cast(GSimpleActionGroup*) p, true);
 	}
-	
+
 	/**
-	 * Warning
-	 * g_simple_action_group_lookup has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_lookup_action()
-	 * Looks up the action with the name action_name in the group.
-	 * If no such action exists, returns NULL.
-	 * Since 2.28
+	 * A convenience function for creating multiple #GSimpleAction instances
+	 * and adding them to the action group.
+	 *
+	 * Deprecated: Use g_action_map_add_action_entries()
+	 *
 	 * Params:
-	 * actionName = the name of an action
-	 * Returns: a GAction, or NULL. [transfer none]
+	 *     entries = a pointer to the first item in
+	 *         an array of #GActionEntry structs
+	 *     nEntries = the length of @entries, or -1
+	 *     userData = the user data for signal connections
+	 *
+	 * Since: 2.30
+	 */
+	public void addEntries(GActionEntry[] entries, void* userData)
+	{
+		g_simple_action_group_add_entries(gSimpleActionGroup, entries.ptr, cast(int)entries.length, userData);
+	}
+
+	/**
+	 * Adds an action to the action group.
+	 *
+	 * If the action group already contains an action with the same name as
+	 * @action then the old action is dropped from the group.
+	 *
+	 * The action group takes its own reference on @action.
+	 *
+	 * Deprecated: Use g_action_map_add_action()
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 *
+	 * Since: 2.28
+	 */
+	public void insert(ActionIF action)
+	{
+		g_simple_action_group_insert(gSimpleActionGroup, (action is null) ? null : action.getActionStruct());
+	}
+
+	/**
+	 * Looks up the action with the name @action_name in the group.
+	 *
+	 * If no such action exists, returns %NULL.
+	 *
+	 * Deprecated: Use g_action_map_lookup_action()
+	 *
+	 * Params:
+	 *     actionName = the name of an action
+	 *
+	 * Return: a #GAction, or %NULL
+	 *
+	 * Since: 2.28
 	 */
 	public ActionIF lookup(string actionName)
 	{
-		// GAction * g_simple_action_group_lookup (GSimpleActionGroup *simple,  const gchar *action_name);
 		auto p = g_simple_action_group_lookup(gSimpleActionGroup, Str.toStringz(actionName));
 		
 		if(p is null)
@@ -164,53 +174,21 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 		
 		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * g_simple_action_group_insert has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_add_action()
-	 * Adds an action to the action group.
-	 * If the action group already contains an action with the same name as
-	 * action then the old action is dropped from the group.
-	 * The action group takes its own reference on action.
-	 * Since 2.28
-	 * Params:
-	 * action = a GAction
-	 */
-	public void insert(ActionIF action)
-	{
-		// void g_simple_action_group_insert (GSimpleActionGroup *simple,  GAction *action);
-		g_simple_action_group_insert(gSimpleActionGroup, (action is null) ? null : action.getActionTStruct());
-	}
-	
-	/**
-	 * Warning
-	 * g_simple_action_group_remove has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_remove_action()
 	 * Removes the named action from the action group.
+	 *
 	 * If no action of this name is in the group then nothing happens.
-	 * Since 2.28
+	 *
+	 * Deprecated: Use g_action_map_remove_action()
+	 *
 	 * Params:
-	 * actionName = the name of the action
+	 *     actionName = the name of the action
+	 *
+	 * Since: 2.28
 	 */
 	public void remove(string actionName)
 	{
-		// void g_simple_action_group_remove (GSimpleActionGroup *simple,  const gchar *action_name);
 		g_simple_action_group_remove(gSimpleActionGroup, Str.toStringz(actionName));
-	}
-	
-	/**
-	 * Warning
-	 * g_simple_action_group_add_entries has been deprecated since version 2.38 and should not be used in newly-written code. Use g_action_map_add_action_entries()
-	 * A convenience function for creating multiple GSimpleAction instances
-	 * and adding them to the action group.
-	 * Since 2.30
-	 * Params:
-	 * entries = a pointer to the first item in
-	 * an array of GActionEntry structs. [array length=n_entries]
-	 * userData = the user data for signal connections
-	 */
-	public void addEntries(GActionEntry[] entries, void* userData)
-	{
-		// void g_simple_action_group_add_entries (GSimpleActionGroup *simple,  const GActionEntry *entries,  gint n_entries,  gpointer user_data);
-		g_simple_action_group_add_entries(gSimpleActionGroup, entries.ptr, cast(int) entries.length, userData);
 	}
 }

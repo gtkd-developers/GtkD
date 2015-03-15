@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = Volume
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Volume
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- VolumeIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.VolumeT
- * 	- gio.VolumeIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Volume;
 
+private import gio.VolumeIF;
+private import gio.VolumeT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.VolumeT;
-private import gio.VolumeIF;
-
-
-
-/**
- */
 public class Volume : ObjectG, VolumeIF
 {
-	
-	// Minimal implementation.
-	mixin VolumeT!(GVolume);
-	
+	/** the main Gtk struct */
+	protected GVolume* gVolume;
+
+	/** Get the main Gtk struct */
+	public GVolume* getVolumeStruct()
+	{
+		return gVolume;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gVolume;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GVolume* gVolume)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gVolume);
-		this.gVolume = gVolume;
+		gVolume = cast(GVolume*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GVolume* gVolume, bool ownedRef = false)
+	{
+		this.gVolume = gVolume;
+		super(cast(GObject*)gVolume, ownedRef);
+	}
+
+	// add the Volume capabilities
+	mixin VolumeT!(GVolume);
+
 	/**
 	 */
 }

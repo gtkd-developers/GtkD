@@ -16,140 +16,108 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkStackSwitcher.html
- * outPack = gtk
- * outFile = StackSwitcher
- * strct   = GtkStackSwitcher
- * realStrct=
- * ctorStrct=
- * clss    = StackSwitcher
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_stack_switcher_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.Stack
- * structWrap:
- * 	- GtkStack* -> Stack
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.StackSwitcher;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-private import gtk.Stack;
-
-
 private import gtk.Box;
+private import gtk.Stack;
+private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
  * The GtkStackSwitcher widget acts as a controller for a
- * GtkStack; it shows a row of buttons to switch between
+ * #GtkStack; it shows a row of buttons to switch between
  * the various pages of the associated stack widget.
- *
+ * 
  * All the content for the buttons comes from the child properties
- * of the GtkStack.
- *
- * It is possible to associate multiple GtkStackSwitcher widgets
+ * of the #GtkStack.
+ * 
+ * It is possible to associate multiple #GtkStackSwitcher widgets
  * with the same stack widget.
- *
+ * 
  * The GtkStackSwitcher widget was added in 3.10.
  */
 public class StackSwitcher : Box
 {
-	
 	/** the main Gtk struct */
 	protected GtkStackSwitcher* gtkStackSwitcher;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkStackSwitcher* getStackSwitcherStruct()
 	{
 		return gtkStackSwitcher;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkStackSwitcher;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkStackSwitcher* gtkStackSwitcher)
-	{
-		super(cast(GtkBox*)gtkStackSwitcher);
-		this.gtkStackSwitcher = gtkStackSwitcher;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkStackSwitcher = cast(GtkStackSwitcher*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkStackSwitcher* gtkStackSwitcher, bool ownedRef = false)
+	{
+		this.gtkStackSwitcher = gtkStackSwitcher;
+		super(cast(GtkBox*)gtkStackSwitcher, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_stack_switcher_get_type();
+	}
+
 	/**
-	 * Create a new GtkStackSwitcher.
+	 * Create a new #GtkStackSwitcher.
+	 *
+	 * Return: a new #GtkStackSwitcher.
+	 *
+	 * Since: 3.10
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_stack_switcher_new (void);
 		auto p = gtk_stack_switcher_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_stack_switcher_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkStackSwitcher*) p);
 	}
-	
-	/**
-	 * Sets the stack to control.
-	 * Params:
-	 * stack = a GtkStack. [allow-none]
-	 * Since 3.10
-	 */
-	public void setStack(Stack stack)
-	{
-		// void gtk_stack_switcher_set_stack (GtkStackSwitcher *switcher,  GtkStack *stack);
-		gtk_stack_switcher_set_stack(gtkStackSwitcher, (stack is null) ? null : stack.getStackStruct());
-	}
-	
+
 	/**
 	 * Retrieves the stack.
 	 * See gtk_stack_switcher_set_stack().
-	 * Returns: the stack, or NULL if none has been set explicitly. [transfer none] Since 3.10
+	 *
+	 * Return: the stack, or %NULL if
+	 *     none has been set explicitly.
+	 *
+	 * Since: 3.10
 	 */
 	public Stack getStack()
 	{
-		// GtkStack * gtk_stack_switcher_get_stack (GtkStackSwitcher *switcher);
 		auto p = gtk_stack_switcher_get_stack(gtkStackSwitcher);
 		
 		if(p is null)
@@ -158,5 +126,18 @@ public class StackSwitcher : Box
 		}
 		
 		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p);
+	}
+
+	/**
+	 * Sets the stack to control.
+	 *
+	 * Params:
+	 *     stack = a #GtkStack
+	 *
+	 * Since: 3.10
+	 */
+	public void setStack(Stack stack)
+	{
+		gtk_stack_switcher_set_stack(gtkStackSwitcher, (stack is null) ? null : stack.getStackStruct());
 	}
 }

@@ -16,123 +16,131 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GInetSocketAddress.html
- * outPack = gio
- * outFile = InetSocketAddress
- * strct   = GInetSocketAddress
- * realStrct=
- * ctorStrct=GSocketAddress
- * clss    = InetSocketAddress
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_inet_socket_address_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.InetAddress
- * structWrap:
- * 	- GInetAddress* -> InetAddress
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.InetSocketAddress;
 
+private import gio.InetAddress;
+private import gio.SocketAddress;
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gio.InetAddress;
-
-
-private import gio.SocketAddress;
 
 /**
  * An IPv4 or IPv6 socket address; that is, the combination of a
- * GInetAddress and a port number.
+ * #GInetAddress and a port number.
  */
 public class InetSocketAddress : SocketAddress
 {
-	
 	/** the main Gtk struct */
 	protected GInetSocketAddress* gInetSocketAddress;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GInetSocketAddress* getInetSocketAddressStruct()
 	{
 		return gInetSocketAddress;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gInetSocketAddress;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GInetSocketAddress* gInetSocketAddress)
-	{
-		super(cast(GSocketAddress*)gInetSocketAddress);
-		this.gInetSocketAddress = gInetSocketAddress;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gInetSocketAddress = cast(GInetSocketAddress*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GInetSocketAddress* gInetSocketAddress, bool ownedRef = false)
+	{
+		this.gInetSocketAddress = gInetSocketAddress;
+		super(cast(GSocketAddress*)gInetSocketAddress, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_inet_socket_address_get_type();
+	}
+
 	/**
-	 * Creates a new GInetSocketAddress for address and port.
-	 * Since 2.22
+	 * Creates a new #GInetSocketAddress for @address and @port.
+	 *
 	 * Params:
-	 * address = a GInetAddress
-	 * port = a port number
+	 *     address = a #GInetAddress
+	 *     port = a port number
+	 *
+	 * Return: a new #GInetSocketAddress
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (InetAddress address, ushort port)
+	public this(InetAddress address, ushort port)
 	{
-		// GSocketAddress * g_inet_socket_address_new (GInetAddress *address,  guint16 port);
 		auto p = g_inet_socket_address_new((address is null) ? null : address.getInetAddressStruct(), port);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_inet_socket_address_new((address is null) ? null : address.getInetAddressStruct(), port)");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GInetSocketAddress*) p);
+		
+		this(cast(GInetSocketAddress*) p, true);
 	}
-	
+
 	/**
-	 * Gets address's GInetAddress.
-	 * Since 2.22
-	 * Returns: the GInetAddress for address, which must be g_object_ref()'d if it will be stored. [transfer none]
+	 * Creates a new #GInetSocketAddress for @address and @port.
+	 *
+	 * If @address is an IPv6 address, it can also contain a scope ID
+	 * (separated from the address by a "<literal>%</literal>").
+	 *
+	 * Params:
+	 *     address = the string form of an IP address
+	 *     port = a port number
+	 *
+	 * Return: a new #GInetSocketAddress, or %NULL if @address cannot be
+	 *     parsed.
+	 *
+	 * Since: 2.40
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string address, uint port)
+	{
+		auto p = g_inet_socket_address_new_from_string(Str.toStringz(address), port);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_string");
+		}
+		
+		this(cast(GInetSocketAddress*) p, true);
+	}
+
+	/**
+	 * Gets @address's #GInetAddress.
+	 *
+	 * Return: the #GInetAddress for @address, which must be
+	 *     g_object_ref()'d if it will be stored
+	 *
+	 * Since: 2.22
 	 */
 	public InetAddress getAddress()
 	{
-		// GInetAddress * g_inet_socket_address_get_address (GInetSocketAddress *address);
 		auto p = g_inet_socket_address_get_address(gInetSocketAddress);
 		
 		if(p is null)
@@ -142,39 +150,42 @@ public class InetSocketAddress : SocketAddress
 		
 		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) p);
 	}
-	
+
 	/**
-	 * Gets address's port.
-	 * Since 2.22
-	 * Returns: the port for address
-	 */
-	public ushort getPort()
-	{
-		// guint16 g_inet_socket_address_get_port (GInetSocketAddress *address);
-		return g_inet_socket_address_get_port(gInetSocketAddress);
-	}
-	
-	/**
-	 * Gets the sin6_flowinfo field from address,
+	 * Gets the `sin6_flowinfo` field from @address,
 	 * which must be an IPv6 address.
-	 * Since 2.32
-	 * Returns: the flowinfo field
+	 *
+	 * Return: the flowinfo field
+	 *
+	 * Since: 2.32
 	 */
 	public uint getFlowinfo()
 	{
-		// guint32 g_inet_socket_address_get_flowinfo (GInetSocketAddress *address);
 		return g_inet_socket_address_get_flowinfo(gInetSocketAddress);
 	}
-	
+
 	/**
-	 * Gets the sin6_scope_id field from address,
+	 * Gets @address's port.
+	 *
+	 * Return: the port for @address
+	 *
+	 * Since: 2.22
+	 */
+	public ushort getPort()
+	{
+		return g_inet_socket_address_get_port(gInetSocketAddress);
+	}
+
+	/**
+	 * Gets the `sin6_scope_id` field from @address,
 	 * which must be an IPv6 address.
-	 * Since 2.32
-	 * Returns: the scope id field
+	 *
+	 * Return: the scope id field
+	 *
+	 * Since: 2.32
 	 */
 	public uint getScopeId()
 	{
-		// guint32 g_inet_socket_address_get_scope_id (GInetSocketAddress *address);
 		return g_inet_socket_address_get_scope_id(gInetSocketAddress);
 	}
 }

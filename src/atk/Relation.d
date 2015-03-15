@@ -16,58 +16,22 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkRelation.html
- * outPack = atk
- * outFile = Relation
- * strct   = AtkRelation
- * realStrct=
- * ctorStrct=
- * clss    = Relation
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_relation_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- glib.PtrArray
- * 	- glib.Str
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * 	- GPtrArray* -> PtrArray
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.Relation;
 
-public  import gtkc.atktypes;
-
-private import gtkc.atk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import atk.ObjectAtk;
+private import glib.ConstructionException;
 private import glib.PtrArray;
 private import glib.Str;
-
-
 private import gobject.ObjectG;
+private import gtkc.atk;
+public  import gtkc.atktypes;
+
 
 /**
  * An AtkRelation describes a relation between an object and one or
@@ -77,123 +41,108 @@ private import gobject.ObjectG;
  */
 public class Relation : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected AtkRelation* atkRelation;
-	
-	
+
 	/** Get the main Gtk struct */
 	public AtkRelation* getRelationStruct()
 	{
 		return atkRelation;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)atkRelation;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (AtkRelation* atkRelation)
-	{
-		super(cast(GObject*)atkRelation);
-		this.atkRelation = atkRelation;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		atkRelation = cast(AtkRelation*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Associate name with a new AtkRelationType
-	 * Params:
-	 * name = a name string
-	 * Returns: an AtkRelationType associated with name
-	 */
-	public static AtkRelationType typeRegister(string name)
+	public this (AtkRelation* atkRelation, bool ownedRef = false)
 	{
-		// AtkRelationType atk_relation_type_register (const gchar *name);
-		return atk_relation_type_register(Str.toStringz(name));
+		this.atkRelation = atkRelation;
+		super(cast(GObject*)atkRelation, ownedRef);
 	}
-	
+
 	/**
-	 * Gets the description string describing the AtkRelationType type.
-	 * Params:
-	 * type = The AtkRelationType whose name is required
-	 * Returns: the string describing the AtkRelationType
 	 */
-	public static string typeGetName(AtkRelationType type)
+
+	public static GType getType()
 	{
-		// const gchar * atk_relation_type_get_name (AtkRelationType type);
-		return Str.toString(atk_relation_type_get_name(type));
+		return atk_relation_get_type();
 	}
-	
-	/**
-	 * Get the AtkRelationType type corresponding to a relation name.
-	 * Params:
-	 * name = a string which is the (non-localized) name of an ATK relation type.
-	 * Returns: the AtkRelationType enumerated type corresponding to the specified name, or ATK_RELATION_NULL if no matching relation type is found.
-	 */
-	public static AtkRelationType typeForName(string name)
-	{
-		// AtkRelationType atk_relation_type_for_name (const gchar *name);
-		return atk_relation_type_for_name(Str.toStringz(name));
-	}
-	
+
 	/**
 	 * Create a new relation for the specified key and the specified list
-	 * of targets. See also atk_object_add_relationship().
+	 * of targets.  See also atk_object_add_relationship().
+	 *
 	 * Params:
-	 * targets = an array of pointers to
-	 * AtkObjects. [array length=n_targets]
-	 * relationship = an AtkRelationType with which to create the new
-	 * AtkRelation
+	 *     targets = an array of pointers to
+	 *         #AtkObjects
+	 *     nTargets = number of #AtkObjects pointed to by @targets
+	 *     relationship = an #AtkRelationType with which to create the new
+	 *         #AtkRelation
+	 *
+	 * Return: a pointer to a new #AtkRelation
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (ObjectAtk[] targets, AtkRelationType relationship)
+	public this(ObjectAtk[] targets, AtkRelationType relationship)
 	{
-		// AtkRelation * atk_relation_new (AtkObject **targets,  gint n_targets,  AtkRelationType relationship);
-		
 		AtkObject*[] targetsArray = new AtkObject*[targets.length];
-		for ( int i = 0; i < targets.length ; i++ )
+		for ( int i = 0; i < targets.length; i++ )
 		{
 			targetsArray[i] = targets[i].getObjectAtkStruct();
 		}
 		
-		auto p = atk_relation_new(targetsArray.ptr, cast(int) targets.length, relationship);
+		auto p = atk_relation_new(targetsArray.ptr, cast(int)targets.length, relationship);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by atk_relation_new(targetsArray.ptr, cast(int) targets.length, relationship)");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(AtkRelation*) p);
+		
+		this(cast(AtkRelation*) p, true);
 	}
-	
+
 	/**
-	 * Gets the type of relation
-	 * Returns: the type of relation
+	 * Adds the specified AtkObject to the target for the relation, if it is
+	 * not already present.  See also atk_object_add_relationship().
+	 *
+	 * Params:
+	 *     target = an #AtkObject
+	 *
+	 * Since: 1.9
+	 */
+	public void addTarget(ObjectAtk target)
+	{
+		atk_relation_add_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct());
+	}
+
+	/**
+	 * Gets the type of @relation
+	 *
+	 * Return: the type of @relation
 	 */
 	public AtkRelationType getRelationType()
 	{
-		// AtkRelationType atk_relation_get_relation_type (AtkRelation *relation);
 		return atk_relation_get_relation_type(atkRelation);
 	}
-	
+
 	/**
-	 * Gets the target list of relation
-	 * Returns: the target list of relation. [transfer none][element-type Atk.Object]
+	 * Gets the target list of @relation
+	 *
+	 * Return: the target list of @relation
 	 */
 	public PtrArray getTarget()
 	{
-		// GPtrArray * atk_relation_get_target (AtkRelation *relation);
 		auto p = atk_relation_get_target(atkRelation);
 		
 		if(p is null)
@@ -201,31 +150,59 @@ public class Relation : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PtrArray)(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) p);
 	}
-	
-	/**
-	 * Adds the specified AtkObject to the target for the relation, if it is
-	 * not already present. See also atk_object_add_relationship().
-	 * Since 1.9
-	 * Params:
-	 * target = an AtkObject
-	 */
-	public void addTarget(ObjectAtk target)
-	{
-		// void atk_relation_add_target (AtkRelation *relation,  AtkObject *target);
-		atk_relation_add_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct());
-	}
-	
+
 	/**
 	 * Remove the specified AtkObject from the target for the relation.
+	 *
 	 * Params:
-	 * target = an AtkObject
-	 * Returns: TRUE if the removal is successful.
+	 *     target = an #AtkObject
+	 *
+	 * Return: TRUE if the removal is successful.
 	 */
-	public int removeTarget(ObjectAtk target)
+	public bool removeTarget(ObjectAtk target)
 	{
-		// gboolean atk_relation_remove_target (AtkRelation *relation,  AtkObject *target);
-		return atk_relation_remove_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct());
+		return atk_relation_remove_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct()) != 0;
+	}
+
+	/**
+	 * Get the #AtkRelationType type corresponding to a relation name.
+	 *
+	 * Params:
+	 *     name = a string which is the (non-localized) name of an ATK relation type.
+	 *
+	 * Return: the #AtkRelationType enumerated type corresponding to the specified name,
+	 *     or #ATK_RELATION_NULL if no matching relation type is found.
+	 */
+	public static AtkRelationType typeForName(string name)
+	{
+		return atk_relation_type_for_name(Str.toStringz(name));
+	}
+
+	/**
+	 * Gets the description string describing the #AtkRelationType @type.
+	 *
+	 * Params:
+	 *     type = The #AtkRelationType whose name is required
+	 *
+	 * Return: the string describing the AtkRelationType
+	 */
+	public static string typeGetName(AtkRelationType type)
+	{
+		return Str.toString(atk_relation_type_get_name(type));
+	}
+
+	/**
+	 * Associate @name with a new #AtkRelationType
+	 *
+	 * Params:
+	 *     name = a name string
+	 *
+	 * Return: an #AtkRelationType associated with @name
+	 */
+	public static AtkRelationType typeRegister(string name)
+	{
+		return atk_relation_type_register(Str.toStringz(name));
 	}
 }

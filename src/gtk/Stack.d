@@ -16,178 +16,217 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkStack.html
- * outPack = gtk
- * outFile = Stack
- * strct   = GtkStack
- * realStrct=
- * ctorStrct=
- * clss    = Stack
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_stack_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Widget
- * structWrap:
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.Stack;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.Container;
+private import gtk.Widget;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gtk.Widget;
-
-
-private import gtk.Container;
 
 /**
  * The GtkStack widget is a container which only shows
  * one of its children at a time. In contrast to GtkNotebook,
  * GtkStack does not provide a means for users to change the
- * visible child. Instead, the GtkStackSwitcher widget can be
+ * visible child. Instead, the #GtkStackSwitcher widget can be
  * used with GtkStack to provide this functionality.
- *
+ * 
  * Transitions between pages can be animated as slides or
  * fades. This can be controlled with gtk_stack_set_transition_type().
- * These animations respect the "gtk-enable-animations"
+ * These animations respect the #GtkSettings:gtk-enable-animations
  * setting.
- *
+ * 
  * The GtkStack widget was added in GTK+ 3.10.
  */
 public class Stack : Container
 {
-	
 	/** the main Gtk struct */
 	protected GtkStack* gtkStack;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkStack* getStackStruct()
 	{
 		return gtkStack;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkStack;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkStack* gtkStack)
-	{
-		super(cast(GtkContainer*)gtkStack);
-		this.gtkStack = gtkStack;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkStack = cast(GtkStack*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkStack* gtkStack, bool ownedRef = false)
+	{
+		this.gtkStack = gtkStack;
+		super(cast(GtkContainer*)gtkStack, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_stack_get_type();
+	}
+
 	/**
-	 * Creates a new GtkStack container.
+	 * Creates a new #GtkStack container.
+	 *
+	 * Return: a new #GtkStack
+	 *
+	 * Since: 3.10
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_stack_new (void);
 		auto p = gtk_stack_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_stack_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkStack*) p);
 	}
-	
+
 	/**
-	 * Adds a child to stack.
-	 * The child is identified by the name.
+	 * Adds a child to @stack.
+	 * The child is identified by the @name.
+	 *
 	 * Params:
-	 * child = the widget to add
-	 * name = the name for child
-	 * Since 3.10
+	 *     child = the widget to add
+	 *     name = the name for @child
+	 *
+	 * Since: 3.10
 	 */
 	public void addNamed(Widget child, string name)
 	{
-		// void gtk_stack_add_named (GtkStack *stack,  GtkWidget *child,  const gchar *name);
 		gtk_stack_add_named(gtkStack, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(name));
 	}
-	
+
 	/**
-	 * Adds a child to stack.
-	 * The child is identified by the name. The title
-	 * will be used by GtkStackSwitcher to represent
-	 * child in a tab bar, so it should be short.
+	 * Adds a child to @stack.
+	 * The child is identified by the @name. The @title
+	 * will be used by #GtkStackSwitcher to represent
+	 * @child in a tab bar, so it should be short.
+	 *
 	 * Params:
-	 * child = the widget to add
-	 * name = the name for child
-	 * title = a human-readable title for child
-	 * Since 3.10
+	 *     child = the widget to add
+	 *     name = the name for @child
+	 *     title = a human-readable title for @child
+	 *
+	 * Since: 3.10
 	 */
 	public void addTitled(Widget child, string name, string title)
 	{
-		// void gtk_stack_add_titled (GtkStack *stack,  GtkWidget *child,  const gchar *name,  const gchar *title);
 		gtk_stack_add_titled(gtkStack, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(name), Str.toStringz(title));
 	}
-	
+
 	/**
-	 * Makes child the visible child of stack.
-	 * If child is different from the currently
-	 * visible child, the transition between the
-	 * two will be animated with the current
-	 * transition type of stack.
+	 * Finds the child of the #GtkStack with the name given as
+	 * the argument. Returns %NULL if there is no child with this
+	 * name.
+	 *
 	 * Params:
-	 * child = a child of stack
-	 * Since 3.10
+	 *     name = the name of the child to find
+	 *
+	 * Return: the requested child of the #GtkStack
+	 *
+	 * Since: 3.12
 	 */
-	public void setVisibleChild(Widget child)
+	public Widget getChildByName(string name)
 	{
-		// void gtk_stack_set_visible_child (GtkStack *stack,  GtkWidget *child);
-		gtk_stack_set_visible_child(gtkStack, (child is null) ? null : child.getWidgetStruct());
+		auto p = gtk_stack_get_child_by_name(gtkStack, Str.toStringz(name));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
-	
+
 	/**
-	 * Gets the currently visible child of stack, or NULL if
+	 * Gets whether @stack is homogeneous.
+	 * See gtk_stack_set_homogeneous().
+	 *
+	 * Return: whether @stack is homogeneous.
+	 *
+	 * Since: 3.10
+	 */
+	public bool getHomogeneous()
+	{
+		return gtk_stack_get_homogeneous(gtkStack) != 0;
+	}
+
+	/**
+	 * Returns the amount of time (in milliseconds) that
+	 * transitions between pages in @stack will take.
+	 *
+	 * Return: the transition duration
+	 *
+	 * Since: 3.10
+	 */
+	public uint getTransitionDuration()
+	{
+		return gtk_stack_get_transition_duration(gtkStack);
+	}
+
+	/**
+	 * Returns whether the @stack is currently in a transition from one page to
+	 * another.
+	 *
+	 * Return: %TRUE if the transition is currently running, %FALSE otherwise.
+	 *
+	 * Since: 3.12
+	 */
+	public bool getTransitionRunning()
+	{
+		return gtk_stack_get_transition_running(gtkStack) != 0;
+	}
+
+	/**
+	 * Gets the type of animation that will be used
+	 * for transitions between pages in @stack.
+	 *
+	 * Return: the current transition type of @stack
+	 *
+	 * Since: 3.10
+	 */
+	public GtkStackTransitionType getTransitionType()
+	{
+		return gtk_stack_get_transition_type(gtkStack);
+	}
+
+	/**
+	 * Gets the currently visible child of @stack, or %NULL if
 	 * there are no visible children.
-	 * Returns: the visible child of the GtkStack. [transfer none] Since 3.10
+	 *
+	 * Return: the visible child of the #GtkStack
+	 *
+	 * Since: 3.10
 	 */
 	public Widget getVisibleChild()
 	{
-		// GtkWidget * gtk_stack_get_visible_child (GtkStack *stack);
 		auto p = gtk_stack_get_visible_child(gtkStack);
 		
 		if(p is null)
@@ -197,122 +236,128 @@ public class Stack : Container
 		
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
-	
+
 	/**
-	 * Makes the child with the given name visible.
-	 * If child is different from the currently
-	 * visible child, the transition between the
-	 * two will be animated with the current
-	 * transition type of stack.
-	 * Params:
-	 * name = the name of the child to make visible
-	 * Since 3.10
-	 */
-	public void setVisibleChildName(string name)
-	{
-		// void gtk_stack_set_visible_child_name (GtkStack *stack,  const gchar *name);
-		gtk_stack_set_visible_child_name(gtkStack, Str.toStringz(name));
-	}
-	
-	/**
-	 * Returns the name of the currently visible child of stack, or
-	 * NULL if there is no visible child.
-	 * Returns: the name of the visible child of the GtkStack. [transfer none] Since 3.10
+	 * Returns the name of the currently visible child of @stack, or
+	 * %NULL if there is no visible child.
+	 *
+	 * Return: the name of the visible child of the #GtkStack
+	 *
+	 * Since: 3.10
 	 */
 	public string getVisibleChildName()
 	{
-		// const gchar * gtk_stack_get_visible_child_name (GtkStack *stack);
 		return Str.toString(gtk_stack_get_visible_child_name(gtkStack));
 	}
-	
+
 	/**
-	 * Makes the child with the given name visible.
-	 * Params:
-	 * name = the name of the child to make visible
-	 * transition = the transition type to use
-	 * Since 3.10
-	 */
-	public void setVisibleChildFull(string name, GtkStackTransitionType transition)
-	{
-		// void gtk_stack_set_visible_child_full (GtkStack *stack,  const gchar *name,  GtkStackTransitionType transition);
-		gtk_stack_set_visible_child_full(gtkStack, Str.toStringz(name), transition);
-	}
-	
-	/**
-	 * Sets the GtkStack to be homogeneous or not. If it
-	 * is homogeneous, the GtkStack will request the same
+	 * Sets the #GtkStack to be homogeneous or not. If it
+	 * is homogeneous, the #GtkStack will request the same
 	 * size for all its children. If it isn't, the stack
 	 * may change size when a different child becomes visible.
+	 *
 	 * Params:
-	 * homogeneous = TRUE to make stack homogeneous
-	 * Since 3.10
+	 *     homogeneous = %TRUE to make @stack homogeneous
+	 *
+	 * Since: 3.10
 	 */
-	public void setHomogeneous(int homogeneous)
+	public void setHomogeneous(bool homogeneous)
 	{
-		// void gtk_stack_set_homogeneous (GtkStack *stack,  gboolean homogeneous);
 		gtk_stack_set_homogeneous(gtkStack, homogeneous);
 	}
-	
+
 	/**
-	 * Gets whether stack is homogeneous.
-	 * See gtk_stack_set_homogeneous().
-	 * Returns: whether stack is homogeneous. Since 3.10
-	 */
-	public int getHomogeneous()
-	{
-		// gboolean gtk_stack_get_homogeneous (GtkStack *stack);
-		return gtk_stack_get_homogeneous(gtkStack);
-	}
-	
-	/**
-	 * Sets the duration that transitions between pages in stack
+	 * Sets the duration that transitions between pages in @stack
 	 * will take.
+	 *
 	 * Params:
-	 * duration = the new duration, in milliseconds
-	 * Since 3.10
+	 *     duration = the new duration, in milliseconds
+	 *
+	 * Since: 3.10
 	 */
 	public void setTransitionDuration(uint duration)
 	{
-		// void gtk_stack_set_transition_duration (GtkStack *stack,  guint duration);
 		gtk_stack_set_transition_duration(gtkStack, duration);
 	}
-	
-	/**
-	 * Returns the amount of time (in milliseconds) that
-	 * transitions between pages in stack will take.
-	 * Returns: the transition duration Since 3.10
-	 */
-	public uint getTransitionDuration()
-	{
-		// guint gtk_stack_get_transition_duration (GtkStack *stack);
-		return gtk_stack_get_transition_duration(gtkStack);
-	}
-	
+
 	/**
 	 * Sets the type of animation that will be used for
-	 * transitions between pages in stack. Available
+	 * transitions between pages in @stack. Available
 	 * types include various kinds of fades and slides.
+	 *
 	 * The transition type can be changed without problems
 	 * at runtime, so it is possible to change the animation
 	 * based on the page that is about to become current.
+	 *
 	 * Params:
-	 * transition = the new transition type
-	 * Since 3.10
+	 *     transition = the new transition type
+	 *
+	 * Since: 3.10
 	 */
 	public void setTransitionType(GtkStackTransitionType transition)
 	{
-		// void gtk_stack_set_transition_type (GtkStack *stack,  GtkStackTransitionType transition);
 		gtk_stack_set_transition_type(gtkStack, transition);
 	}
-	
+
 	/**
-	 * Gets the type of animation that will be used
-	 * for transitions between pages in stack.
-	 * Returns: the current transition type of stack Since 3.10
+	 * Makes @child the visible child of @stack.
+	 *
+	 * If @child is different from the currently
+	 * visible child, the transition between the
+	 * two will be animated with the current
+	 * transition type of @stack.
+	 *
+	 * Note that the @child widget has to be visible itself
+	 * (see gtk_widget_show()) in order to become the visible
+	 * child of @stack.
+	 *
+	 * Params:
+	 *     child = a child of @stack
+	 *
+	 * Since: 3.10
 	 */
-	public GtkStackTransitionType getTransitionType()
+	public void setVisibleChild(Widget child)
 	{
-		// GtkStackTransitionType gtk_stack_get_transition_type (GtkStack *stack);
-		return gtk_stack_get_transition_type(gtkStack);
+		gtk_stack_set_visible_child(gtkStack, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
+	 * Makes the child with the given name visible.
+	 *
+	 * Note that the child widget has to be visible itself
+	 * (see gtk_widget_show()) in order to become the visible
+	 * child of @stack.
+	 *
+	 * Params:
+	 *     name = the name of the child to make visible
+	 *     transition = the transition type to use
+	 *
+	 * Since: 3.10
+	 */
+	public void setVisibleChildFull(string name, GtkStackTransitionType transition)
+	{
+		gtk_stack_set_visible_child_full(gtkStack, Str.toStringz(name), transition);
+	}
+
+	/**
+	 * Makes the child with the given name visible.
+	 *
+	 * If @child is different from the currently
+	 * visible child, the transition between the
+	 * two will be animated with the current
+	 * transition type of @stack.
+	 *
+	 * Note that the child widget has to be visible itself
+	 * (see gtk_widget_show()) in order to become the visible
+	 * child of @stack.
+	 *
+	 * Params:
+	 *     name = the name of the child to make visible
+	 *
+	 * Since: 3.10
+	 */
+	public void setVisibleChildName(string name)
+	{
+		gtk_stack_set_visible_child_name(gtkStack, Str.toStringz(name));
 	}
 }

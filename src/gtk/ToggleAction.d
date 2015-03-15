@@ -16,238 +16,207 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkToggleAction.html
- * outPack = gtk
- * outFile = ToggleAction
- * strct   = GtkToggleAction
- * realStrct=
- * ctorStrct=
- * clss    = ToggleAction
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_toggle_action_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.ToggleAction;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.Action;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
-
-
-private import gtk.Action;
 
 /**
- * A GtkToggleAction corresponds roughly to a GtkCheckMenuItem. It has an
- * "active" state specifying whether the action has been checked or not.
+ * A #GtkToggleAction corresponds roughly to a #GtkCheckMenuItem. It has an
+ * “active” state specifying whether the action has been checked or not.
  */
 public class ToggleAction : Action
 {
-	
 	/** the main Gtk struct */
 	protected GtkToggleAction* gtkToggleAction;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkToggleAction* getToggleActionStruct()
 	{
 		return gtkToggleAction;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkToggleAction;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkToggleAction* gtkToggleAction)
-	{
-		super(cast(GtkAction*)gtkToggleAction);
-		this.gtkToggleAction = gtkToggleAction;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkToggleAction = cast(GtkToggleAction*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
-	 * Creates a new GtkToggleAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.4
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkToggleAction* gtkToggleAction, bool ownedRef = false)
+	{
+		this.gtkToggleAction = gtkToggleAction;
+		super(cast(GtkAction*)gtkToggleAction, ownedRef);
+	}
+
+	/**
+	 * Creates a new ToggleAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionWithAccel().
+	 *
+	 * Since: 2.4
+	 *
 	 * Params:
-	 * name =  A unique name for the action
-	 * label =  The label displayed in menu items and on buttons, or NULL
-	 * tooltip =  A tooltip for the action, or NULL
-	 * stockId =  The stock icon to display in widgets representing the
-	 *  action, or NULL
+	 *     name    = A unique name for the action
+	 *     label   = The label displayed in menu items and on buttons, or null
+	 *     tooltip = A tooltip for the action, or null
+	 *     stockId = The stock icon to display in widgets representing the
+	 *               action, or null
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockId)
 	{
-		this(name, label, tooltip, StockDesc[stockId]);
+		this(name, label, tooltip, cast(string)stockId);
 	}
-	
+
 	/**
 	 */
+
+	public static GType getType()
+	{
+		return gtk_toggle_action_get_type();
+	}
+
+	/**
+	 * Creates a new #GtkToggleAction object. To add the action to
+	 * a #GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 *
+	 * Params:
+	 *     name = A unique name for the action
+	 *     label = The label displayed in menu items and on buttons,
+	 *         or %NULL
+	 *     tooltip = A tooltip for the action, or %NULL
+	 *     stockId = The stock icon to display in widgets representing
+	 *         the action, or %NULL
+	 *
+	 * Return: a new #GtkToggleAction
+	 *
+	 * Since: 2.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string name, string label, string tooltip, string stockId)
+	{
+		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GtkToggleAction*) p, true);
+	}
+
+	/**
+	 * Returns the checked state of the toggle action.
+	 *
+	 * Return: the checked state of the toggle action
+	 *
+	 * Since: 2.4
+	 */
+	public bool getActive()
+	{
+		return gtk_toggle_action_get_active(gtkToggleAction) != 0;
+	}
+
+	/**
+	 * Returns whether the action should have proxies like a radio action.
+	 *
+	 * Return: whether the action should have proxies like a radio action.
+	 *
+	 * Since: 2.4
+	 */
+	public bool getDrawAsRadio()
+	{
+		return gtk_toggle_action_get_draw_as_radio(gtkToggleAction) != 0;
+	}
+
+	/**
+	 * Sets the checked state on the toggle action.
+	 *
+	 * Params:
+	 *     isActive = whether the action should be checked or not
+	 *
+	 * Since: 2.4
+	 */
+	public void setActive(bool isActive)
+	{
+		gtk_toggle_action_set_active(gtkToggleAction, isActive);
+	}
+
+	/**
+	 * Sets whether the action should have proxies like a radio action.
+	 *
+	 * Params:
+	 *     drawAsRadio = whether the action should have proxies like a radio
+	 *         action
+	 *
+	 * Since: 2.4
+	 */
+	public void setDrawAsRadio(bool drawAsRadio)
+	{
+		gtk_toggle_action_set_draw_as_radio(gtkToggleAction, drawAsRadio);
+	}
+
+	/**
+	 * Emits the “toggled” signal on the toggle action.
+	 *
+	 * Since: 2.4
+	 */
+	public void toggled()
+	{
+		gtk_toggle_action_toggled(gtkToggleAction);
+	}
+
 	int[string] connectedSignals;
-	
+
 	void delegate(ToggleAction)[] onToggledListeners;
 	/**
-	 * Warning
-	 * GtkToggleAction::toggled is deprecated and should not be used in newly-written code. 3.10
 	 * Should be connected if you wish to perform an action
-	 * whenever the GtkToggleAction state is changed.
+	 * whenever the #GtkToggleAction state is changed.
 	 */
 	void addOnToggled(void delegate(ToggleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( !("toggled" in connectedSignals) )
+		if ( "toggled" !in connectedSignals )
 		{
 			Signals.connectData(
-			getStruct(),
-			"toggled",
-			cast(GCallback)&callBackToggled,
-			cast(void*)this,
-			null,
-			connectFlags);
+				this,
+				"toggled",
+				cast(GCallback)&callBackToggled,
+				cast(void*)this,
+				null,
+				connectFlags);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkToggleAction* toggleactionStruct, ToggleAction _toggleAction)
+	extern(C) static void callBackToggled(GtkToggleAction* toggleactionStruct, ToggleAction _toggleaction)
 	{
-		foreach ( void delegate(ToggleAction) dlg ; _toggleAction.onToggledListeners )
+		foreach ( void delegate(ToggleAction) dlg; _toggleaction.onToggledListeners )
 		{
-			dlg(_toggleAction);
+			dlg(_toggleaction);
 		}
-	}
-	
-	
-	/**
-	 * Warning
-	 * gtk_toggle_action_new is deprecated and should not be used in newly-written code. 3.10
-	 * Creates a new GtkToggleAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.4
-	 * Params:
-	 * name = A unique name for the action
-	 * label = The label displayed in menu items and on buttons,
-	 * or NULL. [allow-none]
-	 * tooltip = A tooltip for the action, or NULL. [allow-none]
-	 * stockId = The stock icon to display in widgets representing
-	 * the action, or NULL. [allow-none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, string label, string tooltip, string stockId)
-	{
-		// GtkToggleAction * gtk_toggle_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId))");
-		}
-		this(cast(GtkToggleAction*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_toggle_action_toggled is deprecated and should not be used in newly-written code. 3.10
-	 * Emits the "toggled" signal on the toggle action.
-	 * Since 2.4
-	 */
-	public void toggled()
-	{
-		// void gtk_toggle_action_toggled (GtkToggleAction *action);
-		gtk_toggle_action_toggled(gtkToggleAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_toggle_action_set_active is deprecated and should not be used in newly-written code. 3.10
-	 * Sets the checked state on the toggle action.
-	 * Since 2.4
-	 * Params:
-	 * isActive = whether the action should be checked or not
-	 */
-	public void setActive(int isActive)
-	{
-		// void gtk_toggle_action_set_active (GtkToggleAction *action,  gboolean is_active);
-		gtk_toggle_action_set_active(gtkToggleAction, isActive);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_toggle_action_get_active is deprecated and should not be used in newly-written code. 3.10
-	 * Returns the checked state of the toggle action.
-	 * Since 2.4
-	 * Returns: the checked state of the toggle action
-	 */
-	public int getActive()
-	{
-		// gboolean gtk_toggle_action_get_active (GtkToggleAction *action);
-		return gtk_toggle_action_get_active(gtkToggleAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_toggle_action_set_draw_as_radio is deprecated and should not be used in newly-written code. 3.10
-	 * Sets whether the action should have proxies like a radio action.
-	 * Since 2.4
-	 * Params:
-	 * drawAsRadio = whether the action should have proxies like a radio
-	 * action
-	 */
-	public void setDrawAsRadio(int drawAsRadio)
-	{
-		// void gtk_toggle_action_set_draw_as_radio (GtkToggleAction *action,  gboolean draw_as_radio);
-		gtk_toggle_action_set_draw_as_radio(gtkToggleAction, drawAsRadio);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_toggle_action_get_draw_as_radio is deprecated and should not be used in newly-written code. 3.10
-	 * Returns whether the action should have proxies like a radio action.
-	 * Since 2.4
-	 * Returns: whether the action should have proxies like a radio action.
-	 */
-	public int getDrawAsRadio()
-	{
-		// gboolean gtk_toggle_action_get_draw_as_radio (GtkToggleAction *action);
-		return gtk_toggle_action_get_draw_as_radio(gtkToggleAction);
 	}
 }

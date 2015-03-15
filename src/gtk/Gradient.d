@@ -16,116 +16,70 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gtk3-GtkGradient.html
- * outPack = gtk
- * outFile = Gradient
- * strct   = GtkGradient
- * realStrct=
- * ctorStrct=
- * clss    = Gradient
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_gradient_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- cairo.Pattern
- * 	- gtk.StyleContext
- * 	- gtk.StyleProperties
- * 	- gtk.SymbolicColor
- * 	- gtkc.paths
- * 	- gtkc.Loader
- * structWrap:
- * 	- GtkGradient* -> Gradient
- * 	- GtkStyleContext* -> StyleContext
- * 	- GtkStyleProperties* -> StyleProperties
- * 	- GtkSymbolicColor* -> SymbolicColor
- * 	- cairo_pattern_t* -> Pattern
- * module aliases:
- * local aliases:
- * overrides:
- * 	- toString
- */
 
 module gtk.Gradient;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
 private import cairo.Pattern;
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
 private import gtk.StyleContext;
 private import gtk.StyleProperties;
 private import gtk.SymbolicColor;
-private import gtkc.paths;
 private import gtkc.Loader;
-
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+private import gtkc.paths;
 
 
 /**
  * GtkGradient is a boxed type that represents a gradient.
  * It is the result of parsing a
- * gradient expression.
+ * [gradient expression][gtkcssprovider-gradients].
  * To obtain the gradient represented by a GtkGradient, it has to
  * be resolved with gtk_gradient_resolve(), which replaces all
  * symbolic color references by the colors they refer to (in a given
- * context) and constructs a cairo_pattern_t value.
- *
- * It is not normally necessary to deal directly with GtkGradients,
- * since they are mostly used behind the scenes by GtkStyleContext and
- * GtkCssProvider.
- *
- * GtkGradient is deprecated. It was used internally by GTK's CSS engine
+ * context) and constructs a #cairo_pattern_t value.
+ * 
+ * It is not normally necessary to deal directly with #GtkGradients,
+ * since they are mostly used behind the scenes by #GtkStyleContext and
+ * #GtkCssProvider.
+ * 
+ * #GtkGradient is deprecated. It was used internally by GTK’s CSS engine
  * to represent gradients. As its handling is not conforming to modern
  * web standards, it is not used anymore. If you want to use gradients in
  * your own code, please use Cairo directly.
  */
 public class Gradient
 {
-	
 	/** the main Gtk struct */
 	protected GtkGradient* gtkGradient;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkGradient* getGradientStruct()
 	{
 		return gtkGradient;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gtkGradient;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GtkGradient* gtkGradient)
 	{
 		this.gtkGradient = gtkGradient;
 	}
-	
+
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
@@ -133,83 +87,105 @@ public class Gradient
 			gtk_gradient_unref(gtkGradient);
 		}
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_gradient_get_type();
+	}
+
 	/**
-	 * Warning
-	 * gtk_gradient_new_linear has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Creates a new linear gradient along the line defined by (x0, y0) and (x1, y1). Before using the gradient
 	 * a number of stop colors must be added through gtk_gradient_add_color_stop().
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
 	 * Params:
-	 * x0 = X coordinate of the starting point
-	 * y0 = Y coordinate of the starting point
-	 * x1 = X coordinate of the end point
-	 * y1 = Y coordinate of the end point
+	 *     x0 = X coordinate of the starting point
+	 *     y0 = Y coordinate of the starting point
+	 *     x1 = X coordinate of the end point
+	 *     y1 = Y coordinate of the end point
+	 *
+	 * Return: A newly created #GtkGradient
+	 *
+	 * Since: 3.0
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (double x0, double y0, double x1, double y1)
+	public this(double x0, double y0, double x1, double y1)
 	{
-		// GtkGradient * gtk_gradient_new_linear (gdouble x0,  gdouble y0,  gdouble x1,  gdouble y1);
 		auto p = gtk_gradient_new_linear(x0, y0, x1, y1);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_gradient_new_linear(x0, y0, x1, y1)");
+			throw new ConstructionException("null returned by new_linear");
 		}
+		
 		this(cast(GtkGradient*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_gradient_new_radial has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
 	 * Creates a new radial gradient along the two circles defined by (x0, y0, radius0) and
 	 * (x1, y1, radius1). Before using the gradient a number of stop colors must be added
 	 * through gtk_gradient_add_color_stop().
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
 	 * Params:
-	 * x0 = X coordinate of the start circle
-	 * y0 = Y coordinate of the start circle
-	 * radius0 = radius of the start circle
-	 * x1 = X coordinate of the end circle
-	 * y1 = Y coordinate of the end circle
-	 * radius1 = radius of the end circle
+	 *     x0 = X coordinate of the start circle
+	 *     y0 = Y coordinate of the start circle
+	 *     radius0 = radius of the start circle
+	 *     x1 = X coordinate of the end circle
+	 *     y1 = Y coordinate of the end circle
+	 *     radius1 = radius of the end circle
+	 *
+	 * Return: A newly created #GtkGradient
+	 *
+	 * Since: 3.0
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (double x0, double y0, double radius0, double x1, double y1, double radius1)
+	public this(double x0, double y0, double radius0, double x1, double y1, double radius1)
 	{
-		// GtkGradient * gtk_gradient_new_radial (gdouble x0,  gdouble y0,  gdouble radius0,  gdouble x1,  gdouble y1,  gdouble radius1);
 		auto p = gtk_gradient_new_radial(x0, y0, radius0, x1, y1, radius1);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_gradient_new_radial(x0, y0, radius0, x1, y1, radius1)");
+			throw new ConstructionException("null returned by new_radial");
 		}
+		
 		this(cast(GtkGradient*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_gradient_add_color_stop has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
-	 * Adds a stop color to gradient.
+	 * Adds a stop color to @gradient.
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
 	 * Params:
-	 * offset = offset for the color stop
-	 * color = color to use
-	 * Since 3.0
+	 *     offset = offset for the color stop
+	 *     color = color to use
+	 *
+	 * Since: 3.0
 	 */
 	public void addColorStop(double offset, SymbolicColor color)
 	{
-		// void gtk_gradient_add_color_stop (GtkGradient *gradient,  gdouble offset,  GtkSymbolicColor *color);
 		gtk_gradient_add_color_stop(gtkGradient, offset, (color is null) ? null : color.getSymbolicColorStruct());
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_gradient_ref has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
-	 * Increases the reference count of gradient.
-	 * Returns: The same gradient Since 3.0
+	 * Increases the reference count of @gradient.
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
+	 * Return: The same @gradient
+	 *
+	 * Since: 3.0
 	 */
 	public Gradient doref()
 	{
-		// GtkGradient * gtk_gradient_ref (GtkGradient *gradient);
 		auto p = gtk_gradient_ref(gtkGradient);
 		
 		if(p is null)
@@ -219,48 +195,37 @@ public class Gradient
 		
 		return ObjectG.getDObject!(Gradient)(cast(GtkGradient*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_gradient_unref has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
-	 * Decreases the reference count of gradient, freeing its memory
-	 * if the reference count reaches 0.
-	 */
-	public void unref()
-	{
-		// void gtk_gradient_unref (GtkGradient *gradient);
-		gtk_gradient_unref(gtkGradient);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_gradient_resolve has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
-	 * If gradient is resolvable, resolved_gradient will be filled in
-	 * with the resolved gradient as a cairo_pattern_t, and TRUE will
-	 * be returned. Generally, if gradient can't be resolved, it is
+	 * If @gradient is resolvable, @resolved_gradient will be filled in
+	 * with the resolved gradient as a cairo_pattern_t, and %TRUE will
+	 * be returned. Generally, if @gradient can’t be resolved, it is
 	 * due to it being defined on top of a named color that doesn't
-	 * exist in props.
+	 * exist in @props.
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
 	 * Params:
-	 * props = GtkStyleProperties to use when resolving named colors
-	 * resolvedGradient = return location for the resolved pattern. [out]
-	 * Returns: TRUE if the gradient has been resolved Since 3.0
+	 *     props = #GtkStyleProperties to use when resolving named colors
+	 *     resolvedGradient = return location for the resolved pattern
+	 *
+	 * Return: %TRUE if the gradient has been resolved
+	 *
+	 * Since: 3.0
 	 */
-	public int resolve(StyleProperties props, out Pattern resolvedGradient)
+	public bool resolve(StyleProperties props, out Pattern resolvedGradient)
 	{
-		// gboolean gtk_gradient_resolve (GtkGradient *gradient,  GtkStyleProperties *props,  cairo_pattern_t **resolved_gradient);
 		cairo_pattern_t* outresolvedGradient = null;
 		
-		auto p = gtk_gradient_resolve(gtkGradient, (props is null) ? null : props.getStylePropertiesStruct(), &outresolvedGradient);
+		auto p = gtk_gradient_resolve(gtkGradient, (props is null) ? null : props.getStylePropertiesStruct(), &outresolvedGradient) != 0;
 		
-		resolvedGradient = ObjectG.getDObject!(Pattern)(outresolvedGradient);
+		resolvedGradient = new Pattern(outresolvedGradient);
+		
 		return p;
 	}
-	
-	/**
-	 */
+
 	public Pattern resolveForContext(StyleContext context)
 	{
-		// cairo_pattern_t * gtk_gradient_resolve_for_context (GtkGradient *gradient,  GtkStyleContext *context);
 		auto p = gtk_gradient_resolve_for_context(gtkGradient, (context is null) ? null : context.getStyleContextStruct());
 		
 		if(p is null)
@@ -268,19 +233,32 @@ public class Gradient
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Pattern)(cast(cairo_pattern_t*) p);
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_gradient_to_string has been deprecated since version 3.8 and should not be used in newly-written code. GtkGradient is deprecated.
-	 * Creates a string representation for gradient that is suitable
+	 * Creates a string representation for @gradient that is suitable
 	 * for using in GTK CSS files.
-	 * Returns: A string representation for gradient
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
+	 * Return: A string representation for @gradient
 	 */
 	public override string toString()
 	{
-		// char * gtk_gradient_to_string (GtkGradient *gradient);
 		return Str.toString(gtk_gradient_to_string(gtkGradient));
+	}
+
+	/**
+	 * Decreases the reference count of @gradient, freeing its memory
+	 * if the reference count reaches 0.
+	 *
+	 * Deprecated: #GtkGradient is deprecated.
+	 *
+	 * Since: 3.0
+	 */
+	public void unref()
+	{
+		gtk_gradient_unref(gtkGradient);
 	}
 }

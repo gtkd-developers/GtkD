@@ -24,7 +24,7 @@ endif
 default-goal: libs test
 shared: shared-libs
 
-all: libs shared-libs gda gstreamer vte shared-gda shared-gstreamer shared-vte test
+all: libs shared-libs gstreamer vte shared-gstreamer shared-vte test
 
 ifeq ("$(DC)","gdc")
     DCFLAGS=-O2
@@ -70,7 +70,7 @@ RANLIB=ranlib
 
 #######################################################################
 
-GTKD_VERSION=2.4.2
+GTKD_VERSION=3.0.0
 SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))
@@ -94,12 +94,6 @@ SONAME_GTKDSV = libgtkdsv-$(MAJOR).so
 SOURCES_GTKDSV = $(wildcard srcsv/*/*.d)
 OBJECTS_GTKDSV = $(patsubst %.d,%.o,$(SOURCES_GTKDSV))
 PICOBJECTS_GTKDSV = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDSV))
-
-LIBNAME_GTKDGDA = libgtkdgda-$(MAJOR).a
-SONAME_GTKDGDA = libgtkdgda-$(MAJOR).so
-SOURCES_GTKDGDA = $(wildcard srcgda/*/*.d)
-OBJECTS_GTKDGDA = $(patsubst %.d,%.o,$(SOURCES_GTKDGDA))
-PICOBJECTS_GTKDGDA = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGDA))
 
 LIBNAME_GSTREAMERD = libgstreamerd-$(MAJOR).a
 SONAME_GSTREAMERD = libgstreamerd-$(MAJOR).so
@@ -136,14 +130,12 @@ endif
 gtkd:      $(LIBNAME_GTKD)
 gtkdgl:    $(LIBNAME_GTKDGL)
 sv:        $(LIBNAME_GTKDSV)
-gda:       $(LIBNAME_GTKDGDA)
 gstreamer: $(LIBNAME_GSTREAMERD)
 vte:       $(LIBNAME_VTED)
 
 shared-gtkd:      $(SONAME_GTKD)
 shared-gtkdgl:    $(SONAME_GTKDGL)
 shared-sv:        $(SONAME_GTKDSV)
-shared-gda:       $(SONAME_GTKDGDA)
 shared-gstreamer: $(SONAME_GSTREAMERD)
 shared-vte:       $(SONAME_VTED)
 
@@ -159,10 +151,6 @@ $(LIBNAME_GTKDGL): $(LIBNAME_GTKD) $(OBJECTS_GTKDGL)
 
 $(LIBNAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
 $(LIBNAME_GTKDSV): $(LIBNAME_GTKD) $(OBJECTS_GTKDSV)
-	$(make-lib)
-
-$(LIBNAME_GTKDGDA): IMPORTS=-Isrc -Isrcgda
-$(LIBNAME_GTKDGDA): $(LIBNAME_GTKD) $(OBJECTS_GTKDGDA)
 	$(make-lib)
 
 $(LIBNAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
@@ -185,10 +173,6 @@ $(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
 
 $(SONAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
 $(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV)
-	$(make-shared-lib)
-
-$(SONAME_GTKDGDA): IMPORTS=-Isrc -Isrcgda
-$(SONAME_GTKDGDA): $(PICOBJECTS_GTKDGDA)
 	$(make-shared-lib)
 
 $(SONAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
@@ -238,7 +222,6 @@ endif
 pkgconfig-gtkd:      gtkd-$(MAJOR).pc
 pkgconfig-gtkdgl:    gtkdgl-$(MAJOR).pc
 pkgconfig-sv:        gtkdsv-$(MAJOR).pc
-pkgconfig-gda:       gtkdgda-$(MAJOR).pc
 pkgconfig-gstreamer: gstreamerd-$(MAJOR).pc
 pkgconfig-vte:       vted-$(MAJOR).pc
 
@@ -261,13 +244,6 @@ gtkdsv-$(MAJOR).pc:
 	echo Description: A D binding and OO wrapper for GtkSourceView. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdsv-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR) >> $@
-
-gtkdgda-$(MAJOR).pc:
-	echo Name: GdaD > $@
-	echo Description: A D binding and OO wrapper for Gda. >> $@
-	echo Version: $(GTKD_VERSION) >> $@
-	echo Libs: $(LINKERFLAG)-lgtkdgda-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
 
 gstreamerd-$(MAJOR).pc:
@@ -306,9 +282,6 @@ install-gtkdgl: $(LIBNAME_GTKDGL) install-gtkd install-headers-gtkdgl
 install-gtkdsv: $(LIBNAME_GTKDSV) install-gtkd install-headers-gtkdsv
 	install -m 644 $(LIBNAME_GTKDSV) $(DESTDIR)$(prefix)/$(libdir)
 
-install-gda: $(LIBNAME_GTKDGDA) install-gtkd install-headers-gda
-	install -m 644 $(LIBNAME_GTKDGDA) $(DESTDIR)$(prefix)/$(libdir)
-
 install-gstreamer: $(LIBNAME_GSTREAMERD) install-gtkd install-headers-gstreamer
 	install -m 644 $(LIBNAME_GSTREAMERD) $(DESTDIR)$(prefix)/$(libdir)
 
@@ -323,9 +296,6 @@ install-shared-gtkdgl: $(SONAME_GTKDGL) install-shared-gtkd
 	$(install-so)
 
 install-shared-gtkdsv: $(SONAME_GTKDSV) install-shared-gtkd
-	$(install-so)
-
-install-shared-gda: $(SONAME_GTKDGDA) install-shared-gtkd
 	$(install-so)
 
 install-shared-gstreamer: $(SONAME_GSTREAMERD) install-shared-gtkd
@@ -348,10 +318,6 @@ install-headers-gtkdsv: gtkdsv-$(MAJOR).pc install-headers-gtkd
 	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
-install-headers-gda: gtkdgda-$(MAJOR).pc install-headers-gtkd
-	(cd srcgda; echo $(SOURCES_GTKDGDA) | sed -e s,srcgda/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdgda-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
-
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
@@ -360,7 +326,7 @@ install-headers-vte: vted-$(MAJOR).pc install-headers-gtkd
 	(cd srcvte; echo $(SOURCES_VTED) | sed -e s,srcvte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
-uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gda uninstall-gstreamer
+uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
@@ -384,14 +350,6 @@ uninstall-gtkdsv:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
-uninstall-gda:
-	$(foreach dir,$(shell ls srcgda), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdgda-$(MAJOR).pc
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGDA)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA).$(SO_VERSION)
-	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGDA).$(SO_VERSION).$(MINOR).$(BUGFIX)
-
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(datadir)/pkgconfig/gstreamerd-$(MAJOR).pc
@@ -412,7 +370,6 @@ clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       gtkd-$(MAJOR).pc     $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
 	-rm -f $(LIBNAME_GTKDGL)     $(SONAME_GTKDGL)     gtkdgl-$(MAJOR).pc   $(OBJECTS_GTKDGL)     $(PICOBJECTS_GTKDGL)
 	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     gtkdsv-$(MAJOR).pc   $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
-	-rm -f $(LIBNAME_GTKDGDA)    $(SONAME_GTKDGDA)    gtkdgda-$(MAJOR).pc  $(OBJECTS_GTKDGDA)    $(PICOBJECTS_GTKDGDA)
 	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) gstreamerd-$(MAJOR).pc      $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
 	-rm -f $(LIBNAME_VTED)       $(SONAME_VTED)       vted-$(MAJOR).pc     $(OBJECTS_VTED)       $(PICOBJECTS_VTED)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)      $(SONAME_GTKD).$(SO_VERSION)

@@ -16,153 +16,133 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GEmblem.html
- * outPack = gio
- * outFile = Emblem
- * strct   = GEmblem
- * realStrct=
- * ctorStrct=
- * clss    = Emblem
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- IconIF
- * prefixes:
- * 	- g_emblem_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.Icon
- * 	- gio.IconIF
- * 	- gio.IconT
- * structWrap:
- * 	- GIcon* -> IconIF
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Emblem;
-
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
 private import gio.Icon;
 private import gio.IconIF;
 private import gio.IconT;
-
-
+private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
+
 
 /**
- * GEmblem is an implementation of GIcon that supports
+ * #GEmblem is an implementation of #GIcon that supports
  * having an emblem, which is an icon with additional properties.
- * It can than be added to a GEmblemedIcon.
- *
+ * It can than be added to a #GEmblemedIcon.
+ * 
  * Currently, only metainformation about the emblem's origin is
  * supported. More may be added in the future.
  */
 public class Emblem : ObjectG, IconIF
 {
-	
 	/** the main Gtk struct */
 	protected GEmblem* gEmblem;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GEmblem* getEmblemStruct()
 	{
 		return gEmblem;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gEmblem;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GEmblem* gEmblem)
-	{
-		super(cast(GObject*)gEmblem);
-		this.gEmblem = gEmblem;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gEmblem = cast(GEmblem*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GEmblem* gEmblem, bool ownedRef = false)
+	{
+		this.gEmblem = gEmblem;
+		super(cast(GObject*)gEmblem, ownedRef);
+	}
+
 	// add the Icon capabilities
 	mixin IconT!(GEmblem);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_emblem_get_type();
+	}
+
 	/**
-	 * Creates a new emblem for icon.
-	 * Since 2.18
+	 * Creates a new emblem for @icon.
+	 *
 	 * Params:
-	 * icon = a GIcon containing the icon.
+	 *     icon = a GIcon containing the icon.
+	 *
+	 * Return: a new #GEmblem.
+	 *
+	 * Since: 2.18
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (IconIF icon)
+	public this(IconIF icon)
 	{
-		// GEmblem * g_emblem_new (GIcon *icon);
-		auto p = g_emblem_new((icon is null) ? null : icon.getIconTStruct());
+		auto p = g_emblem_new((icon is null) ? null : icon.getIconStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_emblem_new((icon is null) ? null : icon.getIconTStruct())");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GEmblem*) p);
+		
+		this(cast(GEmblem*) p, true);
 	}
-	
+
 	/**
-	 * Creates a new emblem for icon.
-	 * Since 2.18
+	 * Creates a new emblem for @icon.
+	 *
 	 * Params:
-	 * icon = a GIcon containing the icon.
-	 * origin = a GEmblemOrigin enum defining the emblem's origin
+	 *     icon = a GIcon containing the icon.
+	 *     origin = a GEmblemOrigin enum defining the emblem's origin
+	 *
+	 * Return: a new #GEmblem.
+	 *
+	 * Since: 2.18
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (IconIF icon, GEmblemOrigin origin)
+	public this(IconIF icon, GEmblemOrigin origin)
 	{
-		// GEmblem * g_emblem_new_with_origin (GIcon *icon,  GEmblemOrigin origin);
-		auto p = g_emblem_new_with_origin((icon is null) ? null : icon.getIconTStruct(), origin);
+		auto p = g_emblem_new_with_origin((icon is null) ? null : icon.getIconStruct(), origin);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_emblem_new_with_origin((icon is null) ? null : icon.getIconTStruct(), origin)");
+			throw new ConstructionException("null returned by new_with_origin");
 		}
-		this(cast(GEmblem*) p);
+		
+		this(cast(GEmblem*) p, true);
 	}
-	
+
 	/**
-	 * Gives back the icon from emblem.
-	 * Since 2.18
-	 * Returns: a GIcon. The returned object belongs to the emblem and should not be modified or freed. [transfer none]
+	 * Gives back the icon from @emblem.
+	 *
+	 * Return: a #GIcon. The returned object belongs to
+	 *     the emblem and should not be modified or freed.
+	 *
+	 * Since: 2.18
 	 */
 	public IconIF getIcon()
 	{
-		// GIcon * g_emblem_get_icon (GEmblem *emblem);
 		auto p = g_emblem_get_icon(gEmblem);
 		
 		if(p is null)
@@ -172,15 +152,16 @@ public class Emblem : ObjectG, IconIF
 		
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
-	
+
 	/**
 	 * Gets the origin of the emblem.
-	 * Since 2.18
-	 * Returns: the origin of the emblem. [transfer none]
+	 *
+	 * Return: the origin of the emblem
+	 *
+	 * Since: 2.18
 	 */
 	public GEmblemOrigin getOrigin()
 	{
-		// GEmblemOrigin g_emblem_get_origin (GEmblem *emblem);
 		return g_emblem_get_origin(gEmblem);
 	}
 }

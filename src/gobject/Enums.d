@@ -16,186 +16,123 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gobject-Enumeration-and-Flag-Types.html
- * outPack = gobject
- * outFile = Enums
- * strct   = GEnumValue
- * realStrct=
- * ctorStrct=
- * clss    = Enums
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_enum_
- * omit structs:
- * omit prefixes:
- * 	- g_flags_
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * 	- GEnumValue* -> Enums
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gobject.Enums;
 
+private import glib.Str;
+private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 
-private import gtkc.gobject;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import glib.Str;
-
-
-
-/**
- * The GLib type system provides fundamental types for enumeration and
- * flags types. (Flags types are like enumerations, but allow their
- * values to be combined by bitwise or). A registered enumeration or
- * flags type associates a name and a nickname with each allowed
- * value, and the methods g_enum_get_value_by_name(),
- * g_enum_get_value_by_nick(), g_flags_get_value_by_name() and
- * g_flags_get_value_by_nick() can look up values by their name or
- * nickname. When an enumeration or flags type is registered with the
- * GLib type system, it can be used as value type for object
- * properties, using g_param_spec_enum() or g_param_spec_flags().
- *
- * GObject ships with a utility called glib-mkenums that can construct
- * suitable type registration functions from C enumeration
- * definitions.
- */
-public class Enums
+public struct Enums
 {
-	
-	/** the main Gtk struct */
-	protected GEnumValue* gEnumValue;
-	
-	
-	/** Get the main Gtk struct */
-	public GEnumValue* getEnumsStruct()
-	{
-		return gEnumValue;
-	}
-	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gEnumValue;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GEnumValue* gEnumValue)
-	{
-		this.gEnumValue = gEnumValue;
-	}
-	
 	/**
 	 */
-	
+
 	/**
-	 * Returns the GEnumValue for a value.
+	 * This function is meant to be called from the `complete_type_info`
+	 * function of a #GTypePlugin implementation, as in the following
+	 * example:
+	 *
+	 * |[<!-- language="C" -->
+	 * static void
+	 * my_enum_complete_type_info (GTypePlugin     *plugin,
+	 * GType            g_type,
+	 * GTypeInfo       *info,
+	 * GTypeValueTable *value_table)
+	 * {
+	 * static const GEnumValue values[] = {
+	 * { MY_ENUM_FOO, "MY_ENUM_FOO", "foo" },
+	 * { MY_ENUM_BAR, "MY_ENUM_BAR", "bar" },
+	 * { 0, NULL, NULL }
+	 * };
+	 *
+	 * g_enum_complete_type_info (type, info, values);
+	 * }
+	 * ]|
+	 *
 	 * Params:
-	 * enumClass = a GEnumClass
-	 * value = the value to look up
-	 * Returns: the GEnumValue for value, or NULL if value is not a member of the enumeration
+	 *     gEnumType = the type identifier of the type being completed
+	 *     info = the #GTypeInfo struct to be filled in
+	 *     constValues = An array of #GEnumValue structs for the possible
+	 *         enumeration values. The array is terminated by a struct with all
+	 *         members being 0.
 	 */
-	public static Enums getValue(GEnumClass* enumClass, int value)
+	public static void completeTypeInfo(GType gEnumType, out GTypeInfo info, GEnumValue* constValues)
 	{
-		// GEnumValue * g_enum_get_value (GEnumClass *enum_class,  gint value);
-		auto p = g_enum_get_value(enumClass, value);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Enums)(cast(GEnumValue*) p);
+		g_enum_complete_type_info(gEnumType, &info, constValues);
 	}
-	
+
 	/**
-	 * Looks up a GEnumValue by name.
+	 * Returns the #GEnumValue for a value.
+	 *
 	 * Params:
-	 * enumClass = a GEnumClass
-	 * name = the name to look up
-	 * Returns: the GEnumValue with name name, or NULL if the enumeration doesn't have a member with that name
+	 *     enumClass = a #GEnumClass
+	 *     value = the value to look up
+	 *
+	 * Return: the #GEnumValue for @value, or %NULL
+	 *     if @value is not a member of the enumeration
 	 */
-	public static Enums getValueByName(GEnumClass* enumClass, string name)
+	public static GEnumValue* getValue(GEnumClass* enumClass, int value)
 	{
-		// GEnumValue * g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
-		auto p = g_enum_get_value_by_name(enumClass, Str.toStringz(name));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Enums)(cast(GEnumValue*) p);
+		return g_enum_get_value(enumClass, value);
 	}
-	
+
 	/**
-	 * Looks up a GEnumValue by nickname.
+	 * Looks up a #GEnumValue by name.
+	 *
 	 * Params:
-	 * enumClass = a GEnumClass
-	 * nick = the nickname to look up
-	 * Returns: the GEnumValue with nickname nick, or NULL if the enumeration doesn't have a member with that nickname
+	 *     enumClass = a #GEnumClass
+	 *     name = the name to look up
+	 *
+	 * Return: the #GEnumValue with name @name,
+	 *     or %NULL if the enumeration doesn't have a member
+	 *     with that name
 	 */
-	public static Enums getValueByNick(GEnumClass* enumClass, string nick)
+	public static GEnumValue* getValueByName(GEnumClass* enumClass, string name)
 	{
-		// GEnumValue * g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
-		auto p = g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Enums)(cast(GEnumValue*) p);
+		return g_enum_get_value_by_name(enumClass, Str.toStringz(name));
 	}
-	
+
 	/**
-	 * Registers a new static enumeration type with the name name.
-	 * It is normally more convenient to let glib-mkenums generate a
-	 * my_enum_get_type() function from a usual C enumeration definition
-	 * than to write one yourself using g_enum_register_static().
+	 * Looks up a #GEnumValue by nickname.
+	 *
 	 * Params:
-	 * name = A nul-terminated string used as the name of the new type.
-	 * Returns: The new type identifier.
+	 *     enumClass = a #GEnumClass
+	 *     nick = the nickname to look up
+	 *
+	 * Return: the #GEnumValue with nickname @nick,
+	 *     or %NULL if the enumeration doesn't have a member
+	 *     with that nickname
 	 */
-	public static GType registerStatic(string name, Enums _StaticValues)
+	public static GEnumValue* getValueByNick(GEnumClass* enumClass, string nick)
 	{
-		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const_static_values);
-		return g_enum_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
+		return g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
 	}
-	
+
 	/**
-	 * This function is meant to be called from the complete_type_info
-	 * function of a GTypePlugin implementation, as in the following
+	 * Registers a new static enumeration type with the name @name.
+	 *
+	 * It is normally more convenient to let [glib-mkenums][glib-mkenums],
+	 * generate a my_enum_get_type() function from a usual C enumeration
+	 * definition  than to write one yourself using g_enum_register_static().
+	 *
 	 * Params:
-	 * type = the type identifier of the type being completed
-	 * info = the GTypeInfo struct to be filled in
+	 *     name = A nul-terminated string used as the name of the new type.
+	 *     constStaticValues = An array of #GEnumValue structs for the possible
+	 *         enumeration values. The array is terminated by a struct with all
+	 *         members being 0. GObject keeps a reference to the data, so it cannot
+	 *         be stack-allocated.
+	 *
+	 * Return: The new type identifier.
 	 */
-	public static void completeTypeInfo(GType type, out GTypeInfo info, Enums _Values)
+	public static GType registerStatic(string name, GEnumValue* constStaticValues)
 	{
-		// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const_values);
-		g_enum_complete_type_info(type, &info, (_Values is null) ? null : _Values.getEnumsStruct());
+		return g_enum_register_static(Str.toStringz(name), constStaticValues);
 	}
 }

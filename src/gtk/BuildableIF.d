@@ -16,205 +16,180 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkBuildable.html
- * outPack = gtk
- * outFile = BuildableIF
- * strct   = GtkBuildable
- * realStrct=
- * ctorStrct=
- * clss    = BuildableT
- * interf  = BuildableIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_buildable_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * structWrap:
- * 	- GObject* -> ObjectG
- * 	- GValue* -> Value
- * 	- GtkBuilder* -> Builder
- * module aliases:
- * local aliases:
- * 	- getName -> buildableGetName
- * 	- setName -> buildableSetName
- * overrides:
- */
 
 module gtk.BuildableIF;
-
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gtk.Builder;
-
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
 
 /**
  * GtkBuildable allows objects to extend and customize their deserialization
- * from GtkBuilder UI descriptions.
+ * from [GtkBuilder UI descriptions][BUILDER-UI].
  * The interface includes methods for setting names and properties of objects,
  * parsing custom tags and constructing child objects.
- *
+ * 
  * The GtkBuildable interface is implemented by all widgets and
  * many of the non-widget objects that are provided by GTK+. The
- * main user of this interface is GtkBuilder. There should be
- * very little need for applications to call any
- * gtk_buildable_... functions.
- *
- * Note
- *
- * An object only needs to implement this interface if it needs
- * to extend the GtkBuilder format or run any extra routines at deserialization time
+ * main user of this interface is #GtkBuilder. There should be
+ * very little need for applications to call any of these functions directly.
+ * 
+ * An object only needs to implement this interface if it needs to extend the
+ * #GtkBuilder format or run any extra routines at deserialization time.
  */
-public interface BuildableIF
-{
-	
-	
+public interface BuildableIF{
 	/** Get the main Gtk struct */
-	public GtkBuildable* getBuildableTStruct();
-	
+	public GtkBuildable* getBuildableStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Sets the name of the buildable object.
-	 * Since 2.12
-	 * Params:
-	 * buildable = a GtkBuildable
-	 * name = name to set
-	 */
-	public void buildableSetName(string name);
-	
-	/**
-	 * Gets the name of the buildable object.
-	 * GtkBuilder sets the name based on the
-	 * GtkBuilder UI definition
-	 * used to construct the buildable.
-	 * Since 2.12
-	 * Params:
-	 * buildable = a GtkBuildable
-	 * Returns: the name set with gtk_buildable_set_name()
-	 */
-	public string buildableGetName();
-	
-	/**
-	 * Adds a child to buildable. type is an optional string
+	 * Adds a child to @buildable. @type is an optional string
 	 * describing how the child should be added.
-	 * Since 2.12
+	 *
 	 * Params:
-	 * builder = a GtkBuilder
-	 * child = child to add
-	 * type = kind of child or NULL. [allow-none]
+	 *     builder = a #GtkBuilder
+	 *     child = child to add
+	 *     type = kind of child or %NULL
+	 *
+	 * Since: 2.12
 	 */
 	public void addChild(Builder builder, ObjectG child, string type);
-	
+
 	/**
-	 * Sets the property name name to value on the buildable object.
-	 * Since 2.12
-	 * Params:
-	 * builder = a GtkBuilder
-	 * name = name of property
-	 * value = value of property
-	 */
-	public void setBuildableProperty(Builder builder, string name, Value value);
-	
-	/**
-	 * Constructs a child of buildable with the name name.
-	 * GtkBuilder calls this function if a "constructor" has been
+	 * Constructs a child of @buildable with the name @name.
+	 *
+	 * #GtkBuilder calls this function if a “constructor” has been
 	 * specified in the UI definition.
-	 * Since 2.12
+	 *
 	 * Params:
-	 * builder = GtkBuilder used to construct this object
-	 * name = name of child to construct
-	 * Returns: the constructed child. [transfer full]
+	 *     builder = #GtkBuilder used to construct this object
+	 *     name = name of child to construct
+	 *
+	 * Return: the constructed child
+	 *
+	 * Since: 2.12
 	 */
 	public ObjectG constructChild(Builder builder, string name);
-	
+
 	/**
-	 * This is called for each unknown element under &lt;child&gt;.
-	 * Since 2.12
+	 * This is similar to gtk_buildable_parser_finished() but is
+	 * called once for each custom tag handled by the @buildable.
+	 *
 	 * Params:
-	 * builder = a GtkBuilder used to construct this object
-	 * child = child object or NULL for non-child tags. [allow-none]
-	 * tagname = name of tag
-	 * parser = a GMarkupParser structure to fill in. [out]
-	 * data = return location for user data that will be passed in
-	 * to parser functions. [out]
-	 * Returns: TRUE if a object has a custom implementation, FALSE if it doesn't.
+	 *     builder = a #GtkBuilder
+	 *     child = child object or %NULL for non-child tags
+	 *     tagname = the name of the tag
+	 *     data = user data created in custom_tag_start
+	 *
+	 * Since: 2.12
 	 */
-	public int customTagStart(Builder builder, ObjectG child, string tagname, GMarkupParser* parser, void** data);
-	
+	public void customFinished(Builder builder, ObjectG child, string tagname, void* data);
+
 	/**
 	 * This is called at the end of each custom element handled by
 	 * the buildable.
-	 * Since 2.12
+	 *
 	 * Params:
-	 * builder = GtkBuilder used to construct this object
-	 * child = child object or NULL for non-child tags. [allow-none]
-	 * tagname = name of tag
-	 * data = user data that will be passed in to parser functions. [type gpointer]
+	 *     builder = #GtkBuilder used to construct this object
+	 *     child = child object or %NULL for non-child tags
+	 *     tagname = name of tag
+	 *     data = user data that will be passed in to parser functions
+	 *
+	 * Since: 2.12
 	 */
 	public void customTagEnd(Builder builder, ObjectG child, string tagname, void** data);
-	
+
 	/**
-	 * This is similar to gtk_buildable_parser_finished() but is
-	 * called once for each custom tag handled by the buildable.
-	 * Since 2.12
+	 * This is called for each unknown element under <child>.
+	 *
 	 * Params:
-	 * builder = a GtkBuilder
-	 * child = child object or NULL for non-child tags. [allow-none]
-	 * tagname = the name of the tag
-	 * data = user data created in custom_tag_start
+	 *     builder = a #GtkBuilder used to construct this object
+	 *     child = child object or %NULL for non-child tags
+	 *     tagname = name of tag
+	 *     parser = a #GMarkupParser to fill in
+	 *     data = return location for user data that will be passed in
+	 *         to parser functions
+	 *
+	 * Return: %TRUE if a object has a custom implementation, %FALSE
+	 *     if it doesn't.
+	 *
+	 * Since: 2.12
 	 */
-	public void customFinished(Builder builder, ObjectG child, string tagname, void* data);
-	
+	public bool customTagStart(Builder builder, ObjectG child, string tagname, out GMarkupParser parser, out void* data);
+
+	/**
+	 * Get the internal child called @childname of the @buildable object.
+	 *
+	 * Params:
+	 *     builder = a #GtkBuilder
+	 *     childname = name of child
+	 *
+	 * Return: the internal child of the buildable object
+	 *
+	 * Since: 2.12
+	 */
+	public ObjectG getInternalChild(Builder builder, string childname);
+
+	/**
+	 * Gets the name of the @buildable object.
+	 *
+	 * #GtkBuilder sets the name based on the
+	 * [GtkBuilder UI definition][BUILDER-UI]
+	 * used to construct the @buildable.
+	 *
+	 * Return: the name set with gtk_buildable_set_name()
+	 *
+	 * Since: 2.12
+	 */
+	public string buildableGetName();
+
 	/**
 	 * Called when the builder finishes the parsing of a
-	 * GtkBuilder UI definition.
+	 * [GtkBuilder UI definition][BUILDER-UI].
 	 * Note that this will be called once for each time
 	 * gtk_builder_add_from_file() or gtk_builder_add_from_string()
 	 * is called on a builder.
-	 * Since 2.12
+	 *
 	 * Params:
-	 * builder = a GtkBuilder
+	 *     builder = a #GtkBuilder
+	 *
+	 * Since: 2.12
 	 */
 	public void parserFinished(Builder builder);
-	
+
 	/**
-	 * Get the internal child called childname of the buildable object.
-	 * Since 2.12
+	 * Sets the property name @name to @value on the @buildable object.
+	 *
 	 * Params:
-	 * builder = a GtkBuilder
-	 * childname = name of child
-	 * Returns: the internal child of the buildable object. [transfer none]
+	 *     builder = a #GtkBuilder
+	 *     name = name of property
+	 *     value = value of property
+	 *
+	 * Since: 2.12
 	 */
-	public ObjectG getInternalChild(Builder builder, string childname);
+	public void setBuildableProperty(Builder builder, string name, Value value);
+
+	/**
+	 * Sets the name of the @buildable object.
+	 *
+	 * Params:
+	 *     name = name to set
+	 *
+	 * Since: 2.12
+	 */
+	public void buildableSetName(string name);
 }

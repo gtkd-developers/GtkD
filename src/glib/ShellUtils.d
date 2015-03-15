@@ -16,63 +16,31 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = glib-Shell-related-Utilities.html
- * outPack = glib
- * outFile = ShellUtils
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = ShellUtils
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_shell_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glib.ShellUtils;
 
-public  import gtkc.glibtypes;
-
-private import gtkc.glib;
-private import glib.ConstructionException;
-
-private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Str;
+private import gtkc.glib;
+public  import gtkc.glibtypes;
 
 
-
-/**
- */
-public class ShellUtils
+public struct ShellUtils
 {
-	
 	/**
 	 */
-	
+
+	public static GQuark shellErrorQuark()
+	{
+		return g_shell_error_quark();
+	}
+
 	/**
 	 * Parses a command line into an argument vector, in much the same way
 	 * the shell would, but without many of the expansions the shell would
@@ -81,53 +49,55 @@ public class ShellUtils
 	 * those you would get from a UNIX98 /bin/sh, as long as the input
 	 * contains none of the unsupported shell expansions. If the input
 	 * does contain such expansions, they are passed through
-	 * literally. Possible errors are those from the G_SHELL_ERROR
+	 * literally. Possible errors are those from the #G_SHELL_ERROR
 	 * domain. Free the returned vector with g_strfreev().
+	 *
 	 * Params:
-	 * commandLine = command line to parse
-	 * argvp = return location for array of args. [out][array length=argcp zero-terminated=1]
-	 * Returns: TRUE on success, FALSE if error set
+	 *     commandLine = command line to parse
+	 *     argcp = return location for number of args, or %NULL
+	 *     argvp = return
+	 *         location for array of args, or %NULL
+	 *
+	 * Return: %TRUE on success, %FALSE if error set
+	 *
 	 * Throws: GException on failure.
 	 */
-	public static int parseArgv(string commandLine, out string[] argvp)
+	public static bool shellParseArgv(string commandLine, out string[] argvp)
 	{
-		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
-		char** outargvp = null;
 		int argcp;
+		char** outargvp = null;
 		GError* err = null;
 		
-		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err);
+		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err) != 0;
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		argvp = null;
-		foreach ( cstr; outargvp[0 .. argcp] )
-		{
-			argvp ~= Str.toString(cstr);
-		}
+		argvp = Str.toStringArray(outargvp, argcp);
+		
 		return p;
 	}
-	
+
 	/**
 	 * Quotes a string so that the shell (/bin/sh) will interpret the
-	 * quoted string to mean unquoted_string. If you pass a filename to
+	 * quoted string to mean @unquoted_string. If you pass a filename to
 	 * the shell, for example, you should first quote it with this
-	 * function. The return value must be freed with g_free(). The
+	 * function.  The return value must be freed with g_free(). The
 	 * quoting style used is undefined (single or double quotes may be
 	 * used).
+	 *
 	 * Params:
-	 * unquotedString = a literal string
-	 * Returns: quoted string
+	 *     unquotedString = a literal string
+	 *
+	 * Return: quoted string
 	 */
-	public static string quote(string unquotedString)
+	public static string shellQuote(string unquotedString)
 	{
-		// gchar * g_shell_quote (const gchar *unquoted_string);
 		return Str.toString(g_shell_quote(Str.toStringz(unquotedString)));
 	}
-	
+
 	/**
 	 * Unquotes a string as the shell (/bin/sh) would. Only handles
 	 * quotes; if a string contains file globs, arithmetic operators,
@@ -136,27 +106,30 @@ public class ShellUtils
 	 * would produce (the variables, backticks, etc. will be passed
 	 * through literally instead of being expanded). This function is
 	 * guaranteed to succeed if applied to the result of
-	 * g_shell_quote(). If it fails, it returns NULL and sets the
-	 * error. The quoted_string need not actually contain quoted or
+	 * g_shell_quote(). If it fails, it returns %NULL and sets the
+	 * error. The @quoted_string need not actually contain quoted or
 	 * escaped text; g_shell_unquote() simply goes through the string and
 	 * unquotes/unescapes anything that the shell would. Both single and
 	 * double quotes are handled, as are escapes including escaped
 	 * newlines. The return value must be freed with g_free(). Possible
-	 * errors are in the G_SHELL_ERROR domain.
+	 * errors are in the #G_SHELL_ERROR domain.
+	 *
 	 * Shell quoting rules are a bit strange. Single quotes preserve the
 	 * literal string exactly. escape sequences are not allowed; not even
 	 * \' - if you want a ' in the quoted text, you have to do something
-	 * like 'foo'\''bar'. Double quotes allow $, `, ", \, and newline to
+	 * like 'foo'\''bar'.  Double quotes allow $, `, ", \, and newline to
 	 * be escaped with backslash. Otherwise double quotes preserve things
 	 * literally.
+	 *
 	 * Params:
-	 * quotedString = shell-quoted string
-	 * Returns: an unquoted string
+	 *     quotedString = shell-quoted string
+	 *
+	 * Return: an unquoted string
+	 *
 	 * Throws: GException on failure.
 	 */
-	public static string unquote(string quotedString)
+	public static string shellUnquote(string quotedString)
 	{
-		// gchar * g_shell_unquote (const gchar *quoted_string,  GError **error);
 		GError* err = null;
 		
 		auto p = g_shell_unquote(Str.toStringz(quotedString), &err);

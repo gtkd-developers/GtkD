@@ -16,101 +16,66 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkCheckMenuItem.html
- * outPack = gtk
- * outFile = CheckMenuItem
- * strct   = GtkCheckMenuItem
- * realStrct=
- * ctorStrct=
- * clss    = CheckMenuItem
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_check_menu_item_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_check_menu_item_new_with_label
- * 	- gtk_check_menu_item_new_with_mnemonic
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.CheckMenuItem;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.MenuItem;
+private import gtk.Widget;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
-
-
-private import gtk.MenuItem;
 
 /**
- * A GtkCheckMenuItem is a menu item that maintains the state of a boolean
- * value in addition to a GtkMenuItem usual role in activating application
+ * A #GtkCheckMenuItem is a menu item that maintains the state of a boolean
+ * value in addition to a #GtkMenuItem usual role in activating application
  * code.
- *
+ * 
  * A check box indicating the state of the boolean value is displayed
- * at the left side of the GtkMenuItem. Activating the GtkMenuItem
+ * at the left side of the #GtkMenuItem.  Activating the #GtkMenuItem
  * toggles the value.
  */
 public class CheckMenuItem : MenuItem
 {
-	
 	/** the main Gtk struct */
 	protected GtkCheckMenuItem* gtkCheckMenuItem;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkCheckMenuItem* getCheckMenuItemStruct()
 	{
 		return gtkCheckMenuItem;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkCheckMenuItem;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkCheckMenuItem* gtkCheckMenuItem)
-	{
-		super(cast(GtkMenuItem*)gtkCheckMenuItem);
-		this.gtkCheckMenuItem = gtkCheckMenuItem;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkCheckMenuItem = cast(GtkCheckMenuItem*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkCheckMenuItem* gtkCheckMenuItem, bool ownedRef = false)
+	{
+		this.gtkCheckMenuItem = gtkCheckMenuItem;
+		super(cast(GtkMenuItem*)gtkCheckMenuItem, ownedRef);
+	}
+
 	/**
 	 * Creates a new GtkCheckMenuItem with a label.
 	 * Params:
@@ -142,135 +107,146 @@ public class CheckMenuItem : MenuItem
 		
 		this(p);
 	}
-	
+
 	/**
 	 */
+
+	public static GType getType()
+	{
+		return gtk_check_menu_item_get_type();
+	}
+
+	/**
+	 * Creates a new #GtkCheckMenuItem.
+	 *
+	 * Return: a new #GtkCheckMenuItem.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto p = gtk_check_menu_item_new();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GtkCheckMenuItem*) p);
+	}
+
+	/**
+	 * Returns whether the check menu item is active. See
+	 * gtk_check_menu_item_set_active ().
+	 *
+	 * Return: %TRUE if the menu item is checked.
+	 */
+	public bool getActive()
+	{
+		return gtk_check_menu_item_get_active(gtkCheckMenuItem) != 0;
+	}
+
+	/**
+	 * Returns whether @check_menu_item looks like a #GtkRadioMenuItem
+	 *
+	 * Return: Whether @check_menu_item looks like a #GtkRadioMenuItem
+	 *
+	 * Since: 2.4
+	 */
+	public bool getDrawAsRadio()
+	{
+		return gtk_check_menu_item_get_draw_as_radio(gtkCheckMenuItem) != 0;
+	}
+
+	/**
+	 * Retrieves the value set by gtk_check_menu_item_set_inconsistent().
+	 *
+	 * Return: %TRUE if inconsistent
+	 */
+	public bool getInconsistent()
+	{
+		return gtk_check_menu_item_get_inconsistent(gtkCheckMenuItem) != 0;
+	}
+
+	/**
+	 * Sets the active state of the menu item’s check box.
+	 *
+	 * Params:
+	 *     isActive = boolean value indicating whether the check box is active.
+	 */
+	public void setActive(bool isActive)
+	{
+		gtk_check_menu_item_set_active(gtkCheckMenuItem, isActive);
+	}
+
+	/**
+	 * Sets whether @check_menu_item is drawn like a #GtkRadioMenuItem
+	 *
+	 * Params:
+	 *     drawAsRadio = whether @check_menu_item is drawn like a #GtkRadioMenuItem
+	 *
+	 * Since: 2.4
+	 */
+	public void setDrawAsRadio(bool drawAsRadio)
+	{
+		gtk_check_menu_item_set_draw_as_radio(gtkCheckMenuItem, drawAsRadio);
+	}
+
+	/**
+	 * If the user has selected a range of elements (such as some text or
+	 * spreadsheet cells) that are affected by a boolean setting, and the
+	 * current values in that range are inconsistent, you may want to
+	 * display the check in an “in between” state. This function turns on
+	 * “in between” display.  Normally you would turn off the inconsistent
+	 * state again if the user explicitly selects a setting. This has to be
+	 * done manually, gtk_check_menu_item_set_inconsistent() only affects
+	 * visual appearance, it doesn’t affect the semantics of the widget.
+	 *
+	 * Params:
+	 *     setting = %TRUE to display an “inconsistent” third state check
+	 */
+	public void setInconsistent(bool setting)
+	{
+		gtk_check_menu_item_set_inconsistent(gtkCheckMenuItem, setting);
+	}
+
+	/**
+	 * Emits the #GtkCheckMenuItem::toggled signal.
+	 */
+	public void toggled()
+	{
+		gtk_check_menu_item_toggled(gtkCheckMenuItem);
+	}
+
 	int[string] connectedSignals;
-	
+
 	void delegate(CheckMenuItem)[] onToggledListeners;
 	/**
 	 * This signal is emitted when the state of the check box is changed.
+	 *
 	 * A signal handler can use gtk_check_menu_item_get_active()
 	 * to discover the new state.
 	 */
 	void addOnToggled(void delegate(CheckMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( !("toggled" in connectedSignals) )
+		if ( "toggled" !in connectedSignals )
 		{
 			Signals.connectData(
-			getStruct(),
-			"toggled",
-			cast(GCallback)&callBackToggled,
-			cast(void*)this,
-			null,
-			connectFlags);
+				this,
+				"toggled",
+				cast(GCallback)&callBackToggled,
+				cast(void*)this,
+				null,
+				connectFlags);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem _checkMenuItem)
+	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem _checkmenuitem)
 	{
-		foreach ( void delegate(CheckMenuItem) dlg ; _checkMenuItem.onToggledListeners )
+		foreach ( void delegate(CheckMenuItem) dlg; _checkmenuitem.onToggledListeners )
 		{
-			dlg(_checkMenuItem);
+			dlg(_checkmenuitem);
 		}
-	}
-	
-	
-	/**
-	 * Creates a new GtkCheckMenuItem.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GtkWidget * gtk_check_menu_item_new (void);
-		auto p = gtk_check_menu_item_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_check_menu_item_new()");
-		}
-		this(cast(GtkCheckMenuItem*) p);
-	}
-	
-	/**
-	 * Returns whether the check menu item is active. See
-	 * gtk_check_menu_item_set_active().
-	 * Returns: TRUE if the menu item is checked.
-	 */
-	public int getActive()
-	{
-		// gboolean gtk_check_menu_item_get_active (GtkCheckMenuItem *check_menu_item);
-		return gtk_check_menu_item_get_active(gtkCheckMenuItem);
-	}
-	
-	/**
-	 * Sets the active state of the menu item's check box.
-	 * Params:
-	 * isActive = boolean value indicating whether the check box is active.
-	 */
-	public void setActive(int isActive)
-	{
-		// void gtk_check_menu_item_set_active (GtkCheckMenuItem *check_menu_item,  gboolean is_active);
-		gtk_check_menu_item_set_active(gtkCheckMenuItem, isActive);
-	}
-	
-	/**
-	 * Emits the "toggled" signal.
-	 */
-	public void toggled()
-	{
-		// void gtk_check_menu_item_toggled (GtkCheckMenuItem *check_menu_item);
-		gtk_check_menu_item_toggled(gtkCheckMenuItem);
-	}
-	
-	/**
-	 * Retrieves the value set by gtk_check_menu_item_set_inconsistent().
-	 * Returns: TRUE if inconsistent
-	 */
-	public int getInconsistent()
-	{
-		// gboolean gtk_check_menu_item_get_inconsistent  (GtkCheckMenuItem *check_menu_item);
-		return gtk_check_menu_item_get_inconsistent(gtkCheckMenuItem);
-	}
-	
-	/**
-	 * If the user has selected a range of elements (such as some text or
-	 * spreadsheet cells) that are affected by a boolean setting, and the
-	 * current values in that range are inconsistent, you may want to
-	 * display the check in an "in between" state. This function turns on
-	 * "in between" display. Normally you would turn off the inconsistent
-	 * state again if the user explicitly selects a setting. This has to be
-	 * done manually, gtk_check_menu_item_set_inconsistent() only affects
-	 * visual appearance, it doesn't affect the semantics of the widget.
-	 * Params:
-	 * setting = TRUE to display an "inconsistent" third state check
-	 */
-	public void setInconsistent(int setting)
-	{
-		// void gtk_check_menu_item_set_inconsistent  (GtkCheckMenuItem *check_menu_item,  gboolean setting);
-		gtk_check_menu_item_set_inconsistent(gtkCheckMenuItem, setting);
-	}
-	
-	/**
-	 * Sets whether check_menu_item is drawn like a GtkRadioMenuItem
-	 * Since 2.4
-	 * Params:
-	 * drawAsRadio = whether check_menu_item is drawn like a GtkRadioMenuItem
-	 */
-	public void setDrawAsRadio(int drawAsRadio)
-	{
-		// void gtk_check_menu_item_set_draw_as_radio  (GtkCheckMenuItem *check_menu_item,  gboolean draw_as_radio);
-		gtk_check_menu_item_set_draw_as_radio(gtkCheckMenuItem, drawAsRadio);
-	}
-	
-	/**
-	 * Returns whether check_menu_item looks like a GtkRadioMenuItem
-	 * Since 2.4
-	 * Returns: Whether check_menu_item looks like a GtkRadioMenuItem
-	 */
-	public int getDrawAsRadio()
-	{
-		// gboolean gtk_check_menu_item_get_draw_as_radio  (GtkCheckMenuItem *check_menu_item);
-		return gtk_check_menu_item_get_draw_as_radio(gtkCheckMenuItem);
 	}
 }

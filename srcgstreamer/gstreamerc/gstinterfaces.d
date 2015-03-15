@@ -16,7 +16,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -24,43 +24,45 @@
 
 module gstreamerc.gstinterfaces;
 
-private import std.stdio;
-private import gstreamerc.gstinterfacestypes;
-private import gtkc.Loader;
-private import gtkc.paths;
+import std.stdio;
+import gstreamerc.gstinterfacestypes;
+import gtkc.Loader;
+import gtkc.paths;
 
 shared static this()
 {
 	// gstinterfaces.VideoOverlay
 
-	Linker.link(gst_video_overlay_got_window_handle, "gst_video_overlay_got_window_handle", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_set_window_handle, "gst_video_overlay_set_window_handle", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_prepare_window_handle, "gst_video_overlay_prepare_window_handle", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_get_type, "gst_video_overlay_get_type", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_video_overlay_expose, "gst_video_overlay_expose", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_got_window_handle, "gst_video_overlay_got_window_handle", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_video_overlay_handle_events, "gst_video_overlay_handle_events", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_prepare_window_handle, "gst_video_overlay_prepare_window_handle", LIBRARY.GSTINTERFACES);
 	Linker.link(gst_video_overlay_set_render_rectangle, "gst_video_overlay_set_render_rectangle", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_is_video_overlay_prepare_window_handle_message, "gst_is_video_overlay_prepare_window_handle_message", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_window_handle, "gst_video_overlay_set_window_handle", LIBRARY.GSTINTERFACES);
 }
 
 __gshared extern(C)
 {
+
 	// gstinterfaces.VideoOverlay
 
-	void function(GstVideoOverlay* overlay, guintptr handle) c_gst_video_overlay_got_window_handle;
-	void function(GstVideoOverlay* overlay, guintptr handle) c_gst_video_overlay_set_window_handle;
-	void function(GstVideoOverlay* overlay) c_gst_video_overlay_prepare_window_handle;
+	GType function() c_gst_video_overlay_get_type;
 	void function(GstVideoOverlay* overlay) c_gst_video_overlay_expose;
-	void function(GstVideoOverlay* overlay, gboolean handleEvents) c_gst_video_overlay_handle_events;
-	gboolean function(GstVideoOverlay* overlay, gint x, gint y, gint width, gint height) c_gst_video_overlay_set_render_rectangle;
-	gboolean function(GstMessage* msg) c_gst_is_video_overlay_prepare_window_handle_message;
+	void function(GstVideoOverlay* overlay, size_t handle) c_gst_video_overlay_got_window_handle;
+	void function(GstVideoOverlay* overlay, int handleEvents) c_gst_video_overlay_handle_events;
+	void function(GstVideoOverlay* overlay) c_gst_video_overlay_prepare_window_handle;
+	int function(GstVideoOverlay* overlay, int x, int y, int width, int height) c_gst_video_overlay_set_render_rectangle;
+	void function(GstVideoOverlay* overlay, size_t handle) c_gst_video_overlay_set_window_handle;
 }
+
 
 // gstinterfaces.VideoOverlay
 
-alias c_gst_video_overlay_got_window_handle  gst_video_overlay_got_window_handle;
-alias c_gst_video_overlay_set_window_handle  gst_video_overlay_set_window_handle;
-alias c_gst_video_overlay_prepare_window_handle  gst_video_overlay_prepare_window_handle;
-alias c_gst_video_overlay_expose  gst_video_overlay_expose;
-alias c_gst_video_overlay_handle_events  gst_video_overlay_handle_events;
-alias c_gst_video_overlay_set_render_rectangle  gst_video_overlay_set_render_rectangle;
-alias c_gst_is_video_overlay_prepare_window_handle_message  gst_is_video_overlay_prepare_window_handle_message;
+alias c_gst_video_overlay_get_type gst_video_overlay_get_type;
+alias c_gst_video_overlay_expose gst_video_overlay_expose;
+alias c_gst_video_overlay_got_window_handle gst_video_overlay_got_window_handle;
+alias c_gst_video_overlay_handle_events gst_video_overlay_handle_events;
+alias c_gst_video_overlay_prepare_window_handle gst_video_overlay_prepare_window_handle;
+alias c_gst_video_overlay_set_render_rectangle gst_video_overlay_set_render_rectangle;
+alias c_gst_video_overlay_set_window_handle gst_video_overlay_set_window_handle;

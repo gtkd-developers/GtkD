@@ -16,84 +16,46 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GFileDescriptorBased.html
- * outPack = gio
- * outFile = FileDescriptorBasedT
- * strct   = GFileDescriptorBased
- * realStrct=
- * ctorStrct=
- * clss    = FileDescriptorBasedT
- * interf  = FileDescriptorBasedIF
- * class Code: No
- * interface Code: No
- * template for:
- * 	- TStruct
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_file_descriptor_based_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.FileDescriptorBasedT;
 
+public  import gtkc.gio;
 public  import gtkc.giotypes;
-
-public import gtkc.gio;
-public import glib.ConstructionException;
-public import gobject.ObjectG;
-
-
 
 
 /**
- * GFileDescriptorBased is implemented by streams (implementations of
- * GInputStream or GOutputStream) that are based on file descriptors.
- *
- * Note that &lt;gio/gfiledescriptorbased.h&gt; belongs to
- * the UNIX-specific GIO interfaces, thus you have to use the
- * gio-unix-2.0.pc pkg-config file when using it.
+ * #GFileDescriptorBased is implemented by streams (implementations of
+ * #GInputStream or #GOutputStream) that are based on file descriptors.
+ * 
+ * Note that `<gio/gfiledescriptorbased.h>` belongs to the UNIX-specific
+ * GIO interfaces, thus you have to use the `gio-unix-2.0.pc` pkg-config
+ * file when using it.
  */
 public template FileDescriptorBasedT(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GFileDescriptorBased* gFileDescriptorBased;
-	
-	
 	/** Get the main Gtk struct */
-	public GFileDescriptorBased* getFileDescriptorBasedTStruct()
+	public GFileDescriptorBased* getFileDescriptorBasedStruct()
 	{
 		return cast(GFileDescriptorBased*)getStruct();
 	}
-	
-	
+
 	/**
 	 */
-	
+
 	/**
 	 * Gets the underlying file descriptor.
-	 * Since 2.24
-	 * Returns: The file descriptor
+	 *
+	 * Return: The file descriptor
+	 *
+	 * Since: 2.24
 	 */
 	public int getFd()
 	{
-		// int g_file_descriptor_based_get_fd (GFileDescriptorBased *fd_based);
-		return g_file_descriptor_based_get_fd(getFileDescriptorBasedTStruct());
+		return g_file_descriptor_based_get_fd(getFileDescriptorBasedStruct());
 	}
 }

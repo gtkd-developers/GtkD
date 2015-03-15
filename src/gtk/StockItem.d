@@ -16,107 +16,48 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gtk3-Stock-Items.html
- * outPack = gtk
- * outFile = StockItem
- * strct   = GtkStockItem
- * realStrct=
- * ctorStrct=
- * clss    = StockItem
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_stock_item_
- * 	- gtk_stock_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtkc.paths
- * 	- gtkc.Loader
- * 	- glib.ListSG
- * structWrap:
- * 	- GSList* -> ListSG
- * 	- GtkStockItem* -> StockItem
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.StockItem;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gtkc.paths;
-private import gtkc.Loader;
 private import glib.ListSG;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.Loader;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+private import gtkc.paths;
 
 
-
-/**
- * Stock items represent commonly-used menu or toolbar items such as
- * "Open" or "Exit". Each stock item is identified by a stock ID;
- * stock IDs are just strings, but macros such as GTK_STOCK_OPEN are
- * provided to avoid typing mistakes in the strings.
- * Applications can register their own stock items in addition to those
- * built-in to GTK+.
- *
- * Each stock ID can be associated with a GtkStockItem, which contains
- * the user-visible label, keyboard accelerator, and translation domain
- * of the menu or toolbar item; and/or with an icon stored in a
- * GtkIconFactory. See GtkIconFactory for
- * more information on stock icons. The connection between a
- * GtkStockItem and stock icons is purely conventional (by virtue of
- * using the same stock ID); it's possible to register a stock item but
- * no icon, and vice versa. Stock icons may have a RTL variant which gets
- * used for right-to-left locales.
- */
 public class StockItem
 {
-	
 	/** the main Gtk struct */
 	protected GtkStockItem* gtkStockItem;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkStockItem* getStockItemStruct()
 	{
 		return gtkStockItem;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gtkStockItem;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GtkStockItem* gtkStockItem)
 	{
 		this.gtkStockItem = gtkStockItem;
 	}
-	
+
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
@@ -124,51 +65,17 @@ public class StockItem
 			gtk_stock_item_free(gtkStockItem);
 		}
 	}
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Warning
-	 * gtk_stock_add is deprecated and should not be used in newly-written code. 3.10
-	 * Registers each of the stock items in items. If an item already
-	 * exists with the same stock ID as one of the items, the old item
-	 * gets replaced. The stock items are copied, so GTK+ does not hold
-	 * any pointer into items and items can be freed. Use
-	 * gtk_stock_add_static() if items is persistent and GTK+ need not
-	 * copy the array.
-	 * Params:
-	 * items = a GtkStockItem or array of items. [array length=n_items]
-	 */
-	public static void add(GtkStockItem[] items)
-	{
-		// void gtk_stock_add (const GtkStockItem *items,  guint n_items);
-		gtk_stock_add(items.ptr, cast(int) items.length);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_stock_add_static is deprecated and should not be used in newly-written code. 3.10
-	 * Same as gtk_stock_add(), but doesn't copy items, so
-	 * items must persist until application exit.
-	 * Params:
-	 * items = a GtkStockItem or array of GtkStockItem. [array length=n_items]
-	 */
-	public static void addStatic(GtkStockItem[] items)
-	{
-		// void gtk_stock_add_static (const GtkStockItem *items,  guint n_items);
-		gtk_stock_add_static(items.ptr, cast(int) items.length);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_stock_item_copy is deprecated and should not be used in newly-written code. 3.10
 	 * Copies a stock item, mostly useful for language bindings and not in applications.
-	 * Returns: a new GtkStockItem
+	 *
+	 * Return: a new #GtkStockItem
 	 */
 	public StockItem copy()
 	{
-		// GtkStockItem * gtk_stock_item_copy (const GtkStockItem *item);
 		auto p = gtk_stock_item_copy(gtkStockItem);
 		
 		if(p is null)
@@ -178,31 +85,68 @@ public class StockItem
 		
 		return ObjectG.getDObject!(StockItem)(cast(GtkStockItem*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_stock_item_free is deprecated and should not be used in newly-written code. 3.10
 	 * Frees a stock item allocated on the heap, such as one returned by
 	 * gtk_stock_item_copy(). Also frees the fields inside the stock item,
-	 * if they are not NULL.
+	 * if they are not %NULL.
 	 */
 	public void free()
 	{
-		// void gtk_stock_item_free (GtkStockItem *item);
 		gtk_stock_item_free(gtkStockItem);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_stock_list_ids is deprecated and should not be used in newly-written code. 3.10
-	 * Retrieves a list of all known stock IDs added to a GtkIconFactory
+	 * Registers each of the stock items in @items. If an item already
+	 * exists with the same stock ID as one of the @items, the old item
+	 * gets replaced. The stock items are copied, so GTK+ does not hold
+	 * any pointer into @items and @items can be freed. Use
+	 * gtk_stock_add_static() if @items is persistent and GTK+ need not
+	 * copy the array.
+	 *
+	 * Params:
+	 *     items = a #GtkStockItem or array of items
+	 *     nItems = number of #GtkStockItem in @items
+	 */
+	public static void stockAdd(StockItem[] items)
+	{
+		GtkStockItem[] itemsArray = new GtkStockItem[items.length];
+		for ( int i = 0; i < items.length; i++ )
+		{
+			itemsArray[i] = *(items[i].getStockItemStruct());
+		}
+		
+		gtk_stock_add(itemsArray.ptr, cast(uint)items.length);
+	}
+
+	/**
+	 * Same as gtk_stock_add(), but doesn’t copy @items, so
+	 * @items must persist until application exit.
+	 *
+	 * Params:
+	 *     items = a #GtkStockItem or array of #GtkStockItem
+	 *     nItems = number of items
+	 */
+	public static void stockAddStatic(StockItem[] items)
+	{
+		GtkStockItem[] itemsArray = new GtkStockItem[items.length];
+		for ( int i = 0; i < items.length; i++ )
+		{
+			itemsArray[i] = *(items[i].getStockItemStruct());
+		}
+		
+		gtk_stock_add_static(itemsArray.ptr, cast(uint)items.length);
+	}
+
+	/**
+	 * Retrieves a list of all known stock IDs added to a #GtkIconFactory
 	 * or registered with gtk_stock_add(). The list must be freed with g_slist_free(),
 	 * and each string in the list must be freed with g_free().
-	 * Returns: a list of known stock IDs. [element-type utf8][transfer full]
+	 *
+	 * Return: a list of known stock IDs
 	 */
-	public static ListSG listIds()
+	public static ListSG stockListIds()
 	{
-		// GSList * gtk_stock_list_ids (void);
 		auto p = gtk_stock_list_ids();
 		
 		if(p is null)
@@ -210,48 +154,77 @@ public class StockItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_stock_lookup is deprecated and should not be used in newly-written code. 3.10
-	 * Fills item with the registered values for stock_id, returning TRUE
-	 * if stock_id was known.
+	 * Fills @item with the registered values for @stock_id, returning %TRUE
+	 * if @stock_id was known.
+	 *
 	 * Params:
-	 * stockId = a stock item name
-	 * item = stock item to initialize with values. [out]
-	 * Returns: TRUE if item was initialized
+	 *     stockId = a stock item name
+	 *     item = stock item to initialize with values
+	 *
+	 * Return: %TRUE if @item was initialized
 	 */
-	public static int lookup(string stockId, StockItem item)
+	public static bool stockLookup(string stockId, out StockItem item)
 	{
-		// gboolean gtk_stock_lookup (const gchar *stock_id,  GtkStockItem *item);
-		return gtk_stock_lookup(Str.toStringz(stockId), (item is null) ? null : item.getStockItemStruct());
+		GtkStockItem* outitem = new GtkStockItem;
+		
+		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
+		
+		item = ObjectG.getDObject!(StockItem)(outitem);
+		
+		return p;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_stock_set_translate_func is deprecated and should not be used in newly-written code. 3.10
-	 * Sets a function to be used for translating the label of
+	 * Sets a function to be used for translating the @label of
 	 * a stock item.
+	 *
 	 * If no function is registered for a translation domain,
 	 * g_dgettext() is used.
+	 *
 	 * The function is used for all stock items whose
-	 * translation_domain matches domain. Note that it is possible
+	 * @translation_domain matches @domain. Note that it is possible
 	 * to use strings different from the actual gettext translation domain
-	 * of your application for this, as long as your GtkTranslateFunc uses
+	 * of your application for this, as long as your #GtkTranslateFunc uses
 	 * the correct domain when calling dgettext(). This can be useful, e.g.
-	 * Since 2.8
+	 * when dealing with message contexts:
+	 *
+	 * |[<!-- language="C" -->
+	 * GtkStockItem items[] = {
+	 * { MY_ITEM1, NC_("odd items", "Item 1"), 0, 0, "odd-item-domain" },
+	 * { MY_ITEM2, NC_("even items", "Item 2"), 0, 0, "even-item-domain" },
+	 * };
+	 *
+	 * gchar *
+	 * my_translate_func (const gchar *msgid,
+	 * gpointer     data)
+	 * {
+	 * gchar *msgctxt = data;
+	 *
+	 * return (gchar*)g_dpgettext2 (GETTEXT_PACKAGE, msgctxt, msgid);
+	 * }
+	 *
+	 * ...
+	 *
+	 * gtk_stock_add (items, G_N_ELEMENTS (items));
+	 * gtk_stock_set_translate_func ("odd-item-domain", my_translate_func, "odd items");
+	 * gtk_stock_set_translate_func ("even-item-domain", my_translate_func, "even items");
+	 * ]|
+	 *
 	 * Params:
-	 * domain = the translation domain for which func shall be used
-	 * func = a GtkTranslateFunc
-	 * data = data to pass to func
-	 * notify = a GDestroyNotify that is called when data is
-	 * no longer needed
+	 *     domain = the translation domain for which @func shall be used
+	 *     func = a #GtkTranslateFunc
+	 *     data = data to pass to @func
+	 *     notify = a #GDestroyNotify that is called when @data is
+	 *         no longer needed
+	 *
+	 * Since: 2.8
 	 */
-	public static void setTranslateFunc(string domain, GtkTranslateFunc func, void* data, GDestroyNotify notify)
+	public static void stockSetTranslateFunc(string domain, GtkTranslateFunc func, void* data, GDestroyNotify notify)
 	{
-		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GDestroyNotify notify);
 		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);
 	}
 }

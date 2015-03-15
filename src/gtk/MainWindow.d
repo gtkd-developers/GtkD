@@ -16,54 +16,20 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gtk
- * outFile = MainWindow
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = 
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.Widget
- * 	- gtk.Window
- * 	- gtk.Main
- * 	- gdk.Event
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.MainWindow;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
+private import gdk.Event;
+private import gtk.Main;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtk.Main;
-private import gdk.Event;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
 
 
@@ -73,7 +39,6 @@ private import gdk.Event;
  */
 public class MainWindow : Window
 {
-	
 	private static int countTotalMainWindows = 0;
 	
 	/**
@@ -118,4 +83,3 @@ public class MainWindow : Window
 
 /**
  */
-

@@ -16,123 +16,130 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GActionMap.html
- * outPack = gio
- * outFile = ActionMapIF
- * strct   = GActionMap
- * realStrct=
- * ctorStrct=
- * clss    = ActionMapT
- * interf  = ActionMapIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_action_map_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gio.Action
- * 	- gio.ActionIF
- * structWrap:
- * 	- GAction* -> ActionIF
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.ActionMapIF;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
 private import gio.Action;
 private import gio.ActionIF;
-
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * The GActionMap interface is implemented by GActionGroup
+ * The GActionMap interface is implemented by #GActionGroup
  * implementations that operate by containing a number of
- * named GAction instances, such as GSimpleActionGroup.
- *
+ * named #GAction instances, such as #GSimpleActionGroup.
+ * 
  * One useful application of this interface is to map the
  * names of actions from various action groups to unique,
  * prefixed names (e.g. by prepending "app." or "win.").
  * This is the motivation for the 'Map' part of the interface
  * name.
  */
-public interface ActionMapIF
-{
-	
-	
+public interface ActionMapIF{
 	/** Get the main Gtk struct */
-	public GActionMap* getActionMapTStruct();
-	
+	public GActionMap* getActionMapStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Looks up the action with the name action_name in action_map.
-	 * If no such action exists, returns NULL.
-	 * Since 2.32
-	 * Params:
-	 * actionName = the name of an action
-	 * Returns: a GAction, or NULL. [transfer none]
-	 */
-	public ActionIF lookupAction(string actionName);
-	
-	/**
-	 * A convenience function for creating multiple GSimpleAction instances
-	 * and adding them to a GActionMap.
-	 * Each action is constructed as per one GActionEntry.
-	 * $(DDOC_COMMENT example)
-	 * Since 2.32
-	 * Params:
-	 * entries = a pointer to
-	 * the first item in an array of GActionEntry structs. [array length=n_entries][element-type GActionEntry]
-	 * nEntries = the length of entries, or -1 if entries is NULL-terminated
-	 * userData = the user data for signal connections
-	 */
-	public void addActionEntries(GActionEntry[] entries, void* userData);
-	
-	/**
-	 * Adds an action to the action_map.
+	 * Adds an action to the @action_map.
+	 *
 	 * If the action map already contains an action with the same name
-	 * as action then the old action is dropped from the action map.
-	 * The action map takes its own reference on action.
-	 * Since 2.32
+	 * as @action then the old action is dropped from the action map.
+	 *
+	 * The action map takes its own reference on @action.
+	 *
 	 * Params:
-	 * action = a GAction
+	 *     action = a #GAction
+	 *
+	 * Since: 2.32
 	 */
 	public void addAction(ActionIF action);
-	
+
+	/**
+	 * A convenience function for creating multiple #GSimpleAction instances
+	 * and adding them to a #GActionMap.
+	 *
+	 * Each action is constructed as per one #GActionEntry.
+	 *
+	 * |[<!-- language="C" -->
+	 * static void
+	 * activate_quit (GSimpleAction *simple,
+	 * GVariant      *parameter,
+	 * gpointer       user_data)
+	 * {
+	 * exit (0);
+	 * }
+	 *
+	 * static void
+	 * activate_print_string (GSimpleAction *simple,
+	 * GVariant      *parameter,
+	 * gpointer       user_data)
+	 * {
+	 * g_print ("%s\n", g_variant_get_string (parameter, NULL));
+	 * }
+	 *
+	 * static GActionGroup *
+	 * create_action_group (void)
+	 * {
+	 * const GActionEntry entries[] = {
+	 * { "quit",         activate_quit              },
+	 * { "print-string", activate_print_string, "s" }
+	 * };
+	 * GSimpleActionGroup *group;
+	 *
+	 * group = g_simple_action_group_new ();
+	 * g_action_map_add_action_entries (G_ACTION_MAP (group), entries, G_N_ELEMENTS (entries), NULL);
+	 *
+	 * return G_ACTION_GROUP (group);
+	 * }
+	 * ]|
+	 *
+	 * Params:
+	 *     entries = a pointer to
+	 *         the first item in an array of #GActionEntry structs
+	 *     nEntries = the length of @entries, or -1 if @entries is %NULL-terminated
+	 *     userData = the user data for signal connections
+	 *
+	 * Since: 2.32
+	 */
+	public void addActionEntries(GActionEntry[] entries, void* userData);
+
+	/**
+	 * Looks up the action with the name @action_name in @action_map.
+	 *
+	 * If no such action exists, returns %NULL.
+	 *
+	 * Params:
+	 *     actionName = the name of an action
+	 *
+	 * Return: a #GAction, or %NULL
+	 *
+	 * Since: 2.32
+	 */
+	public ActionIF lookupAction(string actionName);
+
 	/**
 	 * Removes the named action from the action map.
+	 *
 	 * If no action of this name is in the map then nothing happens.
-	 * Since 2.32
+	 *
 	 * Params:
-	 * actionName = the name of the action
+	 *     actionName = the name of the action
+	 *
+	 * Since: 2.32
 	 */
 	public void removeAction(string actionName);
 }

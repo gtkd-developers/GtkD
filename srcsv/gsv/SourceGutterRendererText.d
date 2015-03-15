@@ -16,137 +16,98 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkSourceGutterRendererText.html
- * outPack = gsv
- * outFile = SourceGutterRendererText
- * strct   = GtkSourceGutterRendererText
- * realStrct=
- * ctorStrct=GtkSourceGutterRenderer
- * clss    = SourceGutterRendererText
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = GtkSourceGutterRenderer
- * implements:
- * prefixes:
- * 	- gtk_source_gutter_renderer_text_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gsv.SourceGutterRendererText;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gsv.SourceGutterRenderer;
+private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
-private import gsvc.gsv;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import glib.Str;
-
-
-private import gsv.SourceGutterRenderer;
-
-/**
- */
 public class SourceGutterRendererText : SourceGutterRenderer
 {
-	
 	/** the main Gtk struct */
 	protected GtkSourceGutterRendererText* gtkSourceGutterRendererText;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkSourceGutterRendererText* getSourceGutterRendererTextStruct()
 	{
 		return gtkSourceGutterRendererText;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceGutterRendererText;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkSourceGutterRendererText* gtkSourceGutterRendererText)
-	{
-		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererText);
-		this.gtkSourceGutterRendererText = gtkSourceGutterRendererText;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkSourceGutterRendererText = cast(GtkSourceGutterRendererText*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkSourceGutterRendererText* gtkSourceGutterRendererText, bool ownedRef = false)
+	{
+		this.gtkSourceGutterRendererText = gtkSourceGutterRendererText;
+		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererText, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_source_gutter_renderer_text_get_type();
+	}
+
 	/**
-	 * Create a new GtkSourceGutterRendererText.
+	 * Create a new #GtkSourceGutterRendererText.
+	 *
+	 * Return: A #GtkSourceGutterRenderer
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkSourceGutterRenderer * gtk_source_gutter_renderer_text_new  (void);
 		auto p = gtk_source_gutter_renderer_text_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_source_gutter_renderer_text_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GtkSourceGutterRendererText*) p);
+		
+		this(cast(GtkSourceGutterRendererText*) p, true);
 	}
-	
-	/**
-	 */
-	public void setMarkup(string markup, int length)
-	{
-		// void gtk_source_gutter_renderer_text_set_markup  (GtkSourceGutterRendererText *renderer,  const gchar *markup,  gint length);
-		gtk_source_gutter_renderer_text_set_markup(gtkSourceGutterRendererText, Str.toStringz(markup), length);
-	}
-	
-	/**
-	 */
-	public void setText(string text, int length)
-	{
-		// void gtk_source_gutter_renderer_text_set_text  (GtkSourceGutterRendererText *renderer,  const gchar *text,  gint length);
-		gtk_source_gutter_renderer_text_set_text(gtkSourceGutterRendererText, Str.toStringz(text), length);
-	}
-	
-	/**
-	 */
+
 	public void measure(string text, int* width, int* height)
 	{
-		// void gtk_source_gutter_renderer_text_measure  (GtkSourceGutterRendererText *renderer,  const gchar *text,  gint *width,  gint *height);
 		gtk_source_gutter_renderer_text_measure(gtkSourceGutterRendererText, Str.toStringz(text), width, height);
 	}
-	
-	/**
-	 */
+
 	public void measureMarkup(string markup, int* width, int* height)
 	{
-		// void gtk_source_gutter_renderer_text_measure_markup  (GtkSourceGutterRendererText *renderer,  const gchar *markup,  gint *width,  gint *height);
 		gtk_source_gutter_renderer_text_measure_markup(gtkSourceGutterRendererText, Str.toStringz(markup), width, height);
+	}
+
+	public void setMarkup(string markup, int length)
+	{
+		gtk_source_gutter_renderer_text_set_markup(gtkSourceGutterRendererText, Str.toStringz(markup), length);
+	}
+
+	public void setText(string text, int length)
+	{
+		gtk_source_gutter_renderer_text_set_text(gtkSourceGutterRendererText, Str.toStringz(text), length);
 	}
 }

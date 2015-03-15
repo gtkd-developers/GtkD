@@ -1,148 +1,30 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gstreamerD.
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
 #
-# gstreamerD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-#
-# gstreamerD is distributed in the hope that it will be useful,
+# gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License
-# along with gstreamerD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping VTE
-#####
-###
-#
-
-addTypedefs: start
-
-public import gtkc.gtktypes;
-
-addTypedefs: end
-
-addAliases: start
-addAliases: end
-
-addEnums: start
-addEnums: end
-
-addStructs: start
-addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
-
-addConstants: start
-addConstants: end
-
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
-
 wrap: vte
-srcout: srcvte
+file: /usr/share/gir-1.0/Vte-2.91.gir
 
-################################
-### VTE ########################
-################################
+addAliases: start
+	public import gtkc.gtktypes;
+addAliases: end
 
-# TODO: vteGetUserShell
-
-file: VteTerminal.html
-struct: VteTerminal
-class: Terminal
-implements: ScrollableIF
-prefix: vte_terminal_
-prefix: vte_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ArrayG
-import: glib.Regex
-import: gio.Cancellable
-import: gio.OutputStream
-import: gdk.Color
-import: gdk.Cursor
-import: gdk.RGBA
-import: gtk.Adjustment
-import: gtk.MenuShell
-import: pango.PgFontDescription
-import: vte.Pty
-structWrap: GArray* ArrayG
-structWrap: GRegex* Regex
-structWrap: GCancellable* Cancellable
-structWrap: GOutputStream* OutputStream
-structWrap: GdkColor* Color
-structWrap: GdkCursor* Cursor
-structWrap: GdkRGBA* RGBA
-structWrap: GtkAdjustment* Adjustment
-structWrap: GtkMenuShell* MenuShell
-structWrap: PangoFontDescription* PgFontDescription
-structWrap: VtePty* Pty
-
-#imports for Scrollable Interface.
-import: gtk.ScrollableIF
-import: gtk.ScrollableT
-
-array: vte_terminal_feed data length
-array: vte_terminal_feed_child text length
-array: vte_terminal_feed_child_binary data length
-out: vte_terminal_get_cursor_position column
-out: vte_terminal_get_cursor_position row
-out: vte_terminal_match_check tag
-out: vte_terminal_get_padding xpad
-out: vte_terminal_get_padding ypad
-array: vte_terminal_fork_command argv
-array: vte_terminal_fork_command envv
-array: vte_terminal_fork_command_full argv
-array: vte_terminal_fork_command_full envv
-out: vte_terminal_fork_command_full child_pid
-array: vte_terminal_forkpty envv
-
-code: start
-	// add the Scrollable capabilities
-	mixin ScrollableT!(VteTerminal);
-
-	alias Widget.setOpacity setOpacity;
-code: end
-outFile: Terminal
-
-file: vte-Vte-PTY.html
-struct: VtePty
-class: Pty
-implements: InitableIF
-prefix: vte_pty_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-
-#imports for Initable Interface.
-import: gio.InitableIF
-import: gio.InitableT
-
-out: vte_pty_get_size rows
-out: vte_pty_get_size columns
-
-code: start
-	// add the Initable capabilities
-	mixin InitableT!(VtePty);
-code: end
-outFile: Pty
-
+move: get_user_shell Terminal

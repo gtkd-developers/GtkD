@@ -16,71 +16,28 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gtk
- * outFile = TreeModel
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = 
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gobject.Type
- * 	- gobject.ObjectG
- * 	- gobject.Signals
- * 	- gobject.Value
- * 	- gtk.TreeIter
- * 	- gtk.TreePath
- * 	- gtk.TreeModelT
- * 	- gtk.TreeModelIF
- * 	- gtkc.gobject
- * 	- gtkc.Loader
- * 	- gtkc.paths
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.TreeModel;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
-private import gobject.Type;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gobject.Type;
 private import gobject.Value;
 private import gtk.TreeIter;
-private import gtk.TreePath;
-private import gtk.TreeModelT;
 private import gtk.TreeModelIF;
-private import gtkc.gobject;
+private import gtk.TreeModelT;
+private import gtk.TreePath;
 private import gtkc.Loader;
+private import gtkc.gobject;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 private import gtkc.paths;
-
 
 
 struct CustomTreeModelClass
@@ -88,20 +45,14 @@ struct CustomTreeModelClass
 	GObjectClass parentClass;
 }
 
-//We need this function for the interface implementation.
-extern(C) GType function() c_gtk_tree_model_get_type;
-alias c_gtk_tree_model_get_type gtk_tree_model_get_type;
-
 /**
  */
 public class TreeModel : ObjectG, TreeModelIF
 {
 	static GObjectClass* parentClass = null;
 	
-	shared static this()
-	{
-		Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
-	}
+	/** the main Gtk struct */
+	protected GtkTreeModel* gtkTreeModel;
 	
 	// Minimal implementation.
 	mixin TreeModelT!(GtkTreeModel);
@@ -123,9 +74,9 @@ public class TreeModel : ObjectG, TreeModelIF
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GtkTreeModel* gtkTreeModel)
+	public this (GtkTreeModel* gtkTreeModel, bool ownedRef = false)
 	{
-		super(cast(GObject*)gtkTreeModel);
+		super(cast(GObject*)gtkTreeModel, ownedRef);
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	
@@ -187,7 +138,7 @@ public class TreeModel : ObjectG, TreeModelIF
 		{
 			GObjectClass* objectClass;
 			
-			parentClass = cast(GObjectClass*) Type.classPeekParent(klass);
+			parentClass = cast(GObjectClass*) g_type_class_peek_parent(klass);
 			objectClass = cast(GObjectClass*) klass;
 			
 			objectClass.finalize = &customTreeModelFinalize;
@@ -248,7 +199,7 @@ public class TreeModel : ObjectG, TreeModelIF
 			return tm.getColumnType(index);
 		}
 		
-		static gboolean customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
+		static int customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
@@ -270,21 +221,25 @@ public class TreeModel : ObjectG, TreeModelIF
 			tm.getValue(ObjectG.getDObject!(TreeIter)(iter), column, ObjectG.getDObject!(Value)(value));
 		}
 		
-		static gboolean customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		static int customTreeModelIterNext(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
 			return tm.iterNext(ObjectG.getDObject!(TreeIter)(iter));
 		}
 		
-		static gboolean customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
+		static int customTreeModelIterChildren(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent)
 		{
+			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
-			return tm.iterChildren(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent));
+			auto p = tm.iterChildren(ti, ObjectG.getDObject!(TreeIter)(parent));
+			
+			iter = ti.getTreeIterStruct();
+			return p;
 		}
 		
-		static gboolean customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
+		static int customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
@@ -298,22 +253,29 @@ public class TreeModel : ObjectG, TreeModelIF
 			return tm.iterNChildren(ObjectG.getDObject!(TreeIter)(iter));
 		}
 		
-		static gboolean customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
+		static int customTreeModelIterNthChild(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *parent, int n)
 		{
+			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
-			return tm.iterNthChild(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(parent), n);
+			auto p = tm.iterNthChild(ti, ObjectG.getDObject!(TreeIter)(parent), n);
+			
+			iter = ti.getTreeIterStruct();
+			return p;
 		}
 		
-		static gboolean customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
+		static int customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
 		{
+			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
-			return tm.iterParent(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreeIter)(child));
+			auto p = tm.iterParent(ti, ObjectG.getDObject!(TreeIter)(child));
+			
+			iter = ti.getTreeIterStruct();
+			return p;
 		}
 	}
 }
 
 /**
  */
-

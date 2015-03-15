@@ -1,6 +1,14 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.0.0
+--------------
+-New Generator based on the gir files. for changes because of it see the wiki: https://github.com/gtkd-developers/GtkD/wiki/GtkD-2-vs-GtkD-3
+-Wraps the GTK+ 3.14 API.
+-Deprecated the addOnDraw function that doesn't use scoped.
+-Improve memory management for classes derived from gobject.ObjectG.
+-Don't use absolute paths for the GTK libraries on OSX, Issue #97.
+
 Release: 2.4.2
 --------------
 -Fix issue #102, stop allocating in the ObjectG destructor.

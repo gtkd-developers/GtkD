@@ -16,110 +16,82 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GDBusInterface.html
- * outPack = gio
- * outFile = DBusInterfaceIF
- * strct   = GDBusInterface
- * realStrct=
- * ctorStrct=
- * clss    = DBusInterfaceT
- * interf  = DBusInterfaceIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_dbus_interface_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.DBusInterfaceInfo
- * 	- gio.DBusObject
- * 	- gio.DBusObjectIF
- * structWrap:
- * 	- GDBusInterfaceInfo* -> DBusInterfaceInfo
- * 	- GDBusObject* -> DBusObjectIF
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusInterfaceIF;
-
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
 private import gio.DBusInterfaceInfo;
 private import gio.DBusObject;
 private import gio.DBusObjectIF;
-
+private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * The GDBusInterface type is the base type for D-Bus interfaces both
- * on the service side (see GDBusInterfaceSkeleton) and client side
- * (see GDBusProxy).
+ * The #GDBusInterface type is the base type for D-Bus interfaces both
+ * on the service side (see #GDBusInterfaceSkeleton) and client side
+ * (see #GDBusProxy).
+ *
+ * Since: 2.30
  */
-public interface DBusInterfaceIF
-{
-	
-	
+public interface DBusInterfaceIF{
 	/** Get the main Gtk struct */
-	public GDBusInterface* getDBusInterfaceTStruct();
-	
+	public GDBusInterface* getDBusInterfaceStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Gets D-Bus introspection information for the D-Bus interface
-	 * implemented by interface_.
-	 * Since 2.30
-	 * Returns: A GDBusInterfaceInfo. Do not free. [transfer none]
-	 */
-	public DBusInterfaceInfo getInfo();
-	
-	/**
-	 * Gets the GDBusObject that interface_ belongs to, if any.
-	 * Warning
-	 * It is not safe to use the returned object if interface_
-	 * or the returned object is being used from other threads. See
-	 * g_dbus_interface_dup_object() for a thread-safe
-	 * alternative.
-	 * Since 2.30
-	 * Returns: A GDBusObject or NULL. The returned reference belongs to interface_ and should not be freed. [transfer none]
-	 */
-	public DBusObjectIF getObject();
-	
-	/**
-	 * Gets the GDBusObject that interface_ belongs to, if any.
-	 * Since 2.32
-	 * Returns: A GDBusObject or NULL. The returned reference should be freed with g_object_unref(). [transfer full]
+	 * Gets the #GDBusObject that @interface_ belongs to, if any.
+	 *
+	 * Return: A #GDBusObject or %NULL. The returned
+	 *     reference should be freed with g_object_unref().
+	 *
+	 * Since: 2.32
 	 */
 	public DBusObjectIF dupObject();
-	
+
 	/**
-	 * Sets the GDBusObject for interface_ to object.
-	 * Note that interface_ will hold a weak reference to object.
-	 * Since 2.30
+	 * Gets D-Bus introspection information for the D-Bus interface
+	 * implemented by @interface_.
+	 *
+	 * Return: A #GDBusInterfaceInfo. Do not free.
+	 *
+	 * Since: 2.30
+	 */
+	public DBusInterfaceInfo getInfo();
+
+	/**
+	 * Gets the #GDBusObject that @interface_ belongs to, if any.
+	 *
+	 * It is not safe to use the returned object if @interface_ or
+	 * the returned object is being used from other threads. See
+	 * g_dbus_interface_dup_object() for a thread-safe alternative.
+	 *
+	 * Return: A #GDBusObject or %NULL. The returned
+	 *     reference belongs to @interface_ and should not be freed.
+	 *
+	 * Since: 2.30
+	 */
+	public DBusObjectIF getObject();
+
+	/**
+	 * Sets the #GDBusObject for @interface_ to @object.
+	 *
+	 * Note that @interface_ will hold a weak reference to @object.
+	 *
 	 * Params:
-	 * object = A GDBusObject or NULL. [allow-none]
+	 *     object = A #GDBusObject or %NULL.
+	 *
+	 * Since: 2.30
 	 */
 	public void setObject(DBusObjectIF object);
 }

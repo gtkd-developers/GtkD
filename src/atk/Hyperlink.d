@@ -16,160 +16,112 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkHyperlink.html
- * outPack = atk
- * outFile = Hyperlink
- * strct   = AtkHyperlink
- * realStrct=
- * ctorStrct=
- * clss    = Hyperlink
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_hyperlink_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- glib.Str
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.Hyperlink;
 
-public  import gtkc.atktypes;
-
-private import gtkc.atk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
+private import atk.ActionIF;
+private import atk.ActionT;
 private import atk.ObjectAtk;
 private import glib.Str;
-
-
 private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtkc.atk;
+public  import gtkc.atktypes;
+public  import gtkc.gdktypes;
+
 
 /**
  * An ATK object which encapsulates a link or set of links (for
  * instance in the case of client-side image maps) in a hypertext
- * document. It may implement the AtkAction interface. AtkHyperlink
+ * document.  It may implement the AtkAction interface.  AtkHyperlink
  * may also be used to refer to inline embedded content, since it
  * allows specification of a start and end offset within the host
  * AtkHypertext object.
  */
-public class Hyperlink : ObjectG
+public class Hyperlink : ObjectG, ActionIF
 {
-	
 	/** the main Gtk struct */
 	protected AtkHyperlink* atkHyperlink;
-	
-	
+
 	/** Get the main Gtk struct */
 	public AtkHyperlink* getHyperlinkStruct()
 	{
 		return atkHyperlink;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)atkHyperlink;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (AtkHyperlink* atkHyperlink)
-	{
-		super(cast(GObject*)atkHyperlink);
-		this.atkHyperlink = atkHyperlink;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		atkHyperlink = cast(AtkHyperlink*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (AtkHyperlink* atkHyperlink, bool ownedRef = false)
+	{
+		this.atkHyperlink = atkHyperlink;
+		super(cast(GObject*)atkHyperlink, ownedRef);
+	}
+
+	// add the Action capabilities
+	mixin ActionT!(AtkHyperlink);
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(Hyperlink)[] onLinkActivatedListeners;
+
+	public static GType getType()
+	{
+		return atk_hyperlink_get_type();
+	}
+
 	/**
-	 * The signal link-activated is emitted when a link is activated.
+	 * Gets the index with the hypertext document at which this link ends.
+	 *
+	 * Return: the index with the hypertext document at which this link ends
 	 */
-	void addOnLinkActivated(void delegate(Hyperlink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	public int getEndIndex()
 	{
-		if ( !("link-activated" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"link-activated",
-			cast(GCallback)&callBackLinkActivated,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["link-activated"] = 1;
-		}
-		onLinkActivatedListeners ~= dlg;
+		return atk_hyperlink_get_end_index(atkHyperlink);
 	}
-	extern(C) static void callBackLinkActivated(AtkHyperlink* atkhyperlinkStruct, Hyperlink _hyperlink)
-	{
-		foreach ( void delegate(Hyperlink) dlg ; _hyperlink.onLinkActivatedListeners )
-		{
-			dlg(_hyperlink);
-		}
-	}
-	
-	
+
 	/**
-	 * Get a the URI associated with the anchor specified
-	 * by i of link_.
-	 * Multiple anchors are primarily used by client-side image maps.
-	 * Params:
-	 * i = a (zero-index) integer specifying the desired anchor
-	 * Returns: a string specifying the URI
+	 * Gets the number of anchors associated with this hyperlink.
+	 *
+	 * Return: the number of anchors associated with this hyperlink
 	 */
-	public string getUri(int i)
+	public int getNAnchors()
 	{
-		// gchar * atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
-		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i));
+		return atk_hyperlink_get_n_anchors(atkHyperlink);
 	}
-	
+
 	/**
 	 * Returns the item associated with this hyperlinks nth anchor.
-	 * For instance, the returned AtkObject will implement AtkText
-	 * if link_ is a text hyperlink, AtkImage if link_ is an image
+	 * For instance, the returned #AtkObject will implement #AtkText
+	 * if @link_ is a text hyperlink, #AtkImage if @link_ is an image
 	 * hyperlink etc.
+	 *
 	 * Multiple anchors are primarily used by client-side image maps.
+	 *
 	 * Params:
-	 * i = a (zero-index) integer specifying the desired anchor
-	 * Returns: an AtkObject associated with this hyperlinks i-th anchor. [transfer none]
+	 *     i = a (zero-index) integer specifying the desired anchor
+	 *
+	 * Return: an #AtkObject associated with this hyperlinks
+	 *     i-th anchor
 	 */
 	public ObjectAtk getObject(int i)
 	{
-		// AtkObject * atk_hyperlink_get_object (AtkHyperlink *link_,  gint i);
 		auto p = atk_hyperlink_get_object(atkHyperlink, i);
 		
 		if(p is null)
@@ -179,75 +131,100 @@ public class Hyperlink : ObjectG
 		
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
-	
-	/**
-	 * Gets the index with the hypertext document at which this link ends.
-	 * Returns: the index with the hypertext document at which this link ends
-	 */
-	public int getEndIndex()
-	{
-		// gint atk_hyperlink_get_end_index (AtkHyperlink *link_);
-		return atk_hyperlink_get_end_index(atkHyperlink);
-	}
-	
+
 	/**
 	 * Gets the index with the hypertext document at which this link begins.
-	 * Returns: the index with the hypertext document at which this link begins
+	 *
+	 * Return: the index with the hypertext document at which this link begins
 	 */
 	public int getStartIndex()
 	{
-		// gint atk_hyperlink_get_start_index (AtkHyperlink *link_);
 		return atk_hyperlink_get_start_index(atkHyperlink);
 	}
-	
+
 	/**
-	 * Since the document that a link is associated with may have changed
-	 * this method returns TRUE if the link is still valid (with
-	 * respect to the document it references) and FALSE otherwise.
-	 * Returns: whether or not this link is still valid
+	 * Get a the URI associated with the anchor specified
+	 * by @i of @link_.
+	 *
+	 * Multiple anchors are primarily used by client-side image maps.
+	 *
+	 * Params:
+	 *     i = a (zero-index) integer specifying the desired anchor
+	 *
+	 * Return: a string specifying the URI
 	 */
-	public int isValid()
+	public string getUri(int i)
 	{
-		// gboolean atk_hyperlink_is_valid (AtkHyperlink *link_);
-		return atk_hyperlink_is_valid(atkHyperlink);
+		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i));
 	}
-	
+
 	/**
 	 * Indicates whether the link currently displays some or all of its
-	 *  content inline. Ordinary HTML links will usually return
-	 *  FALSE, but an inline lt;srcgt; HTML element will return
-	 *  TRUE.
-	 * a *
-	 * Returns: whether or not this link displays its content inline.
+	 * content inline.  Ordinary HTML links will usually return
+	 * %FALSE, but an inline &lt;src&gt; HTML element will return
+	 * %TRUE.
+	 *
+	 * Return: whether or not this link displays its content inline.
 	 */
-	public int isInline()
+	public bool isInline()
 	{
-		// gboolean atk_hyperlink_is_inline (AtkHyperlink *link_);
-		return atk_hyperlink_is_inline(atkHyperlink);
+		return atk_hyperlink_is_inline(atkHyperlink) != 0;
 	}
-	
+
 	/**
-	 * Gets the number of anchors associated with this hyperlink.
-	 * Returns: the number of anchors associated with this hyperlink
-	 */
-	public int getNAnchors()
-	{
-		// gint atk_hyperlink_get_n_anchors (AtkHyperlink *link_);
-		return atk_hyperlink_get_n_anchors(atkHyperlink);
-	}
-	
-	/**
-	 * Warning
-	 * atk_hyperlink_is_selected_link is deprecated and should not be used in newly-written code. This method is deprecated since ATK version 1.8.
-	 * Please use ATK_STATE_SELECTED to indicate when a hyperlink within a
-	 * Hypertext container is selected.
 	 * Determines whether this AtkHyperlink is selected
-	 * Since 1.4
-	 * Returns: True is the AtkHyperlink is selected, False otherwise
+	 *
+	 * Deprecated: This method is deprecated since ATK version 1.8.
+	 * Please use ATK_STATE_FOCUSABLE for all links, and ATK_STATE_FOCUSED
+	 * for focused links.
+	 *
+	 * Return: True if the AtkHyperlink is selected, False otherwise
+	 *
+	 * Since: 1.4
 	 */
-	public int isSelectedLink()
+	public bool isSelectedLink()
 	{
-		// gboolean atk_hyperlink_is_selected_link (AtkHyperlink *link_);
-		return atk_hyperlink_is_selected_link(atkHyperlink);
+		return atk_hyperlink_is_selected_link(atkHyperlink) != 0;
+	}
+
+	/**
+	 * Since the document that a link is associated with may have changed
+	 * this method returns %TRUE if the link is still valid (with
+	 * respect to the document it references) and %FALSE otherwise.
+	 *
+	 * Return: whether or not this link is still valid
+	 */
+	public bool isValid()
+	{
+		return atk_hyperlink_is_valid(atkHyperlink) != 0;
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(Hyperlink)[] onLinkActivatedListeners;
+	/**
+	 * The signal link-activated is emitted when a link is activated.
+	 */
+	void addOnLinkActivated(void delegate(Hyperlink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "link-activated" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"link-activated",
+				cast(GCallback)&callBackLinkActivated,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["link-activated"] = 1;
+		}
+		onLinkActivatedListeners ~= dlg;
+	}
+	extern(C) static void callBackLinkActivated(AtkHyperlink* hyperlinkStruct, Hyperlink _hyperlink)
+	{
+		foreach ( void delegate(Hyperlink) dlg; _hyperlink.onLinkActivatedListeners )
+		{
+			dlg(_hyperlink);
+		}
 	}
 }

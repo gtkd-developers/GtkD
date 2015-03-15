@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = Proxy
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Proxy
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- ProxyIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.ProxyT
- * 	- gio.ProxyIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Proxy;
 
+private import gio.ProxyIF;
+private import gio.ProxyT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.ProxyT;
-private import gio.ProxyIF;
-
-
-
-/**
- */
 public class Proxy : ObjectG, ProxyIF
 {
-	
-	// Minimal implementation.
-	mixin ProxyT!(GProxy);
-	
+	/** the main Gtk struct */
+	protected GProxy* gProxy;
+
+	/** Get the main Gtk struct */
+	public GProxy* getProxyStruct()
+	{
+		return gProxy;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gProxy;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GProxy* gProxy)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gProxy);
-		this.gProxy = gProxy;
+		gProxy = cast(GProxy*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GProxy* gProxy, bool ownedRef = false)
+	{
+		this.gProxy = gProxy;
+		super(cast(GObject*)gProxy, ownedRef);
+	}
+
+	// add the Proxy capabilities
+	mixin ProxyT!(GProxy);
+
 	/**
 	 */
 }

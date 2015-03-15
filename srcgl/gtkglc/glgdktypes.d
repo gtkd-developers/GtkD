@@ -16,187 +16,195 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gtkglc.glgdktypes;
 
+module gtkglc.glgdktypes;
 
 public import gtkc.glibtypes;
 public import gtkc.gdktypes;
-alias uint VisualID;
 
-public enum GdkGLConfigMode
+public enum GdkGLBufferMask
 {
-	MODE_RGB = 0,
-	MODE_RGBA = 0, /+* same as RGB +/
-	MODE_INDEX = 1 << 0,
-	MODE_SINGLE = 0,
-	MODE_DOUBLE = 1 << 1,
-	MODE_STEREO = 1 << 2,
-	MODE_ALPHA = 1 << 3,
-	MODE_DEPTH = 1 << 4,
-	MODE_STENCIL = 1 << 5,
-	MODE_ACCUM = 1 << 6,
-	MODE_MULTISAMPLE = 1 << 7 /+* not supported yet +/
+	FRONT_LEFT_BUFFER_BIT = 1,
+	FRONT_RIGHT_BUFFER_BIT = 2,
+	BACK_LEFT_BUFFER_BIT = 4,
+	BACK_RIGHT_BUFFER_BIT = 8,
+	AUX_BUFFERS_BIT = 16,
+	DEPTH_BUFFER_BIT = 32,
+	STENCIL_BUFFER_BIT = 64,
+	ACCUM_BUFFER_BIT = 128,
 }
-alias GdkGLConfigMode GLConfigMode;
+alias GdkGLBufferMask GLBufferMask;
 
 public enum GdkGLConfigAttrib
 {
-	USE_GL = 1, /+* support GLX rendering +/
-	BUFFER_SIZE = 2, /+* depth of the color buffer +/
-	LEVEL = 3, /+* level inn plane stacking +/
-	RGBA = 4, /+* true if RGBA mode +/
-	DOUBLEBUFFER = 5, /+* double buffering supported +/
-	STEREO = 6, /+* stereo buffering supported +/
-	AUX_BUFFERS = 7, /+* number of aux buffers +/
-	RED_SIZE = 8, /+* number of red component bits +/
-	GREEN_SIZE = 9, /+* number of green component bits +/
-	BLUE_SIZE = 10, /+* number of blue component bits +/
-	ALPHA_SIZE = 11, /+* number of alpha component bits +/
-	DEPTH_SIZE = 12, /+* number of depth bits +/
-	STENCIL_SIZE = 13, /+* number of stencil bits +/
-	ACCUM_RED_SIZE = 14, /+* number of red accum bits +/
-	ACCUM_GREEN_SIZE = 15, /+* number of green accum bits +/
-	ACCUM_BLUE_SIZE = 16, /+* number of blue accum bits +/
-	ACCUM_ALPHA_SIZE = 17, /+* number of alpha accum bits +/
-	/+*
-	 * FBConfig-specific attributes.
-	 * [ GLX 1.3 and later ]
-	+/
-	CONFIG_CAVEAT = 0x20,
-	X_VISUAL_TYPE = 0x22,
-	TRANSPARENT_TYPE = 0x23,
-	TRANSPARENT_INDEX_VALUE = 0x24,
-	TRANSPARENT_RED_VALUE = 0x25,
-	TRANSPARENT_GREEN_VALUE = 0x26,
-	TRANSPARENT_BLUE_VALUE = 0x27,
-	TRANSPARENT_ALPHA_VALUE = 0x28,
-	DRAWABLE_TYPE = 0x8010,
-	RENDER_TYPE = 0x8011,
-	X_RENDERABLE = 0x8012,
-	FBCONFIG_ID = 0x8013,
-	VISUAL_ID = 0x800B,
-	SCREEN = 0x800C,
-	/+*
-	 * Multisampling configuration attributes.
-	 * [ GLX 1.4 and later ]
-	+/
+	USE_GL = 1,
+	BUFFER_SIZE = 2,
+	LEVEL = 3,
+	RGBA = 4,
+	DOUBLEBUFFER = 5,
+	STEREO = 6,
+	AUX_BUFFERS = 7,
+	RED_SIZE = 8,
+	GREEN_SIZE = 9,
+	BLUE_SIZE = 10,
+	ALPHA_SIZE = 11,
+	DEPTH_SIZE = 12,
+	STENCIL_SIZE = 13,
+	ACCUM_RED_SIZE = 14,
+	ACCUM_GREEN_SIZE = 15,
+	ACCUM_BLUE_SIZE = 16,
+	ACCUM_ALPHA_SIZE = 17,
+	CONFIG_CAVEAT = 32,
+	X_VISUAL_TYPE = 34,
+	TRANSPARENT_TYPE = 35,
+	TRANSPARENT_INDEX_VALUE = 36,
+	TRANSPARENT_RED_VALUE = 37,
+	TRANSPARENT_GREEN_VALUE = 38,
+	TRANSPARENT_BLUE_VALUE = 39,
+	TRANSPARENT_ALPHA_VALUE = 40,
+	DRAWABLE_TYPE = 32784,
+	RENDER_TYPE = 32785,
+	X_RENDERABLE = 32786,
+	FBCONFIG_ID = 32787,
+	VISUAL_ID = 32779,
+	SCREEN = 32780,
 	SAMPLE_BUFFERS = 100000,
-	SAMPLES = 100001
+	SAMPLES = 100001,
 }
 alias GdkGLConfigAttrib GLConfigAttrib;
 
 public enum GdkGLConfigCaveat
 {
-	DONT_CARE = cast(int)0xFFFFFFFF, /+* GDK_GL_DONT_CARE +/
-	NONE = 0x8000, /+* GDK_GL_NONE +/
-	GDK_GL_SLOW_CONFIG = 0x8001,
-	GDK_GL_NON_CONFORMANT_CONFIG = 0x800D
+	CONFIG_CAVEAT_DONT_CARE = 4294967295,
+	CONFIG_CAVEAT_NONE = 32768,
+	SLOW_CONFIG = 32769,
+	NON_CONFORMANT_CONFIG = 32781,
 }
 alias GdkGLConfigCaveat GLConfigCaveat;
 
-public enum GdkGLVisualType
-{
-	TYPE_DONT_CARE = cast(int)0xFFFFFFFF, /+* GDK_GL_DONT_CARE +/
-	GDK_GL_TRUE_COLOR = 0x8002,
-	GDK_GL_DIRECT_COLOR = 0x8003,
-}
-alias GdkGLVisualType GLVisualType;
-
-public enum GdkGLTransparentType
-{
-	NONE = 0x8000, /+* GDK_GL_NONE +/
-	RGB = 0x8008,
-}
-alias GdkGLTransparentType GLTransparentType;
-
-public enum GdkGLDrawableTypeMask
-{
-	WINDOW_BIT = 1 << 0, /+* 0x00000001 +/
-}
-alias GdkGLDrawableTypeMask GLDrawableTypeMask;
-
-public enum GdkGLRenderTypeMask
-{
-	RGBA_BIT = 1 << 0, /+* 0x00000001 +/
-}
-alias GdkGLRenderTypeMask GLRenderTypeMask;
-
-public enum GdkGLBufferMask
-{
-	FRONT_LEFT_BUFFER_BIT = 1 << 0, /+* 0x00000001 +/
-	FRONT_RIGHT_BUFFER_BIT = 1 << 1, /+* 0x00000002 +/
-	BACK_LEFT_BUFFER_BIT = 1 << 2, /+* 0x00000004 +/
-	BACK_RIGHT_BUFFER_BIT = 1 << 3, /+* 0x00000008 +/
-	AUX_BUFFERS_BIT = 1 << 4, /+* 0x00000010 +/
-	DEPTH_BUFFER_BIT = 1 << 5, /+* 0x00000020 +/
-	STENCIL_BUFFER_BIT = 1 << 6, /+* 0x00000040 +/
-	ACCUM_BUFFER_BIT = 1 << 7 /+* 0x00000080 +/
-}
-alias GdkGLBufferMask GLBufferMask;
-
 public enum GdkGLConfigError
 {
-	BAD_SCREEN = 1, /+* screen # is bad +/
-	BAD_ATTRIBUTE = 2, /+* attribute to get is bad +/
-	NO_EXTENSION = 3, /+* no glx extension on server +/
-	BAD_VISUAL = 4, /+* visual # not known by GLX +/
-	BAD_CONTEXT = 5, /+* returned only by importContext EXT? +/
-	BAD_VALUE = 6, /+* returned only by glXSwapIntervalSGI? +/
-	BAD_ENUM = 7 /+* unused? +/
+	BAD_SCREEN = 1,
+	BAD_ATTRIBUTE = 2,
+	NO_EXTENSION = 3,
+	BAD_VISUAL = 4,
+	BAD_CONTEXT = 5,
+	BAD_VALUE = 6,
+	BAD_ENUM = 7,
 }
 alias GdkGLConfigError GLConfigError;
 
-public enum GdkGLRenderType
+public enum GdkGLConfigMode
 {
-	RGBA_TYPE = 0x8014,
+	RGB = 0,
+	RGBA = 0,
+	INDEX = 1,
+	SINGLE = 0,
+	DOUBLE = 2,
+	STEREO = 4,
+	ALPHA = 8,
+	DEPTH = 16,
+	STENCIL = 32,
+	ACCUM = 64,
+	MULTISAMPLE = 128,
 }
-alias GdkGLRenderType GLRenderType;
+alias GdkGLConfigMode GLConfigMode;
 
 public enum GdkGLDrawableAttrib
 {
-	PRESERVED_CONTENTS = 0x801B,
-	WIDTH = 0x801D,
-	HEIGHT = 0x801E,
-	EVENT_MASK = 0x801F
+	PRESERVED_CONTENTS = 32795,
+	WIDTH = 32797,
+	HEIGHT = 32798,
+	EVENT_MASK = 32799,
 }
 alias GdkGLDrawableAttrib GLDrawableAttrib;
 
+public enum GdkGLDrawableTypeMask
+{
+	WINDOW_BIT = 1,
+}
+alias GdkGLDrawableTypeMask GLDrawableTypeMask;
 
-/**
- * Main Gtk struct.
- */
-public struct GdkGLConfig{}
+public enum GdkGLRenderType
+{
+	RGBA_TYPE = 32788,
+}
+alias GdkGLRenderType GLRenderType;
 
+public enum GdkGLRenderTypeMask
+{
+	RGBA_BIT = 1,
+}
+alias GdkGLRenderTypeMask GLRenderTypeMask;
 
-/**
- * Main Gtk struct.
- */
-public struct GdkGLContext{}
+public enum GdkGLTransparentType
+{
+	NONE = 32768,
+	RGB = 32776,
+}
+alias GdkGLTransparentType GLTransparentType;
 
+public enum GdkGLVisualType
+{
+	VISUAL_TYPE_DONT_CARE = 4294967295,
+	TRUE_COLOR = 32770,
+	DIRECT_COLOR = 32771,
+}
+alias GdkGLVisualType GLVisualType;
+struct GdkGLConfigImpl;
+struct GdkGLContextImpl;
+struct GdkGLWindowImpl;
 
-/**
- * Main Gtk struct.
- */
-public struct GdkGLDrawable{}
+struct GdkGLConfig
+{
+	GObject parentInstance;
+	GdkGLConfigImpl* impl;
+}
 
+struct GdkGLConfigClass
+{
+	GObjectClass parentClass;
+}
 
-/**
- * Main Gtk struct.
- */
-public struct GdkGLWindow{}
+struct GdkGLContext
+{
+	GObject parentInstance;
+	GdkGLContextImpl* impl;
+}
 
+struct GdkGLContextClass
+{
+	GObjectClass parentClass;
+}
 
-/*
- */
-// TODO
-// #define gdk_window_get_gl_drawable(window)
+struct GdkGLDrawable;
 
-/*
- */
-// void (*GdkGLProc) (void);
+struct GdkGLDrawableClass
+{
+	GTypeInterface baseIface;
+	extern(C) GdkGLContext* function(GdkGLDrawable* gldrawable, GdkGLContext* shareList, int direct, int renderType) createGlContext;
+	extern(C) int function(GdkGLDrawable* gldrawable) isDoubleBuffered;
+	extern(C) void function(GdkGLDrawable* gldrawable) swapBuffers;
+	extern(C) void function(GdkGLDrawable* gldrawable) waitGl;
+	extern(C) void function(GdkGLDrawable* gldrawable) waitGdk;
+	extern(C) GdkGLConfig* function(GdkGLDrawable* gldrawable) getGlConfig;
+}
+
+struct GdkGLWindow
+{
+	GObject parentInstance;
+	GdkGLWindowImpl* impl;
+	GdkWindow* window;
+}
+
+struct GdkGLWindowClass
+{
+	GObjectClass parentClass;
+}
+
 public alias extern(C) void function() GdkGLProc;

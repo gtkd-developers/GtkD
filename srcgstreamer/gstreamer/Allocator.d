@@ -16,120 +16,89 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GstAllocator.html
- * outPack = gstreamer
- * outFile = Allocator
- * strct   = GstAllocator
- * realStrct=
- * ctorStrct=
- * clss    = Allocator
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_allocator_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gstreamer.Memory
- * structWrap:
- * 	- GstAllocator* -> Allocator
- * 	- GstMemory* -> Memory
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.Allocator;
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gstreamer.AllocationParams;
+private import gstreamer.Memory;
+private import gstreamer.ObjectGst;
+private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gstreamer.Memory;
-
-
-private import gstreamer.ObjectGst;
 
 /**
  * Memory is usually created by allocators with a gst_allocator_alloc()
- * method call. When NULL is used as the allocator, the default allocator will
+ * method call. When %NULL is used as the allocator, the default allocator will
  * be used.
- *
+ * 
  * New allocators can be registered with gst_allocator_register().
  * Allocators are identified by name and can be retrieved with
  * gst_allocator_find(). gst_allocator_set_default() can be used to change the
  * default allocator.
- *
+ * 
  * New memory can be created with gst_memory_new_wrapped() that wraps the memory
  * allocated elsewhere.
- *
- * Last reviewed on 2012-07-09 (0.11.3)
  */
 public class Allocator : ObjectGst
 {
-	
 	/** the main Gtk struct */
 	protected GstAllocator* gstAllocator;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstAllocator* getAllocatorStruct()
 	{
 		return gstAllocator;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gstAllocator;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GstAllocator* gstAllocator)
-	{
-		super(cast(GstObject*)gstAllocator);
-		this.gstAllocator = gstAllocator;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gstAllocator = cast(GstAllocator*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstAllocator* gstAllocator, bool ownedRef = false)
+	{
+		this.gstAllocator = gstAllocator;
+		super(cast(GstObject*)gstAllocator, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gst_allocator_get_type();
+	}
+
 	/**
-	 * Find a previously registered allocator with name. When name is NULL, the
+	 * Find a previously registered allocator with @name. When @name is %NULL, the
 	 * default allocator will be returned.
+	 *
 	 * Params:
-	 * name = the name of the allocator. [allow-none]
-	 * Returns: a GstAllocator or NULL when the allocator with name was not registered. Use gst_object_unref() to release the allocator after usage. [transfer full]
+	 *     name = the name of the allocator
+	 *
+	 * Return: a #GstAllocator or %NULL when
+	 *     the allocator with @name was not registered. Use gst_object_unref()
+	 *     to release the allocator after usage.
 	 */
 	public static Allocator find(string name)
 	{
-		// GstAllocator * gst_allocator_find (const gchar *name);
 		auto p = gst_allocator_find(Str.toStringz(name));
 		
 		if(p is null)
@@ -137,87 +106,48 @@ public class Allocator : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) p);
+		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) p, true);
 	}
-	
+
 	/**
-	 * Registers the memory allocator with name. This function takes ownership of
-	 * allocator.
+	 * Registers the memory @allocator with @name. This function takes ownership of
+	 * @allocator.
+	 *
 	 * Params:
-	 * name = the name of the allocator
-	 * allocator = GstAllocator. [transfer full]
+	 *     name = the name of the allocator
+	 *     allocator = #GstAllocator
 	 */
 	public static void register(string name, Allocator allocator)
 	{
-		// void gst_allocator_register (const gchar *name,  GstAllocator *allocator);
 		gst_allocator_register(Str.toStringz(name), (allocator is null) ? null : allocator.getAllocatorStruct());
 	}
-	
+
 	/**
-	 * Set the default allocator. This function takes ownership of allocator.
-	 */
-	public void setDefault()
-	{
-		// void gst_allocator_set_default (GstAllocator *allocator);
-		gst_allocator_set_default(gstAllocator);
-	}
-	
-	/**
-	 * Initialize params to its default values
-	 * Params:
-	 * params = a GstAllocationParams
-	 */
-	public static void gstAllocationParamsInit(GstAllocationParams* params)
-	{
-		// void gst_allocation_params_init (GstAllocationParams *params);
-		gst_allocation_params_init(params);
-	}
-	
-	/**
-	 * Create a copy of params.
-	 * Free-function: gst_allocation_params_free
-	 * Params:
-	 * params = a GstAllocationParams. [transfer none]
-	 * Returns: a new #GstAllocationParams, free with gst_allocation_params_free(). [transfer full]
-	 */
-	public static GstAllocationParams* gstAllocationParamsCopy(GstAllocationParams* params)
-	{
-		// GstAllocationParams * gst_allocation_params_copy (const GstAllocationParams *params);
-		return gst_allocation_params_copy(params);
-	}
-	
-	/**
-	 * Free params
-	 * Params:
-	 * params = a GstAllocationParams. [in][transfer full]
-	 */
-	public static void gstAllocationParamsFree(GstAllocationParams* params)
-	{
-		// void gst_allocation_params_free (GstAllocationParams *params);
-		gst_allocation_params_free(params);
-	}
-	
-	/**
-	 * Use allocator to allocate a new memory block with memory that is at least
-	 * size big.
-	 * The optional params can specify the prefix and padding for the memory. If
-	 * NULL is passed, no flags, no extra prefix/padding and a default alignment is
+	 * Use @allocator to allocate a new memory block with memory that is at least
+	 * @size big.
+	 *
+	 * The optional @params can specify the prefix and padding for the memory. If
+	 * %NULL is passed, no flags, no extra prefix/padding and a default alignment is
 	 * used.
+	 *
 	 * The prefix/padding will be filled with 0 if flags contains
-	 * GST_MEMORY_FLAG_ZERO_PREFIXED and GST_MEMORY_FLAG_ZERO_PADDED respectively.
-	 * When allocator is NULL, the default allocator will be used.
-	 * The alignment in params is given as a bitmask so that align + 1 equals
+	 * #GST_MEMORY_FLAG_ZERO_PREFIXED and #GST_MEMORY_FLAG_ZERO_PADDED respectively.
+	 *
+	 * When @allocator is %NULL, the default allocator will be used.
+	 *
+	 * The alignment in @params is given as a bitmask so that @align + 1 equals
 	 * the amount of bytes to align to. For example, to align to 8 bytes,
 	 * use an alignment of 7.
+	 *
 	 * Params:
-	 * size = size of the visible memory area
-	 * params = optional parameters. [transfer none][allow-none]
-	 * Returns: a new GstMemory. [transfer full]
+	 *     size = size of the visible memory area
+	 *     params = optional parameters
+	 *
+	 * Return: a new #GstMemory.
 	 */
-	public Memory alloc(gsize size, GstAllocationParams* params)
+	public Memory alloc(size_t size, AllocationParams params)
 	{
-		// GstMemory * gst_allocator_alloc (GstAllocator *allocator,  gsize size,  GstAllocationParams *params);
-		auto p = gst_allocator_alloc(gstAllocator, size, params);
+		auto p = gst_allocator_alloc(gstAllocator, size, (params is null) ? null : params.getAllocationParamsStruct());
 		
 		if(p is null)
 		{
@@ -226,43 +156,23 @@ public class Allocator : ObjectGst
 		
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
 	}
-	
+
 	/**
-	 * Free memory that was previously allocated with gst_allocator_alloc().
+	 * Free @memory that was previously allocated with gst_allocator_alloc().
+	 *
 	 * Params:
-	 * memory = the memory to free. [transfer full]
+	 *     memory = the memory to free
 	 */
 	public void free(Memory memory)
 	{
-		// void gst_allocator_free (GstAllocator *allocator,  GstMemory *memory);
 		gst_allocator_free(gstAllocator, (memory is null) ? null : memory.getMemoryStruct());
 	}
-	
+
 	/**
-	 * Allocate a new memory block that wraps the given data.
-	 * The prefix/padding must be filled with 0 if flags contains
-	 * GST_MEMORY_FLAG_ZERO_PREFIXED and GST_MEMORY_FLAG_ZERO_PADDED respectively.
-	 * Params:
-	 * flags = GstMemoryFlags
-	 * data = data to
-	 * wrap. [array length=size][element-type guint8][transfer none]
-	 * maxsize = allocated size of data
-	 * offset = offset in data
-	 * size = size of valid data
-	 * userData = user_data. [allow-none]
-	 * notify = called with user_data when the memory is freed. [allow-none][scope async][closure user_data]
-	 * Returns: a new GstMemory. [transfer full]
+	 * Set the default allocator. This function takes ownership of @allocator.
 	 */
-	public static Memory gstMemoryNewWrapped(GstMemoryFlags flags, void* data, gsize maxsize, gsize offset, gsize size, void* userData, GDestroyNotify notify)
+	public void setDefault()
 	{
-		// GstMemory * gst_memory_new_wrapped (GstMemoryFlags flags,  gpointer data,  gsize maxsize,  gsize offset,  gsize size,  gpointer user_data,  GDestroyNotify notify);
-		auto p = gst_memory_new_wrapped(flags, data, maxsize, offset, size, userData, notify);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		gst_allocator_set_default(gstAllocator);
 	}
 }

@@ -16,188 +16,97 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkSourceGutterRendererPixbuf.html
- * outPack = gsv
- * outFile = SourceGutterRendererPixbuf
- * strct   = GtkSourceGutterRendererPixbuf
- * realStrct=
- * ctorStrct=GtkSourceGutterRenderer
- * clss    = SourceGutterRendererPixbuf
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = GtkSourceGutterRenderer
- * implements:
- * prefixes:
- * 	- gtk_source_gutter_renderer_pixbuf_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gio.Icon
- * 	- gio.IconIF
- * 	- gdk.Pixbuf
- * structWrap:
- * 	- GIcon* -> IconIF
- * 	- GdkPixbuf* -> Pixbuf
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gsv.SourceGutterRendererPixbuf;
 
-public  import gsvc.gsvtypes;
-
-private import gsvc.gsv;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
+private import gdkpixbuf.Pixbuf;
 private import gio.Icon;
 private import gio.IconIF;
-private import gdk.Pixbuf;
-
-
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
+private import gsvc.gsv;
+public  import gsvc.gsvtypes;
 
-/**
- */
+
 public class SourceGutterRendererPixbuf : SourceGutterRenderer
 {
-	
 	/** the main Gtk struct */
 	protected GtkSourceGutterRendererPixbuf* gtkSourceGutterRendererPixbuf;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkSourceGutterRendererPixbuf* getSourceGutterRendererPixbufStruct()
 	{
 		return gtkSourceGutterRendererPixbuf;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceGutterRendererPixbuf;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkSourceGutterRendererPixbuf* gtkSourceGutterRendererPixbuf)
-	{
-		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererPixbuf);
-		this.gtkSourceGutterRendererPixbuf = gtkSourceGutterRendererPixbuf;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkSourceGutterRendererPixbuf = cast(GtkSourceGutterRendererPixbuf*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkSourceGutterRendererPixbuf* gtkSourceGutterRendererPixbuf, bool ownedRef = false)
+	{
+		this.gtkSourceGutterRendererPixbuf = gtkSourceGutterRendererPixbuf;
+		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererPixbuf, ownedRef);
+	}
+
 	/** */
 	public void setStockId(StockID stockId)
 	{
-		setStockId(StockDesc[stockId]);
+		setStockId(cast(string)stockId);
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_source_gutter_renderer_pixbuf_get_type();
+	}
+
 	/**
-	 * Create a new GtkSourceGutterRendererPixbuf.
+	 * Create a new #GtkSourceGutterRendererPixbuf.
+	 *
+	 * Return: A #GtkSourceGutterRenderer
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkSourceGutterRenderer * gtk_source_gutter_renderer_pixbuf_new  (void);
 		auto p = gtk_source_gutter_renderer_pixbuf_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_source_gutter_renderer_pixbuf_new()");
-		}
-		this(cast(GtkSourceGutterRendererPixbuf*) p);
-	}
-	
-	/**
-	 */
-	public void setPixbuf(Pixbuf pixbuf)
-	{
-		// void gtk_source_gutter_renderer_pixbuf_set_pixbuf  (GtkSourceGutterRendererPixbuf *renderer,  GdkPixbuf *pixbuf);
-		gtk_source_gutter_renderer_pixbuf_set_pixbuf(gtkSourceGutterRendererPixbuf, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-	
-	/**
-	 * Get the pixbuf of the renderer.
-	 * Returns: a GdkPixbuf. [transfer none]
-	 */
-	public Pixbuf getPixbuf()
-	{
-		// GdkPixbuf * gtk_source_gutter_renderer_pixbuf_get_pixbuf  (GtkSourceGutterRendererPixbuf *renderer);
-		auto p = gtk_source_gutter_renderer_pixbuf_get_pixbuf(gtkSourceGutterRendererPixbuf);
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new");
 		}
 		
-		import gtkc.gobject : g_object_ref;
-		g_object_ref(cast(GObject*)p);
-		
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		this(cast(GtkSourceGutterRendererPixbuf*) p, true);
 	}
-	
-	/**
-	 * Warning
-	 * gtk_source_gutter_renderer_pixbuf_set_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Don't use this function.
-	 * Params:
-	 * stockId = the stock id
-	 */
-	public void setStockId(string stockId)
-	{
-		// void gtk_source_gutter_renderer_pixbuf_set_stock_id  (GtkSourceGutterRendererPixbuf *renderer,  const gchar *stock_id);
-		gtk_source_gutter_renderer_pixbuf_set_stock_id(gtkSourceGutterRendererPixbuf, Str.toStringz(stockId));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_source_gutter_renderer_pixbuf_get_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Don't use this function.
-	 * Returns: the stock id.
-	 */
-	public string getStockId()
-	{
-		// const gchar * gtk_source_gutter_renderer_pixbuf_get_stock_id  (GtkSourceGutterRendererPixbuf *renderer);
-		return Str.toString(gtk_source_gutter_renderer_pixbuf_get_stock_id(gtkSourceGutterRendererPixbuf));
-	}
-	
-	/**
-	 */
-	public void setGicon(IconIF icon)
-	{
-		// void gtk_source_gutter_renderer_pixbuf_set_gicon  (GtkSourceGutterRendererPixbuf *renderer,  GIcon *icon);
-		gtk_source_gutter_renderer_pixbuf_set_gicon(gtkSourceGutterRendererPixbuf, (icon is null) ? null : icon.getIconTStruct());
-	}
-	
+
 	/**
 	 * Get the gicon of the renderer
-	 * Returns: a GIcon. [transfer none]
+	 *
+	 * Return: a #GIcon
 	 */
 	public IconIF getGicon()
 	{
-		// GIcon * gtk_source_gutter_renderer_pixbuf_get_gicon  (GtkSourceGutterRendererPixbuf *renderer);
 		auto p = gtk_source_gutter_renderer_pixbuf_get_gicon(gtkSourceGutterRendererPixbuf);
 		
 		if(p is null)
@@ -207,20 +116,66 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 		
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
-	
-	/**
-	 */
-	public void setIconName(string iconName)
-	{
-		// void gtk_source_gutter_renderer_pixbuf_set_icon_name  (GtkSourceGutterRendererPixbuf *renderer,  const gchar *icon_name);
-		gtk_source_gutter_renderer_pixbuf_set_icon_name(gtkSourceGutterRendererPixbuf, Str.toStringz(iconName));
-	}
-	
-	/**
-	 */
+
 	public string getIconName()
 	{
-		// const gchar * gtk_source_gutter_renderer_pixbuf_get_icon_name  (GtkSourceGutterRendererPixbuf *renderer);
 		return Str.toString(gtk_source_gutter_renderer_pixbuf_get_icon_name(gtkSourceGutterRendererPixbuf));
+	}
+
+	/**
+	 * Get the pixbuf of the renderer.
+	 *
+	 * Return: a #GdkPixbuf
+	 */
+	public Pixbuf getPixbuf()
+	{
+		auto p = gtk_source_gutter_renderer_pixbuf_get_pixbuf(gtkSourceGutterRendererPixbuf);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+
+	/**
+	 *
+	 *
+	 * Deprecated: Don't use this function.
+	 *
+	 * Return: the stock id.
+	 */
+	public string getStockId()
+	{
+		return Str.toString(gtk_source_gutter_renderer_pixbuf_get_stock_id(gtkSourceGutterRendererPixbuf));
+	}
+
+	public void setGicon(IconIF icon)
+	{
+		gtk_source_gutter_renderer_pixbuf_set_gicon(gtkSourceGutterRendererPixbuf, (icon is null) ? null : icon.getIconStruct());
+	}
+
+	public void setIconName(string iconName)
+	{
+		gtk_source_gutter_renderer_pixbuf_set_icon_name(gtkSourceGutterRendererPixbuf, Str.toStringz(iconName));
+	}
+
+	public void setPixbuf(Pixbuf pixbuf)
+	{
+		gtk_source_gutter_renderer_pixbuf_set_pixbuf(gtkSourceGutterRendererPixbuf, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+	}
+
+	/**
+	 *
+	 *
+	 * Deprecated: Don't use this function.
+	 *
+	 * Params:
+	 *     stockId = the stock id
+	 */
+	public void setStockId(string stockId)
+	{
+		gtk_source_gutter_renderer_pixbuf_set_stock_id(gtkSourceGutterRendererPixbuf, Str.toStringz(stockId));
 	}
 }

@@ -16,242 +16,227 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GTlsPassword.html
- * outPack = gio
- * outFile = TlsPassword
- * strct   = GTlsPassword
- * realStrct=
- * ctorStrct=
- * clss    = TlsPassword
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_tls_password_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.TlsPassword;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-
-
-private import gobject.ObjectG;
 
 /**
  * Holds a password used in TLS.
+ *
+ * Since: 2.30
  */
 public class TlsPassword : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GTlsPassword* gTlsPassword;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GTlsPassword* getTlsPasswordStruct()
 	{
 		return gTlsPassword;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gTlsPassword;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GTlsPassword* gTlsPassword)
-	{
-		super(cast(GObject*)gTlsPassword);
-		this.gTlsPassword = gTlsPassword;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gTlsPassword = cast(GTlsPassword*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GTlsPassword* gTlsPassword, bool ownedRef = false)
+	{
+		this.gTlsPassword = gTlsPassword;
+		super(cast(GObject*)gTlsPassword, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_tls_password_get_type();
+	}
+
 	/**
-	 * Create a new GTlsPassword object.
+	 * Create a new #GTlsPassword object.
+	 *
 	 * Params:
-	 * flags = the password flags
-	 * description = description of what the password is for
+	 *     flags = the password flags
+	 *     description = description of what the password is for
+	 *
+	 * Return: The newly allocated password object
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GTlsPasswordFlags flags, string description)
+	public this(GTlsPasswordFlags flags, string description)
 	{
-		// GTlsPassword * g_tls_password_new (GTlsPasswordFlags flags,  const gchar *description);
 		auto p = g_tls_password_new(flags, Str.toStringz(description));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_tls_password_new(flags, Str.toStringz(description))");
-		}
-		this(cast(GTlsPassword*) p);
-	}
-	
-	/**
-	 * Get the password value. If length is not NULL then it will be
-	 * filled in with the length of the password value. (Note that the
-	 * password value is not nul-terminated, so you can only pass NULL
-	 * for length in contexts where you know the password will have a
-	 * certain fixed length.)
-	 * Since 2.30
-	 * Returns: The password value (owned by the password object).
-	 */
-	public char[] getValue()
-	{
-		// const guchar * g_tls_password_get_value (GTlsPassword *password,  gsize *length);
-		gsize length;
-		auto p = g_tls_password_get_value(gTlsPassword, &length);
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new");
 		}
 		
-		return p[0 .. length];
+		this(cast(GTlsPassword*) p, true);
 	}
-	
-	/**
-	 * Set the value for this password. The value will be copied by the password
-	 * object.
-	 * Specify the length, for a non-nul-terminated password. Pass -1 as
-	 * length if using a nul-terminated password, and length will be
-	 * calculated automatically. (Note that the terminating nul is not
-	 * considered part of the password in this case.)
-	 * Since 2.30
-	 * Params:
-	 * value = the new password value
-	 */
-	public void setValue(char[] value)
-	{
-		// void g_tls_password_set_value (GTlsPassword *password,  const guchar *value,  gssize length);
-		g_tls_password_set_value(gTlsPassword, value.ptr, cast(int) value.length);
-	}
-	
-	/**
-	 * Provide the value for this password.
-	 * The value will be owned by the password object, and later freed using
-	 * the destroy function callback.
-	 * Specify the length, for a non-nul-terminated password. Pass -1 as
-	 * length if using a nul-terminated password, and length will be
-	 * calculated automatically. (Note that the terminating nul is not
-	 * considered part of the password in this case.)
-	 * Virtual: set_value
-	 * Since 2.30
-	 * Params:
-	 * value = the value for the password
-	 * destroy = a function to use to free the password. [allow-none]
-	 */
-	public void setValueFull(char[] value, GDestroyNotify destroy)
-	{
-		// void g_tls_password_set_value_full (GTlsPassword *password,  guchar *value,  gssize length,  GDestroyNotify destroy);
-		g_tls_password_set_value_full(gTlsPassword, value.ptr, cast(int) value.length, destroy);
-	}
-	
+
 	/**
 	 * Get a description string about what the password will be used for.
-	 * Since 2.30
-	 * Returns: The description of the password.
+	 *
+	 * Return: The description of the password.
+	 *
+	 * Since: 2.30
 	 */
 	public string getDescription()
 	{
-		// const gchar * g_tls_password_get_description (GTlsPassword *password);
 		return Str.toString(g_tls_password_get_description(gTlsPassword));
 	}
-	
-	/**
-	 * Set a description string about what the password will be used for.
-	 * Since 2.30
-	 * Params:
-	 * description = The description of the password
-	 */
-	public void setDescription(string description)
-	{
-		// void g_tls_password_set_description (GTlsPassword *password,  const gchar *description);
-		g_tls_password_set_description(gTlsPassword, Str.toStringz(description));
-	}
-	
+
 	/**
 	 * Get flags about the password.
-	 * Since 2.30
-	 * Returns: The flags about the password.
+	 *
+	 * Return: The flags about the password.
+	 *
+	 * Since: 2.30
 	 */
 	public GTlsPasswordFlags getFlags()
 	{
-		// GTlsPasswordFlags g_tls_password_get_flags (GTlsPassword *password);
 		return g_tls_password_get_flags(gTlsPassword);
 	}
-	
+
 	/**
-	 * Set flags about the password.
-	 * Since 2.30
+	 * Get the password value. If @length is not %NULL then it will be
+	 * filled in with the length of the password value. (Note that the
+	 * password value is not nul-terminated, so you can only pass %NULL
+	 * for @length in contexts where you know the password will have a
+	 * certain fixed length.)
+	 *
 	 * Params:
-	 * flags = The flags about the password
+	 *     length = location to place the length of the password.
+	 *
+	 * Return: The password value (owned by the password object).
+	 *
+	 * Since: 2.30
 	 */
-	public void setFlags(GTlsPasswordFlags flags)
+	public string getValue(size_t* length)
 	{
-		// void g_tls_password_set_flags (GTlsPassword *password,  GTlsPasswordFlags flags);
-		g_tls_password_set_flags(gTlsPassword, flags);
+		return Str.toString(g_tls_password_get_value(gTlsPassword, length));
 	}
-	
+
 	/**
 	 * Get a user readable translated warning. Usually this warning is a
 	 * representation of the password flags returned from
 	 * g_tls_password_get_flags().
-	 * Since 2.30
-	 * Returns: The warning.
+	 *
+	 * Return: The warning.
+	 *
+	 * Since: 2.30
 	 */
 	public string getWarning()
 	{
-		// const gchar * g_tls_password_get_warning (GTlsPassword *password);
 		return Str.toString(g_tls_password_get_warning(gTlsPassword));
 	}
-	
+
+	/**
+	 * Set a description string about what the password will be used for.
+	 *
+	 * Params:
+	 *     description = The description of the password
+	 *
+	 * Since: 2.30
+	 */
+	public void setDescription(string description)
+	{
+		g_tls_password_set_description(gTlsPassword, Str.toStringz(description));
+	}
+
+	/**
+	 * Set flags about the password.
+	 *
+	 * Params:
+	 *     flags = The flags about the password
+	 *
+	 * Since: 2.30
+	 */
+	public void setFlags(GTlsPasswordFlags flags)
+	{
+		g_tls_password_set_flags(gTlsPassword, flags);
+	}
+
+	/**
+	 * Set the value for this password. The @value will be copied by the password
+	 * object.
+	 *
+	 * Specify the @length, for a non-nul-terminated password. Pass -1 as
+	 * @length if using a nul-terminated password, and @length will be
+	 * calculated automatically. (Note that the terminating nul is not
+	 * considered part of the password in this case.)
+	 *
+	 * Params:
+	 *     value = the new password value
+	 *     length = the length of the password, or -1
+	 *
+	 * Since: 2.30
+	 */
+	public void setValue(string value, ptrdiff_t length)
+	{
+		g_tls_password_set_value(gTlsPassword, Str.toStringz(value), length);
+	}
+
+	/**
+	 * Provide the value for this password.
+	 *
+	 * The @value will be owned by the password object, and later freed using
+	 * the @destroy function callback.
+	 *
+	 * Specify the @length, for a non-nul-terminated password. Pass -1 as
+	 * @length if using a nul-terminated password, and @length will be
+	 * calculated automatically. (Note that the terminating nul is not
+	 * considered part of the password in this case.)
+	 *
+	 * Params:
+	 *     value = the value for the password
+	 *     length = the length of the password, or -1
+	 *     destroy = a function to use to free the password.
+	 *
+	 * Since: 2.30
+	 */
+	public void setValueFull(string value, ptrdiff_t length, GDestroyNotify destroy)
+	{
+		g_tls_password_set_value_full(gTlsPassword, Str.toStringz(value), length, destroy);
+	}
+
 	/**
 	 * Set a user readable translated warning. Usually this warning is a
 	 * representation of the password flags returned from
 	 * g_tls_password_get_flags().
-	 * Since 2.30
+	 *
 	 * Params:
-	 * warning = The user readable warning
+	 *     warning = The user readable warning
+	 *
+	 * Since: 2.30
 	 */
 	public void setWarning(string warning)
 	{
-		// void g_tls_password_set_warning (GTlsPassword *password,  const gchar *warning);
 		g_tls_password_set_warning(gTlsPassword, Str.toStringz(warning));
 	}
 }

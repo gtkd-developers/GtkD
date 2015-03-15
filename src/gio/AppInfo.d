@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = AppInfo
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = AppInfo
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- AppInfoIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.AppInfoT
- * 	- gio.AppInfoIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.AppInfo;
 
+private import gio.AppInfoIF;
+private import gio.AppInfoT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.AppInfoT;
-private import gio.AppInfoIF;
-
-
-
-/**
- */
 public class AppInfo : ObjectG, AppInfoIF
 {
-	
-	// Minimal implementation.
-	mixin AppInfoT!(GAppInfo);
-	
+	/** the main Gtk struct */
+	protected GAppInfo* gAppInfo;
+
+	/** Get the main Gtk struct */
+	public GAppInfo* getAppInfoStruct()
+	{
+		return gAppInfo;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gAppInfo;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GAppInfo* gAppInfo)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gAppInfo);
-		this.gAppInfo = gAppInfo;
+		gAppInfo = cast(GAppInfo*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GAppInfo* gAppInfo, bool ownedRef = false)
+	{
+		this.gAppInfo = gAppInfo;
+		super(cast(GObject*)gAppInfo, ownedRef);
+	}
+
+	// add the AppInfo capabilities
+	mixin AppInfoT!(GAppInfo);
+
 	/**
 	 */
 }

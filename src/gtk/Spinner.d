@@ -16,130 +16,107 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkSpinner.html
- * outPack = gtk
- * outFile = Spinner
- * strct   = GtkSpinner
- * realStrct=
- * ctorStrct=
- * clss    = Spinner
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_spinner_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.Spinner;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-
-
 private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
  * A GtkSpinner widget displays an icon-size spinning animation.
- * It is often used as an alternative to a GtkProgressBar for
+ * It is often used as an alternative to a #GtkProgressBar for
  * displaying indefinite activity, instead of actual progress.
- *
+ * 
  * To start the animation, use gtk_spinner_start(), to stop it
  * use gtk_spinner_stop().
  */
 public class Spinner : Widget
 {
-	
 	/** the main Gtk struct */
 	protected GtkSpinner* gtkSpinner;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkSpinner* getSpinnerStruct()
 	{
 		return gtkSpinner;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkSpinner;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkSpinner* gtkSpinner)
-	{
-		super(cast(GtkWidget*)gtkSpinner);
-		this.gtkSpinner = gtkSpinner;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkSpinner = cast(GtkSpinner*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkSpinner* gtkSpinner, bool ownedRef = false)
+	{
+		this.gtkSpinner = gtkSpinner;
+		super(cast(GtkWidget*)gtkSpinner, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_spinner_get_type();
+	}
+
 	/**
 	 * Returns a new spinner widget. Not yet started.
-	 * Since 2.20
+	 *
+	 * Return: a new #GtkSpinner
+	 *
+	 * Since: 2.20
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_spinner_new (void);
 		auto p = gtk_spinner_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_spinner_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkSpinner*) p);
 	}
-	
+
 	/**
 	 * Starts the animation of the spinner.
-	 * Since 2.20
+	 *
+	 * Since: 2.20
 	 */
 	public void start()
 	{
-		// void gtk_spinner_start (GtkSpinner *spinner);
 		gtk_spinner_start(gtkSpinner);
 	}
-	
+
 	/**
 	 * Stops the animation of the spinner.
-	 * Since 2.20
+	 *
+	 * Since: 2.20
 	 */
 	public void stop()
 	{
-		// void gtk_spinner_stop (GtkSpinner *spinner);
 		gtk_spinner_stop(gtkSpinner);
 	}
 }

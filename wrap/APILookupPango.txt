@@ -1,63 +1,50 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gtkD.
-# 
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping pango
-#####
-###
-#
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
-
-addTypedefs: start
-
-public import gtkc.cairotypes;
-public import gtkc.glibtypes;
-public import gtkc.gobjecttypes;
-
-///* The pango Basic Types */
-public alias void FcPattern;
-public alias void FcCharSet;
-public alias void FT_Face;
-
-addTypedefs: end
+wrap: pango
+file: /usr/share/gir-1.0/Pango-1.0.gir
+file: /usr/share/gir-1.0/PangoCairo-1.0.gir
 
 addAliases: start
+	public import gtkc.cairotypes;
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+
+	alias void* FTLibrary;
 addAliases: end
 
-addEnums: start
-addEnums: end
-
 addStructs: start
+
+	struct PangoFcFontMap
+	{
+		PangoFontMap parentInstance;
+		void* priv;
+	}
+
+	struct PangoCairoFont;
+
+	struct PangoCairoFontMap;
+
 addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
 
 addConstants: start
 
@@ -72,209 +59,81 @@ addConstants: start
 
 addConstants: end
 
-wrap: pango
+struct: AttrFontDesc
+class: PgAttributeFontDesc
+extend: Attribute
 
-###########################################################
-### Basic Pango Interfaces ################################
-###########################################################
-
-file: pango-Text-Processing.html
-
-struct: PangoContext
-class: PgContext
-prefix: pango_context_
-prefix: pango_
-noprefix: pango_item_
-import: glib.Str
-
-structWrap: PangoContext* PgContext
-import: glib.ListG
-structWrap: GList* ListG
-import: pango.PgFont
-structWrap: PangoFont* PgFont
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgFontset
-structWrap: PangoFontset* PgFontset
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgMatrix
-structWrap: PangoMatrix* PgMatrix
-import: pango.PgAttributeList
-structWrap: PangoAttrList* PgAttributeList
-import: pango.PgAttributeIterator
-structWrap: PangoAttrIterator* PgAttributeIterator
-import: pango.PgGlyphString
-structWrap: PangoGlyphString* PgGlyphString
-
-nocode: pango_break
-
-out: pango_context_list_families families
-array: pango_context_list_families families n_families
-out: pango_find_paragraph_boundary paragraph_delimiter_index
-out: pango_find_paragraph_boundary next_paragraph_start
-array: pango_shape_full item_text item_length
-array: pango_shape_full paragraph_text paragraph_length
-
+struct: Attribute
 code: start
-	/**
-	 * Determines possible line, word, and character breaks
-	 * for a string of Unicode text with a single analysis. For most
-	 * purposes you may want to use pango_get_log_attrs().
-	 * Params:
-	 * text =  the text to process
-	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
-	 * analysis =  PangoAnalysis structure from pango_itemize()
-	 * attrs =  an array to store character information in
-	 * attrsLen =  size of the array passed as attrs
-	 */
-	public static void pangoBreak(string text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
+	protected void setStruct(GObject* obj)
 	{
-		// void pango_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
-		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
+		pangoAttribute = cast(PangoAttribute*)obj;
 	}
 code: end
-openFile: PgContext
 
-file: pango-Bidirectional-Text.html
-closeFile: PgContext
+struct: AttrIterator
+class: PgAttributeIterator
+out: get_font language
+out: get_font extra_attrs
 
-struct: PangoItem
-class: PgItem
-prefix: pango_item_
-strictPrefix: Yes
-structWrap: PangoItem* PgItem
-outFile: PgItem
+struct: AttrLanguage
+class: PgAttributeLanguage
+extend: Attribute
 
+struct: AttrList
+class: PgAttributeList
 
-file: pango-Glyph-Storage.html
+struct: AttrShape
+class: PgAttributeShape
+extend: Attribute
 
-struct: PangoMatrix
-class: PgMatrix
-prefix: pango_
-prefix: pango_matrix_
-noprefix: pango_glyph_string_
-noprefix: pango_glyph_item_
-noprefix: pango_glyph_item_iter_
-structWrap: PangoMatrix* PgMatrix
-
-inout: pango_matrix_transform_point x
-inout: pango_matrix_transform_point y
-inout: pango_matrix_transform_distance dx
-inout: pango_matrix_transform_distance dy
-
-outFile: PgMatrix
-
-struct: PangoGlyphString
-class: PgGlyphString
-prefix: pango_glyph_string_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoGlyphString* PgGlyphString
-import: pango.PgFont
-structWrap: PangoFont* PgFont
-
-out: pango_glyph_string_index_to_x x_pos
-out: pango_glyph_string_x_to_index index_
-out: pango_glyph_string_x_to_index trailing
-
-outFile: PgGlyphString
-
-struct: PangoGlyphItem
-class: PgGlyphItem
-prefix: pango_glyph_item_
-noprefix: pango_glyph_item_iter_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoGlyphItem* PgGlyphItem
-import: pango.PgAttributeList
-structWrap: PangoAttrList* PgAttributeList
-import: glib.ListSG
-structWrap: GSList* ListSG
-nocode: pango_glyph_item_get_logical_widths
-inout: pango_glyph_item_letter_space log_attrs
+struct: AttrSize
+class: PgAttributeSize
+extend: Attribute
+import: glib.ConstructionException
+noCode: new
+noCode: new_absolute
 code: start
 	/**
-	 * Given a PangoGlyphItem and the corresponding
-	 * text, determine the screen width corresponding to each character. When
-	 * multiple characters compose a single cluster, the width of the entire
-	 * cluster is divided equally among the characters.
-	 * See also pango_glyph_string_get_logical_widths().
-	 * Since 1.26
+	 * Create a new font-size attribute in fractional points.
+	 *
 	 * Params:
-	 * text =  text that glyph_item corresponds to
-	 *  (glyph_item->item->offset is an offset from the
-	 *  start of text)
-	 * logicalWidths =  an array whose length is the number of characters in
-	 *  glyph_item (equal to glyph_item->item->num_chars)
-	 *  to be filled in with the resulting character widths.
+	 *     size = the font size, in %PANGO_SCALE<!-- -->ths of a point.
+	 *     absolute = true if the size represents an absolute size.
+	 *
+	 * Return: the newly allocated #PangoAttribute,
+	 *     which should be freed with pango_attribute_destroy().
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public void getLogicalWidths(string text, out int[] logicalWidths)
+	public this(int size, bool absolute)
 	{
-		logicalWidths = new int[pangoGlyphItem.item.numChars];
+		PangoAttribute* p;
 
-		// void pango_glyph_item_get_logical_widths (PangoGlyphItem *glyph_item,  const char *text,  int *logical_widths);
-		pango_glyph_item_get_logical_widths(pangoGlyphItem, Str.toStringz(text), logicalWidths.ptr);
+		if ( absolute )
+			p = pango_attr_size_new_absolute(size);
+		else
+			p = pango_attr_size_new(size);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(PangoAttrSize*) p);
 	}
 code: end
-outFile: PgGlyphItem
 
-struct: PangoGlyphItemIter
-class: PgGlyphItemIter
-prefix: pango_glyph_item_iter_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoGlyphItemIter* PgGlyphItemIter
-import: pango.PgGlyphItem
-structWrap: PangoGlyphItem* PgGlyphItem
-outFile: PgGlyphItemIter
+struct: Context
+alias: break pangoBreak
 
-file: pango-Fonts.html
+struct: FcFontMap
+class: PgCairoFontMap
+implements:
+noCode: create_context
 
-struct: PangoFont
-class: PgFont
-extend: GObject
-prefix: pango_font_
-noprefix: pango_font_description_
-noprefix: pango_font_descriptions_
-noprefix: pango_font_metrics_
-noprefix: pango_font_family_
-noprefix: pango_font_face_
-noprefix: pango_font_map_
-noprefix: pango_fontset_
-noprefix: pango_fontset_simple_
-
-import: pango.PgEngineShape
-structWrap: PangoEngineShape* PgEngineShape
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgCoverage
-structWrap: PangoCoverage* PgCoverage
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-outFile: PgFont
-
-struct: PangoFontDescription
-class: PgFontDescription
-prefix: pango_font_description_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoFontDescription* PgFontDescription
-
-override: toString
-
+struct: FontDescription
 code: start
-
 	/**
 	 * Creates a nwe font description and set the family nd the size
 	 * Params:
@@ -287,539 +146,111 @@ code: start
 		setFamily(family);
 		setSize(size * PANGO_SCALE);
 	}
-
 code: end
-outFile: PgFontDescription
 
-struct: PangoFontMetrics
-class: PgFontMetrics
-prefix: pango_font_metrics_
-strictPrefix: Yes
-structWrap: PangoFontMetrics* PgFontMetrics
-outFile: PgFontMetrics
-
-struct: PangoFontFamily
-class: PgFontFamily
-extend: GObject
-prefix: pango_font_family_
-strictPrefix: Yes
-import: glib.Str
-import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
-
-out: pango_font_family_list_faces faces
-array: pango_font_family_list_faces faces n_faces
-
-outFile: PgFontFamily
-
-struct: PangoFontFace
-class: PgFontFace
-extend: GObject
-prefix: pango_font_face_
-strictPrefix: Yes
-import: glib.Str
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-
-out: pango_font_face_list_sizes sizes
-array: pango_font_face_list_sizes sizes n_sizes
-
-outFile: PgFontFace
-
-struct: PangoFontMap
-class: PgFontMap
-extend: GObject
-prefix: pango_font_map_
-strictPrefix: Yes
-import: glib.Str
-import: pango.PgFont
-structWrap: PangoFont* PgFont
-import: pango.PgFontset
-structWrap: PangoFontset* PgFontset
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-
-out: pango_font_map_list_families families
-array: pango_font_map_list_families families n_families
-
-outFile: PgFontMap
-
-struct: PangoFontset
-class: PgFontset
-extend: GObject
-prefix: pango_fontset_
-strictPrefix: Yes
-noprefix: pango_fontset_simple_
-import: pango.PgFont
-structWrap: PangoFont* PgFont
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-outFile: PgFontset
-
-struct: PangoFontsetSimple
-class: PgFontsetSimple
-extend: PangoFontset
-prefix: pango_fontset_simple_
-strictPrefix: Yes
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgFont
-structWrap: PangoFont* PgFont
-import: pango.PgFontset
-outFile: PgFontsetSimple
-
-file: pango-Text-Attributes.html
-
-struct: PangoAttribute
-class: PgAttribute
-prefix: pango_attr_
-prefix: pango_
-noprefix: pango_color_
-noprefix: pango_language_
-noprefix: pango_attr_list_
-noprefix: pango_attr_iterator_
-
-import: glib.Str
-structWrap: PangoAttribute* PgAttribute
-import: glib.ErrorG
-import: glib.GException
-import: glib.SimpleXML
-structWrap: GMarkupParseContext* SimpleXML
-import: pango.PgAttributeList
-structWrap: PangoAttrList* PgAttributeList
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-
-out: pango_parse_markup attr_list
-out: pango_parse_markup text
-out: pango_markup_parser_finish attr_list
-out: pango_markup_parser_finish text
-out: pango_markup_parser_finish accel_char
-
-outFile: PgAttribute
-
-struct: PangoColor
-class: PgColor
-prefix: pango_color_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoColor* PgColor
-override: toString
-outFile: PgColor
-
-struct: PangoAttrList
-class: PgAttributeList
-prefix: pango_attr_list_
-strictPrefix: Yes
-structWrap: PangoAttrList* PgAttributeList
-import: pango.PgAttribute
-structWrap: PangoAttribute* PgAttribute
-import: pango.PgAttributeIterator
-structWrap: PangoAttrIterator* PgAttributeIterator
-outFile: PgAttributeList
-
-struct: PangoAttrIterator
-class: PgAttributeIterator
-prefix: pango_attr_iterator_
-strictPrefix: Yes
-structWrap: PangoAttrIterator* PgAttributeIterator
-import: pango.PgAttribute
-structWrap: PangoAttribute* PgAttribute
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: glib.ListSG
-structWrap: GSList* ListSG
-
-out: pango_attr_iterator_range start
-out: pango_attr_iterator_range end
-out: pango_attr_iterator_get_font language
-out: pango_attr_iterator_get_font extra_attrs
-
-outFile: PgAttributeIterator
-
-file: pango-Tab-Stops.html
-struct: PangoTabArray
-class: PgTabArray
-prefix: pango_tab_array_
-structWrap: PangoTabArray* PgTabArray
-
-out: pango_tab_array_get_tab alignment
-out: pango_tab_array_get_tab location
-out: pango_tab_array_get_tabs alignments
-out: pango_tab_array_get_tabs locations
-array: pango_tab_array_get_tabs alignments getSize()
-array: pango_tab_array_get_tabs locations getSize()
-outFile: PgTabArray
-
-#file: PangoMarkupFormat.html
-#class: 
-#prefix: 
-#outFile: 
-
-file: pango-Layout-Objects.html
-
-struct: PangoLayout
-class: PgLayout
-prefix: pango_layout_
-noprefix: pango_layout_iter_
-noprefix: pango_layout_line_
-import: glib.Str
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutLine
-structWrap: PangoLayoutLine* PgLayoutLine
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgAttributeList
-structWrap: PangoAttrList* PgAttributeList
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: pango.PgLayoutIter
-structWrap: PangoLayoutIter* PgLayoutIter
-import: glib.ListSG
-structWrap: GSList* ListSG
-
-out: pango_layout_get_log_attrs attrs
-array: pango_layout_get_log_attrs attrs n_attrs
-out: pango_layout_index_to_line_x line
-out: pango_layout_index_to_line_x x_pos
-out: pango_layout_xy_to_index index_
-out: pango_layout_xy_to_index trailing
-out: pango_layout_move_cursor_visually new_index
-out: pango_layout_move_cursor_visually new_trailing
-out: pango_layout_get_size width
-out: pango_layout_get_size height
-out: pango_layout_get_pixel_size width
-out: pango_layout_get_pixel_size height
-array: pango_layout_get_log_attrs_readonly Return n_attrs
-
-nocode: pango_layout_set_text
-
-code: start
-	/**
-	 * Sets the text of the layout.
-	 * Params:
-	 *  text = a UTF-8 string
-	 */
-	public void setText(string text)
-	{
-		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
-		pango_layout_set_text(pangoLayout, Str.toStringz(text), cast(int) text.length);
-	}
-	
-code: end
-outFile: PgLayout
-
-struct: PangoLayoutIter
-class: PgLayoutIter
-prefix: pango_layout_iter_
-strictPrefix: Yes
-structWrap: PangoLayoutIter* PgLayoutIter
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutLine
-structWrap: PangoLayoutLine* PgLayoutLine
-
-out: pango_layout_iter_get_line_yrange y0_
-out: pango_layout_iter_get_line_yrange y1_
-
-outFile: PgLayoutIter
-
-struct: PangoLayoutLine
-class: PgLayoutLine
-prefix: pango_layout_line_
-strictPrefix: Yes
-structWrap: PangoLayoutLine* PgLayoutLine
-
-out: pango_layout_line_index_to_x x_pos
-out: pango_layout_line_x_to_index index_
-out: pango_layout_line_x_to_index trailing
-out: pango_layout_line_get_x_ranges ranges
-array: pango_layout_line_get_x_ranges ranges n_ranges
-
-outFile: PgLayoutLine
-
-file: pango-Scripts-and-Languages.html
-
-class: PgScript
-prefix: pango_
-prefix: pango_script_
-noprefix: pango_script_iter_
-noprefix: pango_language_
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-outFile: PgScript
-
-struct: PangoScriptIter
-class: PgScriptIter
-prefix: pango_script_iter_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoScriptIter* PgScriptIter
-
-out: pango_script_iter_get_range start
-out: pango_script_iter_get_range end
-out: pango_script_iter_get_range script
-
-outFile: PgScriptIter
-
-struct: PangoLanguage
-class: PgLanguage
-prefix: pango_language_
-strictPrefix: Yes
-import: glib.Str
-structWrap: PangoLanguage* PgLanguage
-override: toString
-outFile: PgLanguage
-
-file: pango-Vertical-Text.html
-class: PgVertical
-prefix: pango_
-import: pango.PgMatrix
-structWrap: PangoMatrix* PgMatrix
-outFile: PgVertical
-
-###########################################################
-### Rendering with Pango ################################
-###########################################################
-
-#file: pango-Win32-Fonts-and-Rendering.html
-#class: PgWin32
-#prefix: pango_win32_ 
-#outFile: PgWin32
-
-#file: pango-FreeType-Fonts-and-Rendering.html
-
-#struct: PangoFT2FontMap
-#class: PgFT2FontMap
-#prefix: pango_ft2_font_map_
-#strictPrefix: Yes
-#outFile: PgFT2FontMap
-
-#class: PgFT2
-#prefix: pango_ft2_
-#noprefix: pango_ft2_font_map_
-#outFile: PgFT2
-
-#file: pango-Xft-Fonts-and-Rendering.html
-#class: PgXft
-#prefix: pango_xft_
-#outFile: PgXft
-
-file: pango-Cairo-Rendering.html
-struct: PangoCairoFontMap
-ctorStruct: PangoFontMap
-extend: PangoFontMap
-class: PgCairoFontMap
-prefix: pango_cairo_font_map_
-strictPrefix: Yes
-import: glib.Str
-import: pango.PgFontMap
-import: pango.PgContext
-structWrap: PangoFontMap* PgFontMap
-structWrap: PangoContext* PgContext
-override: createContext
-outFile: PgCairoFontMap
-
-class: PgCairo
-prefix: pango_cairo_
-noprefix: pango_cairo_font_map_
-import: glib.Str
-import: cairo.Context
-import: cairo.ScaledFont
-import: cairo.FontOption
-import: pango.PgContext
-import: pango.PgFont
-import: pango.PgGlyphItem
-import: pango.PgGlyphString
-import: pango.PgLayout
-import: pango.PgLayoutLine
-structWrap: cairo_t* Context
-structWrap: cairo_scaled_font_t* ScaledFont
-structWrap: cairo_font_options_t* FontOption
-structWrap: PangoContext* PgContext
-structWrap: PangoFont* PgFont
-structWrap: PangoGlyphItem* PgGlyphItem
-structWrap: PangoGlyphString* PgGlyphString
-structWrap: PangoLayout* PgLayout
-structWrap: PangoLayoutLine* PgLayoutLine
-outFile: PgCairo
-
-#file: pango-ATSUI-Fonts.html
-#class: 
-#prefix: 
-#outFile: 
-
-#file: pango-X-Fonts-and-Rendering.html
-#class: 
-#prefix: 
-#outFile: 
-
- 
-###########################################################
-### Low Level Functionality ###############################
-###########################################################
-
-file: pango-pango-renderer.html
-struct: PangoRenderer
-class: PgRenderer
-prefix: pango_renderer_
-import: glib.Str
-import: pango.PgColor
-structWrap: PangoColor* PgColor
-import: pango.PgFont
-structWrap: PangoFont* PgFont
-import: pango.PgGlyphItem
-structWrap: PangoGlyphItem* PgGlyphItem
-import: pango.PgGlyphString
-structWrap: PangoGlyphString* PgGlyphString
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutLine
-structWrap: PangoLayoutLine* PgLayoutLine
-import: pango.PgMatrix
-structWrap: PangoMatrix* PgMatrix
-outFile: PgRenderer
-
-#file: PangoFcFontMap.html
-#class: PangoFcFontMap
-#prefix: pango_fc_font_map_
-#outFile: PangoFcFontMap
-
-#file: PangoFcFont.html
-#class: PangoFcFont
-#prefix: pango_fc_font_
-#outFile: PangoFcFont
-
-#file: PangoFcDecoder.html
-#class: PangoFcDecoder
-#prefix: pango_dc_decoder_
-#outFile: PangoFcDecoder
-
-#file: pango-OpenType-Font-Handling.html
-
-#class: PangoOtInfo
-#prefix: pango_ot_info_
-#noprefix: pango_ot_buffer_
-#noprefix: pango_ot_ruleset_
-#outFile: PangoOtInfo
-
-#class: PangoOtBuffer
-#prefix: pango_ot_buffer_
-#strictPrefix: Y
-#outFile: PangoOtBuffer
-
-#class: PangoOtRuleset
-#prefix: pango_ot_ruleset_
-#strictPrefix: Y
-#outFile: PangoOtRuleset
-
-file: pango-Coverage-Maps.html
-struct: PangoCoverage
-class: PgCoverage
-prefix: pango_coverage_
-structWrap: PangoCoverage* PgCoverage
-
-out: pango_coverage_to_bytes bytes
-array: pango_coverage_to_bytes bytes n_bytes
-array: pango_coverage_from_bytes bytes n_bytes
-
-outFile: PgCoverage
-
-file: pango-Engines.html
-struct: PangoEngine
-class: PgEngine
-prefix: script_engine_
-import: glib.Str
-import: gobject.TypeModule
-structWrap: GTypeModule* TypeModule
-import: pango.PgEngine
-structWrap: PangoEngine* PgEngine
-
-out: script_engine_list engines
-array: script_engine_list engines n_engines
-
-outFile: PgEngine
-
-file: PangoEngineLang.html
-struct: PangoEngineLang
-class: PgEngineLang
-prefix: script_engine_lang_
-outFile: PgEngineLang
-
-file: PangoEngineShape.html
-struct: PangoEngineShape
-class: PgEngineShape
-prefix: script_engine_shape_
-outFile: PgEngineShape
-
-#file: pango-Modules.html
-#class: PgModules
-#prefix: pango_
-#outFile: PgModules
-
-file: pango-Miscellaneous-Utilities.html
-class: PgMiscellaneous
-prefix: pango_
-import: std.c.stdio
-import: glib.Str
-import: glib.StringG
-structWrap: GString* StringG
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-
-inout: pango_skip_space pos
-inout: pango_scan_word pos
-inout: pango_scan_string pos
-inout: pango_scan_int pos
-out: pango_scan_int out
-out: pango_lookup_aliases families
-array: pango_lookup_aliases families n_families
-out: pango_parse_enum value
-out: pango_parse_enum possible_values
-out: pango_parse_style style
-out: pango_parse_variant variant
-out: pango_parse_weight weight
-out: pango_parse_stretch stretch
-out: pango_log2vis_get_embedding_levels pbase_dir
-inout: pango_quantize_line_geometry thickness
-inout: pango_quantize_line_geometry position
-
-outFile: PgMiscellaneous
-
-file: pango-Version-Checking.html
-class: PgVersion
-prefix: pango_version_
-prefix: pango_
-import: glib.Str
-import: pango.PgMatrix
-structWrap: PangoMatrix* PgMatrix
-nocode: pango_version_string
-
-code: start
-	/**
-	 * This is similar to the macro PANGO_VERSION_STRING except that
-	 * it returns the version of Pango available at run-time, as opposed to
-	 * the version available at compile-time.
-	 * Since 1.16
-	 * Returns: A string containing the version of Pango library available at run time. The returned string is owned by Pango and should not be modified or freed.
-	 */
-	public static string strin()
-	{
-		// const char* pango_version_string (void);
-		return Str.toString(pango_version_string());
-	}
-code: end
-outFile: PgVersion
-
+struct: Layout
+array: set_text text length
+
+struct: Map
+out: get_engines exact_engines
+out: get_engines fallback_engines
+
+struct: PgMiscellaneous
+import: core.stdc.stdio
+
+move: attr_background_new Attribute background_new
+move: attr_fallback_new Attribute fallback_new
+move: attr_family_new Attribute family_new
+move: attr_foreground_new Attribute foreground_new
+move: attr_gravity_hint_new Attribute gravity_hint_new
+move: attr_gravity_new Attribute gravity_new
+move: attr_letter_spacing_new Attribute letter_spacing_new
+move: attr_rise_new Attribute rise_new
+move: attr_scale_new Attribute scale_new
+move: attr_stretch_new Attribute stretch_new
+move: attr_strikethrough_color_new Attribute strikethrough_color_new
+move: attr_strikethrough_new Attribute strikethrough_new
+move: attr_style_new Attribute style_new
+move: attr_type_get_name Attribute type_get_name
+move: attr_type_register Attribute type_register
+move: attr_underline_color_new Attribute underline_color_new
+move: attr_underline_new Attribute underline_new
+move: attr_variant_new Attribute variant_new
+move: attr_weight_new Attribute weight_new
+move: markup_parser_finish Attribute
+move: markup_parser_new Attribute
+move: parse_markup Attribute
+
+move: find_map Map
+move: module_register Map
+
+move: gravity_get_for_matrix PgVertical
+move: gravity_get_for_script PgVertical
+move: gravity_get_for_script_and_width PgVertical
+move: gravity_to_rotation PgVertical
+
+move: script_for_unichar PgScript
+move: script_get_sample_language PgScript
+
+move: bidi_type_for_unichar Context
+move: break Context
+move: default_break Context
+move: find_base_dir Context
+move: find_paragraph_boundary Context
+move: get_log_attrs Context
+move: get_mirror_char Context
+move: itemize Context
+move: itemize_with_base_dir Context
+move: reorder_items Context
+move: shape Context
+move: shape_full Context
+move: unichar_direction Context
+
+move: config_key_get PgMiscellaneous
+move: config_key_get_system PgMiscellaneous
+move: get_lib_subdirectory PgMiscellaneous
+move: get_sysconf_subdirectory PgMiscellaneous
+move: is_zero_width PgMiscellaneous
+move: log2vis_get_embedding_levels PgMiscellaneous
+move: lookup_aliases PgMiscellaneous
+move: parse_enum PgMiscellaneous
+move: parse_stretch PgMiscellaneous
+move: parse_style PgMiscellaneous
+move: parse_variant PgMiscellaneous
+move: parse_weight PgMiscellaneous
+move: quantize_line_geometry PgMiscellaneous
+move: read_line PgMiscellaneous
+move: scan_int PgMiscellaneous
+move: scan_string PgMiscellaneous
+move: scan_word PgMiscellaneous
+move: skip_space PgMiscellaneous
+move: split_file_list PgMiscellaneous
+move: trim_string PgMiscellaneous
+
+move: extents_to_pixels Matrix
+move: units_from_double Matrix
+move: units_to_double Matrix
+
+move: version PgVersion
+move: version_check PgVersion
+move: version_string PgVersion
+
+move: context_get_font_options PgCairo
+move: context_get_resolution PgCairo
+move: context_get_shape_renderer PgCairo
+move: context_set_font_options PgCairo
+move: context_set_resolution PgCairo
+move: context_set_shape_renderer PgCairo
+move: create_context PgCairo
+move: create_layout PgCairo
+move: error_underline_path PgCairo
+move: glyph_string_path PgCairo
+move: layout_line_path PgCairo
+move: layout_path PgCairo
+move: show_error_underline PgCairo
+move: show_glyph_item PgCairo
+move: show_glyph_string PgCairo
+move: show_layout PgCairo
+move: show_layout_line PgCairo
+move: update_context PgCairo
+move: update_layout PgCairo

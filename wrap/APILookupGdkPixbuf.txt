@@ -1,317 +1,211 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gtkD.
-# 
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping GdkPixbuf
-#####
-###
-#
-
-
-addTypedefs: start
-
-public import gtkc.glibtypes;
-public import gtkc.gobjecttypes;
-public import gtkc.gdktypes;
-public import gtkc.atktypes;
-
-private import std.stdio;
-addTypedefs: end
-
-addAliases: start
-addAliases: end
-
-addEnums: start
-addEnums: end
-
-addStructs: start
-addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
-
-addConstants: start
-addConstants: end
-
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
+wrap: gdkpixbuf
+file: /usr/share/gir-1.0/GdkPixbuf-2.0.gir
 
-wrap: gdk-pixbuf
+addAliases: start
+	public import gtkc.glibtypes;
+	public  import gtkc.gobjecttypes;
+	public  import gtkc.gdktypes;
+	public  import gtkc.atktypes;
+	private import std.stdio;
+addAliases: start
 
-###########################################################
-### GdkPixbuf #############################################
-###########################################################
-
-#file: gdk-pixbuf-Versioning.html
-#struct: 
-#class: 
-#prefix: 
-#outFile: 
-
-##################
-### moved to gdk and merged with gdk.Pixbuf
-##################
-#
-#file: gdk-pixbuf-creating.html
-#struct: GdkPixbuf
-#class: Pixbuf
-#prefix: gdk_pixbuf_
-#noprefix: gdk_pixbuf_ref
-#noprefix: gdk_pixbuf_unref
-##import: g.Error*
-##structWrap: GError** Error*
-#import: gdk.Pixbuf
-#structWrap: GdkPixbuf* Pixbuf
-#import: gdkpixbuf.PixbufFormat
-#structWrap: GdkPixbufFormat* PixbufFormat
-#openFile: Pixbuf
-#
-#file: gdk-pixbuf-gdk-pixbuf.html
-#mergeFile:  Pixbuf
-#
-#file: gdk-pixbuf-refcounting.html
-#mergeFile:  Pixbuf
-#
-#file: gdk-pixbuf-file-loading.html
-#mergeFile:  Pixbuf
-#
-#file: gdk-pixbuf-file-saving.html
-#mergeFile:  Pixbuf
-#
-#file: gdk-pixbuf-scaling.html
-#mergeFile:  Pixbuf
-#
-#file: gdk-pixbuf-util.html
-#closeFile:  Pixbuf
-############################
-
-file: gdk-pixbuf-Inline-data.html
-struct: GdkPixdata
-class: Pixdata
-prefix: gdk_pixdata_
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: glib.ErrorG
-import: glib.GException
-import: glib.StringG
-structWrap: GString* StringG
-import: glib.Str
-
-array: gdk_pixdata_serialize Return stream_length_p
-array: gdk_pixdata_deserialize stream stream_length
-
-outFile: Pixdata
-
-# on gdk
-#file: gdk-pixbuf-gdk-pixbuf-rendering.html
-#struct: 
-#class: 
-#prefix: 
-#outFile: 
-
-# on gdk
-#file: gdk-pixbuf-gdk-pixbuf-from-drawables.html
-#struct: 
-#class: 
-#prefix: 
-#outFile: 
-
-file: gdk-pixbuf-Animations.html
-struct: GdkPixbufAnimation
-class: PixbufAnimation
-prefix: gdk_pixbuf_animation_
-noprefix: gdk_pixbuf_animation_iter_
-noprefix: gdk_pixbuf_simple_anim_
-import: glib.ErrorG
-import: glib.GException
-structWrap: GdkPixbufAnimation* PixbufAnimation
-import: gdkpixbuf.PixbufAnimationIter
-structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: glib.Str
-import: gio.InputStream
-structWrap: GInputStream* InputStream
-import: gio.Cancellable
-structWrap: GCancellable* Cancellable
-import: gio.AsyncResultIF
-structWrap: GAsyncResult* AsyncResultIF
-nocode: gdk_pixbuf_animation_ref
-nocode: gdk_pixbuf_animation_unref
-nocode: gdk_pixbuf_animation_new_from_resource
-inout: gdk_pixbuf_animation_get_iter start_time
+struct: Pixbuf
+noCode: save_to_bufferv
+noCode: ref
+noCode: unref
+noCode: new_from_resource
+noCode: new_from_resource_at_scale
 
 code: start
-/**
-	 * Creates a new pixbuf animation by loading an image from an resource.
-	 * The file format is detected automatically. If NULL is returned, then
-	 * error will be set.
-	 * Since 2.28
+	/**
+	 * Saves pixbuf to a new buffer in format @type, which is currently "jpeg",
+	 * "tiff", "png", "ico" or "bmp".  See gdk_pixbuf_save_to_buffer()
+	 * for more details.
+	 *
 	 * Params:
-	 * resourcePath = the path of the resource file
+	 *     buffer = location to receive a pointer to the new buffer.
+	 *     bufferSize = location to receive the size of the new buffer.
+	 *     type = name of file format.
+	 *     optionKeys = name of options to set, %NULL-terminated
+	 *     optionValues = values for named options
+	 *
+	 * Return: whether an error was set
+	 *
+	 * Since: 2.4
+	 *
 	 * Throws: GException on failure.
-	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static PixbufAnimation newFromResource(string resourcePath)
+	public bool saveToBuffer(out ubyte[] buffer, string type, string[] optionKeys, string[] optionValues)
 	{
-		// GdkPixbufAnimation * gdk_pixbuf_animation_new_from_resource  (const char *resource_path,  GError **error);
+		char* outbuffer = null;
+		size_t bufferSize;
 		GError* err = null;
-		
-		auto p = gdk_pixbuf_animation_new_from_resource(Str.toStringz(resourcePath), &err);
-		
+
+		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
-		if(p is null)
+
+		buffer = (cast(ubyte*)outbuffer)[0 .. bufferSize];
+
+		return p;
+	}
+
+	/**
+	 * Creates a new pixbuf by loading an image from an resource.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * Params:
+	 *     resourcePath = the path of the resource file
+	 *
+	 * Return: A newly-created pixbuf, or null if any of several error
+	 *     conditions occurred: the file could not be opened, the image format is
+	 *     not supported, there was not enough memory to allocate the image buffer,
+	 *     the stream contained invalid data, or the operation was cancelled.
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf newFromResource(string resourcePath)
+	{
+		GError* err = null;
+
+		auto p = gdk_pixbuf_new_from_resource(Str.toStringz(resourcePath), &err);
+
+		if (err !is null)
 		{
-			throw new ConstructionException("null returned by gdk_pixbuf_animation_new_from_resource(Str.toStringz(resourcePath), &err)");
+			throw new GException( new ErrorG(err) );
 		}
 
-		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
+		return new Pixbuf(cast(GdkPixbuf*) p, true);
+	}
+
+	/**
+	 * Creates a new pixbuf by loading an image from an resource.
+	 *
+	 * The file format is detected automatically.
+	 *
+	 * The image will be scaled to fit in the requested size, optionally
+	 * preserving the image's aspect ratio. When preserving the aspect ratio,
+	 * a width of -1 will cause the image to be scaled to the exact given
+	 * height, and a height of -1 will cause the image to be scaled to the
+	 * exact given width. When not preserving aspect ratio, a width or
+	 * height of -1 means to not scale the image at all in that dimension.
+	 *
+	 * The stream is not closed.
+	 *
+	 * Params:
+	 *     resourcePath = the path of the resource file
+	 *     width = The width the image should have or -1 to not constrain the width
+	 *     height = The height the image should have or -1 to not constrain the height
+	 *     preserveAspectRatio = true to preserve the image's aspect ratio
+	 *
+	 * Return: A newly-created pixbuf, or null if any of several error
+	 *     conditions occurred: the file could not be opened, the image format is
+	 *     not supported, there was not enough memory to allocate the image buffer,
+	 *     the stream contained invalid data, or the operation was cancelled.
+	 *
+	 * Since: 2.26
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf newFromResource(string resourcePath, int width, int height, bool preserveAspectRatio)
+	{
+		GError* err = null;
+
+		auto p = gdk_pixbuf_new_from_resource_at_scale(Str.toStringz(resourcePath), width, height, preserveAspectRatio, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return new Pixbuf(cast(GdkPixbuf*) p, true);
 	}
 code: end
-outFile: PixbufAnimation
 
-struct: GdkPixbufAnimationIter
-class: PixbufAnimationIter
-extend: GObject
-prefix: gdk_pixbuf_animation_iter_
-strictPrefix: Yes
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-inout: gdk_pixbuf_animation_iter_advance current_time
-outFile: PixbufAnimationIter
+struct: PixbufAnimation
+noCode: new_from_resource
 
-struct: GdkPixbufSimpleAnim
-class: PixbufSimpleAnimation
-extend: GObject
-prefix: gdk_pixbuf_simple_anim_
-strictPrefix: Yes
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-outFile: PixbufSimpleAnimation
-
-file: GdkPixbufLoader.html
-struct: GdkPixbufLoader
-class: PixbufLoader
-prefix: gdk_pixbuf_loader_
-import: gdkpixbuf.PixbufFormat
-structWrap: GdkPixbufFormat* PixbufFormat
-import: glib.ErrorG
-import: glib.GException
-import: glib.Bytes
-structWrap: GBytes* Bytes
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gdkpixbuf.PixbufAnimation
-structWrap: GdkPixbufAnimation* PixbufAnimation
-array: gdk_pixbuf_loader_write buf count
+struct: PixbufLoader
 import: glib.Str
-
-nocode: gdk_pixbuf_loader_new_with_type
-nocode: gdk_pixbuf_loader_new_with_mime_type
+noCode: new_with_type
+noCode: new_with_mime_type
 code: start
 	/**
 	 * Creates a new pixbuf loader object that always attempts to parse
-	 * image data as if it were an image of type image_type or mime_type, instead of
+	 * image data as if it were an image of type @image_type, instead of
 	 * identifying the type automatically. Useful if you want an error if
 	 * the image isn't the expected type, for loading image formats
 	 * that can't be reliably identified by looking at the data, or if
 	 * the user manually forces a specific type.
+	 *
+	 * The list of supported image formats depends on what image loaders
+	 * are installed, but typically "png", "jpeg", "gif", "tiff" and
+	 * "xpm" are among the supported formats. To obtain the full list of
+	 * supported image formats, call gdk_pixbuf_format_get_name() on each
+	 * of the #GdkPixbufFormat structs returned by gdk_pixbuf_get_formats().
+	 *
 	 * Params:
-	 *  type = name of the image format or mime to be loaded with the image
+	 *     imageType  = name of the image format to be loaded with the image
+	 *     isMimeType = Set to true if type is a mime type
+	 *
+	 * Return: A newly-created pixbuf loader.
+	 *
+	 * Throws: GException on failure.
 	 */
-	public this (string type, bool isMimeType=false)
+	public this(string type, bool isMimeType=false)
 	{
-		GdkPixbufLoader* p;
 		GError* err = null;
+		GdkPixbufLoader* p;
 
 		if ( isMimeType )
 		{
-			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_mime_type  (const char *mime_type,  GError **error);
 			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), &err);
 		}
 		else
 		{
-			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_type  (const char *image_type,  GError **error);
 			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), &err);
 		}
-
+		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_button_new()");
-		}
-
-		this(p);
+		
+		this(cast(GdkPixbufLoader*) p, true);
 	}
 code: end
 
-outFile: PixbufLoader
+struct: PixbufSimpleAnim
+class: PixbufSimpleAnimation
 
-#file: gdk-pixbuf-gdk-pixbuf-xlib-init.html
-#class: XLib
-#prefix: gdk_pixbuf_xlib_
-#outFile: XLib
-
-#file: gdk-pixbuf-gdk-pixbuf-xlib-rendering.html
-##struct: GdkPixbuf
-#class: XLibRender
-#prefix: gdk_pixbuf_xlib_render_
-#outFile: XLibRender
-
-#file: gdk-pixbuf-gdk-pixbuf-xlib-from-drawables.html
-##struct: GdkPixbuf
-#class: XDrawables
-#prefix: gdk_pixbuf_xlib_
-#outFile: XDrawables
-
-#file: gdk-pixbuf-gdk-pixbuf-xlib-rgb.html
-##struct: 
-#class: XLibRGB
-#prefix: xlib_
-#outFile: XLibRGB
-
-file: gdk-pixbuf-Module-Interface.html
-struct: GdkPixbufFormat
-class: PixbufFormat
-prefix: gdk_pixbuf_format_
-structWrap: GdkPixbufFormat* PixbufFormat
-import: gdk.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: glib.ListSG
-structWrap: GSList* ListSG
-import: glib.Str
-outFile: PixbufFormat
-
+struct: PixbufSimpleAnimIter
+class: PixbufSimpleAnimationIter
+noCode: true

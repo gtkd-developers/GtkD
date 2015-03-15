@@ -16,134 +16,106 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GZlibDecompressor.html
- * outPack = gio
- * outFile = ZlibDecompressor
- * strct   = GZlibDecompressor
- * realStrct=
- * ctorStrct=
- * clss    = ZlibDecompressor
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- ConverterIF
- * prefixes:
- * 	- g_zlib_decompressor_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.FileInfo
- * 	- gio.ConverterT
- * 	- gio.ConverterIF
- * structWrap:
- * 	- GFileInfo* -> FileInfo
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.ZlibDecompressor;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.ConverterIF;
+private import gio.ConverterT;
+private import gio.FileInfo;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-private import gio.FileInfo;
-private import gio.ConverterT;
-private import gio.ConverterIF;
-
-
-private import gobject.ObjectG;
 
 /**
- * GZlibDecompressor is an implementation of GConverter that
- * decompresses data compressed with zlib.
+ * Zlib decompression
  */
 public class ZlibDecompressor : ObjectG, ConverterIF
 {
-	
 	/** the main Gtk struct */
 	protected GZlibDecompressor* gZlibDecompressor;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GZlibDecompressor* getZlibDecompressorStruct()
 	{
 		return gZlibDecompressor;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gZlibDecompressor;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GZlibDecompressor* gZlibDecompressor)
-	{
-		super(cast(GObject*)gZlibDecompressor);
-		this.gZlibDecompressor = gZlibDecompressor;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gZlibDecompressor = cast(GZlibDecompressor*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GZlibDecompressor* gZlibDecompressor, bool ownedRef = false)
+	{
+		this.gZlibDecompressor = gZlibDecompressor;
+		super(cast(GObject*)gZlibDecompressor, ownedRef);
+	}
+
 	// add the Converter capabilities
 	mixin ConverterT!(GZlibDecompressor);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_zlib_decompressor_get_type();
+	}
+
 	/**
-	 * Creates a new GZlibDecompressor.
-	 * Since 2.24
+	 * Creates a new #GZlibDecompressor.
+	 *
 	 * Params:
-	 * format = The format to use for the compressed data
+	 *     format = The format to use for the compressed data
+	 *
+	 * Return: a new #GZlibDecompressor
+	 *
+	 * Since: 2.24
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GZlibCompressorFormat format)
+	public this(GZlibCompressorFormat format)
 	{
-		// GZlibDecompressor * g_zlib_decompressor_new (GZlibCompressorFormat format);
 		auto p = g_zlib_decompressor_new(format);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_zlib_decompressor_new(format)");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GZlibDecompressor*) p);
+		
+		this(cast(GZlibDecompressor*) p, true);
 	}
-	
+
 	/**
-	 * Retrieves the GFileInfo constructed from the GZIP header data
-	 * of compressed data processed by compressor, or NULL if decompressor's
-	 * "format" property is not G_ZLIB_COMPRESSOR_FORMAT_GZIP,
+	 * Retrieves the #GFileInfo constructed from the GZIP header data
+	 * of compressed data processed by @compressor, or %NULL if @decompressor's
+	 * #GZlibDecompressor:format property is not %G_ZLIB_COMPRESSOR_FORMAT_GZIP,
 	 * or the header data was not fully processed yet, or it not present in the
 	 * data stream at all.
-	 * Since 2.26
-	 * Returns: a GFileInfo, or NULL. [transfer none]
+	 *
+	 * Return: a #GFileInfo, or %NULL
+	 *
+	 * Since: 2.26
 	 */
 	public FileInfo getFileInfo()
 	{
-		// GFileInfo * g_zlib_decompressor_get_file_info (GZlibDecompressor *decompressor);
 		auto p = g_zlib_decompressor_get_file_info(gZlibDecompressor);
 		
 		if(p is null)

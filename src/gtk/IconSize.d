@@ -16,219 +16,139 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gtk
- * outFile = IconSize
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = IconSize
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_icon_size_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Settings
- * structWrap:
- * 	- GtkSettings* -> Settings
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.IconSize;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
 private import gtk.Settings;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
 
-
-/**
- * Browse the available stock icons in the list of stock IDs found here. You can also use
- * the gtk-demo application for this purpose.
- *
- * An icon factory manages a collection of GtkIconSet; a GtkIconSet manages a
- * set of variants of a particular icon (i.e. a GtkIconSet contains variants for
- * different sizes and widget states). Icons in an icon factory are named by a
- * stock ID, which is a simple string identifying the icon. Each GtkStyle has a
- * list of GtkIconFactory derived from the current theme; those icon factories
- * are consulted first when searching for an icon. If the theme doesn't set a
- * particular icon, GTK+ looks for the icon in a list of default icon factories,
- * maintained by gtk_icon_factory_add_default() and
- * gtk_icon_factory_remove_default(). Applications with icons should add a default
- * icon factory with their icons, which will allow themes to override the icons
- * for the application.
- *
- * To display an icon, always use gtk_style_lookup_icon_set() on the widget that
- * will display the icon, or the convenience function
- * gtk_widget_render_icon(). These functions take the theme into account when
- * looking up the icon to use for a given stock ID.
- *
- * GtkIconFactory as GtkBuildable
- *
- * GtkIconFactory supports a custom &lt;sources&gt; element, which can contain
- * multiple &lt;source&gt; elements.
- * The following attributes are allowed:
- *
- * stock-id
- *
- * The stock id of the source, a string.
- * This attribute is mandatory
- *
- * filename
- *
- * The filename of the source, a string.
- * This attribute is optional
- *
- * icon-name
- *
- * The icon name for the source, a string.
- * This attribute is optional.
- *
- * size
- *
- * Size of the icon, a GtkIconSize enum value.
- * This attribute is optional.
- *
- * direction
- *
- * Direction of the source, a GtkTextDirection enum value.
- * This attribute is optional.
- *
- * state
- *
- * State of the source, a GtkStateType enum value.
- * This attribute is optional.
- *
- * $(DDOC_COMMENT example)
- */
-public class IconSize
+public struct IconSize
 {
-	
 	/**
 	 */
-	
+
 	/**
+	 * Looks up the icon size associated with @name.
+	 *
+	 * Deprecated: Use #GtkIconTheme instead.
+	 *
 	 * Params:
-	 * size = an icon size. [type int]
-	 * width = location to store icon width. [out][allow-none]
-	 * height = location to store icon height. [out][allow-none]
-	 * Returns: TRUE if size was a valid size
+	 *     name = the name to look up.
+	 *
+	 * Return: the icon size
 	 */
-	public static int lookup(GtkIconSize size, out int width, out int height)
+	public static GtkIconSize fromName(string name)
 	{
-		// gboolean gtk_icon_size_lookup (GtkIconSize size,  gint *width,  gint *height);
-		return gtk_icon_size_lookup(size, &width, &height);
+		return gtk_icon_size_from_name(Str.toStringz(name));
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_icon_size_lookup_for_settings has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_icon_size_lookup() instead.
-	 * Obtains the pixel size of a semantic icon size, possibly
-	 * modified by user preferences for a particular
-	 * GtkSettings. Normally size would be
-	 * GTK_ICON_SIZE_MENU, GTK_ICON_SIZE_BUTTON, etc. This function
-	 * isn't normally needed, gtk_widget_render_icon_pixbuf() is the usual
+	 * Gets the canonical name of the given icon size. The returned string
+	 * is statically allocated and should not be freed.
+	 *
+	 * Deprecated: Use #GtkIconTheme instead.
+	 *
+	 * Params:
+	 *     size = a #GtkIconSize.
+	 *
+	 * Return: the name of the given icon size.
+	 */
+	public static string getName(GtkIconSize size)
+	{
+		return Str.toString(gtk_icon_size_get_name(size));
+	}
+
+	/**
+	 * Obtains the pixel size of a semantic icon size @size:
+	 * #GTK_ICON_SIZE_MENU, #GTK_ICON_SIZE_BUTTON, etc.  This function
+	 * isn’t normally needed, gtk_icon_theme_load_icon() is the usual
 	 * way to get an icon for rendering, then just look at the size of
 	 * the rendered pixbuf. The rendered pixbuf may not even correspond to
 	 * the width/height returned by gtk_icon_size_lookup(), because themes
 	 * are free to render the pixbuf however they like, including changing
 	 * the usual size.
-	 * Since 2.2
+	 *
 	 * Params:
-	 * settings = a GtkSettings object, used to determine
-	 * which set of user preferences to used.
-	 * size = an icon size. [type int]
-	 * width = location to store icon width. [out][allow-none]
-	 * height = location to store icon height. [out][allow-none]
-	 * Returns: TRUE if size was a valid size
+	 *     size = an icon size
+	 *     width = location to store icon width
+	 *     height = location to store icon height
+	 *
+	 * Return: %TRUE if @size was a valid size
 	 */
-	public static int lookupForSettings(Settings settings, GtkIconSize size, out int width, out int height)
+	public static bool lookup(GtkIconSize size, out int width, out int height)
 	{
-		// gboolean gtk_icon_size_lookup_for_settings (GtkSettings *settings,  GtkIconSize size,  gint *width,  gint *height);
-		return gtk_icon_size_lookup_for_settings((settings is null) ? null : settings.getSettingsStruct(), size, &width, &height);
+		return gtk_icon_size_lookup(size, &width, &height) != 0;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_icon_size_register has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
-	 * Registers a new icon size, along the same lines as GTK_ICON_SIZE_MENU,
-	 * etc. Returns the integer value for the size.
+	 * Obtains the pixel size of a semantic icon size, possibly
+	 * modified by user preferences for a particular
+	 * #GtkSettings. Normally @size would be
+	 * #GTK_ICON_SIZE_MENU, #GTK_ICON_SIZE_BUTTON, etc.  This function
+	 * isn’t normally needed, gtk_widget_render_icon_pixbuf() is the usual
+	 * way to get an icon for rendering, then just look at the size of
+	 * the rendered pixbuf. The rendered pixbuf may not even correspond to
+	 * the width/height returned by gtk_icon_size_lookup(), because themes
+	 * are free to render the pixbuf however they like, including changing
+	 * the usual size.
+	 *
+	 * Deprecated: Use gtk_icon_size_lookup() instead.
+	 *
 	 * Params:
-	 * name = name of the icon size
-	 * width = the icon width
-	 * height = the icon height
-	 * Returns: integer value representing the size. [type int]
+	 *     settings = a #GtkSettings object, used to determine
+	 *         which set of user preferences to used.
+	 *     size = an icon size
+	 *     width = location to store icon width
+	 *     height = location to store icon height
+	 *
+	 * Return: %TRUE if @size was a valid size
+	 *
+	 * Since: 2.2
+	 */
+	public static bool lookupForSettings(Settings settings, GtkIconSize size, out int width, out int height)
+	{
+		return gtk_icon_size_lookup_for_settings((settings is null) ? null : settings.getSettingsStruct(), size, &width, &height) != 0;
+	}
+
+	/**
+	 * Registers a new icon size, along the same lines as #GTK_ICON_SIZE_MENU,
+	 * etc. Returns the integer value for the size.
+	 *
+	 * Deprecated: Use #GtkIconTheme instead.
+	 *
+	 * Params:
+	 *     name = name of the icon size
+	 *     width = the icon width
+	 *     height = the icon height
+	 *
+	 * Return: integer value representing the size
 	 */
 	public static GtkIconSize register(string name, int width, int height)
 	{
-		// GtkIconSize gtk_icon_size_register (const gchar *name,  gint width,  gint height);
 		return gtk_icon_size_register(Str.toStringz(name), width, height);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_icon_size_register_alias has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
-	 * Registers alias as another name for target.
-	 * So calling gtk_icon_size_from_name() with alias as argument
-	 * will return target.
+	 * Registers @alias as another name for @target.
+	 * So calling gtk_icon_size_from_name() with @alias as argument
+	 * will return @target.
+	 *
+	 * Deprecated: Use #GtkIconTheme instead.
+	 *
 	 * Params:
-	 * target = an existing icon size. [type int]
+	 *     alias_ = an alias for @target
+	 *     target = an existing icon size
 	 */
-	public static void registerAlias(string alia, GtkIconSize target)
+	public static void registerAlias(string alias_, GtkIconSize target)
 	{
-		// void gtk_icon_size_register_alias (const gchar *alias,  GtkIconSize target);
-		gtk_icon_size_register_alias(Str.toStringz(alia), target);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_icon_size_from_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
-	 * Looks up the icon size associated with name.
-	 * Params:
-	 * name = the name to look up.
-	 * Returns: the icon size. [type int]
-	 */
-	public static GtkIconSize fromName(string name)
-	{
-		// GtkIconSize gtk_icon_size_from_name (const gchar *name);
-		return gtk_icon_size_from_name(Str.toStringz(name));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_icon_size_get_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GtkIconTheme instead.
-	 * Gets the canonical name of the given icon size. The returned string
-	 * is statically allocated and should not be freed.
-	 * Params:
-	 * size = a GtkIconSize. [type int]
-	 * Returns: the name of the given icon size.
-	 */
-	public static string getName(GtkIconSize size)
-	{
-		// const gchar * gtk_icon_size_get_name (GtkIconSize size);
-		return Str.toString(gtk_icon_size_get_name(size));
+		gtk_icon_size_register_alias(Str.toStringz(alias_), target);
 	}
 }

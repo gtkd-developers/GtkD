@@ -16,166 +16,144 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GCharsetConverter.html
- * outPack = gio
- * outFile = CharsetConverter
- * strct   = GCharsetConverter
- * realStrct=
- * ctorStrct=
- * clss    = CharsetConverter
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- ConverterIF
- * prefixes:
- * 	- g_charset_converter_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.ConverterT
- * 	- gio.ConverterIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.CharsetConverter;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.ConverterIF;
+private import gio.ConverterT;
+private import gio.InitableIF;
+private import gio.InitableT;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
-private import gio.ConverterT;
-private import gio.ConverterIF;
-
-
+private import glib.Str;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
+
 
 /**
- * GCharsetConverter is an implementation of GConverter based on
+ * #GCharsetConverter is an implementation of #GConverter based on
  * GIConv.
  */
-public class CharsetConverter : ObjectG, ConverterIF
+public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 {
-	
 	/** the main Gtk struct */
 	protected GCharsetConverter* gCharsetConverter;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GCharsetConverter* getCharsetConverterStruct()
 	{
 		return gCharsetConverter;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gCharsetConverter;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GCharsetConverter* gCharsetConverter)
-	{
-		super(cast(GObject*)gCharsetConverter);
-		this.gCharsetConverter = gCharsetConverter;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gCharsetConverter = cast(GCharsetConverter*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GCharsetConverter* gCharsetConverter, bool ownedRef = false)
+	{
+		this.gCharsetConverter = gCharsetConverter;
+		super(cast(GObject*)gCharsetConverter, ownedRef);
+	}
+
 	// add the Converter capabilities
 	mixin ConverterT!(GCharsetConverter);
-	
+
+	// add the Initable capabilities
+	mixin InitableT!(GCharsetConverter);
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_charset_converter_get_type();
+	}
+
 	/**
-	 * Creates a new GCharsetConverter.
-	 * Since 2.24
+	 * Creates a new #GCharsetConverter.
+	 *
 	 * Params:
-	 * toCharset = destination charset
-	 * fromCharset = source charset
+	 *     toCharset = destination charset
+	 *     fromCharset = source charset
+	 *
+	 * Return: a new #GCharsetConverter or %NULL on error.
+	 *
+	 * Since: 2.24
+	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string toCharset, string fromCharset)
+	public this(string toCharset, string fromCharset)
 	{
-		// GCharsetConverter * g_charset_converter_new (const gchar *to_charset,  const gchar *from_charset,  GError **error);
 		GError* err = null;
 		
 		auto p = g_charset_converter_new(Str.toStringz(toCharset), Str.toStringz(fromCharset), &err);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_charset_converter_new(Str.toStringz(toCharset), Str.toStringz(fromCharset), &err)");
-		}
-		this(cast(GCharsetConverter*) p);
+		this(cast(GCharsetConverter*) p, true);
 	}
-	
+
 	/**
-	 * Sets the "use-fallback" property.
-	 * Since 2.24
-	 * Params:
-	 * useFallback = TRUE to use fallbacks
-	 */
-	public void setUseFallback(int useFallback)
-	{
-		// void g_charset_converter_set_use_fallback  (GCharsetConverter *converter,  gboolean use_fallback);
-		g_charset_converter_set_use_fallback(gCharsetConverter, useFallback);
-	}
-	
-	/**
-	 * Gets the "use-fallback" property.
-	 * Since 2.24
-	 * Returns: TRUE if fallbacks are used by converter
-	 */
-	public int getUseFallback()
-	{
-		// gboolean g_charset_converter_get_use_fallback  (GCharsetConverter *converter);
-		return g_charset_converter_get_use_fallback(gCharsetConverter);
-	}
-	
-	/**
-	 * Gets the number of fallbacks that converter has applied so far.
-	 * Since 2.24
-	 * Returns: the number of fallbacks that converter has applied
+	 * Gets the number of fallbacks that @converter has applied so far.
+	 *
+	 * Return: the number of fallbacks that @converter has applied
+	 *
+	 * Since: 2.24
 	 */
 	public uint getNumFallbacks()
 	{
-		// guint g_charset_converter_get_num_fallbacks  (GCharsetConverter *converter);
 		return g_charset_converter_get_num_fallbacks(gCharsetConverter);
+	}
+
+	/**
+	 * Gets the #GCharsetConverter:use-fallback property.
+	 *
+	 * Return: %TRUE if fallbacks are used by @converter
+	 *
+	 * Since: 2.24
+	 */
+	public bool getUseFallback()
+	{
+		return g_charset_converter_get_use_fallback(gCharsetConverter) != 0;
+	}
+
+	/**
+	 * Sets the #GCharsetConverter:use-fallback property.
+	 *
+	 * Params:
+	 *     useFallback = %TRUE to use fallbacks
+	 *
+	 * Since: 2.24
+	 */
+	public void setUseFallback(bool useFallback)
+	{
+		g_charset_converter_set_use_fallback(gCharsetConverter, useFallback);
 	}
 }

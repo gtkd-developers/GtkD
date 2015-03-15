@@ -16,118 +16,94 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkVScrollbar.html
- * outPack = gtk
- * outFile = VScrollbar
- * strct   = GtkVScrollbar
- * realStrct=
- * ctorStrct=
- * clss    = VScrollbar
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_vscrollbar_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.Adjustment
- * structWrap:
- * 	- GtkAdjustment* -> Adjustment
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.VScrollbar;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
 private import gtk.Adjustment;
-
-
 private import gtk.Scrollbar;
+private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
- * The GtkVScrollbar widget is a widget arranged vertically creating a
- * scrollbar. See GtkScrollbar for details on
- * scrollbars. GtkAdjustment pointers may be added to handle the
- * adjustment of the scrollbar or it may be left NULL in which case one
- * will be created for you. See GtkScrollbar for a description of what the
+ * The #GtkVScrollbar widget is a widget arranged vertically creating a
+ * scrollbar. See #GtkScrollbar for details on
+ * scrollbars. #GtkAdjustment pointers may be added to handle the
+ * adjustment of the scrollbar or it may be left %NULL in which case one
+ * will be created for you. See #GtkScrollbar for a description of what the
  * fields in an adjustment represent for a scrollbar.
- *
- * GtkVScrollbar has been deprecated, use GtkScrollbar instead.
+ * 
+ * GtkVScrollbar has been deprecated, use #GtkScrollbar instead.
  */
 public class VScrollbar : Scrollbar
 {
-	
 	/** the main Gtk struct */
 	protected GtkVScrollbar* gtkVScrollbar;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkVScrollbar* getVScrollbarStruct()
 	{
 		return gtkVScrollbar;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkVScrollbar;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkVScrollbar* gtkVScrollbar)
-	{
-		super(cast(GtkScrollbar*)gtkVScrollbar);
-		this.gtkVScrollbar = gtkVScrollbar;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkVScrollbar = cast(GtkVScrollbar*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkVScrollbar* gtkVScrollbar, bool ownedRef = false)
+	{
+		this.gtkVScrollbar = gtkVScrollbar;
+		super(cast(GtkScrollbar*)gtkVScrollbar, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_vscrollbar_get_type();
+	}
+
 	/**
-	 * Warning
-	 * gtk_vscrollbar_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_scrollbar_new() with GTK_ORIENTATION_VERTICAL instead
 	 * Creates a new vertical scrollbar.
+	 *
+	 * Deprecated: Use gtk_scrollbar_new() with %GTK_ORIENTATION_VERTICAL instead
+	 *
 	 * Params:
-	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. [allow-none]
+	 *     adjustment = the #GtkAdjustment to use, or %NULL to create a new adjustment
+	 *
+	 * Return: the new #GtkVScrollbar
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Adjustment adjustment)
+	public this(Adjustment adjustment)
 	{
-		// GtkWidget * gtk_vscrollbar_new (GtkAdjustment *adjustment);
 		auto p = gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkVScrollbar*) p);
 	}
 }

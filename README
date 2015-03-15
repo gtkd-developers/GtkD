@@ -73,24 +73,18 @@ the -m32 or -m64 flag to rdmd.
 
     rdmd -m64 Build.d
 
-Building with bud/build:
-------------------------
-
-You can also build GtkD using build/bud http://www.dsource.org/projects/build
-see the README in the build directory.
-
 Wraped Versions:
 ----------------
 
-GtkD wraps Gtk+ 3.10 the versions of the associated libraries are:
-Gtk+          3.10
-Gdk           3.10
-Glib          2.38
-GObject       2.38
-Gio           2.38
+GtkD wraps Gtk+ 3.14 the versions of the associated libraries are:
+Gtk+          3.14
+Gdk           3.14
+Glib          2.42
+GObject       2.42
+Gio           2.42
 Pango         1.36
-Gdk-pixbuf    2.30
+Gdk-pixbuf    2.31
 Cairo         1.12.2
-GtksourceView 3.10
-GStreamer     1.2
-Vte           0.37.4
+GtksourceView 3.14
+GStreamer     1.4
+Vte           0.38.3

@@ -16,53 +16,19 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkUtil.html
- * outPack = atk
- * outFile = Util
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Util
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- glib.Str
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.Util;
 
-public  import gtkc.atktypes;
-
-private import gtkc.atk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import atk.ObjectAtk;
 private import glib.Str;
-
+private import gobject.ObjectG;
+private import gtkc.atk;
+public  import gtkc.atktypes;
 
 
 /**
@@ -71,167 +37,143 @@ private import glib.Str;
  * of a process and information about the current ATK implementation
  * and toolkit version.
  */
-public class Util
+public struct Util
 {
-	
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return atk_util_get_type();
+	}
+
 	/**
-	 * Warning
-	 * atk_add_focus_tracker is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
+	 * Adds the specified function to the list of functions to be called
+	 * when an object receives focus.
+	 *
+	 * Deprecated: This method is deprecated since ATK version
 	 * 2.9.4. Focus tracking has been dropped as a feature to be
 	 * implemented by ATK itself. If you need focus tracking on your
 	 * implementation, subscribe to the state-changed:focused signal.
-	 * Adds the specified function to the list of functions to be called
-	 * when an object receives focus.
+	 *
 	 * Params:
-	 * focusTracker = Function to be added to the list of functions to be called
-	 * when an object receives focus.
-	 * Returns: added focus tracker id, or 0 on failure.
+	 *     focusTracker = Function to be added to the list of functions to be called
+	 *         when an object receives focus.
+	 *
+	 * Return: added focus tracker id, or 0 on failure.
 	 */
 	public static uint addFocusTracker(AtkEventListener focusTracker)
 	{
-		// guint atk_add_focus_tracker (AtkEventListener focus_tracker);
 		return atk_add_focus_tracker(focusTracker);
 	}
-	
+
 	/**
-	 * Warning
-	 * atk_remove_focus_tracker is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
-	 * 2.9.4. Focus tracking has been dropped as a feature to be
-	 * implemented by ATK itself. If you need focus tracking on your
-	 * implementation, subscribe to the state-changed:focused signal.
-	 * Removes the specified focus tracker from the list of functions
-	 * to be called when any object receives focus.
+	 * Adds the specified function to the list of functions to be called
+	 * when an ATK event of type event_type occurs.
+	 *
+	 * The format of event_type is the following:
+	 * "ATK:&lt;atk_type&gt;:&lt;atk_event&gt;:&lt;atk_event_detail&gt;
+	 *
+	 * Where "ATK" works as the namespace, &lt;atk_interface&gt; is the name of
+	 * the ATK type (interface or object), &lt;atk_event&gt; is the name of the
+	 * signal defined on that interface and &lt;atk_event_detail&gt; is the
+	 * gsignal detail of that signal. You can find more info about gsignal
+	 * details here:
+	 * http://developer.gnome.org/gobject/stable/gobject-Signals.html
+	 *
+	 * The first three parameters are mandatory. The last one is optional.
+	 *
+	 * For example:
+	 * ATK:AtkObject:state-change
+	 * ATK:AtkText:text-selection-changed
+	 * ATK:AtkText:text-insert:system
+	 *
+	 * Toolkit implementor note: ATK provides a default implementation for
+	 * this virtual method. ATK implementors are discouraged from
+	 * reimplementing this method.
+	 *
+	 * Toolkit implementor note: this method is not intended to be used by
+	 * ATK implementors but by ATK consumers.
+	 *
+	 * ATK consumers note: as this method adds a listener for a given ATK
+	 * type, that type should be already registered on the GType system
+	 * before calling this method. A simple way to do that is creating an
+	 * instance of #AtkNoOpObject. This class implements all ATK
+	 * interfaces, so creating the instance will register all ATK types as
+	 * a collateral effect.
+	 *
 	 * Params:
-	 * trackerId = the id of the focus tracker to remove
+	 *     listener = the listener to notify
+	 *     eventType = the type of event for which notification is requested
+	 *
+	 * Return: added event listener id, or 0 on failure.
 	 */
-	public static void removeFocusTracker(uint trackerId)
+	public static uint addGlobalEventListener(GSignalEmissionHook listener, string eventType)
 	{
-		// void atk_remove_focus_tracker (guint tracker_id);
-		atk_remove_focus_tracker(trackerId);
+		return atk_add_global_event_listener(listener, Str.toStringz(eventType));
 	}
-	
+
 	/**
-	 * Warning
-	 * atk_focus_tracker_init is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
-	 * 2.9.4. Focus tracking has been dropped as a feature to be
-	 * implemented by ATK itself.
+	 * Adds the specified function to the list of functions to be called
+	 * when a key event occurs.  The @data element will be passed to the
+	 * #AtkKeySnoopFunc (@listener) as the @func_data param, on notification.
+	 *
+	 * Params:
+	 *     listener = the listener to notify
+	 *     data = a #gpointer that points to a block of data that should be sent to the registered listeners,
+	 *         along with the event notification, when it occurs.
+	 *
+	 * Return: added event listener id, or 0 on failure.
+	 */
+	public static uint addKeyEventListener(AtkKeySnoopFunc listener, void* data)
+	{
+		return atk_add_key_event_listener(listener, data);
+	}
+
+	/**
 	 * Specifies the function to be called for focus tracker initialization.
 	 * This function should be called by an implementation of the
 	 * ATK interface if any specific work needs to be done to enable
 	 * focus tracking.
+	 *
+	 * Deprecated: This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself.
+	 *
 	 * Params:
-	 * init = Function to be called for focus tracker initialization
+	 *     init = Function to be called for focus tracker initialization
 	 */
 	public static void focusTrackerInit(AtkEventListenerInit init)
 	{
-		// void atk_focus_tracker_init (AtkEventListenerInit init);
 		atk_focus_tracker_init(init);
 	}
-	
+
 	/**
-	 * Warning
-	 * atk_focus_tracker_notify is deprecated and should not be used in newly-written code. This method is deprecated since ATK version
-	 * 2.9.4. Focus tracking has been dropped as a feature to be
-	 * implemented by ATK itself.
 	 * Cause the focus tracker functions which have been specified to be
 	 * executed for the object.
+	 *
+	 * Deprecated: This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself.
+	 *
 	 * Params:
-	 * object = an AtkObject
+	 *     object = an #AtkObject
 	 */
 	public static void focusTrackerNotify(ObjectAtk object)
 	{
-		// void atk_focus_tracker_notify (AtkObject *object);
 		atk_focus_tracker_notify((object is null) ? null : object.getObjectAtkStruct());
 	}
-	
-	/**
-	 * Adds the specified function to the list of functions to be called
-	 * when an ATK event of type event_type occurs.
-	 * Params:
-	 * listener = the listener to notify
-	 * eventType = the type of event for which notification is requested
-	 * Returns: added event listener id, or 0 on failure.
-	 */
-	public static uint addGlobalEventListener(GSignalEmissionHook listener, string eventType)
-	{
-		// guint atk_add_global_event_listener (GSignalEmissionHook listener,  const gchar *event_type);
-		return atk_add_global_event_listener(listener, Str.toStringz(eventType));
-	}
-	
-	/**
-	 * listener_id is the value returned by atk_add_global_event_listener
-	 * when you registered that event listener.
-	 * Toolkit implementor note: Atk provides a default implementation for
-	 * this virtual method, and that implementation should be enough for
-	 * most of the cases. You should have a really good reason to
-	 * reimplement this method.
-	 * Removes the specified event listener
-	 * Params:
-	 * listenerId = the id of the event listener to remove
-	 */
-	public static void removeGlobalEventListener(uint listenerId)
-	{
-		// void atk_remove_global_event_listener (guint listener_id);
-		atk_remove_global_event_listener(listenerId);
-	}
-	
-	/**
-	 * Adds the specified function to the list of functions to be called
-	 *  when a key event occurs. The data element will be passed to the
-	 *  AtkKeySnoopFunc (listener) as the func_data param, on notification.
-	 * Params:
-	 * listener = the listener to notify
-	 * data = a gpointer that points to a block of data that should be sent to the registered listeners,
-	 * along with the event notification, when it occurs.
-	 * Returns: added event listener id, or 0 on failure.
-	 */
-	public static uint addKeyEventListener(AtkKeySnoopFunc listener, void* data)
-	{
-		// guint atk_add_key_event_listener (AtkKeySnoopFunc listener,  gpointer data);
-		return atk_add_key_event_listener(listener, data);
-	}
-	
-	/**
-	 * listener_id is the value returned by atk_add_key_event_listener
-	 * when you registered that event listener.
-	 * Removes the specified event listener.
-	 * Params:
-	 * listenerId = the id of the event listener to remove
-	 */
-	public static void removeKeyEventListener(uint listenerId)
-	{
-		// void atk_remove_key_event_listener (guint listener_id);
-		atk_remove_key_event_listener(listenerId);
-	}
-	
-	/**
-	 * Gets the root accessible container for the current application.
-	 * Returns: the root accessible container for the current application. [transfer none]
-	 */
-	public static ObjectAtk getRoot()
-	{
-		// AtkObject * atk_get_root (void);
-		auto p = atk_get_root();
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
-	}
-	
+
 	/**
 	 * Gets the currently focused object.
-	 * Since 1.6
-	 * Returns: the currently focused object for the current application. [transfer none]
+	 *
+	 * Return: the currently focused object for the current
+	 *     application
+	 *
+	 * Since: 1.6
 	 */
 	public static ObjectAtk getFocusObject()
 	{
-		// AtkObject * atk_get_focus_object (void);
 		auto p = atk_get_focus_object();
 		
 		if(p is null)
@@ -241,35 +183,86 @@ public class Util
 		
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
-	
+
+	/**
+	 * Gets the root accessible container for the current application.
+	 *
+	 * Return: the root accessible container for the current
+	 *     application
+	 */
+	public static ObjectAtk getRoot()
+	{
+		auto p = atk_get_root();
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+	}
+
 	/**
 	 * Gets name string for the GUI toolkit implementing ATK for this application.
-	 * Returns: name string for the GUI toolkit implementing ATK for this application
+	 *
+	 * Return: name string for the GUI toolkit implementing ATK for this application
 	 */
 	public static string getToolkitName()
 	{
-		// const gchar * atk_get_toolkit_name (void);
 		return Str.toString(atk_get_toolkit_name());
 	}
-	
+
 	/**
-	 * Gets version string for the GUI toolkit implementing ATK for this application.
-	 * Returns: version string for the GUI toolkit implementing ATK for this application
+	 *
+	 *
+	 * Deprecated: This method is deprecated since ATK version
+	 * 2.9.4. Focus tracking has been dropped as a feature to be
+	 * implemented by ATK itself. If you need focus tracking on your
+	 * implementation, subscribe to the state-changed:focused signal.
+	 *
+	 * Removes the specified focus tracker from the list of functions
+	 * to be called when any object receives focus.
+	 *
+	 * Params:
+	 *     trackerId = the id of the focus tracker to remove
 	 */
-	public static string getToolkitVersion()
+	public static void removeFocusTracker(uint trackerId)
 	{
-		// const gchar * atk_get_toolkit_version (void);
-		return Str.toString(atk_get_toolkit_version());
+		atk_remove_focus_tracker(trackerId);
 	}
-	
+
 	/**
-	 * Gets the current version for ATK.
-	 * Since 1.20
-	 * Returns: version string for ATK
+	 * @listener_id is the value returned by #atk_add_global_event_listener
+	 * when you registered that event listener.
+	 *
+	 * Toolkit implementor note: ATK provides a default implementation for
+	 * this virtual method. ATK implementors are discouraged from
+	 * reimplementing this method.
+	 *
+	 * Toolkit implementor note: this method is not intended to be used by
+	 * ATK implementors but by ATK consumers.
+	 *
+	 * Removes the specified event listener
+	 *
+	 * Params:
+	 *     listenerId = the id of the event listener to remove
 	 */
-	public static string getVersion()
+	public static void removeGlobalEventListener(uint listenerId)
 	{
-		// const gchar * atk_get_version (void);
-		return Str.toString(atk_get_version());
+		atk_remove_global_event_listener(listenerId);
+	}
+
+	/**
+	 * @listener_id is the value returned by #atk_add_key_event_listener
+	 * when you registered that event listener.
+	 *
+	 * Removes the specified event listener.
+	 *
+	 * Params:
+	 *     listenerId = the id of the event listener to remove
+	 */
+	public static void removeKeyEventListener(uint listenerId)
+	{
+		atk_remove_key_event_listener(listenerId);
 	}
 }

@@ -16,115 +16,79 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GInetAddress.html
- * outPack = gio
- * outFile = InetAddress
- * strct   = GInetAddress
- * realStrct=
- * ctorStrct=
- * clss    = InetAddress
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_inet_address_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- g_inet_address_new_any
- * 	- g_inet_address_new_loopback
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * 	- GInetAddress* -> InetAddress
- * module aliases:
- * local aliases:
- * overrides:
- * 	- toString
- */
 
 module gio.InetAddress;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-
-
-private import gobject.ObjectG;
 
 /**
- * GInetAddress represents an IPv4 or IPv6 internet address. Use
+ * #GInetAddress represents an IPv4 or IPv6 internet address. Use
  * g_resolver_lookup_by_name() or g_resolver_lookup_by_name_async() to
- * look up the GInetAddress for a hostname. Use
+ * look up the #GInetAddress for a hostname. Use
  * g_resolver_lookup_by_address() or
  * g_resolver_lookup_by_address_async() to look up the hostname for a
- * GInetAddress.
- *
+ * #GInetAddress.
+ * 
  * To actually connect to a remote host, you will need a
- * GInetSocketAddress (which includes a GInetAddress as well as a
+ * #GInetSocketAddress (which includes a #GInetAddress as well as a
  * port number).
  */
 public class InetAddress : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GInetAddress* gInetAddress;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GInetAddress* getInetAddressStruct()
 	{
 		return gInetAddress;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gInetAddress;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GInetAddress* gInetAddress)
-	{
-		super(cast(GObject*)gInetAddress);
-		this.gInetAddress = gInetAddress;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gInetAddress = cast(GInetAddress*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
-	 * Creates a GInetAddress for the "any" address (unassigned/"don't
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GInetAddress* gInetAddress, bool ownedRef = false)
+	{
+		this.gInetAddress = gInetAddress;
+		super(cast(GObject*)gInetAddress, ownedRef);
+	}
+
+	/**
+	 * Creates a InetAddress for the "any" address (unassigned/"don't
 	 * care") for family.
-	 * Since 2.22
+	 *
 	 * Params:
-	 * family = the address family
+	 *     family = the address family
+	 *     loopback = If true create an InetAddress for the loopback address.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.22
 	 */
 	public this (GSocketFamily family, bool loopback = false)
 	{
-		// GInetAddress * g_inet_address_new_any (GSocketFamily family);
 		GInetAddress* p;
 		
 		if ( loopback )
@@ -140,228 +104,258 @@ public class InetAddress : ObjectG
 		{
 			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
 		}
-		this(cast(GInetAddress*) p);
+		this(p, true);
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_inet_address_get_type();
+	}
+
 	/**
-	 * Parses string as an IP address and creates a new GInetAddress.
-	 * Since 2.22
+	 * Creates a new #GInetAddress from the given @family and @bytes.
+	 * @bytes should be 4 bytes for %G_SOCKET_FAMILY_IPV4 and 16 bytes for
+	 * %G_SOCKET_FAMILY_IPV6.
+	 *
 	 * Params:
-	 * string = a string representation of an IP address
+	 *     bytes = raw address data
+	 *     family = the address family of @bytes
+	 *
+	 * Return: a new #GInetAddress corresponding to @family and @bytes.
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string string)
+	public this(ubyte[] bytes, GSocketFamily family)
 	{
-		// GInetAddress * g_inet_address_new_from_string (const gchar *string);
-		auto p = g_inet_address_new_from_string(Str.toStringz(string));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_inet_address_new_from_string(Str.toStringz(string))");
-		}
-		this(cast(GInetAddress*) p);
-	}
-	
-	/**
-	 * Creates a new GInetAddress from the given family and bytes.
-	 * bytes should be 4 bytes for G_SOCKET_FAMILY_IPV4 and 16 bytes for
-	 * G_SOCKET_FAMILY_IPV6.
-	 * Since 2.22
-	 * Params:
-	 * bytes = raw address data. [array][element-type guint8]
-	 * family = the address family of bytes
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (ubyte[] bytes, GSocketFamily family)
-	{
-		// GInetAddress * g_inet_address_new_from_bytes (const guint8 *bytes,  GSocketFamily family);
 		auto p = g_inet_address_new_from_bytes(bytes.ptr, family);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_inet_address_new_from_bytes(bytes.ptr, family)");
+			throw new ConstructionException("null returned by new_from_bytes");
 		}
-		this(cast(GInetAddress*) p);
+		
+		this(cast(GInetAddress*) p, true);
 	}
-	
+
 	/**
-	 * Checks if two GInetAddress instances are equal, e.g. the same address.
-	 * Since 2.30
+	 * Parses @string as an IP address and creates a new #GInetAddress.
+	 *
 	 * Params:
-	 * otherAddress = Another GInetAddress.
-	 * Returns: TRUE if address and other_address are equal, FALSE otherwise.
+	 *     str = a string representation of an IP address
+	 *
+	 * Return: a new #GInetAddress corresponding to @string, or %NULL if
+	 *     @string could not be parsed.
+	 *
+	 * Since: 2.22
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public int equal(InetAddress otherAddress)
+	public this(string str)
 	{
-		// gboolean g_inet_address_equal (GInetAddress *address,  GInetAddress *other_address);
-		return g_inet_address_equal(gInetAddress, (otherAddress is null) ? null : otherAddress.getInetAddressStruct());
-	}
-	
-	/**
-	 * Gets the raw binary address data from address.
-	 * Since 2.22
-	 * Returns: a pointer to an internal array of the bytes in address, which should not be modified, stored, or freed. The size of this array can be gotten with g_inet_address_get_native_size().
-	 */
-	public ubyte[] toBytes()
-	{
-		// const guint8 * g_inet_address_to_bytes (GInetAddress *address);
-		auto p = g_inet_address_to_bytes(gInetAddress);
+		auto p = g_inet_address_new_from_string(Str.toStringz(str));
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new_from_string");
 		}
 		
-		return p[0 .. getNativeSize()];
+		this(cast(GInetAddress*) p, true);
 	}
-	
+
 	/**
-	 * Gets the size of the native raw binary address for address. This
-	 * is the size of the data that you get from g_inet_address_to_bytes().
-	 * Since 2.22
-	 * Returns: the number of bytes used for the native version of address.
+	 * Checks if two #GInetAddress instances are equal, e.g. the same address.
+	 *
+	 * Params:
+	 *     otherAddress = Another #GInetAddress.
+	 *
+	 * Return: %TRUE if @address and @other_address are equal, %FALSE otherwise.
+	 *
+	 * Since: 2.30
 	 */
-	public gsize getNativeSize()
+	public bool equal(InetAddress otherAddress)
 	{
-		// gsize g_inet_address_get_native_size (GInetAddress *address);
-		return g_inet_address_get_native_size(gInetAddress);
+		return g_inet_address_equal(gInetAddress, (otherAddress is null) ? null : otherAddress.getInetAddressStruct()) != 0;
 	}
-	
+
 	/**
-	 * Converts address to string form.
-	 * Since 2.22
-	 * Returns: a representation of address as a string, which should be freed after use.
-	 */
-	public override string toString()
-	{
-		// gchar * g_inet_address_to_string (GInetAddress *address);
-		return Str.toString(g_inet_address_to_string(gInetAddress));
-	}
-	
-	/**
-	 * Gets address's family
-	 * Since 2.22
-	 * Returns: address's family
+	 * Gets @address's family
+	 *
+	 * Return: @address's family
+	 *
+	 * Since: 2.22
 	 */
 	public GSocketFamily getFamily()
 	{
-		// GSocketFamily g_inet_address_get_family (GInetAddress *address);
 		return g_inet_address_get_family(gInetAddress);
 	}
-	
+
 	/**
-	 * Tests whether address is the "any" address for its family.
-	 * Since 2.22
-	 * Returns: TRUE if address is the "any" address for its family.
+	 * Tests whether @address is the "any" address for its family.
+	 *
+	 * Return: %TRUE if @address is the "any" address for its family.
+	 *
+	 * Since: 2.22
 	 */
-	public int getIsAny()
+	public bool getIsAny()
 	{
-		// gboolean g_inet_address_get_is_any (GInetAddress *address);
-		return g_inet_address_get_is_any(gInetAddress);
+		return g_inet_address_get_is_any(gInetAddress) != 0;
 	}
-	
+
 	/**
-	 * Tests whether address is the loopback address for its family.
-	 * Since 2.22
-	 * Returns: TRUE if address is the loopback address for its family.
-	 */
-	public int getIsLoopback()
-	{
-		// gboolean g_inet_address_get_is_loopback (GInetAddress *address);
-		return g_inet_address_get_is_loopback(gInetAddress);
-	}
-	
-	/**
-	 * Tests whether address is a link-local address (that is, if it
+	 * Tests whether @address is a link-local address (that is, if it
 	 * identifies a host on a local network that is not connected to the
 	 * Internet).
-	 * Since 2.22
-	 * Returns: TRUE if address is a link-local address.
+	 *
+	 * Return: %TRUE if @address is a link-local address.
+	 *
+	 * Since: 2.22
 	 */
-	public int getIsLinkLocal()
+	public bool getIsLinkLocal()
 	{
-		// gboolean g_inet_address_get_is_link_local (GInetAddress *address);
-		return g_inet_address_get_is_link_local(gInetAddress);
+		return g_inet_address_get_is_link_local(gInetAddress) != 0;
 	}
-	
+
 	/**
-	 * Tests whether address is a site-local address such as 10.0.0.1
+	 * Tests whether @address is the loopback address for its family.
+	 *
+	 * Return: %TRUE if @address is the loopback address for its family.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsLoopback()
+	{
+		return g_inet_address_get_is_loopback(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is a global multicast address.
+	 *
+	 * Return: %TRUE if @address is a global multicast address.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsMcGlobal()
+	{
+		return g_inet_address_get_is_mc_global(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is a link-local multicast address.
+	 *
+	 * Return: %TRUE if @address is a link-local multicast address.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsMcLinkLocal()
+	{
+		return g_inet_address_get_is_mc_link_local(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is a node-local multicast address.
+	 *
+	 * Return: %TRUE if @address is a node-local multicast address.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsMcNodeLocal()
+	{
+		return g_inet_address_get_is_mc_node_local(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is an organization-local multicast address.
+	 *
+	 * Return: %TRUE if @address is an organization-local multicast address.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsMcOrgLocal()
+	{
+		return g_inet_address_get_is_mc_org_local(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is a site-local multicast address.
+	 *
+	 * Return: %TRUE if @address is a site-local multicast address.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsMcSiteLocal()
+	{
+		return g_inet_address_get_is_mc_site_local(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is a multicast address.
+	 *
+	 * Return: %TRUE if @address is a multicast address.
+	 *
+	 * Since: 2.22
+	 */
+	public bool getIsMulticast()
+	{
+		return g_inet_address_get_is_multicast(gInetAddress) != 0;
+	}
+
+	/**
+	 * Tests whether @address is a site-local address such as 10.0.0.1
 	 * (that is, the address identifies a host on a local network that can
 	 * not be reached directly from the Internet, but which may have
 	 * outgoing Internet connectivity via a NAT or firewall).
-	 * Since 2.22
-	 * Returns: TRUE if address is a site-local address.
+	 *
+	 * Return: %TRUE if @address is a site-local address.
+	 *
+	 * Since: 2.22
 	 */
-	public int getIsSiteLocal()
+	public bool getIsSiteLocal()
 	{
-		// gboolean g_inet_address_get_is_site_local (GInetAddress *address);
-		return g_inet_address_get_is_site_local(gInetAddress);
+		return g_inet_address_get_is_site_local(gInetAddress) != 0;
 	}
-	
+
 	/**
-	 * Tests whether address is a multicast address.
-	 * Since 2.22
-	 * Returns: TRUE if address is a multicast address.
+	 * Gets the size of the native raw binary address for @address. This
+	 * is the size of the data that you get from g_inet_address_to_bytes().
+	 *
+	 * Return: the number of bytes used for the native version of @address.
+	 *
+	 * Since: 2.22
 	 */
-	public int getIsMulticast()
+	public size_t getNativeSize()
 	{
-		// gboolean g_inet_address_get_is_multicast (GInetAddress *address);
-		return g_inet_address_get_is_multicast(gInetAddress);
+		return g_inet_address_get_native_size(gInetAddress);
 	}
-	
+
 	/**
-	 * Tests whether address is a link-local multicast address.
-	 * Since 2.22
-	 * Returns: TRUE if address is a link-local multicast address.
+	 * Gets the raw binary address data from @address.
+	 *
+	 * Return: a pointer to an internal array of the bytes in @address,
+	 *     which should not be modified, stored, or freed. The size of this
+	 *     array can be gotten with g_inet_address_get_native_size().
+	 *
+	 * Since: 2.22
 	 */
-	public int getIsMcLinkLocal()
+	public ubyte* toBytes()
 	{
-		// gboolean g_inet_address_get_is_mc_link_local (GInetAddress *address);
-		return g_inet_address_get_is_mc_link_local(gInetAddress);
+		return g_inet_address_to_bytes(gInetAddress);
 	}
-	
+
 	/**
-	 * Tests whether address is a node-local multicast address.
-	 * Since 2.22
-	 * Returns: TRUE if address is a node-local multicast address.
+	 * Converts @address to string form.
+	 *
+	 * Return: a representation of @address as a string, which should be
+	 *     freed after use.
+	 *
+	 * Since: 2.22
 	 */
-	public int getIsMcNodeLocal()
+	public override string toString()
 	{
-		// gboolean g_inet_address_get_is_mc_node_local (GInetAddress *address);
-		return g_inet_address_get_is_mc_node_local(gInetAddress);
-	}
-	
-	/**
-	 * Tests whether address is a site-local multicast address.
-	 * Since 2.22
-	 * Returns: TRUE if address is a site-local multicast address.
-	 */
-	public int getIsMcSiteLocal()
-	{
-		// gboolean g_inet_address_get_is_mc_site_local (GInetAddress *address);
-		return g_inet_address_get_is_mc_site_local(gInetAddress);
-	}
-	
-	/**
-	 * Tests whether address is an organization-local multicast address.
-	 * Since 2.22
-	 * Returns: TRUE if address is an organization-local multicast address.
-	 */
-	public int getIsMcOrgLocal()
-	{
-		// gboolean g_inet_address_get_is_mc_org_local (GInetAddress *address);
-		return g_inet_address_get_is_mc_org_local(gInetAddress);
-	}
-	
-	/**
-	 * Tests whether address is a global multicast address.
-	 * Since 2.22
-	 * Returns: TRUE if address is a global multicast address.
-	 */
-	public int getIsMcGlobal()
-	{
-		// gboolean g_inet_address_get_is_mc_global (GInetAddress *address);
-		return g_inet_address_get_is_mc_global(gInetAddress);
+		return Str.toString(g_inet_address_to_string(gInetAddress));
 	}
 }

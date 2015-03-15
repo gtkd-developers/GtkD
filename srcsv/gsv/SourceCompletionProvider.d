@@ -16,78 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gsv
- * outFile = SourceCompletionProvider
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = SourceCompletionProvider
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = GObject
- * implements:
- * 	- SourceCompletionProviderIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gsv.SourceCompletionProviderT
- * 	- gsv.SourceCompletionProviderIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gsv.SourceCompletionProvider;
 
+private import gobject.ObjectG;
+private import gsv.SourceCompletionProviderIF;
+private import gsv.SourceCompletionProviderT;
+private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
-private import gsvc.gsv;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gsv.SourceCompletionProviderT;
-private import gsv.SourceCompletionProviderIF;
-
-
-private import gobject.ObjectG;
-
-/**
- */
 public class SourceCompletionProvider : ObjectG, SourceCompletionProviderIF
 {
-	
-	// Minimal implementation.
-	mixin SourceCompletionProviderT!(GtkSourceCompletionProvider);
-	
+	/** the main Gtk struct */
+	protected GtkSourceCompletionProvider* gtkSourceCompletionProvider;
+
+	/** Get the main Gtk struct */
+	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct()
+	{
+		return gtkSourceCompletionProvider;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceCompletionProvider;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkSourceCompletionProvider* gtkSourceCompletionProvider)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gtkSourceCompletionProvider);
-		this.gtkSourceCompletionProvider = gtkSourceCompletionProvider;
+		gtkSourceCompletionProvider = cast(GtkSourceCompletionProvider*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkSourceCompletionProvider* gtkSourceCompletionProvider, bool ownedRef = false)
+	{
+		this.gtkSourceCompletionProvider = gtkSourceCompletionProvider;
+		super(cast(GObject*)gtkSourceCompletionProvider, ownedRef);
+	}
+
+	// add the SourceCompletionProvider capabilities
+	mixin SourceCompletionProviderT!(GtkSourceCompletionProvider);
+
 	/**
 	 */
 }

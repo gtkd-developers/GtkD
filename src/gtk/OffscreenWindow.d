@@ -16,162 +16,117 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkOffscreenWindow.html
- * outPack = gtk
- * outFile = OffscreenWindow
- * strct   = GtkOffscreenWindow
- * realStrct=
- * ctorStrct=
- * clss    = OffscreenWindow
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_offscreen_window_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- cairo.Surface
- * 	- gdk.Pixbuf
- * structWrap:
- * 	- GdkPixbuf* -> Pixbuf
- * 	- cairo_surface_t* -> Surface
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.OffscreenWindow;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
+private import cairo.Surface;
+private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-private import cairo.Surface;
-private import gdk.Pixbuf;
-
-
+private import gtk.Widget;
 private import gtk.Window;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
  * GtkOffscreenWindow is strictly intended to be used for obtaining
  * snapshots of widgets that are not part of a normal widget hierarchy.
- * Since GtkOffscreenWindow is a toplevel widget you cannot obtain
+ * Since #GtkOffscreenWindow is a toplevel widget you cannot obtain
  * snapshots of a full window with it since you cannot pack a toplevel
  * widget in another toplevel.
- *
+ * 
  * The idea is to take a widget and manually set the state of it,
  * add it to a GtkOffscreenWindow and then retrieve the snapshot
- * as a cairo_surface_t or GdkPixbuf.
- *
- * GtkOffscreenWindow derives from GtkWindow only as an implementation
- * detail. Applications should not use any API specific to GtkWindow
- * to operate on this object. It should be treated as a GtkBin that
+ * as a #cairo_surface_t or #GdkPixbuf.
+ * 
+ * GtkOffscreenWindow derives from #GtkWindow only as an implementation
+ * detail.  Applications should not use any API specific to #GtkWindow
+ * to operate on this object.  It should be treated as a #GtkBin that
  * has no parent widget.
- *
+ * 
  * When contained offscreen widgets are redrawn, GtkOffscreenWindow
- * will emit a "damage-event" signal.
+ * will emit a #GtkWidget::damage-event signal.
  */
 public class OffscreenWindow : Window
 {
-	
 	/** the main Gtk struct */
 	protected GtkOffscreenWindow* gtkOffscreenWindow;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkOffscreenWindow* getOffscreenWindowStruct()
 	{
 		return gtkOffscreenWindow;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkOffscreenWindow;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkOffscreenWindow* gtkOffscreenWindow)
-	{
-		super(cast(GtkWindow*)gtkOffscreenWindow);
-		this.gtkOffscreenWindow = gtkOffscreenWindow;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkOffscreenWindow = cast(GtkOffscreenWindow*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkOffscreenWindow* gtkOffscreenWindow, bool ownedRef = false)
+	{
+		this.gtkOffscreenWindow = gtkOffscreenWindow;
+		super(cast(GtkWindow*)gtkOffscreenWindow, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_offscreen_window_get_type();
+	}
+
 	/**
 	 * Creates a toplevel container widget that is used to retrieve
 	 * snapshots of widgets without showing them on the screen.
-	 * Since 2.20
+	 *
+	 * Return: A pointer to a #GtkWidget
+	 *
+	 * Since: 2.20
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_offscreen_window_new (void);
 		auto p = gtk_offscreen_window_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_offscreen_window_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkOffscreenWindow*) p);
 	}
-	
+
 	/**
 	 * Retrieves a snapshot of the contained widget in the form of
-	 * a cairo_surface_t. If you need to keep this around over window
-	 * resizes then you should add a reference to it.
-	 * Since 2.20
-	 * Returns: A cairo_surface_t pointer to the offscreen surface, or NULL. [transfer none]
-	 */
-	public Surface getSurface()
-	{
-		// cairo_surface_t * gtk_offscreen_window_get_surface (GtkOffscreenWindow *offscreen);
-		auto p = gtk_offscreen_window_get_surface(gtkOffscreenWindow);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Surface)(cast(cairo_surface_t*) p);
-	}
-	
-	/**
-	 * Retrieves a snapshot of the contained widget in the form of
-	 * a GdkPixbuf. This is a new pixbuf with a reference count of 1,
+	 * a #GdkPixbuf.  This is a new pixbuf with a reference count of 1,
 	 * and the application should unreference it once it is no longer
 	 * needed.
-	 * Since 2.20
-	 * Returns: A GdkPixbuf pointer, or NULL. [transfer full]
+	 *
+	 * Return: A #GdkPixbuf pointer, or %NULL.
+	 *
+	 * Since: 2.20
 	 */
 	public Pixbuf getPixbuf()
 	{
-		// GdkPixbuf * gtk_offscreen_window_get_pixbuf (GtkOffscreenWindow *offscreen);
 		auto p = gtk_offscreen_window_get_pixbuf(gtkOffscreenWindow);
 		
 		if(p is null)
@@ -179,6 +134,28 @@ public class OffscreenWindow : Window
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+	}
+
+	/**
+	 * Retrieves a snapshot of the contained widget in the form of
+	 * a #cairo_surface_t.  If you need to keep this around over window
+	 * resizes then you should add a reference to it.
+	 *
+	 * Return: A #cairo_surface_t pointer to the offscreen
+	 *     surface, or %NULL.
+	 *
+	 * Since: 2.20
+	 */
+	public Surface getSurface()
+	{
+		auto p = gtk_offscreen_window_get_surface(gtkOffscreenWindow);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Surface(cast(cairo_surface_t*) p);
 	}
 }

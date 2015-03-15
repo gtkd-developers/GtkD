@@ -16,89 +16,51 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gstreamer-GstToc.html
- * outPack = gstreamer
- * outFile = Toc
- * strct   = GstToc
- * realStrct=
- * ctorStrct=
- * clss    = Toc
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_toc_
- * omit structs:
- * omit prefixes:
- * 	- gst_toc_entry_
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ListG
- * 	- gstreamer.TagList
- * 	- gstreamer.TocEntry
- * structWrap:
- * 	- GList* -> ListG
- * 	- GstTagList* -> TagList
- * 	- GstTocEntry* -> TocEntry
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.Toc;
 
-public  import gstreamerc.gstreamertypes;
-
-private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
 private import glib.ListG;
+private import glib.Str;
+private import gobject.ObjectG;
 private import gstreamer.TagList;
 private import gstreamer.TocEntry;
-
+private import gstreamerc.gstreamer;
+public  import gstreamerc.gstreamertypes;
 
 
 /**
- * GstToc functions are used to create/free GstToc and GstTocEntry structures.
- * Also they are used to convert GstToc into GstStructure and vice versa.
- *
- * GstToc lets you to inform other elements in pipeline or application that playing
+ * #GstToc functions are used to create/free #GstToc and #GstTocEntry structures.
+ * Also they are used to convert #GstToc into #GstStructure and vice versa.
+ * 
+ * #GstToc lets you to inform other elements in pipeline or application that playing
  * source has some kind of table of contents (TOC). These may be chapters, editions,
  * angles or other types. For example: DVD chapters, Matroska chapters or cue sheet
  * TOC. Such TOC will be useful for applications to display instead of just a
  * playlist.
- *
- * Using TOC is very easy. Firstly, create GstToc structure which represents root
+ * 
+ * Using TOC is very easy. Firstly, create #GstToc structure which represents root
  * contents of the source. You can also attach TOC-specific tags to it. Then fill
- * it with GstTocEntry entries by appending them to the GstToc using
- * gst_toc_append_entry(), and appending subentries to a GstTocEntry using
+ * it with #GstTocEntry entries by appending them to the #GstToc using
+ * gst_toc_append_entry(), and appending subentries to a #GstTocEntry using
  * gst_toc_entry_append_sub_entry().
- *
+ * 
  * Note that root level of the TOC can contain only either editions or chapters. You
  * should not mix them together at the same level. Otherwise you will get serialization
  * /deserialization errors. Make sure that no one of the entries has negative start and
- *  stop values.
- *
- * Use gst_event_new_toc() to create a new TOC GstEvent, and gst_event_parse_toc() to
- * parse received TOC event. Use gst_event_new_toc_select() to create a new TOC select GstEvent,
+ * stop values.
+ * 
+ * Use gst_event_new_toc() to create a new TOC #GstEvent, and gst_event_parse_toc() to
+ * parse received TOC event. Use gst_event_new_toc_select() to create a new TOC select #GstEvent,
  * and gst_event_parse_toc_select() to parse received TOC select event. The same rule for
- * the GstMessage: gst_message_new_toc() to create new TOC GstMessage, and
+ * the #GstMessage: gst_message_new_toc() to create new TOC #GstMessage, and
  * gst_message_parse_toc() to parse received TOC message.
- *
+ * 
  * TOCs can have global scope or current scope. Global scope TOCs contain
  * all entries that can possibly be selected using a toc select event, and
  * are what an application is usually interested in. TOCs with current scope
@@ -109,7 +71,7 @@ private import gstreamer.TocEntry;
  * chapters and angles, for example, while the current TOC would only contain
  * the chapters for the currently playing title if playback of a specific
  * title was requested.
- *
+ * 
  * Applications and plugins should not rely on TOCs having a certain kind of
  * structure, but should allow for different alternatives. For example, a
  * simple CUE sheet embedded in a file may be presented as a flat list of
@@ -121,66 +83,104 @@ private import gstreamer.TocEntry;
  */
 public class Toc
 {
-	
 	/** the main Gtk struct */
 	protected GstToc* gstToc;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstToc* getTocStruct()
 	{
 		return gstToc;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gstToc;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GstToc* gstToc)
 	{
 		this.gstToc = gstToc;
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gst_toc_get_type();
+	}
+
 	/**
-	 * Create a new GstToc structure.
+	 * Create a new #GstToc structure.
+	 *
+	 * Params:
+	 *     scop = scope of this TOC
+	 *
+	 * Return: newly allocated #GstToc structure, free it
+	 *     with gst_toc_unref().
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstTocScope scop)
+	public this(GstTocScope scop)
 	{
-		// GstToc * gst_toc_new (GstTocScope scope);
 		auto p = gst_toc_new(scop);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_toc_new(scop)");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GstToc*) p);
 	}
-	
+
 	/**
-	 * Returns: scope of toc
+	 * Appends the #GstTocEntry @entry to @toc.
+	 *
+	 * Params:
+	 *     entry = A #GstTocEntry
 	 */
-	public GstTocScope getScope()
+	public void appendEntry(TocEntry entry)
 	{
-		// GstTocScope gst_toc_get_scope (const GstToc *toc);
-		return gst_toc_get_scope(gstToc);
+		gst_toc_append_entry(gstToc, (entry is null) ? null : entry.getTocEntryStruct());
 	}
-	
+
+	public void dump()
+	{
+		gst_toc_dump(gstToc);
+	}
+
 	/**
-	 * Gets the list of GstTocEntry of toc.
-	 * Returns: A GList of GstTocEntry for entry. [transfer none][element-type Gst.TocEntry]
+	 * Find #GstTocEntry with given @uid in the @toc.
+	 *
+	 * Params:
+	 *     uid = UID to find #GstTocEntry with.
+	 *
+	 * Return: #GstTocEntry with specified
+	 *     @uid from the @toc, or %NULL if not found.
+	 */
+	public TocEntry findEntry(string uid)
+	{
+		auto p = gst_toc_find_entry(gstToc, Str.toStringz(uid));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) p);
+	}
+
+	/**
+	 * Gets the list of #GstTocEntry of @toc.
+	 *
+	 * Return: A #GList of #GstTocEntry for @entry
 	 */
 	public ListG getEntries()
 	{
-		// GList * gst_toc_get_entries (const GstToc *toc);
 		auto p = gst_toc_get_entries(gstToc);
 		
 		if(p is null)
@@ -188,27 +188,24 @@ public class Toc
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		return new ListG(cast(GList*) p);
 	}
-	
+
 	/**
-	 * Appends the GstTocEntry entry to toc.
-	 * Params:
-	 * entry = A GstTocEntry. [transfer full]
+	 * Return: scope of @toc
 	 */
-	public void appendEntry(TocEntry entry)
+	public GstTocScope getScope()
 	{
-		// void gst_toc_append_entry (GstToc *toc,  GstTocEntry *entry);
-		gst_toc_append_entry(gstToc, (entry is null) ? null : entry.getTocEntryStruct());
+		return gst_toc_get_scope(gstToc);
 	}
-	
+
 	/**
-	 * Gets the tags for toc.
-	 * Returns: A GstTagList for entry. [transfer none]
+	 * Gets the tags for @toc.
+	 *
+	 * Return: A #GstTagList for @entry
 	 */
 	public TagList getTags()
 	{
-		// GstTagList * gst_toc_get_tags (const GstToc *toc);
 		auto p = gst_toc_get_tags(gstToc);
 		
 		if(p is null)
@@ -218,54 +215,27 @@ public class Toc
 		
 		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
-	
+
 	/**
-	 * Merge tags into the existing tags of toc using mode.
+	 * Merge @tags into the existing tags of @toc using @mode.
+	 *
 	 * Params:
-	 * tags = A GstTagList or NULL. [allow-none]
-	 * mode = A GstTagMergeMode
+	 *     tags = A #GstTagList or %NULL
+	 *     mode = A #GstTagMergeMode
 	 */
 	public void mergeTags(TagList tags, GstTagMergeMode mode)
 	{
-		// void gst_toc_merge_tags (GstToc *toc,  GstTagList *tags,  GstTagMergeMode mode);
 		gst_toc_merge_tags(gstToc, (tags is null) ? null : tags.getTagListStruct(), mode);
 	}
-	
+
 	/**
-	 * Set a GstTagList with tags for the complete toc.
+	 * Set a #GstTagList with tags for the complete @toc.
+	 *
 	 * Params:
-	 * tags = A GstTagList or NULL. [allow-none][transfer full]
+	 *     tags = A #GstTagList or %NULL
 	 */
 	public void setTags(TagList tags)
 	{
-		// void gst_toc_set_tags (GstToc *toc,  GstTagList *tags);
 		gst_toc_set_tags(gstToc, (tags is null) ? null : tags.getTagListStruct());
-	}
-	
-	/**
-	 */
-	public void dump()
-	{
-		// void gst_toc_dump (GstToc *toc);
-		gst_toc_dump(gstToc);
-	}
-	
-	/**
-	 * Find GstTocEntry with given uid in the toc.
-	 * Params:
-	 * uid = UID to find GstTocEntry with.
-	 * Returns: GstTocEntry with specified uid from the toc, or NULL if not found. [transfer none]
-	 */
-	public TocEntry findEntry(string uid)
-	{
-		// GstTocEntry * gst_toc_find_entry (const GstToc *toc,  const gchar *uid);
-		auto p = gst_toc_find_entry(gstToc, Str.toStringz(uid));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) p);
 	}
 }

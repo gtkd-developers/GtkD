@@ -16,117 +16,100 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GSeekable.html
- * outPack = gio
- * outFile = SeekableT
- * strct   = GSeekable
- * realStrct=
- * ctorStrct=
- * clss    = SeekableT
- * interf  = SeekableIF
- * class Code: No
- * interface Code: No
- * template for:
- * 	- TStruct
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_seekable_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.Cancellable
- * structWrap:
- * 	- GCancellable* -> Cancellable
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.SeekableT;
 
+public  import gio.Cancellable;
+public  import glib.ErrorG;
+public  import glib.GException;
+public  import gtkc.gio;
 public  import gtkc.giotypes;
-
-public import gtkc.gio;
-public import glib.ConstructionException;
-public import gobject.ObjectG;
-
-public import glib.ErrorG;
-public import glib.GException;
-public import gio.Cancellable;
-
 
 
 /**
- * GSeekable is implemented by streams (implementations of
- * GInputStream or GOutputStream) that support seeking.
+ * #GSeekable is implemented by streams (implementations of
+ * #GInputStream or #GOutputStream) that support seeking.
+ * 
+ * Seekable streams largely fall into two categories: resizable and
+ * fixed-size.
+ * 
+ * #GSeekable on fixed-sized streams is approximately the same as POSIX
+ * lseek() on a block device (for example: attmepting to seek past the
+ * end of the device is an error).  Fixed streams typically cannot be
+ * truncated.
+ * 
+ * #GSeekable on resizable streams is approximately the same as POSIX
+ * lseek() on a normal file.  Seeking past the end and writing data will
+ * usually cause the stream to resize by introducing zero bytes.
  */
 public template SeekableT(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GSeekable* gSeekable;
-	
-	
 	/** Get the main Gtk struct */
-	public GSeekable* getSeekableTStruct()
+	public GSeekable* getSeekableStruct()
 	{
 		return cast(GSeekable*)getStruct();
 	}
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Tells the current position within the stream.
-	 * Returns: the offset from the beginning of the buffer.
+	 * Tests if the stream supports the #GSeekableIface.
+	 *
+	 * Return: %TRUE if @seekable can be seeked. %FALSE otherwise.
 	 */
-	public long tell()
+	public bool canSeek()
 	{
-		// goffset g_seekable_tell (GSeekable *seekable);
-		return g_seekable_tell(getSeekableTStruct());
+		return g_seekable_can_seek(getSeekableStruct()) != 0;
 	}
-	
+
 	/**
-	 * Tests if the stream supports the GSeekableIface.
-	 * Returns: TRUE if seekable can be seeked. FALSE otherwise.
+	 * Tests if the stream can be truncated.
+	 *
+	 * Return: %TRUE if the stream can be truncated, %FALSE otherwise.
 	 */
-	public int canSeek()
+	public bool canTruncate()
 	{
-		// gboolean g_seekable_can_seek (GSeekable *seekable);
-		return g_seekable_can_seek(getSeekableTStruct());
+		return g_seekable_can_truncate(getSeekableStruct()) != 0;
 	}
-	
+
 	/**
-	 * Seeks in the stream by the given offset, modified by type.
-	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * Seeks in the stream by the given @offset, modified by @type.
+	 *
+	 * Attempting to seek past the end of the stream will have different
+	 * results depending on if the stream is fixed-sized or resizable.  If
+	 * the stream is resizable then seeking past the end and then writing
+	 * will result in zeros filling the empty space.  Seeking past the end
+	 * of a resizable stream and reading will result in EOF.  Seeking past
+	 * the end of a fixed-sized stream will fail.
+	 *
+	 * Any operation that would result in a negative offset will fail.
+	 *
+	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned.
+	 * was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
+	 *
 	 * Params:
-	 * offset = a goffset.
-	 * type = a GSeekType.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
+	 *     offset = a #goffset.
+	 *     type = a #GSeekType.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *
+	 * Return: %TRUE if successful. If an error
+	 *     has occurred, this function will return %FALSE and set @error
+	 *     appropriately if present.
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int seek(long offset, GSeekType type, Cancellable cancellable)
+	public bool seek(long offset, GSeekType type, Cancellable cancellable)
 	{
-		// gboolean g_seekable_seek (GSeekable *seekable,  goffset offset,  GSeekType type,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_seekable_seek(getSeekableTStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_seekable_seek(getSeekableStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 		
 		if (err !is null)
 		{
@@ -135,37 +118,41 @@ public template SeekableT(TStruct)
 		
 		return p;
 	}
-	
+
 	/**
-	 * Tests if the stream can be truncated.
-	 * Returns: TRUE if the stream can be truncated, FALSE otherwise.
+	 * Tells the current position within the stream.
+	 *
+	 * Return: the offset from the beginning of the buffer.
 	 */
-	public int canTruncate()
+	public long tell()
 	{
-		// gboolean g_seekable_can_truncate (GSeekable *seekable);
-		return g_seekable_can_truncate(getSeekableTStruct());
+		return g_seekable_tell(getSeekableStruct());
 	}
-	
+
 	/**
-	 * Truncates a stream with a given offset.
-	 * If cancellable is not NULL, then the operation can be cancelled by
+	 * Truncates a stream with a given #offset.
+	 *
+	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
-	 * was cancelled, the error G_IO_ERROR_CANCELLED will be returned. If an
+	 * was cancelled, the error %G_IO_ERROR_CANCELLED will be returned. If an
 	 * operation was partially finished when the operation was cancelled the
 	 * partial result will be returned, without an error.
-	 * Virtual: truncate_fn
+	 *
 	 * Params:
-	 * offset = a goffset.
-	 * cancellable = optional GCancellable object, NULL to ignore. [allow-none]
-	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
+	 *     offset = a #goffset.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *
+	 * Return: %TRUE if successful. If an error
+	 *     has occurred, this function will return %FALSE and set @error
+	 *     appropriately if present.
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int truncate(long offset, Cancellable cancellable)
+	public bool truncate(long offset, Cancellable cancellable)
 	{
-		// gboolean g_seekable_truncate (GSeekable *seekable,  goffset offset,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_seekable_truncate(getSeekableTStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_seekable_truncate(getSeekableStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 		
 		if (err !is null)
 		{

@@ -16,127 +16,97 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkAccessible.html
- * outPack = gtk
- * outFile = Accessible
- * strct   = GtkAccessible
- * realStrct=
- * ctorStrct=
- * clss    = Accessible
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_accessible_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.Widget
- * structWrap:
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.Accessible;
 
+private import atk.ObjectAtk;
+private import gobject.ObjectG;
+private import gtk.Widget;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gtk.Widget;
-
-
-private import atk.ObjectAtk;
 
 /**
- * The GtkAccessible class is the base class for accessible
- * implementations for GtkWidget subclasses. It is a thin
- * wrapper around AtkObject, which adds facilities for associating
+ * The #GtkAccessible class is the base class for accessible
+ * implementations for #GtkWidget subclasses. It is a thin
+ * wrapper around #AtkObject, which adds facilities for associating
  * a widget with its accessible object.
- *
+ * 
  * An accessible implementation for a third-party widget should
- * derive from GtkAccessible and implement the suitable interfaces
- * from ATK, such as AtkText or AtkSelection. To establish
+ * derive from #GtkAccessible and implement the suitable interfaces
+ * from ATK, such as #AtkText or #AtkSelection. To establish
  * the connection between the widget class and its corresponding
  * acccessible implementation, override the get_accessible vfunc
- * in GtkWidgetClass.
+ * in #GtkWidgetClass.
  */
 public class Accessible : ObjectAtk
 {
-	
 	/** the main Gtk struct */
 	protected GtkAccessible* gtkAccessible;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkAccessible* getAccessibleStruct()
 	{
 		return gtkAccessible;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkAccessible;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkAccessible* gtkAccessible)
-	{
-		super(cast(AtkObject*)gtkAccessible);
-		this.gtkAccessible = gtkAccessible;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkAccessible = cast(GtkAccessible*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkAccessible* gtkAccessible, bool ownedRef = false)
+	{
+		this.gtkAccessible = gtkAccessible;
+		super(cast(AtkObject*)gtkAccessible, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_accessible_get_type();
+	}
+
 	/**
-	 * Warning
-	 * gtk_accessible_connect_widget_destroyed has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_accessible_set_widget() and its vfuncs.
 	 * This function specifies the callback function to be called
 	 * when the widget corresponding to a GtkAccessible is destroyed.
+	 *
+	 * Deprecated: Use gtk_accessible_set_widget() and its vfuncs.
 	 */
 	public void connectWidgetDestroyed()
 	{
-		// void gtk_accessible_connect_widget_destroyed  (GtkAccessible *accessible);
 		gtk_accessible_connect_widget_destroyed(gtkAccessible);
 	}
-	
+
 	/**
-	 * Gets the GtkWidget corresponding to the GtkAccessible.
+	 * Gets the #GtkWidget corresponding to the #GtkAccessible.
 	 * The returned widget does not have a reference added, so
 	 * you do not need to unref it.
-	 * Since 2.22
-	 * Returns: pointer to the GtkWidget corresponding to the GtkAccessible, or NULL. [transfer none]
+	 *
+	 * Return: pointer to the #GtkWidget
+	 *     corresponding to the #GtkAccessible, or %NULL.
+	 *
+	 * Since: 2.22
 	 */
 	public Widget getWidget()
 	{
-		// GtkWidget * gtk_accessible_get_widget (GtkAccessible *accessible);
 		auto p = gtk_accessible_get_widget(gtkAccessible);
 		
 		if(p is null)
@@ -146,21 +116,22 @@ public class Accessible : ObjectAtk
 		
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
-	
+
 	/**
-	 * Sets the GtkWidget corresponding to the GtkAccessible.
-	 * Note
-	 * accessible will not hold a reference to widget.
-	 * It is the caller's responsibility to ensure that when widget
+	 * Sets the #GtkWidget corresponding to the #GtkAccessible.
+	 *
+	 * @accessible will not hold a reference to @widget.
+	 * It is the caller’s responsibility to ensure that when @widget
 	 * is destroyed, the widget is unset by calling this function
-	 * again with widget set to NULL.
-	 * Since 2.22
+	 * again with @widget set to %NULL.
+	 *
 	 * Params:
-	 * widget = a GtkWidget or NULL to unset. [allow-none]
+	 *     widget = a #GtkWidget or %NULL to unset
+	 *
+	 * Since: 2.22
 	 */
 	public void setWidget(Widget widget)
 	{
-		// void gtk_accessible_set_widget (GtkAccessible *accessible,  GtkWidget *widget);
 		gtk_accessible_set_widget(gtkAccessible, (widget is null) ? null : widget.getWidgetStruct());
 	}
 }

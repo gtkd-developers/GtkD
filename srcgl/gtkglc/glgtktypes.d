@@ -16,20 +16,14 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gtkglc.glgtktypes;
 
+module gtkglc.glgtktypes;
 
 public import gtkc.glibtypes;
 public import gtkglc.glgdktypes;
 public import gtkc.gtktypes;
-
-
-/*
- */
-// TODO
-// #define gtk_widget_get_gl_drawable(widget)

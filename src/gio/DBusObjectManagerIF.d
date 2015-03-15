@@ -16,161 +16,144 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GDBusObjectManager.html
- * outPack = gio
- * outFile = DBusObjectManagerIF
- * strct   = GDBusObjectManager
- * realStrct=
- * ctorStrct=
- * clss    = DBusObjectManagerT
- * interf  = DBusObjectManagerIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_dbus_object_manager_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ListG
- * 	- gio.DBusInterface
- * 	- gio.DBusInterfaceIF
- * 	- gio.DBusObject
- * 	- gio.DBusObjectIF
- * structWrap:
- * 	- GDBusInterface* -> DBusInterfaceIF
- * 	- GDBusObject* -> DBusObjectIF
- * 	- GList* -> ListG
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusObjectManagerIF;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
-private import glib.ListG;
 private import gio.DBusInterface;
 private import gio.DBusInterfaceIF;
 private import gio.DBusObject;
 private import gio.DBusObjectIF;
-
+private import glib.ListG;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+public  import gtkc.gdktypes;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * The GDBusObjectManager type is the base type for service- and
- * client-side implementations of the standardized org.freedesktop.DBus.ObjectManager
+ * The #GDBusObjectManager type is the base type for service- and
+ * client-side implementations of the standardized
+ * [org.freedesktop.DBus.ObjectManager](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-objectmanager)
  * interface.
- *
- * See GDBusObjectManagerClient for the client-side implementation
- * and GDBusObjectManagerServer for the service-side implementation.
+ * 
+ * See #GDBusObjectManagerClient for the client-side implementation
+ * and #GDBusObjectManagerServer for the service-side implementation.
  */
-public interface DBusObjectManagerIF
-{
-	
-	
+public interface DBusObjectManagerIF{
 	/** Get the main Gtk struct */
-	public GDBusObjectManager* getDBusObjectManagerTStruct();
-	
+	public GDBusObjectManager* getDBusObjectManagerStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
-	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners();
+
 	/**
-	 * Emitted when interface is added to object.
-	 * This signal exists purely as a convenience to avoid having to
-	 * connect signals to all objects managed by manager.
-	 * Since 2.30
-	 */
-	void addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners();
-	/**
-	 * Emitted when interface has been removed from object.
-	 * This signal exists purely as a convenience to avoid having to
-	 * connect signals to all objects managed by manager.
-	 * Since 2.30
-	 */
-	void addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners();
-	/**
-	 * Emitted when object is added to manager.
-	 * Since 2.30
-	 */
-	void addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners();
-	/**
-	 * Emitted when object is removed from manager.
-	 * Since 2.30
-	 */
-	void addOnObjectRemoved(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	
-	/**
-	 * Gets the object path that manager is for.
-	 * Since 2.30
-	 * Returns: A string owned by manager. Do not free.
-	 */
-	public string getObjectPath();
-	
-	/**
-	 * Gets all GDBusObject objects known to manager.
-	 * Since 2.30
-	 * Returns: A list of GDBusObject objects. The returned list should be freed with g_list_free() after each element has been freed with g_object_unref(). [transfer full][element-type GDBusObject]
-	 */
-	public ListG getObjects();
-	
-	/**
-	 * Gets the GDBusObjectProxy at object_path, if any.
-	 * Since 2.30
-	 * Params:
-	 * objectPath = Object path to lookup.
-	 * Returns: A GDBusObject or NULL. Free with g_object_unref(). [transfer full]
-	 */
-	public DBusObjectIF getObject(string objectPath);
-	
-	/**
-	 * Gets the interface proxy for interface_name at object_path, if
+	 * Gets the interface proxy for @interface_name at @object_path, if
 	 * any.
-	 * Since 2.30
-	 * Signal Details
-	 * The "interface-added" signal
-	 * void user_function (GDBusObjectManager *manager,
-	 *  GDBusObject *object,
-	 *  GDBusInterface *interface,
-	 *  gpointer user_data) : Run Last
-	 * Emitted when interface is added to object.
-	 * This signal exists purely as a convenience to avoid having to
-	 * connect signals to all objects managed by manager.
-	 * Since 2.30
+	 *
 	 * Params:
-	 * objectPath = Object path to lookup.
-	 * interfaceName = D-Bus interface name to lookup.
-	 * object = The GDBusObject on which an interface was added.
-	 * interface = The GDBusInterface that was added.
-	 * Returns: A GDBusInterface instance or NULL. Free with g_object_unref(). [transfer full]
+	 *     objectPath = Object path to lookup.
+	 *     interfaceName = D-Bus interface name to lookup.
+	 *
+	 * Return: A #GDBusInterface instance or %NULL. Free
+	 *     with g_object_unref().
+	 *
+	 * Since: 2.30
 	 */
 	public DBusInterfaceIF getInterface(string objectPath, string interfaceName);
+
+	/**
+	 * Gets the #GDBusObjectProxy at @object_path, if any.
+	 *
+	 * Params:
+	 *     objectPath = Object path to lookup.
+	 *
+	 * Return: A #GDBusObject or %NULL. Free with
+	 *     g_object_unref().
+	 *
+	 * Since: 2.30
+	 */
+	public DBusObjectIF getObject(string objectPath);
+
+	/**
+	 * Gets the object path that @manager is for.
+	 *
+	 * Return: A string owned by @manager. Do not free.
+	 *
+	 * Since: 2.30
+	 */
+	public string getObjectPath();
+
+	/**
+	 * Gets all #GDBusObject objects known to @manager.
+	 *
+	 * Return: A list of
+	 *     #GDBusObject objects. The returned list should be freed with
+	 *     g_list_free() after each element has been freed with
+	 *     g_object_unref().
+	 *
+	 * Since: 2.30
+	 */
+	public ListG getObjects();
+	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners();
+	/**
+	 * Emitted when @interface is added to @object.
+	 *
+	 * This signal exists purely as a convenience to avoid having to
+	 * connect signals to all objects managed by @manager.
+	 *
+	 * Params:
+	 *     object = The #GDBusObject on which an interface was added.
+	 *     iface = The #GDBusInterface that was added.
+	 *
+	 * Since: 2.30
+	 */
+	void addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+
+	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners();
+	/**
+	 * Emitted when @interface has been removed from @object.
+	 *
+	 * This signal exists purely as a convenience to avoid having to
+	 * connect signals to all objects managed by @manager.
+	 *
+	 * Params:
+	 *     object = The #GDBusObject on which an interface was removed.
+	 *     iface = The #GDBusInterface that was removed.
+	 *
+	 * Since: 2.30
+	 */
+	void addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+
+	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners();
+	/**
+	 * Emitted when @object is added to @manager.
+	 *
+	 * Params:
+	 *     object = The #GDBusObject that was added.
+	 *
+	 * Since: 2.30
+	 */
+	void addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+
+	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners();
+	/**
+	 * Emitted when @object is removed from @manager.
+	 *
+	 * Params:
+	 *     object = The #GDBusObject that was removed.
+	 *
+	 * Since: 2.30
+	 */
+	void addOnObjectRemoved(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+
 }

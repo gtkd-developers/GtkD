@@ -16,281 +16,130 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gio-D-Bus-Utilities.html
- * outPack = gio
- * outFile = DBusUtilities
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = DBusUtilities
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_dbus_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.Variant
- * 	- glib.VariantType
- * 	- gobject.Value
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.IOStream
- * structWrap:
- * 	- GValue* -> Value
- * 	- GVariant* -> Variant
- * 	- GVariantType* -> VariantType
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusUtilities;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import glib.ErrorG;
-private import glib.GException;
-private import glib.Variant;
-private import glib.VariantType;
-private import gobject.Value;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;
+private import glib.ErrorG;
+private import glib.GException;
+private import glib.Str;
+private import glib.Variant;
+private import glib.VariantType;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
-
-/**
- * Various utility routines related to D-Bus.
- */
-public class DBusUtilities
+public struct DBusUtilities
 {
-	
 	/**
-	 * Routines for working with D-Bus addresses. A D-Bus address is a string
-	 * like "unix:tmpdir=/tmp/my-app-name". The exact format of addresses
-	 * is explained in detail in the D-Bus specification.
 	 */
-	
+
 	/**
-	 * Generate a D-Bus GUID that can be used with
-	 * e.g. g_dbus_connection_new().
-	 * See the D-Bus specification regarding what strings are valid D-Bus
-	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
-	 * Since 2.26
-	 * Returns: A valid D-Bus GUID. Free with g_free().
-	 */
-	public static string generateGuid()
-	{
-		// gchar * g_dbus_generate_guid (void);
-		return Str.toString(g_dbus_generate_guid());
-	}
-	
-	/**
-	 * Checks if string is a D-Bus GUID.
-	 * See the D-Bus specification regarding what strings are valid D-Bus
-	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
-	 * Since 2.26
+	 * Escape @string so it can appear in a D-Bus address as the value
+	 * part of a key-value pair.
+	 *
+	 * For instance, if @string is "/run/bus-for-:0",
+	 * this function would return "/run/bus-for-%3A0",
+	 * which could be used in a D-Bus address like
+	 * "unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0".
+	 *
 	 * Params:
-	 * string = The string to check.
-	 * Returns: TRUE if string is a guid, FALSE otherwise.
+	 *     str = an unescaped string to be included in a D-Bus address
+	 *         as the value in a key-value pair
+	 *
+	 * Return: a copy of @string with all
+	 *     non-optionally-escaped bytes escaped
+	 *
+	 * Since: 2.36
 	 */
-	public static int isGuid(string string)
+	public static string addressEscapeValue(string str)
 	{
-		// gboolean g_dbus_is_guid (const gchar *string);
-		return g_dbus_is_guid(Str.toStringz(string));
+		return Str.toString(g_dbus_address_escape_value(Str.toStringz(str)));
 	}
-	
+
 	/**
-	 * Checks if string is a valid D-Bus bus name (either unique or well-known).
-	 * Since 2.26
+	 * Synchronously looks up the D-Bus address for the well-known message
+	 * bus instance specified by @bus_type. This may involve using various
+	 * platform specific mechanisms.
+	 *
 	 * Params:
-	 * string = The string to check.
-	 * Returns: TRUE if valid, FALSE otherwise.
-	 */
-	public static int isName(string string)
-	{
-		// gboolean g_dbus_is_name (const gchar *string);
-		return g_dbus_is_name(Str.toStringz(string));
-	}
-	
-	/**
-	 * Checks if string is a valid D-Bus unique bus name.
-	 * Since 2.26
-	 * Params:
-	 * string = The string to check.
-	 * Returns: TRUE if valid, FALSE otherwise.
-	 */
-	public static int isUniqueName(string string)
-	{
-		// gboolean g_dbus_is_unique_name (const gchar *string);
-		return g_dbus_is_unique_name(Str.toStringz(string));
-	}
-	
-	/**
-	 * Checks if string is a valid D-Bus member (e.g. signal or method) name.
-	 * Since 2.26
-	 * Params:
-	 * string = The string to check.
-	 * Returns: TRUE if valid, FALSE otherwise.
-	 */
-	public static int isMemberName(string string)
-	{
-		// gboolean g_dbus_is_member_name (const gchar *string);
-		return g_dbus_is_member_name(Str.toStringz(string));
-	}
-	
-	/**
-	 * Checks if string is a valid D-Bus interface name.
-	 * Since 2.26
-	 * Params:
-	 * string = The string to check.
-	 * Returns: TRUE if valid, FALSE otherwise.
-	 */
-	public static int isInterfaceName(string string)
-	{
-		// gboolean g_dbus_is_interface_name (const gchar *string);
-		return g_dbus_is_interface_name(Str.toStringz(string));
-	}
-	
-	/**
-	 * Converts a GValue to a GVariant of the type indicated by the type parameter.
-	 * Since 2.30
-	 * Params:
-	 * gvalue = A GValue to convert to a GVariant.
-	 * type = A GVariantType.
-	 * Returns: A GVariant (never floating) of GVariantType type holding the data from gvalue or NULL in case of failure. Free with g_variant_unref().
-	 */
-	public static Variant gvalueToGvariant(Value gvalue, VariantType type)
-	{
-		// GVariant * g_dbus_gvalue_to_gvariant (const GValue *gvalue,  const GVariantType *type);
-		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
-	}
-	
-	/**
-	 * Converts a GVariant to a GValue. If value is floating, it is consumed.
-	 * The rules specified in the g_dbus_gvalue_to_gvariant() function are
-	 * used - this function is essentially its reverse form.
-	 * The conversion never fails - a valid GValue is always returned in
-	 * out_gvalue.
-	 * Since 2.30
-	 * Params:
-	 * value = A GVariant.
-	 * outGvalue = Return location pointing to a zero-filled (uninitialized) GValue. [out]
-	 */
-	public static void gvariantToGvalue(Variant value, Value outGvalue)
-	{
-		// void g_dbus_gvariant_to_gvalue (GVariant *value,  GValue *out_gvalue);
-		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), (outGvalue is null) ? null : outGvalue.getValueStruct());
-	}
-	
-	/**
-	 * Checks if string is a D-Bus address.
-	 * This doesn't check if string is actually supported by GDBusServer
-	 * or GDBusConnection - use g_dbus_is_supported_address() to do more
-	 * checks.
-	 * Since 2.26
-	 * Params:
-	 * string = A string.
-	 * Returns: TRUE if string is a valid D-Bus address, FALSE otherwise.
-	 */
-	public static int isAddress(string string)
-	{
-		// gboolean g_dbus_is_address (const gchar *string);
-		return g_dbus_is_address(Str.toStringz(string));
-	}
-	
-	/**
-	 * Like g_dbus_is_address() but also checks if the library suppors the
-	 * transports in string and that key/value pairs for each transport
-	 * are valid.
-	 * Since 2.26
-	 * Params:
-	 * string = A string.
-	 * Returns: TRUE if string is a valid D-Bus address that is supported by this library, FALSE if error is set.
+	 *     busType = a #GBusType
+	 *     cancellable = a #GCancellable or %NULL
+	 *
+	 * Return: a valid D-Bus address string for @bus_type or %NULL if
+	 *     @error is set
+	 *
+	 * Since: 2.26
+	 *
 	 * Throws: GException on failure.
 	 */
-	public static int isSupportedAddress(string string)
+	public static string addressGetForBusSync(GBusType busType, Cancellable cancellable)
 	{
-		// gboolean g_dbus_is_supported_address (const gchar *string,  GError **error);
 		GError* err = null;
 		
-		auto p = g_dbus_is_supported_address(Str.toStringz(string), &err);
+		auto p = g_dbus_address_get_for_bus_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return p;
+		return Str.toString(p);
 	}
-	
+
 	/**
-	 * Asynchronously connects to an endpoint specified by address and
+	 * Asynchronously connects to an endpoint specified by @address and
 	 * sets up the connection so it is in a state to run the client-side
 	 * of the D-Bus authentication conversation.
-	 * When the operation is finished, callback will be invoked. You can
+	 *
+	 * When the operation is finished, @callback will be invoked. You can
 	 * then call g_dbus_address_get_stream_finish() to get the result of
 	 * the operation.
+	 *
 	 * This is an asynchronous failable function. See
 	 * g_dbus_address_get_stream_sync() for the synchronous version.
-	 * Since 2.26
+	 *
 	 * Params:
-	 * address = A valid D-Bus address.
-	 * cancellable = A GCancellable or NULL. [allow-none]
-	 * callback = A GAsyncReadyCallback to call when the request is satisfied.
-	 * userData = Data to pass to callback.
+	 *     address = A valid D-Bus address.
+	 *     cancellable = A #GCancellable or %NULL.
+	 *     callback = A #GAsyncReadyCallback to call when the request is satisfied.
+	 *     userData = Data to pass to @callback.
+	 *
+	 * Since: 2.26
 	 */
 	public static void addressGetStream(string address, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		// void g_dbus_address_get_stream (const gchar *address,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_dbus_address_get_stream(Str.toStringz(address), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
-	
+
 	/**
 	 * Finishes an operation started with g_dbus_address_get_stream().
-	 * Since 2.26
+	 *
 	 * Params:
-	 * res = A GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_address_get_stream().
-	 * outGuid = NULL or return location to store the GUID extracted from address, if any.
-	 * Returns: A GIOStream or NULL if error is set. [transfer full]
+	 *     res = A #GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_address_get_stream().
+	 *     outGuid = %NULL or return location to store the GUID extracted from @address, if any.
+	 *
+	 * Return: A #GIOStream or %NULL if @error is set.
+	 *
+	 * Since: 2.26
+	 *
 	 * Throws: GException on failure.
 	 */
 	public static IOStream addressGetStreamFinish(AsyncResultIF res, out string outGuid)
 	{
-		// GIOStream * g_dbus_address_get_stream_finish (GAsyncResult *res,  gchar **out_guid,  GError **error);
 		char* outoutGuid = null;
 		GError* err = null;
 		
-		auto p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultTStruct(), &outoutGuid, &err);
+		auto p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultStruct(), &outoutGuid, &err);
 		
 		if (err !is null)
 		{
@@ -304,26 +153,30 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
 	}
-	
+
 	/**
-	 * Synchronously connects to an endpoint specified by address and
+	 * Synchronously connects to an endpoint specified by @address and
 	 * sets up the connection so it is in a state to run the client-side
 	 * of the D-Bus authentication conversation.
+	 *
 	 * This is a synchronous failable function. See
 	 * g_dbus_address_get_stream() for the asynchronous version.
-	 * Since 2.26
+	 *
 	 * Params:
-	 * address = A valid D-Bus address.
-	 * outGuid = NULL or return location to store the GUID extracted from address, if any.
-	 * cancellable = A GCancellable or NULL. [allow-none]
-	 * Returns: A GIOStream or NULL if error is set. [transfer full]
+	 *     address = A valid D-Bus address.
+	 *     outGuid = %NULL or return location to store the GUID extracted from @address, if any.
+	 *     cancellable = A #GCancellable or %NULL.
+	 *
+	 * Return: A #GIOStream or %NULL if @error is set.
+	 *
+	 * Since: 2.26
+	 *
 	 * Throws: GException on failure.
 	 */
 	public static IOStream addressGetStreamSync(string address, out string outGuid, Cancellable cancellable)
 	{
-		// GIOStream * g_dbus_address_get_stream_sync (const gchar *address,  gchar **out_guid,  GCancellable *cancellable,  GError **error);
 		char* outoutGuid = null;
 		GError* err = null;
 		
@@ -341,32 +194,224 @@ public class DBusUtilities
 			return null;
 		}
 		
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
 	}
-	
+
 	/**
-	 * Synchronously looks up the D-Bus address for the well-known message
-	 * bus instance specified by bus_type. This may involve using various
-	 * platform specific mechanisms.
-	 * Since 2.26
+	 * Generate a D-Bus GUID that can be used with
+	 * e.g. g_dbus_connection_new().
+	 *
+	 * See the D-Bus specification regarding what strings are valid D-Bus
+	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
+	 *
+	 * Return: A valid D-Bus GUID. Free with g_free().
+	 *
+	 * Since: 2.26
+	 */
+	public static string generateGuid()
+	{
+		return Str.toString(g_dbus_generate_guid());
+	}
+
+	/**
+	 * Converts a #GValue to a #GVariant of the type indicated by the @type
+	 * parameter.
+	 *
+	 * The conversion is using the following rules:
+	 *
+	 * - #G_TYPE_STRING: 's', 'o', 'g' or 'ay'
+	 * - #G_TYPE_STRV: 'as', 'ao' or 'aay'
+	 * - #G_TYPE_BOOLEAN: 'b'
+	 * - #G_TYPE_UCHAR: 'y'
+	 * - #G_TYPE_INT: 'i', 'n'
+	 * - #G_TYPE_UINT: 'u', 'q'
+	 * - #G_TYPE_INT64 'x'
+	 * - #G_TYPE_UINT64: 't'
+	 * - #G_TYPE_DOUBLE: 'd'
+	 * - #G_TYPE_VARIANT: Any #GVariantType
+	 *
+	 * This can fail if e.g. @gvalue is of type #G_TYPE_STRING and @type
+	 * is ['i'][G-VARIANT-TYPE-INT32:CAPS]. It will also fail for any #GType
+	 * (including e.g. #G_TYPE_OBJECT and #G_TYPE_BOXED derived-types) not
+	 * in the table above.
+	 *
+	 * Note that if @gvalue is of type #G_TYPE_VARIANT and its value is
+	 * %NULL, the empty #GVariant instance (never %NULL) for @type is
+	 * returned (e.g. 0 for scalar types, the empty string for string types,
+	 * '/' for object path types, the empty array for any array type and so on).
+	 *
+	 * See the g_dbus_gvariant_to_gvalue() function for how to convert a
+	 * #GVariant to a #GValue.
+	 *
 	 * Params:
-	 * busType = A GBusType.
-	 * cancellable = A GCancellable or NULL. [allow-none]
-	 * Returns: A valid D-Bus address string for bus_type or NULL if error is set.
+	 *     gvalue = A #GValue to convert to a #GVariant
+	 *     type = A #GVariantType
+	 *
+	 * Return: A #GVariant (never floating) of #GVariantType @type holding
+	 *     the data from @gvalue or %NULL in case of failure. Free with
+	 *     g_variant_unref().
+	 *
+	 * Since: 2.30
+	 */
+	public static Variant gvalueToGvariant(Value gvalue, VariantType type)
+	{
+		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Variant(cast(GVariant*) p);
+	}
+
+	/**
+	 * Converts a #GVariant to a #GValue. If @value is floating, it is consumed.
+	 *
+	 * The rules specified in the g_dbus_gvalue_to_gvariant() function are
+	 * used - this function is essentially its reverse form.
+	 *
+	 * The conversion never fails - a valid #GValue is always returned in
+	 * @out_gvalue.
+	 *
+	 * Params:
+	 *     value = A #GVariant.
+	 *     outGvalue = Return location pointing to a zero-filled (uninitialized) #GValue.
+	 *
+	 * Since: 2.30
+	 */
+	public static void gvariantToGvalue(Variant value, out Value outGvalue)
+	{
+		GValue* outoutGvalue = new GValue;
+		
+		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), outoutGvalue);
+		
+		outGvalue = ObjectG.getDObject!(Value)(outoutGvalue);
+	}
+
+	/**
+	 * Checks if @string is a D-Bus address.
+	 *
+	 * This doesn't check if @string is actually supported by #GDBusServer
+	 * or #GDBusConnection - use g_dbus_is_supported_address() to do more
+	 * checks.
+	 *
+	 * Params:
+	 *     str = A string.
+	 *
+	 * Return: %TRUE if @string is a valid D-Bus address, %FALSE otherwise.
+	 *
+	 * Since: 2.26
+	 */
+	public static bool isAddress(string str)
+	{
+		return g_dbus_is_address(Str.toStringz(str)) != 0;
+	}
+
+	/**
+	 * Checks if @string is a D-Bus GUID.
+	 *
+	 * See the D-Bus specification regarding what strings are valid D-Bus
+	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
+	 *
+	 * Params:
+	 *     str = The string to check.
+	 *
+	 * Return: %TRUE if @string is a guid, %FALSE otherwise.
+	 *
+	 * Since: 2.26
+	 */
+	public static bool isGuid(string str)
+	{
+		return g_dbus_is_guid(Str.toStringz(str)) != 0;
+	}
+
+	/**
+	 * Checks if @string is a valid D-Bus interface name.
+	 *
+	 * Params:
+	 *     str = The string to check.
+	 *
+	 * Return: %TRUE if valid, %FALSE otherwise.
+	 *
+	 * Since: 2.26
+	 */
+	public static bool isInterfaceName(string str)
+	{
+		return g_dbus_is_interface_name(Str.toStringz(str)) != 0;
+	}
+
+	/**
+	 * Checks if @string is a valid D-Bus member (e.g. signal or method) name.
+	 *
+	 * Params:
+	 *     str = The string to check.
+	 *
+	 * Return: %TRUE if valid, %FALSE otherwise.
+	 *
+	 * Since: 2.26
+	 */
+	public static bool isMemberName(string str)
+	{
+		return g_dbus_is_member_name(Str.toStringz(str)) != 0;
+	}
+
+	/**
+	 * Checks if @string is a valid D-Bus bus name (either unique or well-known).
+	 *
+	 * Params:
+	 *     str = The string to check.
+	 *
+	 * Return: %TRUE if valid, %FALSE otherwise.
+	 *
+	 * Since: 2.26
+	 */
+	public static bool isName(string str)
+	{
+		return g_dbus_is_name(Str.toStringz(str)) != 0;
+	}
+
+	/**
+	 * Like g_dbus_is_address() but also checks if the library suppors the
+	 * transports in @string and that key/value pairs for each transport
+	 * are valid.
+	 *
+	 * Params:
+	 *     str = A string.
+	 *
+	 * Return: %TRUE if @string is a valid D-Bus address that is
+	 *     supported by this library, %FALSE if @error is set.
+	 *
+	 * Since: 2.26
+	 *
 	 * Throws: GException on failure.
 	 */
-	public static string addressGetForBusSync(GBusType busType, Cancellable cancellable)
+	public static bool isSupportedAddress(string str)
 	{
-		// gchar * g_dbus_address_get_for_bus_sync (GBusType bus_type,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_dbus_address_get_for_bus_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_dbus_is_supported_address(Str.toStringz(str), &err) != 0;
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		return p;
+	}
+
+	/**
+	 * Checks if @string is a valid D-Bus unique bus name.
+	 *
+	 * Params:
+	 *     str = The string to check.
+	 *
+	 * Return: %TRUE if valid, %FALSE otherwise.
+	 *
+	 * Since: 2.26
+	 */
+	public static bool isUniqueName(string str)
+	{
+		return g_dbus_is_unique_name(Str.toStringz(str)) != 0;
 	}
 }

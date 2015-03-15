@@ -16,64 +16,33 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkWindowGroup.html
- * outPack = gtk
- * outFile = WindowGroup
- * strct   = GtkWindowGroup
- * realStrct=
- * ctorStrct=
- * clss    = WindowGroup
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_window_group_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.ListG
- * 	- gdk.Device
- * 	- gtk.Widget
- * 	- gtk.Window
- * structWrap:
- * 	- GList* -> ListG
- * 	- GdkDevice* -> Device
- * 	- GtkWidget* -> Widget
- * 	- GtkWindow* -> Window
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.WindowGroup;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.ListG;
 private import gdk.Device;
+private import glib.ConstructionException;
+private import glib.ListG;
+private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.Window;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gobject.ObjectG;
 
 /**
+ * A #GtkWindowGroup restricts the effect of grabs to windows
+ * in the same group, thereby making window groups almost behave
+ * like separate applications.
+ * 
+ * A window can be a member in at most one window group at a time.
+ * Windows that have not been explicitly assigned to a group are
+ * implicitly treated like windows of the default window group.
+ * 
  * GtkWindowGroup objects are referenced by each window in the group,
  * so once you have added all windows to a GtkWindowGroup, you can drop
  * the initial reference to the window group with g_object_unref(). If the
@@ -84,107 +53,107 @@ private import gobject.ObjectG;
  */
 public class WindowGroup : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GtkWindowGroup* gtkWindowGroup;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkWindowGroup* getWindowGroupStruct()
 	{
 		return gtkWindowGroup;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkWindowGroup;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkWindowGroup* gtkWindowGroup)
-	{
-		super(cast(GObject*)gtkWindowGroup);
-		this.gtkWindowGroup = gtkWindowGroup;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkWindowGroup = cast(GtkWindowGroup*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkWindowGroup* gtkWindowGroup, bool ownedRef = false)
+	{
+		this.gtkWindowGroup = gtkWindowGroup;
+		super(cast(GObject*)gtkWindowGroup, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_window_group_get_type();
+	}
+
 	/**
-	 * Creates a new GtkWindowGroup object. Grabs added with
-	 * gtk_grab_add() only affect windows within the same GtkWindowGroup.
+	 * Creates a new #GtkWindowGroup object. Grabs added with
+	 * gtk_grab_add() only affect windows within the same #GtkWindowGroup.
+	 *
+	 * Return: a new #GtkWindowGroup.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWindowGroup * gtk_window_group_new (void);
 		auto p = gtk_window_group_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_window_group_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GtkWindowGroup*) p);
+		
+		this(cast(GtkWindowGroup*) p, true);
 	}
-	
+
 	/**
-	 * Adds a window to a GtkWindowGroup.
+	 * Adds a window to a #GtkWindowGroup.
+	 *
 	 * Params:
-	 * window = the GtkWindow to add
+	 *     window = the #GtkWindow to add
 	 */
 	public void addWindow(Window window)
 	{
-		// void gtk_window_group_add_window (GtkWindowGroup *window_group,  GtkWindow *window);
 		gtk_window_group_add_window(gtkWindowGroup, (window is null) ? null : window.getWindowStruct());
 	}
-	
+
 	/**
-	 * Removes a window from a GtkWindowGroup.
+	 * Returns the current grab widget for @device, or %NULL if none.
+	 *
 	 * Params:
-	 * window = the GtkWindow to remove
+	 *     device = a #GdkDevice
+	 *
+	 * Return: The grab widget, or %NULL
+	 *
+	 * Since: 3.0
 	 */
-	public void removeWindow(Window window)
+	public Widget getCurrentDeviceGrab(Device device)
 	{
-		// void gtk_window_group_remove_window (GtkWindowGroup *window_group,  GtkWindow *window);
-		gtk_window_group_remove_window(gtkWindowGroup, (window is null) ? null : window.getWindowStruct());
-	}
-	
-	/**
-	 * Returns a list of the GtkWindows that belong to window_group.
-	 * Since 2.14
-	 * Returns: A newly-allocated list of windows inside the group. [element-type GtkWindow][transfer container]
-	 */
-	public ListG listWindows()
-	{
-		// GList * gtk_window_group_list_windows (GtkWindowGroup *window_group);
-		auto p = gtk_window_group_list_windows(gtkWindowGroup);
+		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, (device is null) ? null : device.getDeviceStruct());
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
-	
+
 	/**
 	 * Gets the current grab widget of the given group,
 	 * see gtk_grab_add().
-	 * Since 2.22
-	 * Returns: the current grab widget of the group. [transfer none]
+	 *
+	 * Return: the current grab widget of the group
+	 *
+	 * Since: 2.22
 	 */
 	public Widget getCurrentGrab()
 	{
-		// GtkWidget * gtk_window_group_get_current_grab (GtkWindowGroup *window_group);
 		auto p = gtk_window_group_get_current_grab(gtkWindowGroup);
 		
 		if(p is null)
@@ -194,23 +163,35 @@ public class WindowGroup : ObjectG
 		
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
-	
+
 	/**
-	 * Returns the current grab widget for device, or NULL if none.
-	 * Params:
-	 * device = a GdkDevice
-	 * Returns: The grab widget, or NULL. [transfer none] Since 3.0
+	 * Returns a list of the #GtkWindows that belong to @window_group.
+	 *
+	 * Return: A
+	 *     newly-allocated list of windows inside the group.
+	 *
+	 * Since: 2.14
 	 */
-	public Widget getCurrentDeviceGrab(Device device)
+	public ListG listWindows()
 	{
-		// GtkWidget * gtk_window_group_get_current_device_grab  (GtkWindowGroup *window_group,  GdkDevice *device);
-		auto p = gtk_window_group_get_current_device_grab(gtkWindowGroup, (device is null) ? null : device.getDeviceStruct());
+		auto p = gtk_window_group_list_windows(gtkWindowGroup);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Removes a window from a #GtkWindowGroup.
+	 *
+	 * Params:
+	 *     window = the #GtkWindow to remove
+	 */
+	public void removeWindow(Window window)
+	{
+		gtk_window_group_remove_window(gtkWindowGroup, (window is null) ? null : window.getWindowStruct());
 	}
 }

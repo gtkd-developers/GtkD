@@ -16,109 +16,78 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkBin.html
- * outPack = gtk
- * outFile = Bin
- * strct   = GtkBin
- * realStrct=
- * ctorStrct=
- * clss    = Bin
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_bin_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.Widget
- * structWrap:
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.Bin;
 
+private import gobject.ObjectG;
+private import gtk.Container;
+private import gtk.Widget;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gtk.Widget;
-
-
-private import gtk.Container;
 
 /**
- * The GtkBin widget is a container with just one child.
+ * The #GtkBin widget is a container with just one child.
  * It is not very useful itself, but it is useful for deriving subclasses,
  * since it provides common code needed for handling a single child widget.
- *
- * Many GTK+ widgets are subclasses of GtkBin, including GtkWindow,
- * GtkButton, GtkFrame, GtkHandleBox or GtkScrolledWindow.
+ * 
+ * Many GTK+ widgets are subclasses of #GtkBin, including #GtkWindow,
+ * #GtkButton, #GtkFrame, #GtkHandleBox or #GtkScrolledWindow.
  */
 public class Bin : Container
 {
-	
 	/** the main Gtk struct */
 	protected GtkBin* gtkBin;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkBin* getBinStruct()
 	{
 		return gtkBin;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkBin;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkBin* gtkBin)
-	{
-		super(cast(GtkContainer*)gtkBin);
-		this.gtkBin = gtkBin;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkBin = cast(GtkBin*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkBin* gtkBin, bool ownedRef = false)
+	{
+		this.gtkBin = gtkBin;
+		super(cast(GtkContainer*)gtkBin, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_bin_get_type();
+	}
+
 	/**
-	 * Gets the child of the GtkBin, or NULL if the bin contains
+	 * Gets the child of the #GtkBin, or %NULL if the bin contains
 	 * no child widget. The returned widget does not have a reference
 	 * added, so you do not need to unref it.
-	 * Returns: pointer to child of the GtkBin. [transfer none]
+	 *
+	 * Return: pointer to child of the #GtkBin
 	 */
 	public Widget getChild()
 	{
-		// GtkWidget * gtk_bin_get_child (GtkBin *bin);
 		auto p = gtk_bin_get_child(gtkBin);
 		
 		if(p is null)

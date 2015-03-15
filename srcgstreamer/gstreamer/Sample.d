@@ -16,107 +16,99 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gstreamer-GstSample.html
- * outPack = gstreamer
- * outFile = Sample
- * strct   = GstSample
- * realStrct=
- * ctorStrct=
- * clss    = Sample
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_sample_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gstreamer.Buffer
- * 	- gstreamer.Caps
- * 	- gstreamer.Segment
- * 	- gstreamer.Structure
- * structWrap:
- * 	- GstBuffer* -> Buffer
- * 	- GstCaps* -> Caps
- * 	- GstSample* -> Sample
- * 	- GstSegment* -> Segment
- * 	- GstStructure* -> Structure
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.Sample;
 
-public  import gstreamerc.gstreamertypes;
-
-private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
 private import gstreamer.Buffer;
 private import gstreamer.Caps;
 private import gstreamer.Segment;
 private import gstreamer.Structure;
-
+private import gstreamerc.gstreamer;
+public  import gstreamerc.gstreamertypes;
 
 
 /**
- * A GstSample is a small object containing data, a type, timing and
+ * A #GstSample is a small object containing data, a type, timing and
  * extra arbitrary information.
- *
- * Last reviewed on 2012-03-29 (0.11.3)
  */
 public class Sample
 {
-	
 	/** the main Gtk struct */
 	protected GstSample* gstSample;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstSample* getSampleStruct()
 	{
 		return gstSample;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gstSample;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GstSample* gstSample)
 	{
 		this.gstSample = gstSample;
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gst_sample_get_type();
+	}
+
 	/**
-	 * Get the buffer associated with sample
-	 * Returns: the buffer of sample or NULL when there is no buffer. The buffer remains valid as long as sample is valid. If you need to hold on to it for longer than that, take a ref to the buffer with gst_buffer_ref(). [transfer none]
+	 * Create a new #GstSample with the provided details.
+	 *
+	 * Free-function: gst_sample_unref
+	 *
+	 * Params:
+	 *     buffer = a #GstBuffer, or %NULL
+	 *     caps = a #GstCaps, or %NULL
+	 *     segment = a #GstSegment, or %NULL
+	 *     info = a #GstStructure, or %NULL
+	 *
+	 * Return: the new #GstSample. gst_sample_unref()
+	 *     after usage.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Buffer buffer, Caps caps, Segment segment, Structure info)
+	{
+		auto p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GstSample*) p);
+	}
+
+	/**
+	 * Get the buffer associated with @sample
+	 *
+	 * Return: the buffer of @sample or %NULL
+	 *     when there is no buffer. The buffer remains valid as long as
+	 *     @sample is valid.  If you need to hold on to it for longer than
+	 *     that, take a ref to the buffer with gst_buffer_ref().
 	 */
 	public Buffer getBuffer()
 	{
-		// GstBuffer * gst_sample_get_buffer (GstSample *sample);
 		auto p = gst_sample_get_buffer(gstSample);
 		
 		if(p is null)
@@ -126,14 +118,17 @@ public class Sample
 		
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
-	
+
 	/**
-	 * Get the caps associated with sample
-	 * Returns: the caps of sample or NULL when there is no caps. The caps remain valid as long as sample is valid. If you need to hold on to the caps for longer than that, take a ref to the caps with gst_caps_ref(). [transfer none]
+	 * Get the caps associated with @sample
+	 *
+	 * Return: the caps of @sample or %NULL
+	 *     when there is no caps. The caps remain valid as long as @sample is
+	 *     valid.  If you need to hold on to the caps for longer than that,
+	 *     take a ref to the caps with gst_caps_ref().
 	 */
 	public Caps getCaps()
 	{
-		// GstCaps * gst_sample_get_caps (GstSample *sample);
 		auto p = gst_sample_get_caps(gstSample);
 		
 		if(p is null)
@@ -143,14 +138,15 @@ public class Sample
 		
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
-	
+
 	/**
-	 * Get extra information associated with sample.
-	 * Returns: the extra info of sample. The info remains valid as long as sample is valid. [transfer none]
+	 * Get extra information associated with @sample.
+	 *
+	 * Return: the extra info of @sample.
+	 *     The info remains valid as long as @sample is valid.
 	 */
 	public Structure getInfo()
 	{
-		// const GstStructure * gst_sample_get_info (GstSample *sample);
 		auto p = gst_sample_get_info(gstSample);
 		
 		if(p is null)
@@ -160,14 +156,15 @@ public class Sample
 		
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
-	
+
 	/**
-	 * Get the segment associated with sample
-	 * Returns: the segment of sample. The segment remains valid as long as sample is valid. [transfer none]
+	 * Get the segment associated with @sample
+	 *
+	 * Return: the segment of @sample.
+	 *     The segment remains valid as long as @sample is valid.
 	 */
 	public Segment getSegment()
 	{
-		// GstSegment * gst_sample_get_segment (GstSample *sample);
 		auto p = gst_sample_get_segment(gstSample);
 		
 		if(p is null)
@@ -176,53 +173,5 @@ public class Sample
 		}
 		
 		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p);
-	}
-	
-	/**
-	 * Create a new GstSample with the provided details.
-	 * Free-function: gst_sample_unref
-	 * Params:
-	 * buffer = a GstBuffer, or NULL. [transfer none][allow-none]
-	 * caps = a GstCaps, or NULL. [transfer none][allow-none]
-	 * segment = a GstSegment, or NULL. [transfer none][allow-none]
-	 * info = a GstStructure, or NULL. [transfer full][allow-none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Buffer buffer, Caps caps, Segment segment, Structure info)
-	{
-		// GstSample * gst_sample_new (GstBuffer *buffer,  GstCaps *caps,  const GstSegment *segment,  GstStructure *info);
-		auto p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct())");
-		}
-		this(cast(GstSample*) p);
-	}
-	
-	/**
-	 * Increases the refcount of the given sample by one.
-	 * Returns: sample. [transfer full]
-	 */
-	public Sample doref()
-	{
-		// GstSample * gst_sample_ref (GstSample *sample);
-		auto p = gst_sample_ref(gstSample);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Sample)(cast(GstSample*) p);
-	}
-	
-	/**
-	 * Decreases the refcount of the sample. If the refcount reaches 0, the
-	 * sample will be freed.
-	 */
-	public void unref()
-	{
-		// void gst_sample_unref (GstSample *sample);
-		gst_sample_unref(gstSample);
 	}
 }

@@ -16,226 +16,209 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkRecentAction.html
- * outPack = gtk
- * outFile = RecentAction
- * strct   = GtkRecentAction
- * realStrct=
- * ctorStrct=GtkAction
- * clss    = RecentAction
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_recent_action_
- * 	- gtk_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.RecentManager
- * structWrap:
- * 	- GtkRecentManager* -> RecentManager
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.RecentAction;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.Action;
+private import gtk.RecentChooserIF;
+private import gtk.RecentChooserT;
+private import gtk.RecentManager;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gtk.RecentManager;
-
-
-private import gtk.Action;
 
 /**
- * A GtkRecentAction represents a list of recently used files, which
- * can be shown by widgets such as GtkRecentChooserDialog or
- * GtkRecentChooserMenu.
- *
- * To construct a submenu showing recently used files, use a GtkRecentAction
- * as the action for a &lt;menuitem&gt;. To construct a menu toolbutton showing
- * the recently used files in the popup menu, use a GtkRecentAction as the
- * action for a &lt;toolitem&gt; element.
+ * A #GtkRecentAction represents a list of recently used files, which
+ * can be shown by widgets such as #GtkRecentChooserDialog or
+ * #GtkRecentChooserMenu.
+ * 
+ * To construct a submenu showing recently used files, use a #GtkRecentAction
+ * as the action for a <menuitem>. To construct a menu toolbutton showing
+ * the recently used files in the popup menu, use a #GtkRecentAction as the
+ * action for a <toolitem> element.
  */
-public class RecentAction : Action
+public class RecentAction : Action, RecentChooserIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkRecentAction* gtkRecentAction;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkRecentAction* getRecentActionStruct()
 	{
 		return gtkRecentAction;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentAction;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkRecentAction* gtkRecentAction)
-	{
-		super(cast(GtkAction*)gtkRecentAction);
-		this.gtkRecentAction = gtkRecentAction;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkRecentAction = cast(GtkRecentAction*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
-	 * Creates a new GtkRecentAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.12
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkRecentAction* gtkRecentAction, bool ownedRef = false)
+	{
+		this.gtkRecentAction = gtkRecentAction;
+		super(cast(GtkAction*)gtkRecentAction, ownedRef);
+	}
+
+	// add the RecentChooser capabilities
+	mixin RecentChooserT!(GtkRecentAction);
+
+	/**
+	 * Creates a new RecentAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionwWithAccel().
+	 *
+	 * Since: 2.12
+	 *
 	 * Params:
-	 * name =  a unique name for the action
-	 * label =  the label displayed in menu items and on buttons, or NULL
-	 * tooltip =  a tooltip for the action, or NULL
-	 * stockID =  the stock icon to display in widgets representing the
-	 *  action, or NULL
+	 *     name    = a unique name for the action
+	 *     label   = the label displayed in menu items and on buttons, or null
+	 *     tooltip = a tooltip for the action, or null
+	 *     stockID = the stock icon to display in widgets representing the
+	 *               action, or null
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockID)
 	{
-		this(name, label, tooltip, StockDesc[stockID]);
+		this(name, label, tooltip, cast(string)stockID);
 	}
 	
 	/**
-	 * Creates a new GtkRecentAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
-	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.12
+	 * Creates a new RecentAction object. To add the action to
+	 * a ActionGroup and set the accelerator for the action,
+	 * call gtk.ActionGroup.ActionGroup.addActionwWithAccel().
+	 *
+	 * Since: 2.12
+	 *
 	 * Params:
-	 * name =  a unique name for the action
-	 * label =  the label displayed in menu items and on buttons, or NULL
-	 * tooltip =  a tooltip for the action, or NULL
-	 * stockID =  the stock icon to display in widgets representing the
-	 *  action, or NULL
-	 * manager =  a GtkRecentManager, or NULL for using the default
-	 *  GtkRecentManager
+	 *     name    = a unique name for the action
+	 *     label   = the label displayed in menu items and on buttons, or null
+	 *     tooltip = a tooltip for the action, or null
+	 *     stockID = the stock icon to display in widgets representing the
+	 *               action, or null
+	 *     manager = a GtkRecentManager, or null for using the default
+	 *               RecentManager
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
-		this(name, label, tooltip, StockDesc[stockID], manager);
+		this(name, label, tooltip, cast(string)stockID, manager);
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_recent_action_get_type();
+	}
+
 	/**
-	 * Warning
-	 * gtk_recent_action_new is deprecated and should not be used in newly-written code. 3.10
-	 * Creates a new GtkRecentAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
+	 * Creates a new #GtkRecentAction object. To add the action to
+	 * a #GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.12
+	 *
 	 * Params:
-	 * name = a unique name for the action
-	 * label = the label displayed in menu items and on buttons,
-	 * or NULL. [allow-none]
-	 * tooltip = a tooltip for the action, or NULL. [allow-none]
-	 * stockId = the stock icon to display in widgets representing
-	 * the action, or NULL. [allow-none]
+	 *     name = a unique name for the action
+	 *     label = the label displayed in menu items and on buttons,
+	 *         or %NULL
+	 *     tooltip = a tooltip for the action, or %NULL
+	 *     stockId = the stock icon to display in widgets representing
+	 *         the action, or %NULL
+	 *
+	 * Return: the newly created #GtkRecentAction.
+	 *
+	 * Since: 2.12
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, string label, string tooltip, string stockId)
+	public this(string name, string label, string tooltip, string stockId)
 	{
-		// GtkAction * gtk_recent_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId))");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GtkRecentAction*) p);
+		
+		this(cast(GtkRecentAction*) p, true);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_recent_action_new_for_manager is deprecated and should not be used in newly-written code. 3.10
-	 * Creates a new GtkRecentAction object. To add the action to
-	 * a GtkActionGroup and set the accelerator for the action,
+	 * Creates a new #GtkRecentAction object. To add the action to
+	 * a #GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
-	 * Since 2.12
+	 *
 	 * Params:
-	 * name = a unique name for the action
-	 * label = the label displayed in menu items and on buttons,
-	 * or NULL. [allow-none]
-	 * tooltip = a tooltip for the action, or NULL. [allow-none]
-	 * stockId = the stock icon to display in widgets representing
-	 * the action, or NULL. [allow-none]
-	 * manager = a GtkRecentManager, or NULL for using the default
-	 * GtkRecentManager. [allow-none]
+	 *     name = a unique name for the action
+	 *     label = the label displayed in menu items and on buttons,
+	 *         or %NULL
+	 *     tooltip = a tooltip for the action, or %NULL
+	 *     stockId = the stock icon to display in widgets representing
+	 *         the action, or %NULL
+	 *     manager = a #GtkRecentManager, or %NULL for using the default
+	 *         #GtkRecentManager
+	 *
+	 * Return: the newly created #GtkRecentAction
+	 *
+	 * Since: 2.12
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, string label, string tooltip, string stockId, RecentManager manager)
+	public this(string name, string label, string tooltip, string stockId, RecentManager manager)
 	{
-		// GtkAction * gtk_recent_action_new_for_manager (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  GtkRecentManager *manager);
 		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), (manager is null) ? null : manager.getRecentManagerStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), (manager is null) ? null : manager.getRecentManagerStruct())");
+			throw new ConstructionException("null returned by new_for_manager");
 		}
-		this(cast(GtkRecentAction*) p);
+		
+		this(cast(GtkRecentAction*) p, true);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_recent_action_get_show_numbers is deprecated and should not be used in newly-written code. 3.10
 	 * Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
-	 * Since 2.12
-	 * Returns: TRUE if numbers should be shown.
+	 *
+	 * Return: %TRUE if numbers should be shown.
+	 *
+	 * Since: 2.12
 	 */
-	public int getShowNumbers()
+	public bool getShowNumbers()
 	{
-		// gboolean gtk_recent_action_get_show_numbers (GtkRecentAction *action);
-		return gtk_recent_action_get_show_numbers(gtkRecentAction);
+		return gtk_recent_action_get_show_numbers(gtkRecentAction) != 0;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_recent_action_set_show_numbers is deprecated and should not be used in newly-written code. 3.10
 	 * Sets whether a number should be added to the items shown by the
-	 * widgets representing action. The numbers are shown to provide
+	 * widgets representing @action. The numbers are shown to provide
 	 * a unique character for a mnemonic to be used inside the menu item's
 	 * label. Only the first ten items get a number to avoid clashes.
-	 * Since 2.12
+	 *
 	 * Params:
-	 * showNumbers = TRUE if the shown items should be numbered
+	 *     showNumbers = %TRUE if the shown items should be numbered
+	 *
+	 * Since: 2.12
 	 */
-	public void setShowNumbers(int showNumbers)
+	public void setShowNumbers(bool showNumbers)
 	{
-		// void gtk_recent_action_set_show_numbers (GtkRecentAction *action,  gboolean show_numbers);
 		gtk_recent_action_set_show_numbers(gtkRecentAction, showNumbers);
 	}
 }

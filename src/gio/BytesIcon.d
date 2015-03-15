@@ -16,122 +16,109 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gio-GBytesIcon.html
- * outPack = gio
- * outFile = BytesIcon
- * strct   = GBytesIcon
- * realStrct=
- * ctorStrct=GIcon
- * clss    = FileIcon
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- LoadableIconIF
- * prefixes:
- * 	- g_bytes_icon_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Bytes
- * 	- gio.LoadableIconT
- * 	- gio.LoadableIconIF
- * structWrap:
- * 	- GBytes* -> Bytes
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.BytesIcon;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.IconIF;
+private import gio.IconT;
+private import gio.LoadableIconIF;
+private import gio.LoadableIconT;
+private import glib.Bytes;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-private import glib.Bytes;
-private import gio.LoadableIconT;
-private import gio.LoadableIconIF;
-
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * GBytesIcon specifies an image held in memory in a common format (usually
+ * #GBytesIcon specifies an image held in memory in a common format (usually
  * png) to be used as icon.
  */
-public class FileIcon : LoadableIconIF
+public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 {
-	
 	/** the main Gtk struct */
 	protected GBytesIcon* gBytesIcon;
-	
-	
+
 	/** Get the main Gtk struct */
-	public GBytesIcon* getFileIconStruct()
+	public GBytesIcon* getBytesIconStruct()
 	{
 		return gBytesIcon;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gBytesIcon;
 	}
-	
+
+	protected override void setStruct(GObject* obj)
+	{
+		gBytesIcon = cast(GBytesIcon*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GBytesIcon* gBytesIcon)
+	public this (GBytesIcon* gBytesIcon, bool ownedRef = false)
 	{
 		this.gBytesIcon = gBytesIcon;
+		super(cast(GObject*)gBytesIcon, ownedRef);
 	}
-	
+
+	// add the Icon capabilities
+	mixin IconT!(GBytesIcon);
+
 	// add the LoadableIcon capabilities
 	mixin LoadableIconT!(GBytesIcon);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_bytes_icon_get_type();
+	}
+
 	/**
 	 * Creates a new icon for a bytes.
-	 * Since 2.38
+	 *
 	 * Params:
-	 * bytes = a GBytes.
+	 *     bytes = a #GBytes.
+	 *
+	 * Return: a #GIcon for the given
+	 *     @bytes, or %NULL on error.
+	 *
+	 * Since: 2.38
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Bytes bytes)
+	public this(Bytes bytes)
 	{
-		// GIcon * g_bytes_icon_new (GBytes *bytes);
 		auto p = g_bytes_icon_new((bytes is null) ? null : bytes.getBytesStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_bytes_icon_new((bytes is null) ? null : bytes.getBytesStruct())");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GBytesIcon*) p);
+		
+		this(cast(GBytesIcon*) p, true);
 	}
-	
+
 	/**
-	 * Gets the GBytes associated with the given icon.
-	 * Since 2.38
-	 * Returns: a GBytes, or NULL. [transfer none]
+	 * Gets the #GBytes associated with the given @icon.
+	 *
+	 * Return: a #GBytes, or %NULL.
+	 *
+	 * Since: 2.38
 	 */
 	public Bytes getBytes()
 	{
-		// GBytes * g_bytes_icon_get_bytes (GBytesIcon *icon);
 		auto p = g_bytes_icon_get_bytes(gBytesIcon);
 		
 		if(p is null)
@@ -139,6 +126,6 @@ public class FileIcon : LoadableIconIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Bytes)(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p);
 	}
 }

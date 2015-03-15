@@ -16,167 +16,72 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GVfs.html
- * outPack = gio
- * outFile = Vfs
- * strct   = GVfs
- * realStrct=
- * ctorStrct=
- * clss    = Vfs
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_vfs_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gio.File
- * structWrap:
- * 	- GFile* -> File
- * 	- GVfs* -> Vfs
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Vfs;
 
+private import gio.File;
+private import gio.FileIF;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gio.File;
-
-
-private import gobject.ObjectG;
 
 /**
  * Entry point for using GIO functionality.
  */
 public class Vfs : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GVfs* gVfs;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GVfs* getVfsStruct()
 	{
 		return gVfs;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gVfs;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GVfs* gVfs)
-	{
-		super(cast(GObject*)gVfs);
-		this.gVfs = gVfs;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gVfs = cast(GVfs*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Gets a GFile for path.
-	 * Params:
-	 * path = a string containing a VFS path.
-	 * Returns: a GFile. Free the returned object with g_object_unref(). [transfer full]
-	 */
-	public File getFileForPath(string path)
+	public this (GVfs* gVfs, bool ownedRef = false)
 	{
-		// GFile * g_vfs_get_file_for_path (GVfs *vfs,  const char *path);
-		auto p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(File)(cast(GFile*) p);
+		this.gVfs = gVfs;
+		super(cast(GObject*)gVfs, ownedRef);
 	}
-	
+
 	/**
-	 * Gets a GFile for uri.
-	 * This operation never fails, but the returned object
-	 * might not support any I/O operation if the URI
-	 * is malformed or if the URI scheme is not supported.
-	 * Params:
-	 * uri = a string containing a URI
-	 * Returns: a GFile. Free the returned object with g_object_unref(). [transfer full]
 	 */
-	public File getFileForUri(string uri)
+
+	public static GType getType()
 	{
-		// GFile * g_vfs_get_file_for_uri (GVfs *vfs,  const char *uri);
-		auto p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(File)(cast(GFile*) p);
+		return g_vfs_get_type();
 	}
-	
+
 	/**
-	 * This operation never fails, but the returned object might
-	 * not support any I/O operations if the parse_name cannot
-	 * be parsed by the GVfs module.
-	 * Params:
-	 * parseName = a string to be parsed by the VFS module.
-	 * Returns: a GFile for the given parse_name. Free the returned object with g_object_unref(). [transfer full]
-	 */
-	public File parseName(string parseName)
-	{
-		// GFile * g_vfs_parse_name (GVfs *vfs,  const char *parse_name);
-		auto p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(File)(cast(GFile*) p);
-	}
-	
-	/**
-	 * Gets the default GVfs for the system.
-	 * Returns: a GVfs. [transfer none]
+	 * Gets the default #GVfs for the system.
+	 *
+	 * Return: a #GVfs.
 	 */
 	public static Vfs getDefault()
 	{
-		// GVfs * g_vfs_get_default (void);
 		auto p = g_vfs_get_default();
 		
 		if(p is null)
@@ -186,14 +91,14 @@ public class Vfs : ObjectG
 		
 		return ObjectG.getDObject!(Vfs)(cast(GVfs*) p);
 	}
-	
+
 	/**
-	 * Gets the local GVfs for the system.
-	 * Returns: a GVfs. [transfer none]
+	 * Gets the local #GVfs for the system.
+	 *
+	 * Return: a #GVfs.
 	 */
 	public static Vfs getLocal()
 	{
-		// GVfs * g_vfs_get_local (void);
 		auto p = g_vfs_get_local();
 		
 		if(p is null)
@@ -203,24 +108,96 @@ public class Vfs : ObjectG
 		
 		return ObjectG.getDObject!(Vfs)(cast(GVfs*) p);
 	}
-	
+
 	/**
-	 * Checks if the VFS is active.
-	 * Returns: TRUE if construction of the vfs was successful and it is now active.
+	 * Gets a #GFile for @path.
+	 *
+	 * Params:
+	 *     path = a string containing a VFS path.
+	 *
+	 * Return: a #GFile.
+	 *     Free the returned object with g_object_unref().
 	 */
-	public int isActive()
+	public FileIF getFileForPath(string path)
 	{
-		// gboolean g_vfs_is_active (GVfs *vfs);
-		return g_vfs_is_active(gVfs);
+		auto p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
-	
+
 	/**
-	 * Gets a list of URI schemes supported by vfs.
-	 * Returns: a NULL-terminated array of strings. The returned array belongs to GIO and must not be freed or modified. [transfer none]
+	 * Gets a #GFile for @uri.
+	 *
+	 * This operation never fails, but the returned object
+	 * might not support any I/O operation if the URI
+	 * is malformed or if the URI scheme is not supported.
+	 *
+	 * Params:
+	 *     uri = a string containing a URI
+	 *
+	 * Return: a #GFile.
+	 *     Free the returned object with g_object_unref().
+	 */
+	public FileIF getFileForUri(string uri)
+	{
+		auto p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+	}
+
+	/**
+	 * Gets a list of URI schemes supported by @vfs.
+	 *
+	 * Return: a %NULL-terminated array of strings.
+	 *     The returned array belongs to GIO and must
+	 *     not be freed or modified.
 	 */
 	public string[] getSupportedUriSchemes()
 	{
-		// const gchar * const * g_vfs_get_supported_uri_schemes (GVfs *vfs);
 		return Str.toStringArray(g_vfs_get_supported_uri_schemes(gVfs));
+	}
+
+	/**
+	 * Checks if the VFS is active.
+	 *
+	 * Return: %TRUE if construction of the @vfs was successful
+	 *     and it is now active.
+	 */
+	public bool isActive()
+	{
+		return g_vfs_is_active(gVfs) != 0;
+	}
+
+	/**
+	 * This operation never fails, but the returned object might
+	 * not support any I/O operations if the @parse_name cannot
+	 * be parsed by the #GVfs module.
+	 *
+	 * Params:
+	 *     parseName = a string to be parsed by the VFS module.
+	 *
+	 * Return: a #GFile for the given @parse_name.
+	 *     Free the returned object with g_object_unref().
+	 */
+	public FileIF parseName(string parseName)
+	{
+		auto p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 }

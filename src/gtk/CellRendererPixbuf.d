@@ -16,121 +16,97 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkCellRendererPixbuf.html
- * outPack = gtk
- * outFile = CellRendererPixbuf
- * strct   = GtkCellRendererPixbuf
- * realStrct=
- * ctorStrct=GtkCellRenderer
- * clss    = CellRendererPixbuf
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_cell_renderer_pixbuf_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.CellRendererPixbuf;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-
-
 private import gtk.CellRenderer;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
- * A GtkCellRendererPixbuf can be used to render an image in a cell. It allows
- * to render either a given GdkPixbuf (set via the
- * "pixbuf" property) or a named icon (set via the
- * "icon-name" property).
- *
- * To support the tree view, GtkCellRendererPixbuf also supports rendering two
- * alternative pixbufs, when the "is-expander" property is TRUE.
- * If the "is-expanded" property is TRUE and the
- * "pixbuf-expander-open" property is set to a pixbuf, it
- * renders that pixbuf, if the "is-expanded" property is FALSE
- * and the "pixbuf-expander-closed" property is set to a
+ * A #GtkCellRendererPixbuf can be used to render an image in a cell. It allows
+ * to render either a given #GdkPixbuf (set via the
+ * #GtkCellRendererPixbuf:pixbuf property) or a named icon (set via the
+ * #GtkCellRendererPixbuf:icon-name property).
+ * 
+ * To support the tree view, #GtkCellRendererPixbuf also supports rendering two
+ * alternative pixbufs, when the #GtkCellRenderer:is-expander property is %TRUE.
+ * If the #GtkCellRenderer:is-expanded property is %TRUE and the
+ * #GtkCellRendererPixbuf:pixbuf-expander-open property is set to a pixbuf, it
+ * renders that pixbuf, if the #GtkCellRenderer:is-expanded property is %FALSE
+ * and the #GtkCellRendererPixbuf:pixbuf-expander-closed property is set to a
  * pixbuf, it renders that one.
  */
 public class CellRendererPixbuf : CellRenderer
 {
-	
 	/** the main Gtk struct */
 	protected GtkCellRendererPixbuf* gtkCellRendererPixbuf;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkCellRendererPixbuf* getCellRendererPixbufStruct()
 	{
 		return gtkCellRendererPixbuf;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellRendererPixbuf;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkCellRendererPixbuf* gtkCellRendererPixbuf)
-	{
-		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf);
-		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkCellRendererPixbuf = cast(GtkCellRendererPixbuf*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkCellRendererPixbuf* gtkCellRendererPixbuf, bool ownedRef = false)
+	{
+		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;
+		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_cell_renderer_pixbuf_get_type();
+	}
+
 	/**
-	 * Creates a new GtkCellRendererPixbuf. Adjust rendering
+	 * Creates a new #GtkCellRendererPixbuf. Adjust rendering
 	 * parameters using object properties. Object properties can be set
-	 * globally (with g_object_set()). Also, with GtkTreeViewColumn, you
-	 * can bind a property to a value in a GtkTreeModel. For example, you
-	 * can bind the "pixbuf" property on the cell renderer to a pixbuf value
+	 * globally (with g_object_set()). Also, with #GtkTreeViewColumn, you
+	 * can bind a property to a value in a #GtkTreeModel. For example, you
+	 * can bind the “pixbuf” property on the cell renderer to a pixbuf value
 	 * in the model, thus rendering a different image in each row of the
-	 * GtkTreeView.
+	 * #GtkTreeView.
+	 *
+	 * Return: the new cell renderer
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkCellRenderer * gtk_cell_renderer_pixbuf_new (void);
 		auto p = gtk_cell_renderer_pixbuf_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_cell_renderer_pixbuf_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkCellRendererPixbuf*) p);
 	}
 }

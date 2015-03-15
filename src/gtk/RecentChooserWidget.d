@@ -16,145 +16,125 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkRecentChooserWidget.html
- * outPack = gtk
- * outFile = RecentChooserWidget
- * strct   = GtkRecentChooserWidget
- * realStrct=
- * ctorStrct=
- * clss    = RecentChooserWidget
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- RecentChooserIF
- * prefixes:
- * 	- gtk_recent_chooser_widget_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.RecentManager
- * 	- gtk.RecentChooserIF
- * 	- gtk.RecentChooserT
- * structWrap:
- * 	- GtkRecentManager* -> RecentManager
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.RecentChooserWidget;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-private import gtk.RecentManager;
+private import gtk.Box;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
+private import gtk.RecentManager;
+private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gtk.Box;
 
 /**
- * GtkRecentChooserWidget is a widget suitable for selecting recently used
- * files. It is the main building block of a GtkRecentChooserDialog. Most
+ * #GtkRecentChooserWidget is a widget suitable for selecting recently used
+ * files.  It is the main building block of a #GtkRecentChooserDialog.  Most
  * applications will only need to use the latter; you can use
- * GtkRecentChooserWidget as part of a larger window if you have special needs.
- *
- * Note that GtkRecentChooserWidget does not have any methods of its own.
- * Instead, you should use the functions that work on a GtkRecentChooser.
- *
+ * #GtkRecentChooserWidget as part of a larger window if you have special needs.
+ * 
+ * Note that #GtkRecentChooserWidget does not have any methods of its own.
+ * Instead, you should use the functions that work on a #GtkRecentChooser.
+ * 
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentChooserWidget : Box, RecentChooserIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkRecentChooserWidget* gtkRecentChooserWidget;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkRecentChooserWidget* getRecentChooserWidgetStruct()
 	{
 		return gtkRecentChooserWidget;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentChooserWidget;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkRecentChooserWidget* gtkRecentChooserWidget)
-	{
-		super(cast(GtkBox*)gtkRecentChooserWidget);
-		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkRecentChooserWidget = cast(GtkRecentChooserWidget*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkRecentChooserWidget* gtkRecentChooserWidget, bool ownedRef = false)
+	{
+		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
+		super(cast(GtkBox*)gtkRecentChooserWidget, ownedRef);
+	}
+
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserWidget);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_recent_chooser_widget_get_type();
+	}
+
 	/**
-	 * Creates a new GtkRecentChooserWidget object. This is an embeddable widget
+	 * Creates a new #GtkRecentChooserWidget object.  This is an embeddable widget
 	 * used to access the recently used resources list.
-	 * Since 2.10
+	 *
+	 * Return: a new #GtkRecentChooserWidget
+	 *
+	 * Since: 2.10
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_recent_chooser_widget_new (void);
 		auto p = gtk_recent_chooser_widget_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_recent_chooser_widget_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkRecentChooserWidget*) p);
 	}
-	
+
 	/**
-	 * Creates a new GtkRecentChooserWidget with a specified recent manager.
+	 * Creates a new #GtkRecentChooserWidget with a specified recent manager.
+	 *
 	 * This is useful if you have implemented your own recent manager, or if you
-	 * have a customized instance of a GtkRecentManager object.
-	 * Since 2.10
+	 * have a customized instance of a #GtkRecentManager object.
+	 *
 	 * Params:
-	 * manager = a GtkRecentManager
+	 *     manager = a #GtkRecentManager
+	 *
+	 * Return: a new #GtkRecentChooserWidget
+	 *
+	 * Since: 2.10
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (RecentManager manager)
+	public this(RecentManager manager)
 	{
-		// GtkWidget * gtk_recent_chooser_widget_new_for_manager  (GtkRecentManager *manager);
 		auto p = gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct())");
+			throw new ConstructionException("null returned by new_for_manager");
 		}
+		
 		this(cast(GtkRecentChooserWidget*) p);
 	}
 }

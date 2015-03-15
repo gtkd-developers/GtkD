@@ -16,118 +16,94 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkHScrollbar.html
- * outPack = gtk
- * outFile = HScrollbar
- * strct   = GtkHScrollbar
- * realStrct=
- * ctorStrct=
- * clss    = HScrollbar
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_hscrollbar_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.Adjustment
- * structWrap:
- * 	- GtkAdjustment* -> Adjustment
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.HScrollbar;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
 private import gtk.Adjustment;
-
-
 private import gtk.Scrollbar;
+private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
- * The GtkHScrollbar widget is a widget arranged horizontally creating a
- * scrollbar. See GtkScrollbar for details on
- * scrollbars. GtkAdjustment pointers may be added to handle the
- * adjustment of the scrollbar or it may be left NULL in which case one
- * will be created for you. See GtkScrollbar for a description of what the
+ * The #GtkHScrollbar widget is a widget arranged horizontally creating a
+ * scrollbar. See #GtkScrollbar for details on
+ * scrollbars. #GtkAdjustment pointers may be added to handle the
+ * adjustment of the scrollbar or it may be left %NULL in which case one
+ * will be created for you. See #GtkScrollbar for a description of what the
  * fields in an adjustment represent for a scrollbar.
- *
- * GtkHScrollbar has been deprecated, use GtkScrollbar instead.
+ * 
+ * GtkHScrollbar has been deprecated, use #GtkScrollbar instead.
  */
 public class HScrollbar : Scrollbar
 {
-	
 	/** the main Gtk struct */
 	protected GtkHScrollbar* gtkHScrollbar;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkHScrollbar* getHScrollbarStruct()
 	{
 		return gtkHScrollbar;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkHScrollbar;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkHScrollbar* gtkHScrollbar)
-	{
-		super(cast(GtkScrollbar*)gtkHScrollbar);
-		this.gtkHScrollbar = gtkHScrollbar;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkHScrollbar = cast(GtkHScrollbar*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkHScrollbar* gtkHScrollbar, bool ownedRef = false)
+	{
+		this.gtkHScrollbar = gtkHScrollbar;
+		super(cast(GtkScrollbar*)gtkHScrollbar, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_hscrollbar_get_type();
+	}
+
 	/**
-	 * Warning
-	 * gtk_hscrollbar_new has been deprecated since version 3.2 and should not be used in newly-written code. Use gtk_scrollbar_new() with GTK_ORIENTATION_HORIZONTAL instead
 	 * Creates a new horizontal scrollbar.
+	 *
+	 * Deprecated: Use gtk_scrollbar_new() with %GTK_ORIENTATION_HORIZONTAL instead
+	 *
 	 * Params:
-	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment. [allow-none]
+	 *     adjustment = the #GtkAdjustment to use, or %NULL to create a new adjustment
+	 *
+	 * Return: the new #GtkHScrollbar
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Adjustment adjustment)
+	public this(Adjustment adjustment)
 	{
-		// GtkWidget * gtk_hscrollbar_new (GtkAdjustment *adjustment);
 		auto p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct())");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkHScrollbar*) p);
 	}
 }

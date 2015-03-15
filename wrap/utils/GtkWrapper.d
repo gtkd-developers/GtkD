@@ -19,1099 +19,528 @@
 
 module utils.GtkWrapper;
 
-//debug=copyFile;
-//debug=wrapFile;
-//debug=wrapParameter;
-//debug=createPackage;
-//debug=aliases;
-//debug=lookup;
-//debug=file;
-//debug=writeFile;
+import std.algorithm;
+import std.array;
+import std.file;
+import std.uni;
+import std.path;
+import std.stdio;
 
-struct WError
+import utils.DefReader;
+import utils.IndentedStringBuilder;
+import utils.GtkPackage;
+import utils.GtkStruct;
+import utils.GtkFunction;
+import utils.GtkType;
+import utils.WrapError;
+
+void main(string[] args)
 {
-	private import std.stdio;
+	GtkWrapper wrapper = new GtkWrapper("./");
+	wrapper.proccess("APILookup.txt");
 
-	int lineNumber;
-	int code;
-	string filename;
-	string message;
+	if ( args.length > 1 && args[1].among("-f", "--print-free") )
+		wrapper.printFreeFunctions();
 
-
-	static WError* create(string filename, int lineNumber, int code, string message)
+	foreach(pack; GtkWrapper.packages)
 	{
-		WError* error = new WError;
-		error.lineNumber = lineNumber;
-		error.code = code;
-		error.filename = filename;
-		error.message = message;
-		return error;
-	}
+		if ( pack.name == "cairo" )
+			continue;
 
-	void print ()
-	{
-		writefln("%s(%s), code %s: %s.", filename, lineNumber, code, message);
+		pack.writeTypes();
+		pack.writeLoaderTable();
+		pack.writeClasses();
 	}
 }
 
-
-private import utils.WrapperIF;
-private import utils.HTODConvert;
-
-
-/*
-Paths:
-  outputRoot: Where all the wrapper files go.
-  srcDir: Wrapper files subdir (src vs srcgl)
-  inputRoot: Where the html files are
-  apiRoot: Where the API files are
-
-  buildDir: Where the build files go.
-  bindingsDir: Where the C Bindings files go.
-
-*/
-
-string joinRootDirFile(string root, string dir, string file)
+class GtkWrapper
 {
-	return std.path.buildPath(std.path.buildPath(root,dir),file);
-}
+	bool includeComments;
 
-//Moved here because of dsss:
-private import utils.DefReader;
-private import utils.GtkDClass;
-private import utils.convparms;
-private import utils.IndentedStringBuilder;
-
-/**
- * converts and wrap the GTK libs
- */
-public class GtkWrapper : WrapperIF
-{
-	private import std.file;
-	private import std.path;
-	private import std.stdio;
-	private import std.string;
-	private import std.array;
-
-	private string buildText;   /// to build the build.d
-	private string buildTextLibs;   /// to build the build.d libs
-
-	string srcOut = "src";      /// the src output directory
-	string srcDir;
 	string apiRoot;
 	string inputRoot;
 	string outputRoot;
-	string buildDir = "build";
-	string buildPath;
-	string buildFile =  "gtkD.d";
-	string bindingsDir;
+	string srcDir;
+	string bindDir;
 
-	public static string license;
+	static string licence;
+	static string[string] aliasses;
 
-	private bool currIncludeComments;
+	static GtkPackage[string] packages;
 
-	enum {
-
-		ERR_NONE = 1000,
-		ERR_UNKNOWNE,
-		ERR_NO_LICENSE,
-		ERR_INVALID_ALIAS,
-		ERR_NO_IN_ROOT,
-		ERR_NO_OUT_ROOT,
-		ERR_COPY_FILE,
-		ERR_FILE_DEFINITION,
-		ERR_CREATE_PACKAGE,
-	}
-
-	string[string] aliases;
-
-	string[string] enumTypes;
-
-	DefReader defReader;
-
-
-	string[string] packages;
-
-	WError*[] errors;
-
-	private string[] externalDeclarations;  /// the information to build the loader tables
-
-	private string[] collectedAliases;  /// public, module level type aliases
-	private string[] collectedEnums;    /// public, module level definitions of enums
-	private string[] stockEnums;        /// special enums for StockID
-	private string[] stockChars;        /// the string values for StockIDs
-	private string[] gTypes;            /// special enums for G_TYPE_*
-	private string[] collectedStructs;  /// public, module level definitions of structs
-	private string[] collectedTypes;    /// public, module level definitions of other types
-	private string[] collectedFuncts;   /// public, module level definitions of functions
-	private string[] collectedUnions;   /// public, module level definitions of unions
-	private string[] collectedConstants;/// public, module level type contants
-
-	private string[] lookupTypedefs;    /// lookup file definitions to be included on the typedefs.d
-	private string[] lookupAliases;     /// lookup file aliases definitions
-	private string[] lookupEnums;       /// lookup file enum definitions
-	private string[] lookupStructs;     /// lookup file struct definitions
-	private string[] lookupTypes;       /// lookup file type definitions
-	private string[] lookupFuncts;      /// lookup file functs definitions
-	private string[] lookupUnions;      /// lookup file unions definitions
-	private string[] lookupConstants;   /// lookup file constants definitions
-
-	DefReader[] defReaders;
-
-	this(string apiRoot)
+	public this(string apiRoot)
 	{
 		this.apiRoot = apiRoot;
-		//srcOut = "src";
-		//if (!std.file.exists(std.path.buildPath(outputRoot,srcOut)))
-		//{
-		//  std.file.mkdir(std.path.buildPath(outputRoot,srcOut));
-		//}
-
 	}
 
-
-	private void startBuildText()
+	public void proccess(string apiLookupDefinition)
 	{
-		buildText =
-			"/*"
-			"\n * Automatically generated build imports from"
-			"\n * the initial version generouselly given by:"
-			"\n * John Reimer"
-			"\n */"
-			"\n"
-			"\nmodule build;"
-			"\n"
-			"\nversion( build )"
-			"\n{"
-			"\n pragma (nolink);"
-			"\n"
-			"\n version (Windows)     pragma (target, \"GtkD.lib\"  );"
-			"\n version (linux)   pragma (target, \"libgtkd.a\" );"
-			"\n}"
-			"\n"
-			;
+		DefReader defReader = new DefReader( buildPath(apiRoot, apiLookupDefinition) );
 
-		buildTextLibs.length = 0;
-
-	}
-
-	public void writeBuildText()
-	{
-		string outfile;
-
-		buildPath = std.path.buildPath(std.path.buildPath(outputRoot,srcDir),buildDir);
-		if (!std.file.exists(buildPath))
+		while ( !defReader.empty )
 		{
-			std.file.mkdir(buildPath);
-
-		}
-		outfile = std.path.buildPath(buildPath,buildFile);
-		writefln("writeBuildText: %s",outfile);
-
-		std.file.write(outfile, buildText~"\n\n"~buildTextLibs);
-	}
-
-	int process(string apiLookupDefinition)
-	{
-
-		startBuildText();
-
-		int status = ERR_NONE;
-		defReader = new DefReader(std.path.buildPath(apiRoot,apiLookupDefinition));
-
-		if ( status==ERR_NONE && "license" == defReader.next() )
-		{
-			loadLicense();
-		}
-		else
-		{
-			status = ERR_NO_LICENSE;
-			errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Missing license as the first definition");
-		}
-
-		if ( "includeComments" == defReader.next() )
-		{
-			currIncludeComments = defReader.getValueBit();
-			defReader.next();
-		}
-
-		debug(aliases) writefln("key before alias = ",defReader.getKey());
-		while ( "alias" == defReader.getKey() )
-		{
-			status = loadAA(aliases, defReader, errors);
-			defReader.next();
-		}
-
-		while ( "enumType" == defReader.getKey() )
-		{
-			status = loadAA(enumTypes, defReader, errors);
-			defReader.next();
-		}
-
-		debug(aliases) writefln("key after alias = ",defReader.getKey());
-
-		debug(aliases) foreach(string key ; aliases.keys.sort)
-		{
-			writefln("alias %s = %s",key, aliases[key]);
-		}
-		if ( status==ERR_NONE && "inputRoot" == defReader.getKey() )
-		{
-			inputRoot = defReader.getValue();
-		}
-		else
-		{
-			status = ERR_NO_IN_ROOT;
-			errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot determine input root");
-		}
-
-		if ( status==ERR_NONE && "outputRoot" == defReader.next() )
-		{
-			outputRoot = defReader.getValue();
-		}
-		else
-		{
-			status = ERR_NO_OUT_ROOT;
-			errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot determine output root");
-		}
-
-		string key = defReader.next();
-
-		while ( status==ERR_NONE && ( "srcdir" ==  key ))
-		{
-			srcDir = defReader.getValue();
-			string chkdir = std.path.buildPath(outputRoot,srcDir);
-			if (!std.file.exists(chkdir))
+			switch ( defReader.key )
 			{
-				std.file.mkdir(chkdir);
+				case "license":
+					licence = defReader.readBlock().join();
+					break;
+				case "includeComments":
+					includeComments = defReader.valueBool;
+					break;
+				case "alias":
+					loadAA(aliasses, defReader);
+					break;
+				case "inputRoot":
+					inputRoot = defReader.value;
+					break;
+				case "outputRoot":
+					outputRoot = defReader.value;
+					break;
+				case "srcDir":
+					srcDir = defReader.value;
+					break;
+				case "bindDir":
+					bindDir = defReader.value;
+					break;
+				case "copy":
+					if ( srcDir.empty )
+						throw new WrapError(defReader, "Can't copy the file when srcDir is not set");
+
+					string outDir = buildPath(outputRoot, srcDir);
+
+					if ( !exists(outDir) )
+					{
+						try
+							mkdirRecurse(outDir);
+						catch (FileException)
+							throw new WrapError(defReader, "Failed to create directory: "~ outDir);
+					}
+
+					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
+					break;
+				case "lookup":
+					proccess(defReader.value);
+					break;
+				case "wrap":
+					if ( inputRoot.empty )
+						throw new WrapError(defReader, "Found wrap while inputRoot isn't set");
+					if ( outputRoot.empty )
+						throw new WrapError(defReader, "Found wrap while outputRoot isn't set");
+					if ( srcDir.empty )
+						throw new WrapError(defReader, "Found wrap while srcDir isn't set");
+					if ( bindDir.empty )
+						throw new WrapError(defReader, "Found wrap while bindDir isn't set");
+
+					wrapPackage(defReader);
+					break;
+				default:
+					throw new WrapError(defReader, "Unknown key: "~defReader.key);
 			}
-			key = defReader.next();
-			while ( status==ERR_NONE && ( "package" ==  key || "bind" == key ))
-			{
 
-				status = createPackage(outputRoot, defReader.getValue());
-				key = defReader.next();
-			}
+			defReader.popFront();
 		}
-
-
-
-		if ( status==ERR_NONE )
-		{
-			string pack;
-			string outPack;
-			string prevPack;
-			while ( status==ERR_NONE && defReader !is null
-					//&& ("wrap" == defReader.getKey() || "lookup" == defReader.getKey())
-				  )
-			{
-				debug(lookup)writefln("(%s) %s=%s", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-				switch ( defReader.getKey() )
-				{
-					case "alias": loadAA(aliases, defReader, errors); defReader.next(); break;
-					case "addTypedefs": lookupTypedefs ~= loadTextMultiLine("addTypedefs"); defReader.next();break;
-					case "addAliases": lookupAliases ~= loadTextMultiLine("addAliases"); defReader.next();break;
-					case "addEnums": lookupEnums ~= loadTextMultiLine("addEnums"); defReader.next();break;
-					case "addStructs": lookupStructs ~= loadTextMultiLine("addStructs"); defReader.next();break;
-					case "addTypes": lookupTypes ~= loadTextMultiLine("addTypes"); defReader.next();break;
-					case "addFuncts": lookupFuncts ~= loadTextMultiLine("addFuncts"); defReader.next();break;
-					case "addUnions": lookupUnions ~= loadTextMultiLine("addUnions"); defReader.next();break;
-					case "addConstants": lookupConstants ~= loadTextMultiLine("addConstants"); defReader.next();break;
-					case "enumType": loadAA(enumTypes, defReader, errors); defReader.next(); break;
-					case "srcout": srcOut =
-								   defReader.getValue();defReader.next(); break;
-					case "srcdir": srcDir = defReader.getValue();
-								   defReader.next();
-					case "bindDir": bindingsDir = defReader.getValue();
-									defReader.next();break;
-					case "wrap":
-									//package = key packagename
-									//        = pack outpack
-									pack = defReader.getValue();
-
-									outPack = packages[pack];
-									debug(lookup)writefln("wrap %s", outPack);
-									if ( outPack !is null )
-									{
-										buildText ~= "\n";
-										if ( outPack != "lib" )
-										{
-											buildTextLibs ~= "private import "~bindingsDir~"."~outPack~";\n";
-										}
-										if ( outPack == "glgtk" )
-										{
-											buildTextLibs ~= "private import "~bindingsDir~".gl;\n";
-											buildTextLibs ~= "private import "~bindingsDir~".glu;\n";
-										}
-										status = wrapFile(pack, outPack);
-									}
-									if ( prevPack.length>0 && outPack!=prevPack )
-									{
-										buildTypedefs(outPack);
-										buildLoaderTable(outPack, externalDeclarations);
-										externalDeclarations.length = 0;
-									}
-									prevPack = outPack;
-									break;
-
-					case "lookup":
-									defReaders ~= defReader;
-									defReader = new DefReader(std.path.buildPath(apiRoot,defReader.getValue()));
-									defReader.next();
-									debug(lookup)writefln("lookup on file %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-									break;
-
-					case "htod":
-									// not as clean as lookup...
-									// WARNING!!! writefln's are needed to avoid hang.
-									writefln("start htod");
-									new
-										HTODConvert(defReader.getValue(),outputRoot,apiRoot);
-									writefln("end htod");
-									defReader.next();
-									break;
-
-					default:
-									if ( defReader.getKey().length == 0 )
-									{
-										if ( defReaders.length > 0 )
-										{
-											defReader = defReaders[defReaders.length-1];
-											defReaders.length = defReaders.length -1;
-											debug(lookup)writefln("lookup back to %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-											defReader.next();
-											debug(lookup)writefln("lookup next == %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-										}
-										else
-										{
-											defReader = null;
-										}
-									}
-									break;
-				}
-				debug(lookup)if(defReader!is null)writefln("loop (%s) %s=%s", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-			}
-		}
-		else
-		{
-			//writefln("status = %s",status);
-		}
-
-		return status;
 	}
 
-	/**
-	 * Creates an entry on a string[string] associative array
-	 * Params:
-	 *      aa =
-	 *      defReader =
-	 * Returns:
-	 */
-	private static int loadAA(ref string[string] aa, DefReader defReader, WError*[] errors = null)
+	public void wrapPackage(DefReader defReader)
 	{
-		int status = ERR_NONE;
-		string[] vals = std.string.split(defReader.getValue());
-		if ( vals.length == 1 )
-		{
-			vals ~= "";
-		}
-		if ( vals.length == 2 )
-		{
-			aa[vals[0]] = vals[1];
-			debug(aa) writefln("added alias %s = %s", vals[0], vals[1]);
-		}
-		else
-		{
-			status = ERR_INVALID_ALIAS;
-			if ( errors !is null )
-			{
-				errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid alias");
-			}
-		}
-		return status;
-	}
+		GtkPackage pack;
+		GtkStruct currentStruct;
 
-	/**
-	 * Creates an entry on a string[][string] associative array
-	 * Params:
-	 *      aa =
-	 *      defReader =
-	 * Returns:
-	 */
-	private static int loadAA(ref string[][string] aa, DefReader defReader, WError*[] errors = null)
-	{
-		int status = ERR_NONE;
-		string[] vals = std.string.split(defReader.getValue());
-		if ( vals.length == 1 )
-		{
-			vals ~= "";
-		}
-		if ( vals.length == 2 )
-		{
-			aa[vals[0]] ~= vals[1];
-			debug(aa) writefln("added alias %s = %s", vals[0], vals[1]);
-		}
-		else
-		{
-			status = ERR_INVALID_ALIAS;
-			if ( errors !is null )
-			{
-				errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid alias");
-			}
-		}
-		return status;
-	}
-
-	/**
-	 * Creates an entry on a string[][string] associative array
-	 * Params:
-	 *      aa =
-	 *      defReader =
-	 * Returns:
-	 */
-	private static int loadAAA(ref string[string][string] aa, DefReader defReader, WError*[] errors = null)
-	{
-		int status = ERR_NONE;
-		string[] vals = std.string.split(defReader.getValue());
-		if ( vals.length == 1 )
-		{
-			vals ~= "";
-		}
-		if ( vals.length == 2 )
-		{
-			vals ~= "";
-		}
-		if ( vals.length == 3 )
-		{
-			aa[vals[0]][vals[1]] ~= vals[2];
-			debug(aa) writefln("added alias [%s][%s] = %s", vals[0], vals[1], vals[2]);
-		}
-		else
-		{
-			status = ERR_INVALID_ALIAS;
-			if ( errors !is null )
-			{
-				errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid alias");
-			}
-		}
-		return status;
-	}
-
-	private string loadLicense()
-	{
-		license = loadText("license");
-		return license;
-	}
-
-	private string loadText(string key)
-	{
-		string text;
-
-		while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
-		{
-			if ( text.length > 0 )
-			{
-				text ~= "\n" ~ defReader.getFullLine();
-			}
-			else
-			{
-				text ~= defReader.getFullLine();
-			}
-		}
-
-		return text;
-	}
-
-	private string[] loadTextMultiLine(string key)
-	{
-		string[] text;
-
-		while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
-		{
-			text ~= defReader.getFullLine();
-		}
-
-		return text;
-	}
-
-	private int copyFile(string fromDir, string toDir, string fileName)
-	{
-		debug(writeFile)writefln("GtkWrapper.copyFile %s", fileName);
-		int status = ERR_NONE;
-		debug(file)writefln("(1)GtkWrapper.copyFile %s %s", fromDir, fileName);
-		void[] text = std.file.read(std.path.buildPath(fromDir, fileName));
 		try
 		{
-			//debug(copyFile)
-			writefln("copying file [%s] to [%s]", std.path.buildPath(fromDir, fileName), std.path.buildPath(toDir, fileName));
-			if (!std.file.exists(toDir))
-			{
-				std.file.mkdir(toDir);
-			}
-			std.file.write(std.path.buildPath(toDir, fileName), text);
+			if (defReader.value in packages)
+				throw new WrapError(defReader, "Package: "~ defReader.value ~"already defined.");
+
+			pack = new GtkPackage(defReader.value, this, srcDir, bindDir);
+			packages[defReader.value] = pack;
+			defReader.popFront();
 		}
-		catch ( Exception e)
+		catch (Exception e)
+			throw new WrapError(defReader, e.msg);
+
+		while ( !defReader.empty )
 		{
-			status = ERR_COPY_FILE;
-			errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot copy  file "~fileName);
-		}
-
-		writefln("Wrappde %s", fileName);
-
-		return status;
-	}
-
-	private int wrapFile(string pack, string outPack)
-	{
-		debug(file)writefln("GtkWrapper.wrapFile pack=%s outPack=%s", pack, outPack);
-		int status = ERR_NONE;
-
-		GtkDClass gtkDClass;
-
-		ConvParms* convParms = new ConvParms;
-
-		string text;
-
-		string key = defReader.next();
-
-		string keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
-			" openFile mergeFile closeFile outFile"
-			" copy import structWrap alias moduleAlias override"
-			" noprefix nostruct nocode nosignal"
-			" code interfaceCode"
-			" srcout out inout array"
-			;
-		if (outPack == "lib") {string tmp = pack; pack = outPack; outPack = tmp;} //undo Bind hack...oupPack now holds bind dir.
-		convParms.outPack = outPack;
-		convParms.bindDir = bindingsDir;
-
-		while ( std.string.indexOf(keys, key) > 0 )
-		{
-			debug(wrapParameter)writefln("wrapFile [%s] = %s", key, defReader.getValue());
-			switch ( key )
+			switch ( defReader.key )
 			{
-				case "copy": status = copyFile(apiRoot,std.path.buildPath(srcOut,outPack),defReader.getValue());
-							 buildTextLibs ~= "private import " ~outPack~ "." ~defReader.getValue()[0..$-2]~ ";\n";
-							 break;
-				case "srcout": srcOut = defReader.getValue(); break;
-				case "struct": convParms.strct = defReader.getValue(); break;
-				case "realStruct": convParms.realStrct = defReader.getValue(); break;
-				case "ctorStruct": convParms.ctorStrct = defReader.getValue(); break;
-				case "class": convParms.clss = defReader.getValue(); break;
-				case "extend": convParms.extend = defReader.getValue(); break;
-				case "implements": convParms.impl ~= defReader.getValue(); break;
-				case "template": convParms.templ ~= defReader.getValue(); break;
-				case "prefix": convParms.prefixes ~= defReader.getValue(); break;
-				case "strictPrefix": convParms.strictPrefix = defReader.getValueBit(); break;
-				case "noprefix": convParms.noPrefixes ~= defReader.getValue(); break;
-				case "nocode": convParms.noCode ~= defReader.getValue(); break;
-				case "nosignal": convParms.noSignals ~= defReader.getValue(); break;
-				case "nostruct": convParms.noStructs ~= defReader.getValue(); break;
-				case "import": convParms.imprts ~= defReader.getValue(); break;
-				case "structWrap": loadAA(convParms.structWrap, defReader, errors); break;
-				case "alias": loadAA(convParms.aliases, defReader, errors); break;
-				case "moduleAlias": loadAA(convParms.mAliases, defReader, errors); break;
-				case "override": convParms.overrides ~= defReader.getValue(); break;
-				case "out": loadAA(convParms.outParms, defReader, errors); break;
-				case "inout": loadAA(convParms.inoutParms, defReader, errors); break;
-				case "array": loadAAA(convParms.array, defReader, errors); break;
-				case "text":
-							  convParms.text ~= loadTextMultiLine("text");
-							  break;
-				case "code":
-							  convParms.classCode ~= loadText("code");
-							  break;
-				case "interfaceCode":
-							  convParms.interfaceCode ~= loadText("interfaceCode");
-							  break;
-
-				case "openFile":
-							  gtkDClass = openFile(outPack, text, convParms);
-							  text.length = 0;
-							  break;
-				case "mergeFile":
-							  gtkDClass.mergeGtkDClass(text, convParms);
-							  text.length = 0;
-							  break;
-				case "closeFile":
-							  buildText ~= "\nprivate import "
-								  ~convParms.outPack~"."
-								  ~defReader.getValue()~";";
-							  closeFile(text, gtkDClass, convParms);
-							  text.length = 0;
-							  break;
-				case "interface":
-							  convParms.interf = defReader.getValue();
-							  string saveClass = convParms.clss;
-							  string[] saveTempl = convParms.templ;
-							  convParms.templ.length = 0;
-							  convParms.outFile = convParms.interf;
-							  convParms.isInterface = true;
-							  buildText ~= "\nprivate import "
-								  ~convParms.outPack~"."
-								  ~defReader.getValue()~";";
-							  outFile(outPack, text, convParms);
-							  convParms.clss = saveClass;
-							  convParms.templ = saveTempl;
-							  // mark not interface (anymore)
-							  convParms.isInterface = false;
-							  // as outFile is always the last definition
-							  // there is no need to restore it
-							  break;
-				case "outFile":
-							  buildText ~= "\nprivate import "
-								  ~convParms.outPack~"."
-								  ~defReader.getValue()~";";
-							  outFile(outPack, text, convParms);
-							  break;
+				case "addAliases":
+					pack.lookupAliases ~= defReader.readBlock();
+					break;
+				case "addEnums":
+					pack.lookupEnums ~= defReader.readBlock();
+					break;
+				case "addStructs":
+					pack.lookupStructs ~= defReader.readBlock();
+					break;
+				case "addFuncts":
+					pack.lookupFuncts ~= defReader.readBlock();
+					break;
+				case "addConstants":
+					pack.lookupConstants ~= defReader.readBlock();
+					break;
 				case "file":
-							  convParms.inFile = std.string.strip(defReader.getValue());
-							  if ( convParms.inFile.length > 0 )
-							  {
-								  if ( startsWith(convParms.inFile, "/") )
-								  {
-									  debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", convParms.toString());
-									  debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", defReader.toString());
-									  debug(file)writefln("(2)GtkWrapper.wrapFile %s", convParms.inFile);
-									  text = cast(string) std.file.read(convParms.inFile);
-								  }
-								  else
-								  {
-									  debug(file)writefln("(3)GtkWrapper.wrapFile %s", convParms.inFile);
-									  text = cast(string) std.file.read(std.path.buildPath(std.path.buildPath(inputRoot,pack),convParms.inFile));
-								  }
-							  }
-							  else
-							  {
-								  text.length = 0;
-							  }
-							  break;
+					pack.parseGIR(defReader.value);
+					break;
+				case "struct":
+					if ( defReader.value.empty )
+					{
+						currentStruct = null;
+					}
+					else
+					{
+						currentStruct = pack.getStruct(defReader.value);
+						if ( currentStruct is null )
+							currentStruct = createClass(pack, defReader.value);
+					}
+					break;
+				case "class":
+					if ( currentStruct is null )
+						currentStruct = createClass(pack, defReader.value);
+
+					currentStruct.lookupClass = true;
+					currentStruct.name = defReader.value;
+					break;
+				case "interface":
+					if ( currentStruct is null )
+						currentStruct = createClass(pack, defReader.value);
+
+					currentStruct.lookupInterface = true;
+					currentStruct.name = defReader.value;
+					break;
+				case "cType":
+					currentStruct.cType = defReader.value;
+					break;
+				case "namespace":
+					currentStruct.type = GtkStructType.Record;
+					currentStruct.lookupClass = false;
+					currentStruct.lookupInterface = false;
+
+					if ( defReader.value.empty )
+					{
+						currentStruct.noNamespace = true;
+					}
+					else
+					{
+						currentStruct.noNamespace = false;
+						currentStruct.name = defReader.value;
+					}
+					break;
+				case "extend":
+					currentStruct.lookupParent = true;
+					currentStruct.parent = defReader.value;
+					break;
+				case "implements":
+					if ( defReader.value.empty )
+						currentStruct.implements = null;
+					else
+						currentStruct.implements ~= defReader.value;
+					break;
+				case "merge":
+					GtkStruct mergeStruct = pack.getStruct(defReader.value);
+					currentStruct.merge(mergeStruct);
+					GtkStruct copy = currentStruct.dup();
+					copy.noCode = true;
+					copy.noExternal = true;
+					mergeStruct.pack.collectedStructs[mergeStruct.name] = copy;
+					break;
+				case "move":
+					string[] vals = defReader.value.split();
+					if ( vals.length <= 1 )
+						throw new WrapError(defReader, "No destination for move: "~ defReader.value);
+					string newFuncName = ( vals.length == 3 ) ? vals[2] : vals[0];
+					GtkStruct dest = pack.getStruct(vals[1]);
+					if ( dest is null )
+						dest = createClass(pack, vals[1]);
+					if ( vals[0] !in pack.collectedFunctions )
+						throw new WrapError(defReader, "unknown function "~ vals[0]);
+					pack.collectedFunctions[vals[0]].strct = dest;
+					dest.functions[newFuncName] = pack.collectedFunctions[vals[0]];
+					dest.functions[newFuncName].name = newFuncName;
+					pack.collectedFunctions.remove(vals[0]);
+					break;
+				case "import":
+					currentStruct.imports ~= defReader.value;
+					break;
+				case "structWrap":
+					loadAA(currentStruct.structWrap, defReader);
+					break;
+				case "alias":
+					loadAA(currentStruct.aliases, defReader);
+					break;
+				case "override":
+					currentStruct.functions[defReader.value].lookupOverride = true;
+					break;
+				case "noAlias":
+					pack.collectedAliases.remove(defReader.value);
+					break;
+				case "noEnum":
+					pack.collectedEnums.remove(defReader.value);
+					break;
+				case "noCallback":
+					pack.collectedCallbacks.remove(defReader.value);
+					break;
+				case "noCode":
+					if ( defReader.valueBool )
+					{
+						currentStruct.noCode = true;
+						break;
+					}
+					if ( defReader.value !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ defReader.value);
+
+					currentStruct.functions[defReader.value].noCode = true;
+					break;
+				case "noExternal":
+					currentStruct.noExternal = true;
+					break;
+				case "noSignal":
+					currentStruct.functions[defReader.value~"-signal"].noCode = true;
+					break;
+				case "noStruct":
+					currentStruct.noDecleration = true;
+					break;
+				case "code":
+					currentStruct.lookupCode ~= defReader.readBlock;
+					break;
+				case "interfaceCode":
+					currentStruct.lookupInterfaceCode ~= defReader.readBlock;
+					break;
+				case "in":
+					string[] vals = defReader.value.split();
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
+					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.Default;
+					break;
+				case "out":
+					string[] vals = defReader.value.split();
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
+					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.Out;
+					break;
+				case "inout":
+				case "ref":
+					string[] vals = defReader.value.split();
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
+					findParam(currentStruct, vals[0], vals[1]).direction = GtkParamDirection.InOut;
+					break;
+				case "array":
+					string[] vals = defReader.value.split();
+
+					if ( vals[0] !in currentStruct.functions )
+						throw new WrapError(defReader, "Unknown function: "~ vals[0]);
+
+					GtkFunction func = currentStruct.functions[vals[0]];
+
+					if ( vals[1] == "Return" )
+					{
+						if ( vals.length < 3 )
+						{
+							func.returnType.zeroTerminated = true;
+							break;
+						}
+
+						foreach( i, p; func.params )
+						{
+							if ( p.name == vals[2] )
+								func.returnType.length = cast(int)i;
+						}
+					}
+					else
+					{
+						GtkParam param = findParam(currentStruct, vals[0], vals[1]);
+						GtkType elementType = new GtkType(this);
+
+						elementType.name = param.type.name;
+						elementType.cType = param.type.cType[0..$-1];
+						param.type.elementType = elementType;
+
+						if ( vals.length < 3 )
+						{
+							param.type.zeroTerminated = true;
+							break;
+						}
+
+						if ( vals[2] == "Return" )
+						{
+							param.type.length = -2;
+							break;
+						}
+
+						foreach( i, p; func.params )
+						{
+							if ( p.name == vals[2] )
+								param.type.length = cast(int)i;
+						}
+					}
+					break;
+				case "copy":
+					if ( srcDir.empty )
+						throw new WrapError(defReader,
+						                    "Can't copy the file when srcDir is not set");
+
+					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
+					break;
 				default:
-							  status = ERR_FILE_DEFINITION;
-							  errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Invalid file definition");
-							  break;
+					throw new WrapError(defReader, "Unknown key: "~defReader.key);
 			}
-			key = defReader.next();
+
+			defReader.popFront();
 		}
-
-		return status;
 	}
 
-	/**
-	 * Opens, reads and closes a file
-	 * Params:
-	 *      outPack =
-	 *      text =
-	 *      convParms =
-	 */
-	private void outFile(string outPack, string text, ConvParms* convParms)
+	void printFreeFunctions()
 	{
-		GtkDClass gtkDClass = openFile(outPack, text, convParms);
-		closeFile("", gtkDClass, convParms);
-	}
-
-	/**
-	 * Opens and reads a file
-	 * Params:
-	 *      outPack =
-	 *      text =
-	 *      convParms =
-	 * Returns:
-	 */
-	private GtkDClass openFile(string outPack, string text, ConvParms* convParms)
-	{
-		convParms.outFile = defReader.getValue();
-		debug(wrapFile)writefln("######### gtkDClass for %s.%s (%s)
-				bound at %s", outPack, convParms.clss,
-				convParms.outFile,convParms.bindDir);
-		GtkDClass gtkDClass = new GtkDClass(this);
-		convParms.bindDir = bindingsDir;
-		gtkDClass.openGtkDClass(text, convParms);
-
-		return gtkDClass;
-	}
-
-	private void closeFile(string text, GtkDClass gtkDClass, ConvParms* convParms)
-	{
-		debug(writeFile)writefln("GtkWrapper.closeFile %s",
-				gtkDClass.getOutFile(outputRoot, srcDir));
-		string gtkDText = gtkDClass.closeGtkDClass(text, convParms);
-		string writeDir = std.path.buildPath(outputRoot, srcDir);
-		if ( gtkDClass.getError() == 0 )
+		foreach ( pack; packages )
 		{
-			if (!std.file.exists(writeDir))
+			foreach ( func; pack.collectedFunctions )
 			{
-				std.file.mkdir(writeDir);
+				if ( func.movedTo.empty )
+					writefln("%s: %s", pack.name, func.name);
 			}
-			std.file.write(gtkDClass.getOutFile(outputRoot,srcDir),gtkDText);
 		}
-		writefln("gtk Wrapped %s", gtkDClass.getOutFile(outputRoot, srcDir));
-		if ( !convParms.isInterface )
-		{
-			convParms.clearAll();
-		}
-
-		externalDeclarations ~= gtkDClass.getExternalDeclarations();
-		collectedAliases ~= gtkDClass.getAliases();
-		collectedEnums ~=   gtkDClass.getEnums();
-		collectedFuncts ~=  gtkDClass.getFuncts();
-		collectedStructs ~= gtkDClass.getStructs();
-		collectedTypes ~=   gtkDClass.getTypes();
-		collectedUnions ~=  gtkDClass.getUnions();
-		collectedConstants ~=   gtkDClass.getConstants();
-		stockEnums ~= gtkDClass.getStockEnums();
-		stockChars ~= gtkDClass.getStockChars();
-		gTypes ~= gtkDClass.getGTypes();
 	}
 
-	/**
-	 * Assumes input and output packages contains no spaces and are separated by a space
-	 * Params:
-	 *      outputRoot =
-	 *      pack =
-	 * Returns:
-	 */
-	private int createPackage(string outputRoot, string packagevalue)
+	private GtkParam findParam(GtkStruct strct, string func, string name)
 	{
-		int status = ERR_NONE;
-
-		string[] packages = std.string.split(packagevalue, " ");
-		string packageDir;
-
-		if ( packages.length == 1 && "bind" == defReader.getKey() )
+		foreach( param; strct.functions[func].params )
 		{
-			packages ~="lib";
-			packageDir = packages[0];
+			if ( param.name == name )
+				return param;
 		}
-		else if ( packages.length == 2 && "package" == defReader.getKey() )
-		{
-			packageDir = packages[1];
-			// nothing here
-		}
+
+		return null;
+	}
+
+	private void loadAA (ref string[string] aa, DefReader defReader)
+	{
+		string[] vals = defReader.value.split();
+
+		if ( vals.length == 1 )
+			vals ~= "";
+
+		if ( vals.length == 2 )
+			aa[vals[0]] = vals[1];
 		else
-		{
-			status = ERR_CREATE_PACKAGE;
-		}
-
-		if ( status==ERR_NONE )
-		{
-			debug(createPackage)writefln("adding (%s) %s %s", defReader.getKey(), packages[0], packages[1]);
-			this.packages[packages[0]] = packages[1];
-			try
-			{
-				std.file.mkdir(joinRootDirFile(outputRoot,srcDir,packageDir));
-			}
-			catch ( Exception e)
-			{
-				//status = 4;
-				//errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot create src package: "~pack);
-			}
-			try
-			{
-				std.file.mkdir(joinRootDirFile(outputRoot,"obj",
-							packageDir));
-			}
-			catch ( Exception e)
-			{
-				//status = 5;
-				//errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status, "Cannot create obj package: "~pack);
-			}
-		}
-
-		if ( status != ERR_NONE )
-		{
-			errors ~= WError.create(defReader.fileName, defReader.getLineNumber(), status,
-					"Invalid package/src definition (need in and out packages or lib name): "~packagevalue);
-		}
-
-		return status;
+			throw new WrapError(defReader, "Unknown key: "~defReader.key);
 	}
 
-	public void printErrors()
+	private void copyFile(string srcDir, string destDir, string file)
 	{
-		writefln("printing %s errors", errors.length);
-		foreach ( WError* error ; errors)
-		{
-			error.print();
-		}
+		string from = buildPath(srcDir, file);
+		string to   = buildPath(destDir, file);
+
+		writefln("copying file [%s] to [%s]", from, to);
+		copy(from, to);
+
+		if ( !exists(to) )
+			throw new Exception("Cannot copy  file: "~from);
 	}
 
-	public string getLicense()
+	private GtkStruct createClass(GtkPackage pack, string name)
 	{
-		return license;
-	}
+		GtkStruct strct = new GtkStruct(this, pack);
+		strct.name = name;
+		strct.cType = pack.cTypePrefix ~ name;
+		strct.type = GtkStructType.Record;
+		strct.noDecleration = true;
+		pack.collectedStructs["lookup"~name] = strct;
 
-	public string[string] getAliases()
-	{
-		return aliases;
-	}
-
-	public string[string] getEnumTypes()
-	{
-		return enumTypes;
-	}
-
-	public bool includeComments()
-	{
-		return currIncludeComments;
-	}
-
-	void buildLoaderTable(string loaderTableName, string[] declarations)
-	{
-		string externalText = license;
-
-		externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";\n"
-			"\nprivate import std.stdio;"
-			"\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
-
-		if ( loaderTableName == "glib" )
-		{
-			externalText ~= "\nprivate import "~bindingsDir~".gthreadtypes;";
-		}
-		if ( loaderTableName == "gdk" || loaderTableName == "pango" )
-		{
-			externalText ~= "\nprivate import "~bindingsDir~".cairotypes;";
-		}
-
-		if ( loaderTableName != "gl" &&
-				loaderTableName != "glu" &&
-				loaderTableName != "glx"
-		   )
-		{
-			externalText ~= "\nprivate import gtkc.Loader;"
-				"\nprivate import gtkc.paths;\n"
-				"\nshared static this()"
-				"\n{";
-
-			string library = "LIBRARY."~ toUpper(loaderTableName);
-
-			//Returns an array of libraries to try and link with.
-			string getLibrary(string funct)
-			{
-				if ( GtkDClass.startsWith(funct, "gdk") )
-					return library ~ ", LIBRARY.GDKPIXBUF";
-				else if	( GtkDClass.startsWith(funct, "pango_cairo") )
-					return library ~ ", LIBRARY.PANGOCAIRO";
-				else if	( GtkDClass.startsWith(funct, "g_module") )
-					return library ~ ", LIBRARY.GMODULE";
-				else
-					return library;
-			}
-			
-			string getUtfPostfix(string funct)
-			{
-				if ( funct == "g_module_open" ||
-					funct == "g_module_name" )
-					return "\"~ _utfPostfix ~\"";
-					
-				return "";
-			}
-
-			//Generate the static this, where the linking takes place
-			foreach ( string declaration; declarations )
-			{
-				string dec = std.string.strip(declaration);
-				sizediff_t pos = std.string.lastIndexOf(dec,')');
-
-				if (dec.length == 0)
-					continue;
-
-				if ( GtkDClass.startsWith(dec, "//") )
-					externalText ~= "\n\t"~ dec ~"\n\n";
-
-				if ( pos > 0 )
-				{
-					externalText ~= '\t';
-
-					if ( dec[0]=='#' )
-					{
-						externalText ~= "// ";
-					}
-					else
-					{
-						string functName = std.string.strip(dec[pos+1..$]);
-						if ( functName.length > 0 && (functName == "g_module_open" || functName == "g_module_name") )
-						{
-							externalText ~= "mixin(\"Linker.link("~ functName ~", \\\""~ functName ~ "\"~ _utfPostfix ~\"\\\", "~ getLibrary(functName) ~");\");";
-						}
-						else if ( functName.length > 0 )
-						{
-							externalText ~= "Linker.link("~ functName ~", \""~ functName ~"\", "~ getLibrary(functName) ~");";
-						}
-					}
-					externalText ~= '\n';
-				}
-			}
-
-			externalText ~= "}\n\n"
-				"__gshared extern(C)\n"
-				"{";
-
-			//Generate the functions.
-			foreach(string declaration ; declarations)
-			{
-				string dec = std.string.strip(declaration);
-
-				if (dec.length == 0)
-					continue;
-
-				if ( GtkDClass.startsWith(dec, "//") )
-				{
-					externalText ~= "\n\t"~ dec ~"\n\n";
-					continue;
-				}
-
-				if ( loaderTableName == "glib" || loaderTableName == "pango" ) 
-					dec = replace(dec, "FILE*", "void*"); //Phobos workaround.
-
-				sizediff_t pos = std.string.lastIndexOf(dec,')') + 1;
-				externalText ~= '\t';
-
-				if ( dec[0]=='#' )
-					externalText ~= "// ";
-
-				if ( !GtkDClass.startsWith(dec, "//") && dec[0]!='#' )
-					externalText ~= dec[0..pos] ~" c_"~ dec[pos..$] ~';';
-				else
-					externalText ~= dec;
-
-				externalText ~= '\n';
-			}
-
-			externalText ~= "}\n";
-
-			//Generate the aliases.
-			foreach ( string declaration; declarations )
-			{
-				string dec = std.string.strip(declaration);
-				sizediff_t pos = std.string.lastIndexOf(dec,')');
-
-				if (dec.length == 0)
-					continue;
-
-				if ( GtkDClass.startsWith(dec, "//") )
-					externalText ~= '\n'~ dec ~"\n\n";
-
-				if ( pos > 0 )
-				{
-					if ( dec[0]=='#' )
-					{
-						externalText ~= "// ";
-					}
-					else
-					{
-						string functName = std.string.strip(dec[pos+1..$]);
-						if ( functName.length > 0 )
-						{
-							externalText ~= "alias c_"~ functName ~"  "~ functName ~";";
-						}
-					}
-					externalText ~= '\n';
-				}
-			}
-		}
-
-		string pathname = joinRootDirFile(std.path.buildPath(outputRoot,srcDir),bindingsDir,loaderTableName~".d");
-		std.file.write(pathname,externalText);
-	}
-
-	void buildTypedefs(string outPack)
-	{
-
-		string def = license;
-		def ~= "module "~bindingsDir~"."~outPack~"types;\n\n";
-
-		auto indenter = new IndentedStringBuilder();
-
-		def ~= indenter.format(lookupTypedefs);
-
-		if ( gTypes.length > 0 )
-		{
-			def ~= "\n\n// G_TYPE_*";
-			def ~= "\nenum GType : size_t";
-			def ~= "\n{\n";
-			indenter.setIndent("\t");
-			def ~= indenter.format(gTypes);
-			def ~= "\n}\n\n";
-		}
-		indenter.setIndent("");
-
-		def ~= indenter.format(lookupConstants);
-		def ~= indenter.format(lookupAliases);
-		def ~= indenter.format(collectedAliases);
-
-		indenter.setIndent("");
-		def ~= indenter.format(lookupEnums);
-		def ~= indenter.format(collectedEnums);
-
-		indenter.setIndent("");
-		def ~= indenter.format(lookupStructs);
-		def ~= indenter.format(collectedStructs);
-
-		indenter.setIndent("");
-		def ~= indenter.format(lookupTypes);
-		def ~= indenter.format(collectedTypes);
-
-		indenter.setIndent("");
-		def ~= indenter.format(lookupFuncts);
-		def ~= indenter.format(collectedFuncts);
-
-		indenter.setIndent("");
-		def ~= indenter.format(lookupUnions);
-		def ~= indenter.format(collectedUnions);
-
-		if ( stockEnums.length > 0 )
-		{
-			def ~= "\n\n// StockIDs";
-			def ~= "\nenum StockID";
-			def ~= "\n{\n";
-			indenter.setIndent("\t");
-			def ~= indenter.format(stockEnums);
-			def ~= "\n}";
-			def ~= "\n\n// Stock strings";
-			def ~= "\nstring[] StockDesc = ";
-			def ~= "\n[";
-			indenter.setIndent("\t");
-			def ~= indenter.format(stockChars);
-			def ~= "\n];";
-		}
-		indenter.setIndent("");
-		def ~= indenter.format(collectedConstants);
-
-		string pathname =
-			joinRootDirFile(std.path.buildPath(outputRoot,srcDir), bindingsDir, outPack~"types.d");
-		std.file.write(pathname,def);
-
-		lookupTypedefs.length = 0;
-		lookupAliases.length = 0;
-		lookupEnums.length = 0;
-		lookupStructs.length = 0;
-		lookupTypes.length = 0;
-		lookupFuncts.length = 0;
-		lookupUnions.length = 0;
-		lookupConstants.length = 0;
-
-		collectedAliases.length = 0;
-		collectedEnums.length = 0;
-		collectedStructs.length = 0;
-		collectedTypes.length = 0;
-		collectedFuncts.length = 0;
-		collectedUnions.length = 0;
-		collectedConstants.length = 0;
-
-		stockEnums.length = 0;
-		stockChars.length = 0;
-		gTypes.length = 0;
+		return strct;
 	}
 }
 
-int main()
+/**
+ * Apply aliasses to the tokens in the string, and
+ * camelCase underscore separated tokens.
+ */
+string stringToGtkD(string str, string[string] aliases, string[string] localAliases = null)
 {
-	GtkWrapper wrapper = new GtkWrapper("./"); //Run gtkwrapper from the project directory... Make this a config option later.
-	int status = wrapper.process("APILookup.txt");
-	wrapper.printErrors();
-	if ( wrapper.errors.length == 0 )
+	size_t pos, start;
+	string seps = " \n\r\t\f\v()[]*,;";
+	auto converted = appender!string();
+
+	while ( pos < str.length )
 	{
-		wrapper.writeBuildText();
+		if ( !seps.canFind(str[pos]) )
+		{
+			start = pos;
+
+			while ( pos < str.length && !seps.canFind(str[pos]) )
+				pos++;
+
+			//Workaround for the tm struct, type and variable have the same name.
+			if ( pos < str.length && str[pos] == '*' && str[start..pos] == "tm" )
+				converted.put("void");
+			else
+				converted.put(tokenToGtkD(str[start..pos], aliases, localAliases));
+
+			if ( pos == str.length )
+				break;
+		}
+
+		converted.put(str[pos]);
+		pos++;
 	}
-	return status;
+
+	return converted.data;
+}
+
+unittest
+{
+	assert(stringToGtkD("token", ["token":"tok"]) == "tok");
+	assert(stringToGtkD("string token_to_gtkD(string token, string[string] aliases)", ["token":"tok"])
+	       == "string tokenToGtkD(string tok, string[string] aliases)");
+}
+
+string tokenToGtkD(string token, string[string] aliases, bool caseConvert=true)
+{
+	return tokenToGtkD(token, aliases, null, caseConvert);
+}
+
+string tokenToGtkD(string token, string[string] aliases, string[string] localAliases, bool caseConvert=true)
+{
+	if ( token in localAliases )
+		return localAliases[token];
+	else if ( token in aliases )
+		return aliases[token];
+	else if ( token.startsWith("cairo_") && token.endsWith("_t", "_t*", "_t**") )
+		return token;
+	else if ( token == "pid_t" )
+		return token;
+	else if ( caseConvert )
+		return tokenToGtkD(removeUnderscore(token), aliases, localAliases, false);
+	else
+		return token;
+}
+
+string removeUnderscore(string token)
+{
+	char pc;
+	auto converted = appender!string();
+
+	while ( !token.empty )
+	{
+		if ( token[0] == '_' )
+		{
+			pc = token[0];
+			token = token[1..$];
+
+			continue;
+		}
+
+		if ( pc == '_' )
+			converted.put(token[0].toUpper());
+		else
+			converted.put(token[0]);
+
+		pc = token[0];
+		token = token[1..$];
+	}
+
+	return converted.data;
+}
+
+unittest
+{
+	assert(removeUnderscore("this_is_a_test") == "thisIsATest");
 }

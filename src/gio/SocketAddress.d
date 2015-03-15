@@ -16,163 +16,151 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GSocketAddress.html
- * outPack = gio
- * outFile = SocketAddress
- * strct   = GSocketAddress
- * realStrct=
- * ctorStrct=
- * clss    = SocketAddress
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- SocketConnectableIF
- * prefixes:
- * 	- g_socket_address_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.SocketConnectableT
- * 	- gio.SocketConnectableIF
- * structWrap:
- * module aliases:
- * local aliases:
- * 	- GLIB_SYSDEF_AF_INET -> 2
- * 	- GLIB_SYSDEF_AF_INET6 -> 23
- * 	- GLIB_SYSDEF_AF_UNIX -> 1
- * overrides:
- */
 
 module gio.SocketAddress;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.SocketConnectableIF;
+private import gio.SocketConnectableT;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.ErrorG;
 private import glib.GException;
-private import gio.SocketConnectableT;
-private import gio.SocketConnectableIF;
-
-
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
+
 
 /**
- * GSocketAddress is the equivalent of struct sockaddr
- * in the BSD sockets API. This is an abstract class; use
- * GInetSocketAddress for internet sockets, or GUnixSocketAddress
- * for UNIX domain sockets.
+ * #GSocketAddress is the equivalent of struct sockaddr in the BSD
+ * sockets API. This is an abstract class; use #GInetSocketAddress
+ * for internet sockets, or #GUnixSocketAddress for UNIX domain sockets.
  */
 public class SocketAddress : ObjectG, SocketConnectableIF
 {
-	
 	/** the main Gtk struct */
 	protected GSocketAddress* gSocketAddress;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GSocketAddress* getSocketAddressStruct()
 	{
 		return gSocketAddress;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gSocketAddress;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GSocketAddress* gSocketAddress)
-	{
-		super(cast(GObject*)gSocketAddress);
-		this.gSocketAddress = gSocketAddress;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gSocketAddress = cast(GSocketAddress*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GSocketAddress* gSocketAddress, bool ownedRef = false)
+	{
+		this.gSocketAddress = gSocketAddress;
+		super(cast(GObject*)gSocketAddress, ownedRef);
+	}
+
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GSocketAddress);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_socket_address_get_type();
+	}
+
 	/**
-	 * Creates a GSocketAddress subclass corresponding to the native
-	 * struct sockaddr native.
-	 * Since 2.22
+	 * Creates a #GSocketAddress subclass corresponding to the native
+	 * struct sockaddr @native.
+	 *
 	 * Params:
-	 * native = a pointer to a struct sockaddr
-	 * len = the size of the memory location pointed to by native
+	 *     native = a pointer to a struct sockaddr
+	 *     len = the size of the memory location pointed to by @native
+	 *
+	 * Return: a new #GSocketAddress if @native could successfully
+	 *     be converted, otherwise %NULL
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* native, gsize len)
+	public this(void* native, size_t len)
 	{
-		// GSocketAddress * g_socket_address_new_from_native (gpointer native,  gsize len);
 		auto p = g_socket_address_new_from_native(native, len);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_socket_address_new_from_native(native, len)");
+			throw new ConstructionException("null returned by new_from_native");
 		}
-		this(cast(GSocketAddress*) p);
+		
+		this(cast(GSocketAddress*) p, true);
 	}
-	
+
 	/**
-	 * Gets the socket family type of address.
-	 * Since 2.22
-	 * Returns: the socket family type of address.
+	 * Gets the socket family type of @address.
+	 *
+	 * Return: the socket family type of @address
+	 *
+	 * Since: 2.22
 	 */
 	public GSocketFamily getFamily()
 	{
-		// GSocketFamily g_socket_address_get_family (GSocketAddress *address);
 		return g_socket_address_get_family(gSocketAddress);
 	}
-	
+
 	/**
-	 * Converts a GSocketAddress to a native struct
-	 * sockaddr, which can be passed to low-level functions like
-	 * connect() or bind().
-	 * If not enough space is available, a G_IO_ERROR_NO_SPACE error is
-	 * returned. If the address type is not known on the system
-	 * then a G_IO_ERROR_NOT_SUPPORTED error is returned.
-	 * Since 2.22
+	 * Gets the size of @address's native struct sockaddr.
+	 * You can use this to allocate memory to pass to
+	 * g_socket_address_to_native().
+	 *
+	 * Return: the size of the native struct sockaddr that
+	 *     @address represents
+	 *
+	 * Since: 2.22
+	 */
+	public ptrdiff_t getNativeSize()
+	{
+		return g_socket_address_get_native_size(gSocketAddress);
+	}
+
+	/**
+	 * Converts a #GSocketAddress to a native struct sockaddr, which can
+	 * be passed to low-level functions like connect() or bind().
+	 *
+	 * If not enough space is available, a %G_IO_ERROR_NO_SPACE error
+	 * is returned. If the address type is not known on the system
+	 * then a %G_IO_ERROR_NOT_SUPPORTED error is returned.
+	 *
 	 * Params:
-	 * dest = a pointer to a memory location that will contain the native
-	 * struct sockaddr.
-	 * destlen = the size of dest. Must be at least as large as
-	 * g_socket_address_get_native_size().
-	 * Returns: TRUE if dest was filled in, FALSE on error
+	 *     dest = a pointer to a memory location that will contain the native
+	 *         struct sockaddr
+	 *     destlen = the size of @dest. Must be at least as large as
+	 *         g_socket_address_get_native_size()
+	 *
+	 * Return: %TRUE if @dest was filled in, %FALSE on error
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int toNative(void* dest, gsize destlen)
+	public bool toNative(void* dest, size_t destlen)
 	{
-		// gboolean g_socket_address_to_native (GSocketAddress *address,  gpointer dest,  gsize destlen,  GError **error);
 		GError* err = null;
 		
-		auto p = g_socket_address_to_native(gSocketAddress, dest, destlen, &err);
+		auto p = g_socket_address_to_native(gSocketAddress, dest, destlen, &err) != 0;
 		
 		if (err !is null)
 		{
@@ -180,18 +168,5 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 		}
 		
 		return p;
-	}
-	
-	/**
-	 * Gets the size of address's native struct sockaddr.
-	 * You can use this to allocate memory to pass to
-	 * g_socket_address_to_native().
-	 * Since 2.22
-	 * Returns: the size of the native struct sockaddr that address represents
-	 */
-	public gssize getNativeSize()
-	{
-		// gssize g_socket_address_get_native_size (GSocketAddress *address);
-		return g_socket_address_get_native_size(gSocketAddress);
 	}
 }

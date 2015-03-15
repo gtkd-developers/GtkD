@@ -2,7 +2,7 @@
     "name": "gtk-d",
     "targetType": "none",
     "description": "GtkD is the Digital Mars D programing language OO wrapper for Gtk+.",
-    "homepage": "https://github.com/gtkd-developers/GtkD",
+    "homepage": "http://gtkd.org",
     "license": "LGPL license with additional exceptions",
     "authors": [
         "Frank Benoit",
@@ -16,18 +16,18 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:gtkdgl": "~>2.4.0",
-        "gtk-d:sv": "~>2.4.0",
-        "gtk-d:vte": "~>2.4.0",
-        "gtk-d:gtkd": "~>2.4.0",
-        "gtk-d:gstreamer": "~>2.4.0"
+        "gtk-d:gtkdgl": "~>3.0.0-beta",
+        "gtk-d:sv": "~>3.0.0-beta",
+        "gtk-d:vte": "~>3.0.0-beta",
+        "gtk-d:gtkd": "~>3.0.0-beta",
+        "gtk-d:gstreamer": "~>3.0.0-beta"
     },
 
     "subPackages" : [
         {
             "name": "gtkd",
             "targetType": "library",
-            "targetName": "gtkd-2",
+            "targetName": "gtkd-3",
             "sourcePaths": ["src"],
             "libs-posix": ["dl"],
             "importPaths": ["src"]
@@ -35,38 +35,38 @@
         {
             "name": "gtkdgl",
             "targetType": "library",
-            "targetName": "gtkdgl-2",
+            "targetName": "gtkdgl-3",
             "sourcePaths": ["srcgl"],
             "libs-posix": ["dl"],
             "importPaths": ["srcgl"],
-            "dependencies": {"gtk-d:gtkd":"~>2.4.0"}
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
         },
         {
             "name": "sv",
             "targetType": "library",
-            "targetName": "gtkdsv-2",
+            "targetName": "gtkdsv-3",
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
             "importPaths": ["srcsv"],
-            "dependencies": {"gtk-d:gtkd":"~>2.4.0"}
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
         },
         {
             "name": "gstreamer",
             "targetType": "library",
-            "targetName": "gstreamerd-2",
+            "targetName": "gstreamerd-3",
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
             "importPaths": ["srcgstreamer"],
-            "dependencies": {"gtk-d:gtkd":"~>2.4.0"}
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
         },
         {
             "name": "vte",
             "targetType": "library",
-            "targetName": "vted-2",
+            "targetName": "vted-3",
             "sourcePaths": ["srcvte"],
             "libs-posix": ["dl"],
             "importPaths": ["srcvte"],
-            "dependencies": {"gtk-d:gtkd":"~>2.4.0"}
+            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
         }
     ]
 }

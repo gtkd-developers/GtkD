@@ -16,168 +16,62 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = glib
- * outFile = HashTableIter
- * strct   = GHashTableIter
- * realStrct=
- * ctorStrct=
- * clss    = HashTableIter
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_hash_table_iter_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.HashTable
- * structWrap:
- * 	- GHashTable* -> HashTable
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glib.HashTableIter;
 
-public  import gtkc.glibtypes;
-
-private import gtkc.glib;
-private import glib.ConstructionException;
-
 private import glib.HashTable;
-
+private import gtkc.glib;
+public  import gtkc.glibtypes;
 
 
 /**
- * A GHashTable provides associations between keys and values which is
- * optimized so that given a key, the associated value can be found
- * very quickly.
- *
- * Note that neither keys nor values are copied when inserted into the
- * GHashTable, so they must exist for the lifetime of the GHashTable.
- * This means that the use of static strings is OK, but temporary
- * strings (i.e. those created in buffers and those returned by GTK+
- * widgets) should be copied with g_strdup() before being inserted.
- *
- * If keys or values are dynamically allocated, you must be careful to
- * ensure that they are freed when they are removed from the
- * GHashTable, and also when they are overwritten by new insertions
- * into the GHashTable. It is also not advisable to mix static strings
- * and dynamically-allocated strings in a GHashTable, because it then
- * becomes difficult to determine whether the string should be freed.
- *
- * To create a GHashTable, use g_hash_table_new().
- *
- * To insert a key and value into a GHashTable, use
- * g_hash_table_insert().
- *
- * To lookup a value corresponding to a given key, use
- * g_hash_table_lookup() and g_hash_table_lookup_extended().
- *
- * g_hash_table_lookup_extended() can also be used to simply
- * check if a key is present in the hash table.
- *
- * To remove a key and value, use g_hash_table_remove().
- *
- * To call a function for each key and value pair use
- * g_hash_table_foreach() or use a iterator to iterate over the
- * key/value pairs in the hash table, see GHashTableIter.
- *
- * To destroy a GHashTable use g_hash_table_destroy().
- *
- * A common use-case for hash tables is to store information about a
- * set of keys, without associating any particular value with each
- * key. GHashTable optimizes one way of doing so: If you store only
- * key-value pairs where key == value, then GHashTable does not
- * allocate memory to store the values, which can be a considerable
- * space saving, if your set is large. The functions
- * g_hash_table_add() and g_hash_table_contains() are designed to be
- * used when using GHashTable this way.
+ * A GHashTableIter structure represents an iterator that can be used
+ * to iterate over the elements of a #GHashTable. GHashTableIter
+ * structures are typically allocated on the stack and then initialized
+ * with g_hash_table_iter_init().
  */
 public class HashTableIter
 {
-	
 	/** the main Gtk struct */
 	protected GHashTableIter* gHashTableIter;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GHashTableIter* getHashTableIterStruct()
 	{
 		return gHashTableIter;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gHashTableIter;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GHashTableIter* gHashTableIter)
 	{
 		this.gHashTableIter = gHashTableIter;
 	}
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Initializes a key/value pair iterator and associates it with
-	 * hash_table. Modifying the hash table after calling this function
-	 * invalidates the returned iterator.
-	 * $(DDOC_COMMENT example)
-	 * Since 2.16
-	 * Params:
-	 * hashTable = a GHashTable
-	 */
-	public void init(HashTable hashTable)
-	{
-		// void g_hash_table_iter_init (GHashTableIter *iter,  GHashTable *hash_table);
-		g_hash_table_iter_init(gHashTableIter, (hashTable is null) ? null : hashTable.getHashTableStruct());
-	}
-	
-	/**
-	 * Advances iter and retrieves the key and/or value that are now
-	 * pointed to as a result of this advancement. If FALSE is returned,
-	 * key and value are not set, and the iterator becomes invalid.
-	 * Since 2.16
-	 * Params:
-	 * key = a location to store the key, or NULL. [allow-none]
-	 * value = a location to store the value, or NULL. [allow-none]
-	 * Returns: FALSE if the end of the GHashTable has been reached.
-	 */
-	public int next(void** key, void** value)
-	{
-		// gboolean g_hash_table_iter_next (GHashTableIter *iter,  gpointer *key,  gpointer *value);
-		return g_hash_table_iter_next(gHashTableIter, key, value);
-	}
-	
-	/**
-	 * Returns the GHashTable associated with iter.
-	 * Since 2.16
-	 * Returns: the GHashTable associated with iter.
+	 * Returns the #GHashTable associated with @iter.
+	 *
+	 * Return: the #GHashTable associated with @iter.
+	 *
+	 * Since: 2.16
 	 */
 	public HashTable getHashTable()
 	{
-		// GHashTable * g_hash_table_iter_get_hash_table (GHashTableIter *iter);
 		auto p = g_hash_table_iter_get_hash_table(gHashTableIter);
 		
 		if(p is null)
@@ -187,51 +81,106 @@ public class HashTableIter
 		
 		return new HashTable(cast(GHashTable*) p);
 	}
-	
+
 	/**
-	 * Replaces the value currently pointed to by the iterator
-	 * from its associated GHashTable. Can only be called after
-	 * g_hash_table_iter_next() returned TRUE.
-	 * If you supplied a value_destroy_func when creating the
-	 * GHashTable, the old value is freed using that function.
-	 * Since 2.30
+	 * Initializes a key/value pair iterator and associates it with
+	 * @hash_table. Modifying the hash table after calling this function
+	 * invalidates the returned iterator.
+	 * |[<!-- language="C" -->
+	 * GHashTableIter iter;
+	 * gpointer key, value;
+	 *
+	 * g_hash_table_iter_init (&iter, hash_table);
+	 * while (g_hash_table_iter_next (&iter, &key, &value))
+	 * {
+	 * // do something with key and value
+	 * }
+	 * ]|
+	 *
 	 * Params:
-	 * value = the value to replace with
+	 *     hashTable = a #GHashTable
+	 *
+	 * Since: 2.16
 	 */
-	public void replace(void* value)
+	public void init(HashTable hashTable)
 	{
-		// void g_hash_table_iter_replace (GHashTableIter *iter,  gpointer value);
-		g_hash_table_iter_replace(gHashTableIter, value);
+		g_hash_table_iter_init(gHashTableIter, (hashTable is null) ? null : hashTable.getHashTableStruct());
 	}
-	
+
+	/**
+	 * Advances @iter and retrieves the key and/or value that are now
+	 * pointed to as a result of this advancement. If %FALSE is returned,
+	 * @key and @value are not set, and the iterator becomes invalid.
+	 *
+	 * Params:
+	 *     key = a location to store the key, or %NULL
+	 *     value = a location to store the value, or %NULL
+	 *
+	 * Return: %FALSE if the end of the #GHashTable has been reached.
+	 *
+	 * Since: 2.16
+	 */
+	public bool next(void** key, void** value)
+	{
+		return g_hash_table_iter_next(gHashTableIter, key, value) != 0;
+	}
+
 	/**
 	 * Removes the key/value pair currently pointed to by the iterator
-	 * from its associated GHashTable. Can only be called after
-	 * g_hash_table_iter_next() returned TRUE, and cannot be called
+	 * from its associated #GHashTable. Can only be called after
+	 * g_hash_table_iter_next() returned %TRUE, and cannot be called
 	 * more than once for the same key/value pair.
-	 * If the GHashTable was created using g_hash_table_new_full(),
+	 *
+	 * If the #GHashTable was created using g_hash_table_new_full(),
 	 * the key and value are freed using the supplied destroy functions,
 	 * otherwise you have to make sure that any dynamically allocated
 	 * values are freed yourself.
-	 * Since 2.16
+	 *
+	 * It is safe to continue iterating the #GHashTable afterward:
+	 * |[<!-- language="C" -->
+	 * while (g_hash_table_iter_next (&iter, &key, &value))
+	 * {
+	 * if (condition)
+	 * g_hash_table_iter_remove (&iter);
+	 * }
+	 * ]|
+	 *
+	 * Since: 2.16
 	 */
 	public void remove()
 	{
-		// void g_hash_table_iter_remove (GHashTableIter *iter);
 		g_hash_table_iter_remove(gHashTableIter);
 	}
-	
+
+	/**
+	 * Replaces the value currently pointed to by the iterator
+	 * from its associated #GHashTable. Can only be called after
+	 * g_hash_table_iter_next() returned %TRUE.
+	 *
+	 * If you supplied a @value_destroy_func when creating the
+	 * #GHashTable, the old value is freed using that function.
+	 *
+	 * Params:
+	 *     value = the value to replace with
+	 *
+	 * Since: 2.30
+	 */
+	public void replace(void* value)
+	{
+		g_hash_table_iter_replace(gHashTableIter, value);
+	}
+
 	/**
 	 * Removes the key/value pair currently pointed to by the
-	 * iterator from its associated GHashTable, without calling
+	 * iterator from its associated #GHashTable, without calling
 	 * the key and value destroy functions. Can only be called
-	 * after g_hash_table_iter_next() returned TRUE, and cannot
+	 * after g_hash_table_iter_next() returned %TRUE, and cannot
 	 * be called more than once for the same key/value pair.
-	 * Since 2.16
+	 *
+	 * Since: 2.16
 	 */
 	public void steal()
 	{
-		// void g_hash_table_iter_steal (GHashTableIter *iter);
 		g_hash_table_iter_steal(gHashTableIter);
 	}
 }

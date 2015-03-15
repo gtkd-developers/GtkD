@@ -16,106 +16,53 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gtk3-Selections.html
- * outPack = gtk
- * outFile = TargetEntry
- * strct   = GtkTargetEntry
- * realStrct=
- * ctorStrct=
- * clss    = TargetEntry
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_target_entry_
- * 	- gtk_
- * omit structs:
- * 	- GtkTargetList
- * omit prefixes:
- * 	- gtk_target_table_
- * 	- gtk_targets_
- * 	- gtk_target_list_
- * 	- gtk_selection_
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtkc.paths
- * 	- gtkc.Loader
- * structWrap:
- * 	- GtkTargetEntry* -> TargetEntry
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.TargetEntry;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
-private import gtkc.paths;
+private import gobject.ObjectG;
 private import gtkc.Loader;
-
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+private import gtkc.paths;
 
 
 /**
- * The selection mechanism provides the basis for different types
- * of communication between processes. In particular, drag and drop and
- * GtkClipboard work via selections. You will very seldom or
- * never need to use most of the functions in this section directly;
- * GtkClipboard provides a nicer interface to the same functionality.
- *
- * Some of the datatypes defined this section are used in
- * the GtkClipboard and drag-and-drop API's as well. The
- * GtkTargetEntry structure and GtkTargetList objects represent
- * lists of data types that are supported when sending or
- * receiving data. The GtkSelectionData object is used to
- * store a chunk of data along with the data type and other
- * associated information.
+ * A #GtkTargetEntry represents a single type of
+ * data than can be supplied for by a widget for a selection
+ * or for supplied or received during drag-and-drop.
  */
 public class TargetEntry
 {
-	
 	/** the main Gtk struct */
 	protected GtkTargetEntry* gtkTargetEntry;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkTargetEntry* getTargetEntryStruct()
 	{
 		return gtkTargetEntry;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gtkTargetEntry;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GtkTargetEntry* gtkTargetEntry)
 	{
 		this.gtkTargetEntry = gtkTargetEntry;
 	}
-	
+
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetEntry !is null )
@@ -123,36 +70,48 @@ public class TargetEntry
 			gtk_target_entry_free(gtkTargetEntry);
 		}
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_target_entry_get_type();
+	}
+
 	/**
-	 * Makes a new GtkTargetEntry structure.
+	 * Makes a new #GtkTargetEntry.
+	 *
 	 * Params:
-	 * target = String identifier for target
-	 * flags = Set of flags, see GtkTargetFlags
-	 * info = an ID that will be passed back to the application
+	 *     target = String identifier for target
+	 *     flags = Set of flags, see #GtkTargetFlags
+	 *     info = an ID that will be passed back to the application
+	 *
+	 * Return: a pointer to a new #GtkTargetEntry.
+	 *     Free with gtk_target_entry_free()
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string target, uint flags, uint info)
+	public this(string target, uint flags, uint info)
 	{
-		// GtkTargetEntry * gtk_target_entry_new (const gchar *target,  guint flags,  guint info);
 		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_target_entry_new(Str.toStringz(target), flags, info)");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkTargetEntry*) p);
 	}
-	
+
 	/**
-	 * Makes a copy of a GtkTargetEntry structure and its data.
-	 * Returns: a pointer to a copy of data. Free with gtk_target_entry_free()
+	 * Makes a copy of a #GtkTargetEntry and its data.
+	 *
+	 * Return: a pointer to a copy of @data.
+	 *     Free with gtk_target_entry_free()
 	 */
 	public TargetEntry copy()
 	{
-		// GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
 		auto p = gtk_target_entry_copy(gtkTargetEntry);
 		
 		if(p is null)
@@ -162,14 +121,13 @@ public class TargetEntry
 		
 		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p);
 	}
-	
+
 	/**
-	 * Frees a GtkTargetEntry structure returned from
+	 * Frees a #GtkTargetEntry returned from
 	 * gtk_target_entry_new() or gtk_target_entry_copy().
 	 */
 	public void free()
 	{
-		// void gtk_target_entry_free (GtkTargetEntry *data);
 		gtk_target_entry_free(gtkTargetEntry);
 	}
 }

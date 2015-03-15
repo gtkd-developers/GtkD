@@ -16,200 +16,102 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GInitable.html
- * outPack = gio
- * outFile = InitableT
- * strct   = GInitable
- * realStrct=
- * ctorStrct=
- * clss    = InitableT
- * interf  = InitableIF
- * class Code: No
- * interface Code: No
- * template for:
- * 	- TStruct
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_initable_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gobject.ObjectG
- * 	- gio.Cancellable
- * structWrap:
- * 	- GCancellable* -> Cancellable
- * 	- GObject* -> ObjectG
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.InitableT;
 
+public  import gio.Cancellable;
+public  import glib.ConstructionException;
+public  import glib.ErrorG;
+public  import glib.GException;
+public  import glib.Str;
+public  import gobject.ObjectG;
+public  import gtkc.gio;
 public  import gtkc.giotypes;
-
-public import gtkc.gio;
-public import glib.ConstructionException;
-public import gobject.ObjectG;
-
-public import glib.Str;
-public import glib.ErrorG;
-public import glib.GException;
-public import gobject.ObjectG;
-public import gio.Cancellable;
-
 
 
 /**
- * GInitable is implemented by objects that can fail during
+ * #GInitable is implemented by objects that can fail during
  * initialization. If an object implements this interface then
  * it must be initialized as the first thing after construction,
  * either via g_initable_init() or g_async_initable_init_async()
- * (the latter is only available if it also implements GAsyncInitable).
- *
+ * (the latter is only available if it also implements #GAsyncInitable).
+ * 
  * If the object is not initialized, or initialization returns with an
  * error, then all operations on the object except g_object_ref() and
  * g_object_unref() are considered to be invalid, and have undefined
  * behaviour. They will often fail with g_critical() or g_warning(), but
  * this must not be relied on.
- *
+ * 
  * Users of objects implementing this are not intended to use
  * the interface method directly, instead it will be used automatically
  * in various ways. For C applications you generally just call
  * g_initable_new() directly, or indirectly via a foo_thing_new() wrapper.
- * This will call g_initable_init() under the cover, returning NULL and
- * setting a GError on failure (at which point the instance is
+ * This will call g_initable_init() under the cover, returning %NULL and
+ * setting a #GError on failure (at which point the instance is
  * unreferenced).
- *
+ * 
  * For bindings in languages where the native constructor supports
- * exceptions the binding could check for objects implemention GInitable
+ * exceptions the binding could check for objects implemention %GInitable
  * during normal construction and automatically initialize them, throwing
  * an exception on failure.
+ *
+ * Since: 2.22
  */
 public template InitableT(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GInitable* gInitable;
-	
-	
 	/** Get the main Gtk struct */
-	public GInitable* getInitableTStruct()
+	public GInitable* getInitableStruct()
 	{
 		return cast(GInitable*)getStruct();
 	}
-	
-	
+
 	/**
 	 */
-	
+
 	/**
 	 * Initializes the object implementing the interface.
+	 *
 	 * The object must be initialized before any real use after initial
 	 * construction, either with this function or g_async_initable_init_async().
-	 * Implementations may also support cancellation. If cancellable is not NULL,
+	 *
+	 * Implementations may also support cancellation. If @cancellable is not %NULL,
 	 * then initialization can be cancelled by triggering the cancellable object
 	 * from another thread. If the operation was cancelled, the error
-	 * G_IO_ERROR_CANCELLED will be returned. If cancellable is not NULL and
+	 * %G_IO_ERROR_CANCELLED will be returned. If @cancellable is not %NULL and
 	 * the object doesn't support cancellable initialization the error
-	 * G_IO_ERROR_NOT_SUPPORTED will be returned.
+	 * %G_IO_ERROR_NOT_SUPPORTED will be returned.
+	 *
 	 * If the object is not initialized, or initialization returns with an
 	 * error, then all operations on the object except g_object_ref() and
 	 * g_object_unref() are considered to be invalid, and have undefined
-	 * behaviour. See the ??? section introduction
-	 * for more details.
+	 * behaviour. See the [introduction][ginitable] for more details.
+	 *
 	 * Implementations of this method must be idempotent, i.e. multiple calls
 	 * to this function with the same argument should return the same results.
 	 * Only the first call initializes the object, further calls return the result
 	 * of the first call. This is so that it's safe to implement the singleton
 	 * pattern in the GObject constructor function.
-	 * Since 2.22
+	 *
 	 * Params:
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: TRUE if successful. If an error has occurred, this function will return FALSE and set error appropriately if present.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *
+	 * Return: %TRUE if successful. If an error has occurred, this function will
+	 *     return %FALSE and set @error appropriately if present.
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int init(Cancellable cancellable)
+	public bool init(Cancellable cancellable)
 	{
-		// gboolean g_initable_init (GInitable *initable,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_initable_init(getInitableTStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Helper function for constructing GInitable object. This is
-	 * similar to g_object_new_valist() but also initializes the object
-	 * and returns NULL, setting an error on failure.
-	 * Since 2.22
-	 * Params:
-	 * objectType = a GType supporting GInitable.
-	 * firstPropertyName = the name of the first property, followed by
-	 * the value, and other property value pairs, and ended by NULL.
-	 * varArgs = The var args list generated from first_property_name.
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a newly allocated GObject, or NULL on error. [type GObject.Object][transfer full]
-	 * Throws: GException on failure.
-	 */
-	public static ObjectG newValist(GType objectType, string firstPropertyName, void* varArgs, Cancellable cancellable)
-	{
-		// GObject * g_initable_new_valist (GType object_type,  const gchar *first_property_name,  va_list var_args,  GCancellable *cancellable,  GError **error);
-		GError* err = null;
-		
-		auto p = g_initable_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
-	}
-	
-	/**
-	 * Helper function for constructing GInitable object. This is
-	 * similar to g_object_newv() but also initializes the object
-	 * and returns NULL, setting an error on failure.
-	 * Since 2.22
-	 * Params:
-	 * objectType = a GType supporting GInitable.
-	 * parameters = the parameters to use to construct the object. [array length=n_parameters]
-	 * cancellable = optional GCancellable object, NULL to ignore.
-	 * Returns: a newly allocated GObject, or NULL on error. [type GObject.Object][transfer full]
-	 * Throws: GException on failure.
-	 */
-	public static void* newv(GType objectType, GParameter[] parameters, Cancellable cancellable)
-	{
-		// gpointer g_initable_newv (GType object_type,  guint n_parameters,  GParameter *parameters,  GCancellable *cancellable,  GError **error);
-		GError* err = null;
-		
-		auto p = g_initable_newv(objectType, cast(int) parameters.length, parameters.ptr, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_initable_init(getInitableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 		
 		if (err !is null)
 		{

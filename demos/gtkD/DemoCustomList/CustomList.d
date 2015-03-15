@@ -185,7 +185,7 @@ class CustomList : TreeModel
 	 * Takes an iter structure and sets it to point
 	 * to the next row.
 	 */
-	override int iterNext(TreeIter iter)
+	override bool iterNext(TreeIter iter)
 	{
 		CustomRecord* record, nextrecord;
 	  
@@ -219,7 +219,7 @@ class CustomList : TreeModel
 	 * row should be returned if it exists.
 	 */
 
-	override int iterChildren(TreeIter iter, TreeIter parent)
+	override bool iterChildren(out TreeIter iter, TreeIter parent)
 	{
 		/* this is a list, nodes have no children */
 		if ( parent !is null )
@@ -230,6 +230,7 @@ class CustomList : TreeModel
 			return false;
 
 		/* Set iter to first item in list */
+		iter = new TreeIter();
 		iter.stamp     = stamp;
 		iter.userData  = rows[0];
 
@@ -242,7 +243,7 @@ class CustomList : TreeModel
 	 * the row specified by 'iter' has any children.
 	 * We only have a list and thus no children.
 	 */
-	override int iterHasChild(TreeIter iter)
+	override bool iterHasChild(TreeIter iter)
 	{
 		return false;
 	}
@@ -275,7 +276,7 @@ class CustomList : TreeModel
 	 * which case we need to set 'iter' to the n-th
 	 * row if it exists.
 	 */
-	override int iterNthChild(TreeIter iter, TreeIter parent, int n)
+	override bool iterNthChild(out TreeIter iter, TreeIter parent, int n)
 	{
 		CustomRecord  *record;
 
@@ -291,6 +292,7 @@ class CustomList : TreeModel
 		if ( record == null || record.pos != n )
 			throw new Exception("Invalid record");
 
+		iter = new TreeIter();
 		iter.stamp     = stamp;
 		iter.userData  = record;
 
@@ -303,7 +305,7 @@ class CustomList : TreeModel
 	 * we have a list and thus no children and no
 	 * parents of children, we can just return FALSE.
 	 */
-	override int iterParent(TreeIter iter, TreeIter child)
+	override bool iterParent(out TreeIter iter, TreeIter child)
 	{
 		return false;
 	}

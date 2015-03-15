@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = DBusInterface
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = DBusInterface
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- DBusInterfaceIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.DBusInterfaceT
- * 	- gio.DBusInterfaceIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusInterface;
 
+private import gio.DBusInterfaceIF;
+private import gio.DBusInterfaceT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.DBusInterfaceT;
-private import gio.DBusInterfaceIF;
-
-
-
-/**
- */
 public class DBusInterface : ObjectG, DBusInterfaceIF
 {
-	
-	// Minimal implementation.
-	mixin DBusInterfaceT!(GDBusInterface);
-	
+	/** the main Gtk struct */
+	protected GDBusInterface* gDBusInterface;
+
+	/** Get the main Gtk struct */
+	public GDBusInterface* getDBusInterfaceStruct()
+	{
+		return gDBusInterface;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gDBusInterface;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GDBusInterface* gDBusInterface)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gDBusInterface);
-		this.gDBusInterface = gDBusInterface;
+		gDBusInterface = cast(GDBusInterface*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GDBusInterface* gDBusInterface, bool ownedRef = false)
+	{
+		this.gDBusInterface = gDBusInterface;
+		super(cast(GObject*)gDBusInterface, ownedRef);
+	}
+
+	// add the DBusInterface capabilities
+	mixin DBusInterfaceT!(GDBusInterface);
+
 	/**
 	 */
 }

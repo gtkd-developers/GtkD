@@ -16,92 +16,53 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gdk3-Colors.html
- * outPack = gdk
- * outFile = Color
- * strct   = GdkColor
- * realStrct=
- * ctorStrct=
- * clss    = Color
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gdk_color_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtkc.paths;
- * 	- gtkc.Loader;
- * structWrap:
- * 	- GdkColor* -> Color
- * module aliases:
- * local aliases:
- * overrides:
- * 	- toString
- */
 
 module gdk.Color;
 
-public  import gtkc.gdktypes;
-
-private import gtkc.gdk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
-private import gtkc.paths;;
-private import gtkc.Loader;;
-
+private import gobject.ObjectG;
+private import gtkc.Loader;
+private import gtkc.gdk;
+public  import gtkc.gdktypes;
+private import gtkc.paths;
 
 
 /**
- * A GdkColor represents a color.
- *
- * When working with cairo, it is often more convenient
- * to use a GdkRGBA instead.
+ * A #GdkColor is used to describe a color,
+ * similar to the XColor struct used in the X11 drawing API.
+ * 
+ * Deprecated: Use #GdkRGBA
  */
 public class Color
 {
-	
 	/** the main Gtk struct */
 	protected GdkColor* gdkColor;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GdkColor* getColorStruct()
 	{
 		return gdkColor;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gdkColor;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GdkColor* gdkColor)
 	{
 		this.gdkColor = gdkColor;
 	}
-	
+
 	/**
 	 * Creates a new Color
 	 */
@@ -195,18 +156,26 @@ public class Color
 	{
 		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gdk_color_get_type();
+	}
+
 	/**
-	 * Makes a copy of a color structure.
+	 * Makes a copy of a #GdkColor.
+	 *
 	 * The result must be freed using gdk_color_free().
-	 * Returns: a copy of color
+	 *
+	 * Deprecated: Use #GdkRGBA
+	 *
+	 * Return: a copy of @color
 	 */
 	public Color copy()
 	{
-		// GdkColor * gdk_color_copy (const GdkColor *color);
 		auto p = gdk_color_copy(gdkColor);
 		
 		if(p is null)
@@ -216,75 +185,91 @@ public class Color
 		
 		return ObjectG.getDObject!(Color)(cast(GdkColor*) p);
 	}
-	
+
 	/**
-	 * Frees a color structure created with gdk_color_copy().
+	 * Compares two colors.
+	 *
+	 * Deprecated: Use #GdkRGBA
+	 *
+	 * Params:
+	 *     colorb = another #GdkColor
+	 *
+	 * Return: %TRUE if the two colors compare equal
+	 */
+	public bool equal(Color colorb)
+	{
+		return gdk_color_equal(gdkColor, (colorb is null) ? null : colorb.getColorStruct()) != 0;
+	}
+
+	/**
+	 * Frees a #GdkColor created with gdk_color_copy().
+	 *
+	 * Deprecated: Use #GdkRGBA
 	 */
 	public void free()
 	{
-		// void gdk_color_free (GdkColor *color);
 		gdk_color_free(gdkColor);
 	}
-	
-	/**
-	 * Parses a textual specification of a color and fill in the
-	 * red, green,
-	 * and blue fields of a GdkColor
-	 * structure.
-	 * The string can either one of a large set of standard names
-	 * (taken from the X11 rgb.txt file), or
-	 * it can be a hex value in the form '#rgb' '#rrggbb'
-	 * '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and
-	 * 'b' are hex digits of the red, green, and blue components
-	 * of the color, respectively. (White in the four forms is
-	 * '#fff', '#ffffff', '#fffffffff' and
-	 * '#ffffffffffff').
-	 * Params:
-	 * spec = the string specifying the color
-	 * color = the GdkColor to fill in. [out]
-	 * Returns: TRUE if the parsing succeeded
-	 */
-	public static int parse(string spec, Color color)
-	{
-		// gboolean gdk_color_parse (const gchar *spec,  GdkColor *color);
-		return gdk_color_parse(Str.toStringz(spec), (color is null) ? null : color.getColorStruct());
-	}
-	
-	/**
-	 * Compares two colors.
-	 * Params:
-	 * colorb = another GdkColor
-	 * Returns: TRUE if the two colors compare equal
-	 */
-	public int equal(Color colorb)
-	{
-		// gboolean gdk_color_equal (const GdkColor *colora,  const GdkColor *colorb);
-		return gdk_color_equal(gdkColor, (colorb is null) ? null : colorb.getColorStruct());
-	}
-	
+
 	/**
 	 * A hash function suitable for using for a hash
-	 * table that stores GdkColors.
-	 * Returns: The hash function applied to color
+	 * table that stores #GdkColors.
+	 *
+	 * Deprecated: Use #GdkRGBA
+	 *
+	 * Return: The hash function applied to @color
 	 */
 	public uint hash()
 	{
-		// guint gdk_color_hash (const GdkColor *color);
 		return gdk_color_hash(gdkColor);
 	}
-	
+
 	/**
-	 * Returns a textual specification of color in the hexadecimal form
-	 * #rrrrggggbbbb, where r,
-	 * g and b are hex digits
+	 * Returns a textual specification of @color in the hexadecimal
+	 * form “\#rrrrggggbbbb” where “r”, “g” and “b” are hex digits
 	 * representing the red, green and blue components respectively.
+	 *
 	 * The returned string can be parsed by gdk_color_parse().
-	 * Since 2.12
-	 * Returns: a newly-allocated text string
+	 *
+	 * Deprecated: Use #GdkRGBA
+	 *
+	 * Return: a newly-allocated text string
+	 *
+	 * Since: 2.12
 	 */
 	public override string toString()
 	{
-		// gchar * gdk_color_to_string (const GdkColor *color);
 		return Str.toString(gdk_color_to_string(gdkColor));
+	}
+
+	/**
+	 * Parses a textual specification of a color and fill in the
+	 * @red, @green, and @blue fields of a #GdkColor.
+	 *
+	 * The string can either one of a large set of standard names
+	 * (taken from the X11 `rgb.txt` file), or it can be a hexadecimal
+	 * value in the form “\#rgb” “\#rrggbb”, “\#rrrgggbbb” or
+	 * “\#rrrrggggbbbb” where “r”, “g” and “b” are hex digits of
+	 * the red, green, and blue components of the color, respectively.
+	 * (White in the four forms is “\#fff”, “\#ffffff”, “\#fffffffff”
+	 * and “\#ffffffffffff”).
+	 *
+	 * Deprecated: Use #GdkRGBA
+	 *
+	 * Params:
+	 *     spec = the string specifying the color
+	 *     color = the #GdkColor to fill in
+	 *
+	 * Return: %TRUE if the parsing succeeded
+	 */
+	public static bool parse(string spec, out Color color)
+	{
+		GdkColor* outcolor = new GdkColor;
+		
+		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
+		
+		color = ObjectG.getDObject!(Color)(outcolor);
+		
+		return p;
 	}
 }

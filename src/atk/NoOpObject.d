@@ -16,56 +16,44 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkNoOpObject.html
- * outPack = atk
- * outFile = NoOpObject
- * strct   = AtkNoOpObject
- * realStrct=
- * ctorStrct=
- * clss    = NoOpObject
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_no_op_object_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- gobject.ObjectG
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * 	- GObject* -> ObjectG
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.NoOpObject;
 
-public  import gtkc.atktypes;
-
-private import gtkc.atk;
+private import atk.ActionIF;
+private import atk.ActionT;
+private import atk.ComponentIF;
+private import atk.ComponentT;
+private import atk.DocumentIF;
+private import atk.DocumentT;
+private import atk.EditableTextIF;
+private import atk.EditableTextT;
+private import atk.HypertextIF;
+private import atk.HypertextT;
+private import atk.ImageIF;
+private import atk.ImageT;
+private import atk.ObjectAtk;
+private import atk.SelectionIF;
+private import atk.SelectionT;
+private import atk.TableCellIF;
+private import atk.TableCellT;
+private import atk.TableIF;
+private import atk.TableT;
+private import atk.TextIF;
+private import atk.TextT;
+private import atk.ValueIF;
+private import atk.ValueT;
+private import atk.WindowIF;
+private import atk.WindowT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.atk;
+public  import gtkc.atktypes;
 
-private import atk.ObjectAtk;
-private import gobject.ObjectG;
-
-
-private import atk.ObjectAtk;
 
 /**
  * An AtkNoOpObject is an AtkObject which purports to implement all
@@ -73,61 +61,116 @@ private import atk.ObjectAtk;
  * accessible object is requested for an object type for which no
  * factory type is specified.
  */
-public class NoOpObject : ObjectAtk
+public class NoOpObject : ObjectAtk, ActionIF, ComponentIF, DocumentIF, EditableTextIF, HypertextIF, ImageIF, SelectionIF, TableIF, TableCellIF, TextIF, ValueIF, WindowIF
 {
-	
 	/** the main Gtk struct */
 	protected AtkNoOpObject* atkNoOpObject;
-	
-	
+
 	/** Get the main Gtk struct */
 	public AtkNoOpObject* getNoOpObjectStruct()
 	{
 		return atkNoOpObject;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)atkNoOpObject;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (AtkNoOpObject* atkNoOpObject)
-	{
-		super(cast(AtkObject*)atkNoOpObject);
-		this.atkNoOpObject = atkNoOpObject;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		atkNoOpObject = cast(AtkNoOpObject*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Provides a default (non-functioning stub) AtkObject.
-	 * Application maintainers should not use this method.
-	 * Params:
-	 * obj = a GObject
-	 * Returns: a default (non-functioning stub) AtkObject
-	 */
-	public static ObjectAtk newNoOpObject(ObjectG obj)
+	public this (AtkNoOpObject* atkNoOpObject, bool ownedRef = false)
 	{
-		// AtkObject * atk_no_op_object_new (GObject *obj);
+		this.atkNoOpObject = atkNoOpObject;
+		super(cast(AtkObject*)atkNoOpObject, ownedRef);
+	}
+
+	// add the Action capabilities
+	mixin ActionT!(AtkNoOpObject);
+
+	// add the Component capabilities
+	mixin ComponentT!(AtkNoOpObject);
+
+	// add the Document capabilities
+	mixin DocumentT!(AtkNoOpObject);
+
+	// add the EditableText capabilities
+	mixin EditableTextT!(AtkNoOpObject);
+
+	// add the Hypertext capabilities
+	mixin HypertextT!(AtkNoOpObject);
+
+	// add the Image capabilities
+	mixin ImageT!(AtkNoOpObject);
+
+	// add the Selection capabilities
+	mixin SelectionT!(AtkNoOpObject);
+
+	// add the Table capabilities
+	mixin TableT!(AtkNoOpObject);
+
+	// add the TableCell capabilities
+	mixin TableCellT!(AtkNoOpObject);
+
+	// add the Text capabilities
+	mixin TextT!(AtkNoOpObject);
+
+	// add the Value capabilities
+	mixin ValueT!(AtkNoOpObject);
+
+	// add the Window capabilities
+	mixin WindowT!(AtkNoOpObject);
+
+	/**
+	 * Removes the specified child of the object from the object's selection.
+	 *
+	 * Params:
+	 *     i = a #gint specifying the index in the selection set.  (e.g. the
+	 *         ith selection as opposed to the ith child).
+	 *
+	 * Return: TRUE if success, FALSE otherwise.
+	 */
+	public bool removeSelection(int i)
+	{
+		return atk_selection_remove_selection(getSelectionStruct(), i) != 0;
+	}
+
+	/**
+	 */
+
+	public static GType getType()
+	{
+		return atk_no_op_object_get_type();
+	}
+
+	/**
+	 * Provides a default (non-functioning stub) #AtkObject.
+	 * Application maintainers should not use this method.
+	 *
+	 * Params:
+	 *     obj = a #GObject
+	 *
+	 * Return: a default (non-functioning stub) #AtkObject
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ObjectG obj)
+	{
 		auto p = atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new");
 		}
 		
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		this(cast(AtkNoOpObject*) p, true);
 	}
 }

@@ -16,141 +16,88 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gtk
- * outFile = TextChildAnchor
- * strct   = GtkTextChildAnchor
- * realStrct=
- * ctorStrct=
- * clss    = TextChildAnchor
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_text_child_anchor_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * 	- backspace
- * 	- copy-clipboard
- * 	- cut-clipboard
- * 	- delete-from-cursor
- * 	- insert-at-cursor
- * 	- move-cursor
- * 	- move-viewport
- * 	- paste-clipboard
- * 	- populate-popup
- * 	- preedit-changed
- * 	- select-all
- * 	- set-anchor
- * 	- toggle-cursor-visible
- * 	- toggle-overwrite
- * imports:
- * 	- glib.ListG
- * structWrap:
- * 	- GList* -> ListG
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.TextChildAnchor;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import glib.ListG;
-
+private import gobject.ObjectG;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
 
 /**
- * You may wish to begin by reading the text widget
- * conceptual overview which gives an overview of all the objects and data
- * types related to the text widget and how they work together.
+ * A #GtkTextChildAnchor is a spot in the buffer where child widgets can
+ * be “anchored” (inserted inline, as if they were characters). The anchor
+ * can have multiple widgets anchored, to allow for multiple views.
  */
-public class TextChildAnchor
+public class TextChildAnchor : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GtkTextChildAnchor* gtkTextChildAnchor;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkTextChildAnchor* getTextChildAnchorStruct()
 	{
 		return gtkTextChildAnchor;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
-	protected void* getStruct()
+	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextChildAnchor;
 	}
-	
+
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTextChildAnchor = cast(GtkTextChildAnchor*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTextChildAnchor* gtkTextChildAnchor)
+	public this (GtkTextChildAnchor* gtkTextChildAnchor, bool ownedRef = false)
 	{
 		this.gtkTextChildAnchor = gtkTextChildAnchor;
+		super(cast(GObject*)gtkTextChildAnchor, ownedRef);
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_text_child_anchor_get_type();
+	}
+
 	/**
-	 * Creates a new GtkTextChildAnchor. Usually you would then insert
-	 * it into a GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
+	 * Creates a new #GtkTextChildAnchor. Usually you would then insert
+	 * it into a #GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
 	 * To perform the creation and insertion in one step, use the
 	 * convenience function gtk_text_buffer_create_child_anchor().
+	 *
+	 * Return: a new #GtkTextChildAnchor
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkTextChildAnchor * gtk_text_child_anchor_new (void);
 		auto p = gtk_text_child_anchor_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_text_child_anchor_new()");
-		}
-		this(cast(GtkTextChildAnchor*) p);
-	}
-	
-	/**
-	 * Gets a list of all widgets anchored at this child anchor.
-	 * The returned list should be freed with g_list_free().
-	 * Returns: list of widgets anchored at anchor. [element-type GtkWidget][transfer container]
-	 */
-	public ListG getWidgets()
-	{
-		// GList * gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
-		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new");
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		this(cast(GtkTextChildAnchor*) p, true);
 	}
-	
+
 	/**
 	 * Determines whether a child anchor has been deleted from
 	 * the buffer. Keep in mind that the child anchor will be
@@ -158,11 +105,29 @@ public class TextChildAnchor
 	 * hold your own reference (with g_object_ref()) if you plan
 	 * to use this function — otherwise all deleted child anchors
 	 * will also be finalized.
-	 * Returns: TRUE if the child anchor has been deleted from its buffer
+	 *
+	 * Return: %TRUE if the child anchor has been deleted from its buffer
 	 */
-	public int getDeleted()
+	public bool getDeleted()
 	{
-		// gboolean gtk_text_child_anchor_get_deleted (GtkTextChildAnchor *anchor);
-		return gtk_text_child_anchor_get_deleted(gtkTextChildAnchor);
+		return gtk_text_child_anchor_get_deleted(gtkTextChildAnchor) != 0;
+	}
+
+	/**
+	 * Gets a list of all widgets anchored at this child anchor.
+	 * The returned list should be freed with g_list_free().
+	 *
+	 * Return: list of widgets anchored at @anchor
+	 */
+	public ListG getWidgets()
+	{
+		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p);
 	}
 }

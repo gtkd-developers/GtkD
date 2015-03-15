@@ -16,53 +16,19 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GFilterInputStream.html
- * outPack = gio
- * outFile = FilterInputStream
- * strct   = GFilterInputStream
- * realStrct=
- * ctorStrct=
- * clss    = FilterInputStream
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_filter_input_stream_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.InputStream
- * structWrap:
- * 	- GInputStream* -> InputStream
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.FilterInputStream;
 
+private import gio.InputStream;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gio.InputStream;
-
-
-private import gio.InputStream;
 
 /**
  * Base class for input stream implementations that perform some
@@ -72,49 +38,51 @@ private import gio.InputStream;
  */
 public class FilterInputStream : InputStream
 {
-	
 	/** the main Gtk struct */
 	protected GFilterInputStream* gFilterInputStream;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GFilterInputStream* getFilterInputStreamStruct()
 	{
 		return gFilterInputStream;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gFilterInputStream;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GFilterInputStream* gFilterInputStream)
-	{
-		super(cast(GInputStream*)gFilterInputStream);
-		this.gFilterInputStream = gFilterInputStream;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gFilterInputStream = cast(GFilterInputStream*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GFilterInputStream* gFilterInputStream, bool ownedRef = false)
+	{
+		this.gFilterInputStream = gFilterInputStream;
+		super(cast(GInputStream*)gFilterInputStream, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_filter_input_stream_get_type();
+	}
+
 	/**
 	 * Gets the base stream for the filter stream.
-	 * Returns: a GInputStream. [transfer none]
+	 *
+	 * Return: a #GInputStream.
 	 */
 	public InputStream getBaseStream()
 	{
-		// GInputStream * g_filter_input_stream_get_base_stream  (GFilterInputStream *stream);
 		auto p = g_filter_input_stream_get_base_stream(gFilterInputStream);
 		
 		if(p is null)
@@ -124,26 +92,26 @@ public class FilterInputStream : InputStream
 		
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
-	
+
 	/**
-	 * Returns whether the base stream will be closed when stream is
+	 * Returns whether the base stream will be closed when @stream is
 	 * closed.
-	 * Returns: TRUE if the base stream will be closed.
+	 *
+	 * Return: %TRUE if the base stream will be closed.
 	 */
-	public int getCloseBaseStream()
+	public bool getCloseBaseStream()
 	{
-		// gboolean g_filter_input_stream_get_close_base_stream  (GFilterInputStream *stream);
-		return g_filter_input_stream_get_close_base_stream(gFilterInputStream);
+		return g_filter_input_stream_get_close_base_stream(gFilterInputStream) != 0;
 	}
-	
+
 	/**
-	 * Sets whether the base stream will be closed when stream is closed.
+	 * Sets whether the base stream will be closed when @stream is closed.
+	 *
 	 * Params:
-	 * closeBase = TRUE to close the base stream.
+	 *     closeBase = %TRUE to close the base stream.
 	 */
-	public void setCloseBaseStream(int closeBase)
+	public void setCloseBaseStream(bool closeBase)
 	{
-		// void g_filter_input_stream_set_close_base_stream  (GFilterInputStream *stream,  gboolean close_base);
 		g_filter_input_stream_set_close_base_stream(gFilterInputStream, closeBase);
 	}
 }

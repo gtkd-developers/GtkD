@@ -16,81 +16,34 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GdkScreen.html
- * outPack = gdk
- * outFile = Screen
- * strct   = GdkScreen
- * realStrct=
- * ctorStrct=
- * clss    = Screen
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gdk_screen_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- cairo.FontOption
- * 	- glib.ListG
- * 	- glib.Str
- * 	- gobject.Value
- * 	- gdk.Display
- * 	- gdk.Visual
- * 	- gdk.Window
- * structWrap:
- * 	- GList* -> ListG
- * 	- GValue* -> Value
- * 	- GdkDisplay* -> Display
- * 	- GdkScreen* -> Screen
- * 	- GdkVisual* -> Visual
- * 	- GdkWindow* -> Window
- * 	- cairo_font_options_t* -> FontOption
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gdk.Screen;
 
-public  import gtkc.gdktypes;
-
-private import gtkc.gdk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import cairo.FontOption;
-private import glib.ListG;
-private import glib.Str;
-private import gobject.Value;
 private import gdk.Display;
 private import gdk.Visual;
 private import gdk.Window;
-
-
+private import glib.ListG;
+private import glib.Str;
 private import gobject.ObjectG;
+private import gobject.Signals;
+private import gobject.Value;
+private import gtkc.gdk;
+public  import gtkc.gdktypes;
+
 
 /**
- * GdkScreen objects are the GDK representation of the screen on
+ * #GdkScreen objects are the GDK representation of the screen on
  * which windows can be displayed and on which the pointer moves.
  * X originally identified screens with physical screens, but
- * nowadays it is more common to have a single GdkScreen which
+ * nowadays it is more common to have a single #GdkScreen which
  * combines several physical monitors (see gdk_screen_get_n_monitors()).
- *
+ * 
  * GdkScreen is used throughout GDK and GTK+ to specify which screen
  * the top level windows are to be displayed on. it is also used to
  * query the screen specification and default settings such as
@@ -99,142 +52,55 @@ private import gobject.ObjectG;
  */
 public class Screen : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GdkScreen* gdkScreen;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GdkScreen* getScreenStruct()
 	{
 		return gdkScreen;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gdkScreen;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GdkScreen* gdkScreen)
-	{
-		super(cast(GObject*)gdkScreen);
-		this.gdkScreen = gdkScreen;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gdkScreen = cast(GdkScreen*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GdkScreen* gdkScreen, bool ownedRef = false)
+	{
+		this.gdkScreen = gdkScreen;
+		super(cast(GObject*)gdkScreen, ownedRef);
+	}
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(Screen)[] onCompositedChangedListeners;
-	/**
-	 * The ::composited-changed signal is emitted when the composited
-	 * status of the screen changes
-	 * Since 2.10
-	 */
-	void addOnCompositedChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+
+	public static GType getType()
 	{
-		if ( !("composited-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"composited-changed",
-			cast(GCallback)&callBackCompositedChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["composited-changed"] = 1;
-		}
-		onCompositedChangedListeners ~= dlg;
+		return gdk_screen_get_type();
 	}
-	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, Screen _screen)
-	{
-		foreach ( void delegate(Screen) dlg ; _screen.onCompositedChangedListeners )
-		{
-			dlg(_screen);
-		}
-	}
-	
-	void delegate(Screen)[] onMonitorsChangedListeners;
-	/**
-	 * The ::monitors-changed signal is emitted when the number, size
-	 * or position of the monitors attached to the screen change.
-	 * Only for X11 and OS X for now. A future implementation for Win32
-	 * may be a possibility.
-	 * Since 2.14
-	 */
-	void addOnMonitorsChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("monitors-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"monitors-changed",
-			cast(GCallback)&callBackMonitorsChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["monitors-changed"] = 1;
-		}
-		onMonitorsChangedListeners ~= dlg;
-	}
-	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, Screen _screen)
-	{
-		foreach ( void delegate(Screen) dlg ; _screen.onMonitorsChangedListeners )
-		{
-			dlg(_screen);
-		}
-	}
-	
-	void delegate(Screen)[] onSizeChangedListeners;
-	/**
-	 * The ::size-changed signal is emitted when the pixel width or
-	 * height of a screen changes.
-	 * Since 2.2
-	 */
-	void addOnSizeChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("size-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"size-changed",
-			cast(GCallback)&callBackSizeChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["size-changed"] = 1;
-		}
-		onSizeChangedListeners ~= dlg;
-	}
-	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, Screen _screen)
-	{
-		foreach ( void delegate(Screen) dlg ; _screen.onSizeChangedListeners )
-		{
-			dlg(_screen);
-		}
-	}
-	
-	
+
 	/**
 	 * Gets the default screen for the default display. (See
-	 * gdk_display_get_default()).
-	 * Since 2.2
-	 * Returns: a GdkScreen, or NULL if there is no default display. [transfer none]
+	 * gdk_display_get_default ()).
+	 *
+	 * Return: a #GdkScreen, or %NULL if
+	 *     there is no default display.
+	 *
+	 * Since: 2.2
 	 */
 	public static Screen getDefault()
 	{
-		// GdkScreen * gdk_screen_get_default (void);
 		auto p = gdk_screen_get_default();
 		
 		if(p is null)
@@ -244,96 +110,93 @@ public class Screen : ObjectG
 		
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
-	
+
 	/**
-	 * Get the system's default visual for screen.
-	 * This is the visual for the root window of the display.
-	 * The return value should not be freed.
-	 * Since 2.2
-	 * Returns: the system visual. [transfer none]
+	 * Returns the height of the default screen in pixels.
+	 *
+	 * Return: the height of the default screen in pixels.
 	 */
-	public Visual getSystemVisual()
+	public static int height()
 	{
-		// GdkVisual * gdk_screen_get_system_visual (GdkScreen *screen);
-		auto p = gdk_screen_get_system_visual(gdkScreen);
+		return gdk_screen_height();
+	}
+
+	/**
+	 * Returns the height of the default screen in millimeters.
+	 * Note that on many X servers this value will not be correct.
+	 *
+	 * Return: the height of the default screen in millimeters,
+	 *     though it is not always correct.
+	 */
+	public static int heightMm()
+	{
+		return gdk_screen_height_mm();
+	}
+
+	/**
+	 * Returns the width of the default screen in pixels.
+	 *
+	 * Return: the width of the default screen in pixels.
+	 */
+	public static int width()
+	{
+		return gdk_screen_width();
+	}
+
+	/**
+	 * Returns the width of the default screen in millimeters.
+	 * Note that on many X servers this value will not be correct.
+	 *
+	 * Return: the width of the default screen in millimeters,
+	 *     though it is not always correct.
+	 */
+	public static int widthMm()
+	{
+		return gdk_screen_width_mm();
+	}
+
+	/**
+	 * Returns the screen’s currently active window.
+	 *
+	 * On X11, this is done by inspecting the _NET_ACTIVE_WINDOW property
+	 * on the root window, as described in the
+	 * [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec).
+	 * If there is no currently currently active
+	 * window, or the window manager does not support the
+	 * _NET_ACTIVE_WINDOW hint, this function returns %NULL.
+	 *
+	 * On other platforms, this function may return %NULL, depending on whether
+	 * it is implementable on that platform.
+	 *
+	 * The returned window should be unrefed using g_object_unref() when
+	 * no longer needed.
+	 *
+	 * Return: the currently active window,
+	 *     or %NULL.
+	 *
+	 * Since: 2.10
+	 */
+	public Window getActiveWindow()
+	{
+		auto p = gdk_screen_get_active_window(gdkScreen);
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p, true);
 	}
-	
+
 	/**
-	 * Gets a visual to use for creating windows with an alpha channel.
-	 * The windowing system on which GTK+ is running
-	 * may not support this capability, in which case NULL will
-	 * be returned. Even if a non-NULL value is returned, its
-	 * possible that the window's alpha channel won't be honored
-	 * when displaying the window on the screen: in particular, for
-	 * X an appropriate windowing manager and compositing manager
-	 * must be running to provide appropriate display.
-	 * This functionality is not implemented in the Windows backend.
-	 * For setting an overall opacity for a top-level window, see
-	 * gdk_window_set_opacity().
-	 * Since 2.8
-	 * Returns: a visual to use for windows with an alpha channel or NULL if the capability is not available. [transfer none]
-	 */
-	public Visual getRgbaVisual()
-	{
-		// GdkVisual * gdk_screen_get_rgba_visual (GdkScreen *screen);
-		auto p = gdk_screen_get_rgba_visual(gdkScreen);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
-	}
-	
-	/**
-	 * Returns whether windows with an RGBA visual can reasonably
-	 * be expected to have their alpha channel drawn correctly on
-	 * the screen.
-	 * On X11 this function returns whether a compositing manager is
-	 * compositing screen.
-	 * Since 2.10
-	 * Returns: Whether windows with RGBA visuals can reasonably be expected to have their alpha channels drawn correctly on the screen.
-	 */
-	public int isComposited()
-	{
-		// gboolean gdk_screen_is_composited (GdkScreen *screen);
-		return gdk_screen_is_composited(gdkScreen);
-	}
-	
-	/**
-	 * Gets the root window of screen.
-	 * Since 2.2
-	 * Returns: the root window. [transfer none]
-	 */
-	public Window getRootWindow()
-	{
-		// GdkWindow * gdk_screen_get_root_window (GdkScreen *screen);
-		auto p = gdk_screen_get_root_window(gdkScreen);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
-	}
-	
-	/**
-	 * Gets the display to which the screen belongs.
-	 * Since 2.2
-	 * Returns: the display to which screen belongs. [transfer none]
+	 * Gets the display to which the @screen belongs.
+	 *
+	 * Return: the display to which @screen belongs
+	 *
+	 * Since: 2.2
 	 */
 	public Display getDisplay()
 	{
-		// GdkDisplay * gdk_screen_get_display (GdkScreen *screen);
 		auto p = gdk_screen_get_display(gdkScreen);
 		
 		if(p is null)
@@ -343,299 +206,17 @@ public class Screen : ObjectG
 		
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
-	
-	/**
-	 * Gets the index of screen among the screens in the display
-	 * to which it belongs. (See gdk_screen_get_display())
-	 * Since 2.2
-	 * Returns: the index
-	 */
-	public int getNumber()
-	{
-		// gint gdk_screen_get_number (GdkScreen *screen);
-		return gdk_screen_get_number(gdkScreen);
-	}
-	
-	/**
-	 * Gets the width of screen in pixels
-	 * Since 2.2
-	 * Returns: the width of screen in pixels.
-	 */
-	public int getWidth()
-	{
-		// gint gdk_screen_get_width (GdkScreen *screen);
-		return gdk_screen_get_width(gdkScreen);
-	}
-	
-	/**
-	 * Gets the height of screen in pixels
-	 * Since 2.2
-	 * Returns: the height of screen in pixels.
-	 */
-	public int getHeight()
-	{
-		// gint gdk_screen_get_height (GdkScreen *screen);
-		return gdk_screen_get_height(gdkScreen);
-	}
-	
-	/**
-	 * Gets the width of screen in millimeters.
-	 * Note that on some X servers this value will not be correct.
-	 * Since 2.2
-	 * Returns: the width of screen in millimeters.
-	 */
-	public int getWidthMm()
-	{
-		// gint gdk_screen_get_width_mm (GdkScreen *screen);
-		return gdk_screen_get_width_mm(gdkScreen);
-	}
-	
-	/**
-	 * Returns the height of screen in millimeters.
-	 * Note that on some X servers this value will not be correct.
-	 * Since 2.2
-	 * Returns: the heigth of screen in millimeters.
-	 */
-	public int getHeightMm()
-	{
-		// gint gdk_screen_get_height_mm (GdkScreen *screen);
-		return gdk_screen_get_height_mm(gdkScreen);
-	}
-	
-	/**
-	 * Lists the available visuals for the specified screen.
-	 * A visual describes a hardware image data format.
-	 * For example, a visual might support 24-bit color, or 8-bit color,
-	 * and might expect pixels to be in a certain format.
-	 * Call g_list_free() on the return value when you're finished with it.
-	 * Since 2.2
-	 * Returns: a list of visuals; the list must be freed, but not its contents. [transfer container][element-type GdkVisual]
-	 */
-	public ListG listVisuals()
-	{
-		// GList * gdk_screen_list_visuals (GdkScreen *screen);
-		auto p = gdk_screen_list_visuals(gdkScreen);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
-	}
-	
-	/**
-	 * Obtains a list of all toplevel windows known to GDK on the screen screen.
-	 * A toplevel window is a child of the root window (see
-	 * gdk_get_default_root_window()).
-	 * The returned list should be freed with g_list_free(), but
-	 * its elements need not be freed.
-	 * Since 2.2
-	 * Returns: list of toplevel windows, free with g_list_free(). [transfer container][element-type GdkWindow]
-	 */
-	public ListG getToplevelWindows()
-	{
-		// GList * gdk_screen_get_toplevel_windows (GdkScreen *screen);
-		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
-	}
-	
-	/**
-	 * Determines the name to pass to gdk_display_open() to get
-	 * a GdkDisplay with this screen as the default screen.
-	 * Since 2.2
-	 * Returns: a newly allocated string, free with g_free()
-	 */
-	public string makeDisplayName()
-	{
-		// gchar * gdk_screen_make_display_name (GdkScreen *screen);
-		return Str.toString(gdk_screen_make_display_name(gdkScreen));
-	}
-	
-	/**
-	 * Returns the number of monitors which screen consists of.
-	 * Since 2.2
-	 * Returns: number of monitors which screen consists of
-	 */
-	public int getNMonitors()
-	{
-		// gint gdk_screen_get_n_monitors (GdkScreen *screen);
-		return gdk_screen_get_n_monitors(gdkScreen);
-	}
-	
-	/**
-	 * Gets the primary monitor for screen. The primary monitor
-	 * is considered the monitor where the 'main desktop' lives.
-	 * While normal application windows typically allow the window
-	 * manager to place the windows, specialized desktop applications
-	 * such as panels should place themselves on the primary monitor.
-	 * If no primary monitor is configured by the user, the return value
-	 * will be 0, defaulting to the first monitor.
-	 * Since 2.20
-	 * Returns: An integer index for the primary monitor, or 0 if none is configured.
-	 */
-	public int getPrimaryMonitor()
-	{
-		// gint gdk_screen_get_primary_monitor (GdkScreen *screen);
-		return gdk_screen_get_primary_monitor(gdkScreen);
-	}
-	
-	/**
-	 * Retrieves the GdkRectangle representing the size and position of
-	 * the individual monitor within the entire screen area.
-	 * Monitor numbers start at 0. To obtain the number of monitors of
-	 * screen, use gdk_screen_get_n_monitors().
-	 * Note that the size of the entire screen area can be retrieved via
-	 * gdk_screen_get_width() and gdk_screen_get_height().
-	 * Since 2.2
-	 * Params:
-	 * monitorNum = the monitor number
-	 * dest = a GdkRectangle to be filled with
-	 * the monitor geometry. [out][allow-none]
-	 */
-	public void getMonitorGeometry(int monitorNum, out Rectangle dest)
-	{
-		// void gdk_screen_get_monitor_geometry (GdkScreen *screen,  gint monitor_num,  GdkRectangle *dest);
-		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, &dest);
-	}
-	
-	/**
-	 * Retrieves the GdkRectangle representing the size and position of
-	 * the "work area" on a monitor within the entire screen area.
-	 * The work area should be considered when positioning menus and
-	 * similar popups, to avoid placing them below panels, docks or other
-	 * desktop components.
-	 * Monitor numbers start at 0. To obtain the number of monitors of
-	 * screen, use gdk_screen_get_n_monitors().
-	 * Params:
-	 * monitorNum = the monitor number
-	 * dest = a GdkRectangle to be filled with
-	 * the monitor workarea. [out][allow-none]
-	 * Since 3.4
-	 */
-	public void getMonitorWorkarea(int monitorNum, out Rectangle dest)
-	{
-		// void gdk_screen_get_monitor_workarea (GdkScreen *screen,  gint monitor_num,  GdkRectangle *dest);
-		gdk_screen_get_monitor_workarea(gdkScreen, monitorNum, &dest);
-	}
-	
-	/**
-	 * Returns the monitor number in which the point (x,y) is located.
-	 * Since 2.2
-	 * Params:
-	 * x = the x coordinate in the virtual screen.
-	 * y = the y coordinate in the virtual screen.
-	 * Returns: the monitor number in which the point (x,y) lies, or a monitor close to (x,y) if the point is not in any monitor.
-	 */
-	public int getMonitorAtPoint(int x, int y)
-	{
-		// gint gdk_screen_get_monitor_at_point (GdkScreen *screen,  gint x,  gint y);
-		return gdk_screen_get_monitor_at_point(gdkScreen, x, y);
-	}
-	
-	/**
-	 * Returns the number of the monitor in which the largest area of the
-	 * bounding rectangle of window resides.
-	 * Since 2.2
-	 * Params:
-	 * window = a GdkWindow
-	 * Returns: the monitor number in which most of window is located, or if window does not intersect any monitors, a monitor, close to window.
-	 */
-	public int getMonitorAtWindow(Window window)
-	{
-		// gint gdk_screen_get_monitor_at_window (GdkScreen *screen,  GdkWindow *window);
-		return gdk_screen_get_monitor_at_window(gdkScreen, (window is null) ? null : window.getWindowStruct());
-	}
-	
-	/**
-	 * Gets the height in millimeters of the specified monitor.
-	 * Since 2.14
-	 * Params:
-	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
-	 * Returns: the height of the monitor, or -1 if not available
-	 */
-	public int getMonitorHeightMm(int monitorNum)
-	{
-		// gint gdk_screen_get_monitor_height_mm (GdkScreen *screen,  gint monitor_num);
-		return gdk_screen_get_monitor_height_mm(gdkScreen, monitorNum);
-	}
-	
-	/**
-	 * Gets the width in millimeters of the specified monitor, if available.
-	 * Since 2.14
-	 * Params:
-	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
-	 * Returns: the width of the monitor, or -1 if not available
-	 */
-	public int getMonitorWidthMm(int monitorNum)
-	{
-		// gint gdk_screen_get_monitor_width_mm (GdkScreen *screen,  gint monitor_num);
-		return gdk_screen_get_monitor_width_mm(gdkScreen, monitorNum);
-	}
-	
-	/**
-	 * Returns the output name of the specified monitor.
-	 * Usually something like VGA, DVI, or TV, not the actual
-	 * product name of the display device.
-	 * Since 2.14
-	 * Params:
-	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
-	 * Returns: a newly-allocated string containing the name of the monitor, or NULL if the name cannot be determined
-	 */
-	public string getMonitorPlugName(int monitorNum)
-	{
-		// gchar * gdk_screen_get_monitor_plug_name (GdkScreen *screen,  gint monitor_num);
-		return Str.toString(gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum));
-	}
-	
-	/**
-	 * Returns the internal scale factor that maps from monitor coordiantes
-	 * to the actual device pixels. On traditional systems this is 1, but
-	 * on very high density outputs this can be a higher value (often 2).
-	 * This can be used if you want to create pixel based data for a
-	 * particula monitor, but most of the time you're drawing to a window
-	 * where it is better to use gdk_window_get_scale_factor() instead.
-	 * Params:
-	 * monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
-	 * Returns: the scale factor Since 3.10
-	 */
-	public int getMonitorScaleFactor(int monitorNum)
-	{
-		// gint gdk_screen_get_monitor_scale_factor (GdkScreen *screen,  gint monitor_num);
-		return gdk_screen_get_monitor_scale_factor(gdkScreen, monitorNum);
-	}
-	
-	/**
-	 * Retrieves a desktop-wide setting such as double-click time
-	 * for the GdkScreen screen.
-	 * FIXME needs a list of valid settings here, or a link to
-	 * more information.
-	 * Since 2.2
-	 * Params:
-	 * name = the name of the setting
-	 * value = location to store the value of the setting
-	 * Returns: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
-	 */
-	public int getSetting(string name, Value value)
-	{
-		// gboolean gdk_screen_get_setting (GdkScreen *screen,  const gchar *name,  GValue *value);
-		return gdk_screen_get_setting(gdkScreen, Str.toStringz(name), (value is null) ? null : value.getValueStruct());
-	}
-	
+
 	/**
 	 * Gets any options previously set with gdk_screen_set_font_options().
-	 * Since 2.10
-	 * Returns: the current font options, or NULL if no default font options have been set.
+	 *
+	 * Return: the current font options, or %NULL if no
+	 *     default font options have been set.
+	 *
+	 * Since: 2.10
 	 */
 	public FontOption getFontOptions()
 	{
-		// const cairo_font_options_t * gdk_screen_get_font_options  (GdkScreen *screen);
 		auto p = gdk_screen_get_font_options(gdkScreen);
 		
 		if(p is null)
@@ -643,72 +224,288 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FontOption)(cast(cairo_font_options_t*) p);
+		return new FontOption(cast(cairo_font_options_t*) p);
 	}
-	
+
 	/**
-	 * Sets the default font options for the screen. These
-	 * options will be set on any PangoContext's newly created
-	 * with gdk_pango_context_get_for_screen(). Changing the
-	 * default set of font options does not affect contexts that
-	 * have already been created.
-	 * Since 2.10
-	 * Params:
-	 * options = a cairo_font_options_t, or NULL to unset any
-	 * previously set default font options. [allow-none]
+	 * Gets the height of @screen in pixels
+	 *
+	 * Return: the height of @screen in pixels.
+	 *
+	 * Since: 2.2
 	 */
-	public void setFontOptions(FontOption options)
+	public int getHeight()
 	{
-		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
-		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
+		return gdk_screen_get_height(gdkScreen);
 	}
-	
+
+	/**
+	 * Returns the height of @screen in millimeters.
+	 * Note that on some X servers this value will not be correct.
+	 *
+	 * Return: the heigth of @screen in millimeters.
+	 *
+	 * Since: 2.2
+	 */
+	public int getHeightMm()
+	{
+		return gdk_screen_get_height_mm(gdkScreen);
+	}
+
+	/**
+	 * Returns the monitor number in which the point (@x,@y) is located.
+	 *
+	 * Params:
+	 *     x = the x coordinate in the virtual screen.
+	 *     y = the y coordinate in the virtual screen.
+	 *
+	 * Return: the monitor number in which the point (@x,@y) lies, or
+	 *     a monitor close to (@x,@y) if the point is not in any monitor.
+	 *
+	 * Since: 2.2
+	 */
+	public int getMonitorAtPoint(int x, int y)
+	{
+		return gdk_screen_get_monitor_at_point(gdkScreen, x, y);
+	}
+
+	/**
+	 * Returns the number of the monitor in which the largest area of the
+	 * bounding rectangle of @window resides.
+	 *
+	 * Params:
+	 *     window = a #GdkWindow
+	 *
+	 * Return: the monitor number in which most of @window is located,
+	 *     or if @window does not intersect any monitors, a monitor,
+	 *     close to @window.
+	 *
+	 * Since: 2.2
+	 */
+	public int getMonitorAtWindow(Window window)
+	{
+		return gdk_screen_get_monitor_at_window(gdkScreen, (window is null) ? null : window.getWindowStruct());
+	}
+
+	/**
+	 * Retrieves the #GdkRectangle representing the size and position of
+	 * the individual monitor within the entire screen area.
+	 *
+	 * Monitor numbers start at 0. To obtain the number of monitors of
+	 * @screen, use gdk_screen_get_n_monitors().
+	 *
+	 * Note that the size of the entire screen area can be retrieved via
+	 * gdk_screen_get_width() and gdk_screen_get_height().
+	 *
+	 * Params:
+	 *     monitorNum = the monitor number
+	 *     dest = a #GdkRectangle to be filled with
+	 *         the monitor geometry
+	 *
+	 * Since: 2.2
+	 */
+	public void getMonitorGeometry(int monitorNum, out GdkRectangle dest)
+	{
+		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, &dest);
+	}
+
+	/**
+	 * Gets the height in millimeters of the specified monitor.
+	 *
+	 * Params:
+	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+	 *
+	 * Return: the height of the monitor, or -1 if not available
+	 *
+	 * Since: 2.14
+	 */
+	public int getMonitorHeightMm(int monitorNum)
+	{
+		return gdk_screen_get_monitor_height_mm(gdkScreen, monitorNum);
+	}
+
+	/**
+	 * Returns the output name of the specified monitor.
+	 * Usually something like VGA, DVI, or TV, not the actual
+	 * product name of the display device.
+	 *
+	 * Params:
+	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+	 *
+	 * Return: a newly-allocated string containing the name
+	 *     of the monitor, or %NULL if the name cannot be determined
+	 *
+	 * Since: 2.14
+	 */
+	public string getMonitorPlugName(int monitorNum)
+	{
+		return Str.toString(gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum));
+	}
+
+	/**
+	 * Returns the internal scale factor that maps from monitor coordiantes
+	 * to the actual device pixels. On traditional systems this is 1, but
+	 * on very high density outputs this can be a higher value (often 2).
+	 *
+	 * This can be used if you want to create pixel based data for a
+	 * particula monitor, but most of the time you’re drawing to a window
+	 * where it is better to use gdk_window_get_scale_factor() instead.
+	 *
+	 * Params:
+	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+	 *
+	 * Return: the scale factor
+	 *
+	 * Since: 3.10
+	 */
+	public int getMonitorScaleFactor(int monitorNum)
+	{
+		return gdk_screen_get_monitor_scale_factor(gdkScreen, monitorNum);
+	}
+
+	/**
+	 * Gets the width in millimeters of the specified monitor, if available.
+	 *
+	 * Params:
+	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+	 *
+	 * Return: the width of the monitor, or -1 if not available
+	 *
+	 * Since: 2.14
+	 */
+	public int getMonitorWidthMm(int monitorNum)
+	{
+		return gdk_screen_get_monitor_width_mm(gdkScreen, monitorNum);
+	}
+
+	/**
+	 * Retrieves the #GdkRectangle representing the size and position of
+	 * the “work area” on a monitor within the entire screen area.
+	 *
+	 * The work area should be considered when positioning menus and
+	 * similar popups, to avoid placing them below panels, docks or other
+	 * desktop components.
+	 *
+	 * Note that not all backends may have a concept of workarea. This
+	 * function will return the monitor geometry if a workarea is not
+	 * available, or does not apply.
+	 *
+	 * Monitor numbers start at 0. To obtain the number of monitors of
+	 * @screen, use gdk_screen_get_n_monitors().
+	 *
+	 * Params:
+	 *     monitorNum = the monitor number
+	 *     dest = a #GdkRectangle to be filled with
+	 *         the monitor workarea
+	 *
+	 * Since: 3.4
+	 */
+	public void getMonitorWorkarea(int monitorNum, out GdkRectangle dest)
+	{
+		gdk_screen_get_monitor_workarea(gdkScreen, monitorNum, &dest);
+	}
+
+	/**
+	 * Returns the number of monitors which @screen consists of.
+	 *
+	 * Return: number of monitors which @screen consists of
+	 *
+	 * Since: 2.2
+	 */
+	public int getNMonitors()
+	{
+		return gdk_screen_get_n_monitors(gdkScreen);
+	}
+
+	/**
+	 * Gets the index of @screen among the screens in the display
+	 * to which it belongs. (See gdk_screen_get_display())
+	 *
+	 * Return: the index
+	 *
+	 * Since: 2.2
+	 */
+	public int getNumber()
+	{
+		return gdk_screen_get_number(gdkScreen);
+	}
+
+	/**
+	 * Gets the primary monitor for @screen.  The primary monitor
+	 * is considered the monitor where the “main desktop” lives.
+	 * While normal application windows typically allow the window
+	 * manager to place the windows, specialized desktop applications
+	 * such as panels should place themselves on the primary monitor.
+	 *
+	 * If no primary monitor is configured by the user, the return value
+	 * will be 0, defaulting to the first monitor.
+	 *
+	 * Return: An integer index for the primary monitor, or 0 if none is configured.
+	 *
+	 * Since: 2.20
+	 */
+	public int getPrimaryMonitor()
+	{
+		return gdk_screen_get_primary_monitor(gdkScreen);
+	}
+
 	/**
 	 * Gets the resolution for font handling on the screen; see
 	 * gdk_screen_set_resolution() for full details.
-	 * Since 2.10
-	 * Returns: the current resolution, or -1 if no resolution has been set.
+	 *
+	 * Return: the current resolution, or -1 if no resolution
+	 *     has been set.
+	 *
+	 * Since: 2.10
 	 */
 	public double getResolution()
 	{
-		// gdouble gdk_screen_get_resolution (GdkScreen *screen);
 		return gdk_screen_get_resolution(gdkScreen);
 	}
-	
+
 	/**
-	 * Sets the resolution for font handling on the screen. This is a
-	 * scale factor between points specified in a PangoFontDescription
-	 * and cairo units. The default value is 96, meaning that a 10 point
-	 * font will be 13 units high. (10 * 96. / 72. = 13.3).
-	 * Since 2.10
-	 * Params:
-	 * dpi = the resolution in "dots per inch". (Physical inches aren't actually
-	 * involved; the terminology is conventional.)
+	 * Gets a visual to use for creating windows with an alpha channel.
+	 * The windowing system on which GTK+ is running
+	 * may not support this capability, in which case %NULL will
+	 * be returned. Even if a non-%NULL value is returned, its
+	 * possible that the window’s alpha channel won’t be honored
+	 * when displaying the window on the screen: in particular, for
+	 * X an appropriate windowing manager and compositing manager
+	 * must be running to provide appropriate display.
+	 *
+	 * This functionality is not implemented in the Windows backend.
+	 *
+	 * For setting an overall opacity for a top-level window, see
+	 * gdk_window_set_opacity().
+	 *
+	 * Return: a visual to use for windows
+	 *     with an alpha channel or %NULL if the capability is not
+	 *     available.
+	 *
+	 * Since: 2.8
 	 */
-	public void setResolution(double dpi)
+	public Visual getRgbaVisual()
 	{
-		// void gdk_screen_set_resolution (GdkScreen *screen,  gdouble dpi);
-		gdk_screen_set_resolution(gdkScreen, dpi);
+		auto p = gdk_screen_get_rgba_visual(gdkScreen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
-	
+
 	/**
-	 * Returns the screen's currently active window.
-	 * On X11, this is done by inspecting the _NET_ACTIVE_WINDOW property
-	 * on the root window, as described in the Extended Window
-	 * Manager Hints. If there is no currently currently active
-	 * window, or the window manager does not support the
-	 * _NET_ACTIVE_WINDOW hint, this function returns NULL.
-	 * On other platforms, this function may return NULL, depending on whether
-	 * it is implementable on that platform.
-	 * The returned window should be unrefed using g_object_unref() when
-	 * no longer needed.
-	 * Since 2.10
-	 * Returns: the currently active window, or NULL. [transfer full]
+	 * Gets the root window of @screen.
+	 *
+	 * Return: the root window
+	 *
+	 * Since: 2.2
 	 */
-	public Window getActiveWindow()
+	public Window getRootWindow()
 	{
-		// GdkWindow * gdk_screen_get_active_window (GdkScreen *screen);
-		auto p = gdk_screen_get_active_window(gdkScreen);
+		auto p = gdk_screen_get_root_window(gdkScreen);
 		
 		if(p is null)
 		{
@@ -717,25 +514,122 @@ public class Screen : ObjectG
 		
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
-	
+
 	/**
-	 * Returns a GList of GdkWindows representing the current
+	 * Retrieves a desktop-wide setting such as double-click time
+	 * for the #GdkScreen @screen.
+	 *
+	 * FIXME needs a list of valid settings here, or a link to
+	 * more information.
+	 *
+	 * Params:
+	 *     name = the name of the setting
+	 *     value = location to store the value of the setting
+	 *
+	 * Return: %TRUE if the setting existed and a value was stored
+	 *     in @value, %FALSE otherwise.
+	 *
+	 * Since: 2.2
+	 */
+	public bool getSetting(string name, Value value)
+	{
+		return gdk_screen_get_setting(gdkScreen, Str.toStringz(name), (value is null) ? null : value.getValueStruct()) != 0;
+	}
+
+	/**
+	 * Get the system’s default visual for @screen.
+	 * This is the visual for the root window of the display.
+	 * The return value should not be freed.
+	 *
+	 * Return: the system visual
+	 *
+	 * Since: 2.2
+	 */
+	public Visual getSystemVisual()
+	{
+		auto p = gdk_screen_get_system_visual(gdkScreen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+	}
+
+	/**
+	 * Obtains a list of all toplevel windows known to GDK on the screen @screen.
+	 * A toplevel window is a child of the root window (see
+	 * gdk_get_default_root_window()).
+	 *
+	 * The returned list should be freed with g_list_free(), but
+	 * its elements need not be freed.
+	 *
+	 * Return: list of toplevel windows, free with g_list_free()
+	 *
+	 * Since: 2.2
+	 */
+	public ListG getToplevelWindows()
+	{
+		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Gets the width of @screen in pixels
+	 *
+	 * Return: the width of @screen in pixels.
+	 *
+	 * Since: 2.2
+	 */
+	public int getWidth()
+	{
+		return gdk_screen_get_width(gdkScreen);
+	}
+
+	/**
+	 * Gets the width of @screen in millimeters.
+	 * Note that on some X servers this value will not be correct.
+	 *
+	 * Return: the width of @screen in millimeters.
+	 *
+	 * Since: 2.2
+	 */
+	public int getWidthMm()
+	{
+		return gdk_screen_get_width_mm(gdkScreen);
+	}
+
+	/**
+	 * Returns a #GList of #GdkWindows representing the current
 	 * window stack.
+	 *
 	 * On X11, this is done by inspecting the _NET_CLIENT_LIST_STACKING
-	 * property on the root window, as described in the Extended Window
-	 * Manager Hints. If the window manager does not support the
-	 * _NET_CLIENT_LIST_STACKING hint, this function returns NULL.
-	 * On other platforms, this function may return NULL, depending on whether
+	 * property on the root window, as described in the
+	 * [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec).
+	 * If the window manager does not support the
+	 * _NET_CLIENT_LIST_STACKING hint, this function returns %NULL.
+	 *
+	 * On other platforms, this function may return %NULL, depending on whether
 	 * it is implementable on that platform.
+	 *
 	 * The returned list is newly allocated and owns references to the
 	 * windows it contains, so it should be freed using g_list_free() and
 	 * its windows unrefed using g_object_unref() when no longer needed.
-	 * Since 2.10
-	 * Returns: a list of GdkWindows for the current window stack, or NULL. [transfer full][element-type GdkWindow]
+	 *
+	 * Return: a
+	 *     list of #GdkWindows for the current window stack, or %NULL.
+	 *
+	 * Since: 2.10
 	 */
 	public ListG getWindowStack()
 	{
-		// GList * gdk_screen_get_window_stack (GdkScreen *screen);
 		auto p = gdk_screen_get_window_stack(gdkScreen);
 		
 		if(p is null)
@@ -743,6 +637,191 @@ public class Screen : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Returns whether windows with an RGBA visual can reasonably
+	 * be expected to have their alpha channel drawn correctly on
+	 * the screen.
+	 *
+	 * On X11 this function returns whether a compositing manager is
+	 * compositing @screen.
+	 *
+	 * Return: Whether windows with RGBA visuals can reasonably be
+	 *     expected to have their alpha channels drawn correctly on the screen.
+	 *
+	 * Since: 2.10
+	 */
+	public bool isComposited()
+	{
+		return gdk_screen_is_composited(gdkScreen) != 0;
+	}
+
+	/**
+	 * Lists the available visuals for the specified @screen.
+	 * A visual describes a hardware image data format.
+	 * For example, a visual might support 24-bit color, or 8-bit color,
+	 * and might expect pixels to be in a certain format.
+	 *
+	 * Call g_list_free() on the return value when you’re finished with it.
+	 *
+	 * Return: a list of visuals; the list must be freed, but not its contents
+	 *
+	 * Since: 2.2
+	 */
+	public ListG listVisuals()
+	{
+		auto p = gdk_screen_list_visuals(gdkScreen);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Determines the name to pass to gdk_display_open() to get
+	 * a #GdkDisplay with this screen as the default screen.
+	 *
+	 * Return: a newly allocated string, free with g_free()
+	 *
+	 * Since: 2.2
+	 */
+	public string makeDisplayName()
+	{
+		return Str.toString(gdk_screen_make_display_name(gdkScreen));
+	}
+
+	/**
+	 * Sets the default font options for the screen. These
+	 * options will be set on any #PangoContext’s newly created
+	 * with gdk_pango_context_get_for_screen(). Changing the
+	 * default set of font options does not affect contexts that
+	 * have already been created.
+	 *
+	 * Params:
+	 *     options = a #cairo_font_options_t, or %NULL to unset any
+	 *         previously set default font options.
+	 *
+	 * Since: 2.10
+	 */
+	public void setFontOptions(FontOption options)
+	{
+		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
+	}
+
+	/**
+	 * Sets the resolution for font handling on the screen. This is a
+	 * scale factor between points specified in a #PangoFontDescription
+	 * and cairo units. The default value is 96, meaning that a 10 point
+	 * font will be 13 units high. (10 * 96. / 72. = 13.3).
+	 *
+	 * Params:
+	 *     dpi = the resolution in “dots per inch”. (Physical inches aren’t actually
+	 *         involved; the terminology is conventional.)
+	 *
+	 * Since: 2.10
+	 */
+	public void setResolution(double dpi)
+	{
+		gdk_screen_set_resolution(gdkScreen, dpi);
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(Screen)[] onCompositedChangedListeners;
+	/**
+	 * The ::composited-changed signal is emitted when the composited
+	 * status of the screen changes
+	 *
+	 * Since: 2.10
+	 */
+	void addOnCompositedChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "composited-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"composited-changed",
+				cast(GCallback)&callBackCompositedChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["composited-changed"] = 1;
+		}
+		onCompositedChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, Screen _screen)
+	{
+		foreach ( void delegate(Screen) dlg; _screen.onCompositedChangedListeners )
+		{
+			dlg(_screen);
+		}
+	}
+
+	void delegate(Screen)[] onMonitorsChangedListeners;
+	/**
+	 * The ::monitors-changed signal is emitted when the number, size
+	 * or position of the monitors attached to the screen change.
+	 *
+	 * Only for X11 and OS X for now. A future implementation for Win32
+	 * may be a possibility.
+	 *
+	 * Since: 2.14
+	 */
+	void addOnMonitorsChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "monitors-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"monitors-changed",
+				cast(GCallback)&callBackMonitorsChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["monitors-changed"] = 1;
+		}
+		onMonitorsChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, Screen _screen)
+	{
+		foreach ( void delegate(Screen) dlg; _screen.onMonitorsChangedListeners )
+		{
+			dlg(_screen);
+		}
+	}
+
+	void delegate(Screen)[] onSizeChangedListeners;
+	/**
+	 * The ::size-changed signal is emitted when the pixel width or
+	 * height of a screen changes.
+	 *
+	 * Since: 2.2
+	 */
+	void addOnSizeChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "size-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"size-changed",
+				cast(GCallback)&callBackSizeChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["size-changed"] = 1;
+		}
+		onSizeChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, Screen _screen)
+	{
+		foreach ( void delegate(Screen) dlg; _screen.onSizeChangedListeners )
+		{
+			dlg(_screen);
+		}
 	}
 }

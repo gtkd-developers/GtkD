@@ -16,129 +16,102 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GstControlSource.html
- * outPack = gstreamer
- * outFile = ControlSource
- * strct   = GstControlSource
- * realStrct=
- * ctorStrct=
- * clss    = ControlSource
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_control_source_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.ControlSource;
 
+private import gstreamer.ObjectGst;
+private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-
-
-private import gstreamer.ObjectGst;
 
 /**
- * The GstControlSource is a base class for control value sources that could
- * be used by GstController to get timestamp-value pairs. A control source
- * essentially is a function over time, returning gloat values between 0.0 and 1.0.
- *
- * A GstControlSource is used by first getting an instance of a specific
+ * The #GstControlSource is a base class for control value sources that could
+ * be used to get timestamp-value pairs. A control source essentially is a
+ * function over time, returning float values between 0.0 and 1.0.
+ * 
+ * A #GstControlSource is used by first getting an instance of a specific
  * control-source, creating a binding for the control-source to the target property
  * of the element and then adding the binding to the element. The binding will
  * convert the data types and value range to fit to the bound property.
- *
- * For implementing a new GstControlSource one has to implement
- * GstControlSourceGetValue and GstControlSourceGetValueArray functions.
+ * 
+ * For implementing a new #GstControlSource one has to implement
+ * #GstControlSourceGetValue and #GstControlSourceGetValueArray functions.
  * These are then used by gst_control_source_get_value() and
  * gst_control_source_get_value_array() to get values for specific timestamps.
  */
 public class ControlSource : ObjectGst
 {
-	
 	/** the main Gtk struct */
 	protected GstControlSource* gstControlSource;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstControlSource* getControlSourceStruct()
 	{
 		return gstControlSource;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gstControlSource;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GstControlSource* gstControlSource)
-	{
-		super(cast(GstObject*)gstControlSource);
-		this.gstControlSource = gstControlSource;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gstControlSource = cast(GstControlSource*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Gets the value for this GstControlSource at a given timestamp.
-	 * Params:
-	 * timestamp = the time for which the value should be returned
-	 * value = the value
-	 * Returns: FALSE if the value couldn't be returned, TRUE otherwise.
-	 */
-	public int getValue(GstClockTime timestamp, out double value)
+	public this (GstControlSource* gstControlSource, bool ownedRef = false)
 	{
-		// gboolean gst_control_source_get_value (GstControlSource *self,  GstClockTime timestamp,  gdouble *value);
-		return gst_control_source_get_value(gstControlSource, timestamp, &value);
+		this.gstControlSource = gstControlSource;
+		super(cast(GstObject*)gstControlSource, ownedRef);
 	}
-	
+
 	/**
-	 * Gets an array of values for for this GstControlSource. Values that are
+	 */
+
+	public static GType getType()
+	{
+		return gst_control_source_get_type();
+	}
+
+	/**
+	 * Gets the value for this #GstControlSource at a given timestamp.
+	 *
+	 * Params:
+	 *     timestamp = the time for which the value should be returned
+	 *     value = the value
+	 *
+	 * Return: %FALSE if the value couldn't be returned, %TRUE otherwise.
+	 */
+	public bool getValue(GstClockTime timestamp, double* value)
+	{
+		return gst_control_source_get_value(gstControlSource, timestamp, value) != 0;
+	}
+
+	/**
+	 * Gets an array of values for for this #GstControlSource. Values that are
 	 * undefined contain NANs.
+	 *
 	 * Params:
-	 * timestamp = the first timestamp
-	 * interval = the time steps
-	 * values = array to put control-values in
-	 * Returns: TRUE if the given array could be filled, FALSE otherwise
+	 *     timestamp = the first timestamp
+	 *     interval = the time steps
+	 *     nValues = the number of values to fetch
+	 *     values = array to put control-values in
+	 *
+	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
-	public int getValueArray(GstClockTime timestamp, GstClockTime interval, double[] values)
+	public bool getValueArray(GstClockTime timestamp, GstClockTime interval, double[] values)
 	{
-		// gboolean gst_control_source_get_value_array (GstControlSource *self,  GstClockTime timestamp,  GstClockTime interval,  guint n_values,  gdouble *values);
-		return gst_control_source_get_value_array(gstControlSource, timestamp, interval, cast(int) values.length, values.ptr);
+		return gst_control_source_get_value_array(gstControlSource, timestamp, interval, cast(uint)values.length, values.ptr) != 0;
 	}
 }

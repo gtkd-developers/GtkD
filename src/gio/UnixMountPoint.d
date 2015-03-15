@@ -16,199 +16,135 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = UnixMountPoint
- * strct   = GUnixMountPoint
- * realStrct=
- * ctorStrct=
- * clss    = UnixMountPoint
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_unix_mount_point_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * 	- mountpoints-changed
- * 	- mounts-changed
- * imports:
- * 	- glib.Str
- * 	- gio.Icon
- * 	- gio.IconIF
- * structWrap:
- * 	- GIcon* -> IconIF
- * 	- GUnixMountPoint* -> UnixMountPoint
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.UnixMountPoint;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
-
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * Routines for managing mounted UNIX mount points and paths.
- *
- * Note that &lt;gio/gunixmounts.h&gt; belongs to the
- * UNIX-specific GIO interfaces, thus you have to use the
- * gio-unix-2.0.pc pkg-config file when using it.
+ * Defines a Unix mount point (e.g. <filename>/dev</filename>).
+ * This corresponds roughly to a fstab entry.
  */
 public class UnixMountPoint
 {
-	
 	/** the main Gtk struct */
 	protected GUnixMountPoint* gUnixMountPoint;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GUnixMountPoint* getUnixMountPointStruct()
 	{
 		return gUnixMountPoint;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gUnixMountPoint;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GUnixMountPoint* gUnixMountPoint)
 	{
 		this.gUnixMountPoint = gUnixMountPoint;
 	}
-	
+
 	/**
 	 */
-	
+
+	/**
+	 * Compares two unix mount points.
+	 *
+	 * Params:
+	 *     mount2 = a #GUnixMount.
+	 *
+	 * Return: 1, 0 or -1 if @mount1 is greater than, equal to,
+	 *     or less than @mount2, respectively.
+	 */
+	public int compare(UnixMountPoint mount2)
+	{
+		return g_unix_mount_point_compare(gUnixMountPoint, (mount2 is null) ? null : mount2.getUnixMountPointStruct());
+	}
+
 	/**
 	 * Frees a unix mount point.
 	 */
 	public void free()
 	{
-		// void g_unix_mount_point_free (GUnixMountPoint *mount_point);
 		g_unix_mount_point_free(gUnixMountPoint);
 	}
-	
-	/**
-	 * Compares two unix mount points.
-	 * Params:
-	 * mount2 = a GUnixMount.
-	 * Returns: 1, 0 or -1 if mount1 is greater than, equal to, or less than mount2, respectively.
-	 */
-	public int compare(UnixMountPoint mount2)
-	{
-		// gint g_unix_mount_point_compare (GUnixMountPoint *mount1,  GUnixMountPoint *mount2);
-		return g_unix_mount_point_compare(gUnixMountPoint, (mount2 is null) ? null : mount2.getUnixMountPointStruct());
-	}
-	
-	/**
-	 * Gets the mount path for a unix mount point.
-	 * Returns: a string containing the mount path.
-	 */
-	public string getMountPath()
-	{
-		// const char * g_unix_mount_point_get_mount_path (GUnixMountPoint *mount_point);
-		return Str.toString(g_unix_mount_point_get_mount_path(gUnixMountPoint));
-	}
-	
+
 	/**
 	 * Gets the device path for a unix mount point.
-	 * Returns: a string containing the device path.
+	 *
+	 * Return: a string containing the device path.
 	 */
 	public string getDevicePath()
 	{
-		// const char * g_unix_mount_point_get_device_path (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_get_device_path(gUnixMountPoint));
 	}
-	
+
 	/**
 	 * Gets the file system type for the mount point.
-	 * Returns: a string containing the file system type.
+	 *
+	 * Return: a string containing the file system type.
 	 */
 	public string getFsType()
 	{
-		// const char * g_unix_mount_point_get_fs_type (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_get_fs_type(gUnixMountPoint));
 	}
-	
+
+	/**
+	 * Gets the mount path for a unix mount point.
+	 *
+	 * Return: a string containing the mount path.
+	 */
+	public string getMountPath()
+	{
+		return Str.toString(g_unix_mount_point_get_mount_path(gUnixMountPoint));
+	}
+
 	/**
 	 * Gets the options for the mount point.
-	 * Since 2.32
-	 * Returns: a string containing the options.
+	 *
+	 * Return: a string containing the options.
+	 *
+	 * Since: 2.32
 	 */
 	public string getOptions()
 	{
-		// const char * g_unix_mount_point_get_options (GUnixMountPoint *mount_point);
 		return Str.toString(g_unix_mount_point_get_options(gUnixMountPoint));
 	}
-	
+
 	/**
-	 * Checks if a unix mount point is read only.
-	 * Returns: TRUE if a mount point is read only.
+	 * Guesses whether a Unix mount point can be ejected.
+	 *
+	 * Return: %TRUE if @mount_point is deemed to be ejectable.
 	 */
-	public int isReadonly()
+	public bool guessCanEject()
 	{
-		// gboolean g_unix_mount_point_is_readonly (GUnixMountPoint *mount_point);
-		return g_unix_mount_point_is_readonly(gUnixMountPoint);
+		return g_unix_mount_point_guess_can_eject(gUnixMountPoint) != 0;
 	}
-	
-	/**
-	 * Checks if a unix mount point is mountable by the user.
-	 * Returns: TRUE if the mount point is user mountable.
-	 */
-	public int isUserMountable()
-	{
-		// gboolean g_unix_mount_point_is_user_mountable  (GUnixMountPoint *mount_point);
-		return g_unix_mount_point_is_user_mountable(gUnixMountPoint);
-	}
-	
-	/**
-	 * Checks if a unix mount point is a loopback device.
-	 * Returns: TRUE if the mount point is a loopback. FALSE otherwise.
-	 */
-	public int isLoopback()
-	{
-		// gboolean g_unix_mount_point_is_loopback (GUnixMountPoint *mount_point);
-		return g_unix_mount_point_is_loopback(gUnixMountPoint);
-	}
-	
+
 	/**
 	 * Guesses the icon of a Unix mount point.
-	 * Returns: a GIcon. [transfer full]
+	 *
+	 * Return: a #GIcon
 	 */
 	public IconIF guessIcon()
 	{
-		// GIcon * g_unix_mount_point_guess_icon (GUnixMountPoint *mount_point);
 		auto p = g_unix_mount_point_guess_icon(gUnixMountPoint);
 		
 		if(p is null)
@@ -218,15 +154,28 @@ public class UnixMountPoint
 		
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
-	
+
+	/**
+	 * Guesses the name of a Unix mount point.
+	 * The result is a translated string.
+	 *
+	 * Return: A newly allocated string that must
+	 *     be freed with g_free()
+	 */
+	public string guessName()
+	{
+		return Str.toString(g_unix_mount_point_guess_name(gUnixMountPoint));
+	}
+
 	/**
 	 * Guesses the symbolic icon of a Unix mount point.
-	 * Since 2.34
-	 * Returns: a GIcon. [transfer full]
+	 *
+	 * Return: a #GIcon
+	 *
+	 * Since: 2.34
 	 */
 	public IconIF guessSymbolicIcon()
 	{
-		// GIcon * g_unix_mount_point_guess_symbolic_icon  (GUnixMountPoint *mount_point);
 		auto p = g_unix_mount_point_guess_symbolic_icon(gUnixMountPoint);
 		
 		if(p is null)
@@ -236,25 +185,34 @@ public class UnixMountPoint
 		
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
-	
+
 	/**
-	 * Guesses the name of a Unix mount point.
-	 * The result is a translated string.
-	 * Returns: A newly allocated string that must be freed with g_free()
+	 * Checks if a unix mount point is a loopback device.
+	 *
+	 * Return: %TRUE if the mount point is a loopback. %FALSE otherwise.
 	 */
-	public string guessName()
+	public bool isLoopback()
 	{
-		// char * g_unix_mount_point_guess_name (GUnixMountPoint *mount_point);
-		return Str.toString(g_unix_mount_point_guess_name(gUnixMountPoint));
+		return g_unix_mount_point_is_loopback(gUnixMountPoint) != 0;
 	}
-	
+
 	/**
-	 * Guesses whether a Unix mount point can be ejected.
-	 * Returns: TRUE if mount_point is deemed to be ejectable.
+	 * Checks if a unix mount point is read only.
+	 *
+	 * Return: %TRUE if a mount point is read only.
 	 */
-	public int guessCanEject()
+	public bool isReadonly()
 	{
-		// gboolean g_unix_mount_point_guess_can_eject (GUnixMountPoint *mount_point);
-		return g_unix_mount_point_guess_can_eject(gUnixMountPoint);
+		return g_unix_mount_point_is_readonly(gUnixMountPoint) != 0;
+	}
+
+	/**
+	 * Checks if a unix mount point is mountable by the user.
+	 *
+	 * Return: %TRUE if the mount point is user mountable.
+	 */
+	public bool isUserMountable()
+	{
+		return g_unix_mount_point_is_user_mountable(gUnixMountPoint) != 0;
 	}
 }

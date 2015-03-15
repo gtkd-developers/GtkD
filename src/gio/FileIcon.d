@@ -16,133 +16,113 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GFileIcon.html
- * outPack = gio
- * outFile = FileIcon
- * strct   = GFileIcon
- * realStrct=
- * ctorStrct=GIcon
- * clss    = FileIcon
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- IconIF
- * 	- LoadableIconIF
- * prefixes:
- * 	- g_file_icon_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.IconT
- * 	- gio.IconIF
- * 	- gio.LoadableIconT
- * 	- gio.LoadableIconIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.FileIcon;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.File;
+private import gio.FileIF;
+private import gio.IconIF;
+private import gio.IconT;
+private import gio.LoadableIconIF;
+private import gio.LoadableIconT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-private import gio.IconT;
-private import gio.IconIF;
-private import gio.LoadableIconT;
-private import gio.LoadableIconIF;
-
-
-private import gobject.ObjectG;
 
 /**
- * GFileIcon specifies an icon by pointing to an image file
+ * #GFileIcon specifies an icon by pointing to an image file
  * to be used as icon.
  */
 public class FileIcon : ObjectG, IconIF, LoadableIconIF
 {
-	
 	/** the main Gtk struct */
 	protected GFileIcon* gFileIcon;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GFileIcon* getFileIconStruct()
 	{
 		return gFileIcon;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gFileIcon;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GFileIcon* gFileIcon)
-	{
-		super(cast(GObject*)gFileIcon);
-		this.gFileIcon = gFileIcon;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gFileIcon = cast(GFileIcon*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GFileIcon* gFileIcon, bool ownedRef = false)
+	{
+		this.gFileIcon = gFileIcon;
+		super(cast(GObject*)gFileIcon, ownedRef);
+	}
+
 	// add the Icon capabilities
 	mixin IconT!(GFileIcon);
-	
+
 	// add the LoadableIcon capabilities
 	mixin LoadableIconT!(GFileIcon);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_file_icon_get_type();
+	}
+
 	/**
 	 * Creates a new icon for a file.
+	 *
 	 * Params:
-	 * file = a GFile.
+	 *     file = a #GFile.
+	 *
+	 * Return: a #GIcon for the given
+	 *     @file, or %NULL on error.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GFile* file)
+	public this(FileIF file)
 	{
-		// GIcon * g_file_icon_new (GFile *file);
-		auto p = g_file_icon_new(file);
+		auto p = g_file_icon_new((file is null) ? null : file.getFileStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_file_icon_new(file)");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GFileIcon*) p);
+		
+		this(cast(GFileIcon*) p, true);
 	}
-	
+
 	/**
-	 * Gets the GFile associated with the given icon.
-	 * Returns: a GFile, or NULL. [transfer none]
+	 * Gets the #GFile associated with the given @icon.
+	 *
+	 * Return: a #GFile, or %NULL.
 	 */
-	public GFile* getFile()
+	public FileIF getFile()
 	{
-		// GFile * g_file_icon_get_file (GFileIcon *icon);
-		return g_file_icon_get_file(gFileIcon);
+		auto p = g_file_icon_get_file(gFileIcon);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 }

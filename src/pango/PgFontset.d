@@ -16,114 +16,96 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = pango
- * outFile = PgFontset
- * strct   = PangoFontset
- * realStrct=
- * ctorStrct=
- * clss    = PgFontset
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = GObject
- * implements:
- * prefixes:
- * 	- pango_fontset_
- * omit structs:
- * omit prefixes:
- * 	- pango_fontset_simple_
- * omit code:
- * omit signals:
- * imports:
- * 	- pango.PgFont
- * 	- pango.PgFontMetrics
- * structWrap:
- * 	- PangoFont* -> PgFont
- * 	- PangoFontMetrics* -> PgFontMetrics
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module pango.PgFontset;
 
-public  import gtkc.pangotypes;
-
-private import gtkc.pango;
-private import glib.ConstructionException;
 private import gobject.ObjectG;
-
+private import gtkc.pango;
+public  import gtkc.pangotypes;
 private import pango.PgFont;
 private import pango.PgFontMetrics;
 
 
-private import gobject.ObjectG;
-
 /**
- * Pango supports a flexible architecture where a
- * particular rendering architecture can supply an
- * implementation of fonts. The PangoFont structure
- * represents an abstract rendering-system-independent font.
- * Pango provides routines to list available fonts, and
- * to load a font of a given description.
+ * A #PangoFontset represents a set of #PangoFont to use
+ * when rendering text. It is the result of resolving a
+ * #PangoFontDescription against a particular #PangoContext.
+ * It has operations for finding the component font for
+ * a particular Unicode character, and for finding a composite
+ * set of metrics for the entire fontset.
  */
 public class PgFontset : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected PangoFontset* pangoFontset;
-	
-	
+
 	/** Get the main Gtk struct */
 	public PangoFontset* getPgFontsetStruct()
 	{
 		return pangoFontset;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)pangoFontset;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (PangoFontset* pangoFontset)
-	{
-		super(cast(GObject*)pangoFontset);
-		this.pangoFontset = pangoFontset;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		pangoFontset = cast(PangoFontset*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (PangoFontset* pangoFontset, bool ownedRef = false)
+	{
+		this.pangoFontset = pangoFontset;
+		super(cast(GObject*)pangoFontset, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return pango_fontset_get_type();
+	}
+
+	/**
+	 * Iterates through all the fonts in a fontset, calling @func for
+	 * each one. If @func returns %TRUE, that stops the iteration.
+	 *
+	 * Params:
+	 *     func = Callback function
+	 *     data = data to pass to the callback function
+	 *
+	 * Since: 1.4
+	 */
+	public void foreac(PangoFontsetForeachFunc func, void* data)
+	{
+		pango_fontset_foreach(pangoFontset, func, data);
+	}
+
 	/**
 	 * Returns the font in the fontset that contains the best glyph for the
-	 * Unicode character wc.
+	 * Unicode character @wc.
+	 *
 	 * Params:
-	 * wc = a Unicode character
-	 * Returns: a PangoFont. The caller must call g_object_unref when finished with the font. [transfer full]
+	 *     wc = a Unicode character
+	 *
+	 * Return: a #PangoFont. The caller must call
+	 *     g_object_unref when finished with the font.
 	 */
 	public PgFont getFont(uint wc)
 	{
-		// PangoFont * pango_fontset_get_font (PangoFontset *fontset,  guint wc);
 		auto p = pango_fontset_get_font(pangoFontset, wc);
 		
 		if(p is null)
@@ -131,16 +113,17 @@ public class PgFontset : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
 	}
-	
+
 	/**
 	 * Get overall metric information for the fonts in the fontset.
-	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
+	 *
+	 * Return: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
+	 *     when finished using the object.
 	 */
 	public PgFontMetrics getMetrics()
 	{
-		// PangoFontMetrics * pango_fontset_get_metrics (PangoFontset *fontset);
 		auto p = pango_fontset_get_metrics(pangoFontset);
 		
 		if(p is null)
@@ -149,19 +132,5 @@ public class PgFontset : ObjectG
 		}
 		
 		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p);
-	}
-	
-	/**
-	 * Iterates through all the fonts in a fontset, calling func for
-	 * each one. If func returns TRUE, that stops the iteration.
-	 * Since 1.4
-	 * Params:
-	 * func = Callback function. [closure data][scope call]
-	 * data = data to pass to the callback function. [closure]
-	 */
-	public void foreac(PangoFontsetForeachFunc func, void* data)
-	{
-		// void pango_fontset_foreach (PangoFontset *fontset,  PangoFontsetForeachFunc func,  gpointer data);
-		pango_fontset_foreach(pangoFontset, func, data);
 	}
 }

@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = Converter
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Converter
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- ConverterIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.ConverterT
- * 	- gio.ConverterIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Converter;
 
+private import gio.ConverterIF;
+private import gio.ConverterT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.ConverterT;
-private import gio.ConverterIF;
-
-
-
-/**
- */
 public class Converter : ObjectG, ConverterIF
 {
-	
-	// Minimal implementation.
-	mixin ConverterT!(GConverter);
-	
+	/** the main Gtk struct */
+	protected GConverter* gConverter;
+
+	/** Get the main Gtk struct */
+	public GConverter* getConverterStruct()
+	{
+		return gConverter;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gConverter;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GConverter* gConverter)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gConverter);
-		this.gConverter = gConverter;
+		gConverter = cast(GConverter*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GConverter* gConverter, bool ownedRef = false)
+	{
+		this.gConverter = gConverter;
+		super(cast(GObject*)gConverter, ownedRef);
+	}
+
+	// add the Converter capabilities
+	mixin ConverterT!(GConverter);
+
 	/**
 	 */
 }

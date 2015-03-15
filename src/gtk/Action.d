@@ -16,177 +16,118 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkAction.html
- * outPack = gtk
- * outFile = Action
- * strct   = GtkAction
- * realStrct=
- * ctorStrct=
- * clss    = Action
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- BuildableIF
- * prefixes:
- * 	- gtk_action_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_action_get_stock_id
- * 	- gtk_action_create_icon
- * 	- gtk_action_create_menu_item
- * 	- gtk_action_create_tool_item
- * 	- gtk_action_create_menu
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gio.Icon
- * 	- gio.IconIF
- * 	- gobject.Closure
- * 	- glib.ListSG
- * 	- gtk.AccelGroup
- * 	- gtk.Image
- * 	- gtk.Menu
- * 	- gtk.MenuItem
- * 	- gtk.ToolItem
- * 	- gtk.Widget
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
- * structWrap:
- * 	- GClosure* -> Closure
- * 	- GIcon* -> IconIF
- * 	- GSList* -> ListSG
- * 	- GtkAccelGroup* -> AccelGroup
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.Action;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
 private import gio.Icon;
 private import gio.IconIF;
-private import gobject.Closure;
+private import glib.ConstructionException;
 private import glib.ListSG;
+private import glib.Str;
+private import gobject.Closure;
+private import gobject.ObjectG;
+private import gobject.Signals;
 private import gtk.AccelGroup;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.Image;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.ToolItem;
-private import gtk.Widget;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gobject.ObjectG;
 
 /**
- * Warning
- *
- * In GTK+ 3.10, GtkAction has been deprecated. Use GAction instead, and
- * associate actions with GtkActionable widgets. Use GMenuModel for creating
- * menus with gtk_menu_new_from_model().
- *
+ * > In GTK+ 3.10, GtkAction has been deprecated. Use #GAction
+ * > instead, and associate actions with #GtkActionable widgets. Use
+ * > #GMenuModel for creating menus with gtk_menu_new_from_model().
+ * 
  * Actions represent operations that the user can be perform, along with
  * some information how it should be presented in the interface. Each action
  * provides methods to create icons, menu items and toolbar items
  * representing itself.
- *
+ * 
  * As well as the callback that is called when the action gets activated,
  * the following also gets associated with the action:
- *
- * a name (not translated, for path lookup)
- *
- * a label (translated, for display)
- *
- * an accelerator
- *
- * whether label indicates a stock id
- *
- * a tooltip (optional, translated)
- *
- * a toolbar label (optional, shorter than label)
- *
+ * 
+ * - a name (not translated, for path lookup)
+ * 
+ * - a label (translated, for display)
+ * 
+ * - an accelerator
+ * 
+ * - whether label indicates a stock id
+ * 
+ * - a tooltip (optional, translated)
+ * 
+ * - a toolbar label (optional, shorter than label)
+ * 
+ * 
  * The action will also have some state information:
- *
- * visible (shown/hidden)
- *
- * sensitive (enabled/disabled)
- *
- * Apart from regular actions, there are toggle
- * actions, which can be toggled between two states and radio actions, of which only one in a group
- * can be in the "active" state. Other actions can be implemented as GtkAction
+ * 
+ * - visible (shown/hidden)
+ * 
+ * - sensitive (enabled/disabled)
+ * 
+ * Apart from regular actions, there are [toggle actions][GtkToggleAction],
+ * which can be toggled between two states and
+ * [radio actions][GtkRadioAction], of which only one in a group
+ * can be in the “active” state. Other actions can be implemented as #GtkAction
  * subclasses.
- *
+ * 
  * Each action can have one or more proxy widgets. To act as an action proxy,
- * widget needs to implement GtkActivatable interface. Proxies mirror the state
- * of the action and should change when the action's state changes. Properties
- * that are always mirrored by proxies are "sensitive" and
- * "visible". "gicon", "icon-name", "label",
- * "short-label" and "stock-id" properties are only mirorred
- * if proxy widget has "use-action-appearance" property set to
- * TRUE.
- *
+ * widget needs to implement #GtkActivatable interface. Proxies mirror the state
+ * of the action and should change when the action’s state changes. Properties
+ * that are always mirrored by proxies are #GtkAction:sensitive and
+ * #GtkAction:visible. #GtkAction:gicon, #GtkAction:icon-name, #GtkAction:label,
+ * #GtkAction:short-label and #GtkAction:stock-id properties are only mirorred
+ * if proxy widget has #GtkActivatable:use-action-appearance property set to
+ * %TRUE.
+ * 
  * When the proxy is activated, it should activate its action.
  */
 public class Action : ObjectG, BuildableIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkAction* gtkAction;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkAction* getActionStruct()
 	{
 		return gtkAction;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkAction;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkAction* gtkAction)
-	{
-		super(cast(GObject*)gtkAction);
-		this.gtkAction = gtkAction;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkAction = cast(GtkAction*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkAction* gtkAction, bool ownedRef = false)
+	{
+		this.gtkAction = gtkAction;
+		super(cast(GObject*)gtkAction, ownedRef);
+	}
+
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkAction);
-	
+
 	/**
 	 * Creates a new GtkAction object. To add the action to a
 	 * GtkActionGroup and set the accelerator for the action,
@@ -204,7 +145,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public this (string name, string label, string tooltip, StockID stockId)
 	{
-		this(name, label, tooltip, StockDesc[stockId]);
+		this(name, label, tooltip, cast(string)stockId);
 	}
 	
 	/**
@@ -214,16 +155,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public StockID getStockId()
 	{
-		// const gchar * gtk_action_get_stock_id (GtkAction *action);
-		string id = Str.toString(gtk_action_get_stock_id(gtkAction));
-		
-		foreach(i, desc; StockDesc)
-		{
-			if(desc == id)
-			return cast(StockID)i;
-		}
-		
-		return StockID.DISCARD;
+		return cast(StockID)Str.toString(gtk_action_get_stock_id(gtkAction));
 	}
 	
 	/**
@@ -234,7 +166,7 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public void setStockId(StockID stockId)
 	{
-		setStockId(StockDesc[stockId]);
+		setStockId(stockId);
 	}
 	
 	/**
@@ -305,359 +237,132 @@ public class Action : ObjectG, BuildableIF
 		}
 		return new Menu(cast(GtkMenu*) p);
 	}
-	
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(Action)[] onActivateListeners;
-	/**
-	 * Warning
-	 * GtkAction::activate has been deprecated since version 3.10 and should not be used in newly-written code. Use "activate" instead
-	 * The "activate" signal is emitted when the action is activated.
-	 * Since 2.4
-	 * See Also
-	 * GtkActionGroup, GtkUIManager, GtkActivatable
-	 */
-	void addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+
+	public static GType getType()
 	{
-		if ( !("activate" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		return gtk_action_get_type();
 	}
-	extern(C) static void callBackActivate(GtkAction* actionStruct, Action _action)
-	{
-		foreach ( void delegate(Action) dlg ; _action.onActivateListeners )
-		{
-			dlg(_action);
-		}
-	}
-	
-	
+
 	/**
-	 * Warning
-	 * gtk_action_new has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, associating it to a widget with
-	 * GtkActionable or creating a GtkMenu with gtk_menu_new_from_model()
-	 * Creates a new GtkAction object. To add the action to a
-	 * GtkActionGroup and set the accelerator for the action,
+	 * Creates a new #GtkAction object. To add the action to a
+	 * #GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
-	 * See the section called “UI Definitions” for information on allowed action
+	 * See the [UI Definition section][XML-UI] for information on allowed action
 	 * names.
-	 * Since 2.4
+	 *
+	 * Deprecated: Use #GAction instead, associating it to a widget with
+	 * #GtkActionable or creating a #GtkMenu with gtk_menu_new_from_model()
+	 *
 	 * Params:
-	 * name = A unique name for the action
-	 * label = the label displayed in menu items and on buttons,
-	 * or NULL. [allow-none]
-	 * tooltip = a tooltip for the action, or NULL. [allow-none]
-	 * stockId = the stock icon to display in widgets representing
-	 * the action, or NULL. [allow-none]
+	 *     name = A unique name for the action
+	 *     label = the label displayed in menu items and on buttons,
+	 *         or %NULL
+	 *     tooltip = a tooltip for the action, or %NULL
+	 *     stockId = the stock icon to display in widgets representing
+	 *         the action, or %NULL
+	 *
+	 * Return: a new #GtkAction
+	 *
+	 * Since: 2.4
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string name, string label, string tooltip, string stockId)
+	public this(string name, string label, string tooltip, string stockId)
 	{
-		// GtkAction * gtk_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId))");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GtkAction*) p);
+		
+		this(cast(GtkAction*) p, true);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_get_name has been deprecated since version 3.10 and should not be used in newly-written code. Use g_action_get_name() on a GAction instead
-	 * Returns the name of the action.
-	 * Since 2.4
-	 * Returns: the name of the action. The string belongs to GTK+ and should not be freed.
-	 */
-	public string getName()
-	{
-		// const gchar * gtk_action_get_name (GtkAction *action);
-		return Str.toString(gtk_action_get_name(gtkAction));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_is_sensitive has been deprecated since version 3.10 and should not be used in newly-written code. Use g_simple_action_get_enabled() on a GSimpleAction
-	 * instead
-	 * Returns whether the action is effectively sensitive.
-	 * Since 2.4
-	 * Returns: TRUE if the action and its associated action group are both sensitive.
-	 */
-	public int isSensitive()
-	{
-		// gboolean gtk_action_is_sensitive (GtkAction *action);
-		return gtk_action_is_sensitive(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_sensitive has been deprecated since version 3.10 and should not be used in newly-written code. Use g_simple_action_get_enabled() on a GSimpleAction
-	 * instead
-	 * Returns whether the action itself is sensitive. Note that this doesn't
-	 * necessarily mean effective sensitivity. See gtk_action_is_sensitive()
-	 * for that.
-	 * Since 2.4
-	 * Returns: TRUE if the action itself is sensitive.
-	 */
-	public int getSensitive()
-	{
-		// gboolean gtk_action_get_sensitive (GtkAction *action);
-		return gtk_action_get_sensitive(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_sensitive has been deprecated since version 3.10 and should not be used in newly-written code. Use g_simple_action_set_enabled() on a GSimpleAction
-	 * instead
-	 * Sets the ::sensitive property of the action to sensitive. Note that
-	 * this doesn't necessarily mean effective sensitivity. See
-	 * gtk_action_is_sensitive()
-	 * for that.
-	 * Since 2.6
-	 * Params:
-	 * sensitive = TRUE to make the action sensitive
-	 */
-	public void setSensitive(int sensitive)
-	{
-		// void gtk_action_set_sensitive (GtkAction *action,  gboolean sensitive);
-		gtk_action_set_sensitive(gtkAction, sensitive);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_is_visible has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the state of
-	 * GtkActionable widgets directly
-	 * Returns whether the action is effectively visible.
-	 * Since 2.4
-	 * Returns: TRUE if the action and its associated action group are both visible.
-	 */
-	public int isVisible()
-	{
-		// gboolean gtk_action_is_visible (GtkAction *action);
-		return gtk_action_is_visible(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_visible has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the state of
-	 * GtkActionable widgets directly
-	 * Returns whether the action itself is visible. Note that this doesn't
-	 * necessarily mean effective visibility. See gtk_action_is_sensitive()
-	 * for that.
-	 * Since 2.4
-	 * Returns: TRUE if the action itself is visible.
-	 */
-	public int getVisible()
-	{
-		// gboolean gtk_action_get_visible (GtkAction *action);
-		return gtk_action_get_visible(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_visible has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the state of
-	 * GtkActionable widgets directly
-	 * Sets the ::visible property of the action to visible. Note that
-	 * this doesn't necessarily mean effective visibility. See
-	 * gtk_action_is_visible()
-	 * for that.
-	 * Since 2.6
-	 * Params:
-	 * visible = TRUE to make the action visible
-	 */
-	public void setVisible(int visible)
-	{
-		// void gtk_action_set_visible (GtkAction *action,  gboolean visible);
-		gtk_action_set_visible(gtkAction, visible);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_activate has been deprecated since version 3.10 and should not be used in newly-written code. Use g_action_group_activate_action() on a GAction instead
-	 * Emits the "activate" signal on the specified action, if it isn't
+	 * Emits the “activate” signal on the specified action, if it isn't
 	 * insensitive. This gets called by the proxy widgets when they get
 	 * activated.
+	 *
 	 * It can also be used to manually activate an action.
-	 * Since 2.4
+	 *
+	 * Deprecated: Use g_action_group_activate_action() on a #GAction instead
+	 *
+	 * Since: 2.4
 	 */
 	public void activate()
 	{
-		// void gtk_action_activate (GtkAction *action);
 		gtk_action_activate(gtkAction);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_get_proxies is deprecated and should not be used in newly-written code. 3.10
-	 * Returns the proxy widgets for an action.
-	 * See also gtk_activatable_get_related_action().
-	 * Since 2.4
-	 * Returns: a GSList of proxy widgets. The list is owned by GTK+ and must not be modified. [element-type GtkWidget][transfer none]
-	 */
-	public ListSG getProxies()
-	{
-		// GSList * gtk_action_get_proxies (GtkAction *action);
-		auto p = gtk_action_get_proxies(gtkAction);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_connect_accelerator has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction and the accelerator group on an associated
-	 * GtkMenu instead
-	 * Installs the accelerator for action if action has an
-	 * accel path and group. See gtk_action_set_accel_path() and
-	 * gtk_action_set_accel_group()
-	 * Since multiple proxies may independently trigger the installation
-	 * of the accelerator, the action counts the number of times this
-	 * function has been called and doesn't remove the accelerator until
-	 * gtk_action_disconnect_accelerator() has been called as many times.
-	 * Since 2.4
-	 */
-	public void connectAccelerator()
-	{
-		// void gtk_action_connect_accelerator (GtkAction *action);
-		gtk_action_connect_accelerator(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_disconnect_accelerator has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction and the accelerator group on an associated
-	 * GtkMenu instead
-	 * Undoes the effect of one call to gtk_action_connect_accelerator().
-	 * Since 2.4
-	 */
-	public void disconnectAccelerator()
-	{
-		// void gtk_action_disconnect_accelerator (GtkAction *action);
-		gtk_action_disconnect_accelerator(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_block_activate has been deprecated since version 3.10 and should not be used in newly-written code. Use g_simple_action_set_enabled() to disable the
-	 * GSimpleAction instead
 	 * Disable activation signals from the action
+	 *
 	 * This is needed when updating the state of your proxy
-	 * GtkActivatable widget could result in calling gtk_action_activate(),
+	 * #GtkActivatable widget could result in calling gtk_action_activate(),
 	 * this is a convenience function to avoid recursing in those
 	 * cases (updating toggle state for instance).
-	 * Since 2.16
+	 *
+	 * Deprecated: Use g_simple_action_set_enabled() to disable the
+	 * #GSimpleAction instead
+	 *
+	 * Since: 2.16
 	 */
 	public void blockActivate()
 	{
-		// void gtk_action_block_activate (GtkAction *action);
 		gtk_action_block_activate(gtkAction);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_unblock_activate has been deprecated since version 3.10 and should not be used in newly-written code. Use g_simple_action_set_enabled() to enable the
-	 * GSimpleAction instead
-	 * Reenable activation signals from the action
-	 * Since 2.16
+	 * Installs the accelerator for @action if @action has an
+	 * accel path and group. See gtk_action_set_accel_path() and
+	 * gtk_action_set_accel_group()
+	 *
+	 * Since multiple proxies may independently trigger the installation
+	 * of the accelerator, the @action counts the number of times this
+	 * function has been called and doesn’t remove the accelerator until
+	 * gtk_action_disconnect_accelerator() has been called as many times.
+	 *
+	 * Deprecated: Use #GAction and the accelerator group on an associated
+	 * #GtkMenu instead
+	 *
+	 * Since: 2.4
 	 */
-	public void unblockActivate()
+	public void connectAccelerator()
 	{
-		// void gtk_action_unblock_activate (GtkAction *action);
-		gtk_action_unblock_activate(gtkAction);
+		gtk_action_connect_accelerator(gtkAction);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_get_always_show_image has been deprecated since version 3.10 and should not be used in newly-written code. Use g_menu_item_get_attribute_value() on a GMenuItem
-	 * instead
-	 * Returns whether action's menu item proxies will always
-	 * show their image, if available.
-	 * Since 2.20
-	 * Returns: TRUE if the menu item proxies will always show their image
+	 * Undoes the effect of one call to gtk_action_connect_accelerator().
+	 *
+	 * Deprecated: Use #GAction and the accelerator group on an associated
+	 * #GtkMenu instead
+	 *
+	 * Since: 2.4
 	 */
-	public int getAlwaysShowImage()
+	public void disconnectAccelerator()
 	{
-		// gboolean gtk_action_get_always_show_image (GtkAction *action);
-		return gtk_action_get_always_show_image(gtkAction);
+		gtk_action_disconnect_accelerator(gtkAction);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_set_always_show_image has been deprecated since version 3.10 and should not be used in newly-written code. Use g_menu_item_set_icon() on a GMenuItem instead, if the
-	 * item should have an image
-	 * Sets whether action's menu item proxies will always show
-	 * their image, if available.
-	 * Use this if the menu item would be useless or hard to use
-	 * without their image.
-	 * Since 2.20
-	 * Params:
-	 * alwaysShow = TRUE if menuitem proxies should always show their image
-	 */
-	public void setAlwaysShowImage(int alwaysShow)
-	{
-		// void gtk_action_set_always_show_image (GtkAction *action,  gboolean always_show);
-		gtk_action_set_always_show_image(gtkAction, alwaysShow);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_accel_path has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction and the accelerator path on an associated
-	 * GtkMenu instead
-	 * Returns the accel path for this action.
-	 * Since 2.6
-	 * Returns: the accel path for this action, or NULL if none is set. The returned string is owned by GTK+ and must not be freed or modified.
-	 */
-	public string getAccelPath()
-	{
-		// const gchar * gtk_action_get_accel_path (GtkAction *action);
-		return Str.toString(gtk_action_get_accel_path(gtkAction));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_accel_path has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction and the accelerator path on an associated
-	 * GtkMenu instead
-	 * Sets the accel path for this action. All proxy widgets associated
-	 * with the action will have this accel path, so that their
-	 * accelerators are consistent.
-	 * Note that accel_path string will be stored in a GQuark. Therefore, if you
-	 * pass a static string, you can save some memory by interning it first with
-	 * g_intern_static_string().
-	 * Since 2.4
-	 * Params:
-	 * accelPath = the accelerator path
-	 */
-	public void setAccelPath(string accelPath)
-	{
-		// void gtk_action_set_accel_path (GtkAction *action,  const gchar *accel_path);
-		gtk_action_set_accel_path(gtkAction, Str.toStringz(accelPath));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_accel_closure has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction and GtkMenu instead, which have no
-	 * equivalent for getting the accel closure
 	 * Returns the accel closure for this action.
-	 * Since 2.8
-	 * Returns: the accel closure for this action. The returned closure is owned by GTK+ and must not be unreffed or modified. [transfer none]
+	 *
+	 * Deprecated: Use #GAction and #GtkMenu instead, which have no
+	 * equivalent for getting the accel closure
+	 *
+	 * Return: the accel closure for this action. The
+	 *     returned closure is owned by GTK+ and must not be unreffed
+	 *     or modified.
+	 *
+	 * Since: 2.8
 	 */
 	public Closure getAccelClosure()
 	{
-		// GClosure * gtk_action_get_accel_closure (GtkAction *action);
 		auto p = gtk_action_get_accel_closure(gtkAction);
 		
 		if(p is null)
@@ -667,155 +372,53 @@ public class Action : ObjectG, BuildableIF
 		
 		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_set_accel_group has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction and the accelerator group on an associated
-	 * GtkMenu instead
-	 * Sets the GtkAccelGroup in which the accelerator for this action
-	 * will be installed.
-	 * Since 2.4
-	 * Params:
-	 * accelGroup = a GtkAccelGroup or NULL. [allow-none]
+	 * Returns the accel path for this action.
+	 *
+	 * Deprecated: Use #GAction and the accelerator path on an associated
+	 * #GtkMenu instead
+	 *
+	 * Return: the accel path for this action, or %NULL
+	 *     if none is set. The returned string is owned by GTK+
+	 *     and must not be freed or modified.
+	 *
+	 * Since: 2.6
 	 */
-	public void setAccelGroup(AccelGroup accelGroup)
+	public string getAccelPath()
 	{
-		// void gtk_action_set_accel_group (GtkAction *action,  GtkAccelGroup *accel_group);
-		gtk_action_set_accel_group(gtkAction, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		return Str.toString(gtk_action_get_accel_path(gtkAction));
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_set_label has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and set a label on a menu item with
-	 * g_menu_item_set_label(). For GtkActionable widgets, use the widget-specific
-	 * API to set a label
-	 * Sets the label of action.
-	 * Since 2.16
-	 * Params:
-	 * label = the label text to set
+	 * Returns whether @action's menu item proxies will always
+	 * show their image, if available.
+	 *
+	 * Deprecated: Use g_menu_item_get_attribute_value() on a #GMenuItem
+	 * instead
+	 *
+	 * Return: %TRUE if the menu item proxies will always show their image
+	 *
+	 * Since: 2.20
 	 */
-	public void setLabel(string label)
+	public bool getAlwaysShowImage()
 	{
-		// void gtk_action_set_label (GtkAction *action,  const gchar *label);
-		gtk_action_set_label(gtkAction, Str.toStringz(label));
+		return gtk_action_get_always_show_image(gtkAction) != 0;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_get_label has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and get a label from a menu item
-	 * with g_menu_item_get_attribute_value(). For GtkActionable widgets, use the
-	 * widget-specific API to get a label
-	 * Gets the label text of action.
-	 * Since 2.16
-	 * Returns: the label text
-	 */
-	public string getLabel()
-	{
-		// const gchar * gtk_action_get_label (GtkAction *action);
-		return Str.toString(gtk_action_get_label(gtkAction));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_short_label has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, which has no equivalent of short
-	 * labels
-	 * Sets a shorter label text on action.
-	 * Since 2.16
-	 * Params:
-	 * shortLabel = the label text to set
-	 */
-	public void setShortLabel(string shortLabel)
-	{
-		// void gtk_action_set_short_label (GtkAction *action,  const gchar *short_label);
-		gtk_action_set_short_label(gtkAction, Str.toStringz(shortLabel));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_short_label has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, which has no equivalent of short
-	 * labels
-	 * Gets the short label text of action.
-	 * Since 2.16
-	 * Returns: the short label text.
-	 */
-	public string getShortLabel()
-	{
-		// const gchar * gtk_action_get_short_label (GtkAction *action);
-		return Str.toString(gtk_action_get_short_label(gtkAction));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_tooltip has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and set tooltips on associated
-	 * GActionable widgets with gtk_widget_set_tooltip_text()
-	 * Sets the tooltip text on action
-	 * Since 2.16
-	 * Params:
-	 * tooltip = the tooltip text
-	 */
-	public void setTooltip(string tooltip)
-	{
-		// void gtk_action_set_tooltip (GtkAction *action,  const gchar *tooltip);
-		gtk_action_set_tooltip(gtkAction, Str.toStringz(tooltip));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_tooltip has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and get tooltips from associated
-	 * GActionable widgets with gtk_widget_get_tooltip_text()
-	 * Gets the tooltip text of action.
-	 * Since 2.16
-	 * Returns: the tooltip text
-	 */
-	public string getTooltip()
-	{
-		// const gchar * gtk_action_get_tooltip (GtkAction *action);
-		return Str.toString(gtk_action_get_tooltip(gtkAction));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_stock_id has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, which has no equivalent of stock
-	 * items
-	 * Sets the stock id on action
-	 * Since 2.16
-	 * Params:
-	 * stockId = the stock id
-	 */
-	public void setStockId(string stockId)
-	{
-		// void gtk_action_set_stock_id (GtkAction *action,  const gchar *stock_id);
-		gtk_action_set_stock_id(gtkAction, Str.toStringz(stockId));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_gicon has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and g_menu_item_set_icon() to set an
-	 * icon on a GMenuItem associated with a GAction, or gtk_container_add() to
-	 * add a GtkImage to a GtkButton
-	 * Sets the icon of action.
-	 * Since 2.16
-	 * Params:
-	 * icon = the GIcon to set
-	 */
-	public void setGicon(IconIF icon)
-	{
-		// void gtk_action_set_gicon (GtkAction *action,  GIcon *icon);
-		gtk_action_set_gicon(gtkAction, (icon is null) ? null : icon.getIconTStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_gicon has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and
-	 * g_menu_item_get_attribute_value() to get an icon from a GMenuItem
-	 * associated with a GAction
-	 * Gets the gicon of action.
-	 * Since 2.16
-	 * Returns: The action's GIcon if one is set. [transfer none]
+	 * Gets the gicon of @action.
+	 *
+	 * Deprecated: Use #GAction instead, and
+	 * g_menu_item_get_attribute_value() to get an icon from a #GMenuItem
+	 * associated with a #GAction
+	 *
+	 * Return: The action’s #GIcon if one is set.
+	 *
+	 * Since: 2.16
 	 */
 	public IconIF getGicon()
 	{
-		// GIcon * gtk_action_get_gicon (GtkAction *action);
 		auto p = gtk_action_get_gicon(gtkAction);
 		
 		if(p is null)
@@ -825,124 +428,505 @@ public class Action : ObjectG, BuildableIF
 		
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_set_icon_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and g_menu_item_set_icon() to set an
-	 * icon on a GMenuItem associated with a GAction, or gtk_container_add() to
-	 * add a GtkImage to a GtkButton
-	 * Sets the icon name on action
-	 * Since 2.16
-	 * Params:
-	 * iconName = the icon name to set
-	 */
-	public void setIconName(string iconName)
-	{
-		// void gtk_action_set_icon_name (GtkAction *action,  const gchar *icon_name);
-		gtk_action_set_icon_name(gtkAction, Str.toStringz(iconName));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_icon_name has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and
-	 * g_menu_item_get_attribute_value() to get an icon from a GMenuItem
-	 * associated with a GAction
-	 * Gets the icon name of action.
-	 * Since 2.16
-	 * Returns: the icon name
+	 * Gets the icon name of @action.
+	 *
+	 * Deprecated: Use #GAction instead, and
+	 * g_menu_item_get_attribute_value() to get an icon from a #GMenuItem
+	 * associated with a #GAction
+	 *
+	 * Return: the icon name
+	 *
+	 * Since: 2.16
 	 */
 	public string getIconName()
 	{
-		// const gchar * gtk_action_get_icon_name (GtkAction *action);
 		return Str.toString(gtk_action_get_icon_name(gtkAction));
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_set_visible_horizontal has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the
-	 * visibility of associated widgets and menu items directly
-	 * Sets whether action is visible when horizontal
-	 * Since 2.16
-	 * Params:
-	 * visibleHorizontal = whether the action is visible horizontally
-	 */
-	public void setVisibleHorizontal(int visibleHorizontal)
-	{
-		// void gtk_action_set_visible_horizontal (GtkAction *action,  gboolean visible_horizontal);
-		gtk_action_set_visible_horizontal(gtkAction, visibleHorizontal);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_visible_horizontal has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the
-	 * visibility of associated widgets and menu items directly
-	 * Checks whether action is visible when horizontal
-	 * Since 2.16
-	 * Returns: whether action is visible when horizontal
-	 */
-	public int getVisibleHorizontal()
-	{
-		// gboolean gtk_action_get_visible_horizontal (GtkAction *action);
-		return gtk_action_get_visible_horizontal(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_visible_vertical has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the
-	 * visibility of associated widgets and menu items directly
-	 * Sets whether action is visible when vertical
-	 * Since 2.16
-	 * Params:
-	 * visibleVertical = whether the action is visible vertically
-	 */
-	public void setVisibleVertical(int visibleVertical)
-	{
-		// void gtk_action_set_visible_vertical (GtkAction *action,  gboolean visible_vertical);
-		gtk_action_set_visible_vertical(gtkAction, visibleVertical);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_get_visible_vertical has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor the
-	 * visibility of associated widgets and menu items directly
-	 * Checks whether action is visible when horizontal
-	 * Since 2.16
-	 * Returns: whether action is visible when horizontal
-	 */
-	public int getVisibleVertical()
-	{
-		// gboolean gtk_action_get_visible_vertical (GtkAction *action);
-		return gtk_action_get_visible_vertical(gtkAction);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_action_set_is_important has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor whether
+	 * Checks whether @action is important or not
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor whether
 	 * labels are shown directly
+	 *
+	 * Return: whether @action is important
+	 *
+	 * Since: 2.16
+	 */
+	public bool getIsImportant()
+	{
+		return gtk_action_get_is_important(gtkAction) != 0;
+	}
+
+	/**
+	 * Gets the label text of @action.
+	 *
+	 * Deprecated: Use #GAction instead, and get a label from a menu item
+	 * with g_menu_item_get_attribute_value(). For #GtkActionable widgets, use the
+	 * widget-specific API to get a label
+	 *
+	 * Return: the label text
+	 *
+	 * Since: 2.16
+	 */
+	public string getLabel()
+	{
+		return Str.toString(gtk_action_get_label(gtkAction));
+	}
+
+	/**
+	 * Returns the name of the action.
+	 *
+	 * Deprecated: Use g_action_get_name() on a #GAction instead
+	 *
+	 * Return: the name of the action. The string belongs to GTK+ and should not
+	 *     be freed.
+	 *
+	 * Since: 2.4
+	 */
+	public string getName()
+	{
+		return Str.toString(gtk_action_get_name(gtkAction));
+	}
+
+	/**
+	 * Returns the proxy widgets for an action.
+	 * See also gtk_activatable_get_related_action().
+	 *
+	 * Return: a #GSList of proxy widgets. The list is owned by GTK+
+	 *     and must not be modified.
+	 *
+	 * Since: 2.4
+	 */
+	public ListSG getProxies()
+	{
+		auto p = gtk_action_get_proxies(gtkAction);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListSG(cast(GSList*) p);
+	}
+
+	/**
+	 * Returns whether the action itself is sensitive. Note that this doesn’t
+	 * necessarily mean effective sensitivity. See gtk_action_is_sensitive()
+	 * for that.
+	 *
+	 * Deprecated: Use g_action_get_enabled() on a #GAction
+	 * instead
+	 *
+	 * Return: %TRUE if the action itself is sensitive.
+	 *
+	 * Since: 2.4
+	 */
+	public bool getSensitive()
+	{
+		return gtk_action_get_sensitive(gtkAction) != 0;
+	}
+
+	/**
+	 * Gets the short label text of @action.
+	 *
+	 * Deprecated: Use #GAction instead, which has no equivalent of short
+	 * labels
+	 *
+	 * Return: the short label text.
+	 *
+	 * Since: 2.16
+	 */
+	public string getShortLabel()
+	{
+		return Str.toString(gtk_action_get_short_label(gtkAction));
+	}
+
+	/**
+	 * Gets the tooltip text of @action.
+	 *
+	 * Deprecated: Use #GAction instead, and get tooltips from associated
+	 * #GtkActionable widgets with gtk_widget_get_tooltip_text()
+	 *
+	 * Return: the tooltip text
+	 *
+	 * Since: 2.16
+	 */
+	public string getTooltip()
+	{
+		return Str.toString(gtk_action_get_tooltip(gtkAction));
+	}
+
+	/**
+	 * Returns whether the action itself is visible. Note that this doesn’t
+	 * necessarily mean effective visibility. See gtk_action_is_sensitive()
+	 * for that.
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the state of
+	 * #GtkActionable widgets directly
+	 *
+	 * Return: %TRUE if the action itself is visible.
+	 *
+	 * Since: 2.4
+	 */
+	public bool getVisible()
+	{
+		return gtk_action_get_visible(gtkAction) != 0;
+	}
+
+	/**
+	 * Checks whether @action is visible when horizontal
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the
+	 * visibility of associated widgets and menu items directly
+	 *
+	 * Return: whether @action is visible when horizontal
+	 *
+	 * Since: 2.16
+	 */
+	public bool getVisibleHorizontal()
+	{
+		return gtk_action_get_visible_horizontal(gtkAction) != 0;
+	}
+
+	/**
+	 * Checks whether @action is visible when horizontal
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the
+	 * visibility of associated widgets and menu items directly
+	 *
+	 * Return: whether @action is visible when horizontal
+	 *
+	 * Since: 2.16
+	 */
+	public bool getVisibleVertical()
+	{
+		return gtk_action_get_visible_vertical(gtkAction) != 0;
+	}
+
+	/**
+	 * Returns whether the action is effectively sensitive.
+	 *
+	 * Deprecated: Use g_action_get_enabled() on a #GAction
+	 * instead
+	 *
+	 * Return: %TRUE if the action and its associated action group
+	 *     are both sensitive.
+	 *
+	 * Since: 2.4
+	 */
+	public bool isSensitive()
+	{
+		return gtk_action_is_sensitive(gtkAction) != 0;
+	}
+
+	/**
+	 * Returns whether the action is effectively visible.
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the state of
+	 * #GtkActionable widgets directly
+	 *
+	 * Return: %TRUE if the action and its associated action group
+	 *     are both visible.
+	 *
+	 * Since: 2.4
+	 */
+	public bool isVisible()
+	{
+		return gtk_action_is_visible(gtkAction) != 0;
+	}
+
+	/**
+	 * Sets the #GtkAccelGroup in which the accelerator for this action
+	 * will be installed.
+	 *
+	 * Deprecated: Use #GAction and the accelerator group on an associated
+	 * #GtkMenu instead
+	 *
+	 * Params:
+	 *     accelGroup = a #GtkAccelGroup or %NULL
+	 *
+	 * Since: 2.4
+	 */
+	public void setAccelGroup(AccelGroup accelGroup)
+	{
+		gtk_action_set_accel_group(gtkAction, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+	}
+
+	/**
+	 * Sets the accel path for this action.  All proxy widgets associated
+	 * with the action will have this accel path, so that their
+	 * accelerators are consistent.
+	 *
+	 * Note that @accel_path string will be stored in a #GQuark. Therefore, if you
+	 * pass a static string, you can save some memory by interning it first with
+	 * g_intern_static_string().
+	 *
+	 * Deprecated: Use #GAction and the accelerator path on an associated
+	 * #GtkMenu instead
+	 *
+	 * Params:
+	 *     accelPath = the accelerator path
+	 *
+	 * Since: 2.4
+	 */
+	public void setAccelPath(string accelPath)
+	{
+		gtk_action_set_accel_path(gtkAction, Str.toStringz(accelPath));
+	}
+
+	/**
+	 * Sets whether @action's menu item proxies will ignore the
+	 * #GtkSettings:gtk-menu-images setting and always show their image, if available.
+	 *
+	 * Use this if the menu item would be useless or hard to use
+	 * without their image.
+	 *
+	 * Deprecated: Use g_menu_item_set_icon() on a #GMenuItem instead, if the
+	 * item should have an image
+	 *
+	 * Params:
+	 *     alwaysShow = %TRUE if menuitem proxies should always show their image
+	 *
+	 * Since: 2.20
+	 */
+	public void setAlwaysShowImage(bool alwaysShow)
+	{
+		gtk_action_set_always_show_image(gtkAction, alwaysShow);
+	}
+
+	/**
+	 * Sets the icon of @action.
+	 *
+	 * Deprecated: Use #GAction instead, and g_menu_item_set_icon() to set an
+	 * icon on a #GMenuItem associated with a #GAction, or gtk_container_add() to
+	 * add a #GtkImage to a #GtkButton
+	 *
+	 * Params:
+	 *     icon = the #GIcon to set
+	 *
+	 * Since: 2.16
+	 */
+	public void setGicon(IconIF icon)
+	{
+		gtk_action_set_gicon(gtkAction, (icon is null) ? null : icon.getIconStruct());
+	}
+
+	/**
+	 * Sets the icon name on @action
+	 *
+	 * Deprecated: Use #GAction instead, and g_menu_item_set_icon() to set an
+	 * icon on a #GMenuItem associated with a #GAction, or gtk_container_add() to
+	 * add a #GtkImage to a #GtkButton
+	 *
+	 * Params:
+	 *     iconName = the icon name to set
+	 *
+	 * Since: 2.16
+	 */
+	public void setIconName(string iconName)
+	{
+		gtk_action_set_icon_name(gtkAction, Str.toStringz(iconName));
+	}
+
+	/**
 	 * Sets whether the action is important, this attribute is used
 	 * primarily by toolbar items to decide whether to show a label
 	 * or not.
-	 * Since 2.16
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor whether
+	 * labels are shown directly
+	 *
 	 * Params:
-	 * isImportant = TRUE to make the action important
+	 *     isImportant = %TRUE to make the action important
+	 *
+	 * Since: 2.16
 	 */
-	public void setIsImportant(int isImportant)
+	public void setIsImportant(bool isImportant)
 	{
-		// void gtk_action_set_is_important (GtkAction *action,  gboolean is_important);
 		gtk_action_set_is_important(gtkAction, isImportant);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_action_get_is_important has been deprecated since version 3.10 and should not be used in newly-written code. Use GAction instead, and control and monitor whether
-	 * labels are shown directly
-	 * Checks whether action is important or not
-	 * Since 2.16
-	 * Returns: whether action is important
+	 * Sets the label of @action.
+	 *
+	 * Deprecated: Use #GAction instead, and set a label on a menu item with
+	 * g_menu_item_set_label(). For #GtkActionable widgets, use the widget-specific
+	 * API to set a label
+	 *
+	 * Params:
+	 *     label = the label text to set
+	 *
+	 * Since: 2.16
 	 */
-	public int getIsImportant()
+	public void setLabel(string label)
 	{
-		// gboolean gtk_action_get_is_important (GtkAction *action);
-		return gtk_action_get_is_important(gtkAction);
+		gtk_action_set_label(gtkAction, Str.toStringz(label));
+	}
+
+	/**
+	 * Sets the :sensitive property of the action to @sensitive. Note that
+	 * this doesn’t necessarily mean effective sensitivity. See
+	 * gtk_action_is_sensitive()
+	 * for that.
+	 *
+	 * Deprecated: Use g_simple_action_set_enabled() on a #GSimpleAction
+	 * instead
+	 *
+	 * Params:
+	 *     sensitive = %TRUE to make the action sensitive
+	 *
+	 * Since: 2.6
+	 */
+	public void setSensitive(bool sensitive)
+	{
+		gtk_action_set_sensitive(gtkAction, sensitive);
+	}
+
+	/**
+	 * Sets a shorter label text on @action.
+	 *
+	 * Deprecated: Use #GAction instead, which has no equivalent of short
+	 * labels
+	 *
+	 * Params:
+	 *     shortLabel = the label text to set
+	 *
+	 * Since: 2.16
+	 */
+	public void setShortLabel(string shortLabel)
+	{
+		gtk_action_set_short_label(gtkAction, Str.toStringz(shortLabel));
+	}
+
+	/**
+	 * Sets the stock id on @action
+	 *
+	 * Deprecated: Use #GAction instead, which has no equivalent of stock
+	 * items
+	 *
+	 * Params:
+	 *     stockId = the stock id
+	 *
+	 * Since: 2.16
+	 */
+	public void setStockId(string stockId)
+	{
+		gtk_action_set_stock_id(gtkAction, Str.toStringz(stockId));
+	}
+
+	/**
+	 * Sets the tooltip text on @action
+	 *
+	 * Deprecated: Use #GAction instead, and set tooltips on associated
+	 * #GtkActionable widgets with gtk_widget_set_tooltip_text()
+	 *
+	 * Params:
+	 *     tooltip = the tooltip text
+	 *
+	 * Since: 2.16
+	 */
+	public void setTooltip(string tooltip)
+	{
+		gtk_action_set_tooltip(gtkAction, Str.toStringz(tooltip));
+	}
+
+	/**
+	 * Sets the :visible property of the action to @visible. Note that
+	 * this doesn’t necessarily mean effective visibility. See
+	 * gtk_action_is_visible()
+	 * for that.
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the state of
+	 * #GtkActionable widgets directly
+	 *
+	 * Params:
+	 *     visible = %TRUE to make the action visible
+	 *
+	 * Since: 2.6
+	 */
+	public void setVisible(bool visible)
+	{
+		gtk_action_set_visible(gtkAction, visible);
+	}
+
+	/**
+	 * Sets whether @action is visible when horizontal
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the
+	 * visibility of associated widgets and menu items directly
+	 *
+	 * Params:
+	 *     visibleHorizontal = whether the action is visible horizontally
+	 *
+	 * Since: 2.16
+	 */
+	public void setVisibleHorizontal(bool visibleHorizontal)
+	{
+		gtk_action_set_visible_horizontal(gtkAction, visibleHorizontal);
+	}
+
+	/**
+	 * Sets whether @action is visible when vertical
+	 *
+	 * Deprecated: Use #GAction instead, and control and monitor the
+	 * visibility of associated widgets and menu items directly
+	 *
+	 * Params:
+	 *     visibleVertical = whether the action is visible vertically
+	 *
+	 * Since: 2.16
+	 */
+	public void setVisibleVertical(bool visibleVertical)
+	{
+		gtk_action_set_visible_vertical(gtkAction, visibleVertical);
+	}
+
+	/**
+	 * Reenable activation signals from the action
+	 *
+	 * Deprecated: Use g_simple_action_set_enabled() to enable the
+	 * #GSimpleAction instead
+	 *
+	 * Since: 2.16
+	 */
+	public void unblockActivate()
+	{
+		gtk_action_unblock_activate(gtkAction);
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(Action)[] onActivateListeners;
+	/**
+	 * The "activate" signal is emitted when the action is activated.
+	 *
+	 * Deprecated: Use #GSimpleAction::activate instead
+	 *
+	 * Since: 2.4
+	 */
+	void addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "activate" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"activate",
+				cast(GCallback)&callBackActivate,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["activate"] = 1;
+		}
+		onActivateListeners ~= dlg;
+	}
+	extern(C) static void callBackActivate(GtkAction* actionStruct, Action _action)
+	{
+		foreach ( void delegate(Action) dlg; _action.onActivateListeners )
+		{
+			dlg(_action);
+		}
 	}
 }

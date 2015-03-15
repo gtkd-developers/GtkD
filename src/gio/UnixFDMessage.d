@@ -16,156 +16,169 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GUnixFDMessage.html
- * outPack = gio
- * outFile = UnixFDMessage
- * strct   = GUnixFDMessage
- * realStrct=
- * ctorStrct=GSocketControlMessage
- * clss    = UnixFDMessage
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_unix_fd_message_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.UnixFDList
- * structWrap:
- * 	- GUnixFDList* -> UnixFDList
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.UnixFDMessage;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.SocketControlMessage;
+private import gio.UnixFDList;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.ErrorG;
 private import glib.GException;
-private import gio.UnixFDList;
+private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-
-private import gio.SocketControlMessage;
 
 /**
- * This GSocketControlMessage contains a GUnixFDList.
+ * This #GSocketControlMessage contains a #GUnixFDList.
  * It may be sent using g_socket_send_message() and received using
  * g_socket_receive_message() over UNIX sockets (ie: sockets in the
- * G_SOCKET_ADDRESS_UNIX family). The file descriptors are copied
+ * %G_SOCKET_ADDRESS_UNIX family). The file descriptors are copied
  * between processes by the kernel.
- *
+ * 
  * For an easier way to send and receive file descriptors over
  * stream-oriented UNIX sockets, see g_unix_connection_send_fd() and
  * g_unix_connection_receive_fd().
- *
- * Note that &lt;gio/gunixfdmessage.h&gt; belongs to
- * the UNIX-specific GIO interfaces, thus you have to use the
- * gio-unix-2.0.pc pkg-config file when using it.
+ * 
+ * Note that `<gio/gunixfdmessage.h>` belongs to the UNIX-specific GIO
+ * interfaces, thus you have to use the `gio-unix-2.0.pc` pkg-config
+ * file when using it.
  */
 public class UnixFDMessage : SocketControlMessage
 {
-	
 	/** the main Gtk struct */
 	protected GUnixFDMessage* gUnixFDMessage;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GUnixFDMessage* getUnixFDMessageStruct()
 	{
 		return gUnixFDMessage;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gUnixFDMessage;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GUnixFDMessage* gUnixFDMessage)
-	{
-		super(cast(GSocketControlMessage*)gUnixFDMessage);
-		this.gUnixFDMessage = gUnixFDMessage;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gUnixFDMessage = cast(GUnixFDMessage*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Creates a new GUnixFDMessage containing list.
-	 * Since 2.24
-	 * Params:
-	 * fdList = a GUnixFDList
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (UnixFDList fdList)
+	public this (GUnixFDMessage* gUnixFDMessage, bool ownedRef = false)
 	{
-		// GSocketControlMessage * g_unix_fd_message_new_with_fd_list  (GUnixFDList *fd_list);
-		auto p = g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct())");
-		}
-		this(cast(GUnixFDMessage*) p);
+		this.gUnixFDMessage = gUnixFDMessage;
+		super(cast(GSocketControlMessage*)gUnixFDMessage, ownedRef);
 	}
-	
+
 	/**
-	 * Creates a new GUnixFDMessage containing an empty file descriptor
+	 */
+
+	public static GType getType()
+	{
+		return g_unix_fd_message_get_type();
+	}
+
+	/**
+	 * Creates a new #GUnixFDMessage containing an empty file descriptor
 	 * list.
-	 * Since 2.22
+	 *
+	 * Return: a new #GUnixFDMessage
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GSocketControlMessage * g_unix_fd_message_new (void);
 		auto p = g_unix_fd_message_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_unix_fd_message_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GUnixFDMessage*) p);
+		
+		this(cast(GUnixFDMessage*) p, true);
 	}
-	
+
 	/**
-	 * Gets the GUnixFDList contained in message. This function does not
+	 * Creates a new #GUnixFDMessage containing @list.
+	 *
+	 * Params:
+	 *     fdList = a #GUnixFDList
+	 *
+	 * Return: a new #GUnixFDMessage
+	 *
+	 * Since: 2.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(UnixFDList fdList)
+	{
+		auto p = g_unix_fd_message_new_with_fd_list((fdList is null) ? null : fdList.getUnixFDListStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_with_fd_list");
+		}
+		
+		this(cast(GUnixFDMessage*) p, true);
+	}
+
+	/**
+	 * Adds a file descriptor to @message.
+	 *
+	 * The file descriptor is duplicated using dup(). You keep your copy
+	 * of the descriptor and the copy contained in @message will be closed
+	 * when @message is finalized.
+	 *
+	 * A possible cause of failure is exceeding the per-process or
+	 * system-wide file descriptor limit.
+	 *
+	 * Params:
+	 *     fd = a valid open file descriptor
+	 *
+	 * Return: %TRUE in case of success, else %FALSE (and @error is set)
+	 *
+	 * Since: 2.22
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool appendFd(int fd)
+	{
+		GError* err = null;
+		
+		auto p = g_unix_fd_message_append_fd(gUnixFDMessage, fd, &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Gets the #GUnixFDList contained in @message.  This function does not
 	 * return a reference to the caller, but the returned list is valid for
-	 * the lifetime of message.
-	 * Since 2.24
-	 * Returns: the GUnixFDList from message. [transfer none]
+	 * the lifetime of @message.
+	 *
+	 * Return: the #GUnixFDList from @message
+	 *
+	 * Since: 2.24
 	 */
 	public UnixFDList getFdList()
 	{
-		// GUnixFDList * g_unix_fd_message_get_fd_list (GUnixFDMessage *message);
 		auto p = g_unix_fd_message_get_fd_list(gUnixFDMessage);
 		
 		if(p is null)
@@ -175,62 +188,40 @@ public class UnixFDMessage : SocketControlMessage
 		
 		return ObjectG.getDObject!(UnixFDList)(cast(GUnixFDList*) p);
 	}
-	
-	/**
-	 * Adds a file descriptor to message.
-	 * The file descriptor is duplicated using dup(). You keep your copy
-	 * of the descriptor and the copy contained in message will be closed
-	 * when message is finalized.
-	 * A possible cause of failure is exceeding the per-process or
-	 * system-wide file descriptor limit.
-	 * Since 2.22
-	 * Params:
-	 * fd = a valid open file descriptor
-	 * Returns: TRUE in case of success, else FALSE (and error is set)
-	 * Throws: GException on failure.
-	 */
-	public int appendFd(int fd)
-	{
-		// gboolean g_unix_fd_message_append_fd (GUnixFDMessage *message,  gint fd,  GError **error);
-		GError* err = null;
-		
-		auto p = g_unix_fd_message_append_fd(gUnixFDMessage, fd, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
+
 	/**
 	 * Returns the array of file descriptors that is contained in this
 	 * object.
+	 *
 	 * After this call, the descriptors are no longer contained in
-	 * message. Further calls will return an empty list (unless more
+	 * @message. Further calls will return an empty list (unless more
 	 * descriptors have been added).
+	 *
 	 * The return result of this function must be freed with g_free().
 	 * The caller is also responsible for closing all of the file
 	 * descriptors.
-	 * If length is non-NULL then it is set to the number of file
+	 *
+	 * If @length is non-%NULL then it is set to the number of file
 	 * descriptors in the returned array. The returned array is also
 	 * terminated with -1.
-	 * This function never returns NULL. In case there are no file
-	 * descriptors contained in message, an empty array is returned.
-	 * Since 2.22
-	 * Returns: an array of file descriptors. [array length=length][transfer full]
+	 *
+	 * This function never returns %NULL. In case there are no file
+	 * descriptors contained in @message, an empty array is returned.
+	 *
+	 * Params:
+	 *     length = pointer to the length of the returned
+	 *         array, or %NULL
+	 *
+	 * Return: an array of file
+	 *     descriptors
+	 *
+	 * Since: 2.22
 	 */
 	public int[] stealFds()
 	{
-		// gint * g_unix_fd_message_steal_fds (GUnixFDMessage *message,  gint *length);
 		int length;
-		auto p = g_unix_fd_message_steal_fds(gUnixFDMessage, &length);
 		
-		if(p is null)
-		{
-			return null;
-		}
+		auto p = g_unix_fd_message_steal_fds(gUnixFDMessage, &length);
 		
 		return p[0 .. length];
 	}

@@ -16,132 +16,95 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gstreamer-GstEvent.html
- * outPack = gstreamer
- * outFile = Event
- * strct   = GstEvent
- * realStrct=
- * ctorStrct=
- * clss    = Event
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_event_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gst_event_new_eos
- * 	- gst_event_new_flush_start
- * 	- gst_event_new_toc_select
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gstreamer.Caps
- * 	- gstreamer.Message
- * 	- gstreamer.Segment
- * 	- gstreamer.Structure
- * 	- gstreamer.TagList
- * 	- gstreamer.Toc
- * structWrap:
- * 	- GstCaps* -> Caps
- * 	- GstEvent* -> Event
- * 	- GstMessage* -> Message
- * 	- GstSegment* -> Segment
- * 	- GstStructure* -> Structure
- * 	- GstTagList* -> TagList
- * 	- GstToc* -> Toc
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.Event;
 
-public  import gstreamerc.gstreamertypes;
-
-private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
+private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.Message;
 private import gstreamer.Segment;
 private import gstreamer.Structure;
 private import gstreamer.TagList;
 private import gstreamer.Toc;
-
+private import gstreamerc.gstreamer;
+public  import gstreamerc.gstreamertypes;
 
 
 /**
  * The event class provides factory methods to construct events for sending
  * and functions to query (parse) received events.
- *
+ * 
  * Events are usually created with gst_event_new_*() which takes event-type
  * specific parameters as arguments.
  * To send an event application will usually use gst_element_send_event() and
  * elements will use gst_pad_send_event() or gst_pad_push_event().
  * The event should be unreffed with gst_event_unref() if it has not been sent.
- *
+ * 
  * Events that have been received can be parsed with their respective
- * gst_event_parse_*() functions. It is valid to pass NULL for unwanted details.
- *
+ * gst_event_parse_*() functions. It is valid to pass %NULL for unwanted details.
+ * 
  * Events are passed between elements in parallel to the data stream. Some events
  * are serialized with buffers, others are not. Some events only travel downstream,
  * others only upstream. Some events can travel both upstream and downstream.
- *
+ * 
  * The events are used to signal special conditions in the datastream such as
  * EOS (end of stream) or the start of a new stream-segment.
  * Events are also used to flush the pipeline of any pending data.
- *
+ * 
  * Most of the event API is used inside plugins. Applications usually only
  * construct and use seek events.
  * To do that gst_event_new_seek() is used to create a seek event. It takes
  * the needed parameters to specify seeking time and mode.
- *
- * $(DDOC_COMMENT example)
- *
- * Last reviewed on 2012-03-28 (0.11.3)
+ * |[
+ * GstEvent *event;
+ * gboolean result;
+ * ...
+ * // construct a seek event to play the media from second 2 to 5, flush
+ * // the pipeline to decrease latency.
+ * event = gst_event_new_seek (1.0,
+ * GST_FORMAT_TIME,
+ * GST_SEEK_FLAG_FLUSH,
+ * GST_SEEK_TYPE_SET, 2 * GST_SECOND,
+ * GST_SEEK_TYPE_SET, 5 * GST_SECOND);
+ * ...
+ * result = gst_element_send_event (pipeline, event);
+ * if (!result)
+ * g_warning ("seek failed");
+ * ...
+ * ]|
  */
 public class Event
 {
-	
 	/** the main Gtk struct */
 	protected GstEvent* gstEvent;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstEvent* getEventStruct()
 	{
 		return gstEvent;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gstEvent;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GstEvent* gstEvent)
 	{
 		this.gstEvent = gstEvent;
 	}
-	
+
 	/**
 	 * Create a new EOS event. The eos event can only travel downstream
 	 * synchronized with the buffer flow. Elements that receive the EOS
@@ -166,7 +129,9 @@ public class Event
 		}
 		
 		return new Event(cast(GstEvent*)p );
-	}	/**
+	}
+	
+	/**
 	 * Allocate a new flush start event. The flush start event can be send
 	 * upstream and downstream and travels out-of-bounds with the dataflow.
 	 * It marks pads as being in a WRONG_STATE to process more data.
@@ -188,7 +153,9 @@ public class Event
 		}
 		
 		return new Event(cast(GstEvent*)p );
-	}	/**
+	}
+	
+	/**
 	 * Generate a TOC select event with the given uid. The purpose of the
 	 * TOC select event is to start playback based on the TOC's entry with
 	 * the given uid.
@@ -205,211 +172,655 @@ public class Event
 		
 		return new Event(cast(GstEvent*)p );
 	}
-	
+
 	/**
 	 */
-	
-	/**
-	 * Gets the GstEventTypeFlags associated with type.
-	 * Params:
-	 * type = a GstEventType
-	 * Returns: a GstEventTypeFlags.
-	 */
-	public static GstEventTypeFlags typeGetFlags(GstEventType type)
+
+	public static GType getType()
 	{
-		// GstEventTypeFlags gst_event_type_get_flags (GstEventType type);
-		return gst_event_type_get_flags(type);
+		return gst_event_get_type();
 	}
-	
+
 	/**
-	 * Get a printable name for the given event type. Do not modify or free.
+	 * Create a new buffersize event. The event is sent downstream and notifies
+	 * elements that they should provide a buffer of the specified dimensions.
+	 *
+	 * When the @async flag is set, a thread boundary is preferred.
+	 *
 	 * Params:
-	 * type = the event type
-	 * Returns: a reference to the static name of the event.
+	 *     format = buffer format
+	 *     minsize = minimum buffer size
+	 *     maxsize = maximum buffer size
+	 *     async = thread behavior
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static string typeGetName(GstEventType type)
+	public this(GstFormat format, long minsize, long maxsize, bool async)
 	{
-		// const gchar * gst_event_type_get_name (GstEventType type);
-		return Str.toString(gst_event_type_get_name(type));
-	}
-	
-	/**
-	 * Get the unique quark for the given event type.
-	 * Params:
-	 * type = the event type
-	 * Returns: the quark associated with the event type
-	 */
-	public static GQuark typeToQuark(GstEventType type)
-	{
-		// GQuark gst_event_type_to_quark (GstEventType type);
-		return gst_event_type_to_quark(type);
-	}
-	
-	/**
-	 * Increase the refcount of this event.
-	 * Returns: event (for convenience when doing assignments). [transfer full]
-	 */
-	public Event doref()
-	{
-		// GstEvent * gst_event_ref (GstEvent *event);
-		auto p = gst_event_ref(gstEvent);
+		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new_buffer_size");
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
+		this(cast(GstEvent*) p);
 	}
-	
+
 	/**
-	 * Decrease the refcount of an event, freeing it if the refcount reaches 0.
-	 */
-	public void unref()
-	{
-		// void gst_event_unref (GstEvent *event);
-		gst_event_unref(gstEvent);
-	}
-	
-	/**
-	 * Modifies a pointer to a GstEvent to point to a different GstEvent. The
-	 * modification is done atomically (so this is useful for ensuring thread safety
-	 * in some cases), and the reference counts are updated appropriately (the old
-	 * event is unreffed, the new one is reffed).
-	 * Either new_event or the GstEvent pointed to by old_event may be NULL.
+	 * Create a new CAPS event for @caps. The caps event can only travel downstream
+	 * synchronized with the buffer flow and contains the format of the buffers
+	 * that will follow after the event.
+	 *
 	 * Params:
-	 * oldEvent = pointer to a pointer to a GstEvent
-	 * to be replaced. [inout][transfer full]
-	 * newEvent = pointer to a GstEvent that will
-	 * replace the event pointed to by old_event. [allow-none][transfer none]
-	 * Returns: TRUE if new_event was different from old_event
+	 *     caps = a #GstCaps
+	 *
+	 * Return: the new CAPS event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static int replace(ref Event oldEvent, Event newEvent)
+	public this(Caps caps)
 	{
-		// gboolean gst_event_replace (GstEvent **old_event,  GstEvent *new_event);
-		GstEvent* outoldEvent = (oldEvent is null) ? null : oldEvent.getEventStruct();
-		
-		auto p = gst_event_replace(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct());
-		
-		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
-		return p;
-	}
-	
-	/**
-	 * Copy the event using the event specific copy function.
-	 * Returns: the new event. [transfer full]
-	 */
-	public Event copy()
-	{
-		// GstEvent * gst_event_copy (const GstEvent *event);
-		auto p = gst_event_copy(gstEvent);
+		auto p = gst_event_new_caps((caps is null) ? null : caps.getCapsStruct());
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new_caps");
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
+		this(cast(GstEvent*) p);
 	}
-	
-	/**
-	 * Atomically replace the GstEvent pointed to by old_event with NULL and
-	 * return the original event.
-	 * Params:
-	 * oldEvent = pointer to a pointer to a GstEvent
-	 * to be stolen. [inout][transfer full]
-	 * Returns: the GstEvent that was in old_event
-	 */
-	public static Event steal(ref Event oldEvent)
-	{
-		// GstEvent * gst_event_steal (GstEvent **old_event);
-		GstEvent* outoldEvent = (oldEvent is null) ? null : oldEvent.getEventStruct();
-		
-		auto p = gst_event_steal(&outoldEvent);
-		
-		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Modifies a pointer to a GstEvent to point to a different GstEvent. This
-	 * function is similar to gst_event_replace() except that it takes ownership of
-	 * new_event.
-	 * Either new_event or the GstEvent pointed to by old_event may be NULL.
-	 * Params:
-	 * oldEvent = pointer to a pointer to a GstEvent
-	 * to be stolen. [inout][transfer full]
-	 * newEvent = pointer to a GstEvent that will
-	 * replace the event pointed to by old_event. [allow-none][transfer full]
-	 * Returns: TRUE if new_event was different from old_event
-	 */
-	public static int take(ref Event oldEvent, Event newEvent)
-	{
-		// gboolean gst_event_take (GstEvent **old_event,  GstEvent *new_event);
-		GstEvent* outoldEvent = (oldEvent is null) ? null : oldEvent.getEventStruct();
-		
-		auto p = gst_event_take(&outoldEvent, (newEvent is null) ? null : newEvent.getEventStruct());
-		
-		oldEvent = ObjectG.getDObject!(Event)(outoldEvent);
-		return p;
-	}
-	
-	/**
-	 * Get a writable version of the structure.
-	 * Returns: The structure of the event. The structure is still owned by the event, which means that you should not free it and that the pointer becomes invalid when you free the event. This function checks if event is writable and will never return NULL. MT safe.
-	 */
-	public Structure writableStructure()
-	{
-		// GstStructure * gst_event_writable_structure (GstEvent *event);
-		auto p = gst_event_writable_structure(gstEvent);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
-	}
-	
+
 	/**
 	 * Create a new custom-typed event. This can be used for anything not
 	 * handled by other event-specific functions to pass an event to another
 	 * element.
-	 * Make sure to allocate an event type with the GST_EVENT_MAKE_TYPE macro,
+	 *
+	 * Make sure to allocate an event type with the #GST_EVENT_MAKE_TYPE macro,
 	 * assigning a free number and filling in the correct direction and
 	 * serialization flags.
+	 *
 	 * New custom events can also be created by subclassing the event type if
 	 * needed.
+	 *
 	 * Params:
-	 * type = The type of the new event
-	 * structure = the structure for the event. The event will
-	 * take ownership of the structure. [transfer full]
+	 *     type = The type of the new event
+	 *     structure = the structure for the event. The event will
+	 *         take ownership of the structure.
+	 *
+	 * Return: the new custom event.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GstEventType type, Structure structure)
+	public this(GstEventType type, Structure structure)
 	{
-		// GstEvent * gst_event_new_custom (GstEventType type,  GstStructure *structure);
 		auto p = gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct())");
+			throw new ConstructionException("null returned by new_custom");
 		}
+		
 		this(cast(GstEvent*) p);
 	}
-	
+
+	/**
+	 * Allocate a new flush stop event. The flush stop event can be sent
+	 * upstream and downstream and travels serialized with the dataflow.
+	 * It is typically sent after sending a FLUSH_START event to make the
+	 * pads accept data again.
+	 *
+	 * Elements can process this event synchronized with the dataflow since
+	 * the preceding FLUSH_START event stopped the dataflow.
+	 *
+	 * This event is typically generated to complete a seek and to resume
+	 * dataflow.
+	 *
+	 * Params:
+	 *     resetTime = if time should be reset
+	 *
+	 * Return: a new flush stop event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(bool resetTime)
+	{
+		auto p = gst_event_new_flush_stop(resetTime);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_flush_stop");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new GAP event. A gap event can be thought of as conceptually
+	 * equivalent to a buffer to signal that there is no data for a certain
+	 * amount of time. This is useful to signal a gap to downstream elements
+	 * which may wait for data, such as muxers or mixers or overlays, especially
+	 * for sparse streams such as subtitle streams.
+	 *
+	 * Params:
+	 *     timestamp = the start time (pts) of the gap
+	 *     duration = the duration of the gap
+	 *
+	 * Return: the new GAP event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GstClockTime timestamp, GstClockTime duration)
+	{
+		auto p = gst_event_new_gap(timestamp, duration);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_gap");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new latency event. The event is sent upstream from the sinks and
+	 * notifies elements that they should add an additional @latency to the
+	 * running time before synchronising against the clock.
+	 *
+	 * The latency is mostly used in live sinks and is always expressed in
+	 * the time format.
+	 *
+	 * Params:
+	 *     latency = the new latency value
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GstClockTime latency)
+	{
+		auto p = gst_event_new_latency(latency);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_latency");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new navigation event from the given description.
+	 *
+	 * Params:
+	 *     structure = description of the event. The event will take
+	 *         ownership of the structure.
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Structure structure)
+	{
+		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_navigation");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Allocate a new qos event with the given values.
+	 * The QOS event is generated in an element that wants an upstream
+	 * element to either reduce or increase its rate because of
+	 * high/low CPU load or other resource usage such as network performance or
+	 * throttling. Typically sinks generate these events for each buffer
+	 * they receive.
+	 *
+	 * @type indicates the reason for the QoS event. #GST_QOS_TYPE_OVERFLOW is
+	 * used when a buffer arrived in time or when the sink cannot keep up with
+	 * the upstream datarate. #GST_QOS_TYPE_UNDERFLOW is when the sink is not
+	 * receiving buffers fast enough and thus has to drop late buffers.
+	 * #GST_QOS_TYPE_THROTTLE is used when the datarate is artificially limited
+	 * by the application, for example to reduce power consumption.
+	 *
+	 * @proportion indicates the real-time performance of the streaming in the
+	 * element that generated the QoS event (usually the sink). The value is
+	 * generally computed based on more long term statistics about the streams
+	 * timestamps compared to the clock.
+	 * A value < 1.0 indicates that the upstream element is producing data faster
+	 * than real-time. A value > 1.0 indicates that the upstream element is not
+	 * producing data fast enough. 1.0 is the ideal @proportion value. The
+	 * proportion value can safely be used to lower or increase the quality of
+	 * the element.
+	 *
+	 * @diff is the difference against the clock in running time of the last
+	 * buffer that caused the element to generate the QOS event. A negative value
+	 * means that the buffer with @timestamp arrived in time. A positive value
+	 * indicates how late the buffer with @timestamp was. When throttling is
+	 * enabled, @diff will be set to the requested throttling interval.
+	 *
+	 * @timestamp is the timestamp of the last buffer that cause the element
+	 * to generate the QOS event. It is expressed in running time and thus an ever
+	 * increasing value.
+	 *
+	 * The upstream element can use the @diff and @timestamp values to decide
+	 * whether to process more buffers. For positive @diff, all buffers with
+	 * timestamp <= @timestamp + @diff will certainly arrive late in the sink
+	 * as well. A (negative) @diff value so that @timestamp + @diff would yield a
+	 * result smaller than 0 is not allowed.
+	 *
+	 * The application can use general event probes to intercept the QoS
+	 * event and implement custom application specific QoS handling.
+	 *
+	 * Params:
+	 *     type = the QoS type
+	 *     proportion = the proportion of the qos message
+	 *     diff = The time difference of the last Clock sync
+	 *     timestamp = The timestamp of the buffer
+	 *
+	 * Return: a new QOS event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GstQOSType type, double proportion, GstClockTimeDiff diff, GstClockTime timestamp)
+	{
+		auto p = gst_event_new_qos(type, proportion, diff, timestamp);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_qos");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new reconfigure event. The purpose of the reconfigure event is
+	 * to travel upstream and make elements renegotiate their caps or reconfigure
+	 * their buffer pools. This is useful when changing properties on elements
+	 * or changing the topology of the pipeline.
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto p = gst_event_new_reconfigure();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_reconfigure");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Allocate a new seek event with the given parameters.
+	 *
+	 * The seek event configures playback of the pipeline between @start to @stop
+	 * at the speed given in @rate, also called a playback segment.
+	 * The @start and @stop values are expressed in @format.
+	 *
+	 * A @rate of 1.0 means normal playback rate, 2.0 means double speed.
+	 * Negatives values means backwards playback. A value of 0.0 for the
+	 * rate is not allowed and should be accomplished instead by PAUSING the
+	 * pipeline.
+	 *
+	 * A pipeline has a default playback segment configured with a start
+	 * position of 0, a stop position of -1 and a rate of 1.0. The currently
+	 * configured playback segment can be queried with #GST_QUERY_SEGMENT.
+	 *
+	 * @start_type and @stop_type specify how to adjust the currently configured
+	 * start and stop fields in playback segment. Adjustments can be made relative
+	 * or absolute to the last configured values. A type of #GST_SEEK_TYPE_NONE
+	 * means that the position should not be updated.
+	 *
+	 * When the rate is positive and @start has been updated, playback will start
+	 * from the newly configured start position.
+	 *
+	 * For negative rates, playback will start from the newly configured stop
+	 * position (if any). If the stop position is updated, it must be different from
+	 * -1 (#GST_CLOCK_TIME_NONE) for negative rates.
+	 *
+	 * It is not possible to seek relative to the current playback position, to do
+	 * this, PAUSE the pipeline, query the current playback position with
+	 * #GST_QUERY_POSITION and update the playback segment current position with a
+	 * #GST_SEEK_TYPE_SET to the desired position.
+	 *
+	 * Params:
+	 *     rate = The new playback rate
+	 *     format = The format of the seek values
+	 *     flags = The optional seek flags
+	 *     startType = The type and flags for the new start position
+	 *     start = The value of the new start position
+	 *     stopType = The type and flags for the new stop position
+	 *     stop = The value of the new stop position
+	 *
+	 * Return: a new seek event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop)
+	{
+		auto p = gst_event_new_seek(rate, format, flags, startType, start, stopType, stop);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_seek");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new SEGMENT event for @segment. The segment event can only travel
+	 * downstream synchronized with the buffer flow and contains timing information
+	 * and playback properties for the buffers that will follow.
+	 *
+	 * The newsegment event marks the range of buffers to be processed. All
+	 * data not within the segment range is not to be processed. This can be
+	 * used intelligently by plugins to apply more efficient methods of skipping
+	 * unneeded data. The valid range is expressed with the @start and @stop
+	 * values.
+	 *
+	 * The time value of the segment is used in conjunction with the start
+	 * value to convert the buffer timestamps into the stream time. This is
+	 * usually done in sinks to report the current stream_time.
+	 * @time represents the stream_time of a buffer carrying a timestamp of
+	 * @start. @time cannot be -1.
+	 *
+	 * @start cannot be -1, @stop can be -1. If there
+	 * is a valid @stop given, it must be greater or equal the @start, including
+	 * when the indicated playback @rate is < 0.
+	 *
+	 * The @applied_rate value provides information about any rate adjustment that
+	 * has already been made to the timestamps and content on the buffers of the
+	 * stream. (@rate * @applied_rate) should always equal the rate that has been
+	 * requested for playback. For example, if an element has an input segment
+	 * with intended playback @rate of 2.0 and applied_rate of 1.0, it can adjust
+	 * incoming timestamps and buffer content by half and output a newsegment event
+	 * with @rate of 1.0 and @applied_rate of 2.0
+	 *
+	 * After a newsegment event, the buffer stream time is calculated with:
+	 *
+	 * time + (TIMESTAMP(buf) - start) * ABS (rate * applied_rate)
+	 *
+	 * Params:
+	 *     segment = a #GstSegment
+	 *
+	 * Return: the new SEGMENT event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Segment segment)
+	{
+		auto p = gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_segment");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new segment-done event. This event is sent by elements that
+	 * finish playback of a segment as a result of a segment seek.
+	 *
+	 * Params:
+	 *     format = The format of the position being done
+	 *     position = The position of the segment being done
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GstFormat format, long position)
+	{
+		auto p = gst_event_new_segment_done(format, position);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_segment_done");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new sink-message event. The purpose of the sink-message event is
+	 * to instruct a sink to post the message contained in the event synchronized
+	 * with the stream.
+	 *
+	 * @name is used to store multiple sticky events on one pad.
+	 *
+	 * Params:
+	 *     name = a name for the event
+	 *     msg = the #GstMessage to be posted
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string name, Message msg)
+	{
+		auto p = gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_sink_message");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new step event. The purpose of the step event is to instruct a sink
+	 * to skip @amount (expressed in @format) of media. It can be used to implement
+	 * stepping through the video frame by frame or for doing fast trick modes.
+	 *
+	 * A rate of <= 0.0 is not allowed. Pause the pipeline, for the effect of rate
+	 * = 0.0 or first reverse the direction of playback using a seek event to get
+	 * the same effect as rate < 0.0.
+	 *
+	 * The @flush flag will clear any pending data in the pipeline before starting
+	 * the step operation.
+	 *
+	 * The @intermediate flag instructs the pipeline that this step operation is
+	 * part of a larger step operation.
+	 *
+	 * Params:
+	 *     format = the format of @amount
+	 *     amount = the amount of data to step
+	 *     rate = the step rate
+	 *     flush = flushing steps
+	 *     intermediate = intermediate steps
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GstFormat format, ulong amount, double rate, bool flush, bool intermediate)
+	{
+		auto p = gst_event_new_step(format, amount, rate, flush, intermediate);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_step");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new STREAM_START event. The stream start event can only
+	 * travel downstream synchronized with the buffer flow. It is expected
+	 * to be the first event that is sent for a new stream.
+	 *
+	 * Source elements, demuxers and other elements that create new streams
+	 * are supposed to send this event as the first event of a new stream. It
+	 * should not be send after a flushing seek or in similar situations
+	 * and is used to mark the beginning of a new logical stream. Elements
+	 * combining multiple streams must ensure that this event is only forwarded
+	 * downstream once and not for every single input stream.
+	 *
+	 * The @stream_id should be a unique string that consists of the upstream
+	 * stream-id, / as separator and a unique stream-id for this specific
+	 * stream. A new stream-id should only be created for a stream if the upstream
+	 * stream is split into (potentially) multiple new streams, e.g. in a demuxer,
+	 * but not for every single element in the pipeline.
+	 * gst_pad_create_stream_id() or gst_pad_create_stream_id_printf() can be
+	 * used to create a stream-id.
+	 *
+	 * Params:
+	 *     streamId = Identifier for this stream
+	 *
+	 * Return: the new STREAM_START event.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string streamId)
+	{
+		auto p = gst_event_new_stream_start(Str.toStringz(streamId));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_stream_start");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Generates a metadata tag event from the given @taglist.
+	 *
+	 * The scope of the taglist specifies if the taglist applies to the
+	 * complete medium or only to this specific stream. As the tag event
+	 * is a sticky event, elements should merge tags received from
+	 * upstream with a given scope with their own tags with the same
+	 * scope and create a new tag event from it.
+	 *
+	 * Params:
+	 *     taglist = metadata list. The event will take ownership
+	 *         of the taglist.
+	 *
+	 * Return: a new #GstEvent
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TagList taglist)
+	{
+		auto p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_tag");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Generate a TOC event from the given @toc. The purpose of the TOC event is to
+	 * inform elements that some kind of the TOC was found.
+	 *
+	 * Params:
+	 *     toc = #GstToc structure.
+	 *     updated = whether @toc was updated or not.
+	 *
+	 * Return: a new #GstEvent.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Toc toc, bool updated)
+	{
+		auto p = gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_toc");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Parses a segment @event and copies the #GstSegment into the location
+	 * given by @segment.
+	 *
+	 * Params:
+	 *     segment = a pointer to a #GstSegment
+	 */
+	public void copySegment(Segment segment)
+	{
+		gst_event_copy_segment(gstEvent, (segment is null) ? null : segment.getSegmentStruct());
+	}
+
+	/**
+	 * Retrieve the accumulated running time offset of the event.
+	 *
+	 * Events passing through #GstPads that have a running time
+	 * offset set via gst_pad_set_offset() will get their offset
+	 * adjusted according to the pad's offset.
+	 *
+	 * If the event contains any information that related to the
+	 * running time, this information will need to be updated
+	 * before usage with this offset.
+	 *
+	 * Return: The event's running time offset
+	 *
+	 *     MT safe.
+	 *
+	 * Since: 1.4
+	 */
+	public long getRunningTimeOffset()
+	{
+		return gst_event_get_running_time_offset(gstEvent);
+	}
+
+	/**
+	 * Retrieve the sequence number of a event.
+	 *
+	 * Events have ever-incrementing sequence numbers, which may also be set
+	 * explicitly via gst_event_set_seqnum(). Sequence numbers are typically used to
+	 * indicate that a event corresponds to some other set of events or messages,
+	 * for example an EOS event corresponding to a SEEK event. It is considered good
+	 * practice to make this correspondence when possible, though it is not
+	 * required.
+	 *
+	 * Note that events and messages share the same sequence number incrementor;
+	 * two events or messages will never have the same sequence number unless
+	 * that correspondence was made explicitly.
+	 *
+	 * Return: The event's sequence number.
+	 *
+	 *     MT safe.
+	 */
+	public uint getSeqnum()
+	{
+		return gst_event_get_seqnum(gstEvent);
+	}
+
 	/**
 	 * Access the structure of the event.
-	 * Returns: The structure of the event. The structure is still owned by the event, which means that you should not free it and that the pointer becomes invalid when you free the event. MT safe.
+	 *
+	 * Return: The structure of the event. The structure is still
+	 *     owned by the event, which means that you should not free it and
+	 *     that the pointer becomes invalid when you free the event.
+	 *
+	 *     MT safe.
 	 */
 	public Structure getStructure()
 	{
-		// const GstStructure * gst_event_get_structure (GstEvent *event);
 		auto p = gst_event_get_structure(gstEvent);
 		
 		if(p is null)
@@ -419,767 +830,399 @@ public class Event
 		
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
-	
+
 	/**
-	 * Checks if event has the given name. This function is usually used to
+	 * Checks if @event has the given @name. This function is usually used to
 	 * check the name of a custom event.
+	 *
 	 * Params:
-	 * name = name to check
-	 * Returns: TRUE if name matches the name of the event structure.
+	 *     name = name to check
+	 *
+	 * Return: %TRUE if @name matches the name of the event structure.
 	 */
-	public int hasName(string name)
+	public bool hasName(string name)
 	{
-		// gboolean gst_event_has_name (GstEvent *event,  const gchar *name);
-		return gst_event_has_name(gstEvent, Str.toStringz(name));
+		return gst_event_has_name(gstEvent, Str.toStringz(name)) != 0;
 	}
-	
-	/**
-	 * Retrieve the sequence number of a event.
-	 * Events have ever-incrementing sequence numbers, which may also be set
-	 * explicitly via gst_event_set_seqnum(). Sequence numbers are typically used to
-	 * indicate that a event corresponds to some other set of events or messages,
-	 * for example an EOS event corresponding to a SEEK event. It is considered good
-	 * practice to make this correspondence when possible, though it is not
-	 * required.
-	 * Note that events and messages share the same sequence number incrementor;
-	 * two events or messages will never have the same sequence number unless
-	 * that correspondence was made explicitly.
-	 * Returns: The event's sequence number. MT safe.
-	 */
-	public uint getSeqnum()
-	{
-		// guint32 gst_event_get_seqnum (GstEvent *event);
-		return gst_event_get_seqnum(gstEvent);
-	}
-	
-	/**
-	 * Set the sequence number of a event.
-	 * This function might be called by the creator of a event to indicate that the
-	 * event relates to other events or messages. See gst_event_get_seqnum() for
-	 * more information.
-	 * MT safe.
-	 * Params:
-	 * seqnum = A sequence number.
-	 */
-	public void setSeqnum(uint seqnum)
-	{
-		// void gst_event_set_seqnum (GstEvent *event,  guint32 seqnum);
-		gst_event_set_seqnum(gstEvent, seqnum);
-	}
-	
-	/**
-	 * Allocate a new flush stop event. The flush stop event can be sent
-	 * upstream and downstream and travels serialized with the dataflow.
-	 * It is typically sent after sending a FLUSH_START event to make the
-	 * pads accept data again.
-	 * Elements can process this event synchronized with the dataflow since
-	 * the preceeding FLUSH_START event stopped the dataflow.
-	 * This event is typically generated to complete a seek and to resume
-	 * dataflow.
-	 * Params:
-	 * resetTime = if time should be reset
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (int resetTime)
-	{
-		// GstEvent * gst_event_new_flush_stop (gboolean reset_time);
-		auto p = gst_event_new_flush_stop(resetTime);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_flush_stop(resetTime)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parse the FLUSH_STOP event and retrieve the reset_time member.
-	 * Params:
-	 * resetTime = if time should be reset. [out]
-	 */
-	public void parseFlushStop(out int resetTime)
-	{
-		// void gst_event_parse_flush_stop (GstEvent *event,  gboolean *reset_time);
-		gst_event_parse_flush_stop(gstEvent, &resetTime);
-	}
-	
-	/**
-	 * Create a new GAP event. A gap event can be thought of as conceptually
-	 * equivalent to a buffer to signal that there is no data for a certain
-	 * amount of time. This is useful to signal a gap to downstream elements
-	 * which may wait for data, such as muxers or mixers or overlays, especially
-	 * for sparse streams such as subtitle streams.
-	 * Params:
-	 * timestamp = the start time (pts) of the gap
-	 * duration = the duration of the gap
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GstClockTime timestamp, GstClockTime duration)
-	{
-		// GstEvent * gst_event_new_gap (GstClockTime timestamp,  GstClockTime duration);
-		auto p = gst_event_new_gap(timestamp, duration);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_gap(timestamp, duration)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Extract timestamp and duration from a new GAP event.
-	 * Params:
-	 * timestamp = location where to store the
-	 * start time (pts) of the gap, or NULL. [out][allow-none]
-	 * duration = location where to store the duration of
-	 * the gap, or NULL. [out][allow-none]
-	 */
-	public void parseGap(out GstClockTime timestamp, out GstClockTime duration)
-	{
-		// void gst_event_parse_gap (GstEvent *event,  GstClockTime *timestamp,  GstClockTime *duration);
-		gst_event_parse_gap(gstEvent, &timestamp, &duration);
-	}
-	
-	/**
-	 * Create a new STREAM_START event. The stream start event can only
-	 * travel downstream synchronized with the buffer flow. It is expected
-	 * to be the first event that is sent for a new stream.
-	 * Source elements, demuxers and other elements that create new streams
-	 * are supposed to send this event as the first event of a new stream. It
-	 * should not be send after a flushing seek or in similar situations
-	 * and is used to mark the beginning of a new logical stream. Elements
-	 * combining multiple streams must ensure that this event is only forwarded
-	 * downstream once and not for every single input stream.
-	 * The stream_id should be a unique string that consists of the upstream
-	 * stream-id, / as separator and a unique stream-id for this specific
-	 * stream. A new stream-id should only be created for a stream if the upstream
-	 * stream is split into (potentially) multiple new streams, e.g. in a demuxer,
-	 * but not for every single element in the pipeline.
-	 * gst_pad_create_stream_id() or gst_pad_create_stream_id_printf() can be
-	 * used to create a stream-id.
-	 * Params:
-	 * streamId = Identifier for this stream
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string streamId)
-	{
-		// GstEvent * gst_event_new_stream_start (const gchar *stream_id);
-		auto p = gst_event_new_stream_start(Str.toStringz(streamId));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_stream_start(Str.toStringz(streamId))");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parse a stream-id event and store the result in the given stream_id
-	 * location. The string stored in stream_id must not be modified and will
-	 * remain valid only until event gets freed. Make a copy if you want to
-	 * modify it or store it for later use.
-	 * Params:
-	 * streamId = pointer to store the stream-id. [out][transfer none]
-	 */
-	public void parseStreamStart(out string streamId)
-	{
-		// void gst_event_parse_stream_start (GstEvent *event,  const gchar **stream_id);
-		char* outstreamId = null;
-		
-		gst_event_parse_stream_start(gstEvent, &outstreamId);
-		
-		streamId = Str.toString(outstreamId);
-	}
-	
-	/**
-	 * Since 1.2
-	 * Params:
-	 * flags = the stream flags to set
-	 */
-	public void setStreamFlags(GstStreamFlags flags)
-	{
-		// void gst_event_set_stream_flags (GstEvent *event,  GstStreamFlags flags);
-		gst_event_set_stream_flags(gstEvent, flags);
-	}
-	
-	/**
-	 * Since 1.2
-	 * Params:
-	 * flags = address of variable where to store the stream flags. [out]
-	 */
-	public void parseStreamFlags(out GstStreamFlags flags)
-	{
-		// void gst_event_parse_stream_flags (GstEvent *event,  GstStreamFlags *flags);
-		gst_event_parse_stream_flags(gstEvent, &flags);
-	}
-	
-	/**
-	 * All streams that have the same group id are supposed to be played
-	 * together, i.e. all streams inside a container file should have the
-	 * same group id but different stream ids. The group id should change
-	 * each time the stream is started, resulting in different group ids
-	 * each time a file is played for example.
-	 * Use gst_util_group_id_next() to get a new group id.
-	 * Since 1.2
-	 * Params:
-	 * groupId = the group id to set
-	 */
-	public void setGroupId(uint groupId)
-	{
-		// void gst_event_set_group_id (GstEvent *event,  guint group_id);
-		gst_event_set_group_id(gstEvent, groupId);
-	}
-	
-	/**
-	 * Since 1.2
-	 * Params:
-	 * groupId = address of variable where to store the group id. [out]
-	 * Returns: TRUE if a group id was set on the event and could be parsed, FALSE otherwise.
-	 */
-	public int parseGroupId(out uint groupId)
-	{
-		// gboolean gst_event_parse_group_id (GstEvent *event,  guint *group_id);
-		return gst_event_parse_group_id(gstEvent, &groupId);
-	}
-	
-	/**
-	 * Create a new SEGMENT event for segment. The segment event can only travel
-	 * downstream synchronized with the buffer flow and contains timing information
-	 * and playback properties for the buffers that will follow.
-	 * The newsegment event marks the range of buffers to be processed. All
-	 * data not within the segment range is not to be processed. This can be
-	 * used intelligently by plugins to apply more efficient methods of skipping
-	 * unneeded data. The valid range is expressed with the start and stop
-	 * values.
-	 * The time value of the segment is used in conjunction with the start
-	 * value to convert the buffer timestamps into the stream time. This is
-	 * usually done in sinks to report the current stream_time.
-	 * time represents the stream_time of a buffer carrying a timestamp of
-	 * start. time cannot be -1.
-	 * start cannot be -1, stop can be -1. If there
-	 * is a valid stop given, it must be greater or equal the start, including
-	 * when the indicated playback rate is &lt; 0.
-	 * The applied_rate value provides information about any rate adjustment that
-	 * has already been made to the timestamps and content on the buffers of the
-	 * stream. (rate * applied_rate) should always equal the rate that has been
-	 * requested for playback. For example, if an element has an input segment
-	 * with intended playback rate of 2.0 and applied_rate of 1.0, it can adjust
-	 * incoming timestamps and buffer content by half and output a newsegment event
-	 * with rate of 1.0 and applied_rate of 2.0
-	 * Params:
-	 * segment = a GstSegment. [transfer none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Segment segment)
-	{
-		// GstEvent * gst_event_new_segment (const GstSegment *segment);
-		auto p = gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct())");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parses a segment event and stores the result in the given segment location.
-	 * segment remains valid only until the event is freed. Don't modify the segment
-	 * and make a copy if you want to modify it or store it for later use.
-	 * Params:
-	 * segment = a pointer to a GstSegment. [out][transfer none]
-	 */
-	public void parseSegment(out Segment segment)
-	{
-		// void gst_event_parse_segment (GstEvent *event,  const GstSegment **segment);
-		GstSegment* outsegment = null;
-		
-		gst_event_parse_segment(gstEvent, &outsegment);
-		
-		segment = ObjectG.getDObject!(Segment)(outsegment);
-	}
-	
-	/**
-	 * Parses a segment event and copies the GstSegment into the location
-	 * given by segment.
-	 * Params:
-	 * segment = a pointer to a GstSegment
-	 */
-	public void copySegment(Segment segment)
-	{
-		// void gst_event_copy_segment (GstEvent *event,  GstSegment *segment);
-		gst_event_copy_segment(gstEvent, (segment is null) ? null : segment.getSegmentStruct());
-	}
-	
-	/**
-	 * Generates a metadata tag event from the given taglist.
-	 * The scope of the taglist specifies if the taglist applies to the
-	 * complete medium or only to this specific stream. As the tag event
-	 * is a sticky event, elements should merge tags received from
-	 * upstream with a given scope with their own tags with the same
-	 * scope and create a new tag event from it.
-	 * Params:
-	 * taglist = metadata list. The event will take ownership
-	 * of the taglist. [transfer full]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (TagList taglist)
-	{
-		// GstEvent * gst_event_new_tag (GstTagList *taglist);
-		auto p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct())");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parses a tag event and stores the results in the given taglist location.
-	 * No reference to the taglist will be returned, it remains valid only until
-	 * the event is freed. Don't modify or free the taglist, make a copy if you
-	 * want to modify it or store it for later use.
-	 * Params:
-	 * taglist = pointer to metadata list. [out][transfer none]
-	 */
-	public void parseTag(out TagList taglist)
-	{
-		// void gst_event_parse_tag (GstEvent *event,  GstTagList **taglist);
-		GstTagList* outtaglist = null;
-		
-		gst_event_parse_tag(gstEvent, &outtaglist);
-		
-		taglist = ObjectG.getDObject!(TagList)(outtaglist);
-	}
-	
-	/**
-	 * Create a new buffersize event. The event is sent downstream and notifies
-	 * elements that they should provide a buffer of the specified dimensions.
-	 * When the async flag is set, a thread boundary is preferred.
-	 * Params:
-	 * format = buffer format
-	 * minsize = minimum buffer size
-	 * maxsize = maximum buffer size
-	 * async = thread behavior
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GstFormat format, long minsize, long maxsize, int async)
-	{
-		// GstEvent * gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
-		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_buffer_size(format, minsize, maxsize, async)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
+
 	/**
 	 * Get the format, minsize, maxsize and async-flag in the buffersize event.
+	 *
 	 * Params:
-	 * format = A pointer to store the format in. [out]
-	 * minsize = A pointer to store the minsize in. [out]
-	 * maxsize = A pointer to store the maxsize in. [out]
-	 * async = A pointer to store the async-flag in. [out]
+	 *     format = A pointer to store the format in
+	 *     minsize = A pointer to store the minsize in
+	 *     maxsize = A pointer to store the maxsize in
+	 *     async = A pointer to store the async-flag in
 	 */
-	public void parseBufferSize(out GstFormat format, out long minsize, out long maxsize, out int async)
+	public void parseBufferSize(out GstFormat format, out long minsize, out long maxsize, out bool async)
 	{
-		// void gst_event_parse_buffer_size (GstEvent *event,  GstFormat *format,  gint64 *minsize,  gint64 *maxsize,  gboolean *async);
-		gst_event_parse_buffer_size(gstEvent, &format, &minsize, &maxsize, &async);
-	}
-	
-	/**
-	 * Allocate a new qos event with the given values.
-	 * The QOS event is generated in an element that wants an upstream
-	 * element to either reduce or increase its rate because of
-	 * high/low CPU load or other resource usage such as network performance or
-	 * throttling. Typically sinks generate these events for each buffer
-	 * they receive.
-	 * type indicates the reason for the QoS event. GST_QOS_TYPE_OVERFLOW is
-	 * used when a buffer arrived in time or when the sink cannot keep up with
-	 * the upstream datarate. GST_QOS_TYPE_UNDERFLOW is when the sink is not
-	 * receiving buffers fast enough and thus has to drop late buffers.
-	 * GST_QOS_TYPE_THROTTLE is used when the datarate is artificially limited
-	 * by the application, for example to reduce power consumption.
-	 * proportion indicates the real-time performance of the streaming in the
-	 * element that generated the QoS event (usually the sink). The value is
-	 * generally computed based on more long term statistics about the streams
-	 * timestamps compared to the clock.
-	 * A value &lt; 1.0 indicates that the upstream element is producing data faster
-	 * than real-time. A value &gt; 1.0 indicates that the upstream element is not
-	 * producing data fast enough. 1.0 is the ideal proportion value. The
-	 * proportion value can safely be used to lower or increase the quality of
-	 * the element.
-	 * diff is the difference against the clock in running time of the last
-	 * buffer that caused the element to generate the QOS event. A negative value
-	 * means that the buffer with timestamp arrived in time. A positive value
-	 * indicates how late the buffer with timestamp was. When throttling is
-	 * enabled, diff will be set to the requested throttling interval.
-	 * timestamp is the timestamp of the last buffer that cause the element
-	 * to generate the QOS event. It is expressed in running time and thus an ever
-	 * increasing value.
-	 * The upstream element can use the diff and timestamp values to decide
-	 * whether to process more buffers. For possitive diff, all buffers with
-	 * timestamp &lt;= timestamp + diff will certainly arrive late in the sink
-	 * as well. A (negative) diff value so that timestamp + diff would yield a
-	 * result smaller than 0 is not allowed.
-	 * The application can use general event probes to intercept the QoS
-	 * event and implement custom application specific QoS handling.
-	 * Params:
-	 * type = the QoS type
-	 * proportion = the proportion of the qos message
-	 * diff = The time difference of the last Clock sync
-	 * timestamp = The timestamp of the buffer
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GstQOSType type, double proportion, GstClockTimeDiff diff, GstClockTime timestamp)
-	{
-		// GstEvent * gst_event_new_qos (GstQOSType type,  gdouble proportion,  GstClockTimeDiff diff,  GstClockTime timestamp);
-		auto p = gst_event_new_qos(type, proportion, diff, timestamp);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_qos(type, proportion, diff, timestamp)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Get the type, proportion, diff and timestamp in the qos event. See
-	 * gst_event_new_qos() for more information about the different QoS values.
-	 * Params:
-	 * type = A pointer to store the QoS type in. [out]
-	 * proportion = A pointer to store the proportion in. [out]
-	 * diff = A pointer to store the diff in. [out]
-	 * timestamp = A pointer to store the timestamp in. [out]
-	 */
-	public void parseQos(out GstQOSType type, out double proportion, out GstClockTimeDiff diff, out GstClockTime timestamp)
-	{
-		// void gst_event_parse_qos (GstEvent *event,  GstQOSType *type,  gdouble *proportion,  GstClockTimeDiff *diff,  GstClockTime *timestamp);
-		gst_event_parse_qos(gstEvent, &type, &proportion, &diff, &timestamp);
-	}
-	
-	/**
-	 * Allocate a new seek event with the given parameters.
-	 * The seek event configures playback of the pipeline between start to stop
-	 * at the speed given in rate, also called a playback segment.
-	 * The start and stop values are expressed in format.
-	 * A rate of 1.0 means normal playback rate, 2.0 means double speed.
-	 * Negatives values means backwards playback. A value of 0.0 for the
-	 * rate is not allowed and should be accomplished instead by PAUSING the
-	 * pipeline.
-	 * A pipeline has a default playback segment configured with a start
-	 * position of 0, a stop position of -1 and a rate of 1.0. The currently
-	 * configured playback segment can be queried with GST_QUERY_SEGMENT.
-	 * start_type and stop_type specify how to adjust the currently configured
-	 * start and stop fields in playback segment. Adjustments can be made relative
-	 * or absolute to the last configured values. A type of GST_SEEK_TYPE_NONE
-	 * means that the position should not be updated.
-	 * When the rate is positive and start has been updated, playback will start
-	 * from the newly configured start position.
-	 * For negative rates, playback will start from the newly configured stop
-	 * position (if any). If the stop position is updated, it must be different from
-	 * -1 (GST_CLOCK_TIME_NONE) for negative rates.
-	 * It is not possible to seek relative to the current playback position, to do
-	 * this, PAUSE the pipeline, query the current playback position with
-	 * GST_QUERY_POSITION and update the playback segment current position with a
-	 * GST_SEEK_TYPE_SET to the desired position.
-	 * Params:
-	 * rate = The new playback rate
-	 * format = The format of the seek values
-	 * flags = The optional seek flags
-	 * startType = The type and flags for the new start position
-	 * start = The value of the new start position
-	 * stopType = The type and flags for the new stop position
-	 * stop = The value of the new stop position
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop)
-	{
-		// GstEvent * gst_event_new_seek (gdouble rate,  GstFormat format,  GstSeekFlags flags,  GstSeekType start_type,  gint64 start,  GstSeekType stop_type,  gint64 stop);
-		auto p = gst_event_new_seek(rate, format, flags, startType, start, stopType, stop);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_seek(rate, format, flags, startType, start, stopType, stop)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parses a seek event and stores the results in the given result locations.
-	 * Params:
-	 * rate = result location for the rate. [out]
-	 * format = result location for the stream format. [out]
-	 * flags = result location for the GstSeekFlags. [out]
-	 * startType = result location for the GstSeekType of the start position. [out]
-	 * start = result location for the start postion expressed in format. [out]
-	 * stopType = result location for the GstSeekType of the stop position. [out]
-	 * stop = result location for the stop postion expressed in format. [out]
-	 */
-	public void parseSeek(out double rate, out GstFormat format, out GstSeekFlags flags, out GstSeekType startType, out long start, out GstSeekType stopType, out long stop)
-	{
-		// void gst_event_parse_seek (GstEvent *event,  gdouble *rate,  GstFormat *format,  GstSeekFlags *flags,  GstSeekType *start_type,  gint64 *start,  GstSeekType *stop_type,  gint64 *stop);
-		gst_event_parse_seek(gstEvent, &rate, &format, &flags, &startType, &start, &stopType, &stop);
-	}
-	
-	/**
-	 * Create a new navigation event from the given description.
-	 * Params:
-	 * structure = description of the event. The event will take
-	 * ownership of the structure. [transfer full]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Structure structure)
-	{
-		// GstEvent * gst_event_new_navigation (GstStructure *structure);
-		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct())");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Create a new latency event. The event is sent upstream from the sinks and
-	 * notifies elements that they should add an additional latency to the
-	 * running time before synchronising against the clock.
-	 * The latency is mostly used in live sinks and is always expressed in
-	 * the time format.
-	 * Params:
-	 * latency = the new latency value
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GstClockTime latency)
-	{
-		// GstEvent * gst_event_new_latency (GstClockTime latency);
-		auto p = gst_event_new_latency(latency);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_latency(latency)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Get the latency in the latency event.
-	 * Params:
-	 * latency = A pointer to store the latency in. [out]
-	 */
-	public void parseLatency(ref GstClockTime latency)
-	{
-		// void gst_event_parse_latency (GstEvent *event,  GstClockTime *latency);
-		gst_event_parse_latency(gstEvent, &latency);
-	}
-	
-	/**
-	 * Create a new step event. The purpose of the step event is to instruct a sink
-	 * to skip amount (expressed in format) of media. It can be used to implement
-	 * stepping through the video frame by frame or for doing fast trick modes.
-	 * A rate of &lt;= 0.0 is not allowed. Pause the pipeline, for the effect of rate
-	 * = 0.0 or first reverse the direction of playback using a seek event to get
-	 * the same effect as rate &lt; 0.0.
-	 * The flush flag will clear any pending data in the pipeline before starting
-	 * the step operation.
-	 * The intermediate flag instructs the pipeline that this step operation is
-	 * part of a larger step operation.
-	 * Params:
-	 * format = the format of amount
-	 * amount = the amount of data to step
-	 * rate = the step rate
-	 * flush = flushing steps
-	 * intermediate = intermediate steps
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (GstFormat format, ulong amount, double rate, int flush, int intermediate)
-	{
-		// GstEvent * gst_event_new_step (GstFormat format,  guint64 amount,  gdouble rate,  gboolean flush,  gboolean intermediate);
-		auto p = gst_event_new_step(format, amount, rate, flush, intermediate);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_step(format, amount, rate, flush, intermediate)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parse the step event.
-	 * Params:
-	 * format = a pointer to store the format in. [out][allow-none]
-	 * amount = a pointer to store the amount in. [out][allow-none]
-	 * rate = a pointer to store the rate in. [out][allow-none]
-	 * flush = a pointer to store the flush boolean in. [out][allow-none]
-	 * intermediate = a pointer to store the intermediate
-	 * boolean in. [out][allow-none]
-	 */
-	public void parseStep(out GstFormat format, out ulong amount, out double rate, out int flush, out int intermediate)
-	{
-		// void gst_event_parse_step (GstEvent *event,  GstFormat *format,  guint64 *amount,  gdouble *rate,  gboolean *flush,  gboolean *intermediate);
-		gst_event_parse_step(gstEvent, &format, &amount, &rate, &flush, &intermediate);
-	}
-	
-	/**
-	 * Create a new sink-message event. The purpose of the sink-message event is
-	 * to instruct a sink to post the message contained in the event synchronized
-	 * with the stream.
-	 * name is used to store multiple sticky events on one pad.
-	 * Params:
-	 * name = a name for the event
-	 * msg = the GstMessage to be posted. [transfer none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string name, Message msg)
-	{
-		// GstEvent * gst_event_new_sink_message (const gchar *name,  GstMessage *msg);
-		auto p = gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct())");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parse the sink-message event. Unref msg after usage.
-	 * Params:
-	 * msg = a pointer to store the GstMessage in. [out][transfer full]
-	 */
-	public void parseSinkMessage(out Message msg)
-	{
-		// void gst_event_parse_sink_message (GstEvent *event,  GstMessage **msg);
-		GstMessage* outmsg = null;
+		int outasync;
 		
-		gst_event_parse_sink_message(gstEvent, &outmsg);
+		gst_event_parse_buffer_size(gstEvent, &format, &minsize, &maxsize, &outasync);
 		
-		msg = ObjectG.getDObject!(Message)(outmsg);
+		async = (outasync == 1);
 	}
-	
+
 	/**
-	 * Create a new reconfigure event. The purpose of the reconfingure event is
-	 * to travel upstream and make elements renegotiate their caps or reconfigure
-	 * their buffer pools. This is useful when changing properties on elements
-	 * or changing the topology of the pipeline.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this ()
-	{
-		// GstEvent * gst_event_new_reconfigure (void);
-		auto p = gst_event_new_reconfigure();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_reconfigure()");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Create a new CAPS event for caps. The caps event can only travel downstream
-	 * synchronized with the buffer flow and contains the format of the buffers
-	 * that will follow after the event.
-	 * Params:
-	 * caps = a GstCaps. [transfer none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Caps caps)
-	{
-		// GstEvent * gst_event_new_caps (GstCaps *caps);
-		auto p = gst_event_new_caps((caps is null) ? null : caps.getCapsStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_caps((caps is null) ? null : caps.getCapsStruct())");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Get the caps from event. The caps remains valid as long as event remains
+	 * Get the caps from @event. The caps remains valid as long as @event remains
 	 * valid.
+	 *
 	 * Params:
-	 * caps = A pointer to the caps. [out][transfer none]
+	 *     caps = A pointer to the caps
 	 */
 	public void parseCaps(out Caps caps)
 	{
-		// void gst_event_parse_caps (GstEvent *event,  GstCaps **caps);
 		GstCaps* outcaps = null;
 		
 		gst_event_parse_caps(gstEvent, &outcaps);
 		
 		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
-	
+
 	/**
-	 * Generate a TOC event from the given toc. The purpose of the TOC event is to
-	 * inform elements that some kind of the TOC was found.
+	 * Parse the FLUSH_STOP event and retrieve the @reset_time member.
+	 *
 	 * Params:
-	 * toc = GstToc structure. [transfer none]
-	 * updated = whether toc was updated or not.
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *     resetTime = if time should be reset
 	 */
-	public this (Toc toc, int updated)
+	public void parseFlushStop(out bool resetTime)
 	{
-		// GstEvent * gst_event_new_toc (GstToc *toc,  gboolean updated);
-		auto p = gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated)");
-		}
-		this(cast(GstEvent*) p);
-	}
-	
-	/**
-	 * Parse a TOC event and store the results in the given toc and updated locations.
-	 * Params:
-	 * toc = pointer to GstToc structure. [out][transfer full]
-	 * updated = pointer to store TOC updated flag. [out]
-	 */
-	public void parseToc(out Toc toc, out int updated)
-	{
-		// void gst_event_parse_toc (GstEvent *event,  GstToc **toc,  gboolean *updated);
-		GstToc* outtoc = null;
+		int outresetTime;
 		
-		gst_event_parse_toc(gstEvent, &outtoc, &updated);
+		gst_event_parse_flush_stop(gstEvent, &outresetTime);
+		
+		resetTime = (outresetTime == 1);
+	}
+
+	/**
+	 * Extract timestamp and duration from a new GAP event.
+	 *
+	 * Params:
+	 *     timestamp = location where to store the
+	 *         start time (pts) of the gap, or %NULL
+	 *     duration = location where to store the duration of
+	 *         the gap, or %NULL
+	 */
+	public void parseGap(out GstClockTime timestamp, out GstClockTime duration)
+	{
+		gst_event_parse_gap(gstEvent, &timestamp, &duration);
+	}
+
+	/**
+	 *
+	 * Params:
+	 *     groupId = address of variable where to store the group id
+	 * Return: %TRUE if a group id was set on the event and could be parsed,
+	 *     %FALSE otherwise.
+	 *
+	 * Since: 1.2
+	 */
+	public bool parseGroupId(out uint groupId)
+	{
+		return gst_event_parse_group_id(gstEvent, &groupId) != 0;
+	}
+
+	/**
+	 * Get the latency in the latency event.
+	 *
+	 * Params:
+	 *     latency = A pointer to store the latency in.
+	 */
+	public void parseLatency(out GstClockTime latency)
+	{
+		gst_event_parse_latency(gstEvent, &latency);
+	}
+
+	/**
+	 * Get the type, proportion, diff and timestamp in the qos event. See
+	 * gst_event_new_qos() for more information about the different QoS values.
+	 *
+	 * @timestamp will be adjusted for any pad offsets of pads it was passing through.
+	 *
+	 * Params:
+	 *     type = A pointer to store the QoS type in
+	 *     proportion = A pointer to store the proportion in
+	 *     diff = A pointer to store the diff in
+	 *     timestamp = A pointer to store the timestamp in
+	 */
+	public void parseQos(out GstQOSType type, out double proportion, out GstClockTimeDiff diff, out GstClockTime timestamp)
+	{
+		gst_event_parse_qos(gstEvent, &type, &proportion, &diff, &timestamp);
+	}
+
+	/**
+	 * Parses a seek @event and stores the results in the given result locations.
+	 *
+	 * Params:
+	 *     rate = result location for the rate
+	 *     format = result location for the stream format
+	 *     flags = result location for the #GstSeekFlags
+	 *     startType = result location for the #GstSeekType of the start position
+	 *     start = result location for the start position expressed in @format
+	 *     stopType = result location for the #GstSeekType of the stop position
+	 *     stop = result location for the stop position expressed in @format
+	 */
+	public void parseSeek(out double rate, out GstFormat format, out GstSeekFlags flags, out GstSeekType startType, out long start, out GstSeekType stopType, out long stop)
+	{
+		gst_event_parse_seek(gstEvent, &rate, &format, &flags, &startType, &start, &stopType, &stop);
+	}
+
+	/**
+	 * Parses a segment @event and stores the result in the given @segment location.
+	 * @segment remains valid only until the @event is freed. Don't modify the segment
+	 * and make a copy if you want to modify it or store it for later use.
+	 *
+	 * Params:
+	 *     segment = a pointer to a #GstSegment
+	 */
+	public void parseSegment(out Segment segment)
+	{
+		GstSegment* outsegment = null;
+		
+		gst_event_parse_segment(gstEvent, &outsegment);
+		
+		segment = ObjectG.getDObject!(Segment)(outsegment);
+	}
+
+	/**
+	 * Extracts the position and format from the segment done message.
+	 *
+	 * Params:
+	 *     format = Result location for the format, or %NULL
+	 *     position = Result location for the position, or %NULL
+	 */
+	public void parseSegmentDone(out GstFormat format, out long position)
+	{
+		gst_event_parse_segment_done(gstEvent, &format, &position);
+	}
+
+	/**
+	 * Parse the sink-message event. Unref @msg after usage.
+	 *
+	 * Params:
+	 *     msg = a pointer to store the #GstMessage in.
+	 */
+	public void parseSinkMessage(out Message msg)
+	{
+		GstMessage* outmsg = null;
+		
+		gst_event_parse_sink_message(gstEvent, &outmsg);
+		
+		msg = ObjectG.getDObject!(Message)(outmsg);
+	}
+
+	/**
+	 * Parse the step event.
+	 *
+	 * Params:
+	 *     format = a pointer to store the format in
+	 *     amount = a pointer to store the amount in
+	 *     rate = a pointer to store the rate in
+	 *     flush = a pointer to store the flush boolean in
+	 *     intermediate = a pointer to store the intermediate
+	 *         boolean in
+	 */
+	public void parseStep(out GstFormat format, out ulong amount, out double rate, out bool flush, out bool intermediate)
+	{
+		int outflush;
+		int outintermediate;
+		
+		gst_event_parse_step(gstEvent, &format, &amount, &rate, &outflush, &outintermediate);
+		
+		flush = (outflush == 1);
+		intermediate = (outintermediate == 1);
+	}
+
+	public void parseStreamFlags(out GstStreamFlags flags)
+	{
+		gst_event_parse_stream_flags(gstEvent, &flags);
+	}
+
+	/**
+	 * Parse a stream-id @event and store the result in the given @stream_id
+	 * location. The string stored in @stream_id must not be modified and will
+	 * remain valid only until @event gets freed. Make a copy if you want to
+	 * modify it or store it for later use.
+	 *
+	 * Params:
+	 *     streamId = pointer to store the stream-id
+	 */
+	public void parseStreamStart(out string streamId)
+	{
+		char* outstreamId = null;
+		
+		gst_event_parse_stream_start(gstEvent, &outstreamId);
+		
+		streamId = Str.toString(outstreamId);
+	}
+
+	/**
+	 * Parses a tag @event and stores the results in the given @taglist location.
+	 * No reference to the taglist will be returned, it remains valid only until
+	 * the @event is freed. Don't modify or free the taglist, make a copy if you
+	 * want to modify it or store it for later use.
+	 *
+	 * Params:
+	 *     taglist = pointer to metadata list
+	 */
+	public void parseTag(out TagList taglist)
+	{
+		GstTagList* outtaglist = null;
+		
+		gst_event_parse_tag(gstEvent, &outtaglist);
+		
+		taglist = ObjectG.getDObject!(TagList)(outtaglist);
+	}
+
+	/**
+	 * Parse a TOC @event and store the results in the given @toc and @updated locations.
+	 *
+	 * Params:
+	 *     toc = pointer to #GstToc structure.
+	 *     updated = pointer to store TOC updated flag.
+	 */
+	public void parseToc(out Toc toc, out bool updated)
+	{
+		GstToc* outtoc = null;
+		int outupdated;
+		
+		gst_event_parse_toc(gstEvent, &outtoc, &outupdated);
 		
 		toc = ObjectG.getDObject!(Toc)(outtoc);
+		updated = (outupdated == 1);
 	}
-	
+
 	/**
-	 * Parse a TOC select event and store the results in the given uid location.
+	 * Parse a TOC select @event and store the results in the given @uid location.
+	 *
 	 * Params:
-	 * uid = storage for the selection UID. [out]
+	 *     uid = storage for the selection UID.
 	 */
 	public void parseTocSelect(out string uid)
 	{
-		// void gst_event_parse_toc_select (GstEvent *event,  gchar **uid);
 		char* outuid = null;
 		
 		gst_event_parse_toc_select(gstEvent, &outuid);
 		
 		uid = Str.toString(outuid);
 	}
-	
+
 	/**
-	 * Create a new segment-done event. This event is sent by elements that
-	 * finish playback of a segment as a result of a segment seek.
+	 * All streams that have the same group id are supposed to be played
+	 * together, i.e. all streams inside a container file should have the
+	 * same group id but different stream ids. The group id should change
+	 * each time the stream is started, resulting in different group ids
+	 * each time a file is played for example.
+	 *
+	 * Use gst_util_group_id_next() to get a new group id.
+	 *
 	 * Params:
-	 * format = The format of the position being done
-	 * position = The position of the segment being done
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *     groupId = the group id to set
+	 *
+	 * Since: 1.2
 	 */
-	public this (GstFormat format, long position)
+	public void setGroupId(uint groupId)
 	{
-		// GstEvent * gst_event_new_segment_done (GstFormat format,  gint64 position);
-		auto p = gst_event_new_segment_done(format, position);
+		gst_event_set_group_id(gstEvent, groupId);
+	}
+
+	/**
+	 * Set the running time offset of a event. See
+	 * gst_event_get_running_time_offset() for more information.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     offset = A the new running time offset
+	 *
+	 * Since: 1.4
+	 */
+	public void setRunningTimeOffset(long offset)
+	{
+		gst_event_set_running_time_offset(gstEvent, offset);
+	}
+
+	/**
+	 * Set the sequence number of a event.
+	 *
+	 * This function might be called by the creator of a event to indicate that the
+	 * event relates to other events or messages. See gst_event_get_seqnum() for
+	 * more information.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     seqnum = A sequence number.
+	 */
+	public void setSeqnum(uint seqnum)
+	{
+		gst_event_set_seqnum(gstEvent, seqnum);
+	}
+
+	public void setStreamFlags(GstStreamFlags flags)
+	{
+		gst_event_set_stream_flags(gstEvent, flags);
+	}
+
+	/**
+	 * Get a writable version of the structure.
+	 *
+	 * Return: The structure of the event. The structure
+	 *     is still owned by the event, which means that you should not free
+	 *     it and that the pointer becomes invalid when you free the event.
+	 *     This function checks if @event is writable and will never return
+	 *     %NULL.
+	 *
+	 *     MT safe.
+	 */
+	public Structure writableStructure()
+	{
+		auto p = gst_event_writable_structure(gstEvent);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_event_new_segment_done(format, position)");
+			return null;
 		}
-		this(cast(GstEvent*) p);
+		
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
-	
+
 	/**
-	 * Extracts the position and format from the segment done message.
+	 * Gets the #GstEventTypeFlags associated with @type.
+	 *
 	 * Params:
-	 * format = Result location for the format, or NULL. [out][allow-none]
-	 * position = Result location for the position, or NULL. [out][allow-none]
+	 *     type = a #GstEventType
+	 *
+	 * Return: a #GstEventTypeFlags.
 	 */
-	public void parseSegmentDone(out GstFormat format, out long position)
+	public static GstEventTypeFlags typeGetFlags(GstEventType type)
 	{
-		// void gst_event_parse_segment_done (GstEvent *event,  GstFormat *format,  gint64 *position);
-		gst_event_parse_segment_done(gstEvent, &format, &position);
+		return gst_event_type_get_flags(type);
+	}
+
+	/**
+	 * Get a printable name for the given event type. Do not modify or free.
+	 *
+	 * Params:
+	 *     type = the event type
+	 *
+	 * Return: a reference to the static name of the event.
+	 */
+	public static string typeGetName(GstEventType type)
+	{
+		return Str.toString(gst_event_type_get_name(type));
+	}
+
+	/**
+	 * Get the unique quark for the given event type.
+	 *
+	 * Params:
+	 *     type = the event type
+	 *
+	 * Return: the quark associated with the event type
+	 */
+	public static GQuark typeToQuark(GstEventType type)
+	{
+		return gst_event_type_to_quark(type);
 	}
 }

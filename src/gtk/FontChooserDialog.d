@@ -16,127 +16,101 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkFontChooserDialog.html
- * outPack = gtk
- * outFile = FontChooserDialog
- * strct   = GtkFontChooserDialog
- * realStrct=
- * ctorStrct=
- * clss    = FontChooserDialog
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- FontChooserIF
- * prefixes:
- * 	- gtk_font_chooser_dialog_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Window
- * 	- gtk.FontChooserT
- * 	- gtk.FontChooserIF
- * structWrap:
- * 	- GtkWindow* -> Window
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.FontChooserDialog;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.Dialog;
+private import gtk.FontChooserIF;
+private import gtk.FontChooserT;
+private import gtk.Widget;
+private import gtk.Window;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gtk.Window;
-private import gtk.FontChooserT;
-private import gtk.FontChooserIF;
-
-
-private import gtk.Dialog;
 
 /**
- * The GtkFontChooserDialog widget is a dialog for selecting a font.
- * It implements the GtkFontChooser interface.
- *
- * GtkFontChooserDialog as GtkBuildable
- *
- * The GtkFontChooserDialog implementation of the GtkBuildable interface
- * exposes the buttons with the names
- * "select_button" and "cancel_button.
+ * The #GtkFontChooserDialog widget is a dialog for selecting a font.
+ * It implements the #GtkFontChooser interface.
+ * 
+ * # GtkFontChooserDialog as GtkBuildable
+ * 
+ * The GtkFontChooserDialog implementation of the #GtkBuildable
+ * interface exposes the buttons with the names “select_button”
+ * and “cancel_button”.
  */
 public class FontChooserDialog : Dialog, FontChooserIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkFontChooserDialog* gtkFontChooserDialog;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkFontChooserDialog* getFontChooserDialogStruct()
 	{
 		return gtkFontChooserDialog;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkFontChooserDialog;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkFontChooserDialog* gtkFontChooserDialog)
-	{
-		super(cast(GtkDialog*)gtkFontChooserDialog);
-		this.gtkFontChooserDialog = gtkFontChooserDialog;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkFontChooserDialog = cast(GtkFontChooserDialog*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkFontChooserDialog* gtkFontChooserDialog, bool ownedRef = false)
+	{
+		this.gtkFontChooserDialog = gtkFontChooserDialog;
+		super(cast(GtkDialog*)gtkFontChooserDialog, ownedRef);
+	}
+
 	// add the FontChooser capabilities
 	mixin FontChooserT!(GtkFontChooserDialog);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_font_chooser_dialog_get_type();
+	}
+
 	/**
-	 * Creates a new GtkFontChooserDialog.
+	 * Creates a new #GtkFontChooserDialog.
+	 *
 	 * Params:
-	 * title = Title of the dialog, or NULL. [allow-none]
-	 * parent = Transient parent of the dialog, or NULL. [allow-none]
+	 *     title = Title of the dialog, or %NULL
+	 *     parent = Transient parent of the dialog, or %NULL
+	 *
+	 * Return: a new #GtkFontChooserDialog
+	 *
+	 * Since: 3.2
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string title, Window parent)
+	public this(string title, Window parent)
 	{
-		// GtkWidget * gtk_font_chooser_dialog_new (const gchar *title,  GtkWindow *parent);
 		auto p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct())");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkFontChooserDialog*) p);
 	}
 }

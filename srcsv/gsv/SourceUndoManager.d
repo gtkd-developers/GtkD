@@ -16,78 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gsv
- * outFile = SourceUndoManager
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = SourceUndoManager
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = GObject
- * implements:
- * 	- SourceUndoManagerIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gsv.SourceUndoManagerT
- * 	- gsv.SourceUndoManagerIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gsv.SourceUndoManager;
 
+private import gobject.ObjectG;
+private import gsv.SourceUndoManagerIF;
+private import gsv.SourceUndoManagerT;
+private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
-private import gsvc.gsv;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gsv.SourceUndoManagerT;
-private import gsv.SourceUndoManagerIF;
-
-
-private import gobject.ObjectG;
-
-/**
- */
 public class SourceUndoManager : ObjectG, SourceUndoManagerIF
 {
-	
-	// Minimal implementation.
-	mixin SourceUndoManagerT!(GtkSourceUndoManager);
-	
+	/** the main Gtk struct */
+	protected GtkSourceUndoManager* gtkSourceUndoManager;
+
+	/** Get the main Gtk struct */
+	public GtkSourceUndoManager* getSourceUndoManagerStruct()
+	{
+		return gtkSourceUndoManager;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkSourceUndoManager;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkSourceUndoManager* gtkSourceUndoManager)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gtkSourceUndoManager);
-		this.gtkSourceUndoManager = gtkSourceUndoManager;
+		gtkSourceUndoManager = cast(GtkSourceUndoManager*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkSourceUndoManager* gtkSourceUndoManager, bool ownedRef = false)
+	{
+		this.gtkSourceUndoManager = gtkSourceUndoManager;
+		super(cast(GObject*)gtkSourceUndoManager, ownedRef);
+	}
+
+	// add the SourceUndoManager capabilities
+	mixin SourceUndoManagerT!(GtkSourceUndoManager);
+
 	/**
 	 */
 }

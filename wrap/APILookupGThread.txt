@@ -1,128 +1,65 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gtkD.
-# 
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping GThread
-#####
-###
-#
-
-
-addTypedefs: start
-
-public import gtkc.glibtypes;
-
-addTypedefs: end
-
-addAliases: start
-addAliases: end
-
-addEnums: start
-addEnums: end
-
-addStructs: start
-addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
-
-addConstants: start
-addConstants: end
-
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
-
 wrap: gthread
 
-###########################################################
-### GThread ###############################################
-###########################################################
+struct: Cond
+namespace:
+code: start
+	public  import glib.Cond;
+code: end
 
-file: glib-Threads.html
+struct: Mutex
+namespace:
+code: start
+	public  import glib.Mutex;
+code: end
 
-struct: GThread
-class: Thread
-prefix: g_thread_
-prefix: g_
-noprefix: g_mutex_
-noprefix: g_rec_mutex_
-noprefix: g_rw_lock_
-noprefix: g_cond_
-noprefix: g_private_
-noprefix: g_once_
-structWrap: GThread* Thread
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
+struct: Once
+namespace:
+code: start
+	public  import glib.Once;
+code: end
 
-out: g_once_init_enter value_location
-out: g_once_init_leave value_location
-inout: g_bit_lock address
-inout: g_bit_trylock address
-inout: g_bit_unlock address
-outFile: Thread
+struct: Private
+namespace:
+code: start
+	public  import glib.Private;
+code: end
 
-struct: GMutex
-class: Mutex
-prefix: g_mutex_
-strictPrefix: Yes
-outFile: Mutex
+struct: RecMutex
+namespace:
+code: start
+	public  import glib.RecMutex;
+code: end
 
-struct: GRecMutex
-class: RecMutex
-prefix: g_rec_mutex_
-strictPrefix: Yes
-outFile: RecMutex
+struct: RWLock
+namespace:
+code: start
+	public  import glib.RWLock;
+code: end
 
-struct: GRWLock
-class: RWLock
-prefix: g_rw_lock_
-strictPrefix: Yes
-outFile: RWLock
-
-struct: GCond
-class: Cond
-prefix: g_cond_
-strictPrefix: Yes
-import: gthread.Mutex
-structWrap: GMutex* Mutex
-inout: g_cond_timed_wait abs_time
-outFile: Cond
-
-struct: GPrivate
-class: Private
-prefix: g_private_
-strictPrefix: Yes
-outFile: Private
-
-struct: GOnce
-class: Once
-prefix: g_once_
-strictPrefix: Yes
-outFile: Once
-
+struct: Thread
+namespace:
+code: start
+	public  import glib.Thread;
+code: end

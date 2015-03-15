@@ -16,110 +16,65 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gio-D-Bus-Introspection-Data.html
- * outPack = gio
- * outFile = DBusAnnotationInfo
- * strct   = GDBusAnnotationInfo
- * realStrct=
- * ctorStrct=
- * clss    = DBusAnnotationInfo
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_dbus_annotation_info_
- * omit structs:
- * omit prefixes:
- * 	- g_dbus_interface_info_
- * 	- g_dbus_node_info_
- * 	- g_dbus_method_info_
- * 	- g_dbus_signal_info_
- * 	- g_dbus_property_info_
- * 	- g_dbus_arg_info_
- * omit code:
- * 	- g_dbus_annotation_info_lookup
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * 	- GDBusAnnotationInfo* -> DBusAnnotationInfo
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusAnnotationInfo;
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-
-
-private import gobject.Boxed;
 
 /**
- * Various data structures and convenience routines to parse and
- * generate D-Bus introspection XML. Introspection information is
- * used when registering objects with g_dbus_connection_register_object().
+ * Information about an annotation.
  *
- * The format of D-Bus introspection XML is specified in the
- * D-Bus specification.
+ * Since: 2.26
  */
-public class DBusAnnotationInfo : Boxed
+public class DBusAnnotationInfo
 {
-	
 	/** the main Gtk struct */
 	protected GDBusAnnotationInfo* gDBusAnnotationInfo;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GDBusAnnotationInfo* getDBusAnnotationInfoStruct()
 	{
 		return gDBusAnnotationInfo;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gDBusAnnotationInfo;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GDBusAnnotationInfo* gDBusAnnotationInfo)
 	{
 		this.gDBusAnnotationInfo = gDBusAnnotationInfo;
 	}
-	
+
 	/**
 	 * Looks up the value of an annotation.
-	 * This cost of this function is O(n) in number of annotations.
-	 * Since 2.26
+	 *
+	 * The cost of this function is O(n) in number of annotations.
+	 *
 	 * Params:
-	 * annotations = A array of annotations or NULL.
-	 * name = The name of the annotation to look up.
-	 * Returns: The value or null if not found.
+	 *     annotations = A %NULL-terminated array of annotations or %NULL.
+	 *     name = The name of the annotation to look up.
+	 *
+	 * Return: The value or %NULL if not found. Do not free, it is owned by @annotations.
+	 *
+	 * Since: 2.26
 	 */
 	public static string lookup(DBusAnnotationInfo[] annotations, string name)
 	{
-		// const gchar * g_dbus_annotation_info_lookup (GDBusAnnotationInfo **annotations,  const gchar *name);
-		
 		GDBusAnnotationInfo*[] annotationsArray = new GDBusAnnotationInfo*[annotations.length+1];
 		for ( int i = 0; i < annotations.length ; i++ )
 		{
@@ -129,19 +84,25 @@ public class DBusAnnotationInfo : Boxed
 		
 		return Str.toString(g_dbus_annotation_info_lookup(annotationsArray.ptr, Str.toStringz(name)));
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_dbus_annotation_info_get_type();
+	}
+
 	/**
-	 * If info is statically allocated does nothing. Otherwise increases
+	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
-	 * Since 2.26
-	 * Returns: The same info.
+	 *
+	 * Return: The same @info.
+	 *
+	 * Since: 2.26
 	 */
 	public DBusAnnotationInfo doref()
 	{
-		// GDBusAnnotationInfo * g_dbus_annotation_info_ref (GDBusAnnotationInfo *info);
 		auto p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
 		
 		if(p is null)
@@ -151,16 +112,16 @@ public class DBusAnnotationInfo : Boxed
 		
 		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p);
 	}
-	
+
 	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
+	 * If @info is statically allocated, does nothing. Otherwise decreases
+	 * the reference count of @info. When its reference count drops to 0,
 	 * the memory used is freed.
-	 * Since 2.26
+	 *
+	 * Since: 2.26
 	 */
 	public void unref()
 	{
-		// void g_dbus_annotation_info_unref (GDBusAnnotationInfo *info);
 		g_dbus_annotation_info_unref(gDBusAnnotationInfo);
 	}
 }

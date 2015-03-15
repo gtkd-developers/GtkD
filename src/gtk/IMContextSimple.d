@@ -16,123 +16,99 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkIMContextSimple.html
- * outPack = gtk
- * outFile = IMContextSimple
- * strct   = GtkIMContextSimple
- * realStrct=
- * ctorStrct=GtkIMContext
- * clss    = IMContextSimple
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_im_context_simple_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.IMContextSimple;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-
-
 private import gtk.IMContext;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-/**
- */
+
 public class IMContextSimple : IMContext
 {
-	
 	/** the main Gtk struct */
 	protected GtkIMContextSimple* gtkIMContextSimple;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkIMContextSimple* getIMContextSimpleStruct()
 	{
 		return gtkIMContextSimple;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkIMContextSimple;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkIMContextSimple* gtkIMContextSimple)
-	{
-		super(cast(GtkIMContext*)gtkIMContextSimple);
-		this.gtkIMContextSimple = gtkIMContextSimple;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkIMContextSimple = cast(GtkIMContextSimple*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkIMContextSimple* gtkIMContextSimple, bool ownedRef = false)
+	{
+		this.gtkIMContextSimple = gtkIMContextSimple;
+		super(cast(GtkIMContext*)gtkIMContextSimple, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_im_context_simple_get_type();
+	}
+
 	/**
-	 * Creates a new GtkIMContextSimple.
+	 * Creates a new #GtkIMContextSimple.
+	 *
+	 * Return: a new #GtkIMContextSimple.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkIMContext * gtk_im_context_simple_new (void);
 		auto p = gtk_im_context_simple_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_im_context_simple_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GtkIMContextSimple*) p);
+		
+		this(cast(GtkIMContextSimple*) p, true);
 	}
-	
+
 	/**
 	 * Adds an additional table to search to the input context.
-	 * Each row of the table consists of max_seq_len key symbols
-	 * followed by two guint16 interpreted as the high and low
-	 * words of a gunicode value. Tables are searched starting
+	 * Each row of the table consists of @max_seq_len key symbols
+	 * followed by two #guint16 interpreted as the high and low
+	 * words of a #gunicode value. Tables are searched starting
 	 * from the last added.
+	 *
 	 * The table must be sorted in dictionary order on the
 	 * numeric value of the key symbol fields. (Values beyond
 	 * the length of the sequence should be zero.)
+	 *
 	 * Params:
-	 * data = the table
-	 * maxSeqLen = Maximum length of a sequence in the table
-	 * (cannot be greater than GTK_MAX_COMPOSE_LEN)
+	 *     data = the table
+	 *     maxSeqLen = Maximum length of a sequence in the table
+	 *         (cannot be greater than #GTK_MAX_COMPOSE_LEN)
+	 *     nSeqs = number of sequences in the table
 	 */
-	public void addTable(ushort[] data, int maxSeqLen)
+	public void addTable(ushort[] data, int maxSeqLen, int nSeqs)
 	{
-		// void gtk_im_context_simple_add_table (GtkIMContextSimple *context_simple,  guint16 *data,  gint max_seq_len,  gint n_seqs);
-		gtk_im_context_simple_add_table(gtkIMContextSimple, data.ptr, maxSeqLen, cast(int) data.length);
+		gtk_im_context_simple_add_table(gtkIMContextSimple, data.ptr, maxSeqLen, nSeqs);
 	}
 }

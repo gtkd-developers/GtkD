@@ -1,282 +1,154 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gtkD.
-# 
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping GObject
-#####
-###
-#
-
-
-addTypedefs: start
-
-public import gtkc.glibtypes;
-
-alias void GTypeCValue;
-
-addTypedefs: end
-
-addAliases: start
-addAliases: end
-
-addEnums: start
-addEnums: end
-
-addStructs: start
-
-/**
- * An opaque structure used as the base of all type instances.
- */
-struct GTypeInstance
-{
-  /*< private >*/
-  GTypeClass* gClass;
-}
-
-/**
- * An opaque structure used as the base of all classes.
- */
-struct GTypeClass
-{
-  /*< private >*/
-  GType gType;
-}
-
-/**
- * An opaque structure used as the base of all interface types.
- */
-public struct GTypeInterface
-{ 
-	GType gType;         /* iface type */ 
-	GType gInstanceType;
-}
-
-/**
- * The class structure for the GObject type.
- * Example4.Implementing singletons using a constructor
- * static MySingleton *the_singleton = NULL;
- * static GObject*
- * my_singleton_constructor (GType type,
- */
-public struct GObjectClass
-{
-	GTypeClass gTypeClass;
-	/*< private >*/
-	GSList* constructProperties;
-	/* seldomly overidden */
-	extern(C) GObject*  function(GType type,uint nConstructProperties,GObjectConstructParam *constructProperties) constructor;
-	/* overridable methods */
-	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) setProperty;
-	extern(C) void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) getProperty;
-	extern(C) void  function(GObject *object) dispose;
-	extern(C) void  function(GObject *object) finalize;
-	/* seldomly overidden */
-	extern(C) void  function(GObject *object,uint nPspecs,GParamSpec **pspecs) dispatchPropertiesChanged;
-	/* signals */
-	extern(C) void  function(GObject *object,GParamSpec *pspec) notify;
-	/* called when done constructing */
-	extern(C) void  function(GObject *object) constructed;
-	/* padding */
-	gpointer dummy[7];
-}
-
-/**
- * Main Gtk struct.
- * All the fields in the GObject structure are private
- * to the GObject implementation and should never be accessed directly.
- */
-public struct GObject
-{
-  GTypeInstance  gTypeInstance;
-  
-  /*< private >*/
-  uint refCount;
-  GData* qdata;
-}
-
-struct GValue
-{
-	version(Windows)
-	{
-		GType		g_type;
-		union Data
-		{
-			gint     v_int;
-			guint    v_uint;
-			glong    v_long;
-			gulong   v_ulong;
-			gint64   v_int64;
-			guint64  v_uint64;
-			gfloat   v_float;
-			gdouble  v_double;
-			gpointer v_pointer;
-		};
-	}
-	else
-	{
-		align(4)
-		{
-			GType		g_type;
-			union Data
-			{
-				gint     v_int;
-				guint    v_uint;
-				glong    v_long;
-				gulong   v_ulong;
-				gint64   v_int64;
-				guint64  v_uint64;
-				gfloat   v_float;
-				gdouble  v_double;
-				gpointer v_pointer;
-			};
-		}
-	}
-	Data data1;
-	Data data2;
-}
-addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
-
-addConstants: start
-addConstants: end
-
-
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
 wrap: gobject
+file: /usr/share/gir-1.0/GObject-2.0.gir
 
-###########################################################
-### GObject ###############################################
-###########################################################
+addAliases: start
+	public import gtkc.glibtypes;
+addAliases: end
 
-file: gobject-Type-Information.html
-nostruct: GTypeClass
-nostruct: GTypeInstance
-class: Type
-prefix: g_type_
-nostruct: GTypeInterface
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.TypePlugin
-structWrap: GTypePlugin* TypePlugin
+noAlias: Type
+addEnums: start
 
-nocode: GType
-
-out: g_type_query query
-array: g_type_children Return n_children
-array: g_type_interfaces Return n_interfaces
-array: g_type_interface_prerequisites Return n_prerequisites
-
-code: start
-	public static T* getInstanceClass(T)(ObjectG obj)
+	/**
+	 * A value which represents the unique identifier of a registered type.
+	 */
+	enum GType : size_t
 	{
-		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
+		INVALID = 0<<2,
+		NONE = 1<<2,
+		INTERFACE = 2<<2,
+		CHAR = 3<<2,
+		UCHAR = 4<<2,
+		BOOLEAN = 5<<2,
+		INT = 6<<2,
+		UINT = 7<<2,
+		LONG = 8<<2,
+		ULONG = 9<<2,
+		INT64 = 10<<2,
+		UINT64 = 11<<2,
+		ENUM = 12<<2,
+		FLAGS = 13<<2,
+		FLOAT = 14<<2,
+		DOUBLE = 15<<2,
+		STRING = 16<<2,
+		POINTER = 17<<2,
+		BOXED = 18<<2,
+		PARAM = 19<<2,
+		OBJECT = 20<<2,
+		VARIANT = 21<<2,
+	}
+addEnums: end
+
+struct: CClosure
+class: CClosure
+import: glib.ConstructionException
+import: gobject.ObjectG
+noCode: new
+noCode: new_swap
+noCode: new_object
+noCode: new_object_swap
+code: start
+	/**
+	 * Creates a new closure which invokes callbackFunc with userData as
+	 * the last parameter.
+	 *
+	 * Params:
+	 *     callbackFunc = the function to invoke
+	 *     userData = user data to pass to callbackFunc
+	 *     destroyData = destroy notify to be called when userData is no longer used
+	 *     swap = if true invoce with usrData as the first parameter
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GCallback callbackFunc, void* userData, GClosureNotify destroyData, bool swap)
+	{
+		GClosure* p;
+
+		if ( swap )
+			p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
+		else
+			p = g_cclosure_new(callbackFunc, userData, destroyData);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GCClosure*) p);
 	}
 
 	/**
-	 * Get the unique name that is assigned to the Objects type.
-	 * Returns: Static type name or NULL.
+	 * A variant of this() which uses object as userData and
+	 * calls ObjectG.watchClosure() on object and the created
+	 * closure. This function is useful when you have a callback closely
+	 * associated with a gobject.ObjectG, and want the callback to no longer run
+	 * after the object is is freed.
+	 *
+	 * Params:
+	 *     callbackFunc = the function to invoke
+	 *     object = a gobject.ObjectG.ObjectG to pass to callbackFunc
+	 *     swap = if true invoce with usrData as the first parameter
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static string name(ObjectG obj)
+	public this(GCallback callbackFunc, ObjectG object, bool swap)
 	{
-		GType type = (cast(GTypeInstance*)obj.getObjectGStruct()).gClass.gType;
+		GClosure* p;
 
-		return name(type);
+		if ( swap )
+			p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+		else
+			p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_object");
+		}
+
+		this(cast(GCClosure*) p);
 	}
 code: end
-outFile: Type
 
-file: GTypePlugin.html
-struct: GTypePlugin
-class: TypePlugin
-prefix: g_type_plugin_
-#import: gobject.TypeInfo
-#structWrap: GTypeInfo* TypeInfo
-#import: gobject.TypeValueTable
-#structWrap: GTypeValueTable* TypeValueTable
-#import: gobject.InterfaceInfo
-#structWrap: GInterfaceInfo* InterfaceInfo
-outFile: TypePlugin
-
-file: GTypeModule.html
-struct: GTypeModule
-class: TypeModule
-prefix: g_type_module_
-import: glib.Str
-#import: gobject.TypeInfo
-#structWrap: GTypeInfo* TypeInfo
-#import: gobject.InterfaceInfo
-#structWrap: GInterfaceInfo* InterfaceInfo
-import: gobject.Enums
-structWrap: GEnumValue* Enums
-import: gobject.Flags
-structWrap: GFlagsValue* Flags
-outFile: TypeModule
-
-file: gobject-The-Base-Object-Type.html
-struct: GObject
+struct: Object
 class: ObjectG
-nostruct: GObject
-nostruct: GObjectClass
-prefix: g_object_
-prefix: g_
-noprefix: g_weak_ref_
-import: gobject.ObjectG
-structWrap: GObject* ObjectG
-import: gobject.ParamSpec
-structWrap: GParamSpec* ParamSpec
-import: gobject.Value
-structWrap: GValue* Value
-import: gobject.Closure
-structWrap: GClosure* Closure
 import: core.memory
-import: glib.Str
-import: gtkc.paths
+import: gobject.Signals
 import: gtkc.Loader
-
-nosignal: notify
-
-array: g_object_class_list_properties Return n_properties
-array: g_object_interface_list_properties Return n_properties_p
-array: g_object_newv parameters n_parameters
-array: g_object_class_install_properties pspecs n_pspecs
-inout: g_clear_object object_ptr
+import: gtkc.paths
+merge: InitiallyUnowned
+noSignal: notify
+move: clear_object Object
+inout: clear_object object_ptr
 
 code: start
 	protected bool isGcRoot;
 
 	/**
-	* Sets our main struct and passes store it on the gobject.
-	* Add a gabage collector root to the gtk+ struct so it doesn't get collect
-	*/
-	public this (GObject* gObject)
+	 * Sets our main struct and passes store it on the gobject.
+	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
+	 */
+	public this (GObject* gObject, bool ownedRef = false)
 	{
 		this.gObject = gObject;
 		if ( gObject !is  null )
@@ -284,19 +156,24 @@ code: start
 			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
 
-			//If the refCount is largeer then 1 toggleNotify isn't called
+			//If the refCount is larger then 1 toggleNotify isn't called
 			if (gObject.refCount > 1 && !isGcRoot)
 			{
 				GC.addRoot(cast(void*)this);
-
 				isGcRoot = true;
 			}
 
-			//Remove the floating reference if there is one.
-			if (isFloating(gObject))
+			//If we already owned this reference remove the one added by addToggleRef.
+			if ( ownedRef )
 			{
-				refSink(gObject);
-				unref(gObject);
+				unref();
+			}
+
+			//Remove the floating reference if there is one.
+			if (isFloating())
+			{
+				refSink();
+				unref();
 			}
 
 			//When constructed via GtkBuilder set the structs.
@@ -306,7 +183,7 @@ code: start
 			}
 		}
 	}
-	
+
 	extern(C)
 	{
 		static void destroyNotify(ObjectG obj)
@@ -314,7 +191,6 @@ code: start
 			if ( obj.isGcRoot )
 			{
 				GC.removeRoot(cast(void*)obj);
-
 				obj.isGcRoot = false;
 			}
 
@@ -326,13 +202,11 @@ code: start
 			if ( isLastRef && obj.isGcRoot )
 			{
 				GC.removeRoot(cast(void*)obj);
-
 				obj.isGcRoot = false;
 			}
 			else if ( !obj.isGcRoot )
 			{
 				GC.addRoot(cast(void*)obj);
-
 				obj.isGcRoot = true;
 			}
 		}
@@ -362,13 +236,13 @@ code: start
 	 *  obj = GObject containing the associations.
 	 * Returns: the D Object if found, or a newly constructed object if no such Object exists.
 	 */
-	public static RT getDObject(T, RT=T, U)(U obj)
+	public static RT getDObject(T, RT=T, U)(U obj, bool ownedRef = false)
 	{
 		if ( obj is null )
 		{
 			return null;
 		}
-		
+
 		static if ( is(T : ObjectG) )
 		{
 			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
@@ -386,7 +260,7 @@ code: start
 			}
 			else
 			{
-				return new T(obj);
+				return new T(obj, ownedRef);
 			}
 		}
 		else
@@ -405,13 +279,13 @@ code: start
 	{
 		setProperty(propertyName, new Value(value));
 	}
-	
+
 	/** */
 	public void setProperty(string propertyName, string value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
-	
+
 	/** */
 	public void setProperty(string propertyName, long value)
 	{
@@ -425,20 +299,20 @@ code: start
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 
-	public void unref()
+	deprecated("Use the member function")
+	public static void unref(ObjectG obj)
 	{
-		unref(gObject);
+		obj.unref();
 	}
 
-	public ObjectG doref()
+	deprecated("Use the member function")
+	public static ObjectG doref(ObjectG obj)
 	{
-		doref(gObject);
-
-		return this;
+		return obj.doref();
 	}
 
 	int[string] connectedSignals;
-	
+
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
 	/**
 	 * The notify signal is emitted on an object when one of its
@@ -446,13 +320,13 @@ code: start
 	 * doesn't guarantee that the value of the property has actually
 	 * changed, it may also be emitted when the setter for the property
 	 * is called to reinstate the previous value.
-	 * 
+	 *
 	 * This signal is typically used to obtain change notification for a
 	 * single property.
-	 * 
+	 *
 	 * It is important to note that you must use
 	 * canonical parameter names for the property.
-	 * 
+	 *
 	 * Params:
 	 *     dlg          = The callback.
 	 *     property     = Set this if you only want to receive the signal for a specific property.
@@ -463,18 +337,14 @@ code: start
 		string signalName;
 
 		if ( property == "" )
-		{
 			signalName = "notify";
-		}
 		else
-		{
 			signalName = "notify::"~ property;
-		}
 
 		if ( !(signalName in connectedSignals) )
 		{
 			Signals.connectData(
-			getStruct(),
+			this,
 			signalName,
 			cast(GCallback)&callBackNotify,
 			cast(void*)this,
@@ -492,69 +362,115 @@ code: start
 		}
 	}
 code: end
-outFile: ObjectG
 
-struct: GWeakRef
-class: WeakRef
-strictPrefix: Y
-prefix: g_weak_ref_
-nosignal: notify
+struct: ObjectClass
+merge: InitiallyUnownedClass
 
+struct: ParamSpecBoolean
+noCode: true
+
+struct: ParamSpecBoxed
+noCode: true
+
+struct: ParamSpecChar
+noCode: true
+
+struct: ParamSpecDouble
+noCode: true
+
+struct: ParamSpecEnum
+noCode: true
+
+struct: ParamSpecFlags
+noCode: true
+
+struct: ParamSpecFloat
+noCode: true
+
+struct: ParamSpecGType
+noCode: true
+
+struct: ParamSpecInt
+noCode: true
+
+struct: ParamSpecInt64
+noCode: true
+
+struct: ParamSpecLong
+noCode: true
+
+struct: ParamSpecObject
+noCode: true
+
+struct: ParamSpecOverride
+noCode: true
+
+struct: ParamSpecParam
+noCode: true
+
+struct: ParamSpecPointer
+noCode: true
+
+struct: ParamSpecString
+noCode: true
+
+struct: ParamSpecUChar
+noCode: true
+
+struct: ParamSpecUInt
+noCode: true
+
+struct: ParamSpecUInt64
+noCode: true
+
+struct: ParamSpecULong
+noCode: true
+
+struct: ParamSpecUnichar
+noCode: true
+
+struct: ParamSpecValueArray
+noCode: true
+
+struct: ParamSpecVariant
+noCode: true
+
+struct: Signals
 code: start
 	/** */
-	this(void* object)
+	public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
-		g_weak_ref_init(gWeakRef, object);
+		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
 	}
 code: end
-outFile: WeakRef
 
-file: gobject-Enumeration-and-Flag-Types.html
-struct: GEnumValue
-class: Enums
-prefix: g_enum_
-noprefix: g_flags_
-import: glib.Str
-structWrap: GEnumValue* Enums
-#import: gobject.TypeInfo
-#structWrap: GTypeInfo* TypeInfo
-out: g_enum_complete_type_info info
-outFile: Enums
+struct: Type
+import: gobject.ObjectG
+code: start
+	public static T* getInstanceClass(T)(ObjectG obj)
+	{
+		return cast(T*) (cast(GTypeInstance*)obj.getObjectGStruct()).gClass;
+	}
 
-struct: GFlagsValue
-strictPrefix: Y
-class: Flags
-prefix: g_flags_
-import: glib.Str
-structWrap: GFlagsValue* Flags
-#import: gobject.TypeInfo
-#structWrap: GTypeInfo* TypeInfo
-outFile: Flags
+	/**
+	 * Get the unique name that is assigned to the Objects type.
+	 * Returns: Static type name or NULL.
+	 */
+	public static string name(ObjectG obj)
+	{
+		GType type = (cast(GTypeInstance*)obj.getObjectGStruct()).gClass.gType;
 
-file: gobject-Boxed-Types.html
-class: Boxed
-prefix: g_
-import: glib.Str
-outFile: Boxed
+		return name(type);
+	}
+code: end
 
-file: gobject-Generic-values.html
-struct: GValue
-class: Value
-nostruct: GValue
-prefix: g_value_
-import: glib.Str
-structWrap: GValue* Value
-import: gobject.ParamSpec
-structWrap: GParamSpec* ParamSpec
+struct:
+class: TypePlugin
+extend: Object
+implements: TypePlugin
+
+struct: Value
 import: gdk.Pixbuf
-import: glib.Variant
-structWrap: GVariant* Variant
-import: glib.VariantType
-structWrap: GVariantType* VariantType
-
-nocode: g_value_init
-nocode: g_value_reset
-
 code: start
 	/** */
 	public this()
@@ -562,14 +478,12 @@ code: start
 		this(new GValue);
 	}
 
-	/** */	
+	/** */
 	this(Pixbuf pixbuf)
 	{
-		GValue* v = new GValue;
-		//v.g_type = DUIType.PIXBUF;
-		v.g_type = Pixbuf.getType();
-		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
-		this(v);
+		this();
+		init(Pixbuf.getType());
+		setObject(pixbuf);
 	}
 
 	/** */
@@ -603,210 +517,162 @@ code: start
 		init(GType.DOUBLE);
 		setDouble(value);
 	}
-	
-	/**
-	 * Initializes value with the default value of type.
-	 * Params:
-	 *  value = A zero-filled (uninitialized) GValue structure.
-	 *  g_type = Type the GValue should hold values of.
-	 * Returns:
-	 *  the GValue structure that has been passed in
-	 */
-	public Value init(GType gType)
-	{
-		// GValue* g_value_init (GValue *value,  GType g_type);
-		g_value_init(gValue, gType);
-		return this;
-	}
-	
-	/**
-	 * Clears the current value in value and resets it to the default value
-	 * (as if the value had just been initialized).
-	 * Params:
-	 *  value = An initialized GValue structure.
-	 * Returns:
-	 *  the GValue structure that has been passed in
-	 */
-	public Value reset()
-	{
-		// GValue* g_value_reset (GValue *value);
-		g_value_reset(gValue);
-		return this;
-	}
-	
-
-
 code: end
 
-openFile: Value
-
-file: gobject-Standard-Parameter-and-Value-Types.html
-#class: Value
-#import: gobject.Value
-#prefix: g_
-closeFile: Value
-
-#file: gobject-Varargs-Value-Collection.html
-#class: 
-#prefix: 
-#outFile: 
-
-file: gobject-GParamSpec.html
-struct: GParamSpec
-class: ParamSpec
-prefix: g_param_spec_
-noprefix: g_param_spec_pool_
-import: glib.Str
-structWrap: GParamSpec* ParamSpec
-import: gobject.Value
-structWrap: GValue* Value
-#import: gobject.ParamSpecTypeInfo
-#structWrap: GParamSpecTypeInfo* ParamSpecTypeInfo
-#import: gobject.ParamSpecPool
-#structWrap: GParamSpecPool* ParamSpecPool
-import: glib.ListG
-structWrap: GList* ListG
-outFile: ParamSpec
-
-struct: GParamSpecPool
-class: ParamSpecPool
-prefix: g_param_spec_pool_
-strictPrefix: Y
-import: glib.Str
-import: gobject.ParamSpec
-structWrap: GParamSpec* ParamSpec
-import: glib.ListG
-structWrap: GList* ListG
-
-array: g_param_spec_pool_list Return n_pspecs_p
-outFile: ParamSpecPool
-
-file: gobject-Signals.html
-class: Signals
-prefix: g_signal_
-import: glib.Str
-import: gobject.Closure
-structWrap: GClosure* Closure
-#import: gobject.SignalQuery
-#structWrap: GSignalQuery* SignalQuery
-import: gobject.Value
-structWrap: GValue* Value
-import: glib.Quark
-structWrap: GQuark* Quark
-#import: gobject.SignalInvocationHint
-#structWrap: GSignalInvocationHint* SignalInvocationHint
-
-array: g_signal_newv param_types n_params
-array: g_signal_list_ids Return n_ids
-out: g_signal_parse_name signal_id_p
-
+struct: WeakRef
 code: start
 	/** */
-	public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	this(void* object)
 	{
-		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);
-		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
+		g_weak_ref_init(gWeakRef, object);
 	}
-
-
 code: end
 
-outFile: Signals
+#
+# Move functions defined as global into there respective classes
+#
 
-file: gobject-Closures.html
+move: boxed_copy Boxed copy
+move: boxed_free Boxed free
+move: boxed_type_register_static Boxed type_register_static
+move: pointer_type_register_static Boxed
 
-struct: GClosure
-class: Closure
-prefix: g_closure_
-noprefix: g_cclosure_
-import: gobject.ObjectG
-structWrap: GObject* ObjectG
-structWrap: GClosure* Closure
-import: gobject.Value
-structWrap: GValue* Value
-import: glib.Source
-structWrap: GSource* Source
-outFile: Closure
+move: enum_complete_type_info Enums complete_type_info
+move: enum_get_value Enums get_value
+move: enum_get_value_by_name Enums get_value_by_name
+move: enum_get_value_by_nick Enums get_value_by_nick
+move: enum_register_static Enums register_static
 
-struct: GCClosure
-class: CClosure
-prefix: g_cclosure_
-strictPrefix: Yes
-import: gobject.Closure
-structWrap: GClosure* Closure
-import: gobject.ObjectG
-structWrap: GObject* ObjectG
-import: gobject.Value
-structWrap: GValue* Value
+move: flags_complete_type_info Flags complete_type_info
+move: flags_get_first_value Flags get_first_value
+move: flags_get_value_by_name Flags get_value_by_name
+move: flags_get_value_by_nick Flags get_value_by_nick
+move: flags_register_static Flags register_static
 
-array: g_cclosure_marshal_generic param_values n_param_values
-array: g_cclosure_marshal_VOID__VOID param_values n_param_values
-array: g_cclosure_marshal_VOID__BOOLEAN param_values n_param_values
-array: g_cclosure_marshal_VOID__CHAR param_values n_param_values
-array: g_cclosure_marshal_VOID__UCHAR param_values n_param_values
-array: g_cclosure_marshal_VOID__INT param_values n_param_values
-array: g_cclosure_marshal_VOID__UINT param_values n_param_values
-array: g_cclosure_marshal_VOID__LONG param_values n_param_values
-array: g_cclosure_marshal_VOID__ULONG param_values n_param_values
-array: g_cclosure_marshal_VOID__ENUM param_values n_param_values
-array: g_cclosure_marshal_VOID__FLAGS param_values n_param_values
-array: g_cclosure_marshal_VOID__FLOAT param_values n_param_values
-array: g_cclosure_marshal_VOID__DOUBLE param_values n_param_values
-array: g_cclosure_marshal_VOID__STRING param_values n_param_values
-array: g_cclosure_marshal_VOID__PARAM param_values n_param_values
-array: g_cclosure_marshal_VOID__BOXED param_values n_param_values
-array: g_cclosure_marshal_VOID__POINTER param_values n_param_values
-array: g_cclosure_marshal_VOID__OBJECT param_values n_param_values
-array: g_cclosure_marshal_VOID__VARIANT param_values n_param_values
-array: g_cclosure_marshal_STRING__OBJECT_POINTER param_values n_param_values
-array: g_cclosure_marshal_VOID__UINT_POINTER param_values n_param_values
-array: g_cclosure_marshal_BOOLEAN__FLAGS param_values n_param_values
-array: g_cclosure_marshal_BOOLEAN__BOXED_BOXED param_values n_param_values
-array: g_cclosure_marshal_generic_va param_types n_params
-array: g_cclosure_marshal_VOID__VOIDv param_types n_params
-array: g_cclosure_marshal_VOID__BOOLEANv param_types n_params
-array: g_cclosure_marshal_VOID__CHARv param_types n_params
-array: g_cclosure_marshal_VOID__UCHARv param_types n_params
-array: g_cclosure_marshal_VOID__INTv param_types n_params
-array: g_cclosure_marshal_VOID__UINTv param_types n_params
-array: g_cclosure_marshal_VOID__LONGv param_types n_params
-array: g_cclosure_marshal_VOID__ULONGv param_types n_params
-array: g_cclosure_marshal_VOID__ENUMv param_types n_params
-array: g_cclosure_marshal_VOID__FLAGSv param_types n_params
-array: g_cclosure_marshal_VOID__FLOATv param_types n_params
-array: g_cclosure_marshal_VOID__DOUBLEv param_types n_params
-array: g_cclosure_marshal_VOID__STRINGv param_types n_params
-array: g_cclosure_marshal_VOID__PARAMv param_types n_params
-array: g_cclosure_marshal_VOID__BOXEDv param_types n_params
-array: g_cclosure_marshal_VOID__POINTERv param_types n_params
-array: g_cclosure_marshal_VOID__OBJECTv param_types n_params
-array: g_cclosure_marshal_VOID__VARIANTv param_types n_params
-array: g_cclosure_marshal_STRING__OBJECT_POINTERv param_types n_params
-array: g_cclosure_marshal_VOID__UINT_POINTERv param_types n_params
-array: g_cclosure_marshal_BOOLEAN__FLAGSv () param_types n_params
-array: g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv param_types n_params
-outFile: CClosure
+# ParamSpec Constructors?
+move: param_spec_boolean Value
+move: param_spec_boxed Value
+move: param_spec_char Value
+move: param_spec_double Value
+move: param_spec_enum Value
+move: param_spec_flags Value
+move: param_spec_float Value
+move: param_spec_gtype Value
+move: param_spec_int Value
+move: param_spec_int64 Value
+move: param_spec_long Value
+move: param_spec_object Value
+move: param_spec_override Value
+move: param_spec_param Value
+move: param_spec_pointer Value
+move: param_spec_string Value
+move: param_spec_uchar Value
+move: param_spec_uint Value
+move: param_spec_uint64 Value
+move: param_spec_ulong Value
+move: param_spec_unichar Value
+move: param_spec_value_array Value
+move: param_spec_variant Value
 
-file: gobject-Value-arrays.html
-struct: GValueArray
-class: ValueArray
-prefix: g_value_array_
-import: gobject.Value
-structWrap: GValue* Value
-structWrap: GValueArray* ValueArray
-outFile: ValueArray
+move: param_type_register_static ParamSpec
+move: param_value_convert ParamSpec
+move: param_value_defaults ParamSpec
+move: param_value_set_default ParamSpec
+move: param_value_validate ParamSpec
+move: param_values_cmp ParamSpec
 
-file: GBinding.html
-struct: GBinding
-class: Binding
-prefix: g_binding_
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Closure
-import: gobject.Value
-structWrap: GObject* ObjectG
-structWrap: gpointer ObjectG
-structWrap: GBinding* Binding
-structWrap: GClosure* Closure
-structWrap: GValue* Value
-outFile: Binding
+move: signal_accumulator_first_wins Signals accumulator_first_wins
+move: signal_accumulator_true_handled Signals accumulator_true_handled
+move: signal_add_emission_hook Signals add_emission_hook
+move: signal_chain_from_overridden Signals chain_from_overridden
+move: signal_chain_from_overridden_handler Signals chain_from_overridden_handler
+move: signal_connect_closure Signals connect_closure
+move: signal_connect_closure_by_id Signals connect_closure_by_id
+move: signal_connect_data Signals connect_data
+move: signal_connect_object Signals connect_object
+move: signal_emit Signals emit
+move: signal_emit_by_name Signals emit_by_name
+move: signal_emit_valist Signals emit_valist
+move: signal_emitv Signals emitv
+move: signal_get_invocation_hint Signals get_invocation_hint
+move: signal_handler_block Signals handler_block
+move: signal_handler_disconnect Signals handler_disconnect
+move: signal_handler_find Signals handler_find
+move: signal_handler_is_connected Signals handler_is_connected
+move: signal_handler_unblock Signals handler_unblock
+move: signal_handlers_block_matched Signals handlers_block_matched
+move: signal_handlers_destroy Signals handlers_destroy
+move: signal_handlers_disconnect_matched Signals handlers_disconnect_matched
+move: signal_handlers_unblock_matched Signals handlers_unblock_matched
+move: signal_has_handler_pending Signals has_handler_pending
+move: signal_list_ids Signals list_ids
+move: signal_lookup Signals lookup
+move: signal_name Signals name
+move: signal_new Signals new
+move: signal_new_class_handler Signals new_class_handler
+move: signal_new_valist Signals new_valist
+move: signal_newv Signals newv
+move: signal_override_class_closure Signals override_class_closure
+move: signal_override_class_handler Signals override_class_handler
+move: signal_parse_name Signals parse_name
+move: signal_query Signals query
+move: signal_remove_emission_hook Signals remove_emission_
+move: signal_set_va_marshaller Signals set_va_marshaller
+move: signal_stop_emission Signals stop_emission
+move: signal_stop_emission_by_name Signals stop_emission_by_name
+move: signal_type_cclosure_new Signals type_cclosure_new
+
+move: source_set_closure Closure
+move: source_set_dummy_callback Closure
+
+move: strdup_value_contents Value
+
+move: type_add_class_cache_func Type add_class_cache_func
+move: type_add_class_private Type add_class_private
+move: type_add_instance_private Type add_instance_private
+move: type_add_interface_check Type add_interface_check
+move: type_add_interface_dynamic Type add_interface_dynamic
+move: type_add_interface_static Type add_interface_static
+move: type_check_class_cast Type check_class_cast
+move: type_check_class_is_a Type check_class_is_a
+move: type_check_instance Type check_instance
+move: type_check_instance_cast Type check_instance_cast
+move: type_check_instance_is_a Type check_instance_is_a
+move: type_check_instance_is_fundamentally_a Type check_instance_is_fundamentally_a
+move: type_check_is_value_type Type check_is_value_type
+move: type_check_value Type check_value
+move: type_check_value_holds Type check_value_holds
+move: type_children Type children
+move: type_create_instance Type create_instance
+move: type_default_interface_peek Type default_interface_peek
+move: type_default_interface_ref Type default_interface_ref
+move: type_default_interface_unref Type default_interface_unref
+move: type_depth Type depth
+move: type_ensure Type ensure
+move: type_free_instance Type free_instance
+move: type_from_name Type from_name
+move: type_fundamental Type fundamental
+move: type_fundamental_next Type fundamental_next
+move: type_get_plugin Type get_plugin
+move: type_get_qdata Type get_qdata
+move: type_get_type_registration_serial Type get_type_registration_serial
+move: type_init Type init
+move: type_init_with_debug_flags Type init_with_debug_flags
+move: type_interfaces Type interfaces
+move: type_is_a Type is_a
+move: type_name Type name
+move: type_name_from_class Type name_from_class
+move: type_name_from_instance Type name_from_instance
+move: type_next_base Type next_base
+move: type_parent Type parent
+move: type_qname Type qname
+move: type_query Type query
+move: type_register_dynamic Type register_dynamic
+move: type_register_fundamental Type register_fundamental
+move: type_register_static Type register_static
+move: type_register_static_simple Type register_static_simple
+move: type_remove_class_cache_func Type remove_class_cache_func
+move: type_remove_interface_check Type remove_interface_check
+move: type_set_qdata Type set_qdata
+move: type_test_flags Type test_flags
+#move: type_value_table_peek Type value_table_peek

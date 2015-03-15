@@ -189,10 +189,10 @@ class TTextView : Window
 			      "wrap_mode", cast(int)WrapMode.NONE);
 
 		buffer.createTag("center",
-			      "justification", cast(int)Justification.JUSTIFY_CENTER);
+			      "justification", cast(int)Justification.CENTER);
 
 		buffer.createTag("right_justify",
-			      "justification", cast(int)Justification.JUSTIFY_RIGHT);
+			      "justification", cast(int)Justification.RIGHT);
 
 		buffer.createTag("wide_margins",
 			      "left_margin", 50, "right_margin", 50);

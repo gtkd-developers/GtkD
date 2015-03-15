@@ -16,127 +16,108 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gio-GConverterInputstream.html
- * outPack = gio
- * outFile = ConverterInputStream
- * strct   = GConverterInputStream
- * realStrct=
- * ctorStrct=GInputStream
- * clss    = ConverterInputStream
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_converter_input_stream_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.Converter
- * 	- gio.ConverterIF
- * structWrap:
- * 	- GConverter* -> ConverterIF
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.ConverterInputStream;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import gio.Converter;
 private import gio.ConverterIF;
-
-
 private import gio.FilterInputStream;
+private import gio.InputStream;
+private import gio.PollableInputStreamIF;
+private import gio.PollableInputStreamT;
+private import glib.ConstructionException;
+private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
+
 
 /**
- * Converter input stream implements GInputStream and allows
+ * Converter input stream implements #GInputStream and allows
  * conversion of data of various types during reading.
- *
- * As of GLib 2.34, GConverterInputStream implements
- * GPollableInputStream.
+ * 
+ * As of GLib 2.34, #GConverterInputStream implements
+ * #GPollableInputStream.
  */
-public class ConverterInputStream : FilterInputStream
+public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 {
-	
 	/** the main Gtk struct */
 	protected GConverterInputStream* gConverterInputStream;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GConverterInputStream* getConverterInputStreamStruct()
 	{
 		return gConverterInputStream;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gConverterInputStream;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GConverterInputStream* gConverterInputStream)
-	{
-		super(cast(GFilterInputStream*)gConverterInputStream);
-		this.gConverterInputStream = gConverterInputStream;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gConverterInputStream = cast(GConverterInputStream*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GConverterInputStream* gConverterInputStream, bool ownedRef = false)
+	{
+		this.gConverterInputStream = gConverterInputStream;
+		super(cast(GFilterInputStream*)gConverterInputStream, ownedRef);
+	}
+
+	// add the PollableInputStream capabilities
+	mixin PollableInputStreamT!(GConverterInputStream);
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_converter_input_stream_get_type();
+	}
+
 	/**
-	 * Creates a new converter input stream for the base_stream.
+	 * Creates a new converter input stream for the @base_stream.
+	 *
 	 * Params:
-	 * baseStream = a GInputStream
-	 * converter = a GConverter
+	 *     baseStream = a #GInputStream
+	 *     converter = a #GConverter
+	 *
+	 * Return: a new #GInputStream.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GInputStream* baseStream, ConverterIF converter)
+	public this(InputStream baseStream, ConverterIF converter)
 	{
-		// GInputStream * g_converter_input_stream_new (GInputStream *base_stream,  GConverter *converter);
-		auto p = g_converter_input_stream_new(baseStream, (converter is null) ? null : converter.getConverterTStruct());
+		auto p = g_converter_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct(), (converter is null) ? null : converter.getConverterStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_converter_input_stream_new(baseStream, (converter is null) ? null : converter.getConverterTStruct())");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GConverterInputStream*) p);
+		
+		this(cast(GConverterInputStream*) p, true);
 	}
-	
+
 	/**
-	 * Gets the GConverter that is used by converter_stream.
-	 * Since 2.24
-	 * Returns: the converter of the converter input stream. [transfer none]
+	 * Gets the #GConverter that is used by @converter_stream.
+	 *
+	 * Return: the converter of the converter input stream
+	 *
+	 * Since: 2.24
 	 */
 	public ConverterIF getConverter()
 	{
-		// GConverter * g_converter_input_stream_get_converter  (GConverterInputStream *converter_stream);
 		auto p = g_converter_input_stream_get_converter(gConverterInputStream);
 		
 		if(p is null)

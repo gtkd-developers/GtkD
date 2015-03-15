@@ -16,86 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = NetworkMonitor
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = NetworkMonitor
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = GObject
- * implements:
- * 	- InitableIF
- * 	- NetworkMonitorIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.InitableIF
- * 	- gio.InitableT
- * 	- gio.NetworkMonitorT
- * 	- gio.NetworkMonitorIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.NetworkMonitor;
 
+private import gio.NetworkMonitorIF;
+private import gio.NetworkMonitorT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gio.InitableIF;
-private import gio.InitableT;
-private import gio.NetworkMonitorT;
-private import gio.NetworkMonitorIF;
-
-
-private import gobject.ObjectG;
-
-/**
- */
-public class NetworkMonitor : ObjectG, InitableIF, NetworkMonitorIF
+public class NetworkMonitor : ObjectG, NetworkMonitorIF
 {
-	
-	// Minimal implementation.
-	mixin NetworkMonitorT!(GNetworkMonitor);
-	
-	// add the Initable capabilities
-	mixin InitableT!(GNetworkMonitor);
-	
+	/** the main Gtk struct */
+	protected GNetworkMonitor* gNetworkMonitor;
+
+	/** Get the main Gtk struct */
+	public GNetworkMonitor* getNetworkMonitorStruct()
+	{
+		return gNetworkMonitor;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gNetworkMonitor;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GNetworkMonitor* gNetworkMonitor)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gNetworkMonitor);
-		this.gNetworkMonitor = gNetworkMonitor;
+		gNetworkMonitor = cast(GNetworkMonitor*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GNetworkMonitor* gNetworkMonitor, bool ownedRef = false)
+	{
+		this.gNetworkMonitor = gNetworkMonitor;
+		super(cast(GObject*)gNetworkMonitor, ownedRef);
+	}
+
+	// add the NetworkMonitor capabilities
+	mixin NetworkMonitorT!(GNetworkMonitor);
+
 	/**
 	 */
 }

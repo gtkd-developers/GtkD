@@ -1,290 +1,1279 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gtkD.
-# 
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
-#
-###
-#####
-# Definitions for wrapping GLib
-#####
-###
-#
+# must start with wrap
+wrap: glib
+file: /usr/share/gir-1.0/GLib-2.0.gir
+file: /usr/share/gir-1.0/GModule-2.0.gir
 
+addAliases: start
+	public alias uint uid_t;
+	public alias int pid_t;
 
-addTypedefs: start
-/* The GLib Basic Types */
-public alias int gint;
-public alias uint guint;
-public alias int gboolean;
-public alias void* gpointer;
-public alias void* gconstpointer;
-public alias char gchar;
-public alias char guchar;
-public alias short gshort;
-public alias ushort gushort;
-public alias byte gint8;
-public alias ubyte guint8;
-public alias short gint16;
-public alias ushort guint16;
-public alias int gint32;
-public alias long gint64;
-public alias uint guint32;
-public alias ulong guint64;
-public alias float gfloat;
-public alias double gdouble;
-public alias size_t gsize;
-public alias ptrdiff_t gssize;
-public alias size_t guintptr;
-public alias long goffset;
-public alias void* va_list;
-public alias dchar unichar;
-public alias wchar unichar2;
-public alias uint time_t;
-public alias uint XID;
-public alias uint uid_t;
-public alias int pid_t;
-
-version( Windows )
-{
-	alias int glong;
-	alias uint gulong;
-}
-else version( X86_64 )
-{
-	alias long glong;
-	alias ulong gulong;
-}
-else
-{
-	alias int glong;
-	alias uint gulong;
-}
-
-version( Windows )
-	enum _utfPostfix = "_utf8";
-else
-	enum _utfPostfix = "";
-
-version (Windows)
-{
-	private import core.stdc.stdio;
-
-	static if( !is(typeof(fdopen(0, null))) )
+	version( Windows )
 	{
-		extern (C) FILE*  fdopen(int, char*);
+		alias int glong;
+		alias uint gulong;
 	}
-}
-
-static if ( __VERSION__ >= 2063 )
-{
-	public import std.typecons : scoped;
-
-	template Scoped(T)
+	else version( X86_64 )
 	{
-		alias typeof(scoped!T(cast(typeof(T.tupleof[0]))null)) Scoped;
+		alias long glong;
+		alias ulong gulong;
 	}
-}
-else
-{
-	// I'm getting the following error on the older dmd versions:
-	// this for Scoped_store needs to be type Scoped not type inout(Scoped!(T)).
-	// Unlike the phobos version this does use GC alocated memory for the object.
-	// Within GtkD this is used to make sure destroy is called on the object
-	// so it releases the resources it holds.
-	struct Scoped(T)
+	else
 	{
-		T payload;
+		alias int glong;
+		alias uint gulong;
+	}
 
-		alias payload this;
+	version( Windows )
+		enum _utfPostfix = "_utf8";
+	else
+		enum _utfPostfix = "";
 
-		@disable this();
-		@disable this(this);
+	version (Windows)
+	{
+		private import core.stdc.stdio;
 
-		~this()
+		static if( !is(typeof(fdopen(0, null))) )
 		{
-			.destroy(payload);
+			extern (C) FILE*  fdopen(int, char*);
 		}
 	}
 
-	auto scoped(T, Args...)(auto ref Args args) if (is(T == class))
+	static if ( __VERSION__ >= 2063 )
 	{
-		Scoped!(T) result = void;
-		result.payload = new T(args);
+		public import std.typecons : scoped;
 
-		return result;
+		template Scoped(T)
+		{
+			alias typeof(scoped!T(cast(typeof(T.tupleof[0]))null)) Scoped;
+		}
 	}
-}
-addTypedefs: end
+	else
+	{
+		// I'm getting the following error on the older dmd versions:
+		// this for Scoped_store needs to be type Scoped not type inout(Scoped!(T)).
+		// Unlike the phobos version this does use GC alocated memory for the object.
+		// Within GtkD this is used to make sure destroy is called on the object
+		// so it releases the resources it holds.
+		struct Scoped(T)
+		{
+			T payload;
 
-addAliases: start
+			alias payload this;
+
+			@disable this();
+			@disable this(this);
+
+			~this()
+			{
+				.destroy(payload);
+			}
+		}
+
+		auto scoped(T, Args...)(auto ref Args args) if (is(T == class))
+		{
+			Scoped!(T) result = void;
+			result.payload = new T(args);
+
+			return result;
+		}
+	}
+
+	/**
+	 * Get the length of a zero terminated array.
+	 */
+	size_t getArrayLength(T)(T* arr)
+	{
+		size_t len;
+
+		for ( ; arr[len]; len++ ){}
+
+		return len;
+	}
+
+	unittest
+	{
+		assert(getArrayLength("aaaaaaaaa\0".ptr) == 9);
+	}
+
+	alias void* GIConv;
 addAliases: end
 
 addEnums: start
 
-enum GPriority
-{
-	HIGH = -100,
-	DEFAULT = 0,
-	HIGH_IDLE = 100,
-	DEFAULT_IDLE = 200,
-	LOW = 300
-}
+	enum GPriority
+	{
+		HIGH = -100,
+		DEFAULT = 0,
+		HIGH_IDLE = 100,
+		DEFAULT_IDLE = 200,
+		LOW = 300
+	}
 
 addEnums: end
 
-addStructs: start
-public struct GSocketControlMessageClass{}
-public struct GInetSocketAddressClass{}
-addStructs: end
+struct: Array
+class: ArrayG
 
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
-
-addConstants: start
-
-const uint G_MAXUINT = 4294967295;
-
-addConstants: end
-
-
-# must start with wrap
-
-wrap: glib
-
-###########################################################
-### GLib Fundamentals #####################################
-###########################################################
-
-file: glib-Version-Information.html
-class: Version
-prefix: glib_
-import: glib.Str
-outFile: GLib
-
-#file: glib-Basic-Types.html
-#outFile: types
-
-#file: glib-Standard-Macros.html
-#class: 
-#prefix: 
-#outFile: 
-
-#file: glib-Type-Conversion-Macros.html
-#class: 
-#prefix: 
-#outFile: 
-
-#file: glib-Byte-Order-Macros.html
-#class: 
-#prefix: 
-#outFile: 
-
-#file: glib-Numerical-Definitions.html
-#class: 
-#prefix: 
-#outFile: 
-
-#file: glib-Miscellaneous-Macros.html
-#class: 
-#prefix: 
-#outFile: 
-
-file: glib-Atomic-Operations.html
-class: Atomic
-prefix: g_atomic_
-outFile: Atomic
-
-###########################################################
-### GLib Core Application Support #########################
-###########################################################
-
-file: glib-The-Main-Event-Loop.html
-
-struct: GMainLoop
-class: MainLoop
-prefix: g_main_loop_
-prefix: g_
-noprefix: g_main_context_
-noprefix: g_timeout_
-noprefix: g_idle_
-noprefix: g_child_
-noprefix: g_source_
-import: gtkc.paths
-import: gtkc.Loader
-import: glib.MainContext
-import: glib.Source
-structWrap: GMainContext* MainContext
-structWrap: GMainLoop* MainLoop
-structWrap: GSource* Source
-
-array: g_poll fds nfds
-
+struct: Base64
+move: base64_decode_step Base64 decode_step
+noCode: decode_step
 code: start
-	~this()
+	/**
+	 * Incrementally decode a sequence of binary data from its Base-64 stringified
+	 * representation. By calling this function multiple times you can convert
+	 * data in chunks to avoid having to have the full encoded data in memory.
+	 *
+	 * The output buffer must be large enough to fit all the data that will
+	 * be written to it. Since base64 encodes 3 bytes in 4 chars you need
+	 * at least: (@len / 4) * 3 + 3 bytes (+ 3 may be needed in case of non-zero
+	 * state).
+	 *
+	 * Params:
+	 *     inn = binary input data
+	 *     len = max length of @in data to decode
+	 *     output = output buffer
+	 *     state = Saved state between steps, initialize to 0
+	 *     save = Saved state between steps, initialize to 0
+	 *
+	 * Return: The number of bytes of output that was written
+	 *
+	 * Since: 2.12
+	 */
+	public static size_t decodeStep(string inn, ref ubyte[] output, ref int state, ref uint save)
 	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gMainLoop != null)
+		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, cast(char*)output.ptr, &state, &save);
+
+		return p;
+	}
+code: end
+
+struct: BookmarkFile
+out: load_from_data_dirs full_path
+array: set_groups groups length
+
+struct: ByteArray
+class: ByteArray
+
+struct: Bytes
+noCode: new_take
+noCode: new_static
+
+struct: Checksum
+noCode: get_digest
+code: start
+	/**
+	 * Gets the digest from checksum as a raw binary vector and places it
+	 * into buffer. The size of the digest depends on the type of checksum.
+	 *
+	 * Once this function has been called, the Checksum is closed and can
+	 * no longer be updated with update().
+	 *
+	 * Params:
+	 *     buffer = output buffer
+	 *     digestLen = an inout parameter. The caller initializes it to the size of buffer.
+	 *         After the call it contains the length of the digest.
+	 *
+	 * Since: 2.16
+	 */
+	public void getDigest(ref ubyte[] buffer)
+	{
+		size_t digestLen = buffer.length;
+
+		g_checksum_get_digest(gChecksum, buffer.ptr, &digestLen);
+
+		buffer = buffer[0 .. digestLen];
+	}
+code: end
+
+struct: ConstructionException
+namespace:
+code: start
+	class ConstructionException : Exception
+	{
+		this(string message)
 		{
-			g_main_loop_unref(gMainLoop);
+			super(message);
+		}
+
+		override string toString()
+		{
+			return "Construction failure, " ~ msg;
 		}
 	}
 code: end
-outFile: MainLoop
 
-struct: GMainContext
-class: MainContext
-prefix: g_main_context_
-strictPrefix: Yes
-import: glib.Source
-import: gthread.Cond
-import: gthread.Mutex
-structWrap: GMainContext* MainContext
-structWrap: GSource* Source
-structWrap: GCond* Cond
-structWrap: GMutex* Mutex
+struct: DateTime
+import: gtkc.Loader
+import: gtkc.paths
+structWrap: gpointer DateTime
+noCode: new_now_utc
+noCode: new_now_local
+noCode: new_from_unix_local
+noCode: new_from_unix_utc
+noCode: new_from_timeval_local
+noCode: new_from_timeval_utc
+noCode: new_local
+noCode: new_utc
+noCode: hash
+code: start
+	/**
+	 * Creates a DateTime corresponding to the given Unix time t
+	 * Unix time is the number of seconds that have elapsed since 1970-01-01
+	 * 00:00:00 UTC, regardless of the local time offset.
+	 *
+	 * This call can fail (ConstructionException) if t represents a time outside
+	 * of the supported range of GDateTime.
+	 * You should release the return value by calling unref()
+	 * when you are done with it
+	 *
+	 * Params:
+	 *     t   = the Unix time
+	 *     utc = If true use utc else use the local timezone.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.26
+	 */
+	public this (long t, bool utc = true)
+	{
+		GDateTime* p;
 
-out: g_main_context_prepare priority
-out: g_main_context_query timeout_
-array: g_main_context_query fds n_fds
-array: g_main_context_check fds n_fds
-inout: g_main_context_add_poll fd
-inout: g_main_context_remove_poll fd
+		if ( utc )
+		{
+			p = g_date_time_new_from_unix_utc(t);
+		}
+		else
+		{
+			p = g_date_time_new_from_unix_local(t);
+		}
 
-outFile: MainContext
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_date_time_new_from_unix_local(t)");
+		}
+		this(cast(GDateTime*) p);
+	}
 
+	/**
+	 * Creates a DateTime corresponding to the given TimeVal tv.
+	 * The time contained in a TimeVal is always stored in the form of
+	 * seconds elapsed since 1970-01-01 00:00:00 UTC, regardless of the
+	 * local time offset.
+	 *
+	 * This call can fail (ConstructionException) if tv represents a time outside
+	 * of the supported range of DateTime.
+	 * You should release the return value by calling unref()
+	 * when you are done with it.
+	 *
+	 * Params:
+	 *     tv  = a GTimeVal
+	 *     utc = If true use utc else use the local timezone.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 *
+	 * Since: 2.26
+	 */
+	public this (ref GTimeVal tv, bool utc = true)
+	{
+		GDateTime* p;
+
+		if ( utc )
+		{
+			p = g_date_time_new_from_timeval_utc(&tv);
+		}
+		else
+		{
+			p = g_date_time_new_from_timeval_local(&tv);
+		}
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
+		}
+		this(cast(GDateTime*) p);
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GLIB) && gDateTime !is null )
+		{
+			g_date_time_unref(gDateTime);
+		}
+	}
+
+	/** */
+	override bool opEquals(Object rhs)
+	{
+		DateTime date = cast(DateTime)rhs;
+
+		if ( date is null )
+			return false;
+
+		return equal(this, date) != 0;
+	}
+
+	/** */
+	override int opCmp(Object rhs)
+	{
+		DateTime date = cast(DateTime)rhs;
+
+		if ( date is null )
+			return int.min;
+
+		return compare(this, date);
+	}
+
+	/** */
+	override nothrow @trusted hash_t toHash()
+	{
+		return hash();
+	}
+
+	/**
+	 * Hashes datetime into a guint, suitable for use within GHashTable.
+	 * Since 2.26
+	 * Params:
+	 * datetime = a GDateTime
+	 * Returns: a guint containing the hash
+	 */
+	public nothrow @trusted uint hash()
+	{
+		try
+		{
+			return g_date_time_hash(gDateTime);
+		}
+		catch(Exception e)
+		{
+			return 0;
+		}
+	}
+code: end
+
+struct: Dir
+class: Directory
+
+struct: Error
+class: ErrorG
+move: propagate_error Error
+move: set_error_literal Error
+out: set_error_literal err
+out: propagate_error dest
+
+struct: GException
+namespace:
+import: glib.ErrorG
+import: glib.Str
+code: start
+	class GException : Exception
+	{
+		ErrorG error;
+
+		this(ErrorG error)
+		{
+			super( Str.toString(error.getErrorGStruct().message) );
+			this.error = error;
+		}
+	}
+code: end
+
+struct: GLib
+namespace:
+code: start
+	static import glib.Version;
+	deprecated("moves to the glib.Version module")
+	alias glib.Version.Version Version;
+code: end
+
+struct: HashTable
+class: HashTable
+
+struct: Hmac
+noCode: get_digest
+code: start
+	/**
+	 * Gets the digest from checksum as a raw binary array and places it
+	 * into buffer. The size of the digest depends on the type of checksum.
+	 *
+	 * Once this function has been called, the Hmac is closed and can
+	 * no longer be updated with update().
+	 *
+	 * Params:
+	 *     buffer = output buffer
+	 *
+	 * Since: 2.30
+	 */
+	public void getDigest(ref ubyte[] buffer)
+	{
+		size_t digestLen = buffer.length;
+
+		g_hmac_get_digest(gHmac, buffer.ptr, &digestLen);
+
+		buffer = buffer[0 .. digestLen];
+	}
+code: end
+
+struct: IConv
+namespace:
+noStruct: true
+ref: iconv inbuf
+out: iconv inbytes_left
+array: iconv inbuf inbytes_left
+ref: iconv outbuf
+out: iconv outbytes_left
+array: iconv outbuf outbytes_left
+
+struct: Idle
+class: Idle
+cType:
+code: start
+	/** Holds all idle delegates */
+	bool delegate()[] idleListeners;
+	/** our idle ID */
+	uint idleID;
+
+	/**
+	 * Creates a new idle cycle.
+	 * Params:
+	 *    	interval = the idle in milieconds
+	 *    	dlg = the delegate to be executed
+	 *    	fireNow = When true the delegate will be executed emmidiatly
+	 */
+	this(bool delegate() dlg, bool fireNow=false)
+	{
+		idleListeners ~= dlg;
+		idleID = g_idle_add(cast(GSourceFunc)&idleCallback, cast(void*)this);
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				idleListeners.length = 0;
+			}
+		}
+	}
+
+	/**
+	 * Creates a new idle cycle.
+	 * Params:
+	 *    	dlg = the delegate to be executed
+	 *      priority = Priority for the idle function
+	 *    	fireNow = When true the delegate will be executed emmidiatly
+	 */
+	this(bool delegate() dlg, GPriority priority, bool fireNow=false)
+	{
+		idleListeners ~= dlg;
+		idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, null);
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				idleListeners.length = 0;
+			}
+		}
+	}
+
+	/** */
+	public void stop()
+	{
+		if ( idleID > 0 )
+		{
+			g_source_remove(idleID);
+		}
+		idleListeners.length = 0;
+	}
+
+	/**
+	 * Removes the idle from gtk
+	 */
+	~this()
+	{
+		stop();
+	}
+
+	/**
+	 * Adds a new delegate to this idle cycle
+	 * Params:
+	 *    	dlg =
+	 *    	fireNow =
+	 */
+	public void addListener(bool delegate() dlg, bool fireNow=false)
+	{
+		idleListeners ~= dlg;
+		if ( fireNow )
+		{
+			if ( !dlg() )
+			{
+				idleListeners.length = idleListeners.length - 1;
+			}
+		}
+	}
+
+	/**
+	 * The callback execution from glib
+	 * Params:
+	 *    	idle =
+	 * Returns:
+	 */
+	extern(C) static bool idleCallback(Idle idle)
+	{
+		return idle.callAllListeners();
+	}
+
+	/**
+	 * Executes all delegates on the execution list
+	 * Returns:
+	 */
+	private bool callAllListeners()
+	{
+		bool runAgain = false;
+
+		int i = 0;
+
+		while ( i<idleListeners.length )
+		{
+			if ( !idleListeners[i]() )
+			{
+				idleListeners = idleListeners[0..i] ~ idleListeners[i+1..idleListeners.length];
+			}
+			else
+			{
+				runAgain = true;
+				++i;
+			}
+		}
+		return runAgain;
+	}
+code: end
+
+struct: IOChannel
+array: read_line str_return length
+out: read_line_string terminator_pos
+
+struct: List
+class: ListG
+code: start
+  	/** */
+	@property void* data()
+	{
+		return gList.data;
+	}
+
+  	/**
+	 * get the next element
+	 * Returns: the next element, or NULL if there are no more elements.
+	 */
+	@property ListG next()
+	{
+		if ( gList.next is null )
+		{
+			return null;
+		}
+
+		return new ListG(gList.next);
+	}
+
+	/**
+	 * get the previous element
+	 * Returns: the previous element, or NULL if there are no more elements.
+	 */
+	@property ListG previous()
+	{
+		if ( gList.prev is null )
+		{
+			return null;
+		}
+
+		return new ListG(gList.prev);
+	}
+
+	/**
+	 * Turn the list into a D array of the desiered type.
+	 * Type T wraps should match the type of the data.
+	 */
+	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
+	{
+		T[] arr = new T[length()];
+		ListSG list = this;
+		size_t count;
+
+		while(list !is null && count < arr.length)
+		{
+			arr[count] = new T(cast(TC)list.data);
+			list = next();
+			count++;
+		}
+
+		return arr;
+	}
+code: end
+
+struct: MainContext
+in: query fds
+in: query n_fds
+
+struct: MarkupParseContext
+class: SimpleXML
+
+struct: MemorySlice
+code: start
+	T* mewSlice(T)()
+	{
+		return cast(T*)g_slice_alloc(T.sizeof);
+	}
+
+	T* mewSlice0(T)()
+	{
+		return cast(T*)g_slice_alloc0(T.sizeof);
+	}
+
+	T* dup(T)(T* memBlock)
+	{
+		return cast(T*)g_slice_copy(T.sizeof, memBlock);
+	}
+
+	void free(T)(T* memBlock)
+	{
+		 g_slice_free1(T.sizeof, memBlock);
+	}
+code: end
+
+struct: Module
+in: symbol symbol
+
+struct: PatternSpec
+class: Pattern
+
+struct: PtrArray
+class: PtrArray
+
+struct: Queue
+class: QueueG
+
+struct: Rand
+class: RandG
+alias: double randDouble
+alias: int randInt
+array: new_with_seed_array seed seed_length
+
+struct: Scanner
+class: ScannerG
+
+struct: SList
+class: ListSG
+code: start
+  	/** */
+	@property void* data()
+	{
+		return gSList.data;
+	}
+
+  	/**
+	 * get the next element
+	 * Returns: the next element, or NULL if there are no more elements.
+	 */
+	@property ListSG next()
+	{
+		if ( gSList.next is null )
+		{
+			return null;
+		}
+
+		return new ListSG(gSList.next);
+	}
+
+	/**
+	 * Turn the list into a D array of the desiered type.
+	 * Type T wraps should match the type of the data.
+	 */
+	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
+	{
+		T[] arr = new T[length()];
+		ListSG list = this;
+		size_t count;
+
+		while(list !is null && count < arr.length)
+		{
+			arr[count] = new T(cast(TC)list.data);
+			list = next();
+			count++;
+		}
+
+		return arr;
+	}
+code: end
+
+struct: Spawn
+class: Spawn
+cType:
+import: core.thread
+import: core.stdc.string
+import: core.stdc.stdio
+import: std.string
+#noCode: spawn_async_with_pipes
+code: start
+	//we need fdopen.
+	version(Posix)
+	{
+		private import core.sys.posix.stdio;
+	}
+	//fdopen for Windows is defined in gtkc.glibtypes.
+
+	string workingDirectory = ".";
+	string[] argv;
+	string[] envp;
+	GSpawnFlags flags = SpawnFlags.SEARCH_PATH;
+	GSpawnChildSetupFunc childSetup;
+	void* userData;
+	GPid childPid;
+	FILE* standardInput;
+	FILE* standardOutput;
+	FILE* standardError;
+	GError* error;
+	int stdIn;
+	int stdOut;
+	int stdErr;
+
+	// for commandLineSync
+	int exitStatus;
+	char* strOutput;
+	char* strError;
+
+	alias bool delegate(Spawn) ChildWatch;
+	ChildWatch externalWatch;
+
+	/**
+	 * Creates a Spawn for execution.
+	 */
+	public this(string program, string[] envp=null)
+	{
+		argv ~= program;
+		this.envp = envp;
+	}
+
+	/**
+	 * Creates a Spawn for execution.
+	 */
+	public this(string[] program, string[] envp=null)
+	{
+		argv = program;
+		this.envp = envp;
+	}
+
+	/**
+	 * Adds a delegate to be notified on the end of the child process.
+	 * Params:
+	 *    	dlg =
+	 */
+	public void addChildWatch(ChildWatch dlg)
+	{
+		externalWatch = dlg;
+	}
+
+	/**
+	 * Closes all open streams and child process.
+	 */
+	public void close()
+	{
+		if (stdIn != 0 )
+		{
+			fclose(standardInput);
+			stdIn = 0;
+		}
+		if (stdOut != 0 )
+		{
+			fclose(standardOutput);
+			stdOut = 0;
+		}
+		if (stdErr != 0 )
+		{
+			fclose(standardError);
+			stdErr = 0;
+		}
+		if ( childPid != 0 )
+		{
+			closePid(childPid);
+			childPid = 0;
+		}
+	}
+
+	/**
+	 * Adds a parameter to the execution program
+	 */
+	public void addParm(string parm)
+	{
+		argv ~= parm;
+	}
+
+	/**
+	 * Gets the last error message
+	 */
+	public string getLastError()
+	{
+		if ( error != null )
+		{
+			return Str.toString(error.message);
+		}
+		return "";
+	}
+
+	/**
+	 * Executes the prepared process
+	 */
+	public int execAsyncWithPipes(
+		ChildWatch externalWatch = null,
+		bool delegate(string) readOutput = null,
+		bool delegate(string) readError = null )
+	{
+		int result = g_spawn_async_with_pipes(
+		Str.toStringz(workingDirectory),
+		Str.toStringzArray(argv),
+		Str.toStringzArray(envp),
+		flags,
+		childSetup,
+		userData,
+		&childPid,
+		&stdIn,
+		&stdOut,
+		&stdErr,
+		&error
+		);
+
+		if ( result != 0 )
+		{
+			this.externalWatch = externalWatch;
+			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), cast(void*)this);
+			standardInput = fdopen(stdIn, Str.toStringz("w"));
+			standardOutput = fdopen(stdOut, Str.toStringz("r"));
+			standardError = fdopen(stdErr, Str.toStringz("r"));
+
+			if ( readOutput !is null )
+			{
+				(new ReadFile(standardOutput, readOutput)).start();
+			}
+			if ( readError !is null )
+			{
+				(new ReadFile(standardError, readError)).start();
+			}
+		}
+
+		return result;
+	}
+
+	class ReadFile : Thread
+	{
+		bool delegate(string) read;
+		FILE* file;
+
+		int lineCount;
+
+		this(FILE* file, bool delegate (string) read )
+		{
+			this.file = file;
+			this.read = read;
+
+			super(&run);
+		}
+
+		public void run()
+		{
+			string line = readLine(file);
+			while( line !is null )
+			{
+				++lineCount;
+				if ( read !is null )
+				{
+					read(line);
+				}
+				line = readLine(file);
+			}
+		}
+	}
+
+	private string readLine(FILE* stream, int max=4096)
+	{
+		if ( feof(stream) )
+		{
+			if ( externalWatch !is null )
+			{
+				externalWatch(this);
+			}
+			return null;
+		}
+		string line;
+		line.length = max+1;
+		char* lineP = fgets(Str.toStringz(line), max, stream);
+		if ( lineP is null )
+		{
+			return "";
+		}
+		size_t l = strlen(line.ptr);
+		if ( l > 0 ) --l;
+
+		return line[0..l];
+	}
+
+	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
+	{
+		//writefln("Spawn.childWatchCallback %s %s", pid, status);
+		spawn.exitStatus = status;
+		if ( spawn.externalWatch !is null )
+		{
+			spawn.externalWatch(spawn);
+		}
+		spawn.close();
+	}
+
+
+	public bool endOfOutput()
+	{
+		if ( standardOutput is null ) return true;
+		return feof(standardOutput) != 0;
+	}
+
+	public bool endOfError()
+	{
+		if ( standardError is null ) return true;
+		return feof(standardError) != 0;
+	}
+
+	string getOutputString()
+	{
+		return Str.toString(strOutput);
+	}
+
+	string getErrorString()
+	{
+		return Str.toString(strError);
+	}
+
+	int getExitStatus()
+	{
+		return exitStatus;
+	}
+
+	/**
+	 * Executes a command synchronasly and
+	 * optionally calls delegates for sysout, syserr and end of job
+	 *
+	 */
+	public int commandLineSync(
+		ChildWatch externalWatch = null,
+		bool delegate(string) readOutput = null,
+		bool delegate(string) readError = null )
+	{
+		string commandLine;
+		foreach ( int count, string arg; argv)
+		{
+			if ( count > 0 )
+			{
+				commandLine ~= ' ';
+			}
+			commandLine ~= arg;
+		}
+		int status = g_spawn_command_line_sync(
+			Str.toStringz(commandLine),
+			&strOutput,
+			&strError,
+			&exitStatus,
+			&error);
+		if ( readOutput != null )
+		{
+			foreach ( string line ; splitLines(Str.toString(strOutput)) )
+			{
+				readOutput(line);
+			}
+		}
+		if ( readError != null )
+		{
+			foreach ( string line ; splitLines(Str.toString(strError)) )
+			{
+				readError(line);
+			}
+		}
+		if ( externalWatch != null )
+		{
+			externalWatch(this);
+		}
+		return status;
+	}
+code: end
+
+struct: Str
+import: core.stdc.stdio
+import: core.stdc.string
+import: gtkc.gobjecttypes
+code: start
+	/*************************************************
+	 * Convert C-style 0 terminated string s to char[] string.
+	 * copied from phobos
+	 */
+	public static string toString(const(char)* s, size_t len = 0)
+	{
+		if ( s is null )
+			return cast(string)null;
+
+		if ( len == 0 )
+			len = strlen(s);
+
+		return s[0 .. len].idup;
+	}
+
+	/*********************************
+	 * Convert array of chars s[] to a C-style 0 terminated string.
+	 * copied from phobos
+	 */
+	public static char* toStringz(string s)
+	{
+		if ( s is null ) return null;
+		char[] copy;
+
+		if (s.length == 0)
+		{
+			copy = "\0".dup;
+		}
+		else
+		{
+			// Need to make a copy
+			copy = new char[s.length + 1];
+			copy[0..s.length] = s[];
+			copy[s.length] = 0;
+		}
+
+		return copy.ptr;
+	}
+
+	/** */
+	public static char** toStringzArray(string[] args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char** argv = (new char*[args.length]).ptr;
+		int argc = 0;
+		foreach (string p; args)
+		{
+			argv[argc++] = cast(char*)(p.dup~'\0');
+		}
+		argv[argc] = null;
+
+		return argv;
+	}
+
+	/** */
+	public static char*** toStringzArray(string[][] args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char**[] argv = new char**[args.length];
+		int argc = 0;
+		foreach( string[] p; args )
+		{
+			argv[argc++] = toStringzArray(p);
+		}
+		argv[argc] = null;
+
+		return argv.ptr;
+	}
+
+	/** */
+	public static string[] toStringArray(const(char*)* args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		string[] argv;
+
+		while ( *args !is null )
+		{
+			argv ~= toString(*args);
+			args++;
+		}
+
+		return argv;
+	}
+
+	/** */
+	public static string[] toStringArray(const(char*)* args, size_t len)
+	{
+		string[] argv = new string[len];
+
+		for ( int i; i < len; i++ )
+		{
+			argv[i] = toString(args[i]);
+		}
+
+		return argv;
+	}
+
+	/** */
+	public static string[][] toStringArray(char*** args)
+	{
+		string[][] argv;
+
+		if ( args is null )
+		{
+			return null;
+		}
+
+		while ( *args !is null )
+		{
+			argv ~= toStringArray(*args);
+			args++;
+		}
+
+		return argv;
+	}
+
+	deprecated ("Use std.conv.to.")
+	{
+		const static char[10] digits    = "0123456789";			/// 0..9
+
+		/** */
+		public static string toString(bool b)
+		{
+			return b ? "true" : "false";
+		}
+
+		/** */
+		public static char[] toString(char c)
+		{
+			char[] result = new char[2];
+			result[0] = c;
+			result[1] = 0;
+			return result[0 .. 1];
+		}
+
+		/** */
+		public static string toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
+		/** */
+		public static string toString(ushort us) { return toString(cast(uint) us); } /// ditto
+
+		/** */
+		public static string toString(uint u)
+		{
+			char[uint.sizeof * 3] buffer = void;
+			int ndigits;
+			char c;
+			string result;
+
+			ndigits = 0;
+			if (u < 10)
+			{
+				result = digits[u .. u + 1].idup;
+			}
+			else
+			{
+				while (u)
+				{
+					c = cast(char)((u % 10) + '0');
+					u /= 10;
+					ndigits++;
+					buffer[buffer.length - ndigits] = c;
+				}
+
+				result = buffer[buffer.length - ndigits .. buffer.length].idup;
+			}
+			return result;
+		}
+
+		/** */
+		public static string toString(ulong u)
+		{
+			char[ulong.sizeof * 3] buffer;
+			int ndigits;
+			char c;
+			string result;
+
+			if (u < 0x1_0000_0000)
+				return toString(cast(uint)u);
+
+			ndigits = 0;
+			while (u)
+			{
+				c = cast(char)((u % 10) + '0');
+				u /= 10;
+				ndigits++;
+				buffer[buffer.length - ndigits] = c;
+			}
+
+			result = buffer[buffer.length - ndigits .. buffer.length].idup;
+
+			return result;
+		}
+
+		/** */
+		public static string toString(byte b)  { return toString(cast(int) b); } /// ditto
+		/** */
+		public static string toString(short s) { return toString(cast(int) s); } /// ditto
+
+		/** */
+		public static string toString(int i)
+		{
+			char[1 + int.sizeof * 3] buffer;
+			char c;
+			string result;
+
+			if (i >= 0)
+				return toString(cast(uint)i);
+
+			uint u = -i;
+			int ndigits = 1;
+			while (u)
+			{
+				c = cast(char)((u % 10) + '0');
+				u /= 10;
+				buffer[buffer.length - ndigits] = c;
+				ndigits++;
+			}
+			buffer[buffer.length - ndigits] = '-';
+
+			result = buffer[buffer.length - ndigits .. buffer.length].idup;
+
+			return result;
+		}
+	}
+code: end
+
+struct: String
+class: StringG
+
+struct: Thread
+noCode: new
+
+struct: Timeout
 class: Timeout
-prefix: g_timeout_
-strictPrefix: Yes
-import: glib.Source
-structWrap: GSource* Source
+cType:
 code: start
 	/** Holds all timeout delegates */
 	bool delegate()[] timeoutListeners;
 	/** our gtk timeout ID */
 	uint timeoutID;
 
-	 
+
 	/**
 	 * Creates a new timeout cycle with the default priority, GPriority.DEFAULT.
 	 *
@@ -292,7 +1281,7 @@ code: start
 	 * event sources. Thus they should not be relied on for precise timing.
 	 * After each call to the timeout function, the time of the next timeout is
 	 * recalculated based on the current time and the given interval
-	 * (it does not try to 'catch up' time lost in delays). 
+	 * (it does not try to 'catch up' time lost in delays).
 	 * Params:
 	 *    	interval = 	the timeout in milieconds
 	 *    	delegate() = 	the delegate to be executed
@@ -383,7 +1372,7 @@ code: start
 		timeoutID = 0;
 		timeoutListeners.length = 0;
 	}
-	
+
 	/**
 	 * Removes the timeout from gtk
 	 */
@@ -391,12 +1380,12 @@ code: start
 	{
 		stop();
 	}
-	
+
 	/**
 	 * Adds a new delegate to this timeout cycle
 	 * Params:
-	 *    	dlg = 	
-	 *    	fireNow = 	
+	 *    	dlg =
+	 *    	fireNow =
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
@@ -413,24 +1402,24 @@ code: start
 	/**
 	 * The callback execution from glib
 	 * Params:
-	 *    	timeout = 	
-	 * Returns: 
+	 *    	timeout =
+	 * Returns:
 	 */
 	extern(C) static bool timeoutCallback(Timeout timeout)
 	{
 		return timeout.callAllListeners();
 	}
-	
+
 	/**
 	 * Executes all delegates on the execution list
-	 * Returns: 
+	 * Returns:
 	 */
 	private bool callAllListeners()
 	{
 		bool runAgain = false;
-		
+
 		int i = 0;
-		
+
 		while ( i<timeoutListeners.length )
 		{
 			if ( !timeoutListeners[i]() )
@@ -446,2380 +1435,71 @@ code: start
 		return runAgain;
 	}
 code: end
-outFile: Timeout
 
-class: Idle
-prefix: g_idle_
-strictPrefix: Yes
-import: glib.Source
-structWrap: GSource* Source
+struct: TimeZone
+noCode: new_local
+noCode: new_utc
+
+struct: Tree
+class: BBTree
+
+struct: Util
+move: build_filenamev Util
+move: build_pathv Util
+noCode: build_filenamev
+noCode: build_pathv
 code: start
-	/** Holds all idle delegates */
-	bool delegate()[] idleListeners;
-	/** our idle ID */
-	uint idleID;
-
 	/**
-	 * Creates a new idle cycle.
+	 * Behaves exactly like g_build_filename(), but takes the path elements
+	 * as a string array, instead of varargs. This function is mainly
+	 * meant for language bindings.
+	 *
 	 * Params:
-	 *    	interval = the idle in milieconds
-	 *    	dlg = the delegate to be executed
-	 *    	fireNow = When true the delegate will be executed emmidiatly
-	 */
-	this(bool delegate() dlg, bool fireNow=false)
-	{
-		idleListeners ~= dlg;
-		idleID = g_idle_add(cast(GSourceFunc)&idleCallback, cast(void*)this);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = 0;
-			}
-		}
-	}
-
-	/**
-	 * Creates a new idle cycle.
-	 * Params:
-	 *    	dlg = the delegate to be executed
-	 *      priority = Priority for the idle function
-	 *    	fireNow = When true the delegate will be executed emmidiatly
-	 */
-	this(bool delegate() dlg, GPriority priority, bool fireNow=false)
-	{
-		idleListeners ~= dlg;
-		idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, null);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = 0;
-			}
-		}
-	}
-
-	/** */
-	public void stop()
-	{
-		if ( idleID > 0 )
-		{
-			g_source_remove(idleID);
-		}
-		idleListeners.length = 0;
-	}
-	
-	/**
-	 * Removes the idle from gtk
-	 */
-	~this()
-	{
-		stop();
-	}
-	
-	/**
-	 * Adds a new delegate to this idle cycle
-	 * Params:
-	 *    	dlg = 	
-	 *    	fireNow = 	
-	 */
-	public void addListener(bool delegate() dlg, bool fireNow=false)
-	{
-		idleListeners ~= dlg;
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = idleListeners.length - 1;
-			}
-		}
-	}
-
-	/**
-	 * The callback execution from glib
-	 * Params:
-	 *    	idle = 	
-	 * Returns: 
-	 */
-	extern(C) static bool idleCallback(Idle idle)
-	{
-		return idle.callAllListeners();
-	}
-	
-	/**
-	 * Executes all delegates on the execution list
-	 * Returns: 
-	 */
-	private bool callAllListeners()
-	{
-		bool runAgain = false;
-		
-		int i = 0;
-		
-		while ( i<idleListeners.length )
-		{
-			if ( !idleListeners[i]() )
-			{
-				idleListeners = idleListeners[0..i] ~ idleListeners[i+1..idleListeners.length];
-			}
-			else
-			{
-				runAgain = true;
-				++i;
-			}
-		}
-		return runAgain;
-	}
-code: end
-outFile: Idle
-
-class: Child
-import: glib.Source
-structWrap: GSource* Source
-prefix: g_child_
-strictPrefix: Yes
-outFile: Child
-
-struct: GSource
-class: Source
-prefix: g_source_
-strictPrefix: Yes
-import: glib.Str
-import: glib.MainContext
-structWrap: GMainContext* MainContext
-structWrap: GSource* Source
-
-inout: g_source_add_poll fd
-inout: g_source_remove_poll fd
-out: g_source_get_current_time timeval
-outFile: Source
-
-
-#file: glib-Threads.html
-#In APILookupGThread.txt
-
-file: glib-Thread-Pools.html
-struct: GThreadPool
-class: ThreadPool
-prefix: g_thread_pool_
-import: glib.ErrorG
-import: glib.GException
-outFile: ThreadPool
-
-file: glib-Asynchronous-Queues.html
-struct: GAsyncQueue
-class: AsyncQueue
-prefix: g_async_queue_
-structWrap: GAsyncQueue* AsyncQueue
-inout: g_async_queue_timed_pop end_time
-inout: g_async_queue_timed_pop_unlocked end_time
-outFile: AsyncQueue
-
-file: glib-Dynamic-Loading-of-Modules.html
-struct: GModule
-class: Module
-prefix: g_module_
-import: glib.Str
-structWrap: GModule* Module
-outFile: Module
-
-file: glib-Memory-Allocation.html
-class: Memory
-prefix: g_
-outFile: Memory
-
-file: glib-Memory-Slices.html
-class: MemorySlice
-prefix: g_slice_
-
-code: start
-	T* mewSlice(T)()
-	{
-		return cast(T*)g_slice_alloc(T.sizeof);
-	}
-
-	T* mewSlice0(T)()
-	{
-		return cast(T*)g_slice_alloc0(T.sizeof);
-	}
-
-	T* dup(T)(T* memBlock)
-	{
-		return cast(T*)g_slice_copy(T.sizeof, memBlock);
-	}
-
-	void free(T)(T* memBlock)
-	{
-		 g_slice_free1(T.sizeof, memBlock);
-	}
-code: end
-outFile: MemorySlice
-
-file: glib-IO-Channels.html
-struct: GIOChannel
-class: IOChannel
-prefix: g_io_channel_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.Source
-import: glib.StringG
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GIOChannel* IOChannel
-structWrap: GSource* Source
-structWrap: GString* StringG
-
-out: g_io_channel_read_chars bytes_read
-array: g_io_channel_read_chars buf count
-out: g_io_channel_read_unichar thechar
-array: g_io_channel_read_line str_return length
-out: g_io_channel_read_line str_return
-out: g_io_channel_read_line terminator_pos
-out: g_io_channel_read_line_string terminator_pos
-array: g_io_channel_read_to_end str_return length
-out: g_io_channel_read_to_end str_return
-array: g_io_channel_write_chars buf count
-out: g_io_channel_write_chars bytes_written
-array: g_io_channel_get_line_term Return length
-array: g_io_channel_set_line_term line_term length
-array: g_io_channel_read buf count 
-out: g_io_channel_read bytes_read
-array: g_io_channel_write buf count 
-out: g_io_channel_write bytes_written
-
-nocode: g_io_channel_read_line
-nocode: g_io_channel_read_to_end
-
-code: start
-	~this()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gIOChannel !is null )
-		{
-			g_io_channel_unref(gIOChannel);
-		}
-	}
-
-	/**
-	 * Reads a line, including the terminating character(s),
-	 * from a GIOChannel into a newly-allocated string.
-	 * str_return will contain allocated memory if the return
-	 * is G_IO_STATUS_NORMAL.
-	 * Params:
-	 * strReturn =  The line read from the GIOChannel, including the
-	 *  line terminator. This data should be freed with g_free()
-	 *  when no longer needed. This is a nul-terminated string.
-	 *  If a length of zero is returned, this will be NULL instead.
-	 * terminatorPos =  location to store position of line terminator, or NULL
-	 * Returns: the status of the operation.
-	 * Throws: GException on failure.
-	 */
-	public GIOStatus readLine(out string strReturn, out gsize terminatorPos)
-	{
-		// GIOStatus g_io_channel_read_line (GIOChannel *channel,  gchar **str_return,  gsize *length,  gsize *terminator_pos,  GError **error);
-		GError* err = null;
-		char* str = null;
-		gsize len;
-		
-		auto p = g_io_channel_read_line(gIOChannel, &str, &len, &terminatorPos, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		if ( str !is null )
-		{
-			strReturn = str[0 .. len-1].idup;
-		}
-		
-		return p;
-	}
-
-	/**
-	 * Reads all the remaining data from the file.
-	 * Params:
-	 * strReturn =  Location to store a pointer to a string holding
-	 *  the remaining data in the GIOChannel. This data should
-	 *  be freed with g_free() when no longer needed. This
-	 *  data is terminated by an extra nul character, but there
-	 *  may be other nuls in the intervening data.
-	 * Returns: G_IO_STATUS_NORMAL on success.  This function never returns G_IO_STATUS_EOF.
-	 * Throws: GException on failure.
-	 */
-	public GIOStatus readToEnd(out string strReturn)
-	{
-		// GIOStatus g_io_channel_read_to_end (GIOChannel *channel,  gchar **str_return,  gsize *length,  GError **error);
-		GError* err = null;
-		char* str = null;
-		gsize len;
-
-		auto p = g_io_channel_read_to_end(gIOChannel, &str, &len, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-	
-		if ( str !is null )
-		{
-			strReturn = str[0 .. len-1].idup;
-		}
-
-		return p;
-	}
-code: end
-outFile: IOChannel
-
-
-file: glib-Error-Reporting.html
-struct: GError
-class: ErrorG
-prefix: g_error_
-import: glib.Str
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GError* ErrorG
-
-out: g_propagate_error dest
-inout: g_clear_error err
-out: g_set_error_literal err
-
-code: start
-	~this()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gError !is null )
-		{
-			g_error_free(gError);
-		}
-	}
-code: end
-outFile: ErrorG
-
-file:
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-code: start
-
-class GException : Exception
-{
-	ErrorG error;
-
-	this(ErrorG error)
-	{
-		super( Str.toString(error.getErrorGStruct().message) );
-		this.error = error;
-	}
-}
-
-code: end
-outFile: GException
-
-file:
-code: start
-
-class ConstructionException : Exception
-{
-	this(string message)
-	{
-		super(message);
-	}
-
-	override string toString()
-	{
-		return "Construction failure, " ~ msg;
-	}
-}
-
-code: end
-outFile: ConstructionException
-
-file: glib-Warnings-and-Assertions.html
-class: Messages
-prefix: g_
-import: glib.Str
-outFile: Messages
-
-file: glib-Message-Logging.html
-class: MessageLog
-prefix: g_
-import: glib.Str
-outFile: MessageLog
-
-###########################################################
-### GLib Utilities ########################################
-###########################################################
-
-file: glib-String-Utility-Functions.html
-class: Str
-import: std.c.stdio
-import: core.stdc.string
-import: glib.StringG
-structWrap: GString* StringG
-prefix: g_
-
-array: g_strdupv str_array
-array: g_strstr_len haystack haystack_len
-array: g_strrstr_len haystack haystack_len
-array: g_strlcpy dest dest_size
-array: g_strlcat dest dest_size
-array: g_vsnprintf string n
-out: g_vasprintf string
-array: g_ascii_strup str len
-array: g_ascii_strdown str len
-out: g_ascii_strtoll endptr
-out: g_ascii_strtoull endptr
-out: g_ascii_strtod endptr
-array: g_ascii_dtostr buffer buf_len
-array: g_ascii_formatd buffer buf_len
-out: g_strtod endptr
-array: g_strfreev str_array
-array: g_strjoinv str_array
-array: g_strv_length str_array
-
-code: start
-	/*************************************************
-	 * Convert C-style 0 terminated string s to char[] string.
-	 * copied from phobos
-	 */
-	public static string toString(char *s, size_t len = 0)
-	{
-		if ( s is null )
-			return cast(string)null;
-
-		if ( len == 0 )
-			len = strlen(s);
-		
-		return s[0 .. len].idup;
-	}
-	
-	/*********************************
-	 * Convert array of chars s[] to a C-style 0 terminated string.
-	 * copied from phobos
-	 */
-	public static char* toStringz(string s)
-	{
-		if ( s is null ) return null;
-		char[] copy;
-		
-		if (s.length == 0)
-		{
-			copy = "\0".dup;
-		}
-		else
-		{
-			// Need to make a copy
-			copy = new char[s.length + 1];
-			copy[0..s.length] = s[];
-			copy[s.length] = 0;
-		}
-		
-		return copy.ptr;
-	}
-	
-	/** */
-	public static char** toStringzArray(string[] args)
-	{
-		if ( args is null )
-		{
-			return null;
-		}
-		char** argv = (new char*[args.length]).ptr;
-		int argc = 0;
-		foreach (string p; args)
-		{
-			argv[argc++] = cast(char*)(p.dup~'\0');
-		}
-		argv[argc] = null;
-		
-		return argv;
-	}
-	
-	/** */
-	public static string[] toStringArray(char** args)
-	{
-		if ( args is null )
-		{
-			return null;
-		}
-		string[] argv;
-		
-		while ( *args !is null )
-		{
-			argv ~= toString(*args);
-			args++;
-		}
-		
-		return argv;
-	}
-
-	deprecated ("Use std.conv.to.")
-	{
-		const static char[10] digits    = "0123456789";			/// 0..9
-	
-		/** */
-		public static string toString(bool b)
-		{
-			return b ? "true" : "false";
-		}
-	
-		/** */
-		public static char[] toString(char c)
-		{
-			char[] result = new char[2];
-			result[0] = c;
-			result[1] = 0;
-			return result[0 .. 1];
-		}
-	
-		/** */
-		public static string toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
-		/** */
-		public static string toString(ushort us) { return toString(cast(uint) us); } /// ditto
-	
-		/** */
-		public static string toString(uint u)
-		{
-			char[uint.sizeof * 3] buffer = void;
-			int ndigits;
-			char c;
-			string result;
-		
-			ndigits = 0;
-			if (u < 10)
-			{
-				result = digits[u .. u + 1].idup;
-			}
-			else
-			{
-				while (u)
-				{
-					c = cast(char)((u % 10) + '0');
-					u /= 10;
-					ndigits++;
-					buffer[buffer.length - ndigits] = c;
-				}
-
-				result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			}
-			return result;
-		}
-	
-		/** */
-		public static string toString(ulong u)
-		{
-			char[ulong.sizeof * 3] buffer;
-			int ndigits;
-			char c;
-			string result;
-		
-			if (u < 0x1_0000_0000)
-				return toString(cast(uint)u);
-		
-			ndigits = 0;
-			while (u)
-			{
-				c = cast(char)((u % 10) + '0');
-				u /= 10;
-				ndigits++;
-				buffer[buffer.length - ndigits] = c;
-			}
-
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			
-			return result;
-		}
-	
-		/** */
-		public static string toString(byte b)  { return toString(cast(int) b); } /// ditto
-		/** */
-		public static string toString(short s) { return toString(cast(int) s); } /// ditto
-	
-		/** */
-		public static string toString(int i)
-		{
-			char[1 + int.sizeof * 3] buffer;
-			char c;
-			string result;
-		
-			if (i >= 0)
-				return toString(cast(uint)i);
-		
-			uint u = -i;
-			int ndigits = 1;
-			while (u)
-			{
-				c = cast(char)((u % 10) + '0');
-				u /= 10;
-				buffer[buffer.length - ndigits] = c;
-				ndigits++;
-			}
-			buffer[buffer.length - ndigits] = '-';
-
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			
-			return result;
-		}
-	}
-code: end
-outFile: Str
-
-file: glib-Character-Set-Conversion.html
-class: CharacterSet
-prefix: g_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-
-out: g_convert bytes_read
-out: g_convert bytes_written
-out: g_convert_with_fallback bytes_read
-out: g_convert_with_fallback bytes_written
-array: g_convert_with_iconv str len
-out: g_convert_with_iconv bytes_read
-array: g_convert_with_iconv Return bytes_written
-inout: g_iconv inbuf
-array: g_iconv inbuf inbytes_left
-inout: g_iconv outbuf
-array: g_iconv outbuf outbytes_left
-out: g_locale_to_utf8 bytes_read
-out: g_locale_to_utf8 bytes_written
-array: g_filename_to_utf8 opsysstring len
-out: g_filename_to_utf8 bytes_read
-out: g_filename_to_utf8 bytes_written
-array: g_filename_from_utf8 utf8string len
-out: g_filename_from_utf8 bytes_read
-out: g_filename_from_utf8 bytes_written
-out: g_locale_from_utf8 bytes_read
-out: g_locale_from_utf8 bytes_written
-out: g_filename_from_uri hostname
-out: g_get_charset charset
-out: g_get_filename_charsets charsets
-array: g_get_filename_charsets charsets
-
-nocode: g_iconv
-
-code: start
-/**
-	 * Same as the standard UNIX routine iconv(), but
-	 * may be implemented via libiconv on UNIX flavors that lack
-	 * a native implementation.
-	 * GLib provides g_convert() and g_locale_to_utf8() which are likely
-	 * more convenient than the raw iconv wrappers.
-	 * Params:
-	 * converter = conversion descriptor from g_iconv_open()
-	 * inbuf = bytes to convert
-	 * outbuf = converted output bytes
-	 * Returns: count of non-reversible conversions, or -1 on error
-	 */
-	public static gsize iconv(GIConv converter, ref char[] inbuf, ref char[] outbuf)
-	{
-		// gsize g_iconv (GIConv converter,  gchar **inbuf,  gsize *inbytes_left,  gchar **outbuf,  gsize *outbytes_left);
-		gchar* outinbuf = inbuf.ptr;
-		size_t inbytesLeft = inbuf.length;
-		gchar* outoutbuf = outbuf.ptr;
-		size_t outbytesLeft = outbuf.length;
-		
-		auto p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
-		
-		inbuf = outinbuf[0 .. inbytesLeft];
-		outbuf = outoutbuf[0 .. outbytesLeft];
-		return p;
-	}
-code: end
-outFile: CharacterSet
-
-file: glib-Unicode-Manipulation.html
-class: Unicode
-prefix: g_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-
-out: g_unichar_compose ch
-out: g_unichar_decompose a
-out: g_unichar_decompose b
-array: g_unichar_fully_decompose result result_len
-array: g_unicode_canonical_ordering string len
-array: g_unicode_canonical_decomposition Return result_len
-out: g_unichar_get_mirror_char mirrored_ch
-array: g_utf8_get_char_validated p max_len
-array: g_utf8_strlen p max
-array: g_utf8_strreverse str len
-out: g_utf8_validate end
-array: g_utf8_validate str max_len
-array: g_utf8_strup str len
-array: g_utf8_strdown str len
-array: g_utf8_casefold str len
-array: g_utf8_normalize str len
-array: g_utf8_collate_key str len
-array: g_utf8_collate_key_for_filename str len
-array: g_utf8_to_utf16 str len
-out: g_utf8_to_utf16 items_read
-array: g_utf8_to_utf16 Return items_written
-array: g_utf8_to_ucs4 str len
-out: g_utf8_to_ucs4 items_read
-array: g_utf8_to_ucs4 Return items_written
-array: g_utf8_to_ucs4_fast str len
-array: g_utf8_to_ucs4_fast Return items_written
-array: g_utf16_to_ucs4 str len
-out: g_utf16_to_ucs4 items_read
-array: g_utf16_to_ucs4 Return items_written
-array: g_utf16_to_utf8 str len
-out: g_utf16_to_utf8 items_read
-array: g_utf16_to_utf8 Return items_written
-array: g_ucs4_to_utf16 str len
-out: g_ucs4_to_utf16 items_read
-array: g_ucs4_to_utf16 Return items_written
-array: g_ucs4_to_utf8 str len
-out: g_ucs4_to_utf8 items_read
-array: g_ucs4_to_utf8 Return items_written
-
-outFile: Unicode
-
-file: glib-Base64-Encoding.html
-class: Base64
-prefix: g_base64_
-import: glib.Str
-
-array: g_base64_encode_step in len
-inout: g_base64_encode_step state
-inout: g_base64_encode_step save
-inout: g_base64_encode_close state
-inout: g_base64_encode_close save
-array: g_base64_encode data len
-array: g_base64_decode_step in len
-inout: g_base64_decode_step state
-inout: g_base64_decode_step save
-array: g_base64_decode Return out_len
-array: g_base64_decode_inplace Return out_len
-
-outFile: Base64
-
-file: glib-Data-Checksums.html
-struct: GChecksum
-class: Checksum
-prefix: g_checksum_
-prefix: g_
-import: glib.Str
-import: glib.Bytes
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GBytes* Bytes
-structWrap: GChecksum* Checksum
-
-inout: g_checksum_get_digest digest_len
-array: g_checksum_get_digest buffer digest_len
-array: g_checksum_update data length
-array: g_compute_checksum_for_data data length
-array: g_compute_checksum_for_string str length
-
-alias: computeChecksumForData computeForData
-alias: computeChecksumForString computeForString
-
-#TODO: Let the wrapper handle this correctly.
-nocode: g_checksum_get_digest
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gChecksum !is null )
-		{
-			g_checksum_free(gChecksum);
-		}
-	}
-
-	/**
-	 * Gets the digest from checksum as a raw binary vector and places it
-	 * into buffer. The size of the digest depends on the type of checksum.
-	 * Once this function has been called, the GChecksum is closed and can
-	 * no longer be updated with g_checksum_update().
-	 * Since 2.16
-	 * Params:
-	 * buffer = output buffer
-	 */
-	public void getDigest(ref ubyte[] buffer)
-	{
-		size_t digestLen = buffer.length;
-
-		// void g_checksum_get_digest (GChecksum *checksum,  guint8 *buffer,  gsize *digest_len);
-		g_checksum_get_digest(gChecksum, buffer.ptr, &digestLen);
-
-		buffer = buffer[0 .. digestLen];
-	}
-code: end
-outFile: Checksum
-
-file: glib-Data-HMACs.html
-struct: GHmac
-class: Hmac
-prefix: g_hmac_
-prefix: g_
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GHmac* Hmac
-
-array: g_hmac_new key key_len
-array: g_hmac_update data length
-inout: g_hmac_get_digest buffer
-array: g_hmac_get_digest buffer digest_len
-array: g_compute_hmac_for_data key key_len
-array: g_compute_hmac_for_data data length
-array: g_compute_hmac_for_string key key_len
-array: g_compute_hmac_for_string str length
-
-nocode: g_hmac_get_digest
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gHmac !is null )
-		{
-			g_hmac_unref(gHmac);
-		}
-	}
-
-	/**
-	 * Gets the digest from checksum as a raw binary array and places it
-	 * into buffer. The size of the digest depends on the type of checksum.
-	 * Once this function has been called, the GHmac is closed and can
-	 * no longer be updated with g_checksum_update().
-	 * Since 2.30
-	 * Params:
-	 * buffer = output buffer
-	 */
-	public void getDigest(ref ubyte[] buffer)
-	{
-		// void g_hmac_get_digest (GHmac *hmac,  guint8 *buffer,  gsize *digest_len);
-		size_t digestLen = buffer.length;
-		
-		g_hmac_get_digest(gHmac, buffer.ptr, &digestLen);
-
-		buffer = buffer[0 .. digestLen];
-	}
-code: end
-outFile: Hmac
-
-file: glib-I18N.html
-class: Internationalization
-prefix: g_
-import: glib.Str
-outFile: Internationalization
-
-file: glib-Date-and-Time-Functions.html
-class: TimeVal
-prefix: g_time_val_
-prefix: g_
-noprefix: g_date_
-import: glib.Str
-
-out: g_get_current_time result
-inout: g_time_val_add time_
-out: g_time_val_from_iso8601 time_
-inout: g_time_val_to_iso8601 time_
-
-outFile: TimeVal
-
-struct: GDate
-class: Date
-prefix: g_date_
-strictPrefix: Y
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GDate* Date
-
-inout: g_date_set_time_val timeval
-array: g_date_strftime s slen
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gDate !is null )
-		{
-			g_date_free(gDate);
-		}
-	}
-code: end
-outFile: Date
-
-file: glib-GTimeZone.html
-struct: GTimeZone
-class: TimeZone
-prefix: g_time_zone_
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GTimeZone* TimeZone
-nocode: g_time_zone_new_local
-nocode: g_time_zone_new_utc
-
-inout: g_time_zone_adjust_time time_
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gTimeZone !is null )
-		{
-			g_time_zone_unref(gTimeZone);
-		}
-	}
-code: end
-outFile: TimeZone
-
-file: glib-GDateTime.html
-struct: GDateTime
-class: DateTime
-prefix: g_date_time_
-import: glib.Str
-import: glib.TimeZone
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GDateTime* DateTime
-structWrap: GTimeZone* TimeZone
-structWrap: void* DateTime
-
-out: g_date_time_get_ymd year
-out: g_date_time_get_ymd month
-out: g_date_time_get_ymd day
-out: g_date_time_to_timeval tv
-
-nocode: g_date_time_new_now_utc
-nocode: g_date_time_new_now_local
-nocode: g_date_time_new_from_unix_local
-nocode: g_date_time_new_from_unix_utc
-nocode: g_date_time_new_from_timeval_local
-nocode: g_date_time_new_from_timeval_utc
-nocode: g_date_time_new_local
-nocode: g_date_time_new_utc
-nocode: g_date_time_hash
-
-code: start
-	/**
-	 * Creates a GDateTime corresponding to the given Unix time t
-	 * Unix time is the number of seconds that have elapsed since 1970-01-01
-	 * 00:00:00 UTC, regardless of the local time offset.
-	 * 
-	 * This call can fail (returning NULL) if t represents a time outside
-	 * of the supported range of GDateTime.
-	 * You should release the return value by calling g_date_time_unref()
-	 * when you are done with it.
-	 * Since 2.26
-	 * 
-	 * Params:
-	 *     t   = the Unix time
-	 *     utc = If true use utc else use the local timezone.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (long t, bool utc = true)
-	{
-		// GDateTime * g_date_time_new_from_unix_local (gint64 t);
-		GDateTime* p;
-
-		if ( utc )
-		{
-			p = g_date_time_new_from_unix_utc(t);
-		}
-		else
-		{
-			p = g_date_time_new_from_unix_local(t);
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_date_time_new_from_unix_local(t)");
-		}
-		this(cast(GDateTime*) p);
-	}
-
-	/**
-	 * Creates a GDateTime corresponding to the given GTimeVal tv.
-	 * The time contained in a GTimeVal is always stored in the form of
-	 * seconds elapsed since 1970-01-01 00:00:00 UTC, regardless of the
-	 * local time offset.
-	 * 
-	 * This call can fail (returning NULL) if tv represents a time outside
-	 * of the supported range of GDateTime.
-	 * You should release the return value by calling unref()
-	 * when you are done with it.
-	 * Since 2.26
-	 * 
-	 * Params:
-	 *     tv  = a GTimeVal
-	 *     utc = If true use utc else use the local timezone.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (ref GTimeVal tv, bool utc = true)
-	{
-		// GDateTime * g_date_time_new_from_timeval_local (const GTimeVal *tv);
-		GDateTime* p;
-
-		if ( utc )
-		{
-			p = g_date_time_new_from_timeval_utc(&tv);
-		}
-		else
-		{
-			p = g_date_time_new_from_timeval_local(&tv);
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
-		}
-		this(cast(GDateTime*) p);
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gDateTime !is null )
-		{
-			g_date_time_unref(gDateTime);
-		}
-	}
-
-	override bool opEquals(Object rhs)
-	{
-		DateTime date = cast(DateTime)rhs;
-
-		if ( date is null )
-			return false;
-
-		return equal(this, date) != 0;
-	}
-	
-	override int opCmp(Object rhs)
-	{
-		DateTime date = cast(DateTime)rhs;
-
-		if ( date is null )
-			return int.min;
-
-		return compare(this, date);
-	}
-
-	override hash_t toHash()
-	{
-		return hash(this);
-	}
-
-	/**
-	 * Hashes datetime into a guint, suitable for use within GHashTable.
-	 * Since 2.26
-	 * Params:
-	 * datetime = a GDateTime
-	 * Returns: a guint containing the hash
-	 */
-	public static nothrow @trusted uint hash(DateTime datetime)
-	{
-		try
-		{
-			// guint g_date_time_hash (gconstpointer datetime);
-			return g_date_time_hash((datetime is null) ? null : datetime.getDateTimeStruct());
-		}
-		catch(Exception e)
-		{
-			return 0;
-		}
-	}
-code: end
-outFile: DateTime
-
-file: glib-Random-Numbers.html
-struct: GRand
-class: RandG
-prefix: g_rand_
-prefix: g_
-import: gtkc.Loader
-import: gtkc.paths
-
-array: g_rand_set_seed_array seed seed_length
-array: g_rand_new_with_seed_array seed seed_length
-
-structWrap: GRand* RandG
-
-alias: int randInt
-alias: intRange randIntRange
-alias: double randDouble
-alias: doubleRange randDoubleRange
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gRand !is null )
-		{
-			g_rand_free(gRand);
-		}
-	}
-code: end
-outFile: RandG
-
-#file: glib-Hook-Functions.html
-#class: Hook
-#prefix: g_hook_
-##import: glib.HookList
-##structWrap: GHookList* HookList
-##import: glib.Hook
-#structWrap: GHook* Hook
-#outFile: Hook
-
-file: glib-Miscellaneous-Utility-Functions.html
-class: Util
-import: glib.ListG
-structWrap: GList* ListG
-prefix: g_
-import: glib.Str
-
-array: g_environ_getenv envp
-array: g_environ_setenv envp
-array: g_environ_unsetenv envp
-array: g_parse_debug_string keys nkeys
-array: g_qsort_with_data pbase total_elems
-
-nocode: g_build_filenamev
-nocode: g_build_pathv
-
-code: start
-	/**
-	 * Creates a filename from a series of elements using the correct
-	 * separator for filenames.
-	 * On Unix, this function behaves identically to g_build_path
-	 * (G_DIR_SEPARATOR_S, first_element, ....).
-	 * On Windows, it takes into account that either the backslash
-	 * (\ or slash (/) can be used
-	 * as separator in filenames, but otherwise behaves as on Unix. When
-	 * file pathname separators need to be inserted, the one that last
-	 * previously occurred in the parameters (reading from left to right)
-	 * is used.
-	 * No attempt is made to force the resulting filename to be an absolute
-	 * path. If the first element is a relative path, the result will
-	 * be a relative path.
-	 * Params:
-	 * firstElement =  the first element in the path
-	 * ... =  remaining elements in path, terminated by NULL
-	 * Returns: a newly-allocated string that must be freed with g_free().
+	 *     args = strings containing the path elements.
+	 *
+	 * Return: a newly-allocated string that must be freed with g_free().
+	 *
+	 * Since: 2.8
 	 */
 	public static string buildFilename(string[] firstElement ... )
 	{
-		// gchar* g_build_filename (const gchar *first_element,  ...);
 		return Str.toString(g_build_filenamev(Str.toStringzArray(firstElement)));
 	}
 
 	/**
-	 * Creates a path from a series of elements using separator as the
-	 * separator between elements. At the boundary between two elements,
-	 * any trailing occurrences of separator in the first element, or
-	 * leading occurrences of separator in the second element are removed
-	 * and exactly one copy of the separator is inserted.
-	 * Empty elements are ignored.
-	 * The number of leading copies of the separator on the result is
-	 * the same as the number of leading copies of the separator on
-	 * the first non-empty element.
-	 * The number of trailing copies of the separator on the result is
-	 * the same as the number of trailing copies of the separator on
-	 * the last non-empty element. (Determination of the number of
-	 * trailing copies is done without stripping leading copies, so
-	 * if the separator is ABA, ABABA
-	 * has 1 trailing copy.)
-	 * However, if there is only a single non-empty element, and there
-	 * are no characters in that element not part of the leading or
-	 * trailing separators, then the result is exactly the original value
-	 * of that element.
-	 * Other than for determination of the number of leading and trailing
-	 * copies of the separator, elements consisting only of copies
-	 * of the separator are ignored.
+	 * Behaves exactly like g_build_path(), but takes the path elements
+	 * as a string array, instead of varargs. This function is mainly
+	 * meant for language bindings.
+	 *
 	 * Params:
-	 * separator =  a string used to separator the elements of the path.
-	 * firstElement =  the first element in the path
-	 * ... =  remaining elements in path, terminated by NULL
-	 * Returns: a newly-allocated string that must be freed with g_free().
+	 *     separator = a string used to separator the elements of the path.
+	 *     args = strings containing the path elements.
+	 *
+	 * Return: a newly-allocated string that must be freed with g_free().
+	 *
+	 * Since: 2.8
 	 */
 	public static string buildPath(string separator, string[] firstElement ... )
 	{
-		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
 		return Str.toString(g_build_pathv(Str.toStringz(separator), Str.toStringzArray(firstElement)));
 	}
 code: end
-outFile: Util
 
-file: glib-Lexical-Scanner.html
-struct: GScanner
-class: ScannerG
-prefix: g_scanner_
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GScanner* ScannerG
-
-array: g_scanner_input_text text text_len
-
+struct: Variant
+noCode: new_bytestring_array
+noCode: new_object_path
+noCode: new_signature
+noCode: new_objv
+noCode: new_bytestring
+noCode: new_handle
+noCode: new_take_string
 code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gScanner !is null )
-		{
-			g_scanner_destroy(gScanner);
-		}
-	}
-code: end
-outFile: ScannerG
-
-file: glib-Timers.html
-struct: GTimer
-class: Timer
-prefix: g_timer_
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GTimer* Timer
-
-out: g_timer_elapsed microseconds
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gTimer !is null )
-		{
-			g_timer_destroy(gTimer);
-		}
-	}
-code: end
-outFile: Timer
-
-file: glib-Spawning-Processes.html
-class: Spawn
-prefix: g_spawn_
-import: core.thread
-import: core.stdc.string
-import: std.c.stdio
-import: std.string
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-
-array: g_spawn_async argv
-array: g_spawn_async envp
-array: g_spawn_sync argv
-array: g_spawn_sync envp
-out: g_spawn_async child_pid
-out: g_spawn_sync standard_output
-out: g_spawn_sync standard_error
-out: g_spawn_sync exit_status
-out: g_spawn_command_line_sync standard_output
-out: g_spawn_command_line_sync standard_error
-out: g_spawn_command_line_sync exit_status
-
-nocode: g_spawn_async_with_pipes
-
-code: start
-	//we need fdopen.
-	version(Posix)
-	{
-		private import core.sys.posix.stdio;
-	}
-	//fdopen for Windows is defined in gtkc.glibtypes.
-
-	string workingDirectory = ".";
-	string[] argv;
-	string[] envp;
-	GSpawnFlags flags = SpawnFlags.SEARCH_PATH;
-	GSpawnChildSetupFunc childSetup;
-	void* userData;
-	GPid childPid;
-	FILE* standardInput;
-	FILE* standardOutput;
-	FILE* standardError;
-	GError* error;
-	int stdIn;
-	int stdOut;
-	int stdErr;
-	
-	// for commandLineSync
-	int exitStatus;
-	char* strOutput;
-	char* strError;
-	
-	alias bool delegate(Spawn) ChildWatch;
-	ChildWatch externalWatch;
-	
-	/**
-	 * Creates a Spawn for execution.
-	 */
-	public this(string program, string[] envp=null)
-	{
-		argv ~= program;
-		this.envp = envp;
-	}
-	
-	/**
-	 * Creates a Spawn for execution.
-	 */
-	public this(string[] program, string[] envp=null)
-	{
-		argv = program;
-		this.envp = envp;
-	}
-	
-	/**
-	 * Adds a delegate to be notified on the end of the child process.
-	 * Params:
-	 *    	dlg =
-	 */
-	public void addChildWatch(ChildWatch dlg)
-	{
-		externalWatch = dlg;
-	}
-	
-	/**
-	 * Closes all open streams and child process.
-	 */
-	public void close()
-	{
-		if (stdIn != 0 )
-		{
-			fclose(standardInput);
-			stdIn = 0;
-		}
-		if (stdOut != 0 )
-		{
-			fclose(standardOutput);
-			stdOut = 0;
-		}
-		if (stdErr != 0 )
-		{
-			fclose(standardError);
-			stdErr = 0;
-		}
-		if ( childPid != 0 )
-		{
-			closePid(childPid);
-			childPid = 0;
-		}
-	}
-	
-	/**
-	 * Adds a parameter to the execution program
-	 */
-	public void addParm(string parm)
-	{
-		argv ~= parm;
-	}
-	
-	/**
-	 * Gets the last error message
-	 */
-	public string getLastError()
-	{
-		if ( error != null )
-		{
-			return Str.toString(error.message);
-		}
-		return "";
-	}
-	
-	/**
-	 * Executes the prepared process
-	 */
-	public int execAsyncWithPipes(
-		ChildWatch externalWatch = null,
-		bool delegate(string) readOutput = null,
-		bool delegate(string) readError = null )
-	{
-		int result = g_spawn_async_with_pipes(
-		Str.toStringz(workingDirectory),
-		Str.toStringzArray(argv),
-		Str.toStringzArray(envp),
-		flags,
-		childSetup,
-		userData,
-		&childPid,
-		&stdIn,
-		&stdOut,
-		&stdErr,
-		&error
-		);
-		
-		if ( result != 0 )
-		{
-			this.externalWatch = externalWatch;
-			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), cast(void*)this);
-			standardInput = fdopen(stdIn, Str.toStringz("w"));
-			standardOutput = fdopen(stdOut, Str.toStringz("r"));
-			standardError = fdopen(stdErr, Str.toStringz("r"));
-			
-			if ( readOutput !is null )
-			{
-				(new ReadFile(standardOutput, readOutput)).start();
-			}
-			if ( readError !is null )
-			{
-				(new ReadFile(standardError, readError)).start();
-			}
-		}
-		
-		return result;
-	}
-	
-	class ReadFile : Thread
-	{
-		bool delegate(string) read;
-		FILE* file;
-		
-		int lineCount;
-		
-		this(FILE* file, bool delegate (string) read )
-		{
-			this.file = file;
-			this.read = read;
-
-			super(&run);
-		}
-		
-		public void run()
-		{
-			string line = readLine(file);
-			while( line !is null )
-			{
-				++lineCount;
-				if ( read !is null )
-				{
-					read(line);
-				}
-				line = readLine(file);
-			}
-		}
-	}
-	
-	private string readLine(FILE* stream, int max=4096)
-	{
-		if ( feof(stream) )
-		{
-			if ( externalWatch !is null )
-			{
-				externalWatch(this);
-			}
-			return null;
-		}
-		string line;
-		line.length = max+1;
-		char* lineP = fgets(Str.toStringz(line), max, stream);
-		if ( lineP is null )
-		{
-			return "";
-		}
-		size_t l = strlen(line.ptr);
-		if ( l > 0 ) --l;
-
-		return line[0..l];
-	}
-	
-	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
-	{
-		//writefln("Spawn.childWatchCallback %s %s", pid, status);
-		spawn.exitStatus = status;
-		if ( spawn.externalWatch !is null )
-		{
-			spawn.externalWatch(spawn);
-		}
-		spawn.close();
-	}
-	
-	
-	public bool endOfOutput()
-	{
-		if ( standardOutput is null ) return true;
-		return feof(standardOutput) != 0;
-	}
-	
-	public bool endOfError()
-	{
-		if ( standardError is null ) return true;
-		return feof(standardError) != 0;
-	}
-	
-	string getOutputString()
-	{
-		return Str.toString(strOutput);
-	}
-	
-	string getErrorString()
-	{
-		return Str.toString(strError);
-	}
-	
-	int getExitStatus()
-	{
-		return exitStatus;
-	}
-	
-	/**
-	 * Executes a command synchronasly and
-	 * optionally calls delegates for sysout, syserr and end of job
-	 *
-	 */
-	public int commandLineSync(
-		ChildWatch externalWatch = null,
-		bool delegate(string) readOutput = null,
-		bool delegate(string) readError = null )
-	{
-		string commandLine;
-		foreach ( int count, string arg; argv)
-		{
-			if ( count > 0 )
-			{
-				commandLine ~= ' ';
-			}
-			commandLine ~= arg;
-		}
-		int status = g_spawn_command_line_sync(
-			Str.toStringz(commandLine),
-			&strOutput,
-			&strError,
-			&exitStatus,
-			&error);
-		if ( readOutput != null )
-		{
-			foreach ( string line ; splitLines(Str.toString(strOutput)) )
-			{
-				readOutput(line);
-			}
-		}
-		if ( readError != null )
-		{
-			foreach ( string line ; splitLines(Str.toString(strError)) )
-			{
-				readError(line);
-			}
-		}
-		if ( externalWatch != null )
-		{
-			externalWatch(this);
-		}
-		return status;
-	}
-code: end
-outFile: Spawn
-
-file: glib-File-Utilities.html
-class: FileUtils
-prefix: g_
-noprefix: g_dir_
-noprefix: g_mapped_file_
-import: std.c.stdio
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-
-out: g_file_get_contents contents
-array: g_file_get_contents contents length
-array: g_file_set_contents contents length
-out: g_file_open_tmp name_used
-
-nocode: g_file_get_contents
-
-code: start
-/**
-	 * Reads an entire file into allocated memory, with good error
-	 * checking.
-	 * If the call was successful, it returns TRUE and sets contents to the file
-	 * contents and length to the length of the file contents in bytes. The string
-	 * stored in contents will be nul-terminated, so for text files you can pass
-	 * NULL for the length argument. If the call was not successful, it returns
-	 * FALSE and sets error. The error domain is G_FILE_ERROR. Possible error
-	 * codes are those in the GFileError enumeration. In the error case,
-	 * contents is set to NULL and length is set to zero.
-	 * Params:
-	 * filename = name of a file to read contents from, in the GLib file name encoding. [type filename]
-	 * contents = location to store an allocated string, use g_free() to free
-	 * the returned string. [out][array length=length][element-type guint8]
-	 * Returns: TRUE on success, FALSE if an error occurred
-	 * Throws: GException on failure.
-	 */
-	public static int fileGetContents(string filename, out char[] contents)
-	{
-		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
-		gchar* outcontents = null;
-		size_t length;
-		GError* err = null;
-		
-		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		contents = outcontents[0 .. length];
-		return p;
-	}
-code: end
-outFile: FileUtils
-
-struct: GDir
-class: Directory
-prefix: g_dir_
-strictPrefix: Y
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-structWrap: GDir* Directory
-outFile: Directory
-
-struct: GMappedFile
-class: MappedFile
-prefix: g_mapped_file_
-strictPrefix: Y
-import: glib.Str
-import: glib.Bytes
-import: glib.ErrorG
-import: glib.GException
-structWrap: GBytes* Bytes
-structWrap: GMappedFile* MappedFile
-outFile: MappedFile
-
-file: glib-URI-Functions.html
-class: URI
-prefix: g_uri_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-out: g_filename_from_uri hostname
-outFile: URI
-
-file: glib-Hostname-Utilities.html
-class: Hostname
-prefix: g_hostname_
-import: glib.Str
-outFile: Hostname
-
-file: glib-Shell-related-Utilities.html
-class: ShellUtils
-prefix: g_shell_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-
-out: g_shell_parse_argv argvp
-array: g_shell_parse_argv argvp argcp
-
-outFile: ShellUtils
-
-file: glib-Commandline-option-parser.html
-struct: GOptionContext
-class: OptionContext
-prefix: g_option_context_
-noprefix: g_option_group_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.OptionGroup
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GOptionGroup* OptionGroup
-
-out: g_option_context_parse argv
-array: g_option_context_parse argv argc
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gOptionContext !is null )
-		{
-			g_option_context_free(gOptionContext);
-		}
-	}
-code: end
-outFile: OptionContext
-
-struct: GOptionGroup
-class: OptionGroup
-prefix: g_option_group_
-strictPrefix: Yes
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gOptionGroup !is null )
-		{
-			g_option_group_free(gOptionGroup);
-		}
-	}
-code: end
-outFile: OptionGroup
-
-file: glib-Glob-style-pattern-matching.html
-struct: GPatternSpec
-class: Pattern
-prefix: g_pattern_spec_
-prefix: g_pattern_
-import: glib.Str
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GPatternSpec* Pattern
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gPatternSpec !is null )
-		{
-			g_pattern_spec_free(gPatternSpec);
-		}
-	}
-code: end
-outFile: Pattern
-
-file: glib-Perl-compatible-regular-expressions.html
-struct: GRegex
-class: Regex
-prefix: g_regex_
-noprefix: g_match_info_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.MatchInfo
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GMatchInfo* MatchInfo
-structWrap: GRegex* Regex
-
-array: g_regex_escape_string string length
-array: g_regex_escape_nul string length
-out: g_regex_match match_info
-array: g_regex_match_full string string_len
-out: g_regex_match_full match_info
-out: g_regex_match_all match_info
-array: g_regex_match_all_full string string_len
-out: g_regex_match_all_full match_info
-array: g_regex_split_full string string_len
-array: g_regex_replace string string_len
-array: g_regex_replace_literal string string_len
-array: g_regex_replace_eval string string_len
-out: g_regex_check_replacement has_references
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gRegex !is null )
-		{
-			g_regex_unref(gRegex);
-		}
-	}
-code: end
-outFile: Regex
-
-struct: GMatchInfo
-class: MatchInfo
-prefix: g_match_info_
-strictPrefix: Y
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.Regex
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GMatchInfo* MatchInfo
-structWrap: GRegex* Regex
-
-out: g_match_info_fetch_pos start_pos
-out: g_match_info_fetch_pos end_pos
-out: g_match_info_fetch_named_pos start_pos
-out: g_match_info_fetch_named_pos end_pos
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gMatchInfo !is null )
-		{
-			g_match_info_free(gMatchInfo);
-		}
-	}
-code: end
-outFile: MatchInfo
-
-file: glib-Simple-XML-Subset-Parser.html
-struct: GMarkupParseContext
-class: SimpleXML
-prefix: g_markup_parse_context_
-prefix: g_markup_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.ListSG
-import: gtkc.Loader
-import: gtkc.paths
-structWrap: GSList* ListSG
-structWrap: GMarkupParseContext* SimpleXML
-
-out: g_markup_parse_context_get_position line_number
-out: g_markup_parse_context_get_position char_number
-
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gMarkupParseContext !is null )
-		{
-			g_markup_parse_context_free(gMarkupParseContext);
-		}
-	}
-code: end
-outFile: SimpleXML
-
-file: glib-Key-value-file-parser.html
-struct: GKeyFile
-class: KeyFile
-prefix: g_key_file_
-import: glib.ErrorG
-import: glib.GException
-import: glib.Str
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GKeyFile* KeyFile
-
-out: g_key_file_load_from_data_dirs full_path
-out: g_key_file_load_from_dirs full_path
-array: g_key_file_load_from_data data length
-array: g_key_file_load_from_dirs search_dirs
-array: g_key_file_to_data Return length
-array: g_key_file_get_groups Return length
-array: g_key_file_get_keys Return length
-array: g_key_file_get_string_list Return length
-array: g_key_file_get_locale_string_list Return length
-array: g_key_file_get_boolean_list Return length
-array: g_key_file_get_integer_list Return length
-array: g_key_file_get_double_list Return length
-array: g_key_file_set_string_list list length
-array: g_key_file_set_locale_string_list list length
-array: g_key_file_set_boolean_list list length
-array: g_key_file_set_integer_list list length
-array: g_key_file_set_double_list list length
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gKeyFile !is null )
-		{
-			g_key_file_unref(gKeyFile);
-		}
-	}
-code: end
-outFile: KeyFile
-
-file: glib-Bookmark-file-parser.html
-struct: GBookmarkFile
-class: BookmarkFile
-prefix: g_bookmark_file_
-import: glib.ErrorG
-import: glib.GException
-import: glib.Str
-import: gtkc.paths
-import: gtkc.Loader
-
-array: g_bookmark_file_load_from_data data lenght
-out: g_bookmark_file_load_from_data_dirs full_path 
-array: g_bookmark_file_to_data Return length
-array: g_bookmark_file_get_uris Return length
-out: g_bookmark_file_get_icon href
-out: g_bookmark_file_get_icon mime_type
-array: g_bookmark_file_get_groups Return length
-array: g_bookmark_file_get_applications Return length
-out: g_bookmark_file_get_app_info exec
-out: g_bookmark_file_get_app_info count
-out: g_bookmark_file_get_app_info stamp
-array: g_bookmark_file_set_groups groups length
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gBookmarkFile !is null )
-		{
-			g_bookmark_file_free(gBookmarkFile);
-		}
-	}
-code: end
-outFile: BookmarkFile
-
-file: glib-UNIX-specific-utilities-and-integration.html
-class: UnixUtils
-prefix: g_unix_
-import: glib.ErrorG
-import: glib.GException
-import: glib.Source
-structWrap: GSource* Source
-
-#length = 2
-array: g_unix_open_pipe fds
-outFile: UnixUtils
-
-file: glib-Windows-Compatibility-Functions.html
-class: WindowsUtils
-prefix: g_win32_
-import: glib.Str
-outFile: WindowsUtils
-
-
-###########################################################
-### GLib Data Types #######################################
-###########################################################
-
-file: glib-Doubly-Linked-Lists.html
-struct: GList
-class: ListG
-prefix: g_list_
-structWrap: GList* ListG
-
-code: start
-  	/** */ 
-	@property void* data()
-	{
-		return gList.data;
-	}
-
-  	/**
-	 * get the next element
-	 * Returns: the next element, or NULL if there are no more elements.
-	 */ 
-	@property ListG next()
-	{
-		if ( gList.next is null )
-		{
-			return null;
-		}
-
-		return new ListG(gList.next);
-	}
-
-	/**
-	 * get the previous element
-	 * Returns: the previous element, or NULL if there are no more elements.
-	 */ 
-	@property ListG previous()
-	{
-		if ( gList.prev is null )
-		{
-			return null;
-		}
-
-		return new ListG(gList.prev);
-	}
-
-	/**
-	 * Turn the list into a D array of the desiered type.
-	 * Type T wraps should match the type of the data.
-	 */
-	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
-	{
-		T[] arr = new T[length()];
-		ListSG list = this;
-		size_t count;
-
-		while(list !is null && count < arr.length)
-		{
-			arr[count] = new T(cast(TC)list.data);
-			list = next();
-			count++;
-		}
-
-		return arr;
-	}
-code: end
-outFile: ListG
-
-file: glib-Singly-Linked-Lists.html
-struct: GSList
-class: ListSG
-prefix: g_slist_
-structWrap: GSList* ListSG
-
-code: start
-  	/** */ 
-	@property void* data()
-	{
-		return gSList.data;
-	}
-
-  	/**
-	 * get the next element
-	 * Returns: the next element, or NULL if there are no more elements.
-	 */ 
-	@property ListSG next()
-	{
-		if ( gSList.next is null )
-		{
-			return null;
-		}
-
-		return new ListSG(gSList.next);
-	}
-
-	/**
-	 * Turn the list into a D array of the desiered type.
-	 * Type T wraps should match the type of the data.
-	 */
-	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
-	{
-		T[] arr = new T[length()];
-		ListSG list = this;
-		size_t count;
-
-		while(list !is null && count < arr.length)
-		{
-			arr[count] = new T(cast(TC)list.data);
-			list = next();
-			count++;
-		}
-
-		return arr;
-	}
-code: end
-outFile: ListSG
-
-file: glib-Double-ended-Queues.html
-struct: GQueue
-class: QueueG
-prefix: g_queue_
-import: glib.ListG
-structWrap: GList* ListG
-structWrap: GQueue* QueueG
-outFile: QueueG
-
-file: glib-Sequences.html
-struct: GSequence
-class: Sequence
-prefix: g_sequence_
-noprefix: g_sequence_iter_
-import: glib.SequenceIter
-structWrap: GSequence* Sequence
-structWrap: GSequenceIter* SequenceIter
-outFile: Sequence
-
-struct: GSequenceIter
-class: SequenceIter
-prefix: g_sequence_iter_
-strictPrefix: Y
-import: glib.Sequence
-structWrap: GSequence* Sequence
-structWrap: GSequenceIter* SequenceIter
-outFile: SequenceIter
-
-file: glib-Trash-Stacks.html
-struct: GTrashStack
-class: TrashStack
-prefix: g_trash_stack_
-outFile: TrashStack
-
-file: glib-Hash-Tables.html
-struct: GHashTable
-class: HashTable
-prefix: g_hash_table_
-noprefix: g_hash_table_iter_
-import: glib.ListG
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GHashTable* HashTable
-structWrap: GList* ListG
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gHashTable !is null )
-		{
-			g_hash_table_unref(gHashTable);
-		}
-	}
-code: end
-outFile: HashTable
-
-struct: GHashTableIter
-class: HashTableIter
-prefix: g_hash_table_iter_
-strictPrefix: Y
-import: glib.HashTable
-structWrap: GHashTable* HashTable
-outFile: HashTableIter
-
-file: glib-Strings.html
-struct: GString
-class: StringG
-prefix: g_string_
-import: glib.Str
-import: glib.Bytes
-structWrap: GBytes* Bytes 
-structWrap: GString* StringG
-
-array: g_string_new_len init len
-array: g_string_append_len val len
-array: g_string_prepend_len val len
-array: g_string_insert_len val len
-array: g_string_overwrite_len val len
-
-alias: appendLen append
-alias: prependLen prepend
-alias: insertLen insert
-alias: overwriteLen overwrite
-
-nocode: g_string_new
-nocode: g_string_append
-nocode: g_string_prepend
-nocode: g_string_insert
-nocode: g_string_overwrite
-
-outFile: StringG
-
-file: glib-String-Chunks.html
-struct: GStringChunk
-class: StringGChunk
-prefix: g_string_chunk_
-import: glib.Str
-import: gtkc.paths
-import: gtkc.Loader
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gStringChunk !is null )
-		{
-			g_string_chunk_free(gStringChunk);
-		}
-	}
-code: end
-outFile: StringGChunk
-
-file: glib-Arrays.html
-struct: GArray
-class: ArrayG
-prefix: g_array_
-import: glib.Str
-structWrap: GArray* ArrayG
-outFile: ArrayG
-
-file: glib-Pointer-Arrays.html
-struct: GPtrArray
-class: PtrArray
-prefix: g_ptr_array_
-structWrap: GPtrArray* PtrArray
-outFile: PtrArray
-
-file: glib-Byte-Arrays.html
-struct: GByteArray
-class: ByteArray
-prefix: g_byte_array_
-noprefix: g_bytes_
-import: glib.Bytes
-structWrap: GByteArray* ByteArray
-structWrap: GBytes* Bytes
-
-array: g_byte_array_new_take data len
-array: g_byte_array_append data len
-array: g_byte_array_prepend data len
-
-outFile: ByteArray
-
-struct: GBytes
-class: Bytes
-prefix: g_bytes_
-strictPrefix: Y
-nocode: g_bytes_new_take
-nocode: g_bytes_new_static
-import: glib.ByteArray
-structWrap: GByteArray* ByteArray
-structWrap: GBytes* Bytes
-
-array: g_bytes_get_data Return size
-array: g_bytes_unref_to_data Return size
-
-outFile: Bytes
-
-file: glib-Balanced-Binary-Trees.html
-struct: GTree
-class: BBTree
-prefix: g_tree_
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GTree* BBTree
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gTree !is null )
-		{
-			g_tree_unref(gTree);
-		}
-	}
-code: end
-outFile: BBTree
-
-file: glib-N-ary-Trees.html
-struct: GNode
-class: Node
-prefix: g_node_
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GNode* Node
-
-nocode: g_node_destroy
-
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gNode !is null )
-		{
-			g_node_destroy(gNode);
-		}
-	}
-
-	/**
-	 * Removes root and its children from the tree, freeing any memory
-	 * allocated.
-	 */
-	public void destroy()
-	{
-		// void g_node_destroy (GNode *root);
-		g_node_destroy(gNode);
-
-		gNode = null;
-	}
-code: end
-
-outFile: Node
-
-file: glib-Quarks.html
-struct: GQuark
-class: Quark
-prefix: g_quark_
-import: glib.Str
-outFile: Quark
-
-file: glib-Keyed-Data-Lists.html
-struct: GData
-class: DataList
-prefix: g_datalist_
-import: glib.Str
-outFile: DataList
-
-file: glib-Datasets.html
-class: Dataset
-prefix: g_dataset_
-outFile: Dataset
-
-file: glib-GVariantType.html
-struct: GVariantType
-class: VariantType
-prefix: g_variant_type_
-import: glib.Str
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GVariantType* VariantType
-alias: string str
-
-out: g_variant_type_string_scan endptr
-array: g_variant_type_new_tuple items length
-
-nocode: g_variant_type_new_maybe
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantType !is null )
-		{
-			g_variant_type_free(gVariantType);
-		}
-	}
-
-	/**
-	 * Constructs the type corresponding to a maybe instance containing
-	 * type type or Nothing.
-	 * It is appropriate to call g_variant_type_free() on the return value.
-	 * Since 2.24
-	 * Params:
-	 * element = a GVariantType
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public static VariantType newMaybe(VariantType element)
-	{
-		// GVariantType * g_variant_type_new_maybe (const GVariantType *element);
-		auto p = g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct());
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct())");
-		}
-		return new VariantType(cast(GVariantType*) p);
-	}
-code: end
-outFile: VariantType
-
-file: glib-GVariant.html
-struct: GVariant
-class: Variant
-prefix: g_variant_
-noprefix: g_variant_iter_
-noprefix: g_variant_builder_
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: glib.Bytes
-import: glib.StringG
-import: glib.VariantType
-structWrap: GBytes* Bytes
-structWrap: GString* StringG
-structWrap: GVariant* Variant
-structWrap: GVariantType* VariantType
-alias: byte b
-nocode: g_variant_new_boolean
-nocode: g_variant_new_bytestring_array
-nocode: g_variant_new_object_path
-nocode: g_variant_new_signature
-nocode: g_variant_new_objv
-nocode: g_variant_new_bytestring
-nocode: g_variant_new_handle
-nocode: g_variant_new_take_string
-
-array: g_variant_get_strv Return length
-array: g_variant_dup_strv Return length
-#array: g_variant_get_fixed_array Return n_elements
-array: g_variant_new_tuple children n_children
-array: g_variant_new_array children n_children
-out: g_variant_get_string length
-array: g_variant_dup_string Return length
-array: g_variant_new_strv strv length
-out: g_variant_new_va endptr
-out: g_variant_get_va endptr
-out: g_variant_parse endptr
-array: g_variant_dup_bytestring Return length
-array: g_variant_dup_bytestring_array Return length
-array: g_variant_get_bytestring_array Return length
-array: g_variant_get_objv Return length
-array: g_variant_dup_objv Return length
-array: g_variant_new_objv strv length
-array: g_variant_new_fixed_array elements n_elements
-
-code: start
-	/**
-	 * Creates a new boolean GVariant instance -- either TRUE or FALSE.
-	 * Since 2.24
-	 * Params:
-	 * boolean = a gboolean value
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (bool boolean)
-	{
-		// GVariant * g_variant_new_boolean (gboolean boolean);
-		auto p = g_variant_new_boolean(boolean);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_variant_new_boolean(boolean)");
-		}
-		this(cast(GVariant*) p);
-	}
-
 	/**
 	 * Creates a DBus object path GVariant with the contents of string.
 	 * string must be a valid DBus object path.
 	 * Use Variant.isObjectPath() if you're not sure.
-	 * Since 2.24
+	 *
+	 * Since: 2.24
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -2837,7 +1517,8 @@ code: start
 	 * Creates a DBus type signature GVariant with the contents of string.
 	 * string must be a valid DBus type signature.
 	 * Use Variant.isSignature() if you're not sure.
-	 * Since 2.24
+	 *
+	 * Since: 2.24
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -2855,7 +1536,7 @@ code: start
 	 * Creates an array-of-bytes GVariant with the contents of string.
 	 * This function is just like new Variant(string) except that the string
 	 * need not be valid utf8.
-	 * 
+	 *
 	 * The nul terminator character at the end of the string is stored in
 	 * the array.
 	 *
@@ -2869,7 +1550,7 @@ code: start
 			throw new ConstructionException("null returned by g_variant_new_bytestring");
 		}
 		return new Variant(cast(GVariant*) p);
-	}	
+	}
 
 	/**
 	 * Constructs an array of object paths Variant from the given array
@@ -2878,10 +1559,10 @@ code: start
 	 * Each string must be a valid Variant object path.
 	 *
 	 * Since: 2.30
-	 * 
+	 *
 	 * Params:
 	 *     strv   = an array of strings.
-	 * 
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public static Variant fromObjv(string[] strv)
@@ -2897,17 +1578,17 @@ code: start
 
 	/**
 	 * Constructs an array of bytestring GVariant from the given array of
-	 * strings. If length is -1 then strv is NULL-terminated.
-	 * Since 2.26
-	 * 
+	 * strings. If length is -1 then strv is null-terminated.
+	 *
+	 * Since: 2.26
+	 *
 	 * Params:
 	 *     strv   = an array of strings.
-	 * 
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public static Variant fromByteStringArray(string[] strv)
 	{
-		// GVariant * g_variant_new_bytestring_array (const gchar * const *strv,  gssize length);
 		auto p = g_variant_new_bytestring_array(Str.toStringzArray(strv), strv.length);
 		if(p is null)
 		{
@@ -2916,88 +1597,470 @@ code: start
 		return new Variant(cast(GVariant*) p);
 	}
 code: end
-outFile: Variant
 
-struct: GVariantIter
-class: VariantIter
-prefix: g_variant_iter_
-strictPrefix: Yes
-import: glib.Str
-import: glib.Variant
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GVariant* Variant
-structWrap: GVariantIter* VariantIter
-
+struct: VariantType
+noCode: new_maybe
 code: start
-	~this ()
+	/**
+	 * Constructs the type corresponding to a maybe instance containing
+	 * type type or Nothing.
+	 *
+	 * It is appropriate to call free() on the return value.
+	 *
+	 * Params:
+	 *     element = a VariantType
+	 *
+	 * Return: a new maybe VariantType
+	 *
+	 *     Since 2.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static VariantType newMaybe(VariantType element)
 	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantIter !is null )
+		auto p = g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct());
+
+		if(p is null)
 		{
-			g_variant_iter_free(gVariantIter);
+			throw new ConstructionException("null returned by new_maybe");
 		}
+
+		return new VariantType(cast(GVariantType*) p);
 	}
 code: end
-outFile: VariantIter
 
-struct: GVariantBuilder
-class: VariantBuilder
-prefix: g_variant_builder_
-strictPrefix: Yes
-import: glib.Str
-import: glib.Variant
-import: glib.VariantType
-import: gtkc.paths
-import: gtkc.Loader
-structWrap: GVariant* Variant
-structWrap: GVariantBuilder* VariantBuilder
-structWrap: GVariantType* VariantType
+move: atomic_int_add Atomic int_add
+move: atomic_int_and Atomic int_and
+move: atomic_int_compare_and_exchange Atomic int_compare_and_exchange
+move: atomic_int_dec_and_test Atomic int_dec_and_test
+move: atomic_int_exchange_and_add Atomic int_exchange_and_add
+move: atomic_int_get Atomic int_get
+move: atomic_int_inc Atomic int_inc
+move: atomic_int_or Atomic int_or
+move: atomic_int_set Atomic int_set
+move: atomic_int_xor Atomic int_xor
+move: atomic_pointer_add Atomic pointer_add
+move: atomic_pointer_and Atomic pointer_and
+move: atomic_pointer_compare_and_exchange Atomic pointer_compare_and_exchange
+move: atomic_pointer_get Atomic pointer_get
+move: atomic_pointer_or Atomic pointer_or
+move: atomic_pointer_set Atomic pointer_set
+move: atomic_pointer_xor Atomic pointer_xor
 
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && gVariantBuilder !is null )
-		{
-			g_variant_builder_unref(gVariantBuilder);
-		}
-	}
-code: end
-outFile: VariantBuilder
+move: base64_decode Base64 decode
+move: base64_decode_inplace Base64 decode_inplace
+move: base64_encode Base64 encode
+move: base64_encode_close Base64 encode_close
+move: base64_encode_step Base64 encode_step
 
-###########################################################
-### Deprecated APIs #######################################
-###########################################################
+move: convert CharacterSet
+move: convert_error_quark CharacterSet
+move: convert_with_fallback CharacterSet
+move: convert_with_iconv CharacterSet
+move: filename_display_basename CharacterSet
+move: filename_display_name CharacterSet
+move: filename_from_utf8 CharacterSet
+move: filename_to_utf8 CharacterSet
+move: get_charset CharacterSet
+move: get_codeset CharacterSet
+move: get_filename_charsets CharacterSet
+move: locale_from_utf8 CharacterSet
+move: locale_to_utf8 CharacterSet
 
-file: glib-Caches.html
-struct: GCache
-class: Cache
-prefix: g_cache_
-outFile: Cache
+move: child_watch_add Child
+move: child_watch_add_full Child
+move: child_watch_source_new Child
 
-file: glib-Relations-and-Tuples.html
-struct: GRelation
-class: Relation
-prefix: g_relation_
-noprefix: g_tuples_
-import: glib.Tuples
-structWrap: GTuples* Tuples
-outFile: Relation
+move: compute_checksum_for_bytes Checksum
+move: compute_checksum_for_data Checksum
+move: compute_checksum_for_string Checksum
 
-struct: GTuples
-class: Tuples
-prefix: g_tuples_
-strictPrefix: Yes
-outFile: Tuples
+move: datalist_clear DataList clear
+move: datalist_foreach DataList foreach
+move: datalist_get_data DataList get_data
+move: datalist_get_flags DataList get_flags
+move: datalist_id_dup_data DataList id_dup_data
+move: datalist_id_get_data DataList id_get_data
+move: datalist_id_remove_no_notify DataList id_remove_no_notify
+move: datalist_id_replace_data DataList id_replace_data
+move: datalist_id_set_data_full DataList id_set_data_full
+move: datalist_init DataList init
+move: datalist_set_flags DataList set_flags
+move: datalist_unset_flags DataList unset_flags
 
-file: glib-Automatic-String-Completion.html
-struct: GCompletion
-class: StringCompletion
-import: glib.ListG
-structWrap: GList* ListG
-prefix:g_completion_
-import: glib.Str
+move: dataset_destroy DataSet destroy
+move: dataset_foreach DataSet foreach
+move: dataset_id_get_data DataSet id_get_data
+move: dataset_id_remove_no_notify DataSet id_remove_no_notify
+move: dataset_id_set_data_full DataSet id_set_data_full
 
-out: g_completion_complete new_prefix
-out: g_completion_complete_utf8 new_prefix
+#move: clear_error Error
+move: prefix_error Error
+move: propagate_prefixed_error Error
+move: set_error Error
 
-outFile: StringCompletion
+move: access FileUtils
+move: chdir FileUtils
+move: close FileUtils
+move: file_error_from_errno FileUtils
+move: file_error_quark FileUtils
+move: file_get_contents FileUtils
+move: file_open_tmp FileUtils
+move: file_read_link FileUtils
+move: file_set_contents FileUtils
+move: file_test FileUtils
+move: mkdir_with_parents FileUtils
+move: mkdtemp FileUtils
+move: mkdtemp_full FileUtils
+move: mkstemp FileUtils
+move: mkstemp_full FileUtils
+move: rmdir FileUtils
+move: unlink FileUtils
+
+move: direct_equal HashTable
+move: direct_hash HashTable
+move: double_equal HashTable
+move: double_hash HashTable
+move: int64_equal HashTable
+move: int64_hash HashTable
+move: int_equal HashTable
+move: int_hash HashTable
+move: str_equal HashTable
+move: str_hash HashTable
+
+move: compute_hmac_for_data Hmac
+move: compute_hmac_for_string Hmac
+
+move: hostname_is_ascii_encoded Hostname is_ascii_encoded
+move: hostname_is_ip_address Hostname is_ip_address
+move: hostname_is_non_ascii Hostname is_non_ascii
+move: hostname_to_ascii Hostname to_ascii
+move: hostname_to_unicode Hostname to_unicode
+
+move: idle_add Idle add
+move: idle_add_full Idle add_full
+move: idle_remove_by_data Idle remove_by_data
+move: idle_source_new Idle source_new
+
+move: dcgettext Internationalization
+move: dgettext Internationalization
+move: dngettext Internationalization
+move: dpgettext Internationalization
+move: dpgettext2 Internationalization
+move: get_language_names Internationalization
+move: get_locale_variants Internationalization
+move: strip_context Internationalization
+
+move: io_add_watch IOChannel
+move: io_add_watch_full IOChannel
+move: io_create_watch IOChannel
+
+move: main_current_source MainLoop
+move: main_depth MainLoop
+move: poll MainLoop
+
+move: markup_collect_attributes MarkupParseContext
+move: markup_error_quark MarkupParseContext
+move: markup_escape_text MarkupParseContext
+move: markup_printf_escaped MarkupParseContext
+move: markup_vprintf_escaped MarkupParseContext
+
+move: clear_pointer Memory
+move: free Memory
+move: malloc Memory
+move: malloc0 Memory
+move: malloc0_n Memory
+move: malloc_n Memory
+move: mem_is_system_malloc Memory
+move: mem_profile Memory
+move: mem_set_vtable Memory
+move: memdup Memory
+move: realloc Memory
+move: realloc_n Memory
+move: try_malloc Memory
+move: try_malloc0 Memory
+move: try_malloc0_n Memory
+move: try_malloc_n Memory
+move: try_realloc Memory
+move: try_realloc_n Memory
+
+move: slice_alloc MemorySlice
+move: slice_alloc0 MemorySlice
+move: slice_copy MemorySlice
+move: slice_free1 MemorySlice
+move: slice_free_chain_with_offset MemorySlice
+move: slice_get_config MemorySlice
+move: slice_get_config_state MemorySlice
+move: slice_set_config MemorySlice
+
+move: log MessageLog
+move: log_default_handler MessageLog
+move: log_remove_handler MessageLog
+move: log_set_always_fatal MessageLog
+move: log_set_default_handler MessageLog
+move: log_set_fatal_mask MessageLog
+move: log_set_handler MessageLog
+move: logv MessageLog
+
+move: on_error_query Messages
+move: on_error_stack_trace Messages
+move: print Messages
+move: printerr Messages
+move: set_print_handler Messages
+move: set_printerr_handler Messages
+
+move: option_error_quark OptionContext
+
+move: pattern_match PatternSpec
+move: pattern_match_simple PatternSpec
+move: pattern_match_string PatternSpec
+
+move: intern_static_string Quark
+move: intern_string Quark
+move: quark_from_static_string Quark
+move: quark_from_string Quark
+move: quark_to_string Quark
+move: quark_try_string Quark
+
+move: random_double Rand
+move: random_double_range Rand
+move: random_int Rand
+move: random_int_range Rand
+move: random_set_seed Rand
+
+move: shell_error_quark ShellUtils
+move: shell_parse_argv ShellUtils
+move: shell_quote ShellUtils
+move: shell_unquote ShellUtils
+
+move: spawn_async Spawn async
+move: spawn_async_with_pipes Spawn async_with_pipes
+move: spawn_check_exit_status Spawn check_exit_status
+move: spawn_close_pid Spawn close_pid
+move: spawn_command_line_async Spawn command_line_async
+move: spawn_command_line_sync Spawn command_line_sync
+move: spawn_error_quark Spawn error_quark
+move: spawn_exit_error_quark Spawn exit_error_quark
+move: spawn_sync Spawn sync
+
+struct: Spawn
+noCode: async_with_pipes
+
+move: ascii_digit_value Str
+move: ascii_dtostr Str
+move: ascii_formatd Str
+move: ascii_strcasecmp Str
+move: ascii_strdown Str
+move: ascii_strncasecmp Str
+move: ascii_strtod Str
+move: ascii_strtoll Str
+move: ascii_strtoull Str
+move: ascii_strup Str
+move: ascii_tolower Str
+move: ascii_toupper Str
+move: ascii_xdigit_value Str
+move: fprintf Str
+move: printf Str
+move: printf_string_upper_bound Str
+move: snprintf Str
+move: sprintf Str
+move: stpcpy Str
+move: str_has_prefix Str has_prefix
+move: str_has_suffix Str has_suffix
+move: str_is_ascii Str is_ascii
+move: str_match_string Str match_string
+move: str_to_ascii Str to_ascii
+move: str_tokenize_and_fold Str tokenize_and_fold
+move: strcanon Str
+move: strcasecmp Str
+move: strchomp Str
+move: strchug Str
+move: strcmp0 Str
+move: strcompress Str
+move: strconcat Str
+move: strdelimit Str
+move: strdown Str
+move: strdup Str
+move: strdup_printf Str
+move: strdup_vprintf Str
+move: strdupv Str
+move: strerror Str
+move: strescape Str
+move: strfreev Str
+move: strjoin Str
+move: strjoinv Str
+move: strlcat Str
+move: strlcpy Str
+move: strncasecmp Str
+move: strndup Str
+move: strnfill Str
+move: strreverse Str
+move: strrstr Str
+move: strrstr_len Str
+move: strsignal Str
+move: strsplit Str
+move: strsplit_set Str
+move: strstr_len Str
+move: strtod Str
+move: strup Str
+move: strv_get_type Str
+move: strv_length Str
+move: vasprintf Str
+move: vfprintf Str
+move: vprintf Str
+move: vsnprintf Str
+move: vsprintf Str
+
+move: string_new String
+move: string_new_len String
+move: string_sized_new String
+
+move: bit_lock Thread
+move: bit_trylock Thread
+move: bit_unlock Thread
+move: get_num_processors Thread
+move: pointer_bit_lock Thread
+move: pointer_bit_trylock Thread
+move: pointer_bit_unlock Thread
+
+move: timeout_add Timeout add
+move: timeout_add_full Timeout add_full
+move: timeout_add_seconds Timeout add_seconds
+move: timeout_add_seconds_full Timeout add_seconds_full
+move: timeout_source_new Timeout source_new
+move: timeout_source_new_seconds Timeout source_new_seconds
+
+move: get_current_time TimeVal
+move: get_monotonic_time TimeVal
+move: get_real_time TimeVal
+move: usleep TimeVal
+
+move: ucs4_to_utf16 Unicode
+move: ucs4_to_utf8 Unicode
+move: unichar_break_type Unicode
+move: unichar_combining_class Unicode
+move: unichar_compose Unicode
+move: unichar_decompose Unicode
+move: unichar_digit_value Unicode
+move: unichar_fully_decompose Unicode
+move: unichar_get_mirror_char Unicode
+move: unichar_get_script Unicode
+move: unichar_isalnum Unicode
+move: unichar_isalpha Unicode
+move: unichar_iscntrl Unicode
+move: unichar_isdefined Unicode
+move: unichar_isdigit Unicode
+move: unichar_isgraph Unicode
+move: unichar_islower Unicode
+move: unichar_ismark Unicode
+move: unichar_isprint Unicode
+move: unichar_ispunct Unicode
+move: unichar_isspace Unicode
+move: unichar_istitle Unicode
+move: unichar_isupper Unicode
+move: unichar_iswide Unicode
+move: unichar_iswide_cjk Unicode
+move: unichar_isxdigit Unicode
+move: unichar_iszerowidth Unicode
+move: unichar_to_utf8 Unicode
+move: unichar_tolower Unicode
+move: unichar_totitle Unicode
+move: unichar_toupper Unicode
+move: unichar_type Unicode
+move: unichar_validate Unicode
+move: unichar_xdigit_value Unicode
+move: unicode_canonical_decomposition Unicode
+move: unicode_canonical_ordering Unicode
+move: unicode_script_from_iso15924 Unicode
+move: unicode_script_to_iso15924 Unicode
+move: utf16_to_ucs4 Unicode
+move: utf16_to_utf8 Unicode
+move: utf8_casefold Unicode
+move: utf8_collate Unicode
+move: utf8_collate_key Unicode
+move: utf8_collate_key_for_filename Unicode
+move: utf8_find_next_char Unicode
+move: utf8_find_prev_char Unicode
+move: utf8_get_char Unicode
+move: utf8_get_char_validated Unicode
+move: utf8_normalize Unicode
+move: utf8_offset_to_pointer Unicode
+move: utf8_pointer_to_offset Unicode
+move: utf8_prev_char Unicode
+move: utf8_strchr Unicode
+move: utf8_strdown Unicode
+move: utf8_strlen Unicode
+move: utf8_strncpy Unicode
+move: utf8_strrchr Unicode
+move: utf8_strreverse Unicode
+move: utf8_strup Unicode
+move: utf8_substring Unicode
+move: utf8_to_ucs4 Unicode
+move: utf8_to_ucs4_fast Unicode
+move: utf8_to_utf16 Unicode
+move: utf8_validate Unicode
+
+move: unix_error_quark UnixUtils error_quark
+move: unix_fd_add UnixUtils fd_add
+move: unix_fd_add_full UnixUtils fd_add_full
+move: unix_fd_source_new UnixUtils fd_source_new
+move: unix_open_pipe UnixUtils open_pipe
+move: unix_set_fd_nonblocking UnixUtils set_fd_nonblocking
+move: unix_signal_add UnixUtils signal_add
+move: unix_signal_add_full UnixUtils signal_add_full
+move: unix_signal_source_new UnixUtils signal_source_new
+
+move: filename_from_uri URI
+move: filename_to_uri URI
+move: uri_escape_string URI
+move: uri_list_extract_uris URI
+move: uri_parse_scheme URI
+move: uri_unescape_segment URI
+move: uri_unescape_string URI
+
+move: atexit Util
+move: basename Util
+move: bit_nth_lsf Util
+move: bit_nth_msf Util
+move: bit_storage Util
+move: build_path Util
+move: environ_getenv Util
+move: environ_setenv Util
+move: environ_unsetenv Util
+move: find_program_in_path Util
+move: format_size Util
+move: format_size_for_display Util
+move: format_size_full Util
+move: get_application_name Util
+move: get_environ Util
+move: get_current_dir Util
+move: get_home_dir Util
+move: get_host_name Util
+move: get_prgname Util
+move: get_real_name Util
+move: get_system_config_dirs Util
+move: get_system_data_dirs Util
+move: get_tmp_dir Util
+move: get_user_cache_dir Util
+move: get_user_config_dir Util
+move: get_user_data_dir Util
+move: get_user_name Util
+move: get_user_runtime_dir Util
+move: get_user_special_dir Util
+move: getenv Util
+move: listenv Util
+move: nullify_pointer Util
+move: parse_debug_string Util
+move: path_get_basename Util
+move: path_get_dirname Util
+move: path_is_absolute Util
+move: path_skip_root Util
+move: qsort_with_data Util
+move: reload_user_special_dirs_cache Util
+move: set_application_name Util
+move: set_prgname Util
+move: setenv Util
+move: spaced_primes_closest Util
+move: unsetenv Util
+
+move: check_version Version

@@ -16,143 +16,128 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkLockButton.html
- * outPack = gtk
- * outFile = LockButton
- * strct   = GtkLockButton
- * realStrct=
- * ctorStrct=
- * clss    = LockButton
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_switch_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gio.Permission
- * structWrap:
- * 	- GPermission* -> Permission
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.LockButton;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
+private import gio.Permission;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-private import gio.Permission;
-
-
 private import gtk.Button;
+private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
  * GtkLockButton is a widget that can be used in control panels or
  * preference dialogs to allow users to obtain and revoke authorizations
  * needed to operate the controls. The required authorization is represented
- * by a GPermission object. Concrete implementations of GPermission may use
+ * by a #GPermission object. Concrete implementations of #GPermission may use
  * PolicyKit or some other authorization framework. To obtain a PolicyKit-based
- * GPermission, use polkit_permission_new().
- *
+ * #GPermission, use polkit_permission_new().
+ * 
  * If the user is not currently allowed to perform the action, but can obtain
- * the permission, the widget looks like this
- *
- * $(DDOC_COMMENT example)
- *
+ * the permission, the widget looks like this:
+ * 
+ * ![](lockbutton-locked.png)
+ * 
  * and the user can click the button to request the permission. Depending
  * on the platform, this may pop up an authentication dialog or ask the user
  * to authenticate in some other way. Once the user has obtained the permission,
- * the widget changes to this
- *
- * $(DDOC_COMMENT example)
- *
+ * the widget changes to this:
+ * 
+ * ![](lockbutton-unlocked.png)
+ * 
  * and the permission can be dropped again by clicking the button. If the user
- * is not able to obtain the permission at all, the widget looks like this
- *
- * $(DDOC_COMMENT example)
- *
+ * is not able to obtain the permission at all, the widget looks like this:
+ * 
+ * ![](lockbutton-sorry.png)
+ * 
  * If the user has the permission and cannot drop it, the button is hidden.
- *
+ * 
  * The text (and tooltips) that are shown in the various cases can be adjusted
- * with the "text-lock", "text-unlock",
- * "tooltip-lock", "tooltip-unlock" and
- * "tooltip-not-authorized" properties.
+ * with the #GtkLockButton:text-lock, #GtkLockButton:text-unlock,
+ * #GtkLockButton:tooltip-lock, #GtkLockButton:tooltip-unlock and
+ * #GtkLockButton:tooltip-not-authorized properties.
  */
 public class LockButton : Button
 {
-	
 	/** the main Gtk struct */
 	protected GtkLockButton* gtkLockButton;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkLockButton* getLockButtonStruct()
 	{
 		return gtkLockButton;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkLockButton;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkLockButton* gtkLockButton)
-	{
-		super(cast(GtkButton*)gtkLockButton);
-		this.gtkLockButton = gtkLockButton;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkLockButton = cast(GtkLockButton*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkLockButton* gtkLockButton, bool ownedRef = false)
+	{
+		this.gtkLockButton = gtkLockButton;
+		super(cast(GtkButton*)gtkLockButton, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_lock_button_get_type();
+	}
+
 	/**
-	 * Creates a new lock button which reflects the permission.
+	 * Creates a new lock button which reflects the @permission.
+	 *
 	 * Params:
-	 * permission = a GPermission. [allow-none]
-	 * Returns: a new GtkLockButton Since 3.2
+	 *     permission = a #GPermission
+	 *
+	 * Return: a new #GtkLockButton
+	 *
+	 * Since: 3.2
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static GtkWidget* gtkLockButtonNew(Permission permission)
+	public this(Permission permission)
 	{
-		// GtkWidget * gtk_lock_button_new (GPermission *permission);
-		return gtk_lock_button_new((permission is null) ? null : permission.getPermissionStruct());
+		auto p = gtk_lock_button_new((permission is null) ? null : permission.getPermissionStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GtkLockButton*) p);
 	}
-	
+
 	/**
-	 * Obtains the GPermission object that controls button.
-	 * Returns: the GPermission of button. [transfer none] Since 3.2
+	 * Obtains the #GPermission object that controls @button.
+	 *
+	 * Return: the #GPermission of @button
+	 *
+	 * Since: 3.2
 	 */
-	public Permission gtkLockButtonGetPermission()
+	public Permission getPermission()
 	{
-		// GPermission * gtk_lock_button_get_permission (GtkLockButton *button);
 		auto p = gtk_lock_button_get_permission(gtkLockButton);
 		
 		if(p is null)
@@ -162,16 +147,17 @@ public class LockButton : Button
 		
 		return ObjectG.getDObject!(Permission)(cast(GPermission*) p);
 	}
-	
+
 	/**
-	 * Sets the GPermission object that controls button.
+	 * Sets the #GPermission object that controls @button.
+	 *
 	 * Params:
-	 * permission = a GPermission object, or NULL. [allow-none]
-	 * Since 3.2
+	 *     permission = a #GPermission object, or %NULL
+	 *
+	 * Since: 3.2
 	 */
-	public void gtkLockButtonSetPermission(Permission permission)
+	public void setPermission(Permission permission)
 	{
-		// void gtk_lock_button_set_permission (GtkLockButton *button,  GPermission *permission);
 		gtk_lock_button_set_permission(gtkLockButton, (permission is null) ? null : permission.getPermissionStruct());
 	}
 }

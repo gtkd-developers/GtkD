@@ -16,195 +16,175 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = glib-Base64-Encoding.html
- * outPack = glib
- * outFile = Base64
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Base64
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_base64_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glib.Base64;
 
+private import glib.Str;
+private import gtkc.glib;
 public  import gtkc.glibtypes;
 
-private import gtkc.glib;
-private import glib.ConstructionException;
 
-private import glib.Str;
-
-
-
-/**
- * Base64 is an encoding that allows a sequence of arbitrary bytes to be
- * encoded as a sequence of printable ASCII characters. For the definition
- * of Base64, see RFC
- * 1421 or RFC
- * 2045. Base64 is most commonly used as a MIME transfer encoding
- * for email.
- *
- * GLib supports incremental encoding using g_base64_encode_step() and
- * g_base64_encode_close(). Incremental decoding can be done with
- * g_base64_decode_step(). To encode or decode data in one go, use
- * g_base64_encode() or g_base64_decode(). To avoid memory allocation when
- * decoding, you can use g_base64_decode_inplace().
- *
- * Support for Base64 encoding has been added in GLib 2.12.
- */
-public class Base64
+public struct Base64
 {
-	
-	/**
-	 */
-	
-	/**
-	 * Incrementally encode a sequence of binary data into its Base-64 stringified
-	 * representation. By calling this function multiple times you can convert
-	 * data in chunks to avoid having to have the full encoded data in memory.
-	 * When all of the data has been converted you must call
-	 * g_base64_encode_close() to flush the saved state.
-	 * The output buffer must be large enough to fit all the data that will
-	 * be written to it. Due to the way base64 encodes you will need
-	 * at least: (len / 3 + 1) * 4 + 4 bytes (+ 4 may be needed in case of
-	 * Since 2.12
-	 * Params:
-	 * in = the binary data to encode. [array length=len][element-type guint8]
-	 * breakLines = whether to break long lines
-	 * out = pointer to destination buffer. [out][array][element-type guint8]
-	 * state = Saved state between steps, initialize to 0. [inout]
-	 * save = Saved state between steps, initialize to 0. [inout]
-	 * Returns: The number of bytes of output that was written
-	 */
-	public static gsize encodeStep(char[] inn, int breakLines, string f_out, ref int state, ref int save)
-	{
-		// gsize g_base64_encode_step (const guchar *in,  gsize len,  gboolean break_lines,  gchar *out,  gint *state,  gint *save);
-		return g_base64_encode_step(inn.ptr, cast(int) inn.length, breakLines, Str.toStringz(f_out), &state, &save);
-	}
-	
-	/**
-	 * Flush the status from a sequence of calls to g_base64_encode_step().
-	 * The output buffer must be large enough to fit all the data that will
-	 * be written to it. It will need up to 4 bytes, or up to 5 bytes if
-	 * line-breaking is enabled.
-	 * Since 2.12
-	 * Params:
-	 * breakLines = whether to break long lines
-	 * out = pointer to destination buffer. [out][array][element-type guint8]
-	 * state = Saved state from g_base64_encode_step(). [inout]
-	 * save = Saved state from g_base64_encode_step(). [inout]
-	 * Returns: The number of bytes of output that was written
-	 */
-	public static gsize encodeClose(int breakLines, string f_out, ref int state, ref int save)
-	{
-		// gsize g_base64_encode_close (gboolean break_lines,  gchar *out,  gint *state,  gint *save);
-		return g_base64_encode_close(breakLines, Str.toStringz(f_out), &state, &save);
-	}
-	
-	/**
-	 * Encode a sequence of binary data into its Base-64 stringified
-	 * representation.
-	 * Since 2.12
-	 * Params:
-	 * data = the binary data to encode. [array length=len][element-type guint8]
-	 * Returns: a newly allocated, zero-terminated Base-64 encoded string representing data. The returned string must be freed with g_free(). [transfer full]
-	 */
-	public static string encode(char[] data)
-	{
-		// gchar * g_base64_encode (const guchar *data,  gsize len);
-		return Str.toString(g_base64_encode(data.ptr, cast(int) data.length));
-	}
-	
 	/**
 	 * Incrementally decode a sequence of binary data from its Base-64 stringified
 	 * representation. By calling this function multiple times you can convert
 	 * data in chunks to avoid having to have the full encoded data in memory.
+	 *
 	 * The output buffer must be large enough to fit all the data that will
 	 * be written to it. Since base64 encodes 3 bytes in 4 chars you need
-	 * at least: (len / 4) * 3 + 3 bytes (+ 3 may be needed in case of non-zero
+	 * at least: (@len / 4) * 3 + 3 bytes (+ 3 may be needed in case of non-zero
 	 * state).
-	 * Since 2.12
+	 *
 	 * Params:
-	 * in = binary input data. [array length=len][element-type guint8]
-	 * out = output buffer. [out][array][element-type guint8]
-	 * state = Saved state between steps, initialize to 0. [inout]
-	 * save = Saved state between steps, initialize to 0. [inout]
-	 * Returns: The number of bytes of output that was written
+	 *     inn = binary input data
+	 *     len = max length of @in data to decode
+	 *     output = output buffer
+	 *     state = Saved state between steps, initialize to 0
+	 *     save = Saved state between steps, initialize to 0
+	 *
+	 * Return: The number of bytes of output that was written
+	 *
+	 * Since: 2.12
 	 */
-	public static gsize decodeStep(string inn, char* f_out, ref int state, ref uint save)
+	public static size_t decodeStep(string inn, ref ubyte[] output, ref int state, ref uint save)
 	{
-		// gsize g_base64_decode_step (const gchar *in,  gsize len,  guchar *out,  gint *state,  guint *save);
-		return g_base64_decode_step(cast(char*)inn.ptr, cast(int) inn.length, f_out, &state, &save);
+		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, cast(char*)output.ptr, &state, &save);
+		
+		return p;
 	}
-	
+
 	/**
-	 * Decode a sequence of Base-64 encoded text into binary data. Note
+	 */
+
+	/**
+	 * Decode a sequence of Base-64 encoded text into binary data.  Note
 	 * that the returned binary data is not necessarily zero-terminated,
 	 * so it should not be used as a character string.
-	 * Since 2.12
+	 *
 	 * Params:
-	 * text = zero-terminated string with base64 text to decode
-	 * Returns: newly allocated buffer containing the binary data that text represents. The returned buffer must be freed with g_free(). [transfer full][array length=out_len][element-type guint8]
+	 *     text = zero-terminated string with base64 text to decode
+	 *     outLen = The length of the decoded data is written here
+	 *
+	 * Return: newly allocated buffer containing the binary data
+	 *     that @text represents. The returned buffer must
+	 *     be freed with g_free().
+	 *
+	 * Since: 2.12
 	 */
-	public static char[] decode(string text)
+	public static string decode(string text)
 	{
-		// guchar * g_base64_decode (const gchar *text,  gsize *out_len);
-		gsize outLen;
-		auto p = g_base64_decode(Str.toStringz(text), &outLen);
+		size_t outLen;
 		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return p[0 .. outLen];
+		return Str.toString(g_base64_decode(Str.toStringz(text), &outLen));
 	}
-	
+
 	/**
 	 * Decode a sequence of Base-64 encoded text into binary data
 	 * by overwriting the input data.
-	 * Since 2.20
+	 *
 	 * Params:
-	 * text = zero-terminated
-	 * string with base64 text to decode. [inout][array length=out_len][element-type guint8]
-	 * Returns: The binary data that text responds. This pointer is the same as the input text. [transfer none]
+	 *     text = zero-terminated
+	 *         string with base64 text to decode
+	 *     outLen = The length of the decoded data is written here
+	 *
+	 * Return: The binary data that @text responds. This pointer
+	 *     is the same as the input @text.
+	 *
+	 * Since: 2.20
 	 */
-	public static char[] decodeInplace(string text)
+	public static string decodeInplace(ref char[] text)
 	{
-		// guchar * g_base64_decode_inplace (gchar *text,  gsize *out_len);
-		gsize outLen;
-		auto p = g_base64_decode_inplace(Str.toStringz(text), &outLen);
+		size_t outLen = cast(size_t)text.length;
 		
-		if(p is null)
-		{
-			return null;
-		}
+		auto p = g_base64_decode_inplace(text.ptr, &outLen);
 		
-		return p[0 .. outLen];
+		text = text[0..outLen];
+		
+		return Str.toString(p);
+	}
+
+	/**
+	 * Encode a sequence of binary data into its Base-64 stringified
+	 * representation.
+	 *
+	 * Params:
+	 *     data = the binary data to encode
+	 *     len = the length of @data
+	 *
+	 * Return: a newly allocated, zero-terminated Base-64
+	 *     encoded string representing @data. The returned string must
+	 *     be freed with g_free().
+	 *
+	 * Since: 2.12
+	 */
+	public static string encode(string data)
+	{
+		return Str.toString(g_base64_encode(Str.toStringz(data), cast(size_t)data.length));
+	}
+
+	/**
+	 * Flush the status from a sequence of calls to g_base64_encode_step().
+	 *
+	 * The output buffer must be large enough to fit all the data that will
+	 * be written to it. It will need up to 4 bytes, or up to 5 bytes if
+	 * line-breaking is enabled.
+	 *
+	 * Params:
+	 *     breakLines = whether to break long lines
+	 *     output = pointer to destination buffer
+	 *     state = Saved state from g_base64_encode_step()
+	 *     save = Saved state from g_base64_encode_step()
+	 *
+	 * Return: The number of bytes of output that was written
+	 *
+	 * Since: 2.12
+	 */
+	public static size_t encodeClose(bool breakLines, out char[] output, ref int state, ref int save)
+	{
+		return g_base64_encode_close(breakLines, output.ptr, &state, &save);
+	}
+
+	/**
+	 * Incrementally encode a sequence of binary data into its Base-64 stringified
+	 * representation. By calling this function multiple times you can convert
+	 * data in chunks to avoid having to have the full encoded data in memory.
+	 *
+	 * When all of the data has been converted you must call
+	 * g_base64_encode_close() to flush the saved state.
+	 *
+	 * The output buffer must be large enough to fit all the data that will
+	 * be written to it. Due to the way base64 encodes you will need
+	 * at least: (@len / 3 + 1) * 4 + 4 bytes (+ 4 may be needed in case of
+	 * non-zero state). If you enable line-breaking you will need at least:
+	 * ((@len / 3 + 1) * 4 + 4) / 72 + 1 bytes of extra space.
+	 *
+	 * @break_lines is typically used when putting base64-encoded data in emails.
+	 * It breaks the lines at 72 columns instead of putting all of the text on
+	 * the same line. This avoids problems with long lines in the email system.
+	 * Note however that it breaks the lines with `LF` characters, not
+	 * `CR LF` sequences, so the result cannot be passed directly to SMTP
+	 * or certain other protocols.
+	 *
+	 * Params:
+	 *     inn = the binary data to encode
+	 *     len = the length of @in
+	 *     breakLines = whether to break long lines
+	 *     output = pointer to destination buffer
+	 *     state = Saved state between steps, initialize to 0
+	 *     save = Saved state between steps, initialize to 0
+	 *
+	 * Return: The number of bytes of output that was written
+	 *
+	 * Since: 2.12
+	 */
+	public static size_t encodeStep(string inn, bool breakLines, out char[] output, ref int state, ref int save)
+	{
+		return g_base64_encode_step(Str.toStringz(inn), cast(size_t)inn.length, breakLines, output.ptr, &state, &save);
 	}
 }

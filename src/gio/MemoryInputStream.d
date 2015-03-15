@@ -16,181 +16,169 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GMemoryInputStream.html
- * outPack = gio
- * outFile = MemoryInputStream
- * strct   = GMemoryInputStream
- * realStrct=
- * ctorStrct=GInputStream
- * clss    = MemoryInputStream
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- SeekableIF
- * prefixes:
- * 	- g_memory_input_stream_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Bytes
- * 	- gio.SeekableT
- * 	- gio.SeekableIF
- * structWrap:
- * 	- GBytes* -> Bytes
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.MemoryInputStream;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.InputStream;
+private import gio.PollableInputStreamIF;
+private import gio.PollableInputStreamT;
+private import gio.SeekableIF;
+private import gio.SeekableT;
+private import glib.Bytes;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-private import glib.Bytes;
-private import gio.SeekableT;
-private import gio.SeekableIF;
-
-
-private import gio.InputStream;
 
 /**
- * GMemoryInputStream is a class for using arbitrary
+ * #GMemoryInputStream is a class for using arbitrary
  * memory chunks as input for GIO streaming input operations.
- *
- * As of GLib 2.34, GMemoryInputStream implements
- * GPollableInputStream.
+ * 
+ * As of GLib 2.34, #GMemoryInputStream implements
+ * #GPollableInputStream.
  */
-public class MemoryInputStream : InputStream, SeekableIF
+public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 {
-	
 	/** the main Gtk struct */
 	protected GMemoryInputStream* gMemoryInputStream;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GMemoryInputStream* getMemoryInputStreamStruct()
 	{
 		return gMemoryInputStream;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gMemoryInputStream;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GMemoryInputStream* gMemoryInputStream)
-	{
-		super(cast(GInputStream*)gMemoryInputStream);
-		this.gMemoryInputStream = gMemoryInputStream;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gMemoryInputStream = cast(GMemoryInputStream*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GMemoryInputStream* gMemoryInputStream, bool ownedRef = false)
+	{
+		this.gMemoryInputStream = gMemoryInputStream;
+		super(cast(GInputStream*)gMemoryInputStream, ownedRef);
+	}
+
+	// add the PollableInputStream capabilities
+	mixin PollableInputStreamT!(GMemoryInputStream);
+
 	// add the Seekable capabilities
 	mixin SeekableT!(GMemoryInputStream);
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_memory_input_stream_get_type();
+	}
+
 	/**
-	 * Creates a new empty GMemoryInputStream.
+	 * Creates a new empty #GMemoryInputStream.
+	 *
+	 * Return: a new #GInputStream
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GInputStream * g_memory_input_stream_new (void);
 		auto p = g_memory_input_stream_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_memory_input_stream_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GMemoryInputStream*) p);
+		
+		this(cast(GMemoryInputStream*) p, true);
 	}
-	
+
 	/**
-	 * Creates a new GMemoryInputStream with data in memory of a given size.
+	 * Creates a new #GMemoryInputStream with data from the given @bytes.
+	 *
 	 * Params:
-	 * data = input data. [array length=len][element-type guint8][transfer full]
-	 * len = length of the data, may be -1 if data is a nul-terminated string
-	 * destroy = function that is called to free data, or NULL. [allow-none]
+	 *     bytes = a #GBytes
+	 *
+	 * Return: new #GInputStream read from @bytes
+	 *
+	 * Since: 2.34
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (void* data, gssize len, GDestroyNotify destroy)
+	public this(Bytes bytes)
 	{
-		// GInputStream * g_memory_input_stream_new_from_data (const void *data,  gssize len,  GDestroyNotify destroy);
-		auto p = g_memory_input_stream_new_from_data(data, len, destroy);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_memory_input_stream_new_from_data(data, len, destroy)");
-		}
-		this(cast(GMemoryInputStream*) p);
-	}
-	
-	/**
-	 * Creates a new GMemoryInputStream with data from the given bytes.
-	 * Since 2.34
-	 * Params:
-	 * bytes = a GBytes
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Bytes bytes)
-	{
-		// GInputStream * g_memory_input_stream_new_from_bytes  (GBytes *bytes);
 		auto p = g_memory_input_stream_new_from_bytes((bytes is null) ? null : bytes.getBytesStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_memory_input_stream_new_from_bytes((bytes is null) ? null : bytes.getBytesStruct())");
+			throw new ConstructionException("null returned by new_from_bytes");
 		}
-		this(cast(GMemoryInputStream*) p);
+		
+		this(cast(GMemoryInputStream*) p, true);
 	}
-	
+
 	/**
-	 * Appends data to data that can be read from the input stream
+	 * Creates a new #GMemoryInputStream with data in memory of a given size.
+	 *
 	 * Params:
-	 * data = input data. [array length=len][element-type guint8][transfer full]
-	 * len = length of the data, may be -1 if data is a nul-terminated string
-	 * destroy = function that is called to free data, or NULL. [allow-none]
+	 *     data = input data
+	 *     len = length of the data, may be -1 if @data is a nul-terminated string
+	 *     destroy = function that is called to free @data, or %NULL
+	 *
+	 * Return: new #GInputStream read from @data of @len bytes.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public void addData(void* data, gssize len, GDestroyNotify destroy)
+	public this(ubyte[] data, GDestroyNotify destroy)
 	{
-		// void g_memory_input_stream_add_data (GMemoryInputStream *stream,  const void *data,  gssize len,  GDestroyNotify destroy);
-		g_memory_input_stream_add_data(gMemoryInputStream, data, len, destroy);
+		auto p = g_memory_input_stream_new_from_data(data.ptr, cast(ptrdiff_t)data.length, destroy);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_data");
+		}
+		
+		this(cast(GMemoryInputStream*) p, true);
 	}
-	
+
 	/**
-	 * Appends bytes to data that can be read from the input stream.
-	 * Since 2.34
+	 * Appends @bytes to data that can be read from the input stream.
+	 *
 	 * Params:
-	 * bytes = input data
+	 *     bytes = input data
+	 *
+	 * Since: 2.34
 	 */
 	public void addBytes(Bytes bytes)
 	{
-		// void g_memory_input_stream_add_bytes (GMemoryInputStream *stream,  GBytes *bytes);
 		g_memory_input_stream_add_bytes(gMemoryInputStream, (bytes is null) ? null : bytes.getBytesStruct());
+	}
+
+	/**
+	 * Appends @data to data that can be read from the input stream
+	 *
+	 * Params:
+	 *     data = input data
+	 *     len = length of the data, may be -1 if @data is a nul-terminated string
+	 *     destroy = function that is called to free @data, or %NULL
+	 */
+	public void addData(ubyte[] data, GDestroyNotify destroy)
+	{
+		g_memory_input_stream_add_data(gMemoryInputStream, data.ptr, cast(ptrdiff_t)data.length, destroy);
 	}
 }

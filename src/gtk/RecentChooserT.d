@@ -16,433 +16,74 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkRecentChooser.html
- * outPack = gtk
- * outFile = RecentChooserT
- * strct   = GtkRecentChooser
- * realStrct=
- * ctorStrct=
- * clss    = RecentChooserT
- * interf  = RecentChooserIF
- * class Code: No
- * interface Code: No
- * template for:
- * 	- TStruct
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_recent_chooser_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListG
- * 	- glib.ListSG
- * 	- gtk.RecentInfo
- * 	- gtk.RecentFilter
- * structWrap:
- * 	- GList* -> ListG
- * 	- GSList* -> ListSG
- * 	- GtkRecentFilter* -> RecentFilter
- * 	- GtkRecentInfo* -> RecentInfo
- * module aliases:
- * local aliases:
- * 	- getShowNumbers -> recentChooserGetShowNumbers
- * 	- setShowNumbers -> recentChooserSetShowNumbers
- * overrides:
- */
 
 module gtk.RecentChooserT;
 
-public  import gtkc.gtktypes;
-
-public import gtkc.gtk;
-public import glib.ConstructionException;
-public import gobject.ObjectG;
-
-public import gobject.Signals;
+public  import glib.ErrorG;
+public  import glib.GException;
+public  import glib.ListG;
+public  import glib.ListSG;
+public  import glib.Str;
+public  import gobject.ObjectG;
+public  import gobject.Signals;
+public  import gtk.RecentFilter;
+public  import gtk.RecentInfo;
 public  import gtkc.gdktypes;
-public import glib.Str;
-public import glib.ErrorG;
-public import glib.GException;
-public import glib.ListG;
-public import glib.ListSG;
-public import gtk.RecentInfo;
-public import gtk.RecentFilter;
-
+public  import gtkc.gtk;
+public  import gtkc.gtktypes;
 
 
 /**
- * GtkRecentChooser is an interface that can be implemented by widgets
- * displaying the list of recently used files. In GTK+, the main objects
- * that implement this interface are GtkRecentChooserWidget,
- * GtkRecentChooserDialog and GtkRecentChooserMenu.
- *
+ * #GtkRecentChooser is an interface that can be implemented by widgets
+ * displaying the list of recently used files.  In GTK+, the main objects
+ * that implement this interface are #GtkRecentChooserWidget,
+ * #GtkRecentChooserDialog and #GtkRecentChooserMenu.
+ * 
  * Recently used files are supported since GTK+ 2.10.
  */
 public template RecentChooserT(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GtkRecentChooser* gtkRecentChooser;
-	
-	
 	/** Get the main Gtk struct */
-	public GtkRecentChooser* getRecentChooserTStruct()
+	public GtkRecentChooser* getRecentChooserStruct()
 	{
 		return cast(GtkRecentChooser*)getStruct();
 	}
-	
-	
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(RecentChooserIF)[] _onItemActivatedListeners;
-	@property void delegate(RecentChooserIF)[] onItemActivatedListeners()
-	{
-		return  _onItemActivatedListeners;
-	}
+
 	/**
-	 * This signal is emitted when the user "activates" a recent item
-	 * in the recent chooser. This can happen by double-clicking on an item
-	 * in the recently used resources list, or by pressing
-	 * Enter.
-	 * Since 2.10
-	 */
-	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("item-activated" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"item-activated",
-			cast(GCallback)&callBackItemActivated,
-			cast(void*)cast(RecentChooserIF)this,
-			null,
-			connectFlags);
-			connectedSignals["item-activated"] = 1;
-		}
-		_onItemActivatedListeners ~= dlg;
-	}
-	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, RecentChooserIF _recentChooserIF)
-	{
-		foreach ( void delegate(RecentChooserIF) dlg ; _recentChooserIF.onItemActivatedListeners )
-		{
-			dlg(_recentChooserIF);
-		}
-	}
-	
-	void delegate(RecentChooserIF)[] _onSelectionChangedListeners;
-	@property void delegate(RecentChooserIF)[] onSelectionChangedListeners()
-	{
-		return  _onSelectionChangedListeners;
-	}
-	/**
-	 * This signal is emitted when there is a change in the set of
-	 * selected recently used resources. This can happen when a user
-	 * modifies the selection with the mouse or the keyboard, or when
-	 * explicitely calling functions to change the selection.
-	 * Since 2.10
-	 * See Also
-	 * GtkRecentManager, GtkRecentChooserDialog,
-	 *  GtkRecentChooserWidget, GtkRecentChooserMenu
-	 */
-	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("selection-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"selection-changed",
-			cast(GCallback)&callBackSelectionChanged,
-			cast(void*)cast(RecentChooserIF)this,
-			null,
-			connectFlags);
-			connectedSignals["selection-changed"] = 1;
-		}
-		_onSelectionChangedListeners ~= dlg;
-	}
-	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, RecentChooserIF _recentChooserIF)
-	{
-		foreach ( void delegate(RecentChooserIF) dlg ; _recentChooserIF.onSelectionChangedListeners )
-		{
-			dlg(_recentChooserIF);
-		}
-	}
-	
-	
-	/**
-	 * Whether to show recently used resources marked registered as private.
-	 * Since 2.10
+	 * Adds @filter to the list of #GtkRecentFilter objects held by @chooser.
+	 *
+	 * If no previous filter objects were defined, this function will call
+	 * gtk_recent_chooser_set_filter().
+	 *
 	 * Params:
-	 * showPrivate = TRUE to show private items, FALSE otherwise
+	 *     filter = a #GtkRecentFilter
+	 *
+	 * Since: 2.10
 	 */
-	public void setShowPrivate(int showPrivate)
+	public void addFilter(RecentFilter filter)
 	{
-		// void gtk_recent_chooser_set_show_private (GtkRecentChooser *chooser,  gboolean show_private);
-		gtk_recent_chooser_set_show_private(getRecentChooserTStruct(), showPrivate);
+		gtk_recent_chooser_add_filter(getRecentChooserStruct(), (filter is null) ? null : filter.getRecentFilterStruct());
 	}
-	
+
 	/**
-	 * Returns whether chooser should display recently used resources
-	 * registered as private.
-	 * Since 2.10
-	 * Returns: TRUE if the recent chooser should show private items, FALSE otherwise.
-	 */
-	public int getShowPrivate()
-	{
-		// gboolean gtk_recent_chooser_get_show_private (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_show_private(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets whether chooser should display the recently used resources that
-	 * it didn't find. This only applies to local resources.
-	 * Since 2.10
-	 * Params:
-	 * showNotFound = whether to show the local items we didn't find
-	 */
-	public void setShowNotFound(int showNotFound)
-	{
-		// void gtk_recent_chooser_set_show_not_found  (GtkRecentChooser *chooser,  gboolean show_not_found);
-		gtk_recent_chooser_set_show_not_found(getRecentChooserTStruct(), showNotFound);
-	}
-	
-	/**
-	 * Retrieves whether chooser should show the recently used resources that
-	 * were not found.
-	 * Since 2.10
-	 * Returns: TRUE if the resources not found should be displayed, and FALSE otheriwse.
-	 */
-	public int getShowNotFound()
-	{
-		// gboolean gtk_recent_chooser_get_show_not_found  (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_show_not_found(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets whether chooser should show an icon near the resource when
-	 * displaying it.
-	 * Since 2.10
-	 * Params:
-	 * showIcons = whether to show an icon near the resource
-	 */
-	public void setShowIcons(int showIcons)
-	{
-		// void gtk_recent_chooser_set_show_icons (GtkRecentChooser *chooser,  gboolean show_icons);
-		gtk_recent_chooser_set_show_icons(getRecentChooserTStruct(), showIcons);
-	}
-	
-	/**
-	 * Retrieves whether chooser should show an icon near the resource.
-	 * Since 2.10
-	 * Returns: TRUE if the icons should be displayed, FALSE otherwise.
-	 */
-	public int getShowIcons()
-	{
-		// gboolean gtk_recent_chooser_get_show_icons (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_show_icons(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets whether chooser can select multiple items.
-	 * Since 2.10
-	 * Params:
-	 * selectMultiple = TRUE if chooser can select more than one item
-	 */
-	public void setSelectMultiple(int selectMultiple)
-	{
-		// void gtk_recent_chooser_set_select_multiple  (GtkRecentChooser *chooser,  gboolean select_multiple);
-		gtk_recent_chooser_set_select_multiple(getRecentChooserTStruct(), selectMultiple);
-	}
-	
-	/**
-	 * Gets whether chooser can select multiple items.
-	 * Since 2.10
-	 * Returns: TRUE if chooser can select more than one item.
-	 */
-	public int getSelectMultiple()
-	{
-		// gboolean gtk_recent_chooser_get_select_multiple  (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_select_multiple(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets whether only local resources, that is resources using the file:// URI
-	 * scheme, should be shown in the recently used resources selector. If
-	 * local_only is TRUE (the default) then the shown resources are guaranteed
-	 * to be accessible through the operating system native file system.
-	 * Since 2.10
-	 * Params:
-	 * localOnly = TRUE if only local files can be shown
-	 */
-	public void setLocalOnly(int localOnly)
-	{
-		// void gtk_recent_chooser_set_local_only (GtkRecentChooser *chooser,  gboolean local_only);
-		gtk_recent_chooser_set_local_only(getRecentChooserTStruct(), localOnly);
-	}
-	
-	/**
-	 * Gets whether only local resources should be shown in the recently used
-	 * resources selector. See gtk_recent_chooser_set_local_only()
-	 * Since 2.10
-	 * Returns: TRUE if only local resources should be shown.
-	 */
-	public int getLocalOnly()
-	{
-		// gboolean gtk_recent_chooser_get_local_only (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_local_only(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets the number of items that should be returned by
-	 * gtk_recent_chooser_get_items() and gtk_recent_chooser_get_uris().
-	 * Since 2.10
-	 * Params:
-	 * limit = a positive integer, or -1 for all items
-	 */
-	public void setLimit(int limit)
-	{
-		// void gtk_recent_chooser_set_limit (GtkRecentChooser *chooser,  gint limit);
-		gtk_recent_chooser_set_limit(getRecentChooserTStruct(), limit);
-	}
-	
-	/**
-	 * Gets the number of items returned by gtk_recent_chooser_get_items()
-	 * and gtk_recent_chooser_get_uris().
-	 * Since 2.10
-	 * Returns: A positive integer, or -1 meaning that all items are returned.
-	 */
-	public int getLimit()
-	{
-		// gint gtk_recent_chooser_get_limit (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_limit(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets whether to show a tooltips containing the full path of each
-	 * recently used resource in a GtkRecentChooser widget.
-	 * Since 2.10
-	 * Params:
-	 * showTips = TRUE if tooltips should be shown
-	 */
-	public void setShowTips(int showTips)
-	{
-		// void gtk_recent_chooser_set_show_tips (GtkRecentChooser *chooser,  gboolean show_tips);
-		gtk_recent_chooser_set_show_tips(getRecentChooserTStruct(), showTips);
-	}
-	
-	/**
-	 * Gets whether chooser should display tooltips containing the full path
-	 * of a recently user resource.
-	 * Since 2.10
-	 * Returns: TRUE if the recent chooser should show tooltips, FALSE otherwise.
-	 */
-	public int getShowTips()
-	{
-		// gboolean gtk_recent_chooser_get_show_tips (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_show_tips(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Changes the sorting order of the recently used resources list displayed by
-	 * chooser.
-	 * Since 2.10
-	 * Params:
-	 * sortType = sort order that the chooser should use
-	 */
-	public void setSortType(GtkRecentSortType sortType)
-	{
-		// void gtk_recent_chooser_set_sort_type (GtkRecentChooser *chooser,  GtkRecentSortType sort_type);
-		gtk_recent_chooser_set_sort_type(getRecentChooserTStruct(), sortType);
-	}
-	
-	/**
-	 * Gets the value set by gtk_recent_chooser_set_sort_type().
-	 * Since 2.10
-	 * Returns: the sorting order of the chooser.
-	 */
-	public GtkRecentSortType getSortType()
-	{
-		// GtkRecentSortType gtk_recent_chooser_get_sort_type (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_get_sort_type(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Sets the comparison function used when sorting to be sort_func. If
-	 * the chooser has the sort type set to GTK_RECENT_SORT_CUSTOM then
-	 * the chooser will sort using this function.
-	 * To the comparison function will be passed two GtkRecentInfo structs and
-	 * sort_data; sort_func should return a positive integer if the first
-	 * item comes before the second, zero if the two items are equal and
-	 * a negative integer if the first item comes after the second.
-	 * Since 2.10
-	 * Params:
-	 * sortFunc = the comparison function
-	 * sortData = user data to pass to sort_func, or NULL. [allow-none]
-	 * dataDestroy = destroy notifier for sort_data, or NULL. [allow-none]
-	 */
-	public void setSortFunc(GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy)
-	{
-		// void gtk_recent_chooser_set_sort_func (GtkRecentChooser *chooser,  GtkRecentSortFunc sort_func,  gpointer sort_data,  GDestroyNotify data_destroy);
-		gtk_recent_chooser_set_sort_func(getRecentChooserTStruct(), sortFunc, sortData, dataDestroy);
-	}
-	
-	/**
-	 * Sets uri as the current URI for chooser.
-	 * Since 2.10
-	 * Params:
-	 * uri = a URI
-	 * Returns: TRUE if the URI was found.
-	 * Throws: GException on failure.
-	 */
-	public int setCurrentUri(string uri)
-	{
-		// gboolean gtk_recent_chooser_set_current_uri (GtkRecentChooser *chooser,  const gchar *uri,  GError **error);
-		GError* err = null;
-		
-		auto p = gtk_recent_chooser_set_current_uri(getRecentChooserTStruct(), Str.toStringz(uri), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Gets the URI currently selected by chooser.
-	 * Since 2.10
-	 * Returns: a newly allocated string holding a URI.
-	 */
-	public string getCurrentUri()
-	{
-		// gchar * gtk_recent_chooser_get_current_uri (GtkRecentChooser *chooser);
-		return Str.toString(gtk_recent_chooser_get_current_uri(getRecentChooserTStruct()));
-	}
-	
-	/**
-	 * Gets the GtkRecentInfo currently selected by chooser.
-	 * Since 2.10
-	 * Returns: a GtkRecentInfo. Use gtk_recent_info_unref() when when you have finished using it.
+	 * Gets the #GtkRecentInfo currently selected by @chooser.
+	 *
+	 * Return: a #GtkRecentInfo.  Use gtk_recent_info_unref() when
+	 *     when you have finished using it.
+	 *
+	 * Since: 2.10
 	 */
 	public RecentInfo getCurrentItem()
 	{
-		// GtkRecentInfo * gtk_recent_chooser_get_current_item (GtkRecentChooser *chooser);
-		auto p = gtk_recent_chooser_get_current_item(getRecentChooserTStruct());
+		auto p = gtk_recent_chooser_get_current_item(getRecentChooserStruct());
 		
 		if(p is null)
 		{
@@ -451,21 +92,255 @@ public template RecentChooserT(TStruct)
 		
 		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p);
 	}
-	
+
 	/**
-	 * Selects uri inside chooser.
-	 * Since 2.10
+	 * Gets the URI currently selected by @chooser.
+	 *
+	 * Return: a newly allocated string holding a URI.
+	 *
+	 * Since: 2.10
+	 */
+	public string getCurrentUri()
+	{
+		return Str.toString(gtk_recent_chooser_get_current_uri(getRecentChooserStruct()));
+	}
+
+	/**
+	 * Gets the #GtkRecentFilter object currently used by @chooser to affect
+	 * the display of the recently used resources.
+	 *
+	 * Return: a #GtkRecentFilter object.
+	 *
+	 * Since: 2.10
+	 */
+	public RecentFilter getFilter()
+	{
+		auto p = gtk_recent_chooser_get_filter(getRecentChooserStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(RecentFilter)(cast(GtkRecentFilter*) p);
+	}
+
+	/**
+	 * Gets the list of recently used resources in form of #GtkRecentInfo objects.
+	 *
+	 * The return value of this function is affected by the “sort-type” and
+	 * “limit” properties of @chooser.
+	 *
+	 * Return: A newly allocated
+	 *     list of #GtkRecentInfo objects.  You should
+	 *     use gtk_recent_info_unref() on every item of the list, and then free
+	 *     the list itself using g_list_free().
+	 *
+	 * Since: 2.10
+	 */
+	public ListG getItems()
+	{
+		auto p = gtk_recent_chooser_get_items(getRecentChooserStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Gets the number of items returned by gtk_recent_chooser_get_items()
+	 * and gtk_recent_chooser_get_uris().
+	 *
+	 * Return: A positive integer, or -1 meaning that all items are
+	 *     returned.
+	 *
+	 * Since: 2.10
+	 */
+	public int getLimit()
+	{
+		return gtk_recent_chooser_get_limit(getRecentChooserStruct());
+	}
+
+	/**
+	 * Gets whether only local resources should be shown in the recently used
+	 * resources selector.  See gtk_recent_chooser_set_local_only()
+	 *
+	 * Return: %TRUE if only local resources should be shown.
+	 *
+	 * Since: 2.10
+	 */
+	public bool getLocalOnly()
+	{
+		return gtk_recent_chooser_get_local_only(getRecentChooserStruct()) != 0;
+	}
+
+	/**
+	 * Gets whether @chooser can select multiple items.
+	 *
+	 * Return: %TRUE if @chooser can select more than one item.
+	 *
+	 * Since: 2.10
+	 */
+	public bool getSelectMultiple()
+	{
+		return gtk_recent_chooser_get_select_multiple(getRecentChooserStruct()) != 0;
+	}
+
+	/**
+	 * Retrieves whether @chooser should show an icon near the resource.
+	 *
+	 * Return: %TRUE if the icons should be displayed, %FALSE otherwise.
+	 *
+	 * Since: 2.10
+	 */
+	public bool getShowIcons()
+	{
+		return gtk_recent_chooser_get_show_icons(getRecentChooserStruct()) != 0;
+	}
+
+	/**
+	 * Retrieves whether @chooser should show the recently used resources that
+	 * were not found.
+	 *
+	 * Return: %TRUE if the resources not found should be displayed, and
+	 *     %FALSE otheriwse.
+	 *
+	 * Since: 2.10
+	 */
+	public bool getShowNotFound()
+	{
+		return gtk_recent_chooser_get_show_not_found(getRecentChooserStruct()) != 0;
+	}
+
+	/**
+	 * Returns whether @chooser should display recently used resources
+	 * registered as private.
+	 *
+	 * Return: %TRUE if the recent chooser should show private items,
+	 *     %FALSE otherwise.
+	 *
+	 * Since: 2.10
+	 */
+	public bool getShowPrivate()
+	{
+		return gtk_recent_chooser_get_show_private(getRecentChooserStruct()) != 0;
+	}
+
+	/**
+	 * Gets whether @chooser should display tooltips containing the full path
+	 * of a recently user resource.
+	 *
+	 * Return: %TRUE if the recent chooser should show tooltips,
+	 *     %FALSE otherwise.
+	 *
+	 * Since: 2.10
+	 */
+	public bool getShowTips()
+	{
+		return gtk_recent_chooser_get_show_tips(getRecentChooserStruct()) != 0;
+	}
+
+	/**
+	 * Gets the value set by gtk_recent_chooser_set_sort_type().
+	 *
+	 * Return: the sorting order of the @chooser.
+	 *
+	 * Since: 2.10
+	 */
+	public GtkRecentSortType getSortType()
+	{
+		return gtk_recent_chooser_get_sort_type(getRecentChooserStruct());
+	}
+
+	/**
+	 * Gets the URI of the recently used resources.
+	 *
+	 * The return value of this function is affected by the “sort-type” and “limit”
+	 * properties of @chooser.
+	 *
+	 * Since the returned array is %NULL terminated, @length may be %NULL.
+	 *
 	 * Params:
-	 * uri = a URI
-	 * Returns: TRUE if uri was found.
+	 *     length = return location for a the length of the
+	 *         URI list, or %NULL
+	 *
+	 * Return: A newly allocated, %NULL-terminated array of strings. Use
+	 *     g_strfreev() to free it.
+	 *
+	 * Since: 2.10
+	 */
+	public string[] getUris()
+	{
+		size_t length;
+		
+		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserStruct(), &length));
+	}
+
+	/**
+	 * Gets the #GtkRecentFilter objects held by @chooser.
+	 *
+	 * Return: A singly linked list
+	 *     of #GtkRecentFilter objects.  You
+	 *     should just free the returned list using g_slist_free().
+	 *
+	 * Since: 2.10
+	 */
+	public ListSG listFilters()
+	{
+		auto p = gtk_recent_chooser_list_filters(getRecentChooserStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListSG(cast(GSList*) p);
+	}
+
+	/**
+	 * Removes @filter from the list of #GtkRecentFilter objects held by @chooser.
+	 *
+	 * Params:
+	 *     filter = a #GtkRecentFilter
+	 *
+	 * Since: 2.10
+	 */
+	public void removeFilter(RecentFilter filter)
+	{
+		gtk_recent_chooser_remove_filter(getRecentChooserStruct(), (filter is null) ? null : filter.getRecentFilterStruct());
+	}
+
+	/**
+	 * Selects all the items inside @chooser, if the @chooser supports
+	 * multiple selection.
+	 *
+	 * Since: 2.10
+	 */
+	public void selectAll()
+	{
+		gtk_recent_chooser_select_all(getRecentChooserStruct());
+	}
+
+	/**
+	 * Selects @uri inside @chooser.
+	 *
+	 * Params:
+	 *     uri = a URI
+	 *
+	 * Return: %TRUE if @uri was found.
+	 *
+	 * Since: 2.10
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int selectUri(string uri)
+	public bool selectUri(string uri)
 	{
-		// gboolean gtk_recent_chooser_select_uri (GtkRecentChooser *chooser,  const gchar *uri,  GError **error);
 		GError* err = null;
 		
-		auto p = gtk_recent_chooser_select_uri(getRecentChooserTStruct(), Str.toStringz(uri), &err);
+		auto p = gtk_recent_chooser_select_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
 		
 		if (err !is null)
 		{
@@ -474,156 +349,275 @@ public template RecentChooserT(TStruct)
 		
 		return p;
 	}
-	
+
 	/**
-	 * Unselects uri inside chooser.
-	 * Since 2.10
+	 * Sets @uri as the current URI for @chooser.
+	 *
 	 * Params:
-	 * uri = a URI
+	 *     uri = a URI
+	 *
+	 * Return: %TRUE if the URI was found.
+	 *
+	 * Since: 2.10
+	 *
+	 * Throws: GException on failure.
 	 */
-	public void unselectUri(string uri)
+	public bool setCurrentUri(string uri)
 	{
-		// void gtk_recent_chooser_unselect_uri (GtkRecentChooser *chooser,  const gchar *uri);
-		gtk_recent_chooser_unselect_uri(getRecentChooserTStruct(), Str.toStringz(uri));
-	}
-	
-	/**
-	 * Selects all the items inside chooser, if the chooser supports
-	 * multiple selection.
-	 * Since 2.10
-	 */
-	public void selectAll()
-	{
-		// void gtk_recent_chooser_select_all (GtkRecentChooser *chooser);
-		gtk_recent_chooser_select_all(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Unselects all the items inside chooser.
-	 * Since 2.10
-	 */
-	public void unselectAll()
-	{
-		// void gtk_recent_chooser_unselect_all (GtkRecentChooser *chooser);
-		gtk_recent_chooser_unselect_all(getRecentChooserTStruct());
-	}
-	
-	/**
-	 * Gets the list of recently used resources in form of GtkRecentInfo objects.
-	 * The return value of this function is affected by the "sort-type" and
-	 * "limit" properties of chooser.
-	 * Since 2.10
-	 * Returns: A newly allocated list of GtkRecentInfo objects. You should use gtk_recent_info_unref() on every item of the list, and then free the list itself using g_list_free(). [element-type GtkRecentInfo][transfer full]
-	 */
-	public ListG getItems()
-	{
-		// GList * gtk_recent_chooser_get_items (GtkRecentChooser *chooser);
-		auto p = gtk_recent_chooser_get_items(getRecentChooserTStruct());
+		GError* err = null;
 		
-		if(p is null)
+		auto p = gtk_recent_chooser_set_current_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
+		
+		if (err !is null)
 		{
-			return null;
+			throw new GException( new ErrorG(err) );
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		return p;
 	}
-	
+
 	/**
-	 * Gets the URI of the recently used resources.
-	 * The return value of this function is affected by the "sort-type" and "limit"
-	 * properties of chooser.
-	 * Since the returned array is NULL terminated, length may be NULL.
-	 * Since 2.10
-	 * Returns: A newly allocated, NULL-terminated array of strings. Use g_strfreev() to free it. [array length=length zero-terminated=1][transfer full]
-	 */
-	public string[] getUris()
-	{
-		// gchar ** gtk_recent_chooser_get_uris (GtkRecentChooser *chooser,  gsize *length);
-		gsize length;
-		auto p = gtk_recent_chooser_get_uris(getRecentChooserTStruct(), &length);
-		
-		string[] strArray = null;
-		foreach ( cstr; p[0 .. length] )
-		{
-			strArray ~= Str.toString(cstr);
-		}
-		
-		return strArray;
-	}
-	
-	/**
-	 * Adds filter to the list of GtkRecentFilter objects held by chooser.
-	 * If no previous filter objects were defined, this function will call
-	 * gtk_recent_chooser_set_filter().
-	 * Since 2.10
-	 * Params:
-	 * filter = a GtkRecentFilter
-	 */
-	public void addFilter(RecentFilter filter)
-	{
-		// void gtk_recent_chooser_add_filter (GtkRecentChooser *chooser,  GtkRecentFilter *filter);
-		gtk_recent_chooser_add_filter(getRecentChooserTStruct(), (filter is null) ? null : filter.getRecentFilterStruct());
-	}
-	
-	/**
-	 * Removes filter from the list of GtkRecentFilter objects held by chooser.
-	 * Since 2.10
-	 * Params:
-	 * filter = a GtkRecentFilter
-	 */
-	public void removeFilter(RecentFilter filter)
-	{
-		// void gtk_recent_chooser_remove_filter (GtkRecentChooser *chooser,  GtkRecentFilter *filter);
-		gtk_recent_chooser_remove_filter(getRecentChooserTStruct(), (filter is null) ? null : filter.getRecentFilterStruct());
-	}
-	
-	/**
-	 * Gets the GtkRecentFilter objects held by chooser.
-	 * Since 2.10
-	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free(). [element-type GtkRecentFilter][transfer container]
-	 */
-	public ListSG listFilters()
-	{
-		// GSList * gtk_recent_chooser_list_filters (GtkRecentChooser *chooser);
-		auto p = gtk_recent_chooser_list_filters(getRecentChooserTStruct());
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
-	}
-	
-	/**
-	 * Sets filter as the current GtkRecentFilter object used by chooser
+	 * Sets @filter as the current #GtkRecentFilter object used by @chooser
 	 * to affect the displayed recently used resources.
-	 * Since 2.10
+	 *
 	 * Params:
-	 * filter = a GtkRecentFilter. [allow-none]
+	 *     filter = a #GtkRecentFilter
+	 *
+	 * Since: 2.10
 	 */
 	public void setFilter(RecentFilter filter)
 	{
-		// void gtk_recent_chooser_set_filter (GtkRecentChooser *chooser,  GtkRecentFilter *filter);
-		gtk_recent_chooser_set_filter(getRecentChooserTStruct(), (filter is null) ? null : filter.getRecentFilterStruct());
+		gtk_recent_chooser_set_filter(getRecentChooserStruct(), (filter is null) ? null : filter.getRecentFilterStruct());
 	}
-	
+
 	/**
-	 * Gets the GtkRecentFilter object currently used by chooser to affect
-	 * the display of the recently used resources.
-	 * Since 2.10
-	 * Returns: a GtkRecentFilter object. [transfer none]
+	 * Sets the number of items that should be returned by
+	 * gtk_recent_chooser_get_items() and gtk_recent_chooser_get_uris().
+	 *
+	 * Params:
+	 *     limit = a positive integer, or -1 for all items
+	 *
+	 * Since: 2.10
 	 */
-	public RecentFilter getFilter()
+	public void setLimit(int limit)
 	{
-		// GtkRecentFilter * gtk_recent_chooser_get_filter (GtkRecentChooser *chooser);
-		auto p = gtk_recent_chooser_get_filter(getRecentChooserTStruct());
-		
-		if(p is null)
+		gtk_recent_chooser_set_limit(getRecentChooserStruct(), limit);
+	}
+
+	/**
+	 * Sets whether only local resources, that is resources using the file:// URI
+	 * scheme, should be shown in the recently used resources selector.  If
+	 * @local_only is %TRUE (the default) then the shown resources are guaranteed
+	 * to be accessible through the operating system native file system.
+	 *
+	 * Params:
+	 *     localOnly = %TRUE if only local files can be shown
+	 *
+	 * Since: 2.10
+	 */
+	public void setLocalOnly(bool localOnly)
+	{
+		gtk_recent_chooser_set_local_only(getRecentChooserStruct(), localOnly);
+	}
+
+	/**
+	 * Sets whether @chooser can select multiple items.
+	 *
+	 * Params:
+	 *     selectMultiple = %TRUE if @chooser can select more than one item
+	 *
+	 * Since: 2.10
+	 */
+	public void setSelectMultiple(bool selectMultiple)
+	{
+		gtk_recent_chooser_set_select_multiple(getRecentChooserStruct(), selectMultiple);
+	}
+
+	/**
+	 * Sets whether @chooser should show an icon near the resource when
+	 * displaying it.
+	 *
+	 * Params:
+	 *     showIcons = whether to show an icon near the resource
+	 *
+	 * Since: 2.10
+	 */
+	public void setShowIcons(bool showIcons)
+	{
+		gtk_recent_chooser_set_show_icons(getRecentChooserStruct(), showIcons);
+	}
+
+	/**
+	 * Sets whether @chooser should display the recently used resources that
+	 * it didn’t find.  This only applies to local resources.
+	 *
+	 * Params:
+	 *     showNotFound = whether to show the local items we didn’t find
+	 *
+	 * Since: 2.10
+	 */
+	public void setShowNotFound(bool showNotFound)
+	{
+		gtk_recent_chooser_set_show_not_found(getRecentChooserStruct(), showNotFound);
+	}
+
+	/**
+	 * Whether to show recently used resources marked registered as private.
+	 *
+	 * Params:
+	 *     showPrivate = %TRUE to show private items, %FALSE otherwise
+	 *
+	 * Since: 2.10
+	 */
+	public void setShowPrivate(bool showPrivate)
+	{
+		gtk_recent_chooser_set_show_private(getRecentChooserStruct(), showPrivate);
+	}
+
+	/**
+	 * Sets whether to show a tooltips containing the full path of each
+	 * recently used resource in a #GtkRecentChooser widget.
+	 *
+	 * Params:
+	 *     showTips = %TRUE if tooltips should be shown
+	 *
+	 * Since: 2.10
+	 */
+	public void setShowTips(bool showTips)
+	{
+		gtk_recent_chooser_set_show_tips(getRecentChooserStruct(), showTips);
+	}
+
+	/**
+	 * Sets the comparison function used when sorting to be @sort_func.  If
+	 * the @chooser has the sort type set to #GTK_RECENT_SORT_CUSTOM then
+	 * the chooser will sort using this function.
+	 *
+	 * To the comparison function will be passed two #GtkRecentInfo structs and
+	 * @sort_data;  @sort_func should return a positive integer if the first
+	 * item comes before the second, zero if the two items are equal and
+	 * a negative integer if the first item comes after the second.
+	 *
+	 * Params:
+	 *     sortFunc = the comparison function
+	 *     sortData = user data to pass to @sort_func, or %NULL
+	 *     dataDestroy = destroy notifier for @sort_data, or %NULL
+	 *
+	 * Since: 2.10
+	 */
+	public void setSortFunc(GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy)
+	{
+		gtk_recent_chooser_set_sort_func(getRecentChooserStruct(), sortFunc, sortData, dataDestroy);
+	}
+
+	/**
+	 * Changes the sorting order of the recently used resources list displayed by
+	 * @chooser.
+	 *
+	 * Params:
+	 *     sortType = sort order that the chooser should use
+	 *
+	 * Since: 2.10
+	 */
+	public void setSortType(GtkRecentSortType sortType)
+	{
+		gtk_recent_chooser_set_sort_type(getRecentChooserStruct(), sortType);
+	}
+
+	/**
+	 * Unselects all the items inside @chooser.
+	 *
+	 * Since: 2.10
+	 */
+	public void unselectAll()
+	{
+		gtk_recent_chooser_unselect_all(getRecentChooserStruct());
+	}
+
+	/**
+	 * Unselects @uri inside @chooser.
+	 *
+	 * Params:
+	 *     uri = a URI
+	 *
+	 * Since: 2.10
+	 */
+	public void unselectUri(string uri)
+	{
+		gtk_recent_chooser_unselect_uri(getRecentChooserStruct(), Str.toStringz(uri));
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(RecentChooserIF)[] _onItemActivatedListeners;
+	@property void delegate(RecentChooserIF)[] onItemActivatedListeners()
+	{
+		return _onItemActivatedListeners;
+	}
+	/**
+	 * This signal is emitted when the user "activates" a recent item
+	 * in the recent chooser.  This can happen by double-clicking on an item
+	 * in the recently used resources list, or by pressing
+	 * `Enter`.
+	 *
+	 * Since: 2.10
+	 */
+	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "item-activated" !in connectedSignals )
 		{
-			return null;
+			Signals.connectData(
+				this,
+				"item-activated",
+				cast(GCallback)&callBackItemActivated,
+				cast(void*)cast(RecentChooserIF)this,
+				null,
+				connectFlags);
+			connectedSignals["item-activated"] = 1;
 		}
-		
-		return ObjectG.getDObject!(RecentFilter)(cast(GtkRecentFilter*) p);
+		_onItemActivatedListeners ~= dlg;
+	}
+	extern(C) static void callBackItemActivated(GtkRecentChooser* recentchooserStruct, RecentChooserIF _recentchooser)
+	{
+		foreach ( void delegate(RecentChooserIF) dlg; _recentchooser.onItemActivatedListeners )
+		{
+			dlg(_recentchooser);
+		}
+	}
+
+	void delegate(RecentChooserIF)[] _onSelectionChangedListeners;
+	@property void delegate(RecentChooserIF)[] onSelectionChangedListeners()
+	{
+		return _onSelectionChangedListeners;
+	}
+	/**
+	 * This signal is emitted when there is a change in the set of
+	 * selected recently used resources.  This can happen when a user
+	 * modifies the selection with the mouse or the keyboard, or when
+	 * explicitly calling functions to change the selection.
+	 *
+	 * Since: 2.10
+	 */
+	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "selection-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"selection-changed",
+				cast(GCallback)&callBackSelectionChanged,
+				cast(void*)cast(RecentChooserIF)this,
+				null,
+				connectFlags);
+			connectedSignals["selection-changed"] = 1;
+		}
+		_onSelectionChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackSelectionChanged(GtkRecentChooser* recentchooserStruct, RecentChooserIF _recentchooser)
+	{
+		foreach ( void delegate(RecentChooserIF) dlg; _recentchooser.onSelectionChangedListeners )
+		{
+			dlg(_recentchooser);
+		}
 	}
 }

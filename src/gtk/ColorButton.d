@@ -16,286 +16,276 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkColorButton.html
- * outPack = gtk
- * outFile = ColorButton
- * strct   = GtkColorButton
- * realStrct=
- * ctorStrct=
- * clss    = ColorButton
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- ColorChooserIF
- * prefixes:
- * 	- gtk_color_button_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_color_button_set_rgba
- * 	- gtk_color_button_get_rgba
- * 	- gtk_color_button_set_use_alpha
- * 	- gtk_color_button_get_use_alpha
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gdk.Color
- * 	- gdk.RGBA
- * 	- gtk.ColorChooserIF
- * 	- gtk.ColorChooserT
- * structWrap:
- * 	- GdkColor* -> Color
- * 	- GdkRGBA* -> RGBA
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.ColorButton;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
 private import gdk.Color;
 private import gdk.RGBA;
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.Button;
 private import gtk.ColorChooserIF;
 private import gtk.ColorChooserT;
+private import gtk.Widget;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gtk.Button;
 
 /**
- * The GtkColorButton is a button which displays the currently selected
+ * The #GtkColorButton is a button which displays the currently selected
  * color an allows to open a color selection dialog to change the color.
  * It is suitable widget for selecting a color in a preference dialog.
  */
 public class ColorButton : Button, ColorChooserIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkColorButton* gtkColorButton;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkColorButton* getColorButtonStruct()
 	{
 		return gtkColorButton;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkColorButton;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkColorButton* gtkColorButton)
-	{
-		super(cast(GtkButton*)gtkColorButton);
-		this.gtkColorButton = gtkColorButton;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkColorButton = cast(GtkColorButton*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkColorButton* gtkColorButton, bool ownedRef = false)
+	{
+		this.gtkColorButton = gtkColorButton;
+		super(cast(GtkButton*)gtkColorButton, ownedRef);
+	}
+
 	// add the ColorChooser capabilities
 	mixin ColorChooserT!(GtkColorButton);
-	
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(ColorButton)[] onColorSetListeners;
-	/**
-	 * The ::color-set signal is emitted when the user selects a color.
-	 * When handling this signal, use gtk_color_button_get_rgba() to
-	 * find out which color was just selected.
-	 * Note that this signal is only emitted when the user
-	 * changes the color. If you need to react to programmatic color changes
-	 * as well, use the notify::color signal.
-	 * Since 2.4
-	 * See Also
-	 * GtkColorSelectionDialog, GtkFontButton
-	 */
-	void addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+
+	public static GType getType()
 	{
-		if ( !("color-set" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"color-set",
-			cast(GCallback)&callBackColorSet,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["color-set"] = 1;
-		}
-		onColorSetListeners ~= dlg;
+		return gtk_color_button_get_type();
 	}
-	extern(C) static void callBackColorSet(GtkColorButton* widgetStruct, ColorButton _colorButton)
-	{
-		foreach ( void delegate(ColorButton) dlg ; _colorButton.onColorSetListeners )
-		{
-			dlg(_colorButton);
-		}
-	}
-	
-	
+
 	/**
 	 * Creates a new color button.
+	 *
 	 * This returns a widget in the form of a small button containing
 	 * a swatch representing the current selected color. When the button
 	 * is clicked, a color-selection dialog will open, allowing the user
 	 * to select a color. The swatch will be updated to reflect the new
 	 * color when the user finishes.
-	 * Since 2.4
+	 *
+	 * Return: a new color button
+	 *
+	 * Since: 2.4
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_color_button_new (void);
 		auto p = gtk_color_button_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_color_button_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkColorButton*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_color_button_new_with_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_button_new_with_rgba() instead.
 	 * Creates a new color button.
-	 * Since 2.4
+	 *
+	 * Deprecated: Use gtk_color_button_new_with_rgba() instead.
+	 *
 	 * Params:
-	 * color = A GdkColor to set the current color with
+	 *     color = A #GdkColor to set the current color with
+	 *
+	 * Return: a new color button
+	 *
+	 * Since: 2.4
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (Color color)
+	public this(Color color)
 	{
-		// GtkWidget * gtk_color_button_new_with_color (const GdkColor *color);
 		auto p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct())");
+			throw new ConstructionException("null returned by new_with_color");
 		}
+		
 		this(cast(GtkColorButton*) p);
 	}
-	
+
 	/**
 	 * Creates a new color button.
+	 *
 	 * Params:
-	 * rgba = A GdkRGBA to set the current color with
+	 *     rgba = A #GdkRGBA to set the current color with
+	 *
+	 * Return: a new color button
+	 *
+	 * Since: 3.0
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (RGBA rgba)
+	public this(RGBA rgba)
 	{
-		// GtkWidget * gtk_color_button_new_with_rgba (const GdkRGBA *rgba);
 		auto p = gtk_color_button_new_with_rgba((rgba is null) ? null : rgba.getRGBAStruct());
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_color_button_new_with_rgba((rgba is null) ? null : rgba.getRGBAStruct())");
+			throw new ConstructionException("null returned by new_with_rgba");
 		}
+		
 		this(cast(GtkColorButton*) p);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_color_button_set_color is deprecated and should not be used in newly-written code. Use gtk_color_chooser_set_rgba() instead.
-	 * Sets the current color to be color.
-	 * Since 2.4
-	 * Params:
-	 * color = A GdkColor to set the current color with
-	 */
-	public void setColor(Color color)
-	{
-		// void gtk_color_button_set_color (GtkColorButton *button,  const GdkColor *color);
-		gtk_color_button_set_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_color_button_get_color has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_rgba() instead.
-	 * Sets color to be the current color in the GtkColorButton widget.
-	 * Since 2.4
-	 * Params:
-	 * color = a GdkColor to fill in with the current color. [out]
-	 */
-	public void getColor(Color color)
-	{
-		// void gtk_color_button_get_color (GtkColorButton *button,  GdkColor *color);
-		gtk_color_button_get_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_color_button_set_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_set_rgba() instead.
-	 * Sets the current opacity to be alpha.
-	 * Since 2.4
-	 * Params:
-	 * alpha = an integer between 0 and 65535
-	 */
-	public void setAlpha(ushort alpha)
-	{
-		// void gtk_color_button_set_alpha (GtkColorButton *button,  guint16 alpha);
-		gtk_color_button_set_alpha(gtkColorButton, alpha);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_color_button_get_alpha has been deprecated since version 3.4 and should not be used in newly-written code. Use gtk_color_chooser_get_rgba() instead.
 	 * Returns the current alpha value.
-	 * Since 2.4
-	 * Returns: an integer between 0 and 65535
+	 *
+	 * Deprecated: Use gtk_color_chooser_get_rgba() instead.
+	 *
+	 * Return: an integer between 0 and 65535
+	 *
+	 * Since: 2.4
 	 */
 	public ushort getAlpha()
 	{
-		// guint16 gtk_color_button_get_alpha (GtkColorButton *button);
 		return gtk_color_button_get_alpha(gtkColorButton);
 	}
-	
+
 	/**
-	 * Sets the title for the color selection dialog.
-	 * Since 2.4
+	 * Sets @color to be the current color in the #GtkColorButton widget.
+	 *
+	 * Deprecated: Use gtk_color_chooser_get_rgba() instead.
+	 *
 	 * Params:
-	 * title = String containing new window title
+	 *     color = a #GdkColor to fill in with the current color
+	 *
+	 * Since: 2.4
 	 */
-	public void setTitle(string title)
+	public void getColor(out Color color)
 	{
-		// void gtk_color_button_set_title (GtkColorButton *button,  const gchar *title);
-		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
+		GdkColor* outcolor = new GdkColor;
+		
+		gtk_color_button_get_color(gtkColorButton, outcolor);
+		
+		color = ObjectG.getDObject!(Color)(outcolor);
 	}
-	
+
 	/**
 	 * Gets the title of the color selection dialog.
-	 * Since 2.4
-	 * Returns: An internal string, do not free the return value
+	 *
+	 * Return: An internal string, do not free the return value
+	 *
+	 * Since: 2.4
 	 */
 	public string getTitle()
 	{
-		// const gchar * gtk_color_button_get_title (GtkColorButton *button);
 		return Str.toString(gtk_color_button_get_title(gtkColorButton));
+	}
+
+	/**
+	 * Sets the current opacity to be @alpha.
+	 *
+	 * Deprecated: Use gtk_color_chooser_set_rgba() instead.
+	 *
+	 * Params:
+	 *     alpha = an integer between 0 and 65535
+	 *
+	 * Since: 2.4
+	 */
+	public void setAlpha(ushort alpha)
+	{
+		gtk_color_button_set_alpha(gtkColorButton, alpha);
+	}
+
+	/**
+	 * Sets the current color to be @color.
+	 *
+	 * Deprecated: Use gtk_color_chooser_set_rgba() instead.
+	 *
+	 * Params:
+	 *     color = A #GdkColor to set the current color with
+	 *
+	 * Since: 2.4
+	 */
+	public void setColor(Color color)
+	{
+		gtk_color_button_set_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
+	}
+
+	/**
+	 * Sets the title for the color selection dialog.
+	 *
+	 * Params:
+	 *     title = String containing new window title
+	 *
+	 * Since: 2.4
+	 */
+	public void setTitle(string title)
+	{
+		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(ColorButton)[] onColorSetListeners;
+	/**
+	 * The ::color-set signal is emitted when the user selects a color.
+	 * When handling this signal, use gtk_color_button_get_rgba() to
+	 * find out which color was just selected.
+	 *
+	 * Note that this signal is only emitted when the user
+	 * changes the color. If you need to react to programmatic color changes
+	 * as well, use the notify::color signal.
+	 *
+	 * Since: 2.4
+	 */
+	void addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "color-set" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"color-set",
+				cast(GCallback)&callBackColorSet,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["color-set"] = 1;
+		}
+		onColorSetListeners ~= dlg;
+	}
+	extern(C) static void callBackColorSet(GtkColorButton* colorbuttonStruct, ColorButton _colorbutton)
+	{
+		foreach ( void delegate(ColorButton) dlg; _colorbutton.onColorSetListeners )
+		{
+			dlg(_colorbutton);
+		}
 	}
 }

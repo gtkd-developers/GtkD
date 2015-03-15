@@ -16,182 +16,79 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GstPluginFeature.html
- * outPack = gstreamer
- * outFile = PluginFeature
- * strct   = GstPluginFeature
- * realStrct=
- * ctorStrct=
- * clss    = PluginFeature
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_plugin_feature_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ListG
- * 	- gstreamer.Plugin
- * structWrap:
- * 	- GList* -> ListG
- * 	- GstPlugin* -> Plugin
- * 	- GstPluginFeature* -> PluginFeature
- * module aliases:
- * local aliases:
- * 	- setName -> setFeatureName
- * overrides:
- * 	- getName
- */
 
 module gstreamer.PluginFeature;
 
+private import glib.ListG;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gstreamer.ObjectGst;
+private import gstreamer.Plugin;
+private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import glib.ListG;
-private import gstreamer.Plugin;
-
-
-private import gstreamer.ObjectGst;
 
 /**
- * This is a base class for anything that can be added to a GstPlugin.
+ * This is a base class for anything that can be added to a #GstPlugin.
  */
 public class PluginFeature : ObjectGst
 {
-	
 	/** the main Gtk struct */
 	protected GstPluginFeature* gstPluginFeature;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstPluginFeature* getPluginFeatureStruct()
 	{
 		return gstPluginFeature;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gstPluginFeature;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GstPluginFeature* gstPluginFeature)
-	{
-		super(cast(GstObject*)gstPluginFeature);
-		this.gstPluginFeature = gstPluginFeature;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gstPluginFeature = cast(GstPluginFeature*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Specifies a rank for a plugin feature, so that autoplugging uses
-	 * the most appropriate feature.
-	 * Params:
-	 * rank = rank value - higher number means more priority rank
-	 */
-	public void setRank(uint rank)
+	public this (GstPluginFeature* gstPluginFeature, bool ownedRef = false)
 	{
-		// void gst_plugin_feature_set_rank (GstPluginFeature *feature,  guint rank);
-		gst_plugin_feature_set_rank(gstPluginFeature, rank);
+		this.gstPluginFeature = gstPluginFeature;
+		super(cast(GstObject*)gstPluginFeature, ownedRef);
 	}
-	
+
 	/**
-	 * Gets the rank of a plugin feature.
-	 * Returns: The rank of the feature
 	 */
-	public uint getRank()
+
+	public static GType getType()
 	{
-		// guint gst_plugin_feature_get_rank (GstPluginFeature *feature);
-		return gst_plugin_feature_get_rank(gstPluginFeature);
+		return gst_plugin_feature_get_type();
 	}
-	
+
 	/**
-	 * Get the plugin that provides this feature.
-	 * Returns: the plugin that provides this feature, or NULL. Unref with gst_object_unref() when no longer needed. [transfer full]
-	 */
-	public Plugin getPlugin()
-	{
-		// GstPlugin * gst_plugin_feature_get_plugin (GstPluginFeature *feature);
-		auto p = gst_plugin_feature_get_plugin(gstPluginFeature);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p);
-	}
-	
-	/**
-	 * Get the name of the plugin that provides this feature.
-	 * Since 1.2.0
-	 * Returns: the name of the plugin that provides this feature, or NULL if the feature is not associated with a plugin.
-	 */
-	public string getPluginName()
-	{
-		// const gchar * gst_plugin_feature_get_plugin_name (GstPluginFeature *feature);
-		return Str.toString(gst_plugin_feature_get_plugin_name(gstPluginFeature));
-	}
-	
-	/**
-	 * Loads the plugin containing feature if it's not already loaded. feature is
-	 * unaffected; use the return value instead.
-	 * Returns: a reference to the loaded feature, or NULL on error. [transfer full]
-	 */
-	public PluginFeature load()
-	{
-		// GstPluginFeature * gst_plugin_feature_load (GstPluginFeature *feature);
-		auto p = gst_plugin_feature_load(gstPluginFeature);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p);
-	}
-	
-	/**
-	 * Copies the list of features. Caller should call gst_plugin_feature_list_free
+	 * Copies the list of features. Caller should call @gst_plugin_feature_list_free
 	 * when done with the list.
+	 *
 	 * Params:
-	 * list = list
-	 * of GstPluginFeature. [transfer none][element-type Gst.PluginFeature]
-	 * Returns: a copy of list, with each feature's reference count incremented. [transfer full][element-type Gst.PluginFeature]
+	 *     list = list
+	 *         of #GstPluginFeature
+	 *
+	 * Return: a copy of @list,
+	 *     with each feature's reference count incremented.
 	 */
 	public static ListG listCopy(ListG list)
 	{
-		// GList * gst_plugin_feature_list_copy (GList *list);
 		auto p = gst_plugin_feature_list_copy((list is null) ? null : list.getListGStruct());
 		
 		if(p is null)
@@ -199,47 +96,149 @@ public class PluginFeature : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		return new ListG(cast(GList*) p);
 	}
-	
+
 	/**
-	 * Unrefs each member of list, then frees the list.
+	 * Debug the plugin feature names in @list.
+	 *
 	 * Params:
-	 * list = list
-	 * of GstPluginFeature. [transfer full][element-type Gst.PluginFeature]
+	 *     list = a #GList of
+	 *         plugin features
+	 */
+	public static void listDebug(ListG list)
+	{
+		gst_plugin_feature_list_debug((list is null) ? null : list.getListGStruct());
+	}
+
+	/**
+	 * Unrefs each member of @list, then frees the list.
+	 *
+	 * Params:
+	 *     list = list
+	 *         of #GstPluginFeature
 	 */
 	public static void listFree(ListG list)
 	{
-		// void gst_plugin_feature_list_free (GList *list);
 		gst_plugin_feature_list_free((list is null) ? null : list.getListGStruct());
 	}
-	
+
 	/**
-	 * Checks whether the given plugin feature is at least
-	 *  the required version
+	 * Compares the two given #GstPluginFeature instances. This function can be
+	 * used as a #GCompareFunc when sorting by rank and then by name.
+	 *
 	 * Params:
-	 * minMajor = minimum required major version
-	 * minMinor = minimum required minor version
-	 * minMicro = minimum required micro version
-	 * Returns: TRUE if the plugin feature has at least the required version, otherwise FALSE.
-	 */
-	public int checkVersion(uint minMajor, uint minMinor, uint minMicro)
-	{
-		// gboolean gst_plugin_feature_check_version (GstPluginFeature *feature,  guint min_major,  guint min_minor,  guint min_micro);
-		return gst_plugin_feature_check_version(gstPluginFeature, minMajor, minMinor, minMicro);
-	}
-	
-	/**
-	 * Compares the two given GstPluginFeature instances. This function can be
-	 * used as a GCompareFunc when sorting by rank and then by name.
-	 * Params:
-	 * p1 = a GstPluginFeature
-	 * p2 = a GstPluginFeature
-	 * Returns: negative value if the rank of p1 > the rank of p2 or the ranks are equal but the name of p1 comes before the name of p2; zero if the rank and names are equal; positive value if the rank of p1 < the rank of p2 or the ranks are equal but the name of p2 comes before the name of p1
+	 *     p1 = a #GstPluginFeature
+	 *     p2 = a #GstPluginFeature
+	 *
+	 * Return: negative value if the rank of p1 > the rank of p2 or the ranks are
+	 *     equal but the name of p1 comes before the name of p2; zero if the rank
+	 *     and names are equal; positive value if the rank of p1 < the rank of p2 or the
+	 *     ranks are equal but the name of p2 comes before the name of p1
 	 */
 	public static int rankCompareFunc(void* p1, void* p2)
 	{
-		// gint gst_plugin_feature_rank_compare_func  (gconstpointer p1,  gconstpointer p2);
 		return gst_plugin_feature_rank_compare_func(p1, p2);
+	}
+
+	/**
+	 * Checks whether the given plugin feature is at least
+	 * the required version
+	 *
+	 * Params:
+	 *     minMajor = minimum required major version
+	 *     minMinor = minimum required minor version
+	 *     minMicro = minimum required micro version
+	 *
+	 * Return: %TRUE if the plugin feature has at least
+	 *     the required version, otherwise %FALSE.
+	 */
+	public bool checkVersion(uint minMajor, uint minMinor, uint minMicro)
+	{
+		return gst_plugin_feature_check_version(gstPluginFeature, minMajor, minMinor, minMicro) != 0;
+	}
+
+	/**
+	 * Get the plugin that provides this feature.
+	 *
+	 * Return: the plugin that provides this
+	 *     feature, or %NULL.  Unref with gst_object_unref() when no
+	 *     longer needed.
+	 */
+	public Plugin getPlugin()
+	{
+		auto p = gst_plugin_feature_get_plugin(gstPluginFeature);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
+	}
+
+	/**
+	 * Get the name of the plugin that provides this feature.
+	 *
+	 * Return: the name of the plugin that provides this
+	 *     feature, or %NULL if the feature is not associated with a
+	 *     plugin.
+	 *
+	 * Since: 1.2
+	 */
+	public string getPluginName()
+	{
+		return Str.toString(gst_plugin_feature_get_plugin_name(gstPluginFeature));
+	}
+
+	/**
+	 * Gets the rank of a plugin feature.
+	 *
+	 * Return: The rank of the feature
+	 */
+	public uint getRank()
+	{
+		return gst_plugin_feature_get_rank(gstPluginFeature);
+	}
+
+	/**
+	 * Loads the plugin containing @feature if it's not already loaded. @feature is
+	 * unaffected; use the return value instead.
+	 *
+	 * Normally this function is used like this:
+	 * |[
+	 * GstPluginFeature *loaded_feature;
+	 *
+	 * loaded_feature = gst_plugin_feature_load (feature);
+	 * // presumably, we're no longer interested in the potentially-unloaded feature
+	 * gst_object_unref (feature);
+	 * feature = loaded_feature;
+	 * ]|
+	 *
+	 * Return: a reference to the loaded
+	 *     feature, or %NULL on error
+	 */
+	public PluginFeature load()
+	{
+		auto p = gst_plugin_feature_load(gstPluginFeature);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p, true);
+	}
+
+	/**
+	 * Specifies a rank for a plugin feature, so that autoplugging uses
+	 * the most appropriate feature.
+	 *
+	 * Params:
+	 *     rank = rank value - higher number means more priority rank
+	 */
+	public void setRank(uint rank)
+	{
+		gst_plugin_feature_set_rank(gstPluginFeature, rank);
 	}
 }

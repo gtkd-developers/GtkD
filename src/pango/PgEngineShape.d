@@ -16,91 +16,66 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = PangoEngineShape.html
- * outPack = pango
- * outFile = PgEngineShape
- * strct   = PangoEngineShape
- * realStrct=
- * ctorStrct=
- * clss    = PgEngineShape
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- script_engine_shape_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module pango.PgEngineShape;
 
-public  import gtkc.pangotypes;
-
 private import gtkc.pango;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-
-
+public  import gtkc.pangotypes;
 private import pango.PgEngine;
 
+
 /**
- * The shape engines are rendering-system dependent
- * engines that convert character strings into glyph strings.
- * These engines are used in pango_shape().
+ * The #PangoEngineShape class is implemented by engines that
+ * customize the rendering-system dependent part of the
+ * Pango pipeline for a particular script or language.
+ * A #PangoEngineShape implementation is then specific to both
+ * a particular rendering system or group of rendering systems
+ * and to a particular script. For instance, there is one
+ * #PangoEngineShape implementation to handle shaping Arabic
+ * for Fontconfig-based backends.
  */
 public class PgEngineShape : PgEngine
 {
-	
 	/** the main Gtk struct */
 	protected PangoEngineShape* pangoEngineShape;
-	
-	
+
 	/** Get the main Gtk struct */
 	public PangoEngineShape* getPgEngineShapeStruct()
 	{
 		return pangoEngineShape;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)pangoEngineShape;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (PangoEngineShape* pangoEngineShape)
-	{
-		super(cast(PangoEngine*)pangoEngineShape);
-		this.pangoEngineShape = pangoEngineShape;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		pangoEngineShape = cast(PangoEngineShape*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (PangoEngineShape* pangoEngineShape, bool ownedRef = false)
+	{
+		this.pangoEngineShape = pangoEngineShape;
+		super(cast(PangoEngine*)pangoEngineShape, ownedRef);
+	}
+
 	/**
 	 */
+
+	public static GType getType()
+	{
+		return pango_engine_shape_get_type();
+	}
 }

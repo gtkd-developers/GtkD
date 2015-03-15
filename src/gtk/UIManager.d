@@ -16,93 +16,28 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkUIManager.html
- * outPack = gtk
- * outFile = UIManager
- * strct   = GtkUIManager
- * realStrct=
- * ctorStrct=
- * clss    = UIManager
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- BuildableIF
- * prefixes:
- * 	- gtk_ui_manager_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_ui_manager_get_widget
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- glib.ListG
- * 	- glib.ListSG
- * 	- gobject.Type
- * 	- gtk.AccelGroup
- * 	- gtk.Action
- * 	- gtk.ActionGroup
- * 	- gtk.CheckMenuItem
- * 	- gtk.ImageMenuItem
- * 	- gtk.Menu
- * 	- gtk.MenuBar
- * 	- gtk.MenuItem
- * 	- gtk.MenuToolButton
- * 	- gtk.RadioMenuItem
- * 	- gtk.RadioToolButton
- * 	- gtk.SeparatorMenuItem
- * 	- gtk.SeparatorToolItem
- * 	- gtk.TearoffMenuItem
- * 	- gtk.ToggleToolButton
- * 	- gtk.Toolbar
- * 	- gtk.ToolButton
- * 	- gtk.ToolItem
- * 	- gtk.Widget
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
- * structWrap:
- * 	- GList* -> ListG
- * 	- GSList* -> ListSG
- * 	- GtkAccelGroup* -> AccelGroup
- * 	- GtkAction* -> Action
- * 	- GtkActionGroup* -> ActionGroup
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.UIManager;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.ListSG;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
 private import gobject.Type;
 private import gtk.AccelGroup;
 private import gtk.Action;
 private import gtk.ActionGroup;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.CheckMenuItem;
 private import gtk.ImageMenuItem;
 private import gtk.Menu;
@@ -115,235 +50,271 @@ private import gtk.SeparatorMenuItem;
 private import gtk.SeparatorToolItem;
 private import gtk.TearoffMenuItem;
 private import gtk.ToggleToolButton;
-private import gtk.Toolbar;
 private import gtk.ToolButton;
 private import gtk.ToolItem;
+private import gtk.Toolbar;
 private import gtk.Widget;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gobject.ObjectG;
 
 /**
- * A GtkUIManager constructs a user interface (menus and toolbars) from
+ * A #GtkUIManager constructs a user interface (menus and toolbars) from
  * one or more UI definitions, which reference actions from one or more
  * action groups.
- *
- * UI Definitions
- *
+ * 
+ * # UI Definitions # {#XML-UI}
+ * 
  * The UI definitions are specified in an XML format which can be
  * roughly described by the following DTD.
- *
- * Note
- *
- * Do not confuse the GtkUIManager UI Definitions described here with
- * the similarly named GtkBuilder UI
- * Definitions.
- *
- * &lt;!ELEMENT ui (menubar|toolbar|popup|accelerator)* &gt;
- * &lt;!ELEMENT menubar (menuitem|separator|placeholder|menu)* &gt;
- * &lt;!ELEMENT menu (menuitem|separator|placeholder|menu)* &gt;
- * &lt;!ELEMENT popup (menuitem|separator|placeholder|menu)* &gt;
- * &lt;!ELEMENT toolbar (toolitem|separator|placeholder)* &gt;
- * &lt;!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* &gt;
- * &lt;!ELEMENT menuitem EMPTY &gt;
- * &lt;!ELEMENT toolitem (menu?) &gt;
- * &lt;!ELEMENT separator EMPTY &gt;
- * &lt;!ELEMENT accelerator EMPTY &gt;
- * &lt;!ATTLIST menubar name #IMPLIED
- *  action #IMPLIED &gt;
- * &lt;!ATTLIST toolbar name #IMPLIED
- *  action #IMPLIED &gt;
- * &lt;!ATTLIST popup name #IMPLIED
- *  action #IMPLIED
- *  accelerators (true|false) #IMPLIED &gt;
- * &lt;!ATTLIST placeholder name #IMPLIED
- *  action #IMPLIED &gt;
- * &lt;!ATTLIST separator name #IMPLIED
- *  action #IMPLIED
- *  expand (true|false) #IMPLIED &gt;
- * &lt;!ATTLIST menu name #IMPLIED
- *  action #REQUIRED
- *  position (top|bot) #IMPLIED &gt;
- * &lt;!ATTLIST menuitem name #IMPLIED
- *  action #REQUIRED
- *  position (top|bot) #IMPLIED
- *  always-show-image (true|false) #IMPLIED &gt;
- * &lt;!ATTLIST toolitem name #IMPLIED
- *  action #REQUIRED
- *  position (top|bot) #IMPLIED &gt;
- * &lt;!ATTLIST accelerator name #IMPLIED
- *  action #REQUIRED &gt;
- *
+ * 
+ * > Do not confuse the GtkUIManager UI Definitions described here with
+ * > the similarly named [GtkBuilder UI Definitions][BUILDER-UI].
+ * 
+ * |[
+ * <!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
+ * <!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
+ * <!ELEMENT menu        (menuitem|separator|placeholder|menu)* >
+ * <!ELEMENT popup       (menuitem|separator|placeholder|menu)* >
+ * <!ELEMENT toolbar     (toolitem|separator|placeholder)* >
+ * <!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
+ * <!ELEMENT menuitem     EMPTY >
+ * <!ELEMENT toolitem     (menu?) >
+ * <!ELEMENT separator    EMPTY >
+ * <!ELEMENT accelerator  EMPTY >
+ * <!ATTLIST menubar      name                      #IMPLIED
+ * action                    #IMPLIED >
+ * <!ATTLIST toolbar      name                      #IMPLIED
+ * action                    #IMPLIED >
+ * <!ATTLIST popup        name                      #IMPLIED
+ * action                    #IMPLIED
+ * accelerators (true|false) #IMPLIED >
+ * <!ATTLIST placeholder  name                      #IMPLIED
+ * action                    #IMPLIED >
+ * <!ATTLIST separator    name                      #IMPLIED
+ * action                    #IMPLIED
+ * expand       (true|false) #IMPLIED >
+ * <!ATTLIST menu         name                      #IMPLIED
+ * action                    #REQUIRED
+ * position     (top|bot)    #IMPLIED >
+ * <!ATTLIST menuitem     name                      #IMPLIED
+ * action                    #REQUIRED
+ * position     (top|bot)    #IMPLIED
+ * always-show-image (true|false) #IMPLIED >
+ * <!ATTLIST toolitem     name                      #IMPLIED
+ * action                    #REQUIRED
+ * position     (top|bot)    #IMPLIED >
+ * <!ATTLIST accelerator  name                      #IMPLIED
+ * action                    #REQUIRED >
+ * ]|
+ * 
  * There are some additional restrictions beyond those specified in the
  * DTD, e.g. every toolitem must have a toolbar in its anchestry and
  * every menuitem must have a menubar or popup in its anchestry. Since
- * a GMarkup parser is used to parse the UI description, it must not only
- * be valid XML, but valid GMarkup.
- *
+ * a #GMarkupParser is used to parse the UI description, it must not only
+ * be valid XML, but valid markup.
+ * 
  * If a name is not specified, it defaults to the action. If an action is
  * not specified either, the element name is used. The name and action
- * attributes must not contain '/' characters after parsing (since that
+ * attributes must not contain “/” characters after parsing (since that
  * would mess up path lookup) and must be usable as XML attributes when
- * enclosed in doublequotes, thus they must not '"' characters or references
- * to the " entity.
- *
- * $(DDOC_COMMENT example)
- *
+ * enclosed in doublequotes, thus they must not “"” characters or references
+ * to the &quot; entity.
+ * 
+ * # A UI definition #
+ * 
+ * |[
+ * <ui>
+ * <menubar>
+ * <menu name="FileMenu" action="FileMenuAction">
+ * <menuitem name="New" action="New2Action" />
+ * <placeholder name="FileMenuAdditions" />
+ * </menu>
+ * <menu name="JustifyMenu" action="JustifyMenuAction">
+ * <menuitem name="Left" action="justify-left"/>
+ * <menuitem name="Centre" action="justify-center"/>
+ * <menuitem name="Right" action="justify-right"/>
+ * <menuitem name="Fill" action="justify-fill"/>
+ * </menu>
+ * </menubar>
+ * <toolbar action="toolbar1">
+ * <placeholder name="JustifyToolItems">
+ * <separator/>
+ * <toolitem name="Left" action="justify-left"/>
+ * <toolitem name="Centre" action="justify-center"/>
+ * <toolitem name="Right" action="justify-right"/>
+ * <toolitem name="Fill" action="justify-fill"/>
+ * <separator/>
+ * </placeholder>
+ * </toolbar>
+ * </ui>
+ * ]|
+ * 
  * The constructed widget hierarchy is very similar to the element tree
  * of the XML, with the exception that placeholders are merged into their
  * parents. The correspondence of XML elements to widgets should be
  * almost obvious:
- *
- * menubar
- *
- * a GtkMenuBar
- *
- * toolbar
- *
- * a GtkToolbar
- *
- * popup
- *
- * a toplevel GtkMenu
- *
- * menu
- *
- * a GtkMenu attached to a menuitem
- *
- * menuitem
- *
- * a GtkMenuItem subclass, the exact type depends on the
- * action
- *
- * toolitem
- *
- * a GtkToolItem subclass, the exact type depends on the
- * action. Note that toolitem elements may contain a menu element, but only
- * if their associated action specifies a GtkMenuToolButton as proxy.
- *
- * separator
- *
- * a GtkSeparatorMenuItem or
- * GtkSeparatorToolItem
- *
- * accelerator
- *
+ * 
+ * - menubar
+ * 
+ * a #GtkMenuBar
+ * 
+ * - toolbar
+ * 
+ * a #GtkToolbar
+ * 
+ * - popup
+ * 
+ * a toplevel #GtkMenu
+ * 
+ * - menu
+ * 
+ * a #GtkMenu attached to a menuitem
+ * 
+ * - menuitem
+ * 
+ * a #GtkMenuItem subclass, the exact type depends on the action
+ * 
+ * - toolitem
+ * 
+ * a #GtkToolItem subclass, the exact type depends on the
+ * action. Note that toolitem elements may contain a menu element,
+ * but only if their associated action specifies a
+ * #GtkMenuToolButton as proxy.
+ * 
+ * - separator
+ * 
+ * a #GtkSeparatorMenuItem or #GtkSeparatorToolItem
+ * 
+ * - accelerator
+ * 
  * a keyboard accelerator
- *
- * The "position" attribute determines where a constructed widget is positioned
+ * 
+ * The “position” attribute determines where a constructed widget is positioned
  * wrt. to its siblings in the partially constructed tree. If it is
- * "top", the widget is prepended, otherwise it is appended.
- *
- * <hr>
- *
- * UI Merging
- *
- * The most remarkable feature of GtkUIManager is that it can overlay a set
+ * “top”, the widget is prepended, otherwise it is appended.
+ * 
+ * # UI Merging # {#UI-Merging}
+ * 
+ * The most remarkable feature of #GtkUIManager is that it can overlay a set
  * of menuitems and toolitems over another one, and demerge them later.
- *
+ * 
  * Merging is done based on the names of the XML elements. Each element is
  * identified by a path which consists of the names of its anchestors, separated
- * by slashes. For example, the menuitem named "Left" in the example above
- * has the path /ui/menubar/JustifyMenu/Left and the
+ * by slashes. For example, the menuitem named “Left” in the example above
+ * has the path `/ui/menubar/JustifyMenu/Left` and the
  * toolitem with the same name has path
- * /ui/toolbar1/JustifyToolItems/Left.
- *
- * <hr>
- *
- * Accelerators
- *
- * Every action has an accelerator path. Accelerators are installed together with
- * menuitem proxies, but they can also be explicitly added with &lt;accelerator&gt;
- * elements in the UI definition. This makes it possible to have accelerators for
- * actions even if they have no visible proxies.
- *
- * <hr>
- *
- * Smart Separators
- *
- * The separators created by GtkUIManager are "smart", i.e. they do not show up
+ * `/ui/toolbar1/JustifyToolItems/Left`.
+ * 
+ * # Accelerators #
+ * 
+ * Every action has an accelerator path. Accelerators are installed together
+ * with menuitem proxies, but they can also be explicitly added with
+ * <accelerator> elements in the UI definition. This makes it possible to
+ * have accelerators for actions even if they have no visible proxies.
+ * 
+ * # Smart Separators # {#Smart-Separators}
+ * 
+ * The separators created by #GtkUIManager are “smart”, i.e. they do not show up
  * in the UI unless they end up between two visible menu or tool items. Separators
  * which are located at the very beginning or end of the menu or toolbar
  * containing them, or multiple separators next to each other, are hidden. This
  * is a useful feature, since the merging of UI elements from multiple sources
  * can make it hard or impossible to determine in advance whether a separator
  * will end up in such an unfortunate position.
- *
- * For separators in toolbars, you can set expand="true" to
+ * 
+ * For separators in toolbars, you can set `expand="true"` to
  * turn them from a small, visible separator to an expanding, invisible one.
  * Toolitems following an expanding separator are effectively right-aligned.
- *
- * <hr>
- *
- * Empty Menus
- *
+ * 
+ * # Empty Menus
+ * 
  * Submenus pose similar problems to separators inconnection with merging. It is
  * impossible to know in advance whether they will end up empty after merging.
- * GtkUIManager offers two ways to treat empty submenus:
- *
- * make them disappear by hiding the menu item they're attached to
- *
- * add an insensitive "Empty" item
- *
- * The behaviour is chosen based on the "hide_if_empty" property of the action
+ * #GtkUIManager offers two ways to treat empty submenus:
+ * 
+ * - make them disappear by hiding the menu item they’re attached to
+ * 
+ * - add an insensitive “Empty” item
+ * 
+ * The behaviour is chosen based on the “hide_if_empty” property of the action
  * to which the submenu is associated.
- *
- * <hr>
- *
- * GtkUIManager as GtkBuildable
- *
+ * 
+ * # GtkUIManager as GtkBuildable # {#GtkUIManager-BUILDER-UI}
+ * 
  * The GtkUIManager implementation of the GtkBuildable interface accepts
- * GtkActionGroup objects as &lt;child&gt; elements in UI definitions.
- *
+ * GtkActionGroup objects as <child> elements in UI definitions.
+ * 
  * A GtkUIManager UI definition as described above can be embedded in
- * an GtkUIManager &lt;object&gt; element in a GtkBuilder UI definition.
- *
+ * an GtkUIManager <object> element in a GtkBuilder UI definition.
+ * 
  * The widgets that are constructed by a GtkUIManager can be embedded in
  * other parts of the constructed user interface with the help of the
- * "constructor" attribute. See the example below.
- *
- * $(DDOC_COMMENT example)
+ * “constructor” attribute. See the example below.
+ * 
+ * ## An embedded GtkUIManager UI definition
+ * 
+ * |[
+ * <object class="GtkUIManager" id="uiman">
+ * <child>
+ * <object class="GtkActionGroup" id="actiongroup">
+ * <child>
+ * <object class="GtkAction" id="file">
+ * <property name="label">_File</property>
+ * </object>
+ * </child>
+ * </object>
+ * </child>
+ * <ui>
+ * <menubar name="menubar1">
+ * <menu action="file">
+ * </menu>
+ * </menubar>
+ * </ui>
+ * </object>
+ * <object class="GtkWindow" id="main-window">
+ * <child>
+ * <object class="GtkMenuBar" id="menubar1" constructor="uiman"/>
+ * </child>
+ * </object>
+ * ]|
  */
 public class UIManager : ObjectG, BuildableIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkUIManager* gtkUIManager;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkUIManager* getUIManagerStruct()
 	{
 		return gtkUIManager;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkUIManager;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkUIManager* gtkUIManager)
-	{
-		super(cast(GObject*)gtkUIManager);
-		this.gtkUIManager = gtkUIManager;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkUIManager = cast(GtkUIManager*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkUIManager* gtkUIManager, bool ownedRef = false)
+	{
+		this.gtkUIManager = gtkUIManager;
+		super(cast(GObject*)gtkUIManager, ownedRef);
+	}
+
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkUIManager);
-	
+
 	/**
 	 * Warning: getWidget is deprecated and should not be used in newly-written code. 3.10
 	 *
@@ -416,447 +387,80 @@ public class UIManager : ObjectG, BuildableIF
 			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 		}
 	}
-	
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(UIManager)[] onActionsChangedListeners;
+
+	public static GType getType()
+	{
+		return gtk_ui_manager_get_type();
+	}
+
 	/**
-	 * Warning
-	 * GtkUIManager::actions-changed is deprecated and should not be used in newly-written code. 3.10
-	 * The ::actions-changed signal is emitted whenever the set of actions
-	 * changes.
-	 * Since 2.4
-	 */
-	void addOnActionsChanged(void delegate(UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("actions-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"actions-changed",
-			cast(GCallback)&callBackActionsChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["actions-changed"] = 1;
-		}
-		onActionsChangedListeners ~= dlg;
-	}
-	extern(C) static void callBackActionsChanged(GtkUIManager* managerStruct, UIManager _uIManager)
-	{
-		foreach ( void delegate(UIManager) dlg ; _uIManager.onActionsChangedListeners )
-		{
-			dlg(_uIManager);
-		}
-	}
-	
-	void delegate(Widget, UIManager)[] onAddWidgetListeners;
-	/**
-	 * Warning
-	 * GtkUIManager::add-widget is deprecated and should not be used in newly-written code. 3.10
-	 * The ::add-widget signal is emitted for each generated menubar and toolbar.
-	 * It is not emitted for generated popup menus, which can be obtained by
-	 * gtk_ui_manager_get_widget().
-	 * Since 2.4
-	 */
-	void addOnAddWidget(void delegate(Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("add-widget" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"add-widget",
-			cast(GCallback)&callBackAddWidget,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["add-widget"] = 1;
-		}
-		onAddWidgetListeners ~= dlg;
-	}
-	extern(C) static void callBackAddWidget(GtkUIManager* managerStruct, GtkWidget* widget, UIManager _uIManager)
-	{
-		foreach ( void delegate(Widget, UIManager) dlg ; _uIManager.onAddWidgetListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(widget), _uIManager);
-		}
-	}
-	
-	void delegate(Action, Widget, UIManager)[] onConnectProxyListeners;
-	/**
-	 * Warning
-	 * GtkUIManager::connect-proxy is deprecated and should not be used in newly-written code. 3.10
-	 * The ::connect-proxy signal is emitted after connecting a proxy to
-	 * an action in the group.
-	 * This is intended for simple customizations for which a custom action
-	 * class would be too clumsy, e.g. showing tooltips for menuitems in the
-	 * statusbar.
-	 * Since 2.4
-	 */
-	void addOnConnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("connect-proxy" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"connect-proxy",
-			cast(GCallback)&callBackConnectProxy,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["connect-proxy"] = 1;
-		}
-		onConnectProxyListeners ~= dlg;
-	}
-	extern(C) static void callBackConnectProxy(GtkUIManager* managerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uIManager)
-	{
-		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onConnectProxyListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _uIManager);
-		}
-	}
-	
-	void delegate(Action, Widget, UIManager)[] onDisconnectProxyListeners;
-	/**
-	 * Warning
-	 * GtkUIManager::disconnect-proxy is deprecated and should not be used in newly-written code. 3.10
-	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
-	 * from an action in the group.
-	 * Since 2.4
-	 */
-	void addOnDisconnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("disconnect-proxy" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"disconnect-proxy",
-			cast(GCallback)&callBackDisconnectProxy,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["disconnect-proxy"] = 1;
-		}
-		onDisconnectProxyListeners ~= dlg;
-	}
-	extern(C) static void callBackDisconnectProxy(GtkUIManager* managerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uIManager)
-	{
-		foreach ( void delegate(Action, Widget, UIManager) dlg ; _uIManager.onDisconnectProxyListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _uIManager);
-		}
-	}
-	
-	void delegate(Action, UIManager)[] onPostActivateListeners;
-	/**
-	 * Warning
-	 * GtkUIManager::post-activate is deprecated and should not be used in newly-written code. 3.10
-	 * The ::post-activate signal is emitted just after the action
-	 * is activated.
-	 * This is intended for applications to get notification
-	 * just after any action is activated.
-	 * Since 2.4
-	 */
-	void addOnPostActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("post-activate" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"post-activate",
-			cast(GCallback)&callBackPostActivate,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["post-activate"] = 1;
-		}
-		onPostActivateListeners ~= dlg;
-	}
-	extern(C) static void callBackPostActivate(GtkUIManager* managerStruct, GtkAction* action, UIManager _uIManager)
-	{
-		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPostActivateListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), _uIManager);
-		}
-	}
-	
-	void delegate(Action, UIManager)[] onPreActivateListeners;
-	/**
-	 * Warning
-	 * GtkUIManager::pre-activate is deprecated and should not be used in newly-written code. 3.10
-	 * The ::pre-activate signal is emitted just before the action
-	 * is activated.
-	 * This is intended for applications to get notification
-	 * just before any action is activated.
-	 * Since 2.4
-	 * See Also
-	 * GtkBuilder
-	 */
-	void addOnPreActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("pre-activate" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"pre-activate",
-			cast(GCallback)&callBackPreActivate,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["pre-activate"] = 1;
-		}
-		onPreActivateListeners ~= dlg;
-	}
-	extern(C) static void callBackPreActivate(GtkUIManager* managerStruct, GtkAction* action, UIManager _uIManager)
-	{
-		foreach ( void delegate(Action, UIManager) dlg ; _uIManager.onPreActivateListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), _uIManager);
-		}
-	}
-	
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_new is deprecated and should not be used in newly-written code. 3.10
 	 * Creates a new ui manager object.
-	 * Since 2.4
+	 *
+	 * Return: a new ui manager object.
+	 *
+	 * Since: 2.4
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkUIManager * gtk_ui_manager_new (void);
 		auto p = gtk_ui_manager_new();
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_ui_manager_new()");
-		}
-		this(cast(GtkUIManager*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_set_add_tearoffs has been deprecated since version 3.4 and should not be used in newly-written code. Tearoff menus are deprecated and should not
-	 *  be used in newly written code.
-	 * Sets the "add_tearoffs" property, which controls whether menus
-	 * generated by this GtkUIManager will have tearoff menu items.
-	 * Note that this only affects regular menus. Generated popup
-	 * menus never have tearoff menu items.
-	 * Since 2.4
-	 * Params:
-	 * addTearoffs = whether tearoff menu items are added
-	 */
-	public void setAddTearoffs(int addTearoffs)
-	{
-		// void gtk_ui_manager_set_add_tearoffs (GtkUIManager *manager,  gboolean add_tearoffs);
-		gtk_ui_manager_set_add_tearoffs(gtkUIManager, addTearoffs);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_get_add_tearoffs has been deprecated since version 3.4 and should not be used in newly-written code. Tearoff menus are deprecated and should not
-	 *  be used in newly written code.
-	 * Returns whether menus generated by this GtkUIManager
-	 * will have tearoff menu items.
-	 * Since 2.4
-	 * Returns: whether tearoff menu items are added
-	 */
-	public int getAddTearoffs()
-	{
-		// gboolean gtk_ui_manager_get_add_tearoffs (GtkUIManager *manager);
-		return gtk_ui_manager_get_add_tearoffs(gtkUIManager);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_insert_action_group is deprecated and should not be used in newly-written code. 3.10
-	 * Inserts an action group into the list of action groups associated
-	 * with manager. Actions in earlier groups hide actions with the same
-	 * name in later groups.
-	 * If pos is larger than the number of action groups in manager, or
-	 * negative, action_group will be inserted at the end of the internal
-	 * list.
-	 * Since 2.4
-	 * Params:
-	 * actionGroup = the action group to be inserted
-	 * pos = the position at which the group will be inserted.
-	 */
-	public void insertActionGroup(ActionGroup actionGroup, int pos)
-	{
-		// void gtk_ui_manager_insert_action_group (GtkUIManager *manager,  GtkActionGroup *action_group,  gint pos);
-		gtk_ui_manager_insert_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct(), pos);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_remove_action_group is deprecated and should not be used in newly-written code. 3.10
-	 * Removes an action group from the list of action groups associated
-	 * with manager.
-	 * Since 2.4
-	 * Params:
-	 * actionGroup = the action group to be removed
-	 */
-	public void removeActionGroup(ActionGroup actionGroup)
-	{
-		// void gtk_ui_manager_remove_action_group (GtkUIManager *manager,  GtkActionGroup *action_group);
-		gtk_ui_manager_remove_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct());
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_get_action_groups is deprecated and should not be used in newly-written code. 3.10
-	 * Returns the list of action groups associated with manager.
-	 * Since 2.4
-	 * Returns: a GList of action groups. The list is owned by GTK+ and should not be modified. [element-type GtkActionGroup][transfer none]
-	 */
-	public ListG getActionGroups()
-	{
-		// GList * gtk_ui_manager_get_action_groups (GtkUIManager *manager);
-		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
 		
 		if(p is null)
 		{
-			return null;
+			throw new ConstructionException("null returned by new");
 		}
 		
-		return ObjectG.getDObject!(ListG)(cast(GList*) p);
+		this(cast(GtkUIManager*) p, true);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_ui_manager_get_accel_group is deprecated and should not be used in newly-written code. 3.10
-	 * Returns the GtkAccelGroup associated with manager.
-	 * Since 2.4
-	 * Returns: the GtkAccelGroup. [transfer none]
-	 */
-	public AccelGroup getAccelGroup()
-	{
-		// GtkAccelGroup * gtk_ui_manager_get_accel_group (GtkUIManager *manager);
-		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_get_toplevels is deprecated and should not be used in newly-written code. 3.10
-	 * Obtains a list of all toplevel widgets of the requested types.
-	 * Since 2.4
+	 * Adds a UI element to the current contents of @manager.
+	 *
+	 * If @type is %GTK_UI_MANAGER_AUTO, GTK+ inserts a menuitem, toolitem or
+	 * separator if such an element can be inserted at the place determined by
+	 * @path. Otherwise @type must indicate an element that can be inserted at
+	 * the place determined by @path.
+	 *
+	 * If @path points to a menuitem or toolitem, the new element will be inserted
+	 * before or after this item, depending on @top.
+	 *
 	 * Params:
-	 * types = specifies the types of toplevel widgets to include. Allowed
-	 * types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
-	 * GTK_UI_MANAGER_POPUP.
-	 * Returns: a newly-allocated GSList of all toplevel widgets of the requested types. Free the returned list with g_slist_free(). [element-type GtkWidget][transfer container]
+	 *     mergeId = the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
+	 *     path = a path
+	 *     name = the name for the added UI element
+	 *     action = the name of the action to be proxied, or %NULL to add a separator
+	 *     type = the type of UI element to add.
+	 *     top = if %TRUE, the UI element is added before its siblings, otherwise it
+	 *         is added after its siblings.
+	 *
+	 * Since: 2.4
 	 */
-	public ListSG getToplevels(GtkUIManagerItemType types)
+	public void addUi(uint mergeId, string path, string name, string action, GtkUIManagerItemType type, bool top)
 	{
-		// GSList * gtk_ui_manager_get_toplevels (GtkUIManager *manager,  GtkUIManagerItemType types);
-		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(ListSG)(cast(GSList*) p);
+		gtk_ui_manager_add_ui(gtkUIManager, mergeId, Str.toStringz(path), Str.toStringz(name), Str.toStringz(action), type, top);
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_ui_manager_get_action is deprecated and should not be used in newly-written code. 3.10
-	 * Looks up an action by following a path. See gtk_ui_manager_get_widget()
-	 * for more information about paths.
-	 * Since 2.4
+	 * Parses a file containing a [UI definition][XML-UI] and
+	 * merges it with the current contents of @manager.
+	 *
 	 * Params:
-	 * path = a path
-	 * Returns: the action whose proxy widget is found by following the path, or NULL if no widget was found. [transfer none]
-	 */
-	public Action getAction(string path)
-	{
-		// GtkAction * gtk_ui_manager_get_action (GtkUIManager *manager,  const gchar *path);
-		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_add_ui_from_resource is deprecated and should not be used in newly-written code. 3.10
-	 * Parses a resource file containing a UI definition and
-	 * merges it with the current contents of manager.
-	 * Params:
-	 * resourcePath = the resource path of the file to parse
-	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0. Since 3.4
-	 * Throws: GException on failure.
-	 */
-	public uint addUiFromResource(string resourcePath)
-	{
-		// guint gtk_ui_manager_add_ui_from_resource (GtkUIManager *manager,  const gchar *resource_path,  GError **error);
-		GError* err = null;
-		
-		auto p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_add_ui_from_string is deprecated and should not be used in newly-written code. 3.10
-	 * Parses a string containing a UI definition and
-	 * merges it with the current contents of manager. An enclosing &lt;ui&gt;
-	 * element is added if it is missing.
-	 * Since 2.4
-	 * Params:
-	 * buffer = the string to parse
-	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
-	 * Throws: GException on failure.
-	 */
-	public uint addUiFromString(string buffer)
-	{
-		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *manager,  const gchar *buffer,  gssize length,  GError **error);
-		GError* err = null;
-		
-		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, cast(char*)buffer.ptr, cast(int) buffer.length, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-		
-		return p;
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_add_ui_from_file is deprecated and should not be used in newly-written code. 3.10
-	 * Parses a file containing a UI definition and
-	 * merges it with the current contents of manager.
-	 * Since 2.4
-	 * Params:
-	 * filename = the name of the file to parse. [type filename]
-	 * Returns: The merge id for the merged UI. The merge id can be used to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred, the return value is 0.
+	 *     filename = the name of the file to parse
+	 *
+	 * Return: The merge id for the merged UI. The merge id can be used
+	 *     to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred,
+	 *     the return value is 0.
+	 *
+	 * Since: 2.4
+	 *
 	 * Throws: GException on failure.
 	 */
 	public uint addUiFromFile(string filename)
 	{
-		// guint gtk_ui_manager_add_ui_from_file (GtkUIManager *manager,  const gchar *filename,  GError **error);
 		GError* err = null;
 		
 		auto p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
@@ -868,86 +472,496 @@ public class UIManager : ObjectG, BuildableIF
 		
 		return p;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_ui_manager_new_merge_id is deprecated and should not be used in newly-written code. 3.10
-	 * Returns an unused merge id, suitable for use with
-	 * gtk_ui_manager_add_ui().
-	 * Since 2.4
-	 * Returns: an unused merge id.
-	 */
-	public uint newMergeId()
-	{
-		// guint gtk_ui_manager_new_merge_id (GtkUIManager *manager);
-		return gtk_ui_manager_new_merge_id(gtkUIManager);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_add_ui is deprecated and should not be used in newly-written code. 3.10
-	 * Adds a UI element to the current contents of manager.
-	 * If type is GTK_UI_MANAGER_AUTO, GTK+ inserts a menuitem, toolitem or
-	 * separator if such an element can be inserted at the place determined by
-	 * path. Otherwise type must indicate an element that can be inserted at
-	 * the place determined by path.
-	 * If path points to a menuitem or toolitem, the new element will be inserted
-	 * before or after this item, depending on top.
-	 * Since 2.4
+	 * Parses a resource file containing a [UI definition][XML-UI] and
+	 * merges it with the current contents of @manager.
+	 *
 	 * Params:
-	 * mergeId = the merge id for the merged UI, see gtk_ui_manager_new_merge_id()
-	 * path = a path
-	 * name = the name for the added UI element
-	 * action = the name of the action to be proxied, or NULL to add a separator. [allow-none]
-	 * type = the type of UI element to add.
-	 * top = if TRUE, the UI element is added before its siblings, otherwise it
-	 * is added after its siblings.
+	 *     resourcePath = the resource path of the file to parse
+	 *
+	 * Return: The merge id for the merged UI. The merge id can be used
+	 *     to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred,
+	 *     the return value is 0.
+	 *
+	 * Since: 3.4
+	 *
+	 * Throws: GException on failure.
 	 */
-	public void addUi(uint mergeId, string path, string name, string action, GtkUIManagerItemType type, int top)
+	public uint addUiFromResource(string resourcePath)
 	{
-		// void gtk_ui_manager_add_ui (GtkUIManager *manager,  guint merge_id,  const gchar *path,  const gchar *name,  const gchar *action,  GtkUIManagerItemType type,  gboolean top);
-		gtk_ui_manager_add_ui(gtkUIManager, mergeId, Str.toStringz(path), Str.toStringz(name), Str.toStringz(action), type, top);
+		GError* err = null;
+		
+		auto p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_ui_manager_remove_ui is deprecated and should not be used in newly-written code. 3.10
-	 * Unmerges the part of managers content identified by merge_id.
-	 * Since 2.4
+	 * Parses a string containing a [UI definition][XML-UI] and merges it with
+	 * the current contents of @manager. An enclosing <ui> element is added if
+	 * it is missing.
+	 *
 	 * Params:
-	 * mergeId = a merge id as returned by gtk_ui_manager_add_ui_from_string()
+	 *     buffer = the string to parse
+	 *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
+	 *
+	 * Return: The merge id for the merged UI. The merge id can be used
+	 *     to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred,
+	 *     the return value is 0.
+	 *
+	 * Since: 2.4
+	 *
+	 * Throws: GException on failure.
 	 */
-	public void removeUi(uint mergeId)
+	public uint addUiFromString(string buffer, ptrdiff_t length)
 	{
-		// void gtk_ui_manager_remove_ui (GtkUIManager *manager,  guint merge_id);
-		gtk_ui_manager_remove_ui(gtkUIManager, mergeId);
+		GError* err = null;
+		
+		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
 	}
-	
+
 	/**
-	 * Warning
-	 * gtk_ui_manager_get_ui is deprecated and should not be used in newly-written code. 3.10
-	 * Creates a UI definition of the merged UI.
-	 * Since 2.4
-	 * Returns: A newly allocated string containing an XML representation of the merged UI.
-	 */
-	public string getUi()
-	{
-		// gchar * gtk_ui_manager_get_ui (GtkUIManager *manager);
-		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager));
-	}
-	
-	/**
-	 * Warning
-	 * gtk_ui_manager_ensure_update is deprecated and should not be used in newly-written code. 3.10
 	 * Makes sure that all pending updates to the UI have been completed.
-	 * This may occasionally be necessary, since GtkUIManager updates the
+	 *
+	 * This may occasionally be necessary, since #GtkUIManager updates the
 	 * UI in an idle function. A typical example where this function is
 	 * useful is to enforce that the menubar and toolbar have been added to
-	 * Since 2.4
+	 * the main window before showing it:
+	 * |[<!-- language="C" -->
+	 * gtk_container_add (GTK_CONTAINER (window), vbox);
+	 * g_signal_connect (merge, "add-widget",
+	 * G_CALLBACK (add_widget), vbox);
+	 * gtk_ui_manager_add_ui_from_file (merge, "my-menus");
+	 * gtk_ui_manager_add_ui_from_file (merge, "my-toolbars");
+	 * gtk_ui_manager_ensure_update (merge);
+	 * gtk_widget_show (window);
+	 * ]|
+	 *
+	 * Since: 2.4
 	 */
 	public void ensureUpdate()
 	{
-		// void gtk_ui_manager_ensure_update (GtkUIManager *manager);
 		gtk_ui_manager_ensure_update(gtkUIManager);
+	}
+
+	/**
+	 * Returns the #GtkAccelGroup associated with @manager.
+	 *
+	 * Return: the #GtkAccelGroup.
+	 *
+	 * Since: 2.4
+	 */
+	public AccelGroup getAccelGroup()
+	{
+		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+	}
+
+	/**
+	 * Looks up an action by following a path. See gtk_ui_manager_get_widget()
+	 * for more information about paths.
+	 *
+	 * Params:
+	 *     path = a path
+	 *
+	 * Return: the action whose proxy widget is found by following the path,
+	 *     or %NULL if no widget was found.
+	 *
+	 * Since: 2.4
+	 */
+	public Action getAction(string path)
+	{
+		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
+	}
+
+	/**
+	 * Returns the list of action groups associated with @manager.
+	 *
+	 * Return: a #GList of
+	 *     action groups. The list is owned by GTK+
+	 *     and should not be modified.
+	 *
+	 * Since: 2.4
+	 */
+	public ListG getActionGroups()
+	{
+		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Returns whether menus generated by this #GtkUIManager
+	 * will have tearoff menu items.
+	 *
+	 * Deprecated: Tearoff menus are deprecated and should not
+	 * be used in newly written code.
+	 *
+	 * Return: whether tearoff menu items are added
+	 *
+	 * Since: 2.4
+	 */
+	public bool getAddTearoffs()
+	{
+		return gtk_ui_manager_get_add_tearoffs(gtkUIManager) != 0;
+	}
+
+	/**
+	 * Obtains a list of all toplevel widgets of the requested types.
+	 *
+	 * Params:
+	 *     types = specifies the types of toplevel widgets to include. Allowed
+	 *         types are #GTK_UI_MANAGER_MENUBAR, #GTK_UI_MANAGER_TOOLBAR and
+	 *         #GTK_UI_MANAGER_POPUP.
+	 *
+	 * Return: a newly-allocated #GSList of
+	 *     all toplevel widgets of the requested types.  Free the returned list with g_slist_free().
+	 *
+	 * Since: 2.4
+	 */
+	public ListSG getToplevels(GtkUIManagerItemType types)
+	{
+		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListSG(cast(GSList*) p);
+	}
+
+	/**
+	 * Creates a [UI definition][XML-UI] of the merged UI.
+	 *
+	 * Return: A newly allocated string containing an XML representation of
+	 *     the merged UI.
+	 *
+	 * Since: 2.4
+	 */
+	public string getUi()
+	{
+		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager));
+	}
+
+	/**
+	 * Inserts an action group into the list of action groups associated
+	 * with @manager. Actions in earlier groups hide actions with the same
+	 * name in later groups.
+	 *
+	 * If @pos is larger than the number of action groups in @manager, or
+	 * negative, @action_group will be inserted at the end of the internal
+	 * list.
+	 *
+	 * Params:
+	 *     actionGroup = the action group to be inserted
+	 *     pos = the position at which the group will be inserted.
+	 *
+	 * Since: 2.4
+	 */
+	public void insertActionGroup(ActionGroup actionGroup, int pos)
+	{
+		gtk_ui_manager_insert_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct(), pos);
+	}
+
+	/**
+	 * Returns an unused merge id, suitable for use with
+	 * gtk_ui_manager_add_ui().
+	 *
+	 * Return: an unused merge id.
+	 *
+	 * Since: 2.4
+	 */
+	public uint newMergeId()
+	{
+		return gtk_ui_manager_new_merge_id(gtkUIManager);
+	}
+
+	/**
+	 * Removes an action group from the list of action groups associated
+	 * with @manager.
+	 *
+	 * Params:
+	 *     actionGroup = the action group to be removed
+	 *
+	 * Since: 2.4
+	 */
+	public void removeActionGroup(ActionGroup actionGroup)
+	{
+		gtk_ui_manager_remove_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct());
+	}
+
+	/**
+	 * Unmerges the part of @manager's content identified by @merge_id.
+	 *
+	 * Params:
+	 *     mergeId = a merge id as returned by gtk_ui_manager_add_ui_from_string()
+	 *
+	 * Since: 2.4
+	 */
+	public void removeUi(uint mergeId)
+	{
+		gtk_ui_manager_remove_ui(gtkUIManager, mergeId);
+	}
+
+	/**
+	 * Sets the “add_tearoffs” property, which controls whether menus
+	 * generated by this #GtkUIManager will have tearoff menu items.
+	 *
+	 * Note that this only affects regular menus. Generated popup
+	 * menus never have tearoff menu items.
+	 *
+	 * Deprecated: Tearoff menus are deprecated and should not
+	 * be used in newly written code.
+	 *
+	 * Params:
+	 *     addTearoffs = whether tearoff menu items are added
+	 *
+	 * Since: 2.4
+	 */
+	public void setAddTearoffs(bool addTearoffs)
+	{
+		gtk_ui_manager_set_add_tearoffs(gtkUIManager, addTearoffs);
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(UIManager)[] onActionsChangedListeners;
+	/**
+	 * The ::actions-changed signal is emitted whenever the set of actions
+	 * changes.
+	 *
+	 * Since: 2.4
+	 */
+	void addOnActionsChanged(void delegate(UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "actions-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"actions-changed",
+				cast(GCallback)&callBackActionsChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["actions-changed"] = 1;
+		}
+		onActionsChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackActionsChanged(GtkUIManager* uimanagerStruct, UIManager _uimanager)
+	{
+		foreach ( void delegate(UIManager) dlg; _uimanager.onActionsChangedListeners )
+		{
+			dlg(_uimanager);
+		}
+	}
+
+	void delegate(Widget, UIManager)[] onAddWidgetListeners;
+	/**
+	 * The ::add-widget signal is emitted for each generated menubar and toolbar.
+	 * It is not emitted for generated popup menus, which can be obtained by
+	 * gtk_ui_manager_get_widget().
+	 *
+	 * Params:
+	 *     widget = the added widget
+	 *
+	 * Since: 2.4
+	 */
+	void addOnAddWidget(void delegate(Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "add-widget" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"add-widget",
+				cast(GCallback)&callBackAddWidget,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["add-widget"] = 1;
+		}
+		onAddWidgetListeners ~= dlg;
+	}
+	extern(C) static void callBackAddWidget(GtkUIManager* uimanagerStruct, GtkWidget* widget, UIManager _uimanager)
+	{
+		foreach ( void delegate(Widget, UIManager) dlg; _uimanager.onAddWidgetListeners )
+		{
+			dlg(ObjectG.getDObject!(Widget)(widget), _uimanager);
+		}
+	}
+
+	void delegate(Action, Widget, UIManager)[] onConnectProxyListeners;
+	/**
+	 * The ::connect-proxy signal is emitted after connecting a proxy to
+	 * an action in the group.
+	 *
+	 * This is intended for simple customizations for which a custom action
+	 * class would be too clumsy, e.g. showing tooltips for menuitems in the
+	 * statusbar.
+	 *
+	 * Params:
+	 *     action = the action
+	 *     proxy = the proxy
+	 *
+	 * Since: 2.4
+	 */
+	void addOnConnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "connect-proxy" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"connect-proxy",
+				cast(GCallback)&callBackConnectProxy,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["connect-proxy"] = 1;
+		}
+		onConnectProxyListeners ~= dlg;
+	}
+	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uimanager)
+	{
+		foreach ( void delegate(Action, Widget, UIManager) dlg; _uimanager.onConnectProxyListeners )
+		{
+			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _uimanager);
+		}
+	}
+
+	void delegate(Action, Widget, UIManager)[] onDisconnectProxyListeners;
+	/**
+	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
+	 * from an action in the group.
+	 *
+	 * Params:
+	 *     action = the action
+	 *     proxy = the proxy
+	 *
+	 * Since: 2.4
+	 */
+	void addOnDisconnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "disconnect-proxy" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"disconnect-proxy",
+				cast(GCallback)&callBackDisconnectProxy,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["disconnect-proxy"] = 1;
+		}
+		onDisconnectProxyListeners ~= dlg;
+	}
+	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager _uimanager)
+	{
+		foreach ( void delegate(Action, Widget, UIManager) dlg; _uimanager.onDisconnectProxyListeners )
+		{
+			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _uimanager);
+		}
+	}
+
+	void delegate(Action, UIManager)[] onPostActivateListeners;
+	/**
+	 * The ::post-activate signal is emitted just after the @action
+	 * is activated.
+	 *
+	 * This is intended for applications to get notification
+	 * just after any action is activated.
+	 *
+	 * Params:
+	 *     action = the action
+	 *
+	 * Since: 2.4
+	 */
+	void addOnPostActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "post-activate" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"post-activate",
+				cast(GCallback)&callBackPostActivate,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["post-activate"] = 1;
+		}
+		onPostActivateListeners ~= dlg;
+	}
+	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager _uimanager)
+	{
+		foreach ( void delegate(Action, UIManager) dlg; _uimanager.onPostActivateListeners )
+		{
+			dlg(ObjectG.getDObject!(Action)(action), _uimanager);
+		}
+	}
+
+	void delegate(Action, UIManager)[] onPreActivateListeners;
+	/**
+	 * The ::pre-activate signal is emitted just before the @action
+	 * is activated.
+	 *
+	 * This is intended for applications to get notification
+	 * just before any action is activated.
+	 *
+	 * Params:
+	 *     action = the action
+	 *
+	 * Since: 2.4
+	 */
+	void addOnPreActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "pre-activate" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"pre-activate",
+				cast(GCallback)&callBackPreActivate,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["pre-activate"] = 1;
+		}
+		onPreActivateListeners ~= dlg;
+	}
+	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager _uimanager)
+	{
+		foreach ( void delegate(Action, UIManager) dlg; _uimanager.onPreActivateListeners )
+		{
+			dlg(ObjectG.getDObject!(Action)(action), _uimanager);
+		}
 	}
 }

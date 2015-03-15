@@ -16,128 +16,106 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkHBox.html
- * outPack = gtk
- * outFile = HBox
- * strct   = GtkHBox
- * realStrct=
- * ctorStrct=
- * clss    = HBox
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_hbox_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.HBox;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-
-
 private import gtk.Box;
+private import gtk.Widget;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
+
 
 /**
- * GtkHBox is a container that organizes child widgets into a single row.
- *
- * Use the GtkBox packing interface to determine the arrangement,
- * spacing, width, and alignment of GtkHBox children.
- *
+ * #GtkHBox is a container that organizes child widgets into a single row.
+ * 
+ * Use the #GtkBox packing interface to determine the arrangement,
+ * spacing, width, and alignment of #GtkHBox children.
+ * 
  * All children are allocated the same height.
- *
- * GtkHBox has been deprecated. You can use GtkBox instead, which is a
- * very quick and easy change. If you have derived your own classes from
+ * 
+ * GtkHBox has been deprecated. You can use #GtkBox instead, which is a
+ * very quick and easy change. If you have derived your own classes from
  * GtkHBox, you can simply change the inheritance to derive directly
- * from GtkBox. No further changes are needed, since the default
- * value of the "orientation" property is
- * GTK_ORIENTATION_HORIZONTAL.
- * If you don't need first-child or last-child styling, and want your code
- * to be future-proof, the recommendation is to switch to GtkGrid instead
- * of nested boxes. For more information about migrating to GtkGrid,
- * see Migrating from other containers to GtkGrid
+ * from #GtkBox. No further changes are needed, since the default
+ * value of the #GtkOrientable:orientation property is
+ * %GTK_ORIENTATION_HORIZONTAL.
+ * If you don’t need first-child or last-child styling, and want your code
+ * to be future-proof, the recommendation is to switch to #GtkGrid instead
+ * of nested boxes. For more information about migrating to #GtkGrid,
+ * see [Migrating from other containers to GtkGrid][gtk-migrating-GtkGrid].
  */
 public class HBox : Box
 {
-	
 	/** the main Gtk struct */
 	protected GtkHBox* gtkHBox;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkHBox* getHBoxStruct()
 	{
 		return gtkHBox;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkHBox;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkHBox* gtkHBox)
-	{
-		super(cast(GtkBox*)gtkHBox);
-		this.gtkHBox = gtkHBox;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkHBox = cast(GtkHBox*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkHBox* gtkHBox, bool ownedRef = false)
+	{
+		this.gtkHBox = gtkHBox;
+		super(cast(GtkBox*)gtkHBox, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_hbox_get_type();
+	}
+
 	/**
-	 * Warning
-	 * gtk_hbox_new has been deprecated since version 3.2 and should not be used in newly-written code. You can use gtk_box_new() with GTK_ORIENTATION_HORIZONTAL instead,
-	 *  which is a quick and easy change. But the recommendation is to switch to
-	 *  GtkGrid, since GtkBox is going to go away eventually.
-	 *  See Migrating from other containers to GtkGrid.
-	 * Creates a new GtkHBox.
+	 * Creates a new #GtkHBox.
+	 *
+	 * Deprecated: You can use gtk_box_new() with %GTK_ORIENTATION_HORIZONTAL instead,
+	 * which is a quick and easy change. But the recommendation is to switch to
+	 * #GtkGrid, since #GtkBox is going to go away eventually.
+	 * See [Migrating from other containers to GtkGrid][gtk-migrating-GtkGrid].
+	 *
 	 * Params:
-	 * homogeneous = TRUE if all children are to be given equal space allotments.
-	 * spacing = the number of pixels to place by default between children.
+	 *     homogeneous = %TRUE if all children are to be given equal space allotments.
+	 *     spacing = the number of pixels to place by default between children.
+	 *
+	 * Return: a new #GtkHBox.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int homogeneous, int spacing)
+	public this(bool homogeneous, int spacing)
 	{
-		// GtkWidget * gtk_hbox_new (gboolean homogeneous,  gint spacing);
 		auto p = gtk_hbox_new(homogeneous, spacing);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_hbox_new(homogeneous, spacing)");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkHBox*) p);
 	}
 }

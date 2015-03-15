@@ -16,129 +16,99 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkMenuToolButton.html
- * outPack = gtk
- * outFile = MenuToolButton
- * strct   = GtkMenuToolButton
- * realStrct=
- * ctorStrct=GtkToolItem
- * clss    = MenuToolButton
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_menu_tool_button_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_menu_tool_button_get_menu
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Menu
- * 	- gtk.Widget
- * structWrap:
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.MenuToolButton;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.Menu;
+private import gtk.ToolButton;
+private import gtk.ToolItem;
+private import gtk.Widget;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
-private import gtk.Menu;
-private import gtk.Widget;
-
-
-private import gtk.ToolButton;
 
 /**
- * A GtkMenuToolButton is a GtkToolItem that contains a button and
+ * A #GtkMenuToolButton is a #GtkToolItem that contains a button and
  * a small additional button with an arrow. When clicked, the arrow
  * button pops up a dropdown menu.
- *
+ * 
  * Use gtk_menu_tool_button_new() to create a new
- * GtkMenuToolButton.
- *
- * GtkMenuToolButton as GtkBuildable
- *
+ * #GtkMenuToolButton.
+ * 
+ * # GtkMenuToolButton as GtkBuildable
+ * 
  * The GtkMenuToolButton implementation of the GtkBuildable interface
- * supports adding a menu by specifying "menu" as the "type"
- * attribute of a &lt;child&gt; element.
- *
- * $(DDOC_COMMENT example)
+ * supports adding a menu by specifying “menu” as the “type” attribute
+ * of a <child> element.
+ * 
+ * An example for a UI definition fragment with menus:
+ * |[
+ * <object class="GtkMenuToolButton">
+ * <child type="menu">
+ * <object class="GtkMenu"/>
+ * </child>
+ * </object>
+ * ]|
  */
 public class MenuToolButton : ToolButton
 {
-	
 	/** the main Gtk struct */
 	protected GtkMenuToolButton* gtkMenuToolButton;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkMenuToolButton* getMenuToolButtonStruct()
 	{
 		return gtkMenuToolButton;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkMenuToolButton;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkMenuToolButton* gtkMenuToolButton)
-	{
-		super(cast(GtkToolButton*)gtkMenuToolButton);
-		this.gtkMenuToolButton = gtkMenuToolButton;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkMenuToolButton = cast(GtkMenuToolButton*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkMenuToolButton* gtkMenuToolButton, bool ownedRef = false)
+	{
+		this.gtkMenuToolButton = gtkMenuToolButton;
+		super(cast(GtkToolButton*)gtkMenuToolButton, ownedRef);
+	}
+
 	/**
 	 * Creates a new GtkMenuToolButton.
 	 * The new GtkMenuToolButton will contain an icon and label from
 	 * the stock item indicated by stockID.
-	 * Since 2.6
+	 * Since: 2.6
 	 * Params:
-	 * stockID = the name of a stock item
+	 *     stockID = the name of a stock item
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(StockID stockId)
 	{
-		this(StockDesc[stockId]);
+		this(cast(string)stockId);
 	}
 	
 	/**
 	 * Gets the GtkMenu associated with GtkMenuToolButton.
-	 * Since 2.6
+	 * Since: 2.6
 	 * Params:
 	 *  button = a GtkMenuToolButton
 	 * Returns:
@@ -146,7 +116,6 @@ public class MenuToolButton : ToolButton
 	 */
 	public Menu getMenu()
 	{
-		// GtkWidget* gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
 		auto p =  gtk_menu_tool_button_get_menu(gtkMenuToolButton);
 		if(p is null)
 		{
@@ -154,126 +123,146 @@ public class MenuToolButton : ToolButton
 		}
 		return new Menu(cast(GtkMenu*)p);
 	}
-	
+
 	/**
 	 */
+
+	public static GType getType()
+	{
+		return gtk_menu_tool_button_get_type();
+	}
+
+	/**
+	 * Creates a new #GtkMenuToolButton using @icon_widget as icon and
+	 * @label as label.
+	 *
+	 * Params:
+	 *     iconWidget = a widget that will be used as icon widget, or %NULL
+	 *     label = a string that will be used as label, or %NULL
+	 *
+	 * Return: the new #GtkMenuToolButton
+	 *
+	 * Since: 2.6
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Widget iconWidget, string label)
+	{
+		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GtkMenuToolButton*) p);
+	}
+
+	/**
+	 * Creates a new #GtkMenuToolButton.
+	 * The new #GtkMenuToolButton will contain an icon and label from
+	 * the stock item indicated by @stock_id.
+	 *
+	 * Deprecated: Use gtk_menu_tool_button_new() instead.
+	 *
+	 * Params:
+	 *     stockId = the name of a stock item
+	 *
+	 * Return: the new #GtkMenuToolButton
+	 *
+	 * Since: 2.6
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string stockId)
+	{
+		auto p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_stock");
+		}
+		
+		this(cast(GtkMenuToolButton*) p);
+	}
+
+	/**
+	 * Sets the tooltip markup text to be used as tooltip for the arrow button
+	 * which pops up the menu.  See gtk_tool_item_set_tooltip_text() for setting
+	 * a tooltip on the whole #GtkMenuToolButton.
+	 *
+	 * Params:
+	 *     markup = markup text to be used as tooltip text for button’s arrow button
+	 *
+	 * Since: 2.12
+	 */
+	public void setArrowTooltipMarkup(string markup)
+	{
+		gtk_menu_tool_button_set_arrow_tooltip_markup(gtkMenuToolButton, Str.toStringz(markup));
+	}
+
+	/**
+	 * Sets the tooltip text to be used as tooltip for the arrow button which
+	 * pops up the menu.  See gtk_tool_item_set_tooltip_text() for setting a tooltip
+	 * on the whole #GtkMenuToolButton.
+	 *
+	 * Params:
+	 *     text = text to be used as tooltip text for button’s arrow button
+	 *
+	 * Since: 2.12
+	 */
+	public void setArrowTooltipText(string text)
+	{
+		gtk_menu_tool_button_set_arrow_tooltip_text(gtkMenuToolButton, Str.toStringz(text));
+	}
+
+	/**
+	 * Sets the #GtkMenu that is popped up when the user clicks on the arrow.
+	 * If @menu is NULL, the arrow button becomes insensitive.
+	 *
+	 * Params:
+	 *     menu = the #GtkMenu associated with #GtkMenuToolButton
+	 *
+	 * Since: 2.6
+	 */
+	public void setMenu(Widget menu)
+	{
+		gtk_menu_tool_button_set_menu(gtkMenuToolButton, (menu is null) ? null : menu.getWidgetStruct());
+	}
+
 	int[string] connectedSignals;
-	
+
 	void delegate(MenuToolButton)[] onShowMenuListeners;
 	/**
 	 * The ::show-menu signal is emitted before the menu is shown.
+	 *
 	 * It can be used to populate the menu on demand, using
 	 * gtk_menu_tool_button_set_menu().
+	 *
 	 * Note that even if you populate the menu dynamically in this way,
-	 * you must set an empty menu on the GtkMenuToolButton beforehand,
+	 * you must set an empty menu on the #GtkMenuToolButton beforehand,
 	 * since the arrow is made insensitive if the menu is not set.
-	 * See Also
-	 * GtkToolbar, GtkToolButton
 	 */
 	void addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( !("show-menu" in connectedSignals) )
+		if ( "show-menu" !in connectedSignals )
 		{
 			Signals.connectData(
-			getStruct(),
-			"show-menu",
-			cast(GCallback)&callBackShowMenu,
-			cast(void*)this,
-			null,
-			connectFlags);
+				this,
+				"show-menu",
+				cast(GCallback)&callBackShowMenu,
+				cast(void*)this,
+				null,
+				connectFlags);
 			connectedSignals["show-menu"] = 1;
 		}
 		onShowMenuListeners ~= dlg;
 	}
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* buttonStruct, MenuToolButton _menuToolButton)
+	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, MenuToolButton _menutoolbutton)
 	{
-		foreach ( void delegate(MenuToolButton) dlg ; _menuToolButton.onShowMenuListeners )
+		foreach ( void delegate(MenuToolButton) dlg; _menutoolbutton.onShowMenuListeners )
 		{
-			dlg(_menuToolButton);
+			dlg(_menutoolbutton);
 		}
-	}
-	
-	
-	/**
-	 * Creates a new GtkMenuToolButton using icon_widget as icon and
-	 * label as label.
-	 * Since 2.6
-	 * Params:
-	 * iconWidget = a widget that will be used as icon widget, or NULL. [allow-none]
-	 * label = a string that will be used as label, or NULL. [allow-none]
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (Widget iconWidget, string label)
-	{
-		// GtkToolItem * gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label))");
-		}
-		this(cast(GtkMenuToolButton*) p);
-	}
-	
-	/**
-	 * Warning
-	 * gtk_menu_tool_button_new_from_stock has been deprecated since version 3.10 and should not be used in newly-written code. Use gtk_menu_tool_button_new() instead.
-	 * Creates a new GtkMenuToolButton.
-	 * The new GtkMenuToolButton will contain an icon and label from
-	 * the stock item indicated by stock_id.
-	 * Since 2.6
-	 * Params:
-	 * stockId = the name of a stock item
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string stockId)
-	{
-		// GtkToolItem * gtk_menu_tool_button_new_from_stock (const gchar *stock_id);
-		auto p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId))");
-		}
-		this(cast(GtkMenuToolButton*) p);
-	}
-	
-	/**
-	 * Sets the GtkMenu that is popped up when the user clicks on the arrow.
-	 * If menu is NULL, the arrow button becomes insensitive.
-	 * Since 2.6
-	 * Params:
-	 * menu = the GtkMenu associated with GtkMenuToolButton
-	 */
-	public void setMenu(Widget menu)
-	{
-		// void gtk_menu_tool_button_set_menu (GtkMenuToolButton *button,  GtkWidget *menu);
-		gtk_menu_tool_button_set_menu(gtkMenuToolButton, (menu is null) ? null : menu.getWidgetStruct());
-	}
-	
-	/**
-	 * Sets the tooltip text to be used as tooltip for the arrow button which
-	 * pops up the menu. See gtk_tool_item_set_tooltip_text() for setting a tooltip
-	 * on the whole GtkMenuToolButton.
-	 * Since 2.12
-	 * Params:
-	 * text = text to be used as tooltip text for button's arrow button
-	 */
-	public void setArrowTooltipText(string text)
-	{
-		// void gtk_menu_tool_button_set_arrow_tooltip_text  (GtkMenuToolButton *button,  const gchar *text);
-		gtk_menu_tool_button_set_arrow_tooltip_text(gtkMenuToolButton, Str.toStringz(text));
-	}
-	
-	/**
-	 * Sets the tooltip markup text to be used as tooltip for the arrow button
-	 * which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting
-	 * a tooltip on the whole GtkMenuToolButton.
-	 * Since 2.12
-	 * Params:
-	 * markup = markup text to be used as tooltip text for button's arrow button
-	 */
-	public void setArrowTooltipMarkup(string markup)
-	{
-		// void gtk_menu_tool_button_set_arrow_tooltip_markup  (GtkMenuToolButton *button,  const gchar *markup);
-		gtk_menu_tool_button_set_arrow_tooltip_markup(gtkMenuToolButton, Str.toStringz(markup));
 	}
 }

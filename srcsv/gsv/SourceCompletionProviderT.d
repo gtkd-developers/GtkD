@@ -16,177 +16,116 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkSourceCompletionProvider.html
- * outPack = gsv
- * outFile = SourceCompletionProviderT
- * strct   = GtkSourceCompletionProvider
- * realStrct=
- * ctorStrct=
- * clss    = SourceCompletionProviderT
- * interf  = SourceCompletionProviderIF
- * class Code: No
- * interface Code: No
- * template for:
- * 	- TStruct
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_source_completion_proposal_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gdk.Pixbuf
- * 	- gsv.SourceCompletionContext
- * 	- gsv.SourceCompletionInfo
- * 	- gsv.SourceCompletionProposalIF
- * 	- gtk.TextIter
- * 	- gtk.Widget
- * structWrap:
- * 	- GdkPixbuf* -> Pixbuf
- * 	- GtkSourceCompletionContext* -> SourceCompletionContext
- * 	- GtkSourceCompletionInfo* -> SourceCompletionInfo
- * 	- GtkSourceCompletionProposal* -> SourceCompletionProposalIF
- * 	- GtkTextIter* -> TextIter
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gsv.SourceCompletionProviderT;
 
+public  import gdkpixbuf.Pixbuf;
+public  import glib.Str;
+public  import gobject.ObjectG;
+public  import gsv.SourceCompletionContext;
+public  import gsv.SourceCompletionInfo;
+public  import gsv.SourceCompletionProposalIF;
+public  import gsvc.gsv;
 public  import gsvc.gsvtypes;
-
-public import gsvc.gsv;
-public import glib.ConstructionException;
-public import gobject.ObjectG;
-
-public import glib.Str;
-public import gdk.Pixbuf;
-public import gsv.SourceCompletionContext;
-public import gsv.SourceCompletionInfo;
-public import gsv.SourceCompletionProposalIF;
-public import gtk.TextIter;
-public import gtk.Widget;
+public  import gtk.TextIter;
+public  import gtk.Widget;
 
 
-
-/**
- * You must implement this interface to provide proposals to GtkSourceCompletion
- */
 public template SourceCompletionProviderT(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GtkSourceCompletionProvider* gtkSourceCompletionProvider;
-	
-	
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionProvider* getSourceCompletionProviderTStruct()
+	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct()
 	{
 		return cast(GtkSourceCompletionProvider*)getStruct();
 	}
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Get the name of the provider. This should be a translatable name for
-	 * display to the user. For example: _("Document word completion provider"). The
-	 * returned string must be freed with g_free().
-	 * Returns: a new string containing the name of the provider.
+	 * Activate @proposal at @iter. When this functions returns %FALSE, the default
+	 * activation of @proposal will take place which replaces the word at @iter
+	 * with the text of @proposal (see gtk_source_completion_proposal_get_text()).
+	 *
+	 * Here is how the default activation selects the boundaries of the word to
+	 * replace. The end of the word is @iter. For the start of the word, it depends
+	 * on whether a start iter is defined for @proposal (see
+	 * gtk_source_completion_provider_get_start_iter()). If a start iter is defined,
+	 * the start of the word is the start iter. Else, the word (as long as possible)
+	 * will contain only alphanumerical and the "_" characters.
+	 *
+	 * Params:
+	 *     proposal = a #GtkSourceCompletionProposal.
+	 *     iter = a #GtkTextIter.
+	 *
+	 * Return: %TRUE to indicate that the proposal activation has been handled,
+	 *     %FALSE otherwise.
 	 */
-	public string gtkSourceCompletionProviderGetName()
+	public bool activateProposal(SourceCompletionProposalIF proposal, TextIter iter)
 	{
-		// gchar * gtk_source_completion_provider_get_name  (GtkSourceCompletionProvider *provider);
-		return Str.toString(gtk_source_completion_provider_get_name(getSourceCompletionProviderTStruct()));
+		return gtk_source_completion_provider_activate_proposal(getSourceCompletionProviderStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), (iter is null) ? null : iter.getTextIterStruct()) != 0;
 	}
-	
+
+	/**
+	 * Get with what kind of activation the provider should be activated.
+	 *
+	 * Return: a combination of #GtkSourceCompletionActivation.
+	 */
+	public GtkSourceCompletionActivation getActivation()
+	{
+		return gtk_source_completion_provider_get_activation(getSourceCompletionProviderStruct());
+	}
+
 	/**
 	 * Get the icon of the provider.
-	 * Returns: The icon to be used for the provider, or NULL if the provider does not have a special icon. [transfer none]
+	 *
+	 * Return: The icon to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
 	 */
-	public Pixbuf gtkSourceCompletionProviderGetIcon()
+	public Pixbuf getIcon()
 	{
-		// GdkPixbuf * gtk_source_completion_provider_get_icon  (GtkSourceCompletionProvider *provider);
-		auto p = gtk_source_completion_provider_get_icon(getSourceCompletionProviderTStruct());
+		auto p = gtk_source_completion_provider_get_icon(getSourceCompletionProviderStruct());
 		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		import gtkc.gobject : g_object_ref;
-		g_object_ref(cast(GObject*)p);
-		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
-	
-	/**
-	 * Populate context with proposals from provider added with the
-	 * gtk_source_completion_context_add_proposals() function.
-	 * Params:
-	 * context = a GtkSourceCompletionContext.
-	 */
-	public void gtkSourceCompletionProviderPopulate(SourceCompletionContext context)
-	{
-		// void gtk_source_completion_provider_populate  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionContext *context);
-		gtk_source_completion_provider_populate(getSourceCompletionProviderTStruct(), (context is null) ? null : context.getSourceCompletionContextStruct());
-	}
-	
-	/**
-	 * Get with what kind of activation the provider should be activated.
-	 * Returns: a combination of GtkSourceCompletionActivation.
-	 */
-	public GtkSourceCompletionActivation gtkSourceCompletionProviderGetActivation()
-	{
-		// GtkSourceCompletionActivation gtk_source_completion_provider_get_activation  (GtkSourceCompletionProvider *provider);
-		return gtk_source_completion_provider_get_activation(getSourceCompletionProviderTStruct());
-	}
-	
-	/**
-	 * Get whether the provider match the context of completion detailed in
-	 * context.
-	 * Params:
-	 * context = a GtkSourceCompletionContext.
-	 * Returns: TRUE if provider matches the completion context, FALSE otherwise.
-	 */
-	public int gtkSourceCompletionProviderMatch(SourceCompletionContext context)
-	{
-		// gboolean gtk_source_completion_provider_match  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionContext *context);
-		return gtk_source_completion_provider_match(getSourceCompletionProviderTStruct(), (context is null) ? null : context.getSourceCompletionContextStruct());
-	}
-	
+
 	/**
 	 * Get a customized info widget to show extra information of a proposal.
 	 * This allows for customized widgets on a proposal basis, although in general
 	 * providers will have the same custom widget for all their proposals and
-	 * proposal can be ignored. The implementation of this function is optional.
-	 * If this function is not implemented, the default widget is a GtkLabel. The
+	 * @proposal can be ignored. The implementation of this function is optional.
+	 *
+	 * If this function is not implemented, the default widget is a #GtkLabel. The
 	 * return value of gtk_source_completion_proposal_get_info() is used as the
-	 * content of the GtkLabel.
-	 * Note
-	 *  If implemented, gtk_source_completion_provider_update_info()
-	 *  must also be implemented.
+	 * content of the #GtkLabel.
+	 *
+	 * <note>
+	 * <para>
+	 * If implemented, gtk_source_completion_provider_update_info()
+	 * <emphasis>must</emphasis> also be implemented.
+	 * </para>
+	 * </note>
+	 *
 	 * Params:
-	 * proposal = a currently selected GtkSourceCompletionProposal.
-	 * Returns: a custom GtkWidget to show extra information about proposal. [transfer none]
+	 *     proposal = a currently selected #GtkSourceCompletionProposal.
+	 *
+	 * Return: a custom #GtkWidget to show extra
+	 *     information about @proposal, or %NULL if the provider does not have a special
+	 *     info widget.
 	 */
-	public Widget gtkSourceCompletionProviderGetInfoWidget(SourceCompletionProposalIF proposal)
+	public Widget getInfoWidget(SourceCompletionProposalIF proposal)
 	{
-		// GtkWidget * gtk_source_completion_provider_get_info_widget  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionProposal *proposal);
-		auto p = gtk_source_completion_provider_get_info_widget(getSourceCompletionProviderTStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalTStruct());
+		auto p = gtk_source_completion_provider_get_info_widget(getSourceCompletionProviderStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct());
 		
 		if(p is null)
 		{
@@ -195,87 +134,117 @@ public template SourceCompletionProviderT(TStruct)
 		
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
-	
-	/**
-	 * Update extra information shown in info for proposal.
-	 * Note
-	 *  This function must be implemented when
-	 *  gtk_source_completion_provider_get_info_widget() is implemented.
-	 * Params:
-	 * proposal = a GtkSourceCompletionProposal.
-	 * info = a GtkSourceCompletionInfo.
-	 */
-	public void gtkSourceCompletionProviderUpdateInfo(SourceCompletionProposalIF proposal, SourceCompletionInfo info)
-	{
-		// void gtk_source_completion_provider_update_info  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionProposal *proposal,  GtkSourceCompletionInfo *info);
-		gtk_source_completion_provider_update_info(getSourceCompletionProviderTStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalTStruct(), (info is null) ? null : info.getSourceCompletionInfoStruct());
-	}
-	
-	/**
-	 * Get the GtkTextIter at which the completion for proposal starts. When
-	 * implemented, this information is used to position the completion window
-	 * accordingly when a proposal is selected in the completion window. The
-	 * proposal text inside the completion window is aligned on iter.
-	 * If this function is not implemented, the word boundary is taken to position
-	 * the completion window. See gtk_source_completion_provider_activate_proposal()
-	 * for an explanation on the word boundaries.
-	 * When the proposal is activated, the default handler uses iter as the start
-	 * of the word to replace. See
-	 * gtk_source_completion_provider_activate_proposal() for more information.
-	 * Params:
-	 * context = a GtkSourceCompletionContext.
-	 * proposal = a GtkSourceCompletionProposal.
-	 * iter = a GtkTextIter.
-	 * Returns: TRUE if iter was set for proposal, FALSE otherwise.
-	 */
-	public int gtkSourceCompletionProviderGetStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, TextIter iter)
-	{
-		// gboolean gtk_source_completion_provider_get_start_iter  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionContext *context,  GtkSourceCompletionProposal *proposal,  GtkTextIter *iter);
-		return gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderTStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalTStruct(), (iter is null) ? null : iter.getTextIterStruct());
-	}
-	
-	/**
-	 * Activate proposal at iter. When this functions returns FALSE, the default
-	 * activation of proposal will take place which replaces the word at iter
-	 * with the text of proposal (see gtk_source_completion_proposal_get_text()).
-	 * Here is how the default activation selects the boundaries of the word to
-	 * replace. The end of the word is iter. For the start of the word, it depends
-	 * on whether a start iter is defined for proposal (see
-	 * gtk_source_completion_provider_get_start_iter()). If a start iter is defined,
-	 * the start of the word is the start iter. Else, the word (as long as possible)
-	 * will contain only alphanumerical and the "_" characters.
-	 * Params:
-	 * proposal = a GtkSourceCompletionProposal.
-	 * iter = a GtkTextIter.
-	 * Returns: TRUE to indicate that the proposal activation has been handled, FALSE otherwise.
-	 */
-	public int gtkSourceCompletionProviderActivateProposal(SourceCompletionProposalIF proposal, TextIter iter)
-	{
-		// gboolean gtk_source_completion_provider_activate_proposal  (GtkSourceCompletionProvider *provider,  GtkSourceCompletionProposal *proposal,  GtkTextIter *iter);
-		return gtk_source_completion_provider_activate_proposal(getSourceCompletionProviderTStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalTStruct(), (iter is null) ? null : iter.getTextIterStruct());
-	}
-	
+
 	/**
 	 * Get the delay in milliseconds before starting interactive completion for
 	 * this provider. A value of -1 indicates to use the default value as set
-	 * by the "auto-complete-delay" property.
-	 * Returns: the interactive delay in milliseconds.
+	 * by the #GtkSourceCompletion:auto-complete-delay property.
+	 *
+	 * Return: the interactive delay in milliseconds.
 	 */
-	public int gtkSourceCompletionProviderGetInteractiveDelay()
+	public int getInteractiveDelay()
 	{
-		// gint gtk_source_completion_provider_get_interactive_delay  (GtkSourceCompletionProvider *provider);
-		return gtk_source_completion_provider_get_interactive_delay(getSourceCompletionProviderTStruct());
+		return gtk_source_completion_provider_get_interactive_delay(getSourceCompletionProviderStruct());
 	}
-	
+
+	/**
+	 * Get the name of the provider. This should be a translatable name for
+	 * display to the user. For example: _("Document word completion provider"). The
+	 * returned string must be freed with g_free().
+	 *
+	 * Return: a new string containing the name of the provider.
+	 */
+	public string getName()
+	{
+		return Str.toString(gtk_source_completion_provider_get_name(getSourceCompletionProviderStruct()));
+	}
+
 	/**
 	 * Get the provider priority. The priority determines the order in which
 	 * proposals appear in the completion popup. Higher priorities are sorted
 	 * before lower priorities. The default priority is 0.
-	 * Returns: the provider priority.
+	 *
+	 * Return: the provider priority.
 	 */
-	public int gtkSourceCompletionProviderGetPriority()
+	public int getPriority()
 	{
-		// gint gtk_source_completion_provider_get_priority  (GtkSourceCompletionProvider *provider);
-		return gtk_source_completion_provider_get_priority(getSourceCompletionProviderTStruct());
+		return gtk_source_completion_provider_get_priority(getSourceCompletionProviderStruct());
+	}
+
+	/**
+	 * Get the #GtkTextIter at which the completion for @proposal starts. When
+	 * implemented, this information is used to position the completion window
+	 * accordingly when a proposal is selected in the completion window. The
+	 * @proposal text inside the completion window is aligned on @iter.
+	 *
+	 * If this function is not implemented, the word boundary is taken to position
+	 * the completion window. See gtk_source_completion_provider_activate_proposal()
+	 * for an explanation on the word boundaries.
+	 *
+	 * When the @proposal is activated, the default handler uses @iter as the start
+	 * of the word to replace. See
+	 * gtk_source_completion_provider_activate_proposal() for more information.
+	 *
+	 * Params:
+	 *     context = a #GtkSourceCompletionContext.
+	 *     proposal = a #GtkSourceCompletionProposal.
+	 *     iter = a #GtkTextIter.
+	 *
+	 * Return: %TRUE if @iter was set for @proposal, %FALSE otherwise.
+	 */
+	public bool getStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, out TextIter iter)
+	{
+		GtkTextIter* outiter = new GtkTextIter;
+		
+		auto p = gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), outiter) != 0;
+		
+		iter = ObjectG.getDObject!(TextIter)(outiter);
+		
+		return p;
+	}
+
+	/**
+	 * Get whether the provider match the context of completion detailed in
+	 * @context.
+	 *
+	 * Params:
+	 *     context = a #GtkSourceCompletionContext.
+	 *
+	 * Return: %TRUE if @provider matches the completion context, %FALSE otherwise.
+	 */
+	public bool match(SourceCompletionContext context)
+	{
+		return gtk_source_completion_provider_match(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct()) != 0;
+	}
+
+	/**
+	 * Populate @context with proposals from @provider added with the
+	 * gtk_source_completion_context_add_proposals() function.
+	 *
+	 * Params:
+	 *     context = a #GtkSourceCompletionContext.
+	 */
+	public void populate(SourceCompletionContext context)
+	{
+		gtk_source_completion_provider_populate(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct());
+	}
+
+	/**
+	 * Update extra information shown in @info for @proposal.
+	 *
+	 * <note>
+	 * <para>
+	 * This function <emphasis>must</emphasis> be implemented when
+	 * gtk_source_completion_provider_get_info_widget() is implemented.
+	 * </para>
+	 * </note>
+	 *
+	 * Params:
+	 *     proposal = a #GtkSourceCompletionProposal.
+	 *     info = a #GtkSourceCompletionInfo.
+	 */
+	public void updateInfo(SourceCompletionProposalIF proposal, SourceCompletionInfo info)
+	{
+		gtk_source_completion_provider_update_info(getSourceCompletionProviderStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), (info is null) ? null : info.getSourceCompletionInfoStruct());
 	}
 }

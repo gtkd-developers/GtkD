@@ -16,125 +16,111 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkMessageDialog.html
- * outPack = gtk
- * outFile = MessageDialog
- * strct   = GtkMessageDialog
- * realStrct=
- * ctorStrct=
- * clss    = MessageDialog
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_message_dialog_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_message_dialog_new
- * 	- gtk_message_dialog_new_with_markup
- * 	- gtk_message_dialog_get_message_area
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.VBox
- * 	- gtk.Widget
- * 	- gtk.Window
- * structWrap:
- * 	- GtkWidget* -> Widget
- * 	- GtkWindow* -> Window
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.MessageDialog;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.Dialog;
 private import gtk.VBox;
 private import gtk.Widget;
 private import gtk.Window;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gtk.Dialog;
 
 /**
- * GtkMessageDialog presents a dialog with an image representing the type of
- * message (Error, Question, etc.) alongside some message text. It's simply a
- * convenience widget; you could construct the equivalent of GtkMessageDialog
- * from GtkDialog without too much effort, but GtkMessageDialog saves typing.
- *
- * One difference from GtkDialog is that GtkMessageDialog sets the
- * "skip-taskbar-hint" property to TRUE, so that the dialog is hidden
+ * #GtkMessageDialog presents a dialog with some message text. It’s simply a
+ * convenience widget; you could construct the equivalent of #GtkMessageDialog
+ * from #GtkDialog without too much effort, but #GtkMessageDialog saves typing.
+ * 
+ * One difference from #GtkDialog is that #GtkMessageDialog sets the
+ * #GtkWindow:skip-taskbar-hint property to %TRUE, so that the dialog is hidden
  * from the taskbar by default.
- *
+ * 
  * The easiest way to do a modal message dialog is to use gtk_dialog_run(), though
- * you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
+ * you can also pass in the %GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
  * makes the dialog modal and waits for the user to respond to it. gtk_dialog_run()
  * returns when any dialog button is clicked.
- *
- * $(DDOC_COMMENT example)
- *
- * You might do a non-modal GtkMessageDialog as follows:
- *
- * $(DDOC_COMMENT example)
- *
- * GtkMessageDialog as GtkBuildable
- *
+ * 
+ * An example for using a modal dialog:
+ * |[<!-- language="C" -->
+ * GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+ * dialog = gtk_message_dialog_new (parent_window,
+ * flags,
+ * GTK_MESSAGE_ERROR,
+ * GTK_BUTTONS_CLOSE,
+ * "Error reading “%s”: %s",
+ * filename,
+ * g_strerror (errno));
+ * gtk_dialog_run (GTK_DIALOG (dialog));
+ * gtk_widget_destroy (dialog);
+ * ]|
+ * 
+ * You might do a non-modal #GtkMessageDialog as follows:
+ * 
+ * An example for a non-modal dialog:
+ * |[<!-- language="C" -->
+ * GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+ * dialog = gtk_message_dialog_new (parent_window,
+ * flags,
+ * GTK_MESSAGE_ERROR,
+ * GTK_BUTTONS_CLOSE,
+ * "Error reading “%s”: %s",
+ * filename,
+ * g_strerror (errno));
+ * 
+ * // Destroy the dialog when the user responds to it
+ * // (e.g. clicks a button)
+ * 
+ * g_signal_connect_swapped (dialog, "response",
+ * G_CALLBACK (gtk_widget_destroy),
+ * dialog);
+ * ]|
+ * 
+ * # GtkMessageDialog as GtkBuildable
+ * 
  * The GtkMessageDialog implementation of the GtkBuildable interface exposes
- * the message area as an internal child with the name "message_area".
+ * the message area as an internal child with the name “message_area”.
  */
 public class MessageDialog : Dialog
 {
-	
 	/** the main Gtk struct */
 	protected GtkMessageDialog* gtkMessageDialog;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkMessageDialog* getMessageDialogStruct()
 	{
 		return gtkMessageDialog;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkMessageDialog;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkMessageDialog* gtkMessageDialog)
-	{
-		super(cast(GtkDialog*)gtkMessageDialog);
-		this.gtkMessageDialog = gtkMessageDialog;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkMessageDialog = cast(GtkMessageDialog*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkMessageDialog* gtkMessageDialog, bool ownedRef = false)
+	{
+		this.gtkMessageDialog = gtkMessageDialog;
+		super(cast(GtkDialog*)gtkMessageDialog, ownedRef);
+	}
+
 	/**
 	 * Creates a new message dialog, which is a simple dialog with an icon
 	 * indicating the dialog type (error, warning, etc.) and some text the
@@ -202,26 +188,26 @@ public class MessageDialog : Dialog
 		{
 			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
 			p = cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
-			parent is null ? null : parent.getWindowStruct(),
-			flags,
-			type,
-			buttons,
-			Str.toStringz(messageFormat),
-			Str.toStringz(message),	// this should be null
-			null
+				parent is null ? null : parent.getWindowStruct(),
+				flags,
+				type,
+				buttons,
+				Str.toStringz(messageFormat),
+				Str.toStringz(message),	// this should be null
+				null
 			);
 		}
 		else
 		{
 			// GtkWidget* gtk_message_dialog_new (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
 			p = cast(GtkMessageDialog*)gtk_message_dialog_new(
-			parent is null ? null : parent.getWindowStruct(),
-			flags,
-			type,
-			buttons,
-			Str.toStringz(messageFormat),
-			Str.toStringz(message),	// this should be null
-			null
+				parent is null ? null : parent.getWindowStruct(),
+				flags,
+				type,
+				buttons,
+				Str.toStringz(messageFormat),
+				Str.toStringz(message),	// this should be null
+				null
 			);
 		}
 		
@@ -247,44 +233,26 @@ public class MessageDialog : Dialog
 		}
 		return new VBox(cast(GtkVBox*) p);
 	}
-	
+
 	/**
 	 */
-	
-	/**
-	 * Sets the text of the message dialog to be str, which is marked
-	 * up with the Pango text markup
-	 * language.
-	 * Since 2.4
-	 * Params:
-	 * str = markup string (see Pango markup format)
-	 */
-	public void setMarkup(string str)
+
+	public static GType getType()
 	{
-		// void gtk_message_dialog_set_markup (GtkMessageDialog *message_dialog,  const gchar *str);
-		gtk_message_dialog_set_markup(gtkMessageDialog, Str.toStringz(str));
+		return gtk_message_dialog_get_type();
 	}
-	
+
 	/**
-	 * Sets the dialog's image to image.
-	 * Since 2.10
-	 * Params:
-	 * image = the image
-	 */
-	public void setImage(Widget image)
-	{
-		// void gtk_message_dialog_set_image (GtkMessageDialog *dialog,  GtkWidget *image);
-		gtk_message_dialog_set_image(gtkMessageDialog, (image is null) ? null : image.getWidgetStruct());
-	}
-	
-	/**
-	 * Gets the dialog's image.
-	 * Since 2.14
-	 * Returns: the dialog's image. [transfer none]
+	 * Gets the dialog’s image.
+	 *
+	 * Deprecated: Use #GtkDialog for dialogs with images
+	 *
+	 * Return: the dialog’s image
+	 *
+	 * Since: 2.14
 	 */
 	public Widget getImage()
 	{
-		// GtkWidget * gtk_message_dialog_get_image (GtkMessageDialog *dialog);
 		auto p = gtk_message_dialog_get_image(gtkMessageDialog);
 		
 		if(p is null)
@@ -293,5 +261,34 @@ public class MessageDialog : Dialog
 		}
 		
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+	}
+
+	/**
+	 * Sets the dialog’s image to @image.
+	 *
+	 * Deprecated: Use #GtkDialog to create dialogs with images
+	 *
+	 * Params:
+	 *     image = the image
+	 *
+	 * Since: 2.10
+	 */
+	public void setImage(Widget image)
+	{
+		gtk_message_dialog_set_image(gtkMessageDialog, (image is null) ? null : image.getWidgetStruct());
+	}
+
+	/**
+	 * Sets the text of the message dialog to be @str, which is marked
+	 * up with the [Pango text markup language][PangoMarkupFormat].
+	 *
+	 * Params:
+	 *     str = markup string (see [Pango markup format][PangoMarkupFormat])
+	 *
+	 * Since: 2.4
+	 */
+	public void setMarkup(string str)
+	{
+		gtk_message_dialog_set_markup(gtkMessageDialog, Str.toStringz(str));
 	}
 }

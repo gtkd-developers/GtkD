@@ -16,78 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gtk
- * outFile = CellEditable
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = CellEditable
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = GObject
- * implements:
- * 	- CellEditableIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gtk.CellEditableT
- * 	- gtk.CellEditableIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.CellEditable;
 
+private import gobject.ObjectG;
+private import gtk.CellEditableIF;
+private import gtk.CellEditableT;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gtk.CellEditableT;
-private import gtk.CellEditableIF;
-
-
-private import gobject.ObjectG;
-
-/**
- */
 public class CellEditable : ObjectG, CellEditableIF
 {
-	
-	// Minimal implementation.
-	mixin CellEditableT!(GtkCellEditable);
-	
+	/** the main Gtk struct */
+	protected GtkCellEditable* gtkCellEditable;
+
+	/** Get the main Gtk struct */
+	public GtkCellEditable* getCellEditableStruct()
+	{
+		return gtkCellEditable;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkCellEditable;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkCellEditable* gtkCellEditable)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gtkCellEditable);
-		this.gtkCellEditable = gtkCellEditable;
+		gtkCellEditable = cast(GtkCellEditable*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkCellEditable* gtkCellEditable, bool ownedRef = false)
+	{
+		this.gtkCellEditable = gtkCellEditable;
+		super(cast(GObject*)gtkCellEditable, ownedRef);
+	}
+
+	// add the CellEditable capabilities
+	mixin CellEditableT!(GtkCellEditable);
+
 	/**
 	 */
 }

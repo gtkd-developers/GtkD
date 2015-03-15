@@ -16,65 +16,36 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gstreamer-GstGError.html
- * outPack = gstreamer
- * outFile = GError
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = 
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.GError;
 
+private import glib.Str;
+private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import glib.Str;
-
-
-
-/**
- */
-
-/**
- * Get a string describing the error message in the current locale.
- * Params:
- * domain = the GStreamer error domain this error belongs to.
- * code = the error code belonging to the domain.
- * Returns: a newly allocated string describing the error message (in UTF-8 encoding). [transfer full]
- */
-public static string errorGetMessage(GQuark domain, int code)
+public struct GError
 {
-	// gchar * gst_error_get_message (GQuark domain,  gint code);
-	return Str.toString(gst_error_get_message(domain, code));
-}
+	/**
+	 */
 
+	/**
+	 * Get a string describing the error message in the current locale.
+	 *
+	 * Params:
+	 *     domain = the GStreamer error domain this error belongs to.
+	 *     code = the error code belonging to the domain.
+	 *
+	 * Return: a newly allocated string describing
+	 *     the error message (in UTF-8 encoding)
+	 */
+	public static string errorGetMessage(GQuark domain, int code)
+	{
+		return Str.toString(gst_error_get_message(domain, code));
+	}
+}

@@ -16,116 +16,102 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkRecentChooserDialog.html
- * outPack = gtk
- * outFile = RecentChooserDialog
- * strct   = GtkRecentChooserDialog
- * realStrct=
- * ctorStrct=
- * clss    = RecentChooserDialog
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * 	- RecentChooserIF
- * prefixes:
- * 	- gtk_recent_chooser_dialog_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_recent_chooser_dialog_new
- * 	- gtk_recent_chooser_dialog_new_for_manager
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Window
- * 	- gtk.RecentManager
- * 	- gtk.RecentChooserIF
- * 	- gtk.RecentChooserT
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.RecentChooserDialog;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gtk.Window;
-private import gtk.RecentManager;
+private import gtk.Dialog;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
+private import gtk.RecentManager;
+private import gtk.Window;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gtk.Dialog;
 
 /**
- * GtkRecentChooserDialog is a dialog box suitable for displaying the recently
- * used documents. This widgets works by putting a GtkRecentChooserWidget inside
- * a GtkDialog. It exposes the GtkRecentChooserIface interface, so you can use
- * all the GtkRecentChooser functions on the recent chooser dialog as well as
- * those for GtkDialog.
- *
- * Note that GtkRecentChooserDialog does not have any methods of its own.
- * Instead, you should use the functions that work on a GtkRecentChooser.
- *
- * $(DDOC_COMMENT example)
- *
+ * #GtkRecentChooserDialog is a dialog box suitable for displaying the recently
+ * used documents.  This widgets works by putting a #GtkRecentChooserWidget inside
+ * a #GtkDialog.  It exposes the #GtkRecentChooserIface interface, so you can use
+ * all the #GtkRecentChooser functions on the recent chooser dialog as well as
+ * those for #GtkDialog.
+ * 
+ * Note that #GtkRecentChooserDialog does not have any methods of its own.
+ * Instead, you should use the functions that work on a #GtkRecentChooser.
+ * 
+ * ## Typical usage ## {#gtkrecentchooser-typical-usage}
+ * 
+ * In the simplest of cases, you can use the following code to use
+ * a #GtkRecentChooserDialog to select a recently used file:
+ * 
+ * |[<!-- language="C" -->
+ * GtkWidget *dialog;
+ * gint res;
+ * 
+ * dialog = gtk_recent_chooser_dialog_new ("Recent Documents",
+ * parent_window,
+ * _("_Cancel"),
+ * GTK_RESPONSE_CANCEL,
+ * _("_Open"),
+ * GTK_RESPONSE_ACCEPT,
+ * NULL);
+ * 
+ * res = gtk_dialog_run (GTK_DIALOG (dialog));
+ * if (res == GTK_RESPONSE_ACCEPT)
+ * {
+ * GtkRecentInfo *info;
+ * GtkRecentChooser *chooser = GTK_RECENT_CHOOSER (dialog);
+ * 
+ * info = gtk_recent_chooser_get_current_item (chooser);
+ * open_file (gtk_recent_info_get_uri (info));
+ * gtk_recent_info_unref (info);
+ * }
+ * 
+ * gtk_widget_destroy (dialog);
+ * ]|
+ * 
  * Recently used files are supported since GTK+ 2.10.
  */
 public class RecentChooserDialog : Dialog, RecentChooserIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkRecentChooserDialog* gtkRecentChooserDialog;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkRecentChooserDialog* getRecentChooserDialogStruct()
 	{
 		return gtkRecentChooserDialog;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkRecentChooserDialog;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkRecentChooserDialog* gtkRecentChooserDialog)
-	{
-		super(cast(GtkDialog*)gtkRecentChooserDialog);
-		this.gtkRecentChooserDialog = gtkRecentChooserDialog;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkRecentChooserDialog = cast(GtkRecentChooserDialog*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkRecentChooserDialog* gtkRecentChooserDialog, bool ownedRef = false)
+	{
+		this.gtkRecentChooserDialog = gtkRecentChooserDialog;
+		super(cast(GtkDialog*)gtkRecentChooserDialog, ownedRef);
+	}
+
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);
-	
+
 	/**
 	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
 	 * This is useful if you have implemented your own recent manager, or if you
@@ -175,7 +161,12 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 		this(cast(GtkRecentChooserDialog*) p);
 		addButtons(stockIDs, responses);
 	}
-	
+
 	/**
 	 */
+
+	public static GType getType()
+	{
+		return gtk_recent_chooser_dialog_get_type();
+	}
 }

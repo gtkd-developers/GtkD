@@ -16,237 +16,238 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GApplicationCommandLine.html
- * outPack = gio
- * outFile = ApplicationCommandLine
- * strct   = GApplicationCommandLine
- * realStrct=
- * ctorStrct=
- * clss    = ApplicationCommandLine
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_application_command_line_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.Variant
- * 	- gio.File
- * 	- gio.InputStream
- * structWrap:
- * 	- GFile* -> File
- * 	- GInputStream* -> InputStream
- * 	- GVariant* -> Variant
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.ApplicationCommandLine;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
+private import gio.File;
+private import gio.FileIF;
+private import gio.InputStream;
 private import glib.Str;
 private import glib.Variant;
-private import gio.File;
-private import gio.InputStream;
-
-
+private import glib.VariantDict;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
+
 
 /**
- * GApplicationCommandLine represents a command-line invocation of
- * an application. It is created by GApplication and emitted
- * in the "command-line" signal and virtual function.
- *
+ * #GApplicationCommandLine represents a command-line invocation of
+ * an application.  It is created by #GApplication and emitted
+ * in the #GApplication::command-line signal and virtual function.
+ * 
  * The class contains the list of arguments that the program was invoked
- * with. It is also possible to query if the commandline invocation was
+ * with.  It is also possible to query if the commandline invocation was
  * local (ie: the current process is running in direct response to the
  * invocation) or remote (ie: some other process forwarded the
  * commandline to this process).
- *
- * The GApplicationCommandLine object can provide the argc and argv
- * parameters for use with the GOptionContext command-line parsing API,
+ * 
+ * The GApplicationCommandLine object can provide the @argc and @argv
+ * parameters for use with the #GOptionContext command-line parsing API,
  * with the g_application_command_line_get_arguments() function. See
- *  Example 24, “Deferred commandline handling” for an example.
- *
+ * [gapplication-example-cmdline3.c][gapplication-example-cmdline3]
+ * for an example.
+ * 
  * The exit status of the originally-invoked process may be set and
- * messages can be printed to stdout or stderr of that process. The
+ * messages can be printed to stdout or stderr of that process.  The
  * lifecycle of the originally-invoked process is tied to the lifecycle
  * of this object (ie: the process exits when the last reference is
  * dropped).
- *
- * The main use for GApplicationCommandLine (and the
- * "command-line" signal) is 'Emacs server' like use cases:
- * You can set the EDITOR environment variable to have
- * e.g. git use your favourite editor to edit commit messages, and if you
- * already have an instance of the editor running, the editing will happen
+ * 
+ * The main use for #GApplicationCommandLine (and the
+ * #GApplication::command-line signal) is 'Emacs server' like use cases:
+ * You can set the `EDITOR` environment variable to have e.g. git use
+ * your favourite editor to edit commit messages, and if you already
+ * have an instance of the editor running, the editing will happen
  * in the running instance, instead of opening a new one. An important
  * aspect of this use case is that the process that gets started by git
  * does not return until the editing is done.
- *
- * $(DDOC_COMMENT example)
- *
- * $(DDOC_COMMENT example)
- *
- * $(DDOC_COMMENT example)
+ * 
+ * Normally, the commandline is completely handled in the
+ * #GApplication::command-line handler. The launching instance exits
+ * once the signal handler in the primary instance has returned, and
+ * the return value of the signal handler becomes the exit status
+ * of the launching instance.
+ * |[<!-- language="C" -->
+ * static int
+ * command_line (GApplication            *application,
+ * GApplicationCommandLine *cmdline)
+ * {
+ * gchar **argv;
+ * gint argc;
+ * gint i;
+ * 
+ * argv = g_application_command_line_get_arguments (cmdline, &argc);
+ * 
+ * g_application_command_line_print (cmdline,
+ * "This text is written back\n"
+ * "to stdout of the caller\n");
+ * 
+ * for (i = 0; i < argc; i++)
+ * g_print ("argument %d: %s\n", i, argv[i]);
+ * 
+ * g_strfreev (argv);
+ * 
+ * return 0;
+ * }
+ * ]|
+ * The complete example can be found here:
+ * [gapplication-example-cmdline.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-cmdline.c)
+ * 
+ * In more complicated cases, the handling of the comandline can be
+ * split between the launcher and the primary instance.
+ * |[<!-- language="C" -->
+ * static gboolean
+ * test_local_cmdline (GApplication   *application,
+ * gchar        ***arguments,
+ * gint           *exit_status)
+ * {
+ * gint i, j;
+ * gchar **argv;
+ * 
+ * argv = *arguments;
+ * 
+ * i = 1;
+ * while (argv[i])
+ * {
+ * if (g_str_has_prefix (argv[i], "--local-"))
+ * {
+ * g_print ("handling argument %s locally\n", argv[i]);
+ * g_free (argv[i]);
+ * for (j = i; argv[j]; j++)
+ * argv[j] = argv[j + 1];
+ * }
+ * else
+ * {
+ * g_print ("not handling argument %s locally\n", argv[i]);
+ * i++;
+ * }
+ * }
+ * 
+ * *exit_status = 0;
+ * 
+ * return FALSE;
+ * }
+ * 
+ * static void
+ * test_application_class_init (TestApplicationClass *class)
+ * {
+ * G_APPLICATION_CLASS (class)->local_command_line = test_local_cmdline;
+ * 
+ * ...
+ * }
+ * ]|
+ * In this example of split commandline handling, options that start
+ * with `--local-` are handled locally, all other options are passed
+ * to the #GApplication::command-line handler which runs in the primary
+ * instance.
+ * 
+ * The complete example can be found here:
+ * [gapplication-example-cmdline2.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-cmdline2.c)
+ * 
+ * If handling the commandline requires a lot of work, it may
+ * be better to defer it.
+ * |[<!-- language="C" -->
+ * static gboolean
+ * my_cmdline_handler (gpointer data)
+ * {
+ * GApplicationCommandLine *cmdline = data;
+ * 
+ * // do the heavy lifting in an idle
+ * 
+ * g_application_command_line_set_exit_status (cmdline, 0);
+ * g_object_unref (cmdline); // this releases the application
+ * 
+ * return G_SOURCE_REMOVE;
+ * }
+ * 
+ * static int
+ * command_line (GApplication            *application,
+ * GApplicationCommandLine *cmdline)
+ * {
+ * // keep the application running until we are done with this commandline
+ * g_application_hold (application);
+ * 
+ * g_object_set_data_full (G_OBJECT (cmdline),
+ * "application", application,
+ * (GDestroyNotify)g_application_release);
+ * 
+ * g_object_ref (cmdline);
+ * g_idle_add (my_cmdline_handler, cmdline);
+ * 
+ * return 0;
+ * }
+ * ]|
+ * In this example the commandline is not completely handled before
+ * the #GApplication::command-line handler returns. Instead, we keep
+ * a reference to the #GApplicationCommandLine object and handle it
+ * later (in this example, in an idle). Note that it is necessary to
+ * hold the application until you are done with the commandline.
+ * 
+ * The complete example can be found here:
+ * [gapplication-example-cmdline3.c](https://git.gnome.org/browse/glib/tree/gio/tests/gapplication-example-cmdline3.c)
  */
 public class ApplicationCommandLine : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected GApplicationCommandLine* gApplicationCommandLine;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GApplicationCommandLine* getApplicationCommandLineStruct()
 	{
 		return gApplicationCommandLine;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gApplicationCommandLine;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GApplicationCommandLine* gApplicationCommandLine)
-	{
-		super(cast(GObject*)gApplicationCommandLine);
-		this.gApplicationCommandLine = gApplicationCommandLine;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gApplicationCommandLine = cast(GApplicationCommandLine*)obj;
+		super.setStruct(obj);
 	}
-	
+
 	/**
+	 * Sets our main struct and passes it to the parent class.
 	 */
-	
-	/**
-	 * Gets the list of arguments that was passed on the command line.
-	 * The strings in the array may contain non-utf8 data.
-	 * The return value is NULL-terminated and should be freed using
-	 * g_strfreev().
-	 * Since 2.28
-	 * Returns: the string array containing the arguments (the argv). [array length=argc][transfer full]
-	 */
-	public string[] getArguments()
+	public this (GApplicationCommandLine* gApplicationCommandLine, bool ownedRef = false)
 	{
-		// gchar ** g_application_command_line_get_arguments  (GApplicationCommandLine *cmdline,  int *argc);
-		int argc;
-		auto p = g_application_command_line_get_arguments(gApplicationCommandLine, &argc);
-		
-		string[] strArray = null;
-		foreach ( cstr; p[0 .. argc] )
-		{
-			strArray ~= Str.toString(cstr);
-		}
-		
-		return strArray;
+		this.gApplicationCommandLine = gApplicationCommandLine;
+		super(cast(GObject*)gApplicationCommandLine, ownedRef);
 	}
-	
+
 	/**
-	 * Gets the working directory of the command line invocation.
-	 * The string may contain non-utf8 data.
-	 * It is possible that the remote application did not send a working
-	 * directory, so this may be NULL.
-	 * The return value should not be modified or freed and is valid for as
-	 * long as cmdline exists.
-	 * Since 2.28
-	 * Returns: the current directory, or NULL
 	 */
-	public string getCwd()
+
+	public static GType getType()
 	{
-		// const gchar * g_application_command_line_get_cwd (GApplicationCommandLine *cmdline);
-		return Str.toString(g_application_command_line_get_cwd(gApplicationCommandLine));
+		return g_application_command_line_get_type();
 	}
-	
+
 	/**
-	 * Gets the contents of the 'environ' variable of the command line
-	 * invocation, as would be returned by g_get_environ(), ie as a
-	 * NULL-terminated list of strings in the form 'NAME=VALUE'.
-	 * The strings may contain non-utf8 data.
-	 * The remote application usually does not send an environment. Use
-	 * G_APPLICATION_SEND_ENVIRONMENT to affect that. Even with this flag
-	 * set it is possible that the environment is still not available (due
-	 * to invocation messages from other applications).
-	 * The return value should not be modified or freed and is valid for as
-	 * long as cmdline exists.
-	 * See g_application_command_line_getenv() if you are only interested
-	 * in the value of a single environment variable.
-	 * Since 2.28
-	 * Returns: the environment strings, or NULL if they were not sent. [array zero-terminated=1][transfer none]
-	 */
-	public string[] getEnviron()
-	{
-		// const gchar * const * g_application_command_line_get_environ  (GApplicationCommandLine *cmdline);
-		return Str.toStringArray(g_application_command_line_get_environ(gApplicationCommandLine));
-	}
-	
-	/**
-	 * Gets the stdin of the invoking process.
-	 * The GInputStream can be used to read data passed to the standard
-	 * input of the invoking process.
-	 * This doesn't work on all platforms. Presently, it is only available
-	 * on UNIX when using a DBus daemon capable of passing file descriptors.
-	 * If stdin is not available then NULL will be returned. In the
-	 * future, support may be expanded to other platforms.
-	 * You must only call this function once per commandline invocation.
-	 * Since 2.34
-	 * Returns: a GInputStream for stdin. [transfer full]
-	 */
-	public InputStream getStdin()
-	{
-		// GInputStream * g_application_command_line_get_stdin  (GApplicationCommandLine *cmdline);
-		auto p = g_application_command_line_get_stdin(gApplicationCommandLine);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
-	}
-	
-	/**
-	 * Creates a GFile corresponding to a filename that was given as part
-	 * of the invocation of cmdline.
+	 * Creates a #GFile corresponding to a filename that was given as part
+	 * of the invocation of @cmdline.
+	 *
 	 * This differs from g_file_new_for_commandline_arg() in that it
 	 * resolves relative pathnames using the current working directory of
 	 * the invoking process rather than the local process.
-	 * Since 2.36
+	 *
 	 * Params:
-	 * arg = an argument from cmdline
-	 * Returns: a new GFile. [transfer full]
+	 *     arg = an argument from @cmdline
+	 *
+	 * Return: a new #GFile
+	 *
+	 * Since: 2.36
 	 */
-	public File createFileForArg(string arg)
+	public FileIF createFileForArg(string arg)
 	{
-		// GFile * g_application_command_line_create_file_for_arg  (GApplicationCommandLine *cmdline,  const gchar *arg);
 		auto p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
 		
 		if(p is null)
@@ -254,54 +255,151 @@ public class ApplicationCommandLine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
-	
+
 	/**
-	 * Gets the value of a particular environment variable of the command
-	 * line invocation, as would be returned by g_getenv(). The strings may
-	 * contain non-utf8 data.
-	 * The remote application usually does not send an environment. Use
-	 * G_APPLICATION_SEND_ENVIRONMENT to affect that. Even with this flag
+	 * Gets the list of arguments that was passed on the command line.
+	 *
+	 * The strings in the array may contain non-UTF-8 data on UNIX (such as
+	 * filenames or arguments given in the system locale) but are always in
+	 * UTF-8 on Windows.
+	 *
+	 * If you wish to use the return value with #GOptionContext, you must
+	 * use g_option_context_parse_strv().
+	 *
+	 * The return value is %NULL-terminated and should be freed using
+	 * g_strfreev().
+	 *
+	 * Params:
+	 *     argc = the length of the arguments array, or %NULL
+	 *
+	 * Return: the string array
+	 *     containing the arguments (the argv)
+	 *
+	 * Since: 2.28
+	 */
+	public string[] getArguments()
+	{
+		int argc;
+		
+		return Str.toStringArray(g_application_command_line_get_arguments(gApplicationCommandLine, &argc));
+	}
+
+	/**
+	 * Gets the working directory of the command line invocation.
+	 * The string may contain non-utf8 data.
+	 *
+	 * It is possible that the remote application did not send a working
+	 * directory, so this may be %NULL.
+	 *
+	 * The return value should not be modified or freed and is valid for as
+	 * long as @cmdline exists.
+	 *
+	 * Return: the current directory, or %NULL
+	 *
+	 * Since: 2.28
+	 */
+	public string getCwd()
+	{
+		return Str.toString(g_application_command_line_get_cwd(gApplicationCommandLine));
+	}
+
+	/**
+	 * Gets the contents of the 'environ' variable of the command line
+	 * invocation, as would be returned by g_get_environ(), ie as a
+	 * %NULL-terminated list of strings in the form 'NAME=VALUE'.
+	 * The strings may contain non-utf8 data.
+	 *
+	 * The remote application usually does not send an environment.  Use
+	 * %G_APPLICATION_SEND_ENVIRONMENT to affect that.  Even with this flag
 	 * set it is possible that the environment is still not available (due
 	 * to invocation messages from other applications).
+	 *
 	 * The return value should not be modified or freed and is valid for as
-	 * long as cmdline exists.
-	 * Since 2.28
-	 * Params:
-	 * name = the environment variable to get
-	 * Returns: the value of the variable, or NULL if unset or unsent
+	 * long as @cmdline exists.
+	 *
+	 * See g_application_command_line_getenv() if you are only interested
+	 * in the value of a single environment variable.
+	 *
+	 * Return: the environment
+	 *     strings, or %NULL if they were not sent
+	 *
+	 * Since: 2.28
 	 */
-	public string getenv(string name)
+	public string[] getEnviron()
 	{
-		// const gchar * g_application_command_line_getenv (GApplicationCommandLine *cmdline,  const gchar *name);
-		return Str.toString(g_application_command_line_getenv(gApplicationCommandLine, Str.toStringz(name)));
+		return Str.toStringArray(g_application_command_line_get_environ(gApplicationCommandLine));
 	}
-	
+
 	/**
-	 * Determines if cmdline represents a remote invocation.
-	 * Since 2.28
-	 * Returns: TRUE if the invocation was remote
+	 * Gets the exit status of @cmdline.  See
+	 * g_application_command_line_set_exit_status() for more information.
+	 *
+	 * Return: the exit status
+	 *
+	 * Since: 2.28
 	 */
-	public int getIsRemote()
+	public int getExitStatus()
 	{
-		// gboolean g_application_command_line_get_is_remote  (GApplicationCommandLine *cmdline);
-		return g_application_command_line_get_is_remote(gApplicationCommandLine);
+		return g_application_command_line_get_exit_status(gApplicationCommandLine);
 	}
-	
+
 	/**
-	 * Gets the platform data associated with the invocation of cmdline.
-	 * This is a GVariant dictionary containing information about the
-	 * context in which the invocation occurred. It typically contains
+	 * Determines if @cmdline represents a remote invocation.
+	 *
+	 * Return: %TRUE if the invocation was remote
+	 *
+	 * Since: 2.28
+	 */
+	public bool getIsRemote()
+	{
+		return g_application_command_line_get_is_remote(gApplicationCommandLine) != 0;
+	}
+
+	/**
+	 * Gets the options there were passed to g_application_command_line().
+	 *
+	 * If you did not override local_command_line() then these are the same
+	 * options that were parsed according to the #GOptionEntrys added to the
+	 * application with g_application_add_main_option_entries() and possibly
+	 * modified from your GApplication::handle-local-options handler.
+	 *
+	 * If no options were sent then an empty dictionary is returned so that
+	 * you don't need to check for %NULL.
+	 *
+	 * Return: a #GVariantDict with the options
+	 *
+	 * Since: 2.40
+	 */
+	public VariantDict getOptionsDict()
+	{
+		auto p = g_application_command_line_get_options_dict(gApplicationCommandLine);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new VariantDict(cast(GVariantDict*) p);
+	}
+
+	/**
+	 * Gets the platform data associated with the invocation of @cmdline.
+	 *
+	 * This is a #GVariant dictionary containing information about the
+	 * context in which the invocation occurred.  It typically contains
 	 * information like the current working directory and the startup
 	 * notification ID.
-	 * For local invocation, it will be NULL.
-	 * Since 2.28
-	 * Returns: the platform data, or NULL. [allow-none]
+	 *
+	 * For local invocation, it will be %NULL.
+	 *
+	 * Return: the platform data, or %NULL
+	 *
+	 * Since: 2.28
 	 */
 	public Variant getPlatformData()
 	{
-		// GVariant * g_application_command_line_get_platform_data  (GApplicationCommandLine *cmdline);
 		auto p = g_application_command_line_get_platform_data(gApplicationCommandLine);
 		
 		if(p is null)
@@ -309,47 +407,92 @@ public class ApplicationCommandLine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Variant)(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p);
 	}
-	
+
+	/**
+	 * Gets the stdin of the invoking process.
+	 *
+	 * The #GInputStream can be used to read data passed to the standard
+	 * input of the invoking process.
+	 * This doesn't work on all platforms.  Presently, it is only available
+	 * on UNIX when using a DBus daemon capable of passing file descriptors.
+	 * If stdin is not available then %NULL will be returned.  In the
+	 * future, support may be expanded to other platforms.
+	 *
+	 * You must only call this function once per commandline invocation.
+	 *
+	 * Return: a #GInputStream for stdin
+	 *
+	 * Since: 2.34
+	 */
+	public InputStream getStdin()
+	{
+		auto p = g_application_command_line_get_stdin(gApplicationCommandLine);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+	}
+
+	/**
+	 * Gets the value of a particular environment variable of the command
+	 * line invocation, as would be returned by g_getenv().  The strings may
+	 * contain non-utf8 data.
+	 *
+	 * The remote application usually does not send an environment.  Use
+	 * %G_APPLICATION_SEND_ENVIRONMENT to affect that.  Even with this flag
+	 * set it is possible that the environment is still not available (due
+	 * to invocation messages from other applications).
+	 *
+	 * The return value should not be modified or freed and is valid for as
+	 * long as @cmdline exists.
+	 *
+	 * Params:
+	 *     name = the environment variable to get
+	 *
+	 * Return: the value of the variable, or %NULL if unset or unsent
+	 *
+	 * Since: 2.28
+	 */
+	public string getenv(string name)
+	{
+		return Str.toString(g_application_command_line_getenv(gApplicationCommandLine, Str.toStringz(name)));
+	}
+
 	/**
 	 * Sets the exit status that will be used when the invoking process
 	 * exits.
-	 * The return value of the "command-line" signal is
-	 * passed to this function when the handler returns. This is the usual
+	 *
+	 * The return value of the #GApplication::command-line signal is
+	 * passed to this function when the handler returns.  This is the usual
 	 * way of setting the exit status.
+	 *
 	 * In the event that you want the remote invocation to continue running
 	 * and want to decide on the exit status in the future, you can use this
-	 * call. For the case of a remote invocation, the remote process will
-	 * typically exit when the last reference is dropped on cmdline. The
+	 * call.  For the case of a remote invocation, the remote process will
+	 * typically exit when the last reference is dropped on @cmdline.  The
 	 * exit status of the remote process will be equal to the last value
 	 * that was set with this function.
+	 *
 	 * In the case that the commandline invocation is local, the situation
-	 * is slightly more complicated. If the commandline invocation results
+	 * is slightly more complicated.  If the commandline invocation results
 	 * in the mainloop running (ie: because the use-count of the application
 	 * increased to a non-zero value) then the application is considered to
 	 * have been 'successful' in a certain sense, and the exit status is
-	 * always zero. If the application use count is zero, though, the exit
-	 * status of the local GApplicationCommandLine is used.
-	 * Since 2.28
+	 * always zero.  If the application use count is zero, though, the exit
+	 * status of the local #GApplicationCommandLine is used.
+	 *
 	 * Params:
-	 * exitStatus = the exit status
+	 *     exitStatus = the exit status
+	 *
+	 * Since: 2.28
 	 */
 	public void setExitStatus(int exitStatus)
 	{
-		// void g_application_command_line_set_exit_status  (GApplicationCommandLine *cmdline,  int exit_status);
 		g_application_command_line_set_exit_status(gApplicationCommandLine, exitStatus);
-	}
-	
-	/**
-	 * Gets the exit status of cmdline. See
-	 * g_application_command_line_set_exit_status() for more information.
-	 * Since 2.28
-	 * Returns: the exit status
-	 */
-	public int getExitStatus()
-	{
-		// int g_application_command_line_get_exit_status  (GApplicationCommandLine *cmdline);
-		return g_application_command_line_get_exit_status(gApplicationCommandLine);
 	}
 }

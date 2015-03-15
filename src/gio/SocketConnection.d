@@ -16,137 +16,143 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GSocketConnection.html
- * outPack = gio
- * outFile = SocketConnection
- * strct   = GSocketConnection
- * realStrct=
- * ctorStrct=
- * clss    = SocketConnection
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_socket_connection_
- * omit structs:
- * omit prefixes:
- * 	- g_tcp_connection_
- * 	- g_unix_connection_
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.Socket
- * 	- gio.SocketAddress
- * structWrap:
- * 	- GAsyncResult* -> AsyncResultIF
- * 	- GCancellable* -> Cancellable
- * 	- GSocket* -> Socket
- * 	- GSocketAddress* -> SocketAddress
- * 	- GSocketConnection* -> SocketConnection
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.SocketConnection;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.ErrorG;
-private import glib.GException;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
+private import gio.IOStream;
 private import gio.Socket;
 private import gio.SocketAddress;
+private import glib.ErrorG;
+private import glib.GException;
+private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-
-private import gio.IOStream;
 
 /**
- * GSocketConnection is a GIOStream for a connected socket. They
- * can be created either by GSocketClient when connecting to a host,
- * or by GSocketListener when accepting a new client.
- *
- * The type of the GSocketConnection object returned from these calls
+ * #GSocketConnection is a #GIOStream for a connected socket. They
+ * can be created either by #GSocketClient when connecting to a host,
+ * or by #GSocketListener when accepting a new client.
+ * 
+ * The type of the #GSocketConnection object returned from these calls
  * depends on the type of the underlying socket that is in use. For
- * instance, for a TCP/IP connection it will be a GTcpConnection.
- *
+ * instance, for a TCP/IP connection it will be a #GTcpConnection.
+ * 
  * Choosing what type of object to construct is done with the socket
  * connection factory, and it is possible for 3rd parties to register
  * custom socket connection types for specific combination of socket
  * family/type/protocol using g_socket_connection_factory_register_type().
+ * 
+ * To close a #GSocketConnection, use g_io_stream_close(). Closing both
+ * substreams of the #GIOStream separately will not close the underlying
+ * #GSocket.
+ *
+ * Since: 2.22
  */
 public class SocketConnection : IOStream
 {
-	
 	/** the main Gtk struct */
 	protected GSocketConnection* gSocketConnection;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GSocketConnection* getSocketConnectionStruct()
 	{
 		return gSocketConnection;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gSocketConnection;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GSocketConnection* gSocketConnection)
-	{
-		super(cast(GIOStream*)gSocketConnection);
-		this.gSocketConnection = gSocketConnection;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gSocketConnection = cast(GSocketConnection*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GSocketConnection* gSocketConnection, bool ownedRef = false)
+	{
+		this.gSocketConnection = gSocketConnection;
+		super(cast(GIOStream*)gSocketConnection, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_socket_connection_get_type();
+	}
+
 	/**
-	 * Connect connection to the specified remote address.
-	 * Since 2.32
+	 * Looks up the #GType to be used when creating socket connections on
+	 * sockets with the specified @family, @type and @protocol_id.
+	 *
+	 * If no type is registered, the #GSocketConnection base type is returned.
+	 *
 	 * Params:
-	 * address = a GSocketAddress specifying the remote address.
-	 * cancellable = a GCancellable or NULL. [allow-none]
-	 * Returns: TRUE if the connection succeeded, FALSE on error
+	 *     family = a #GSocketFamily
+	 *     type = a #GSocketType
+	 *     protocolId = a protocol id
+	 *
+	 * Return: a #GType
+	 *
+	 * Since: 2.22
+	 */
+	public static GType factoryLookupType(GSocketFamily family, GSocketType type, int protocolId)
+	{
+		return g_socket_connection_factory_lookup_type(family, type, protocolId);
+	}
+
+	/**
+	 * Looks up the #GType to be used when creating socket connections on
+	 * sockets with the specified @family, @type and @protocol.
+	 *
+	 * If no type is registered, the #GSocketConnection base type is returned.
+	 *
+	 * Params:
+	 *     gType = a #GType, inheriting from %G_TYPE_SOCKET_CONNECTION
+	 *     family = a #GSocketFamily
+	 *     type = a #GSocketType
+	 *     protocol = a protocol id
+	 *
+	 * Since: 2.22
+	 */
+	public static void factoryRegisterType(GType gType, GSocketFamily family, GSocketType type, int protocol)
+	{
+		g_socket_connection_factory_register_type(gType, family, type, protocol);
+	}
+
+	/**
+	 * Connect @connection to the specified remote address.
+	 *
+	 * Params:
+	 *     address = a #GSocketAddress specifying the remote address.
+	 *     cancellable = a %GCancellable or %NULL
+	 *
+	 * Return: %TRUE if the connection succeeded, %FALSE on error
+	 *
+	 * Since: 2.32
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int connect(SocketAddress address, Cancellable cancellable)
+	public bool connect(SocketAddress address, Cancellable cancellable)
 	{
-		// gboolean g_socket_connection_connect (GSocketConnection *connection,  GSocketAddress *address,  GCancellable *cancellable,  GError **error);
 		GError* err = null;
 		
-		auto p = g_socket_connection_connect(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_connection_connect(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 		
 		if (err !is null)
 		{
@@ -155,39 +161,45 @@ public class SocketConnection : IOStream
 		
 		return p;
 	}
-	
+
 	/**
-	 * Asynchronously connect connection to the specified remote address.
-	 * This clears the "blocking" flag on connection's underlying
+	 * Asynchronously connect @connection to the specified remote address.
+	 *
+	 * This clears the #GSocket:blocking flag on @connection's underlying
 	 * socket if it is currently set.
+	 *
 	 * Use g_socket_connection_connect_finish() to retrieve the result.
-	 * Since 2.32
+	 *
 	 * Params:
-	 * address = a GSocketAddress specifying the remote address.
-	 * cancellable = a GCancellable or NULL. [allow-none]
-	 * callback = a GAsyncReadyCallback. [scope async]
-	 * userData = user data for the callback. [closure]
+	 *     address = a #GSocketAddress specifying the remote address.
+	 *     cancellable = a %GCancellable or %NULL
+	 *     callback = a #GAsyncReadyCallback
+	 *     userData = user data for the callback
+	 *
+	 * Since: 2.32
 	 */
 	public void connectAsync(SocketAddress address, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		// void g_socket_connection_connect_async (GSocketConnection *connection,  GSocketAddress *address,  GCancellable *cancellable,  GAsyncReadyCallback callback,  gpointer user_data);
 		g_socket_connection_connect_async(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
-	
+
 	/**
 	 * Gets the result of a g_socket_connection_connect_async() call.
-	 * Since 2.32
+	 *
 	 * Params:
-	 * result = the GAsyncResult
-	 * Returns: TRUE if the connection succeeded, FALSE on error
+	 *     result = the #GAsyncResult
+	 *
+	 * Return: %TRUE if the connection succeeded, %FALSE on error
+	 *
+	 * Since: 2.32
+	 *
 	 * Throws: GException on failure.
 	 */
-	public int connectFinish(AsyncResultIF result)
+	public bool connectFinish(AsyncResultIF result)
 	{
-		// gboolean g_socket_connection_connect_finish (GSocketConnection *connection,  GAsyncResult *result,  GError **error);
 		GError* err = null;
 		
-		auto p = g_socket_connection_connect_finish(gSocketConnection, (result is null) ? null : result.getAsyncResultTStruct(), &err);
+		auto p = g_socket_connection_connect_finish(gSocketConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 		
 		if (err !is null)
 		{
@@ -196,28 +208,19 @@ public class SocketConnection : IOStream
 		
 		return p;
 	}
-	
-	/**
-	 * Checks if connection is connected. This is equivalent to calling
-	 * g_socket_is_connected() on connection's underlying GSocket.
-	 * Since 2.32
-	 * Returns: whether connection is connected
-	 */
-	public int isConnected()
-	{
-		// gboolean g_socket_connection_is_connected (GSocketConnection *connection);
-		return g_socket_connection_is_connected(gSocketConnection);
-	}
-	
+
 	/**
 	 * Try to get the local address of a socket connection.
-	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref(). [transfer full]
+	 *
+	 * Return: a #GSocketAddress or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: GException on failure.
 	 */
 	public SocketAddress getLocalAddress()
 	{
-		// GSocketAddress * g_socket_connection_get_local_address  (GSocketConnection *connection,  GError **error);
 		GError* err = null;
 		
 		auto p = g_socket_connection_get_local_address(gSocketConnection, &err);
@@ -227,24 +230,33 @@ public class SocketConnection : IOStream
 			throw new GException( new ErrorG(err) );
 		}
 		
-		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
 	}
-	
+
 	/**
 	 * Try to get the remote address of a socket connection.
-	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. Free the returned object with g_object_unref(). [transfer full]
+	 *
+	 * Since GLib 2.40, when used with g_socket_client_connect() or
+	 * g_socket_client_connect_async(), during emission of
+	 * %G_SOCKET_CLIENT_CONNECTING, this function will return the remote
+	 * address that will be used for the connection.  This allows
+	 * applications to print e.g. "Connecting to example.com
+	 * (10.42.77.3)...".
+	 *
+	 * Return: a #GSocketAddress or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Since: 2.22
+	 *
 	 * Throws: GException on failure.
 	 */
 	public SocketAddress getRemoteAddress()
 	{
-		// GSocketAddress * g_socket_connection_get_remote_address  (GSocketConnection *connection,  GError **error);
 		GError* err = null;
 		
 		auto p = g_socket_connection_get_remote_address(gSocketConnection, &err);
@@ -254,25 +266,25 @@ public class SocketConnection : IOStream
 			throw new GException( new ErrorG(err) );
 		}
 		
-		
 		if(p is null)
 		{
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
 	}
-	
+
 	/**
-	 * Gets the underlying GSocket object of the connection.
+	 * Gets the underlying #GSocket object of the connection.
 	 * This can be useful if you want to do something unusual on it
-	 * not supported by the GSocketConnection APIs.
-	 * Since 2.22
-	 * Returns: a GSocketAddress or NULL on error. [transfer none]
+	 * not supported by the #GSocketConnection APIs.
+	 *
+	 * Return: a #GSocketAddress or %NULL on error.
+	 *
+	 * Since: 2.22
 	 */
 	public Socket getSocket()
 	{
-		// GSocket * g_socket_connection_get_socket (GSocketConnection *connection);
 		auto p = g_socket_connection_get_socket(gSocketConnection);
 		
 		if(p is null)
@@ -282,59 +294,17 @@ public class SocketConnection : IOStream
 		
 		return ObjectG.getDObject!(Socket)(cast(GSocket*) p);
 	}
-	
+
 	/**
-	 * Creates a GSocketConnection subclass of the right type for
-	 * socket.
-	 * Since 2.22
-	 * Params:
-	 * socket = a GSocket
-	 * Returns: a GSocketConnection. [transfer full]
+	 * Checks if @connection is connected. This is equivalent to calling
+	 * g_socket_is_connected() on @connection's underlying #GSocket.
+	 *
+	 * Return: whether @connection is connected
+	 *
+	 * Since: 2.32
 	 */
-	public static SocketConnection factoryCreateConnection(Socket socket)
+	public bool isConnected()
 	{
-		// GSocketConnection * g_socket_connection_factory_create_connection  (GSocket *socket);
-		auto p = g_socket_connection_factory_create_connection((socket is null) ? null : socket.getSocketStruct());
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p);
-	}
-	
-	/**
-	 * Looks up the GType to be used when creating socket connections on
-	 * sockets with the specified family, type and protocol_id.
-	 * If no type is registered, the GSocketConnection base type is returned.
-	 * Since 2.22
-	 * Params:
-	 * family = a GSocketFamily
-	 * type = a GSocketType
-	 * protocolId = a protocol id
-	 * Returns: a GType
-	 */
-	public static GType factoryLookupType(GSocketFamily family, GSocketType type, int protocolId)
-	{
-		// GType g_socket_connection_factory_lookup_type  (GSocketFamily family,  GSocketType type,  gint protocol_id);
-		return g_socket_connection_factory_lookup_type(family, type, protocolId);
-	}
-	
-	/**
-	 * Looks up the GType to be used when creating socket connections on
-	 * sockets with the specified family, type and protocol.
-	 * If no type is registered, the GSocketConnection base type is returned.
-	 * Since 2.22
-	 * Params:
-	 * gType = a GType, inheriting from G_TYPE_SOCKET_CONNECTION
-	 * family = a GSocketFamily
-	 * type = a GSocketType
-	 * protocol = a protocol id
-	 */
-	public static void factoryRegisterType(GType gType, GSocketFamily family, GSocketType type, int protocol)
-	{
-		// void g_socket_connection_factory_register_type  (GType g_type,  GSocketFamily family,  GSocketType type,  gint protocol);
-		g_socket_connection_factory_register_type(gType, family, type, protocol);
+		return g_socket_connection_is_connected(gSocketConnection) != 0;
 	}
 }

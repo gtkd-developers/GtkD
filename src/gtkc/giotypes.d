@@ -16,821 +16,1976 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gtkc.giotypes;
 
+module gtkc.giotypes;
 
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
-
-enum GResolverRecordType
-{
-	SRV = 1,
-	MX,
-	TXT,
-	SOA,
-	NS
-}
-alias GResolverRecordType ResolverRecordType;
-
 /**
- * Flags used when querying a GFileInfo.
- * G_FILE_QUERY_INFO_NONE
- * No flags set.
- * G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS
- * Don't follow symlinks.
- */
-public enum GFileQueryInfoFlags
-{
-	NONE = 0,
-	NOFOLLOW_SYMLINKS = (1 << 0) /+*< nick=nofollow-symlinks >+/
-}
-alias GFileQueryInfoFlags FileQueryInfoFlags;
-
-/**
- * Flags used when an operation may create a file.
- * G_FILE_CREATE_NONE
- * No flags set.
- * G_FILE_CREATE_PRIVATE
- * Create a file that can only be
- *  accessed by the current user.
- * G_FILE_CREATE_REPLACE_DESTINATION
- * Replace the destination
- *  as if it didn't exist before. Don't try to keep any old
- *  permissions, replace instead of following links. This
- *  is generally useful if you're doing a "copy over"
- *  rather than a "save new version of" replace operation.
- *  You can think of it as "unlink destination" before
- *  writing to it, although the implementation may not
- *  be exactly like that. Since 2.20
- */
-public enum GFileCreateFlags
-{
-	NONE = 0,
-	PRIVATE = (1 << 0),
-	REPLACE_DESTINATION = (1 << 1)
-}
-alias GFileCreateFlags FileCreateFlags;
-
-/**
- * Flags used when copying or moving files.
- * G_FILE_COPY_NONE
- * No flags set.
- * G_FILE_COPY_OVERWRITE
- * Overwrite any existing files
- * G_FILE_COPY_BACKUP
- * Make a backup of any existing files.
- * G_FILE_COPY_NOFOLLOW_SYMLINKS
- * Don't follow symlinks.
- * G_FILE_COPY_ALL_METADATA
- * Copy all file metadata instead of just default set used for copy (see GFileInfo).
- * G_FILE_COPY_NO_FALLBACK_FOR_MOVE
- * Don't use copy and delete fallback if native move not supported.
- * G_FILE_COPY_TARGET_DEFAULT_PERMS
- * Leaves target file with default perms, instead of setting the source file perms.
- */
-public enum GFileCopyFlags
-{
-	NONE = 0, /+*< nick=none >+/
-	OVERWRITE = (1 << 0),
-	BACKUP = (1 << 1),
-	NOFOLLOW_SYMLINKS = (1 << 2),
-	ALL_METADATA = (1 << 3),
-	NO_FALLBACK_FOR_MOVE = (1 << 4),
-	TARGET_DEFAULT_PERMS = (1 << 5)
-}
-alias GFileCopyFlags FileCopyFlags;
-
-/**
- * Flags used to set what a GFileMonitor will watch for.
- * G_FILE_MONITOR_NONE
- * No flags set.
- * G_FILE_MONITOR_WATCH_MOUNTS
- * Watch for mount events.
- * G_FILE_MONITOR_SEND_MOVED
- * Pair DELETED and CREATED events caused
- *  by file renames (moves) and send a single G_FILE_MONITOR_EVENT_MOVED
- *  event instead (NB: not supported on all backends; the default
- *  behaviour -without specifying this flag- is to send single DELETED
- *  and CREATED events).
- * G_FILE_MONITOR_WATCH_HARD_LINKS
- * Watch for changes to the file made
- *  via another hard link. Since 2.36.
- */
-public enum GFileMonitorFlags
-{
-	NONE = 0,
-	WATCH_MOUNTS = (1 << 0),
-	SEND_MOVED = (1 << 1),
-	WATCH_HARD_LINKS = (1 << 2)
-}
-alias GFileMonitorFlags FileMonitorFlags;
-
-/**
- * Flags that can be used with g_file_measure_disk_usage().
- * G_FILE_MEASURE_NONE
- * No flags set.
- * G_FILE_MEASURE_REPORT_ANY_ERROR
- * Report any error encountered
- *  while traversing the directory tree. Normally errors are only
- *  reported for the toplevel file.
- * G_FILE_MEASURE_APPARENT_SIZE
- * Tally usage based on apparent file
- *  sizes. Normally, the block-size is used, if available, as this is a
- *  more accurate representation of disk space used.
- *  Compare with 'du --apparent-size'.
- * G_FILE_MEASURE_NO_XDEV
- * Do not cross mount point boundaries.
- *  Compare with 'du -x'.
- * Since 2.38
- */
-public enum GFileMeasureFlags
-{
-	NONE = 0,
-	REPORT_ANY_ERROR = (1 << 1),
-	APPARENT_SIZE = (1 << 2),
-	NO_XDEV = (1 << 3)
-}
-alias GFileMeasureFlags FileMeasureFlags;
-
-/**
- * Indicates a hint from the file system whether files should be
- * previewed in a file manager. Returned as the value of the key
- * G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
- * G_FILESYSTEM_PREVIEW_TYPE_IF_ALWAYS
- * Only preview files if user has explicitly requested it.
- * G_FILESYSTEM_PREVIEW_TYPE_IF_LOCAL
- * Preview files if user has requested preview of "local" files.
- * G_FILESYSTEM_PREVIEW_TYPE_NEVER
- * Never preview files.
- */
-public enum GFilesystemPreviewType
-{
-	TYPE_IF_ALWAYS = 0,
-	TYPE_IF_LOCAL,
-	TYPE_NEVER
-}
-alias GFilesystemPreviewType FilesystemPreviewType;
-
-/**
- * The data types for file attributes.
- * G_FILE_ATTRIBUTE_TYPE_INVALID
- * indicates an invalid or uninitalized type.
- * G_FILE_ATTRIBUTE_TYPE_STRING
- * a null terminated UTF8 string.
- * G_FILE_ATTRIBUTE_TYPE_BYTE_STRING
- * a zero terminated string of non-zero bytes.
- * G_FILE_ATTRIBUTE_TYPE_BOOLEAN
- * a boolean value.
- * G_FILE_ATTRIBUTE_TYPE_UINT32
- * an unsigned 4-byte/32-bit integer.
- * G_FILE_ATTRIBUTE_TYPE_INT32
- * a signed 4-byte/32-bit integer.
- * G_FILE_ATTRIBUTE_TYPE_UINT64
- * an unsigned 8-byte/64-bit integer.
- * G_FILE_ATTRIBUTE_TYPE_INT64
- * a signed 8-byte/64-bit integer.
- * G_FILE_ATTRIBUTE_TYPE_OBJECT
- * a GObject.
- * G_FILE_ATTRIBUTE_TYPE_STRINGV
- * a NULL terminated char **. Since 2.22
- */
-public enum GFileAttributeType
-{
-	TYPE_INVALID = 0,
-	TYPE_STRING,
-	TYPE_BYTE_STRING, /+* zero terminated string of non-zero bytes +/
-	TYPE_BOOLEAN,
-	TYPE_UINT32,
-	TYPE_INT32,
-	TYPE_UINT64,
-	TYPE_INT64,
-	TYPE_OBJECT,
-	TYPE_STRINGV
-}
-alias GFileAttributeType FileAttributeType;
-
-/**
- * Flags specifying the behaviour of an attribute.
- * G_FILE_ATTRIBUTE_INFO_NONE
- * no flags set.
- * G_FILE_ATTRIBUTE_INFO_COPY_WITH_FILE
- * copy the attribute values when the file is copied.
- * G_FILE_ATTRIBUTE_INFO_COPY_WHEN_MOVED
- * copy the attribute values when the file is moved.
- */
-public enum GFileAttributeInfoFlags
-{
-	NONE = 0,
-	COPY_WITH_FILE = (1 << 0),
-	COPY_WHEN_MOVED = (1 << 1)
-}
-alias GFileAttributeInfoFlags FileAttributeInfoFlags;
-
-/**
- * Used by g_file_set_attributes_from_info() when setting file attributes.
- * G_FILE_ATTRIBUTE_STATUS_UNSET
- * Attribute value is unset (empty).
- * G_FILE_ATTRIBUTE_STATUS_SET
- * Attribute value is set.
- * G_FILE_ATTRIBUTE_STATUS_ERROR_SETTING
- * Indicates an error in setting the value.
- */
-public enum GFileAttributeStatus
-{
-	UNSET = 0,
-	SET,
-	ERROR_SETTING
-}
-alias GFileAttributeStatus FileAttributeStatus;
-
-/**
- * Indicates the file's on-disk type.
- * G_FILE_TYPE_UNKNOWN
- * File's type is unknown.
- * G_FILE_TYPE_REGULAR
- * File handle represents a regular file.
- * G_FILE_TYPE_DIRECTORY
- * File handle represents a directory.
- * G_FILE_TYPE_SYMBOLIC_LINK
- * File handle represents a symbolic link
- *  (Unix systems).
- * G_FILE_TYPE_SPECIAL
- * File is a "special" file, such as a socket, fifo,
- *  block device, or character device.
- * G_FILE_TYPE_SHORTCUT
- * File is a shortcut (Windows systems).
- * G_FILE_TYPE_MOUNTABLE
- * File is a mountable location.
- */
-public enum GFileType
-{
-	TYPE_UNKNOWN = 0,
-	TYPE_REGULAR,
-	TYPE_DIRECTORY,
-	TYPE_SYMBOLIC_LINK,
-	TYPE_SPECIAL, /+* socket, fifo, blockdev, chardev +/
-	TYPE_SHORTCUT,
-	TYPE_MOUNTABLE
-}
-alias GFileType FileType;
-
-/**
- * Error codes returned by GIO functions.
- * G_IO_ERROR_FAILED
- * Generic error condition for when any operation fails.
- * G_IO_ERROR_NOT_FOUND
- * File not found.
- * G_IO_ERROR_EXISTS
- * File already exists.
- * G_IO_ERROR_IS_DIRECTORY
- * File is a directory.
- * G_IO_ERROR_NOT_DIRECTORY
- * File is not a directory.
- * G_IO_ERROR_NOT_EMPTY
- * File is a directory that isn't empty.
- * G_IO_ERROR_NOT_REGULAR_FILE
- * File is not a regular file.
- * G_IO_ERROR_NOT_SYMBOLIC_LINK
- * File is not a symbolic link.
- * G_IO_ERROR_NOT_MOUNTABLE_FILE
- * File cannot be mounted.
- * G_IO_ERROR_FILENAME_TOO_LONG
- * Filename is too many characters.
- * G_IO_ERROR_INVALID_FILENAME
- * Filename is invalid or contains invalid characters.
- * G_IO_ERROR_TOO_MANY_LINKS
- * File contains too many symbolic links.
- * G_IO_ERROR_NO_SPACE
- * No space left on drive.
- * G_IO_ERROR_INVALID_ARGUMENT
- * Invalid argument.
- * G_IO_ERROR_PERMISSION_DENIED
- * Permission denied.
- * G_IO_ERROR_NOT_SUPPORTED
- * Operation not supported for the current backend.
- * G_IO_ERROR_NOT_MOUNTED
- * File isn't mounted.
- * G_IO_ERROR_ALREADY_MOUNTED
- * File is already mounted.
- * G_IO_ERROR_CLOSED
- * File was closed.
- * G_IO_ERROR_CANCELLED
- * Operation was cancelled. See GCancellable.
- * G_IO_ERROR_PENDING
- * Operations are still pending.
- * G_IO_ERROR_READ_ONLY
- * File is read only.
- * G_IO_ERROR_CANT_CREATE_BACKUP
- * Backup couldn't be created.
- * G_IO_ERROR_WRONG_ETAG
- * File's Entity Tag was incorrect.
- * G_IO_ERROR_TIMED_OUT
- * Operation timed out.
- * G_IO_ERROR_WOULD_RECURSE
- * Operation would be recursive.
- * G_IO_ERROR_BUSY
- * File is busy.
- * G_IO_ERROR_WOULD_BLOCK
- * Operation would block.
- * G_IO_ERROR_HOST_NOT_FOUND
- * Host couldn't be found (remote operations).
- * G_IO_ERROR_WOULD_MERGE
- * Operation would merge files.
- * G_IO_ERROR_FAILED_HANDLED
- * Operation failed and a helper program has
- *  already interacted with the user. Do not display any error dialog.
- * G_IO_ERROR_TOO_MANY_OPEN_FILES
- * The current process has too many files
- *  open and can't open any more. Duplicate descriptors do count toward
- *  this limit. Since 2.20
- * G_IO_ERROR_NOT_INITIALIZED
- * The object has not been initialized. Since 2.22
- * G_IO_ERROR_ADDRESS_IN_USE
- * The requested address is already in use. Since 2.22
- * G_IO_ERROR_PARTIAL_INPUT
- * Need more input to finish operation. Since 2.24
- * G_IO_ERROR_INVALID_DATA
- * The input data was invalid. Since 2.24
- * G_IO_ERROR_DBUS_ERROR
- * A remote object generated an error that
- *  doesn't correspond to a locally registered GError error
- *  domain. Use g_dbus_error_get_remote_error() to extract the D-Bus
- *  error name and g_dbus_error_strip_remote_error() to fix up the
- *  message so it matches what was received on the wire. Since 2.26.
- * G_IO_ERROR_HOST_UNREACHABLE
- * Host unreachable. Since 2.26
- * G_IO_ERROR_NETWORK_UNREACHABLE
- * Network unreachable. Since 2.26
- * G_IO_ERROR_CONNECTION_REFUSED
- * Connection refused. Since 2.26
- * G_IO_ERROR_PROXY_FAILED
- * Connection to proxy server failed. Since 2.26
- * G_IO_ERROR_PROXY_AUTH_FAILED
- * Proxy authentication failed. Since 2.26
- * G_IO_ERROR_PROXY_NEED_AUTH
- * Proxy server needs authentication. Since 2.26
- * G_IO_ERROR_PROXY_NOT_ALLOWED
- * Proxy connection is not allowed by ruleset.
- *  Since 2.26
- * G_IO_ERROR_BROKEN_PIPE
- * Broken pipe. Since 2.36
- */
-public enum GIOErrorEnum
-{
-	FAILED,
-	NOT_FOUND,
-	EXISTS,
-	IS_DIRECTORY,
-	NOT_DIRECTORY,
-	NOT_EMPTY,
-	NOT_REGULAR_FILE,
-	NOT_SYMBOLIC_LINK,
-	NOT_MOUNTABLE_FILE,
-	FILENAME_TOO_LONG,
-	INVALID_FILENAME,
-	TOO_MANY_LINKS,
-	NO_SPACE,
-	INVALID_ARGUMENT,
-	PERMISSION_DENIED,
-	NOT_SUPPORTED,
-	NOT_MOUNTED,
-	ALREADY_MOUNTED,
-	CLOSED,
-	CANCELLED,
-	PENDING,
-	READ_ONLY,
-	CANT_CREATE_BACKUP,
-	WRONG_ETAG,
-	TIMED_OUT,
-	WOULD_RECURSE,
-	BUSY,
-	WOULD_BLOCK,
-	HOST_NOT_FOUND,
-	WOULD_MERGE,
-	FAILED_HANDLED,
-	TOO_MANY_OPEN_FILES,
-	NOT_INITIALIZED,
-	ADDRESS_IN_USE,
-	PARTIAL_INPUT,
-	INVALID_DATA,
-	DBUS_ERROR,
-	HOST_UNREACHABLE,
-	NETWORK_UNREACHABLE,
-	CONNECTION_REFUSED,
-	PROXY_FAILED,
-	PROXY_AUTH_FAILED,
-	PROXY_NEED_AUTH,
-	PROXY_NOT_ALLOWED,
-	BROKEN_PIPE
-}
-alias GIOErrorEnum IOErrorEnum;
-
-/**
- * GAskPasswordFlags are used to request specific information from the
- * user, or to notify the user of their choices in an authentication
- * situation.
- * G_ASK_PASSWORD_NEED_PASSWORD
- * operation requires a password.
- * G_ASK_PASSWORD_NEED_USERNAME
- * operation requires a username.
- * G_ASK_PASSWORD_NEED_DOMAIN
- * operation requires a domain.
- * G_ASK_PASSWORD_SAVING_SUPPORTED
- * operation supports saving settings.
- * G_ASK_PASSWORD_ANONYMOUS_SUPPORTED
- * operation supports anonymous users.
- */
-public enum GAskPasswordFlags
-{
-	NEED_PASSWORD = (1 << 0),
-	NEED_USERNAME = (1 << 1),
-	NEED_DOMAIN = (1 << 2),
-	SAVING_SUPPORTED = (1 << 3),
-	ANONYMOUS_SUPPORTED = (1 << 4)
-}
-alias GAskPasswordFlags AskPasswordFlags;
-
-/**
- * GPasswordSave is used to indicate the lifespan of a saved password.
- * Gvfs stores passwords in the Gnome keyring when this flag allows it
- * to, and later retrieves it again from there.
- * G_PASSWORD_SAVE_NEVER
- * never save a password.
- * G_PASSWORD_SAVE_FOR_SESSION
- * save a password for the session.
- * G_PASSWORD_SAVE_PERMANENTLY
- * save a password permanently.
- */
-public enum GPasswordSave
-{
-	NEVER,
-	FOR_SESSION,
-	PERMANENTLY
-}
-alias GPasswordSave PasswordSave;
-
-/**
- * GMountOperationResult is returned as a result when a request for
- * information is send by the mounting operation.
- * G_MOUNT_OPERATION_HANDLED
- * The request was fulfilled and the
- *  user specified data is now available
- * G_MOUNT_OPERATION_ABORTED
- * The user requested the mount operation
- *  to be aborted
- * G_MOUNT_OPERATION_UNHANDLED
- * The request was unhandled (i.e. not
- *  implemented)
- */
-public enum GMountOperationResult
-{
-	HANDLED,
-	ABORTED,
-	UNHANDLED
-}
-alias GMountOperationResult MountOperationResult;
-
-/**
- * Specifies what type of event a monitor event is.
- * G_FILE_MONITOR_EVENT_CHANGED
- * a file changed.
- * G_FILE_MONITOR_EVENT_CHANGES_DONE_HINT
- * a hint that this was probably the last change in a set of changes.
- * G_FILE_MONITOR_EVENT_DELETED
- * a file was deleted.
- * G_FILE_MONITOR_EVENT_CREATED
- * a file was created.
- * G_FILE_MONITOR_EVENT_ATTRIBUTE_CHANGED
- * a file attribute was changed.
- * G_FILE_MONITOR_EVENT_PRE_UNMOUNT
- * the file location will soon be unmounted.
- * G_FILE_MONITOR_EVENT_UNMOUNTED
- * the file location was unmounted.
- * G_FILE_MONITOR_EVENT_MOVED
- * the file was moved.
- */
-public enum GFileMonitorEvent
-{
-	CHANGED,
-	CHANGES_DONE_HINT,
-	DELETED,
-	CREATED,
-	ATTRIBUTE_CHANGED,
-	PRE_UNMOUNT,
-	UNMOUNTED,
-	MOVED
-}
-alias GFileMonitorEvent FileMonitorEvent;
-
-/**
- * Results returned from g_converter_convert().
- * G_CONVERTER_ERROR
- * There was an error during conversion.
- * G_CONVERTER_CONVERTED
- * Some data was consumed or produced
- * G_CONVERTER_FINISHED
- * The conversion is finished
- * G_CONVERTER_FLUSHED
- * Flushing is finished
- * Since 2.24
- */
-public enum GConverterResult
-{
-	ERROR = 0, /+*< nick=error >+/
-	CONVERTED = 1, /+*< nick=converted >+/
-	FINISHED = 2, /+*< nick=finished >+/
-	FLUSHED = 3 /+*< nick=flushed >+/
-}
-alias GConverterResult ConverterResult;
-
-/**
- * Flags used when calling a g_converter_convert().
- * G_CONVERTER_NO_FLAGS
- * No flags.
- * G_CONVERTER_INPUT_AT_END
- * At end of input data
- * G_CONVERTER_FLUSH
- * Flush data
- * Since 2.24
- */
-public enum GConverterFlags
-{
-	NO_FLAGS = 0, /+*< nick=none >+/
-	INPUT_AT_END = (1 << 0), /+*< nick=input-at-end >+/
-	FLUSH = (1 << 1) /+*< nick=flush >+/
-}
-alias GConverterFlags ConverterFlags;
-
-/**
- * Used to select the type of data format to use for GZlibDecompressor
- * and GZlibCompressor.
- * G_ZLIB_COMPRESSOR_FORMAT_ZLIB
- * deflate compression with zlib header
- * G_ZLIB_COMPRESSOR_FORMAT_GZIP
- * gzip file format
- * G_ZLIB_COMPRESSOR_FORMAT_RAW
- * deflate compression with no header
- * Since 2.24
- */
-public enum GZlibCompressorFormat
-{
-	ZLIB,
-	GZIP,
-	RAW
-}
-alias GZlibCompressorFormat ZlibCompressorFormat;
-
-/**
- * GOutputStreamSpliceFlags determine how streams should be spliced.
- * G_OUTPUT_STREAM_SPLICE_NONE
- * Do not close either stream.
- * G_OUTPUT_STREAM_SPLICE_CLOSE_SOURCE
- * Close the source stream after
- *  the splice.
- * G_OUTPUT_STREAM_SPLICE_CLOSE_TARGET
- * Close the target stream after
- *  the splice.
- */
-public enum GOutputStreamSpliceFlags
-{
-	NONE = 0,
-	CLOSE_SOURCE = (1 << 0),
-	CLOSE_TARGET = (1 << 1)
-}
-alias GOutputStreamSpliceFlags OutputStreamSpliceFlags;
-
-/**
- * GIOStreamSpliceFlags determine how streams should be spliced.
- * G_IO_STREAM_SPLICE_NONE
- * Do not close either stream.
- * G_IO_STREAM_SPLICE_CLOSE_STREAM1
- * Close the first stream after
- *  the splice.
- * G_IO_STREAM_SPLICE_CLOSE_STREAM2
- * Close the second stream after
- *  the splice.
- * G_IO_STREAM_SPLICE_WAIT_FOR_BOTH
- * Wait for both splice operations to finish
- *  before calling the callback.
- * Since 2.28
- */
-public enum GIOStreamSpliceFlags
-{
-	NONE = 0,
-	CLOSE_STREAM1 = (1 << 0),
-	CLOSE_STREAM2 = (1 << 1),
-	WAIT_FOR_BOTH = (1 << 2)
-}
-alias GIOStreamSpliceFlags IOStreamSpliceFlags;
-
-/**
- * GDataStreamByteOrder is used to ensure proper endianness of streaming data sources
- * across various machine architectures.
- * G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN
- * Selects Big Endian byte order.
- * G_DATA_STREAM_BYTE_ORDER_LITTLE_ENDIAN
- * Selects Little Endian byte order.
- * G_DATA_STREAM_BYTE_ORDER_HOST_ENDIAN
- * Selects endianness based on host machine's architecture.
- */
-public enum GDataStreamByteOrder
-{
-	BIG_ENDIAN,
-	LITTLE_ENDIAN,
-	HOST_ENDIAN
-}
-alias GDataStreamByteOrder DataStreamByteOrder;
-
-/**
- * GDataStreamNewlineType is used when checking for or setting the line endings for a given file.
- * G_DATA_STREAM_NEWLINE_TYPE_LF
- * Selects "LF" line endings, common on most modern UNIX platforms.
- * G_DATA_STREAM_NEWLINE_TYPE_CR
- * Selects "CR" line endings.
- * G_DATA_STREAM_NEWLINE_TYPE_CR_LF
- * Selects "CR, LF" line ending, common on Microsoft Windows.
- * G_DATA_STREAM_NEWLINE_TYPE_ANY
- * Automatically try to handle any line ending type.
- */
-public enum GDataStreamNewlineType
-{
-	TYPE_LF,
-	TYPE_CR,
-	TYPE_CR_LF,
-	TYPE_ANY
-}
-alias GDataStreamNewlineType DataStreamNewlineType;
-
-/**
- * Flags used when creating a GAppInfo.
- * G_APP_INFO_CREATE_NONE
- * No flags.
- * G_APP_INFO_CREATE_NEEDS_TERMINAL
- * Application opens in a terminal window.
- * G_APP_INFO_CREATE_SUPPORTS_URIS
- * Application supports URI arguments.
- * G_APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION
- * Application supports startup notification. Since 2.26
+ * Flags used when creating a #GAppInfo.
  */
 public enum GAppInfoCreateFlags
 {
-	NONE = 0, /+*< nick=none >+/
-	NEEDS_TERMINAL = (1 << 0), /+*< nick=needs-terminal >+/
-	SUPPORTS_URIS = (1 << 1), /+*< nick=supports-uris >+/
-	SUPPORTS_STARTUP_NOTIFICATION = (1 << 2) /+*< nick=supports-startup-notification >+/
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
+	/**
+	 * Application opens in a terminal window.
+	 */
+	NEEDS_TERMINAL = 1,
+	/**
+	 * Application supports URI arguments.
+	 */
+	SUPPORTS_URIS = 2,
+	/**
+	 * Application supports startup notification. Since 2.26
+	 */
+	SUPPORTS_STARTUP_NOTIFICATION = 4,
 }
 alias GAppInfoCreateFlags AppInfoCreateFlags;
 
 /**
- * Flags used when mounting a mount.
- * G_MOUNT_MOUNT_NONE
- * No flags set.
+ * Flags used to define the behaviour of a #GApplication.
+ *
+ * Since: 2.28
  */
-public enum GMountMountFlags
+public enum GApplicationFlags
 {
-	NONE = 0
+	/**
+	 * Default
+	 */
+	FLAGS_NONE = 0,
+	/**
+	 * Run as a service. In this mode, registration
+	 * fails if the service is already running, and the application
+	 * will initially wait up to 10 seconds for an initial activation
+	 * message to arrive.
+	 */
+	IS_SERVICE = 1,
+	/**
+	 * Don't try to become the primary instance.
+	 */
+	IS_LAUNCHER = 2,
+	/**
+	 * This application handles opening files (in
+	 * the primary instance). Note that this flag only affects the default
+	 * implementation of local_command_line(), and has no effect if
+	 * %G_APPLICATION_HANDLES_COMMAND_LINE is given.
+	 * See g_application_run() for details.
+	 */
+	HANDLES_OPEN = 4,
+	/**
+	 * This application handles command line
+	 * arguments (in the primary instance). Note that this flag only affect
+	 * the default implementation of local_command_line().
+	 * See g_application_run() for details.
+	 */
+	HANDLES_COMMAND_LINE = 8,
+	/**
+	 * Send the environment of the
+	 * launching process to the primary instance. Set this flag if your
+	 * application is expected to behave differently depending on certain
+	 * environment variables. For instance, an editor might be expected
+	 * to use the <envar>GIT_COMMITTER_NAME</envar> environment variable
+	 * when editing a git commit message. The environment is available
+	 * to the #GApplication::command-line signal handler, via
+	 * g_application_command_line_getenv().
+	 */
+	SEND_ENVIRONMENT = 16,
+	/**
+	 * Make no attempts to do any of the typical
+	 * single-instance application negotiation, even if the application
+	 * ID is given.  The application neither attempts to become the
+	 * owner of the application ID nor does it check if an existing
+	 * owner already exists.  Everything occurs in the local process.
+	 * Since: 2.30.
+	 */
+	NON_UNIQUE = 32,
 }
-alias GMountMountFlags MountMountFlags;
+alias GApplicationFlags ApplicationFlags;
 
 /**
- * Flags used when an unmounting a mount.
- * G_MOUNT_UNMOUNT_NONE
- * No flags set.
- * G_MOUNT_UNMOUNT_FORCE
- * Unmount even if there are outstanding
- *  file operations on the mount.
+ * #GAskPasswordFlags are used to request specific information from the
+ * user, or to notify the user of their choices in an authentication
+ * situation.
  */
-public enum GMountUnmountFlags
+public enum GAskPasswordFlags
 {
-	NONE = 0,
-	FORCE = (1 << 0)
+	/**
+	 * operation requires a password.
+	 */
+	NEED_PASSWORD = 1,
+	/**
+	 * operation requires a username.
+	 */
+	NEED_USERNAME = 2,
+	/**
+	 * operation requires a domain.
+	 */
+	NEED_DOMAIN = 4,
+	/**
+	 * operation supports saving settings.
+	 */
+	SAVING_SUPPORTED = 8,
+	/**
+	 * operation supports anonymous users.
+	 */
+	ANONYMOUS_SUPPORTED = 16,
 }
-alias GMountUnmountFlags MountUnmountFlags;
+alias GAskPasswordFlags AskPasswordFlags;
+
+/**
+ * Flags used in g_bus_own_name().
+ *
+ * Since: 2.26
+ */
+public enum GBusNameOwnerFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Allow another message bus connection to claim the name.
+	 */
+	ALLOW_REPLACEMENT = 1,
+	/**
+	 * If another message bus connection owns the name and have
+	 * specified #G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
+	 */
+	REPLACE = 2,
+}
+alias GBusNameOwnerFlags BusNameOwnerFlags;
+
+/**
+ * Flags used in g_bus_watch_name().
+ *
+ * Since: 2.26
+ */
+public enum GBusNameWatcherFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * If no-one owns the name when
+	 * beginning to watch the name, ask the bus to launch an owner for the
+	 * name.
+	 */
+	AUTO_START = 1,
+}
+alias GBusNameWatcherFlags BusNameWatcherFlags;
+
+/**
+ * An enumeration for well-known message buses.
+ *
+ * Since: 2.26
+ */
+public enum GBusType
+{
+	/**
+	 * An alias for the message bus that activated the process, if any.
+	 */
+	STARTER = -1,
+	/**
+	 * Not a message bus.
+	 */
+	NONE = 0,
+	/**
+	 * The system-wide message bus.
+	 */
+	SYSTEM = 1,
+	/**
+	 * The login session message bus.
+	 */
+	SESSION = 2,
+}
+alias GBusType BusType;
+
+/**
+ * Flags used when calling a g_converter_convert().
+ *
+ * Since: 2.24
+ */
+public enum GConverterFlags
+{
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
+	/**
+	 * At end of input data
+	 */
+	INPUT_AT_END = 1,
+	/**
+	 * Flush data
+	 */
+	FLUSH = 2,
+}
+alias GConverterFlags ConverterFlags;
+
+/**
+ * Results returned from g_converter_convert().
+ *
+ * Since: 2.24
+ */
+public enum GConverterResult
+{
+	/**
+	 * There was an error during conversion.
+	 */
+	ERROR = 0,
+	/**
+	 * Some data was consumed or produced
+	 */
+	CONVERTED = 1,
+	/**
+	 * The conversion is finished
+	 */
+	FINISHED = 2,
+	/**
+	 * Flushing is finished
+	 */
+	FLUSHED = 3,
+}
+alias GConverterResult ConverterResult;
+
+/**
+ * Enumeration describing different kinds of native credential types.
+ *
+ * Since: 2.26
+ */
+public enum GCredentialsType
+{
+	/**
+	 * Indicates an invalid native credential type.
+	 */
+	INVALID = 0,
+	/**
+	 * The native credentials type is a <type>struct ucred</type>.
+	 */
+	LINUX_UCRED = 1,
+	/**
+	 * The native credentials type is a <type>struct cmsgcred</type>.
+	 */
+	FREEBSD_CMSGCRED = 2,
+	/**
+	 * The native credentials type is a <type>struct unpcbid</type>.
+	 */
+	NETBSD_UNPCBID = 3,
+	/**
+	 * The native credentials type is a <type>struct sockpeercred</type>. Added in 2.30.
+	 */
+	OPENBSD_SOCKPEERCRED = 4,
+	/**
+	 * The native credentials type is a <type>ucred_t</type>. Added in 2.40.
+	 */
+	SOLARIS_UCRED = 5,
+}
+alias GCredentialsType CredentialsType;
+
+/**
+ * Flags used in g_dbus_connection_call() and similar APIs.
+ *
+ * Since: 2.26
+ */
+public enum GDBusCallFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * The bus must not launch
+	 * an owner for the destination name in response to this method
+	 * invocation.
+	 */
+	NO_AUTO_START = 1,
+}
+alias GDBusCallFlags DBusCallFlags;
+
+/**
+ * Capabilities negotiated with the remote peer.
+ *
+ * Since: 2.26
+ */
+public enum GDBusCapabilityFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * The connection
+	 * supports exchanging UNIX file descriptors with the remote peer.
+	 */
+	UNIX_FD_PASSING = 1,
+}
+alias GDBusCapabilityFlags DBusCapabilityFlags;
+
+/**
+ * Flags used when creating a new #GDBusConnection.
+ *
+ * Since: 2.26
+ */
+public enum GDBusConnectionFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Perform authentication against server.
+	 */
+	AUTHENTICATION_CLIENT = 1,
+	/**
+	 * Perform authentication against client.
+	 */
+	AUTHENTICATION_SERVER = 2,
+	/**
+	 * When
+	 * authenticating as a server, allow the anonymous authentication
+	 * method.
+	 */
+	AUTHENTICATION_ALLOW_ANONYMOUS = 4,
+	/**
+	 * Pass this flag if connecting to a peer that is a
+	 * message bus. This means that the Hello() method will be invoked as part of the connection setup.
+	 */
+	MESSAGE_BUS_CONNECTION = 8,
+	/**
+	 * If set, processing of D-Bus messages is
+	 * delayed until g_dbus_connection_start_message_processing() is called.
+	 */
+	DELAY_MESSAGE_PROCESSING = 16,
+}
+alias GDBusConnectionFlags DBusConnectionFlags;
+
+/**
+ * Error codes for the %G_DBUS_ERROR error domain.
+ *
+ * Since: 2.26
+ */
+public enum GDBusError
+{
+	/**
+	 * A generic error; "something went wrong" - see the error message for
+	 * more.
+	 */
+	FAILED = 0,
+	/**
+	 * There was not enough memory to complete an operation.
+	 */
+	NO_MEMORY = 1,
+	/**
+	 * The bus doesn't know how to launch a service to supply the bus name
+	 * you wanted.
+	 */
+	SERVICE_UNKNOWN = 2,
+	/**
+	 * The bus name you referenced doesn't exist (i.e. no application owns
+	 * it).
+	 */
+	NAME_HAS_NO_OWNER = 3,
+	/**
+	 * No reply to a message expecting one, usually means a timeout occurred.
+	 */
+	NO_REPLY = 4,
+	/**
+	 * Something went wrong reading or writing to a socket, for example.
+	 */
+	IO_ERROR = 5,
+	/**
+	 * A D-Bus bus address was malformed.
+	 */
+	BAD_ADDRESS = 6,
+	/**
+	 * Requested operation isn't supported (like ENOSYS on UNIX).
+	 */
+	NOT_SUPPORTED = 7,
+	/**
+	 * Some limited resource is exhausted.
+	 */
+	LIMITS_EXCEEDED = 8,
+	/**
+	 * Security restrictions don't allow doing what you're trying to do.
+	 */
+	ACCESS_DENIED = 9,
+	/**
+	 * Authentication didn't work.
+	 */
+	AUTH_FAILED = 10,
+	/**
+	 * Unable to connect to server (probably caused by ECONNREFUSED on a
+	 * socket).
+	 */
+	NO_SERVER = 11,
+	/**
+	 * Certain timeout errors, possibly ETIMEDOUT on a socket.  Note that
+	 * %G_DBUS_ERROR_NO_REPLY is used for message reply timeouts. Warning:
+	 * this is confusingly-named given that %G_DBUS_ERROR_TIMED_OUT also
+	 * exists. We can't fix it for compatibility reasons so just be
+	 * careful.
+	 */
+	TIMEOUT = 12,
+	/**
+	 * No network access (probably ENETUNREACH on a socket).
+	 */
+	NO_NETWORK = 13,
+	/**
+	 * Can't bind a socket since its address is in use (i.e. EADDRINUSE).
+	 */
+	ADDRESS_IN_USE = 14,
+	/**
+	 * The connection is disconnected and you're trying to use it.
+	 */
+	DISCONNECTED = 15,
+	/**
+	 * Invalid arguments passed to a method call.
+	 */
+	INVALID_ARGS = 16,
+	/**
+	 * Missing file.
+	 */
+	FILE_NOT_FOUND = 17,
+	/**
+	 * Existing file and the operation you're using does not silently overwrite.
+	 */
+	FILE_EXISTS = 18,
+	/**
+	 * Method name you invoked isn't known by the object you invoked it on.
+	 */
+	UNKNOWN_METHOD = 19,
+	/**
+	 * Certain timeout errors, e.g. while starting a service. Warning: this is
+	 * confusingly-named given that %G_DBUS_ERROR_TIMEOUT also exists. We
+	 * can't fix it for compatibility reasons so just be careful.
+	 */
+	TIMED_OUT = 20,
+	/**
+	 * Tried to remove or modify a match rule that didn't exist.
+	 */
+	MATCH_RULE_NOT_FOUND = 21,
+	/**
+	 * The match rule isn't syntactically valid.
+	 */
+	MATCH_RULE_INVALID = 22,
+	/**
+	 * While starting a new process, the exec() call failed.
+	 */
+	SPAWN_EXEC_FAILED = 23,
+	/**
+	 * While starting a new process, the fork() call failed.
+	 */
+	SPAWN_FORK_FAILED = 24,
+	/**
+	 * While starting a new process, the child exited with a status code.
+	 */
+	SPAWN_CHILD_EXITED = 25,
+	/**
+	 * While starting a new process, the child exited on a signal.
+	 */
+	SPAWN_CHILD_SIGNALED = 26,
+	/**
+	 * While starting a new process, something went wrong.
+	 */
+	SPAWN_FAILED = 27,
+	/**
+	 * We failed to setup the environment correctly.
+	 */
+	SPAWN_SETUP_FAILED = 28,
+	/**
+	 * We failed to setup the config parser correctly.
+	 */
+	SPAWN_CONFIG_INVALID = 29,
+	/**
+	 * Bus name was not valid.
+	 */
+	SPAWN_SERVICE_INVALID = 30,
+	/**
+	 * Service file not found in system-services directory.
+	 */
+	SPAWN_SERVICE_NOT_FOUND = 31,
+	/**
+	 * Permissions are incorrect on the setuid helper.
+	 */
+	SPAWN_PERMISSIONS_INVALID = 32,
+	/**
+	 * Service file invalid (Name, User or Exec missing).
+	 */
+	SPAWN_FILE_INVALID = 33,
+	/**
+	 * Tried to get a UNIX process ID and it wasn't available.
+	 */
+	SPAWN_NO_MEMORY = 34,
+	/**
+	 * Tried to get a UNIX process ID and it wasn't available.
+	 */
+	UNIX_PROCESS_ID_UNKNOWN = 35,
+	/**
+	 * A type signature is not valid.
+	 */
+	INVALID_SIGNATURE = 36,
+	/**
+	 * A file contains invalid syntax or is otherwise broken.
+	 */
+	INVALID_FILE_CONTENT = 37,
+	/**
+	 * Asked for SELinux security context and it wasn't available.
+	 */
+	SELINUX_SECURITY_CONTEXT_UNKNOWN = 38,
+	/**
+	 * Asked for ADT audit data and it wasn't available.
+	 */
+	ADT_AUDIT_DATA_UNKNOWN = 39,
+	/**
+	 * There's already an object with the requested object path.
+	 */
+	OBJECT_PATH_IN_USE = 40,
+	/**
+	 * Object you invoked a method on isn't known. Since 2.42
+	 */
+	UNKNOWN_OBJECT = 41,
+	/**
+	 * Interface you invoked a method on isn't known by the object. Since 2.42
+	 */
+	UNKNOWN_INTERFACE = 42,
+	/**
+	 * Property you tried to access isn't known by the object. Since 2.42
+	 */
+	UNKNOWN_PROPERTY = 43,
+	/**
+	 * Property you tried to set is read-only. Since 2.42
+	 */
+	PROPERTY_READ_ONLY = 44,
+}
+alias GDBusError DBusError;
+
+/**
+ * Flags describing the behavior of a #GDBusInterfaceSkeleton instance.
+ *
+ * Since: 2.30
+ */
+public enum GDBusInterfaceSkeletonFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Each method invocation is handled in
+	 * a thread dedicated to the invocation. This means that the method implementation can use blocking IO
+	 * without blocking any other part of the process. It also means that the method implementation must
+	 * use locking to access data structures used by other threads.
+	 */
+	HANDLE_METHOD_INVOCATIONS_IN_THREAD = 1,
+}
+alias GDBusInterfaceSkeletonFlags DBusInterfaceSkeletonFlags;
+
+/**
+ * Enumeration used to describe the byte order of a D-Bus message.
+ *
+ * Since: 2.26
+ */
+public enum GDBusMessageByteOrder
+{
+	/**
+	 * The byte order is big endian.
+	 */
+	BIG_ENDIAN = 66,
+	/**
+	 * The byte order is little endian.
+	 */
+	LITTLE_ENDIAN = 108,
+}
+alias GDBusMessageByteOrder DBusMessageByteOrder;
+
+/**
+ * Message flags used in #GDBusMessage.
+ *
+ * Since: 2.26
+ */
+public enum GDBusMessageFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * A reply is not expected.
+	 */
+	NO_REPLY_EXPECTED = 1,
+	/**
+	 * The bus must not launch an
+	 * owner for the destination name in response to this message.
+	 */
+	NO_AUTO_START = 2,
+}
+alias GDBusMessageFlags DBusMessageFlags;
+
+/**
+ * Header fields used in #GDBusMessage.
+ *
+ * Since: 2.26
+ */
+public enum GDBusMessageHeaderField
+{
+	/**
+	 * Not a valid header field.
+	 */
+	INVALID = 0,
+	/**
+	 * The object path.
+	 */
+	PATH = 1,
+	/**
+	 * The interface name.
+	 */
+	INTERFACE = 2,
+	/**
+	 * The method or signal name.
+	 */
+	MEMBER = 3,
+	/**
+	 * The name of the error that occurred.
+	 */
+	ERROR_NAME = 4,
+	/**
+	 * The serial number the message is a reply to.
+	 */
+	REPLY_SERIAL = 5,
+	/**
+	 * The name the message is intended for.
+	 */
+	DESTINATION = 6,
+	/**
+	 * Unique name of the sender of the message (filled in by the bus).
+	 */
+	SENDER = 7,
+	/**
+	 * The signature of the message body.
+	 */
+	SIGNATURE = 8,
+	/**
+	 * The number of UNIX file descriptors that accompany the message.
+	 */
+	NUM_UNIX_FDS = 9,
+}
+alias GDBusMessageHeaderField DBusMessageHeaderField;
+
+/**
+ * Message types used in #GDBusMessage.
+ *
+ * Since: 2.26
+ */
+public enum GDBusMessageType
+{
+	/**
+	 * Message is of invalid type.
+	 */
+	INVALID = 0,
+	/**
+	 * Method call.
+	 */
+	METHOD_CALL = 1,
+	/**
+	 * Method reply.
+	 */
+	METHOD_RETURN = 2,
+	/**
+	 * Error reply.
+	 */
+	ERROR = 3,
+	/**
+	 * Signal emission.
+	 */
+	SIGNAL = 4,
+}
+alias GDBusMessageType DBusMessageType;
+
+/**
+ * Flags used when constructing a #GDBusObjectManagerClient.
+ *
+ * Since: 2.30
+ */
+public enum GDBusObjectManagerClientFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * If not set and the
+	 * manager is for a well-known name, then request the bus to launch
+	 * an owner for the name if no-one owns the name. This flag can only
+	 * be used in managers for well-known names.
+	 */
+	DO_NOT_AUTO_START = 1,
+}
+alias GDBusObjectManagerClientFlags DBusObjectManagerClientFlags;
+
+/**
+ * Flags describing the access control of a D-Bus property.
+ *
+ * Since: 2.26
+ */
+public enum GDBusPropertyInfoFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Property is readable.
+	 */
+	READABLE = 1,
+	/**
+	 * Property is writable.
+	 */
+	WRITABLE = 2,
+}
+alias GDBusPropertyInfoFlags DBusPropertyInfoFlags;
+
+/**
+ * Flags used when constructing an instance of a #GDBusProxy derived class.
+ *
+ * Since: 2.26
+ */
+public enum GDBusProxyFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Don't load properties.
+	 */
+	DO_NOT_LOAD_PROPERTIES = 1,
+	/**
+	 * Don't connect to signals on the remote object.
+	 */
+	DO_NOT_CONNECT_SIGNALS = 2,
+	/**
+	 * If not set and the proxy if for a well-known name,
+	 * then request the bus to launch an owner for the name if no-one owns the name. This flag can
+	 * only be used in proxies for well-known names.
+	 */
+	DO_NOT_AUTO_START = 4,
+	/**
+	 * If set, the property value for any <emphasis>invalidated property</emphasis> will be (asynchronously) retrieved upon receiving the <ulink url="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties">PropertiesChanged</ulink> D-Bus signal and the property will not cause emission of the #GDBusProxy::g-properties-changed signal. When the value is received the #GDBusProxy::g-properties-changed signal is emitted for the property along with the retrieved value. Since 2.32.
+	 */
+	GET_INVALIDATED_PROPERTIES = 8,
+	/**
+	 * If the proxy is for a well-known name,
+	 * do not ask the bus to launch an owner during proxy initialization, but allow it to be
+	 * autostarted by a method call. This flag is only meaningful in proxies for well-known names,
+	 * and only if %G_DBUS_PROXY_FLAGS_DO_NOT_AUTOSTART is not also specified.
+	 */
+	DO_NOT_AUTO_START_AT_CONSTRUCTION = 16,
+}
+alias GDBusProxyFlags DBusProxyFlags;
+
+/**
+ * Flags used when sending #GDBusMessages on a #GDBusConnection.
+ *
+ * Since: 2.26
+ */
+public enum GDBusSendMessageFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Do not automatically
+	 * assign a serial number from the #GDBusConnection object when
+	 * sending a message.
+	 */
+	PRESERVE_SERIAL = 1,
+}
+alias GDBusSendMessageFlags DBusSendMessageFlags;
+
+/**
+ * Flags used when creating a #GDBusServer.
+ *
+ * Since: 2.26
+ */
+public enum GDBusServerFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * All #GDBusServer::new-connection
+	 * signals will run in separated dedicated threads (see signal for
+	 * details).
+	 */
+	RUN_IN_THREAD = 1,
+	/**
+	 * Allow the anonymous
+	 * authentication method.
+	 */
+	AUTHENTICATION_ALLOW_ANONYMOUS = 2,
+}
+alias GDBusServerFlags DBusServerFlags;
+
+/**
+ * Flags used when subscribing to signals via g_dbus_connection_signal_subscribe().
+ *
+ * Since: 2.26
+ */
+public enum GDBusSignalFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Don't actually send the AddMatch
+	 * D-Bus call for this signal subscription.  This gives you more control
+	 * over which match rules you add (but you must add them manually).
+	 */
+	NO_MATCH_RULE = 1,
+	/**
+	 * Match first arguments that
+	 * contain a bus or interface name with the given namespace.
+	 */
+	MATCH_ARG0_NAMESPACE = 2,
+	/**
+	 * Match first arguments that
+	 * contain an object path that is either equivalent to the given path,
+	 * or one of the paths is a subpath of the other.
+	 */
+	MATCH_ARG0_PATH = 4,
+}
+alias GDBusSignalFlags DBusSignalFlags;
+
+/**
+ * Flags passed to g_dbus_connection_register_subtree().
+ *
+ * Since: 2.26
+ */
+public enum GDBusSubtreeFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Method calls to objects not in the enumerated range
+	 * will still be dispatched. This is useful if you want
+	 * to dynamically spawn objects in the subtree.
+	 */
+	DISPATCH_TO_UNENUMERATED_NODES = 1,
+}
+alias GDBusSubtreeFlags DBusSubtreeFlags;
+
+/**
+ * #GDataStreamByteOrder is used to ensure proper endianness of streaming data sources
+ * across various machine architectures.
+ */
+public enum GDataStreamByteOrder
+{
+	/**
+	 * Selects Big Endian byte order.
+	 */
+	BIG_ENDIAN = 0,
+	/**
+	 * Selects Little Endian byte order.
+	 */
+	LITTLE_ENDIAN = 1,
+	/**
+	 * Selects endianness based on host machine's architecture.
+	 */
+	HOST_ENDIAN = 2,
+}
+alias GDataStreamByteOrder DataStreamByteOrder;
+
+/**
+ * #GDataStreamNewlineType is used when checking for or setting the line endings for a given file.
+ */
+public enum GDataStreamNewlineType
+{
+	/**
+	 * Selects "LF" line endings, common on most modern UNIX platforms.
+	 */
+	LF = 0,
+	/**
+	 * Selects "CR" line endings.
+	 */
+	CR = 1,
+	/**
+	 * Selects "CR, LF" line ending, common on Microsoft Windows.
+	 */
+	CR_LF = 2,
+	/**
+	 * Automatically try to handle any line ending type.
+	 */
+	ANY = 3,
+}
+alias GDataStreamNewlineType DataStreamNewlineType;
 
 /**
  * Flags used when starting a drive.
- * G_DRIVE_START_NONE
- * No flags set.
- * Since 2.22
+ *
+ * Since: 2.22
  */
 public enum GDriveStartFlags
 {
-	NONE = 0
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
 }
 alias GDriveStartFlags DriveStartFlags;
 
 /**
  * Enumeration describing how a drive can be started/stopped.
- * G_DRIVE_START_STOP_TYPE_UNKNOWN
- * Unknown or drive doesn't support
- *  start/stop.
- * G_DRIVE_START_STOP_TYPE_SHUTDOWN
- * The stop method will physically
- *  shut down the drive and e.g. power down the port the drive is
- *  attached to.
- * G_DRIVE_START_STOP_TYPE_NETWORK
- * The start/stop methods are used
- *  for connecting/disconnect to the drive over the network.
- * G_DRIVE_START_STOP_TYPE_MULTIDISK
- * The start/stop methods will
- *  assemble/disassemble a virtual drive from several physical
- *  drives.
- * G_DRIVE_START_STOP_TYPE_PASSWORD
- * The start/stop methods will
- *  unlock/lock the disk (for example using the ATA “SECURITY
- *  UNLOCK DEVICE” command)
- * Since 2.22
+ *
+ * Since: 2.22
  */
 public enum GDriveStartStopType
 {
-	TYPE_UNKNOWN,
-	TYPE_SHUTDOWN,
-	TYPE_NETWORK,
-	TYPE_MULTIDISK,
-	TYPE_PASSWORD
+	/**
+	 * Unknown or drive doesn't support
+	 * start/stop.
+	 */
+	UNKNOWN = 0,
+	/**
+	 * The stop method will physically
+	 * shut down the drive and e.g. power down the port the drive is
+	 * attached to.
+	 */
+	SHUTDOWN = 1,
+	/**
+	 * The start/stop methods are used
+	 * for connecting/disconnect to the drive over the network.
+	 */
+	NETWORK = 2,
+	/**
+	 * The start/stop methods will
+	 * assemble/disassemble a virtual drive from several physical
+	 * drives.
+	 */
+	MULTIDISK = 3,
+	/**
+	 * The start/stop methods will
+	 * unlock/lock the disk (for example using the ATA <quote>SECURITY
+	 * UNLOCK DEVICE</quote> command)
+	 */
+	PASSWORD = 4,
 }
 alias GDriveStartStopType DriveStartStopType;
 
 /**
  * GEmblemOrigin is used to add information about the origin of the emblem
- * to GEmblem.
- * G_EMBLEM_ORIGIN_UNKNOWN
- * Emblem of unknown origin
- * G_EMBLEM_ORIGIN_DEVICE
- * Emblem adds device-specific information
- * G_EMBLEM_ORIGIN_LIVEMETADATA
- * Emblem depicts live metadata, such as "readonly"
- * G_EMBLEM_ORIGIN_TAG
- * Emblem comes from a user-defined tag, e.g. set by nautilus (in the future)
- * Since 2.18
+ * to #GEmblem.
+ *
+ * Since: 2.18
  */
 public enum GEmblemOrigin
 {
-	UNKNOWN,
-	DEVICE,
-	LIVEMETADATA,
-	TAG
+	/**
+	 * Emblem of unknown origin
+	 */
+	UNKNOWN = 0,
+	/**
+	 * Emblem adds device-specific information
+	 */
+	DEVICE = 1,
+	/**
+	 * Emblem depicts live metadata, such as "readonly"
+	 */
+	LIVEMETADATA = 2,
+	/**
+	 * Emblem comes from a user-defined tag, e.g. set by nautilus (in the future)
+	 */
+	TAG = 3,
 }
 alias GEmblemOrigin EmblemOrigin;
 
 /**
- * Flags used when creating a GSocket. Some protocols may not implement
- * all the socket types.
- * G_SOCKET_TYPE_INVALID
- * Type unknown or wrong
- * G_SOCKET_TYPE_STREAM
- * Reliable connection-based byte streams (e.g. TCP).
- * G_SOCKET_TYPE_DATAGRAM
- * Connectionless, unreliable datagram passing.
- *  (e.g. UDP)
- * G_SOCKET_TYPE_SEQPACKET
- * Reliable connection-based passing of datagrams
- *  of fixed maximum length (e.g. SCTP).
- * Since 2.22
+ * Flags specifying the behaviour of an attribute.
  */
-public enum GSocketType
+public enum GFileAttributeInfoFlags
 {
-	TYPE_INVALID,
-	TYPE_STREAM,
-	TYPE_DATAGRAM,
-	TYPE_SEQPACKET
+	/**
+	 * no flags set.
+	 */
+	NONE = 0,
+	/**
+	 * copy the attribute values when the file is copied.
+	 */
+	COPY_WITH_FILE = 1,
+	/**
+	 * copy the attribute values when the file is moved.
+	 */
+	COPY_WHEN_MOVED = 2,
 }
-alias GSocketType SocketType;
+alias GFileAttributeInfoFlags FileAttributeInfoFlags;
 
 /**
- * A protocol identifier is specified when creating a GSocket, which is a
- * family/type specific identifier, where 0 means the default protocol for
- * the particular family/type.
- * This enum contains a set of commonly available and used protocols. You
- * can also pass any other identifiers handled by the platform in order to
- * use protocols not listed here.
- * G_SOCKET_PROTOCOL_UNKNOWN
- * The protocol type is unknown
- * G_SOCKET_PROTOCOL_DEFAULT
- * The default protocol for the family/type
- * G_SOCKET_PROTOCOL_TCP
- * TCP over IP
- * G_SOCKET_PROTOCOL_UDP
- * UDP over IP
- * G_SOCKET_PROTOCOL_SCTP
- * SCTP over IP
- * Since 2.22
+ * Used by g_file_set_attributes_from_info() when setting file attributes.
  */
-public enum GSocketProtocol
+public enum GFileAttributeStatus
 {
-	UNKNOWN = -1,
-	DEFAULT = 0,
-	TCP = 6,
-	UDP = 17,
-	SCTP = 132
+	/**
+	 * Attribute value is unset (empty).
+	 */
+	UNSET = 0,
+	/**
+	 * Attribute value is set.
+	 */
+	SET = 1,
+	/**
+	 * Indicates an error in setting the value.
+	 */
+	ERROR_SETTING = 2,
 }
-alias GSocketProtocol SocketProtocol;
+alias GFileAttributeStatus FileAttributeStatus;
+
+/**
+ * The data types for file attributes.
+ */
+public enum GFileAttributeType
+{
+	/**
+	 * indicates an invalid or uninitalized type.
+	 */
+	INVALID = 0,
+	/**
+	 * a null terminated UTF8 string.
+	 */
+	STRING = 1,
+	/**
+	 * a zero terminated string of non-zero bytes.
+	 */
+	BYTE_STRING = 2,
+	/**
+	 * a boolean value.
+	 */
+	BOOLEAN = 3,
+	/**
+	 * an unsigned 4-byte/32-bit integer.
+	 */
+	UINT32 = 4,
+	/**
+	 * a signed 4-byte/32-bit integer.
+	 */
+	INT32 = 5,
+	/**
+	 * an unsigned 8-byte/64-bit integer.
+	 */
+	UINT64 = 6,
+	/**
+	 * a signed 8-byte/64-bit integer.
+	 */
+	INT64 = 7,
+	/**
+	 * a #GObject.
+	 */
+	OBJECT = 8,
+	/**
+	 * a %NULL terminated char **. Since 2.22
+	 */
+	STRINGV = 9,
+}
+alias GFileAttributeType FileAttributeType;
+
+/**
+ * Flags used when copying or moving files.
+ */
+public enum GFileCopyFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Overwrite any existing files
+	 */
+	OVERWRITE = 1,
+	/**
+	 * Make a backup of any existing files.
+	 */
+	BACKUP = 2,
+	/**
+	 * Don't follow symlinks.
+	 */
+	NOFOLLOW_SYMLINKS = 4,
+	/**
+	 * Copy all file metadata instead of just default set used for copy (see #GFileInfo).
+	 */
+	ALL_METADATA = 8,
+	/**
+	 * Don't use copy and delete fallback if native move not supported.
+	 */
+	NO_FALLBACK_FOR_MOVE = 16,
+	/**
+	 * Leaves target file with default perms, instead of setting the source file perms.
+	 */
+	TARGET_DEFAULT_PERMS = 32,
+}
+alias GFileCopyFlags FileCopyFlags;
+
+/**
+ * Flags used when an operation may create a file.
+ */
+public enum GFileCreateFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Create a file that can only be
+	 * accessed by the current user.
+	 */
+	PRIVATE = 1,
+	/**
+	 * Replace the destination
+	 * as if it didn't exist before. Don't try to keep any old
+	 * permissions, replace instead of following links. This
+	 * is generally useful if you're doing a "copy over"
+	 * rather than a "save new version of" replace operation.
+	 * You can think of it as "unlink destination" before
+	 * writing to it, although the implementation may not
+	 * be exactly like that. Since 2.20
+	 */
+	REPLACE_DESTINATION = 2,
+}
+alias GFileCreateFlags FileCreateFlags;
+
+/**
+ * Flags that can be used with g_file_measure_disk_usage().
+ *
+ * Since: 2.38
+ */
+public enum GFileMeasureFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Report any error encountered
+	 * while traversing the directory tree.  Normally errors are only
+	 * reported for the toplevel file.
+	 */
+	REPORT_ANY_ERROR = 2,
+	/**
+	 * Tally usage based on apparent file
+	 * sizes.  Normally, the block-size is used, if available, as this is a
+	 * more accurate representation of disk space used.
+	 * Compare with `du --apparent-size`.
+	 */
+	APPARENT_SIZE = 4,
+	/**
+	 * Do not cross mount point boundaries.
+	 * Compare with `du -x`.
+	 */
+	NO_XDEV = 8,
+}
+alias GFileMeasureFlags FileMeasureFlags;
+
+/**
+ * Specifies what type of event a monitor event is.
+ */
+public enum GFileMonitorEvent
+{
+	/**
+	 * a file changed.
+	 */
+	CHANGED = 0,
+	/**
+	 * a hint that this was probably the last change in a set of changes.
+	 */
+	CHANGES_DONE_HINT = 1,
+	/**
+	 * a file was deleted.
+	 */
+	DELETED = 2,
+	/**
+	 * a file was created.
+	 */
+	CREATED = 3,
+	/**
+	 * a file attribute was changed.
+	 */
+	ATTRIBUTE_CHANGED = 4,
+	/**
+	 * the file location will soon be unmounted.
+	 */
+	PRE_UNMOUNT = 5,
+	/**
+	 * the file location was unmounted.
+	 */
+	UNMOUNTED = 6,
+	/**
+	 * the file was moved.
+	 */
+	MOVED = 7,
+}
+alias GFileMonitorEvent FileMonitorEvent;
+
+/**
+ * Flags used to set what a #GFileMonitor will watch for.
+ */
+public enum GFileMonitorFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Watch for mount events.
+	 */
+	WATCH_MOUNTS = 1,
+	/**
+	 * Pair DELETED and CREATED events caused
+	 * by file renames (moves) and send a single G_FILE_MONITOR_EVENT_MOVED
+	 * event instead (NB: not supported on all backends; the default
+	 * behaviour -without specifying this flag- is to send single DELETED
+	 * and CREATED events).
+	 */
+	SEND_MOVED = 2,
+	/**
+	 * Watch for changes to the file made
+	 * via another hard link. Since 2.36.
+	 */
+	WATCH_HARD_LINKS = 4,
+}
+alias GFileMonitorFlags FileMonitorFlags;
+
+/**
+ * Flags used when querying a #GFileInfo.
+ */
+public enum GFileQueryInfoFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Don't follow symlinks.
+	 */
+	NOFOLLOW_SYMLINKS = 1,
+}
+alias GFileQueryInfoFlags FileQueryInfoFlags;
+
+/**
+ * Indicates the file's on-disk type.
+ */
+public enum GFileType
+{
+	/**
+	 * File's type is unknown.
+	 */
+	UNKNOWN = 0,
+	/**
+	 * File handle represents a regular file.
+	 */
+	REGULAR = 1,
+	/**
+	 * File handle represents a directory.
+	 */
+	DIRECTORY = 2,
+	/**
+	 * File handle represents a symbolic link
+	 * (Unix systems).
+	 */
+	SYMBOLIC_LINK = 3,
+	/**
+	 * File is a "special" file, such as a socket, fifo,
+	 * block device, or character device.
+	 */
+	SPECIAL = 4,
+	/**
+	 * File is a shortcut (Windows systems).
+	 */
+	SHORTCUT = 5,
+	/**
+	 * File is a mountable location.
+	 */
+	MOUNTABLE = 6,
+}
+alias GFileType FileType;
+
+/**
+ * Indicates a hint from the file system whether files should be
+ * previewed in a file manager. Returned as the value of the key
+ * #G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW.
+ */
+public enum GFilesystemPreviewType
+{
+	/**
+	 * Only preview files if user has explicitly requested it.
+	 */
+	IF_ALWAYS = 0,
+	/**
+	 * Preview files if user has requested preview of "local" files.
+	 */
+	IF_LOCAL = 1,
+	/**
+	 * Never preview files.
+	 */
+	NEVER = 2,
+}
+alias GFilesystemPreviewType FilesystemPreviewType;
+
+/**
+ * Error codes returned by GIO functions.
+ *
+ * Note that this domain may be extended in future GLib releases. In
+ * general, new error codes either only apply to new APIs, or else
+ * replace #G_IO_ERROR_FAILED in cases that were not explicitly
+ * distinguished before. You should therefore avoid writing code like
+ * |[<!-- language="C" -->
+ * if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_FAILED))
+ * {
+ * // Assume that this is EPRINTERONFIRE
+ * ...
+ * }
+ * ]|
+ * but should instead treat all unrecognized error codes the same as
+ * #G_IO_ERROR_FAILED.
+ */
+public enum GIOErrorEnum
+{
+	/**
+	 * Generic error condition for when an operation fails
+	 * and no more specific #GIOErrorEnum value is defined.
+	 */
+	FAILED = 0,
+	/**
+	 * File not found.
+	 */
+	NOT_FOUND = 1,
+	/**
+	 * File already exists.
+	 */
+	EXISTS = 2,
+	/**
+	 * File is a directory.
+	 */
+	IS_DIRECTORY = 3,
+	/**
+	 * File is not a directory.
+	 */
+	NOT_DIRECTORY = 4,
+	/**
+	 * File is a directory that isn't empty.
+	 */
+	NOT_EMPTY = 5,
+	/**
+	 * File is not a regular file.
+	 */
+	NOT_REGULAR_FILE = 6,
+	/**
+	 * File is not a symbolic link.
+	 */
+	NOT_SYMBOLIC_LINK = 7,
+	/**
+	 * File cannot be mounted.
+	 */
+	NOT_MOUNTABLE_FILE = 8,
+	/**
+	 * Filename is too many characters.
+	 */
+	FILENAME_TOO_LONG = 9,
+	/**
+	 * Filename is invalid or contains invalid characters.
+	 */
+	INVALID_FILENAME = 10,
+	/**
+	 * File contains too many symbolic links.
+	 */
+	TOO_MANY_LINKS = 11,
+	/**
+	 * No space left on drive.
+	 */
+	NO_SPACE = 12,
+	/**
+	 * Invalid argument.
+	 */
+	INVALID_ARGUMENT = 13,
+	/**
+	 * Permission denied.
+	 */
+	PERMISSION_DENIED = 14,
+	/**
+	 * Operation (or one of its parameters) not supported
+	 */
+	NOT_SUPPORTED = 15,
+	/**
+	 * File isn't mounted.
+	 */
+	NOT_MOUNTED = 16,
+	/**
+	 * File is already mounted.
+	 */
+	ALREADY_MOUNTED = 17,
+	/**
+	 * File was closed.
+	 */
+	CLOSED = 18,
+	/**
+	 * Operation was cancelled. See #GCancellable.
+	 */
+	CANCELLED = 19,
+	/**
+	 * Operations are still pending.
+	 */
+	PENDING = 20,
+	/**
+	 * File is read only.
+	 */
+	READ_ONLY = 21,
+	/**
+	 * Backup couldn't be created.
+	 */
+	CANT_CREATE_BACKUP = 22,
+	/**
+	 * File's Entity Tag was incorrect.
+	 */
+	WRONG_ETAG = 23,
+	/**
+	 * Operation timed out.
+	 */
+	TIMED_OUT = 24,
+	/**
+	 * Operation would be recursive.
+	 */
+	WOULD_RECURSE = 25,
+	/**
+	 * File is busy.
+	 */
+	BUSY = 26,
+	/**
+	 * Operation would block.
+	 */
+	WOULD_BLOCK = 27,
+	/**
+	 * Host couldn't be found (remote operations).
+	 */
+	HOST_NOT_FOUND = 28,
+	/**
+	 * Operation would merge files.
+	 */
+	WOULD_MERGE = 29,
+	/**
+	 * Operation failed and a helper program has
+	 * already interacted with the user. Do not display any error dialog.
+	 */
+	FAILED_HANDLED = 30,
+	/**
+	 * The current process has too many files
+	 * open and can't open any more. Duplicate descriptors do count toward
+	 * this limit. Since 2.20
+	 */
+	TOO_MANY_OPEN_FILES = 31,
+	/**
+	 * The object has not been initialized. Since 2.22
+	 */
+	NOT_INITIALIZED = 32,
+	/**
+	 * The requested address is already in use. Since 2.22
+	 */
+	ADDRESS_IN_USE = 33,
+	/**
+	 * Need more input to finish operation. Since 2.24
+	 */
+	PARTIAL_INPUT = 34,
+	/**
+	 * The input data was invalid. Since 2.24
+	 */
+	INVALID_DATA = 35,
+	/**
+	 * A remote object generated an error that
+	 * doesn't correspond to a locally registered #GError error
+	 * domain. Use g_dbus_error_get_remote_error() to extract the D-Bus
+	 * error name and g_dbus_error_strip_remote_error() to fix up the
+	 * message so it matches what was received on the wire. Since 2.26.
+	 */
+	DBUS_ERROR = 36,
+	/**
+	 * Host unreachable. Since 2.26
+	 */
+	HOST_UNREACHABLE = 37,
+	/**
+	 * Network unreachable. Since 2.26
+	 */
+	NETWORK_UNREACHABLE = 38,
+	/**
+	 * Connection refused. Since 2.26
+	 */
+	CONNECTION_REFUSED = 39,
+	/**
+	 * Connection to proxy server failed. Since 2.26
+	 */
+	PROXY_FAILED = 40,
+	/**
+	 * Proxy authentication failed. Since 2.26
+	 */
+	PROXY_AUTH_FAILED = 41,
+	/**
+	 * Proxy server needs authentication. Since 2.26
+	 */
+	PROXY_NEED_AUTH = 42,
+	/**
+	 * Proxy connection is not allowed by ruleset.
+	 * Since 2.26
+	 */
+	PROXY_NOT_ALLOWED = 43,
+	/**
+	 * Broken pipe. Since 2.36
+	 */
+	BROKEN_PIPE = 44,
+}
+alias GIOErrorEnum IOErrorEnum;
+
+/**
+ * Flags for use with g_io_module_scope_new().
+ *
+ * Since: 2.30
+ */
+public enum GIOModuleScopeFlags
+{
+	/**
+	 * No module scan flags
+	 */
+	NONE = 0,
+	/**
+	 * When using this scope to load or
+	 * scan modules, automatically block a modules which has the same base
+	 * basename as previously loaded module.
+	 */
+	BLOCK_DUPLICATES = 1,
+}
+alias GIOModuleScopeFlags IOModuleScopeFlags;
+
+/**
+ * GIOStreamSpliceFlags determine how streams should be spliced.
+ *
+ * Since: 2.28
+ */
+public enum GIOStreamSpliceFlags
+{
+	/**
+	 * Do not close either stream.
+	 */
+	NONE = 0,
+	/**
+	 * Close the first stream after
+	 * the splice.
+	 */
+	CLOSE_STREAM1 = 1,
+	/**
+	 * Close the second stream after
+	 * the splice.
+	 */
+	CLOSE_STREAM2 = 2,
+	/**
+	 * Wait for both splice operations to finish
+	 * before calling the callback.
+	 */
+	WAIT_FOR_BOTH = 4,
+}
+alias GIOStreamSpliceFlags IOStreamSpliceFlags;
+
+/**
+ * Flags used when mounting a mount.
+ */
+public enum GMountMountFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+}
+alias GMountMountFlags MountMountFlags;
+
+/**
+ * #GMountOperationResult is returned as a result when a request for
+ * information is send by the mounting operation.
+ */
+public enum GMountOperationResult
+{
+	/**
+	 * The request was fulfilled and the
+	 * user specified data is now available
+	 */
+	HANDLED = 0,
+	/**
+	 * The user requested the mount operation
+	 * to be aborted
+	 */
+	ABORTED = 1,
+	/**
+	 * The request was unhandled (i.e. not
+	 * implemented)
+	 */
+	UNHANDLED = 2,
+}
+alias GMountOperationResult MountOperationResult;
+
+/**
+ * Flags used when an unmounting a mount.
+ */
+public enum GMountUnmountFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * Unmount even if there are outstanding
+	 * file operations on the mount.
+	 */
+	FORCE = 1,
+}
+alias GMountUnmountFlags MountUnmountFlags;
+
+/**
+ * Priority levels for #GNotifications.
+ *
+ * Since: 2.42
+ */
+public enum GNotificationPriority
+{
+	/**
+	 * the default priority, to be used for the
+	 * majority of notifications (for example email messages, software updates,
+	 * completed download/sync operations)
+	 */
+	NORMAL = 0,
+	/**
+	 * for notifications that do not require
+	 * immediate attention - typically used for contextual background
+	 * information, such as contact birthdays or local weather
+	 */
+	LOW = 1,
+	/**
+	 * for events that require more attention,
+	 * usually because responses are time-sensitive (for example chat and SMS
+	 * messages or alarms)
+	 */
+	HIGH = 2,
+	/**
+	 * for urgent notifications, or notifications
+	 * that require a response in a short space of time (for example phone calls
+	 * or emergency warnings)
+	 */
+	URGENT = 3,
+}
+alias GNotificationPriority NotificationPriority;
+
+/**
+ * GOutputStreamSpliceFlags determine how streams should be spliced.
+ */
+public enum GOutputStreamSpliceFlags
+{
+	/**
+	 * Do not close either stream.
+	 */
+	NONE = 0,
+	/**
+	 * Close the source stream after
+	 * the splice.
+	 */
+	CLOSE_SOURCE = 1,
+	/**
+	 * Close the target stream after
+	 * the splice.
+	 */
+	CLOSE_TARGET = 2,
+}
+alias GOutputStreamSpliceFlags OutputStreamSpliceFlags;
+
+/**
+ * #GPasswordSave is used to indicate the lifespan of a saved password.
+ *
+ * #Gvfs stores passwords in the Gnome keyring when this flag allows it
+ * to, and later retrieves it again from there.
+ */
+public enum GPasswordSave
+{
+	/**
+	 * never save a password.
+	 */
+	NEVER = 0,
+	/**
+	 * save a password for the session.
+	 */
+	FOR_SESSION = 1,
+	/**
+	 * save a password permanently.
+	 */
+	PERMANENTLY = 2,
+}
+alias GPasswordSave PasswordSave;
+
+/**
+ * An error code used with %G_RESOLVER_ERROR in a #GError returned
+ * from a #GResolver routine.
+ *
+ * Since: 2.22
+ */
+public enum GResolverError
+{
+	/**
+	 * the requested name/address/service was not
+	 * found
+	 */
+	NOT_FOUND = 0,
+	/**
+	 * the requested information could not
+	 * be looked up due to a network error or similar problem
+	 */
+	TEMPORARY_FAILURE = 1,
+	/**
+	 * unknown error
+	 */
+	INTERNAL = 2,
+}
+alias GResolverError ResolverError;
+
+/**
+ * The type of record that g_resolver_lookup_records() or
+ * g_resolver_lookup_records_async() should retrieve. The records are returned
+ * as lists of #GVariant tuples. Each record type has different values in
+ * the variant tuples returned.
+ *
+ * %G_RESOLVER_RECORD_SRV records are returned as variants with the signature
+ * '(qqqs)', containing a guint16 with the priority, a guint16 with the
+ * weight, a guint16 with the port, and a string of the hostname.
+ *
+ * %G_RESOLVER_RECORD_MX records are returned as variants with the signature
+ * '(qs)', representing a guint16 with the preference, and a string containing
+ * the mail exchanger hostname.
+ *
+ * %G_RESOLVER_RECORD_TXT records are returned as variants with the signature
+ * '(as)', representing an array of the strings in the text record.
+ *
+ * %G_RESOLVER_RECORD_SOA records are returned as variants with the signature
+ * '(ssuuuuu)', representing a string containing the primary name server, a
+ * string containing the administrator, the serial as a guint32, the refresh
+ * interval as guint32, the retry interval as a guint32, the expire timeout
+ * as a guint32, and the ttl as a guint32.
+ *
+ * %G_RESOLVER_RECORD_NS records are returned as variants with the signature
+ * '(s)', representing a string of the hostname of the name server.
+ *
+ * Since: 2.34
+ */
+public enum GResolverRecordType
+{
+	/**
+	 * lookup DNS SRV records for a domain
+	 */
+	SRV = 1,
+	/**
+	 * lookup DNS MX records for a domain
+	 */
+	MX = 2,
+	/**
+	 * lookup DNS TXT records for a name
+	 */
+	TXT = 3,
+	/**
+	 * lookup DNS SOA records for a zone
+	 */
+	SOA = 4,
+	/**
+	 * lookup DNS NS records for a domain
+	 */
+	NS = 5,
+}
+alias GResolverRecordType ResolverRecordType;
+
+/**
+ * An error code used with %G_RESOURCE_ERROR in a #GError returned
+ * from a #GResource routine.
+ *
+ * Since: 2.32
+ */
+public enum GResourceError
+{
+	/**
+	 * no file was found at the requested path
+	 */
+	NOT_FOUND = 0,
+	/**
+	 * unknown error
+	 */
+	INTERNAL = 1,
+}
+alias GResourceError ResourceError;
+
+/**
+ * GResourceFlags give information about a particular file inside a resource
+ * bundle.
+ *
+ * Since: 2.32
+ */
+public enum GResourceFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+	/**
+	 * The file is compressed.
+	 */
+	COMPRESSED = 1,
+}
+alias GResourceFlags ResourceFlags;
+
+/**
+ * GResourceLookupFlags determine how resource path lookups are handled.
+ *
+ * Since: 2.32
+ */
+public enum GResourceLookupFlags
+{
+	/**
+	 * No flags set.
+	 */
+	NONE = 0,
+}
+alias GResourceLookupFlags ResourceLookupFlags;
+
+/**
+ * Flags used when creating a binding. These flags determine in which
+ * direction the binding works. The default is to synchronize in both
+ * directions.
+ */
+public enum GSettingsBindFlags
+{
+	/**
+	 * Equivalent to `G_SETTINGS_BIND_GET|G_SETTINGS_BIND_SET`
+	 */
+	DEFAULT = 0,
+	/**
+	 * Update the #GObject property when the setting changes.
+	 * It is an error to use this flag if the property is not writable.
+	 */
+	GET = 1,
+	/**
+	 * Update the setting when the #GObject property changes.
+	 * It is an error to use this flag if the property is not readable.
+	 */
+	SET = 2,
+	/**
+	 * Do not try to bind a "sensitivity" property to the writability of the setting
+	 */
+	NO_SENSITIVITY = 4,
+	/**
+	 * When set in addition to #G_SETTINGS_BIND_GET, set the #GObject property
+	 * value initially from the setting, but do not listen for changes of the setting
+	 */
+	GET_NO_CHANGES = 8,
+	/**
+	 * When passed to g_settings_bind(), uses a pair of mapping functions that invert
+	 * the boolean value when mapping between the setting and the property.  The setting and property must both
+	 * be booleans.  You cannot pass this flag to g_settings_bind_with_mapping().
+	 */
+	INVERT_BOOLEAN = 16,
+}
+alias GSettingsBindFlags SettingsBindFlags;
+
+/**
+ * Describes an event occurring on a #GSocketClient. See the
+ * #GSocketClient::event signal for more details.
+ *
+ * Additional values may be added to this type in the future.
+ *
+ * Since: 2.32
+ */
+public enum GSocketClientEvent
+{
+	/**
+	 * The client is doing a DNS lookup.
+	 */
+	RESOLVING = 0,
+	/**
+	 * The client has completed a DNS lookup.
+	 */
+	RESOLVED = 1,
+	/**
+	 * The client is connecting to a remote
+	 * host (either a proxy or the destination server).
+	 */
+	CONNECTING = 2,
+	/**
+	 * The client has connected to a remote
+	 * host.
+	 */
+	CONNECTED = 3,
+	/**
+	 * The client is negotiating
+	 * with a proxy to connect to the destination server.
+	 */
+	PROXY_NEGOTIATING = 4,
+	/**
+	 * The client has negotiated
+	 * with the proxy server.
+	 */
+	PROXY_NEGOTIATED = 5,
+	/**
+	 * The client is performing a
+	 * TLS handshake.
+	 */
+	TLS_HANDSHAKING = 6,
+	/**
+	 * The client has performed a
+	 * TLS handshake.
+	 */
+	TLS_HANDSHAKED = 7,
+	/**
+	 * The client is done with a particular
+	 * #GSocketConnectable.
+	 */
+	COMPLETE = 8,
+}
+alias GSocketClientEvent SocketClientEvent;
+
+/**
+ * The protocol family of a #GSocketAddress. (These values are
+ * identical to the system defines %AF_INET, %AF_INET6 and %AF_UNIX,
+ * if available.)
+ *
+ * Since: 2.22
+ */
+public enum GSocketFamily
+{
+	/**
+	 * no address family
+	 */
+	INVALID = 0,
+	/**
+	 * the UNIX domain family
+	 */
+	UNIX = 1,
+	/**
+	 * the IPv4 family
+	 */
+	IPV4 = 2,
+	/**
+	 * the IPv6 family
+	 */
+	IPV6 = 10,
+}
+alias GSocketFamily SocketFamily;
 
 /**
  * Flags used in g_socket_receive_message() and g_socket_send_message().
@@ -838,205 +1993,198 @@ alias GSocketProtocol SocketProtocol;
  * values used for them are the same as on the platform, and any other flags
  * are passed in/out as is. So to use a platform specific flag, just include
  * the right system header and pass in the flag.
- * G_SOCKET_MSG_NONE
- * No flags.
- * G_SOCKET_MSG_OOB
- * Request to send/receive out of band data.
- * G_SOCKET_MSG_PEEK
- * Read data from the socket without removing it from
- *  the queue.
- * G_SOCKET_MSG_DONTROUTE
- * Don't use a gateway to send out the packet,
- *  only send to hosts on directly connected networks.
- * Since 2.22
+ *
+ * Since: 2.22
  */
 public enum GSocketMsgFlags
 {
-	NONE,
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
+	/**
+	 * Request to send/receive out of band data.
+	 */
 	OOB = 1,
+	/**
+	 * Read data from the socket without removing it from
+	 * the queue.
+	 */
 	PEEK = 2,
-	DONTROUTE = 4
+	/**
+	 * Don't use a gateway to send out the packet,
+	 * only send to hosts on directly connected networks.
+	 */
+	DONTROUTE = 4,
 }
 alias GSocketMsgFlags SocketMsgFlags;
 
 /**
- * The protocol family of a GSocketAddress. (These values are
- * identical to the system defines AF_INET, AF_INET6 and AF_UNIX,
- * if available.)
- * G_SOCKET_FAMILY_INVALID
- * no address family
- * G_SOCKET_FAMILY_UNIX
- * the UNIX domain family
- * G_SOCKET_FAMILY_IPV4
- * the IPv4 family
- * G_SOCKET_FAMILY_IPV6
- * the IPv6 family
- * Since 2.22
+ * A protocol identifier is specified when creating a #GSocket, which is a
+ * family/type specific identifier, where 0 means the default protocol for
+ * the particular family/type.
+ *
+ * This enum contains a set of commonly available and used protocols. You
+ * can also pass any other identifiers handled by the platform in order to
+ * use protocols not listed here.
+ *
+ * Since: 2.22
  */
-public enum GSocketFamily
+public enum GSocketProtocol
 {
-	INVALID,
-	UNIX = 1,
-	IPV4 = 2,
-	IPV6 = 23
+	/**
+	 * The protocol type is unknown
+	 */
+	UNKNOWN = -1,
+	/**
+	 * The default protocol for the family/type
+	 */
+	DEFAULT = 0,
+	/**
+	 * TCP over IP
+	 */
+	TCP = 6,
+	/**
+	 * UDP over IP
+	 */
+	UDP = 17,
+	/**
+	 * SCTP over IP
+	 */
+	SCTP = 132,
 }
-alias GSocketFamily SocketFamily;
+alias GSocketProtocol SocketProtocol;
 
 /**
- * The type of name used by a GUnixSocketAddress.
- * G_UNIX_SOCKET_ADDRESS_PATH indicates a traditional unix domain
- * socket bound to a filesystem path. G_UNIX_SOCKET_ADDRESS_ANONYMOUS
- * indicates a socket not bound to any name (eg, a client-side socket,
- * or a socket created with socketpair()).
- * For abstract sockets, there are two incompatible ways of naming
- * them; the man pages suggest using the entire struct
- * sockaddr_un as the name, padding the unused parts of the
- * sun_path field with zeroes; this corresponds to
- * G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED. However, many programs
- * instead just use a portion of sun_path, and pass an appropriate
- * smaller length to bind() or connect(). This is
- * G_UNIX_SOCKET_ADDRESS_ABSTRACT.
- * G_UNIX_SOCKET_ADDRESS_INVALID
- * invalid
- * G_UNIX_SOCKET_ADDRESS_ANONYMOUS
- * anonymous
- * G_UNIX_SOCKET_ADDRESS_PATH
- * a filesystem path
- * G_UNIX_SOCKET_ADDRESS_ABSTRACT
- * an abstract name
- * G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED
- * an abstract name, 0-padded
- *  to the full length of a unix socket name
- * Since 2.26
+ * Flags used when creating a #GSocket. Some protocols may not implement
+ * all the socket types.
+ *
+ * Since: 2.22
  */
-public enum GUnixSocketAddressType
+public enum GSocketType
 {
-	INVALID,
-	ANONYMOUS,
-	PATH,
-	ABSTRACT,
-	ABSTRACT_PADDED
+	/**
+	 * Type unknown or wrong
+	 */
+	INVALID = 0,
+	/**
+	 * Reliable connection-based byte streams (e.g. TCP).
+	 */
+	STREAM = 1,
+	/**
+	 * Connectionless, unreliable datagram passing.
+	 * (e.g. UDP)
+	 */
+	DATAGRAM = 2,
+	/**
+	 * Reliable connection-based passing of datagrams
+	 * of fixed maximum length (e.g. SCTP).
+	 */
+	SEQPACKET = 3,
 }
-alias GUnixSocketAddressType UnixSocketAddressType;
+alias GSocketType SocketType;
 
 /**
- * Enumeration describing different kinds of native credential types.
- * G_CREDENTIALS_TYPE_INVALID
- * Indicates an invalid native credential type.
- * G_CREDENTIALS_TYPE_LINUX_UCRED
- * The native credentials type is a struct ucred.
- * G_CREDENTIALS_TYPE_FREEBSD_CMSGCRED
- * The native credentials type is a struct cmsgcred.
- * G_CREDENTIALS_TYPE_OPENBSD_SOCKPEERCRED
- * The native credentials type is a struct sockpeercred. Added in 2.30.
- * Since 2.26
+ * Flags to define the behaviour of a #GSubprocess.
+ *
+ * Note that the default for stdin is to redirect from /dev/null.  For
+ * stdout and stderr the default are for them to inherit the
+ * corresponding descriptor from the calling process.
+ *
+ * Note that it is a programmer error to mix 'incompatible' flags.  For
+ * example, you may not request both %G_SUBPROCESS_FLAGS_STDOUT_PIPE and
+ * %G_SUBPROCESS_FLAGS_STDOUT_SILENCE.
+ *
+ * Since: 2.40
  */
-public enum GCredentialsType
+public enum GSubprocessFlags
 {
-	TYPE_INVALID,
-	TYPE_LINUX_UCRED,
-	TYPE_FREEBSD_CMSGCRED,
-	TYPE_OPENBSD_SOCKPEERCRED
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
+	/**
+	 * create a pipe for the stdin of the
+	 * spawned process that can be accessed with
+	 * g_subprocess_get_stdin_pipe().
+	 */
+	STDIN_PIPE = 1,
+	/**
+	 * stdin is inherited from the
+	 * calling process.
+	 */
+	STDIN_INHERIT = 2,
+	/**
+	 * create a pipe for the stdout of the
+	 * spawned process that can be accessed with
+	 * g_subprocess_get_stdout_pipe().
+	 */
+	STDOUT_PIPE = 4,
+	/**
+	 * silence the stdout of the spawned
+	 * process (ie: redirect to /dev/null).
+	 */
+	STDOUT_SILENCE = 8,
+	/**
+	 * create a pipe for the stderr of the
+	 * spawned process that can be accessed with
+	 * g_subprocess_get_stderr_pipe().
+	 */
+	STDERR_PIPE = 16,
+	/**
+	 * silence the stderr of the spawned
+	 * process (ie: redirect to /dev/null).
+	 */
+	STDERR_SILENCE = 32,
+	/**
+	 * merge the stderr of the spawned
+	 * process with whatever the stdout happens to be.  This is a good way
+	 * of directing both streams to a common log file, for example.
+	 */
+	STDERR_MERGE = 64,
+	/**
+	 * spawned processes will inherit the
+	 * file descriptors of their parent, unless those descriptors have
+	 * been explicitly marked as close-on-exec.  This flag has no effect
+	 * over the "standard" file descriptors (stdin, stdout, stderr).
+	 */
+	INHERIT_FDS = 128,
 }
-alias GCredentialsType CredentialsType;
+alias GSubprocessFlags SubprocessFlags;
 
 /**
- * Describes an event occurring on a GSocketClient. See the
- * "event" signal for more details.
- * Additional values may be added to this type in the future.
- * G_SOCKET_CLIENT_RESOLVING
- * The client is doing a DNS lookup.
- * G_SOCKET_CLIENT_RESOLVED
- * The client has completed a DNS lookup.
- * G_SOCKET_CLIENT_CONNECTING
- * The client is connecting to a remote
- *  host (either a proxy or the destination server).
- * G_SOCKET_CLIENT_CONNECTED
- * The client has connected to a remote
- *  host.
- * G_SOCKET_CLIENT_PROXY_NEGOTIATING
- * The client is negotiating
- *  with a proxy to connect to the destination server.
- * G_SOCKET_CLIENT_PROXY_NEGOTIATED
- * The client has negotiated
- *  with the proxy server.
- * G_SOCKET_CLIENT_TLS_HANDSHAKING
- * The client is performing a
- *  TLS handshake.
- * G_SOCKET_CLIENT_TLS_HANDSHAKED
- * The client has performed a
- *  TLS handshake.
- * G_SOCKET_CLIENT_COMPLETE
- * The client is done with a particular
- *  GSocketConnectable.
- * Since 2.32
+ * Flags to define future #GTestDBus behaviour.
+ *
+ * Since: 2.34
  */
-public enum GSocketClientEvent
+public enum GTestDBusFlags
 {
-	RESOLVING,
-	RESOLVED,
-	CONNECTING,
-	CONNECTED,
-	PROXY_NEGOTIATING,
-	PROXY_NEGOTIATED,
-	TLS_HANDSHAKING,
-	TLS_HANDSHAKED,
-	COMPLETE
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
 }
-alias GSocketClientEvent SocketClientEvent;
+alias GTestDBusFlags TestDBusFlags;
 
 /**
- * An error code used with G_TLS_ERROR in a GError returned from a
- * TLS-related routine.
- * G_TLS_ERROR_UNAVAILABLE
- * No TLS provider is available
- * G_TLS_ERROR_MISC
- * Miscellaneous TLS error
- * G_TLS_ERROR_BAD_CERTIFICATE
- * A certificate could not be parsed
- * G_TLS_ERROR_NOT_TLS
- * The TLS handshake failed because the
- *  peer does not seem to be a TLS server.
- * G_TLS_ERROR_HANDSHAKE
- * The TLS handshake failed because the
- *  peer's certificate was not acceptable.
- * G_TLS_ERROR_CERTIFICATE_REQUIRED
- * The TLS handshake failed because
- *  the server requested a client-side certificate, but none was
- *  provided. See g_tls_connection_set_certificate().
- * G_TLS_ERROR_EOF
- * The TLS connection was closed without proper
- *  notice, which may indicate an attack. See
- *  g_tls_connection_set_require_close_notify().
- * Since 2.28
- */
-public enum GTlsError
-{
-	UNAVAILABLE,
-	MISC,
-	BAD_CERTIFICATE,
-	NOT_TLS,
-	HANDSHAKE,
-	CERTIFICATE_REQUIRED,
-	EOF
-}
-alias GTlsError TlsError;
-
-/**
- * The client authentication mode for a GTlsServerConnection.
- * G_TLS_AUTHENTICATION_NONE
- * client authentication not required
- * G_TLS_AUTHENTICATION_REQUESTED
- * client authentication is requested
- * G_TLS_AUTHENTICATION_REQUIRED
- * client authentication is required
- * Since 2.28
+ * The client authentication mode for a #GTlsServerConnection.
+ *
+ * Since: 2.28
  */
 public enum GTlsAuthenticationMode
 {
-	NONE,
-	REQUESTED,
-	REQUIRED
+	/**
+	 * client authentication not required
+	 */
+	NONE = 0,
+	/**
+	 * client authentication is requested
+	 */
+	REQUESTED = 1,
+	/**
+	 * client authentication is required
+	 */
+	REQUIRED = 2,
 }
 alias GTlsAuthenticationMode TlsAuthenticationMode;
 
@@ -1045,4348 +2193,6160 @@ alias GTlsAuthenticationMode TlsAuthenticationMode;
  * used to set which validation steps to perform (eg, with
  * g_tls_client_connection_set_validation_flags()), or to describe why
  * a particular certificate was rejected (eg, in
- * "accept-certificate").
- * G_TLS_CERTIFICATE_UNKNOWN_CA
- * The signing certificate authority is
- *  not known.
- * G_TLS_CERTIFICATE_BAD_IDENTITY
- * The certificate does not match the
- *  expected identity of the site that it was retrieved from.
- * G_TLS_CERTIFICATE_NOT_ACTIVATED
- * The certificate's activation time
- *  is still in the future
- * G_TLS_CERTIFICATE_EXPIRED
- * The certificate has expired
- * G_TLS_CERTIFICATE_REVOKED
- * The certificate has been revoked
- *  according to the GTlsConnection's certificate revocation list.
- * G_TLS_CERTIFICATE_INSECURE
- * The certificate's algorithm is
- *  considered insecure.
- * G_TLS_CERTIFICATE_GENERIC_ERROR
- * Some other error occurred validating
- *  the certificate
- * G_TLS_CERTIFICATE_VALIDATE_ALL
- * the combination of all of the above
- *  flags
- * Since 2.28
+ * #GTlsConnection::accept-certificate).
+ *
+ * Since: 2.28
  */
 public enum GTlsCertificateFlags
 {
-	UNKNOWN_CA = (1 << 0),
-	BAD_IDENTITY = (1 << 1),
-	NOT_ACTIVATED = (1 << 2),
-	EXPIRED = (1 << 3),
-	REVOKED = (1 << 4),
-	INSECURE = (1 << 5),
-	GENERIC_ERROR = (1 << 6),
-	VALIDATE_ALL = 0x007f
+	/**
+	 * The signing certificate authority is
+	 * not known.
+	 */
+	UNKNOWN_CA = 1,
+	/**
+	 * The certificate does not match the
+	 * expected identity of the site that it was retrieved from.
+	 */
+	BAD_IDENTITY = 2,
+	/**
+	 * The certificate's activation time
+	 * is still in the future
+	 */
+	NOT_ACTIVATED = 4,
+	/**
+	 * The certificate has expired
+	 */
+	EXPIRED = 8,
+	/**
+	 * The certificate has been revoked
+	 * according to the #GTlsConnection's certificate revocation list.
+	 */
+	REVOKED = 16,
+	/**
+	 * The certificate's algorithm is
+	 * considered insecure.
+	 */
+	INSECURE = 32,
+	/**
+	 * Some other error occurred validating
+	 * the certificate
+	 */
+	GENERIC_ERROR = 64,
+	/**
+	 * the combination of all of the above
+	 * flags
+	 */
+	VALIDATE_ALL = 127,
 }
 alias GTlsCertificateFlags TlsCertificateFlags;
 
 /**
- * When to allow rehandshaking. See
- * g_tls_connection_set_rehandshake_mode().
- * G_TLS_REHANDSHAKE_NEVER
- * Never allow rehandshaking
- * G_TLS_REHANDSHAKE_SAFELY
- * Allow safe rehandshaking only
- * G_TLS_REHANDSHAKE_UNSAFELY
- * Allow unsafe rehandshaking
- * Since 2.28
+ * Flags for g_tls_interaction_request_certificate(),
+ * g_tls_interaction_request_certificate_async(), and
+ * g_tls_interaction_invoke_request_certificate().
+ *
+ * Since: 2.40
  */
-public enum GTlsRehandshakeMode
+public enum GTlsCertificateRequestFlags
 {
-	NEVER,
-	SAFELY,
-	UNSAFELY
+	/**
+	 * No flags
+	 */
+	NONE = 0,
 }
-alias GTlsRehandshakeMode TlsRehandshakeMode;
-
-/**
- * Flags for g_tls_database_verify_chain().
- * G_TLS_DATABASE_VERIFY_NONE
- * No verification flags
- * Since 2.30
- */
-public enum GTlsDatabaseVerifyFlags
-{
-	NONE = 0
-}
-alias GTlsDatabaseVerifyFlags TlsDatabaseVerifyFlags;
+alias GTlsCertificateRequestFlags TlsCertificateRequestFlags;
 
 /**
  * Flags for g_tls_database_lookup_certificate_handle(),
  * g_tls_database_lookup_certificate_issuer(),
  * and g_tls_database_lookup_certificates_issued_by().
- * G_TLS_DATABASE_LOOKUP_NONE
- * No lookup flags
- * G_TLS_DATABASE_LOOKUP_KEYPAIR
- * Restrict lookup to certificates that have
- *  a private key.
- * Since 2.30
+ *
+ * Since: 2.30
  */
 public enum GTlsDatabaseLookupFlags
 {
+	/**
+	 * No lookup flags
+	 */
 	NONE = 0,
-	KEYPAIR = 1
+	/**
+	 * Restrict lookup to certificates that have
+	 * a private key.
+	 */
+	KEYPAIR = 1,
 }
 alias GTlsDatabaseLookupFlags TlsDatabaseLookupFlags;
 
 /**
- * GTlsInteractionResult is returned by various functions in GTlsInteraction
+ * Flags for g_tls_database_verify_chain().
+ *
+ * Since: 2.30
+ */
+public enum GTlsDatabaseVerifyFlags
+{
+	/**
+	 * No verification flags
+	 */
+	NONE = 0,
+}
+alias GTlsDatabaseVerifyFlags TlsDatabaseVerifyFlags;
+
+/**
+ * An error code used with %G_TLS_ERROR in a #GError returned from a
+ * TLS-related routine.
+ *
+ * Since: 2.28
+ */
+public enum GTlsError
+{
+	/**
+	 * No TLS provider is available
+	 */
+	UNAVAILABLE = 0,
+	/**
+	 * Miscellaneous TLS error
+	 */
+	MISC = 1,
+	/**
+	 * A certificate could not be parsed
+	 */
+	BAD_CERTIFICATE = 2,
+	/**
+	 * The TLS handshake failed because the
+	 * peer does not seem to be a TLS server.
+	 */
+	NOT_TLS = 3,
+	/**
+	 * The TLS handshake failed because the
+	 * peer's certificate was not acceptable.
+	 */
+	HANDSHAKE = 4,
+	/**
+	 * The TLS handshake failed because
+	 * the server requested a client-side certificate, but none was
+	 * provided. See g_tls_connection_set_certificate().
+	 */
+	CERTIFICATE_REQUIRED = 5,
+	/**
+	 * The TLS connection was closed without proper
+	 * notice, which may indicate an attack. See
+	 * g_tls_connection_set_require_close_notify().
+	 */
+	EOF = 6,
+}
+alias GTlsError TlsError;
+
+/**
+ * #GTlsInteractionResult is returned by various functions in #GTlsInteraction
  * when finishing an interaction request.
- * G_TLS_INTERACTION_UNHANDLED
- * The interaction was unhandled (i.e. not
- *  implemented).
- * G_TLS_INTERACTION_HANDLED
- * The interaction completed, and resulting data
- *  is available.
- * G_TLS_INTERACTION_FAILED
- * The interaction has failed, or was cancelled.
- *  and the operation should be aborted.
- * Since 2.30
+ *
+ * Since: 2.30
  */
 public enum GTlsInteractionResult
 {
-	UNHANDLED,
-	HANDLED,
-	FAILED
+	/**
+	 * The interaction was unhandled (i.e. not
+	 * implemented).
+	 */
+	UNHANDLED = 0,
+	/**
+	 * The interaction completed, and resulting data
+	 * is available.
+	 */
+	HANDLED = 1,
+	/**
+	 * The interaction has failed, or was cancelled.
+	 * and the operation should be aborted.
+	 */
+	FAILED = 2,
 }
 alias GTlsInteractionResult TlsInteractionResult;
 
 /**
  * Various flags for the password.
- * G_TLS_PASSWORD_NONE
- * No flags
- * G_TLS_PASSWORD_RETRY
- * The password was wrong, and the user should retry.
- * G_TLS_PASSWORD_MANY_TRIES
- * Hint to the user that the password has been
- *  wrong many times, and the user may not have many chances left.
- * G_TLS_PASSWORD_FINAL_TRY
- * Hint to the user that this is the last try to get
- *  this password right.
- * Since 2.30
+ *
+ * Since: 2.30
  */
 public enum GTlsPasswordFlags
 {
+	/**
+	 * No flags
+	 */
 	NONE = 0,
-	RETRY = 1 << 1,
-	MANY_TRIES = 1 << 2,
-	FINAL_TRY = 1 << 3
+	/**
+	 * The password was wrong, and the user should retry.
+	 */
+	RETRY = 2,
+	/**
+	 * Hint to the user that the password has been
+	 * wrong many times, and the user may not have many chances left.
+	 */
+	MANY_TRIES = 4,
+	/**
+	 * Hint to the user that this is the last try to get
+	 * this password right.
+	 */
+	FINAL_TRY = 8,
 }
 alias GTlsPasswordFlags TlsPasswordFlags;
 
 /**
- * An error code used with G_RESOLVER_ERROR in a GError returned
- * from a GResolver routine.
- * G_RESOLVER_ERROR_NOT_FOUND
- * the requested name/address/service was not
- *  found
- * G_RESOLVER_ERROR_TEMPORARY_FAILURE
- * the requested information could not
- *  be looked up due to a network error or similar problem
- * G_RESOLVER_ERROR_INTERNAL
- * unknown error
- * Since 2.22
- * Signal Details
- * The "reload" signal
- * void user_function (GResolver *resolver,
- *  gpointer user_data) : Run Last
- * Emitted when the resolver notices that the system resolver
- * configuration has changed.
- * resolver :
- * a GResolver
- * user_data :
- * user data set when the signal handler was connected.
+ * When to allow rehandshaking. See
+ * g_tls_connection_set_rehandshake_mode().
+ *
+ * Since: 2.28
  */
-public enum GResolverError
+public enum GTlsRehandshakeMode
 {
-	NOT_FOUND,
-	TEMPORARY_FAILURE,
-	INTERNAL
+	/**
+	 * Never allow rehandshaking
+	 */
+	NEVER = 0,
+	/**
+	 * Allow safe rehandshaking only
+	 */
+	SAFELY = 1,
+	/**
+	 * Allow unsafe rehandshaking
+	 */
+	UNSAFELY = 2,
 }
-alias GResolverError ResolverError;
+alias GTlsRehandshakeMode TlsRehandshakeMode;
 
 /**
- * Flags describing the access control of a D-Bus property.
- * G_DBUS_PROPERTY_INFO_FLAGS_NONE
- * No flags set.
- * G_DBUS_PROPERTY_INFO_FLAGS_READABLE
- * Property is readable.
- * G_DBUS_PROPERTY_INFO_FLAGS_WRITABLE
- * Property is writable.
- * Since 2.26
+ * The type of name used by a #GUnixSocketAddress.
+ * %G_UNIX_SOCKET_ADDRESS_PATH indicates a traditional unix domain
+ * socket bound to a filesystem path. %G_UNIX_SOCKET_ADDRESS_ANONYMOUS
+ * indicates a socket not bound to any name (eg, a client-side socket,
+ * or a socket created with socketpair()).
+ *
+ * For abstract sockets, there are two incompatible ways of naming
+ * them; the man pages suggest using the entire `struct sockaddr_un`
+ * as the name, padding the unused parts of the %sun_path field with
+ * zeroes; this corresponds to %G_UNIX_SOCKET_ADDRESS_ABSTRACT_PADDED.
+ * However, many programs instead just use a portion of %sun_path, and
+ * pass an appropriate smaller length to bind() or connect(). This is
+ * %G_UNIX_SOCKET_ADDRESS_ABSTRACT.
+ *
+ * Since: 2.26
  */
-public enum GDBusPropertyInfoFlags
+public enum GUnixSocketAddressType
 {
-	NONE = 0,
-	READABLE = (1<<0),
-	WRITABLE = (1<<1)
+	/**
+	 * invalid
+	 */
+	INVALID = 0,
+	/**
+	 * anonymous
+	 */
+	ANONYMOUS = 1,
+	/**
+	 * a filesystem path
+	 */
+	PATH = 2,
+	/**
+	 * an abstract name
+	 */
+	ABSTRACT = 3,
+	/**
+	 * an abstract name, 0-padded
+	 * to the full length of a unix socket name
+	 */
+	ABSTRACT_PADDED = 4,
 }
-alias GDBusPropertyInfoFlags DBusPropertyInfoFlags;
+alias GUnixSocketAddressType UnixSocketAddressType;
 
 /**
- * Error codes for the G_DBUS_ERROR error domain.
- * G_DBUS_ERROR_FAILED
- * A generic error; "something went wrong" - see the error message for
- * more.
- * G_DBUS_ERROR_NO_MEMORY
- * There was not enough memory to complete an operation.
- * G_DBUS_ERROR_SERVICE_UNKNOWN
- * The bus doesn't know how to launch a service to supply the bus name
- * you wanted.
- * G_DBUS_ERROR_NAME_HAS_NO_OWNER
- * The bus name you referenced doesn't exist (i.e. no application owns
- * it).
- * G_DBUS_ERROR_NO_REPLY
- * No reply to a message expecting one, usually means a timeout occurred.
- * G_DBUS_ERROR_IO_ERROR
- * Something went wrong reading or writing to a socket, for example.
- * G_DBUS_ERROR_BAD_ADDRESS
- * A D-Bus bus address was malformed.
- * G_DBUS_ERROR_NOT_SUPPORTED
- * Requested operation isn't supported (like ENOSYS on UNIX).
- * G_DBUS_ERROR_LIMITS_EXCEEDED
- * Some limited resource is exhausted.
- * G_DBUS_ERROR_ACCESS_DENIED
- * Security restrictions don't allow doing what you're trying to do.
- * G_DBUS_ERROR_AUTH_FAILED
- * Authentication didn't work.
- * G_DBUS_ERROR_NO_SERVER
- * Unable to connect to server (probably caused by ECONNREFUSED on a
- * socket).
- * G_DBUS_ERROR_TIMEOUT
- * Certain timeout errors, possibly ETIMEDOUT on a socket. Note that
- * G_DBUS_ERROR_NO_REPLY is used for message reply timeouts. Warning:
- * this is confusingly-named given that G_DBUS_ERROR_TIMED_OUT also
- * exists. We can't fix it for compatibility reasons so just be
- * careful.
- * G_DBUS_ERROR_NO_NETWORK
- * No network access (probably ENETUNREACH on a socket).
- * G_DBUS_ERROR_ADDRESS_IN_USE
- * Can't bind a socket since its address is in use (i.e. EADDRINUSE).
- * G_DBUS_ERROR_DISCONNECTED
- * The connection is disconnected and you're trying to use it.
- * G_DBUS_ERROR_INVALID_ARGS
- * Invalid arguments passed to a method call.
- * G_DBUS_ERROR_FILE_NOT_FOUND
- * Missing file.
- * G_DBUS_ERROR_FILE_EXISTS
- * Existing file and the operation you're using does not silently overwrite.
- * G_DBUS_ERROR_UNKNOWN_METHOD
- * Method name you invoked isn't known by the object you invoked it on.
- * G_DBUS_ERROR_TIMED_OUT
- * Certain timeout errors, e.g. while starting a service. Warning: this is
- * confusingly-named given that G_DBUS_ERROR_TIMEOUT also exists. We
- * can't fix it for compatibility reasons so just be careful.
- * G_DBUS_ERROR_MATCH_RULE_NOT_FOUND
- * Tried to remove or modify a match rule that didn't exist.
- * G_DBUS_ERROR_MATCH_RULE_INVALID
- * The match rule isn't syntactically valid.
- * G_DBUS_ERROR_SPAWN_EXEC_FAILED
- * While starting a new process, the exec() call failed.
- * G_DBUS_ERROR_SPAWN_FORK_FAILED
- * While starting a new process, the fork() call failed.
- * G_DBUS_ERROR_SPAWN_CHILD_EXITED
- * While starting a new process, the child exited with a status code.
- * G_DBUS_ERROR_SPAWN_CHILD_SIGNALED
- * While starting a new process, the child exited on a signal.
- * G_DBUS_ERROR_SPAWN_FAILED
- * While starting a new process, something went wrong.
- * G_DBUS_ERROR_SPAWN_SETUP_FAILED
- * We failed to setup the environment correctly.
- * G_DBUS_ERROR_SPAWN_CONFIG_INVALID
- * We failed to setup the config parser correctly.
- * G_DBUS_ERROR_SPAWN_SERVICE_INVALID
- * Bus name was not valid.
- * G_DBUS_ERROR_SPAWN_SERVICE_NOT_FOUND
- * Service file not found in system-services directory.
- * G_DBUS_ERROR_SPAWN_PERMISSIONS_INVALID
- * Permissions are incorrect on the setuid helper.
- * G_DBUS_ERROR_SPAWN_FILE_INVALID
- * Service file invalid (Name, User or Exec missing).
- * G_DBUS_ERROR_SPAWN_NO_MEMORY
- * Tried to get a UNIX process ID and it wasn't available.
- * G_DBUS_ERROR_UNIX_PROCESS_ID_UNKNOWN
- * Tried to get a UNIX process ID and it wasn't available.
- * G_DBUS_ERROR_INVALID_SIGNATURE
- * A type signature is not valid.
- * G_DBUS_ERROR_INVALID_FILE_CONTENT
- * A file contains invalid syntax or is otherwise broken.
- * G_DBUS_ERROR_SELINUX_SECURITY_CONTEXT_UNKNOWN
- * Asked for SELinux security context and it wasn't available.
- * G_DBUS_ERROR_ADT_AUDIT_DATA_UNKNOWN
- * Asked for ADT audit data and it wasn't available.
- * G_DBUS_ERROR_OBJECT_PATH_IN_USE
- * There's already an object with the requested object path.
- * Since 2.26
+ * Used to select the type of data format to use for #GZlibDecompressor
+ * and #GZlibCompressor.
+ *
+ * Since: 2.24
  */
-public enum GDBusError
+public enum GZlibCompressorFormat
 {
-	FAILED, /+* org.freedesktop.DBus.Error.Failed +/
-	NO_MEMORY, /+* org.freedesktop.DBus.Error.NoMemory +/
-	SERVICE_UNKNOWN, /+* org.freedesktop.DBus.Error.ServiceUnknown +/
-	NAME_HAS_NO_OWNER, /+* org.freedesktop.DBus.Error.NameHasNoOwner +/
-	NO_REPLY, /+* org.freedesktop.DBus.Error.NoReply +/
-	IO_ERROR, /+* org.freedesktop.DBus.Error.IOError +/
-	BAD_ADDRESS, /+* org.freedesktop.DBus.Error.BadAddress +/
-	NOT_SUPPORTED, /+* org.freedesktop.DBus.Error.NotSupported +/
-	LIMITS_EXCEEDED, /+* org.freedesktop.DBus.Error.LimitsExceeded +/
-	ACCESS_DENIED, /+* org.freedesktop.DBus.Error.AccessDenied +/
-	AUTH_FAILED, /+* org.freedesktop.DBus.Error.AuthFailed +/
-	NO_SERVER, /+* org.freedesktop.DBus.Error.NoServer +/
-	TIMEOUT, /+* org.freedesktop.DBus.Error.Timeout +/
-	NO_NETWORK, /+* org.freedesktop.DBus.Error.NoNetwork +/
-	ADDRESS_IN_USE, /+* org.freedesktop.DBus.Error.AddressInUse +/
-	DISCONNECTED, /+* org.freedesktop.DBus.Error.Disconnected +/
-	INVALID_ARGS, /+* org.freedesktop.DBus.Error.InvalidArgs +/
-	FILE_NOT_FOUND, /+* org.freedesktop.DBus.Error.FileNotFound +/
-	FILE_EXISTS, /+* org.freedesktop.DBus.Error.FileExists +/
-	UNKNOWN_METHOD, /+* org.freedesktop.DBus.Error.UnknownMethod +/
-	TIMED_OUT, /+* org.freedesktop.DBus.Error.TimedOut +/
-	MATCH_RULE_NOT_FOUND, /+* org.freedesktop.DBus.Error.MatchRuleNotFound +/
-	MATCH_RULE_INVALID, /+* org.freedesktop.DBus.Error.MatchRuleInvalid +/
-	SPAWN_EXEC_FAILED, /+* org.freedesktop.DBus.Error.Spawn.ExecFailed +/
-	SPAWN_FORK_FAILED, /+* org.freedesktop.DBus.Error.Spawn.ForkFailed +/
-	SPAWN_CHILD_EXITED, /+* org.freedesktop.DBus.Error.Spawn.ChildExited +/
-	SPAWN_CHILD_SIGNALED, /+* org.freedesktop.DBus.Error.Spawn.ChildSignaled +/
-	SPAWN_FAILED, /+* org.freedesktop.DBus.Error.Spawn.Failed +/
-	SPAWN_SETUP_FAILED, /+* org.freedesktop.DBus.Error.Spawn.FailedToSetup +/
-	SPAWN_CONFIG_INVALID, /+* org.freedesktop.DBus.Error.Spawn.ConfigInvalid +/
-	SPAWN_SERVICE_INVALID, /+* org.freedesktop.DBus.Error.Spawn.ServiceNotValid +/
-	SPAWN_SERVICE_NOT_FOUND, /+* org.freedesktop.DBus.Error.Spawn.ServiceNotFound +/
-	SPAWN_PERMISSIONS_INVALID, /+* org.freedesktop.DBus.Error.Spawn.PermissionsInvalid +/
-	SPAWN_FILE_INVALID, /+* org.freedesktop.DBus.Error.Spawn.FileInvalid +/
-	SPAWN_NO_MEMORY, /+* org.freedesktop.DBus.Error.Spawn.NoMemory +/
-	UNIX_PROCESS_ID_UNKNOWN, /+* org.freedesktop.DBus.Error.UnixProcessIdUnknown +/
-	INVALID_SIGNATURE, /+* org.freedesktop.DBus.Error.InvalidSignature +/
-	INVALID_FILE_CONTENT, /+* org.freedesktop.DBus.Error.InvalidFileContent +/
-	SELINUX_SECURITY_CONTEXT_UNKNOWN, /+* org.freedesktop.DBus.Error.SELinuxSecurityContextUnknown +/
-	ADT_AUDIT_DATA_UNKNOWN, /+* org.freedesktop.DBus.Error.AdtAuditDataUnknown +/
-	OBJECT_PATH_IN_USE /+* org.freedesktop.DBus.Error.ObjectPathInUse +/
+	/**
+	 * deflate compression with zlib header
+	 */
+	ZLIB = 0,
+	/**
+	 * gzip file format
+	 */
+	GZIP = 1,
+	/**
+	 * deflate compression with no header
+	 */
+	RAW = 2,
 }
-alias GDBusError DBusError;
+alias GZlibCompressorFormat ZlibCompressorFormat;
+
+struct GAction;
 
 /**
- * Message types used in GDBusMessage.
- * G_DBUS_MESSAGE_TYPE_INVALID
- * Message is of invalid type.
- * G_DBUS_MESSAGE_TYPE_METHOD_CALL
- * Method call.
- * G_DBUS_MESSAGE_TYPE_METHOD_RETURN
- * Method reply.
- * G_DBUS_MESSAGE_TYPE_ERROR
- * Error reply.
- * G_DBUS_MESSAGE_TYPE_SIGNAL
- * Signal emission.
- * Since 2.26
+ * This struct defines a single action.  It is for use with
+ * g_action_map_add_action_entries().
+ *
+ * The order of the items in the structure are intended to reflect
+ * frequency of use.  It is permissible to use an incomplete initialiser
+ * in order to leave some of the later values as %NULL.  All values
+ * after @name are optional.  Additional optional fields may be added in
+ * the future.
+ *
+ * See g_action_map_add_action_entries() for an example.
  */
-public enum GDBusMessageType
+struct GActionEntry
 {
-	TYPE_INVALID,
-	TYPE_METHOD_CALL,
-	TYPE_METHOD_RETURN,
-	TYPE_ERROR,
-	TYPE_SIGNAL
-}
-alias GDBusMessageType DBusMessageType;
-
-/**
- * Message flags used in GDBusMessage.
- * G_DBUS_MESSAGE_FLAGS_NONE
- * No flags set.
- * G_DBUS_MESSAGE_FLAGS_NO_REPLY_EXPECTED
- * A reply is not expected.
- * G_DBUS_MESSAGE_FLAGS_NO_AUTO_START
- * The bus must not launch an
- * owner for the destination name in response to this message.
- * Since 2.26
- */
-public enum GDBusMessageFlags
-{
-	NONE = 0,
-	NO_REPLY_EXPECTED = (1<<0),
-	NO_AUTO_START = (1<<1)
-}
-alias GDBusMessageFlags DBusMessageFlags;
-
-/**
- * Header fields used in GDBusMessage.
- * G_DBUS_MESSAGE_HEADER_FIELD_INVALID
- * Not a valid header field.
- * G_DBUS_MESSAGE_HEADER_FIELD_PATH
- * The object path.
- * G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE
- * The interface name.
- * G_DBUS_MESSAGE_HEADER_FIELD_MEMBER
- * The method or signal name.
- * G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME
- * The name of the error that occurred.
- * G_DBUS_MESSAGE_HEADER_FIELD_REPLY_SERIAL
- * The serial number the message is a reply to.
- * G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION
- * The name the message is intended for.
- * G_DBUS_MESSAGE_HEADER_FIELD_SENDER
- * Unique name of the sender of the message (filled in by the bus).
- * G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE
- * The signature of the message body.
- * G_DBUS_MESSAGE_HEADER_FIELD_NUM_UNIX_FDS
- * The number of UNIX file descriptors that accompany the message.
- * Since 2.26
- */
-public enum GDBusMessageHeaderField
-{
-	INVALID,
-	PATH,
-	INTERFACE,
-	MEMBER,
-	ERROR_NAME,
-	REPLY_SERIAL,
-	DESTINATION,
-	SENDER,
-	SIGNATURE,
-	NUM_UNIX_FDS
-}
-alias GDBusMessageHeaderField DBusMessageHeaderField;
-
-/**
- * Enumeration used to describe the byte order of a D-Bus message.
- * G_DBUS_MESSAGE_BYTE_ORDER_BIG_ENDIAN
- * The byte order is big endian.
- * G_DBUS_MESSAGE_BYTE_ORDER_LITTLE_ENDIAN
- * The byte order is little endian.
- * Since 2.26
- */
-public enum GDBusMessageByteOrder
-{
-	BIG_ENDIAN = 'B',
-	LITTLE_ENDIAN = 'l'
-}
-alias GDBusMessageByteOrder DBusMessageByteOrder;
-
-/**
- * An enumeration for well-known message buses.
- * G_BUS_TYPE_STARTER
- * An alias for the message bus that activated the process, if any.
- * G_BUS_TYPE_NONE
- * Not a message bus.
- * G_BUS_TYPE_SYSTEM
- * The system-wide message bus.
- * G_BUS_TYPE_SESSION
- * The login session message bus.
- * Since 2.26
- */
-public enum GBusType
-{
-	TYPE_STARTER = -1,
-	TYPE_NONE = 0,
-	TYPE_SYSTEM = 1,
-	TYPE_SESSION = 2
-}
-alias GBusType BusType;
-
-/**
- * Flags used when creating a new GDBusConnection.
- * G_DBUS_CONNECTION_FLAGS_NONE
- * No flags set.
- * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT
- * Perform authentication against server.
- * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER
- * Perform authentication against client.
- * G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS
- * When
- * authenticating as a server, allow the anonymous authentication
- * method.
- * G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION
- * Pass this flag if connecting to a peer that is a
- * message bus. This means that the Hello() method will be invoked as part of the connection setup.
- * G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING
- * If set, processing of D-Bus messages is
- * delayed until g_dbus_connection_start_message_processing() is called.
- * Since 2.26
- */
-public enum GDBusConnectionFlags
-{
-	NONE = 0,
-	AUTHENTICATION_CLIENT = (1<<0),
-	AUTHENTICATION_SERVER = (1<<1),
-	AUTHENTICATION_ALLOW_ANONYMOUS = (1<<2),
-	MESSAGE_BUS_CONNECTION = (1<<3),
-	DELAY_MESSAGE_PROCESSING = (1<<4)
-}
-alias GDBusConnectionFlags DBusConnectionFlags;
-
-/**
- * Capabilities negotiated with the remote peer.
- * G_DBUS_CAPABILITY_FLAGS_NONE
- * No flags set.
- * G_DBUS_CAPABILITY_FLAGS_UNIX_FD_PASSING
- * The connection
- * supports exchanging UNIX file descriptors with the remote peer.
- * Since 2.26
- */
-public enum GDBusCapabilityFlags
-{
-	NONE = 0,
-	UNIX_FD_PASSING = (1<<0)
-}
-alias GDBusCapabilityFlags DBusCapabilityFlags;
-
-/**
- * Flags used in g_dbus_connection_call() and similar APIs.
- * G_DBUS_CALL_FLAGS_NONE
- * No flags set.
- * G_DBUS_CALL_FLAGS_NO_AUTO_START
- * The bus must not launch
- * an owner for the destination name in response to this method
- * invocation.
- * Since 2.26
- */
-public enum GDBusCallFlags
-{
-	NONE = 0,
-	NO_AUTO_START = (1<<0)
-}
-alias GDBusCallFlags DBusCallFlags;
-
-/**
- * Flags used when subscribing to signals via g_dbus_connection_signal_subscribe().
- * G_DBUS_SIGNAL_FLAGS_NONE
- * No flags set.
- * G_DBUS_SIGNAL_FLAGS_NO_MATCH_RULE
- * Don't actually send the AddMatch
- * D-Bus call for this signal subscription. This gives you more control
- * over which match rules you add (but you must add them manually).
- * G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_NAMESPACE
- * Match first arguments that
- * contain a bus or interface name with the given namespace.
- * G_DBUS_SIGNAL_FLAGS_MATCH_ARG0_PATH
- * Match first arguments that
- * contain an object path that is either equivalent to the given path,
- * or one of the paths is a subpath of the other.
- * Since 2.26
- */
-public enum GDBusSignalFlags
-{
-	NONE = 0,
-	NO_MATCH_RULE = (1<<0),
-	MATCH_ARG0_NAMESPACE = (1<<1),
-	MATCH_ARG0_PATH = (1<<2)
-}
-alias GDBusSignalFlags DBusSignalFlags;
-
-/**
- * Flags used when sending GDBusMessages on a GDBusConnection.
- * G_DBUS_SEND_MESSAGE_FLAGS_NONE
- * No flags set.
- * G_DBUS_SEND_MESSAGE_FLAGS_PRESERVE_SERIAL
- * Do not automatically
- * assign a serial number from the GDBusConnection object when
- * sending a message.
- * Since 2.26
- */
-public enum GDBusSendMessageFlags
-{
-	NONE = 0,
-	PRESERVE_SERIAL = (1<<0)
-}
-alias GDBusSendMessageFlags DBusSendMessageFlags;
-
-/**
- * Flags passed to g_dbus_connection_register_subtree().
- * G_DBUS_SUBTREE_FLAGS_NONE
- * No flags set.
- * G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES
- * Method calls to objects not in the enumerated range
- *  will still be dispatched. This is useful if you want
- *  to dynamically spawn objects in the subtree.
- * Since 2.26
- */
-public enum GDBusSubtreeFlags
-{
-	NONE = 0,
-	DISPATCH_TO_UNENUMERATED_NODES = (1<<0)
-}
-alias GDBusSubtreeFlags DBusSubtreeFlags;
-
-/**
- * Flags used when creating a GDBusServer.
- * G_DBUS_SERVER_FLAGS_NONE
- * No flags set.
- * G_DBUS_SERVER_FLAGS_RUN_IN_THREAD
- * All "new-connection"
- * signals will run in separated dedicated threads (see signal for
- * details).
- * G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS
- * Allow the anonymous
- * authentication method.
- * Since 2.26
- */
-public enum GDBusServerFlags
-{
-	NONE = 0,
-	RUN_IN_THREAD = (1<<0),
-	AUTHENTICATION_ALLOW_ANONYMOUS = (1<<1)
-}
-alias GDBusServerFlags DBusServerFlags;
-
-/**
- * Flags used in g_bus_own_name().
- * G_BUS_NAME_OWNER_FLAGS_NONE
- * No flags set.
- * G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT
- * Allow another message bus connection to claim the name.
- * G_BUS_NAME_OWNER_FLAGS_REPLACE
- * If another message bus connection owns the name and have
- * specified G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
- * Since 2.26
- */
-public enum GBusNameOwnerFlags
-{
-	NONE = 0, /+*< nick=none >+/
-	ALLOW_REPLACEMENT = (1 << 0), /+*< nick=allow-replacement >+/
-	REPLACE = (1 << 1) /+*< nick=replace >+/
-}
-alias GBusNameOwnerFlags BusNameOwnerFlags;
-
-/**
- * Flags used in g_bus_watch_name().
- * G_BUS_NAME_WATCHER_FLAGS_NONE
- * No flags set.
- * G_BUS_NAME_WATCHER_FLAGS_AUTO_START
- * If no-one owns the name when
- * beginning to watch the name, ask the bus to launch an owner for the
- * name.
- * Since 2.26
- */
-public enum GBusNameWatcherFlags
-{
-	NONE = 0,
-	AUTO_START = (1<<0)
-}
-alias GBusNameWatcherFlags BusNameWatcherFlags;
-
-/**
- * Flags describing the behavior of a GDBusInterfaceSkeleton instance.
- * G_DBUS_INTERFACE_SKELETON_FLAGS_NONE
- * No flags set.
- * G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_THREAD
- * Each method invocation is handled in
- *  a thread dedicated to the invocation. This means that the method implementation can use blocking IO
- *  without blocking any other part of the process. It also means that the method implementation must
- *  use locking to access data structures used by other threads.
- * Since 2.30
- */
-public enum GDBusInterfaceSkeletonFlags
-{
-	NONE = 0,
-	HANDLE_METHOD_INVOCATIONS_IN_THREAD = (1<<0)
-}
-alias GDBusInterfaceSkeletonFlags DBusInterfaceSkeletonFlags;
-
-/**
- * Flags used when constructing an instance of a GDBusProxy derived class.
- * G_DBUS_PROXY_FLAGS_NONE
- * No flags set.
- * G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES
- * Don't load properties.
- * G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS
- * Don't connect to signals on the remote object.
- * G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START
- * If not set and the proxy if for a well-known name,
- * then request the bus to launch an owner for the name if no-one owns the name. This flag can
- * only be used in proxies for well-known names.
- * G_DBUS_PROXY_FLAGS_GET_INVALIDATED_PROPERTIES
- * If set, the property value for any invalidated property will be (asynchronously) retrieved upon receiving the PropertiesChanged D-Bus signal and the property will not cause emission of the "g-properties-changed" signal. When the value is received the "g-properties-changed" signal is emitted for the property along with the retrieved value. Since 2.32.
- * Since 2.26
- */
-public enum GDBusProxyFlags
-{
-	NONE = 0,
-	DO_NOT_LOAD_PROPERTIES = (1<<0),
-	DO_NOT_CONNECT_SIGNALS = (1<<1),
-	DO_NOT_AUTO_START = (1<<2),
-	GET_INVALIDATED_PROPERTIES = (1<<3)
-}
-alias GDBusProxyFlags DBusProxyFlags;
-
-/**
- * Flags used when constructing a GDBusObjectManagerClient.
- * G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE
- * No flags set.
- * G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_DO_NOT_AUTO_START
- * If not set and the
- *  manager is for a well-known name, then request the bus to launch
- *  an owner for the name if no-one owns the name. This flag can only
- *  be used in managers for well-known names.
- * Since 2.30
- */
-public enum GDBusObjectManagerClientFlags
-{
-	NONE = 0,
-	DO_NOT_AUTO_START = (1<<0)
-}
-alias GDBusObjectManagerClientFlags DBusObjectManagerClientFlags;
-
-/**
- * Flags used when creating a binding. These flags determine in which
- * direction the binding works. The default is to synchronize in both
- * directions.
- * G_SETTINGS_BIND_DEFAULT
- * Equivalent to G_SETTINGS_BIND_GET|G_SETTINGS_BIND_SET
- * G_SETTINGS_BIND_GET
- * Update the GObject property when the setting changes.
- *  It is an error to use this flag if the property is not writable.
- * G_SETTINGS_BIND_SET
- * Update the setting when the GObject property changes.
- *  It is an error to use this flag if the property is not readable.
- * G_SETTINGS_BIND_NO_SENSITIVITY
- * Do not try to bind a "sensitivity" property to the writability of the setting
- * G_SETTINGS_BIND_GET_NO_CHANGES
- * When set in addition to G_SETTINGS_BIND_GET, set the GObject property
- *  value initially from the setting, but do not listen for changes of the setting
- * G_SETTINGS_BIND_INVERT_BOOLEAN
- * When passed to g_settings_bind(), uses a pair of mapping functions that invert
- *  the boolean value when mapping between the setting and the property. The setting and property must both
- *  be booleans. You cannot pass this flag to g_settings_bind_with_mapping().
- */
-public enum GSettingsBindFlags
-{
-	DEFAULT,
-	GET = (1<<0),
-	SET = (1<<1),
-	NO_SENSITIVITY = (1<<2),
-	GET_NO_CHANGES = (1<<3),
-	INVERT_BOOLEAN = (1<<4)
-}
-alias GSettingsBindFlags SettingsBindFlags;
-
-/**
- * GResourceFlags give information about a particular file inside a resource
- * bundle.
- * G_RESOURCE_FLAGS_NONE
- * No flags set.
- * G_RESOURCE_FLAGS_COMPRESSED
- * The file is compressed.
- * Since 2.32
- */
-public enum GResourceFlags
-{
-	NONE = 0,
-	COMPRESSED = (1<<0)
-}
-alias GResourceFlags ResourceFlags;
-
-/**
- * GResourceLookupFlags determine how resource path lookups are handled.
- * G_RESOURCE_LOOKUP_FLAGS_NONE
- * No flags set.
- * Since 2.32
- */
-public enum GResourceLookupFlags
-{
-	NONE = 0
-}
-alias GResourceLookupFlags ResourceLookupFlags;
-
-/**
- * An error code used with G_RESOURCE_ERROR in a GError returned
- * from a GResource routine.
- * G_RESOURCE_ERROR_NOT_FOUND
- * no file was found at the requested path
- * G_RESOURCE_ERROR_INTERNAL
- * unknown error
- * Since 2.32
- */
-public enum GResourceError
-{
-	NOT_FOUND,
-	INTERNAL
-}
-alias GResourceError ResourceError;
-
-/**
- * Flags used to define the behaviour of a GApplication.
- * G_APPLICATION_FLAGS_NONE
- * Default
- * G_APPLICATION_IS_SERVICE
- * Run as a service. In this mode, registration
- *  fails if the service is already running, and the application
- *  will initially wait up to 10 seconds for an initial activation
- *  message to arrive.
- * G_APPLICATION_IS_LAUNCHER
- * Don't try to become the primary instance.
- * G_APPLICATION_HANDLES_OPEN
- * This application handles opening files (in
- *  the primary instance). Note that this flag only affects the default
- *  implementation of local_command_line(), and has no effect if
- *  G_APPLICATION_HANDLES_COMMAND_LINE is given.
- *  See g_application_run() for details.
- * G_APPLICATION_HANDLES_COMMAND_LINE
- * This application handles command line
- *  arguments (in the primary instance). Note that this flag only affect
- *  the default implementation of local_command_line().
- *  See g_application_run() for details.
- * G_APPLICATION_SEND_ENVIRONMENT
- * Send the environment of the
- *  launching process to the primary instance. Set this flag if your
- *  application is expected to behave differently depending on certain
- *  environment variables. For instance, an editor might be expected
- *  to use the GIT_COMMITTER_NAME environment variable
- *  when editing a git commit message. The environment is available
- *  to the "command-line" signal handler, via
- *  g_application_command_line_getenv().
- * G_APPLICATION_NON_UNIQUE
- * Make no attempts to do any of the typical
- *  single-instance application negotiation, even if the application
- *  ID is given. The application neither attempts to become the
- *  owner of the application ID nor does it check if an existing
- *  owner already exists. Everything occurs in the local process.
- *  Since: 2.30.
- * Since 2.28
- */
-public enum GApplicationFlags
-{
-	NONE,
-	G_APPLICATION_IS_SERVICE = (1 << 0),
-	G_APPLICATION_IS_LAUNCHER = (1 << 1),
-	G_APPLICATION_HANDLES_OPEN = (1 << 2),
-	G_APPLICATION_HANDLES_COMMAND_LINE = (1 << 3),
-	G_APPLICATION_SEND_ENVIRONMENT = (1 << 4),
-	G_APPLICATION_NON_UNIQUE = (1 << 5)
-}
-alias GApplicationFlags ApplicationFlags;
-
-/**
- * Flags for use with g_io_module_scope_new().
- * G_IO_MODULE_SCOPE_NONE
- * No module scan flags
- * G_IO_MODULE_SCOPE_BLOCK_DUPLICATES
- * When using this scope to load or
- *  scan modules, automatically block a modules which has the same base
- *  basename as previously loaded module.
- * Since 2.30
- */
-public enum GIOModuleScopeFlags
-{
-	NONE,
-	BLOCK_DUPLICATES
-}
-alias GIOModuleScopeFlags IOModuleScopeFlags;
-
-/**
- * Flags to define future GTestDBus behaviour.
- * G_TEST_DBUS_NONE
- * No flags.
- * Since 2.34
- */
-public enum GTestDBusFlags
-{
-	NONE = 0
-}
-alias GTestDBusFlags TestDBusFlags;
-
-
-struct GStaticResource
-{
-	guint8* data;
-	gsize   data_len;
-	GResource* resource;
-	GStaticResource* next;
-	gpointer padding;
+	/**
+	 * the name of the action
+	 */
+	const(char)* name;
+	extern(C) void function(GSimpleAction* action, GVariant* parameter, void* userData) activate;
+	/**
+	 * the type of the parameter that must be passed to the
+	 * activate function for this action, given as a single
+	 * GVariant type string (or %NULL for no parameter)
+	 */
+	const(char)* parameterType;
+	/**
+	 * the initial state for this action, given in
+	 * [GVariant text format][gvariant-text].  The state is parsed
+	 * with no extra type information, so type tags must be added to
+	 * the string if they are necessary.  Stateless actions should
+	 * give %NULL here.
+	 */
+	const(char)* state;
+	extern(C) void function(GSimpleAction* action, GVariant* value, void* userData) changeState;
+	size_t[3] padding;
 }
 
+struct GActionGroup;
 
 /**
- * Main Gtk struct.
- * A handle to an object implementing the GFileIface interface.
- * Generally stores a location within the file system. Handles do not
- * necessarily represent files or directories that currently exist.
+ * The virtual function table for #GActionGroup.
+ *
+ * Since: 2.28
  */
-public struct GFile{}
-
-
-/**
- * An interface for writing VFS file handles.
- * GTypeInterface g_iface;
- * The parent interface.
- * dup ()
- * Duplicates a GFile.
- * hash ()
- * Creates a hash of a GFile.
- * equal ()
- * Checks equality of two given GFiles.
- * is_native ()
- * Checks to see if a file is native to the system.
- * has_uri_scheme ()
- * Checks to see if a GFile has a given URI scheme.
- * get_uri_scheme ()
- * Gets the URI scheme for a GFile.
- * get_basename ()
- * Gets the basename for a given GFile.
- * get_path ()
- * Gets the current path within a GFile.
- * get_uri ()
- * Gets a URI for the path within a GFile.
- * get_parse_name ()
- * Gets the parsed name for the GFile.
- * get_parent ()
- * Gets the parent directory for the GFile.
- * prefix_matches ()
- * Checks whether a GFile contains a specified file.
- * get_relative_path ()
- * Gets the path for a GFile relative to a given path.
- * resolve_relative_path ()
- * Resolves a relative path for a GFile to an absolute path.
- * get_child_for_display_name ()
- * Gets the child GFile for a given display name.
- * enumerate_children ()
- * Gets a GFileEnumerator with the children of a GFile.
- * enumerate_children_async ()
- * Asynchronously gets a GFileEnumerator with the children of a GFile.
- * enumerate_children_finish ()
- * Finishes asynchronously enumerating the children.
- * query_info ()
- * Gets the GFileInfo for a GFile.
- * query_info_async ()
- * Asynchronously gets the GFileInfo for a GFile.
- * query_info_finish ()
- * Finishes an asynchronous query info operation.
- * query_filesystem_info ()
- * Gets a GFileInfo for the file system GFile is on.
- * query_filesystem_info_async ()
- * Asynchronously gets a GFileInfo for the file system GFile is on.
- * query_filesystem_info_finish ()
- * Finishes asynchronously getting the file system info.
- * find_enclosing_mount ()
- * Gets a GMount for the GFile.
- * find_enclosing_mount_async ()
- * Asynchronously gets the GMount for a GFile.
- * find_enclosing_mount_finish ()
- * Finishes asynchronously getting the volume.
- * set_display_name ()
- * Sets the display name for a GFile.
- * set_display_name_async ()
- * Asynchronously sets a GFile's display name.
- * set_display_name_finish ()
- * Finishes asynchronously setting a GFile's display name.
- * query_settable_attributes ()
- * Returns a list of GFileAttributes that can be set.
- * _query_settable_attributes_async ()
- * Asynchronously gets a list of GFileAttributes that can be set.
- * _query_settable_attributes_finish ()
- * Finishes asynchronously querying settable attributes.
- * query_writable_namespaces ()
- * Returns a list of GFileAttribute namespaces that are writable.
- * _query_writable_namespaces_async ()
- * Asynchronously gets a list of GFileAttribute namespaces that are writable.
- * _query_writable_namespaces_finish ()
- * Finishes asynchronously querying the writable namespaces.
- * set_attribute ()
- * Sets a GFileAttribute.
- * set_attributes_from_info ()
- * Sets a GFileAttribute with information from a GFileInfo.
- * set_attributes_async ()
- * Asynchronously sets a file's attributes.
- * set_attributes_finish ()
- * Finishes setting a file's attributes asynchronously.
- * read_fn ()
- * Reads a file asynchronously.
- * read_async ()
- * Asynchronously reads a file.
- * read_finish ()
- * Finishes asynchronously reading a file.
- * append_to ()
- * Writes to the end of a file.
- * append_to_async ()
- * Asynchronously writes to the end of a file.
- * append_to_finish ()
- * Finishes an asynchronous file append operation.
- * create ()
- * Creates a new file.
- * create_async ()
- * Asynchronously creates a file.
- * create_finish ()
- * Finishes asynchronously creating a file.
- * replace ()
- * Replaces the contents of a file.
- * replace_async ()
- * Asynchronously replaces the contents of a file.
- * replace_finish ()
- * Finishes asynchronously replacing a file.
- * delete_file ()
- * Deletes a file.
- * delete_file_async ()
- * Asynchronously deletes a file.
- * delete_file_finish ()
- * Finishes an asynchronous delete.
- * trash ()
- * Sends a GFile to the Trash location.
- * trash_async ()
- * Asynchronously sends a GFile to the Trash location.
- * trash_finish ()
- * Finishes an asynchronous file trashing operation.
- * make_directory ()
- * Makes a directory.
- * make_directory_async ()
- * Asynchronously makes a directory.
- * make_directory_finish ()
- * Finishes making a directory asynchronously.
- * make_symbolic_link ()
- * Makes a symbolic link.
- * _make_symbolic_link_async ()
- * Asynchronously makes a symbolic link
- * _make_symbolic_link_finish ()
- * Finishes making a symbolic link asynchronously.
- * copy ()
- * Copies a file.
- * copy_async ()
- * Asynchronously copies a file.
- * copy_finish ()
- * Finishes an asynchronous copy operation.
- * move ()
- * Moves a file.
- * _move_async ()
- * Asynchronously moves a file.
- * _move_finish ()
- * Finishes an asynchronous move operation.
- * mount_mountable ()
- * Mounts a mountable object.
- * mount_mountable_finish ()
- * Finishes a mounting operation.
- * unmount_mountable ()
- * Unmounts a mountable object.
- * unmount_mountable_finish ()
- * Finishes an unmount operation.
- * eject_mountable ()
- * Ejects a mountable.
- * eject_mountable_finish ()
- * Finishes an eject operation.
- * mount_enclosing_volume ()
- * Mounts a specified location.
- * mount_enclosing_volume_finish ()
- * Finishes mounting a specified location.
- * monitor_dir ()
- * Creates a GFileMonitor for the location.
- * monitor_file ()
- * Creates a GFileMonitor for the location.
- * open_readwrite ()
- * Open file read/write. Since 2.22.
- * open_readwrite_async ()
- * Asynchronously opens file read/write. Since 2.22.
- * open_readwrite_finish ()
- * Finishes an asynchronous open read/write. Since 2.22.
- * create_readwrite ()
- * Creates file read/write. Since 2.22.
- * create_readwrite_async ()
- * Asynchronously creates file read/write. Since 2.22.
- * create_readwrite_finish ()
- * Finishes an asynchronous creates read/write. Since 2.22.
- * replace_readwrite ()
- * Replaces file read/write. Since 2.22.
- * replace_readwrite_async ()
- * Asynchronously replaces file read/write. Since 2.22.
- * replace_readwrite_finish ()
- * Finishes an asynchronous replace read/write. Since 2.22.
- * start_mountable ()
- * Starts a mountable object. Since 2.22.
- * start_mountable_finish ()
- * Finishes an start operation. Since 2.22.
- * stop_mountable ()
- * Stops a mountable. Since 2.22.
- * stop_mountable_finish ()
- * Finishes an stop operation. Since 2.22.
- * gboolean supports_thread_contexts;
- * a boolean that indicates whether the GFile implementation supports thread-default contexts. Since 2.22.
- * unmount_mountable_with_operation ()
- * Unmounts a mountable object using a GMountOperation. Since 2.22.
- * unmount_mountable_with_operation_finish ()
- * Finishes an unmount operation using a GMountOperation. Since 2.22.
- * eject_mountable_with_operation ()
- * Ejects a mountable object using a GMountOperation. Since 2.22.
- * eject_mountable_with_operation_finish ()
- * Finishes an eject operation using a GMountOperation. Since 2.22.
- * poll_mountable ()
- * Polls a mountable object for media changes. Since 2.22.
- * poll_mountable_finish ()
- * Finishes an poll operation for media changes. Since 2.22.
- * measure_disk_usage ()
- * measure_disk_usage_async ()
- * measure_disk_usage_finish ()
- */
-public struct GFileIface
+struct GActionGroupInterface
 {
 	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GFile * function(GFile* file)  dup;
-	extern(C) uint function(GFile* file)  hash;
-	extern(C) int function(GFile* file1, GFile* file2)  equal;
-	extern(C) int function(GFile* file)  isNative;
-	extern(C) int function(GFile* file, char* uriScheme)  hasUriScheme;
-	extern(C) char * function(GFile* file)  getUriScheme;
-	extern(C) char * function(GFile* file)  getBasename;
-	extern(C) char * function(GFile* file)  getPath;
-	extern(C) char * function(GFile* file)  getUri;
-	extern(C) char * function(GFile* file)  getParseName;
-	extern(C) GFile * function(GFile* file)  getParent;
-	extern(C) int function(GFile* prefix, GFile* file)  prefixMatches;
-	extern(C) char * function(GFile* parent, GFile* descendant)  getRelativePath;
-	extern(C) GFile * function(GFile* file, char* relativePath)  resolveRelativePath;
-	extern(C) GFile * function(GFile* file, char* displayName, GError** error)  getChildForDisplayName;
-	extern(C) GFileEnumerator * function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)  enumerateChildren;
-	extern(C) void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  enumerateChildrenAsync;
-	extern(C) GFileEnumerator * function(GFile* file, GAsyncResult* res, GError** error)  enumerateChildrenFinish;
-	extern(C) GFileInfo * function(GFile* file, char* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)  queryInfo;
-	extern(C) void function(GFile* file, char* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  queryInfoAsync;
-	extern(C) GFileInfo * function(GFile* file, GAsyncResult* res, GError** error)  queryInfoFinish;
-	extern(C) GFileInfo * function(GFile* file, char* attributes, GCancellable* cancellable, GError** error)  queryFilesystemInfo;
-	extern(C) void function(GFile* file, char* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  queryFilesystemInfoAsync;
-	extern(C) GFileInfo * function(GFile* file, GAsyncResult* res, GError** error)  queryFilesystemInfoFinish;
-	extern(C) GMount * function(GFile* file, GCancellable* cancellable, GError** error)  findEnclosingMount;
-	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  findEnclosingMountAsync;
-	extern(C) GMount * function(GFile* file, GAsyncResult* res, GError** error)  findEnclosingMountFinish;
-	extern(C) GFile * function(GFile* file, char* displayName, GCancellable* cancellable, GError** error)  setDisplayName;
-	extern(C) void function(GFile* file, char* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  setDisplayNameAsync;
-	extern(C) GFile * function(GFile* file, GAsyncResult* res, GError** error)  setDisplayNameFinish;
-	extern(C) GFileAttributeInfoList * function(GFile* file, GCancellable* cancellable, GError** error)  querySettableAttributes;
-	extern(C) void function()  _QuerySettableAttributesAsync;
-	extern(C) void function()  _QuerySettableAttributesFinish;
-	extern(C) GFileAttributeInfoList * function(GFile* file, GCancellable* cancellable, GError** error)  queryWritableNamespaces;
-	extern(C) void function()  _QueryWritableNamespacesAsync;
-	extern(C) void function()  _QueryWritableNamespacesFinish;
-	extern(C) int function(GFile* file, char* attribute, GFileAttributeType type, void* valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)  setAttribute;
-	extern(C) int function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** error)  setAttributesFromInfo;
-	extern(C) void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  setAttributesAsync;
-	extern(C) int function(GFile* file, GAsyncResult* result, GFileInfo** info, GError** error)  setAttributesFinish;
-	extern(C) GFileInputStream * function(GFile* file, GCancellable* cancellable, GError** error)  readFn;
-	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  readAsync;
-	extern(C) GFileInputStream * function(GFile* file, GAsyncResult* res, GError** error)  readFinish;
-	extern(C) GFileOutputStream * function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error)  appendTo;
-	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  appendToAsync;
-	extern(C) GFileOutputStream * function(GFile* file, GAsyncResult* res, GError** error)  appendToFinish;
-	extern(C) GFileOutputStream * function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error)  create;
-	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  createAsync;
-	extern(C) GFileOutputStream * function(GFile* file, GAsyncResult* res, GError** error)  createFinish;
-	extern(C) GFileOutputStream * function(GFile* file, char* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error)  replace;
-	extern(C) void function(GFile* file, char* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  replaceAsync;
-	extern(C) GFileOutputStream * function(GFile* file, GAsyncResult* res, GError** error)  replaceFinish;
-	extern(C) int function(GFile* file, GCancellable* cancellable, GError** error)  deleteFile;
-	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  deleteFileAsync;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  deleteFileFinish;
-	extern(C) int function(GFile* file, GCancellable* cancellable, GError** error)  trash;
-	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  trashAsync;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  trashFinish;
-	extern(C) int function(GFile* file, GCancellable* cancellable, GError** error)  makeDirectory;
-	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  makeDirectoryAsync;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  makeDirectoryFinish;
-	extern(C) int function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** error)  makeSymbolicLink;
-	extern(C) void function()  _MakeSymbolicLinkAsync;
-	extern(C) void function()  _MakeSymbolicLinkFinish;
-	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error)  copy;
-	extern(C) void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData)  copyAsync;
-	extern(C) int function(GFile* file, GAsyncResult* res, GError** error)  copyFinish;
-	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** error)  move;
-	extern(C) void function()  _MoveAsync;
-	extern(C) void function()  _MoveFinish;
-	extern(C) void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  mountMountable;
-	extern(C) GFile * function(GFile* file, GAsyncResult* result, GError** error)  mountMountableFinish;
-	extern(C) void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  unmountMountable;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  unmountMountableFinish;
-	extern(C) void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  ejectMountable;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  ejectMountableFinish;
-	extern(C) void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  mountEnclosingVolume;
-	extern(C) int function(GFile* location, GAsyncResult* result, GError** error)  mountEnclosingVolumeFinish;
-	extern(C) GFileMonitor * function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error)  monitorDir;
-	extern(C) GFileMonitor * function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** error)  monitorFile;
-	extern(C) GFileIOStream * function(GFile* file, GCancellable* cancellable, GError** error)  openReadwrite;
-	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  openReadwriteAsync;
-	extern(C) GFileIOStream * function(GFile* file, GAsyncResult* res, GError** error)  openReadwriteFinish;
-	extern(C) GFileIOStream * function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** error)  createReadwrite;
-	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  createReadwriteAsync;
-	extern(C) GFileIOStream * function(GFile* file, GAsyncResult* res, GError** error)  createReadwriteFinish;
-	extern(C) GFileIOStream * function(GFile* file, char* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** error)  replaceReadwrite;
-	extern(C) void function(GFile* file, char* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  replaceReadwriteAsync;
-	extern(C) GFileIOStream * function(GFile* file, GAsyncResult* res, GError** error)  replaceReadwriteFinish;
-	extern(C) void function(GFile* file, GDriveStartFlags flags, GMountOperation* startOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  startMountable;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  startMountableFinish;
-	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  stopMountable;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  stopMountableFinish;
-	int supportsThreadContexts;
-	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  unmountMountableWithOperation;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  unmountMountableWithOperationFinish;
-	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  ejectMountableWithOperation;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  ejectMountableWithOperationFinish;
-	extern(C) void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  pollMountable;
-	extern(C) int function(GFile* file, GAsyncResult* result, GError** error)  pollMountableFinish;
-	extern(C) int function(GFile* file, GFileMeasureFlags flags, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** error)  measureDiskUsage;
-	extern(C) void function(GFile* file, GFileMeasureFlags flags, int ioPriority, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData)  measureDiskUsageAsync;
-	extern(C) int function(GFile* file, GAsyncResult* result, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** error)  measureDiskUsageFinish;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of the action to check for
+	 * Return: whether the named action exists
+	 */
+	extern(C) int function(GActionGroup* actionGroup, const(char)* actionName) hasAction;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 * Return: a %NULL-terminated array of the names of the
+	 *     actions in the groupb
+	 */
+	extern(C) char** function(GActionGroup* actionGroup) listActions;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of the action to query
+	 * Return: whether or not the action is currently enabled
+	 */
+	extern(C) int function(GActionGroup* actionGroup, const(char)* actionName) getActionEnabled;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of the action to query
+	 * Return: the parameter type
+	 */
+	extern(C) GVariantType* function(GActionGroup* actionGroup, const(char)* actionName) getActionParameterType;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of the action to query
+	 * Return: the state type, if the action
+	 *     is stateful
+	 */
+	extern(C) GVariantType* function(GActionGroup* actionGroup, const(char)* actionName) getActionStateType;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of the action to query
+	 * Return: the state range hint
+	 */
+	extern(C) GVariant* function(GActionGroup* actionGroup, const(char)* actionName) getActionStateHint;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of the action to query
+	 * Return: the current state of the action
+	 */
+	extern(C) GVariant* function(GActionGroup* actionGroup, const(char)* actionName) getActionState;
+	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, GVariant* value) changeActionState;
+	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, GVariant* parameter) activateAction;
+	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName) actionAdded;
+	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName) actionRemoved;
+	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, int enabled) actionEnabledChanged;
+	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, GVariant* state) actionStateChanged;
+	/**
+	 *
+	 * Params:
+	 *     actionGroup = a #GActionGroup
+	 *     actionName = the name of an action in the group
+	 *     enabled = if the action is presently enabled
+	 *     parameterType = the parameter type, or %NULL if none needed
+	 *     stateType = the state type, or %NULL if stateless
+	 *     stateHint = the state hint, or %NULL if none
+	 *     state = the current state, or %NULL if stateless
+	 * Return: %TRUE if the action exists, else %FALSE
+	 */
+	extern(C) int function(GActionGroup* actionGroup, const(char)* actionName, int* enabled, GVariantType** parameterType, GVariantType** stateType, GVariant** stateHint, GVariant** state) queryAction;
 }
 
-
 /**
- * Information about a specific attribute.
- * char *name;
- * the name of the attribute.
- * GFileAttributeType type;
- * the GFileAttributeType type of the attribute.
- * GFileAttributeInfoFlags flags;
- * a set of GFileAttributeInfoFlags.
+ * The virtual function table for #GAction.
+ *
+ * Since: 2.28
  */
-public struct GFileAttributeInfo
-{
-	char *name;
-	GFileAttributeType type;
-	GFileAttributeInfoFlags flags;
-}
-
-
-/**
- * Main Gtk struct.
- * Acts as a lightweight registry for possible valid file attributes.
- * The registry stores Key-Value pair formats as GFileAttributeInfos.
- * GFileAttributeInfo *infos;
- * an array of GFileAttributeInfos.
- * int n_infos;
- * the number of values in the array.
- */
-public struct GFileAttributeInfoList
-{
-	GFileAttributeInfo *infos;
-	int nInfos;
-}
-
-
-/**
- * Determines if a string matches a file attribute.
- */
-public struct GFileAttributeMatcher{}
-
-
-/**
- * Main Gtk struct.
- * Stores information about a file system object referenced by a GFile.
- */
-public struct GFileInfo{}
-
-
-/**
- * Main Gtk struct.
- * A per matched file iterator.
- */
-public struct GFileEnumerator{}
-
-
-/**
- * Main Gtk struct.
- * Class for providing authentication methods for mounting operations,
- * such as mounting a file locally, or authenticating with a server.
- */
-public struct GMountOperation{}
-
-
-/**
- * Main Gtk struct.
- * Watches for changes to a file.
- */
-public struct GFileMonitor{}
-
-
-/**
- * Main Gtk struct.
- * Completes filenames based on files that exist within the file system.
- */
-public struct GFilenameCompleter{}
-
-
-/**
- * Main Gtk struct.
- * Allows actions to be cancelled.
- */
-public struct GCancellable{}
-
-
-/**
- * Main Gtk struct.
- * Holds results information for an asynchronous operation,
- * usually passed directly to a asynchronous _finish() operation.
- */
-public struct GAsyncResult{}
-
-
-/**
- * Interface definition for GAsyncResult.
- * GTypeInterface g_iface;
- * The parent interface.
- * get_user_data ()
- * Gets the user data passed to the callback.
- * get_source_object ()
- * Gets the source object that issued the asynchronous operation.
- * is_tagged ()
- * Checks if a result is tagged with a particular source.
- */
-public struct GAsyncResultIface
+struct GActionInterface
 {
 	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) void* function(GAsyncResult* res)  getUserData;
-	extern(C) GObject * function(GAsyncResult* res)  getSourceObject;
-	extern(C) int function(GAsyncResult* res, void* sourceTag)  isTagged;
+	/**
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 * Return: the name of the action
+	 */
+	extern(C) const(char)* function(GAction* action) getName;
+	/**
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 * Return: the parameter type
+	 */
+	extern(C) GVariantType* function(GAction* action) getParameterType;
+	/**
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 * Return: the state type, if the action is stateful
+	 */
+	extern(C) GVariantType* function(GAction* action) getStateType;
+	/**
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 * Return: the state range hint
+	 */
+	extern(C) GVariant* function(GAction* action) getStateHint;
+	/**
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 * Return: whether the action is enabled
+	 */
+	extern(C) int function(GAction* action) getEnabled;
+	/**
+	 *
+	 * Params:
+	 *     action = a #GAction
+	 * Return: the current state of the action
+	 */
+	extern(C) GVariant* function(GAction* action) getState;
+	extern(C) void function(GAction* action, GVariant* value) changeState;
+	extern(C) void function(GAction* action, GVariant* parameter) activate;
 }
 
+struct GActionMap;
 
 /**
- * Main Gtk struct.
- * The opaque object representing a synchronous or asynchronous task
- * and its result.
+ * The virtual function table for #GActionMap.
+ *
+ * Since: 2.32
  */
-public struct GTask{}
+struct GActionMapInterface
+{
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     actionMap = a #GActionMap
+	 *     actionName = the name of an action
+	 * Return: a #GAction, or %NULL
+	 */
+	extern(C) GAction* function(GActionMap* actionMap, const(char)* actionName) lookupAction;
+	extern(C) void function(GActionMap* actionMap, GAction* action) addAction;
+	extern(C) void function(GActionMap* actionMap, const(char)* actionName) removeAction;
+}
 
+struct GAppInfo;
 
 /**
- * Main Gtk struct.
- * Opaque class for defining and scheduling IO jobs.
+ * Application Information interface, for operating system portability.
  */
-public struct GIOSchedulerJob{}
+struct GAppInfoIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: a duplicate of @appinfo.
+	 */
+	extern(C) GAppInfo* function(GAppInfo* appinfo) dup;
+	/**
+	 *
+	 * Params:
+	 *     appinfo1 = the first #GAppInfo.
+	 *     appinfo2 = the second #GAppInfo.
+	 * Return: %TRUE if @appinfo1 is equal to @appinfo2. %FALSE otherwise.
+	 */
+	extern(C) int function(GAppInfo* appinfo1, GAppInfo* appinfo2) equal;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: a string containing the application's ID.
+	 */
+	extern(C) const(char)* function(GAppInfo* appinfo) getId;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: the name of the application for @appinfo.
+	 */
+	extern(C) const(char)* function(GAppInfo* appinfo) getName;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: a string containing a description of the
+	 *     application @appinfo, or %NULL if none.
+	 */
+	extern(C) const(char)* function(GAppInfo* appinfo) getDescription;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 * Return: a string containing the @appinfo's application
+	 *     binaries name
+	 */
+	extern(C) const(char)* function(GAppInfo* appinfo) getExecutable;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: the default #GIcon for @appinfo or %NULL
+	 *     if there is no default icon.
+	 */
+	extern(C) GIcon* function(GAppInfo* appinfo) getIcon;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 *     files = a #GList of #GFile objects
+	 *     launchContext = a #GAppLaunchContext or %NULL
+	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** err) launch;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: %TRUE if the @appinfo supports URIs.
+	 */
+	extern(C) int function(GAppInfo* appinfo) supportsUris;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: %TRUE if the @appinfo supports files.
+	 */
+	extern(C) int function(GAppInfo* appinfo) supportsFiles;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 *     uris = a #GList containing URIs to launch.
+	 *     launchContext = a #GAppLaunchContext or %NULL
+	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** err) launchUris;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: %TRUE if the @appinfo should be shown, %FALSE otherwise.
+	 */
+	extern(C) int function(GAppInfo* appinfo) shouldShow;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 *     contentType = the content type.
+	 * Return: %TRUE on success, %FALSE on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, const(char)* contentType, GError** err) setAsDefaultForType;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 *     extension = a string containing the file extension (without the dot).
+	 * Return: %TRUE on success, %FALSE on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, const(char)* extension, GError** err) setAsDefaultForExtension;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 *     contentType = a string.
+	 * Return: %TRUE on success, %FALSE on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, const(char)* contentType, GError** err) addSupportsType;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: %TRUE if it is possible to remove supported
+	 *     content types from a given @appinfo, %FALSE if not.
+	 */
+	extern(C) int function(GAppInfo* appinfo) canRemoveSupportsType;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 *     contentType = a string.
+	 * Return: %TRUE on success, %FALSE on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, const(char)* contentType, GError** err) removeSupportsType;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 * Return: %TRUE if @appinfo can be deleted
+	 */
+	extern(C) int function(GAppInfo* appinfo) canDelete;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 * Return: %TRUE if @appinfo has been deleted
+	 */
+	extern(C) int function(GAppInfo* appinfo) doDelete;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo
+	 * Return: a string containing the @appinfo's commandline,
+	 *     or %NULL if this information is not available
+	 */
+	extern(C) const(char)* function(GAppInfo* appinfo) getCommandline;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 * Return: the display name of the application for @appinfo, or the name if
+	 *     no display name is available.
+	 */
+	extern(C) const(char)* function(GAppInfo* appinfo) getDisplayName;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo.
+	 *     contentType = the content type.
+	 * Return: %TRUE on success, %FALSE on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAppInfo* appinfo, const(char)* contentType, GError** err) setAsLastUsedForType;
+	/**
+	 *
+	 * Params:
+	 *     appinfo = a #GAppInfo that can handle files
+	 * Return: a list of content types.
+	 */
+	extern(C) char** function(GAppInfo* appinfo) getSupportedTypes;
+}
 
+struct GAppInfoMonitor;
+
+struct GAppLaunchContext
+{
+	GObject parentInstance;
+	GAppLaunchContextPrivate* priv;
+}
+
+struct GAppLaunchContextClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     context = a #GAppLaunchContext
+	 *     info = a #GAppInfo
+	 *     files = a #GList of #GFile objects
+	 * Return: a display string for the display.
+	 */
+	extern(C) char* function(GAppLaunchContext* context, GAppInfo* info, GList* files) getDisplay;
+	/**
+	 *
+	 * Params:
+	 *     context = a #GAppLaunchContext
+	 *     info = a #GAppInfo
+	 *     files = a #GList of of #GFile objects
+	 * Return: a startup notification ID for the application, or %NULL if
+	 *     not supported.
+	 */
+	extern(C) char* function(GAppLaunchContext* context, GAppInfo* info, GList* files) getStartupNotifyId;
+	extern(C) void function(GAppLaunchContext* context, const(char)* startupNotifyId) launchFailed;
+	extern(C) void function(GAppLaunchContext* context, GAppInfo* info, GVariant* platformData) launched;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+}
+
+struct GAppLaunchContextPrivate;
+
+struct GApplication
+{
+	GObject parentInstance;
+	GApplicationPrivate* priv;
+}
 
 /**
- * Main Gtk struct.
- * A simple implementation of GAsyncResult.
+ * Virtual function table for #GApplication.
+ *
+ * Since: 2.28
  */
-public struct GSimpleAsyncResult{}
+struct GApplicationClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GApplication* application) startup;
+	extern(C) void function(GApplication* application) activate;
+	extern(C) void function(GApplication* application, GFile** files, int nFiles, const(char)* hint) open;
+	extern(C) int function(GApplication* application, GApplicationCommandLine* commandLine) commandLine;
+	/**
+	 *
+	 * Params:
+	 *     application = a #GApplication
+	 *     arguments = array of command line arguments
+	 *     exitStatus = exit status to fill after processing the command line.
+	 * Return: %TRUE if the commandline has been completely handled
+	 */
+	extern(C) int function(GApplication* application, char*** arguments, int* exitStatus) localCommandLine;
+	extern(C) void function(GApplication* application, GVariant* platformData) beforeEmit;
+	extern(C) void function(GApplication* application, GVariant* platformData) afterEmit;
+	extern(C) void function(GApplication* application, GVariantBuilder* builder) addPlatformData;
+	extern(C) void function(GApplication* application) quitMainloop;
+	extern(C) void function(GApplication* application) runMainloop;
+	extern(C) void function(GApplication* application) shutdown;
+	extern(C) int function(GApplication* application, GDBusConnection* connection, const(char)* objectPath, GError** err) dbusRegister;
+	extern(C) void function(GApplication* application, GDBusConnection* connection, const(char)* objectPath) dbusUnregister;
+	extern(C) int function(GApplication* application, GVariantDict* options) handleLocalOptions;
+	void*[8] padding;
+}
 
+struct GApplicationCommandLine
+{
+	GObject parentInstance;
+	GApplicationCommandLinePrivate* priv;
+}
 
 /**
- * Main Gtk struct.
- * Seek object for streaming operations.
- * Since 2.24
+ * The #GApplicationCommandLineClass-struct
+ * contains private data only.
+ *
+ * Since: 2.28
  */
-public struct GConverter{}
+struct GApplicationCommandLineClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GApplicationCommandLine* cmdline, const(char)* message) printLiteral;
+	extern(C) void function(GApplicationCommandLine* cmdline, const(char)* message) printerrLiteral;
+	/**
+	 *
+	 * Params:
+	 *     cmdline = a #GApplicationCommandLine
+	 * Return: a #GInputStream for stdin
+	 */
+	extern(C) GInputStream* function(GApplicationCommandLine* cmdline) getStdin;
+	void*[11] padding;
+}
 
+struct GApplicationCommandLinePrivate;
+
+struct GApplicationPrivate;
+
+struct GAsyncInitable;
+
+/**
+ * Provides an interface for asynchronous initializing object such that
+ * initialization may fail.
+ *
+ * Since: 2.22
+ */
+struct GAsyncInitableIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	extern(C) void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) initAsync;
+	/**
+	 *
+	 * Params:
+	 *     initable = a #GAsyncInitable.
+	 *     res = a #GAsyncResult.
+	 * Return: %TRUE if successful. If an error has occurred, this function
+	 *     will return %FALSE and set @error appropriately if present.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GAsyncInitable* initable, GAsyncResult* res, GError** err) initFinish;
+}
+
+struct GAsyncResult;
+
+/**
+ * Interface definition for #GAsyncResult.
+ */
+struct GAsyncResultIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     res = a #GAsyncResult.
+	 * Return: the user data for @res.
+	 */
+	extern(C) void* function(GAsyncResult* res) getUserData;
+	/**
+	 *
+	 * Params:
+	 *     res = a #GAsyncResult
+	 * Return: a new reference to the source object for the @res,
+	 *     or %NULL if there is none.
+	 */
+	extern(C) GObject* function(GAsyncResult* res) getSourceObject;
+	/**
+	 *
+	 * Params:
+	 *     res = a #GAsyncResult
+	 *     sourceTag = an application-defined tag
+	 * Return: %TRUE if @res has the indicated @source_tag, %FALSE if
+	 *     not.
+	 */
+	extern(C) int function(GAsyncResult* res, void* sourceTag) isTagged;
+}
+
+struct GBufferedInputStream
+{
+	GFilterInputStream parentInstance;
+	GBufferedInputStreamPrivate* priv;
+}
+
+struct GBufferedInputStreamClass
+{
+	GFilterInputStreamClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GBufferedInputStream
+	 *     count = the number of bytes that will be read from the stream
+	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 * Return: the number of bytes read into @stream's buffer, up to @count,
+	 *     or -1 on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GBufferedInputStream* stream, ptrdiff_t count, GCancellable* cancellable, GError** err) fill;
+	extern(C) void function(GBufferedInputStream* stream, ptrdiff_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) fillAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GBufferedInputStream
+	 *     result = a #GAsyncResult
+	 * Return: a #gssize of the read stream, or %-1 on an error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GBufferedInputStream* stream, GAsyncResult* result, GError** err) fillFinish;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GBufferedInputStreamPrivate;
+
+struct GBufferedOutputStream
+{
+	GFilterOutputStream parentInstance;
+	GBufferedOutputStreamPrivate* priv;
+}
+
+struct GBufferedOutputStreamClass
+{
+	GFilterOutputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+}
+
+struct GBufferedOutputStreamPrivate;
+
+struct GBytesIcon;
+
+struct GCancellable
+{
+	GObject parentInstance;
+	GCancellablePrivate* priv;
+}
+
+struct GCancellableClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GCancellable* cancellable) cancelled;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GCancellablePrivate;
+
+struct GCharsetConverter;
+
+struct GCharsetConverterClass
+{
+	GObjectClass parentClass;
+}
+
+struct GConverter;
 
 /**
  * Provides an interface for converting data from one type
  * to another type. The conversion can be stateful
  * and may fail at any place.
- * GTypeInterface g_iface;
- * The parent interface.
- * convert ()
- * Converts data.
- * reset ()
- * Reverts the internal state of the converter to its initial state.
- * Since 2.24
+ *
+ * Since: 2.24
  */
-public struct GConverterIface
+struct GConverterIface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GConverterResult function(GConverter* converter, void* inbuf, gsize inbufSize, void* outbuf, gsize outbufSize, GConverterFlags flags, gsize* bytesRead, gsize* bytesWritten, GError** error)  convert;
-	extern(C) void function(GConverter* converter)  reset;
+	/**
+	 *
+	 * Params:
+	 *     converter = a #GConverter.
+	 *     inbuf = the buffer
+	 *         containing the data to convert.
+	 *     inbufSize = the number of bytes in @inbuf
+	 *     outbuf = a buffer to write converted data in.
+	 *     outbufSize = the number of bytes in @outbuf, must be at least one
+	 *     flags = a #GConverterFlags controlling the conversion details
+	 *     bytesRead = will be set to the number of bytes read from @inbuf on success
+	 *     bytesWritten = will be set to the number of bytes written to @outbuf on success
+	 * Return: a #GConverterResult, %G_CONVERTER_ERROR on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GConverterResult function(GConverter* converter, void* inbuf, size_t inbufSize, void* outbuf, size_t outbufSize, GConverterFlags flags, size_t* bytesRead, size_t* bytesWritten, GError** err) convert;
+	extern(C) void function(GConverter* converter) reset;
 }
 
-
-/**
- * Main Gtk struct.
- * Conversions between character sets.
- */
-public struct GCharsetConverter{}
-
-
-/**
- * Main Gtk struct.
- * Zlib decompression
- */
-public struct GZlibCompressor{}
-
-
-/**
- * Main Gtk struct.
- * Zlib decompression
- */
-public struct GZlibDecompressor{}
-
-
-/**
- * Main Gtk struct.
- * Seek object for streaming operations.
- */
-public struct GSeekable{}
-
-
-/**
- * Provides an interface for implementing seekable functionality on I/O Streams.
- * GTypeInterface g_iface;
- * The parent interface.
- * tell ()
- * Tells the current location within a stream.
- * can_seek ()
- * Checks if seeking is supported by the stream.
- * seek ()
- * Seeks to a location within a stream.
- * can_truncate ()
- * Checks if truncation is supported by the stream.
- * truncate_fn ()
- * Truncates a stream.
- */
-public struct GSeekableIface
+struct GConverterInputStream
 {
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) long function(GSeekable* seekable)  tell;
-	extern(C) int function(GSeekable* seekable)  canSeek;
-	extern(C) int function(GSeekable* seekable, long offset, GSeekType type, GCancellable* cancellable, GError** error)  seek;
-	extern(C) int function(GSeekable* seekable)  canTruncate;
-	extern(C) int function(GSeekable* seekable, long offset, GCancellable* cancellable, GError** error)  truncateFn;
-	/+* TODO: Async seek/truncate +/
+	GFilterInputStream parentInstance;
+	GConverterInputStreamPrivate* priv;
 }
 
-
-/**
- * Main Gtk struct.
- * Base class for streaming input operations.
- */
-public struct GInputStream{}
-
-
-/**
- * Main Gtk struct.
- * Base class for writing output.
- * All classes derived from GOutputStream should implement synchronous
- * writing, splicing, flushing and closing streams, but may implement
- * asynchronous versions.
- */
-public struct GOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * Base class for read-write streams.
- */
-public struct GIOStream{}
-
-
-/**
- * Main Gtk struct.
- * A subclass of GInputStream for opened files. This adds
- * a few file-specific operations and seeking.
- * GFileInputStream implements GSeekable.
- */
-public struct GFileInputStream{}
-
-
-/**
- * Main Gtk struct.
- * A subclass of GOutputStream for opened files. This adds
- * a few file-specific operations and seeking and truncating.
- * GFileOutputStream implements GSeekable.
- */
-public struct GFileOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * A subclass of GIOStream for opened files. This adds
- * a few file-specific operations and seeking and truncating.
- * GFileIOStream implements GSeekable.
- */
-public struct GFileIOStream{}
-
-
-/**
- * Main Gtk struct.
- * An interface for file descriptor based io objects.
- */
-public struct GFileDescriptorBased{}
-
-
-/**
- * Main Gtk struct.
- * A base class for all input streams that work on an underlying stream.
- */
-public struct GFilterInputStream{}
-
-
-/**
- * Main Gtk struct.
- * A base class for all output streams that work on an underlying stream.
- */
-public struct GFilterOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * Implements GInputStream for arbitrary memory chunks.
- */
-public struct GMemoryInputStream{}
-
-
-/**
- * Main Gtk struct.
- * Implements GOutputStream for arbitrary memory chunks.
- */
-public struct GMemoryOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * Implements GFilterInputStream with a sized input buffer.
- */
-public struct GBufferedInputStream{}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GFilterOutputStream with a sized buffer.
- */
-public struct GBufferedOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GBufferedInputStream that allows for high-level
- * data manipulation of arbitrary data (including binary operations).
- */
-public struct GDataInputStream{}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GBufferedOutputStream that allows for high-level
- * data manipulation of arbitrary data (including binary operations).
- */
-public struct GDataOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * Implements GInputStream for reading from selectable unix file descriptors
- */
-public struct GUnixInputStream{}
-
-
-/**
- * Main Gtk struct.
- * Implements GOutputStream for outputting to selectable unix file descriptors
- */
-public struct GUnixOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GFilterInputStream that allows data
- * conversion.
- */
-public struct GConverterInputStream{}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GFilterOutputStream that allows data
- * conversion.
- */
-public struct GConverterOutputStream{}
-
-
-/**
- * Main Gtk struct.
- * An interface for a GInputStream that can be polled for readability.
- * Since 2.28
- */
-public struct GPollableInputStream{}
-
-
-/**
- * The interface for pollable input streams.
- * The default implementation of can_poll always returns TRUE.
- * The default implementation of read_nonblocking calls
- * g_pollable_input_stream_is_readable(), and then calls
- * g_input_stream_read() if it returns TRUE. This means you only need
- * to override it if it is possible that your is_readable
- * implementation may return TRUE when the stream is not actually
- * readable.
- * GTypeInterface g_iface;
- * The parent interface.
- * can_poll ()
- * Checks if the GPollableInputStream instance is actually pollable
- * is_readable ()
- * Checks if the stream is readable
- * create_source ()
- * Creates a GSource to poll the stream
- * read_nonblocking ()
- * Does a non-blocking read or returns
- * G_IO_ERROR_WOULD_BLOCK
- * Since 2.28
- */
-public struct GPollableInputStreamInterface
+struct GConverterInputStreamClass
 {
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) int function(GPollableInputStream* stream) canPoll;
-	extern(C) int function(GPollableInputStream* stream) isReadable;
-	extern(C) GSource * function(GPollableInputStream* stream, GCancellable* cancellable) createSource;
-	extern(C) gssize function(GPollableInputStream* stream, void* buffer, gsize count, GError** error) readNonblocking;
+	GFilterInputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
 }
 
+struct GConverterInputStreamPrivate;
 
-/**
- * Main Gtk struct.
- * An interface for a GOutputStream that can be polled for readability.
- * Since 2.28
- */
-public struct GPollableOutputStream{}
-
-
-/**
- * The interface for pollable output streams.
- * The default implementation of can_poll always returns TRUE.
- * The default implementation of write_nonblocking calls
- * g_pollable_output_stream_is_writable(), and then calls
- * g_output_stream_write() if it returns TRUE. This means you only
- * need to override it if it is possible that your is_writable
- * implementation may return TRUE when the stream is not actually
- * writable.
- * GTypeInterface g_iface;
- * The parent interface.
- * can_poll ()
- * Checks if the GPollableOutputStream instance is actually pollable
- * is_writable ()
- * Checks if the stream is writable
- * create_source ()
- * Creates a GSource to poll the stream
- * write_nonblocking ()
- * Does a non-blocking write or returns
- * G_IO_ERROR_WOULD_BLOCK
- * Since 2.28
- */
-public struct GPollableOutputStreamInterface
+struct GConverterOutputStream
 {
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) int function(GPollableOutputStream* stream) canPoll;
-	extern(C) int function(GPollableOutputStream* stream) isWritable;
-	extern(C) GSource * function(GPollableOutputStream* stream, GCancellable* cancellable) createSource;
-	extern(C) gssize function(GPollableOutputStream* stream, void* buffer, gsize count, GError** error) writeNonblocking;
+	GFilterOutputStream parentInstance;
+	GConverterOutputStreamPrivate* priv;
 }
 
-
-/**
- * Main Gtk struct.
- * Information about an installed application and methods to launch
- * it (with file arguments).
- */
-public struct GAppInfo{}
-
-
-/**
- * Application Information interface, for operating system portability.
- * GTypeInterface g_iface;
- * The parent interface.
- * dup ()
- * Copies a GAppInfo.
- * equal ()
- * Checks two GAppInfos for equality.
- * get_id ()
- * Gets a string identifier for a GAppInfo.
- * get_name ()
- * Gets the name of the application for a GAppInfo.
- * get_description ()
- * Gets a short description for the application described by the GAppInfo.
- * get_executable ()
- * Gets the executable name for the GAppInfo.
- * get_icon ()
- * Gets the GIcon for the GAppInfo.
- * launch ()
- * Launches an application specified by the GAppInfo.
- * supports_uris ()
- * Indicates whether the application specified supports launching URIs.
- * supports_files ()
- * Indicates whether the application specified accepts filename arguments.
- * launch_uris ()
- * Launches an application with a list of URIs.
- * should_show ()
- * Returns whether an application should be shown (e.g. when getting a list of installed applications).
- * FreeDesktop.Org Startup Notification Specification.
- * set_as_default_for_type ()
- * Sets an application as default for a given content type.
- * set_as_default_for_extension ()
- * Sets an application as default for a given file extension.
- * add_supports_type ()
- * Adds to the GAppInfo information about supported file types.
- * can_remove_supports_type ()
- * Checks for support for removing supported file types from a GAppInfo.
- * remove_supports_type ()
- * Removes a supported application type from a GAppInfo.
- * can_delete ()
- * Checks if a GAppInfo can be deleted. Since 2.20
- * do_delete ()
- * Deletes a GAppInfo. Since 2.20
- * get_commandline ()
- * Gets the commandline for the GAppInfo. Since 2.20
- * get_display_name ()
- * Gets the display name for the GAppInfo. Since 2.24
- * set_as_last_used_for_type ()
- * Sets the application as the last used. See g_app_info_set_as_last_used_for_type().
- * get_supported_types ()
- */
-public struct GAppInfoIface
+struct GConverterOutputStreamClass
 {
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GAppInfo * function(GAppInfo* appinfo)  dup;
-	extern(C) int function(GAppInfo* appinfo1, GAppInfo* appinfo2)  equal;
-	extern(C) char * function(GAppInfo* appinfo)  getId;
-	extern(C) char * function(GAppInfo* appinfo)  getName;
-	extern(C) char * function(GAppInfo* appinfo)  getDescription;
-	extern(C) char * function(GAppInfo* appinfo)  getExecutable;
-	extern(C) GIcon * function(GAppInfo* appinfo)  getIcon;
-	extern(C) int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** error)  launch;
-	extern(C) int function(GAppInfo* appinfo)  supportsUris;
-	extern(C) int function(GAppInfo* appinfo)  supportsFiles;
-	extern(C) int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** error)  launchUris;
-	extern(C) int function(GAppInfo* appinfo)  shouldShow;
-	/+* For changing associations +/
-	extern(C) int function(GAppInfo* appinfo, char* contentType, GError** error)  setAsDefaultForType;
-	extern(C) int function(GAppInfo* appinfo, char* extension, GError** error)  setAsDefaultForExtension;
-	extern(C) int function(GAppInfo* appinfo, char* contentType, GError** error)  addSupportsType;
-	extern(C) int function(GAppInfo* appinfo)  canRemoveSupportsType;
-	extern(C) int function(GAppInfo* appinfo, char* contentType, GError** error)  removeSupportsType;
-	extern(C) int function(GAppInfo* appinfo)  canDelete;
-	extern(C) int function(GAppInfo* appinfo)  doDelete;
-	extern(C) char * function(GAppInfo* appinfo)  getCommandline;
-	extern(C) char * function(GAppInfo* appinfo)  getDisplayName;
-	extern(C) int function(GAppInfo* appinfo, char* contentType, GError** error)  setAsLastUsedForType;
-	extern(C) char ** function(GAppInfo* appinfo)  getSupportedTypes;
+	GFilterOutputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
 }
 
+struct GConverterOutputStreamPrivate;
+
+struct GCredentials;
 
 /**
- * Integrating the launch with the launching application. This is used to
- * handle for instance startup notification and launching the new application
- * on the same screen as the launching window.
+ * Class structure for #GCredentials.
+ *
+ * Since: 2.26
  */
-public struct GAppLaunchContext{}
+struct GCredentialsClass;
 
+struct GDBusActionGroup;
 
-/**
- * Main Gtk struct.
- * Information about an installed application from a desktop file.
- */
-public struct GDesktopAppInfo{}
-
-
-/**
- * Main Gtk struct.
- * A Volume Monitor that watches for volume events.
- */
-public struct GVolumeMonitor{}
-
-
-/**
- * Main Gtk struct.
- * Opaque mountable volume object.
- */
-public struct GVolume{}
-
-
-/**
- * Interface for implementing operations for mountable volumes.
- * GTypeInterface g_iface;
- * The parent interface.
- * changed ()
- * Changed signal that is emitted when the volume's state has changed.
- * removed ()
- * The removed signal that is emitted when the GVolume have been removed. If the recipient is holding references to the object they should release them so the object can be finalized.
- * get_name ()
- * Gets a string containing the name of the GVolume.
- * get_icon ()
- * Gets a GIcon for the GVolume.
- * get_uuid ()
- * Gets the UUID for the GVolume. The reference is typically based on the file system UUID for the mount in question and should be considered an opaque string. Returns NULL if there is no UUID available.
- * get_drive ()
- * Gets a GDrive the volume is located on. Returns NULL if the GVolume is not associated with a GDrive.
- * get_mount ()
- * Gets a GMount representing the mounted volume. Returns NULL if the GVolume is not mounted.
- * can_mount ()
- * Returns TRUE if the GVolume can be mounted.
- * can_eject ()
- * Checks if a GVolume can be ejected.
- * mount_fn ()
- * Mounts a given GVolume.
- * GVolume implementations must emit the "aborted"
- * signal before completing a mount operation that is aborted while
- * awaiting input from the user through a GMountOperation instance.
- * mount_finish ()
- * Finishes a mount operation.
- * eject ()
- * Ejects a given GVolume.
- * eject_finish ()
- * Finishes an eject operation.
- * get_identifier ()
- * Returns the identifier of the given kind, or NULL if
- * the GVolume doesn't have one.
- * enumerate_identifiers ()
- * Returns an array strings listing the kinds
- * of identifiers which the GVolume has.
- * should_automount ()
- * Returns TRUE if the GVolume should be automatically mounted.
- * get_activation_root ()
- * Returns the activation root for the GVolume if it is known in advance or NULL if
- * it is not known.
- * eject_with_operation ()
- * Starts ejecting a GVolume using a GMountOperation. Since 2.22.
- * eject_with_operation_finish ()
- * Finishes an eject operation using a GMountOperation. Since 2.22.
- * get_sort_key ()
- * Gets a key used for sorting GVolume instance or NULL if no such key exists. Since 2.32.
- * get_symbolic_icon ()
- * Gets a symbolic GIcon for the GVolume. Since 2.34.
- */
-public struct GVolumeIface
+struct GDBusAnnotationInfo
 {
-	GTypeInterface gIface;
-	/+* signals +/
-	extern(C) void function(GVolume* volume)  changed;
-	extern(C) void function(GVolume* volume)  removed;
-	/+* Virtual Table +/
-	extern(C) char * function(GVolume* volume)  getName;
-	extern(C) GIcon * function(GVolume* volume)  getIcon;
-	extern(C) char * function(GVolume* volume)  getUuid;
-	extern(C) GDrive * function(GVolume* volume)  getDrive;
-	extern(C) GMount * function(GVolume* volume)  getMount;
-	extern(C) int function(GVolume* volume)  canMount;
-	extern(C) int function(GVolume* volume)  canEject;
-	extern(C) void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  mountFn;
-	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** error)  mountFinish;
-	extern(C) void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  eject;
-	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** error)  ejectFinish;
-	extern(C) char * function(GVolume* volume, char* kind)  getIdentifier;
-	extern(C) char ** function(GVolume* volume)  enumerateIdentifiers;
-	extern(C) int function(GVolume* volume)  shouldAutomount;
-	extern(C) GFile * function(GVolume* volume)  getActivationRoot;
-	extern(C) void function(GVolume* volume, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  ejectWithOperation;
-	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** error)  ejectWithOperationFinish;
-	extern(C) char * function(GVolume* volume)  getSortKey;
-	extern(C) GIcon * function(GVolume* volume)  getSymbolicIcon;
-}
-
-
-/**
- * Main Gtk struct.
- * A handle to an object implementing the GMountIface interface.
- */
-public struct GMount{}
-
-
-/**
- * Interface for implementing operations for mounts.
- * GTypeInterface g_iface;
- * The parent interface.
- * changed ()
- * Changed signal that is emitted when the mount's state has changed.
- * unmounted ()
- * The unmounted signal that is emitted when the GMount have been unmounted. If the recipient is holding references to the object they should release them so the object can be finalized.
- * get_root ()
- * Gets a GFile to the root directory of the GMount.
- * get_name ()
- * Gets a string containing the name of the GMount.
- * get_icon ()
- * Gets a GIcon for the GMount.
- * get_uuid ()
- * Gets the UUID for the GMount. The reference is typically based on the file system UUID for the mount in question and should be considered an opaque string. Returns NULL if there is no UUID available.
- * get_volume ()
- * Gets a GVolume the mount is located on. Returns NULL if the GMount is not associated with a GVolume.
- * get_drive ()
- * Gets a GDrive the volume of the mount is located on. Returns NULL if the GMount is not associated with a GDrive or a GVolume. This is convenience method for getting the GVolume and using that to get the GDrive.
- * can_unmount ()
- * Checks if a GMount can be unmounted.
- * can_eject ()
- * Checks if a GMount can be ejected.
- * unmount ()
- * Starts unmounting a GMount.
- * unmount_finish ()
- * Finishes an unmounting operation.
- * eject ()
- * Starts ejecting a GMount.
- * eject_finish ()
- * Finishes an eject operation.
- * remount ()
- * Starts remounting a GMount.
- * remount_finish ()
- * Finishes a remounting operation.
- * guess_content_type ()
- * Starts guessing the type of the content of a GMount.
- * See g_mount_guess_content_type() for more information on content
- * type guessing. This operation was added in 2.18.
- * guess_content_type_finish ()
- * Finishes a content type guessing operation. Added in 2.18.
- * guess_content_type_sync ()
- * Synchronous variant of guess_content_type. Added in 2.18
- * pre_unmount ()
- * The ::pre-unmount signal that is emitted when the GMount will soon be emitted. If the recipient is somehow holding the mount open by keeping an open file on it it should close the file.
- * unmount_with_operation ()
- * Starts unmounting a GMount using a GMountOperation. Since 2.22.
- * unmount_with_operation_finish ()
- * Finishes an unmounting operation using a GMountOperation. Since 2.22.
- * eject_with_operation ()
- * Starts ejecting a GMount using a GMountOperation. Since 2.22.
- * eject_with_operation_finish ()
- * Finishes an eject operation using a GMountOperation. Since 2.22.
- * get_default_location ()
- * Gets a GFile indication a start location that can be use as the entry point for this mount. Since 2.24.
- * get_sort_key ()
- * Gets a key used for sorting GMount instance or NULL if no such key exists. Since 2.32.
- * get_symbolic_icon ()
- * Gets a symbolic GIcon for the GMount. Since 2.34.
- */
-public struct GMountIface
-{
-	GTypeInterface gIface;
-	/+* signals +/
-	extern(C) void function(GMount* mount)  changed;
-	extern(C) void function(GMount* mount)  unmounted;
-	/+* Virtual Table +/
-	extern(C) GFile * function(GMount* mount)  getRoot;
-	extern(C) char * function(GMount* mount)  getName;
-	extern(C) GIcon * function(GMount* mount)  getIcon;
-	extern(C) char * function(GMount* mount)  getUuid;
-	extern(C) GVolume * function(GMount* mount)  getVolume;
-	extern(C) GDrive * function(GMount* mount)  getDrive;
-	extern(C) int function(GMount* mount)  canUnmount;
-	extern(C) int function(GMount* mount)  canEject;
-	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  unmount;
-	extern(C) int function(GMount* mount, GAsyncResult* result, GError** error)  unmountFinish;
-	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  eject;
-	extern(C) int function(GMount* mount, GAsyncResult* result, GError** error)  ejectFinish;
-	extern(C) void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  remount;
-	extern(C) int function(GMount* mount, GAsyncResult* result, GError** error)  remountFinish;
-	extern(C) void function(GMount* mount, int forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  guessContentType;
-	extern(C) char ** function(GMount* mount, GAsyncResult* result, GError** error)  guessContentTypeFinish;
-	extern(C) char ** function(GMount* mount, int forceRescan, GCancellable* cancellable, GError** error)  guessContentTypeSync;
-	/+* Signal, not VFunc +/
-	extern(C) void function(GMount* mount)  preUnmount;
-	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  unmountWithOperation;
-	extern(C) int function(GMount* mount, GAsyncResult* result, GError** error)  unmountWithOperationFinish;
-	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  ejectWithOperation;
-	extern(C) int function(GMount* mount, GAsyncResult* result, GError** error)  ejectWithOperationFinish;
-	extern(C) GFile * function(GMount* mount)  getDefaultLocation;
-	extern(C) char * function(GMount* mount)  getSortKey;
-	extern(C) GIcon * function(GMount* mount)  getSymbolicIcon;
-}
-
-
-/**
- * Main Gtk struct.
- * Opaque drive object.
- */
-public struct GDrive{}
-
-
-/**
- * Interface for creating GDrive implementations.
- * GTypeInterface g_iface;
- * The parent interface.
- * changed ()
- * Signal emitted when the drive is changed.
- * disconnected ()
- * The removed signal that is emitted when the GDrive have been disconnected. If the recipient is holding references to the object they should release them so the object can be finalized.
- * eject_button ()
- * Signal emitted when the physical eject button (if any) of a drive have been pressed.
- * get_name ()
- * Returns the name for the given GDrive.
- * get_icon ()
- * Returns a GIcon for the given GDrive.
- * has_volumes ()
- * Returns TRUE if the GDrive has mountable volumes.
- * get_volumes ()
- * Returns a list GList of GVolume for the GDrive.
- * is_media_removable ()
- * Returns TRUE if the GDrive supports removal and insertion of media.
- * has_media ()
- * Returns TRUE if the GDrive has media inserted.
- * is_media_check_automatic ()
- * Returns TRUE if the GDrive is capabable of automatically detecting media changes.
- * can_eject ()
- * Returns TRUE if the GDrive can eject media.
- * can_poll_for_media ()
- * Returns TRUE if the GDrive is capable of manually polling for media change.
- * eject ()
- * Ejects a GDrive.
- * eject_finish ()
- * Finishes an eject operation.
- * poll_for_media ()
- * Poll for media insertion/removal on a GDrive.
- * poll_for_media_finish ()
- * Finishes a media poll operation.
- * get_identifier ()
- * Returns the identifier of the given kind, or NULL if
- * the GDrive doesn't have one.
- * enumerate_identifiers ()
- * Returns an array strings listing the kinds
- * of identifiers which the GDrive has.
- * get_start_stop_type ()
- * Gets a GDriveStartStopType with details about starting/stopping the drive. Since 2.22.
- * can_start ()
- * Returns TRUE if a GDrive can be started. Since 2.22.
- * can_start_degraded ()
- * Returns TRUE if a GDrive can be started degraded. Since 2.22.
- * start ()
- * Starts a GDrive. Since 2.22.
- * start_finish ()
- * Finishes a start operation. Since 2.22.
- * can_stop ()
- * Returns TRUE if a GDrive can be stopped. Since 2.22.
- * stop ()
- * Stops a GDrive. Since 2.22.
- * stop_finish ()
- * Finishes a stop operation. Since 2.22.
- * stop_button ()
- * Signal emitted when the physical stop button (if any) of a drive have been pressed. Since 2.22.
- * eject_with_operation ()
- * Starts ejecting a GDrive using a GMountOperation. Since 2.22.
- * eject_with_operation_finish ()
- * Finishes an eject operation using a GMountOperation. Since 2.22.
- * get_sort_key ()
- * Gets a key used for sorting GDrive instances or NULL if no such key exists. Since 2.32.
- * get_symbolic_icon ()
- * Returns a symbolic GIcon for the given GDrive. Since 2.34.
- */
-public struct GDriveIface
-{
-	GTypeInterface gIface;
-	/+* signals +/
-	extern(C) void function(GDrive* drive)  changed;
-	extern(C) void function(GDrive* drive)  disconnected;
-	extern(C) void function(GDrive* drive)  ejectButton;
-	/+* Virtual Table +/
-	extern(C) char * function(GDrive* drive)  getName;
-	extern(C) GIcon * function(GDrive* drive)  getIcon;
-	extern(C) int function(GDrive* drive)  hasVolumes;
-	extern(C) GList * function(GDrive* drive)  getVolumes;
-	extern(C) int function(GDrive* drive)  isMediaRemovable;
-	extern(C) int function(GDrive* drive)  hasMedia;
-	extern(C) int function(GDrive* drive)  isMediaCheckAutomatic;
-	extern(C) int function(GDrive* drive)  canEject;
-	extern(C) int function(GDrive* drive)  canPollForMedia;
-	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  eject;
-	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** error)  ejectFinish;
-	extern(C) void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  pollForMedia;
-	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** error)  pollForMediaFinish;
-	extern(C) char * function(GDrive* drive, char* kind)  getIdentifier;
-	extern(C) char ** function(GDrive* drive)  enumerateIdentifiers;
-	extern(C) GDriveStartStopType function(GDrive* drive)  getStartStopType;
-	extern(C) int function(GDrive* drive)  canStart;
-	extern(C) int function(GDrive* drive)  canStartDegraded;
-	extern(C) void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  start;
-	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** error)  startFinish;
-	extern(C) int function(GDrive* drive)  canStop;
-	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  stop;
-	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** error)  stopFinish;
-	/+* signal, not VFunc +/
-	extern(C) void function(GDrive* drive)  stopButton;
-	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  ejectWithOperation;
-	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** error)  ejectWithOperationFinish;
-	extern(C) char * function(GDrive* drive)  getSortKey;
-	extern(C) GIcon * function(GDrive* drive)  getSymbolicIcon;
-}
-
-
-/**
- * Defines a Unix mount point (e.g. /dev).
- * This corresponds roughly to a fstab entry.
- */
-public struct GUnixMountPoint{}
-
-
-/**
- * Main Gtk struct.
- * Defines a Unix mount entry (e.g. /media/cdrom).
- * This corresponds roughly to a mtab entry.
- */
-public struct GUnixMountEntry{}
-
-
-/**
- * Watches GUnixMounts for changes.
- */
-public struct GUnixMountMonitor{}
-
-
-/**
- * Main Gtk struct.
- * An abstract type that specifies an icon.
- */
-public struct GIcon{}
-
-
-/**
- * GIconIface is used to implement GIcon types for various
- * different systems. See GThemedIcon and GLoadableIcon for
- * examples of how to implement this interface.
- * GTypeInterface g_iface;
- * The parent interface.
- * hash ()
- * A hash for a given GIcon.
- * equal ()
- * Checks if two GIcons are equal.
- * to_tokens ()
- * Serializes a GIcon into tokens. The tokens must not
- * contain any whitespace. Don't implement if the GIcon can't be
- * serialized (Since 2.20).
- * from_tokens ()
- * Constructs a GIcon from tokens. Set the GError if
- * the tokens are malformed. Don't implement if the GIcon can't be
- * serialized (Since 2.20).
- * serialize ()
- */
-public struct GIconIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) uint function(GIcon* icon)  hash;
-	extern(C) int function(GIcon* icon1, GIcon* icon2)  equal;
-	extern(C) int function(GIcon* icon, GPtrArray* tokens, int* outVersion)  toTokens;
-	extern(C) GIcon * function(char** tokens, int numTokens, int versio, GError** error)  fromTokens;
-	extern(C) GVariant * function(GIcon* icon)  serialize;
-}
-
-
-/**
- * Main Gtk struct.
- * Gets an icon for a GFile. Implements GLoadableIcon.
- */
-public struct GFileIcon{}
-
-
-/**
- * Main Gtk struct.
- * Gets an icon for a GBytes. Implements GLoadableIcon.
- */
-public struct GBytesIcon{}
-
-
-/**
- * Main Gtk struct.
- * Generic type for all kinds of icons that can be loaded
- * as a stream.
- */
-public struct GLoadableIcon{}
-
-
-/**
- * Interface for icons that can be loaded as a stream.
- * GTypeInterface g_iface;
- * The parent interface.
- * load ()
- * Loads an icon.
- * load_async ()
- * Loads an icon asynchronously.
- * load_finish ()
- * Finishes an asynchronous icon load.
- */
-public struct GLoadableIconIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GInputStream * function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** error)  load;
-	extern(C) void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  loadAsync;
-	extern(C) GInputStream * function(GLoadableIcon* icon, GAsyncResult* res, char** type, GError** error)  loadFinish;
-}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GIcon for themed icons.
- */
-public struct GThemedIcon{}
-
-
-/**
- * Main Gtk struct.
- * An implementation of GIcon for icons with emblems.
- */
-public struct GEmblemedIcon{}
-
-
-/**
- * Main Gtk struct.
- * An object for Emblems
- */
-public struct GEmblem{}
-
-
-/**
- * Main Gtk struct.
- * Interface for initializable objects.
- * Since 2.22
- */
-public struct GInitable{}
-
-
-/**
- * Provides an interface for initializing object such that initialization
- * may fail.
- * GTypeInterface g_iface;
- * The parent interface.
- * init ()
- * Initializes the object.
- * Since 2.22
- */
-public struct GInitableIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) int function(GInitable* initable, GCancellable* cancellable, GError** error)  init;
-}
-
-
-/**
- * Main Gtk struct.
- * Interface for asynchronously initializable objects.
- * Since 2.22
- */
-public struct GAsyncInitable{}
-
-
-/**
- * Provides an interface for asynchronous initializing object such that
- * initialization may fail.
- * GTypeInterface g_iface;
- * The parent interface.
- * init_async ()
- * Starts initialization of the object.
- * init_finish ()
- * Finishes initialization of the object.
- * Since 2.22
- */
-public struct GAsyncInitableIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  initAsync;
-	extern(C) int function(GAsyncInitable* initable, GAsyncResult* res, GError** error)  initFinish;
-}
-
-
-/**
- * Main Gtk struct.
- * A lowlevel network socket object.
- * Since 2.22
- */
-public struct GSocket{}
-
-
-/**
- * Structure used for scatter/gather data input.
- * You generally pass in an array of GInputVectors
- * and the operation will store the read data starting in the
- * first buffer, switching to the next as needed.
- * gpointer buffer;
- * Pointer to a buffer where data will be written.
- * gsize size;
- * the available size in buffer.
- * Since 2.22
- */
-public struct GInputVector
-{
-	void* buffer;
-	gsize size;
-}
-
-
-/**
- * Structure used for scatter/gather data output.
- * You generally pass in an array of GOutputVectors
- * and the operation will use all the buffers as if they were
- * one buffer.
- * gconstpointer buffer;
- * Pointer to a buffer of data to read.
- * gsize size;
- * the size of buffer.
- * Since 2.22
- */
-public struct GOutputVector
-{
-	void* buffer;
-	gsize size;
-}
-
-
-/**
- * Main Gtk struct.
- * An IPv4 or IPv6 internet address.
- */
-public struct GInetAddress{}
-
-
-/**
- * Main Gtk struct.
- * A combination of an IPv4 or IPv6 base address and a length,
- * representing a range of IP addresses.
- * Since 2.32
- */
-public struct GInetAddressMask
-{
-	GObject parentInstance;
-}
-
-
-/**
- * Main Gtk struct.
- * A socket endpoint address, corresponding to struct sockaddr
- * or one of its subtypes.
- */
-public struct GSocketAddress{}
-
-
-/**
- * Main Gtk struct.
- * An IPv4 or IPv6 socket address, corresponding to a struct
- * sockaddr_in or struct sockaddr_in6.
- */
-public struct GInetSocketAddress{}
-
-
-/**
- * Main Gtk struct.
- * A UNIX-domain (local) socket address, corresponding to a
- * struct sockaddr_un.
- */
-public struct GUnixSocketAddress{}
-
-
-/**
- * Main Gtk struct.
- * Base class for socket-type specific control messages that can be sent and
- * received over GSocket.
- */
-public struct GSocketControlMessage{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GUnixFDList{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GUnixFDMessage{}
-
-
-/**
- * Main Gtk struct.
- * The GCredentials structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.26
- */
-public struct GCredentials{}
-
-
-/**
- * Main Gtk struct.
- * The GUnixCredentialsMessage structure contains only private data
- * and should only be accessed using the provided API.
- * Since 2.26
- */
-public struct GUnixCredentialsMessage{}
-
-
-/**
- * Class structure for GUnixCredentialsMessage.
- * Since 2.26
- */
-public struct GUnixCredentialsMessageClass
-{
-	GSocketControlMessageClass parentClass;
-}
-
-
-/**
- * Main Gtk struct.
- * Interface that handles proxy connection and payload.
- * Since 2.26
- */
-public struct GProxy{}
-
-
-/**
- * Provides an interface for handling proxy connection and payload.
- * GTypeInterface g_iface;
- * The parent interface.
- * connect ()
- * Connect to proxy server and wrap (if required) the connection
- * to handle payload.
- * connect_async ()
- * Same as connect() but asynchronous.
- * connect_finish ()
- * Returns the result of connect_async()
- * supports_hostname ()
- * Returns whether the proxy supports hostname lookups.
- * Since 2.26
- */
-public struct GProxyInterface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GIOStream * function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GError** error)  connect;
-	extern(C) void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  connectAsync;
-	extern(C) GIOStream * function(GProxy* proxy, GAsyncResult* result, GError** error)  connectFinish;
-	extern(C) int function(GProxy* proxy)  supportsHostname;
-}
-
-
-/**
- * Main Gtk struct.
- * A GInetSocketAddress representing a connection via a proxy server
- * Since 2.26
- */
-public struct GProxyAddress{}
-
-
-public struct GProxyAddressClass
-{
-	GInetSocketAddressClass parentClass;
-}
-
-
-/**
- * Main Gtk struct.
- * A helper class for network clients to make connections.
- * Since 2.22
- */
-public struct GSocketClient{}
-
-
-/**
- * Main Gtk struct.
- * A socket connection GIOStream object for connection-oriented sockets.
- * Since 2.22
- */
-public struct GSocketConnection{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GUnixConnection{}
-
-
-/**
- * Main Gtk struct.
- * A GSocketConnection for TCP/IP connections.
- * Since 2.22
- */
-public struct GTcpConnection{}
-
-
-/**
- * Main Gtk struct.
- * A helper class for network servers to listen for and accept connections.
- * Since 2.22
- */
-public struct GSocketListener{}
-
-
-/**
- * Main Gtk struct.
- * A helper class for handling accepting incomming connections in the
- * glib mainloop.
- * Since 2.22
- */
-public struct GSocketService{}
-
-
-/**
- * Main Gtk struct.
- * A helper class for handling accepting incoming connections in the
- * glib mainloop and handling them in a thread.
- * Since 2.22
- */
-public struct GThreadedSocketService{}
-
-
-/**
- * Main Gtk struct.
- * GNetworkMonitor monitors the status of network connections and
- * indicates when a possibly-user-visible change has occurred.
- * Since 2.32
- */
-public struct GNetworkMonitor{}
-
-
-public struct GNetworkMonitorInterface
-{
-	GTypeInterface gIface;
-	extern(C) void function(GNetworkMonitor* monitor, int available) networkChanged;
-	extern(C) int function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GError** error) canReach;
-	extern(C) void function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) canReachAsync;
-	extern(C) int function(GNetworkMonitor* monitor, GAsyncResult* result, GError** error) canReachFinish;
-}
-
-
-/**
- * Main Gtk struct.
- * Abstract base class for TLS certificate types.
- * Since 2.28
- */
-public struct GTlsCertificate{}
-
-
-/**
- * Main Gtk struct.
- * Abstract base class for the backend-specific GTlsClientConnection
- * and GTlsServerConnection types.
- * Since 2.28
- */
-public struct GTlsConnection{}
-
-
-/**
- * Main Gtk struct.
- * Abstract base class for the backend-specific client connection
- * type.
- * Since 2.28
- */
-public struct GTlsClientConnection{}
-
-
-public struct GTlsClientConnectionInterface
-{
-	GTypeInterface gIface;
-}
-
-
-/**
- * Main Gtk struct.
- * TLS server-side connection. This is the server-side implementation
- * of a GTlsConnection.
- * Since 2.28
- */
-public struct GTlsServerConnection{}
-
-
-public struct GTlsServerConnectionInterface
-{
-	GTypeInterface gIface;
-}
-
-
-/**
- * Main Gtk struct.
- * TLS (Transport Layer Security, aka SSL) backend. This is an
- * internal type used to coordinate the different classes implemented
- * by a TLS backend.
- * Since 2.28
- */
-public struct GTlsBackend{}
-
-
-/**
- * Provides an interface for describing TLS-related types.
- * GTypeInterface g_iface;
- * The parent interface.
- * supports_tls ()
- * returns whether the backend supports TLS.
- * get_certificate_type ()
- * returns the GTlsCertificate implementation type
- * get_client_connection_type ()
- * returns the GTlsClientConnection implementation type
- * get_server_connection_type ()
- * returns the GTlsServerConnection implementation type
- * get_file_database_type ()
- * returns the GTlsFileDatabase implementation type.
- * get_default_database ()
- * returns a default GTlsDatabase instance.
- * Since 2.28
- */
-public struct GTlsBackendInterface
-{
-	GTypeInterface gIface;
-	/+* methods +/
-	extern(C) int function(GTlsBackend* backend) supportsTls;
-	extern(C) GType function() getCertificateType;
-	extern(C) GType function() getClientConnectionType;
-	extern(C) GType function() getServerConnectionType;
-	extern(C) GType function() getFileDatabaseType;
-	extern(C) GTlsDatabase * function(GTlsBackend* backend) getDefaultDatabase;
-}
-
-
-/**
- * Main Gtk struct.
- * Abstract base class for the backend-specific database types.
- * Since 2.30
- */
-public struct GTlsDatabase{}
-
-
-/**
- * Main Gtk struct.
- * Implemented by a GTlsDatabase which allows you to load certificates
- * from a file.
- * Since 2.30
- */
-public struct GTlsFileDatabase{}
-
-
-/**
- * Provides an interface for GTlsFileDatabase implementations.
- * GTypeInterface g_iface;
- * The parent interface.
- */
-public struct GTlsFileDatabaseInterface
-{
-	GTypeInterface gIface;
-}
-
-
-/**
- * Main Gtk struct.
- * An object representing interaction that the TLS connection and database
- * might have with the user.
- * Since 2.30
- */
-public struct GTlsInteraction{}
-
-
-/**
- * Main Gtk struct.
- * An abstract interface representing a password used in TLS. Often used in
- * user interaction such as unlocking a key storage token.
- * Since 2.30
- */
-public struct GTlsPassword{}
-
-
-public struct GTlsPasswordClass
-{
-	GObjectClass parentClass;
-	/+* methods +/
-	extern(C) char * function(GTlsPassword* password, gsize* length) getValue;
-	extern(C) void function(GTlsPassword* password, char* value, gssize length, GDestroyNotify destroy) setValue;
-	extern(C) char* function(GTlsPassword* password) getDefaultWarning;
-}
-
-
-/**
- * Main Gtk struct.
- * The object that handles DNS resolution. Use g_resolver_get_default()
- * to get the default resolver.
- */
-public struct GResolver{}
-
-
-/**
- * Main Gtk struct.
- * A helper class to enumerate proxies base on URI.
- * Since 2.26
- */
-public struct GProxyResolver{}
-
-
-public struct GProxyResolverInterface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) int function(GProxyResolver* resolver)  isSupported;
-	extern(C) char ** function(GProxyResolver* resolver, char* uri, GCancellable* cancellable, GError** error)  lookup;
-	extern(C) void function(GProxyResolver* resolver, char* uri, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData)  lookupAsync;
-	extern(C) char ** function(GProxyResolver* resolver, GAsyncResult* result, GError** error)  lookupFinish;
-}
-
-
-/**
- * Main Gtk struct.
- * A GProxyResolver implementation for using a fixed set of proxies.
- */
-public struct GSimpleProxyResolver{}
-
-
-/**
- * Main Gtk struct.
- * Interface for objects that contain or generate GSocketAddresses.
- */
-public struct GSocketConnectable{}
-
-
-/**
- * Provides an interface for returning a GSocketAddressEnumerator
- * and GProxyAddressEnumerator
- * GTypeInterface g_iface;
- * The parent interface.
- * enumerate ()
- * Creates a GSocketAddressEnumerator
- * proxy_enumerate ()
- * Creates a GProxyAddressEnumerator
- */
-public struct GSocketConnectableIface
-{
-	GTypeInterface gIface;
-	/+* Virtual Table +/
-	extern(C) GSocketAddressEnumerator * function(GSocketConnectable* connectable)  enumerate;
-	extern(C) GSocketAddressEnumerator * function(GSocketConnectable* connectable)  proxyEnumerate;
-}
-
-
-/**
- * Enumerator type for objects that contain or generate
- * GSocketAddresses.
- */
-public struct GSocketAddressEnumerator{}
-
-
-/**
- * A subclass of GSocketAddressEnumerator that takes another address
- * enumerator and wraps its results in GProxyAddresses as
- * directed by the default GProxyResolver.
- * Property Details
- * The "connectable" property
- */
-public struct GProxyAddressEnumerator{}
-
-
-/**
- * Main Gtk struct.
- * A GSocketConnectable for resolving a hostname and connecting to
- * that host.
- */
-public struct GNetworkAddress{}
-
-
-/**
- * Main Gtk struct.
- * A GSocketConnectable for resolving a SRV record and connecting to
- * that service.
- */
-public struct GNetworkService{}
-
-
-/**
- * Main Gtk struct.
- * A single target host/port that a network service is running on.
- */
-public struct GSrvTarget{}
-
-
-/**
- * Main Gtk struct.
- * Information about an annotation.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *key;
- * The name of the annotation, e.g. "org.freedesktop.DBus.Deprecated".
- * gchar *value;
- * The value of the annotation.
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusAnnotationInfo
-{
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
 	int refCount;
-	char *key;
-	char *value;
-	GDBusAnnotationInfo **annotations;
+	/**
+	 * The name of the annotation, e.g. "org.freedesktop.DBus.Deprecated".
+	 */
+	char* key;
+	/**
+	 * The value of the annotation.
+	 */
+	char* value;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
 }
 
-
-/**
- * Information about an argument for a method or a signal.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *name;
- * Name of the argument, e.g. unix_user_id.
- * gchar *signature;
- * D-Bus signature of the argument (a single complete type).
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusArgInfo
+struct GDBusArgInfo
 {
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
 	int refCount;
-	char *name;
-	char *signature;
-	GDBusAnnotationInfo **annotations;
+	/**
+	 * Name of the argument, e.g. @unix_user_id.
+	 */
+	char* name;
+	/**
+	 * D-Bus signature of the argument (a single complete type).
+	 */
+	char* signature;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
 }
 
+struct GDBusAuthObserver;
 
-/**
- * Information about a method on an D-Bus interface.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *name;
- * The name of the D-Bus method, e.g. RequestName.
- * GDBusArgInfo **in_args;
- * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no in arguments. [array zero-terminated=1]
- * GDBusArgInfo **out_args;
- * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no out arguments. [array zero-terminated=1]
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusMethodInfo
-{
-	int refCount;
-	char *name;
-	GDBusArgInfo **inArgs;
-	GDBusArgInfo **outArgs;
-	GDBusAnnotationInfo **annotations;
-}
-
-
-/**
- * Information about a signal on a D-Bus interface.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *name;
- * The name of the D-Bus signal, e.g. "NameOwnerChanged".
- * GDBusArgInfo **args;
- * A pointer to a NULL-terminated array of pointers to GDBusArgInfo structures or NULL if there are no arguments. [array zero-terminated=1]
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusSignalInfo
-{
-	int refCount;
-	char *name;
-	GDBusArgInfo **args;
-	GDBusAnnotationInfo **annotations;
-}
-
-
-/**
- * Information about a D-Bus property on a D-Bus interface.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *name;
- * The name of the D-Bus property, e.g. "SupportedFilesystems".
- * gchar *signature;
- * The D-Bus signature of the property (a single complete type).
- * GDBusPropertyInfoFlags flags;
- * Access control flags for the property.
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusPropertyInfo
-{
-	int refCount;
-	char *name;
-	char *signature;
-	GDBusPropertyInfoFlags flags;
-	GDBusAnnotationInfo **annotations;
-}
-
-
-/**
- * Information about a D-Bus interface.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *name;
- * The name of the D-Bus interface, e.g. "org.freedesktop.DBus.Properties".
- * GDBusMethodInfo **methods;
- * A pointer to a NULL-terminated array of pointers to GDBusMethodInfo structures or NULL if there are no methods. [array zero-terminated=1]
- * GDBusSignalInfo **signals;
- * A pointer to a NULL-terminated array of pointers to GDBusSignalInfo structures or NULL if there are no signals. [array zero-terminated=1]
- * GDBusPropertyInfo **properties;
- * A pointer to a NULL-terminated array of pointers to GDBusPropertyInfo structures or NULL if there are no properties. [array zero-terminated=1]
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusInterfaceInfo
-{
-	int refCount;
-	char *name;
-	GDBusMethodInfo **methods;
-	GDBusSignalInfo **signals;
-	GDBusPropertyInfo **properties;
-	GDBusAnnotationInfo **annotations;
-}
-
-
-/**
- * Information about nodes in a remote object hierarchy.
- * volatile gint ref_count;
- * The reference count or -1 if statically allocated.
- * gchar *path;
- * The path of the node or NULL if omitted. Note that this may be a relative path. See the D-Bus specification for more details.
- * GDBusInterfaceInfo **interfaces;
- * A pointer to a NULL-terminated array of pointers to GDBusInterfaceInfo structures or NULL if there are no interfaces. [array zero-terminated=1]
- * GDBusNodeInfo **nodes;
- * A pointer to a NULL-terminated array of pointers to GDBusNodeInfo structures or NULL if there are no nodes. [array zero-terminated=1]
- * GDBusAnnotationInfo **annotations;
- * A pointer to a NULL-terminated array of pointers to GDBusAnnotationInfo structures or NULL if there are no annotations. [array zero-terminated=1]
- * Since 2.26
- */
-public struct GDBusNodeInfo
-{
-	int refCount;
-	char *path;
-	GDBusInterfaceInfo **interfaces;
-	GDBusNodeInfo **nodes;
-	GDBusAnnotationInfo **annotations;
-}
-
+struct GDBusConnection;
 
 /**
  * Struct used in g_dbus_error_register_error_domain().
- * gint error_code;
- * An error code.
- * const gchar *dbus_error_name;
- * The D-Bus error name to associate with error_code.
- * Since 2.26
+ *
+ * Since: 2.26
  */
-public struct GDBusErrorEntry
+struct GDBusErrorEntry
 {
+	/**
+	 * An error code.
+	 */
 	int errorCode;
-	char *dbusErrorName;
+	/**
+	 * The D-Bus error name to associate with @error_code.
+	 */
+	const(char)* dbusErrorName;
 }
 
+struct GDBusInterface;
 
 /**
- * Main Gtk struct.
- * The GDBusMessage structure contains only private data and should
- * only be accessed using the provided API.
- * Since 2.26
+ * Base type for D-Bus interfaces.
+ *
+ * Since: 2.30
  */
-public struct GDBusMessage{}
+struct GDBusInterfaceIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface parentIface;
+	/**
+	 *
+	 * Params:
+	 *     iface = An exported D-Bus interface.
+	 * Return: A #GDBusInterfaceInfo. Do not free.
+	 */
+	extern(C) GDBusInterfaceInfo* function(GDBusInterface* iface) getInfo;
+	/**
+	 *
+	 * Params:
+	 *     iface = An exported D-Bus interface
+	 * Return: A #GDBusObject or %NULL. The returned
+	 *     reference belongs to @interface_ and should not be freed.
+	 */
+	extern(C) GDBusObject* function(GDBusInterface* iface) getObject;
+	extern(C) void function(GDBusInterface* iface, GDBusObject* object) setObject;
+	/**
+	 *
+	 * Params:
+	 *     iface = An exported D-Bus interface.
+	 * Return: A #GDBusObject or %NULL. The returned
+	 *     reference should be freed with g_object_unref().
+	 */
+	extern(C) GDBusObject* function(GDBusInterface* iface) dupObject;
+}
 
+struct GDBusInterfaceInfo
+{
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	int refCount;
+	/**
+	 * The name of the D-Bus interface, e.g. "org.freedesktop.DBus.Properties".
+	 */
+	char* name;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusMethodInfo structures or %NULL if there are no methods.
+	 */
+	GDBusMethodInfo** methods;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusSignalInfo structures or %NULL if there are no signals.
+	 */
+	GDBusSignalInfo** signals;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusPropertyInfo structures or %NULL if there are no properties.
+	 */
+	GDBusPropertyInfo** properties;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
+}
+
+struct GDBusInterfaceSkeleton
+{
+	GObject parentInstance;
+	GDBusInterfaceSkeletonPrivate* priv;
+}
 
 /**
- * Main Gtk struct.
- * The GDBusConnection structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.26
+ * Class structure for #GDBusInterfaceSkeleton.
+ *
+ * Since: 2.30
  */
-public struct GDBusConnection{}
+struct GDBusInterfaceSkeletonClass
+{
+	/**
+	 * The parent class.
+	 */
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     iface = A #GDBusInterfaceSkeleton.
+	 * Return: A #GDBusInterfaceInfo (never %NULL). Do not free.
+	 */
+	extern(C) GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* iface) getInfo;
+	/**
+	 *
+	 * Params:
+	 *     iface = A #GDBusInterfaceSkeleton.
+	 * Return: A #GDBusInterfaceVTable (never %NULL).
+	 */
+	extern(C) GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* iface) getVtable;
+	/**
+	 *
+	 * Params:
+	 *     iface = A #GDBusInterfaceSkeleton.
+	 * Return: A #GVariant of type
+	 *     ['a{sv}'][G-VARIANT-TYPE-VARDICT:CAPS].
+	 *     Free with g_variant_unref().
+	 */
+	extern(C) GVariant* function(GDBusInterfaceSkeleton* iface) getProperties;
+	extern(C) void function(GDBusInterfaceSkeleton* iface) flush;
+	void*[8] vfuncPadding;
+	extern(C) int function(GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) gAuthorizeMethod;
+	void*[8] signalPadding;
+}
 
+struct GDBusInterfaceSkeletonPrivate;
 
 /**
  * Virtual table for handling properties and method calls for a D-Bus
  * interface.
+ *
  * Since 2.38, if you want to handle getting/setting D-Bus properties
- * asynchronously, give NULL as your get_property() or set_property()
- * function. The D-Bus call will be directed to your method_call
- * function, with the provided interface_name set to
- * "org.freedesktop.DBus.Properties".
+ * asynchronously, give %NULL as your get_property() or set_property()
+ * function. The D-Bus call will be directed to your @method_call function,
+ * with the provided @interface_name set to "org.freedesktop.DBus.Properties".
+ *
  * The usual checks on the validity of the calls is performed. For
- * 'Get' calls, an error is automatically returned if
- * the property does not exist or the permissions do not allow access.
- * The same checks are performed for 'Set' calls, and
- * the provided value is also checked for being the correct type.
- * For both 'Get' and 'Set' calls,
- * the GDBusMethodInvocation passed to the method_call handler can be
- * queried with g_dbus_method_invocation_get_property_info() to get a
- * pointer to the GDBusPropertyInfo of the property.
- * If you have readable properties specified in your interface info, you
- * must ensure that you either provide a non-NULL get_property()
- * function or provide implementations of both the
- * 'Get' and 'GetAll' methods on
- * the 'org.freedesktop.DBus.Properties' interface in
- * your method_call function. Note that the required return type of
- * the 'Get' call is (v), not the
- * type of the property. 'GetAll' expects a return
- * value of type a{sv}.
- * If you have writable properties specified in your interface info, you
- * must ensure that you either provide a non-NULL set_property()
- * function or provide an implementation of the 'Set'
- * call. If implementing the call, you must return the value of type
- * G_VARIANT_TYPE_UNIT.
- * GDBusInterfaceMethodCallFunc method_call;
- * Function for handling incoming method calls.
- * GDBusInterfaceGetPropertyFunc get_property;
- * Function for getting a property.
- * GDBusInterfaceSetPropertyFunc set_property;
- * Function for setting a property.
- * Since 2.26
+ * `Get` calls, an error is automatically returned if the property does
+ * not exist or the permissions do not allow access. The same checks are
+ * performed for `Set` calls, and the provided value is also checked for
+ * being the correct type.
+ *
+ * For both `Get` and `Set` calls, the #GDBusMethodInvocation
+ * passed to the @method_call handler can be queried with
+ * g_dbus_method_invocation_get_property_info() to get a pointer
+ * to the #GDBusPropertyInfo of the property.
+ *
+ * If you have readable properties specified in your interface info,
+ * you must ensure that you either provide a non-%NULL @get_property()
+ * function or provide implementations of both the `Get` and `GetAll`
+ * methods on org.freedesktop.DBus.Properties interface in your @method_call
+ * function. Note that the required return type of the `Get` call is
+ * `(v)`, not the type of the property. `GetAll` expects a return value
+ * of type `a{sv}`.
+ *
+ * If you have writable properties specified in your interface info,
+ * you must ensure that you either provide a non-%NULL @set_property()
+ * function or provide an implementation of the `Set` call. If implementing
+ * the call, you must return the value of type %G_VARIANT_TYPE_UNIT.
+ *
+ * Since: 2.26
  */
-public struct GDBusInterfaceVTable
+struct GDBusInterfaceVTable
 {
+	/**
+	 * Function for handling incoming method calls.
+	 */
 	GDBusInterfaceMethodCallFunc methodCall;
+	/**
+	 * Function for getting a property.
+	 */
 	GDBusInterfaceGetPropertyFunc getProperty;
+	/**
+	 * Function for setting a property.
+	 */
 	GDBusInterfaceSetPropertyFunc setProperty;
+	void*[8] padding;
 }
 
+struct GDBusMenuModel;
 
-/**
- * Virtual table for handling subtrees registered with g_dbus_connection_register_subtree().
- * GDBusSubtreeEnumerateFunc enumerate;
- * Function for enumerating child nodes.
- * GDBusSubtreeIntrospectFunc introspect;
- * Function for introspecting a child node.
- * GDBusSubtreeDispatchFunc dispatch;
- * Function for dispatching a remote call on a child node.
- * Since 2.26
- */
-public struct GDBusSubtreeVTable
+struct GDBusMessage;
+
+struct GDBusMethodInfo
 {
-	GDBusSubtreeEnumerateFunc enumerate;
-	GDBusSubtreeIntrospectFunc introspect;
-	GDBusSubtreeDispatchFunc dispatch;
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	int refCount;
+	/**
+	 * The name of the D-Bus method, e.g. @RequestName.
+	 */
+	char* name;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusArgInfo structures or %NULL if there are no in arguments.
+	 */
+	GDBusArgInfo** inArgs;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusArgInfo structures or %NULL if there are no out arguments.
+	 */
+	GDBusArgInfo** outArgs;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
 }
 
+struct GDBusMethodInvocation;
 
-/**
- * Main Gtk struct.
- * The GDBusMethodInvocation structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.26
- */
-public struct GDBusMethodInvocation{}
-
-
-/**
- * Main Gtk struct.
- * The GDBusServer structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.26
- */
-public struct GDBusServer{}
-
-
-/**
- * Main Gtk struct.
- * The GDBusAuthObserver structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.26
- */
-public struct GDBusAuthObserver{}
-
-
-/**
- * Main Gtk struct.
- * Base type for D-Bus interfaces.
- * Since 2.30
- */
-public struct GDBusInterface{}
-
-
-/**
- * Base type for D-Bus interfaces.
- * GTypeInterface parent_iface;
- * The parent interface.
- * get_info ()
- * Returns a GDBusInterfaceInfo. See g_dbus_interface_get_info().
- * get_object ()
- * Gets the enclosing GDBusObject. See g_dbus_interface_get_object().
- * set_object ()
- * Sets the enclosing GDBusObject. See g_dbus_interface_set_object().
- * dup_object ()
- * Gets a reference to the enclosing GDBusObject. See g_dbus_interface_dup_object(). Added in 2.32.
- * Since 2.30
- */
-public struct GDBusInterfaceIface
+struct GDBusNodeInfo
 {
-	GTypeInterface parentIface;
-	/+* Virtual Functions +/
-	extern(C) GDBusInterfaceInfo * function(GDBusInterface* iface) getInfo;
-	extern(C) GDBusObject * function(GDBusInterface* iface) getObject;
-	extern(C) void function(GDBusInterface* iface, GDBusObject* object) setObject;
-	extern(C) GDBusObject * function(GDBusInterface* iface) dupObject;
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	int refCount;
+	/**
+	 * The path of the node or %NULL if omitted. Note that this may be a relative path. See the D-Bus specification for more details.
+	 */
+	char* path;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusInterfaceInfo structures or %NULL if there are no interfaces.
+	 */
+	GDBusInterfaceInfo** interfaces;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusNodeInfo structures or %NULL if there are no nodes.
+	 */
+	GDBusNodeInfo** nodes;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
 }
 
-
-/**
- * Main Gtk struct.
- * The GDBusInterfaceSkeleton structure contains private data and should
- * only be accessed using the provided API.
- * Since 2.30
- */
-public struct GDBusInterfaceSkeleton{}
-
-
-/**
- * Class structure for GDBusInterfaceSkeleton.
- * GObjectClass parent_class;
- * The parent class.
- * get_info ()
- * Returns a GDBusInterfaceInfo. See g_dbus_interface_skeleton_get_info() for details.
- * get_vtable ()
- * Returns a GDBusInterfaceVTable. See g_dbus_interface_skeleton_get_vtable() for details.
- * get_properties ()
- * Returns a GVariant with all properties. See g_dbus_interface_skeleton_get_properties().
- * flush ()
- * Emits outstanding changes, if any. See g_dbus_interface_skeleton_flush().
- * g_authorize_method ()
- * Signal class handler for the "g-authorize-method" signal.
- * Since 2.30
- */
-public struct GDBusInterfaceSkeletonClass
-{
-	GObjectClass parentClass;
-	/+* Virtual Functions +/
-	extern(C) GDBusInterfaceInfo * function(GDBusInterfaceSkeleton* iface) getInfo;
-	extern(C) GDBusInterfaceVTable * function(GDBusInterfaceSkeleton* iface) getVtable;
-	extern(C) GVariant * function(GDBusInterfaceSkeleton* iface) getProperties;
-	extern(C) void function(GDBusInterfaceSkeleton* iface) flush;
-	/+* Signals +/
-	extern(C) int function(GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) gAuthorizeMethod;
-}
-
-
-/**
- * Main Gtk struct.
- * The GDBusProxy structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.26
- */
-public struct GDBusProxy{}
-
-
-/**
- * Class structure for GDBusProxy.
- * g_properties_changed ()
- * Signal class handler for the "g-properties-changed" signal.
- * g_signal ()
- * Signal class handler for the "g-signal" signal.
- * Since 2.26
- */
-public struct GDBusProxyClass
-{
-	/+* Signals +/
-	extern(C) void function(GDBusProxy* proxy, GVariant* changedProperties, char** invalidatedProperties) gPropertiesChanged;
-	extern(C) void function(GDBusProxy* proxy, char* senderName, char* signalName, GVariant* parameters) gSignal;
-}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GDBusObject{}
-
+struct GDBusObject;
 
 /**
  * Base object type for D-Bus objects.
- * GTypeInterface parent_iface;
- * The parent interface.
- * get_object_path ()
- * Returns the object path. See g_dbus_object_get_object_path().
- * get_interfaces ()
- * Returns all interfaces. See g_dbus_object_get_interfaces().
- * get_interface ()
- * Returns an interface by name. See g_dbus_object_get_interface().
- * interface_added ()
- * Signal handler for the "interface-added" signal.
- * interface_removed ()
- * Signal handler for the "interface-removed" signal.
- * Since 2.30
+ *
+ * Since: 2.30
  */
-public struct GDBusObjectIface
+struct GDBusObjectIface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface parentIface;
-	/+* Virtual Functions +/
-	extern(C) char * function(GDBusObject* object) getObjectPath;
-	extern(C) GList * function(GDBusObject* object) getInterfaces;
-	extern(C) GDBusInterface * function(GDBusObject* object, char* interfaceName) getInterface;
-	/+* Signals +/
+	/**
+	 *
+	 * Params:
+	 *     object = A #GDBusObject.
+	 * Return: A string owned by @object. Do not free.
+	 */
+	extern(C) const(char)* function(GDBusObject* object) getObjectPath;
+	/**
+	 *
+	 * Params:
+	 *     object = A #GDBusObject.
+	 * Return: A list of #GDBusInterface instances.
+	 *     The returned list must be freed by g_list_free() after each element has been freed
+	 *     with g_object_unref().
+	 */
+	extern(C) GList* function(GDBusObject* object) getInterfaces;
+	/**
+	 *
+	 * Params:
+	 *     object = A #GDBusObject.
+	 *     interfaceName = A D-Bus interface name.
+	 * Return: %NULL if not found, otherwise a
+	 *     #GDBusInterface that must be freed with g_object_unref().
+	 */
+	extern(C) GDBusInterface* function(GDBusObject* object, const(char)* interfaceName) getInterface;
 	extern(C) void function(GDBusObject* object, GDBusInterface* iface) interfaceAdded;
 	extern(C) void function(GDBusObject* object, GDBusInterface* iface) interfaceRemoved;
 }
 
+struct GDBusObjectManager;
 
-/**
- * Main Gtk struct.
- * The GDBusObjectSkeleton structure contains private data and should only be
- * accessed using the provided API.
- * Since 2.30
- */
-public struct GDBusObjectSkeleton{}
-
-
-/**
- * Class structure for GDBusObjectSkeleton.
- * GObjectClass parent_class;
- * The parent class.
- * authorize_method ()
- * Signal class handler for the "authorize-method" signal.
- * Since 2.30
- */
-public struct GDBusObjectSkeletonClass
+struct GDBusObjectManagerClient
 {
-	GObjectClass parentClass;
-	/+* Signals +/
-	extern(C) int function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) authorizeMethod;
+	GObject parentInstance;
+	GDBusObjectManagerClientPrivate* priv;
 }
 
-
 /**
- * Main Gtk struct.
- * The GDBusObjectProxy structure contains private data and should
- * only be accessed using the provided API.
- * Since 2.30
+ * Class structure for #GDBusObjectManagerClient.
+ *
+ * Since: 2.30
  */
-public struct GDBusObjectProxy{}
-
-
-/**
- * Class structure for GDBusObjectProxy.
- * GObjectClass parent_class;
- * The parent class.
- * Since 2.30
- */
-public struct GDBusObjectProxyClass
+struct GDBusObjectManagerClientClass
 {
+	/**
+	 * The parent class.
+	 */
 	GObjectClass parentClass;
+	extern(C) void function(GDBusObjectManagerClient* manager, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, const(char)* senderName, const(char)* signalName, GVariant* parameters) interfaceProxySignal;
+	extern(C) void function(GDBusObjectManagerClient* manager, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, GVariant* changedProperties, const(char)* invalidatedProperties) interfaceProxyPropertiesChanged;
+	void*[8] padding;
 }
 
-
-/**
- * Main Gtk struct.
- */
-public struct GDBusObjectManager{}
-
+struct GDBusObjectManagerClientPrivate;
 
 /**
  * Base type for D-Bus object managers.
- * GTypeInterface parent_iface;
- * The parent interface.
- * get_object_path ()
- * Virtual function for g_dbus_object_manager_get_object_path().
- * get_objects ()
- * Virtual function for g_dbus_object_manager_get_objects().
- * get_object ()
- * Virtual function for g_dbus_object_manager_get_object().
- * get_interface ()
- * Virtual function for g_dbus_object_manager_get_interface().
- * object_added ()
- * Signal handler for the "object-added" signal.
- * object_removed ()
- * Signal handler for the "object-removed" signal.
- * interface_added ()
- * Signal handler for the "interface-added" signal.
- * interface_removed ()
- * Signal handler for the "interface-removed" signal.
- * Since 2.30
+ *
+ * Since: 2.30
  */
-public struct GDBusObjectManagerIface
+struct GDBusObjectManagerIface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface parentIface;
-	/+* Virtual Functions +/
-	extern(C) char * function(GDBusObjectManager* manager) getObjectPath;
-	extern(C) GList * function(GDBusObjectManager* manager) getObjects;
-	extern(C) GDBusObject * function(GDBusObjectManager* manager, char* objectPath) getObject;
-	extern(C) GDBusInterface * function(GDBusObjectManager* manager, char* objectPath, char* interfaceName) getInterface;
-	/+* Signals +/
+	/**
+	 *
+	 * Params:
+	 *     manager = A #GDBusObjectManager.
+	 * Return: A string owned by @manager. Do not free.
+	 */
+	extern(C) const(char)* function(GDBusObjectManager* manager) getObjectPath;
+	/**
+	 *
+	 * Params:
+	 *     manager = A #GDBusObjectManager.
+	 * Return: A list of
+	 *     #GDBusObject objects. The returned list should be freed with
+	 *     g_list_free() after each element has been freed with
+	 *     g_object_unref().
+	 */
+	extern(C) GList* function(GDBusObjectManager* manager) getObjects;
+	/**
+	 *
+	 * Params:
+	 *     manager = A #GDBusObjectManager.
+	 *     objectPath = Object path to lookup.
+	 * Return: A #GDBusObject or %NULL. Free with
+	 *     g_object_unref().
+	 */
+	extern(C) GDBusObject* function(GDBusObjectManager* manager, const(char)* objectPath) getObject;
+	/**
+	 *
+	 * Params:
+	 *     manager = A #GDBusObjectManager.
+	 *     objectPath = Object path to lookup.
+	 *     interfaceName = D-Bus interface name to lookup.
+	 * Return: A #GDBusInterface instance or %NULL. Free
+	 *     with g_object_unref().
+	 */
+	extern(C) GDBusInterface* function(GDBusObjectManager* manager, const(char)* objectPath, const(char)* interfaceName) getInterface;
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object) objectAdded;
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object) objectRemoved;
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* iface) interfaceAdded;
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* iface) interfaceRemoved;
 }
 
+struct GDBusObjectManagerServer
+{
+	GObject parentInstance;
+	GDBusObjectManagerServerPrivate* priv;
+}
 
 /**
- * Main Gtk struct.
- * The GDBusObjectManagerServer structure contains private data and should
- * only be accessed using the provided API.
- * Since 2.30
+ * Class structure for #GDBusObjectManagerServer.
+ *
+ * Since: 2.30
  */
-public struct GDBusObjectManagerServer{}
+struct GDBusObjectManagerServerClass
+{
+	/**
+	 * The parent class.
+	 */
+	GObjectClass parentClass;
+	void*[8] padding;
+}
 
+struct GDBusObjectManagerServerPrivate;
+
+struct GDBusObjectProxy
+{
+	GObject parentInstance;
+	GDBusObjectProxyPrivate* priv;
+}
 
 /**
- * Class structure for GDBusObjectManagerServer.
- * GObjectClass parent_class;
- * The parent class.
- * Since 2.30
+ * Class structure for #GDBusObjectProxy.
+ *
+ * Since: 2.30
  */
-public struct GDBusObjectManagerServerClass
+struct GDBusObjectProxyClass
+{
+	/**
+	 * The parent class.
+	 */
+	GObjectClass parentClass;
+	void*[8] padding;
+}
+
+struct GDBusObjectProxyPrivate;
+
+struct GDBusObjectSkeleton
+{
+	GObject parentInstance;
+	GDBusObjectSkeletonPrivate* priv;
+}
+
+/**
+ * Class structure for #GDBusObjectSkeleton.
+ *
+ * Since: 2.30
+ */
+struct GDBusObjectSkeletonClass
+{
+	/**
+	 * The parent class.
+	 */
+	GObjectClass parentClass;
+	extern(C) int function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) authorizeMethod;
+	void*[8] padding;
+}
+
+struct GDBusObjectSkeletonPrivate;
+
+struct GDBusPropertyInfo
+{
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	int refCount;
+	/**
+	 * The name of the D-Bus property, e.g. "SupportedFilesystems".
+	 */
+	char* name;
+	/**
+	 * The D-Bus signature of the property (a single complete type).
+	 */
+	char* signature;
+	/**
+	 * Access control flags for the property.
+	 */
+	GDBusPropertyInfoFlags flags;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
+}
+
+struct GDBusProxy
+{
+	GObject parentInstance;
+	GDBusProxyPrivate* priv;
+}
+
+/**
+ * Class structure for #GDBusProxy.
+ *
+ * Since: 2.26
+ */
+struct GDBusProxyClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GDBusProxy* proxy, GVariant* changedProperties, const(char)* invalidatedProperties) gPropertiesChanged;
+	extern(C) void function(GDBusProxy* proxy, const(char)* senderName, const(char)* signalName, GVariant* parameters) gSignal;
+	void*[32] padding;
+}
+
+struct GDBusProxyPrivate;
+
+struct GDBusServer;
+
+struct GDBusSignalInfo
+{
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	int refCount;
+	/**
+	 * The name of the D-Bus signal, e.g. "NameOwnerChanged".
+	 */
+	char* name;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusArgInfo structures or %NULL if there are no arguments.
+	 */
+	GDBusArgInfo** args;
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	GDBusAnnotationInfo** annotations;
+}
+
+/**
+ * Virtual table for handling subtrees registered with g_dbus_connection_register_subtree().
+ *
+ * Since: 2.26
+ */
+struct GDBusSubtreeVTable
+{
+	/**
+	 * Function for enumerating child nodes.
+	 */
+	GDBusSubtreeEnumerateFunc enumerate;
+	/**
+	 * Function for introspecting a child node.
+	 */
+	GDBusSubtreeIntrospectFunc introspect;
+	/**
+	 * Function for dispatching a remote call on a child node.
+	 */
+	GDBusSubtreeDispatchFunc dispatch;
+	void*[8] padding;
+}
+
+struct GDataInputStream
+{
+	GBufferedInputStream parentInstance;
+	GDataInputStreamPrivate* priv;
+}
+
+struct GDataInputStreamClass
+{
+	GBufferedInputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GDataInputStreamPrivate;
+
+struct GDataOutputStream
+{
+	GFilterOutputStream parentInstance;
+	GDataOutputStreamPrivate* priv;
+}
+
+struct GDataOutputStreamClass
+{
+	GFilterOutputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GDataOutputStreamPrivate;
+
+struct GDesktopAppInfo;
+
+struct GDesktopAppInfoClass
 {
 	GObjectClass parentClass;
 }
 
+struct GDesktopAppInfoLookup;
+
+struct GDesktopAppInfoLookupIface
+{
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     lookup = a #GDesktopAppInfoLookup
+	 *     uriScheme = a string containing a URI scheme.
+	 * Return: #GAppInfo for given @uri_scheme or %NULL on error.
+	 */
+	extern(C) GAppInfo* function(GDesktopAppInfoLookup* lookup, const(char)* uriScheme) getDefaultForUriScheme;
+}
+
+struct GDrive;
 
 /**
- * Main Gtk struct.
- * The GDBusObjectManagerClient structure contains private data and should
- * only be accessed using the provided API.
- * Since 2.30
+ * Interface for creating #GDrive implementations.
  */
-public struct GDBusObjectManagerClient{}
+struct GDriveIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	extern(C) void function(GDrive* drive) changed;
+	extern(C) void function(GDrive* drive) disconnected;
+	extern(C) void function(GDrive* drive) ejectButton;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: a string containing @drive's name. The returned
+	 *     string should be freed when no longer needed.
+	 */
+	extern(C) char* function(GDrive* drive) getName;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: #GIcon for the @drive.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GIcon* function(GDrive* drive) getIcon;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive contains volumes, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) hasVolumes;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: #GList containing any #GVolume objects on the given @drive.
+	 */
+	extern(C) GList* function(GDrive* drive) getVolumes;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if @drive supports removable media, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) isMediaRemovable;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if @drive has media, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) hasMedia;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive is capabable of automatically detecting
+	 *     media changes, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) isMediaCheckAutomatic;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive can be ejected, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) canEject;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive can be polled for media changes,
+	 *     %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) canPollForMedia;
+	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) eject;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the drive has been ejected successfully,
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) ejectFinish;
+	extern(C) void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) pollForMedia;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the drive has been poll_for_mediaed successfully,
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) pollForMediaFinish;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive
+	 *     kind = the kind of identifier to return
+	 * Return: a newly allocated string containing the
+	 *     requested identfier, or %NULL if the #GDrive
+	 *     doesn't have this kind of identifier.
+	 */
+	extern(C) char* function(GDrive* drive, const(char)* kind) getIdentifier;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive
+	 * Return: a %NULL-terminated
+	 *     array of strings containing kinds of identifiers. Use g_strfreev()
+	 *     to free.
+	 */
+	extern(C) char** function(GDrive* drive) enumerateIdentifiers;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: A value from the #GDriveStartStopType enumeration.
+	 */
+	extern(C) GDriveStartStopType function(GDrive* drive) getStartStopType;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive can be started, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) canStart;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive can be started degraded, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) canStartDegraded;
+	extern(C) void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) start;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the drive has been started successfully,
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) startFinish;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if the @drive can be stopped, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) canStop;
+	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) stop;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the drive has been stopped successfully,
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) stopFinish;
+	extern(C) void function(GDrive* drive) stopButton;
+	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectWithOperation;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the drive was successfully ejected. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) ejectWithOperationFinish;
+	/**
+	 *
+	 * Params:
+	 *     drive = A #GDrive.
+	 * Return: Sorting key for @drive or %NULL if no such key is available.
+	 */
+	extern(C) const(char)* function(GDrive* drive) getSortKey;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: symbolic #GIcon for the @drive.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GIcon* function(GDrive* drive) getSymbolicIcon;
+}
 
+struct GEmblem;
 
-/**
- * Class structure for GDBusObjectManagerClient.
- * GObjectClass parent_class;
- * The parent class.
- * interface_proxy_signal ()
- * Signal class handler for the "interface-proxy-signal" signal.
- * interface_proxy_properties_changed ()
- * Signal class handler for the "interface-proxy-properties-changed" signal.
- * Since 2.30
- */
-public struct GDBusObjectManagerClientClass
+struct GEmblemClass;
+
+struct GEmblemedIcon
+{
+	GObject parentInstance;
+	GEmblemedIconPrivate* priv;
+}
+
+struct GEmblemedIconClass
 {
 	GObjectClass parentClass;
-	/+* signals +/
-	extern(C) void function(GDBusObjectManagerClient* manager, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, char* senderName, char* signalName, GVariant* parameters) interfaceProxySignal;
-	extern(C) void function(GDBusObjectManagerClient* manager, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, GVariant* changedProperties, char** invalidatedProperties) interfaceProxyPropertiesChanged;
 }
 
+struct GEmblemedIconPrivate;
+
+struct GFile;
 
 /**
- * Main Gtk struct.
+ * Information about a specific attribute.
  */
-public struct GSettings{}
+struct GFileAttributeInfo
+{
+	/**
+	 * the name of the attribute.
+	 */
+	char* name;
+	/**
+	 * the #GFileAttributeType type of the attribute.
+	 */
+	GFileAttributeType type;
+	/**
+	 * a set of #GFileAttributeInfoFlags.
+	 */
+	GFileAttributeInfoFlags flags;
+}
 
+struct GFileAttributeInfoList
+{
+	/**
+	 * an array of #GFileAttributeInfos.
+	 */
+	GFileAttributeInfo* infos;
+	/**
+	 * the number of values in the array.
+	 */
+	int nInfos;
+}
 
-/**
- * Main Gtk struct.
- * An implementation of a settings storage repository.
- */
-public struct GSettingsBackend{}
+struct GFileAttributeMatcher;
 
+struct GFileDescriptorBased;
 
-public struct GSettingsBackendClass
+struct GFileDescriptorBasedIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     fdBased = a #GFileDescriptorBased.
+	 * Return: The file descriptor
+	 */
+	extern(C) int function(GFileDescriptorBased* fdBased) getFd;
+}
+
+struct GFileEnumerator
+{
+	GObject parentInstance;
+	GFileEnumeratorPrivate* priv;
+}
+
+struct GFileEnumeratorClass
 {
 	GObjectClass parentClass;
-	extern(C) GVariant * function(GSettingsBackend* backend, char* key, GVariantType* expectedType, int defaultValue) read;
-	extern(C) int function(GSettingsBackend* backend, char* key) getWritable;
-	extern(C) int function(GSettingsBackend* backend, char* key, GVariant* value, void* originTag) write;
-	extern(C) int function(GSettingsBackend* backend, GTree* tree, void* originTag) writeTree;
-	extern(C) void function(GSettingsBackend* backend, char* key, void* originTag) reset;
-	extern(C) void function(GSettingsBackend* backend, char* name) subscribe;
-	extern(C) void function(GSettingsBackend* backend, char* name) unsubscribe;
-	extern(C) void function(GSettingsBackend* backend) sync;
-	extern(C) GPermission * function(GSettingsBackend* backend, char* path) getPermission;
-	void* padding[24];
+	/**
+	 *
+	 * Params:
+	 *     enumerator = a #GFileEnumerator.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: A #GFileInfo or %NULL on error
+	 *     or end of enumerator.  Free the returned object with
+	 *     g_object_unref() when no longer needed.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** err) nextFile;
+	extern(C) int function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** err) closeFn;
+	extern(C) void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) nextFilesAsync;
+	/**
+	 *
+	 * Params:
+	 *     enumerator = a #GFileEnumerator.
+	 *     result = a #GAsyncResult.
+	 * Return: a #GList of #GFileInfos. You must free the list with
+	 *     g_list_free() and unref the infos with g_object_unref() when you're
+	 *     done with them.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GFileEnumerator* enumerator, GAsyncResult* result, GError** err) nextFilesFinish;
+	extern(C) void function(GFileEnumerator* enumerator, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
+	/**
+	 *
+	 * Params:
+	 *     enumerator = a #GFileEnumerator.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the close operation has finished successfully.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFileEnumerator* enumerator, GAsyncResult* result, GError** err) closeFinish;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+	extern(C) void function() GReserved7;
 }
 
+struct GFileEnumeratorPrivate;
 
-/**
- * This is an opaque structure type. You may not access it directly.
- * Since 2.32
- */
-public struct GSettingsSchemaSource{}
-
-
-/**
- * Main Gtk struct.
- * This is an opaque structure type. You may not access it directly.
- * Since 2.32
- */
-public struct GSettingsSchema{}
-
-
-/**
- * Main Gtk struct.
- * A resource bundle.
- * Since 2.32
- */
-public struct GResource{}
-
-
-/**
- * Main Gtk struct.
- * GPermission is an opaque data structure and can only be accessed
- * using the following functions.
- */
-public struct GPermission{}
-
-
-/**
- * Main Gtk struct.
- * GSimplePermission is an opaque data structure. There are no methods
- * except for those defined by GPermission.
- */
-public struct GSimplePermission{}
-
-
-/**
- * Main Gtk struct.
- * Since 2.28
- */
-public struct GApplication{}
-
-
-/**
- * Virtual function table for GApplication.
- * startup ()
- * invoked on the primary instance immediately after registration
- * activate ()
- * invoked on the primary instance when an activation occurs
- * open ()
- * invoked on the primary instance when there are files to open
- * command_line ()
- * invoked on the primary instance when a command-line is
- * not handled locally
- * local_command_line ()
- * invoked (locally) when the process has been invoked
- * via commandline execution (as opposed to, say, D-Bus activation - which
- * is not currently supported by GApplication). The virtual function has
- * the chance to inspect (and possibly replace) the list of command line
- * arguments. See g_application_run() for more information.
- * before_emit ()
- * invoked on the primary instance before 'activate', 'open',
- * 'command-line' or any action invocation, gets the 'platform data' from
- * the calling instance
- * after_emit ()
- * invoked on the primary instance after 'activate', 'open',
- * 'command-line' or any action invocation, gets the 'platform data' from
- * the calling instance
- * add_platform_data ()
- * invoked (locally) to add 'platform data' to be sent to
- * the primary instance when activating, opening or invoking actions
- * quit_mainloop ()
- * Used to be invoked on the primary instance when the use
- * count of the application drops to zero (and after any inactivity
- * timeout, if requested). Not used anymore since 2.32
- * run_mainloop ()
- * Used to be invoked on the primary instance from
- * g_application_run() if the use-count is non-zero. Since 2.32,
- * GApplication is iterating the main context directly and is not
- * using run_mainloop anymore
- * shutdown ()
- * invoked only on the registered primary instance immediately
- * after the main loop terminates
- * dbus_register ()
- * invoked locally during registration, if the application is
- * using its D-Bus backend. You can use this to export extra objects on the
- * bus, that need to exist before the application tries to own the bus name.
- * The function is passed the GDBusConnection to to session bus, and the
- * object path that GApplication will use to export is D-Bus API.
- * If this function returns TRUE, registration will proceed; otherwise
- * registration will abort. Since: 2.34
- * dbus_unregister ()
- * invoked locally during unregistration, if the application
- * is using its D-Bus backend. Use this to undo anything done by the
- * dbus_register vfunc. Since: 2.34
- * Since 2.28
- */
-public struct GApplicationClass
+struct GFileIOStream
 {
-	/+* signals +/
-	extern(C) void function(GApplication* application)  startup;
-	extern(C) void function(GApplication* application)  activate;
-	extern(C) void function(GApplication* application, GFile** files, int nFiles, char* hint)  open;
-	extern(C) int function(GApplication* application, GApplicationCommandLine* commandLine)  commandLine;
-	/+* vfuncs +/
-	/+**
-	 * GApplicationClass::localCommandLine:
-	 * @application: a #GApplication
-	 * @arguments: (inout) (array zero-terminated=1): array of command line arguments
-	 * @exitStatus: (out): exit status to fill after processing the command line.
-	 *
-	 * This virtua funct is always invoked inn the local instance. It
-	 * gets passed a pointer to a %NULL-terminated copy of @argv and is
-	 * expected to remove arguments that it handled (shifting up remaining
-	 * arguments).
-	 *
-	 * The last argument to localCommandLine() is a pointer to the @status
-	 * variable which can used to set the exit status that is returned from
-	 * run().
-	 *
-	 * See run() for more details on #GApplication startup.
-	 *
-	 * Returns: %TRUE if the commandline has been completely handled
-	+/
-	extern(C) int function(GApplication* application, char*** arguments, int* exitStatus)  localCommandLine;
-	extern(C) void function(GApplication* application, GVariant* platformData)  beforeEmit;
-	extern(C) void function(GApplication* application, GVariant* platformData)  afterEmit;
-	extern(C) void function(GApplication* application, GVariantBuilder* builder)  addPlatformData;
-	extern(C) void function(GApplication* application)  quitMainloop;
-	extern(C) void function(GApplication* application)  runMainloop;
-	extern(C) void function(GApplication* application)  shutdown;
-	extern(C) int function(GApplication* application, GDBusConnection* connection, char* objectPath, GError** error)  dbusRegister;
-	extern(C) void function(GApplication* application, GDBusConnection* connection, char* objectPath)  dbusUnregister;
+	GIOStream parentInstance;
+	GFileIOStreamPrivate* priv;
 }
 
+struct GFileIOStreamClass
+{
+	GIOStreamClass parentClass;
+	extern(C) long function(GFileIOStream* stream) tell;
+	extern(C) int function(GFileIOStream* stream) canSeek;
+	extern(C) int function(GFileIOStream* stream, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
+	extern(C) int function(GFileIOStream* stream) canTruncate;
+	extern(C) int function(GFileIOStream* stream, long size, GCancellable* cancellable, GError** err) truncateFn;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileIOStream.
+	 *     attributes = a file attribute query string.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: a #GFileInfo for the @stream, or %NULL on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileIOStream* stream, const(char)* attributes, GCancellable* cancellable, GError** err) queryInfo;
+	extern(C) void function(GFileIOStream* stream, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileIOStream.
+	 *     result = a #GAsyncResult.
+	 * Return: A #GFileInfo for the finished query.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileIOStream* stream, GAsyncResult* result, GError** err) queryInfoFinish;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileIOStream.
+	 * Return: the entity tag for the stream.
+	 */
+	extern(C) char* function(GFileIOStream* stream) getEtag;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GFileIOStreamPrivate;
+
+struct GFileIcon;
+
+struct GFileIconClass;
 
 /**
- * Main Gtk struct.
+ * An interface for writing VFS file handles.
  */
-public struct GApplicationCommandLine{}
+struct GFileIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: a new #GFile that is a duplicate
+	 *     of the given #GFile.
+	 */
+	extern(C) GFile* function(GFile* file) dup;
+	/**
+	 *
+	 * Params:
+	 *     file = #gconstpointer to a #GFile
+	 * Return: 0 if @file is not a valid #GFile, otherwise an
+	 *     integer that can be used as hash value for the #GFile.
+	 *     This function is intended for easily hashing a #GFile to
+	 *     add to a #GHashTable or similar data structure.
+	 */
+	extern(C) uint function(GFile* file) hash;
+	/**
+	 *
+	 * Params:
+	 *     file1 = the first #GFile
+	 *     file2 = the second #GFile
+	 * Return: %TRUE if @file1 and @file2 are equal.
+	 */
+	extern(C) int function(GFile* file1, GFile* file2) equal;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: %TRUE if @file is native
+	 */
+	extern(C) int function(GFile* file) isNative;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     uriScheme = a string containing a URI scheme
+	 * Return: %TRUE if #GFile's backend supports the
+	 *     given URI scheme, %FALSE if URI scheme is %NULL,
+	 *     not supported, or #GFile is invalid.
+	 */
+	extern(C) int function(GFile* file, const(char)* uriScheme) hasUriScheme;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: a string containing the URI scheme for the given
+	 *     #GFile. The returned string should be freed with g_free()
+	 *     when no longer needed.
+	 */
+	extern(C) char* function(GFile* file) getUriScheme;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: string containing the #GFile's base name, or
+	 *     %NULL if given #GFile is invalid. The returned string should be
+	 *     freed with g_free() when no longer needed.
+	 */
+	extern(C) char* function(GFile* file) getBasename;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: string containing the #GFile's path, or %NULL
+	 *     if no such path exists. The returned string should be freed
+	 *     with g_free() when no longer needed.
+	 */
+	extern(C) char* function(GFile* file) getPath;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: a string containing the #GFile's URI.
+	 *     The returned string should be freed with g_free()
+	 *     when no longer needed.
+	 */
+	extern(C) char* function(GFile* file) getUri;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: a string containing the #GFile's parse name.
+	 *     The returned string should be freed with g_free()
+	 *     when no longer needed.
+	 */
+	extern(C) char* function(GFile* file) getParseName;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 * Return: a #GFile structure to the
+	 *     parent of the given #GFile or %NULL if there is no parent. Free
+	 *     the returned object with g_object_unref().
+	 */
+	extern(C) GFile* function(GFile* file) getParent;
+	/**
+	 *
+	 * Params:
+	 *     prefix = input #GFile
+	 *     file = input #GFile
+	 * Return: %TRUE if the @files's parent, grandparent, etc is @prefix,
+	 *     %FALSE otherwise.
+	 */
+	extern(C) int function(GFile* prefix, GFile* file) prefixMatches;
+	/**
+	 *
+	 * Params:
+	 *     parent = input #GFile
+	 *     descendant = input #GFile
+	 * Return: string with the relative path from @descendant
+	 *     to @parent, or %NULL if @descendant doesn't have @parent as
+	 *     prefix. The returned string should be freed with g_free() when
+	 *     no longer needed.
+	 */
+	extern(C) char* function(GFile* parent, GFile* descendant) getRelativePath;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     relativePath = a given relative path string
+	 * Return: #GFile to the resolved path.
+	 *     %NULL if @relative_path is %NULL or if @file is invalid.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GFile* function(GFile* file, const(char)* relativePath) resolveRelativePath;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     displayName = string to a possible child
+	 * Return: a #GFile to the specified child, or
+	 *     %NULL if the display name couldn't be converted.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFile* function(GFile* file, const(char)* displayName, GError** err) getChildForDisplayName;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     attributes = an attribute query string
+	 *     flags = a set of #GFileQueryInfoFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: A #GFileEnumerator if successful,
+	 *     %NULL on error. Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileEnumerator* function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) enumerateChildren;
+	extern(C) void function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) enumerateChildrenAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileEnumerator or %NULL
+	 *     if an error occurred.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileEnumerator* function(GFile* file, GAsyncResult* res, GError** err) enumerateChildrenFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     attributes = an attribute query string
+	 *     flags = a set of #GFileQueryInfoFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileInfo for the given @file, or %NULL
+	 *     on error. Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) queryInfo;
+	extern(C) void function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: #GFileInfo for given @file
+	 *     or %NULL on error. Free the returned object with
+	 *     g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFile* file, GAsyncResult* res, GError** err) queryInfoFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     attributes = an attribute query string
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileInfo or %NULL if there was an error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFile* file, const(char)* attributes, GCancellable* cancellable, GError** err) queryFilesystemInfo;
+	extern(C) void function(GFile* file, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryFilesystemInfoAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: #GFileInfo for given @file
+	 *     or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFile* file, GAsyncResult* res, GError** err) queryFilesystemInfoFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GMount where the @file is located
+	 *     or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GMount* function(GFile* file, GCancellable* cancellable, GError** err) findEnclosingMount;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) findEnclosingMountAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = a #GFile
+	 *     res = a #GAsyncResult
+	 * Return: #GMount for given @file or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GMount* function(GFile* file, GAsyncResult* res, GError** err) findEnclosingMountFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     displayName = a string
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFile specifying what @file was renamed to,
+	 *     or %NULL if there was an error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFile* function(GFile* file, const(char)* displayName, GCancellable* cancellable, GError** err) setDisplayName;
+	extern(C) void function(GFile* file, const(char)* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) setDisplayNameAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFile or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFile* function(GFile* file, GAsyncResult* res, GError** err) setDisplayNameFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileAttributeInfoList describing the settable attributes.
+	 *     When you are done with it, release it with
+	 *     g_file_attribute_info_list_unref()
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** err) querySettableAttributes;
+	extern(C) void function() QuerySettableAttributesAsync;
+	extern(C) void function() QuerySettableAttributesFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileAttributeInfoList describing the writable namespaces.
+	 *     When you are done with it, release it with
+	 *     g_file_attribute_info_list_unref()
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** err) queryWritableNamespaces;
+	extern(C) void function() QueryWritableNamespacesAsync;
+	extern(C) void function() QueryWritableNamespacesFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     attribute = a string containing the attribute's name
+	 *     type = The type of the attribute
+	 *     valueP = a pointer to the value (or the pointer
+	 *         itself if the type is a pointer type)
+	 *     flags = a set of #GFileQueryInfoFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: %TRUE if the attribute was set, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, const(char)* attribute, GFileAttributeType type, void* valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) setAttribute;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     info = a #GFileInfo
+	 *     flags = #GFileQueryInfoFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: %FALSE if there was any error, %TRUE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) setAttributesFromInfo;
+	extern(C) void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) setAttributesAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 *     info = a #GFileInfo
+	 * Return: %TRUE if the attributes were set correctly, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GFileInfo** info, GError** err) setAttributesFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = #GFile to read
+	 *     cancellable = a #GCancellable
+	 * Return: #GFileInputStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInputStream* function(GFile* file, GCancellable* cancellable, GError** err) readFn;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) readAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileInputStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInputStream* function(GFile* file, GAsyncResult* res, GError** err) readFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     flags = a set of #GFileCreateFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileOutputStream, or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) appendTo;
+	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) appendToAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = #GAsyncResult
+	 * Return: a valid #GFileOutputStream
+	 *     or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** err) appendToFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     flags = a set of #GFileCreateFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileOutputStream for the newly created
+	 *     file, or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) create;
+	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) createAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileOutputStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** err) createFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     etag = an optional [entity tag][gfile-etag]
+	 *         for the current #GFile, or #NULL to ignore
+	 *     makeBackup = %TRUE if a backup should be created
+	 *     flags = a set of #GFileCreateFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileOutputStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileOutputStream* function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** err) replace;
+	extern(C) void function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) replaceAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileOutputStream, or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileOutputStream* function(GFile* file, GAsyncResult* res, GError** err) replaceFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: %TRUE if the file was deleted. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GCancellable* cancellable, GError** err) deleteFile;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) deleteFileAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the file was deleted. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) deleteFileFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = #GFile to send to trash
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: %TRUE on successful trash, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GCancellable* cancellable, GError** err) trash;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) trashAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE on successful trash, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) trashFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: %TRUE on successful creation, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GCancellable* cancellable, GError** err) makeDirectory;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) makeDirectoryAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE on successful directory creation, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) makeDirectoryFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = a #GFile with the name of the symlink to create
+	 *     symlinkValue = a string with the path for the target of the new symlink
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: %TRUE on the creation of a new symlink, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, const(char)* symlinkValue, GCancellable* cancellable, GError** err) makeSymbolicLink;
+	extern(C) void function() MakeSymbolicLinkAsync;
+	extern(C) void function() MakeSymbolicLinkFinish;
+	/**
+	 *
+	 * Params:
+	 *     source = input #GFile
+	 *     destination = destination #GFile
+	 *     flags = set of #GFileCopyFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 *     progressCallback = function to callback with
+	 *         progress information, or %NULL if progress information is not needed
+	 *     progressCallbackData = user data to pass to @progress_callback
+	 * Return: %TRUE on success, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) copy;
+	extern(C) void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) copyAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a %TRUE on success, %FALSE on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* res, GError** err) copyFinish;
+	/**
+	 *
+	 * Params:
+	 *     source = #GFile pointing to the source location
+	 *     destination = #GFile pointing to the destination location
+	 *     flags = set of #GFileCopyFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 *     progressCallback = #GFileProgressCallback
+	 *         function for updates
+	 *     progressCallbackData = gpointer to user data for
+	 *         the callback function
+	 * Return: %TRUE on successful move, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) move;
+	extern(C) void function() MoveAsync;
+	extern(C) void function() MoveFinish;
+	extern(C) void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountMountable;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: a #GFile or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFile* function(GFile* file, GAsyncResult* result, GError** err) mountMountableFinish;
+	extern(C) void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmountMountable;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the operation finished successfully.
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) unmountMountableFinish;
+	extern(C) void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectMountable;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the @file was ejected successfully.
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) ejectMountableFinish;
+	extern(C) void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountEnclosingVolume;
+	/**
+	 *
+	 * Params:
+	 *     location = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if successful. If an error has occurred,
+	 *     this function will return %FALSE and set @error
+	 *     appropriately if present.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* location, GAsyncResult* result, GError** err) mountEnclosingVolumeFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     flags = a set of #GFileMonitorFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileMonitor for the given @file,
+	 *     or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** err) monitorDir;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     flags = a set of #GFileMonitorFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileMonitor for the given @file,
+	 *     or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileMonitor* function(GFile* file, GFileMonitorFlags flags, GCancellable* cancellable, GError** err) monitorFile;
+	/**
+	 *
+	 * Params:
+	 *     file = #GFile to open
+	 *     cancellable = a #GCancellable
+	 * Return: #GFileIOStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** err) openReadwrite;
+	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) openReadwriteAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileIOStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) openReadwriteFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = a #GFile
+	 *     flags = a set of #GFileCreateFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileIOStream for the newly created
+	 *     file, or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileIOStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) createReadwrite;
+	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) createReadwriteAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileIOStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) createReadwriteFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = a #GFile
+	 *     etag = an optional [entity tag][gfile-etag]
+	 *         for the current #GFile, or #NULL to ignore
+	 *     makeBackup = %TRUE if a backup should be created
+	 *     flags = a set of #GFileCreateFlags
+	 *     cancellable = optional #GCancellable object,
+	 *         %NULL to ignore
+	 * Return: a #GFileIOStream or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileIOStream* function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** err) replaceReadwrite;
+	extern(C) void function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) replaceReadwriteAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     res = a #GAsyncResult
+	 * Return: a #GFileIOStream, or %NULL on error.
+	 *     Free the returned object with g_object_unref().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) replaceReadwriteFinish;
+	extern(C) void function(GFile* file, GDriveStartFlags flags, GMountOperation* startOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) startMountable;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the operation finished successfully. %FALSE
+	 *     otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) startMountableFinish;
+	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) stopMountable;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the operation finished successfully.
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) stopMountableFinish;
+	/**
+	 * a boolean that indicates whether the #GFile implementation supports thread-default contexts. Since 2.22.
+	 */
+	bool supportsThreadContexts;
+	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmountMountableWithOperation;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the operation finished successfully.
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) unmountMountableWithOperationFinish;
+	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectMountableWithOperation;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the @file was ejected successfully.
+	 *     %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) ejectMountableWithOperationFinish;
+	extern(C) void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) pollMountable;
+	/**
+	 *
+	 * Params:
+	 *     file = input #GFile
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the operation finished successfully. %FALSE
+	 *     otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) pollMountableFinish;
+	/**
+	 *
+	 * Params:
+	 *     file = a #GFile
+	 *     flags = #GFileMeasureFlags
+	 *     cancellable = optional #GCancellable
+	 *     progressCallback = a #GFileMeasureProgressCallback
+	 *     progressData = user_data for @progress_callback
+	 *     diskUsage = the number of bytes of disk space used
+	 *     numDirs = the number of directories encountered
+	 *     numFiles = the number of non-directories encountered
+	 * Return: %TRUE if successful, with the out parameters set.
+	 *     %FALSE otherwise, with @error set.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GFileMeasureFlags flags, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** err) measureDiskUsage;
+	extern(C) void function(GFile* file, GFileMeasureFlags flags, int ioPriority, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData) measureDiskUsageAsync;
+	/**
+	 *
+	 * Params:
+	 *     file = a #GFile
+	 *     result = the #GAsyncResult passed to your #GAsyncReadyCallback
+	 *     diskUsage = the number of bytes of disk space used
+	 *     numDirs = the number of directories encountered
+	 *     numFiles = the number of non-directories encountered
+	 * Return: %TRUE if successful, with the out parameters set.
+	 *     %FALSE otherwise, with @error set.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GFile* file, GAsyncResult* result, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** err) measureDiskUsageFinish;
+}
 
+struct GFileInfo;
+
+struct GFileInfoClass;
+
+struct GFileInputStream
+{
+	GInputStream parentInstance;
+	GFileInputStreamPrivate* priv;
+}
+
+struct GFileInputStreamClass
+{
+	GInputStreamClass parentClass;
+	extern(C) long function(GFileInputStream* stream) tell;
+	extern(C) int function(GFileInputStream* stream) canSeek;
+	extern(C) int function(GFileInputStream* stream, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileInputStream.
+	 *     attributes = a file attribute query string.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: a #GFileInfo, or %NULL on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileInputStream* stream, const(char)* attributes, GCancellable* cancellable, GError** err) queryInfo;
+	extern(C) void function(GFileInputStream* stream, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileInputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: #GFileInfo.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileInputStream* stream, GAsyncResult* result, GError** err) queryInfoFinish;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GFileInputStreamPrivate;
+
+struct GFileMonitor
+{
+	GObject parentInstance;
+	GFileMonitorPrivate* priv;
+}
+
+struct GFileMonitorClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GFileMonitor* monitor, GFile* file, GFile* otherFile, GFileMonitorEvent eventType) changed;
+	/**
+	 *
+	 * Params:
+	 *     monitor = a #GFileMonitor.
+	 * Return: %TRUE if monitor was cancelled.
+	 */
+	extern(C) int function(GFileMonitor* monitor) cancel;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GFileMonitorPrivate;
+
+struct GFileOutputStream
+{
+	GOutputStream parentInstance;
+	GFileOutputStreamPrivate* priv;
+}
+
+struct GFileOutputStreamClass
+{
+	GOutputStreamClass parentClass;
+	extern(C) long function(GFileOutputStream* stream) tell;
+	extern(C) int function(GFileOutputStream* stream) canSeek;
+	extern(C) int function(GFileOutputStream* stream, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
+	extern(C) int function(GFileOutputStream* stream) canTruncate;
+	extern(C) int function(GFileOutputStream* stream, long size, GCancellable* cancellable, GError** err) truncateFn;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileOutputStream.
+	 *     attributes = a file attribute query string.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: a #GFileInfo for the @stream, or %NULL on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileOutputStream* stream, const(char)* attributes, GCancellable* cancellable, GError** err) queryInfo;
+	extern(C) void function(GFileOutputStream* stream, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileOutputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: A #GFileInfo for the finished query.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GFileInfo* function(GFileOutputStream* stream, GAsyncResult* result, GError** err) queryInfoFinish;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GFileOutputStream.
+	 * Return: the entity tag for the stream.
+	 */
+	extern(C) char* function(GFileOutputStream* stream) getEtag;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GFileOutputStreamPrivate;
+
+struct GFilenameCompleter;
+
+struct GFilenameCompleterClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GFilenameCompleter* filenameCompleter) gotCompletionData;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+}
+
+struct GFilterInputStream
+{
+	GInputStream parentInstance;
+	GInputStream* baseStream;
+}
+
+struct GFilterInputStreamClass
+{
+	GInputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+}
+
+struct GFilterOutputStream
+{
+	GOutputStream parentInstance;
+	GOutputStream* baseStream;
+}
+
+struct GFilterOutputStreamClass
+{
+	GOutputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+}
+
+struct GIOExtension;
+
+struct GIOExtensionPoint;
+
+struct GIOModule;
+
+struct GIOModuleClass;
+
+struct GIOModuleScope;
+
+struct GIOSchedulerJob;
+
+struct GIOStream
+{
+	GObject parentInstance;
+	GIOStreamPrivate* priv;
+}
+
+struct GIOStreamAdapter;
+
+struct GIOStreamClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GIOStream
+	 * Return: a #GInputStream, owned by the #GIOStream.
+	 *     Do not free.
+	 */
+	extern(C) GInputStream* function(GIOStream* stream) getInputStream;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GIOStream
+	 * Return: a #GOutputStream, owned by the #GIOStream.
+	 *     Do not free.
+	 */
+	extern(C) GOutputStream* function(GIOStream* stream) getOutputStream;
+	extern(C) int function(GIOStream* stream, GCancellable* cancellable, GError** err) closeFn;
+	extern(C) void function(GIOStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GIOStream
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if stream was successfully closed, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GIOStream* stream, GAsyncResult* result, GError** err) closeFinish;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+	extern(C) void function() GReserved7;
+	extern(C) void function() GReserved8;
+	extern(C) void function() GReserved9;
+	extern(C) void function() GReserved10;
+}
+
+struct GIOStreamPrivate;
+
+struct GIcon;
 
 /**
- * The GApplicationCommandLineClass structure
- * contains private data only
- * Since 2.28
+ * GIconIface is used to implement GIcon types for various
+ * different systems. See #GThemedIcon and #GLoadableIcon for
+ * examples of how to implement this interface.
  */
-public struct GApplicationCommandLineClass{}
+struct GIconIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     icon = #gconstpointer to an icon object.
+	 * Return: a #guint containing a hash for the @icon, suitable for
+	 *     use in a #GHashTable or similar data structure.
+	 */
+	extern(C) uint function(GIcon* icon) hash;
+	/**
+	 *
+	 * Params:
+	 *     icon1 = pointer to the first #GIcon.
+	 *     icon2 = pointer to the second #GIcon.
+	 * Return: %TRUE if @icon1 is equal to @icon2. %FALSE otherwise.
+	 */
+	extern(C) int function(GIcon* icon1, GIcon* icon2) equal;
+	/**
+	 *
+	 * Params:
+	 *     icon = a #GIcon.
+	 * Return: An allocated NUL-terminated UTF8 string or
+	 *     %NULL if @icon can't be serialized. Use g_free() to free.
+	 */
+	extern(C) int function(GIcon* icon, GPtrArray* tokens, int* outVersion) toTokens;
+	extern(C) GIcon* function(char** tokens, int numTokens, int versio, GError** err) fromTokens;
+	/**
+	 *
+	 * Params:
+	 *     icon = a #GIcon
+	 * Return: a #GVariant, or %NULL when serialization fails.
+	 */
+	extern(C) GVariant* function(GIcon* icon) serialize;
+}
 
+struct GInetAddress
+{
+	GObject parentInstance;
+	GInetAddressPrivate* priv;
+}
+
+struct GInetAddressClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     address = a #GInetAddress
+	 * Return: a representation of @address as a string, which should be
+	 *     freed after use.
+	 */
+	extern(C) char* function(GInetAddress* address) toString;
+	/**
+	 *
+	 * Params:
+	 *     address = a #GInetAddress
+	 * Return: a pointer to an internal array of the bytes in @address,
+	 *     which should not be modified, stored, or freed. The size of this
+	 *     array can be gotten with g_inet_address_get_native_size().
+	 */
+	extern(C) ubyte* function(GInetAddress* address) toBytes;
+}
+
+struct GInetAddressMask
+{
+	GObject parentInstance;
+	GInetAddressMaskPrivate* priv;
+}
+
+struct GInetAddressMaskClass
+{
+	GObjectClass parentClass;
+}
+
+struct GInetAddressMaskPrivate;
+
+struct GInetAddressPrivate;
+
+struct GInetSocketAddress
+{
+	GSocketAddress parentInstance;
+	GInetSocketAddressPrivate* priv;
+}
+
+struct GInetSocketAddressClass
+{
+	GSocketAddressClass parentClass;
+}
+
+struct GInetSocketAddressPrivate;
+
+struct GInitable;
 
 /**
- * Main Gtk struct.
+ * Provides an interface for initializing object such that initialization
+ * may fail.
+ *
+ * Since: 2.22
  */
-public struct GActionGroup{}
+struct GInitableIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     initable = a #GInitable.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: %TRUE if successful. If an error has occurred, this function will
+	 *     return %FALSE and set @error appropriately if present.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GInitable* initable, GCancellable* cancellable, GError** err) init;
+}
 
+struct GInputStream
+{
+	GObject parentInstance;
+	GInputStreamPrivate* priv;
+}
+
+struct GInputStreamClass
+{
+	GObjectClass parentClass;
+	extern(C) ptrdiff_t function(GInputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) readFn;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GInputStream.
+	 *     count = the number of bytes that will be skipped from the stream
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: Number of bytes skipped, or -1 on error
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GInputStream* stream, size_t count, GCancellable* cancellable, GError** err) skip;
+	extern(C) int function(GInputStream* stream, GCancellable* cancellable, GError** err) closeFn;
+	extern(C) void function(GInputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) readAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GInputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: number of bytes read in, or -1 on error, or 0 on end of file.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GInputStream* stream, GAsyncResult* result, GError** err) readFinish;
+	extern(C) void function(GInputStream* stream, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) skipAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GInputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: the size of the bytes skipped, or %-1 on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GInputStream* stream, GAsyncResult* result, GError** err) skipFinish;
+	extern(C) void function(GInputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GInputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the stream was closed successfully.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GInputStream* stream, GAsyncResult* result, GError** err) closeFinish;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GInputStreamPrivate;
 
 /**
- * The virtual function table for GActionGroup.
- * GTypeInterface g_iface;
- * has_action ()
- * the virtual function pointer for g_action_group_has_action()
- * list_actions ()
- * the virtual function pointer for g_action_group_list_actions()
- * get_action_enabled ()
- * the virtual function pointer for g_action_group_get_action_enabled()
- * get_action_parameter_type ()
- * the virtual function pointer for g_action_group_get_action_parameter_type()
- * get_action_state_type ()
- * the virtual function pointer for g_action_group_get_action_state_type()
- * get_action_state_hint ()
- * the virtual function pointer for g_action_group_get_action_state_hint()
- * get_action_state ()
- * the virtual function pointer for g_action_group_get_action_state()
- * change_action_state ()
- * the virtual function pointer for g_action_group_change_action_state()
- * activate_action ()
- * the virtual function pointer for g_action_group_activate_action()
- * action_added ()
- * the class closure for the "action-added" signal
- * action_removed ()
- * the class closure for the "action-removed" signal
- * action_enabled_changed ()
- * the class closure for the "action-enabled-changed" signal
- * action_state_changed ()
- * the class closure for the "action-enabled-changed" signal
- * query_action ()
- * the virtual function pointer for g_action_group_query_action()
- * Since 2.28
+ * Structure used for scatter/gather data input.
+ * You generally pass in an array of #GInputVectors
+ * and the operation will store the read data starting in the
+ * first buffer, switching to the next as needed.
+ *
+ * Since: 2.22
  */
-public struct GActionGroupInterface
+struct GInputVector
+{
+	/**
+	 * Pointer to a buffer where data will be written.
+	 */
+	void* buffer;
+	/**
+	 * the available size in @buffer.
+	 */
+	size_t size;
+}
+
+struct GLoadableIcon;
+
+/**
+ * Interface for icons that can be loaded as a stream.
+ */
+struct GLoadableIconIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     icon = a #GLoadableIcon.
+	 *     size = an integer.
+	 *     type = a location to store the type of the loaded
+	 *         icon, %NULL to ignore.
+	 *     cancellable = optional #GCancellable object, %NULL to
+	 *         ignore.
+	 * Return: a #GInputStream to read the icon from.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GInputStream* function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** err) load;
+	extern(C) void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) loadAsync;
+	/**
+	 *
+	 * Params:
+	 *     icon = a #GLoadableIcon.
+	 *     res = a #GAsyncResult.
+	 *     type = a location to store the type of the loaded
+	 *         icon, %NULL to ignore.
+	 * Return: a #GInputStream to read the icon from.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GInputStream* function(GLoadableIcon* icon, GAsyncResult* res, char** type, GError** err) loadFinish;
+}
+
+struct GMemoryInputStream
+{
+	GInputStream parentInstance;
+	GMemoryInputStreamPrivate* priv;
+}
+
+struct GMemoryInputStreamClass
+{
+	GInputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GMemoryInputStreamPrivate;
+
+struct GMemoryOutputStream
+{
+	GOutputStream parentInstance;
+	GMemoryOutputStreamPrivate* priv;
+}
+
+struct GMemoryOutputStreamClass
+{
+	GOutputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GMemoryOutputStreamPrivate;
+
+struct GMenu;
+
+struct GMenuAttributeIter
+{
+	GObject parentInstance;
+	GMenuAttributeIterPrivate* priv;
+}
+
+struct GMenuAttributeIterClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     iter = a #GMenuAttributeIter
+	 *     outName = the type of the attribute
+	 *     value = the attribute value
+	 * Return: %TRUE on success, or %FALSE if there is no additional
+	 *     attribute
+	 */
+	extern(C) int function(GMenuAttributeIter* iter, char** outName, GVariant** value) getNext;
+}
+
+struct GMenuAttributeIterPrivate;
+
+struct GMenuItem;
+
+struct GMenuLinkIter
+{
+	GObject parentInstance;
+	GMenuLinkIterPrivate* priv;
+}
+
+struct GMenuLinkIterClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     iter = a #GMenuLinkIter
+	 *     outLink = the name of the link
+	 *     value = the linked #GMenuModel
+	 * Return: %TRUE on success, or %FALSE if there is no additional link
+	 */
+	extern(C) int function(GMenuLinkIter* iter, char** outLink, GMenuModel** value) getNext;
+}
+
+struct GMenuLinkIterPrivate;
+
+struct GMenuModel
+{
+	GObject parentInstance;
+	GMenuModelPrivate* priv;
+}
+
+struct GMenuModelClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 * Return: %TRUE if the model is mutable (ie: "items-changed" may be
+	 *     emitted).
+	 */
+	extern(C) int function(GMenuModel* model) isMutable;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 * Return: the number of items
+	 */
+	extern(C) int function(GMenuModel* model) getNItems;
+	extern(C) void function(GMenuModel* model, int itemIndex, GHashTable** attributes) getItemAttributes;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 *     itemIndex = the index of the item
+	 * Return: a new #GMenuAttributeIter
+	 */
+	extern(C) GMenuAttributeIter* function(GMenuModel* model, int itemIndex) iterateItemAttributes;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 *     itemIndex = the index of the item
+	 *     attribute = the attribute to query
+	 *     expectedType = the expected type of the attribute, or
+	 *         %NULL
+	 * Return: the value of the attribute
+	 */
+	extern(C) GVariant* function(GMenuModel* model, int itemIndex, const(char)* attribute, GVariantType* expectedType) getItemAttributeValue;
+	extern(C) void function(GMenuModel* model, int itemIndex, GHashTable** links) getItemLinks;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 *     itemIndex = the index of the item
+	 * Return: a new #GMenuLinkIter
+	 */
+	extern(C) GMenuLinkIter* function(GMenuModel* model, int itemIndex) iterateItemLinks;
+	/**
+	 *
+	 * Params:
+	 *     model = a #GMenuModel
+	 *     itemIndex = the index of the item
+	 *     link = the link to query
+	 * Return: the linked #GMenuModel, or %NULL
+	 */
+	extern(C) GMenuModel* function(GMenuModel* model, int itemIndex, const(char)* link) getItemLink;
+}
+
+struct GMenuModelPrivate;
+
+struct GMount;
+
+/**
+ * Interface for implementing operations for mounts.
+ */
+struct GMountIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	extern(C) void function(GMount* mount) changed;
+	extern(C) void function(GMount* mount) unmounted;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: a #GFile.
+	 *     The returned object should be unreffed with
+	 *     g_object_unref() when no longer needed.
+	 */
+	extern(C) GFile* function(GMount* mount) getRoot;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: the name for the given @mount.
+	 *     The returned string should be freed with g_free()
+	 *     when no longer needed.
+	 */
+	extern(C) char* function(GMount* mount) getName;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: a #GIcon.
+	 *     The returned object should be unreffed with
+	 *     g_object_unref() when no longer needed.
+	 */
+	extern(C) GIcon* function(GMount* mount) getIcon;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: the UUID for @mount or %NULL if no UUID can be computed.
+	 *     The returned string should be freed with g_free()
+	 *     when no longer needed.
+	 */
+	extern(C) char* function(GMount* mount) getUuid;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: a #GVolume or %NULL if @mount is not associated with a volume.
+	 *     The returned object should be unreffed with
+	 *     g_object_unref() when no longer needed.
+	 */
+	extern(C) GVolume* function(GMount* mount) getVolume;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
+	 *     The returned object should be unreffed with
+	 *     g_object_unref() when no longer needed.
+	 */
+	extern(C) GDrive* function(GMount* mount) getDrive;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: %TRUE if the @mount can be unmounted.
+	 */
+	extern(C) int function(GMount* mount) canUnmount;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: %TRUE if the @mount can be ejected.
+	 */
+	extern(C) int function(GMount* mount) canEject;
+	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmount;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) unmountFinish;
+	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) eject;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the mount was successfully ejected. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) ejectFinish;
+	extern(C) void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) remount;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the mount was successfully remounted. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) remountFinish;
+	extern(C) void function(GMount* mount, int forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) guessContentType;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount
+	 *     result = a #GAsyncResult
+	 * Return: a %NULL-terminated array of content types or %NULL on error.
+	 *     Caller should free this array with g_strfreev() when done with it.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) char** function(GMount* mount, GAsyncResult* result, GError** err) guessContentTypeFinish;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount
+	 *     forceRescan = Whether to force a rescan of the content.
+	 *         Otherwise a cached result will be used if available
+	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 * Return: a %NULL-terminated array of content types or %NULL on error.
+	 *     Caller should free this array with g_strfreev() when done with it.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) char** function(GMount* mount, int forceRescan, GCancellable* cancellable, GError** err) guessContentTypeSync;
+	extern(C) void function(GMount* mount) preUnmount;
+	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmountWithOperation;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) unmountWithOperationFinish;
+	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectWithOperation;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if the mount was successfully ejected. %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) ejectWithOperationFinish;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: a #GFile.
+	 *     The returned object should be unreffed with
+	 *     g_object_unref() when no longer needed.
+	 */
+	extern(C) GFile* function(GMount* mount) getDefaultLocation;
+	/**
+	 *
+	 * Params:
+	 *     mount = A #GMount.
+	 * Return: Sorting key for @mount or %NULL if no such key is available.
+	 */
+	extern(C) const(char)* function(GMount* mount) getSortKey;
+	/**
+	 *
+	 * Params:
+	 *     mount = a #GMount.
+	 * Return: a #GIcon.
+	 *     The returned object should be unreffed with
+	 *     g_object_unref() when no longer needed.
+	 */
+	extern(C) GIcon* function(GMount* mount) getSymbolicIcon;
+}
+
+struct GMountOperation
+{
+	GObject parentInstance;
+	GMountOperationPrivate* priv;
+}
+
+struct GMountOperationClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* defaultUser, const(char)* defaultDomain, GAskPasswordFlags flags) askPassword;
+	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* choices) askQuestion;
+	extern(C) void function(GMountOperation* op, GMountOperationResult result) reply;
+	extern(C) void function(GMountOperation* op) aborted;
+	extern(C) void function(GMountOperation* op, const(char)* message, GArray* processes, const(char)* choices) showProcesses;
+	extern(C) void function(GMountOperation* op, const(char)* message, long timeLeft, long bytesLeft) showUnmountProgress;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+	extern(C) void function() GReserved7;
+	extern(C) void function() GReserved8;
+	extern(C) void function() GReserved9;
+}
+
+struct GMountOperationPrivate;
+
+struct GNativeVolumeMonitor
+{
+	GVolumeMonitor parentInstance;
+}
+
+struct GNativeVolumeMonitorClass
+{
+	GVolumeMonitorClass parentClass;
+	extern(C) GMount* function(const(char)* mountPath, GCancellable* cancellable) getMountForMountPath;
+}
+
+struct GNetworkAddress
+{
+	GObject parentInstance;
+	GNetworkAddressPrivate* priv;
+}
+
+struct GNetworkAddressClass
+{
+	GObjectClass parentClass;
+}
+
+struct GNetworkAddressPrivate;
+
+struct GNetworkMonitor;
+
+struct GNetworkMonitorInterface
 {
 	GTypeInterface gIface;
-	/+* virtua functions +/
-	extern(C) int function(GActionGroup* actionGroup, char* actionName)  hasAction;
-	extern(C) char ** function(GActionGroup* actionGroup)  listActions;
-	extern(C) int function(GActionGroup* actionGroup, char* actionName)  getActionEnabled;
-	extern(C) GVariantType * function(GActionGroup* actionGroup, char* actionName)  getActionParameterType;
-	extern(C) GVariantType * function(GActionGroup* actionGroup, char* actionName)  getActionStateType;
-	extern(C) GVariant * function(GActionGroup* actionGroup, char* actionName)  getActionStateHint;
-	extern(C) GVariant * function(GActionGroup* actionGroup, char* actionName)  getActionState;
-	extern(C) void function(GActionGroup* actionGroup, char* actionName, GVariant* value)  changeActionState;
-	extern(C) void function(GActionGroup* actionGroup, char* actionName, GVariant* parameter)  activateAction;
-	/+* signals +/
-	extern(C) void function(GActionGroup* actionGroup, char* actionName)  actionAdded;
-	extern(C) void function(GActionGroup* actionGroup, char* actionName)  actionRemoved;
-	extern(C) void function(GActionGroup* actionGroup, char* actionName, int enabled)  actionEnabledChanged;
-	extern(C) void function(GActionGroup* actionGroup, char* actionName, GVariant* state)  actionStateChanged;
-	/+* more virtua functions +/
-	extern(C) int function(GActionGroup* actionGroup, char* actionName, int* enabled, GVariantType** parameterType, GVariantType** stateType, GVariant** stateHint, GVariant** state)  queryAction;
+	extern(C) void function(GNetworkMonitor* monitor, int available) networkChanged;
+	/**
+	 *
+	 * Params:
+	 *     monitor = a #GNetworkMonitor
+	 *     connectable = a #GSocketConnectable
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: %TRUE if @connectable is reachable, %FALSE if not.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GError** err) canReach;
+	extern(C) void function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) canReachAsync;
+	/**
+	 *
+	 * Params:
+	 *     monitor = a #GNetworkMonitor
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if network is reachable, %FALSE if not.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GNetworkMonitor* monitor, GAsyncResult* result, GError** err) canReachFinish;
 }
 
+struct GNetworkService
+{
+	GObject parentInstance;
+	GNetworkServicePrivate* priv;
+}
+
+struct GNetworkServiceClass
+{
+	GObjectClass parentClass;
+}
+
+struct GNetworkServicePrivate;
+
+struct GNotification;
+
+struct GOutputStream
+{
+	GObject parentInstance;
+	GOutputStreamPrivate* priv;
+}
+
+struct GOutputStreamClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     buffer = the buffer containing the data to write.
+	 *     count = the number of bytes to write
+	 *     cancellable = optional cancellable object
+	 * Return: Number of bytes written, or -1 on error
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GOutputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) writeFn;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     source = a #GInputStream.
+	 *     flags = a set of #GOutputStreamSpliceFlags.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: a #gssize containing the size of the data spliced, or
+	 *     -1 if an error occurred. Note that if the number of bytes
+	 *     spliced is greater than %G_MAXSSIZE, then that will be
+	 *     returned, and there is no way to determine the actual number
+	 *     of bytes spliced.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, GCancellable* cancellable, GError** err) splice;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     cancellable = optional cancellable object
+	 * Return: %TRUE on success, %FALSE on error
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GOutputStream* stream, GCancellable* cancellable, GError** err) flush;
+	extern(C) int function(GOutputStream* stream, GCancellable* cancellable, GError** err) closeFn;
+	extern(C) void function(GOutputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) writeAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: a #gssize containing the number of bytes written to the stream.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GOutputStream* stream, GAsyncResult* result, GError** err) writeFinish;
+	extern(C) void function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) spliceAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: a #gssize of the number of bytes spliced. Note that if the
+	 *     number of bytes spliced is greater than %G_MAXSSIZE, then that
+	 *     will be returned, and there is no way to determine the actual
+	 *     number of bytes spliced.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GOutputStream* stream, GAsyncResult* result, GError** err) spliceFinish;
+	extern(C) void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) flushAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     result = a GAsyncResult.
+	 * Return: %TRUE if flush operation succeeded, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GOutputStream* stream, GAsyncResult* result, GError** err) flushFinish;
+	extern(C) void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GOutputStream.
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE if stream was successfully closed, %FALSE otherwise.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GOutputStream* stream, GAsyncResult* result, GError** err) closeFinish;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+	extern(C) void function() GReserved7;
+	extern(C) void function() GReserved8;
+}
+
+struct GOutputStreamPrivate;
 
 /**
- * Main Gtk struct.
+ * Structure used for scatter/gather data output.
+ * You generally pass in an array of #GOutputVectors
+ * and the operation will use all the buffers as if they were
+ * one buffer.
+ *
+ * Since: 2.22
  */
-public struct GActionMap{}
+struct GOutputVector
+{
+	/**
+	 * Pointer to a buffer of data to read.
+	 */
+	void* buffer;
+	/**
+	 * the size of @buffer.
+	 */
+	size_t size;
+}
 
+struct GPermission
+{
+	GObject parentInstance;
+	GPermissionPrivate* priv;
+}
+
+struct GPermissionClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     permission = a #GPermission instance
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: %TRUE if the permission was successfully acquired
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GPermission* permission, GCancellable* cancellable, GError** err) acquire;
+	extern(C) void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) acquireAsync;
+	/**
+	 *
+	 * Params:
+	 *     permission = a #GPermission instance
+	 *     result = the #GAsyncResult given to the #GAsyncReadyCallback
+	 * Return: %TRUE if the permission was successfully acquired
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GPermission* permission, GAsyncResult* result, GError** err) acquireFinish;
+	/**
+	 *
+	 * Params:
+	 *     permission = a #GPermission instance
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: %TRUE if the permission was successfully released
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GPermission* permission, GCancellable* cancellable, GError** err) release;
+	extern(C) void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) releaseAsync;
+	/**
+	 *
+	 * Params:
+	 *     permission = a #GPermission instance
+	 *     result = the #GAsyncResult given to the #GAsyncReadyCallback
+	 * Return: %TRUE if the permission was successfully released
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GPermission* permission, GAsyncResult* result, GError** err) releaseFinish;
+	void*[16] reserved;
+}
+
+struct GPermissionPrivate;
+
+struct GPollableInputStream;
 
 /**
- * The virtual function table for GActionMap.
- * GTypeInterface g_iface;
- * lookup_action ()
- * the virtual function pointer for g_action_map_lookup_action()
- * add_action ()
- * the virtual function pointer for g_action_map_add_action()
- * remove_action ()
- * the virtual function pointer for g_action_map_remove_action()
- * Since 2.32
+ * The interface for pollable input streams.
+ *
+ * The default implementation of @can_poll always returns %TRUE.
+ *
+ * The default implementation of @read_nonblocking calls
+ * g_pollable_input_stream_is_readable(), and then calls
+ * g_input_stream_read() if it returns %TRUE. This means you only need
+ * to override it if it is possible that your @is_readable
+ * implementation may return %TRUE when the stream is not actually
+ * readable.
+ *
+ * Since: 2.28
  */
-public struct GActionMapInterface
+struct GPollableInputStreamInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableInputStream.
+	 * Return: %TRUE if @stream is pollable, %FALSE if not.
+	 */
+	extern(C) int function(GPollableInputStream* stream) canPoll;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableInputStream.
+	 * Return: %TRUE if @stream is readable, %FALSE if not. If an error
+	 *     has occurred on @stream, this will result in
+	 *     g_pollable_input_stream_is_readable() returning %TRUE, and the
+	 *     next attempt to read will return the error.
+	 */
+	extern(C) int function(GPollableInputStream* stream) isReadable;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableInputStream.
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a new #GSource
+	 */
+	extern(C) GSource* function(GPollableInputStream* stream, GCancellable* cancellable) createSource;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableInputStream
+	 *     buffer = a buffer to
+	 *         read data into (which should be at least @count bytes long).
+	 *     count = the number of bytes you want to read
+	 * Return: the number of bytes read, or -1 on error (including
+	 *     %G_IO_ERROR_WOULD_BLOCK).
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GPollableInputStream* stream, void* buffer, size_t count, GError** err) readNonblocking;
+}
+
+struct GPollableOutputStream;
+
+/**
+ * The interface for pollable output streams.
+ *
+ * The default implementation of @can_poll always returns %TRUE.
+ *
+ * The default implementation of @write_nonblocking calls
+ * g_pollable_output_stream_is_writable(), and then calls
+ * g_output_stream_write() if it returns %TRUE. This means you only
+ * need to override it if it is possible that your @is_writable
+ * implementation may return %TRUE when the stream is not actually
+ * writable.
+ *
+ * Since: 2.28
+ */
+struct GPollableOutputStreamInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableOutputStream.
+	 * Return: %TRUE if @stream is pollable, %FALSE if not.
+	 */
+	extern(C) int function(GPollableOutputStream* stream) canPoll;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableOutputStream.
+	 * Return: %TRUE if @stream is writable, %FALSE if not. If an error
+	 *     has occurred on @stream, this will result in
+	 *     g_pollable_output_stream_is_writable() returning %TRUE, and the
+	 *     next attempt to write will return the error.
+	 */
+	extern(C) int function(GPollableOutputStream* stream) isWritable;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableOutputStream.
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a new #GSource
+	 */
+	extern(C) GSource* function(GPollableOutputStream* stream, GCancellable* cancellable) createSource;
+	/**
+	 *
+	 * Params:
+	 *     stream = a #GPollableOutputStream
+	 *     buffer = a buffer to write
+	 *         data from
+	 *     count = the number of bytes you want to write
+	 * Return: the number of bytes written, or -1 on error (including
+	 *     %G_IO_ERROR_WOULD_BLOCK).
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) ptrdiff_t function(GPollableOutputStream* stream, void* buffer, size_t count, GError** err) writeNonblocking;
+}
+
+struct GPropertyAction;
+
+struct GProxy;
+
+struct GProxyAddress
+{
+	GInetSocketAddress parentInstance;
+	GProxyAddressPrivate* priv;
+}
+
+struct GProxyAddressClass
+{
+	GInetSocketAddressClass parentClass;
+}
+
+struct GProxyAddressEnumerator
+{
+	GSocketAddressEnumerator parentInstance;
+	GProxyAddressEnumeratorPrivate* priv;
+}
+
+struct GProxyAddressEnumeratorClass
+{
+	GSocketAddressEnumeratorClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+	extern(C) void function() GReserved7;
+}
+
+struct GProxyAddressEnumeratorPrivate;
+
+struct GProxyAddressPrivate;
+
+/**
+ * Provides an interface for handling proxy connection and payload.
+ *
+ * Since: 2.26
+ */
+struct GProxyInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     proxy = a #GProxy
+	 *     connection = a #GIOStream
+	 *     proxyAddress = a #GProxyAddress
+	 *     cancellable = a #GCancellable
+	 * Return: a #GIOStream that will replace @connection. This might
+	 *     be the same as @connection, in which case a reference
+	 *     will be added.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GIOStream* function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GError** err) connect;
+	extern(C) void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) connectAsync;
+	/**
+	 *
+	 * Params:
+	 *     proxy = a #GProxy
+	 *     result = a #GAsyncResult
+	 * Return: a #GIOStream.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GIOStream* function(GProxy* proxy, GAsyncResult* result, GError** err) connectFinish;
+	/**
+	 *
+	 * Params:
+	 *     proxy = a #GProxy
+	 * Return: %TRUE if hostname resolution is supported.
+	 */
+	extern(C) int function(GProxy* proxy) supportsHostname;
+}
+
+struct GProxyResolver;
+
+struct GProxyResolverInterface
 {
 	GTypeInterface gIface;
-	extern(C) GAction * function(GActionMap* actionMap, char* actionName)  lookupAction;
-	extern(C) void function(GActionMap* actionMap, GAction* action)  addAction;
-	extern(C) void function(GActionMap* actionMap, char* actionName)  removeAction;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GProxyResolver
+	 * Return: %TRUE if @resolver is supported.
+	 */
+	extern(C) int function(GProxyResolver* resolver) isSupported;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GProxyResolver
+	 *     uri = a URI representing the destination to connect to
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: A
+	 *     NULL-terminated array of proxy URIs. Must be freed
+	 *     with g_strfreev().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) char** function(GProxyResolver* resolver, const(char)* uri, GCancellable* cancellable, GError** err) lookup;
+	extern(C) void function(GProxyResolver* resolver, const(char)* uri, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupAsync;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GProxyResolver
+	 *     result = the result passed to your #GAsyncReadyCallback
+	 * Return: A
+	 *     NULL-terminated array of proxy URIs. Must be freed
+	 *     with g_strfreev().
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) char** function(GProxyResolver* resolver, GAsyncResult* result, GError** err) lookupFinish;
 }
 
+struct GRemoteActionGroup;
 
 /**
- * This struct defines a single action. It is for use with
- * g_action_map_add_action_entries().
- * The order of the items in the structure are intended to reflect
- * frequency of use. It is permissible to use an incomplete initialiser
- * in order to leave some of the later values as NULL. All values
- * after name are optional. Additional optional fields may be added in
- * the future.
- * See g_action_map_add_action_entries() for an example.
- * const gchar *name;
- * the name of the action
- * activate ()
- * the callback to connect to the "activate" signal of the
- * action
- * const gchar *parameter_type;
- * the type of the parameter that must be passed to the
- * activate function for this action, given as a single
- * GVariant type string (or NULL for no parameter)
- * const gchar *state;
- * the initial state for this action, given in GVariant text
- * format. The state is parsed with no extra type information,
- * so type tags must be added to the string if they are
- * necessary.
- * change_state ()
- * the callback to connect to the "change-state" signal
- * of the action
+ * The virtual function table for #GRemoteActionGroup.
+ *
+ * Since: 2.32
  */
-public struct GActionEntry
-{
-	char *name;
-	extern(C) void function(GSimpleAction* action, GVariant* parameter, void* userData)  activate;
-	char *parameterType;
-	char *state;
-	extern(C) void function(GSimpleAction* action, GVariant* value, void* userData)  changeState;
-}
-
-
-/**
- * Main Gtk struct.
- * The GSimpleActionGroup structure contains private data and should only be accessed using the provided API.
- * Since 2.28
- */
-public struct GSimpleActionGroup{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GAction{}
-
-
-/**
- * The virtual function table for GAction.
- * GTypeInterface g_iface;
- * get_name ()
- * the virtual function pointer for g_action_get_name()
- * get_parameter_type ()
- * the virtual function pointer for g_action_get_parameter_type()
- * get_state_type ()
- * the virtual function pointer for g_action_get_state_type()
- * get_state_hint ()
- * the virtual function pointer for g_action_get_state_hint()
- * get_enabled ()
- * the virtual function pointer for g_action_get_enabled()
- * get_state ()
- * the virtual function pointer for g_action_get_state()
- * change_state ()
- * the virtual function pointer for g_action_change_state()
- * activate ()
- * the virtual function pointer for g_action_activate(). Note that GAction does not have an
- * 'activate' signal but that implementations of it may have one.
- * Since 2.28
- */
-public struct GActionInterface
+struct GRemoteActionGroupInterface
 {
 	GTypeInterface gIface;
-	/+* virtua functions +/
-	extern(C) char * function(GAction* action)  getName;
-	extern(C) GVariantType * function(GAction* action)  getParameterType;
-	extern(C) GVariantType * function(GAction* action)  getStateType;
-	extern(C) GVariant * function(GAction* action)  getStateHint;
-	extern(C) int function(GAction* action)  getEnabled;
-	extern(C) GVariant * function(GAction* action)  getState;
-	extern(C) void function(GAction* action, GVariant* value)  changeState;
-	extern(C) void function(GAction* action, GVariant* parameter)  activate;
+	extern(C) void function(GRemoteActionGroup* remote, const(char)* actionName, GVariant* parameter, GVariant* platformData) activateActionFull;
+	extern(C) void function(GRemoteActionGroup* remote, const(char)* actionName, GVariant* value, GVariant* platformData) changeActionStateFull;
 }
 
+struct GResolver
+{
+	GObject parentInstance;
+	GResolverPrivate* priv;
+}
+
+struct GResolverClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GResolver* resolver) reload;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     hostname = the hostname to look up
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a non-empty #GList
+	 *     of #GInetAddress, or %NULL on error. You
+	 *     must unref each of the addresses and free the list when you are
+	 *     done with it. (You can use g_resolver_free_addresses() to do this.)
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GResolver* resolver, const(char)* hostname, GCancellable* cancellable, GError** err) lookupByName;
+	extern(C) void function(GResolver* resolver, const(char)* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupByNameAsync;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     result = the result passed to your #GAsyncReadyCallback
+	 * Return: a #GList
+	 *     of #GInetAddress, or %NULL on error. See g_resolver_lookup_by_name()
+	 *     for more details.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupByNameFinish;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     address = the address to reverse-resolve
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a hostname (either ASCII-only, or in ASCII-encoded
+	 *     form), or %NULL on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) char* function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GError** err) lookupByAddress;
+	extern(C) void function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupByAddressAsync;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     result = the result passed to your #GAsyncReadyCallback
+	 * Return: a hostname (either ASCII-only, or in ASCII-encoded
+	 *     form), or %NULL on error.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) char* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupByAddressFinish;
+	extern(C) GList* function(GResolver* resolver, const(char)* rrname, GCancellable* cancellable, GError** err) lookupService;
+	extern(C) void function(GResolver* resolver, const(char)* rrname, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupServiceAsync;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     result = the result passed to your #GAsyncReadyCallback
+	 * Return: a non-empty #GList of
+	 *     #GSrvTarget, or %NULL on error. See g_resolver_lookup_service() for more
+	 *     details.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupServiceFinish;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     rrname = the DNS name to lookup the record for
+	 *     recordType = the type of DNS record to lookup
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a non-empty #GList of
+	 *     #GVariant, or %NULL on error. You must free each of the records and the list
+	 *     when you are done with it. (You can use g_list_free_full() with
+	 *     g_variant_unref() to do this.)
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GResolver* resolver, const(char)* rrname, GResolverRecordType recordType, GCancellable* cancellable, GError** err) lookupRecords;
+	extern(C) void function(GResolver* resolver, const(char)* rrname, GResolverRecordType recordType, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupRecordsAsync;
+	/**
+	 *
+	 * Params:
+	 *     resolver = a #GResolver
+	 *     result = the result passed to your #GAsyncReadyCallback
+	 * Return: a non-empty #GList of
+	 *     #GVariant, or %NULL on error. You must free each of the records and the list
+	 *     when you are done with it. (You can use g_list_free_full() with
+	 *     g_variant_unref() to do this.)
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupRecordsFinish;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+}
+
+struct GResolverPrivate;
+
+struct GResource;
+
+struct GSeekable;
 
 /**
- * Main Gtk struct.
+ * Provides an interface for implementing seekable functionality on I/O Streams.
  */
-public struct GSimpleAction{}
+struct GSeekableIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     seekable = a #GSeekable.
+	 * Return: the offset from the beginning of the buffer.
+	 */
+	extern(C) long function(GSeekable* seekable) tell;
+	/**
+	 *
+	 * Params:
+	 *     seekable = a #GSeekable.
+	 * Return: %TRUE if @seekable can be seeked. %FALSE otherwise.
+	 */
+	extern(C) int function(GSeekable* seekable) canSeek;
+	/**
+	 *
+	 * Params:
+	 *     seekable = a #GSeekable.
+	 *     offset = a #goffset.
+	 *     type = a #GSeekType.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: %TRUE if successful. If an error
+	 *     has occurred, this function will return %FALSE and set @error
+	 *     appropriately if present.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GSeekable* seekable, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
+	/**
+	 *
+	 * Params:
+	 *     seekable = a #GSeekable.
+	 * Return: %TRUE if the stream can be truncated, %FALSE otherwise.
+	 */
+	extern(C) int function(GSeekable* seekable) canTruncate;
+	/**
+	 *
+	 * Params:
+	 *     seekable = a #GSeekable.
+	 *     offset = a #goffset.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: %TRUE if successful. If an error
+	 *     has occurred, this function will return %FALSE and set @error
+	 *     appropriately if present.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GSeekable* seekable, long offset, GCancellable* cancellable, GError** err) truncateFn;
+}
 
+struct GSettings
+{
+	GObject parentInstance;
+	GSettingsPrivate* priv;
+}
 
 /**
- * Main Gtk struct.
- * This type is opaque.
- * Since 2.38
+ * The #GSettingsBackend interface defines a generic interface for
+ * non-strictly-typed data that is stored in a hierarchy. To implement
+ * an alternative storage backend for #GSettings, you need to implement
+ * the #GSettingsBackend interface and then make it implement the
+ * extension point #G_SETTINGS_BACKEND_EXTENSION_POINT_NAME.
+ *
+ * The interface defines methods for reading and writing values, a
+ * method for determining if writing of certain values will fail
+ * (lockdown) and a change notification mechanism.
+ *
+ * The semantics of the interface are very precisely defined and
+ * implementations must carefully adhere to the expectations of
+ * callers that are documented on each of the interface methods.
+ *
+ * Some of the GSettingsBackend functions accept or return a #GTree.
+ * These trees always have strings as keys and #GVariant as values.
+ * g_settings_backend_create_tree() is a convenience function to create
+ * suitable trees.
+ *
+ * The GSettingsBackend API is exported to allow third-party
+ * implementations, but does not carry the same stability guarantees
+ * as the public GIO API. For this reason, you have to define the
+ * C preprocessor symbol %G_SETTINGS_ENABLE_BACKEND before including
+ * `gio/gsettingsbackend.h`.
  */
-public struct GPropertyAction{}
+struct GSettingsBackend;
 
+struct GSettingsClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GSettings* settings, const(char)* key) writableChanged;
+	extern(C) void function(GSettings* settings, const(char)* key) changed;
+	extern(C) int function(GSettings* settings, GQuark key) writableChangeEvent;
+	extern(C) int function(GSettings* settings, GQuark* keys, int nKeys) changeEvent;
+	void*[20] padding;
+}
+
+struct GSettingsPrivate;
+
+struct GSettingsSchema;
+
+struct GSettingsSchemaKey;
+
+struct GSettingsSchemaSource;
+
+struct GSimpleAction;
+
+struct GSimpleActionGroup
+{
+	GObject parentInstance;
+	GSimpleActionGroupPrivate* priv;
+}
+
+struct GSimpleActionGroupClass
+{
+	GObjectClass parentClass;
+	void*[12] padding;
+}
+
+struct GSimpleActionGroupPrivate;
+
+struct GSimpleAsyncResult;
+
+struct GSimpleAsyncResultClass;
+
+struct GSimplePermission;
+
+struct GSimpleProxyResolver
+{
+	GObject parentInstance;
+	GSimpleProxyResolverPrivate* priv;
+}
+
+struct GSimpleProxyResolverClass
+{
+	GObjectClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GSimpleProxyResolverPrivate;
+
+struct GSocket
+{
+	GObject parentInstance;
+	GSocketPrivate* priv;
+}
+
+struct GSocketAddress
+{
+	GObject parentInstance;
+}
+
+struct GSocketAddressClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     address = a #GSocketAddress
+	 * Return: the socket family type of @address
+	 */
+	extern(C) GSocketFamily function(GSocketAddress* address) getFamily;
+	/**
+	 *
+	 * Params:
+	 *     address = a #GSocketAddress
+	 * Return: the size of the native struct sockaddr that
+	 *     @address represents
+	 */
+	extern(C) ptrdiff_t function(GSocketAddress* address) getNativeSize;
+	/**
+	 *
+	 * Params:
+	 *     address = a #GSocketAddress
+	 *     dest = a pointer to a memory location that will contain the native
+	 *         struct sockaddr
+	 *     destlen = the size of @dest. Must be at least as large as
+	 *         g_socket_address_get_native_size()
+	 * Return: %TRUE if @dest was filled in, %FALSE on error
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GSocketAddress* address, void* dest, size_t destlen, GError** err) toNative;
+}
+
+struct GSocketAddressEnumerator
+{
+	GObject parentInstance;
+}
+
+struct GSocketAddressEnumeratorClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     enumerator = a #GSocketAddressEnumerator
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 * Return: a #GSocketAddress (owned by the caller), or %NULL on
+	 *     error (in which case *@error will be set) or if there are no
+	 *     more addresses.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GSocketAddress* function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GError** err) next;
+	extern(C) void function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) nextAsync;
+	/**
+	 *
+	 * Params:
+	 *     enumerator = a #GSocketAddressEnumerator
+	 *     result = a #GAsyncResult
+	 * Return: a #GSocketAddress (owned by the caller), or %NULL on
+	 *     error (in which case *@error will be set) or if there are no
+	 *     more addresses.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GSocketAddress* function(GSocketAddressEnumerator* enumerator, GAsyncResult* result, GError** err) nextFinish;
+}
+
+struct GSocketClass
+{
+	GObjectClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+	extern(C) void function() GReserved7;
+	extern(C) void function() GReserved8;
+	extern(C) void function() GReserved9;
+	extern(C) void function() GReserved10;
+}
+
+struct GSocketClient
+{
+	GObject parentInstance;
+	GSocketClientPrivate* priv;
+}
+
+struct GSocketClientClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GSocketClient* client, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection) event;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+}
+
+struct GSocketClientPrivate;
+
+struct GSocketConnectable;
 
 /**
- * Main Gtk struct.
+ * Provides an interface for returning a #GSocketAddressEnumerator
+ * and #GProxyAddressEnumerator
  */
-public struct GRemoteActionGroup{}
+struct GSocketConnectableIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     connectable = a #GSocketConnectable
+	 * Return: a new #GSocketAddressEnumerator.
+	 */
+	extern(C) GSocketAddressEnumerator* function(GSocketConnectable* connectable) enumerate;
+	/**
+	 *
+	 * Params:
+	 *     connectable = a #GSocketConnectable
+	 * Return: a new #GSocketAddressEnumerator.
+	 */
+	extern(C) GSocketAddressEnumerator* function(GSocketConnectable* connectable) proxyEnumerate;
+}
 
+struct GSocketConnection
+{
+	GIOStream parentInstance;
+	GSocketConnectionPrivate* priv;
+}
+
+struct GSocketConnectionClass
+{
+	GIOStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+}
+
+struct GSocketConnectionPrivate;
+
+struct GSocketControlMessage
+{
+	GObject parentInstance;
+	GSocketControlMessagePrivate* priv;
+}
+
+struct GSocketControlMessageClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     message = a #GSocketControlMessage
+	 * Return: The number of bytes required.
+	 */
+	extern(C) size_t function(GSocketControlMessage* message) getSize;
+	/**
+	 *
+	 * Params:
+	 *     message = a #GSocketControlMessage
+	 * Return: an integer describing the level
+	 */
+	extern(C) int function(GSocketControlMessage* message) getLevel;
+	extern(C) int function(GSocketControlMessage* message) getType;
+	extern(C) void function(GSocketControlMessage* message, void* data) serialize;
+	extern(C) GSocketControlMessage* function(int level, int type, size_t size, void* data) deserialize;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GSocketControlMessagePrivate;
+
+struct GSocketListener
+{
+	GObject parentInstance;
+	GSocketListenerPrivate* priv;
+}
+
+struct GSocketListenerClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GSocketListener* listener) changed;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+}
+
+struct GSocketListenerPrivate;
+
+struct GSocketPrivate;
+
+struct GSocketService
+{
+	GSocketListener parentInstance;
+	GSocketServicePrivate* priv;
+}
+
+struct GSocketServiceClass
+{
+	GSocketListenerClass parentClass;
+	extern(C) int function(GSocketService* service, GSocketConnection* connection, GObject* sourceObject) incoming;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+}
+
+struct GSocketServicePrivate;
+
+struct GSrvTarget;
+
+struct GStaticResource
+{
+	ubyte* data;
+	size_t dataLen;
+	GResource* resource;
+	GStaticResource* next;
+	void* padding;
+}
+
+struct GSubprocess;
+
+struct GSubprocessLauncher;
+
+struct GTask;
+
+struct GTaskClass;
+
+struct GTcpConnection
+{
+	GSocketConnection parentInstance;
+	GTcpConnectionPrivate* priv;
+}
+
+struct GTcpConnectionClass
+{
+	GSocketConnectionClass parentClass;
+}
+
+struct GTcpConnectionPrivate;
+
+struct GTcpWrapperConnection
+{
+	GTcpConnection parentInstance;
+	GTcpWrapperConnectionPrivate* priv;
+}
+
+struct GTcpWrapperConnectionClass
+{
+	GTcpConnectionClass parentClass;
+}
+
+struct GTcpWrapperConnectionPrivate;
+
+struct GTestDBus;
+
+struct GThemedIcon;
+
+struct GThemedIconClass;
+
+struct GThreadedSocketService
+{
+	GSocketService parentInstance;
+	GThreadedSocketServicePrivate* priv;
+}
+
+struct GThreadedSocketServiceClass
+{
+	GSocketServiceClass parentClass;
+	extern(C) int function(GThreadedSocketService* service, GSocketConnection* connection, GObject* sourceObject) run;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GThreadedSocketServicePrivate;
+
+struct GTlsBackend;
 
 /**
- * The virtual function table for GRemoteActionGroup.
- * GTypeInterface g_iface;
- * activate_action_full ()
- * the virtual function pointer for g_remote_action_group_activate_action_full()
- * change_action_state_full ()
- * the virtual function pointer for g_remote_action_group_change_action_state_full()
- * Since 2.32
+ * Provides an interface for describing TLS-related types.
+ *
+ * Since: 2.28
  */
-public struct GRemoteActionGroupInterface
+struct GTlsBackendInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     backend = the #GTlsBackend
+	 * Return: whether or not TLS is supported
+	 */
+	extern(C) int function(GTlsBackend* backend) supportsTls;
+	extern(C) GType function() getCertificateType;
+	extern(C) GType function() getClientConnectionType;
+	extern(C) GType function() getServerConnectionType;
+	extern(C) GType function() getFileDatabaseType;
+	/**
+	 *
+	 * Params:
+	 *     backend = the #GTlsBackend
+	 * Return: the default database, which should be
+	 *     unreffed when done.
+	 */
+	extern(C) GTlsDatabase* function(GTlsBackend* backend) getDefaultDatabase;
+}
+
+struct GTlsCertificate
+{
+	GObject parentInstance;
+	GTlsCertificatePrivate* priv;
+}
+
+struct GTlsCertificateClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     cert = a #GTlsCertificate
+	 *     identity = the expected peer identity
+	 *     trustedCa = the certificate of a trusted authority
+	 * Return: the appropriate #GTlsCertificateFlags
+	 */
+	extern(C) GTlsCertificateFlags function(GTlsCertificate* cert, GSocketConnectable* identity, GTlsCertificate* trustedCa) verify;
+	void*[8] padding;
+}
+
+struct GTlsCertificatePrivate;
+
+struct GTlsClientConnection;
+
+struct GTlsClientConnectionInterface
 {
 	GTypeInterface gIface;
-	extern(C) void function(GRemoteActionGroup* remote, char* actionName, GVariant* parameter, GVariant* platformData)  activateActionFull;
-	extern(C) void function(GRemoteActionGroup* remote, char* actionName, GVariant* value, GVariant* platformData)  changeActionStateFull;
 }
 
+struct GTlsConnection
+{
+	GIOStream parentInstance;
+	GTlsConnectionPrivate* priv;
+}
+
+struct GTlsConnectionClass
+{
+	GIOStreamClass parentClass;
+	extern(C) int function(GTlsConnection* connection, GTlsCertificate* peerCert, GTlsCertificateFlags errors) acceptCertificate;
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GTlsConnection
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: success or failure
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GTlsConnection* conn, GCancellable* cancellable, GError** err) handshake;
+	extern(C) void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) handshakeAsync;
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GTlsConnection
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE on success, %FALSE on failure, in which
+	 *     case @error will be set.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GTlsConnection* conn, GAsyncResult* result, GError** err) handshakeFinish;
+	void*[8] padding;
+}
+
+struct GTlsConnectionPrivate;
+
+struct GTlsDatabase
+{
+	GObject parentInstance;
+	GTlsDatabasePrivate* priv;
+}
+
+struct GTlsDatabaseClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     chain = a #GTlsCertificate chain
+	 *     purpose = the purpose that this certificate chain will be used for.
+	 *     identity = the expected peer identity
+	 *     interaction = used to interact with the user if necessary
+	 *     flags = additional verify flags
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: the appropriate #GTlsCertificateFlags which represents the
+	 *     result of verification.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsCertificateFlags function(GTlsDatabase* self, GTlsCertificate* chain, const(char)* purpose, GSocketConnectable* identity, GTlsInteraction* interaction, GTlsDatabaseVerifyFlags flags, GCancellable* cancellable, GError** err) verifyChain;
+	extern(C) void function(GTlsDatabase* self, GTlsCertificate* chain, const(char)* purpose, GSocketConnectable* identity, GTlsInteraction* interaction, GTlsDatabaseVerifyFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) verifyChainAsync;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     result = a #GAsyncResult.
+	 * Return: the appropriate #GTlsCertificateFlags which represents the
+	 *     result of verification.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsCertificateFlags function(GTlsDatabase* self, GAsyncResult* result, GError** err) verifyChainFinish;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     certificate = certificate for which to create a handle.
+	 * Return: a newly allocated string containing the
+	 *     handle.
+	 */
+	extern(C) char* function(GTlsDatabase* self, GTlsCertificate* certificate) createCertificateHandle;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     handle = a certificate handle
+	 *     interaction = used to interact with the user if necessary
+	 *     flags = Flags which affect the lookup.
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a newly allocated
+	 *     #GTlsCertificate, or %NULL. Use g_object_unref() to release the certificate.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsCertificate* function(GTlsDatabase* self, const(char)* handle, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** err) lookupCertificateForHandle;
+	extern(C) void function(GTlsDatabase* self, const(char)* handle, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupCertificateForHandleAsync;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     result = a #GAsyncResult.
+	 * Return: a newly allocated #GTlsCertificate object.
+	 *     Use g_object_unref() to release the certificate.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsCertificate* function(GTlsDatabase* self, GAsyncResult* result, GError** err) lookupCertificateForHandleFinish;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     certificate = a #GTlsCertificate
+	 *     interaction = used to interact with the user if necessary
+	 *     flags = flags which affect the lookup operation
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a newly allocated issuer #GTlsCertificate,
+	 *     or %NULL. Use g_object_unref() to release the certificate.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsCertificate* function(GTlsDatabase* self, GTlsCertificate* certificate, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** err) lookupCertificateIssuer;
+	extern(C) void function(GTlsDatabase* self, GTlsCertificate* certificate, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupCertificateIssuerAsync;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     result = a #GAsyncResult.
+	 * Return: a newly allocated issuer #GTlsCertificate,
+	 *     or %NULL. Use g_object_unref() to release the certificate.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsCertificate* function(GTlsDatabase* self, GAsyncResult* result, GError** err) lookupCertificateIssuerFinish;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     issuerRawDn = a #GByteArray which holds the DER encoded issuer DN.
+	 *     interaction = used to interact with the user if necessary
+	 *     flags = Flags which affect the lookup operation.
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: a newly allocated list of #GTlsCertificate
+	 *     objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GTlsDatabase* self, GByteArray* issuerRawDn, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** err) lookupCertificatesIssuedBy;
+	extern(C) void function(GTlsDatabase* self, GByteArray* issuerRawDn, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupCertificatesIssuedByAsync;
+	/**
+	 *
+	 * Params:
+	 *     self = a #GTlsDatabase
+	 *     result = a #GAsyncResult.
+	 * Return: a newly allocated list of #GTlsCertificate
+	 *     objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GList* function(GTlsDatabase* self, GAsyncResult* result, GError** err) lookupCertificatesIssuedByFinish;
+	void*[16] padding;
+}
+
+struct GTlsDatabasePrivate;
+
+struct GTlsFileDatabase;
 
 /**
- * Main Gtk struct.
+ * Provides an interface for #GTlsFileDatabase implementations.
  */
-public struct GDBusActionGroup{}
+struct GTlsFileDatabaseInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	void*[8] padding;
+}
 
+struct GTlsInteraction
+{
+	GObject parentInstance;
+	GTlsInteractionPrivate* priv;
+}
 
 /**
- * Main Gtk struct.
- * GMenuModel is an opaque structure type. You must access it using the
- * functions below.
- * Since 2.32
+ * The class for #GTlsInteraction. Derived classes implement the various
+ * virtual interaction methods to handle TLS interactions.
+ *
+ * Derived classes can choose to implement whichever interactions methods they'd
+ * like to support by overriding those virtual methods in their class
+ * initialization function. If a derived class implements an async method,
+ * it must also implement the corresponding finish method.
+ *
+ * The synchronous interaction methods should implement to display modal dialogs,
+ * and the asynchronous methods to display modeless dialogs.
+ *
+ * If the user cancels an interaction, then the result should be
+ * %G_TLS_INTERACTION_FAILED and the error should be set with a domain of
+ * %G_IO_ERROR and code of %G_IO_ERROR_CANCELLED.
+ *
+ * Since: 2.30
  */
-public struct GMenuModel{}
+struct GTlsInteractionClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     interaction = a #GTlsInteraction object
+	 *     password = a #GTlsPassword object
+	 *     cancellable = an optional #GCancellable cancellation object
+	 * Return: The status of the ask password interaction.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsInteractionResult function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GError** err) askPassword;
+	extern(C) void function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) askPasswordAsync;
+	/**
+	 *
+	 * Params:
+	 *     interaction = a #GTlsInteraction object
+	 *     result = the result passed to the callback
+	 * Return: The status of the ask password interaction.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsInteractionResult function(GTlsInteraction* interaction, GAsyncResult* result, GError** err) askPasswordFinish;
+	/**
+	 *
+	 * Params:
+	 *     interaction = a #GTlsInteraction object
+	 *     connection = a #GTlsConnection object
+	 *     flags = flags providing more information about the request
+	 *     cancellable = an optional #GCancellable cancellation object
+	 * Return: The status of the request certificate interaction.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsInteractionResult function(GTlsInteraction* interaction, GTlsConnection* connection, GTlsCertificateRequestFlags flags, GCancellable* cancellable, GError** err) requestCertificate;
+	extern(C) void function(GTlsInteraction* interaction, GTlsConnection* connection, GTlsCertificateRequestFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) requestCertificateAsync;
+	/**
+	 *
+	 * Params:
+	 *     interaction = a #GTlsInteraction object
+	 *     result = the result passed to the callback
+	 * Return: The status of the request certificate interaction.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) GTlsInteractionResult function(GTlsInteraction* interaction, GAsyncResult* result, GError** err) requestCertificateFinish;
+	void*[21] padding;
+}
 
+struct GTlsInteractionPrivate;
+
+struct GTlsPassword
+{
+	GObject parentInstance;
+	GTlsPasswordPrivate* priv;
+}
+
+struct GTlsPasswordClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     password = a #GTlsPassword object
+	 *     length = location to place the length of the password.
+	 * Return: The password value (owned by the password object).
+	 */
+	extern(C) char* function(GTlsPassword* password, size_t* length) getValue;
+	extern(C) void function(GTlsPassword* password, char* value, ptrdiff_t length, GDestroyNotify destroy) setValue;
+	extern(C) const(char)* function(GTlsPassword* password) getDefaultWarning;
+	void*[4] padding;
+}
+
+struct GTlsPasswordPrivate;
+
+struct GTlsServerConnection;
+
+struct GTlsServerConnectionInterface
+{
+	GTypeInterface gIface;
+}
+
+struct GUnixConnection
+{
+	GSocketConnection parentInstance;
+	GUnixConnectionPrivate* priv;
+}
+
+struct GUnixConnectionClass
+{
+	GSocketConnectionClass parentClass;
+}
+
+struct GUnixConnectionPrivate;
+
+struct GUnixCredentialsMessage
+{
+	GSocketControlMessage parentInstance;
+	GUnixCredentialsMessagePrivate* priv;
+}
 
 /**
- * GMenuAttributeIter is an opaque structure type. You must access it
- * using the functions below.
- * Since 2.32
+ * Class structure for #GUnixCredentialsMessage.
+ *
+ * Since: 2.26
  */
-public struct GMenuAttributeIter{}
+struct GUnixCredentialsMessageClass
+{
+	GSocketControlMessageClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+}
 
+struct GUnixCredentialsMessagePrivate;
+
+struct GUnixFDList
+{
+	GObject parentInstance;
+	GUnixFDListPrivate* priv;
+}
+
+struct GUnixFDListClass
+{
+	GObjectClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GUnixFDListPrivate;
+
+struct GUnixFDMessage
+{
+	GSocketControlMessage parentInstance;
+	GUnixFDMessagePrivate* priv;
+}
+
+struct GUnixFDMessageClass
+{
+	GSocketControlMessageClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+}
+
+struct GUnixFDMessagePrivate;
+
+struct GUnixInputStream
+{
+	GInputStream parentInstance;
+	GUnixInputStreamPrivate* priv;
+}
+
+struct GUnixInputStreamClass
+{
+	GInputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GUnixInputStreamPrivate;
 
 /**
- * GMenuLinkIter is an opaque structure type. You must access it using
- * the functions below.
- * Since 2.32
+ * Defines a Unix mount entry (e.g. <filename>/media/cdrom</filename>).
+ * This corresponds roughly to a mtab entry.
  */
-public struct GMenuLinkIter{}
+struct GUnixMountEntry;
 
+struct GUnixMountMonitor;
+
+struct GUnixMountMonitorClass;
+
+struct GUnixMountPoint;
+
+struct GUnixOutputStream
+{
+	GOutputStream parentInstance;
+	GUnixOutputStreamPrivate* priv;
+}
+
+struct GUnixOutputStreamClass
+{
+	GOutputStreamClass parentClass;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+}
+
+struct GUnixOutputStreamPrivate;
+
+struct GUnixSocketAddress
+{
+	GSocketAddress parentInstance;
+	GUnixSocketAddressPrivate* priv;
+}
+
+struct GUnixSocketAddressClass
+{
+	GSocketAddressClass parentClass;
+}
+
+struct GUnixSocketAddressPrivate;
+
+struct GVfs
+{
+	GObject parentInstance;
+}
+
+struct GVfsClass
+{
+	GObjectClass parentClass;
+	/**
+	 *
+	 * Params:
+	 *     vfs = a #GVfs.
+	 * Return: %TRUE if construction of the @vfs was successful
+	 *     and it is now active.
+	 */
+	extern(C) int function(GVfs* vfs) isActive;
+	/**
+	 *
+	 * Params:
+	 *     vfs = a #GVfs.
+	 *     path = a string containing a VFS path.
+	 * Return: a #GFile.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GFile* function(GVfs* vfs, const(char)* path) getFileForPath;
+	/**
+	 *
+	 * Params:
+	 *     vfs = a#GVfs.
+	 *     uri = a string containing a URI
+	 * Return: a #GFile.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GFile* function(GVfs* vfs, const(char)* uri) getFileForUri;
+	/**
+	 *
+	 * Params:
+	 *     vfs = a #GVfs.
+	 * Return: a %NULL-terminated array of strings.
+	 *     The returned array belongs to GIO and must
+	 *     not be freed or modified.
+	 */
+	extern(C) char** function(GVfs* vfs) getSupportedUriSchemes;
+	/**
+	 *
+	 * Params:
+	 *     vfs = a #GVfs.
+	 *     parseName = a string to be parsed by the VFS module.
+	 * Return: a #GFile for the given @parse_name.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GFile* function(GVfs* vfs, const(char)* parseName) parseName;
+	extern(C) void function(GVfs* vfs, const(char)* filename, ulong device, GFileAttributeMatcher* attributeMatcher, GFileInfo* info, GCancellable* cancellable, void** extraData, GDestroyNotify* freeExtraData) localFileAddInfo;
+	extern(C) void function(GVfs* vfs, GFileAttributeInfoList* list) addWritableNamespaces;
+	extern(C) int function(GVfs* vfs, const(char)* filename, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) localFileSetAttributes;
+	extern(C) void function(GVfs* vfs, const(char)* filename) localFileRemoved;
+	extern(C) void function(GVfs* vfs, const(char)* source, const(char)* dest) localFileMoved;
+	extern(C) GIcon* function(GVfs* vfs, GVariant* value) deserializeIcon;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+}
+
+struct GVolume;
 
 /**
- * Main Gtk struct.
- * GMenu is an opaque structure type. You must access it using the
- * functions below.
- * Since 2.32
+ * Interface for implementing operations for mountable volumes.
  */
-public struct GMenu{}
+struct GVolumeIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	extern(C) void function(GVolume* volume) changed;
+	extern(C) void function(GVolume* volume) removed;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: the name for the given @volume. The returned string should
+	 *     be freed with g_free() when no longer needed.
+	 */
+	extern(C) char* function(GVolume* volume) getName;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: a #GIcon.
+	 *     The returned object should be unreffed with g_object_unref()
+	 *     when no longer needed.
+	 */
+	extern(C) GIcon* function(GVolume* volume) getIcon;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: the UUID for @volume or %NULL if no UUID can be computed.
+	 *     The returned string should be freed with g_free()
+	 *     when no longer needed.
+	 */
+	extern(C) char* function(GVolume* volume) getUuid;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: a #GDrive or %NULL if @volume is not
+	 *     associated with a drive. The returned object should be unreffed
+	 *     with g_object_unref() when no longer needed.
+	 */
+	extern(C) GDrive* function(GVolume* volume) getDrive;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: a #GMount or %NULL if @volume isn't mounted.
+	 *     The returned object should be unreffed with g_object_unref()
+	 *     when no longer needed.
+	 */
+	extern(C) GMount* function(GVolume* volume) getMount;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: %TRUE if the @volume can be mounted. %FALSE otherwise
+	 */
+	extern(C) int function(GVolume* volume) canMount;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: %TRUE if the @volume can be ejected. %FALSE otherwise
+	 */
+	extern(C) int function(GVolume* volume) canEject;
+	extern(C) void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountFn;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE, %FALSE if operation failed
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** err) mountFinish;
+	extern(C) void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) eject;
+	/**
+	 *
+	 * Params:
+	 *     volume = pointer to a #GVolume
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE, %FALSE if operation failed
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** err) ejectFinish;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 *     kind = the kind of identifier to return
+	 * Return: a newly allocated string containing the
+	 *     requested identfier, or %NULL if the #GVolume
+	 *     doesn't have this kind of identifier
+	 */
+	extern(C) char* function(GVolume* volume, const(char)* kind) getIdentifier;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: a %NULL-terminated array
+	 *     of strings containing kinds of identifiers. Use g_strfreev() to free.
+	 */
+	extern(C) char** function(GVolume* volume) enumerateIdentifiers;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: %TRUE if the volume should be automatically mounted
+	 */
+	extern(C) int function(GVolume* volume) shouldAutomount;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: the activation root of @volume
+	 *     or %NULL. Use g_object_unref() to free.
+	 */
+	extern(C) GFile* function(GVolume* volume) getActivationRoot;
+	extern(C) void function(GVolume* volume, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectWithOperation;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE if the volume was successfully ejected. %FALSE otherwise
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** err) ejectWithOperationFinish;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: Sorting key for @volume or %NULL if no such key is available
+	 */
+	extern(C) const(char)* function(GVolume* volume) getSortKey;
+	/**
+	 *
+	 * Params:
+	 *     volume = a #GVolume
+	 * Return: a #GIcon.
+	 *     The returned object should be unreffed with g_object_unref()
+	 *     when no longer needed.
+	 */
+	extern(C) GIcon* function(GVolume* volume) getSymbolicIcon;
+}
 
+struct GVolumeMonitor
+{
+	GObject parentInstance;
+	void* priv;
+}
+
+struct GVolumeMonitorClass
+{
+	GObjectClass parentClass;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GVolume* volume) volumeAdded;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GVolume* volume) volumeRemoved;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GVolume* volume) volumeChanged;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountAdded;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountRemoved;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountPreUnmount;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountChanged;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveConnected;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveDisconnected;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveChanged;
+	extern(C) int function() isSupported;
+	/**
+	 *
+	 * Params:
+	 *     volumeMonitor = a #GVolumeMonitor.
+	 * Return: a #GList of connected #GDrive objects.
+	 */
+	extern(C) GList* function(GVolumeMonitor* volumeMonitor) getConnectedDrives;
+	/**
+	 *
+	 * Params:
+	 *     volumeMonitor = a #GVolumeMonitor.
+	 * Return: a #GList of #GVolume objects.
+	 */
+	extern(C) GList* function(GVolumeMonitor* volumeMonitor) getVolumes;
+	/**
+	 *
+	 * Params:
+	 *     volumeMonitor = a #GVolumeMonitor.
+	 * Return: a #GList of #GMount objects.
+	 */
+	extern(C) GList* function(GVolumeMonitor* volumeMonitor) getMounts;
+	/**
+	 *
+	 * Params:
+	 *     volumeMonitor = a #GVolumeMonitor.
+	 *     uuid = the UUID to look for
+	 * Return: a #GVolume or %NULL if no such volume is available.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GVolume* function(GVolumeMonitor* volumeMonitor, const(char)* uuid) getVolumeForUuid;
+	/**
+	 *
+	 * Params:
+	 *     volumeMonitor = a #GVolumeMonitor.
+	 *     uuid = the UUID to look for
+	 * Return: a #GMount or %NULL if no such mount is available.
+	 *     Free the returned object with g_object_unref().
+	 */
+	extern(C) GMount* function(GVolumeMonitor* volumeMonitor, const(char)* uuid) getMountForUuid;
+	extern(C) GVolume* function(GMount* mount, GVolumeMonitor* volumeMonitor) adoptOrphanMount;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveEjectButton;
+	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveStopButton;
+	extern(C) void function() GReserved1;
+	extern(C) void function() GReserved2;
+	extern(C) void function() GReserved3;
+	extern(C) void function() GReserved4;
+	extern(C) void function() GReserved5;
+	extern(C) void function() GReserved6;
+}
+
+struct GZlibCompressor;
+
+struct GZlibCompressorClass
+{
+	GObjectClass parentClass;
+}
+
+struct GZlibDecompressor;
+
+struct GZlibDecompressorClass
+{
+	GObjectClass parentClass;
+}
 
 /**
- * GMenuItem is an opaque structure type. You must access it using the
- * functions below.
- * Since 2.32
+ * Type definition for a function that will be called back when an asynchronous
+ * operation within GIO has been completed.
+ *
+ * Params:
+ *     sourceObject = the object the asynchronous operation was started with.
+ *     res = a #GAsyncResult.
+ *     userData = user data passed to the callback.
  */
-public struct GMenuItem{}
-
+public alias extern(C) void function(GObject* sourceObject, GAsyncResult* res, void* userData) GAsyncReadyCallback;
 
 /**
- * Main Gtk struct.
+ * Invoked when a connection to a message bus has been obtained.
+ *
+ * Params:
+ *     connection = The #GDBusConnection to a message bus.
+ *     name = The name that is requested to be owned.
+ *     userData = User data passed to g_bus_own_name().
+ *
+ * Since: 2.26
  */
-public struct GDBusMenuModel{}
-
+public alias extern(C) void function(GDBusConnection* connection, const(char)* name, void* userData) GBusAcquiredCallback;
 
 /**
- * Main Gtk struct.
- * Virtual File System object.
+ * Invoked when the name is acquired.
+ *
+ * Params:
+ *     connection = The #GDBusConnection on which to acquired the name.
+ *     name = The name being owned.
+ *     userData = User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
+ *
+ * Since: 2.26
  */
-public struct GVfs{}
-
+public alias extern(C) void function(GDBusConnection* connection, const(char)* name, void* userData) GBusNameAcquiredCallback;
 
 /**
- * Main Gtk struct.
- * Opaque module base class for extending GIO.
+ * Invoked when the name being watched is known to have to have a owner.
+ *
+ * Params:
+ *     connection = The #GDBusConnection the name is being watched on.
+ *     name = The name being watched.
+ *     nameOwner = Unique name of the owner of the name being watched.
+ *     userData = User data passed to g_bus_watch_name().
+ *
+ * Since: 2.26
  */
-public struct GIOModule{}
-
+public alias extern(C) void function(GDBusConnection* connection, const(char)* name, const(char)* nameOwner, void* userData) GBusNameAppearedCallback;
 
 /**
- * Represents a scope for loading IO modules. A scope can be used for blocking
- * duplicate modules, or blocking a module you don't want to load.
- * The scope can be used with g_io_modules_load_all_in_directory_with_scope()
- * or g_io_modules_scan_all_in_directory_with_scope().
- * Since 2.30
+ * Invoked when the name is lost or @connection has been closed.
+ *
+ * Params:
+ *     connection = The #GDBusConnection on which to acquire the name or %NULL if
+ *         the connection was disconnected.
+ *     name = The name being owned.
+ *     userData = User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
+ *
+ * Since: 2.26
  */
-public struct GIOModuleScope{}
-
+public alias extern(C) void function(GDBusConnection* connection, const(char)* name, void* userData) GBusNameLostCallback;
 
 /**
- * Main Gtk struct.
+ * Invoked when the name being watched is known not to have to have a owner.
+ *
+ * This is also invoked when the #GDBusConection on which the watch was
+ * established has been closed.  In that case, @connection will be
+ * %NULL.
+ *
+ * Params:
+ *     connection = The #GDBusConnection the name is being watched on, or
+ *         %NULL.
+ *     name = The name being watched.
+ *     userData = User data passed to g_bus_watch_name().
+ *
+ * Since: 2.26
  */
-public struct GIOExtension{}
-
-
-public struct GIOExtensionPoint{}
-
+public alias extern(C) void function(GDBusConnection* connection, const(char)* name, void* userData) GBusNameVanishedCallback;
 
 /**
- * Main Gtk struct.
- * The GTestDBus structure contains only private data and
- * should only be accessed using the provided API.
- * Since 2.34
+ * This is the function type of the callback used for the #GSource
+ * returned by g_cancellable_source_new().
+ *
+ * Params:
+ *     cancellable = the #GCancellable
+ *     userData = data passed in by the user.
+ *
+ * Return: it should return %FALSE if the source should be removed.
+ *
+ * Since: 2.28
  */
-public struct GTestDBus{}
+public alias extern(C) int function(GCancellable* cancellable, void* userData) GCancellableSourceFunc;
 
-
-/*
- * When doing file operations that may take a while, such as moving
- * a file or copying a file, a progress callback is used to pass how
- * far along that operation is to the application.
- * current_num_bytes :
- * the current number of bytes in the operation.
- * total_num_bytes :
- * the total number of bytes in the operation.
- * user_data :
- * user data passed to the callback.
+/**
+ * The type of the @get_property function in #GDBusInterfaceVTable.
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     sender = The unique bus name of the remote caller.
+ *     objectPath = The object path that the method was invoked on.
+ *     interfaceName = The D-Bus interface name for the property.
+ *     propertyName = The name of the property to get the value of.
+ *     error = Return location for error.
+ *     userData = The @user_data #gpointer passed to g_dbus_connection_register_object().
+ *
+ * Return: A #GVariant with the value for @property_name or %NULL if
+ *     @error is set. If the returned #GVariant is floating, it is
+ *     consumed - otherwise its reference count is decreased by one.
+ *
+ * Since: 2.26
  */
-// void (*GFileProgressCallback) (goffset current_num_bytes,  goffset total_num_bytes,  gpointer user_data);
-public alias extern(C) void function(long currentNumBytes, long totalNumBytes, void* userData) GFileProgressCallback;
+public alias extern(C) GVariant* function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, const(char)* interfaceName, const(char)* propertyName, GError** error, void* userData) GDBusInterfaceGetPropertyFunc;
 
-/*
- * When loading the partial contents of a file with g_file_load_partial_contents_async(),
- * it may become necessary to determine if any more data from the file should be loaded.
- * A GFileReadMoreCallback function facilitates this by returning TRUE if more data
- * should be read, or FALSE otherwise.
- * file_contents :
- * the data as currently read.
- * file_size :
- * the size of the data currently read.
- * callback_data :
- * data passed to the callback.
- * Returns :
- * TRUE if more data should be read back. FALSE otherwise.
+/**
+ * The type of the @method_call function in #GDBusInterfaceVTable.
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     sender = The unique bus name of the remote caller.
+ *     objectPath = The object path that the method was invoked on.
+ *     interfaceName = The D-Bus interface name the method was invoked on.
+ *     methodName = The name of the method that was invoked.
+ *     parameters = A #GVariant tuple with parameters.
+ *     invocation = A #GDBusMethodInvocation object that can be used to return a value or error.
+ *     userData = The @user_data #gpointer passed to g_dbus_connection_register_object().
+ *
+ * Since: 2.26
  */
-// gboolean (*GFileReadMoreCallback) (const char *file_contents,  goffset file_size,  gpointer callback_data);
-public alias extern(C) int function(char* fileContents, long fileSize, void* callbackData) GFileReadMoreCallback;
+public alias extern(C) void function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, const(char)* interfaceName, const(char)* methodName, GVariant* parameters, GDBusMethodInvocation* invocation, void* userData) GDBusInterfaceMethodCallFunc;
 
-/*
+/**
+ * The type of the @set_property function in #GDBusInterfaceVTable.
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     sender = The unique bus name of the remote caller.
+ *     objectPath = The object path that the method was invoked on.
+ *     interfaceName = The D-Bus interface name for the property.
+ *     propertyName = The name of the property to get the value of.
+ *     value = The value to set the property to.
+ *     error = Return location for error.
+ *     userData = The @user_data #gpointer passed to g_dbus_connection_register_object().
+ *
+ * Return: %TRUE if the property was set to @value, %FALSE if @error is set.
+ *
+ * Since: 2.26
+ */
+public alias extern(C) int function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, const(char)* interfaceName, const(char)* propertyName, GVariant* value, GError** error, void* userData) GDBusInterfaceSetPropertyFunc;
+
+/**
+ * Signature for function used in g_dbus_connection_add_filter().
+ *
+ * A filter function is passed a #GDBusMessage and expected to return
+ * a #GDBusMessage too. Passive filter functions that don't modify the
+ * message can simply return the @message object:
+ * |[
+ * static GDBusMessage *
+ * passive_filter (GDBusConnection *connection
+ * GDBusMessage    *message,
+ * gboolean         incoming,
+ * gpointer         user_data)
+ * {
+ * /<!-- -->* inspect @message *<!-- -->/
+ * return message;
+ * }
+ * ]|
+ * Filter functions that wants to drop a message can simply return %NULL:
+ * |[
+ * static GDBusMessage *
+ * drop_filter (GDBusConnection *connection
+ * GDBusMessage    *message,
+ * gboolean         incoming,
+ * gpointer         user_data)
+ * {
+ * if (should_drop_message)
+ * {
+ * g_object_unref (message);
+ * message = NULL;
+ * }
+ * return message;
+ * }
+ * ]|
+ * Finally, a filter function may modify a message by copying it:
+ * |[
+ * static GDBusMessage *
+ * modifying_filter (GDBusConnection *connection
+ * GDBusMessage    *message,
+ * gboolean         incoming,
+ * gpointer         user_data)
+ * {
+ * GDBusMessage *copy;
+ * GError *error;
+ *
+ * error = NULL;
+ * copy = g_dbus_message_copy (message, &error);
+ * /<!-- -->* handle @error being is set *<!-- -->/
+ * g_object_unref (message);
+ *
+ * /<!-- -->* modify @copy *<!-- -->/
+ *
+ * return copy;
+ * }
+ * ]|
+ * If the returned #GDBusMessage is different from @message and cannot
+ * be sent on @connection (it could use features, such as file
+ * descriptors, not compatible with @connection), then a warning is
+ * logged to <emphasis>standard error</emphasis>. Applications can
+ * check this ahead of time using g_dbus_message_to_blob() passing a
+ * #GDBusCapabilityFlags value obtained from @connection.
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     message = A locked #GDBusMessage that the filter function takes ownership of.
+ *     incoming = %TRUE if it is a message received from the other peer, %FALSE if it is
+ *         a message to be sent to the other peer.
+ *     userData = User data passed when adding the filter.
+ *
+ * Return: A #GDBusMessage that will be freed with
+ *     g_object_unref() or %NULL to drop the message. Passive filter
+ *     functions can simply return the passed @message object.
+ *
+ * Since: 2.26
+ */
+public alias extern(C) GDBusMessage* function(GDBusConnection* connection, GDBusMessage* message, int incoming, void* userData) GDBusMessageFilterFunction;
+
+/**
+ * Function signature for a function used to determine the #GType to
+ * use for an interface proxy (if @interface_name is not %NULL) or
+ * object proxy (if @interface_name is %NULL).
+ *
+ * This function is called in the
+ * [thread-default main loop][g-main-context-push-thread-default]
+ * that @manager was constructed in.
+ *
+ * Params:
+ *     manager = A #GDBusObjectManagerClient.
+ *     objectPath = The object path of the remote object.
+ *     interfaceName = The interface name of the remote object or %NULL if a #GDBusObjectProxy #GType is requested.
+ *     userData = User data.
+ *
+ * Return: A #GType to use for the remote object. The returned type
+ *     must be a #GDBusProxy<!-- -->- or #GDBusObjectProxy<!-- -->-derived
+ *     type.
+ *
+ * Since: 2.30
+ */
+public alias extern(C) GType function(GDBusObjectManagerClient* manager, const(char)* objectPath, const(char)* interfaceName, void* userData) GDBusProxyTypeFunc;
+
+/**
+ * Signature for callback function used in g_dbus_connection_signal_subscribe().
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     senderName = The unique bus name of the sender of the signal.
+ *     objectPath = The object path that the signal was emitted on.
+ *     interfaceName = The name of the interface.
+ *     signalName = The name of the signal.
+ *     parameters = A #GVariant tuple with parameters for the signal.
+ *     userData = User data passed when subscribing to the signal.
+ *
+ * Since: 2.26
+ */
+public alias extern(C) void function(GDBusConnection* connection, const(char)* senderName, const(char)* objectPath, const(char)* interfaceName, const(char)* signalName, GVariant* parameters, void* userData) GDBusSignalCallback;
+
+/**
+ * The type of the @dispatch function in #GDBusSubtreeVTable.
+ *
+ * Subtrees are flat.  @node, if non-%NULL, is always exactly one
+ * segment of the object path (ie: it never contains a slash).
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     sender = The unique bus name of the remote caller.
+ *     objectPath = The object path that was registered with g_dbus_connection_register_subtree().
+ *     interfaceName = The D-Bus interface name that the method call or property access is for.
+ *     node = A node that is a child of @object_path (relative to @object_path) or %NULL for the root of the subtree.
+ *     outUserData = Return location for user data to pass to functions in the returned #GDBusInterfaceVTable (never %NULL).
+ *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
+ *
+ * Return: A #GDBusInterfaceVTable or %NULL if you don't want to handle the methods.
+ *
+ * Since: 2.26
+ */
+public alias extern(C) GDBusInterfaceVTable* function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, const(char)* interfaceName, const(char)* node, void** outUserData, void* userData) GDBusSubtreeDispatchFunc;
+
+/**
+ * The type of the @enumerate function in #GDBusSubtreeVTable.
+ *
+ * This function is called when generating introspection data and also
+ * when preparing to dispatch incoming messages in the event that the
+ * %G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES flag is not
+ * specified (ie: to verify that the object path is valid).
+ *
+ * Hierarchies are not supported; the items that you return should not
+ * contain the '/' character.
+ *
+ * The return value will be freed with g_strfreev().
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     sender = The unique bus name of the remote caller.
+ *     objectPath = The object path that was registered with g_dbus_connection_register_subtree().
+ *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
+ *
+ * Return: A newly allocated array of strings for node names that are children of @object_path.
+ *
+ * Since: 2.26
+ */
+public alias extern(C) char** function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, void* userData) GDBusSubtreeEnumerateFunc;
+
+/**
+ * The type of the @introspect function in #GDBusSubtreeVTable.
+ *
+ * Subtrees are flat.  @node, if non-%NULL, is always exactly one
+ * segment of the object path (ie: it never contains a slash).
+ *
+ * This function should return %NULL to indicate that there is no object
+ * at this node.
+ *
+ * If this function returns non-%NULL, the return value is expected to
+ * be a %NULL-terminated array of pointers to #GDBusInterfaceInfo
+ * structures describing the interfaces implemented by @node.  This
+ * array will have g_dbus_interface_info_unref() called on each item
+ * before being freed with g_free().
+ *
+ * The difference between returning %NULL and an array containing zero
+ * items is that the standard DBus interfaces will returned to the
+ * remote introspector in the empty array case, but not in the %NULL
+ * case.
+ *
+ * Params:
+ *     connection = A #GDBusConnection.
+ *     sender = The unique bus name of the remote caller.
+ *     objectPath = The object path that was registered with g_dbus_connection_register_subtree().
+ *     node = A node that is a child of @object_path (relative to @object_path) or %NULL for the root of the subtree.
+ *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
+ *
+ * Return: A %NULL-terminated array of pointers to #GDBusInterfaceInfo, or %NULL.
+ *
+ * Since: 2.26
+ */
+public alias extern(C) GDBusInterfaceInfo** function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, const(char)* node, void* userData) GDBusSubtreeIntrospectFunc;
+
+/**
+ * During invocation, g_desktop_app_info_launch_uris_as_manager() may
+ * create one or more child processes.  This callback is invoked once
+ * for each, providing the process ID.
+ *
+ * Params:
+ *     appinfo = a #GDesktopAppInfo
+ *     pid = Process identifier
+ *     userData = User data
+ */
+public alias extern(C) void function(GDesktopAppInfo* appinfo, GPid pid, void* userData) GDesktopAppLaunchCallback;
+
+/**
  * This callback type is used by g_file_measure_disk_usage() to make
  * periodic progress reports when measuring the amount of disk spaced
  * used by a directory.
+ *
  * These calls are made on a best-effort basis and not all types of
- * GFile will support them. At the minimum, however, one call will
+ * #GFile will support them.  At the minimum, however, one call will
  * always be made immediately.
- * In the case that there is no support, reporting will be set to
- * FALSE (and the other values undefined) and no further calls will be
- * made. Otherwise, the reporting will be TRUE and the other values
- * all-zeros during the first (immediate) call. In this way, you can
+ *
+ * In the case that there is no support, @reporting will be set to
+ * %FALSE (and the other values undefined) and no further calls will be
+ * made.  Otherwise, the @reporting will be %TRUE and the other values
+ * all-zeros during the first (immediate) call.  In this way, you can
  * know which type of progress UI to show without a delay.
- * For g_file_measure_disk_usage() the callback is made directly. For
+ *
+ * For g_file_measure_disk_usage() the callback is made directly.  For
  * g_file_measure_disk_usage_async() the callback is made via the
  * default main context of the calling thread (ie: the same way that the
  * final async result would be reported).
- * current_size is in the same units as requested by the operation (see
- * G_FILE_DISK_USAGE_APPARENT_SIZE).
+ *
+ * @current_size is in the same units as requested by the operation (see
+ * %G_FILE_DISK_USAGE_APPARENT_SIZE).
+ *
  * The frequency of the updates is implementation defined, but is
  * ideally about once every 200ms.
+ *
  * The last progress callback may or may not be equal to the final
- * result. Always check the async result to get the final value.
- * reporting :
- * TRUE if more reports will come
- * current_size :
- * the current cumulative size measurement
- * num_dirs :
- * the number of directories visited so far
- * num_files :
- * the number of non-directory files encountered
- * user_data :
- * the data passed to the original request for this callback
- * Since 2.38
+ * result.  Always check the async result to get the final value.
+ *
+ * Params:
+ *     reporting = %TRUE if more reports will come
+ *     currentSize = the current cumulative size measurement
+ *     numDirs = the number of directories visited so far
+ *     numFiles = the number of non-directory files encountered
+ *     userData = the data passed to the original request for this callback
+ *
+ * Since: 2.38
  */
-// void (*GFileMeasureProgressCallback) (gboolean reporting,  guint64 current_size,  guint64 num_dirs,  guint64 num_files,  gpointer user_data);
 public alias extern(C) void function(int reporting, ulong currentSize, ulong numDirs, ulong numFiles, void* userData) GFileMeasureProgressCallback;
 
-/*
- * This is the function type of the callback used for the GSource
- * returned by g_cancellable_source_new().
- * cancellable :
- * the GCancellable
- * user_data :
- * data passed in by the user.
- * Returns :
- * it should return FALSE if the source should be removed.
- * Since 2.28
+/**
+ * When doing file operations that may take a while, such as moving
+ * a file or copying a file, a progress callback is used to pass how
+ * far along that operation is to the application.
+ *
+ * Params:
+ *     currentNumBytes = the current number of bytes in the operation.
+ *     totalNumBytes = the total number of bytes in the operation.
+ *     userData = user data passed to the callback.
  */
-// gboolean (*GCancellableSourceFunc) (GCancellable *cancellable,  gpointer user_data);
-public alias extern(C) int function(GCancellable* cancellable, void* userData) GCancellableSourceFunc;
+public alias extern(C) void function(long currentNumBytes, long totalNumBytes, void* userData) GFileProgressCallback;
 
-/*
- * Type definition for a function that will be called back when an asynchronous
- * operation within GIO has been completed.
- * source_object :
- * the object the asynchronous operation was started with.
- * res :
- * a GAsyncResult.
- * user_data :
- * user data passed to the callback.
+/**
+ * When loading the partial contents of a file with g_file_load_partial_contents_async(),
+ * it may become necessary to determine if any more data from the file should be loaded.
+ * A #GFileReadMoreCallback function facilitates this by returning %TRUE if more data
+ * should be read, or %FALSE otherwise.
+ *
+ * Params:
+ *     fileContents = the data as currently read.
+ *     fileSize = the size of the data currently read.
+ *     callbackData = data passed to the callback.
+ *
+ * Return: %TRUE if more data should be read back. %FALSE otherwise.
  */
-// void (*GAsyncReadyCallback) (GObject *source_object,  GAsyncResult *res,  gpointer user_data);
-public alias extern(C) void function(GObject* sourceObject, GAsyncResult* res, void* userData) GAsyncReadyCallback;
+public alias extern(C) int function(const(char)* fileContents, long fileSize, void* callbackData) GFileReadMoreCallback;
 
-/*
+/**
+ * I/O Job function.
+ *
+ * Long-running jobs should periodically check the @cancellable
+ * to see if they have been cancelled.
+ *
+ * Params:
+ *     job = a #GIOSchedulerJob.
+ *     cancellable = optional #GCancellable object, %NULL to ignore.
+ *     userData = the data to pass to callback function
+ *
+ * Return: %TRUE if this function should be called again to
+ *     complete the job, %FALSE if the job is complete (or cancelled)
+ */
+public alias extern(C) int function(GIOSchedulerJob* job, GCancellable* cancellable, void* userData) GIOSchedulerJobFunc;
+
+/**
+ * This is the function type of the callback used for the #GSource
+ * returned by g_pollable_input_stream_create_source() and
+ * g_pollable_output_stream_create_source().
+ *
+ * Params:
+ *     pollableStream = the #GPollableInputStream or #GPollableOutputStream
+ *     userData = data passed in by the user.
+ *
+ * Return: it should return %FALSE if the source should be removed.
+ *
+ * Since: 2.28
+ */
+public alias extern(C) int function(GObject* pollableStream, void* userData) GPollableSourceFunc;
+
+/**
+ * Changes the size of the memory block pointed to by @data to
+ * @size bytes.
+ *
+ * The function should have the same semantics as realloc().
+ *
+ * Params:
+ *     data = memory block to reallocate
+ *     size = size to reallocate @data to
+ *
+ * Return: a pointer to the reallocated memory
+ */
+public alias extern(C) void* function(void* data, size_t size) GReallocFunc;
+
+/**
+ * The type for the function that is used to convert from #GSettings to
+ * an object property. The @value is already initialized to hold values
+ * of the appropriate type.
+ *
+ * Params:
+ *     value = return location for the property value
+ *     variant = the #GVariant
+ *     userData = user data that was specified when the binding was created
+ *
+ * Return: %TRUE if the conversion succeeded, %FALSE in case of an error
+ */
+public alias extern(C) int function(GValue* value, GVariant* variant, void* userData) GSettingsBindGetMapping;
+
+/**
+ * The type for the function that is used to convert an object property
+ * value to a #GVariant for storing it in #GSettings.
+ *
+ * Params:
+ *     value = a #GValue containing the property value to map
+ *     expectedType = the #GVariantType to create
+ *     userData = user data that was specified when the binding was created
+ *
+ * Return: a new #GVariant holding the data from @value,
+ *     or %NULL in case of an error
+ */
+public alias extern(C) GVariant* function(GValue* value, GVariantType* expectedType, void* userData) GSettingsBindSetMapping;
+
+/**
+ * The type of the function that is used to convert from a value stored
+ * in a #GSettings to a value that is useful to the application.
+ *
+ * If the value is successfully mapped, the result should be stored at
+ * @result and %TRUE returned.  If mapping fails (for example, if @value
+ * is not in the right format) then %FALSE should be returned.
+ *
+ * If @value is %NULL then it means that the mapping function is being
+ * given a "last chance" to successfully return a valid value.  %TRUE
+ * must be returned in this case.
+ *
+ * Params:
+ *     value = the #GVariant to map, or %NULL
+ *     result = the result of the mapping
+ *     userData = the user data that was passed to
+ *         g_settings_get_mapped()
+ *
+ * Return: %TRUE if the conversion succeeded, %FALSE in case of an error
+ */
+public alias extern(C) int function(GVariant* value, void** result, void* userData) GSettingsGetMapping;
+
+/**
+ * Simple thread function that runs an asynchronous operation and
+ * checks for cancellation.
+ *
+ * Params:
+ *     res = a #GSimpleAsyncResult.
+ *     object = a #GObject.
+ *     cancellable = optional #GCancellable object, %NULL to ignore.
+ */
+public alias extern(C) void function(GSimpleAsyncResult* res, GObject* object, GCancellable* cancellable) GSimpleAsyncThreadFunc;
+
+/**
+ * This is the function type of the callback used for the #GSource
+ * returned by g_socket_create_source().
+ *
+ * Params:
+ *     socket = the #GSocket
+ *     condition = the current condition at the source fired.
+ *     userData = data passed in by the user.
+ *
+ * Return: it should return %FALSE if the source should be removed.
+ *
+ * Since: 2.22
+ */
+public alias extern(C) int function(GSocket* socket, GIOCondition condition, void* userData) GSocketSourceFunc;
+
+/**
  * The prototype for a task function to be run in a thread via
  * g_task_run_in_thread() or g_task_run_in_thread_sync().
- * If the return-on-cancel flag is set on task, and cancellable gets
- * cancelled, then the GTask will be completed immediately (as though
+ *
+ * If the return-on-cancel flag is set on @task, and @cancellable gets
+ * cancelled, then the #GTask will be completed immediately (as though
  * g_task_return_error_if_cancelled() had been called), without
  * waiting for the task function to complete. However, the task
  * function will continue running in its thread in the background. The
  * function therefore needs to be careful about how it uses
  * externally-visible state in this case. See
  * g_task_set_return_on_cancel() for more details.
- * Other than in that case, task will be completed when the
- * GTaskThreadFunc returns, not when it calls
- * a g_task_return_ function.
- * task :
- * the GTask
- * source_object :
- * task's source object. [type GObject]
- * task_data :
- * task's task data
- * cancellable :
- * task's GCancellable, or NULL
- * Since 2.36
+ *
+ * Other than in that case, @task will be completed when the
+ * #GTaskThreadFunc returns, not when it calls a
+ * `g_task_return_` function.
+ *
+ * Params:
+ *     task = the #GTask
+ *     sourceObject = @task's source object
+ *     taskData = @task's task data
+ *     cancellable = @task's #GCancellable, or %NULL
+ *
+ * Since: 2.36
  */
-// void (*GTaskThreadFunc) (GTask *task,  gpointer source_object,  gpointer task_data,  GCancellable *cancellable);
 public alias extern(C) void function(GTask* task, void* sourceObject, void* taskData, GCancellable* cancellable) GTaskThreadFunc;
-
-/*
- * I/O Job function.
- * Long-running jobs should periodically check the cancellable
- * to see if they have been cancelled.
- * job :
- * a GIOSchedulerJob.
- * cancellable :
- * optional GCancellable object, NULL to ignore.
- * user_data :
- * the data to pass to callback function
- * Returns :
- * TRUE if this function should be called again to
- * complete the job, FALSE if the job is complete (or cancelled)
- */
-// gboolean (*GIOSchedulerJobFunc) (GIOSchedulerJob *job,  GCancellable *cancellable,  gpointer user_data);
-public alias extern(C) int function(GIOSchedulerJob* job, GCancellable* cancellable, void* userData) GIOSchedulerJobFunc;
-
-/*
- * Simple thread function that runs an asynchronous operation and
- * checks for cancellation.
- * res :
- * a GSimpleAsyncResult.
- * object :
- * a GObject.
- * cancellable :
- * optional GCancellable object, NULL to ignore.
- */
-// void (*GSimpleAsyncThreadFunc) (GSimpleAsyncResult *res,  GObject *object,  GCancellable *cancellable);
-public alias extern(C) void function(GSimpleAsyncResult* res, GObject* object, GCancellable* cancellable) GSimpleAsyncThreadFunc;
-
-/*
- * Changes the size of the memory block pointed to by data to
- * size bytes.
- * The function should have the same semantics as realloc().
- * data :
- * memory block to reallocate
- * size :
- * size to reallocate data to
- * Returns :
- * a pointer to the reallocated memory
- */
-// gpointer (*GReallocFunc) (gpointer data,  gsize size);
-public alias extern(C) void* function(void* data, gsize size) GReallocFunc;
-
-/*
- * This is the function type of the callback used for the GSource
- * returned by g_pollable_input_stream_create_source() and
- * g_pollable_output_stream_create_source().
- * pollable_stream :
- * the GPollableInputStream or GPollableOutputStream
- * user_data :
- * data passed in by the user.
- * Returns :
- * it should return FALSE if the source should be removed.
- * Since 2.28
- */
-// gboolean (*GPollableSourceFunc) (GObject *pollable_stream,  gpointer user_data);
-public alias extern(C) int function(GObject* pollableStream, void* userData) GPollableSourceFunc;
-
-/*
- * During invocation, g_desktop_app_info_launch_uris_as_manager() may
- * create one or more child processes. This callback is invoked once
- * for each, providing the process ID.
- * appinfo :
- * a GDesktopAppInfo
- * pid :
- * Process identifier
- * user_data :
- * User data
- */
-// void (*GDesktopAppLaunchCallback) (GDesktopAppInfo *appinfo,  GPid pid,  gpointer user_data);
-public alias extern(C) void function(GDesktopAppInfo* appinfo, GPid pid, void* userData) GDesktopAppLaunchCallback;
-
-/*
- * This is the function type of the callback used for the GSource
- * returned by g_socket_create_source().
- * socket :
- * the GSocket
- * condition :
- * the current condition at the source fired.
- * user_data :
- * data passed in by the user.
- * Returns :
- * it should return FALSE if the source should be removed.
- * Since 2.22
- */
-// gboolean (*GSocketSourceFunc) (GSocket *socket,  GIOCondition condition,  gpointer user_data);
-public alias extern(C) int function(GSocket* socket, GIOCondition condition, void* userData) GSocketSourceFunc;
-
-/*
- * Signature for callback function used in g_dbus_connection_signal_subscribe().
- * connection :
- * A GDBusConnection.
- * sender_name :
- * The unique bus name of the sender of the signal.
- * object_path :
- * The object path that the signal was emitted on.
- * interface_name :
- * The name of the interface.
- * signal_name :
- * The name of the signal.
- * parameters :
- * A GVariant tuple with parameters for the signal.
- * user_data :
- * User data passed when subscribing to the signal.
- * Since 2.26
- */
-// void (*GDBusSignalCallback) (GDBusConnection *connection,  const gchar *sender_name,  const gchar *object_path,  const gchar *interface_name,  const gchar *signal_name,  GVariant *parameters,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* senderName, char* objectPath, char* interfaceName, char* signalName, GVariant* parameters, void* userData) GDBusSignalCallback;
-
-/*
- * Signature for function used in g_dbus_connection_add_filter().
- * A filter function is passed a GDBusMessage and expected to return
- * a GDBusMessage too. Passive filter functions that don't modify the
- * message can simply return the message object:
- * $(DDOC_COMMENT example)
- * Filter functions that wants to drop a message can simply return NULL:
- * $(DDOC_COMMENT example)
- * Finally, a filter function may modify a message by copying it:
- * $(DDOC_COMMENT example)
- * If the returned GDBusMessage is different from message and cannot
- * be sent on connection (it could use features, such as file
- * descriptors, not compatible with connection), then a warning is
- * logged to standard error. Applications can
- * check this ahead of time using g_dbus_message_to_blob() passing a
- * GDBusCapabilityFlags value obtained from connection.
- * connection :
- * A GDBusConnection. [transfer none]
- * message :
- * A locked GDBusMessage that the filter function takes ownership of. [transfer full]
- * incoming :
- * TRUE if it is a message received from the other peer, FALSE if it is
- * a message to be sent to the other peer.
- * user_data :
- * User data passed when adding the filter.
- * Returns :
- * A GDBusMessage that will be freed with
- * g_object_unref() or NULL to drop the message. Passive filter
- * functions can simply return the passed message object. [transfer full][allow-none]
- * Since 2.26
- */
-// GDBusMessage * (*GDBusMessageFilterFunction) (GDBusConnection *connection,  GDBusMessage *message,  gboolean incoming,  gpointer user_data);
-public alias extern(C) GDBusMessage * function(GDBusConnection* connection, GDBusMessage* message, int incoming, void* userData) GDBusMessageFilterFunction;
-
-/*
- * The type of the method_call function in GDBusInterfaceVTable.
- * connection :
- * A GDBusConnection.
- * sender :
- * The unique bus name of the remote caller.
- * object_path :
- * The object path that the method was invoked on.
- * interface_name :
- * The D-Bus interface name the method was invoked on.
- * method_name :
- * The name of the method that was invoked.
- * parameters :
- * A GVariant tuple with parameters.
- * invocation :
- * A GDBusMethodInvocation object that can be used to return a value or error.
- * user_data :
- * The user_data gpointer passed to g_dbus_connection_register_object().
- * Since 2.26
- */
-// void (*GDBusInterfaceMethodCallFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *method_name,  GVariant *parameters,  GDBusMethodInvocation *invocation,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* sender, char* objectPath, char* interfaceName, char* methodName, GVariant* parameters, GDBusMethodInvocation* invocation, void* userData) GDBusInterfaceMethodCallFunc;
-
-/*
- * The type of the get_property function in GDBusInterfaceVTable.
- * connection :
- * A GDBusConnection.
- * sender :
- * The unique bus name of the remote caller.
- * object_path :
- * The object path that the method was invoked on.
- * interface_name :
- * The D-Bus interface name for the property.
- * property_name :
- * The name of the property to get the value of.
- * error :
- * Return location for error.
- * user_data :
- * The user_data gpointer passed to g_dbus_connection_register_object().
- * Returns :
- * A GVariant with the value for property_name or NULL if
- * error is set. If the returned GVariant is floating, it is
- * consumed - otherwise its reference count is decreased by one.
- * Since 2.26
- */
-// GVariant * (*GDBusInterfaceGetPropertyFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *property_name,  GError **error,  gpointer user_data);
-public alias extern(C) GVariant * function(GDBusConnection* connection, char* sender, char* objectPath, char* interfaceName, char* propertyName, GError** error, void* userData) GDBusInterfaceGetPropertyFunc;
-
-/*
- * The type of the set_property function in GDBusInterfaceVTable.
- * connection :
- * A GDBusConnection.
- * sender :
- * The unique bus name of the remote caller.
- * object_path :
- * The object path that the method was invoked on.
- * interface_name :
- * The D-Bus interface name for the property.
- * property_name :
- * The name of the property to get the value of.
- * value :
- * The value to set the property to.
- * error :
- * Return location for error.
- * user_data :
- * The user_data gpointer passed to g_dbus_connection_register_object().
- * Returns :
- * TRUE if the property was set to value, FALSE if error is set.
- * Since 2.26
- */
-// gboolean (*GDBusInterfaceSetPropertyFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *property_name,  GVariant *value,  GError **error,  gpointer user_data);
-public alias extern(C) int function(GDBusConnection* connection, char* sender, char* objectPath, char* interfaceName, char* propertyName, GVariant* value, GError** error, void* userData) GDBusInterfaceSetPropertyFunc;
-
-/*
- * The type of the enumerate function in GDBusSubtreeVTable.
- * This function is called when generating introspection data and also
- * when preparing to dispatch incoming messages in the event that the
- * G_DBUS_SUBTREE_FLAGS_DISPATCH_TO_UNENUMERATED_NODES flag is not
- * specified (ie: to verify that the object path is valid).
- * Hierarchies are not supported; the items that you return should not
- * contain the '/' character.
- * The return value will be freed with g_strfreev().
- * connection :
- * A GDBusConnection.
- * sender :
- * The unique bus name of the remote caller.
- * object_path :
- * The object path that was registered with g_dbus_connection_register_subtree().
- * user_data :
- * The user_data gpointer passed to g_dbus_connection_register_subtree().
- * Returns :
- * A newly allocated array of strings for node names that are children of object_path.
- * Since 2.26
- */
-// gchar ** (*GDBusSubtreeEnumerateFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  gpointer user_data);
-public alias extern(C) char ** function(GDBusConnection* connection, char* sender, char* objectPath, void* userData) GDBusSubtreeEnumerateFunc;
-
-/*
- * The type of the introspect function in GDBusSubtreeVTable.
- * Subtrees are flat. node, if non-NULL, is always exactly one
- * segment of the object path (ie: it never contains a slash).
- * This function should return NULL to indicate that there is no object
- * at this node.
- * If this function returns non-NULL, the return value is expected to
- * be a NULL-terminated array of pointers to GDBusInterfaceInfo
- * structures describing the interfaces implemented by node. This
- * array will have g_dbus_interface_info_unref() called on each item
- * before being freed with g_free().
- * The difference between returning NULL and an array containing zero
- * items is that the standard DBus interfaces will returned to the
- * remote introspector in the empty array case, but not in the NULL
- * case.
- * connection :
- * A GDBusConnection.
- * sender :
- * The unique bus name of the remote caller.
- * object_path :
- * The object path that was registered with g_dbus_connection_register_subtree().
- * node :
- * A node that is a child of object_path (relative to object_path) or NULL for the root of the subtree.
- * user_data :
- * The user_data gpointer passed to g_dbus_connection_register_subtree().
- * Returns :
- * A NULL-terminated array of pointers to GDBusInterfaceInfo, or NULL.
- * Since 2.26
- */
-// GDBusInterfaceInfo ** (*GDBusSubtreeIntrospectFunc) (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *node,  gpointer user_data);
-public alias extern(C) GDBusInterfaceInfo ** function(GDBusConnection* connection, char* sender, char* objectPath, char* node, void* userData) GDBusSubtreeIntrospectFunc;
-
-/*
- * The type of the dispatch function in GDBusSubtreeVTable.
- * Subtrees are flat. node, if non-NULL, is always exactly one
- * segment of the object path (ie: it never contains a slash).
- * connection :
- * A GDBusConnection.
- * sender :
- * The unique bus name of the remote caller.
- * object_path :
- * The object path that was registered with g_dbus_connection_register_subtree().
- * interface_name :
- * The D-Bus interface name that the method call or property access is for.
- * node :
- * A node that is a child of object_path (relative to object_path) or NULL for the root of the subtree.
- * out_user_data :
- * Return location for user data to pass to functions in the returned GDBusInterfaceVTable (never NULL).
- * user_data :
- * The user_data gpointer passed to g_dbus_connection_register_subtree().
- * Returns :
- * A GDBusInterfaceVTable or NULL if you don't want to handle the methods.
- * Since 2.26
- */
-// const GDBusInterfaceVTable * (*GDBusSubtreeDispatchFunc)  (GDBusConnection *connection,  const gchar *sender,  const gchar *object_path,  const gchar *interface_name,  const gchar *node,  gpointer *out_user_data,  gpointer user_data);
-public alias extern(C) GDBusInterfaceVTable * function(GDBusConnection* connection, char* sender, char* objectPath, char* interfaceName, char* node, gpointer* outUserData, void* userData) GDBusSubtreeDispatchFunc;
-
-/*
- * Invoked when a connection to a message bus has been obtained.
- * connection :
- * The GDBusConnection to a message bus.
- * name :
- * The name that is requested to be owned.
- * user_data :
- * User data passed to g_bus_own_name().
- * Since 2.26
- */
-// void (*GBusAcquiredCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* name, void* userData) GBusAcquiredCallback;
-
-/*
- * Invoked when the name is acquired.
- * connection :
- * The GDBusConnection on which to acquired the name.
- * name :
- * The name being owned.
- * user_data :
- * User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
- * Since 2.26
- */
-// void (*GBusNameAcquiredCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* name, void* userData) GBusNameAcquiredCallback;
-
-/*
- * Invoked when the name is lost or connection has been closed.
- * connection :
- * The GDBusConnection on which to acquire the name or NULL if
- * the connection was disconnected.
- * name :
- * The name being owned.
- * user_data :
- * User data passed to g_bus_own_name() or g_bus_own_name_on_connection().
- * Since 2.26
- */
-// void (*GBusNameLostCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* name, void* userData) GBusNameLostCallback;
-
-/*
- * Invoked when the name being watched is known to have to have a owner.
- * connection :
- * The GDBusConnection the name is being watched on.
- * name :
- * The name being watched.
- * name_owner :
- * Unique name of the owner of the name being watched.
- * user_data :
- * User data passed to g_bus_watch_name().
- * Since 2.26
- */
-// void (*GBusNameAppearedCallback) (GDBusConnection *connection,  const gchar *name,  const gchar *name_owner,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* name, char* nameOwner, void* userData) GBusNameAppearedCallback;
-
-/*
- * Invoked when the name being watched is known not to have to have a owner.
- * This is also invoked when the GDBusConection on which the watch was
- * established has been closed. In that case, connection will be
- * NULL.
- * connection :
- * The GDBusConnection the name is being watched on, or
- * NULL.
- * name :
- * The name being watched.
- * user_data :
- * User data passed to g_bus_watch_name().
- * Since 2.26
- */
-// void (*GBusNameVanishedCallback) (GDBusConnection *connection,  const gchar *name,  gpointer user_data);
-public alias extern(C) void function(GDBusConnection* connection, char* name, void* userData) GBusNameVanishedCallback;
-
-/*
- * Function signature for a function used to determine the GType to
- * use for an interface proxy (if interface_name is not NULL) or
- * object proxy (if interface_name is NULL).
- * This function is called in the
- * thread-default main loop
- * that manager was constructed in.
- * manager :
- * A GDBusObjectManagerClient.
- * object_path :
- * The object path of the remote object.
- * interface_name :
- * The interface name of the remote object or NULL if a GDBusObjectProxy GType is requested. [allow-none]
- * user_data :
- * User data.
- * Returns :
- * A GType to use for the remote object. The returned type
- * must be a GDBusProxy- or GDBusObjectProxy-derived
- * type.
- * Since 2.30
- */
-// GType (*GDBusProxyTypeFunc) (GDBusObjectManagerClient *manager,  const gchar *object_path,  const gchar *interface_name,  gpointer user_data);
-public alias extern(C) GType function(GDBusObjectManagerClient* manager, char* objectPath, char* interfaceName, void* userData) GDBusProxyTypeFunc;
-
-/*
- * The type of the function that is used to convert from a value stored
- * in a GSettings to a value that is useful to the application.
- * If the value is successfully mapped, the result should be stored at
- * result and TRUE returned. If mapping fails (for example, if value
- * is not in the right format) then FALSE should be returned.
- * If value is NULL then it means that the mapping function is being
- * given a "last chance" to successfully return a valid value. TRUE
- * must be returned in this case.
- * value :
- * the GVariant to map, or NULL
- * result :
- * the result of the mapping. [out]
- * user_data :
- * the user data that was passed to
- * g_settings_get_mapped(). [closure]
- * Returns :
- * TRUE if the conversion succeeded, FALSE in case of an error
- */
-// gboolean (*GSettingsGetMapping) (GVariant *value,  gpointer *result,  gpointer user_data);
-public alias extern(C) int function(GVariant* value, gpointer* result, void* userData) GSettingsGetMapping;
-
-/*
- * The type for the function that is used to convert an object property
- * value to a GVariant for storing it in GSettings.
- * value :
- * a GValue containing the property value to map
- * expected_type :
- * the GVariantType to create
- * user_data :
- * user data that was specified when the binding was created
- * Returns :
- * a new GVariant holding the data from value,
- * or NULL in case of an error
- */
-// GVariant * (*GSettingsBindSetMapping) (const GValue *value,  const GVariantType *expected_type,  gpointer user_data);
-public alias extern(C) GVariant * function(GValue* value, GVariantType* expectedType, void* userData) GSettingsBindSetMapping;
-
-/*
- * The type for the function that is used to convert from GSettings to
- * an object property. The value is already initialized to hold values
- * of the appropriate type.
- * value :
- * return location for the property value
- * variant :
- * the GVariant
- * user_data :
- * user data that was specified when the binding was created
- * Returns :
- * TRUE if the conversion succeeded, FALSE in case of an error
- */
-// gboolean (*GSettingsBindGetMapping) (GValue *value,  GVariant *variant,  gpointer user_data);
-public alias extern(C) int function(GValue* value, GVariant* variant, void* userData) GSettingsBindGetMapping;

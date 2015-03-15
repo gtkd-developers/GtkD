@@ -16,94 +16,51 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gdk3-RGBA-Colors.html
- * outPack = gdk
- * outFile = RGBA
- * strct   = GdkRGBA
- * realStrct=
- * ctorStrct=
- * clss    = RGBA
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gdk_rgba_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtkc.paths;
- * 	- gtkc.Loader;
- * structWrap:
- * 	- GdkRGBA* -> RGBA
- * module aliases:
- * local aliases:
- * overrides:
- * 	- toString
- */
 
 module gdk.RGBA;
 
-public  import gtkc.gdktypes;
-
-private import gtkc.gdk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
-private import gtkc.paths;;
-private import gtkc.Loader;;
-
+private import gobject.ObjectG;
+private import gtkc.Loader;
+private import gtkc.gdk;
+public  import gtkc.gdktypes;
+private import gtkc.paths;
 
 
 /**
- * The GdkRGBA struct is a convenient way to pass rgba colors around.
- * It's based on cairo's way to deal with colors and mirrors its behavior.
- * All values are in the range from 0.0 to 1.0 inclusive. So the color
- * (0.0, 0.0, 0.0, 0.0) represents transparent black and
- * (1.0, 1.0, 1.0, 1.0) is opaque white. Other values will be clamped
- * to this range when drawing.
+ * A #GdkRGBA is used to represent a (possibly translucent)
+ * color, in a way that is compatible with cairos notion of color.
  */
 public class RGBA
 {
-	
 	/** the main Gtk struct */
 	protected GdkRGBA* gdkRGBA;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GdkRGBA* getRGBAStruct()
 	{
 		return gdkRGBA;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gdkRGBA;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GdkRGBA* gdkRGBA)
 	{
 		this.gdkRGBA = gdkRGBA;
 	}
-	
+
 	/**
 	 * Creates a new RGBA Color
 	 */
@@ -185,18 +142,26 @@ public class RGBA
 	{
 		gdkRGBA.alpha = value;
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gdk_rgba_get_type();
+	}
+
 	/**
-	 * Makes a copy of a GdkRGBA structure.
+	 * Makes a copy of a #GdkRGBA.
+	 *
 	 * The result must be freed through gdk_rgba_free().
-	 * Returns: A newly allocated GdkRGBA, with the same contents as rgba Since 3.0
+	 *
+	 * Return: A newly allocated #GdkRGBA, with the same contents as @rgba
+	 *
+	 * Since: 3.0
 	 */
 	public RGBA copy()
 	{
-		// GdkRGBA * gdk_rgba_copy (const GdkRGBA *rgba);
 		auto p = gdk_rgba_copy(gdkRGBA);
 		
 		if(p is null)
@@ -206,76 +171,97 @@ public class RGBA
 		
 		return ObjectG.getDObject!(RGBA)(cast(GdkRGBA*) p);
 	}
-	
+
 	/**
-	 * Frees a GdkRGBA struct created with gdk_rgba_copy()
+	 * Compares two RGBA colors.
+	 *
+	 * Params:
+	 *     p2 = another #GdkRGBA pointer
+	 *
+	 * Return: %TRUE if the two colors compare equal
+	 *
+	 * Since: 3.0
+	 */
+	public bool equal(RGBA p2)
+	{
+		return gdk_rgba_equal(gdkRGBA, (p2 is null) ? null : p2.getRGBAStruct()) != 0;
+	}
+
+	/**
+	 * Frees a #GdkRGBA created with gdk_rgba_copy()
+	 *
+	 * Since: 3.0
 	 */
 	public void free()
 	{
-		// void gdk_rgba_free (GdkRGBA *rgba);
 		gdk_rgba_free(gdkRGBA);
 	}
-	
-	/**
-	 * Parses a textual representation of a color, filling in
-	 * the red, green,
-	 * blue and alpha
-	 * fields of the rgba struct.
-	 * Params:
-	 * spec = the string specifying the color
-	 * Returns: TRUE if the parsing succeeded Since 3.0
-	 */
-	public int parse(string spec)
-	{
-		// gboolean gdk_rgba_parse (GdkRGBA *rgba,  const gchar *spec);
-		return gdk_rgba_parse(gdkRGBA, Str.toStringz(spec));
-	}
-	
-	/**
-	 * Compares two RGBA colors.
-	 * Params:
-	 * p1 = a GdkRGBA pointer. [type GdkRGBA]
-	 * p2 = another GdkRGBA pointer. [type GdkRGBA]
-	 * Returns: TRUE if the two colors compare equal Since 3.0
-	 */
-	public static int equal(void* p1, void* p2)
-	{
-		// gboolean gdk_rgba_equal (gconstpointer p1,  gconstpointer p2);
-		return gdk_rgba_equal(p1, p2);
-	}
-	
+
 	/**
 	 * A hash function suitable for using for a hash
-	 * table that stores GdkRGBAs.
-	 * Params:
-	 * p = a GdkRGBA pointer. [type GdkRGBA]
-	 * Returns: The hash value for p Since 3.0
+	 * table that stores #GdkRGBAs.
+	 *
+	 * Return: The hash value for @p
+	 *
+	 * Since: 3.0
 	 */
-	public static uint hash(void* p)
+	public uint hash()
 	{
-		// guint gdk_rgba_hash (gconstpointer p);
-		return gdk_rgba_hash(p);
+		return gdk_rgba_hash(gdkRGBA);
 	}
-	
+
 	/**
-	 * Returns a textual specification of rgba in the form
-	 * rgb (r, g, b) or
-	 * rgba (r, g, b, a),
-	 * where 'r', 'g', 'b' and 'a' represent the red, green,
+	 * Parses a textual representation of a color, filling in
+	 * the @red, @green, @blue and @alpha fields of the @rgba #GdkRGBA.
+	 *
+	 * The string can be either one of:
+	 * - A standard name (Taken from the X11 rgb.txt file).
+	 * - A hexadecimal value in the form “\#rgb”, “\#rrggbb”,
+	 * “\#rrrgggbbb” or ”\#rrrrggggbbbb”
+	 * - A RGB color in the form “rgb(r,g,b)” (In this case the color will
+	 * have full opacity)
+	 * - A RGBA color in the form “rgba(r,g,b,a)”
+	 *
+	 * Where “r”, “g”, “b” and “a” are respectively the red, green, blue and
+	 * alpha color values. In the last two cases, r g and b are either integers
+	 * in the range 0 to 255 or precentage values in the range 0% to 100%, and
+	 * a is a floating point value in the range 0 to 1.
+	 *
+	 * Params:
+	 *     spec = the string specifying the color
+	 *
+	 * Return: %TRUE if the parsing succeeded
+	 *
+	 * Since: 3.0
+	 */
+	public bool parse(string spec)
+	{
+		return gdk_rgba_parse(gdkRGBA, Str.toStringz(spec)) != 0;
+	}
+
+	/**
+	 * Returns a textual specification of @rgba in the form
+	 * `rgb (r, g, b)` or
+	 * `rgba (r, g, b, a)`,
+	 * where “r”, “g”, “b” and “a” represent the red, green,
 	 * blue and alpha values respectively. r, g, and b are
 	 * represented as integers in the range 0 to 255, and a
 	 * is represented as floating point value in the range 0 to 1.
+	 *
 	 * These string forms are string forms those supported by
 	 * the CSS3 colors module, and can be parsed by gdk_rgba_parse().
+	 *
 	 * Note that this string representation may lose some
 	 * precision, since r, g and b are represented as 8-bit
 	 * integers. If this is a concern, you should use a
 	 * different representation.
-	 * Returns: A newly allocated text string Since 3.0
+	 *
+	 * Return: A newly allocated text string
+	 *
+	 * Since: 3.0
 	 */
 	public override string toString()
 	{
-		// gchar * gdk_rgba_to_string (const GdkRGBA *rgba);
 		return Str.toString(gdk_rgba_to_string(gdkRGBA));
 	}
 }

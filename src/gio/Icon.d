@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = Icon
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Icon
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- IconIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.IconT
- * 	- gio.IconIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Icon;
 
+private import gio.IconIF;
+private import gio.IconT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.IconT;
-private import gio.IconIF;
-
-
-
-/**
- */
 public class Icon : ObjectG, IconIF
 {
-	
-	// Minimal implementation.
-	mixin IconT!(GIcon);
-	
+	/** the main Gtk struct */
+	protected GIcon* gIcon;
+
+	/** Get the main Gtk struct */
+	public GIcon* getIconStruct()
+	{
+		return gIcon;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gIcon;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GIcon* gIcon)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gIcon);
-		this.gIcon = gIcon;
+		gIcon = cast(GIcon*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GIcon* gIcon, bool ownedRef = false)
+	{
+		this.gIcon = gIcon;
+		super(cast(GObject*)gIcon, ownedRef);
+	}
+
+	// add the Icon capabilities
+	mixin IconT!(GIcon);
+
 	/**
 	 */
 }

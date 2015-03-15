@@ -16,86 +16,49 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gstreamer-GstParamSpec.html
- * outPack = gstreamer
- * outFile = ParamSpecFraction
- * strct   = GstParamSpecFraction
- * realStrct=
- * ctorStrct=
- * clss    = ParamSpecFraction
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_param_spec_fraction_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gst_param_spec_fraction
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.ParamSpecFraction;
 
-public  import gstreamerc.gstreamertypes;
-
-private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
-
+private import gstreamerc.gstreamer;
+public  import gstreamerc.gstreamertypes;
 
 
 /**
- * GParamSpec implementations specific to GStreamer.
- *
- * Last reviewed on 2008-03-11 (0.10.18)
+ * A GParamSpec derived structure that contains the meta data for fractional
+ * properties.
  */
 public class ParamSpecFraction
 {
-	
 	/** the main Gtk struct */
 	protected GstParamSpecFraction* gstParamSpecFraction;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstParamSpecFraction* getParamSpecFractionStruct()
 	{
 		return gstParamSpecFraction;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gstParamSpecFraction;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GstParamSpecFraction* gstParamSpecFraction)
 	{
 		this.gstParamSpecFraction = gstParamSpecFraction;
 	}
-	
+
 	/**
 	 * This function creates a fraction GParamSpec for use by objects/elements
 	 * that want to expose properties of fraction type. This function is typically
@@ -116,7 +79,6 @@ public class ParamSpecFraction
 	 */
 	public this(string name, string nick, string blurb, int minNum, int minDenom, int maxNum, int maxDenom, int defaultNum, int defaultDenom, GParamFlags flags)
 	{
-		// GParamSpec * gst_param_spec_fraction (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint min_num,  gint min_denom,  gint max_num,  gint max_denom,  gint default_num,  gint default_denom,  GParamFlags flags);
 		auto p = gst_param_spec_fraction(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minNum, minDenom, maxNum, maxDenom, defaultNum, defaultDenom, flags);
 		if(p is null)
 		{
@@ -124,7 +86,7 @@ public class ParamSpecFraction
 		}
 		this(cast(GstParamSpecFraction*) p);
 	}
-	
+
 	/**
 	 */
 }

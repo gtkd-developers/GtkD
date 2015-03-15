@@ -16,242 +16,161 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkTextTagTable.html
- * outPack = gtk
- * outFile = TextTagTable
- * strct   = GtkTextTagTable
- * realStrct=
- * ctorStrct=
- * clss    = TextTagTable
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_text_tag_table_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.TextTag
- * structWrap:
- * 	- GtkTextTag* -> TextTag
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.TextTagTable;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
+private import gtk.TextTag;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.Str;
-private import gtk.TextTag;
-
-
-private import gobject.ObjectG;
 
 /**
- * You may wish to begin by reading the text widget
- * conceptual overview which gives an overview of all the objects and
+ * You may wish to begin by reading the
+ * [text widget conceptual overview][TextWidget]
+ * which gives an overview of all the objects and
  * data types related to the text widget and how they work together.
- *
- * GtkTextTagTables as GtkBuildable
- *
+ * 
+ * # GtkTextTagTables as GtkBuildable
+ * 
  * The GtkTextTagTable implementation of the GtkBuildable interface
- * supports adding tags by specifying "tag" as the "type"
- * attribute of a &lt;child&gt; element.
- *
- * $(DDOC_COMMENT example)
+ * supports adding tags by specifying “tag” as the “type” attribute
+ * of a <child> element.
+ * 
+ * An example of a UI definition fragment specifying tags:
+ * |[
+ * <object class="GtkTextTagTable">
+ * <child type="tag">
+ * <object class="GtkTextTag"/>
+ * </child>
+ * </object>
+ * ]|
  */
-public class TextTagTable : ObjectG
+public class TextTagTable : ObjectG, BuildableIF
 {
-	
 	/** the main Gtk struct */
 	protected GtkTextTagTable* gtkTextTagTable;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkTextTagTable* getTextTagTableStruct()
 	{
 		return gtkTextTagTable;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkTextTagTable;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkTextTagTable* gtkTextTagTable)
-	{
-		super(cast(GObject*)gtkTextTagTable);
-		this.gtkTextTagTable = gtkTextTagTable;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkTextTagTable = cast(GtkTextTagTable*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkTextTagTable* gtkTextTagTable, bool ownedRef = false)
+	{
+		this.gtkTextTagTable = gtkTextTagTable;
+		super(cast(GObject*)gtkTextTagTable, ownedRef);
+	}
+
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTextTagTable);
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
+
+	public static GType getType()
+	{
+		return gtk_text_tag_table_get_type();
+	}
+
 	/**
-	 */
-	void addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("tag-added" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"tag-added",
-			cast(GCallback)&callBackTagAdded,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["tag-added"] = 1;
-		}
-		onTagAddedListeners ~= dlg;
-	}
-	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable _textTagTable)
-	{
-		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(TextTag)(tag), _textTagTable);
-		}
-	}
-	
-	void delegate(TextTag, gboolean, TextTagTable)[] onTagChangedListeners;
-	/**
-	 */
-	void addOnTagChanged(void delegate(TextTag, gboolean, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("tag-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"tag-changed",
-			cast(GCallback)&callBackTagChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["tag-changed"] = 1;
-		}
-		onTagChangedListeners ~= dlg;
-	}
-	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, gboolean sizeChanged, TextTagTable _textTagTable)
-	{
-		foreach ( void delegate(TextTag, gboolean, TextTagTable) dlg ; _textTagTable.onTagChangedListeners )
-		{
-			dlg(ObjectG.getDObject!(TextTag)(tag), sizeChanged, _textTagTable);
-		}
-	}
-	
-	void delegate(TextTag, TextTagTable)[] onTagRemovedListeners;
-	/**
-	 */
-	void addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("tag-removed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"tag-removed",
-			cast(GCallback)&callBackTagRemoved,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["tag-removed"] = 1;
-		}
-		onTagRemovedListeners ~= dlg;
-	}
-	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable _textTagTable)
-	{
-		foreach ( void delegate(TextTag, TextTagTable) dlg ; _textTagTable.onTagRemovedListeners )
-		{
-			dlg(ObjectG.getDObject!(TextTag)(tag), _textTagTable);
-		}
-	}
-	
-	
-	/**
-	 * Creates a new GtkTextTagTable. The table contains no tags by
+	 * Creates a new #GtkTextTagTable. The table contains no tags by
 	 * default.
+	 *
+	 * Return: a new #GtkTextTagTable
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkTextTagTable * gtk_text_tag_table_new (void);
 		auto p = gtk_text_tag_table_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_text_tag_table_new()");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GtkTextTagTable*) p);
+		
+		this(cast(GtkTextTagTable*) p, true);
 	}
-	
+
 	/**
 	 * Add a tag to the table. The tag is assigned the highest priority
 	 * in the table.
-	 * tag must not be in a tag table already, and may not have
+	 *
+	 * @tag must not be in a tag table already, and may not have
 	 * the same name as an already-added tag.
+	 *
 	 * Params:
-	 * tag = a GtkTextTag
+	 *     tag = a #GtkTextTag
+	 *
+	 * Return: %TRUE on success.
 	 */
-	public void add(TextTag tag)
+	public bool add(TextTag tag)
 	{
-		// void gtk_text_tag_table_add (GtkTextTagTable *table,  GtkTextTag *tag);
-		gtk_text_tag_table_add(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
+		return gtk_text_tag_table_add(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct()) != 0;
 	}
-	
+
 	/**
-	 * Remove a tag from the table. If a GtkTextBuffer has table as its tag table,
-	 * the tag is removed from the buffer. The table's reference to the tag is
-	 * removed, so the tag will end up destroyed if you don't have a reference to
-	 * it.
+	 * Calls @func on each tag in @table, with user data @data.
+	 * Note that the table may not be modified while iterating
+	 * over it (you can’t add/remove tags).
+	 *
 	 * Params:
-	 * tag = a GtkTextTag
+	 *     func = a function to call on each tag
+	 *     data = user data
 	 */
-	public void remove(TextTag tag)
+	public void foreac(GtkTextTagTableForeach func, void* data)
 	{
-		// void gtk_text_tag_table_remove (GtkTextTagTable *table,  GtkTextTag *tag);
-		gtk_text_tag_table_remove(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
+		gtk_text_tag_table_foreach(gtkTextTagTable, func, data);
 	}
-	
+
+	/**
+	 * Returns the size of the table (number of tags)
+	 *
+	 * Return: number of tags in @table
+	 */
+	public int getSize()
+	{
+		return gtk_text_tag_table_get_size(gtkTextTagTable);
+	}
+
 	/**
 	 * Look up a named tag.
+	 *
 	 * Params:
-	 * name = name of a tag
-	 * Returns: The tag, or NULL if none by that name is in the table. [transfer none]
+	 *     name = name of a tag
+	 *
+	 * Return: The tag, or %NULL if none by that name is in the table.
 	 */
 	public TextTag lookup(string name)
 	{
-		// GtkTextTag * gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
 		
 		if(p is null)
@@ -261,28 +180,92 @@ public class TextTagTable : ObjectG
 		
 		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) p);
 	}
-	
+
 	/**
-	 * Calls func on each tag in table, with user data data.
-	 * Note that the table may not be modified while iterating
-	 * over it (you can't add/remove tags).
+	 * Remove a tag from the table. If a #GtkTextBuffer has @table as its tag table,
+	 * the tag is removed from the buffer. The table’s reference to the tag is
+	 * removed, so the tag will end up destroyed if you don’t have a reference to
+	 * it.
+	 *
 	 * Params:
-	 * func = a function to call on each tag. [scope call]
-	 * data = user data
+	 *     tag = a #GtkTextTag
 	 */
-	public void foreac(GtkTextTagTableForeach func, void* data)
+	public void remove(TextTag tag)
 	{
-		// void gtk_text_tag_table_foreach (GtkTextTagTable *table,  GtkTextTagTableForeach func,  gpointer data);
-		gtk_text_tag_table_foreach(gtkTextTagTable, func, data);
+		gtk_text_tag_table_remove(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
 	}
-	
-	/**
-	 * Returns the size of the table (number of tags)
-	 * Returns: number of tags in table Signal Details The "tag-added" signal void user_function (GtkTextTagTable *texttagtable, GtkTextTag *tag, gpointer user_data) : Run Last
-	 */
-	public int getSize()
+
+	int[string] connectedSignals;
+
+	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
+	void addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		// gint gtk_text_tag_table_get_size (GtkTextTagTable *table);
-		return gtk_text_tag_table_get_size(gtkTextTagTable);
+		if ( "tag-added" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"tag-added",
+				cast(GCallback)&callBackTagAdded,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["tag-added"] = 1;
+		}
+		onTagAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable _texttagtable)
+	{
+		foreach ( void delegate(TextTag, TextTagTable) dlg; _texttagtable.onTagAddedListeners )
+		{
+			dlg(ObjectG.getDObject!(TextTag)(tag), _texttagtable);
+		}
+	}
+
+	void delegate(TextTag, bool, TextTagTable)[] onTagChangedListeners;
+	void addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "tag-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"tag-changed",
+				cast(GCallback)&callBackTagChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["tag-changed"] = 1;
+		}
+		onTagChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, bool sizeChanged, TextTagTable _texttagtable)
+	{
+		foreach ( void delegate(TextTag, bool, TextTagTable) dlg; _texttagtable.onTagChangedListeners )
+		{
+			dlg(ObjectG.getDObject!(TextTag)(tag), sizeChanged, _texttagtable);
+		}
+	}
+
+	void delegate(TextTag, TextTagTable)[] onTagRemovedListeners;
+	void addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "tag-removed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"tag-removed",
+				cast(GCallback)&callBackTagRemoved,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["tag-removed"] = 1;
+		}
+		onTagRemovedListeners ~= dlg;
+	}
+	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, TextTagTable _texttagtable)
+	{
+		foreach ( void delegate(TextTag, TextTagTable) dlg; _texttagtable.onTagRemovedListeners )
+		{
+			dlg(ObjectG.getDObject!(TextTag)(tag), _texttagtable);
+		}
 	}
 }

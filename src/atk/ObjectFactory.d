@@ -16,56 +16,19 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkObjectFactory.html
- * outPack = atk
- * outFile = ObjectFactory
- * strct   = AtkObjectFactory
- * realStrct=
- * ctorStrct=
- * clss    = ObjectFactory
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_object_factory_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- gobject.ObjectG
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * 	- GObject* -> ObjectG
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.ObjectFactory;
 
-public  import gtkc.atktypes;
-
-private import gtkc.atk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import atk.ObjectAtk;
 private import gobject.ObjectG;
+private import gtkc.atk;
+public  import gtkc.atktypes;
 
-
-private import gobject.ObjectG;
 
 /**
  * This class is the base object class for a factory used to create an
@@ -76,52 +39,56 @@ private import gobject.ObjectG;
  */
 public class ObjectFactory : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected AtkObjectFactory* atkObjectFactory;
-	
-	
+
 	/** Get the main Gtk struct */
 	public AtkObjectFactory* getObjectFactoryStruct()
 	{
 		return atkObjectFactory;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)atkObjectFactory;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (AtkObjectFactory* atkObjectFactory)
-	{
-		super(cast(GObject*)atkObjectFactory);
-		this.atkObjectFactory = atkObjectFactory;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		atkObjectFactory = cast(AtkObjectFactory*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (AtkObjectFactory* atkObjectFactory, bool ownedRef = false)
+	{
+		this.atkObjectFactory = atkObjectFactory;
+		super(cast(GObject*)atkObjectFactory, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return atk_object_factory_get_type();
+	}
+
 	/**
-	 * Provides an AtkObject that implements an accessibility interface
-	 * on behalf of obj
+	 * Provides an #AtkObject that implements an accessibility interface
+	 * on behalf of @obj
+	 *
 	 * Params:
-	 * obj = a GObject
-	 * Returns: an AtkObject that implements an accessibility interface on behalf of obj. [transfer full]
+	 *     obj = a #GObject
+	 *
+	 * Return: an #AtkObject that implements an accessibility
+	 *     interface on behalf of @obj
 	 */
 	public ObjectAtk createAccessible(ObjectG obj)
 	{
-		// AtkObject * atk_object_factory_create_accessible  (AtkObjectFactory *factory,  GObject *obj);
 		auto p = atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
 		
 		if(p is null)
@@ -129,29 +96,29 @@ public class ObjectFactory : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
-	
+
 	/**
 	 * Gets the GType of the accessible which is created by the factory.
-	 * Returns: the type of the accessible which is created by the factory. The value G_TYPE_INVALID is returned if no type if found.
+	 *
+	 * Return: the type of the accessible which is created by the @factory.
+	 *     The value G_TYPE_INVALID is returned if no type if found.
 	 */
 	public GType getAccessibleType()
 	{
-		// GType atk_object_factory_get_accessible_type  (AtkObjectFactory *factory);
 		return atk_object_factory_get_accessible_type(atkObjectFactory);
 	}
-	
+
 	/**
-	 * Inform factory that it is no longer being used to create
-	 * accessibles. When called, factory may need to inform
-	 * AtkObjects which it has created that they need to be re-instantiated.
-	 * Note: primarily used for runtime replacement of AtkObjectFactorys
+	 * Inform @factory that it is no longer being used to create
+	 * accessibles. When called, @factory may need to inform
+	 * #AtkObjects which it has created that they need to be re-instantiated.
+	 * Note: primarily used for runtime replacement of #AtkObjectFactorys
 	 * in object registries.
 	 */
 	public void invalidate()
 	{
-		// void atk_object_factory_invalidate (AtkObjectFactory *factory);
 		atk_object_factory_invalidate(atkObjectFactory);
 	}
 }

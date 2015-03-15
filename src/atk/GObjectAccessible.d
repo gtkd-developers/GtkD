@@ -16,56 +16,19 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkGObjectAccessible.html
- * outPack = atk
- * outFile = GObjectAccessible
- * strct   = AtkGObjectAccessible
- * realStrct=
- * ctorStrct=
- * clss    = GObjectAccessible
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_gobject_accessible_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- gobject.ObjectG
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * 	- GObject* -> ObjectG
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.GObjectAccessible;
 
+private import atk.ObjectAtk;
+private import gobject.ObjectG;
+private import gtkc.atk;
 public  import gtkc.atktypes;
 
-private import gtkc.atk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import atk.ObjectAtk;
-private import gobject.ObjectG;
-
-
-private import atk.ObjectAtk;
 
 /**
  * This object class is derived from AtkObject. It can be used as a
@@ -75,51 +38,55 @@ private import atk.ObjectAtk;
  */
 public class GObjectAccessible : ObjectAtk
 {
-	
 	/** the main Gtk struct */
 	protected AtkGObjectAccessible* atkGObjectAccessible;
-	
-	
+
 	/** Get the main Gtk struct */
 	public AtkGObjectAccessible* getGObjectAccessibleStruct()
 	{
 		return atkGObjectAccessible;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)atkGObjectAccessible;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (AtkGObjectAccessible* atkGObjectAccessible)
-	{
-		super(cast(AtkObject*)atkGObjectAccessible);
-		this.atkGObjectAccessible = atkGObjectAccessible;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		atkGObjectAccessible = cast(AtkGObjectAccessible*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (AtkGObjectAccessible* atkGObjectAccessible, bool ownedRef = false)
+	{
+		this.atkGObjectAccessible = atkGObjectAccessible;
+		super(cast(AtkObject*)atkGObjectAccessible, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return atk_gobject_accessible_get_type();
+	}
+
 	/**
-	 * Gets the accessible object for the specified obj.
+	 * Gets the accessible object for the specified @obj.
+	 *
 	 * Params:
-	 * obj = a GObject
-	 * Returns: a AtkObject which is the accessible object for the obj. [transfer none]
+	 *     obj = a #GObject
+	 *
+	 * Return: a #AtkObject which is the accessible object for
+	 *     the @obj
 	 */
 	public static ObjectAtk forObject(ObjectG obj)
 	{
-		// AtkObject * atk_gobject_accessible_for_object (GObject *obj);
 		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
 		
 		if(p is null)
@@ -129,14 +96,15 @@ public class GObjectAccessible : ObjectAtk
 		
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
-	
+
 	/**
-	 * Gets the GObject for which obj is the accessible object.
-	 * Returns: a GObject which is the object for which obj is the accessible object. [transfer none]
+	 * Gets the GObject for which @obj is the accessible object.
+	 *
+	 * Return: a #GObject which is the object for which @obj is
+	 *     the accessible object
 	 */
 	public ObjectG getObject()
 	{
-		// GObject * atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
 		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);
 		
 		if(p is null)

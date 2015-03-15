@@ -16,54 +16,20 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gtk
- * outFile = TreeIterError
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = TreeIterError
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = Exception
- * implements:
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.TreeIterError;
 
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-
-
-
-/**
- */
 public class TreeIterError : Exception
 {
-	
 	/**
 	 * A TreeIter error.
 	 * thrown<br>
@@ -73,7 +39,7 @@ public class TreeIterError : Exception
 	{
 		super("TreeIter."~method~" : "~message);
 	}
-	
+
 	/**
 	 */
 }

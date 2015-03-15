@@ -16,93 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gtkglext-gdkgldrawable.html
- * outPack = glgdk
- * outFile = GLDrawableIF
- * strct   = GdkGLDrawable
- * realStrct=
- * ctorStrct=
- * clss    = GLDrawableT
- * interf  = GLDrawableIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gdk_gl_drawable_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glgdk.GLConfig
- * structWrap:
- * 	- GdkGLConfig* -> GLConfig
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glgdk.GLDrawableIF;
 
+private import glgdk.GLConfig;
+private import gobject.ObjectG;
+private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
-private import gtkglc.glgdk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import glgdk.GLConfig;
-
-
-
-/**
- */
-public interface GLDrawableIF
-{
-	
-	
+public interface GLDrawableIF{
 	/** Get the main Gtk struct */
-	public GdkGLDrawable* getGLDrawableTStruct();
-	
+	public GdkGLDrawable* getGLDrawableStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Returns whether the gldrawable supports the double-buffered visual.
-	 * Returns: TRUE if the double-buffered visual is supported, FALSE otherwise.
+	 * Gets #GdkGLConfig with which the @gldrawable is configured.
+	 *
+	 * Return: the #GdkGLConfig.
 	 */
-	public int isDoubleBuffered();
-	
+	public GLConfig getGlConfig();
+
+	/**
+	 * Returns whether the @gldrawable supports the double-buffered visual.
+	 *
+	 * Return: TRUE if the double-buffered visual is supported, FALSE otherwise.
+	 */
+	public bool isDoubleBuffered();
+
 	/**
 	 * Exchange front and back buffers.
 	 */
 	public void swapBuffers();
-	
-	/**
-	 * Complete OpenGL execution prior to subsequent GDK drawing calls.
-	 */
-	public void waitGl();
-	
+
 	/**
 	 * Complete GDK drawing execution prior to subsequent OpenGL calls.
 	 */
 	public void waitGdk();
-	
+
 	/**
-	 * Gets GdkGLConfig with which the gldrawable is configured.
-	 * Returns: the GdkGLConfig.
+	 * Complete OpenGL execution prior to subsequent GDK drawing calls.
 	 */
-	public GLConfig getGLConfig();
+	public void waitGl();
 }

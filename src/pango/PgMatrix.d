@@ -16,155 +16,90 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = pango-Glyph-Storage.html
- * outPack = pango
- * outFile = PgMatrix
- * strct   = PangoMatrix
- * realStrct=
- * ctorStrct=
- * clss    = PgMatrix
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- pango_
- * 	- pango_matrix_
- * omit structs:
- * omit prefixes:
- * 	- pango_glyph_string_
- * 	- pango_glyph_item_
- * 	- pango_glyph_item_iter_
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * 	- PangoMatrix* -> PgMatrix
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module pango.PgMatrix;
 
+private import gobject.ObjectG;
+private import gtkc.pango;
 public  import gtkc.pangotypes;
 
-private import gtkc.pango;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-
-
-private import gobject.Boxed;
 
 /**
- * pango_shape() produces a string of glyphs which
- * can be measured or drawn to the screen. The following
- * structures are used to store information about
- * glyphs.
+ * A structure specifying a transformation between user-space
+ * coordinates and device coordinates. The transformation
+ * is given by
+ * 
+ * <programlisting>
+ * x_device = x_user * matrix->xx + y_user * matrix->xy + matrix->x0;
+ * y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
+ * </programlisting>
+ *
+ * Since: 1.6
  */
-public class PgMatrix : Boxed
+public class PgMatrix
 {
-	
 	/** the main Gtk struct */
 	protected PangoMatrix* pangoMatrix;
-	
-	
+
 	/** Get the main Gtk struct */
 	public PangoMatrix* getPgMatrixStruct()
 	{
 		return pangoMatrix;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)pangoMatrix;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (PangoMatrix* pangoMatrix)
 	{
 		this.pangoMatrix = pangoMatrix;
 	}
-	
+
 	/**
 	 */
-	
-	/**
-	 * Converts a number in Pango units to floating-point: divides
-	 * it by PANGO_SCALE.
-	 * Since 1.16
-	 * Params:
-	 * i = value in Pango units
-	 * Returns: the double value.
-	 */
-	public static double unitsToDouble(int i)
+
+	public static GType getType()
 	{
-		// double pango_units_to_double (int i);
-		return pango_units_to_double(i);
+		return pango_matrix_get_type();
 	}
-	
+
 	/**
-	 * Converts a floating-point number to Pango units: multiplies
-	 * it by PANGO_SCALE and rounds to nearest integer.
-	 * Since 1.16
+	 * Changes the transformation represented by @matrix to be the
+	 * transformation given by first applying transformation
+	 * given by @new_matrix then applying the original transformation.
+	 *
 	 * Params:
-	 * d = double floating-point value
-	 * Returns: the value in Pango units.
+	 *     newMatrix = a #PangoMatrix
+	 *
+	 * Since: 1.6
 	 */
-	public static int unitsFromDouble(double d)
+	public void concat(PgMatrix newMatrix)
 	{
-		// int pango_units_from_double (double d);
-		return pango_units_from_double(d);
+		pango_matrix_concat(pangoMatrix, (newMatrix is null) ? null : newMatrix.getPgMatrixStruct());
 	}
-	
+
 	/**
-	 * Converts extents from Pango units to device units, dividing by the
-	 * PANGO_SCALE factor and performing rounding.
-	 * The inclusive rectangle is converted by flooring the x/y coordinates and extending
-	 * width/height, such that the final rectangle completely includes the original
-	 * rectangle.
-	 * The nearest rectangle is converted by rounding the coordinates
-	 * of the rectangle to the nearest device unit (pixel).
-	 * The rule to which argument to use is: if you want the resulting device-space
-	 * rectangle to completely contain the original rectangle, pass it in as inclusive.
-	 * If you want two touching-but-not-overlapping rectangles stay
-	 * touching-but-not-overlapping after rounding to device units, pass them in
-	 * as nearest.
-	 * Since 1.16
-	 * Params:
-	 * inclusive = rectangle to round to pixels inclusively, or NULL. [allow-none]
-	 * nearest = rectangle to round to nearest pixels, or NULL. [allow-none]
+	 * Copies a #PangoMatrix.
+	 *
+	 * Return: the newly allocated #PangoMatrix, which should
+	 *     be freed with pango_matrix_free(), or %NULL if
+	 *     @matrix was %NULL.
+	 *
+	 * Since: 1.6
 	 */
-	public static void extentsToPixels(PangoRectangle* inclusive, PangoRectangle* nearest)
+	public PgMatrix copy()
 	{
-		// void pango_extents_to_pixels (PangoRectangle *inclusive,  PangoRectangle *nearest);
-		pango_extents_to_pixels(inclusive, nearest);
-	}
-	
-	/**
-	 * Copies a PangoMatrix.
-	 * Since 1.6
-	 * Params:
-	 * matrix = a PangoMatrix, may be NULL
-	 * Returns: the newly allocated PangoMatrix, which should be freed with pango_matrix_free(), or NULL if matrix was NULL.
-	 */
-	public PgMatrix matrixCopy()
-	{
-		// PangoMatrix * pango_matrix_copy (const PangoMatrix *matrix);
 		auto p = pango_matrix_copy(pangoMatrix);
 		
 		if(p is null)
@@ -174,120 +109,139 @@ public class PgMatrix : Boxed
 		
 		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
 	}
-	
+
 	/**
-	 * Free a PangoMatrix created with pango_matrix_copy().
-	 * Since 1.6
-	 * Params:
-	 * matrix = a PangoMatrix, may be NULL
+	 * Free a #PangoMatrix created with pango_matrix_copy().
+	 *
+	 * Since: 1.6
 	 */
-	public void matrixFree()
+	public void free()
 	{
-		// void pango_matrix_free (PangoMatrix *matrix);
 		pango_matrix_free(pangoMatrix);
 	}
-	
+
 	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first translating by (tx, ty)
-	 * then applying the original transformation.
-	 * Since 1.6
-	 * Params:
-	 * matrix = a PangoMatrix
-	 * tx = amount to translate in the X direction
-	 * ty = amount to translate in the Y direction
+	 * Returns the scale factor of a matrix on the height of the font.
+	 * That is, the scale factor in the direction perpendicular to the
+	 * vector that the X coordinate is mapped to.
+	 *
+	 * Return: the scale factor of @matrix on the height of the font,
+	 *     or 1.0 if @matrix is %NULL.
+	 *
+	 * Since: 1.12
 	 */
-	public void matrixTranslate(double tx, double ty)
+	public double getFontScaleFactor()
 	{
-		// void pango_matrix_translate (PangoMatrix *matrix,  double tx,  double ty);
-		pango_matrix_translate(pangoMatrix, tx, ty);
+		return pango_matrix_get_font_scale_factor(pangoMatrix);
 	}
-	
+
 	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first scaling by sx in the X direction
-	 * and sy in the Y direction then applying the original
-	 * transformation.
-	 * Since 1.6
-	 * Params:
-	 * matrix = a PangoMatrix
-	 * scaleX = amount to scale by in X direction
-	 * scaleY = amount to scale by in Y direction
-	 */
-	public void matrixScale(double scaleX, double scaleY)
-	{
-		// void pango_matrix_scale (PangoMatrix *matrix,  double scale_x,  double scale_y);
-		pango_matrix_scale(pangoMatrix, scaleX, scaleY);
-	}
-	
-	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first rotating by degrees degrees
+	 * Changes the transformation represented by @matrix to be the
+	 * transformation given by first rotating by @degrees degrees
 	 * counter-clockwise then applying the original transformation.
-	 * Since 1.6
+	 *
 	 * Params:
-	 * matrix = a PangoMatrix
-	 * degrees = degrees to rotate counter-clockwise
+	 *     degrees = degrees to rotate counter-clockwise
+	 *
+	 * Since: 1.6
 	 */
-	public void matrixRotate(double degrees)
+	public void rotate(double degrees)
 	{
-		// void pango_matrix_rotate (PangoMatrix *matrix,  double degrees);
 		pango_matrix_rotate(pangoMatrix, degrees);
 	}
-	
+
 	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first applying transformation
-	 * given by new_matrix then applying the original transformation.
-	 * Since 1.6
+	 * Changes the transformation represented by @matrix to be the
+	 * transformation given by first scaling by @sx in the X direction
+	 * and @sy in the Y direction then applying the original
+	 * transformation.
+	 *
 	 * Params:
-	 * matrix = a PangoMatrix
-	 * newMatrix = a PangoMatrix
+	 *     scaleX = amount to scale by in X direction
+	 *     scaleY = amount to scale by in Y direction
+	 *
+	 * Since: 1.6
 	 */
-	public void matrixConcat(PgMatrix newMatrix)
+	public void scale(double scaleX, double scaleY)
 	{
-		// void pango_matrix_concat (PangoMatrix *matrix,  const PangoMatrix *new_matrix);
-		pango_matrix_concat(pangoMatrix, (newMatrix is null) ? null : newMatrix.getPgMatrixStruct());
+		pango_matrix_scale(pangoMatrix, scaleX, scaleY);
 	}
-	
+
 	/**
-	 * Transforms the point (x, y) by matrix.
-	 * Since 1.16
-	 * Params:
-	 * matrix = a PangoMatrix, or NULL
-	 * x = in/out X position. [inout]
-	 * y = in/out Y position. [inout]
-	 */
-	public void matrixTransformPoint(ref double x, ref double y)
-	{
-		// void pango_matrix_transform_point (const PangoMatrix *matrix,  double *x,  double *y);
-		pango_matrix_transform_point(pangoMatrix, &x, &y);
-	}
-	
-	/**
-	 * Transforms the distance vector (dx,dy) by matrix. This is
+	 * Transforms the distance vector (@dx,@dy) by @matrix. This is
 	 * similar to pango_matrix_transform_point() except that the translation
 	 * components of the transformation are ignored. The calculation of
-	 * Since 1.16
+	 * the returned vector is as follows:
+	 *
+	 * <programlisting>
+	 * dx2 = dx1 * xx + dy1 * xy;
+	 * dy2 = dx1 * yx + dy1 * yy;
+	 * </programlisting>
+	 *
+	 * Affine transformations are position invariant, so the same vector
+	 * always transforms to the same vector. If (@x1,@y1) transforms
+	 * to (@x2,@y2) then (@x1+@dx1,@y1+@dy1) will transform to
+	 * (@x1+@dx2,@y1+@dy2) for all values of @x1 and @x2.
+	 *
 	 * Params:
-	 * matrix = a PangoMatrix, or NULL
-	 * dx = in/out X component of a distance vector. [inout]
-	 * dy = in/out Y component of a distance vector. [inout]
+	 *     dx = in/out X component of a distance vector
+	 *     dy = in/out Y component of a distance vector
+	 *
+	 * Since: 1.16
 	 */
-	public void matrixTransformDistance(ref double dx, ref double dy)
+	public void transformDistance(ref double dx, ref double dy)
 	{
-		// void pango_matrix_transform_distance (const PangoMatrix *matrix,  double *dx,  double *dy);
 		pango_matrix_transform_distance(pangoMatrix, &dx, &dy);
 	}
-	
+
 	/**
-	 * First transforms rect using matrix, then calculates the bounding box
-	 * of the transformed rectangle. The rectangle should be in Pango units.
+	 * First transforms the @rect using @matrix, then calculates the bounding box
+	 * of the transformed rectangle.  The rectangle should be in device units
+	 * (pixels).
+	 *
 	 * This function is useful for example when you want to draw a rotated
-	 * PangoLayout to an image buffer, and want to know how large the image
+	 * @PangoLayout to an image buffer, and want to know how large the image
 	 * should be and how much you should shift the layout when rendering.
+	 *
+	 * For better accuracy, you should use pango_matrix_transform_rectangle() on
+	 * original rectangle in Pango units and convert to pixels afterward
+	 * using pango_extents_to_pixels()'s first argument.
+	 *
+	 * Params:
+	 *     rect = in/out bounding box in device units, or %NULL
+	 *
+	 * Since: 1.16
+	 */
+	public void transformPixelRectangle(ref PangoRectangle rect)
+	{
+		pango_matrix_transform_pixel_rectangle(pangoMatrix, &rect);
+	}
+
+	/**
+	 * Transforms the point (@x, @y) by @matrix.
+	 *
+	 * Params:
+	 *     x = in/out X position
+	 *     y = in/out Y position
+	 *
+	 * Since: 1.16
+	 */
+	public void transformPoint(ref double x, ref double y)
+	{
+		pango_matrix_transform_point(pangoMatrix, &x, &y);
+	}
+
+	/**
+	 * First transforms @rect using @matrix, then calculates the bounding box
+	 * of the transformed rectangle.  The rectangle should be in Pango units.
+	 *
+	 * This function is useful for example when you want to draw a rotated
+	 * @PangoLayout to an image buffer, and want to know how large the image
+	 * should be and how much you should shift the layout when rendering.
+	 *
 	 * If you have a rectangle in device units (pixels), use
 	 * pango_matrix_transform_pixel_rectangle().
+	 *
 	 * If you have the rectangle in Pango units and want to convert to
 	 * transformed pixel bounding box, it is more accurate to transform it first
 	 * (using this function) and pass the result to pango_extents_to_pixels(),
@@ -296,50 +250,90 @@ public class PgMatrix : Boxed
 	 * to pixels first and then transform, for example when the transformed
 	 * coordinates may overflow in Pango units (large matrix translation for
 	 * example).
-	 * Since 1.16
+	 *
 	 * Params:
-	 * matrix = a PangoMatrix, or NULL
-	 * rect = in/out bounding box in Pango units, or NULL. [inout][allow-none]
+	 *     rect = in/out bounding box in Pango units, or %NULL
+	 *
+	 * Since: 1.16
 	 */
-	public void matrixTransformRectangle(PangoRectangle* rect)
+	public void transformRectangle(ref PangoRectangle rect)
 	{
-		// void pango_matrix_transform_rectangle (const PangoMatrix *matrix,  PangoRectangle *rect);
-		pango_matrix_transform_rectangle(pangoMatrix, rect);
+		pango_matrix_transform_rectangle(pangoMatrix, &rect);
 	}
-	
+
 	/**
-	 * First transforms the rect using matrix, then calculates the bounding box
-	 * of the transformed rectangle. The rectangle should be in device units
-	 * (pixels).
-	 * This function is useful for example when you want to draw a rotated
-	 * PangoLayout to an image buffer, and want to know how large the image
-	 * should be and how much you should shift the layout when rendering.
-	 * For better accuracy, you should use pango_matrix_transform_rectangle() on
-	 * original rectangle in Pango units and convert to pixels afterward
-	 * using pango_extents_to_pixels()'s first argument.
-	 * Since 1.16
+	 * Changes the transformation represented by @matrix to be the
+	 * transformation given by first translating by (@tx, @ty)
+	 * then applying the original transformation.
+	 *
 	 * Params:
-	 * matrix = a PangoMatrix, or NULL
-	 * rect = in/out bounding box in device units, or NULL. [inout][allow-none]
+	 *     tx = amount to translate in the X direction
+	 *     ty = amount to translate in the Y direction
+	 *
+	 * Since: 1.6
 	 */
-	public void matrixTransformPixelRectangle(PangoRectangle* rect)
+	public void translate(double tx, double ty)
 	{
-		// void pango_matrix_transform_pixel_rectangle  (const PangoMatrix *matrix,  PangoRectangle *rect);
-		pango_matrix_transform_pixel_rectangle(pangoMatrix, rect);
+		pango_matrix_translate(pangoMatrix, tx, ty);
 	}
-	
+
 	/**
-	 * Returns the scale factor of a matrix on the height of the font.
-	 * That is, the scale factor in the direction perpendicular to the
-	 * vector that the X coordinate is mapped to.
-	 * Since 1.12
+	 * Converts extents from Pango units to device units, dividing by the
+	 * %PANGO_SCALE factor and performing rounding.
+	 *
+	 * The @inclusive rectangle is converted by flooring the x/y coordinates and extending
+	 * width/height, such that the final rectangle completely includes the original
+	 * rectangle.
+	 *
+	 * The @nearest rectangle is converted by rounding the coordinates
+	 * of the rectangle to the nearest device unit (pixel).
+	 *
+	 * The rule to which argument to use is: if you want the resulting device-space
+	 * rectangle to completely contain the original rectangle, pass it in as @inclusive.
+	 * If you want two touching-but-not-overlapping rectangles stay
+	 * touching-but-not-overlapping after rounding to device units, pass them in
+	 * as @nearest.
+	 *
 	 * Params:
-	 * matrix = a PangoMatrix, may be NULL. [allow-none]
-	 * Returns: the scale factor of matrix on the height of the font, or 1.0 if matrix is NULL.
+	 *     inclusive = rectangle to round to pixels inclusively, or %NULL.
+	 *     nearest = rectangle to round to nearest pixels, or %NULL.
+	 *
+	 * Since: 1.16
 	 */
-	public double matrixGetFontScaleFactor()
+	public static void extentsToPixels(PangoRectangle* inclusive, PangoRectangle* nearest)
 	{
-		// double pango_matrix_get_font_scale_factor (const PangoMatrix *matrix);
-		return pango_matrix_get_font_scale_factor(pangoMatrix);
+		pango_extents_to_pixels(inclusive, nearest);
+	}
+
+	/**
+	 * Converts a floating-point number to Pango units: multiplies
+	 * it by %PANGO_SCALE and rounds to nearest integer.
+	 *
+	 * Params:
+	 *     d = double floating-point value
+	 *
+	 * Return: the value in Pango units.
+	 *
+	 * Since: 1.16
+	 */
+	public static int unitsFromDouble(double d)
+	{
+		return pango_units_from_double(d);
+	}
+
+	/**
+	 * Converts a number in Pango units to floating-point: divides
+	 * it by %PANGO_SCALE.
+	 *
+	 * Params:
+	 *     i = value in Pango units
+	 *
+	 * Return: the double value.
+	 *
+	 * Since: 1.16
+	 */
+	public static double unitsToDouble(int i)
+	{
+		return pango_units_to_double(i);
 	}
 }

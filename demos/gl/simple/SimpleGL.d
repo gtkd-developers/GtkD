@@ -57,7 +57,7 @@ class SimpleGL : DrawingArea
 	this()
 	{
 		super(300, 300);
-		setGLCapability();	// set the GL capabilities for this widget
+		setGlCapability();	// set the GL capabilities for this widget
 	}
 
 	/**

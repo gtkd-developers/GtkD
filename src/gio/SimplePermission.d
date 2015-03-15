@@ -16,112 +16,90 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GSimplePermission.html
- * outPack = gio
- * outFile = SimplePermission
- * strct   = GSimplePermission
- * realStrct=
- * ctorStrct=GPermission
- * clss    = SimplePermission
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_simple_permission_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.SimplePermission;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
+private import gio.Permission;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
-
-
-private import gio.Permission;
 
 /**
- * GSimplePermission is a trivial implementation of GPermission that
- * represents a permission that is either always or never allowed. The
+ * #GSimplePermission is a trivial implementation of #GPermission that
+ * represents a permission that is either always or never allowed.  The
  * value is given at construction and doesn't change.
- *
+ * 
  * Calling request or release will result in errors.
  */
 public class SimplePermission : Permission
 {
-	
 	/** the main Gtk struct */
 	protected GSimplePermission* gSimplePermission;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GSimplePermission* getSimplePermissionStruct()
 	{
 		return gSimplePermission;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gSimplePermission;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GSimplePermission* gSimplePermission)
-	{
-		super(cast(GPermission*)gSimplePermission);
-		this.gSimplePermission = gSimplePermission;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gSimplePermission = cast(GSimplePermission*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GSimplePermission* gSimplePermission, bool ownedRef = false)
+	{
+		this.gSimplePermission = gSimplePermission;
+		super(cast(GPermission*)gSimplePermission, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_simple_permission_get_type();
+	}
+
 	/**
-	 * Creates a new GPermission instance that represents an action that is
+	 * Creates a new #GPermission instance that represents an action that is
 	 * either always or never allowed.
-	 * Since 2.26
+	 *
 	 * Params:
-	 * allowed = TRUE if the action is allowed
+	 *     allowed = %TRUE if the action is allowed
+	 *
+	 * Return: the #GSimplePermission, as a #GPermission
+	 *
+	 * Since: 2.26
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (int allowed)
+	public this(bool allowed)
 	{
-		// GPermission * g_simple_permission_new (gboolean allowed);
 		auto p = g_simple_permission_new(allowed);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by g_simple_permission_new(allowed)");
+			throw new ConstructionException("null returned by new");
 		}
-		this(cast(GSimplePermission*) p);
+		
+		this(cast(GSimplePermission*) p, true);
 	}
 }

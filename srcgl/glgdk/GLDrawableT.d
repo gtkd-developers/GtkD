@@ -16,118 +16,39 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gtkglext-gdkgldrawable.html
- * outPack = glgdk
- * outFile = GLDrawableT
- * strct   = GdkGLDrawable
- * realStrct=
- * ctorStrct=
- * clss    = GLDrawableT
- * interf  = GLDrawableIF
- * class Code: No
- * interface Code: No
- * template for:
- * 	- TStruct
- * extend  = 
- * implements:
- * prefixes:
- * 	- gdk_gl_drawable_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glgdk.GLConfig
- * structWrap:
- * 	- GdkGLConfig* -> GLConfig
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module glgdk.GLDrawableT;
 
+public  import glgdk.GLConfig;
+public  import gobject.ObjectG;
+public  import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
-public import gtkglc.glgdk;
-public import glib.ConstructionException;
-public import gobject.ObjectG;
 
-public import glgdk.GLConfig;
-
-
-
-/**
- */
 public template GLDrawableT(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GdkGLDrawable* gdkGLDrawable;
-	
-	
 	/** Get the main Gtk struct */
-	public GdkGLDrawable* getGLDrawableTStruct()
+	public GdkGLDrawable* getGLDrawableStruct()
 	{
 		return cast(GdkGLDrawable*)getStruct();
 	}
-	
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Returns whether the gldrawable supports the double-buffered visual.
-	 * Returns: TRUE if the double-buffered visual is supported, FALSE otherwise.
+	 * Gets #GdkGLConfig with which the @gldrawable is configured.
+	 *
+	 * Return: the #GdkGLConfig.
 	 */
-	public int isDoubleBuffered()
+	public GLConfig getGlConfig()
 	{
-		// gboolean gdk_gl_drawable_is_double_buffered (GdkGLDrawable *gldrawable);
-		return gdk_gl_drawable_is_double_buffered(getGLDrawableTStruct());
-	}
-	
-	/**
-	 * Exchange front and back buffers.
-	 */
-	public void swapBuffers()
-	{
-		// void gdk_gl_drawable_swap_buffers (GdkGLDrawable *gldrawable);
-		gdk_gl_drawable_swap_buffers(getGLDrawableTStruct());
-	}
-	
-	/**
-	 * Complete OpenGL execution prior to subsequent GDK drawing calls.
-	 */
-	public void waitGl()
-	{
-		// void gdk_gl_drawable_wait_gl (GdkGLDrawable *gldrawable);
-		gdk_gl_drawable_wait_gl(getGLDrawableTStruct());
-	}
-	
-	/**
-	 * Complete GDK drawing execution prior to subsequent OpenGL calls.
-	 */
-	public void waitGdk()
-	{
-		// void gdk_gl_drawable_wait_gdk (GdkGLDrawable *gldrawable);
-		gdk_gl_drawable_wait_gdk(getGLDrawableTStruct());
-	}
-	
-	/**
-	 * Gets GdkGLConfig with which the gldrawable is configured.
-	 * Returns: the GdkGLConfig.
-	 */
-	public GLConfig getGLConfig()
-	{
-		// GdkGLConfig * gdk_gl_drawable_get_gl_config (GdkGLDrawable *gldrawable);
-		auto p = gdk_gl_drawable_get_gl_config(getGLDrawableTStruct());
+		auto p = gdk_gl_drawable_get_gl_config(getGLDrawableStruct());
 		
 		if(p is null)
 		{
@@ -135,5 +56,39 @@ public template GLDrawableT(TStruct)
 		}
 		
 		return ObjectG.getDObject!(GLConfig)(cast(GdkGLConfig*) p);
+	}
+
+	/**
+	 * Returns whether the @gldrawable supports the double-buffered visual.
+	 *
+	 * Return: TRUE if the double-buffered visual is supported, FALSE otherwise.
+	 */
+	public bool isDoubleBuffered()
+	{
+		return gdk_gl_drawable_is_double_buffered(getGLDrawableStruct()) != 0;
+	}
+
+	/**
+	 * Exchange front and back buffers.
+	 */
+	public void swapBuffers()
+	{
+		gdk_gl_drawable_swap_buffers(getGLDrawableStruct());
+	}
+
+	/**
+	 * Complete GDK drawing execution prior to subsequent OpenGL calls.
+	 */
+	public void waitGdk()
+	{
+		gdk_gl_drawable_wait_gdk(getGLDrawableStruct());
+	}
+
+	/**
+	 * Complete OpenGL execution prior to subsequent GDK drawing calls.
+	 */
+	public void waitGl()
+	{
+		gdk_gl_drawable_wait_gl(getGLDrawableStruct());
 	}
 }

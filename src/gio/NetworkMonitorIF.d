@@ -16,163 +16,142 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GNetworkMonitor.html
- * outPack = gio
- * outFile = NetworkMonitorIF
- * strct   = GNetworkMonitor
- * realStrct=
- * ctorStrct=
- * clss    = NetworkMonitorT
- * interf  = NetworkMonitorIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_network_monitor_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- glib.ErrorG
- * 	- glib.GException
- * 	- gio.AsyncResultIF
- * 	- gio.Cancellable
- * 	- gio.NetworkMonitorIF
- * 	- gio.SocketConnectableIF
- * structWrap:
- * 	- GAsyncResult* -> AsyncResultIF
- * 	- GCancellable* -> Cancellable
- * 	- GNetworkMonitor* -> NetworkMonitorIF
- * 	- GSocketConnectable* -> SocketConnectableIF
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.NetworkMonitorIF;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
-private import glib.ErrorG;
-private import glib.GException;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
+private import gio.NetworkMonitor;
 private import gio.NetworkMonitorIF;
 private import gio.SocketConnectableIF;
-
+private import glib.ErrorG;
+private import glib.GException;
+private import gobject.ObjectG;
+private import gobject.Signals;
+public  import gtkc.gdktypes;
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * GNetworkMonitor provides an easy-to-use cross-platform API
+ * #GNetworkMonitor provides an easy-to-use cross-platform API
  * for monitoring network connectivity. On Linux, the implementation
  * is based on the kernel's netlink interface.
+ *
+ * Since: 2.32
  */
-public interface NetworkMonitorIF
-{
-	
-	
+public interface NetworkMonitorIF{
 	/** Get the main Gtk struct */
-	public GNetworkMonitor* getNetworkMonitorTStruct();
-	
+	public GNetworkMonitor* getNetworkMonitorStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
-	@property void delegate(gboolean, NetworkMonitorIF)[] onNetworkChangedListeners();
+
 	/**
-	 * Emitted when the network configuration changes. If available is
-	 * TRUE, then some hosts may be reachable that were not reachable
-	 * before, while others that were reachable before may no longer be
-	 * reachable. If available is FALSE, then no remote hosts are
-	 * reachable.
-	 * Since 2.32
-	 */
-	void addOnNetworkChanged(void delegate(gboolean, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	
-	/**
-	 * Gets the default GNetworkMonitor for the system.
-	 * Since 2.32
-	 * Returns: a GNetworkMonitor. [transfer none]
+	 * Gets the default #GNetworkMonitor for the system.
+	 *
+	 * Return: a #GNetworkMonitor
+	 *
+	 * Since: 2.32
 	 */
 	public static NetworkMonitorIF getDefault();
-	
+
+	/**
+	 * Attempts to determine whether or not the host pointed to by
+	 * @connectable can be reached, without actually trying to connect to
+	 * it.
+	 *
+	 * This may return %TRUE even when #GNetworkMonitor:network-available
+	 * is %FALSE, if, for example, @monitor can determine that
+	 * @connectable refers to a host on a local network.
+	 *
+	 * If @monitor believes that an attempt to connect to @connectable
+	 * will succeed, it will return %TRUE. Otherwise, it will return
+	 * %FALSE and set @error to an appropriate error (such as
+	 * %G_IO_ERROR_HOST_UNREACHABLE).
+	 *
+	 * Note that although this does not attempt to connect to
+	 * @connectable, it may still block for a brief period of time (eg,
+	 * trying to do multicast DNS on the local network), so if you do not
+	 * want to block, you should use g_network_monitor_can_reach_async().
+	 *
+	 * Params:
+	 *     connectable = a #GSocketConnectable
+	 *     cancellable = a #GCancellable, or %NULL
+	 *
+	 * Return: %TRUE if @connectable is reachable, %FALSE if not.
+	 *
+	 * Since: 2.32
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool canReach(SocketConnectableIF connectable, Cancellable cancellable);
+
+	/**
+	 * Asynchronously attempts to determine whether or not the host
+	 * pointed to by @connectable can be reached, without actually
+	 * trying to connect to it.
+	 *
+	 * For more details, see g_network_monitor_can_reach().
+	 *
+	 * When the operation is finished, @callback will be called.
+	 * You can then call g_network_monitor_can_reach_finish()
+	 * to get the result of the operation.
+	 *
+	 * Params:
+	 *     connectable = a #GSocketConnectable
+	 *     cancellable = a #GCancellable, or %NULL
+	 *     callback = a #GAsyncReadyCallback to call when the
+	 *         request is satisfied
+	 *     userData = the data to pass to callback function
+	 */
+	public void canReachAsync(SocketConnectableIF connectable, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+
+	/**
+	 * Finishes an async network connectivity test.
+	 * See g_network_monitor_can_reach_async().
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Return: %TRUE if network is reachable, %FALSE if not.
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool canReachFinish(AsyncResultIF result);
+
 	/**
 	 * Checks if the network is available. "Available" here means that the
 	 * system has a default route available for at least one of IPv4 or
 	 * IPv6. It does not necessarily imply that the public Internet is
-	 * reachable. See "network-available" for more details.
-	 * Since 2.32
-	 * Returns: whether the network is available
+	 * reachable. See #GNetworkMonitor:network-available for more details.
+	 *
+	 * Return: whether the network is available
+	 *
+	 * Since: 2.32
 	 */
-	public int getNetworkAvailable();
-	
+	public bool getNetworkAvailable();
+	@property void delegate(bool, NetworkMonitorIF)[] onNetworkChangedListeners();
 	/**
-	 * Attempts to determine whether or not the host pointed to by
-	 * connectable can be reached, without actually trying to connect to
-	 * it.
-	 * This may return TRUE even when "network-available"
-	 * is FALSE, if, for example, monitor can determine that
-	 * connectable refers to a host on a local network.
-	 * If monitor believes that an attempt to connect to connectable
-	 * will succeed, it will return TRUE. Otherwise, it will return
-	 * FALSE and set error to an appropriate error (such as
-	 * G_IO_ERROR_HOST_UNREACHABLE).
-	 * Note that although this does not attempt to connect to
-	 * connectable, it may still block for a brief period of time (eg,
-	 * trying to do multicast DNS on the local network), so if you do not
-	 * want to block, you should use g_network_monitor_can_reach_async().
-	 * Since 2.32
+	 * Emitted when the network configuration changes. If @available is
+	 * %TRUE, then some hosts may be reachable that were not reachable
+	 * before, while others that were reachable before may no longer be
+	 * reachable. If @available is %FALSE, then no remote hosts are
+	 * reachable.
+	 *
 	 * Params:
-	 * connectable = a GSocketConnectable
-	 * cancellable = a GCancellable, or NULL. [allow-none]
-	 * Returns: TRUE if connectable is reachable, FALSE if not.
-	 * Throws: GException on failure.
+	 *     available = the current value of #GNetworkMonitor:network-available
+	 *
+	 * Since: 2.32
 	 */
-	public int canReach(SocketConnectableIF connectable, Cancellable cancellable);
-	
-	/**
-	 * Asynchronously attempts to determine whether or not the host
-	 * pointed to by connectable can be reached, without actually
-	 * trying to connect to it.
-	 * For more details, see g_network_monitor_can_reach().
-	 * When the operation is finished, callback will be called.
-	 * You can then call g_network_monitor_can_reach_finish()
-	 * to get the result of the operation.
-	 * Params:
-	 * connectable = a GSocketConnectable
-	 * cancellable = a GCancellable, or NULL. [allow-none]
-	 * callback = a GAsyncReadyCallback to call when the
-	 * request is satisfied. [scope async]
-	 * userData = the data to pass to callback function. [closure]
-	 */
-	public void canReachAsync(SocketConnectableIF connectable, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
-	
-	/**
-	 * Finishes an async network connectivity test.
-	 * See g_network_monitor_can_reach_async().
-	 * Params:
-	 * result = a GAsyncResult
-	 * Returns: TRUE if network is reachable, FALSE if not.
-	 * Throws: GException on failure.
-	 */
-	public int canReachFinish(AsyncResultIF result);
+	void addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+
 }

@@ -16,172 +16,243 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = gstreamer-GstCapsFeatures.html
- * outPack = gstreamer
- * outFile = CapsFeatures
- * strct   = GstCapsFeatures
- * realStrct=
- * ctorStrct=
- * clss    = CapsFeatures
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_caps_features_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gst_caps_features_new_any
- * omit signals:
- * imports:
- * 	- glib.Str
- * structWrap:
- * 	- GstCapsFeatures* -> CapsFeatures
- * module aliases:
- * local aliases:
- * overrides:
- * 	- toString
- */
 
 module gstreamer.CapsFeatures;
 
-public  import gstreamerc.gstreamertypes;
-
-private import gstreamerc.gstreamer;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import glib.Str;
-
+private import gobject.ObjectG;
+private import gstreamerc.gstreamer;
+public  import gstreamerc.gstreamertypes;
 
 
 /**
- * GstCapsFeatures can optionally be set on a GstCaps to add requirements
- * for additional features for a specific GstStructure. Caps structures with
+ * #GstCapsFeatures can optionally be set on a #GstCaps to add requirements
+ * for additional features for a specific #GstStructure. Caps structures with
  * the same name but with a non-equal set of caps features are not compatible.
  * If a pad supports multiple sets of features it has to add multiple equal
  * structures with different feature sets to the caps.
- *
- * Empty GstCapsFeatures are equivalent with the GstCapsFeatures that only
- * contain GST_CAPS_FEATURE_MEMORY_SYSTEM_MEMORY. ANY GstCapsFeatures as
- * created by gst_caps_features_new_any() are equal to any other GstCapsFeatures
- * and can be used to specify that any GstCapsFeatures would be supported, e.g.
- * for elements that don't touch buffer memory. GstCaps with ANY GstCapsFeatures
- * are considered non-fixed and during negotiation some GstCapsFeatures have
+ * 
+ * Empty #GstCapsFeatures are equivalent with the #GstCapsFeatures that only
+ * contain #GST_CAPS_FEATURE_MEMORY_SYSTEM_MEMORY. ANY #GstCapsFeatures as
+ * created by gst_caps_features_new_any() are equal to any other #GstCapsFeatures
+ * and can be used to specify that any #GstCapsFeatures would be supported, e.g.
+ * for elements that don't touch buffer memory. #GstCaps with ANY #GstCapsFeatures
+ * are considered non-fixed and during negotiation some #GstCapsFeatures have
  * to be selected.
- *
- * Examples for caps features would be the requirement of a specific GstMemory
- * types or the requirement of having a specific GstMeta on the buffer. Features
+ * 
+ * Examples for caps features would be the requirement of a specific #GstMemory
+ * types or the requirement of having a specific #GstMeta on the buffer. Features
  * are given as a string of the format "memory:GstMemoryTypeName" or
  * "meta:GstMetaAPIName".
  */
 public class CapsFeatures
 {
-	
 	/** the main Gtk struct */
 	protected GstCapsFeatures* gstCapsFeatures;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstCapsFeatures* getCapsFeaturesStruct()
 	{
 		return gstCapsFeatures;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gstCapsFeatures;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GstCapsFeatures* gstCapsFeatures)
 	{
 		this.gstCapsFeatures = gstCapsFeatures;
 	}
-	
+
 	/**
-	 */
-	
-	/**
-	 * Creates a new, empty GstCapsFeatures.
+	 * Creates a new, ANY #GstCapsFeatures. This will be equal
+	 * to any other #GstCapsFeatures but caps with these are
+	 * unfixed.
+	 *
 	 * Free-function: gst_caps_features_free
-	 * Since 1.2
+	 *
+	 * Return: a new, ANY #GstCapsFeatures
+	 *
+	 * Since: 1.2
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public static newAny()
 	{
-		// GstCapsFeatures * gst_caps_features_new_empty (void);
+		auto p = gst_caps_features_new_any();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_any");
+		}
+		
+		return new CapsFeatures(cast(GstCapsFeatures*)p);
+	}
+
+	/**
+	 */
+
+	public static GType getType()
+	{
+		return gst_caps_features_get_type();
+	}
+
+	/**
+	 * Creates a new, empty #GstCapsFeatures.
+	 *
+	 * Free-function: gst_caps_features_free
+	 *
+	 * Return: a new, empty #GstCapsFeatures
+	 *
+	 * Since: 1.2
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
 		auto p = gst_caps_features_new_empty();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_caps_features_new_empty()");
+			throw new ConstructionException("null returned by new_empty");
 		}
+		
 		this(cast(GstCapsFeatures*) p);
 	}
-	
+
 	/**
-	 * Creates a new GstCapsFeatures with the given features.
+	 * Creates a new #GstCapsFeatures with the given features.
+	 *
 	 * Free-function: gst_caps_features_free
-	 * Since 1.2
+	 *
 	 * Params:
-	 * feature1 = name of first feature to set
-	 * varargs = variable argument list
+	 *     feature1 = name of first feature to set
+	 *     varargs = variable argument list
+	 *
+	 * Return: a new, empty #GstCapsFeatures
+	 *
+	 * Since: 1.2
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (GQuark feature1, void* varargs)
+	public this(GQuark feature1, void* varargs)
 	{
-		// GstCapsFeatures * gst_caps_features_new_id_valist (GQuark feature1,  va_list varargs);
 		auto p = gst_caps_features_new_id_valist(feature1, varargs);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_caps_features_new_id_valist(feature1, varargs)");
+			throw new ConstructionException("null returned by new_id_valist");
 		}
+		
 		this(cast(GstCapsFeatures*) p);
 	}
-	
+
 	/**
-	 * Creates a new GstCapsFeatures with the given features.
+	 * Creates a new #GstCapsFeatures with the given features.
+	 *
 	 * Free-function: gst_caps_features_free
-	 * Since 1.2
+	 *
 	 * Params:
-	 * feature1 = name of first feature to set
-	 * varargs = variable argument list
+	 *     feature1 = name of first feature to set
+	 *     varargs = variable argument list
+	 *
+	 * Return: a new, empty #GstCapsFeatures
+	 *
+	 * Since: 1.2
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this (string feature1, void* varargs)
+	public this(string feature1, void* varargs)
 	{
-		// GstCapsFeatures * gst_caps_features_new_valist (const gchar *feature1,  va_list varargs);
 		auto p = gst_caps_features_new_valist(Str.toStringz(feature1), varargs);
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gst_caps_features_new_valist(Str.toStringz(feature1), varargs)");
+			throw new ConstructionException("null returned by new_valist");
 		}
+		
 		this(cast(GstCapsFeatures*) p);
 	}
-	
+
 	/**
-	 * Duplicates a GstCapsFeatures and all its values.
+	 * Adds @feature to @features.
+	 *
+	 * Params:
+	 *     feature = a feature.
+	 *
+	 * Since: 1.2
+	 */
+	public void add(string feature)
+	{
+		gst_caps_features_add(gstCapsFeatures, Str.toStringz(feature));
+	}
+
+	/**
+	 * Adds @feature to @features.
+	 *
+	 * Params:
+	 *     feature = a feature.
+	 *
+	 * Since: 1.2
+	 */
+	public void addId(GQuark feature)
+	{
+		gst_caps_features_add_id(gstCapsFeatures, feature);
+	}
+
+	/**
+	 * Check if @features contains @feature.
+	 *
+	 * Params:
+	 *     feature = a feature
+	 *
+	 * Return: %TRUE if @features contains @feature.
+	 *
+	 * Since: 1.2
+	 */
+	public bool contains(string feature)
+	{
+		return gst_caps_features_contains(gstCapsFeatures, Str.toStringz(feature)) != 0;
+	}
+
+	/**
+	 * Check if @features contains @feature.
+	 *
+	 * Params:
+	 *     feature = a feature
+	 *
+	 * Return: %TRUE if @features contains @feature.
+	 *
+	 * Since: 1.2
+	 */
+	public bool containsId(GQuark feature)
+	{
+		return gst_caps_features_contains_id(gstCapsFeatures, feature) != 0;
+	}
+
+	/**
+	 * Duplicates a #GstCapsFeatures and all its values.
+	 *
 	 * Free-function: gst_caps_features_free
-	 * Since 1.2
-	 * Returns: a new GstCapsFeatures. [transfer full]
+	 *
+	 * Return: a new #GstCapsFeatures.
+	 *
+	 * Since: 1.2
 	 */
 	public CapsFeatures copy()
 	{
-		// GstCapsFeatures * gst_caps_features_copy (const GstCapsFeatures *features);
 		auto p = gst_caps_features_copy(gstCapsFeatures);
 		
 		if(p is null)
@@ -191,29 +262,168 @@ public class CapsFeatures
 		
 		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
 	}
-	
+
 	/**
-	 * Frees a GstCapsFeatures and all its values. The caps features must not
+	 * Frees a #GstCapsFeatures and all its values. The caps features must not
 	 * have a parent when this function is called.
-	 * Since 1.2
+	 *
+	 * Since: 1.2
 	 */
 	public void free()
 	{
-		// void gst_caps_features_free (GstCapsFeatures *features);
 		gst_caps_features_free(gstCapsFeatures);
 	}
-	
+
 	/**
-	 * Creates a GstCapsFeatures from a string representation.
-	 * Free-function: gst_caps_features_free
-	 * Since 1.2
+	 * Returns the @i-th feature of @features.
+	 *
 	 * Params:
-	 * features = a string representation of a GstCapsFeatures.
-	 * Returns: a new GstCapsFeatures or NULL when the string could not be parsed. Free with gst_caps_features_free() after use. [transfer full]
+	 *     i = index of the feature
+	 *
+	 * Return: The @i-th feature of @features.
+	 *
+	 * Since: 1.2
+	 */
+	public string getNth(uint i)
+	{
+		return Str.toString(gst_caps_features_get_nth(gstCapsFeatures, i));
+	}
+
+	/**
+	 * Returns the @i-th feature of @features.
+	 *
+	 * Params:
+	 *     i = index of the feature
+	 *
+	 * Return: The @i-th feature of @features.
+	 *
+	 * Since: 1.2
+	 */
+	public GQuark getNthId(uint i)
+	{
+		return gst_caps_features_get_nth_id(gstCapsFeatures, i);
+	}
+
+	/**
+	 * Returns the number of features in @features.
+	 *
+	 * Return: The number of features in @features.
+	 *
+	 * Since: 1.2
+	 */
+	public uint getSize()
+	{
+		return gst_caps_features_get_size(gstCapsFeatures);
+	}
+
+	/**
+	 * Check if @features is %GST_CAPS_FEATURES_ANY.
+	 *
+	 * Return: %TRUE if @features is %GST_CAPS_FEATURES_ANY.
+	 *
+	 * Since: 1.2
+	 */
+	public bool isAny()
+	{
+		return gst_caps_features_is_any(gstCapsFeatures) != 0;
+	}
+
+	/**
+	 * Check if @features1 and @features2 are equal.
+	 *
+	 * Params:
+	 *     features2 = a #GstCapsFeatures.
+	 *
+	 * Return: %TRUE if @features1 and @features2 are equal.
+	 *
+	 * Since: 1.2
+	 */
+	public bool isEqual(CapsFeatures features2)
+	{
+		return gst_caps_features_is_equal(gstCapsFeatures, (features2 is null) ? null : features2.getCapsFeaturesStruct()) != 0;
+	}
+
+	/**
+	 * Removes @feature from @features.
+	 *
+	 * Params:
+	 *     feature = a feature.
+	 *
+	 * Since: 1.2
+	 */
+	public void remove(string feature)
+	{
+		gst_caps_features_remove(gstCapsFeatures, Str.toStringz(feature));
+	}
+
+	/**
+	 * Removes @feature from @features.
+	 *
+	 * Params:
+	 *     feature = a feature.
+	 *
+	 * Since: 1.2
+	 */
+	public void removeId(GQuark feature)
+	{
+		gst_caps_features_remove_id(gstCapsFeatures, feature);
+	}
+
+	/**
+	 * Sets the parent_refcount field of #GstCapsFeatures. This field is used to
+	 * determine whether a caps features is mutable or not. This function should only be
+	 * called by code implementing parent objects of #GstCapsFeatures, as described in
+	 * the MT Refcounting section of the design documents.
+	 *
+	 * Params:
+	 *     refcount = a pointer to the parent's refcount
+	 *
+	 * Return: %TRUE if the parent refcount could be set.
+	 *
+	 * Since: 1.2
+	 */
+	public bool setParentRefcount(int* refcount)
+	{
+		return gst_caps_features_set_parent_refcount(gstCapsFeatures, refcount) != 0;
+	}
+
+	/**
+	 * Converts @features to a human-readable string representation.
+	 *
+	 * For debugging purposes its easier to do something like this:
+	 * |[
+	 * GST_LOG ("features is %" GST_PTR_FORMAT, features);
+	 * ]|
+	 * This prints the features in human readable form.
+	 *
+	 * Free-function: g_free
+	 *
+	 * Return: a pointer to string allocated by g_malloc().
+	 *     g_free() after usage.
+	 *
+	 * Since: 1.2
+	 */
+	public override string toString()
+	{
+		return Str.toString(gst_caps_features_to_string(gstCapsFeatures));
+	}
+
+	/**
+	 * Creates a #GstCapsFeatures from a string representation.
+	 *
+	 * Free-function: gst_caps_features_free
+	 *
+	 * Params:
+	 *     features = a string representation of a #GstCapsFeatures.
+	 *
+	 * Return: a new #GstCapsFeatures or
+	 *     %NULL when the string could not be parsed. Free with
+	 *     gst_caps_features_free() after use.
+	 *
+	 * Since: 1.2
 	 */
 	public static CapsFeatures fromString(string features)
 	{
-		// GstCapsFeatures * gst_caps_features_from_string (const gchar *features);
 		auto p = gst_caps_features_from_string(Str.toStringz(features));
 		
 		if(p is null)
@@ -222,167 +432,5 @@ public class CapsFeatures
 		}
 		
 		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
-	}
-	
-	/**
-	 * Converts features to a human-readable string representation.
-	 * Since 1.2
-	 * Returns: a pointer to string allocated by g_malloc(). g_free() after usage. [transfer full]
-	 */
-	public override string toString()
-	{
-		// gchar * gst_caps_features_to_string (const GstCapsFeatures *features);
-		return Str.toString(gst_caps_features_to_string(gstCapsFeatures));
-	}
-	
-	/**
-	 * Sets the parent_refcount field of GstCapsFeatures. This field is used to
-	 * determine whether a caps features is mutable or not. This function should only be
-	 * called by code implementing parent objects of GstCapsFeatures, as described in
-	 * the MT Refcounting section of the design documents.
-	 * Since 1.2
-	 * Params:
-	 * refcount = a pointer to the parent's refcount. [in]
-	 * Returns: TRUE if the parent refcount could be set.
-	 */
-	public int setParentRefcount(int* refcount)
-	{
-		// gboolean gst_caps_features_set_parent_refcount  (GstCapsFeatures *features,  gint *refcount);
-		return gst_caps_features_set_parent_refcount(gstCapsFeatures, refcount);
-	}
-	
-	/**
-	 * Check if features1 and features2 are equal.
-	 * Since 1.2
-	 * Params:
-	 * features2 = a GstCapsFeatures.
-	 * Returns: TRUE if features1 and features2 are equal.
-	 */
-	public int isEqual(CapsFeatures features2)
-	{
-		// gboolean gst_caps_features_is_equal (const GstCapsFeatures *features1,  const GstCapsFeatures *features2);
-		return gst_caps_features_is_equal(gstCapsFeatures, (features2 is null) ? null : features2.getCapsFeaturesStruct());
-	}
-	
-	/**
-	 * Check if features is GST_CAPS_FEATURES_ANY.
-	 * Since 1.2
-	 * Returns: TRUE if features is GST_CAPS_FEATURES_ANY.
-	 */
-	public int isAny()
-	{
-		// gboolean gst_caps_features_is_any (const GstCapsFeatures *features);
-		return gst_caps_features_is_any(gstCapsFeatures);
-	}
-	
-	/**
-	 * Check if features contains feature.
-	 * Since 1.2
-	 * Params:
-	 * feature = a feature
-	 * Returns: TRUE if features contains feature.
-	 */
-	public int contains(string feature)
-	{
-		// gboolean gst_caps_features_contains (const GstCapsFeatures *features,  const gchar *feature);
-		return gst_caps_features_contains(gstCapsFeatures, Str.toStringz(feature));
-	}
-	
-	/**
-	 * Check if features contains feature.
-	 * Since 1.2
-	 * Params:
-	 * feature = a feature
-	 * Returns: TRUE if features contains feature.
-	 */
-	public int containsId(GQuark feature)
-	{
-		// gboolean gst_caps_features_contains_id (const GstCapsFeatures *features,  GQuark feature);
-		return gst_caps_features_contains_id(gstCapsFeatures, feature);
-	}
-	
-	/**
-	 * Returns the number of features in features.
-	 * Since 1.2
-	 * Returns: The number of features in features.
-	 */
-	public uint getSize()
-	{
-		// guint gst_caps_features_get_size (const GstCapsFeatures *features);
-		return gst_caps_features_get_size(gstCapsFeatures);
-	}
-	
-	/**
-	 * Returns the i-th feature of features.
-	 * Since 1.2
-	 * Params:
-	 * i = index of the feature
-	 * Returns: The i-th feature of features.
-	 */
-	public string getNth(uint i)
-	{
-		// const gchar * gst_caps_features_get_nth (const GstCapsFeatures *features,  guint i);
-		return Str.toString(gst_caps_features_get_nth(gstCapsFeatures, i));
-	}
-	
-	/**
-	 * Returns the i-th feature of features.
-	 * Since 1.2
-	 * Params:
-	 * i = index of the feature
-	 * Returns: The i-th feature of features.
-	 */
-	public GQuark getNthId(uint i)
-	{
-		// GQuark gst_caps_features_get_nth_id (const GstCapsFeatures *features,  guint i);
-		return gst_caps_features_get_nth_id(gstCapsFeatures, i);
-	}
-	
-	/**
-	 * Adds feature to features.
-	 * Since 1.2
-	 * Params:
-	 * feature = a feature.
-	 */
-	public void add(string feature)
-	{
-		// void gst_caps_features_add (GstCapsFeatures *features,  const gchar *feature);
-		gst_caps_features_add(gstCapsFeatures, Str.toStringz(feature));
-	}
-	
-	/**
-	 * Adds feature to features.
-	 * Since 1.2
-	 * Params:
-	 * feature = a feature.
-	 */
-	public void addId(GQuark feature)
-	{
-		// void gst_caps_features_add_id (GstCapsFeatures *features,  GQuark feature);
-		gst_caps_features_add_id(gstCapsFeatures, feature);
-	}
-	
-	/**
-	 * Removes feature from features.
-	 * Since 1.2
-	 * Params:
-	 * feature = a feature.
-	 */
-	public void remove(string feature)
-	{
-		// void gst_caps_features_remove (GstCapsFeatures *features,  const gchar *feature);
-		gst_caps_features_remove(gstCapsFeatures, Str.toStringz(feature));
-	}
-	
-	/**
-	 * Removes feature from features.
-	 * Since 1.2
-	 * Params:
-	 * feature = a feature.
-	 */
-	public void removeId(GQuark feature)
-	{
-		// void gst_caps_features_remove_id (GstCapsFeatures *features,  GQuark feature);
-		gst_caps_features_remove_id(gstCapsFeatures, feature);
 	}
 }

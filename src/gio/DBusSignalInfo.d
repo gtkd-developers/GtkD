@@ -16,99 +16,67 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = DBusSignalInfo
- * strct   = GDBusSignalInfo
- * realStrct=
- * ctorStrct=
- * clss    = DBusSignalInfo
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_dbus_signal_info_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * 	- GDBusSignalInfo* -> DBusSignalInfo
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.DBusSignalInfo;
 
-public  import gtkc.giotypes;
-
-private import gtkc.gio;
-private import glib.ConstructionException;
 private import gobject.ObjectG;
-
-
+private import gtkc.gio;
+public  import gtkc.giotypes;
 
 
 /**
- * Various data structures and convenience routines to parse and
- * generate D-Bus introspection XML. Introspection information is
- * used when registering objects with g_dbus_connection_register_object().
+ * Information about a signal on a D-Bus interface.
  *
- * The format of D-Bus introspection XML is specified in the
- * D-Bus specification.
+ * Since: 2.26
  */
 public class DBusSignalInfo
 {
-	
 	/** the main Gtk struct */
 	protected GDBusSignalInfo* gDBusSignalInfo;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GDBusSignalInfo* getDBusSignalInfoStruct()
 	{
 		return gDBusSignalInfo;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gDBusSignalInfo;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GDBusSignalInfo* gDBusSignalInfo)
 	{
 		this.gDBusSignalInfo = gDBusSignalInfo;
 	}
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return g_dbus_signal_info_get_type();
+	}
+
 	/**
-	 * If info is statically allocated does nothing. Otherwise increases
+	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
-	 * Since 2.26
-	 * Returns: The same info.
+	 *
+	 * Return: The same @info.
+	 *
+	 * Since: 2.26
 	 */
 	public DBusSignalInfo doref()
 	{
-		// GDBusSignalInfo * g_dbus_signal_info_ref (GDBusSignalInfo *info);
 		auto p = g_dbus_signal_info_ref(gDBusSignalInfo);
 		
 		if(p is null)
@@ -118,16 +86,16 @@ public class DBusSignalInfo
 		
 		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p);
 	}
-	
+
 	/**
-	 * If info is statically allocated, does nothing. Otherwise decreases
-	 * the reference count of info. When its reference count drops to 0,
+	 * If @info is statically allocated, does nothing. Otherwise decreases
+	 * the reference count of @info. When its reference count drops to 0,
 	 * the memory used is freed.
-	 * Since 2.26
+	 *
+	 * Since: 2.26
 	 */
 	public void unref()
 	{
-		// void g_dbus_signal_info_unref (GDBusSignalInfo *info);
 		g_dbus_signal_info_unref(gDBusSignalInfo);
 	}
 }

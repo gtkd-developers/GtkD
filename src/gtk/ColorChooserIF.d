@@ -16,82 +16,47 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkColorChooser.html
- * outPack = gtk
- * outFile = ColorChooserIF
- * strct   = GtkColorChooser
- * realStrct=
- * ctorStrct=
- * clss    = ColorChooserT
- * interf  = ColorChooserIF
- * class Code: Yes
- * interface Code: Yes
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_color_chooser_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_color_chooser_add_palette
- * omit signals:
- * imports:
- * 	- gdk.RGBA
- * structWrap:
- * 	- GdkRGBA* -> RGBA
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.ColorChooserIF;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
-private import glib.ConstructionException;
+private import gdk.RGBA;
 private import gobject.ObjectG;
-
 private import gobject.Signals;
 public  import gtkc.gdktypes;
-private import gdk.RGBA;
-
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
 
 /**
- * GtkColorChooser is an interface that is implemented by widgets
+ * #GtkColorChooser is an interface that is implemented by widgets
  * for choosing colors. Depending on the situation, colors may be
  * allowed to have alpha (translucency).
- *
+ * 
  * In GTK+, the main widgets that implement this interface are
- * GtkColorChooserWidget, GtkColorChooserDialog and GtkColorButton.
+ * #GtkColorChooserWidget, #GtkColorChooserDialog and #GtkColorButton.
  */
-public interface ColorChooserIF
-{
-	
-	
+public interface ColorChooserIF{
 	/** Get the main Gtk struct */
-	public GtkColorChooser* getColorChooserTStruct();
-	
+	public GtkColorChooser* getColorChooserStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
-	 * Adds a palette to the color chooser. If orientation is horizontal,
-	 * the colors are grouped in rows, with colorsPerPine colors
-	 * in each row. If horizontal is false, the colors are grouped
+	 */
+
+	/**
+	 * Adds a palette to the color chooser. If @orientation is horizontal,
+	 * the colors are grouped in rows, with @colors_per_line colors
+	 * in each row. If @horizontal is %FALSE, the colors are grouped
 	 * in columns instead.
 	 *
-	 * The default color palette of ColorChooserWidget has
+	 * The default color palette of #GtkColorChooserWidget has
 	 * 27 colors, organized in columns of 3 colors. The default gray
 	 * palette has 9 grays in a single row.
 	 *
@@ -102,59 +67,70 @@ public interface ColorChooserIF
 	 * side effect of removing the default color and gray palettes
 	 * from the color chooser.
 	 *
-	 * If colors is null, removes all previously added palettes.
+	 * If @colors is %NULL, removes all previously added palettes.
 	 *
 	 * Params:
-	 *     orientation   = Orientation.HORIZONTAL if the palette should
-	 *                     be displayed in rows, Orientation.VERTICAL for columns
+	 *     orientation = %GTK_ORIENTATION_HORIZONTAL if the palette should
+	 *         be displayed in rows, %GTK_ORIENTATION_VERTICAL for columns
 	 *     colorsPerLine = the number of colors to show in each row/column
-	 *     colors        = the colors of the palette, or null.
-	 * Since 3.4
+	 *     nColors = the total number of elements in @colors
+	 *     colors = the colors of the palette, or %NULL
+	 *
+	 * Since: 3.4
 	 */
 	public void addPalette(GtkOrientation orientation, int colorsPerLine, RGBA[] colors);
-	
+
 	/**
+	 * Gets the currently-selected color.
+	 *
+	 * Params:
+	 *     color = a #GdkRGBA to fill in with the current color
+	 *
+	 * Since: 3.4
 	 */
-	
+	public void getRgba(out RGBA color);
+
+	/**
+	 * Returns whether the color chooser shows the alpha channel.
+	 *
+	 * Return: %TRUE if the color chooser uses the alpha channel,
+	 *     %FALSE if not
+	 *
+	 * Since: 3.4
+	 */
+	public bool getUseAlpha();
+
+	/**
+	 * Sets the color.
+	 *
+	 * Params:
+	 *     color = the new color
+	 *
+	 * Since: 3.4
+	 */
+	public void setRgba(RGBA color);
+
+	/**
+	 * Sets whether or not the color chooser should use the alpha channel.
+	 *
+	 * Params:
+	 *     useAlpha = %TRUE if color chooser should use alpha channel, %FALSE if not
+	 *
+	 * Since: 3.4
+	 */
+	public void setUseAlpha(bool useAlpha);
 	@property void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners();
 	/**
 	 * Emitted when a color is activated from the color chooser.
 	 * This usually happens when the user clicks a color swatch,
 	 * or a color is selected and the user presses one of the keys
 	 * Space, Shift+Space, Return or Enter.
-	 * Since 3.4
-	 * See Also
-	 * GtkColorChooserDialog, GtkColorChooserWidget, GtkColorButton
+	 *
+	 * Params:
+	 *     color = the color
+	 *
+	 * Since: 3.4
 	 */
 	void addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
-	
-	/**
-	 * Gets the currently-selected color.
-	 * Params:
-	 * color = a GdkRGBA to fill in with the current color. [out]
-	 * Since 3.4
-	 */
-	public void getRgba(RGBA color);
-	
-	/**
-	 * Sets the color.
-	 * Params:
-	 * color = the new color
-	 * Since 3.4
-	 */
-	public void setRgba(RGBA color);
-	
-	/**
-	 * Returns whether the color chooser shows the alpha channel.
-	 * Returns: TRUE if the color chooser uses the alpha channel, FALSE if not Since 3.4
-	 */
-	public int getUseAlpha();
-	
-	/**
-	 * Sets whether or not the color chooser should use the alpha channel.
-	 * Params:
-	 * useAlpha = TRUE if color chooser should use alpha channel, FALSE if not
-	 * Since 3.4
-	 */
-	public void setUseAlpha(int useAlpha);
+
 }

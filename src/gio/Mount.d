@@ -16,79 +16,56 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = 
- * outPack = gio
- * outFile = Mount
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = Mount
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = ObjectG
- * implements:
- * 	- MountIF
- * prefixes:
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gobject.ObjectG
- * 	- gio.MountT
- * 	- gio.MountIF
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.Mount;
 
+private import gio.MountIF;
+private import gio.MountT;
+private import gobject.ObjectG;
+private import gtkc.gio;
 public  import gtkc.giotypes;
 
-private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
 
-private import gobject.ObjectG;
-private import gio.MountT;
-private import gio.MountIF;
-
-
-
-/**
- */
 public class Mount : ObjectG, MountIF
 {
-	
-	// Minimal implementation.
-	mixin MountT!(GMount);
-	
+	/** the main Gtk struct */
+	protected GMount* gMount;
+
+	/** Get the main Gtk struct */
+	public GMount* getMountStruct()
+	{
+		return gMount;
+	}
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gMount;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GMount* gMount)
+
+	protected override void setStruct(GObject* obj)
 	{
-		super(cast(GObject*)gMount);
-		this.gMount = gMount;
+		gMount = cast(GMount*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GMount* gMount, bool ownedRef = false)
+	{
+		this.gMount = gMount;
+		super(cast(GObject*)gMount, ownedRef);
+	}
+
+	// add the Mount capabilities
+	mixin MountT!(GMount);
+
 	/**
 	 */
 }

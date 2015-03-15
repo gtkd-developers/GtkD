@@ -1,491 +1,60 @@
-#
+﻿#
 # This file is part of gtkD.
-# 
+#
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping Gdk
-#####
-###
-#
-
-enumType: GDK_2BUTTON_PRESS 5
-enumType: GDK_3BUTTON_PRESS 6
-
-addTypedefs: start
-
-public import gtkc.glibtypes;
-public import gtkc.gobjecttypes;
-public import gtkc.giotypes;
-public import gtkc.pangotypes;
-public import gtkc.gdkpixbuftypes;
-
-const int GDK_MAX_TIMECOORD_AXES = 128;
-
-addTypedefs: end
-
-addAliases: start
-alias Rectangle GdkRectangle;
-addAliases: end
-
-addEnums: start
-
-enum GdkModifierIntent
-{
-	PRIMARY_ACCELERATOR,
-	CONTEXT_MENU,
-	EXTEND_SELECTION,
-	MODIFY_SELECTION,
-	NO_TEXT_INPUT,
-	SHIFT_GROUP
-}
-public alias GdkModifierIntent ModifierIntent;
-
-addEnums: end
-
-addStructs: start
-/**
- * An opaque type representing a string as an index into a table
- * of strings on the X server.
- */
-alias _GdkAtom* GdkAtom;
-public struct _GdkAtom;
-addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-/**
- * The GdkEvent struct contains a union of all of the event structs,
- * and allows access to the data fields in a number of ways.
- * The event type is always the first field in all of the event structs, and
- * can always be accessed with the following code, no matter what type of event
- * it is:
- */
-public struct GdkEvent
-{
-	union
-	{
-		GdkEventType type;
-		GdkEventAny any;
-		GdkEventExpose expose;
-		GdkEventVisibility visibility;
-		GdkEventMotion motion;
-		GdkEventButton button;
-		GdkEventScroll scroll;
-		GdkEventKey key;
-		GdkEventCrossing crossing;
-		GdkEventFocus focusChange;
-		GdkEventConfigure configure;
-		GdkEventProperty property;
-		GdkEventSelection selection;
-		GdkEventOwnerChange ownerChange;
-		GdkEventProximity proximity;
-		GdkEventDND dnd;
-		GdkEventWindowState windowState;
-		GdkEventSetting setting;
-		GdkEventGrabBroken grabBroken;
-	}
-}
-addUnions: end
-
-addConstants: start
-addConstants: end
-
-alias: GdkRectangle Rectangle
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
-
 wrap: gdk
+file: /usr/share/gir-1.0/Gdk-3.0.gir
+file: /usr/share/gir-1.0/GdkX11-3.0.gir
 
-###########################################################
-### Gdk ###################################################
-###########################################################
+addAliases: start
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+	public import gtkc.giotypes;
+	public import gtkc.pangotypes;
+	public import gtkc.gdkpixbuftypes;
+addAliases: end
 
-file: gdk3-General.html
-class: Gdk
-prefix: gdk_
-import: glib.Str
-import: gdk.Cursor
-import: gdk.Window
-structWrap: GdkCursor* Cursor
-structWrap: GdkWindow* Window
-
-inout: gdk_init argv
-array: gdk_init argv argc
-inout: gdk_init_check argv
-array: gdk_init_check argv argc
-inout: gdk_parse_args argv
-array: gdk_parse_args argv argc
-
-outFile: Gdk
-
-file: GdkDisplayManager.html
-struct: GdkDisplayManager
-class: DisplayManager
-prefix: gdk_display_manager_
-import: glib.Str
-import: glib.ListSG
-import: gdk.Display
-structWrap: GSList* ListSG
-structWrap: GdkDisplay* Display
-structWrap: GdkDisplayManager* DisplayManager
-outFile: DisplayManager
-
-file: GdkDisplay.html
-struct: GdkDisplay
-class: Display
-prefix: gdk_display_
-import: glib.Str
-import: glib.ListG
-import: gdk.AppLaunchContext
-import: gdk.DeviceManager
-import: gdk.Device
-import: gdk.Event
-import: gdk.Screen
-import: gdk.Window
-structWrap: GList* ListG
-structWrap: GdkAppLaunchContext* AppLaunchContext
-structWrap: GdkDevice* Device
-structWrap: GdkDeviceManager* DeviceManager
-structWrap: GdkDisplay* Display
-structWrap: GdkEvent* Event
-structWrap: GdkScreen* Screen
-structWrap: GdkWindow* Window
-
-out: gdk_display_get_pointer screen
-out: gdk_display_get_pointer x
-out: gdk_display_get_pointer y
-out: gdk_display_get_pointer mask
-out: gdk_display_get_window_at_pointer win_x
-out: gdk_display_get_window_at_pointer win_y
-out: gdk_display_get_maximal_cursor_size width
-out: gdk_display_get_maximal_cursor_size height
-array: gdk_display_store_clipboard targets n_targets
-
-outFile: Display
-
-file: GdkScreen.html
-struct: GdkScreen
-class: Screen
-prefix: gdk_screen_
-import: cairo.FontOption
-import: glib.ListG
-import: glib.Str
-import: gobject.Value
-import: gdk.Display
-import: gdk.Visual
-import: gdk.Window
-structWrap: cairo_font_options_t* FontOption
-structWrap: GList* ListG
-structWrap: GValue* Value
-structWrap: GdkDisplay* Display
-structWrap: GdkScreen* Screen
-structWrap: GdkVisual* Visual
-structWrap: GdkWindow* Window
-
-out: gdk_screen_get_monitor_geometry dest
-out: gdk_screen_get_monitor_workarea dest
-outFile: Screen
-
-file: GdkDeviceManager.html
-struct: GdkDeviceManager
-class: DeviceManager
-prefix: gdk_device_manager_
-prefix: gdk_
-import: gdk.Device
-import: gdk.Display
-structWrap: GdkDevice* Device
-structWrap: GdkDisplay* Display
-outFile: DeviceManager
-
-file: GdkDevice.html
-struct: GdkDevice
-class: Device
-prefix: gdk_device_
-import: glib.ListG
-import: glib.Str
-import: gdk.Cursor
-import: gdk.Display
-import: gdk.Screen
-import: gdk.Window
-structWrap: GList* ListG
-structWrap: GdkCursor* Cursor
-structWrap: GdkDevice* Device
-structWrap: GdkDisplay* Display
-structWrap: GdkScreen* Screen
-structWrap: GdkWindow* Window
-
-out: gdk_device_get_key keyval
-out: gdk_device_get_key modifiers
-#Length = 2
-array: gdk_device_get_state axes
-out: gdk_device_get_state mask
-out: gdk_device_get_position screen
-out: gdk_device_get_position x
-out: gdk_device_get_position y
-out: gdk_device_get_window_at_position win_x
-out: gdk_device_get_window_at_position win_y
-out: gdk_device_get_history events
-array: gdk_device_get_history events n_events
-array: gdk_device_free_history events n_events
-#Length = 2
-array: gdk_device_get_axis axes
-out: gdk_device_get_axis value
-#Length = 2
-array: gdk_device_get_axis_value axes
-out: gdk_device_get_axis_value value
-out: gdk_device_get_position_double screen
-out: gdk_device_get_position_double x
-out: gdk_device_get_position_double y
-out: gdk_device_get_window_at_position_double win_x
-out: gdk_device_get_window_at_position_double win_y
-
-outFile: Device
-
-file: gdk3-Points-Rectangles-and-Regions.html
-prefix: gdk_rectangle_
-
-inout: gdk_rectangle_intersect src1
-inout:  gdk_rectangle_intersect src2
-out: gdk_rectangle_intersect dest
-inout: gdk_rectangle_union src1
-inout: gdk_rectangle_union src2
-out: gdk_rectangle_union dest
-outFile: Rectangle
-
-## move to GdkPixbuf? no?
-## extend GdkPixbuf? Yes?
-
-file: gdk3-Pixbufs.html
-struct: GdkPixbuf
-class: Pixbuf
-extend: GObject
-implements: IconIF
-implements: LoadableIconIF
-prefix: gdk_pixbuf_
-import: cairo.Surface
-import: glib.Str
-import: glib.ErrorG
-import: glib.GException
-import: gio.AsyncResultIF
-import: gio.Cancellable
-import: gio.InputStream
-import: gdk.Window
-import: gdkpixbuf.PixbufFormat
-
-#imports for Icon Interface.
-import: gio.IconT
-import: gio.IconIF
-
-#imports for LoadableIcon Interface.
-import: gio.LoadableIconT
-import: gio.LoadableIconIF
-
-structWrap: cairo_surface_t* Surface
-structWrap: GAsyncResult* AsyncResultIF
-structWrap: GCancellable* Cancellable
-structWrap: GInputStream* InputStream
-structWrap: GdkWindow* Window
-structWrap: GdkPixbuf* Pixbuf
-structWrap: GdkPixbufFormat* PixbufFormat
-
-
-code: start
-	// Minimal implementation.
-	mixin IconT!(GdkPixbuf);
-
-	// add the LoadableIcon capabilities
-	mixin LoadableIconT!(GdkPixbuf);
-
-	~this(){
-		unref();
-	}
+addStructs: start
 
 	/**
-	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
-	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
-	 * Since 2.4
-	 * Params:
-	 * buffer =  location to receive a pointer to the new buffer.
-	 * type =  name of file format.
-	 * optionKeys =  name of options to set, NULL-terminated
-	 * optionValues =  values for named options
-	 * Returns: whether an error was set
-	 * Throws: GException on failure.
+	 * An opaque type representing a string as an index into a table
+	 * of strings on the X server.
 	 */
-	public int saveToBuffer(out ubyte[] buffer, string type, string[] optionKeys, string[] optionValues)
-	{
-		gchar* outbuffer = null;
-		gsize bufferSize;
-		GError* err = null;
+	alias _GdkAtom* GdkAtom;
+	public struct _GdkAtom;
+addStructs: end
 
-		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err);
+struct: Atom
+namespace:
+noStruct: true
 
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
+struct: Cairo
+namespace:
 
-		buffer = (cast(ubyte*)outbuffer)[0 .. bufferSize];
-		return p;
-	}	
-code: end
-openFile: Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-Image-Data-in-Memory.html
-struct: GdkPixbuf
-array: gdk_pixbuf_new_from_xpm_data data
-array: gdk_pixbuf_new_from_inline data data_length
-class: Pixbuf
-
-text: start
-gdk_pixbuf_get_type ()
-GType gdk_pixbuf_get_type ();
-text: end
-mergeFile: Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-The-GdkPixbuf-Structure.html
-array: gdk_pixbuf_get_pixels_with_length Return length
-mergeFile:  Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-Reference-Counting-and-Memory-Mangement.html
-nocode: gdk_pixbuf_ref
-nocode: gdk_pixbuf_unref
-mergeFile:  Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-File-Loading.html
-out: gdk_pixbuf_get_file_info width
-out: gdk_pixbuf_get_file_info height
-
-nocode: gdk_pixbuf_new_from_resource
-nocode: gdk_pixbuf_new_from_resource_at_scale
-
-code: start
-	/**
-	 * Creates a new pixbuf by loading an image from an resource.
-	 * 
-	 * The file format is detected automatically.
-	 * 
-	 * Since: 2.26
-	 * 
-	 * Params:
-	 *     resourcePath = the path of the resource file.
-	 * 
-	 * Throws: GException on failure.
-	 */
-	public static Pixbuf newFromResource(string resourcePath)
-	{
-		// GdkPixbuf * gdk_pixbuf_new_from_resource (const char *resource_path,  GError **error);
-		GError* err = null;
-		
-		auto p = gdk_pixbuf_new_from_resource(Str.toStringz(resourcePath), &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gdk_pixbuf_new_from_resource");
-		}
-		
-		return new Pixbuf(cast(GdkPixbuf*) p);
-	}
-
-	/**
-	 * Creates a new pixbuf by loading an image from an resource.
-	 * 
-	 * The file format is detected automatically.
-	 * 
-	 * The image will be scaled to fit in the requested size, optionally
-	 * preserving the image's aspect ratio. When preserving the aspect ratio,
-	 * a width of -1 will cause the image to be scaled to the exact given
-	 * height, and a height of -1 will cause the image to be scaled to the
-	 * exact given width. When not preserving aspect ratio, a width or height
-	 * of -1 means to not scale the image at all in that dimension.
-	 * 
-	 * Params:
-	 *     resourcePath = Name of file to load, in the GLib file name encoding
-	 *     width        = The width the image should have or -1 to not constrain the width
-	 *     height       = The height the image should have or -1 to not constrain the height
-	 *     preserveAspectRatio 
-     *                  = true to preserve the image's aspect ratio.
-	 * 
-	 * Throws: GException on failure.
-	 */
-	public static Pixbuf newFromResource(string resourcePath, int width, int height, int preserveAspectRatio)
-	{
-		// GdkPixbuf * gdk_pixbuf_new_from_resource_at_scale (const char *resource_path,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
-		GError* err = null;
-		
-		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(resourcePath), width, height, preserveAspectRatio, &err);
-		
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gdk_pixbuf_new_from_resource_at_scale");
-		}
-		
-		return new Pixbuf(cast(GdkPixbuf*) p);
-	}
-code: end
-mergeFile:  Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-File-saving.html
-array: gdk_pixbuf_savev option_keys
-array: gdk_pixbuf_savev option_values
-array: gdk_pixbuf_save_to_callbackv option_keys
-array: gdk_pixbuf_save_to_callbackv option_values
-out: gdk_pixbuf_save_to_bufferv buffer
-
-nocode: gdk_pixbuf_save_to_bufferv
-mergeFile:  Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-Scaling.html
-mergeFile:  Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-Utilities.html
-closeFile:  Pixbuf
-
-file: gdk3-Colors.html
-struct: GdkColor
-class: Color
-prefix: gdk_color_
-import: glib.Str
-import: gtkc.paths;
-import: gtkc.Loader;
-structWrap: GdkColor* Color
-
-override: toString
-
+struct: Color
+import: gobject.ObjectG
+import: gtkc.Loader
+import: gtkc.paths
+override: to_string
 code: start
 	/**
 	 * Creates a new Color
@@ -581,302 +150,11 @@ code: start
 		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
 	}
 code: end
-outFile: Color
 
-file: gdk3-RGBA-Colors.html
-struct: GdkRGBA
-class: RGBA
-prefix: gdk_rgba_
-import: glib.Str
-import: gtkc.paths;
-import: gtkc.Loader;
-structWrap: GdkRGBA* RGBA
-
-override: toString
-
-code: start
-	/**
-	 * Creates a new RGBA Color
-	 */
-	this()
-	{
-		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
-
-		this(gdk_rgba_copy(&rgba));
-	}
-
-	/** ditto */
-	this(double red, double green, double blue, double alpha = 1.0)
-	{
-		GdkRGBA rgba;
-
-		rgba.red = red;
-		rgba.green = green;
-		rgba.blue = blue;
-		rgba.alpha = alpha;
-
-		this(gdk_rgba_copy(&rgba));
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && gdkRGBA !is null )
-		{
-			gdk_rgba_free(gdkRGBA);
-		}
-	}
-
-	/**
-	 * The color values.
-	 * All values are in the range from 0.0 to 1.0 inclusive.
-	 */
-	double red()
-	{
-		return gdkRGBA.red;
-	}
-
-	/** ditto */
-	void red(double value)
-	{
-		gdkRGBA.red = value;
-	}
-
-	/** ditto */
-	double green()
-	{
-		return gdkRGBA.green;
-	}
-
-	/** ditto */
-	void green(double value)
-	{
-		gdkRGBA.green = value;
-	}
-
-	/** ditto */
-	double blue()
-	{
-		return gdkRGBA.blue;
-	}
-
-	/** ditto */
-	void blue(double value)
-	{
-		gdkRGBA.blue = value;
-	}
-
-	/** ditto */
-	double alpha()
-	{
-		return gdkRGBA.alpha;
-	}
-
-	/** ditto */
-	void alpha(double value)
-	{
-		gdkRGBA.alpha = value;
-	}
-code: end
-outFile: RGBA
-
-file: gdk3-Visuals.html
-struct: GdkVisual
-class: Visual
-prefix: gdk_visual_
-prefix: gdk_
-import: glib.ListG
-import: gdk.Screen
-structWrap: GList* ListG
-structWrap: GdkVisual* Visual
-structWrap: GdkScreen* Screen
-
-out: gdk_query_depths depths
-array: gdk_query_depths depths count
-out: gdk_query_visual_types visual_types
-array: gdk_query_visual_types visual_types count
-out: gdk_visual_get_blue_pixel_details mask
-out: gdk_visual_get_blue_pixel_details shift
-out: gdk_visual_get_blue_pixel_details precision
-out: gdk_visual_get_green_pixel_details mask
-out: gdk_visual_get_green_pixel_details shift
-out: gdk_visual_get_green_pixel_details precision
-out: gdk_visual_get_red_pixel_details mask
-out: gdk_visual_get_red_pixel_details shift
-out: gdk_visual_get_red_pixel_details precision
-
-outFile: Visual
-
-file: gdk3-Cursors.html
-struct: GdkCursor
-class: Cursor
-prefix: gdk_cursor_
-import: glib.Str
-import: cairo.Surface
-import: gdk.Display
-import: gdk.Pixbuf
-structWrap: cairo_surface_t* Surface
-structWrap: GdkDisplay* Display
-structWrap: GdkPixbuf* Pixbuf
-
-nocode: gdk_cursor_ref
-nocode: gdk_cursor_unref
-out: gdk_cursor_get_surface x_hot
-out: gdk_cursor_get_surface y_hot
-outFile: Cursor
-
-file: gdk3-Windows.html
-struct: GdkWindow
-class: Window
-prefix: gdk_window_
-prefix: gdk_
-import: glib.Str
-import: cairo.Pattern
-import: cairo.Region
-import: cairo.Surface
-import: glib.ListG
-import: gdk.Color
-import: gdk.Cursor
-import: gdk.Device
-import: gdk.Display
-import: gdk.FrameClock
-import: gdk.Rectangle
-import: gdk.RGBA
-import: gdk.Screen
-import: gdk.Visual
-structWrap: cairo_pattern_t* Pattern
-structWrap: cairo_region_t* Region
-structWrap: CairoSurface* Surface
-structWrap: cairo_surface_t* Surface
-structWrap: GList* ListG
-structWrap: GdkColor* Color
-structWrap: GdkCursor* Cursor
-structWrap: GdkDevice* Device
-structWrap: GdkDisplay* Display
-structWrap: GdkFrameClock* FrameClock
-structWrap: GdkRGBA* RGBA
-structWrap: GdkScreen* Screen
-structWrap: GdkVisual* Visual
-structWrap: GdkWindow* Window
-
-out: gdk_window_at_pointer win_x
-out: gdk_window_at_pointer win_y
-inout: gdk_window_constrain_size geometry
-out: gdk_window_constrain_size new_width
-out: gdk_window_constrain_size new_height
-inout: gdk_window_begin_paint_rect rectangle
-inout: gdk_window_invalidate_rect rectangle
-out: gdk_window_get_geometry x
-out: gdk_window_get_geometry y
-out: gdk_window_get_geometry width
-out: gdk_window_get_geometry height
-inout:  gdk_window_set_geometry_hints geometry
-out: gdk_window_get_position x
-out: gdk_window_get_position y
-out: gdk_window_get_root_origin x
-out: gdk_window_get_root_origin y
-out: gdk_window_get_frame_extents rect
-out: gdk_window_get_origin x
-out: gdk_window_get_origin y
-out: gdk_window_get_root_coords root_x
-out: gdk_window_get_root_coords root_y
-out: gdk_window_get_pointer x
-out: gdk_window_get_pointer y
-out: gdk_window_get_pointer mask
-out: gdk_window_get_device_position x
-out: gdk_window_get_device_position y
-out: gdk_window_get_device_position mask
-out: gdk_window_get_decorations decorations
-out: gdk_window_coords_from_parent x
-out: gdk_window_coords_from_parent y
-out: gdk_window_coords_to_parent parent_x
-out: gdk_window_coords_to_parent parent_y
-out: gdk_window_get_device_position_double x
-out: gdk_window_get_device_position_double y
-out: gdk_window_get_device_position_double mask
-
-code: start
-	/**
-	 * Create a new surface that is as compatible as possible with the
-	 * given window. For example the new surface will have the same
-	 * fallback resolution and font options as window. Generally, the new
-	 * surface will also use the same backend as window, unless that is
-	 * not possible for some reason. The type of the returned surface may
-	 * be examined with cairo_surface_get_type().
-	 * Initially the surface contents are all 0 (transparent if contents
-	 * have transparency, black otherwise.)
-	 * Since 2.22
-	 * Params:
-	 * window = window to make new surface similar to
-	 * content = the content for the new surface
-	 * width = width of the new surface
-	 * height = height of the new surface
-	 * Returns: a pointer to the newly allocated surface. The caller owns the surface and should call cairo_surface_destroy() when done with it. This function always returns a valid pointer, but it will return a pointer to a "nil" surface if other is already in an error state or any other error occurs.
-	 */
-	public Surface createSimilarSurface(CairoContent content, int width, int height)
-	{
-		// cairo_surface_t * gdk_window_create_similar_surface (GdkWindow *window,  cairo_content_t content,  int width,  int height);
-		auto p = gdk_window_create_similar_surface(gdkWindow, content, width, height);
-		if(p is null)
-		{
-			return null;
-		}
-		return new Surface(cast(cairo_surface_t*) p);
-	}
-code: end
-outFile: Window
-
-file: gdk3-GdkFrameClock.html
-struct: GdkFrameClock
-class: FrameClock
-prefix: gdk_frame_clock_
-import: gdk.FrameTimings
-structWrap: GdkFrameTimings* FrameTimings
-
-out: gdk_frame_clock_get_refresh_info refresh_interval_return
-out: gdk_frame_clock_get_refresh_info presentation_time_return
-outFile: FrameClock
-
-file: gdk3-GdkFrameTimings.html
-struct: GdkFrameTimings
-class: FrameTimings
-prefix: gdk_frame_timings_
-structWrap: GdkFrameTimings* FrameTimings
-outFile: FrameTimings
-
-file: gdk3-Events.html
-struct: GdkEvent
-class: Event
-prefix: gdk_event_
-prefix: gdk_
-import: glib.Str
-import: gobject.Value
-import: gdk.Device
-import: gdk.Screen
-import: gdk.Window
-structWrap: GValue* Value
-structWrap: GdkDevice* Device
-structWrap: GdkEvent* Event
-structWrap: GdkScreen* Screen
-structWrap: GdkWindow* Window
-
-out: gdk_event_get_state state
-out: gdk_event_get_axis value
-out: gdk_event_get_coords x_win
-out: gdk_event_get_coords y_win
-out: gdk_event_get_root_coords x_root
-out: gdk_event_get_root_coords y_root
-out: gdk_events_get_angle angle
-out: gdk_events_get_center x
-out: gdk_events_get_center y
-out: gdk_events_get_distance distance
-out: gdk_event_get_button button
-out: gdk_event_get_click_count click_count
-out: gdk_event_get_keycode keycode
-out: gdk_event_get_keyval keyval
-out: gdk_event_get_scroll_direction direction
-out: gdk_event_get_scroll_deltas delta_x
-out: gdk_event_get_scroll_deltas delta_y
-
+struct: Event
+alias: _get_angle getAngle
+alias: _get_center getCenter
+alias: _get_distance getDistance
 code: start
 	/**
 	 * Specifies the type of the event.
@@ -997,257 +275,357 @@ code: start
 	/** */
 	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
-		return eventButton.button==buttonNumber 
+		return eventButton.button==buttonNumber
 				&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
 	}
 
 	/** */
 	public static bool isTripleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
-		return eventButton.button==buttonNumber 
+		return eventButton.button==buttonNumber
 				&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
 	}
 code: end
-openFile: Event
 
-file: gdk3-Event-Structures.html
-nostruct: GdkEvent
-closeFile: Event
+struct: Pango
+namespace:
 
-file: gdk3-Keyboard-Handling.html
-struct: GdkKeymap
-class: Keymap
-prefix: gdk_keymap_
-import: glib.Str
-import: gdk.Display
-structWrap: GdkDisplay* Display
-structWrap: GdkKeymap* Keymap
+struct: Pixbuf
+namespace:
+code: start
+	public  import gdkpixbuf.Pixbuf;
+code: end
 
-out: gdk_keymap_lookup_key key
-out: gdk_keymap_translate_keyboard_state keyval
-out: gdk_keymap_translate_keyboard_state effective_group
-out: gdk_keymap_translate_keyboard_state level
-out: gdk_keymap_translate_keyboard_state consumed_modifiers
-out: gdk_keymap_get_entries_for_keyval keys
-array: gdk_keymap_get_entries_for_keyval keys n_keys
-out: gdk_keymap_get_entries_for_keycode keys
-array: gdk_keymap_get_entries_for_keycode keys n_entries
-out: gdk_keymap_get_entries_for_keycode keyvals
-array: gdk_keymap_get_entries_for_keycode keyvals n_entries
-inout: gdk_keymap_add_virtual_modifiers state
-inout: gdk_keymap_map_virtual_modifiers state
-out: gdk_keyval_convert_case lower
-out: gdk_keyval_convert_case upper
+struct: Rectangle
+namespace:
 
-outFile: Keymap
-
-file: gdk3-Selections.html
-class: Selection
-prefix: gdk_selection_
-import: gdk.Display
-import: gdk.Window
-structWrap: GdkDisplay* Display
-structWrap: GdkWindow* Window
-
-out: gdk_selection_property_get data
-out: gdk_selection_property_get prop_type
-out: gdk_selection_property_get prop_format
-outFile: Selection
-
-file: gdk3-Drag-and-Drop.html
-struct: GdkDragContext
-class: DragContext
-prefix: gdk_drag_context_
-prefix: gdk_
-import: glib.ListG
-import: gdk.Device
-import: gdk.Screen
-import: gdk.Window
-structWrap: GList* ListG
-structWrap: GdkDevice* Device
-structWrap: GdkDragContext* DragContext
-structWrap: GdkScreen* Screen
-structWrap: GdkWindow* Window
-
-out: gdk_drag_find_window_for_screen dest_window
-out: gdk_drag_find_window_for_screen protocol
-out: gdk_window_get_drag_protocol target
-outFile: DragContext
-
-file: gdk3-Properties-and-Atoms.html
-prefix: gdk_
-nostruct: GdkAtom
-import: glib.Str
-import: gdk.Display
-import: gdk.Window
-structWrap: GdkDisplay* Display
-structWrap: GdkWindow* Window
-
-out: gdk_text_property_to_utf8_list_for_display list
-out: gdk_property_get actual_property_type
-out: gdk_property_get actual_format
-out: gdk_property_get data
-array: gdk_property_get data actual_length
-array: gdk_property_change data nelements
-outFile: Atoms
-
-file: gdk3-Threads.html
-prefix: gdk_
-outFile: Threads
-
-#file: gdk3-Pango-Interaction.html
-#struct: 
-#class: 
-#prefix: 
-#outFile: 
-
-file: gdk3-X-Window-System-Interaction.html
-#struct: #we're not wrapping a struct ATM
-#we're just putting these methods to be static.
-class: X11
-prefix: gdk_x11_
-import: glib.Str
-import: gdk.Device
-import: gdk.DeviceManager
-import: gdk.Display
-import: gdk.Keymap
-import: gdk.Screen
-import: gdk.Window
-structWrap: GdkDevice* Device
-structWrap: GdkDeviceManager* DeviceManager
-structWrap: GdkDisplay* Display
-structWrap: GdkKeymap* Keymap
-structWrap: GdkScreen* Screen
-structWrap: GdkWindow* Window
-
-nocode: gdk_x11_window_get_xid
+struct: RGBA
+import: gtkc.Loader
+import: gtkc.paths
+override: to_string
 code: start
 	/**
-	 * Returns the X resource (window) belonging to a GdkWindow.
-	 * Params:
-	 * window = a native GdkWindow.
-	 * Returns: the ID of drawable's X resource.
+	 * Creates a new RGBA Color
 	 */
-	public static gulong windowGetXid(Window window)
+	this()
 	{
-		// Window gdk_x11_window_get_xid (GdkWindow *window);
-		return gdk_x11_window_get_xid((window is null) ? null : window.getWindowStruct());
+		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
+
+		this(gdk_rgba_copy(&rgba));
+	}
+
+	/** ditto */
+	this(double red, double green, double blue, double alpha = 1.0)
+	{
+		GdkRGBA rgba;
+
+		rgba.red = red;
+		rgba.green = green;
+		rgba.blue = blue;
+		rgba.alpha = alpha;
+
+		this(gdk_rgba_copy(&rgba));
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY.GDK) && gdkRGBA !is null )
+		{
+			gdk_rgba_free(gdkRGBA);
+		}
+	}
+
+	/**
+	 * The color values.
+	 * All values are in the range from 0.0 to 1.0 inclusive.
+	 */
+	double red()
+	{
+		return gdkRGBA.red;
+	}
+
+	/** ditto */
+	void red(double value)
+	{
+		gdkRGBA.red = value;
+	}
+
+	/** ditto */
+	double green()
+	{
+		return gdkRGBA.green;
+	}
+
+	/** ditto */
+	void green(double value)
+	{
+		gdkRGBA.green = value;
+	}
+
+	/** ditto */
+	double blue()
+	{
+		return gdkRGBA.blue;
+	}
+
+	/** ditto */
+	void blue(double value)
+	{
+		gdkRGBA.blue = value;
+	}
+
+	/** ditto */
+	double alpha()
+	{
+		return gdkRGBA.alpha;
+	}
+
+	/** ditto */
+	void alpha(double value)
+	{
+		gdkRGBA.alpha = value;
 	}
 code: end
 
-#more types should added here like atom, visual, image, etc...
-#for now we just disable all the stuff with X types in them
-#only thing left is XID which is just an uint.
-#using noprefix to exclude these functions so no external decleration gets generated
-noprefix: gdkx_visual_get
-noprefix: gdkx_colormap_get
-noprefix: gdk_pixmap_foreign_new
-noprefix: gdk_pixmap_foreign_new_for_display
-noprefix: gdk_pixmap_foreign_new_for_screen
-noprefix: gdk_window_foreign_new_for_display
-noprefix: gdk_xid_table_lookup_for_display
-noprefix: gdk_window_lookup_for_display
-noprefix: gdk_x11_lookup_xdisplay
-noprefix: gdk_net_wm_supports
-noprefix: gdk_x11_screen_supports_net_wm_hint
-noprefix: gdk_x11_screen_get_window_manager_name
-noprefix: gdk_x11_screen_lookup_visual
-noprefix: gdk_x11_display_get_user_time
-noprefix: gdk_x11_colormap_foreign_new
-noprefix: gdk_x11_colormap_get_xcolormap
-noprefix: gdk_x11_colormap_get_xdisplay
-noprefix: gdk_x11_cursor_get_xcursor
-noprefix: gdk_x11_cursor_get_xdisplay
-noprefix: gdk_x11_display_get_xdisplay
-noprefix: gdk_x11_display_grab
-noprefix: gdk_x11_display_ungrab
-noprefix: gdk_x11_display_set_cursor_theme
-noprefix: gdk_x11_register_standard_event_type
-noprefix: gdk_x11_drawable_get_xdisplay
-noprefix: gdk_x11_font_get_xdisplay
-noprefix: gdk_x11_gc_get_xdisplay
-noprefix: gdk_x11_gc_get_xgc
-noprefix: gdk_x11_get_default_root_xwindow
-noprefix: gdk_x11_get_default_xdisplay
-noprefix: gdk_x11_image_get_xdisplay
-noprefix: gdk_x11_image_get_ximage
-noprefix: gdk_x11_screen_get_screen_number
-noprefix: gdk_x11_screen_get_xscreen
-noprefix: gdk_x11_visual_get_xvisual
-noprefix: gdk_x11_atom_to_xatom
-noprefix: gdk_x11_atom_to_xatom_for_display
-noprefix: gdk_x11_xatom_to_atom
-noprefix: gdk_x11_xatom_to_atom_for_display
-noprefix: gdk_x11_get_xatom_by_name
-noprefix: gdk_x11_get_xatom_by_name_for_display
-noprefix: gdk_x11_get_xatom_name
-noprefix: gdk_x11_get_xatom_name_for_display
-noprefix: gdk_x11_window_foreign_new_for_display
-noprefix: gdk_x11_window_lookup_for_display
+struct: Threads
+namespace:
 
-array: gdk_x11_display_text_property_to_text_list text
-array: gdk_x11_display_text_property_to_text_list list length
-out: gdk_x11_display_text_property_to_text_list list
-inout: gdk_x11_free_text_list list
-out: gdk_x11_display_string_to_compound_text encoding
-out: gdk_x11_display_string_to_compound_text format
-out: gdk_x11_display_string_to_compound_text ctext
-array: gdk_x11_display_string_to_compound_text ctext length
-out: gdk_x11_display_utf8_to_compound_text encoding
-out: gdk_x11_display_utf8_to_compound_text format
-out: gdk_x11_display_utf8_to_compound_text ctext
-array: gdk_x11_display_utf8_to_compound_text ctext length
-inout: gdk_x11_free_compound_text ctext
-outFile: X11
+struct: X11AppLaunchContext
+noCode: true
+noExternal: true
 
-file: gdk3-Application-launching.html
-struct: GdkAppLaunchContext
-class: AppLaunchContext
-extend: GioAppLaunchContext
-prefix: gdk_app_launch_context_
-import: glib.Str
-import: gio.AppLaunchContext : GioAppLaunchContext = AppLaunchContext
+struct: X11AppLaunchContextClass
+noExternal: true
+
+struct: X11Cursor
+noCode: true
+noExternal: true
+
+struct: X11CursorClass
+noExternal: true
+
+struct: X11DeviceCore
+noCode: true
+noExternal: true
+
+struct: X11DeviceCoreClass
+noExternal: true
+
+struct: X11DeviceManagerCore
+noCode: true
+noExternal: true
+
+struct: X11DeviceManagerCoreClass
+noExternal: true
+
+struct: X11DeviceManagerXI2
+noCode: true
+noExternal: true
+
+struct: X11DeviceManagerXI2Class
+noExternal: true
+
+struct: X11DeviceXI2
+noCode: true
+noExternal: true
+
+struct: X11DeviceXI2Class
+noExternal: true
+
+struct: X11Display
+noCode: true
+noExternal: true
+
+struct: X11DisplayClass
+noExternal: true
+
+struct: X11DisplayManager
+noCode: true
+noExternal: true
+
+struct: X11DisplayManagerClass
+noExternal: true
+
+struct: X11DragContext
+noCode: true
+noExternal: true
+
+struct: X11DragContextClass
+noExternal: true
+
+struct: X11Keymap
+noCode: true
+noExternal: true
+
+struct: X11KeymapClass
+noExternal: true
+
+struct: X11Screen
+noCode: true
+noExternal: true
+
+struct: X11ScreenClass
+noExternal: true
+
+struct: X11Visual
+noCode: true
+noExternal: true
+
+struct: X11VisualClass
+noExternal: true
+
+struct: X11Window
+namespace: X11
+namespace:
+noCode: get_type
+alias: Window uint
 import: gdk.Display
-import: gdk.Screen
-import: gio.IconIF
-structWrap: GIcon* IconIF
-structWrap: GdkDisplay* Display
-structWrap: GdkScreen* Screen
-outFile: AppLaunchContext
-
-file: gdk3-Testing.html
-class: Testing
-prefix: gdk_test_
 import: gdk.Window
-structWrap: GdkWindow* Window
-outFile: Testing
-
-############## cairo interaction ###############
-
-
-file: gdk3-Cairo-Interaction.html
-prefix: gdk_cairo_
-prefix: gdk_window_
-import: cairo.Context
-import: cairo.Region
-import: cairo.Surface
-import: gdk.Color
-import: gdk.Pixbuf
-import: gdk.RGBA
-import: gdk.Window
-structWrap: cairo_t* Context
-structWrap: cairo_region_t* Region
-structWrap: cairo_surface_t* Surface
-structWrap: GdkColor* Color
-structWrap: GdkPixbuf* Pixbuf
-structWrap: GdkRGBA* RGBA
-structWrap: GdkWindow* Window
-
-alias: create createContext
-
+structWrap: X11Display Display
+structWrap: X11Window Window
+noCode: lookup_for_display
 code: start
-/**
- * Use these functions in combination with UFCS.
- */
+	/**
+	 * Looks up the #GdkWindow that wraps the given native window handle.
+	 *
+	 * Params:
+	 *     display = the #GdkDisplay corresponding to the
+	 *         window handle
+	 *     window = an Xlib Window
+	 *
+	 * Return: the #GdkWindow wrapper for the native
+	 *     window, or %NULL if there is none.
+	 *
+	 * Since: 2.24
+	 */
+	public Window lookupForDisplay(Display display, uint window)
+	{
+		auto p = gdk_x11_window_lookup_for_display((display is null) ? null : display.getDisplayStruct(), window);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
 code: end
-outFile: Cairo
+
+move: property_change Atom
+move: property_delete Atom
+move: property_get Atom
+move: text_property_to_utf8_list_for_display Atom
+move: utf8_to_string_target Atom
+
+move: cairo_create Cairo create_context
+move: cairo_get_clip_rectangle Cairo get_clip_rectangle
+move: cairo_rectangle Cairo rectangle
+move: cairo_region Cairo region
+move: cairo_region_create_from_surface Cairo region_create_from_surface
+move: cairo_set_source_color Cairo set_source_color
+move: cairo_set_source_pixbuf Cairo set_source_pixbuf
+move: cairo_set_source_rgba Cairo set_source_rgba
+move: cairo_set_source_window Cairo set_source_window
+move: cairo_surface_create_from_pixbuf Cairo surface_create_from_pixbuf
+
+move: disable_multidevice DeviceManager
+
+move: drag_abort DragContext
+move: drag_begin DragContext
+move: drag_begin_for_device DragContext
+move: drag_drop DragContext
+move: drag_drop_succeeded DragContext
+move: drag_find_window_for_screen DragContext
+move: drag_get_selection DragContext
+move: drag_motion DragContext
+move: drag_status DragContext
+move: drop_finish DragContext
+move: drop_reply DragContext
+
+move: events_get_angle Event _get_angle
+move: events_get_center Event _get_center
+move: events_get_distance Event _get_distance
+move: events_pending Event pending
+move: get_show_events Event
+move: set_show_events Event
+move: setting_get Event
+
+move: beep Gdk
+move: error_trap_pop Gdk
+move: error_trap_pop_ignored Gdk
+move: error_trap_push Gdk
+move: flush Gdk
+move: get_display Gdk
+move: get_display_arg_name Gdk
+move: get_program_class Gdk
+move: init Gdk
+move: init_check Gdk
+move: keyboard_grab Gdk
+move: keyboard_ungrab Gdk
+move: notify_startup_complete Gdk
+move: notify_startup_complete_with_id Gdk
+move: parse_args Gdk
+move: pointer_grab Gdk
+move: pointer_is_grabbed Gdk
+move: pointer_ungrab Gdk
+move: set_allowed_backends Gdk
+move: set_double_click_time Gdk
+move: set_program_class Gdk
+
+move: keyval_convert_case Keymap
+move: keyval_from_name Keymap
+move: keyval_is_lower Keymap
+move: keyval_is_upper Keymap
+move: keyval_name Keymap
+move: keyval_to_lower Keymap
+move: keyval_to_unicode Keymap
+move: keyval_to_upper Keymap
+move: unicode_to_keyval Keymap
+
+move: pango_context_get Pango context_get
+move: pango_context_get_for_screen Pango context_get_for_screen
+move: pango_layout_get_clip_region Pango layout_get_clip_region
+move: pango_layout_line_get_clip_region Pango layout_line_get_clip_region
+
+move: pixbuf_get_from_surface Pixbuf get_from_surface
+move: pixbuf_get_from_window Pixbuf get_from_window
+
+#move: rectangle_get_type Rectangle get_type
+move: rectangle_intersect Rectangle intersect
+move: rectangle_union Rectangle union
+
+move: selection_convert Selection convert
+move: selection_owner_get Selection owner_get
+move: selection_owner_get_for_display Selection owner_get_for_display
+move: selection_owner_set Selection owner_set
+move: selection_owner_set_for_display Selection owner_set_for_display
+move: selection_property_get Selection property_get
+move: selection_send_notify Selection send_notify
+move: selection_send_notify_for_display Selection send_notify_for_display
+
+struct: Selection
+out: property_get data
+
+move: test_render_sync Testing
+move: test_simulate_button Testing
+move: test_simulate_key Testing
+
+move: threads_add_idle Threads
+move: threads_add_idle_full Threads
+move: threads_add_timeout Threads
+move: threads_add_timeout_full Threads
+move: threads_add_timeout_seconds Threads
+move: threads_add_timeout_seconds_full Threads
+move: threads_enter Threads
+move: threads_init Threads
+move: threads_leave Threads
+move: threads_set_lock_functions Threads
+
+move: list_visuals Visual
+move: query_depths Visual
+move: query_visual_types Visual
+
+move: get_default_root_window Window
+move: offscreen_window_get_embedder Window
+move: offscreen_window_get_surface Window
+move: offscreen_window_set_embedder Window

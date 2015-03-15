@@ -16,220 +16,83 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = glib-Strings.html
- * outPack = glib
- * outFile = StringG
- * strct   = GString
- * realStrct=
- * ctorStrct=
- * clss    = StringG
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_string_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- g_string_new
- * 	- g_string_append
- * 	- g_string_prepend
- * 	- g_string_insert
- * 	- g_string_overwrite
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- glib.Bytes
- * structWrap:
- * 	- GBytes* -> Bytes
- * 	- GString* -> StringG
- * module aliases:
- * local aliases:
- * 	- appendLen -> append
- * 	- insertLen -> insert
- * 	- overwriteLen -> overwrite
- * 	- prependLen -> prepend
- * overrides:
- */
 
 module glib.StringG;
 
-public  import gtkc.glibtypes;
-
-private import gtkc.glib;
-private import glib.ConstructionException;
-
-private import glib.Str;
 private import glib.Bytes;
-
+private import glib.Str;
+private import gtkc.glib;
+public  import gtkc.glibtypes;
 
 
 /**
- * A GString is an object that handles the memory management of a C
- * string for you. The emphasis of GString is on text, typically
- * UTF-8. Crucially, the "str" member of a GString is guaranteed to
- * have a trailing nul character, and it is therefore always safe to
- * call functions such as strchr() or g_strdup() on it.
- *
- * However, a GString can also hold arbitrary binary data, because it
- * has a "len" member, which includes any possible embedded nul
- * characters in the data. Conceptually then, GString is like a
- * GByteArray with the addition of many convenience methods for text,
- * and a guaranteed nul terminator.
+ * The GString struct contains the public fields of a GString.
  */
 public class StringG
 {
-	
 	/** the main Gtk struct */
 	protected GString* gString;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GString* getStringGStruct()
 	{
 		return gString;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gString;
 	}
-	
+
 	/**
-	 * Sets our main struct and passes it to the parent class
+	 * Sets our main struct and passes it to the parent class.
 	 */
 	public this (GString* gString)
 	{
 		this.gString = gString;
 	}
-	
+
 	/**
 	 */
-	
+
 	/**
-	 * Creates a new GString with len bytes of the init buffer.
-	 * Because a length is provided, init need not be nul-terminated,
-	 * and can contain embedded nul bytes.
-	 * Since this function does not stop at nul bytes, it is the caller's
-	 * responsibility to ensure that init has at least len addressable
-	 * bytes.
-	 * Params:
-	 * init = initial contents of the string
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string init)
-	{
-		// GString * g_string_new_len (const gchar *init,  gssize len);
-		auto p = g_string_new_len(cast(char*)init.ptr, cast(int) init.length);
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by g_string_new_len(cast(char*)init.ptr, cast(int) init.length)");
-		}
-		this(cast(GString*) p);
-	}
-	
-	/**
-	 * Creates a new GString, with enough space for dfl_size
-	 * bytes. This is useful if you are going to add a lot of
-	 * text to the string and don't want it to be reallocated
-	 * too often.
-	 * Params:
-	 * dflSize = the default size of the space allocated to
-	 * hold the string
-	 * Returns: the new GString
-	 */
-	public static StringG sizedNew(gsize dflSize)
-	{
-		// GString * g_string_sized_new (gsize dfl_size);
-		auto p = g_string_sized_new(dflSize);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Copies the bytes from a string into a GString,
-	 * destroying any previous contents. It is rather like
-	 * the standard strcpy() function, except that you do not
-	 * have to worry about having enough space to copy the string.
-	 * Params:
-	 * string = the destination GString. Its current contents
-	 * are destroyed.
-	 * rval = the string to copy into string
-	 * Returns: string
-	 */
-	public StringG assign(string rval)
-	{
-		// GString * g_string_assign (GString *string,  const gchar *rval);
-		auto p = g_string_assign(gString, Str.toStringz(rval));
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Writes a formatted string into a GString.
-	 * This function is similar to g_string_printf() except that
-	 * the arguments to the format string are passed as a va_list.
-	 * Since 2.14
-	 * Params:
-	 * string = a GString
-	 * format = the string format. See the printf() documentation
-	 * args = the parameters to insert into the format string
-	 */
-	public void vprintf(string format, void* args)
-	{
-		// void g_string_vprintf (GString *string,  const gchar *format,  va_list args);
-		g_string_vprintf(gString, Str.toStringz(format), args);
-	}
-	
-	/**
-	 * Appends a formatted string onto the end of a GString.
-	 * This function is similar to g_string_append_printf()
-	 * except that the arguments to the format string are passed
-	 * as a va_list.
-	 * Since 2.14
-	 * Params:
-	 * string = a GString
-	 * format = the string format. See the printf() documentation
-	 * args = the list of arguments to insert in the output
-	 */
-	public void appendVprintf(string format, void* args)
-	{
-		// void g_string_append_vprintf (GString *string,  const gchar *format,  va_list args);
-		g_string_append_vprintf(gString, Str.toStringz(format), args);
-	}
-	
-	/**
-	 * Adds a byte onto the end of a GString, expanding
+	 * Adds a string onto the end of a #GString, expanding
 	 * it if necessary.
+	 *
 	 * Params:
-	 * c = the byte to append onto the end of string
-	 * Returns: string
+	 *     val = the string to append onto the end of @string
+	 *
+	 * Return: @string
+	 */
+	public StringG append(string val)
+	{
+		auto p = g_string_append(gString, Str.toStringz(val));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Adds a byte onto the end of a #GString, expanding
+	 * it if necessary.
+	 *
+	 * Params:
+	 *     c = the byte to append onto the end of @string
+	 *
+	 * Return: @string
 	 */
 	public StringG appendC(char c)
 	{
-		// GString * g_string_append_c (GString *string,  gchar c);
 		auto p = g_string_append_c(gString, c);
 		
 		if(p is null)
@@ -239,17 +102,45 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
+	/**
+	 * Appends @len bytes of @val to @string. Because @len is
+	 * provided, @val may contain embedded nuls and need not
+	 * be nul-terminated.
+	 *
+	 * Since this function does not stop at nul bytes, it is
+	 * the caller's responsibility to ensure that @val has at
+	 * least @len addressable bytes.
+	 *
+	 * Params:
+	 *     val = bytes to append
+	 *     len = number of bytes of @val to use
+	 *
+	 * Return: @string
+	 */
+	public StringG appendLen(string val, ptrdiff_t len)
+	{
+		auto p = g_string_append_len(gString, Str.toStringz(val), len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
 	/**
 	 * Converts a Unicode character into UTF-8, and appends it
 	 * to the string.
+	 *
 	 * Params:
-	 * wc = a Unicode character
-	 * Returns: string
+	 *     wc = a Unicode character
+	 *
+	 * Return: @string
 	 */
-	public StringG appendUnichar(gunichar wc)
+	public StringG appendUnichar(dchar wc)
 	{
-		// GString * g_string_append_unichar (GString *string,  gunichar wc);
 		auto p = g_string_append_unichar(gString, wc);
 		
 		if(p is null)
@@ -259,47 +150,23 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
 	/**
-	 * Appends len bytes of val to string. Because len is
-	 * provided, val may contain embedded nuls and need not
-	 * be nul-terminated.
-	 * Since this function does not stop at nul bytes, it is
-	 * the caller's responsibility to ensure that val has at
-	 * least len addressable bytes.
-	 * Params:
-	 * string = a GString
-	 * val = bytes to append
-	 * Returns: string
-	 */
-	public StringG append(string val)
-	{
-		// GString * g_string_append_len (GString *string,  const gchar *val,  gssize len);
-		auto p = g_string_append_len(gString, cast(char*)val.ptr, cast(int) val.length);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Appends unescaped to string, escaped any characters that
+	 * Appends @unescaped to @string, escaped any characters that
 	 * are reserved in URIs using URI-style escape sequences.
-	 * Since 2.16
+	 *
 	 * Params:
-	 * string = a GString
-	 * unescaped = a string
-	 * reservedCharsAllowed = a string of reserved characters allowed
-	 * to be used, or NULL
-	 * allowUtf8 = set TRUE if the escaped string may include UTF8 characters
-	 * Returns: string
+	 *     unescaped = a string
+	 *     reservedCharsAllowed = a string of reserved characters allowed
+	 *         to be used, or %NULL
+	 *     allowUtf8 = set %TRUE if the escaped string may include UTF8 characters
+	 *
+	 * Return: @string
+	 *
+	 * Since: 2.16
 	 */
-	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, int allowUtf8)
+	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, bool allowUtf8)
 	{
-		// GString * g_string_append_uri_escaped (GString *string,  const gchar *unescaped,  const gchar *reserved_chars_allowed,  gboolean allow_utf8);
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
 		
 		if(p is null)
@@ -309,18 +176,34 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
 	/**
-	 * Adds a byte onto the start of a GString,
-	 * expanding it if necessary.
+	 * Appends a formatted string onto the end of a #GString.
+	 * This function is similar to g_string_append_printf()
+	 * except that the arguments to the format string are passed
+	 * as a va_list.
+	 *
 	 * Params:
-	 * c = the byte to prepend on the start of the GString
-	 * Returns: string
+	 *     format = the string format. See the printf() documentation
+	 *     args = the list of arguments to insert in the output
+	 *
+	 * Since: 2.14
 	 */
-	public StringG prependC(char c)
+	public void appendVprintf(string format, void* args)
 	{
-		// GString * g_string_prepend_c (GString *string,  gchar c);
-		auto p = g_string_prepend_c(gString, c);
+		g_string_append_vprintf(gString, Str.toStringz(format), args);
+	}
+
+	/**
+	 * Converts all uppercase ASCII letters to lowercase ASCII letters.
+	 *
+	 * Return: passed-in @string pointer, with all the
+	 *     uppercase characters converted to lowercase in place,
+	 *     with semantics that exactly match g_ascii_tolower().
+	 */
+	public StringG asciiDown()
+	{
+		auto p = g_string_ascii_down(gString);
 		
 		if(p is null)
 		{
@@ -329,18 +212,17 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
 	/**
-	 * Converts a Unicode character into UTF-8, and prepends it
-	 * to the string.
-	 * Params:
-	 * wc = a Unicode character
-	 * Returns: string
+	 * Converts all lowercase ASCII letters to uppercase ASCII letters.
+	 *
+	 * Return: passed-in @string pointer, with all the
+	 *     lowercase characters converted to uppercase in place,
+	 *     with semantics that exactly match g_ascii_toupper().
 	 */
-	public StringG prependUnichar(gunichar wc)
+	public StringG asciiUp()
 	{
-		// GString * g_string_prepend_unichar (GString *string,  gunichar wc);
-		auto p = g_string_prepend_unichar(gString, wc);
+		auto p = g_string_ascii_up(gString);
 		
 		if(p is null)
 		{
@@ -349,23 +231,21 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
 	/**
-	 * Prepends len bytes of val to string.
-	 * Because len is provided, val may contain
-	 * embedded nuls and need not be nul-terminated.
-	 * Since this function does not stop at nul bytes,
-	 * it is the caller's responsibility to ensure that
-	 * val has at least len addressable bytes.
+	 * Copies the bytes from a string into a #GString,
+	 * destroying any previous contents. It is rather like
+	 * the standard strcpy() function, except that you do not
+	 * have to worry about having enough space to copy the string.
+	 *
 	 * Params:
-	 * string = a GString
-	 * val = bytes to prepend
-	 * Returns: string
+	 *     rval = the string to copy into @string
+	 *
+	 * Return: @string
 	 */
-	public StringG prepend(string val)
+	public StringG assign(string rval)
 	{
-		// GString * g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
-		auto p = g_string_prepend_len(gString, cast(char*)val.ptr, cast(int) val.length);
+		auto p = g_string_assign(gString, Str.toStringz(rval));
 		
 		if(p is null)
 		{
@@ -374,236 +254,18 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
 	/**
-	 * Inserts a byte into a GString, expanding it if necessary.
-	 * Params:
-	 * pos = the position to insert the byte
-	 * c = the byte to insert
-	 * Returns: string
-	 */
-	public StringG insertC(gssize pos, char c)
-	{
-		// GString * g_string_insert_c (GString *string,  gssize pos,  gchar c);
-		auto p = g_string_insert_c(gString, pos, c);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Converts a Unicode character into UTF-8, and insert it
-	 * into the string at the given position.
-	 * Params:
-	 * pos = the position at which to insert character, or -1
-	 * to append at the end of the string
-	 * wc = a Unicode character
-	 * Returns: string
-	 */
-	public StringG insertUnichar(gssize pos, gunichar wc)
-	{
-		// GString * g_string_insert_unichar (GString *string,  gssize pos,  gunichar wc);
-		auto p = g_string_insert_unichar(gString, pos, wc);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Inserts len bytes of val into string at pos.
-	 * Because len is provided, val may contain embedded
-	 * nuls and need not be nul-terminated. If pos is -1,
-	 * bytes are inserted at the end of the string.
-	 * Since this function does not stop at nul bytes, it is
-	 * the caller's responsibility to ensure that val has at
-	 * least len addressable bytes.
-	 * Params:
-	 * string = a GString
-	 * pos = position in string where insertion should
-	 * happen, or -1 for at the end
-	 * val = bytes to insert
-	 * Returns: string
-	 */
-	public StringG insert(gssize pos, string val)
-	{
-		// GString * g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
-		auto p = g_string_insert_len(gString, pos, cast(char*)val.ptr, cast(int) val.length);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Overwrites part of a string, lengthening it if necessary.
-	 * This function will work with embedded nuls.
-	 * Since 2.14
-	 * Params:
-	 * string = a GString
-	 * pos = the position at which to start overwriting
-	 * val = the string that will overwrite the string starting at pos
-	 * Returns: string
-	 */
-	public StringG overwrite(gsize pos, string val)
-	{
-		// GString * g_string_overwrite_len (GString *string,  gsize pos,  const gchar *val,  gssize len);
-		auto p = g_string_overwrite_len(gString, pos, cast(char*)val.ptr, cast(int) val.length);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Removes len bytes from a GString, starting at position pos.
-	 * The rest of the GString is shifted down to fill the gap.
-	 * Params:
-	 * pos = the position of the content to remove
-	 * len = the number of bytes to remove, or -1 to remove all
-	 * following bytes
-	 * Returns: string
-	 */
-	public StringG erase(gssize pos, gssize len)
-	{
-		// GString * g_string_erase (GString *string,  gssize pos,  gssize len);
-		auto p = g_string_erase(gString, pos, len);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Cuts off the end of the GString, leaving the first len bytes.
-	 * Params:
-	 * len = the new size of string
-	 * Returns: string
-	 */
-	public StringG truncate(gsize len)
-	{
-		// GString * g_string_truncate (GString *string,  gsize len);
-		auto p = g_string_truncate(gString, len);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Sets the length of a GString. If the length is less than
-	 * the current length, the string will be truncated. If the
-	 * length is greater than the current length, the contents
-	 * of the newly added area are undefined. (However, as
-	 * always, string-&gt;str[string-&gt;len] will be a nul byte.)
-	 * Params:
-	 * len = the new length
-	 * Returns: string
-	 */
-	public StringG setSize(gsize len)
-	{
-		// GString * g_string_set_size (GString *string,  gsize len);
-		auto p = g_string_set_size(gString, len);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Frees the memory allocated for the GString.
-	 * If free_segment is TRUE it also frees the character data. If
-	 * it's FALSE, the caller gains ownership of the buffer and must
-	 * free it after use with g_free().
-	 * Params:
-	 * string = a GString
-	 * freeSegment = if TRUE, the actual character data is freed as well
-	 * Returns: the character data of string (i.e. NULL if free_segment is TRUE)
-	 */
-	public string free(int freeSegment)
-	{
-		// gchar * g_string_free (GString *string,  gboolean free_segment);
-		return Str.toString(g_string_free(gString, freeSegment));
-	}
-	
-	/**
-	 * Transfers ownership of the contents of string to a newly allocated
-	 * GBytes. The GString structure itself is deallocated, and it is
-	 * therefore invalid to use string after invoking this function.
-	 * Note that while GString ensures that its buffer always has a
-	 * trailing nul character (not reflected in its "len"), the returned
-	 * GBytes does not include this extra nul; i.e. it has length exactly
-	 * equal to the "len" member.
-	 * Since 2.34
-	 * Returns: A newly allocated GBytes containing contents of string; string itself is freed
-	 */
-	public Bytes freeToBytes()
-	{
-		// GBytes * g_string_free_to_bytes (GString *string);
-		auto p = g_string_free_to_bytes(gString);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new Bytes(cast(GBytes*) p);
-	}
-	
-	/**
-	 * Warning
-	 * g_string_up has been deprecated since version 2.2 and should not be used in newly-written code. This function uses the locale-specific
-	 *  toupper() function, which is almost never the right thing.
-	 *  Use g_string_ascii_up() or g_utf8_strup() instead.
-	 * Converts a GString to uppercase.
-	 * Returns: string
-	 */
-	public StringG up()
-	{
-		// GString * g_string_up (GString *string);
-		auto p = g_string_up(gString);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return new StringG(cast(GString*) p);
-	}
-	
-	/**
-	 * Warning
-	 * g_string_down has been deprecated since version 2.2 and should not be used in newly-written code. This function uses the locale-specific
-	 *  tolower() function, which is almost never the right thing.
-	 *  Use g_string_ascii_down() or g_utf8_strdown() instead.
-	 * Converts a GString to lowercase.
-	 * Returns: the GString
+	 * Converts a #GString to lowercase.
+	 *
+	 * Deprecated: This function uses the locale-specific
+	 * tolower() function, which is almost never the right thing.
+	 * Use g_string_ascii_down() or g_utf8_strdown() instead.
+	 *
+	 * Return: the #GString
 	 */
 	public StringG down()
 	{
-		// GString * g_string_down (GString *string);
 		auto p = g_string_down(gString);
 		
 		if(p is null)
@@ -613,28 +275,482 @@ public class StringG
 		
 		return new StringG(cast(GString*) p);
 	}
-	
+
 	/**
-	 * Creates a hash code for str; for use with GHashTable.
-	 * Returns: hash code for str
+	 * Compares two strings for equality, returning %TRUE if they are equal.
+	 * For use with #GHashTable.
+	 *
+	 * Params:
+	 *     v2 = another #GString
+	 *
+	 * Return: %TRUE if the strings are the same length and contain the
+	 *     same bytes
+	 */
+	public bool equal(StringG v2)
+	{
+		return g_string_equal(gString, (v2 is null) ? null : v2.getStringGStruct()) != 0;
+	}
+
+	/**
+	 * Removes @len bytes from a #GString, starting at position @pos.
+	 * The rest of the #GString is shifted down to fill the gap.
+	 *
+	 * Params:
+	 *     pos = the position of the content to remove
+	 *     len = the number of bytes to remove, or -1 to remove all
+	 *         following bytes
+	 *
+	 * Return: @string
+	 */
+	public StringG erase(ptrdiff_t pos, ptrdiff_t len)
+	{
+		auto p = g_string_erase(gString, pos, len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Frees the memory allocated for the #GString.
+	 * If @free_segment is %TRUE it also frees the character data.  If
+	 * it's %FALSE, the caller gains ownership of the buffer and must
+	 * free it after use with g_free().
+	 *
+	 * Params:
+	 *     freeSegment = if %TRUE, the actual character data is freed as well
+	 *
+	 * Return: the character data of @string
+	 *     (i.e. %NULL if @free_segment is %TRUE)
+	 */
+	public string free(bool freeSegment)
+	{
+		return Str.toString(g_string_free(gString, freeSegment));
+	}
+
+	/**
+	 * Transfers ownership of the contents of @string to a newly allocated
+	 * #GBytes.  The #GString structure itself is deallocated, and it is
+	 * therefore invalid to use @string after invoking this function.
+	 *
+	 * Note that while #GString ensures that its buffer always has a
+	 * trailing nul character (not reflected in its "len"), the returned
+	 * #GBytes does not include this extra nul; i.e. it has length exactly
+	 * equal to the "len" member.
+	 *
+	 * Return: A newly allocated #GBytes containing contents of @string; @string itself is freed
+	 *
+	 * Since: 2.34
+	 */
+	public Bytes freeToBytes()
+	{
+		auto p = g_string_free_to_bytes(gString);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Bytes(cast(GBytes*) p);
+	}
+
+	/**
+	 * Creates a hash code for @str; for use with #GHashTable.
+	 *
+	 * Return: hash code for @str
 	 */
 	public uint hash()
 	{
-		// guint g_string_hash (const GString *str);
 		return g_string_hash(gString);
 	}
-	
+
 	/**
-	 * Compares two strings for equality, returning TRUE if they are equal.
-	 * For use with GHashTable.
+	 * Inserts a copy of a string into a #GString,
+	 * expanding it if necessary.
+	 *
 	 * Params:
-	 * v = a GString
-	 * v2 = another GString
-	 * Returns: TRUE if the strings are the same length and contain the same bytes
+	 *     pos = the position to insert the copy of the string
+	 *     val = the string to insert
+	 *
+	 * Return: @string
 	 */
-	public int equal(StringG v2)
+	public StringG insert(ptrdiff_t pos, string val)
 	{
-		// gboolean g_string_equal (const GString *v,  const GString *v2);
-		return g_string_equal(gString, (v2 is null) ? null : v2.getStringGStruct());
+		auto p = g_string_insert(gString, pos, Str.toStringz(val));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Inserts a byte into a #GString, expanding it if necessary.
+	 *
+	 * Params:
+	 *     pos = the position to insert the byte
+	 *     c = the byte to insert
+	 *
+	 * Return: @string
+	 */
+	public StringG insertC(ptrdiff_t pos, char c)
+	{
+		auto p = g_string_insert_c(gString, pos, c);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Inserts @len bytes of @val into @string at @pos.
+	 * Because @len is provided, @val may contain embedded
+	 * nuls and need not be nul-terminated. If @pos is -1,
+	 * bytes are inserted at the end of the string.
+	 *
+	 * Since this function does not stop at nul bytes, it is
+	 * the caller's responsibility to ensure that @val has at
+	 * least @len addressable bytes.
+	 *
+	 * Params:
+	 *     pos = position in @string where insertion should
+	 *         happen, or -1 for at the end
+	 *     val = bytes to insert
+	 *     len = number of bytes of @val to insert
+	 *
+	 * Return: @string
+	 */
+	public StringG insertLen(ptrdiff_t pos, string val, ptrdiff_t len)
+	{
+		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Converts a Unicode character into UTF-8, and insert it
+	 * into the string at the given position.
+	 *
+	 * Params:
+	 *     pos = the position at which to insert character, or -1
+	 *         to append at the end of the string
+	 *     wc = a Unicode character
+	 *
+	 * Return: @string
+	 */
+	public StringG insertUnichar(ptrdiff_t pos, dchar wc)
+	{
+		auto p = g_string_insert_unichar(gString, pos, wc);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Overwrites part of a string, lengthening it if necessary.
+	 *
+	 * Params:
+	 *     pos = the position at which to start overwriting
+	 *     val = the string that will overwrite the @string starting at @pos
+	 *
+	 * Return: @string
+	 *
+	 * Since: 2.14
+	 */
+	public StringG overwrite(size_t pos, string val)
+	{
+		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Overwrites part of a string, lengthening it if necessary.
+	 * This function will work with embedded nuls.
+	 *
+	 * Params:
+	 *     pos = the position at which to start overwriting
+	 *     val = the string that will overwrite the @string starting at @pos
+	 *     len = the number of bytes to write from @val
+	 *
+	 * Return: @string
+	 *
+	 * Since: 2.14
+	 */
+	public StringG overwriteLen(size_t pos, string val, ptrdiff_t len)
+	{
+		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Adds a string on to the start of a #GString,
+	 * expanding it if necessary.
+	 *
+	 * Params:
+	 *     val = the string to prepend on the start of @string
+	 *
+	 * Return: @string
+	 */
+	public StringG prepend(string val)
+	{
+		auto p = g_string_prepend(gString, Str.toStringz(val));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Adds a byte onto the start of a #GString,
+	 * expanding it if necessary.
+	 *
+	 * Params:
+	 *     c = the byte to prepend on the start of the #GString
+	 *
+	 * Return: @string
+	 */
+	public StringG prependC(char c)
+	{
+		auto p = g_string_prepend_c(gString, c);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Prepends @len bytes of @val to @string.
+	 * Because @len is provided, @val may contain
+	 * embedded nuls and need not be nul-terminated.
+	 *
+	 * Since this function does not stop at nul bytes,
+	 * it is the caller's responsibility to ensure that
+	 * @val has at least @len addressable bytes.
+	 *
+	 * Params:
+	 *     val = bytes to prepend
+	 *     len = number of bytes in @val to prepend
+	 *
+	 * Return: @string
+	 */
+	public StringG prependLen(string val, ptrdiff_t len)
+	{
+		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Converts a Unicode character into UTF-8, and prepends it
+	 * to the string.
+	 *
+	 * Params:
+	 *     wc = a Unicode character
+	 *
+	 * Return: @string
+	 */
+	public StringG prependUnichar(dchar wc)
+	{
+		auto p = g_string_prepend_unichar(gString, wc);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Sets the length of a #GString. If the length is less than
+	 * the current length, the string will be truncated. If the
+	 * length is greater than the current length, the contents
+	 * of the newly added area are undefined. (However, as
+	 * always, string->str[string->len] will be a nul byte.)
+	 *
+	 * Params:
+	 *     len = the new length
+	 *
+	 * Return: @string
+	 */
+	public StringG setSize(size_t len)
+	{
+		auto p = g_string_set_size(gString, len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Cuts off the end of the GString, leaving the first @len bytes.
+	 *
+	 * Params:
+	 *     len = the new size of @string
+	 *
+	 * Return: @string
+	 */
+	public StringG truncate(size_t len)
+	{
+		auto p = g_string_truncate(gString, len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Converts a #GString to uppercase.
+	 *
+	 * Deprecated: This function uses the locale-specific
+	 * toupper() function, which is almost never the right thing.
+	 * Use g_string_ascii_up() or g_utf8_strup() instead.
+	 *
+	 * Return: @string
+	 */
+	public StringG up()
+	{
+		auto p = g_string_up(gString);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Writes a formatted string into a #GString.
+	 * This function is similar to g_string_printf() except that
+	 * the arguments to the format string are passed as a va_list.
+	 *
+	 * Params:
+	 *     format = the string format. See the printf() documentation
+	 *     args = the parameters to insert into the format string
+	 *
+	 * Since: 2.14
+	 */
+	public void vprintf(string format, void* args)
+	{
+		g_string_vprintf(gString, Str.toStringz(format), args);
+	}
+
+	/**
+	 * Creates a new #GString, initialized with the given string.
+	 *
+	 * Params:
+	 *     init = the initial text to copy into the string, or %NULL to
+	 *         start with an empty string.
+	 *
+	 * Return: the new #GString
+	 */
+	public static StringG stringNew(string init)
+	{
+		auto p = g_string_new(Str.toStringz(init));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Creates a new #GString with @len bytes of the @init buffer.
+	 * Because a length is provided, @init need not be nul-terminated,
+	 * and can contain embedded nul bytes.
+	 *
+	 * Since this function does not stop at nul bytes, it is the caller's
+	 * responsibility to ensure that @init has at least @len addressable
+	 * bytes.
+	 *
+	 * Params:
+	 *     init = initial contents of the string
+	 *     len = length of @init to use
+	 *
+	 * Return: a new #GString
+	 */
+	public static StringG stringNewLen(string init, ptrdiff_t len)
+	{
+		auto p = g_string_new_len(Str.toStringz(init), len);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
+	}
+
+	/**
+	 * Creates a new #GString, with enough space for @dfl_size
+	 * bytes. This is useful if you are going to add a lot of
+	 * text to the string and don't want it to be reallocated
+	 * too often.
+	 *
+	 * Params:
+	 *     dflSize = the default size of the space allocated to
+	 *         hold the string
+	 *
+	 * Return: the new #GString
+	 */
+	public static StringG stringSizedNew(size_t dflSize)
+	{
+		auto p = g_string_sized_new(dflSize);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new StringG(cast(GString*) p);
 	}
 }

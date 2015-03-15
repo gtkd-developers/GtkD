@@ -1,316 +1,112 @@
+﻿# This file is part of gtkD.
 #
-# This file is part of gtkD.
-# 
 # gtkD is free software; you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation; either version 3
-# of the License, or (at your option) any later version, with
-# some exceptions, please read the COPYING file.
-# 
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
 # gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with gtkD; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
-#
-###
-#####
-# Definitions for wrapping Atk
-#####
-###
-#
-
-
-addTypedefs: start
-
-public import gtkc.glibtypes;
-public import gtkc.gobjecttypes;
-
-addTypedefs: end
-
-addAliases: start
-addAliases: end
-
-addEnums: start
-addEnums: end
-
-addStructs: start
-addStructs: end
-
-addTypes: start
-addTypes: end
-
-addFuncts: start
-addFuncts: end
-
-addUnions: start
-addUnions: end
-
-addConstants: start
-addConstants: end
-
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
 
 # must start with wrap
-
 wrap: atk
+file: /usr/share/gir-1.0/Atk-1.0.gir
 
-###########################################################
-### Atk ###################################################
-###########################################################
+addAliases: start
+	public import gtkc.glibtypes;
+	public import gtkc.gobjecttypes;
+addAliases: end
 
-file: AtkAction.html
-struct: AtkAction
-class: Action
-prefix: atk_action_
-import: glib.Str
-outFile: Action
+struct: Attribute
+noCode: true
+noExternal: true
 
-file: AtkComponent.html
-struct: AtkComponent
-class: Component
-prefix: atk_component_
-structWrap: AtkObject* ObjectAtk
-import: atk.ObjectAtk
+struct: Component
+override: get_layer
+override: get_mdi_zorder
 
-out: atk_component_get_extents x
-out: atk_component_get_extents y
-out: atk_component_get_extents width
-out: atk_component_get_extents height
-out: atk_component_get_position x
-out: atk_component_get_position y
-out: atk_component_get_size width
-out: atk_component_get_size height
+struct: Document
+override: get_attributes
 
-outFile: Component
+struct: Implementor
+interface: Implementor
+merge: ImplementorIface
 
-file: AtkDocument.html
-struct: AtkDocument
-class: Document
-prefix: atk_document_
-import: glib.Str
-outFile: Document
+struct: NoOpObject
+code: start
+	/**
+	 * Removes the specified child of the object from the object's selection.
+	 *
+	 * Params:
+	 *     i = a #gint specifying the index in the selection set.  (e.g. the
+	 *         ith selection as opposed to the ith child).
+	 *
+	 * Return: TRUE if success, FALSE otherwise.
+	 */
+	public bool removeSelection(int i)
+	{
+		return atk_selection_remove_selection(getSelectionStruct(), i) != 0;
+	}
+code: end
 
-file: AtkEditableText.html
-struct: AtkEditableText
-class: EditableText
-prefix: atk_editable_text_
-import: glib.Str
-inout: atk_editable_text_insert_text position
-outFile: EditableText
-
-file: AtkGObjectAccessible.html
-struct: AtkGObjectAccessible
-class: GObjectAccessible
-prefix: atk_gobject_accessible_
-structWrap: AtkObject* ObjectAtk
-structWrap: GObject* ObjectG
-import: atk.ObjectAtk
-import: gobject.ObjectG
-outFile: GObjectAccessible
-
-file: AtkHyperlink.html
-struct: AtkHyperlink
-class: Hyperlink
-prefix: atk_hyperlink_
-structWrap: AtkObject* ObjectAtk
-import: atk.ObjectAtk
-import: glib.Str
-outFile: Hyperlink
-
-#file: atk-AtkHyperlinkImpl.html
-#struct: AtkHyperlinkImpl
-#class: HyperlinkImpl
-#prefix: atk_hyperlink_impl_
-#outFile: HyperlinkImpl
-
-file: AtkHypertext.html
-struct: AtkHypertext
-class: Hypertext
-prefix: atk_hypertext_
-structWrap: AtkHyperlink* Hyperlink
-import: atk.Hyperlink
-outFile: Hypertext
-
-file: AtkImage.html
-struct: AtkImage
-class: Image
-prefix: atk_image_
-import: glib.Str
-
-out: atk_image_get_image_position x
-out: atk_image_get_image_position y
-out: atk_image_get_image_size width
-out: atk_image_get_image_size height
-
-outFile: Image
-
-file: AtkNoOpObject.html
-struct: AtkNoOpObject
-class: NoOpObject
-prefix: atk_no_op_object_
-structWrap: AtkObject* ObjectAtk
-structWrap: GObject* ObjectG
-import: atk.ObjectAtk
-import: gobject.ObjectG
-outFile: NoOpObject
-
-file: AtkNoOpObjectFactory.html
-struct: AtkNoOpObjectFactory
-class: NoOpObjectFactory
-prefix: atk_no_op_object_factory_
-outFile: NoOpObjectFactory
-
-file: AtkObject.html
-struct: AtkObject
+struct: Object
 class: ObjectAtk
-prefix: atk_object_
-prefix: atk_
-structWrap: AtkObject* ObjectAtk
-structWrap: AtkRelationSet* RelationSet
-structWrap: AtkStateSet* StateSet
-import: atk.ObjectAtk
-import: atk.RelationSet
-import: atk.StateSet
-import: glib.Str
-outFile: ObjectAtk
 
-file: AtkObjectFactory.html
-struct: AtkObjectFactory
-class: ObjectFactory
-prefix: atk_object_factory_
-structWrap: AtkObject* ObjectAtk
-structWrap: GObject* ObjectG
-import: atk.ObjectAtk
-import: gobject.ObjectG
-outFile: ObjectFactory
+struct: Util
+namespace: Util
 
-file: AtkRegistry.html
-struct: AtkRegistry
-class: Registry
-prefix: atk_registry_
-structWrap: AtkObjectFactory* ObjectFactory
-structWrap: AtkRegistry* Registry
-import: atk.ObjectFactory
-import: atk.Registry
-outFile: Registry
+#
+# Move functions defined as global into there respective classes
+#
 
-file: AtkRelation.html
-struct: AtkRelation
-class: Relation
-prefix: atk_relation_
-structWrap: AtkObject* ObjectAtk
-structWrap: GPtrArray* PtrArray
-import: atk.ObjectAtk
-import: glib.PtrArray
-import: glib.Str
-array: atk_relation_new targets n_targets
-outFile: Relation
+move: add_focus_tracker Util
+move: add_global_event_listener Util
+move: add_key_event_listener Util
+move: focus_tracker_init Util
+move: focus_tracker_notify Util
+move: get_focus_object Util
+move: get_root Util
+move: get_toolkit_name Util
+move: remove_focus_tracker Util
+move: remove_global_event_listener Util
+move: remove_key_event_listener Util
 
-file: AtkRelationSet.html
-struct: AtkRelationSet
-class: RelationSet
-prefix: atk_relationSet_
-structWrap: AtkObject* ObjectAtk
-structWrap: AtkRelation* Relation
-structWrap: GPtrArray* PtrArray
-import: atk.ObjectAtk
-import: atk.Relation
-import: glib.PtrArray
-outFile: RelationSet
+move: attribute_set_free Text
+move: text_attribute_for_name Text attribute_for_name
+move: text_attribute_get_name Text attribute_get_name
+move: text_attribute_get_value Text attribute_get_value
+move: text_attribute_register Text attribute_register
 
-file: AtkSelection.html
-struct: AtkSelection
-class: Selection
-prefix: atk_selection_
-structWrap: AtkObject* ObjectAtk
-import: atk.ObjectAtk
-outFile: Selection
+move: get_binary_age Version
+move: get_interface_age Version
+move: get_major_version Version
+move: get_micro_version Version
+move: get_minor_version Version
+move: get_toolkit_version Version
+move: get_version Version
 
-file: atk-AtkState.html
-class: State
-prefix: atk_state_
-import: glib.Str
-outFile: State
+move: get_default_registry Registry
 
-file: AtkStateSet.html
-struct: AtkStateSet
-class: StateSet
-prefix: atk_state_set_
-structWrap: AtkStateSet* StateSet
-import: glib.Str
+move: relation_type_for_name Relation type_for_name
+move: relation_type_get_name Relation type_get_name
+move: relation_type_register Relation type_register
 
-array: atk_state_set_add_states types n_types
-array: atk_state_set_contains_states types n_types
+move: role_for_name Object
+move: role_get_localized_name Object
+move: role_get_name Object
+move: role_register Object
 
-outFile: StateSet
-
-file: AtkStreamableContent.html
-struct: AtkStreamableContent
-class: StreamableContent
-prefix: atk_streamable_content_
-structWrap: GIOChannel* IOChannel
-import: glib.IOChannel
-import: glib.Str
-outFile: StreamableContent
-
-file: AtkTable.html
-struct: AtkTable
-class: Table
-prefix: atk_table_
-structWrap: AtkObject* ObjectAtk
-import: atk.ObjectAtk
-import: glib.Str
-
-out: atk_table_get_selected_columns selected
-out: atk_table_get_selected_rows selected
-array: atk_table_get_selected_columns selected Return
-array: atk_table_get_selected_rows selected Return
-
-outFile: Table
-
-file: AtkText.html
-struct: AtkText
-class: Text
-prefix: atk_text_
-import: glib.Str
-
-out: atk_text_get_text_after_offset start_offset
-out: atk_text_get_text_after_offset end_offset
-out: atk_text_get_text_at_offset start_offset
-out: atk_text_get_text_at_offset end_offset
-out: atk_text_get_text_before_offset start_offset
-out: atk_text_get_text_before_offset end_offset
-out: atk_text_get_character_extents x
-out: atk_text_get_character_extents y
-out: atk_text_get_character_extents width
-out: atk_text_get_character_extents height
-out: atk_text_get_run_attributes start_offset
-out: atk_text_get_run_attributes end_offset
-out: atk_text_get_selection start_offset
-out: atk_text_get_selection end_offset
-out: atk_text_get_string_at_offset start_offset
-out: atk_text_get_string_at_offset end_offset
-
-outFile:Text
-
-file: AtkUtil.html
-class: Util
-prefix: atk_
-structWrap: AtkObject* ObjectAtk
-import: atk.ObjectAtk
-import: glib.Str
-outFile: Util
-
-file: AtkValue.html
-struct: AtkValue
-class: ValueAtk
-prefix: atk_value_
-import: gobject.Value
-structWrap: GValue* Value
-outFile: ValueAtk
+move: state_type_for_name State type_for_name
+move: state_type_get_name State type_get_name
+move: state_type_register State type_register

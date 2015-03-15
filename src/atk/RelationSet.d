@@ -16,59 +16,21 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = AtkRelationSet.html
- * outPack = atk
- * outFile = RelationSet
- * strct   = AtkRelationSet
- * realStrct=
- * ctorStrct=
- * clss    = RelationSet
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- atk_relationSet_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- atk.ObjectAtk
- * 	- atk.Relation
- * 	- glib.PtrArray
- * structWrap:
- * 	- AtkObject* -> ObjectAtk
- * 	- AtkRelation* -> Relation
- * 	- GPtrArray* -> PtrArray
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module atk.RelationSet;
 
-public  import gtkc.atktypes;
-
-private import gtkc.atk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
 private import atk.ObjectAtk;
 private import atk.Relation;
-private import glib.PtrArray;
-
-
+private import glib.ConstructionException;
 private import gobject.ObjectG;
+private import gtkc.atk;
+public  import gtkc.atktypes;
+
 
 /**
  * The AtkRelationSet held by an object establishes its relationships
@@ -82,112 +44,148 @@ private import gobject.ObjectG;
  */
 public class RelationSet : ObjectG
 {
-	
 	/** the main Gtk struct */
 	protected AtkRelationSet* atkRelationSet;
-	
-	
+
 	/** Get the main Gtk struct */
 	public AtkRelationSet* getRelationSetStruct()
 	{
 		return atkRelationSet;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)atkRelationSet;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (AtkRelationSet* atkRelationSet)
-	{
-		super(cast(GObject*)atkRelationSet);
-		this.atkRelationSet = atkRelationSet;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		atkRelationSet = cast(AtkRelationSet*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (AtkRelationSet* atkRelationSet, bool ownedRef = false)
+	{
+		this.atkRelationSet = atkRelationSet;
+		super(cast(GObject*)atkRelationSet, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return atk_relation_set_get_type();
+	}
+
 	/**
 	 * Creates a new empty relation set.
-	 * Returns: a new AtkRelationSet
+	 *
+	 * Return: a new #AtkRelationSet
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public static AtkRelationSet* atkRelationSetNew()
+	public this()
 	{
-		// AtkRelationSet * atk_relation_set_new (void);
-		return atk_relation_set_new();
+		auto p = atk_relation_set_new();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(AtkRelationSet*) p, true);
 	}
-	
-	/**
-	 * Determines whether the relation set contains a relation that matches the
-	 * specified type.
-	 * Params:
-	 * relationship = an AtkRelationType
-	 * Returns: TRUE if relationship is the relationship type of a relation in set, FALSE otherwise
-	 */
-	public int atkRelationSetContains(AtkRelationType relationship)
-	{
-		// gboolean atk_relation_set_contains (AtkRelationSet *set,  AtkRelationType relationship);
-		return atk_relation_set_contains(atkRelationSet, relationship);
-	}
-	
-	/**
-	 * Removes a relation from the relation set.
-	 * This function unref's the AtkRelation so it will be deleted unless there
-	 * is another reference to it.
-	 * Params:
-	 * relation = an AtkRelation
-	 */
-	public void atkRelationSetRemove(Relation relation)
-	{
-		// void atk_relation_set_remove (AtkRelationSet *set,  AtkRelation *relation);
-		atk_relation_set_remove(atkRelationSet, (relation is null) ? null : relation.getRelationStruct());
-	}
-	
+
 	/**
 	 * Add a new relation to the current relation set if it is not already
 	 * present.
 	 * This function ref's the AtkRelation so the caller of this function
 	 * should unref it to ensure that it will be destroyed when the AtkRelationSet
 	 * is destroyed.
+	 *
 	 * Params:
-	 * relation = an AtkRelation
+	 *     relation = an #AtkRelation
 	 */
-	public void atkRelationSetAdd(Relation relation)
+	public void add(Relation relation)
 	{
-		// void atk_relation_set_add (AtkRelationSet *set,  AtkRelation *relation);
 		atk_relation_set_add(atkRelationSet, (relation is null) ? null : relation.getRelationStruct());
 	}
-	
+
+	/**
+	 * Add a new relation of the specified type with the specified target to
+	 * the current relation set if the relation set does not contain a relation
+	 * of that type. If it is does contain a relation of that typea the target
+	 * is added to the relation.
+	 *
+	 * Params:
+	 *     relationship = an #AtkRelationType
+	 *     target = an #AtkObject
+	 *
+	 * Since: 1.9
+	 */
+	public void addRelationByType(AtkRelationType relationship, ObjectAtk target)
+	{
+		atk_relation_set_add_relation_by_type(atkRelationSet, relationship, (target is null) ? null : target.getObjectAtkStruct());
+	}
+
+	/**
+	 * Determines whether the relation set contains a relation that matches the
+	 * specified type.
+	 *
+	 * Params:
+	 *     relationship = an #AtkRelationType
+	 *
+	 * Return: %TRUE if @relationship is the relationship type of a relation
+	 *     in @set, %FALSE otherwise
+	 */
+	public bool contains(AtkRelationType relationship)
+	{
+		return atk_relation_set_contains(atkRelationSet, relationship) != 0;
+	}
+
+	/**
+	 * Determines whether the relation set contains a relation that
+	 * matches the specified pair formed by type @relationship and object
+	 * @target.
+	 *
+	 * Params:
+	 *     relationship = an #AtkRelationType
+	 *     target = an #AtkObject
+	 *
+	 * Return: %TRUE if @set contains a relation with the relationship
+	 *     type @relationship with an object @target, %FALSE otherwise
+	 */
+	public bool containsTarget(AtkRelationType relationship, ObjectAtk target)
+	{
+		return atk_relation_set_contains_target(atkRelationSet, relationship, (target is null) ? null : target.getObjectAtkStruct()) != 0;
+	}
+
 	/**
 	 * Determines the number of relations in a relation set.
-	 * Returns: an integer representing the number of relations in the set.
+	 *
+	 * Return: an integer representing the number of relations in the set.
 	 */
-	public int atkRelationSetGetNRelations()
+	public int getNRelations()
 	{
-		// gint atk_relation_set_get_n_relations (AtkRelationSet *set);
 		return atk_relation_set_get_n_relations(atkRelationSet);
 	}
-	
+
 	/**
 	 * Determines the relation at the specified position in the relation set.
+	 *
 	 * Params:
-	 * i = a gint representing a position in the set, starting from 0.
-	 * Returns: a AtkRelation, which is the relation at position i in the set. [transfer none]
+	 *     i = a gint representing a position in the set, starting from 0.
+	 *
+	 * Return: a #AtkRelation, which is the relation at
+	 *     position i in the set.
 	 */
-	public Relation atkRelationSetGetRelation(int i)
+	public Relation getRelation(int i)
 	{
-		// AtkRelation * atk_relation_set_get_relation (AtkRelationSet *set,  gint i);
 		auto p = atk_relation_set_get_relation(atkRelationSet, i);
 		
 		if(p is null)
@@ -197,16 +195,18 @@ public class RelationSet : ObjectG
 		
 		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
 	}
-	
+
 	/**
 	 * Finds a relation that matches the specified type.
+	 *
 	 * Params:
-	 * relationship = an AtkRelationType
-	 * Returns: an AtkRelation, which is a relation matching the specified type. [transfer none]
+	 *     relationship = an #AtkRelationType
+	 *
+	 * Return: an #AtkRelation, which is a relation matching the
+	 *     specified type.
 	 */
-	public Relation atkRelationSetGetRelationByType(AtkRelationType relationship)
+	public Relation getRelationByType(AtkRelationType relationship)
 	{
-		// AtkRelation * atk_relation_set_get_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship);
 		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
 		
 		if(p is null)
@@ -216,20 +216,17 @@ public class RelationSet : ObjectG
 		
 		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
 	}
-	
+
 	/**
-	 * Add a new relation of the specified type with the specified target to
-	 * the current relation set if the relation set does not contain a relation
-	 * of that type. If it is does contain a relation of that typea the target
-	 * is added to the relation.
-	 * Since 1.9
+	 * Removes a relation from the relation set.
+	 * This function unref's the #AtkRelation so it will be deleted unless there
+	 * is another reference to it.
+	 *
 	 * Params:
-	 * relationship = an AtkRelationType
-	 * target = an AtkObject
+	 *     relation = an #AtkRelation
 	 */
-	public void atkRelationSetAddRelationByType(AtkRelationType relationship, ObjectAtk target)
+	public void remove(Relation relation)
 	{
-		// void atk_relation_set_add_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship,  AtkObject *target);
-		atk_relation_set_add_relation_by_type(atkRelationSet, relationship, (target is null) ? null : target.getObjectAtkStruct());
+		atk_relation_set_remove(atkRelationSet, (relation is null) ? null : relation.getRelationStruct());
 	}
 }

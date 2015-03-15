@@ -16,100 +16,64 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkCheckButton.html
- * outPack = gtk
- * outFile = CheckButton
- * strct   = GtkCheckButton
- * realStrct=
- * ctorStrct=
- * clss    = CheckButton
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_check_button_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_check_button_new_with_label
- * 	- gtk_check_button_new_with_mnemonic
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Button
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.CheckButton;
 
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.Button;
+private import gtk.ToggleButton;
+private import gtk.Widget;
+private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
-private import gtkc.gtk;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import glib.Str;
-private import gtk.Button;
-
-
-private import gtk.ToggleButton;
 
 /**
- * A GtkCheckButton places a discrete GtkToggleButton next to a widget,
- * (usually a GtkLabel). See the section on GtkToggleButton widgets for
+ * A #GtkCheckButton places a discrete #GtkToggleButton next to a widget,
+ * (usually a #GtkLabel). See the section on #GtkToggleButton widgets for
  * more information about toggle/check buttons.
- *
- * The important signal ( "toggled" ) is also inherited from
- * GtkToggleButton.
+ * 
+ * The important signal ( #GtkToggleButton::toggled ) is also inherited from
+ * #GtkToggleButton.
  */
 public class CheckButton : ToggleButton
 {
-	
 	/** the main Gtk struct */
 	protected GtkCheckButton* gtkCheckButton;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkCheckButton* getCheckButtonStruct()
 	{
 		return gtkCheckButton;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkCheckButton;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkCheckButton* gtkCheckButton)
-	{
-		super(cast(GtkToggleButton*)gtkCheckButton);
-		this.gtkCheckButton = gtkCheckButton;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkCheckButton = cast(GtkCheckButton*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkCheckButton* gtkCheckButton, bool ownedRef = false)
+	{
+		this.gtkCheckButton = gtkCheckButton;
+		super(cast(GtkToggleButton*)gtkCheckButton, ownedRef);
+	}
+
 	/**
 	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.
 	 * If mnemonic is true the label
@@ -150,23 +114,31 @@ public class CheckButton : ToggleButton
 		this(label, mnemonic);
 		addOnClicked(cast(void delegate(Button))onClicked);
 	}
-	
-	
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gtk_check_button_get_type();
+	}
+
 	/**
-	 * Creates a new GtkCheckButton.
+	 * Creates a new #GtkCheckButton.
+	 *
+	 * Return: a #GtkWidget.
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_check_button_new (void);
 		auto p = gtk_check_button_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_check_button_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkCheckButton*) p);
 	}
 }

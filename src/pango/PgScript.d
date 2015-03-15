@@ -16,96 +16,88 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = pango-Scripts-and-Languages.html
- * outPack = pango
- * outFile = PgScript
- * strct   = 
- * realStrct=
- * ctorStrct=
- * clss    = PgScript
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- pango_
- * 	- pango_script_
- * omit structs:
- * omit prefixes:
- * 	- pango_script_iter_
- * 	- pango_language_
- * omit code:
- * omit signals:
- * imports:
- * 	- pango.PgLanguage
- * structWrap:
- * 	- PangoLanguage* -> PgLanguage
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module pango.PgScript;
 
-public  import gtkc.pangotypes;
-
-private import gtkc.pango;
-private import glib.ConstructionException;
 private import gobject.ObjectG;
-
+private import gtkc.pango;
+public  import gtkc.pangotypes;
 private import pango.PgLanguage;
 
 
-
-/**
- * The functions in this section are used to identify the writing
- * system, or script of individual characters
- * and of ranges within a larger text string.
- */
-public class PgScript
+public struct PgScript
 {
-	
 	/**
 	 */
-	
+
 	/**
-	 * Looks up the PangoScript for a particular character (as defined by
-	 * Unicode Standard Annex 24). No check is made for ch being a
+	 * Looks up the #PangoScript for a particular character (as defined by
+	 * Unicode Standard Annex \#24). No check is made for @ch being a
 	 * valid Unicode character; if you pass in invalid character, the
 	 * result is undefined.
+	 *
 	 * As of Pango 1.18, this function simply returns the return value of
 	 * g_unichar_get_script().
-	 * Since 1.4
+	 *
 	 * Params:
-	 * ch = a Unicode character
-	 * Returns: the PangoScript for the character.
+	 *     ch = a Unicode character
+	 *
+	 * Return: the #PangoScript for the character.
+	 *
+	 * Since: 1.4
 	 */
-	public static PangoScript scriptForUnichar(gunichar ch)
+	public static PangoScript scriptForUnichar(dchar ch)
 	{
-		// PangoScript pango_script_for_unichar (gunichar ch);
 		return pango_script_for_unichar(ch);
 	}
-	
+
 	/**
 	 * Given a script, finds a language tag that is reasonably
 	 * representative of that script. This will usually be the
-	 * Since 1.4
+	 * most widely spoken or used language written in that script:
+	 * for instance, the sample language for %PANGO_SCRIPT_CYRILLIC
+	 * is <literal>ru</literal> (Russian), the sample language
+	 * for %PANGO_SCRIPT_ARABIC is <literal>ar</literal>.
+	 *
+	 * For some
+	 * scripts, no sample language will be returned because there
+	 * is no language that is sufficiently representative. The best
+	 * example of this is %PANGO_SCRIPT_HAN, where various different
+	 * variants of written Chinese, Japanese, and Korean all use
+	 * significantly different sets of Han characters and forms
+	 * of shared characters. No sample language can be provided
+	 * for many historical scripts as well.
+	 *
+	 * As of 1.18, this function checks the environment variables
+	 * PANGO_LANGUAGE and LANGUAGE (checked in that order) first.
+	 * If one of them is set, it is parsed as a list of language tags
+	 * separated by colons or other separators.  This function
+	 * will return the first language in the parsed list that Pango
+	 * believes may use @script for writing.  This last predicate
+	 * is tested using pango_language_includes_script().  This can
+	 * be used to control Pango's font selection for non-primary
+	 * languages.  For example, a PANGO_LANGUAGE enviroment variable
+	 * set to "en:fa" makes Pango choose fonts suitable for Persian (fa)
+	 * instead of Arabic (ar) when a segment of Arabic text is found
+	 * in an otherwise non-Arabic text.  The same trick can be used to
+	 * choose a default language for %PANGO_SCRIPT_HAN when setting
+	 * context language is not feasible.
+	 *
 	 * Params:
-	 * script = a PangoScript
-	 * Returns: a PangoLanguage that is representative of the script, or NULL if no such language exists.
+	 *     script = a #PangoScript
+	 *
+	 * Return: a #PangoLanguage that is representative
+	 *     of the script, or %NULL if no such language exists.
+	 *
+	 * Since: 1.4
 	 */
 	public static PgLanguage scriptGetSampleLanguage(PangoScript script)
 	{
-		// PangoLanguage * pango_script_get_sample_language (PangoScript script);
 		auto p = pango_script_get_sample_language(script);
 		
 		if(p is null)

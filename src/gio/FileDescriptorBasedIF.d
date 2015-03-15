@@ -16,76 +16,42 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GFileDescriptorBased.html
- * outPack = gio
- * outFile = FileDescriptorBasedIF
- * strct   = GFileDescriptorBased
- * realStrct=
- * ctorStrct=
- * clss    = FileDescriptorBasedT
- * interf  = FileDescriptorBasedIF
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- g_file_descriptor_based_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * structWrap:
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gio.FileDescriptorBasedIF;
 
-public  import gtkc.giotypes;
-
 private import gtkc.gio;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-
+public  import gtkc.giotypes;
 
 
 /**
- * GFileDescriptorBased is implemented by streams (implementations of
- * GInputStream or GOutputStream) that are based on file descriptors.
- *
- * Note that &lt;gio/gfiledescriptorbased.h&gt; belongs to
- * the UNIX-specific GIO interfaces, thus you have to use the
- * gio-unix-2.0.pc pkg-config file when using it.
+ * #GFileDescriptorBased is implemented by streams (implementations of
+ * #GInputStream or #GOutputStream) that are based on file descriptors.
+ * 
+ * Note that `<gio/gfiledescriptorbased.h>` belongs to the UNIX-specific
+ * GIO interfaces, thus you have to use the `gio-unix-2.0.pc` pkg-config
+ * file when using it.
  */
-public interface FileDescriptorBasedIF
-{
-	
-	
+public interface FileDescriptorBasedIF{
 	/** Get the main Gtk struct */
-	public GFileDescriptorBased* getFileDescriptorBasedTStruct();
-	
+	public GFileDescriptorBased* getFileDescriptorBasedStruct();
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
-	
-	
+
 	/**
 	 */
-	
+
 	/**
 	 * Gets the underlying file descriptor.
-	 * Since 2.24
-	 * Returns: The file descriptor
+	 *
+	 * Return: The file descriptor
+	 *
+	 * Since: 2.24
 	 */
 	public int getFd();
 }

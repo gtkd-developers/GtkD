@@ -16,114 +16,82 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GstSystemClock.html
- * outPack = gstreamer
- * outFile = SystemClock
- * strct   = GstSystemClock
- * realStrct=
- * ctorStrct=
- * clss    = SystemClock
- * interf  = 
- * class Code: No
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gst_system_clock_
- * omit structs:
- * omit prefixes:
- * omit code:
- * omit signals:
- * imports:
- * 	- gstreamer.Clock
- * structWrap:
- * 	- GstClock* -> Clock
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gstreamer.SystemClock;
 
+private import gobject.ObjectG;
+private import gstreamer.Clock;
+private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
-private import gstreamerc.gstreamer;
-private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gstreamer.Clock;
-
-
-private import gstreamer.Clock;
 
 /**
  * The GStreamer core provides a GstSystemClock based on the system time.
  * Asynchronous callbacks are scheduled from an internal thread.
- *
+ * 
  * Clock implementors are encouraged to subclass this systemclock as it
  * implements the async notification.
- *
+ * 
  * Subclasses can however override all of the important methods for sync and
  * async notifications to implement their own callback methods or blocking
  * wait operations.
- *
- * Last reviewed on 2006-03-08 (0.10.4)
  */
 public class SystemClock : Clock
 {
-	
 	/** the main Gtk struct */
 	protected GstSystemClock* gstSystemClock;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GstSystemClock* getSystemClockStruct()
 	{
 		return gstSystemClock;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gstSystemClock;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GstSystemClock* gstSystemClock)
-	{
-		super(cast(GstClock*)gstSystemClock);
-		this.gstSystemClock = gstSystemClock;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gstSystemClock = cast(GstSystemClock*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstSystemClock* gstSystemClock, bool ownedRef = false)
+	{
+		this.gstSystemClock = gstSystemClock;
+		super(cast(GstClock*)gstSystemClock, ownedRef);
+	}
+
 	/**
 	 */
-	
+
+	public static GType getType()
+	{
+		return gst_system_clock_get_type();
+	}
+
 	/**
 	 * Get a handle to the default system clock. The refcount of the
 	 * clock will be increased so you need to unref the clock after
 	 * usage.
-	 * Returns: the default clock. MT safe. [transfer full]
+	 *
+	 * Return: the default clock.
+	 *
+	 *     MT safe.
 	 */
 	public static Clock obtain()
 	{
-		// GstClock * gst_system_clock_obtain (void);
 		auto p = gst_system_clock_obtain();
 		
 		if(p is null)
@@ -131,6 +99,26 @@ public class SystemClock : Clock
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Clock)(cast(GstClock*) p);
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+	}
+
+	/**
+	 * Sets the default system clock that can be obtained with
+	 * gst_system_clock_obtain().
+	 *
+	 * This is mostly used for testing and debugging purposes when you
+	 * want to have control over the time reported by the default system
+	 * clock.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     newClock = a #GstClock
+	 *
+	 * Since: 1.4
+	 */
+	public static void setDefault(Clock newClock)
+	{
+		gst_system_clock_set_default((newClock is null) ? null : newClock.getClockStruct());
 	}
 }

@@ -16,133 +16,125 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * inFile  = GtkInfoBar.html
- * outPack = gtk
- * outFile = InfoBar
- * strct   = GtkInfoBar
- * realStrct=
- * ctorStrct=GtkWidget
- * clss    = InfoBar
- * interf  = 
- * class Code: Yes
- * interface Code: No
- * template for:
- * extend  = 
- * implements:
- * prefixes:
- * 	- gtk_info_bar_
- * omit structs:
- * omit prefixes:
- * omit code:
- * 	- gtk_info_bar_get_action_area
- * 	- gtk_info_bar_get_content_area
- * omit signals:
- * imports:
- * 	- glib.Str
- * 	- gtk.Button
- * 	- gtk.HBox;
- * 	- gtk.VButtonBox
- * 	- gtk.Widget
- * structWrap:
- * 	- GtkWidget* -> Widget
- * module aliases:
- * local aliases:
- * overrides:
- */
 
 module gtk.InfoBar;
 
-public  import gtkc.gtktypes;
-
-private import gtkc.gtk;
 private import glib.ConstructionException;
-private import gobject.ObjectG;
-
-private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.Box;
 private import gtk.Button;
-private import gtk.HBox;;
+private import gtk.HBox;
 private import gtk.VButtonBox;
 private import gtk.Widget;
+public  import gtkc.gdktypes;
+private import gtkc.gtk;
+public  import gtkc.gtktypes;
 
-
-private import gtk.Box;
 
 /**
- * GtkInfoBar is a widget that can be used to show messages to
+ * #GtkInfoBar is a widget that can be used to show messages to
  * the user without showing a dialog. It is often temporarily shown
- * at the top or bottom of a document. In contrast to GtkDialog, which
- * has a action area at the bottom, GtkInfoBar has an action area
+ * at the top or bottom of a document. In contrast to #GtkDialog, which
+ * has a action area at the bottom, #GtkInfoBar has an action area
  * at the side.
- *
- * The API of GtkInfoBar is very similar to GtkDialog, allowing you
+ * 
+ * The API of #GtkInfoBar is very similar to #GtkDialog, allowing you
  * to add buttons to the action area with gtk_info_bar_add_button() or
  * gtk_info_bar_new_with_buttons(). The sensitivity of action widgets
  * can be controlled with gtk_info_bar_set_response_sensitive().
- * To add widgets to the main content area of a GtkInfoBar, use
+ * To add widgets to the main content area of a #GtkInfoBar, use
  * gtk_info_bar_get_content_area() and add your widgets to the container.
- *
- * Similar to GtkMessageDialog, the contents of a GtkInfoBar can by
+ * 
+ * Similar to #GtkMessageDialog, the contents of a #GtkInfoBar can by
  * classified as error message, warning, informational message, etc,
  * by using gtk_info_bar_set_message_type(). GTK+ may use the message type
  * to determine how the message is displayed.
- *
- * $(DDOC_COMMENT example)
- *
- * GtkInfoBar as GtkBuildable
- *
+ * 
+ * A simple example for using a GtkInfoBar:
+ * |[<!-- language="C" -->
+ * // set up info bar
+ * GtkWidget *widget;
+ * GtkInfoBar *bar;
+ * 
+ * widget = gtk_info_bar_new ();
+ * bar = GTK_INFO_BAR (bar);
+ * 
+ * gtk_widget_set_no_show_all (widget, TRUE);
+ * message_label = gtk_label_new ("");
+ * gtk_widget_show (message_label);
+ * content_area = gtk_info_bar_get_content_area (bar);
+ * gtk_container_add (GTK_CONTAINER (content_area),
+ * message_label);
+ * gtk_info_bar_add_button (bar,
+ * _("_OK"),
+ * GTK_RESPONSE_OK);
+ * g_signal_connect (bar,
+ * "response",
+ * G_CALLBACK (gtk_widget_hide),
+ * NULL);
+ * gtk_grid_attach (GTK_GRID (grid),
+ * widget,
+ * 0, 2, 1, 1);
+ * 
+ * ...
+ * 
+ * // show an error message
+ * gtk_label_set_text (GTK_LABEL (message_label), message);
+ * gtk_info_bar_set_message_type (bar,
+ * GTK_MESSAGE_ERROR);
+ * gtk_widget_show (bar);
+ * ]|
+ * 
+ * # GtkInfoBar as GtkBuildable
+ * 
  * The GtkInfoBar implementation of the GtkBuildable interface exposes
  * the content area and action area as internal children with the names
- * "content_area" and "action_area".
- *
- * GtkInfoBar supports a custom &lt;action-widgets&gt; element, which
- * can contain multiple &lt;action-widget&gt; elements. The "response"
- * attribute specifies a numeric response, and the content of the element
- * is the id of widget (which should be a child of the dialogs action_area).
+ * “content_area” and “action_area”.
+ * 
+ * GtkInfoBar supports a custom <action-widgets> element, which can contain
+ * multiple <action-widget> elements. The “response” attribute specifies a
+ * numeric response, and the content of the element is the id of widget
+ * (which should be a child of the dialogs @action_area).
  */
 public class InfoBar : Box
 {
-	
 	/** the main Gtk struct */
 	protected GtkInfoBar* gtkInfoBar;
-	
-	
+
 	/** Get the main Gtk struct */
 	public GtkInfoBar* getInfoBarStruct()
 	{
 		return gtkInfoBar;
 	}
-	
-	
+
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
 		return cast(void*)gtkInfoBar;
 	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkInfoBar* gtkInfoBar)
-	{
-		super(cast(GtkBox*)gtkInfoBar);
-		this.gtkInfoBar = gtkInfoBar;
-	}
-	
+
 	protected override void setStruct(GObject* obj)
 	{
-		super.setStruct(obj);
 		gtkInfoBar = cast(GtkInfoBar*)obj;
+		super.setStruct(obj);
 	}
-	
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkInfoBar* gtkInfoBar, bool ownedRef = false)
+	{
+		this.gtkInfoBar = gtkInfoBar;
+		super(cast(GtkBox*)gtkInfoBar, ownedRef);
+	}
+
 	/** */
 	public this(string[] buttonsText, ResponseType[] responses)
 	{
@@ -168,7 +160,7 @@ public class InfoBar : Box
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
-		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(StockDesc[stockID]), responseId);
+		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(stockID), responseId);
 		
 		if ( p is null )
 		{
@@ -227,123 +219,71 @@ public class InfoBar : Box
 		}
 		return new HBox(cast(GtkHBox*) p);
 	}
-	
+
 	/**
 	 */
-	int[string] connectedSignals;
-	
-	void delegate(InfoBar)[] onCloseListeners;
+
+	public static GType getType()
+	{
+		return gtk_info_bar_get_type();
+	}
+
 	/**
-	 * The ::close signal is a
-	 * keybinding signal
-	 * which gets emitted when the user uses a keybinding to dismiss
-	 * the info bar.
-	 * The default binding for this signal is the Escape key.
-	 * Since 2.18
-	 */
-	void addOnClose(void delegate(InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("close" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"close",
-			cast(GCallback)&callBackClose,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["close"] = 1;
-		}
-		onCloseListeners ~= dlg;
-	}
-	extern(C) static void callBackClose(GtkInfoBar* arg0Struct, InfoBar _infoBar)
-	{
-		foreach ( void delegate(InfoBar) dlg ; _infoBar.onCloseListeners )
-		{
-			dlg(_infoBar);
-		}
-	}
-	
-	void delegate(gint, InfoBar)[] onResponseListeners;
-	/**
-	 * Emitted when an action widget is clicked or the application programmer
-	 * calls gtk_dialog_response(). The response_id depends on which action
-	 * widget was clicked.
-	 * Since 2.18
-	 * See Also
-	 * GtkStatusbar, GtkMessageDialog
-	 */
-	void addOnResponse(void delegate(gint, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("response" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"response",
-			cast(GCallback)&callBackResponse,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["response"] = 1;
-		}
-		onResponseListeners ~= dlg;
-	}
-	extern(C) static void callBackResponse(GtkInfoBar* infoBarStruct, gint responseId, InfoBar _infoBar)
-	{
-		foreach ( void delegate(gint, InfoBar) dlg ; _infoBar.onResponseListeners )
-		{
-			dlg(responseId, _infoBar);
-		}
-	}
-	
-	
-	/**
-	 * Creates a new GtkInfoBar object.
-	 * Since 2.18
+	 * Creates a new #GtkInfoBar object.
+	 *
+	 * Return: a new #GtkInfoBar object
+	 *
+	 * Since: 2.18
+	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this ()
+	public this()
 	{
-		// GtkWidget * gtk_info_bar_new (void);
 		auto p = gtk_info_bar_new();
+		
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by gtk_info_bar_new()");
+			throw new ConstructionException("null returned by new");
 		}
+		
 		this(cast(GtkInfoBar*) p);
 	}
-	
+
 	/**
-	 * Add an activatable widget to the action area of a GtkInfoBar,
-	 * connecting a signal handler that will emit the "response"
+	 * Add an activatable widget to the action area of a #GtkInfoBar,
+	 * connecting a signal handler that will emit the #GtkInfoBar::response
 	 * signal on the message area when the widget is activated. The widget
 	 * is appended to the end of the message areas action area.
-	 * Since 2.18
+	 *
 	 * Params:
-	 * child = an activatable widget
-	 * responseId = response ID for child
+	 *     child = an activatable widget
+	 *     responseId = response ID for @child
+	 *
+	 * Since: 2.18
 	 */
 	public void addActionWidget(Widget child, int responseId)
 	{
-		// void gtk_info_bar_add_action_widget (GtkInfoBar *info_bar,  GtkWidget *child,  gint response_id);
 		gtk_info_bar_add_action_widget(gtkInfoBar, (child is null) ? null : child.getWidgetStruct(), responseId);
 	}
-	
+
 	/**
 	 * Adds a button with the given text and sets things up so that
-	 * clicking the button will emit the "response" signal with the given
+	 * clicking the button will emit the “response” signal with the given
 	 * response_id. The button is appended to the end of the info bars's
 	 * action area. The button widget is returned, but usually you don't
 	 * need it.
-	 * Since 2.18
+	 *
 	 * Params:
-	 * buttonText = text of button
-	 * responseId = response ID for the button
-	 * Returns: the GtkButton widget that was added. [transfer none]
+	 *     buttonText = text of button
+	 *     responseId = response ID for the button
+	 *
+	 * Return: the #GtkButton widget
+	 *     that was added
+	 *
+	 * Since: 2.18
 	 */
-	public Widget addButton(string buttonText, int responseId)
+	public Button addButton(string buttonText, int responseId)
 	{
-		// GtkWidget * gtk_info_bar_add_button (GtkInfoBar *info_bar,  const gchar *button_text,  gint response_id);
 		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
 		
 		if(p is null)
@@ -351,97 +291,176 @@ public class InfoBar : Box
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
-	
+
 	/**
-	 * Calls gtk_widget_set_sensitive (widget, setting) for each
-	 * widget in the info bars's action area with the given response_id.
-	 * A convenient way to sensitize/desensitize dialog buttons.
-	 * Since 2.18
-	 * Params:
-	 * responseId = a response ID
-	 * setting = TRUE for sensitive
+	 * Returns the message type of the message area.
+	 *
+	 * Return: the message type of the message area.
+	 *
+	 * Since: 2.18
 	 */
-	public void setResponseSensitive(int responseId, int setting)
+	public GtkMessageType getMessageType()
 	{
-		// void gtk_info_bar_set_response_sensitive (GtkInfoBar *info_bar,  gint response_id,  gboolean setting);
-		gtk_info_bar_set_response_sensitive(gtkInfoBar, responseId, setting);
+		return gtk_info_bar_get_message_type(gtkInfoBar);
 	}
-	
+
 	/**
-	 * Sets the last widget in the info bar's action area with
-	 * the given response_id as the default widget for the dialog.
-	 * Pressing "Enter" normally activates the default widget.
-	 * Note that this function currently requires info_bar to
-	 * be added to a widget hierarchy.
-	 * Since 2.18
-	 * Params:
-	 * responseId = a response ID
+	 * Returns whether the widget will display a standard close button.
+	 *
+	 * Return: %TRUE if the widget displays standard close button
+	 *
+	 * Since: 3.10
 	 */
-	public void setDefaultResponse(int responseId)
+	public bool getShowCloseButton()
 	{
-		// void gtk_info_bar_set_default_response (GtkInfoBar *info_bar,  gint response_id);
-		gtk_info_bar_set_default_response(gtkInfoBar, responseId);
+		return gtk_info_bar_get_show_close_button(gtkInfoBar) != 0;
 	}
-	
+
 	/**
-	 * Emits the 'response' signal with the given response_id.
-	 * Since 2.18
+	 * Emits the “response” signal with the given @response_id.
+	 *
 	 * Params:
-	 * responseId = a response ID
+	 *     responseId = a response ID
+	 *
+	 * Since: 2.18
 	 */
 	public void response(int responseId)
 	{
-		// void gtk_info_bar_response (GtkInfoBar *info_bar,  gint response_id);
 		gtk_info_bar_response(gtkInfoBar, responseId);
 	}
-	
+
+	/**
+	 * Sets the last widget in the info bar’s action area with
+	 * the given response_id as the default widget for the dialog.
+	 * Pressing “Enter” normally activates the default widget.
+	 *
+	 * Note that this function currently requires @info_bar to
+	 * be added to a widget hierarchy.
+	 *
+	 * Params:
+	 *     responseId = a response ID
+	 *
+	 * Since: 2.18
+	 */
+	public void setDefaultResponse(int responseId)
+	{
+		gtk_info_bar_set_default_response(gtkInfoBar, responseId);
+	}
+
 	/**
 	 * Sets the message type of the message area.
 	 * GTK+ uses this type to determine what color to use
 	 * when drawing the message area.
-	 * Since 2.18
+	 *
 	 * Params:
-	 * messageType = a GtkMessageType
+	 *     messageType = a #GtkMessageType
+	 *
+	 * Since: 2.18
 	 */
 	public void setMessageType(GtkMessageType messageType)
 	{
-		// void gtk_info_bar_set_message_type (GtkInfoBar *info_bar,  GtkMessageType message_type);
 		gtk_info_bar_set_message_type(gtkInfoBar, messageType);
 	}
-	
+
 	/**
-	 * Returns the message type of the message area.
-	 * Since 2.18
-	 * Returns: the message type of the message area.
+	 * Calls gtk_widget_set_sensitive (widget, setting) for each
+	 * widget in the info bars’s action area with the given response_id.
+	 * A convenient way to sensitize/desensitize dialog buttons.
+	 *
+	 * Params:
+	 *     responseId = a response ID
+	 *     setting = TRUE for sensitive
+	 *
+	 * Since: 2.18
 	 */
-	public GtkMessageType getMessageType()
+	public void setResponseSensitive(int responseId, bool setting)
 	{
-		// GtkMessageType gtk_info_bar_get_message_type (GtkInfoBar *info_bar);
-		return gtk_info_bar_get_message_type(gtkInfoBar);
+		gtk_info_bar_set_response_sensitive(gtkInfoBar, responseId, setting);
 	}
-	
-	/**
-	 * Returns whether the widget will display a standard close button.
-	 * Returns: TRUE if the widget displays standard close button Since 3.10
-	 */
-	public int getShowCloseButton()
-	{
-		// gboolean gtk_info_bar_get_show_close_button (GtkInfoBar *info_bar);
-		return gtk_info_bar_get_show_close_button(gtkInfoBar);
-	}
-	
+
 	/**
 	 * If true, a standard close button is shown. When clicked it emits
-	 * the response GTK_RESPONSE_CLOSE.
+	 * the response %GTK_RESPONSE_CLOSE.
+	 *
 	 * Params:
-	 * setting = TRUE to include a close button
-	 * Since 3.10
+	 *     setting = %TRUE to include a close button
+	 *
+	 * Since: 3.10
 	 */
-	public void setShowCloseButton(int setting)
+	public void setShowCloseButton(bool setting)
 	{
-		// void gtk_info_bar_set_show_close_button (GtkInfoBar *info_bar,  gboolean setting);
 		gtk_info_bar_set_show_close_button(gtkInfoBar, setting);
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(InfoBar)[] onCloseListeners;
+	/**
+	 * The ::close signal is a
+	 * [keybinding signal][GtkBindingSignal]
+	 * which gets emitted when the user uses a keybinding to dismiss
+	 * the info bar.
+	 *
+	 * The default binding for this signal is the Escape key.
+	 *
+	 * Since: 2.18
+	 */
+	void addOnClose(void delegate(InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "close" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"close",
+				cast(GCallback)&callBackClose,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["close"] = 1;
+		}
+		onCloseListeners ~= dlg;
+	}
+	extern(C) static void callBackClose(GtkInfoBar* infobarStruct, InfoBar _infobar)
+	{
+		foreach ( void delegate(InfoBar) dlg; _infobar.onCloseListeners )
+		{
+			dlg(_infobar);
+		}
+	}
+
+	void delegate(int, InfoBar)[] onResponseListeners;
+	/**
+	 * Emitted when an action widget is clicked or the application programmer
+	 * calls gtk_dialog_response(). The @response_id depends on which action
+	 * widget was clicked.
+	 *
+	 * Params:
+	 *     responseId = the response ID
+	 *
+	 * Since: 2.18
+	 */
+	void addOnResponse(void delegate(int, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "response" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"response",
+				cast(GCallback)&callBackResponse,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["response"] = 1;
+		}
+		onResponseListeners ~= dlg;
+	}
+	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId, InfoBar _infobar)
+	{
+		foreach ( void delegate(int, InfoBar) dlg; _infobar.onResponseListeners )
+		{
+			dlg(responseId, _infobar);
+		}
 	}
 }
