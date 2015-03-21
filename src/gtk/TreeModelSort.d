@@ -24,6 +24,7 @@
 
 module gtk.TreeModelSort;
 
+private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragSourceT;
@@ -174,6 +175,27 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 
 	// add the TreeSortable capabilities
 	mixin TreeSortableT!(GtkTreeModelSort);
+
+	/**
+	 * Creates a new TreeModel, with childModel as the child model.
+	 *
+	 * Params:
+	 *     childModel = A TreeModel.
+	 *
+	 * Throws: A ConstructionException if GTK+ fails to create the object.
+	 *
+	 */
+	public this(TreeModelIF childModel)
+	{
+		auto p = gtk_tree_model_sort_new_with_model(childModel.getTreeModelStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_model_sort_new_with_model");
+		}
+		
+		this(cast(GtkTreeModelSort*) p, true);
+	}
 
 	/**
 	 */

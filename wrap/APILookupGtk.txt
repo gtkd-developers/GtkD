@@ -4246,6 +4246,59 @@ public class TreeModel : ObjectG, TreeModelIF
 }
 code: end
 
+struct: TreeModelFilter
+import: glib.ConstructionException
+code: start
+	/**
+	 * Creates a new TreeModel, with childModel as the child model
+	 * and root as the virtual _root.
+	 *
+	 * Params:
+	 *     childModel = A TreeModel.
+	 *     root = A TreePath or null.
+	 *
+	 * Throws: A ConstructionException if GTK+ fails to create the object.
+	 *
+	 * Since: 2.4
+	 */
+	public this(TreeModelIF childModel, TreePath root)
+	{
+		auto p = gtk_tree_model_filter_new(childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_model_filter_new");
+		}
+
+		this(cast(GtkTreeModelFilter*) p, true);
+	}
+code: end
+
+struct: TreeModelSort
+import: glib.ConstructionException
+code: start
+	/**
+	 * Creates a new TreeModel, with childModel as the child model.
+	 *
+	 * Params:
+	 *     childModel = A TreeModel.
+	 *
+	 * Throws: A ConstructionException if GTK+ fails to create the object.
+	 *
+	 */
+	public this(TreeModelIF childModel)
+	{
+		auto p = gtk_tree_model_sort_new_with_model(childModel.getTreeModelStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_model_sort_new_with_model");
+		}
+
+		this(cast(GtkTreeModelSort*) p, true);
+	}
+code: end
+
 struct:
 class: TreeNode
 namespace:

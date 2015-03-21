@@ -24,6 +24,7 @@
 
 module gtk.TreeModelFilter;
 
+private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragSourceT;
@@ -140,6 +141,30 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelFilter);
+
+	/**
+	 * Creates a new TreeModel, with childModel as the child model
+	 * and root as the virtual _root.
+	 *
+	 * Params:
+	 *     childModel = A TreeModel.
+	 *     root = A TreePath or null.
+	 *
+	 * Throws: A ConstructionException if GTK+ fails to create the object.
+	 *
+	 * Since: 2.4
+	 */
+	public this(TreeModelIF childModel, TreePath root)
+	{
+		auto p = gtk_tree_model_filter_new(childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by gtk_tree_model_filter_new");
+		}
+		
+		this(cast(GtkTreeModelFilter*) p, true);
+	}
 
 	/**
 	 */
