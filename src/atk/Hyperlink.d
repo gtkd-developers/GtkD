@@ -174,9 +174,8 @@ public class Hyperlink : ObjectG, ActionIF
 	/**
 	 * Determines whether this AtkHyperlink is selected
 	 *
-	 * Deprecated: This method is deprecated since ATK version 1.8.
-	 * Please use ATK_STATE_FOCUSABLE for all links, and ATK_STATE_FOCUSED
-	 * for focused links.
+	 * Deprecated: Please use ATK_STATE_FOCUSABLE for all links,
+	 * and ATK_STATE_FOCUSED for focused links.
 	 *
 	 * Return: True if the AtkHyperlink is selected, False otherwise
 	 *

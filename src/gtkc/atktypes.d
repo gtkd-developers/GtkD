@@ -467,7 +467,13 @@ public enum AtkRole
 	 */
 	TERMINAL = 59,
 	/**
-	 * An object that presents text to the user
+	 * An interactive widget that supports multiple lines of text and
+	 * optionally accepts user input, but whose purpose is not to solicit user input.
+	 * Thus ATK_ROLE_TEXT is appropriate for the text view in a plain text editor
+	 * but inappropriate for an input field in a dialog box or web form. For widgets
+	 * whose purpose is to solicit input from the user, see ATK_ROLE_ENTRY and
+	 * ATK_ROLE_PASSWORD_TEXT. For generic objects which display a brief amount of
+	 * textual information, see ATK_ROLE_STATIC.
 	 */
 	TEXT = 60,
 	/**
@@ -738,9 +744,44 @@ public enum AtkRole
 	 */
 	DESCRIPTION_VALUE = 116,
 	/**
+	 * A generic non-container object whose purpose is to display a
+	 * brief amount of information to the user and whose role is known by the
+	 * implementor but lacks semantic value for the user. Examples in which
+	 * ATK_ROLE_STATIC is appropriate include the message displayed in a message box
+	 * and an image used as an alternative means to display text. ATK_ROLE_STATIC
+	 * should not be applied to widgets which are traditionally interactive, objects
+	 * which display a significant amount of content, or any object which has an
+	 * accessible relation pointing to another object. Implementors should expose the
+	 * displayed information through the accessible name of the object. If doing so seems
+	 * inappropriate, it may indicate that a different role should be used. For
+	 * labels which describe another widget, see ATK_ROLE_LABEL. For text views, see
+	 * ATK_ROLE_TEXT. For generic containers, see ATK_ROLE_PANEL. For objects whose
+	 * role is not known by the implementor, see ATK_ROLE_UNKNOWN. @Since: ATK-2.16.
+	 */
+	STATIC = 117,
+	/**
+	 * An object that represents a mathematical fraction.
+	 */
+	MATH_FRACTION = 118,
+	/**
+	 * An object that represents a mathematical expression
+	 * displayed with a radical. @Since: ATK-2.16.
+	 */
+	MATH_ROOT = 119,
+	/**
+	 * An object that contains text that is displayed as a
+	 * subscript. @Since: ATK-2.16.
+	 */
+	SUBSCRIPT = 120,
+	/**
+	 * An object that contains text that is displayed as a
+	 * superscript. @Since: ATK-2.16.
+	 */
+	SUPERSCRIPT = 121,
+	/**
 	 * not a valid role, used for finding end of the enumeration
 	 */
-	LAST_DEFINED = 117,
+	LAST_DEFINED = 122,
 }
 alias AtkRole Role;
 
@@ -754,11 +795,11 @@ public enum AtkStateType
 	 */
 	INVALID = 0,
 	/**
-	 * Indicates a window is currently the active window, or is an active subelement within a container or table
+	 * Indicates a window is currently the active window, or an object is the active subelement within a container or table. ATK_STATE_ACTIVE should not be used for objects which have ATK_STATE_FOCUSABLE or ATK_STATE_SELECTABLE: Those objects should use ATK_STATE_FOCUSED and ATK_STATE_SELECTED respectively. ATK_STATE_ACTIVE is a means to indicate that an object which is not focusable and not selectable is the currently-active item within its parent container.
 	 */
 	ACTIVE = 1,
 	/**
-	 * Indicates that the object is 'armed', i.e. will be activated by if a pointer button-release event occurs within its bounds.  Buttons often enter this state when a pointer click occurs within their bounds, as a precursor to activation.
+	 * Indicates that the object is 'armed', i.e. will be activated by if a pointer button-release event occurs within its bounds.  Buttons often enter this state when a pointer click occurs within their bounds, as a precursor to activation. ATK_STATE_ARMED has been deprecated since ATK-2.16 and should not be used in newly-written code.
 	 */
 	ARMED = 2,
 	/**
@@ -774,7 +815,12 @@ public enum AtkStateType
 	 */
 	DEFUNCT = 5,
 	/**
-	 * Indicates the user can change the contents of this object
+	 * Indicates that this object can contain text, and that the
+	 * user can change the textual contents of this object by editing those contents
+	 * directly. For an object which is expected to be editable due to its type, but
+	 * which cannot be edited due to the application or platform preventing the user
+	 * from doing so, that object's #AtkStateSet should lack ATK_STATE_EDITABLE and
+	 * should contain ATK_STATE_READ_ONLY.
 	 */
 	EDITABLE = 6,
 	/**
@@ -822,7 +868,7 @@ public enum AtkStateType
 	 */
 	OPAQUE = 17,
 	/**
-	 * Indicates this object is currently pressed; c.f. ATK_STATE_ARMED
+	 * Indicates this object is currently pressed.
 	 */
 	PRESSED = 18,
 	/**
@@ -892,14 +938,13 @@ public enum AtkStateType
 	 */
 	MANAGES_DESCENDANTS = 29,
 	/**
-	 * Indicates that a check box is in a state other than checked or not checked.
-	 * This usually means that the boolean value reflected or
-	 * controlled by the object does not apply consistently to the entire current context.
-	 * For example, a checkbox for the "Bold" attribute of text may have STATE_INDETERMINATE
-	 * if the currently selected text contains a mixture of weight attributes.
-	 * In many cases interacting with a STATE_INDETERMINATE object will cause
-	 * the context's corresponding boolean attribute to be homogenized, whereupon the object
-	 * will lose STATE_INDETERMINATE and a corresponding state-changed event will be fired.
+	 * Indicates that the value, or some other quantifiable
+	 * property, of this AtkObject cannot be fully determined. In the case of a large
+	 * data set in which the total number of items in that set is unknown (e.g. 1 of
+	 * 999+), implementors should expose the currently-known set size (999) along
+	 * with this state. In the case of a check box, this state should be used to
+	 * indicate that the check box is a tri-state check box which is currently
+	 * neither checked nor unchecked.
 	 */
 	INDETERMINATE = 30,
 	/**
@@ -959,9 +1004,25 @@ public enum AtkStateType
 	 */
 	HAS_POPUP = 40,
 	/**
+	 * Indicates this object has a tooltip. @Since: ATK-2.16
+	 */
+	HAS_TOOLTIP = 41,
+	/**
+	 * Indicates that a widget which is ENABLED and SENSITIVE
+	 * has a value which can be read, but not modified, by the user. Note that this
+	 * state should only be applied to widget types whose value is normally directly
+	 * user modifiable, such as check boxes, radio buttons, spin buttons, text input
+	 * fields, and combo boxes, as a means to convey that the expected interaction
+	 * with that widget is not possible. When the expected interaction with a
+	 * widget does not include modification by the user, as is the case with
+	 * labels and containers, ATK_STATE_READ_ONLY should not be applied. See also
+	 * ATK_STATE_EDITABLE. @Since: ATK-2-16
+	 */
+	READ_ONLY = 42,
+	/**
 	 * Not a valid state, used for finding end of enumeration
 	 */
-	LAST_DEFINED = 41,
+	LAST_DEFINED = 43,
 }
 alias AtkStateType StateType;
 
@@ -2728,9 +2789,8 @@ public alias extern(C) void function() AtkEventListenerInit;
  * atk_component_add_focus_handler() and
  * atk_component_remove_focus_handler()
  *
- * Deprecated: This type is deprecated since ATK version 2.9.4. as
- * atk_component_add_focus_handler() and
- * atk_component_remove_focus_handler() are deprecated. See those
+ * Deprecated: Deprecated with atk_component_add_focus_handler()
+ * and atk_component_remove_focus_handler(). See those
  * methods for more information.
  *
  * Params:

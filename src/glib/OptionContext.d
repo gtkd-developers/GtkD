@@ -68,10 +68,8 @@ public class OptionContext
 
 	/**
 	 * Adds a #GOptionGroup to the @context, so that parsing with @context
-	 * will recognize the options in the group. Note that the group will
-	 * be freed together with the context when g_option_context_free() is
-	 * called, so you must not free the group yourself after adding it
-	 * to a context.
+	 * will recognize the options in the group. Note that this will take
+	 * ownership of the @group and thus the @group should not be freed.
 	 *
 	 * Params:
 	 *     group = the group to add
@@ -177,9 +175,9 @@ public class OptionContext
 	/**
 	 * Returns a pointer to the main group of @context.
 	 *
-	 * Return: the main group of @context, or %NULL if @context doesn't
-	 *     have a main group. Note that group belongs to @context and should
-	 *     not be modified or freed.
+	 * Return: the main group of @context, or %NULL if
+	 *     @context doesn't have a main group. Note that group belongs to
+	 *     @context and should not be modified or freed.
 	 *
 	 * Since: 2.6
 	 */
@@ -193,6 +191,20 @@ public class OptionContext
 		}
 		
 		return new OptionGroup(cast(GOptionGroup*) p);
+	}
+
+	/**
+	 * Returns whether strict POSIX code is enabled.
+	 *
+	 * See g_option_context_set_strict_posix() for more information.
+	 *
+	 * Return: %TRUE if strict POSIX is enabled, %FALSE otherwise.
+	 *
+	 * Since: 2.44
+	 */
+	public bool getStrictPosix()
+	{
+		return g_option_context_get_strict_posix(gOptionContext) != 0;
 	}
 
 	/**
@@ -373,6 +385,42 @@ public class OptionContext
 	public void setMainGroup(OptionGroup group)
 	{
 		g_option_context_set_main_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct());
+	}
+
+	/**
+	 * Sets strict POSIX mode.
+	 *
+	 * By default, this mode is disabled.
+	 *
+	 * In strict POSIX mode, the first non-argument parameter encountered
+	 * (eg: filename) terminates argument processing.  Remaining arguments
+	 * are treated as non-options and are not attempted to be parsed.
+	 *
+	 * If strict POSIX mode is disabled then parsing is done in the GNU way
+	 * where option arguments can be freely mixed with non-options.
+	 *
+	 * As an example, consider "ls foo -l".  With GNU style parsing, this
+	 * will list "foo" in long mode.  In strict POSIX style, this will list
+	 * the files named "foo" and "-l".
+	 *
+	 * It may be useful to force strict POSIX mode when creating "verb
+	 * style" command line tools.  For example, the "gsettings" command line
+	 * tool supports the global option "--schemadir" as well as many
+	 * subcommands ("get", "set", etc.) which each have their own set of
+	 * arguments.  Using strict POSIX mode will allow parsing the global
+	 * options up to the verb name while leaving the remaining options to be
+	 * parsed by the relevant subcommand (which can be determined by
+	 * examining the verb name, which should be present in argv[1] after
+	 * parsing).
+	 *
+	 * Params:
+	 *     strictPosix = the new value
+	 *
+	 * Since: 2.44
+	 */
+	public void setStrictPosix(bool strictPosix)
+	{
+		g_option_context_set_strict_posix(gOptionContext, strictPosix);
 	}
 
 	/**

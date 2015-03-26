@@ -66,11 +66,11 @@ public template ImageT(TStruct)
 	}
 
 	/**
-	 * Since ATK 1.12
-	 *
 	 * Return: a string corresponding to the POSIX
 	 *     LC_MESSAGES locale used by the image description, or %NULL if the
 	 *     image does not specify a locale.
+	 *
+	 * Since: 1.12
 	 */
 	public string getImageLocale()
 	{

@@ -283,6 +283,19 @@ public class Popover : Bin
 	}
 
 	/**
+	 * Returns whether show/hide transitions are enabled on this popover.
+	 *
+	 * Return: #TRUE if the show and hide transitions of the given
+	 *     popover are enabled, #FALSE otherwise.
+	 *
+	 * Since: 3.16
+	 */
+	public bool getTransitionsEnabled()
+	{
+		return gtk_popover_get_transitions_enabled(gtkPopover) != 0;
+	}
+
+	/**
 	 * Sets whether @popover is modal, a modal popover will grab all input
 	 * within the toplevel and grab the keyboard focus on it when being
 	 * displayed. Clicking outside the popover area or pressing Esc will
@@ -348,6 +361,19 @@ public class Popover : Bin
 	public void setRelativeTo(Widget relativeTo)
 	{
 		gtk_popover_set_relative_to(gtkPopover, (relativeTo is null) ? null : relativeTo.getWidgetStruct());
+	}
+
+	/**
+	 * Sets whether show/hide transitions are enabled on this popover
+	 *
+	 * Params:
+	 *     transitionsEnabled = Whether transitions are enabled
+	 *
+	 * Since: 3.16
+	 */
+	public void setTransitionsEnabled(bool transitionsEnabled)
+	{
+		gtk_popover_set_transitions_enabled(gtkPopover, transitionsEnabled);
 	}
 
 	int[string] connectedSignals;

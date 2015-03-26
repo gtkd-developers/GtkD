@@ -134,11 +134,13 @@ shared static this()
 	Linker.link(g_application_add_main_option, "g_application_add_main_option", LIBRARY.GIO);
 	Linker.link(g_application_add_main_option_entries, "g_application_add_main_option_entries", LIBRARY.GIO);
 	Linker.link(g_application_add_option_group, "g_application_add_option_group", LIBRARY.GIO);
+	Linker.link(g_application_bind_busy_property, "g_application_bind_busy_property", LIBRARY.GIO);
 	Linker.link(g_application_get_application_id, "g_application_get_application_id", LIBRARY.GIO);
 	Linker.link(g_application_get_dbus_connection, "g_application_get_dbus_connection", LIBRARY.GIO);
 	Linker.link(g_application_get_dbus_object_path, "g_application_get_dbus_object_path", LIBRARY.GIO);
 	Linker.link(g_application_get_flags, "g_application_get_flags", LIBRARY.GIO);
 	Linker.link(g_application_get_inactivity_timeout, "g_application_get_inactivity_timeout", LIBRARY.GIO);
+	Linker.link(g_application_get_is_busy, "g_application_get_is_busy", LIBRARY.GIO);
 	Linker.link(g_application_get_is_registered, "g_application_get_is_registered", LIBRARY.GIO);
 	Linker.link(g_application_get_is_remote, "g_application_get_is_remote", LIBRARY.GIO);
 	Linker.link(g_application_get_resource_base_path, "g_application_get_resource_base_path", LIBRARY.GIO);
@@ -156,6 +158,7 @@ shared static this()
 	Linker.link(g_application_set_flags, "g_application_set_flags", LIBRARY.GIO);
 	Linker.link(g_application_set_inactivity_timeout, "g_application_set_inactivity_timeout", LIBRARY.GIO);
 	Linker.link(g_application_set_resource_base_path, "g_application_set_resource_base_path", LIBRARY.GIO);
+	Linker.link(g_application_unbind_busy_property, "g_application_unbind_busy_property", LIBRARY.GIO);
 	Linker.link(g_application_unmark_busy, "g_application_unmark_busy", LIBRARY.GIO);
 	Linker.link(g_application_withdraw_notification, "g_application_withdraw_notification", LIBRARY.GIO);
 
@@ -884,6 +887,7 @@ shared static this()
 	Linker.link(g_file_enumerator_get_container, "g_file_enumerator_get_container", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_has_pending, "g_file_enumerator_has_pending", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_is_closed, "g_file_enumerator_is_closed", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_iterate, "g_file_enumerator_iterate", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_next_file, "g_file_enumerator_next_file", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_next_files_async, "g_file_enumerator_next_files_async", LIBRARY.GIO);
 	Linker.link(g_file_enumerator_next_files_finish, "g_file_enumerator_next_files_finish", LIBRARY.GIO);
@@ -1146,6 +1150,8 @@ shared static this()
 	Linker.link(g_input_stream_is_closed, "g_input_stream_is_closed", LIBRARY.GIO);
 	Linker.link(g_input_stream_read, "g_input_stream_read", LIBRARY.GIO);
 	Linker.link(g_input_stream_read_all, "g_input_stream_read_all", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_all_async, "g_input_stream_read_all_async", LIBRARY.GIO);
+	Linker.link(g_input_stream_read_all_finish, "g_input_stream_read_all_finish", LIBRARY.GIO);
 	Linker.link(g_input_stream_read_async, "g_input_stream_read_async", LIBRARY.GIO);
 	Linker.link(g_input_stream_read_bytes, "g_input_stream_read_bytes", LIBRARY.GIO);
 	Linker.link(g_input_stream_read_bytes_async, "g_input_stream_read_bytes_async", LIBRARY.GIO);
@@ -1155,6 +1161,26 @@ shared static this()
 	Linker.link(g_input_stream_skip, "g_input_stream_skip", LIBRARY.GIO);
 	Linker.link(g_input_stream_skip_async, "g_input_stream_skip_async", LIBRARY.GIO);
 	Linker.link(g_input_stream_skip_finish, "g_input_stream_skip_finish", LIBRARY.GIO);
+
+	// gio.ListModel
+
+	Linker.link(g_list_model_get_type, "g_list_model_get_type", LIBRARY.GIO);
+	Linker.link(g_list_model_get_item, "g_list_model_get_item", LIBRARY.GIO);
+	Linker.link(g_list_model_get_item_type, "g_list_model_get_item_type", LIBRARY.GIO);
+	Linker.link(g_list_model_get_n_items, "g_list_model_get_n_items", LIBRARY.GIO);
+	Linker.link(g_list_model_get_object, "g_list_model_get_object", LIBRARY.GIO);
+	Linker.link(g_list_model_items_changed, "g_list_model_items_changed", LIBRARY.GIO);
+
+	// gio.ListStore
+
+	Linker.link(g_list_store_get_type, "g_list_store_get_type", LIBRARY.GIO);
+	Linker.link(g_list_store_new, "g_list_store_new", LIBRARY.GIO);
+	Linker.link(g_list_store_append, "g_list_store_append", LIBRARY.GIO);
+	Linker.link(g_list_store_insert, "g_list_store_insert", LIBRARY.GIO);
+	Linker.link(g_list_store_insert_sorted, "g_list_store_insert_sorted", LIBRARY.GIO);
+	Linker.link(g_list_store_remove, "g_list_store_remove", LIBRARY.GIO);
+	Linker.link(g_list_store_remove_all, "g_list_store_remove_all", LIBRARY.GIO);
+	Linker.link(g_list_store_splice, "g_list_store_splice", LIBRARY.GIO);
 
 	// gio.LoadableIcon
 
@@ -1309,6 +1335,7 @@ shared static this()
 
 	Linker.link(g_network_address_get_type, "g_network_address_get_type", LIBRARY.GIO);
 	Linker.link(g_network_address_new, "g_network_address_new", LIBRARY.GIO);
+	Linker.link(g_network_address_new_loopback, "g_network_address_new_loopback", LIBRARY.GIO);
 	Linker.link(g_network_address_parse, "g_network_address_parse", LIBRARY.GIO);
 	Linker.link(g_network_address_parse_uri, "g_network_address_parse_uri", LIBRARY.GIO);
 	Linker.link(g_network_address_get_hostname, "g_network_address_get_hostname", LIBRARY.GIO);
@@ -1322,6 +1349,7 @@ shared static this()
 	Linker.link(g_network_monitor_can_reach, "g_network_monitor_can_reach", LIBRARY.GIO);
 	Linker.link(g_network_monitor_can_reach_async, "g_network_monitor_can_reach_async", LIBRARY.GIO);
 	Linker.link(g_network_monitor_can_reach_finish, "g_network_monitor_can_reach_finish", LIBRARY.GIO);
+	Linker.link(g_network_monitor_get_connectivity, "g_network_monitor_get_connectivity", LIBRARY.GIO);
 	Linker.link(g_network_monitor_get_network_available, "g_network_monitor_get_network_available", LIBRARY.GIO);
 
 	// gio.NetworkService
@@ -1371,6 +1399,8 @@ shared static this()
 	Linker.link(g_output_stream_vprintf, "g_output_stream_vprintf", LIBRARY.GIO);
 	Linker.link(g_output_stream_write, "g_output_stream_write", LIBRARY.GIO);
 	Linker.link(g_output_stream_write_all, "g_output_stream_write_all", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_all_async, "g_output_stream_write_all_async", LIBRARY.GIO);
+	Linker.link(g_output_stream_write_all_finish, "g_output_stream_write_all_finish", LIBRARY.GIO);
 	Linker.link(g_output_stream_write_async, "g_output_stream_write_async", LIBRARY.GIO);
 	Linker.link(g_output_stream_write_bytes, "g_output_stream_write_bytes", LIBRARY.GIO);
 	Linker.link(g_output_stream_write_bytes_async, "g_output_stream_write_bytes_async", LIBRARY.GIO);
@@ -1557,6 +1587,7 @@ shared static this()
 	Linker.link(g_settings_schema_get_key, "g_settings_schema_get_key", LIBRARY.GIO);
 	Linker.link(g_settings_schema_get_path, "g_settings_schema_get_path", LIBRARY.GIO);
 	Linker.link(g_settings_schema_has_key, "g_settings_schema_has_key", LIBRARY.GIO);
+	Linker.link(g_settings_schema_list_children, "g_settings_schema_list_children", LIBRARY.GIO);
 	Linker.link(g_settings_schema_ref, "g_settings_schema_ref", LIBRARY.GIO);
 	Linker.link(g_settings_schema_unref, "g_settings_schema_unref", LIBRARY.GIO);
 
@@ -1565,6 +1596,7 @@ shared static this()
 	Linker.link(g_settings_schema_key_get_type, "g_settings_schema_key_get_type", LIBRARY.GIO);
 	Linker.link(g_settings_schema_key_get_default_value, "g_settings_schema_key_get_default_value", LIBRARY.GIO);
 	Linker.link(g_settings_schema_key_get_description, "g_settings_schema_key_get_description", LIBRARY.GIO);
+	Linker.link(g_settings_schema_key_get_name, "g_settings_schema_key_get_name", LIBRARY.GIO);
 	Linker.link(g_settings_schema_key_get_range, "g_settings_schema_key_get_range", LIBRARY.GIO);
 	Linker.link(g_settings_schema_key_get_summary, "g_settings_schema_key_get_summary", LIBRARY.GIO);
 	Linker.link(g_settings_schema_key_get_value_type, "g_settings_schema_key_get_value_type", LIBRARY.GIO);
@@ -1589,6 +1621,7 @@ shared static this()
 	Linker.link(g_simple_action_new_stateful, "g_simple_action_new_stateful", LIBRARY.GIO);
 	Linker.link(g_simple_action_set_enabled, "g_simple_action_set_enabled", LIBRARY.GIO);
 	Linker.link(g_simple_action_set_state, "g_simple_action_set_state", LIBRARY.GIO);
+	Linker.link(g_simple_action_set_state_hint, "g_simple_action_set_state_hint", LIBRARY.GIO);
 
 	// gio.SimpleActionGroup
 
@@ -1627,6 +1660,11 @@ shared static this()
 	Linker.link(g_simple_async_report_error_in_idle, "g_simple_async_report_error_in_idle", LIBRARY.GIO);
 	Linker.link(g_simple_async_report_gerror_in_idle, "g_simple_async_report_gerror_in_idle", LIBRARY.GIO);
 	Linker.link(g_simple_async_report_take_gerror_in_idle, "g_simple_async_report_take_gerror_in_idle", LIBRARY.GIO);
+
+	// gio.SimpleIOStream
+
+	Linker.link(g_simple_io_stream_get_type, "g_simple_io_stream_get_type", LIBRARY.GIO);
+	Linker.link(g_simple_io_stream_new, "g_simple_io_stream_new", LIBRARY.GIO);
 
 	// gio.SimplePermission
 
@@ -1684,6 +1722,7 @@ shared static this()
 	Linker.link(g_socket_receive_with_blocking, "g_socket_receive_with_blocking", LIBRARY.GIO);
 	Linker.link(g_socket_send, "g_socket_send", LIBRARY.GIO);
 	Linker.link(g_socket_send_message, "g_socket_send_message", LIBRARY.GIO);
+	Linker.link(g_socket_send_messages, "g_socket_send_messages", LIBRARY.GIO);
 	Linker.link(g_socket_send_to, "g_socket_send_to", LIBRARY.GIO);
 	Linker.link(g_socket_send_with_blocking, "g_socket_send_with_blocking", LIBRARY.GIO);
 	Linker.link(g_socket_set_blocking, "g_socket_set_blocking", LIBRARY.GIO);
@@ -1881,6 +1920,7 @@ shared static this()
 	Linker.link(g_task_attach_source, "g_task_attach_source", LIBRARY.GIO);
 	Linker.link(g_task_get_cancellable, "g_task_get_cancellable", LIBRARY.GIO);
 	Linker.link(g_task_get_check_cancellable, "g_task_get_check_cancellable", LIBRARY.GIO);
+	Linker.link(g_task_get_completed, "g_task_get_completed", LIBRARY.GIO);
 	Linker.link(g_task_get_context, "g_task_get_context", LIBRARY.GIO);
 	Linker.link(g_task_get_priority, "g_task_get_priority", LIBRARY.GIO);
 	Linker.link(g_task_get_return_on_cancel, "g_task_get_return_on_cancel", LIBRARY.GIO);
@@ -2126,6 +2166,7 @@ shared static this()
 
 	Linker.link(g_unix_mount_monitor_get_type, "g_unix_mount_monitor_get_type", LIBRARY.GIO);
 	Linker.link(g_unix_mount_monitor_new, "g_unix_mount_monitor_new", LIBRARY.GIO);
+	Linker.link(g_unix_mount_monitor_get, "g_unix_mount_monitor_get", LIBRARY.GIO);
 	Linker.link(g_unix_mount_monitor_set_rate_limit, "g_unix_mount_monitor_set_rate_limit", LIBRARY.GIO);
 
 	// gio.UnixMountPoint
@@ -2401,11 +2442,13 @@ __gshared extern(C)
 	void function(GApplication* application, const(char)* longName, char shortName, GOptionFlags flags, GOptionArg arg, const(char)* description, const(char)* argDescription) c_g_application_add_main_option;
 	void function(GApplication* application, GOptionEntry* entries) c_g_application_add_main_option_entries;
 	void function(GApplication* application, GOptionGroup* group) c_g_application_add_option_group;
+	void function(GApplication* application, void* object, const(char)* property) c_g_application_bind_busy_property;
 	const(char)* function(GApplication* application) c_g_application_get_application_id;
 	GDBusConnection* function(GApplication* application) c_g_application_get_dbus_connection;
 	const(char)* function(GApplication* application) c_g_application_get_dbus_object_path;
 	GApplicationFlags function(GApplication* application) c_g_application_get_flags;
 	uint function(GApplication* application) c_g_application_get_inactivity_timeout;
+	int function(GApplication* application) c_g_application_get_is_busy;
 	int function(GApplication* application) c_g_application_get_is_registered;
 	int function(GApplication* application) c_g_application_get_is_remote;
 	const(char)* function(GApplication* application) c_g_application_get_resource_base_path;
@@ -2423,6 +2466,7 @@ __gshared extern(C)
 	void function(GApplication* application, GApplicationFlags flags) c_g_application_set_flags;
 	void function(GApplication* application, uint inactivityTimeout) c_g_application_set_inactivity_timeout;
 	void function(GApplication* application, const(char)* resourcePath) c_g_application_set_resource_base_path;
+	void function(GApplication* application, void* object, const(char)* property) c_g_application_unbind_busy_property;
 	void function(GApplication* application) c_g_application_unmark_busy;
 	void function(GApplication* application, const(char)* id) c_g_application_withdraw_notification;
 
@@ -3151,6 +3195,7 @@ __gshared extern(C)
 	GFile* function(GFileEnumerator* enumerator) c_g_file_enumerator_get_container;
 	int function(GFileEnumerator* enumerator) c_g_file_enumerator_has_pending;
 	int function(GFileEnumerator* enumerator) c_g_file_enumerator_is_closed;
+	int function(GFileEnumerator* direnum, GFileInfo** outInfo, GFile** outChild, GCancellable* cancellable, GError** err) c_g_file_enumerator_iterate;
 	GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** err) c_g_file_enumerator_next_file;
 	void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_enumerator_next_files_async;
 	GList* function(GFileEnumerator* enumerator, GAsyncResult* result, GError** err) c_g_file_enumerator_next_files_finish;
@@ -3413,6 +3458,8 @@ __gshared extern(C)
 	int function(GInputStream* stream) c_g_input_stream_is_closed;
 	ptrdiff_t function(GInputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) c_g_input_stream_read;
 	int function(GInputStream* stream, void* buffer, size_t count, size_t* bytesRead, GCancellable* cancellable, GError** err) c_g_input_stream_read_all;
+	void function(GInputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_read_all_async;
+	int function(GInputStream* stream, GAsyncResult* result, size_t* bytesRead, GError** err) c_g_input_stream_read_all_finish;
 	void function(GInputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_read_async;
 	GBytes* function(GInputStream* stream, size_t count, GCancellable* cancellable, GError** err) c_g_input_stream_read_bytes;
 	void function(GInputStream* stream, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_read_bytes_async;
@@ -3422,6 +3469,26 @@ __gshared extern(C)
 	ptrdiff_t function(GInputStream* stream, size_t count, GCancellable* cancellable, GError** err) c_g_input_stream_skip;
 	void function(GInputStream* stream, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_input_stream_skip_async;
 	ptrdiff_t function(GInputStream* stream, GAsyncResult* result, GError** err) c_g_input_stream_skip_finish;
+
+	// gio.ListModel
+
+	GType function() c_g_list_model_get_type;
+	void* function(GListModel* list, uint position) c_g_list_model_get_item;
+	GType function(GListModel* list) c_g_list_model_get_item_type;
+	uint function(GListModel* list) c_g_list_model_get_n_items;
+	GObject* function(GListModel* list, uint position) c_g_list_model_get_object;
+	void function(GListModel* list, uint position, uint removed, uint added) c_g_list_model_items_changed;
+
+	// gio.ListStore
+
+	GType function() c_g_list_store_get_type;
+	GListStore* function(GType itemType) c_g_list_store_new;
+	void function(GListStore* store, void* item) c_g_list_store_append;
+	void function(GListStore* store, uint position, void* item) c_g_list_store_insert;
+	uint function(GListStore* store, void* item, GCompareDataFunc compareFunc, void* userData) c_g_list_store_insert_sorted;
+	void function(GListStore* store, uint position) c_g_list_store_remove;
+	void function(GListStore* store) c_g_list_store_remove_all;
+	void function(GListStore* store, uint position, uint nRemovals, void** additions, uint nAdditions) c_g_list_store_splice;
 
 	// gio.LoadableIcon
 
@@ -3576,6 +3643,7 @@ __gshared extern(C)
 
 	GType function() c_g_network_address_get_type;
 	GSocketConnectable* function(const(char)* hostname, ushort port) c_g_network_address_new;
+	GSocketConnectable* function(ushort port) c_g_network_address_new_loopback;
 	GSocketConnectable* function(const(char)* hostAndPort, ushort defaultPort, GError** err) c_g_network_address_parse;
 	GSocketConnectable* function(const(char)* uri, ushort defaultPort, GError** err) c_g_network_address_parse_uri;
 	const(char)* function(GNetworkAddress* addr) c_g_network_address_get_hostname;
@@ -3589,6 +3657,7 @@ __gshared extern(C)
 	int function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GError** err) c_g_network_monitor_can_reach;
 	void function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_network_monitor_can_reach_async;
 	int function(GNetworkMonitor* monitor, GAsyncResult* result, GError** err) c_g_network_monitor_can_reach_finish;
+	GNetworkConnectivity function(GNetworkMonitor* monitor) c_g_network_monitor_get_connectivity;
 	int function(GNetworkMonitor* monitor) c_g_network_monitor_get_network_available;
 
 	// gio.NetworkService
@@ -3638,6 +3707,8 @@ __gshared extern(C)
 	int function(GOutputStream* stream, size_t* bytesWritten, GCancellable* cancellable, GError** error, const(char)* format, void* args) c_g_output_stream_vprintf;
 	ptrdiff_t function(GOutputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) c_g_output_stream_write;
 	int function(GOutputStream* stream, void* buffer, size_t count, size_t* bytesWritten, GCancellable* cancellable, GError** err) c_g_output_stream_write_all;
+	void function(GOutputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_write_all_async;
+	int function(GOutputStream* stream, GAsyncResult* result, size_t* bytesWritten, GError** err) c_g_output_stream_write_all_finish;
 	void function(GOutputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_write_async;
 	ptrdiff_t function(GOutputStream* stream, GBytes* bytes, GCancellable* cancellable, GError** err) c_g_output_stream_write_bytes;
 	void function(GOutputStream* stream, GBytes* bytes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_write_bytes_async;
@@ -3824,6 +3895,7 @@ __gshared extern(C)
 	GSettingsSchemaKey* function(GSettingsSchema* schema, const(char)* name) c_g_settings_schema_get_key;
 	const(char)* function(GSettingsSchema* schema) c_g_settings_schema_get_path;
 	int function(GSettingsSchema* schema, const(char)* name) c_g_settings_schema_has_key;
+	char** function(GSettingsSchema* schema) c_g_settings_schema_list_children;
 	GSettingsSchema* function(GSettingsSchema* schema) c_g_settings_schema_ref;
 	void function(GSettingsSchema* schema) c_g_settings_schema_unref;
 
@@ -3832,6 +3904,7 @@ __gshared extern(C)
 	GType function() c_g_settings_schema_key_get_type;
 	GVariant* function(GSettingsSchemaKey* key) c_g_settings_schema_key_get_default_value;
 	const(char)* function(GSettingsSchemaKey* key) c_g_settings_schema_key_get_description;
+	const(char)* function(GSettingsSchemaKey* key) c_g_settings_schema_key_get_name;
 	GVariant* function(GSettingsSchemaKey* key) c_g_settings_schema_key_get_range;
 	const(char)* function(GSettingsSchemaKey* key) c_g_settings_schema_key_get_summary;
 	GVariantType* function(GSettingsSchemaKey* key) c_g_settings_schema_key_get_value_type;
@@ -3856,6 +3929,7 @@ __gshared extern(C)
 	GSimpleAction* function(const(char)* name, GVariantType* parameterType, GVariant* state) c_g_simple_action_new_stateful;
 	void function(GSimpleAction* simple, int enabled) c_g_simple_action_set_enabled;
 	void function(GSimpleAction* simple, GVariant* value) c_g_simple_action_set_state;
+	void function(GSimpleAction* simple, GVariant* stateHint) c_g_simple_action_set_state_hint;
 
 	// gio.SimpleActionGroup
 
@@ -3894,6 +3968,11 @@ __gshared extern(C)
 	void function(GObject* object, GAsyncReadyCallback callback, void* userData, GQuark domain, int code, const(char)* format, ... ) c_g_simple_async_report_error_in_idle;
 	void function(GObject* object, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_report_gerror_in_idle;
 	void function(GObject* object, GAsyncReadyCallback callback, void* userData, GError* error) c_g_simple_async_report_take_gerror_in_idle;
+
+	// gio.SimpleIOStream
+
+	GType function() c_g_simple_io_stream_get_type;
+	GIOStream* function(GInputStream* inputStream, GOutputStream* outputStream) c_g_simple_io_stream_new;
 
 	// gio.SimplePermission
 
@@ -3951,6 +4030,7 @@ __gshared extern(C)
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, int blocking, GCancellable* cancellable, GError** err) c_g_socket_receive_with_blocking;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_send;
 	ptrdiff_t function(GSocket* socket, GSocketAddress* address, GOutputVector* vectors, int numVectors, GSocketControlMessage** messages, int numMessages, int flags, GCancellable* cancellable, GError** err) c_g_socket_send_message;
+	int function(GSocket* socket, GOutputMessage* messages, uint numMessages, int flags, GCancellable* cancellable, GError** err) c_g_socket_send_messages;
 	ptrdiff_t function(GSocket* socket, GSocketAddress* address, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_send_to;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, int blocking, GCancellable* cancellable, GError** err) c_g_socket_send_with_blocking;
 	void function(GSocket* socket, int blocking) c_g_socket_set_blocking;
@@ -4148,6 +4228,7 @@ __gshared extern(C)
 	void function(GTask* task, GSource* source, GSourceFunc callback) c_g_task_attach_source;
 	GCancellable* function(GTask* task) c_g_task_get_cancellable;
 	int function(GTask* task) c_g_task_get_check_cancellable;
+	int function(GTask* task) c_g_task_get_completed;
 	GMainContext* function(GTask* task) c_g_task_get_context;
 	int function(GTask* task) c_g_task_get_priority;
 	int function(GTask* task) c_g_task_get_return_on_cancel;
@@ -4393,6 +4474,7 @@ __gshared extern(C)
 
 	GType function() c_g_unix_mount_monitor_get_type;
 	GUnixMountMonitor* function() c_g_unix_mount_monitor_new;
+	GUnixMountMonitor* function() c_g_unix_mount_monitor_get;
 	void function(GUnixMountMonitor* mountMonitor, int limitMsec) c_g_unix_mount_monitor_set_rate_limit;
 
 	// gio.UnixMountPoint
@@ -4666,11 +4748,13 @@ alias c_g_application_activate g_application_activate;
 alias c_g_application_add_main_option g_application_add_main_option;
 alias c_g_application_add_main_option_entries g_application_add_main_option_entries;
 alias c_g_application_add_option_group g_application_add_option_group;
+alias c_g_application_bind_busy_property g_application_bind_busy_property;
 alias c_g_application_get_application_id g_application_get_application_id;
 alias c_g_application_get_dbus_connection g_application_get_dbus_connection;
 alias c_g_application_get_dbus_object_path g_application_get_dbus_object_path;
 alias c_g_application_get_flags g_application_get_flags;
 alias c_g_application_get_inactivity_timeout g_application_get_inactivity_timeout;
+alias c_g_application_get_is_busy g_application_get_is_busy;
 alias c_g_application_get_is_registered g_application_get_is_registered;
 alias c_g_application_get_is_remote g_application_get_is_remote;
 alias c_g_application_get_resource_base_path g_application_get_resource_base_path;
@@ -4688,6 +4772,7 @@ alias c_g_application_set_default g_application_set_default;
 alias c_g_application_set_flags g_application_set_flags;
 alias c_g_application_set_inactivity_timeout g_application_set_inactivity_timeout;
 alias c_g_application_set_resource_base_path g_application_set_resource_base_path;
+alias c_g_application_unbind_busy_property g_application_unbind_busy_property;
 alias c_g_application_unmark_busy g_application_unmark_busy;
 alias c_g_application_withdraw_notification g_application_withdraw_notification;
 
@@ -5416,6 +5501,7 @@ alias c_g_file_enumerator_get_child g_file_enumerator_get_child;
 alias c_g_file_enumerator_get_container g_file_enumerator_get_container;
 alias c_g_file_enumerator_has_pending g_file_enumerator_has_pending;
 alias c_g_file_enumerator_is_closed g_file_enumerator_is_closed;
+alias c_g_file_enumerator_iterate g_file_enumerator_iterate;
 alias c_g_file_enumerator_next_file g_file_enumerator_next_file;
 alias c_g_file_enumerator_next_files_async g_file_enumerator_next_files_async;
 alias c_g_file_enumerator_next_files_finish g_file_enumerator_next_files_finish;
@@ -5678,6 +5764,8 @@ alias c_g_input_stream_has_pending g_input_stream_has_pending;
 alias c_g_input_stream_is_closed g_input_stream_is_closed;
 alias c_g_input_stream_read g_input_stream_read;
 alias c_g_input_stream_read_all g_input_stream_read_all;
+alias c_g_input_stream_read_all_async g_input_stream_read_all_async;
+alias c_g_input_stream_read_all_finish g_input_stream_read_all_finish;
 alias c_g_input_stream_read_async g_input_stream_read_async;
 alias c_g_input_stream_read_bytes g_input_stream_read_bytes;
 alias c_g_input_stream_read_bytes_async g_input_stream_read_bytes_async;
@@ -5687,6 +5775,26 @@ alias c_g_input_stream_set_pending g_input_stream_set_pending;
 alias c_g_input_stream_skip g_input_stream_skip;
 alias c_g_input_stream_skip_async g_input_stream_skip_async;
 alias c_g_input_stream_skip_finish g_input_stream_skip_finish;
+
+// gio.ListModel
+
+alias c_g_list_model_get_type g_list_model_get_type;
+alias c_g_list_model_get_item g_list_model_get_item;
+alias c_g_list_model_get_item_type g_list_model_get_item_type;
+alias c_g_list_model_get_n_items g_list_model_get_n_items;
+alias c_g_list_model_get_object g_list_model_get_object;
+alias c_g_list_model_items_changed g_list_model_items_changed;
+
+// gio.ListStore
+
+alias c_g_list_store_get_type g_list_store_get_type;
+alias c_g_list_store_new g_list_store_new;
+alias c_g_list_store_append g_list_store_append;
+alias c_g_list_store_insert g_list_store_insert;
+alias c_g_list_store_insert_sorted g_list_store_insert_sorted;
+alias c_g_list_store_remove g_list_store_remove;
+alias c_g_list_store_remove_all g_list_store_remove_all;
+alias c_g_list_store_splice g_list_store_splice;
 
 // gio.LoadableIcon
 
@@ -5841,6 +5949,7 @@ alias c_g_native_volume_monitor_get_type g_native_volume_monitor_get_type;
 
 alias c_g_network_address_get_type g_network_address_get_type;
 alias c_g_network_address_new g_network_address_new;
+alias c_g_network_address_new_loopback g_network_address_new_loopback;
 alias c_g_network_address_parse g_network_address_parse;
 alias c_g_network_address_parse_uri g_network_address_parse_uri;
 alias c_g_network_address_get_hostname g_network_address_get_hostname;
@@ -5854,6 +5963,7 @@ alias c_g_network_monitor_get_default g_network_monitor_get_default;
 alias c_g_network_monitor_can_reach g_network_monitor_can_reach;
 alias c_g_network_monitor_can_reach_async g_network_monitor_can_reach_async;
 alias c_g_network_monitor_can_reach_finish g_network_monitor_can_reach_finish;
+alias c_g_network_monitor_get_connectivity g_network_monitor_get_connectivity;
 alias c_g_network_monitor_get_network_available g_network_monitor_get_network_available;
 
 // gio.NetworkService
@@ -5903,6 +6013,8 @@ alias c_g_output_stream_splice_finish g_output_stream_splice_finish;
 alias c_g_output_stream_vprintf g_output_stream_vprintf;
 alias c_g_output_stream_write g_output_stream_write;
 alias c_g_output_stream_write_all g_output_stream_write_all;
+alias c_g_output_stream_write_all_async g_output_stream_write_all_async;
+alias c_g_output_stream_write_all_finish g_output_stream_write_all_finish;
 alias c_g_output_stream_write_async g_output_stream_write_async;
 alias c_g_output_stream_write_bytes g_output_stream_write_bytes;
 alias c_g_output_stream_write_bytes_async g_output_stream_write_bytes_async;
@@ -6089,6 +6201,7 @@ alias c_g_settings_schema_get_id g_settings_schema_get_id;
 alias c_g_settings_schema_get_key g_settings_schema_get_key;
 alias c_g_settings_schema_get_path g_settings_schema_get_path;
 alias c_g_settings_schema_has_key g_settings_schema_has_key;
+alias c_g_settings_schema_list_children g_settings_schema_list_children;
 alias c_g_settings_schema_ref g_settings_schema_ref;
 alias c_g_settings_schema_unref g_settings_schema_unref;
 
@@ -6097,6 +6210,7 @@ alias c_g_settings_schema_unref g_settings_schema_unref;
 alias c_g_settings_schema_key_get_type g_settings_schema_key_get_type;
 alias c_g_settings_schema_key_get_default_value g_settings_schema_key_get_default_value;
 alias c_g_settings_schema_key_get_description g_settings_schema_key_get_description;
+alias c_g_settings_schema_key_get_name g_settings_schema_key_get_name;
 alias c_g_settings_schema_key_get_range g_settings_schema_key_get_range;
 alias c_g_settings_schema_key_get_summary g_settings_schema_key_get_summary;
 alias c_g_settings_schema_key_get_value_type g_settings_schema_key_get_value_type;
@@ -6121,6 +6235,7 @@ alias c_g_simple_action_new g_simple_action_new;
 alias c_g_simple_action_new_stateful g_simple_action_new_stateful;
 alias c_g_simple_action_set_enabled g_simple_action_set_enabled;
 alias c_g_simple_action_set_state g_simple_action_set_state;
+alias c_g_simple_action_set_state_hint g_simple_action_set_state_hint;
 
 // gio.SimpleActionGroup
 
@@ -6159,6 +6274,11 @@ alias c_g_simple_async_result_take_error g_simple_async_result_take_error;
 alias c_g_simple_async_report_error_in_idle g_simple_async_report_error_in_idle;
 alias c_g_simple_async_report_gerror_in_idle g_simple_async_report_gerror_in_idle;
 alias c_g_simple_async_report_take_gerror_in_idle g_simple_async_report_take_gerror_in_idle;
+
+// gio.SimpleIOStream
+
+alias c_g_simple_io_stream_get_type g_simple_io_stream_get_type;
+alias c_g_simple_io_stream_new g_simple_io_stream_new;
 
 // gio.SimplePermission
 
@@ -6216,6 +6336,7 @@ alias c_g_socket_receive_message g_socket_receive_message;
 alias c_g_socket_receive_with_blocking g_socket_receive_with_blocking;
 alias c_g_socket_send g_socket_send;
 alias c_g_socket_send_message g_socket_send_message;
+alias c_g_socket_send_messages g_socket_send_messages;
 alias c_g_socket_send_to g_socket_send_to;
 alias c_g_socket_send_with_blocking g_socket_send_with_blocking;
 alias c_g_socket_set_blocking g_socket_set_blocking;
@@ -6413,6 +6534,7 @@ alias c_g_task_report_new_error g_task_report_new_error;
 alias c_g_task_attach_source g_task_attach_source;
 alias c_g_task_get_cancellable g_task_get_cancellable;
 alias c_g_task_get_check_cancellable g_task_get_check_cancellable;
+alias c_g_task_get_completed g_task_get_completed;
 alias c_g_task_get_context g_task_get_context;
 alias c_g_task_get_priority g_task_get_priority;
 alias c_g_task_get_return_on_cancel g_task_get_return_on_cancel;
@@ -6658,6 +6780,7 @@ alias c_g_unix_mounts_get g_unix_mounts_get;
 
 alias c_g_unix_mount_monitor_get_type g_unix_mount_monitor_get_type;
 alias c_g_unix_mount_monitor_new g_unix_mount_monitor_new;
+alias c_g_unix_mount_monitor_get g_unix_mount_monitor_get;
 alias c_g_unix_mount_monitor_set_rate_limit g_unix_mount_monitor_set_rate_limit;
 
 // gio.UnixMountPoint

@@ -504,7 +504,8 @@ public class ListSG
 	 * Gets the number of elements in a #GSList.
 	 *
 	 * This function iterates over the whole list to
-	 * count its elements.
+	 * count its elements. To check whether the list is non-empty, it is faster to
+	 * check @list against %NULL.
 	 *
 	 * Return: the number of elements in the #GSList
 	 */

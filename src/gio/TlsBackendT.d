@@ -33,9 +33,7 @@ public  import gtkc.giotypes;
 
 
 /**
- * TLS (Transport Layer Security, aka SSL) backend. This is an
- * internal type used to coordinate the different classes implemented
- * by a TLS backend.
+ * TLS (Transport Layer Security, aka SSL) backend
  *
  * Since: 2.28
  */

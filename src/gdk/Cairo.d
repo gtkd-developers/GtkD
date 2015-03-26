@@ -42,7 +42,7 @@ public  import gtkc.gdktypes;
  * Creates a Cairo context for drawing to @window.
  *
  * Note that calling cairo_reset_clip() on the resulting #cairo_t will
- * rproduce undefined results, so avoid it at all costs.
+ * produce undefined results, so avoid it at all costs.
  *
  * Params:
  *     window = a #GdkWindow
@@ -62,6 +62,42 @@ public Context createContext(Window window)
 	}
 	
 	return new Context(cast(cairo_t*) p);
+}
+
+/**
+ * This is the main way to draw GL content in GTK+. It takes a render buffer ID
+ * (@source_type == #GL_RENDERBUFFER) or a texture id (@source_type == #GL_TEXTURE)
+ * and draws it onto @cr with an OVER operation, respecting the current clip.
+ * The top left corner of the rectangle specified by @x, @y, @width and @height
+ * will be drawn at the current (0,0) position of the cairo_t.
+ *
+ * This will work for *all* cairo_t, as long as @window is realized, but the
+ * fallback implementation that reads back the pixels from the buffer may be
+ * used in the general case. In the case of direct drawing to a window with
+ * no special effects applied to @cr it will however use a more efficient
+ * approach.
+ *
+ * For #GL_RENDERBUFFER the code will always fall back to software for buffers
+ * with alpha components, so make sure you use #GL_TEXTURE if using alpha.
+ *
+ * Calling this may change the current GL context.
+ *
+ * Params:
+ *     cr = a cairo context
+ *     window = The window we're rendering for (not necessarily into)
+ *     source = The GL ID of the source buffer
+ *     sourceType = The type of the @source
+ *     bufferScale = The scale-factor that the @source buffer is allocated for
+ *     x = The source x position in @source to start copying from in GL coordinates
+ *     y = The source y position in @source to start copying from in GL coordinates
+ *     width = The width of the region to draw
+ *     height = The height of the region to draw
+ *
+ * Since: 3.16
+ */
+public void drawFromGl(Context cr, Window window, int source, int sourceType, int bufferScale, int x, int y, int width, int height)
+{
+	gdk_cairo_draw_from_gl((cr is null) ? null : cr.getContextStruct(), (window is null) ? null : window.getWindowStruct(), source, sourceType, bufferScale, x, y, width, height);
 }
 
 /**

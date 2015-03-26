@@ -342,8 +342,7 @@ public template TextT(TStruct)
 	/**
 	 * Gets the specified text.
 	 *
-	 * Deprecated: This method is deprecated since ATK version
-	 * 2.9.3. Please use atk_text_get_string_at_offset() instead.
+	 * Deprecated: Please use atk_text_get_string_at_offset() instead.
 	 *
 	 * Params:
 	 *     offset = position
@@ -407,8 +406,7 @@ public template TextT(TStruct)
 	/**
 	 * Gets the specified text.
 	 *
-	 * Deprecated: This method is deprecated since ATK version
-	 * 2.9.3. Please use atk_text_get_string_at_offset() instead.
+	 * Deprecated: Please use atk_text_get_string_at_offset() instead.
 	 *
 	 * Params:
 	 *     offset = position
@@ -558,7 +556,7 @@ public template TextT(TStruct)
 	 * "delete" which identifies whether the text change was an
 	 * insertion or a deletion.
 	 *
-	 * Deprecated: Since 2.9.4. Use #AtkObject::text-insert or
+	 * Deprecated: Use #AtkObject::text-insert or
 	 * #AtkObject::text-remove instead.
 	 *
 	 * Params:

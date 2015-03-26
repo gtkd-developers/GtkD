@@ -65,6 +65,7 @@ code: end
 
 struct: Context
 class: GLContext
+noStruct: true
 
 struct: Drawable
 interface: GLDrawable

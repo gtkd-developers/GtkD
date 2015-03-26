@@ -83,6 +83,16 @@ public  import gtkc.giotypes;
  * the names must begin with a lowercase character, must not end
  * with a '-', and must not contain consecutive dashes.
  * 
+ * GSettings supports change notification.  The primary mechanism to
+ * watch for changes is to connect to the "changed" signal.  You can
+ * optionally watch for changes on only a single key by using a signal
+ * detail.  Signals are only guaranteed to be emitted for a given key
+ * after you have read the value of that key while a signal handler was
+ * connected for that key.  Signals may or may not be emitted in the
+ * case that the key "changed" to the value that you had previously
+ * read.  Signals may be reported in additional cases as well and the
+ * "changed" signal should really be treated as "may have changed".
+ * 
  * Similar to GConf, the default values in GSettings schemas can be
  * localized, but the localized values are stored in gettext catalogs
  * and looked up with the domain that is specified in the
@@ -178,7 +188,7 @@ public  import gtkc.giotypes;
  * </key>
  * 
  * <key name='flags-key' flags='org.gtk.Test.myflags'>
- * <default>["flag1",flag2"]</default>
+ * <default>["flag1","flag2"]</default>
  * </key>
  * </schema>
  * </schemalist>
@@ -303,14 +313,14 @@ public class Settings : ObjectG
 	 * backend, and a #GMainContext to which signals are dispatched.
 	 *
 	 * This constructor therefore gives you full control over constructing
-	 * #GSettings instances.  The first 4 parameters are given directly as
+	 * #GSettings instances.  The first 3 parameters are given directly as
 	 * @schema, @backend and @path, and the main context is taken from the
 	 * thread-default (as per g_settings_new()).
 	 *
 	 * If @backend is %NULL then the default backend is used.
 	 *
 	 * If @path is %NULL then the path from the schema is used.  It is an
-	 * error f @path is %NULL and the schema has no path of its own or if
+	 * error if @path is %NULL and the schema has no path of its own or if
 	 * @path is non-%NULL and not equal to the path that the schema does
 	 * have.
 	 *
@@ -437,7 +447,7 @@ public class Settings : ObjectG
 	}
 
 	/**
-	 *
+	 * <!-- -->
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead
 	 *
@@ -453,7 +463,7 @@ public class Settings : ObjectG
 	}
 
 	/**
-	 *
+	 * <!-- -->
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead.
 	 * If you used g_settings_list_schemas() to check for the presence of
@@ -502,9 +512,9 @@ public class Settings : ObjectG
 	 *
 	 * Since: 2.26
 	 */
-	public static void unbind(void* object, string property)
+	public static void unbind(ObjectG object, string property)
 	{
-		g_settings_unbind(object, Str.toStringz(property));
+		g_settings_unbind((object is null) ? null : object.getObjectGStruct(), Str.toStringz(property));
 	}
 
 	/**

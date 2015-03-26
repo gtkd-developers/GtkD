@@ -51,13 +51,13 @@ public  import gtkc.gtktypes;
  * for settings by installing a `settings.ini` file
  * next to their `gtk.css` file.
  * 
- * Applications can override system-wide settings with
- * gtk_settings_set_string_property(), gtk_settings_set_long_property(),
- * etc. This should be restricted to special cases though; GtkSettings are
- * not meant as an application configuration facility. When doing so, you
- * need to be aware that settings that are specific to individual widgets
- * may not be available before the widget type has been realized at least
- * once. The following example demonstrates a way to do this:
+ * Applications can override system-wide settings by setting the property
+ * of the GtkSettings object with g_object_set(). This should be restricted
+ * to special cases though; GtkSettings are not meant as an application
+ * configuration facility. When doing so, you need to be aware that settings
+ * that are specific to individual widgets may not be available before the
+ * widget type has been realized at least once. The following example
+ * demonstrates a way to do this:
  * |[<!-- language="C" -->
  * gtk_init (&argc, &argv);
  * 
@@ -156,31 +156,61 @@ public class Settings : ObjectG, StyleProviderIF
 		return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
 	}
 
+	/**
+	 *
+	 *
+	 * Deprecated: This function is not useful outside GTK+.
+	 */
 	public static void installProperty(ParamSpec pspec)
 	{
 		gtk_settings_install_property((pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 
+	/**
+	 *
+	 *
+	 * Deprecated: This function is not useful outside GTK+.
+	 */
 	public static void installPropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
 	{
 		gtk_settings_install_property_parser((pspec is null) ? null : pspec.getParamSpecStruct(), parser);
 	}
 
+	/**
+	 *
+	 *
+	 * Deprecated: Use g_object_set() instead.
+	 */
 	public void setDoubleProperty(string name, double vDouble, string origin)
 	{
 		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));
 	}
 
+	/**
+	 *
+	 *
+	 * Deprecated: Use g_object_set() instead.
+	 */
 	public void setLongProperty(string name, glong vLong, string origin)
 	{
 		gtk_settings_set_long_property(gtkSettings, Str.toStringz(name), vLong, Str.toStringz(origin));
 	}
 
+	/**
+	 *
+	 *
+	 * Deprecated: Use g_object_set() instead.
+	 */
 	public void setPropertyValue(string name, GtkSettingsValue* svalue)
 	{
 		gtk_settings_set_property_value(gtkSettings, Str.toStringz(name), svalue);
 	}
 
+	/**
+	 *
+	 *
+	 * Deprecated: Use g_object_set() instead.
+	 */
 	public void setStringProperty(string name, string vString, string origin)
 	{
 		gtk_settings_set_string_property(gtkSettings, Str.toStringz(name), Str.toStringz(vString), Str.toStringz(origin));

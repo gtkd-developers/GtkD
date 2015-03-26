@@ -243,12 +243,14 @@ public class QueueG
 	}
 
 	/**
-	 * Inserts @data into @queue after @sibling
+	 * Inserts @data into @queue after @sibling.
 	 *
-	 * @sibling must be part of @queue
+	 * @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
+	 * data at the head of the queue.
 	 *
 	 * Params:
-	 *     sibling = a #GList link that must be part of @queue
+	 *     sibling = a #GList link that must be part of @queue, or %NULL to
+	 *         push at the head of the queue.
 	 *     data = the data to insert
 	 *
 	 * Since: 2.4
@@ -261,10 +263,12 @@ public class QueueG
 	/**
 	 * Inserts @data into @queue before @sibling.
 	 *
-	 * @sibling must be part of @queue.
+	 * @sibling must be part of @queue. Since GLib 2.44 a %NULL sibling pushes the
+	 * data at the tail of the queue.
 	 *
 	 * Params:
-	 *     sibling = a #GList link that must be part of @queue
+	 *     sibling = a #GList link that must be part of @queue, or %NULL to
+	 *         push at the tail of the queue.
 	 *     data = the data to insert
 	 *
 	 * Since: 2.4

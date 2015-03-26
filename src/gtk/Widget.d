@@ -41,6 +41,7 @@ private import gdk.Screen;
 private import gdk.Visual;
 private import gdk.Window : GdkWin = Window;
 private import gdkpixbuf.Pixbuf;
+private import gio.ActionGroup;
 private import gio.ActionGroupIF;
 private import gio.IconIF;
 private import glib.ConstructionException;
@@ -1013,7 +1014,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		/**
 		 * Adds the events in the bitfield @events to the event mask for
-		 * @widget. See gtk_widget_set_events() for details.
+		 * @widget. See gtk_widget_set_events() and the
+		 * [input handling overview][event-masks] for details.
 		 *
 		 * Params:
 		 *     events = an event mask, see #GdkEventMask
@@ -1612,8 +1614,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     context = the drag context
 		 *     target = the target (form of the data) to retrieve
 		 *     time = a timestamp for retrieving the data. This will
-		 *         generally be the time received in a #GtkWidget::drag-motion"
-		 *         or #GtkWidget::drag-drop" signal
+		 *         generally be the time received in a #GtkWidget::drag-motion
+		 *         or #GtkWidget::drag-drop signal
 		 */
 		public void dragGetData(DragContext context, GdkAtom target, uint time)
 		{
@@ -1920,6 +1922,32 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			}
 			
 			return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		}
+
+		/**
+		 * Retrieves the #GActionGroup that was registered using @prefix. The resulting
+		 * #GActionGroup may have been registered to @widget or any #GtkWidget in its
+		 * ancestry.
+		 *
+		 * If no action group was found matching @prefix, then %NULL is returned.
+		 *
+		 * Params:
+		 *     prefix = The “prefix” of the action group.
+		 *
+		 * Return: A #GActionGroup or %NULL.
+		 *
+		 * Since: 3.16
+		 */
+		public ActionGroupIF getActionGroup(string prefix)
+		{
+			auto p = gtk_widget_get_action_group(gtkWidget, Str.toStringz(prefix));
+			
+			if(p is null)
+			{
+				return null;
+			}
+			
+			return ObjectG.getDObject!(ActionGroup, ActionGroupIF)(cast(GActionGroup*) p);
 		}
 
 		/**
@@ -2255,9 +2283,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Returns the event mask for the widget (a bitfield containing flags
-		 * from the #GdkEventMask enumeration). These are the events that the widget
-		 * will receive.
+		 * Returns the event mask (see #GdkEventMask) for the widget. These are the
+		 * events that the widget will receive.
 		 *
 		 * Note: Internally, the widget event mask will be the logical OR of the event
 		 * mask set through gtk_widget_set_events() or gtk_widget_add_events(), and the
@@ -2650,9 +2677,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Obtains the location of the mouse pointer in widget coordinates.
 		 * Widget coordinates are a bit odd; for historical reasons, they are
-		 * defined as @widget->window coordinates for widgets that are not
-		 * #GTK_NO_WINDOW widgets, and are relative to @widget->allocation.x,
-		 * @widget->allocation.y for widgets that are #GTK_NO_WINDOW widgets.
+		 * defined as @widget->window coordinates for widgets that return %TRUE for
+		 * gtk_widget_get_has_window(); and are relative to @widget->allocation.x,
+		 * @widget->allocation.y otherwise.
 		 *
 		 * Deprecated: Use gdk_window_get_device_position() instead.
 		 *
@@ -3742,6 +3769,19 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
+		 * Retrieves a %NULL-terminated array of strings containing the prefixes of
+		 * #GActionGroup's available to @widget.
+		 *
+		 * Return: a %NULL-terminated array of strings.
+		 *
+		 * Since: 3.16
+		 */
+		public string[] listActionPrefixes()
+		{
+			return Str.toStringArray(gtk_widget_list_action_prefixes(gtkWidget));
+		}
+
+		/**
 		 * Returns a newly allocated list of the widgets, normally labels, for
 		 * which this widget is the target of a mnemonic (see for example,
 		 * gtk_label_set_mnemonic_widget()).
@@ -3975,6 +4015,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * All other style values are left untouched.
 		 * See gtk_widget_override_color().
 		 *
+		 * Deprecated: This function is not useful in the context of CSS-based
+		 * rendering. If you wish to change the way a widget renders its background
+		 * you should use a custom CSS style, through an application-specific
+		 * #GtkStyleProvider and a CSS style class. You can also override the default
+		 * drawing of a widget through the #GtkWidget::draw signal, and use Cairo to
+		 * draw a specific color, regardless of the CSS style.
+		 *
 		 * Params:
 		 *     state = the state for which to set the background color
 		 *     color = the color to assign, or %NULL to undo the effect
@@ -4015,6 +4062,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * #GtkCssProvider with the %GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
 		 * priority.
 		 *
+		 * Deprecated: Use a custom style provider and style classes instead
+		 *
 		 * Params:
 		 *     state = the state for which to set the color
 		 *     color = the color to assign, or %NULL to undo the effect
@@ -4036,6 +4085,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Note that the underlying properties have the #GdkColor type,
 		 * so the alpha value in @primary and @secondary will be ignored.
 		 *
+		 * Deprecated: This function is not useful in the context of CSS-based
+		 * rendering. If you wish to change the color used to render the primary
+		 * and seconday cursors you should use a custom CSS style, through an
+		 * application-specific #GtkStyleProvider and a CSS style class.
+		 *
 		 * Params:
 		 *     cursor = the color to use for primary cursor (does not need to be
 		 *         allocated), or %NULL to undo the effect of previous calls to
@@ -4055,6 +4109,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Sets the font to use for a widget. All other style values are
 		 * left untouched. See gtk_widget_override_color().
 		 *
+		 * Deprecated: This function is not useful in the context of CSS-based
+		 * rendering. If you wish to change the font a widget uses to render its text
+		 * you should use a custom CSS style, through an application-specific
+		 * #GtkStyleProvider and a CSS style class.
+		 *
 		 * Params:
 		 *     fontDesc = the font descriptiong to use, or %NULL to undo
 		 *         the effect of previous calls to gtk_widget_override_font()
@@ -4072,6 +4131,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * All other style values are left untouched.
 		 * See gtk_widget_override_color() for overriding the foreground
 		 * or background color.
+		 *
+		 * Deprecated: This function is not useful in the context of CSS-based
+		 * rendering. If you wish to change the color used to render symbolic icons
+		 * you should use a custom CSS style, through an application-specific
+		 * #GtkStyleProvider and a CSS style class.
 		 *
 		 * Params:
 		 *     name = the name of the symbolic color to modify
@@ -4148,9 +4212,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * The region here is specified in widget coordinates.
 		 * Widget coordinates are a bit odd; for historical reasons, they are
-		 * defined as @widget->window coordinates for widgets that are not
-		 * #GTK_NO_WINDOW widgets, and are relative to @widget->allocation.x,
-		 * @widget->allocation.y for widgets that are #GTK_NO_WINDOW widgets.
+		 * defined as @widget->window coordinates for widgets that return %TRUE for
+		 * gtk_widget_get_has_window(), and are relative to @widget->allocation.x,
+		 * @widget->allocation.y otherwise.
+		 *
+		 * @width or @height may be 0, in this case this function does
+		 * nothing. Negative values for @width and @height are not allowed.
 		 *
 		 * Params:
 		 *     x = x coordinate of upper-left corner of rectangle to redraw
@@ -4249,13 +4316,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     region = a #cairo_region_t, in the same coordinate system as
 		 *         @widget->allocation. That is, relative to @widget->window
-		 *         for %NO_WINDOW widgets; relative to the parent window
-		 *         of @widget->window for widgets with their own window.
+		 *         for widgets which return %FALSE from gtk_widget_get_has_window();
+		 *         relative to the parent window of @widget->window otherwise.
 		 *
 		 * Return: A newly allocated region holding the intersection of @widget
-		 *     and @region. The coordinates of the return value are relative to
-		 *     @widget->window for %NO_WINDOW widgets, and relative to the parent
-		 *     window of @widget->window for widgets with their own window.
+		 *     and @region.
 		 */
 		public Region regionIntersect(Region region)
 		{
@@ -4454,8 +4519,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Very rarely-used function. This function is used to emit
 		 * an expose event on a widget. This function is not normally used
 		 * directly. The only time it is used is when propagating an expose
-		 * event to a child %NO_WINDOW widget, and that is normally done
-		 * using gtk_container_propagate_draw().
+		 * event to a windowless child widget (gtk_widget_get_has_window() is %FALSE),
+		 * and that is normally done using gtk_container_propagate_draw().
 		 *
 		 * If you want to force an area of a window to be redrawn,
 		 * use gdk_window_invalidate_rect() or gdk_window_invalidate_region().
@@ -4643,23 +4708,16 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Sets the widget’s clip.  This must not be used
-		 * directly, but from within a widget’s size_allocate method.
+		 * Sets the widget’s clip.  This must not be used directly,
+		 * but from within a widget’s size_allocate method.
+		 * It must be called after gtk_widget_set_allocation() (or after chaning up
+		 * to the parent class), because that function resets the clip.
 		 *
 		 * The clip set should be the area that @widget draws on. If @widget is a
 		 * #GtkContainer, the area must contain all children's clips.
 		 *
 		 * If this function is not called by @widget during a ::size-allocate handler,
-		 * it is assumed to be equal to the allocation. However, if the function is
-		 * not called, certain features that might extend a widget's allocation will
-		 * not be available:
-		 *
-		 * * The #GtkWidget::draw signal will be clipped to the widget's allocation
-		 * to avoid overdraw.
-		 * * Calling gtk_render_background() will not draw outset shadows.
-		 *
-		 * It is therefore suggested that you always call gtk_widget_set_clip() during
-		 * a ::size-allocate handler.
+		 * the clip will be set to @widget's allocation.
 		 *
 		 * Params:
 		 *     clip = a pointer to a #GtkAllocation to copy from
@@ -4712,7 +4770,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * so be careful. This function must be called while a widget is
 		 * unrealized. Consider gtk_widget_add_device_events() for widgets that are
 		 * already realized, or if you want to preserve the existing event
-		 * mask. This function can’t be used with #GTK_NO_WINDOW widgets;
+		 * mask. This function can’t be used with windowless widgets (which return
+		 * %FALSE from gtk_widget_get_has_window());
 		 * to get events on those widgets, place them inside a #GtkEventBox
 		 * and receive events on the event box.
 		 *
@@ -6256,6 +6315,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Signals that all holders of a reference to the widget should release
 		 * the reference that they hold. May result in finalization of the widget
 		 * if all references are released.
+		 *
+		 * This signal is not suitable for saving widget state.
 		 */
 		void addOnDestroy(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{

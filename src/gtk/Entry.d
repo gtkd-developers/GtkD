@@ -855,6 +855,22 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
+	 * Causes @entry to have keyboard focus.
+	 *
+	 * It behaves like gtk_widget_grab_focus(),
+	 * except that it doesn't select the contents of the entry.
+	 * You only want to call this on some special entries
+	 * which the user usually doesn't want to replace all text in,
+	 * such as search-as-you-type entries.
+	 *
+	 * Since: 3.16
+	 */
+	public void grabFocusWithoutSelecting()
+	{
+		gtk_entry_grab_focus_without_selecting(gtkEntry);
+	}
+
+	/**
 	 * Allow the #GtkEntry input method to internally handle key press
 	 * and release events. If this function returns %TRUE, then no further
 	 * processing should be done for this key event. See

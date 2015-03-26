@@ -38,6 +38,7 @@ private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.HashTable;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -472,6 +473,8 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * inline data located at runtime, you could have corrupt inline data in
 	 * addition.
 	 *
+	 * Deprecated: Use #GResource instead.
+	 *
 	 * Params:
 	 *     dataLength = Length in bytes of the @data argument or -1 to
 	 *         disable length checks
@@ -670,6 +673,8 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * if the pixel data is run-length-encoded, the pixel data is copied into
 	 * newly-allocated memory; otherwise it is reused.
 	 *
+	 * Deprecated: Use #GResource instead.
+	 *
 	 * Params:
 	 *     pixdata = a #GdkPixdata to convert into a #GdkPixbuf.
 	 *     copyPixels = whether to copy raw pixel data; run-length encoded
@@ -809,11 +814,6 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		}
 		
 		return new ListSG(cast(GSList*) p);
-	}
-
-	public static string gettext(string msgid)
-	{
-		return Str.toString(gdk_pixbuf_gettext(Str.toStringz(msgid)));
 	}
 
 	/**
@@ -1194,7 +1194,10 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * options for cursor definitions. The PNG loader provides the tEXt ancillary
 	 * chunk key/value pairs as options. Since 2.12, the TIFF and JPEG loaders
 	 * return an "orientation" option string that corresponds to the embedded
-	 * TIFF/Exif orientation tag (if present).
+	 * TIFF/Exif orientation tag (if present). Since 2.32, the TIFF loader sets
+	 * the "multipage" option string to "yes" when a multi-page TIFF is loaded.
+	 * Since 2.32 the JPEG and PNG loaders set "x-dpi" and "y-dpi" if the file
+	 * contains image density information in dots per inch.
 	 *
 	 * Params:
 	 *     key = a nul-terminated string.
@@ -1205,6 +1208,29 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public string getOption(string key)
 	{
 		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key)));
+	}
+
+	/**
+	 * Returns a #GHashTable with a list of all the options that may have been
+	 * attached to the @pixbuf when it was loaded, or that may have been
+	 * attached by another function using gdk_pixbuf_set_option().
+	 *
+	 * See gdk_pixbuf_get_option() for more details.
+	 *
+	 * Return: a #GHashTable of key/values
+	 *
+	 * Since: 2.32
+	 */
+	public HashTable getOptions()
+	{
+		auto p = gdk_pixbuf_get_options(gdkPixbuf);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new HashTable(cast(GHashTable*) p);
 	}
 
 	/**

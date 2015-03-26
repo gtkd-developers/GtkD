@@ -16,11 +16,11 @@
         "hauptmech"
     ],
     "dependencies": {
-        "gtk-d:gtkdgl": "~>3.0.0-beta",
-        "gtk-d:sv": "~>3.0.0-beta",
-        "gtk-d:vte": "~>3.0.0-beta",
-        "gtk-d:gtkd": "~>3.0.0-beta",
-        "gtk-d:gstreamer": "~>3.0.0-beta"
+        "gtk-d:gtkdgl": "~>3.1.0",
+        "gtk-d:sv": "~>3.1.0",
+        "gtk-d:vte": "~>3.1.0",
+        "gtk-d:gtkd": "~>3.1.0",
+        "gtk-d:gstreamer": "~>3.1.0"
     },
 
     "subPackages" : [
@@ -39,7 +39,7 @@
             "sourcePaths": ["srcgl"],
             "libs-posix": ["dl"],
             "importPaths": ["srcgl"],
-            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+            "dependencies": {"gtk-d:gtkd":"~>3.1.0"}
         },
         {
             "name": "sv",
@@ -48,7 +48,7 @@
             "sourcePaths": ["srcsv"],
             "libs-posix": ["dl"],
             "importPaths": ["srcsv"],
-            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+            "dependencies": {"gtk-d:gtkd":"~>3.1.0"}
         },
         {
             "name": "gstreamer",
@@ -57,7 +57,7 @@
             "sourcePaths": ["srcgstreamer"],
             "libs-posix": ["dl"],
             "importPaths": ["srcgstreamer"],
-            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+            "dependencies": {"gtk-d:gtkd":"~>3.1.0"}
         },
         {
             "name": "vte",
@@ -66,7 +66,7 @@
             "sourcePaths": ["srcvte"],
             "libs-posix": ["dl"],
             "importPaths": ["srcvte"],
-            "dependencies": {"gtk-d:gtkd":"~>3.0.0-beta"}
+            "dependencies": {"gtk-d:gtkd":"~>3.1.0"}
         }
     ]
 }

@@ -26,6 +26,7 @@ module gtk.ScrollableIF;
 
 private import gobject.ObjectG;
 private import gtk.Adjustment;
+private import gtk.Border;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
@@ -68,6 +69,22 @@ public interface ScrollableIF{
 
 	/**
 	 */
+
+	/**
+	 * Returns the size of a non-scrolling border around the
+	 * outside of the scrollable. An example for this would
+	 * be treeview headers. GTK+ can use this information to
+	 * display overlayed graphics, like the overshoot indication,
+	 * at the right position.
+	 *
+	 * Params:
+	 *     border = return location for the results
+	 *
+	 * Return: %TRUE if @border has been set
+	 *
+	 * Since: 3.16
+	 */
+	public bool getBorder(Border border);
 
 	/**
 	 * Retrieves the #GtkAdjustment used for horizontal scrolling.

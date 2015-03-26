@@ -358,6 +358,17 @@ public class StyleContext : ObjectG
 	/**
 	 * Gets the background color for a given state.
 	 *
+	 * This function is far less useful than it seems, and it should not be used in
+	 * newly written code. CSS has no concept of "background color", as a background
+	 * can be an image, or a gradient, or any other pattern including solid colors.
+	 *
+	 * The only reason why you would call gtk_style_context_get_background_color() is
+	 * to use the returned value to draw the background with it; the correct way to
+	 * achieve this result is to use gtk_render_background() instead, along with CSS
+	 * style classes to modify the color to be rendered.
+	 *
+	 * Deprecated: Use gtk_render_background() instead.
+	 *
 	 * Params:
 	 *     state = state to retrieve the color for
 	 *     color = return value for the background color
@@ -394,6 +405,8 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Gets the border color for a given state.
+	 *
+	 * Deprecated: Use gtk_render_border() instead.
 	 *
 	 * Params:
 	 *     state = state to retrieve the color for
@@ -1001,11 +1014,13 @@ public class StyleContext : ObjectG
 	}
 
 	/**
-	 * Saves the @context state, so all modifications done through
+	 * Saves the @context state, so temporary modifications done through
 	 * gtk_style_context_add_class(), gtk_style_context_remove_class(),
-	 * gtk_style_context_add_region(), gtk_style_context_remove_region()
-	 * or gtk_style_context_set_junction_sides() can be reverted in one
-	 * go through gtk_style_context_restore().
+	 * gtk_style_context_set_state(), etc. can quickly be reverted
+	 * in one go through gtk_style_context_restore().
+	 *
+	 * The matching call to gtk_style_context_restore() must be done
+	 * before GTK returns to the main loop.
 	 *
 	 * Since: 3.0
 	 */

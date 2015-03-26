@@ -26,6 +26,19 @@ module gsvc.gsvtypes;
 
 public import gtkc.gtktypes;
 
+public enum GtkSourceBackgroundPatternType
+{
+	/**
+	 * no pattern
+	 */
+	NONE = 0,
+	/**
+	 * grid pattern
+	 */
+	GRID = 1,
+}
+alias GtkSourceBackgroundPatternType BackgroundPatternType;
+
 public enum GtkSourceBracketMatchType
 {
 	/**
@@ -824,6 +837,42 @@ struct GtkSourceStyleScheme
 {
 	GObject base;
 	GtkSourceStyleSchemePrivate* priv;
+}
+
+struct GtkSourceStyleSchemeChooser;
+
+struct GtkSourceStyleSchemeChooserButton
+{
+	GtkButton parent;
+}
+
+struct GtkSourceStyleSchemeChooserButtonClass
+{
+	GtkButtonClass parent;
+}
+
+struct GtkSourceStyleSchemeChooserInterface
+{
+	GTypeInterface baseInterface;
+	/**
+	 *
+	 * Params:
+	 *     chooser = a #GtkSourceStyleSchemeChooser
+	 * Return: the currently-selected scheme.
+	 */
+	extern(C) GtkSourceStyleScheme* function(GtkSourceStyleSchemeChooser* chooser) getStyleScheme;
+	extern(C) void function(GtkSourceStyleSchemeChooser* chooser, GtkSourceStyleScheme* scheme) setStyleScheme;
+	void*[12] padding;
+}
+
+struct GtkSourceStyleSchemeChooserWidget
+{
+	GtkBin parent;
+}
+
+struct GtkSourceStyleSchemeChooserWidgetClass
+{
+	GtkBinClass parent;
 }
 
 struct GtkSourceStyleSchemeClass

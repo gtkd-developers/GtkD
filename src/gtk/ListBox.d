@@ -24,6 +24,7 @@
 
 module gtk.ListBox;
 
+private import gio.ListModelIF;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
@@ -119,6 +120,33 @@ public class ListBox : Container
 		}
 		
 		this(cast(GtkListBox*) p);
+	}
+
+	/**
+	 * Binds @model to @box.
+	 *
+	 * If @box was already bound to a model, that previous binding is
+	 * destroyed.
+	 *
+	 * The contents of @box are cleared and then filled with widgets that
+	 * represent items from @model. @box is updated whenever @model changes.
+	 * If @model is %NULL, @box is left empty.
+	 *
+	 * It is undefined to add or remove widgets directly (for example, with
+	 * gtk_list_box_insert() or gtk_container_add()) while @box is bound to a
+	 * model.
+	 *
+	 * Params:
+	 *     model = the #GListModel to be bound to @box
+	 *     createWidgetFunc = a function that creates widgets for items
+	 *     userData = user data passed to @create_widget_func
+	 *     userDataFreeFunc = function for freeing @user_data
+	 *
+	 * Since: 3.16
+	 */
+	public void bindModel(ListModelIF model, GtkListBoxCreateWidgetFunc createWidgetFunc, void* userData, GDestroyNotify userDataFreeFunc)
+	{
+		gtk_list_box_bind_model(gtkListBox, (model is null) ? null : model.getListModelStruct(), createWidgetFunc, userData, userDataFreeFunc);
 	}
 
 	/**

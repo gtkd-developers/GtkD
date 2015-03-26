@@ -355,11 +355,9 @@ public class SourceBuffer : TextBuffer
 	}
 
 	/**
-	 * Determines the number of undo levels the buffer will track for
-	 * buffer edits.
+	 * Determines the number of undo levels the buffer will track for buffer edits.
 	 *
-	 * Return: the maximum number of possible undo levels or
-	 *     -1 if no limit is set.
+	 * Return: the maximum number of possible undo levels or -1 if no limit is set.
 	 */
 	public int getMaxUndoLevels()
 	{
@@ -514,6 +512,20 @@ public class SourceBuffer : TextBuffer
 	public bool iterHasContextClass(TextIter iter, string contextClass)
 	{
 		return gtk_source_buffer_iter_has_context_class(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass)) != 0;
+	}
+
+	/**
+	 * Joins the lines of text between the specified iterators.
+	 *
+	 * Params:
+	 *     start = a #GtkTextIter.
+	 *     end = a #GtkTextIter.
+	 *
+	 * Since: 3.16
+	 */
+	public void joinLines(TextIter start, TextIter end)
+	{
+		gtk_source_buffer_join_lines(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 
 	/**

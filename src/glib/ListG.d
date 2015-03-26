@@ -379,7 +379,10 @@ public class ListG
 	}
 
 	/**
-	 * Frees one #GList element.
+	 * Frees one #GList element, but does not update links from the next and
+	 * previous elements in the list, so you should not call this function on an
+	 * element that is currently part of a list.
+	 *
 	 * It is usually used after g_list_remove_link().
 	 */
 	public void free1()
@@ -545,7 +548,8 @@ public class ListG
 	 *
 	 * This function iterates over the whole list to count its elements.
 	 * Use a #GQueue instead of a GList if you regularly need the number
-	 * of items.
+	 * of items. To check whether the list is non-empty, it is faster to check
+	 * @list against %NULL.
 	 *
 	 * Return: the number of elements in the #GList
 	 */
@@ -556,6 +560,10 @@ public class ListG
 
 	/**
 	 * Gets the element at the given position in a #GList.
+	 *
+	 * This iterates over the list until it reaches the @n-th position. If you
+	 * intend to iterate over every element, it is better to use a for-loop as
+	 * described in the #GList introduction.
 	 *
 	 * Params:
 	 *     n = the position of the element, counting from 0
@@ -577,6 +585,10 @@ public class ListG
 
 	/**
 	 * Gets the data of the element at the given position.
+	 *
+	 * This iterates over the list until it reaches the @n-th position. If you
+	 * intend to iterate over every element, it is better to use a for-loop as
+	 * described in the #GList introduction.
 	 *
 	 * Params:
 	 *     n = the position of the element

@@ -444,6 +444,26 @@ public enum GtkButtonBoxStyle
 alias GtkButtonBoxStyle ButtonBoxStyle;
 
 /**
+ * The role specifies the desired appearance of a #GtkModelButton.
+ */
+public enum GtkButtonRole
+{
+	/**
+	 * A plain button
+	 */
+	NORMAL = 0,
+	/**
+	 * A check button
+	 */
+	CHECK = 1,
+	/**
+	 * A radio button
+	 */
+	RADIO = 2,
+}
+alias GtkButtonRole ButtonRole;
+
+/**
  * Prebuilt sets of buttons for the dialog. If
  * none of these choices are appropriate, simply use %GTK_BUTTONS_NONE
  * then call gtk_dialog_add_buttons().
@@ -1985,6 +2005,12 @@ public enum GtkPolicyType
 	 * content determines the size.
 	 */
 	NEVER = 2,
+	/**
+	 * Don't show a scrollbar, but don't force the
+	 * size to follow the content. This can be used e.g. to make multiple
+	 * scrolled windows share a scrollbar. Since: 3.16
+	 */
+	EXTERNAL = 3,
 }
 alias GtkPolicyType PolicyType;
 
@@ -3327,6 +3353,27 @@ public enum GtkTextDirection
 	RTL = 2,
 }
 alias GtkTextDirection TextDirection;
+
+/**
+ * Granularity types that extend the text selection. Use the
+ * #GtkTextView::extend-selection signal to customize the selection.
+ *
+ * Since: 3.16
+ */
+public enum GtkTextExtendSelection
+{
+	/**
+	 * Selects the current word. It is triggered by
+	 * a double-click for example.
+	 */
+	WORD = 0,
+	/**
+	 * Selects the current line. It is triggered by
+	 * a triple-click for example.
+	 */
+	LINE = 1,
+}
+alias GtkTextExtendSelection TextExtendSelection;
 
 /**
  * Flags affecting how a search is done.
@@ -5476,8 +5523,18 @@ struct GtkEntryBufferClass
 
 struct GtkEntryBufferPrivate;
 
+/**
+ * Class structure for #GtkEntry. All virtual functions have a default
+ * implementation. Derived classes may set the virtual function pointers for the
+ * signal handlers to %NULL, but must keep @get_text_area_size and
+ * @get_frame_size non-%NULL; either use the default implementation, or provide
+ * a custom one.
+ */
 struct GtkEntryClass
 {
+	/**
+	 * The parent class.
+	 */
 	GtkWidgetClass parentClass;
 	extern(C) void function(GtkEntry* entry, GtkWidget* popup) populatePopup;
 	extern(C) void function(GtkEntry* entry) activate;
@@ -5922,6 +5979,25 @@ struct GtkFrameClass
 }
 
 struct GtkFramePrivate;
+
+struct GtkGLArea
+{
+	GtkWidget parentInstance;
+}
+
+/**
+ * The `GtkGLAreaClass` structure contains only private data.
+ *
+ * Since: 3.16
+ */
+struct GtkGLAreaClass
+{
+	GtkWidgetClass parentClass;
+	extern(C) int function(GtkGLArea* area, GdkGLContext* context) render;
+	extern(C) void function(GtkGLArea* area, int width, int height) resize;
+	extern(C) GdkGLContext* function(GtkGLArea* area) createContext;
+	void*[6] Padding;
+}
 
 struct GtkGesture;
 
@@ -6873,6 +6949,8 @@ struct GtkMiscClass
 
 struct GtkMiscPrivate;
 
+struct GtkModelButton;
+
 struct GtkMountOperation
 {
 	GMountOperation parentInstance;
@@ -7111,6 +7189,14 @@ struct GtkPopoverClass
 {
 	GtkBinClass parentClass;
 	extern(C) void function(GtkPopover* popover) closed;
+	void*[10] reserved;
+}
+
+struct GtkPopoverMenu;
+
+struct GtkPopoverMenuClass
+{
+	GtkPopoverClass parentClass;
 	void*[10] reserved;
 }
 
@@ -7844,6 +7930,14 @@ struct GtkScrollable;
 struct GtkScrollableInterface
 {
 	GTypeInterface baseIface;
+	/**
+	 *
+	 * Params:
+	 *     scrollable = a #GtkScrollable
+	 *     border = return location for the results
+	 * Return: %TRUE if @border has been set
+	 */
+	extern(C) int function(GtkScrollable* scrollable, GtkBorder* border) getBorder;
 }
 
 struct GtkScrollbar
@@ -7922,9 +8016,9 @@ struct GtkSearchEntryClass
 {
 	GtkEntryClass parentClass;
 	extern(C) void function(GtkSearchEntry* entry) searchChanged;
-	extern(C) void function() GtkReserved1;
-	extern(C) void function() GtkReserved2;
-	extern(C) void function() GtkReserved3;
+	extern(C) void function(GtkSearchEntry* entry) nextMatch;
+	extern(C) void function(GtkSearchEntry* entry) previousMatch;
+	extern(C) void function(GtkSearchEntry* entry) stopSearch;
 }
 
 struct GtkSelectionData;
@@ -8124,6 +8218,22 @@ struct GtkStackClass
 {
 	GtkContainerClass parentClass;
 }
+
+struct GtkStackSidebar
+{
+	GtkBin parent;
+}
+
+struct GtkStackSidebarClass
+{
+	GtkBinClass parentClass;
+	extern(C) void function() GtkReserved1;
+	extern(C) void function() GtkReserved2;
+	extern(C) void function() GtkReserved3;
+	extern(C) void function() GtkReserved4;
+}
+
+struct GtkStackSidebarPrivate;
 
 struct GtkStackSwitcher
 {
@@ -8672,10 +8782,15 @@ struct GtkTextAttributes
 		uint, "invisible", 1,
 		uint, "bgFullHeight", 1,
 		uint, "editable", 1,
-		uint, "", 29
+		uint, "noFallback", 1,
+		uint, "", 28
 	));
 	GdkRGBA* pgBgRgba;
-	uint[3] padding;
+	/**
+	 * Extra space to insert between graphemes, in Pango units
+	 */
+	int letterSpacing;
+	uint[2] padding;
 }
 
 struct GtkTextBTree;
@@ -8688,6 +8803,9 @@ struct GtkTextBuffer
 
 struct GtkTextBufferClass
 {
+	/**
+	 * The object class structure needs to be the first.
+	 */
 	GObjectClass parentClass;
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* pos, const(char)* newText, int newTextLength) insertText;
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* iter, GdkPixbuf* pixbuf) insertPixbuf;
@@ -8855,12 +8973,12 @@ struct GtkTextViewClass
 	extern(C) void function(GtkTextView* textView) toggleOverwrite;
 	extern(C) GtkTextBuffer* function(GtkTextView* textView) createBuffer;
 	extern(C) void function(GtkTextView* textView, GtkTextViewLayer layer, cairo_t* cr) drawLayer;
+	extern(C) int function(GtkTextView* textView, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end) extendSelection;
 	extern(C) void function() GtkReserved1;
 	extern(C) void function() GtkReserved2;
 	extern(C) void function() GtkReserved3;
 	extern(C) void function() GtkReserved4;
 	extern(C) void function() GtkReserved5;
-	extern(C) void function() GtkReserved6;
 }
 
 struct GtkTextViewPrivate;
@@ -10298,6 +10416,20 @@ public alias extern(C) void function(GtkIconView* iconView, GtkTreePath* path, v
 public alias extern(C) int function(GtkWidget* grabWidget, GdkEventKey* event, void* funcData) GtkKeySnoopFunc;
 
 /**
+ * Called for list boxes that are bound to a #GListModel with
+ * gtk_list_box_bind_model() for each item that gets added to the model.
+ *
+ * Params:
+ *     item = the item from the model for which to create a widget for
+ *     userData = user data
+ *
+ * Return: a #GtkWidget that represents @item
+ *
+ * Since: 3.16
+ */
+public alias extern(C) GtkWidget* function(void* item, void* userData) GtkListBoxCreateWidgetFunc;
+
+/**
  * Will be called whenever the row changes or is added and lets you control
  * if the row should be visible or not.
  *
@@ -10789,7 +10921,7 @@ public enum StockID
 	/**
 	 * The “Delete” item and icon.
 	 *
-	 * Deprecated: Use the named icon &quot;edit-cut&quot; or the label &quot;_Delete&quot;.
+	 * Deprecated: Use the named icon &quot;edit-delete&quot; or the label &quot;_Delete&quot;.
 	 */
 	DELETE = "gtk-delete",
 	/**
@@ -11115,7 +11247,7 @@ public enum StockID
 	/**
 	 * The “Paste” item and icon.
 	 *
-	 * Deprecated: Do not use an icon. Use label &quot;_Paste&quot;.
+	 * Deprecated: Use named icon &quot;edit-paste&quot; or the label &quot;_Paste&quot;.
 	 */
 	PASTE = "gtk-paste",
 	/**

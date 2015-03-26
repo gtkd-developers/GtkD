@@ -109,9 +109,15 @@ public  import gtkc.giotypes;
  * the operation, producing a GAsyncResult which is then passed to the
  * function's matching _finish() operation.
  * 
- * Some #GFile operations do not have synchronous analogs, as they may
- * take a very long time to finish, and blocking may leave an application
- * unusable. Notable cases include:
+ * It is highly recommended to use asynchronous calls when running within a
+ * shared main loop, such as in the main thread of an application. This avoids
+ * I/O operations blocking other sources on the main loop from being dispatched.
+ * Synchronous I/O operations should be performed from worker threads. See the
+ * [introduction to asynchronous programming section][async-programming] for
+ * more.
+ * 
+ * Some #GFile operations almost always take a noticeable amount of time, and
+ * so do not have synchronous analogs. Notable cases include:
  * - g_file_mount_mountable() to mount a mountable file.
  * - g_file_unmount_mountable_with_operation() to unmount a mountable file.
  * - g_file_eject_mountable_with_operation() to eject a mountable file.
@@ -698,7 +704,7 @@ public interface FileIF{
 	public FileEnumerator enumerateChildrenFinish(AsyncResultIF res);
 
 	/**
-	 * Checks equality of two given #GFiles.
+	 * Checks if the two given #GFiles refer to the same file.
 	 *
 	 * Note that two #GFiles that differ can still refer to the same
 	 * file on the filesystem due to various forms of filename
@@ -941,6 +947,9 @@ public interface FileIF{
 	 * pathname match @prefix. Only full pathname elements are matched,
 	 * so a path like /foo is not considered a prefix of /foobar, only
 	 * of /foo/bar.
+	 *
+	 * A #GFile is not a prefix of itself. If you want to check for
+	 * equality, use g_file_equal().
 	 *
 	 * This call does no I/O, as it works purely on names. As such it can
 	 * sometimes return %FALSE even if @file is inside a @prefix (from a
@@ -1966,14 +1975,14 @@ public interface FileIF{
 	 * operation was cancelled, the error %G_IO_ERROR_CANCELLED will be
 	 * returned.
 	 *
-	 * If you pass in a non-%NULL @etag value, then this value is
-	 * compared to the current entity tag of the file, and if they differ
-	 * an %G_IO_ERROR_WRONG_ETAG error is returned. This generally means
-	 * that the file has been changed since you last read it. You can get
-	 * the new etag from g_file_output_stream_get_etag() after you've
-	 * finished writing and closed the #GFileOutputStream. When you load
-	 * a new file you can use g_file_input_stream_query_info() to get
-	 * the etag of the file.
+	 * If you pass in a non-%NULL @etag value and @file already exists, then
+	 * this value is compared to the current entity tag of the file, and if
+	 * they differ an %G_IO_ERROR_WRONG_ETAG error is returned. This
+	 * generally means that the file has been changed since you last read
+	 * it. You can get the new etag from g_file_output_stream_get_etag()
+	 * after you've finished writing and closed the #GFileOutputStream. When
+	 * you load a new file you can use g_file_input_stream_query_info() to
+	 * get the etag of the file.
 	 *
 	 * If @make_backup is %TRUE, this function will attempt to make a
 	 * backup of the current file before overwriting it. If this fails

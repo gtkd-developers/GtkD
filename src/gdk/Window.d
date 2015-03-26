@@ -24,6 +24,7 @@
 
 module gdk.Window;
 
+private import cairo.Context;
 private import cairo.Pattern;
 private import cairo.Region;
 private import cairo.Surface;
@@ -33,11 +34,14 @@ private import gdk.Device;
 private import gdk.Display;
 private import gdk.Event;
 private import gdk.FrameClock;
+private import gdk.GLContext;
 private import gdk.RGBA;
 private import gdk.Screen;
 private import gdk.Visual;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -451,6 +455,42 @@ public class Window : ObjectG
 	}
 
 	/**
+	 * Creates a new #GdkGLContext matching the
+	 * framebuffer format to the visual of the #GdkWindow. The context
+	 * is disconnected from any particular window or surface.
+	 *
+	 * If the creation of the #GdkGLContext failed, @error will be set.
+	 *
+	 * Before using the returned #GdkGLContext, you will need to
+	 * call gdk_gl_context_make_current() or gdk_gl_context_realize().
+	 *
+	 * Return: the newly created #GdkGLContext, or
+	 *     %NULL on error
+	 *
+	 * Since: 3.16
+	 *
+	 * Throws: GException on failure.
+	 */
+	public GLContext createGlContext()
+	{
+		GError* err = null;
+		
+		auto p = gdk_window_create_gl_context(gdkWindow, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p, true);
+	}
+
+	/**
 	 * Create a new image surface that is efficient to draw on the
 	 * given @window.
 	 *
@@ -566,12 +606,13 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * Indicates that the backing store created by the most recent call to
-	 * gdk_window_begin_paint_region() should be copied onscreen and
+	 * Indicates that the backing store created by the most recent call
+	 * to gdk_window_begin_paint_region() should be copied onscreen and
 	 * deleted, leaving the next-most-recent backing store or no backing
 	 * store at all as the active paint region. See
-	 * gdk_window_begin_paint_region() for full details. It is an error to
-	 * call this function without a matching
+	 * gdk_window_begin_paint_region() for full details.
+	 *
+	 * It is an error to call this function without a matching
 	 * gdk_window_begin_paint_region() first.
 	 */
 	public void endPaint()
@@ -629,6 +670,8 @@ public class Window : ObjectG
 	 *
 	 * This function is not part of the GDK public API and is only
 	 * for use by GTK+.
+	 *
+	 * Deprecated: This symbol was never meant to be used outside of GTK+
 	 */
 	public void freezeToplevelUpdatesLibgtkOnly()
 	{
@@ -794,6 +837,9 @@ public class Window : ObjectG
 	 * Determines whether @window is composited.
 	 *
 	 * See gdk_window_set_composited().
+	 *
+	 * Deprecated: Compositing is an outdated technology that
+	 * only ever worked on X11.
 	 *
 	 * Return: %TRUE if the window is composited.
 	 *
@@ -1296,7 +1342,7 @@ public class Window : ObjectG
 	/**
 	 * Obtains the position of a window position in root
 	 * window coordinates. This is similar to
-	 * gdk_window_get_origin() but allows you go pass
+	 * gdk_window_get_origin() but allows you to pass
 	 * in any position in the window, not just the origin.
 	 *
 	 * Params:
@@ -1759,6 +1805,26 @@ public class Window : ObjectG
 	}
 
 	/**
+	 * If you call this during a paint (e.g. between gdk_window_begin_paint_region()
+	 * and gdk_window_end_paint() then GDK will mark the current clip region of the
+	 * window as being drawn. This is required when mixing GL rendering via
+	 * gdk_cairo_draw_from_gl() and cairo rendering, as otherwise GDK has no way
+	 * of knowing when something paints over the GL-drawn regions.
+	 *
+	 * This is typically called automatically by GTK+ and you don't need
+	 * to care about this.
+	 *
+	 * Params:
+	 *     cr = a #cairo_t
+	 *
+	 * Since: 3.16
+	 */
+	public void markPaintFromClip(Context cr)
+	{
+		gdk_window_mark_paint_from_clip(gdkWindow, (cr is null) ? null : cr.getContextStruct());
+	}
+
+	/**
 	 * Maximizes the window. If the window was already maximized, then
 	 * this function does nothing.
 	 *
@@ -2029,10 +2095,12 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * Sets the background color of @window. (However, when using GTK+,
-	 * set the background of a widget with gtk_widget_modify_bg() - if
-	 * you’re an application - or gtk_style_set_background() - if you're
-	 * implementing a custom widget.)
+	 * Sets the background color of @window.
+	 *
+	 * However, when using GTK+, influence the background of a widget
+	 * using a style class or CSS — if you’re an application — or with
+	 * gtk_style_context_set_background() — if you're implementing a
+	 * custom widget.
 	 *
 	 * See also gdk_window_set_background_pattern().
 	 *
@@ -2124,6 +2192,9 @@ public class Window : ObjectG
 	 * setting a window as composited is supported before
 	 * attempting to do so.
 	 *
+	 * Deprecated: Compositing is an outdated technology that
+	 * only ever worked on X11.
+	 *
 	 * Params:
 	 *     composited = %TRUE to set the window as composited
 	 *
@@ -2135,11 +2206,15 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * Sets the default mouse pointer for a #GdkWindow. Use gdk_cursor_new_for_display()
-	 * or gdk_cursor_new_from_pixbuf() to create the cursor. To make the cursor
-	 * invisible, use %GDK_BLANK_CURSOR. Passing %NULL for the @cursor argument
-	 * to gdk_window_set_cursor() means that @window will use the cursor of its
-	 * parent window. Most windows should use this default.
+	 * Sets the default mouse pointer for a #GdkWindow.
+	 *
+	 * Note that @cursor must be for the same display as @window.
+	 *
+	 * Use gdk_cursor_new_for_display() or gdk_cursor_new_from_pixbuf() to
+	 * create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
+	 * Passing %NULL for the @cursor argument to gdk_window_set_cursor() means
+	 * that @window will use the cursor of its parent window. Most windows
+	 * should use this default.
 	 *
 	 * Params:
 	 *     cursor = a cursor
@@ -2199,6 +2274,8 @@ public class Window : ObjectG
 	 * press events. The event mask is the bitwise OR of values from the
 	 * #GdkEventMask enumeration.
 	 *
+	 * See the [input handling overview][event-masks] for details.
+	 *
 	 * Params:
 	 *     device = #GdkDevice to enable events for.
 	 *     eventMask = event mask for @window
@@ -2236,6 +2313,8 @@ public class Window : ObjectG
 	 * including #GDK_BUTTON_PRESS_MASK means the window should report button
 	 * press events. The event mask is the bitwise OR of values from the
 	 * #GdkEventMask enumeration.
+	 *
+	 * See the [input handling overview][event-masks] for details.
 	 *
 	 * Params:
 	 *     eventMask = event mask for @window
@@ -2493,7 +2572,12 @@ public class Window : ObjectG
 	 *
 	 * For toplevel windows this depends on support from the windowing system
 	 * that may not always be there. For instance, On X11, this works only on
-	 * X screens with a compositing manager running.
+	 * X screens with a compositing manager running. On Wayland, there is no
+	 * per-window opacity value that the compositor would apply. Instead, use
+	 * `gdk_window_set_opaque_region (window, NULL)` to tell the compositor
+	 * that the entire window is (potentially) non-opaque, and draw your content
+	 * with alpha, or use gtk_widget_set_opacity() to set an overall opacity
+	 * for your widgets.
 	 *
 	 * For child windows this function only works for non-native windows.
 	 *
@@ -2671,15 +2755,18 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * Set the bit gravity of the given window to static, and flag it so
-	 * all children get static subwindow gravity. This is used if you are
-	 * implementing scary features that involve deep knowledge of the
-	 * windowing system. Don’t worry about it unless you have to.
+	 * Used to set the bit gravity of the given window to static, and flag
+	 * it so all children get static subwindow gravity. This is used if you
+	 * are implementing scary features that involve deep knowledge of the
+	 * windowing system. Don’t worry about it.
+	 *
+	 * Deprecated: static gravities haven't worked on anything but X11
+	 * for a long time.
 	 *
 	 * Params:
 	 *     useStatic = %TRUE to turn on static gravity
 	 *
-	 * Return: %TRUE if the server supports static gravity
+	 * Return: %FALSE
 	 */
 	public bool setStaticGravities(bool useStatic)
 	{
@@ -2878,6 +2965,8 @@ public class Window : ObjectG
 	 *
 	 * This function is not part of the GDK public API and is only
 	 * for use by GTK+.
+	 *
+	 * Deprecated: This symbol was never meant to be used outside of GTK+
 	 */
 	public void thawToplevelUpdatesLibgtkOnly()
 	{

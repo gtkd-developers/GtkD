@@ -134,7 +134,9 @@ public class Cancellable : ObjectG
 	 * it from a thread other than the one running the operation that was
 	 * passed the @cancellable.
 	 *
-	 * The convention within gio is that cancelling an asynchronous
+	 * If @cancellable is %NULL, this function returns immediately for convenience.
+	 *
+	 * The convention within GIO is that cancelling an asynchronous
 	 * operation causes it to complete asynchronously. That is, if you
 	 * cancel the operation from the same thread in which it is running,
 	 * then the operation's #GAsyncReadyCallback will not be invoked until
@@ -320,6 +322,13 @@ public class Cancellable : ObjectG
 	 *
 	 * If cancellable is currently in use by any cancellable operation
 	 * then the behavior of this function is undefined.
+	 *
+	 * Note that it is generally not a good idea to reuse an existing
+	 * cancellable for more operations after it has been cancelled once,
+	 * as this function might tempt you to do. The recommended practice
+	 * is to drop the reference to a cancellable after cancelling it,
+	 * and let it die with the outstanding async operations. You should
+	 * create a fresh cancellable for further async operations.
 	 */
 	public void reset()
 	{
@@ -356,6 +365,8 @@ public class Cancellable : ObjectG
 	 *
 	 * For convenience, you can call this with a %NULL #GCancellable,
 	 * in which case the source will never trigger.
+	 *
+	 * The new #GSource will hold a reference to the #GCancellable.
 	 *
 	 * Return: the new #GSource.
 	 *

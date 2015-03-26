@@ -59,9 +59,8 @@ public interface ComponentIF{
 	 * when this object receives focus events (in or out). If the handler is
 	 * already added it is not added again
 	 *
-	 * Deprecated: This method is deprecated since ATK version 2.9.4. If
-	 * you need to track when an object gains or lose the focus, use
-	 * state-changed:focused notification instead.
+	 * Deprecated: If you need to track when an object gains or
+	 * lose the focus, use state-changed:focused notification instead.
 	 *
 	 * Params:
 	 *     handler = The #AtkFocusHandler to be attached to @component
@@ -182,9 +181,8 @@ public interface ComponentIF{
 	 * functions to be executed when this object receives focus events
 	 * (in or out).
 	 *
-	 * Deprecated: This method is deprecated since ATK version 2.9.4. If
-	 * you need to track when an object gains or lose the focus, use
-	 * state-changed:focused notification instead.
+	 * Deprecated: If you need to track when an object gains or
+	 * lose the focus, use state-changed:focused notification instead.
 	 *
 	 * Params:
 	 *     handlerId = the handler id of the focus handler to be removed

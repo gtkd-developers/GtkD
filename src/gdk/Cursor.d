@@ -83,6 +83,8 @@ public class Cursor : ObjectG
 	 *
 	 * To make the cursor invisible, use %GDK_BLANK_CURSOR.
 	 *
+	 * Deprecated: Use gdk_cursor_new_for_display() instead.
+	 *
 	 * Params:
 	 *     cursorType = cursor to create
 	 *

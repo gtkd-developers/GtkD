@@ -90,6 +90,8 @@ public class HashTable
 	 * Params:
 	 *     key = a key to check
 	 *
+	 * Return: %TRUE if @key is in @hash_table, %FALSE otherwise.
+	 *
 	 * Since: 2.32
 	 */
 	public bool contains(void* key)
@@ -205,6 +207,10 @@ public class HashTable
 	 * Retrieves every key inside @hash_table. The returned data is valid
 	 * until changes to the hash release those keys.
 	 *
+	 * This iterates over every entry in the hash table to build its return value.
+	 * To iterate over the entries in a #GHashTable more efficiently, use a
+	 * #GHashTableIter.
+	 *
 	 * Return: a #GList containing all the keys inside the hash
 	 *     table. The content of the list is owned by the hash table and
 	 *     should not be modified or freed. Use g_list_free() when done
@@ -232,7 +238,11 @@ public class HashTable
 	 * %NULL was used as the value for a key.
 	 *
 	 * Note: in the common case of a string-keyed #GHashTable, the return
-	 * value of this function can be conveniently cast to (gchar **).
+	 * value of this function can be conveniently cast to (const gchar **).
+	 *
+	 * This iterates over every entry in the hash table to build its return value.
+	 * To iterate over the entries in a #GHashTable more efficiently, use a
+	 * #GHashTableIter.
 	 *
 	 * You should always free the return result with g_free().  In the
 	 * above-mentioned case of a string-keyed hash table, it may be
@@ -259,6 +269,10 @@ public class HashTable
 	/**
 	 * Retrieves every value inside @hash_table. The returned data
 	 * is valid until @hash_table is modified.
+	 *
+	 * This iterates over every entry in the hash table to build its return value.
+	 * To iterate over the entries in a #GHashTable more efficiently, use a
+	 * #GHashTableIter.
 	 *
 	 * Return: a #GList containing all the values inside the hash
 	 *     table. The content of the list is owned by the hash table and
@@ -379,6 +393,13 @@ public class HashTable
 	 * count of 1 and allows to specify functions to free the memory
 	 * allocated for the key and value that get called when removing the
 	 * entry from the #GHashTable.
+	 *
+	 * Since version 2.42 it is permissible for destroy notify functions to
+	 * recursively remove further items from the hash table. This is only
+	 * permissible if the application still holds a reference to the hash table.
+	 * This means that you may need to ensure that the hash table is empty by
+	 * calling g_hash_table_remove_all before releasing the last reference using
+	 * g_hash_table_unref().
 	 *
 	 * Params:
 	 *     hashFunc = a function to create a hash value from a key

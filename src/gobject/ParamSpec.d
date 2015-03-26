@@ -114,6 +114,15 @@ public class ParamSpec
 		return Str.toString(g_param_spec_get_blurb(gParamSpec));
 	}
 
+	/**
+	 * Gets the default value of @param as a pointer to a #GValue.
+	 *
+	 * The #GValue will remain value for the life of @param.
+	 *
+	 * Return: a pointer to a #GValue which must not be modified
+	 *
+	 * Since: 2.38
+	 */
 	public Value getDefaultValue()
 	{
 		auto p = g_param_spec_get_default_value(gParamSpec);

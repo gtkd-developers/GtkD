@@ -198,6 +198,16 @@ public class AppLaunchContext : ObjectG
 	int[string] connectedSignals;
 
 	void delegate(string, AppLaunchContext)[] onLaunchFailedListeners;
+	/**
+	 * The ::launch-failed signal is emitted when a #GAppInfo launch
+	 * fails. The startup notification id is provided, so that the launcher
+	 * can cancel the startup notification.
+	 *
+	 * Params:
+	 *     startupNotifyId = the startup notification id for the failed launch
+	 *
+	 * Since: 2.36
+	 */
 	void addOnLaunchFailed(void delegate(string, AppLaunchContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "launch-failed" !in connectedSignals )
@@ -213,15 +223,28 @@ public class AppLaunchContext : ObjectG
 		}
 		onLaunchFailedListeners ~= dlg;
 	}
-	extern(C) static void callBackLaunchFailed(GAppLaunchContext* applaunchcontextStruct, char* object, AppLaunchContext _applaunchcontext)
+	extern(C) static void callBackLaunchFailed(GAppLaunchContext* applaunchcontextStruct, char* startupNotifyId, AppLaunchContext _applaunchcontext)
 	{
 		foreach ( void delegate(string, AppLaunchContext) dlg; _applaunchcontext.onLaunchFailedListeners )
 		{
-			dlg(Str.toString(object), _applaunchcontext);
+			dlg(Str.toString(startupNotifyId), _applaunchcontext);
 		}
 	}
 
 	void delegate(AppInfoIF, Variant, AppLaunchContext)[] onLaunchedListeners;
+	/**
+	 * The ::launched signal is emitted when a #GAppInfo is successfully
+	 * launched. The @platform_data is an GVariant dictionary mapping
+	 * strings to variants (ie a{sv}), which contains additional,
+	 * platform-specific data about this launch. On UNIX, at least the
+	 * "pid" and "startup-notification-id" keys will be present.
+	 *
+	 * Params:
+	 *     info = the #GAppInfo that was just launched
+	 *     platformData = additional platform-specific data for this launch
+	 *
+	 * Since: 2.36
+	 */
 	void addOnLaunched(void delegate(AppInfoIF, Variant, AppLaunchContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "launched" !in connectedSignals )
@@ -237,11 +260,11 @@ public class AppLaunchContext : ObjectG
 		}
 		onLaunchedListeners ~= dlg;
 	}
-	extern(C) static void callBackLaunched(GAppLaunchContext* applaunchcontextStruct, GAppInfo* object, GVariant* p0, AppLaunchContext _applaunchcontext)
+	extern(C) static void callBackLaunched(GAppLaunchContext* applaunchcontextStruct, GAppInfo* info, GVariant* platformData, AppLaunchContext _applaunchcontext)
 	{
 		foreach ( void delegate(AppInfoIF, Variant, AppLaunchContext) dlg; _applaunchcontext.onLaunchedListeners )
 		{
-			dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(object), new Variant(p0), _applaunchcontext);
+			dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(info), new Variant(platformData), _applaunchcontext);
 		}
 	}
 }

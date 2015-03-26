@@ -1905,6 +1905,7 @@ move: strtod Str
 move: strup Str
 move: strv_get_type Str
 move: strv_length Str
+move: strv_contains Str
 move: vasprintf Str
 move: vfprintf Str
 move: vprintf Str

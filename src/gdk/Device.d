@@ -100,6 +100,9 @@ public class Device : ObjectG
 	 * Determines information about the current keyboard grab.
 	 * This is not public API and must not be used by applications.
 	 *
+	 * Deprecated: The symbol was never meant to be used outside
+	 * of GTK+
+	 *
 	 * Params:
 	 *     display = the display for which to get the grab information
 	 *     device = device to get the grab information from
@@ -236,6 +239,7 @@ public class Device : ObjectG
 
 	/**
 	 * Determines whether the pointer follows device motion.
+	 * This is not meaningful for keyboard devices, which don't have a pointer.
 	 *
 	 * Return: %TRUE if the pointer follows device motion
 	 *
@@ -301,7 +305,7 @@ public class Device : ObjectG
 	}
 
 	/**
-	 * Gets information about which window the given pointer device is in, based on
+	 * Gets information about which window the given pointer device is in, based on events
 	 * that have been received so far from the display server. If another application
 	 * has a pointer grab, or this application has a grab with owner_events = %FALSE,
 	 * %NULL may be returned even if the pointer is physically over one of this
@@ -418,6 +422,20 @@ public class Device : ObjectG
 	}
 
 	/**
+	 * Returns the product ID of this device, or %NULL if this information couldn't
+	 * be obtained. This ID is retrieved from the device, and is thus constant for
+	 * it. See gdk_device_get_vendor_id() for more information.
+	 *
+	 * Return: the product ID, or %NULL
+	 *
+	 * Since: 3.16
+	 */
+	public string getProductId()
+	{
+		return Str.toString(gdk_device_get_product_id(gdkDevice));
+	}
+
+	/**
 	 * Determines the type of the device.
 	 *
 	 * Return: a #GdkInputSource
@@ -444,6 +462,43 @@ public class Device : ObjectG
 	public void getState(Window window, double[] axes, out GdkModifierType mask)
 	{
 		gdk_device_get_state(gdkDevice, (window is null) ? null : window.getWindowStruct(), axes.ptr, &mask);
+	}
+
+	/**
+	 * Returns the vendor ID of this device, or %NULL if this information couldn't
+	 * be obtained. This ID is retrieved from the device, and is thus constant for
+	 * it.
+	 *
+	 * This function, together with gdk_device_get_product_id(), can be used to eg.
+	 * compose #GSettings paths to store settings for this device.
+	 *
+	 * |[<!-- language="C" -->
+	 * static GSettings *
+	 * get_device_settings (GdkDevice *device)
+	 * {
+	 * const gchar *vendor, *product;
+	 * GSettings *settings;
+	 * GdkDevice *device;
+	 * gchar *path;
+	 *
+	 * vendor = gdk_device_get_vendor_id (device);
+	 * product = gdk_device_get_product_id (device);
+	 *
+	 * path = g_strdup_printf ("/org/example/app/devices/%s:%s/", vendor, product);
+	 * settings = g_settings_new_with_path (DEVICE_SCHEMA, path);
+	 * g_free (path);
+	 *
+	 * return settings;
+	 * }
+	 * ]|
+	 *
+	 * Return: the vendor ID, or %NULL
+	 *
+	 * Since: 3.16
+	 */
+	public string getVendorId()
+	{
+		return Str.toString(gdk_device_get_vendor_id(gdkDevice));
 	}
 
 	/**
@@ -514,6 +569,8 @@ public class Device : ObjectG
 	 * this application until the device is ungrabbed with gdk_device_ungrab(),
 	 * or the window becomes unviewable. This overrides any previous grab on the device
 	 * by this client.
+	 *
+	 * Note that @device and @window need to be on the same display.
 	 *
 	 * Device grabs are used for operations which need complete control over the
 	 * given device events (either pointer or keyboard). For example in GTK+ this

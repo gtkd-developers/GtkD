@@ -368,13 +368,20 @@ public struct CharacterSet
 	 * freed.
 	 *
 	 * Params:
-	 *     charset = return location for character set name
+	 *     charset = return location for character set
+	 *         name, or %NULL.
 	 *
 	 * Return: %TRUE if the returned charset is UTF-8
 	 */
-	public static bool getCharset(string[] charset)
+	public static bool getCharset(out string charset)
 	{
-		return g_get_charset(Str.toStringzArray(charset)) != 0;
+		char* outcharset = null;
+		
+		auto p = g_get_charset(&outcharset) != 0;
+		
+		charset = Str.toString(outcharset);
+		
+		return p;
 	}
 
 	/**

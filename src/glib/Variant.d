@@ -809,10 +809,10 @@ public class Variant
 	/**
 	 * Creates a string #GVariant with the contents of @string.
 	 *
-	 * @string must be valid utf8.
+	 * @string must be valid UTF-8.
 	 *
 	 * Params:
-	 *     str = a normal utf8 nul-terminated string
+	 *     str = a normal UTF-8 nul-terminated string
 	 *
 	 * Return: a floating reference to a new string #GVariant instance
 	 *
@@ -1242,14 +1242,14 @@ public class Variant
 	 * Similar to g_variant_get_string() except that instead of returning
 	 * a constant string, the string is duplicated.
 	 *
-	 * The string will always be utf8 encoded.
+	 * The string will always be UTF-8 encoded.
 	 *
 	 * The return value must be freed using g_free().
 	 *
 	 * Params:
 	 *     length = a pointer to a #gsize, to store the length
 	 *
-	 * Return: a newly allocated string, utf8 encoded
+	 * Return: a newly allocated string, UTF-8 encoded
 	 *
 	 * Since: 2.24
 	 */
@@ -1707,7 +1707,7 @@ public class Variant
 	 * type.  This includes the types %G_VARIANT_TYPE_STRING,
 	 * %G_VARIANT_TYPE_OBJECT_PATH and %G_VARIANT_TYPE_SIGNATURE.
 	 *
-	 * The string will always be utf8 encoded.
+	 * The string will always be UTF-8 encoded.
 	 *
 	 * If @length is non-%NULL then the length of the string (in bytes) is
 	 * returned there.  For trusted values, this information is already
@@ -1722,7 +1722,7 @@ public class Variant
 	 *     length = a pointer to a #gsize,
 	 *         to store the length
 	 *
-	 * Return: the constant string, utf8 encoded
+	 * Return: the constant string, UTF-8 encoded
 	 *
 	 * Since: 2.24
 	 */

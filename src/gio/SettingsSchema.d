@@ -239,6 +239,21 @@ public class SettingsSchema
 	}
 
 	/**
+	 * Gets the list of children in @schema.
+	 *
+	 * You should free the return value with g_strfreev() when you are done
+	 * with it.
+	 *
+	 * Return: a list of the children on @settings
+	 *
+	 * Since: 2.44
+	 */
+	public string[] listChildren()
+	{
+		return Str.toStringArray(g_settings_schema_list_children(gSettingsSchema));
+	}
+
+	/**
 	 * Increase the reference count of @schema, returning a new reference.
 	 *
 	 * Return: a new reference to @schema

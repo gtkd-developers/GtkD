@@ -195,6 +195,9 @@ public class Socket : ObjectG, InitableIF
 	 * will be set to non-blocking mode, independent on the blocking
 	 * mode of the #GSocket.
 	 *
+	 * On success, the returned #GSocket takes ownership of @fd. On failure, the
+	 * caller must close @fd themselves.
+	 *
 	 * Params:
 	 *     fd = a native socket file descriptor.
 	 *
@@ -1396,6 +1399,69 @@ public class Socket : ObjectG, InitableIF
 		GError* err = null;
 		
 		auto p = g_socket_send_message(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Send multiple data messages from @socket in one go.  This is the most
+	 * complicated and fully-featured version of this call. For easier use, see
+	 * g_socket_send(), g_socket_send_to(), and g_socket_send_message().
+	 *
+	 * @messages must point to an array of #GOutputMessage structs and
+	 * @num_messages must be the length of this array. Each #GOutputMessage
+	 * contains an address to send the data to, and a pointer to an array of
+	 * #GOutputVector structs to describe the buffers that the data to be sent
+	 * for each message will be gathered from. Using multiple #GOutputVectors is
+	 * more memory-efficient than manually copying data from multiple sources
+	 * into a single buffer, and more network-efficient than making multiple
+	 * calls to g_socket_send(). Sending multiple messages in one go avoids the
+	 * overhead of making a lot of syscalls in scenarios where a lot of data
+	 * packets need to be sent (e.g. high-bandwidth video streaming over RTP/UDP),
+	 * or where the same data needs to be sent to multiple recipients.
+	 *
+	 * @flags modify how the message is sent. The commonly available arguments
+	 * for this are available in the #GSocketMsgFlags enum, but the
+	 * values there are the same as the system values, and the flags
+	 * are passed in as-is, so you can pass in system-specific flags too.
+	 *
+	 * If the socket is in blocking mode the call will block until there is
+	 * space for all the data in the socket queue. If there is no space available
+	 * and the socket is in non-blocking mode a %G_IO_ERROR_WOULD_BLOCK error
+	 * will be returned if no data was written at all, otherwise the number of
+	 * messages sent will be returned. To be notified when space is available,
+	 * wait for the %G_IO_OUT condition. Note though that you may still receive
+	 * %G_IO_ERROR_WOULD_BLOCK from g_socket_send() even if you were previously
+	 * notified of a %G_IO_OUT condition. (On Windows in particular, this is
+	 * very common due to the way the underlying APIs work.)
+	 *
+	 * On error -1 is returned and @error is set accordingly.
+	 *
+	 * Params:
+	 *     messages = an array of #GOutputMessage structs
+	 *     numMessages = the number of elements in @messages
+	 *     flags = an int containing #GSocketMsgFlags flags
+	 *     cancellable = a %GCancellable or %NULL
+	 *
+	 * Return: number of messages sent, or -1 on error. Note that the number of
+	 *     messages sent may be smaller than @num_messages if the socket is
+	 *     non-blocking or if @num_messages was larger than UIO_MAXIOV (1024),
+	 *     in which case the caller may re-try to send the remaining messages.
+	 *
+	 * Since: 2.44
+	 *
+	 * Throws: GException on failure.
+	 */
+	public int sendMessages(GOutputMessage[] messages, int flags, Cancellable cancellable)
+	{
+		GError* err = null;
+		
+		auto p = g_socket_send_messages(gSocket, messages.ptr, cast(uint)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{

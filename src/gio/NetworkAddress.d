@@ -91,6 +91,12 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * Creates a new #GSocketConnectable for connecting to the given
 	 * @hostname and @port.
 	 *
+	 * Note that depending on the configuration of the machine, a
+	 * @hostname of `localhost` may refer to the IPv4 loopback address
+	 * only, or to both IPv4 and IPv6; use
+	 * g_network_address_new_loopback() to create a #GNetworkAddress that
+	 * is guaranteed to resolve to both addresses.
+	 *
 	 * Params:
 	 *     hostname = the hostname
 	 *     port = the port
@@ -108,6 +114,41 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GNetworkAddress*) p, true);
+	}
+
+	/**
+	 * Creates a new #GSocketConnectable for connecting to the local host
+	 * over a loopback connection to the given @port. This is intended for
+	 * use in connecting to local services which may be running on IPv4 or
+	 * IPv6.
+	 *
+	 * The connectable will return IPv4 and IPv6 loopback addresses,
+	 * regardless of how the host resolves `localhost`. By contrast,
+	 * g_network_address_new() will often only return an IPv4 address when
+	 * resolving `localhost`, and an IPv6 address for `localhost6`.
+	 *
+	 * g_network_address_get_hostname() will always return `localhost` for
+	 * #GNetworkAddresses created with this constructor.
+	 *
+	 * Params:
+	 *     port = the port
+	 *
+	 * Return: the new #GNetworkAddress
+	 *
+	 * Since: 2.44
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ushort port)
+	{
+		auto p = g_network_address_new_loopback(port);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_loopback");
 		}
 		
 		this(cast(GNetworkAddress*) p, true);

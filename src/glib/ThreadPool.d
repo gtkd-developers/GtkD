@@ -292,7 +292,7 @@ public class ThreadPool
 	 * @error can be %NULL to ignore errors, or non-%NULL to report
 	 * errors. An error can only occur when @exclusive is set to %TRUE
 	 * and not all @max_threads threads could be created.
-	 * See #GThreadError for possible errors that may occurr.
+	 * See #GThreadError for possible errors that may occur.
 	 * Note, even in case of error a valid #GThreadPool is returned.
 	 *
 	 * Params:

@@ -52,7 +52,6 @@ shared static this()
 	Linker.link(gdk_pixbuf_get_file_info_async, "gdk_pixbuf_get_file_info_async", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info_finish, "gdk_pixbuf_get_file_info_finish", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_formats, "gdk_pixbuf_get_formats", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_pixbuf_gettext, "gdk_pixbuf_gettext", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_stream_async, "gdk_pixbuf_new_from_stream_async", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_stream_at_scale_async, "gdk_pixbuf_new_from_stream_at_scale_async", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_save_to_stream_finish, "gdk_pixbuf_save_to_stream_finish", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -72,6 +71,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_get_height, "gdk_pixbuf_get_height", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_n_channels, "gdk_pixbuf_get_n_channels", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_option, "gdk_pixbuf_get_option", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_get_options, "gdk_pixbuf_get_options", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_pixels, "gdk_pixbuf_get_pixels", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_pixels_with_length, "gdk_pixbuf_get_pixels_with_length", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_rowstride, "gdk_pixbuf_get_rowstride", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -191,7 +191,6 @@ __gshared extern(C)
 	void function(const(char)* filename, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_get_file_info_async;
 	GdkPixbufFormat* function(GAsyncResult* asyncResult, int* width, int* height, GError** err) c_gdk_pixbuf_get_file_info_finish;
 	GSList* function() c_gdk_pixbuf_get_formats;
-	const(char)* function(const(char)* msgid) c_gdk_pixbuf_gettext;
 	void function(GInputStream* stream, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_new_from_stream_async;
 	void function(GInputStream* stream, int width, int height, int preserveAspectRatio, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_new_from_stream_at_scale_async;
 	int function(GAsyncResult* asyncResult, GError** err) c_gdk_pixbuf_save_to_stream_finish;
@@ -211,6 +210,7 @@ __gshared extern(C)
 	int function(GdkPixbuf* pixbuf) c_gdk_pixbuf_get_height;
 	int function(GdkPixbuf* pixbuf) c_gdk_pixbuf_get_n_channels;
 	const(char)* function(GdkPixbuf* pixbuf, const(char)* key) c_gdk_pixbuf_get_option;
+	GHashTable* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_get_options;
 	char* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_get_pixels;
 	char* function(GdkPixbuf* pixbuf, uint* length) c_gdk_pixbuf_get_pixels_with_length;
 	int function(GdkPixbuf* pixbuf) c_gdk_pixbuf_get_rowstride;
@@ -328,7 +328,6 @@ alias c_gdk_pixbuf_get_file_info gdk_pixbuf_get_file_info;
 alias c_gdk_pixbuf_get_file_info_async gdk_pixbuf_get_file_info_async;
 alias c_gdk_pixbuf_get_file_info_finish gdk_pixbuf_get_file_info_finish;
 alias c_gdk_pixbuf_get_formats gdk_pixbuf_get_formats;
-alias c_gdk_pixbuf_gettext gdk_pixbuf_gettext;
 alias c_gdk_pixbuf_new_from_stream_async gdk_pixbuf_new_from_stream_async;
 alias c_gdk_pixbuf_new_from_stream_at_scale_async gdk_pixbuf_new_from_stream_at_scale_async;
 alias c_gdk_pixbuf_save_to_stream_finish gdk_pixbuf_save_to_stream_finish;
@@ -348,6 +347,7 @@ alias c_gdk_pixbuf_get_has_alpha gdk_pixbuf_get_has_alpha;
 alias c_gdk_pixbuf_get_height gdk_pixbuf_get_height;
 alias c_gdk_pixbuf_get_n_channels gdk_pixbuf_get_n_channels;
 alias c_gdk_pixbuf_get_option gdk_pixbuf_get_option;
+alias c_gdk_pixbuf_get_options gdk_pixbuf_get_options;
 alias c_gdk_pixbuf_get_pixels gdk_pixbuf_get_pixels;
 alias c_gdk_pixbuf_get_pixels_with_length gdk_pixbuf_get_pixels_with_length;
 alias c_gdk_pixbuf_get_rowstride gdk_pixbuf_get_rowstride;

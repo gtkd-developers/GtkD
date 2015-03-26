@@ -142,6 +142,38 @@ public class PaperSize
 	}
 
 	/**
+	 * Creates a new #GtkPaperSize object by using
+	 * IPP information.
+	 *
+	 * If @ipp_name is not a recognized paper name,
+	 * @width and @height are used to
+	 * construct a custom #GtkPaperSize object.
+	 *
+	 * Params:
+	 *     ippName = an IPP paper name
+	 *     width = the paper width, in points
+	 *     height = the paper height in points
+	 *
+	 * Return: a new #GtkPaperSize, use gtk_paper_size_free()
+	 *     to free it
+	 *
+	 * Since: 3.16
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string ippName, double width, double height)
+	{
+		auto p = gtk_paper_size_new_from_ipp(Str.toStringz(ippName), width, height);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_ipp");
+		}
+		
+		this(cast(GtkPaperSize*) p);
+	}
+
+	/**
 	 * Reads a paper size from the group @group_name in the key file
 	 * @key_file.
 	 *
@@ -392,6 +424,16 @@ public class PaperSize
 	public bool isEqual(PaperSize size2)
 	{
 		return gtk_paper_size_is_equal(gtkPaperSize, (size2 is null) ? null : size2.getPaperSizeStruct()) != 0;
+	}
+
+	/**
+	 * Returns %TRUE if @size is an IPP standard paper size.
+	 *
+	 * Return: whether @size is not an IPP custom paper size.
+	 */
+	public bool isIpp()
+	{
+		return gtk_paper_size_is_ipp(gtkPaperSize) != 0;
 	}
 
 	/**

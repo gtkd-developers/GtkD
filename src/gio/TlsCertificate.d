@@ -85,8 +85,17 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
-	 * Creates a #GTlsCertificate from the PEM-encoded data in @file. If
-	 * @file cannot be read or parsed, the function will return %NULL and
+	 * Creates a #GTlsCertificate from the PEM-encoded data in @file. The
+	 * returned certificate will be the first certificate found in @file. As
+	 * of GLib 2.44, if @file contains more certificates it will try to load
+	 * a certificate chain. All certificates will be verified in the order
+	 * found (top-level certificate should be the last one in the file) and
+	 * the #GTlsCertificate:issuer property of each certificate will be set
+	 * accordingly if the verification succeeds. If any certificate in the
+	 * chain cannot be verified, the first certificate in the file will
+	 * still be returned.
+	 *
+	 * If @file cannot be read or parsed, the function will return %NULL and
 	 * set @error. Otherwise, this behaves like
 	 * g_tls_certificate_new_from_pem().
 	 *
@@ -121,12 +130,23 @@ public class TlsCertificate : ObjectG
 
 	/**
 	 * Creates a #GTlsCertificate from the PEM-encoded data in @cert_file
-	 * and @key_file. If either file cannot be read or parsed, the
-	 * function will return %NULL and set @error. Otherwise, this behaves
-	 * like g_tls_certificate_new_from_pem().
+	 * and @key_file. The returned certificate will be the first certificate
+	 * found in @cert_file. As of GLib 2.44, if @cert_file contains more
+	 * certificates it will try to load a certificate chain. All
+	 * certificates will be verified in the order found (top-level
+	 * certificate should be the last one in the file) and the
+	 * #GTlsCertificate:issuer property of each certificate will be set
+	 * accordingly if the verification succeeds. If any certificate in the
+	 * chain cannot be verified, the first certificate in the file will
+	 * still be returned.
+	 *
+	 * If either file cannot be read or parsed, the function will return
+	 * %NULL and set @error. Otherwise, this behaves like
+	 * g_tls_certificate_new_from_pem().
 	 *
 	 * Params:
-	 *     certFile = file containing a PEM-encoded certificate to import
+	 *     certFile = file containing one or more PEM-encoded certificates to
+	 *         import
 	 *     keyFile = file containing a PEM-encoded private key to import
 	 *
 	 * Return: the new certificate, or %NULL on error
@@ -156,14 +176,20 @@ public class TlsCertificate : ObjectG
 	}
 
 	/**
-	 * Creates a new #GTlsCertificate from the PEM-encoded data in @data.
-	 * If @data includes both a certificate and a private key, then the
+	 * Creates a #GTlsCertificate from the PEM-encoded data in @data. If
+	 * @data includes both a certificate and a private key, then the
 	 * returned certificate will include the private key data as well. (See
 	 * the #GTlsCertificate:private-key-pem property for information about
 	 * supported formats.)
 	 *
-	 * If @data includes multiple certificates, only the first one will be
-	 * parsed.
+	 * The returned certificate will be the first certificate found in
+	 * @data. As of GLib 2.44, if @data contains more certificates it will
+	 * try to load a certificate chain. All certificates will be verified in
+	 * the order found (top-level certificate should be the last one in the
+	 * file) and the #GTlsCertificate:issuer property of each certificate
+	 * will be set accordingly if the verification succeeds. If any
+	 * certificate in the chain cannot be verified, the first certificate in
+	 * the file will still be returned.
 	 *
 	 * Params:
 	 *     data = PEM-encoded certificate data

@@ -437,6 +437,25 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	}
 
 	/**
+	 * Marks @application as busy (see g_application_mark_busy()) while
+	 * @property on @object is %TRUE.
+	 *
+	 * The binding holds a reference to @application while it is active, but
+	 * not to @object. Instead, the binding is destroyed when @object is
+	 * finalized.
+	 *
+	 * Params:
+	 *     object = a #GObject
+	 *     property = the name of a boolean property of @object
+	 *
+	 * Since: 2.44
+	 */
+	public void bindBusyProperty(ObjectG object, string property)
+	{
+		g_application_bind_busy_property(gApplication, (object is null) ? null : object.getObjectGStruct(), Str.toStringz(property));
+	}
+
+	/**
 	 * Gets the unique identifier for @application.
 	 *
 	 * Return: the identifier for @application, owned by @application
@@ -531,6 +550,19 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public uint getInactivityTimeout()
 	{
 		return g_application_get_inactivity_timeout(gApplication);
+	}
+
+	/**
+	 * Gets the application's current busy state, as set through
+	 * g_application_mark_busy() or g_application_bind_busy_property().
+	 *
+	 * Return: %TRUE if @application is currenty marked as busy
+	 *
+	 * Since: 2.44
+	 */
+	public bool getIsBusy()
+	{
+		return g_application_get_is_busy(gApplication) != 0;
 	}
 
 	/**
@@ -791,11 +823,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * use.
 	 *
 	 * This function sets the prgname (g_set_prgname()), if not already set,
-	 * to the basename of argv[0].  Since 2.38, if %G_APPLICATION_IS_SERVICE
-	 * is specified, the prgname is set to the application ID.  The main
-	 * impact of this is is that the wmclass of windows created by Gtk+ will
-	 * be set accordingly, which helps the window manager determine which
-	 * application is showing the window.
+	 * to the basename of argv[0].
 	 *
 	 * Since 2.40, applications that are not explicitly flagged as services
 	 * or launchers (ie: neither %G_APPLICATION_IS_SERVICE or
@@ -996,6 +1024,22 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public void setResourceBasePath(string resourcePath)
 	{
 		g_application_set_resource_base_path(gApplication, Str.toStringz(resourcePath));
+	}
+
+	/**
+	 * Destroys a binding between @property and the busy state of
+	 * @application that was previously created with
+	 * g_application_bind_busy_property().
+	 *
+	 * Params:
+	 *     object = a #GObject
+	 *     property = the name of a boolean property of @object
+	 *
+	 * Since: 2.44
+	 */
+	public void unbindBusyProperty(ObjectG object, string property)
+	{
+		g_application_unbind_busy_property(gApplication, (object is null) ? null : object.getObjectGStruct(), Str.toStringz(property));
 	}
 
 	/**

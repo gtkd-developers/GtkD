@@ -171,12 +171,6 @@ struct GdkGLConfigClass
 	GObjectClass parentClass;
 }
 
-struct GdkGLContext
-{
-	GObject parentInstance;
-	GdkGLContextImpl* impl;
-}
-
 struct GdkGLContextClass
 {
 	GObjectClass parentClass;

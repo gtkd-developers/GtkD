@@ -5306,6 +5306,7 @@ move: bindings_activate_event BindingSet
 
 move: alternative_dialog_button_order Dialog
 
+move: drag_cancel DragAndDrop
 move: drag_finish DragAndDrop
 move: drag_get_source_widget DragAndDrop
 move: drag_set_icon_default DragAndDrop

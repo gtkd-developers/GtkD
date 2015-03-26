@@ -518,6 +518,7 @@ move: text_property_to_utf8_list_for_display Atom
 move: utf8_to_string_target Atom
 
 move: cairo_create Cairo create_context
+move: cairo_draw_from_gl Cairo draw_from_gl
 move: cairo_get_clip_rectangle Cairo get_clip_rectangle
 move: cairo_rectangle Cairo rectangle
 move: cairo_region Cairo region

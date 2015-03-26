@@ -36,8 +36,8 @@ public  import gtkc.gtktypes;
 
 
 /**
- * #GtkScrolledWindow is a #GtkBin subclass: it’s a container
- * the accepts a single child widget. #GtkScrolledWindow adds scrollbars
+ * GtkScrolledWindow is a #GtkBin subclass: it’s a container
+ * the accepts a single child widget. GtkScrolledWindow adds scrollbars
  * to the child widget and optionally draws a beveled frame around the
  * child widget.
  * 
@@ -52,15 +52,15 @@ public  import gtkc.gtktypes;
  * to scroll child widgets such as #GtkGrid, #GtkBox, and so on.
  * 
  * If a widget has native scrolling abilities, it can be added to the
- * #GtkScrolledWindow with gtk_container_add(). If a widget does not, you
+ * GtkScrolledWindow with gtk_container_add(). If a widget does not, you
  * must first add the widget to a #GtkViewport, then add the #GtkViewport
  * to the scrolled window. gtk_container_add() will do this for you for
  * widgets that don’t implement #GtkScrollable natively, so you can
  * ignore the presence of the viewport.
  * 
- * The position of the scrollbars is controlled by the scroll
- * adjustments. See #GtkAdjustment for the fields in an adjustment - for
- * #GtkScrollbar, used by #GtkScrolledWindow, the “value” field
+ * The position of the scrollbars is controlled by the scroll adjustments.
+ * See #GtkAdjustment for the fields in an adjustment — for
+ * #GtkScrollbar, used by GtkScrolledWindow, the “value” field
  * represents the position of the scrollbar, which must be between the
  * “lower” field and “upper - page_size.” The “page_size” field
  * represents the size of the visible scrollable area. The
@@ -68,9 +68,26 @@ public  import gtkc.gtktypes;
  * asks to step down (using the small stepper arrows) or page down (using
  * for example the PageDown key).
  * 
- * If a #GtkScrolledWindow doesn’t behave quite as you would like, or
+ * If a GtkScrolledWindow doesn’t behave quite as you would like, or
  * doesn’t have exactly the right layout, it’s very possible to set up
  * your own scrolling with #GtkScrollbar and for example a #GtkGrid.
+ * 
+ * # Touch support
+ * 
+ * GtkScrolledWindow has built-in support for touch devices. When a
+ * touchscreen is used, swiping will move the scrolled window, and will
+ * expose 'kinetic' behavior. This can be turned off with the
+ * #GtkScrolledWindow:kinetic-scrolling property if it is undesired.
+ * 
+ * GtkScrolledWindow also displays visual 'overshoot' indication when
+ * the content is pulled beyond the end, and this situation can be
+ * captured with the #GtkScrolledWindow::edge-overshot signal.
+ * 
+ * If no mouse device is present, the scrollbars will overlayed as
+ * narrow, auto-hiding indicators over the content. If traditional
+ * scrollbars are desired although no mouse is present, this behaviour
+ * can be turned off with the #GtkScrolledWindow:overlay-scrolling
+ * property.
  */
 public class ScrolledWindow : Bin
 {
@@ -183,7 +200,7 @@ public class ScrolledWindow : Bin
 	 * A widget supports scrolling natively if it implements the
 	 * #GtkScrollable interface.
 	 *
-	 * Deprecated: gtk_container_add() will now automatically add
+	 * Deprecated: gtk_container_add() will automatically add
 	 * a #GtkViewport if the child doesn’t implement #GtkScrollable.
 	 *
 	 * Params:
@@ -282,6 +299,18 @@ public class ScrolledWindow : Bin
 	}
 
 	/**
+	 * Returns whether overlay scrolling is enabled for this scrolled window.
+	 *
+	 * Return: %TRUE if overlay scrolling is enabled
+	 *
+	 * Since: 3.16
+	 */
+	public bool getOverlayScrolling()
+	{
+		return gtk_scrolled_window_get_overlay_scrolling(gtkScrolledWindow) != 0;
+	}
+
+	/**
 	 * Gets the placement of the contents with respect to the scrollbars
 	 * for the scrolled window. See gtk_scrolled_window_set_placement().
 	 *
@@ -301,9 +330,9 @@ public class ScrolledWindow : Bin
 	 *
 	 * Params:
 	 *     hscrollbarPolicy = location to store the policy
-	 *         for the horizontal scrollbar, or %NULL.
+	 *         for the horizontal scrollbar, or %NULL
 	 *     vscrollbarPolicy = location to store the policy
-	 *         for the vertical scrollbar, or %NULL.
+	 *         for the vertical scrollbar, or %NULL
 	 */
 	public void getPolicy(out GtkPolicyType hscrollbarPolicy, out GtkPolicyType vscrollbarPolicy)
 	{
@@ -438,6 +467,19 @@ public class ScrolledWindow : Bin
 	}
 
 	/**
+	 * Enables or disables overlay scrolling for this scrolled window.
+	 *
+	 * Params:
+	 *     overlayScrolling = whether to enable overlay scrolling
+	 *
+	 * Since: 3.16
+	 */
+	public void setOverlayScrolling(bool overlayScrolling)
+	{
+		gtk_scrolled_window_set_overlay_scrolling(gtkScrolledWindow, overlayScrolling);
+	}
+
+	/**
 	 * Sets the placement of the contents with respect to the scrollbars
 	 * for the scrolled window.
 	 *
@@ -465,7 +507,7 @@ public class ScrolledWindow : Bin
 	 * scrollbar is always present; if %GTK_POLICY_NEVER, the scrollbar is
 	 * never present; if %GTK_POLICY_AUTOMATIC, the scrollbar is present only
 	 * if needed (that is, if the slider part of the bar would be smaller
-	 * than the trough - the display is larger than the page size).
+	 * than the trough — the display is larger than the page size).
 	 *
 	 * Params:
 	 *     hscrollbarPolicy = policy for horizontal bar
@@ -502,7 +544,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Unsets the placement of the contents with respect to the scrollbars
 	 * for the scrolled window. If no window placement is set for a scrolled
-	 * window, it defaults to GTK_CORNER_TOP_LEFT.
+	 * window, it defaults to %GTK_CORNER_TOP_LEFT.
 	 *
 	 * See also gtk_scrolled_window_set_placement() and
 	 * gtk_scrolled_window_get_placement().
@@ -516,14 +558,94 @@ public class ScrolledWindow : Bin
 
 	int[string] connectedSignals;
 
+	void delegate(GtkPositionType, ScrolledWindow)[] onEdgeOvershotListeners;
+	/**
+	 * The ::edge-overshot signal is emitted whenever user initiated scrolling
+	 * makes the scrolledwindow firmly surpass (ie. with some edge resistance)
+	 * the lower or upper limits defined by the adjustment in that orientation.
+	 *
+	 * A similar behavior without edge resistance is provided by the
+	 * #GtkScrolledWindow::edge-reached signal.
+	 *
+	 * Note: The @pos argument is LTR/RTL aware, so callers should be aware too
+	 * if intending to provide behavior on horizontal edges.
+	 *
+	 * Params:
+	 *     pos = edge side that was hit
+	 *
+	 * Since: 3.16
+	 */
+	void addOnEdgeOvershot(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "edge-overshot" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"edge-overshot",
+				cast(GCallback)&callBackEdgeOvershot,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["edge-overshot"] = 1;
+		}
+		onEdgeOvershotListeners ~= dlg;
+	}
+	extern(C) static void callBackEdgeOvershot(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos, ScrolledWindow _scrolledwindow)
+	{
+		foreach ( void delegate(GtkPositionType, ScrolledWindow) dlg; _scrolledwindow.onEdgeOvershotListeners )
+		{
+			dlg(pos, _scrolledwindow);
+		}
+	}
+
+	void delegate(GtkPositionType, ScrolledWindow)[] onEdgeReachedListeners;
+	/**
+	 * The ::edge-reached signal is emitted whenever user-initiated scrolling
+	 * makes the scrolledwindow exactly reaches the lower or upper limits
+	 * defined by the adjustment in that orientation.
+	 *
+	 * A similar behavior with edge resistance is provided by the
+	 * #GtkScrolledWindow::edge-overshot signal.
+	 *
+	 * Note: The @pos argument is LTR/RTL aware, so callers should be aware too
+	 * if intending to provide behavior on horizontal edges.
+	 *
+	 * Params:
+	 *     pos = edge side that was reached
+	 *
+	 * Since: 3.16
+	 */
+	void addOnEdgeReached(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "edge-reached" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"edge-reached",
+				cast(GCallback)&callBackEdgeReached,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["edge-reached"] = 1;
+		}
+		onEdgeReachedListeners ~= dlg;
+	}
+	extern(C) static void callBackEdgeReached(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos, ScrolledWindow _scrolledwindow)
+	{
+		foreach ( void delegate(GtkPositionType, ScrolledWindow) dlg; _scrolledwindow.onEdgeReachedListeners )
+		{
+			dlg(pos, _scrolledwindow);
+		}
+	}
+
 	void delegate(GtkDirectionType, ScrolledWindow)[] onMoveFocusOutListeners;
 	/**
 	 * The ::move-focus-out signal is a
 	 * [keybinding signal][GtkBindingSignal] which gets
 	 * emitted when focus is moved away from the scrolled window by a
-	 * keybinding.  The #GtkWidget::move-focus signal is emitted with
+	 * keybinding. The #GtkWidget::move-focus signal is emitted with
 	 * @direction_type on this scrolled windows toplevel parent in the
-	 * container hierarchy.  The default bindings for this signal are
+	 * container hierarchy. The default bindings for this signal are
 	 * `Tab + Ctrl` and `Tab + Ctrl + Shift`.
 	 *
 	 * Params:

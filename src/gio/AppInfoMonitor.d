@@ -122,6 +122,10 @@ public class AppInfoMonitor : ObjectG
 	int[string] connectedSignals;
 
 	void delegate(AppInfoMonitor)[] onChangedListeners;
+	/**
+	 * Signal emitted when the app info database for changes (ie: newly installed
+	 * or removed applications).
+	 */
 	void addOnChanged(void delegate(AppInfoMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "changed" !in connectedSignals )

@@ -258,6 +258,74 @@ public class FileEnumerator : ObjectG
 	}
 
 	/**
+	 * This is a version of g_file_enumerator_next_file() that's easier to
+	 * use correctly from C programs.  With g_file_enumerator_next_file(),
+	 * the gboolean return value signifies "end of iteration or error", which
+	 * requires allocation of a temporary #GError.
+	 *
+	 * In contrast, with this function, a %FALSE return from
+	 * gs_file_enumerator_iterate() *always* means
+	 * "error".  End of iteration is signaled by @out_info or @out_child being %NULL.
+	 *
+	 * Another crucial difference is that the references for @out_info and
+	 * @out_child are owned by @direnum (they are cached as hidden
+	 * properties).  You must not unref them in your own code.  This makes
+	 * memory management significantly easier for C code in combination
+	 * with loops.
+	 *
+	 * Finally, this function optionally allows retrieving a #GFile as
+	 * well.
+	 *
+	 * You must specify at least one of @out_info or @out_child.
+	 *
+	 * The code pattern for correctly using g_file_enumerator_iterate() from C
+	 * is:
+	 *
+	 * |[
+	 * direnum = g_file_enumerate_children (file, ...);
+	 * while (TRUE)
+	 * {
+	 * GFileInfo *info;
+	 * if (!g_file_enumerator_iterate (direnum, &info, NULL, cancellable, error))
+	 * goto out;
+	 * if (!info)
+	 * break;
+	 * ... do stuff with "info"; do not unref it! ...
+	 * }
+	 *
+	 * out:
+	 * g_object_unref (direnum); // Note: frees the last @info
+	 * ]|
+	 *
+	 * Params:
+	 *     outInfo = Output location for the next #GFileInfo, or %NULL
+	 *     outChild = Output location for the next #GFile, or %NULL
+	 *     cancellable = a #GCancellable
+	 *
+	 * Since: 2.44
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool iterate(out FileInfo outInfo, out FileIF outChild, Cancellable cancellable)
+	{
+		GFileInfo* outoutInfo = null;
+		GFile* outoutChild = null;
+		GError* err = null;
+		
+		auto p = g_file_enumerator_iterate(gFileEnumerator, &outoutInfo, &outoutChild, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		outInfo = ObjectG.getDObject!(FileInfo)(outoutInfo);
+		outChild = ObjectG.getDObject!(File, FileIF)(outoutChild);
+		
+		return p;
+	}
+
+	/**
 	 * Returns information for the next file in the enumerated object.
 	 * Will block until the information is available. The #GFileInfo
 	 * returned from this function will contain attributes that match the

@@ -101,9 +101,9 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Creates a new #GtkSourceView. An empty default buffer will be
-	 * created for you. If you want to specify your own buffer, consider
-	 * gtk_source_view_new_with_buffer().
+	 * Creates a new #GtkSourceView. An empty default #GtkSourceBuffer will be
+	 * created for you and can be retrieved with gtk_text_view_get_buffer(). If you
+	 * want to specify your own buffer, consider gtk_source_view_new_with_buffer().
 	 *
 	 * Return: a new #GtkSourceView.
 	 *
@@ -145,13 +145,26 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Returns whether auto indentation of text is enabled.
+	 * Returns whether auto-indentation of text is enabled.
 	 *
 	 * Return: %TRUE if auto indentation is enabled.
 	 */
 	public bool getAutoIndent()
 	{
 		return gtk_source_view_get_auto_indent(gtkSourceView) != 0;
+	}
+
+	/**
+	 * Returns the #GtkSourceBackgroundPatternType specifying if and how
+	 * the background pattern should be displayed for this @view.
+	 *
+	 * Return: the #GtkSourceBackgroundPatternType.
+	 *
+	 * Since: 3.16
+	 */
+	public GtkSourceBackgroundPatternType getBackgroundPattern()
+	{
+		return gtk_source_view_get_background_pattern(gtkSourceView);
 	}
 
 	/**
@@ -338,8 +351,8 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Determines the visual column at @iter taking into
-	 * consideration the indent width of @view.
+	 * Determines the visual column at @iter taking into consideration the
+	 * #GtkSourceView:tab-width of @view.
 	 *
 	 * Params:
 	 *     iter = a position in @view.
@@ -352,7 +365,27 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * If %TRUE auto indentation of text is enabled.
+	 * Insert one indentation level at the beginning of the
+	 * specified lines.
+	 *
+	 * Params:
+	 *     start = #GtkTextIter of the first line to indent
+	 *     end = #GtkTextIter of the last line to indent
+	 *
+	 * Since: 3.16
+	 */
+	public void indentLines(TextIter start, TextIter end)
+	{
+		gtk_source_view_indent_lines(gtkSourceView, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+	}
+
+	/**
+	 * If %TRUE auto-indentation of text is enabled.
+	 *
+	 * When Enter is pressed to create a new line, the auto-indentation inserts the
+	 * same indentation as the previous line. This is <emphasis>not</emphasis> a
+	 * "smart indentation" where an indentation level is added or removed depending
+	 * on the context.
 	 *
 	 * Params:
 	 *     enable = whether to enable auto indentation.
@@ -360,6 +393,19 @@ public class SourceView : TextView
 	public void setAutoIndent(bool enable)
 	{
 		gtk_source_view_set_auto_indent(gtkSourceView, enable);
+	}
+
+	/**
+	 * Set if and how the background pattern should be displayed.
+	 *
+	 * Params:
+	 *     backgroundPattern = the #GtkSourceBackgroundPatternType.
+	 *
+	 * Since: 3.16
+	 */
+	public void setBackgroundPattern(GtkSourceBackgroundPatternType backgroundPattern)
+	{
+		gtk_source_view_set_background_pattern(gtkSourceView, backgroundPattern);
 	}
 
 	/**
@@ -376,20 +422,26 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * If @hl is %TRUE the current line is highlighted.
+	 * If @highlight is %TRUE the current line will be highlighted.
 	 *
 	 * Params:
-	 *     hl = whether to highlight the current line.
+	 *     highlight = whether to highlight the current line.
 	 */
-	public void setHighlightCurrentLine(bool hl)
+	public void setHighlightCurrentLine(bool highlight)
 	{
-		gtk_source_view_set_highlight_current_line(gtkSourceView, hl);
+		gtk_source_view_set_highlight_current_line(gtkSourceView, highlight);
 	}
 
 	/**
-	 * If %TRUE, when the tab key is pressed and there is a selection, the
-	 * selected text is indented of one level instead of being replaced with
-	 * the \t characters. Shift+Tab unindents the selection.
+	 * If %TRUE, when the tab key is pressed when several lines are selected, the
+	 * selected lines are indented of one level instead of being replaced with a \t
+	 * character. Shift+Tab unindents the selection.
+	 *
+	 * If the first or last line is not selected completely, it is also indented or
+	 * unindented.
+	 *
+	 * When the selection doesn't span several lines, the tab key always replaces
+	 * the selection with a normal \t character.
 	 *
 	 * Params:
 	 *     enable = whether to indent a block when tab is pressed.
@@ -402,9 +454,26 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Sets the number of spaces to use for each step of indent.
-	 * If @width is -1, the value of the #GtkSourceView:tab-width property
+	 * Sets the number of spaces to use for each step of indent when the tab key is
+	 * pressed. If @width is -1, the value of the #GtkSourceView:tab-width property
 	 * will be used.
+	 *
+	 * The #GtkSourceView:indent-width interacts with the
+	 * #GtkSourceView:insert-spaces-instead-of-tabs property and
+	 * #GtkSourceView:tab-width. An example will be clearer: if the
+	 * #GtkSourceView:indent-width is 4 and
+	 * #GtkSourceView:tab-width is 8 and
+	 * #GtkSourceView:insert-spaces-instead-of-tabs is %FALSE, then pressing the tab
+	 * key at the beginning of a line will insert 4 spaces. So far so good. Pressing
+	 * the tab key a second time will remove the 4 spaces and insert a \t character
+	 * instead (since #GtkSourceView:tab-width is 8). On the other hand, if
+	 * #GtkSourceView:insert-spaces-instead-of-tabs is %TRUE, the second tab key
+	 * pressed will insert 4 more spaces for a total of 8 spaces in the
+	 * #GtkTextBuffer.
+	 *
+	 * The test-widget program (available in the GtkSourceView repository) may be
+	 * useful to better understand the indentation settings (enable the space
+	 * drawing!).
 	 *
 	 * Params:
 	 *     width = indent width in characters.
@@ -415,8 +484,9 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * If %TRUE any tabulator character inserted is replaced by a group
-	 * of space characters.
+	 * If %TRUE a tab key pressed is replaced by a group of space characters. Of
+	 * course it is still possible to insert a real \t programmatically with the
+	 * #GtkTextBuffer API.
 	 *
 	 * Params:
 	 *     enable = whether to insert spaces instead of tabs.
@@ -490,15 +560,17 @@ public class SourceView : TextView
 	 * are pressed.
 	 *
 	 * Params:
-	 *     smartHe = the desired behavior among #GtkSourceSmartHomeEndType.
+	 *     smartHomeEnd = the desired behavior among #GtkSourceSmartHomeEndType.
 	 */
-	public void setSmartHomeEnd(GtkSourceSmartHomeEndType smartHe)
+	public void setSmartHomeEnd(GtkSourceSmartHomeEndType smartHomeEnd)
 	{
-		gtk_source_view_set_smart_home_end(gtkSourceView, smartHe);
+		gtk_source_view_set_smart_home_end(gtkSourceView, smartHomeEnd);
 	}
 
 	/**
-	 * Sets the width of tabulation in characters.
+	 * Sets the width of tabulation in characters. The #GtkTextBuffer still contains
+	 * \t characters, but they can take a different visual width in a #GtkSourceView
+	 * widget.
 	 *
 	 * Params:
 	 *     width = width of tab in characters.
@@ -508,7 +580,115 @@ public class SourceView : TextView
 		gtk_source_view_set_tab_width(gtkSourceView, width);
 	}
 
+	/**
+	 * Removes one indentation level at the beginning of the
+	 * specified lines.
+	 *
+	 * Params:
+	 *     start = #GtkTextIter of the first line to indent
+	 *     end = #GtkTextIter of the last line to indent
+	 *
+	 * Since: 3.16
+	 */
+	public void unindentLines(TextIter start, TextIter end)
+	{
+		gtk_source_view_unindent_lines(gtkSourceView, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+	}
+
 	int[string] connectedSignals;
+
+	void delegate(GtkSourceChangeCaseType, SourceView)[] onChangeCaseListeners;
+	/**
+	 * Keybinding signal to change case of the text at the current cursor position.
+	 *
+	 * Params:
+	 *     caseType = the case to use
+	 *
+	 * Since: 3.16
+	 */
+	void addOnChangeCase(void delegate(GtkSourceChangeCaseType, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "change-case" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"change-case",
+				cast(GCallback)&callBackChangeCase,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["change-case"] = 1;
+		}
+		onChangeCaseListeners ~= dlg;
+	}
+	extern(C) static void callBackChangeCase(GtkSourceView* sourceviewStruct, GtkSourceChangeCaseType caseType, SourceView _sourceview)
+	{
+		foreach ( void delegate(GtkSourceChangeCaseType, SourceView) dlg; _sourceview.onChangeCaseListeners )
+		{
+			dlg(caseType, _sourceview);
+		}
+	}
+
+	void delegate(int, SourceView)[] onChangeNumberListeners;
+	/**
+	 * Keybinding signal to edit a number at the current cursor position.
+	 *
+	 * Params:
+	 *     count = the number to add to the number at the current position
+	 *
+	 * Since: 3.16
+	 */
+	void addOnChangeNumber(void delegate(int, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "change-number" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"change-number",
+				cast(GCallback)&callBackChangeNumber,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["change-number"] = 1;
+		}
+		onChangeNumberListeners ~= dlg;
+	}
+	extern(C) static void callBackChangeNumber(GtkSourceView* sourceviewStruct, int count, SourceView _sourceview)
+	{
+		foreach ( void delegate(int, SourceView) dlg; _sourceview.onChangeNumberListeners )
+		{
+			dlg(count, _sourceview);
+		}
+	}
+
+	void delegate(SourceView)[] onJoinLinesListeners;
+	/**
+	 * Keybinding signal to join the lines currently selected.
+	 *
+	 * Since: 3.16
+	 */
+	void addOnJoinLines(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "join-lines" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"join-lines",
+				cast(GCallback)&callBackJoinLines,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["join-lines"] = 1;
+		}
+		onJoinLinesListeners ~= dlg;
+	}
+	extern(C) static void callBackJoinLines(GtkSourceView* sourceviewStruct, SourceView _sourceview)
+	{
+		foreach ( void delegate(SourceView) dlg; _sourceview.onJoinLinesListeners )
+		{
+			dlg(_sourceview);
+		}
+	}
 
 	void delegate(TextIter, Event, SourceView)[] onLineMarkActivatedListeners;
 	/**
@@ -578,6 +758,38 @@ public class SourceView : TextView
 		foreach ( void delegate(bool, int, SourceView) dlg; _sourceview.onMoveLinesListeners )
 		{
 			dlg(copy, count, _sourceview);
+		}
+	}
+
+	void delegate(bool, SourceView)[] onMoveToMatchingBracketListeners;
+	/**
+	 * Keybinding signal to move the cursor to the matching bracket.
+	 *
+	 * Params:
+	 *     extendSelection = %TRUE if the move should extend the selection
+	 *
+	 * Since: 3.16
+	 */
+	void addOnMoveToMatchingBracket(void delegate(bool, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "move-to-matching-bracket" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"move-to-matching-bracket",
+				cast(GCallback)&callBackMoveToMatchingBracket,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["move-to-matching-bracket"] = 1;
+		}
+		onMoveToMatchingBracketListeners ~= dlg;
+	}
+	extern(C) static void callBackMoveToMatchingBracket(GtkSourceView* sourceviewStruct, bool extendSelection, SourceView _sourceview)
+	{
+		foreach ( void delegate(bool, SourceView) dlg; _sourceview.onMoveToMatchingBracketListeners )
+		{
+			dlg(extendSelection, _sourceview);
 		}
 	}
 

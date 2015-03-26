@@ -34,6 +34,11 @@ extend: GObject.Object
 implements: Action
 
 struct:
+class: ActionGroup
+extend: GObject.Object
+implements: ActionGroup
+
+struct:
 class: AppInfo
 extend: GObject.Object
 implements: AppInfo

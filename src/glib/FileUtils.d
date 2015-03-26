@@ -95,6 +95,8 @@ public struct FileUtils
 	 * Params:
 	 *     fd = A file descriptor
 	 *
+	 * Return: %TRUE on success, %FALSE if there was an error.
+	 *
 	 * Since: 2.36
 	 *
 	 * Throws: GException on failure.

@@ -64,7 +64,9 @@ public  import gtkc.gtktypes;
  * on Win32 doesn’t allow to embed arbitrary widgets.
  * 
  * GtkStatusIcon has been deprecated in 3.14. You should consider using
- * notifications or more modern platform-specific APIs instead.
+ * notifications or more modern platform-specific APIs instead. GLib provides
+ * the #GNotification API which works well with #GtkApplication. Also see this
+ * [HowDoI](https://wiki.gnome.org/HowDoI/GNotification).
  */
 public class StatusIcon : ObjectG
 {
@@ -257,7 +259,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	public static void positionMenu(Menu menu, out int x, out int y, out bool pushIn, StatusIcon userData)
+	public static void positionMenu(Menu menu, ref int x, ref int y, out bool pushIn, StatusIcon userData)
 	{
 		int outpushIn;
 		

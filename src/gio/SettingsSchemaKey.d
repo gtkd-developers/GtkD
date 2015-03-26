@@ -32,6 +32,10 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/**
+ * #GSettingsSchemaKey is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
 public class SettingsSchemaKey
 {
 	/** the main Gtk struct */
@@ -110,6 +114,18 @@ public class SettingsSchemaKey
 	public string getDescription()
 	{
 		return Str.toString(g_settings_schema_key_get_description(gSettingsSchemaKey));
+	}
+
+	/**
+	 * Gets the name of @key.
+	 *
+	 * Return: the name of @key.
+	 *
+	 * Since: 2.44
+	 */
+	public string getName()
+	{
+		return Str.toString(g_settings_schema_key_get_name(gSettingsSchemaKey));
 	}
 
 	/**

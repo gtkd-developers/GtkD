@@ -282,6 +282,9 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Emits a state-change signal for the specified state.
 	 *
+	 * Note that as a general rule when the state of an existing object changes,
+	 * emitting a notification is expected.
+	 *
 	 * Params:
 	 *     state = an #AtkState whose state is changed
 	 *     value = a gboolean which indicates whether the state is being set on or off
@@ -532,7 +535,7 @@ public class ObjectAtk : ObjectG
 	 * The signal "focus-event" is emitted when an object gained or lost
 	 * focus.
 	 *
-	 * Deprecated: Since 2.9.4. Use #AtkObject::state-change signal instead.
+	 * Deprecated: Use #AtkObject::state-change signal instead.
 	 *
 	 * Params:
 	 *     arg1 = a boolean value which indicates whether the object gained

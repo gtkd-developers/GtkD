@@ -274,7 +274,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show a "Location"
-	 * prompt when the user pastes #GtkFileChooserWidget.
+	 * prompt when the user pastes into a #GtkFileChooserWidget.
 	 *
 	 * The default binding for this signal is `Control + V`.
 	 */

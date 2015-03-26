@@ -469,6 +469,12 @@ public struct Signals
 	 * Returns whether there are any handlers connected to @instance for the
 	 * given signal id and detail.
 	 *
+	 * If @detail is 0 then it will only match handlers that were connected
+	 * without detail.  If @detail is non-zero then it will match handlers
+	 * connected both without detail and with the given detail.  This is
+	 * consistent with how a signal emitted with @detail would be delivered
+	 * to those handlers.
+	 *
 	 * One example of when you might use this is when the arguments to the
 	 * signal are difficult to compute. A class implementor may opt to not
 	 * emit the signal if no one is attached anyway, thus saving the cost
@@ -702,6 +708,19 @@ public struct Signals
 		g_signal_remove_emission_hook(signalId, hookId);
 	}
 
+	/**
+	 * Change the #GSignalCVaMarshaller used for a given signal.  This is a
+	 * specialised form of the marshaller that can often be used for the
+	 * common case of a single connected signal handler and avoids the
+	 * overhead of #GValue.  Its use is optional.
+	 *
+	 * Params:
+	 *     signalId = the signal id
+	 *     instanceType = the instance type on which to set the marshaller.
+	 *     vaMarshaller = the marshaller to set.
+	 *
+	 * Since: 2.32
+	 */
 	public static void setVaMarshaller(uint signalId, GType instanceType, GSignalCVaMarshaller vaMarshaller)
 	{
 		g_signal_set_va_marshaller(signalId, instanceType, vaMarshaller);

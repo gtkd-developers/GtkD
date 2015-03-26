@@ -666,6 +666,7 @@ shared static this()
 	Linker.link(g_option_context_get_help_enabled, "g_option_context_get_help_enabled", LIBRARY.GLIB);
 	Linker.link(g_option_context_get_ignore_unknown_options, "g_option_context_get_ignore_unknown_options", LIBRARY.GLIB);
 	Linker.link(g_option_context_get_main_group, "g_option_context_get_main_group", LIBRARY.GLIB);
+	Linker.link(g_option_context_get_strict_posix, "g_option_context_get_strict_posix", LIBRARY.GLIB);
 	Linker.link(g_option_context_get_summary, "g_option_context_get_summary", LIBRARY.GLIB);
 	Linker.link(g_option_context_parse, "g_option_context_parse", LIBRARY.GLIB);
 	Linker.link(g_option_context_parse_strv, "g_option_context_parse_strv", LIBRARY.GLIB);
@@ -673,6 +674,7 @@ shared static this()
 	Linker.link(g_option_context_set_help_enabled, "g_option_context_set_help_enabled", LIBRARY.GLIB);
 	Linker.link(g_option_context_set_ignore_unknown_options, "g_option_context_set_ignore_unknown_options", LIBRARY.GLIB);
 	Linker.link(g_option_context_set_main_group, "g_option_context_set_main_group", LIBRARY.GLIB);
+	Linker.link(g_option_context_set_strict_posix, "g_option_context_set_strict_posix", LIBRARY.GLIB);
 	Linker.link(g_option_context_set_summary, "g_option_context_set_summary", LIBRARY.GLIB);
 	Linker.link(g_option_context_set_translate_func, "g_option_context_set_translate_func", LIBRARY.GLIB);
 	Linker.link(g_option_context_set_translation_domain, "g_option_context_set_translation_domain", LIBRARY.GLIB);
@@ -681,13 +683,15 @@ shared static this()
 
 	// glib.OptionGroup
 
+	Linker.link(g_option_group_new, "g_option_group_new", LIBRARY.GLIB);
 	Linker.link(g_option_group_add_entries, "g_option_group_add_entries", LIBRARY.GLIB);
 	Linker.link(g_option_group_free, "g_option_group_free", LIBRARY.GLIB);
+	Linker.link(g_option_group_ref, "g_option_group_ref", LIBRARY.GLIB);
 	Linker.link(g_option_group_set_error_hook, "g_option_group_set_error_hook", LIBRARY.GLIB);
 	Linker.link(g_option_group_set_parse_hooks, "g_option_group_set_parse_hooks", LIBRARY.GLIB);
 	Linker.link(g_option_group_set_translate_func, "g_option_group_set_translate_func", LIBRARY.GLIB);
 	Linker.link(g_option_group_set_translation_domain, "g_option_group_set_translation_domain", LIBRARY.GLIB);
-	Linker.link(g_option_group_new, "g_option_group_new", LIBRARY.GLIB);
+	Linker.link(g_option_group_unref, "g_option_group_unref", LIBRARY.GLIB);
 
 	// glib.Pattern
 
@@ -1406,6 +1410,7 @@ shared static this()
 	Linker.link(g_strup, "g_strup", LIBRARY.GLIB);
 	Linker.link(g_strv_get_type, "g_strv_get_type", LIBRARY.GLIB);
 	Linker.link(g_strv_length, "g_strv_length", LIBRARY.GLIB);
+	Linker.link(g_strv_contains, "g_strv_contains", LIBRARY.GLIB);
 	Linker.link(g_vasprintf, "g_vasprintf", LIBRARY.GLIB);
 	Linker.link(g_vfprintf, "g_vfprintf", LIBRARY.GLIB);
 	Linker.link(g_vprintf, "g_vprintf", LIBRARY.GLIB);
@@ -2362,6 +2367,7 @@ __gshared extern(C)
 	int function(GOptionContext* context) c_g_option_context_get_help_enabled;
 	int function(GOptionContext* context) c_g_option_context_get_ignore_unknown_options;
 	GOptionGroup* function(GOptionContext* context) c_g_option_context_get_main_group;
+	int function(GOptionContext* context) c_g_option_context_get_strict_posix;
 	const(char)* function(GOptionContext* context) c_g_option_context_get_summary;
 	int function(GOptionContext* context, int* argc, char*** argv, GError** err) c_g_option_context_parse;
 	int function(GOptionContext* context, char*** arguments, GError** err) c_g_option_context_parse_strv;
@@ -2369,6 +2375,7 @@ __gshared extern(C)
 	void function(GOptionContext* context, int helpEnabled) c_g_option_context_set_help_enabled;
 	void function(GOptionContext* context, int ignoreUnknown) c_g_option_context_set_ignore_unknown_options;
 	void function(GOptionContext* context, GOptionGroup* group) c_g_option_context_set_main_group;
+	void function(GOptionContext* context, int strictPosix) c_g_option_context_set_strict_posix;
 	void function(GOptionContext* context, const(char)* summary) c_g_option_context_set_summary;
 	void function(GOptionContext* context, GTranslateFunc func, void* data, GDestroyNotify destroyNotify) c_g_option_context_set_translate_func;
 	void function(GOptionContext* context, const(char)* domain) c_g_option_context_set_translation_domain;
@@ -2377,13 +2384,15 @@ __gshared extern(C)
 
 	// glib.OptionGroup
 
+	GOptionGroup* function(const(char)* name, const(char)* description, const(char)* helpDescription, void* userData, GDestroyNotify destroy) c_g_option_group_new;
 	void function(GOptionGroup* group, GOptionEntry* entries) c_g_option_group_add_entries;
 	void function(GOptionGroup* group) c_g_option_group_free;
+	GOptionGroup* function(GOptionGroup* group) c_g_option_group_ref;
 	void function(GOptionGroup* group, GOptionErrorFunc errorFunc) c_g_option_group_set_error_hook;
 	void function(GOptionGroup* group, GOptionParseFunc preParseFunc, GOptionParseFunc postParseFunc) c_g_option_group_set_parse_hooks;
 	void function(GOptionGroup* group, GTranslateFunc func, void* data, GDestroyNotify destroyNotify) c_g_option_group_set_translate_func;
 	void function(GOptionGroup* group, const(char)* domain) c_g_option_group_set_translation_domain;
-	GOptionGroup* function(const(char)* name, const(char)* description, const(char)* helpDescription, void* userData, GDestroyNotify destroy) c_g_option_group_new;
+	void function(GOptionGroup* group) c_g_option_group_unref;
 
 	// glib.Pattern
 
@@ -3102,6 +3111,7 @@ __gshared extern(C)
 	char* function(char* str) c_g_strup;
 	GType function() c_g_strv_get_type;
 	uint function(char** strArray) c_g_strv_length;
+	int function(const(char)* strv, const(char)* str) c_g_strv_contains;
 	int function(char** str, char* format, void* args) c_g_vasprintf;
 	int function(FILE* file, char* format, void* args) c_g_vfprintf;
 	int function(char* format, void* args) c_g_vprintf;
@@ -4056,6 +4066,7 @@ alias c_g_option_context_get_help g_option_context_get_help;
 alias c_g_option_context_get_help_enabled g_option_context_get_help_enabled;
 alias c_g_option_context_get_ignore_unknown_options g_option_context_get_ignore_unknown_options;
 alias c_g_option_context_get_main_group g_option_context_get_main_group;
+alias c_g_option_context_get_strict_posix g_option_context_get_strict_posix;
 alias c_g_option_context_get_summary g_option_context_get_summary;
 alias c_g_option_context_parse g_option_context_parse;
 alias c_g_option_context_parse_strv g_option_context_parse_strv;
@@ -4063,6 +4074,7 @@ alias c_g_option_context_set_description g_option_context_set_description;
 alias c_g_option_context_set_help_enabled g_option_context_set_help_enabled;
 alias c_g_option_context_set_ignore_unknown_options g_option_context_set_ignore_unknown_options;
 alias c_g_option_context_set_main_group g_option_context_set_main_group;
+alias c_g_option_context_set_strict_posix g_option_context_set_strict_posix;
 alias c_g_option_context_set_summary g_option_context_set_summary;
 alias c_g_option_context_set_translate_func g_option_context_set_translate_func;
 alias c_g_option_context_set_translation_domain g_option_context_set_translation_domain;
@@ -4071,13 +4083,15 @@ alias c_g_option_error_quark g_option_error_quark;
 
 // glib.OptionGroup
 
+alias c_g_option_group_new g_option_group_new;
 alias c_g_option_group_add_entries g_option_group_add_entries;
 alias c_g_option_group_free g_option_group_free;
+alias c_g_option_group_ref g_option_group_ref;
 alias c_g_option_group_set_error_hook g_option_group_set_error_hook;
 alias c_g_option_group_set_parse_hooks g_option_group_set_parse_hooks;
 alias c_g_option_group_set_translate_func g_option_group_set_translate_func;
 alias c_g_option_group_set_translation_domain g_option_group_set_translation_domain;
-alias c_g_option_group_new g_option_group_new;
+alias c_g_option_group_unref g_option_group_unref;
 
 // glib.Pattern
 
@@ -4796,6 +4810,7 @@ alias c_g_strtod g_strtod;
 alias c_g_strup g_strup;
 alias c_g_strv_get_type g_strv_get_type;
 alias c_g_strv_length g_strv_length;
+alias c_g_strv_contains g_strv_contains;
 alias c_g_vasprintf g_vasprintf;
 alias c_g_vfprintf g_vfprintf;
 alias c_g_vprintf g_vprintf;

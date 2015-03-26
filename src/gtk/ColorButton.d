@@ -41,7 +41,7 @@ public  import gtkc.gtktypes;
 
 /**
  * The #GtkColorButton is a button which displays the currently selected
- * color an allows to open a color selection dialog to change the color.
+ * color and allows to open a color selection dialog to change the color.
  * It is suitable widget for selecting a color in a preference dialog.
  */
 public class ColorButton : Button, ColorChooserIF

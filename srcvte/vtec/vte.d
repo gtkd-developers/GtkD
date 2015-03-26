@@ -78,6 +78,7 @@ shared static this()
 	Linker.link(vte_terminal_get_text_include_trailing_spaces, "vte_terminal_get_text_include_trailing_spaces", LIBRARY.VTE);
 	Linker.link(vte_terminal_get_text_range, "vte_terminal_get_text_range", LIBRARY.VTE);
 	Linker.link(vte_terminal_get_window_title, "vte_terminal_get_window_title", LIBRARY.VTE);
+	Linker.link(vte_terminal_get_word_char_exceptions, "vte_terminal_get_word_char_exceptions", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_add_gregex, "vte_terminal_match_add_gregex", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_check, "vte_terminal_match_check", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_check_event, "vte_terminal_match_check_event", LIBRARY.VTE);
@@ -124,11 +125,19 @@ shared static this()
 	Linker.link(vte_terminal_set_scroll_on_output, "vte_terminal_set_scroll_on_output", LIBRARY.VTE);
 	Linker.link(vte_terminal_set_scrollback_lines, "vte_terminal_set_scrollback_lines", LIBRARY.VTE);
 	Linker.link(vte_terminal_set_size, "vte_terminal_set_size", LIBRARY.VTE);
+	Linker.link(vte_terminal_set_word_char_exceptions, "vte_terminal_set_word_char_exceptions", LIBRARY.VTE);
 	Linker.link(vte_terminal_spawn_sync, "vte_terminal_spawn_sync", LIBRARY.VTE);
 	Linker.link(vte_terminal_unselect_all, "vte_terminal_unselect_all", LIBRARY.VTE);
 	Linker.link(vte_terminal_watch_child, "vte_terminal_watch_child", LIBRARY.VTE);
 	Linker.link(vte_terminal_write_contents_sync, "vte_terminal_write_contents_sync", LIBRARY.VTE);
 	Linker.link(vte_get_user_shell, "vte_get_user_shell", LIBRARY.VTE);
+
+	// vte.Version
+
+	Linker.link(vte_get_features, "vte_get_features", LIBRARY.VTE);
+	Linker.link(vte_get_major_version, "vte_get_major_version", LIBRARY.VTE);
+	Linker.link(vte_get_micro_version, "vte_get_micro_version", LIBRARY.VTE);
+	Linker.link(vte_get_minor_version, "vte_get_minor_version", LIBRARY.VTE);
 }
 
 __gshared extern(C)
@@ -181,6 +190,7 @@ __gshared extern(C)
 	char* function(VteTerminal* terminal, VteSelectionFunc isSelected, void* userData, GArray* attributes) c_vte_terminal_get_text_include_trailing_spaces;
 	char* function(VteTerminal* terminal, glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, GArray* attributes) c_vte_terminal_get_text_range;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_window_title;
+	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_word_char_exceptions;
 	int function(VteTerminal* terminal, GRegex* regex, GRegexMatchFlags flags) c_vte_terminal_match_add_gregex;
 	char* function(VteTerminal* terminal, glong column, glong row, int* tag) c_vte_terminal_match_check;
 	char* function(VteTerminal* terminal, GdkEvent* event, int* tag) c_vte_terminal_match_check_event;
@@ -227,11 +237,19 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, int scroll) c_vte_terminal_set_scroll_on_output;
 	void function(VteTerminal* terminal, glong lines) c_vte_terminal_set_scrollback_lines;
 	void function(VteTerminal* terminal, glong columns, glong rows) c_vte_terminal_set_size;
+	void function(VteTerminal* terminal, const(char)* exceptions) c_vte_terminal_set_word_char_exceptions;
 	int function(VteTerminal* terminal, VtePtyFlags ptyFlags, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GPid* childPid, GCancellable* cancellable, GError** err) c_vte_terminal_spawn_sync;
 	void function(VteTerminal* terminal) c_vte_terminal_unselect_all;
 	void function(VteTerminal* terminal, GPid childPid) c_vte_terminal_watch_child;
 	int function(VteTerminal* terminal, GOutputStream* stream, VteWriteFlags flags, GCancellable* cancellable, GError** err) c_vte_terminal_write_contents_sync;
 	char* function() c_vte_get_user_shell;
+
+	// vte.Version
+
+	const(char)* function() c_vte_get_features;
+	uint function() c_vte_get_major_version;
+	uint function() c_vte_get_micro_version;
+	uint function() c_vte_get_minor_version;
 }
 
 
@@ -282,6 +300,7 @@ alias c_vte_terminal_get_text vte_terminal_get_text;
 alias c_vte_terminal_get_text_include_trailing_spaces vte_terminal_get_text_include_trailing_spaces;
 alias c_vte_terminal_get_text_range vte_terminal_get_text_range;
 alias c_vte_terminal_get_window_title vte_terminal_get_window_title;
+alias c_vte_terminal_get_word_char_exceptions vte_terminal_get_word_char_exceptions;
 alias c_vte_terminal_match_add_gregex vte_terminal_match_add_gregex;
 alias c_vte_terminal_match_check vte_terminal_match_check;
 alias c_vte_terminal_match_check_event vte_terminal_match_check_event;
@@ -328,8 +347,16 @@ alias c_vte_terminal_set_scroll_on_keystroke vte_terminal_set_scroll_on_keystrok
 alias c_vte_terminal_set_scroll_on_output vte_terminal_set_scroll_on_output;
 alias c_vte_terminal_set_scrollback_lines vte_terminal_set_scrollback_lines;
 alias c_vte_terminal_set_size vte_terminal_set_size;
+alias c_vte_terminal_set_word_char_exceptions vte_terminal_set_word_char_exceptions;
 alias c_vte_terminal_spawn_sync vte_terminal_spawn_sync;
 alias c_vte_terminal_unselect_all vte_terminal_unselect_all;
 alias c_vte_terminal_watch_child vte_terminal_watch_child;
 alias c_vte_terminal_write_contents_sync vte_terminal_write_contents_sync;
 alias c_vte_get_user_shell vte_get_user_shell;
+
+// vte.Version
+
+alias c_vte_get_features vte_get_features;
+alias c_vte_get_major_version vte_get_major_version;
+alias c_vte_get_micro_version vte_get_micro_version;
+alias c_vte_get_minor_version vte_get_minor_version;

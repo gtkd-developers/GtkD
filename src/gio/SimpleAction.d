@@ -186,6 +186,22 @@ public class SimpleAction : ObjectG, ActionIF
 		g_simple_action_set_state(gSimpleAction, (value is null) ? null : value.getVariantStruct());
 	}
 
+	/**
+	 * Sets the state hint for the action.
+	 *
+	 * See g_action_get_state_hint() for more information about
+	 * action state hints.
+	 *
+	 * Params:
+	 *     stateHint = a #GVariant representing the state hint
+	 *
+	 * Since: 2.44
+	 */
+	public void setStateHint(Variant stateHint)
+	{
+		g_simple_action_set_state_hint(gSimpleAction, (stateHint is null) ? null : stateHint.getVariantStruct());
+	}
+
 	int[string] connectedSignals;
 
 	void delegate(Variant, SimpleAction)[] onActivateListeners;

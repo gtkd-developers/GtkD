@@ -26,6 +26,7 @@ module gtk.ScrollableT;
 
 public  import gobject.ObjectG;
 public  import gtk.Adjustment;
+public  import gtk.Border;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
 
@@ -69,6 +70,25 @@ public template ScrollableT(TStruct)
 
 	/**
 	 */
+
+	/**
+	 * Returns the size of a non-scrolling border around the
+	 * outside of the scrollable. An example for this would
+	 * be treeview headers. GTK+ can use this information to
+	 * display overlayed graphics, like the overshoot indication,
+	 * at the right position.
+	 *
+	 * Params:
+	 *     border = return location for the results
+	 *
+	 * Return: %TRUE if @border has been set
+	 *
+	 * Since: 3.16
+	 */
+	public bool getBorder(Border border)
+	{
+		return gtk_scrollable_get_border(getScrollableStruct(), (border is null) ? null : border.getBorderStruct()) != 0;
+	}
 
 	/**
 	 * Retrieves the #GtkAdjustment used for horizontal scrolling.

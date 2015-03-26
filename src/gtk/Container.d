@@ -203,21 +203,32 @@ public  import gtkc.gtktypes;
  * a <packing> element for children, which can contain multiple <property>
  * elements that specify child properties for the child.
  * 
- * An example of child properties in UI definitions:
+ * Since 2.16, child properties can also be marked as translatable using
+ * the same “translatable”, “comments” and “context” attributes that are used
+ * for regular properties.
+ * 
+ * Since 3.16, containers can have a <focus-chain> element containing multiple
+ * <widget> elements, one for each child that should be added to the focus
+ * chain. The ”name” attribute gives the id of the widget.
+ * 
+ * An example of these properties in UI definitions:
  * |[
- * <object class="GtkVBox">
+ * <object class="GtkBox">
  * <child>
- * <object class="GtkLabel"/>
+ * <object class="GtkEntry" id="entry1"/>
  * <packing>
  * <property name="pack-type">start</property>
  * </packing>
  * </child>
+ * <child>
+ * <object class="GtkEntry" id="entry2"/>
+ * </child>
+ * <focus-chain>
+ * <widget name="entry1"/>
+ * <widget name="entry2"/>
+ * </focus-chain>
  * </object>
  * ]|
- * 
- * Since 2.16, child properties can also be marked as translatable using
- * the same “translatable”, “comments” and “context” attributes that are used
- * for regular properties.
  */
 public class Container : Widget
 {
@@ -675,7 +686,7 @@ public class Container : Widget
 	 * default behaviour by overriding the class closure of this signal.
 	 *
 	 * This is function is mostly meant to be used by widgets. Applications can use
-	 * gtk_widget_grab_focus() to manualy set the focus to a specific widget.
+	 * gtk_widget_grab_focus() to manually set the focus to a specific widget.
 	 *
 	 * Params:
 	 *     child = a #GtkWidget, or %NULL

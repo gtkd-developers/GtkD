@@ -201,7 +201,7 @@ public class Thread
 	}
 
 	/**
-	 * This functions returns the #GThread corresponding to the
+	 * This function returns the #GThread corresponding to the
 	 * current thread. Note that this function does not increase
 	 * the reference count of the returned struct.
 	 *

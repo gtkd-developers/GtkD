@@ -58,7 +58,9 @@ public struct Memory
 
 	/**
 	 * Frees the memory pointed to by @mem.
-	 * If @mem is %NULL it simply returns.
+	 *
+	 * If @mem is %NULL it simply returns, so there is no need to check @mem
+	 * against %NULL before calling this function.
 	 *
 	 * Params:
 	 *     mem = the memory to free
@@ -303,7 +305,9 @@ public struct Memory
 	/**
 	 * Attempts to realloc @mem to a new size, @n_bytes, and returns %NULL
 	 * on failure. Contrast with g_realloc(), which aborts the program
-	 * on failure. If @mem is %NULL, behaves the same as g_try_malloc().
+	 * on failure.
+	 *
+	 * If @mem is %NULL, behaves the same as g_try_malloc().
 	 *
 	 * Params:
 	 *     mem = previously-allocated memory, or %NULL.

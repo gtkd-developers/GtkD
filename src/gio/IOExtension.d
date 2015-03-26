@@ -31,6 +31,10 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/**
+ * #GIOExtension is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
 public class IOExtension
 {
 	/** the main Gtk struct */

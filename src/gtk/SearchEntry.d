@@ -24,6 +24,7 @@
 
 module gtk.SearchEntry;
 
+private import gdk.Event;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -35,13 +36,12 @@ public  import gtkc.gtktypes;
 
 
 /**
- * #GtkSearchEntry is a subclass of #GtkEntry that has
- * been tailored for use as a search entry.
+ * #GtkSearchEntry is a subclass of #GtkEntry that has been
+ * tailored for use as a search entry.
  * 
- * It will show an inactive symbolic “find” icon when the
- * search entry is empty, and a symbolic “clear” icon when
- * there is text. Clicking on the “clear” icon will empty
- * the search entry.
+ * It will show an inactive symbolic “find” icon when the search
+ * entry is empty, and a symbolic “clear” icon when there is text.
+ * Clicking on the “clear” icon will empty the search entry.
  * 
  * Note that the search/clear icon is shown using a secondary
  * icon, and thus does not work if you are using the secondary
@@ -52,6 +52,14 @@ public  import gtkc.gtktypes;
  * only after a short delay. To support this, #GtkSearchEntry
  * emits the #GtkSearchEntry::search-changed signal which can
  * be used instead of the #GtkEditable::changed signal.
+ * 
+ * The #GtkSearchEntry::previous-match, #GtkSearchEntry::next-match
+ * and #GtkSearchEntry::stop-search signals can be uesd to implement
+ * moving between search results and ending the search.
+ * 
+ * Often, GtkSearchEntry will be fed events by means of being
+ * placed inside a #GtkSearchEntry. If that is not the case,
+ * you can use gtk_search_entry_handle_event() to pass events.
  */
 public class SearchEntry : Entry
 {
@@ -115,7 +123,106 @@ public class SearchEntry : Entry
 		this(cast(GtkSearchEntry*) p);
 	}
 
+	/**
+	 * This function should be called when the top-level window
+	 * which contains the search entry received a key event. If
+	 * the entry is part of a #GtkSearchBar, it is preferable
+	 * to call gtk_search_bar_handle_event() instead, which will
+	 * reveal the entry in addition to passing the event to this
+	 * function.
+	 *
+	 * If the key event is handled by the search entry and starts
+	 * or continues a search, %GDK_EVENT_STOP will be returned.
+	 * The caller should ensure that the entry is shown in this
+	 * case, and not propagate the event further.
+	 *
+	 * Params:
+	 *     event = a key event
+	 *
+	 * Return: %GDK_EVENT_STOP if the key press event resulted
+	 *     in a search beginning or continuing, %GDK_EVENT_PROPAGATE
+	 *     otherwise.
+	 *
+	 * Since: 3.16
+	 */
+	public bool handleEvent(Event event)
+	{
+		return gtk_search_entry_handle_event(gtkSearchEntry, (event is null) ? null : event.getEventStruct()) != 0;
+	}
+
 	int[string] connectedSignals;
+
+	void delegate(SearchEntry)[] onNextMatchListeners;
+	/**
+	 * The ::next-match signal is a [keybinding signal][GtkBindingSignal]
+	 * which gets emitted when the user initiates a move to the next match
+	 * for the current search string.
+	 *
+	 * Applications should connect to it, to implement moving between
+	 * matches.
+	 *
+	 * The default bindings for this signal is Ctrl-g.
+	 *
+	 * Since: 3.16
+	 */
+	void addOnNextMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "next-match" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"next-match",
+				cast(GCallback)&callBackNextMatch,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["next-match"] = 1;
+		}
+		onNextMatchListeners ~= dlg;
+	}
+	extern(C) static void callBackNextMatch(GtkSearchEntry* searchentryStruct, SearchEntry _searchentry)
+	{
+		foreach ( void delegate(SearchEntry) dlg; _searchentry.onNextMatchListeners )
+		{
+			dlg(_searchentry);
+		}
+	}
+
+	void delegate(SearchEntry)[] onPreviousMatchListeners;
+	/**
+	 * The ::previous-match signal is a [keybinding signal][GtkBindingSignal]
+	 * which gets emitted when the user initiates a move to the previous match
+	 * for the current search string.
+	 *
+	 * Applications should connect to it, to implement moving between
+	 * matches.
+	 *
+	 * The default bindings for this signal is Ctrl-Shift-g.
+	 *
+	 * Since: 3.16
+	 */
+	void addOnPreviousMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "previous-match" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"previous-match",
+				cast(GCallback)&callBackPreviousMatch,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["previous-match"] = 1;
+		}
+		onPreviousMatchListeners ~= dlg;
+	}
+	extern(C) static void callBackPreviousMatch(GtkSearchEntry* searchentryStruct, SearchEntry _searchentry)
+	{
+		foreach ( void delegate(SearchEntry) dlg; _searchentry.onPreviousMatchListeners )
+		{
+			dlg(_searchentry);
+		}
+	}
 
 	void delegate(SearchEntry)[] onSearchChangedListeners;
 	/**
@@ -142,6 +249,41 @@ public class SearchEntry : Entry
 	extern(C) static void callBackSearchChanged(GtkSearchEntry* searchentryStruct, SearchEntry _searchentry)
 	{
 		foreach ( void delegate(SearchEntry) dlg; _searchentry.onSearchChangedListeners )
+		{
+			dlg(_searchentry);
+		}
+	}
+
+	void delegate(SearchEntry)[] onStopSearchListeners;
+	/**
+	 * The ::stop-search signal is a [keybinding signal][GtkBindingSignal]
+	 * which gets emitted when the user stops a search via keyboard input.
+	 *
+	 * Applications should connect to it, to implement hiding the search
+	 * entry in this case.
+	 *
+	 * The default bindings for this signal is Escape.
+	 *
+	 * Since: 3.16
+	 */
+	void addOnStopSearch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "stop-search" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"stop-search",
+				cast(GCallback)&callBackStopSearch,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["stop-search"] = 1;
+		}
+		onStopSearchListeners ~= dlg;
+	}
+	extern(C) static void callBackStopSearch(GtkSearchEntry* searchentryStruct, SearchEntry _searchentry)
+	{
+		foreach ( void delegate(SearchEntry) dlg; _searchentry.onStopSearchListeners )
 		{
 			dlg(_searchentry);
 		}

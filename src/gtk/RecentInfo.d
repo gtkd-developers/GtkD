@@ -123,8 +123,9 @@ public class RecentInfo
 	}
 
 	/**
-	 * Checks whether the resource pointed by @info still exists.  At
-	 * the moment this check is done only on resources pointing to local files.
+	 * Checks whether the resource pointed by @info still exists.
+	 * At the moment this check is done only on resources pointing
+	 * to local files.
 	 *
 	 * Return: %TRUE if the resource exists
 	 *
@@ -150,11 +151,11 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the number of days elapsed since the last update of the resource
-	 * pointed by @info.
+	 * Gets the number of days elapsed since the last update
+	 * of the resource pointed by @info.
 	 *
-	 * Return: a positive integer containing the number of days elapsed
-	 *     since the time this resource was last modified.
+	 * Return: a positive integer containing the number of days
+	 *     elapsed since the time this resource was last modified
 	 *
 	 * Since: 2.10
 	 */
@@ -172,7 +173,8 @@ public class RecentInfo
 	 *
 	 * Params:
 	 *     appName = the name of the application that has registered this item
-	 *     appExec = return location for the string containing the command line
+	 *     appExec = return location for the string containing
+	 *         the command line
 	 *     count = return location for the number of times this item was registered
 	 *     time = return location for the timestamp this item was last registered
 	 *         for this application
@@ -216,7 +218,7 @@ public class RecentInfo
 	/**
 	 * Gets the (short) description of the resource.
 	 *
-	 * Return: the description of the resource.  The returned string
+	 * Return: the description of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -227,10 +229,10 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the name of the resource.  If none has been defined, the basename
+	 * Gets the name of the resource. If none has been defined, the basename
 	 * of the resource is obtained.
 	 *
-	 * Return: the display name of the resource.  The returned string
+	 * Return: the display name of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -243,8 +245,8 @@ public class RecentInfo
 	/**
 	 * Retrieves the icon associated to the resource MIME type.
 	 *
-	 * Return: a #GIcon containing the icon, or %NULL. Use
-	 *     g_object_unref() when finished using the icon
+	 * Return: a #GIcon containing the icon, or %NULL.
+	 *     Use g_object_unref() when finished using the icon
 	 *
 	 * Since: 2.22
 	 */
@@ -261,9 +263,9 @@ public class RecentInfo
 	}
 
 	/**
-	 * Returns all groups registered for the recently used item @info.  The
-	 * array of returned group names will be %NULL terminated, so length might
-	 * optionally be %NULL.
+	 * Returns all groups registered for the recently used item @info.
+	 * The array of returned group names will be %NULL terminated, so
+	 * length might optionally be %NULL.
 	 *
 	 * Params:
 	 *     length = return location for the number of groups returned
@@ -306,7 +308,7 @@ public class RecentInfo
 	/**
 	 * Gets the MIME type of the resource.
 	 *
-	 * Return: the MIME type of the resource.  The returned string
+	 * Return: the MIME type of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -331,11 +333,11 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets the value of the “private” flag.  Resources in the recently used
+	 * Gets the value of the “private” flag. Resources in the recently used
 	 * list that have this flag set to %TRUE should only be displayed by the
 	 * applications that have registered them.
 	 *
-	 * Return: %TRUE if the private flag was found, %FALSE otherwise.
+	 * Return: %TRUE if the private flag was found, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -345,12 +347,13 @@ public class RecentInfo
 	}
 
 	/**
-	 * Computes a valid UTF-8 string that can be used as the name of the item in a
-	 * menu or list.  For example, calling this function on an item that refers to
+	 * Computes a valid UTF-8 string that can be used as the
+	 * name of the item in a menu or list. For example, calling
+	 * this function on an item that refers to
 	 * “file:///foo/bar.txt” will yield “bar.txt”.
 	 *
-	 * Return: A newly-allocated string in UTF-8 encoding; free it with
-	 *     g_free().
+	 * Return: A newly-allocated string in UTF-8 encoding
+	 *     free it with g_free()
 	 *
 	 * Since: 2.10
 	 */
@@ -362,7 +365,7 @@ public class RecentInfo
 	/**
 	 * Gets the URI of the resource.
 	 *
-	 * Return: the URI of the resource.  The returned string is
+	 * Return: the URI of the resource. The returned string is
 	 *     owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -373,7 +376,7 @@ public class RecentInfo
 	}
 
 	/**
-	 * Gets a displayable version of the resource’s URI.  If the resource
+	 * Gets a displayable version of the resource’s URI. If the resource
 	 * is local, it returns a local path; if the resource is not local,
 	 * it returns the UTF-8 encoded content of gtk_recent_info_get_uri().
 	 *
@@ -408,7 +411,7 @@ public class RecentInfo
 	 *     appName = a string containing an application name
 	 *
 	 * Return: %TRUE if an application with name @app_name was found,
-	 *     %FALSE otherwise.
+	 *     %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -418,13 +421,13 @@ public class RecentInfo
 	}
 
 	/**
-	 * Checks whether @group_name appears inside the groups registered for the
-	 * recently used item @info.
+	 * Checks whether @group_name appears inside the groups
+	 * registered for the recently used item @info.
 	 *
 	 * Params:
 	 *     groupName = name of a group
 	 *
-	 * Return: %TRUE if the group was found.
+	 * Return: %TRUE if the group was found
 	 *
 	 * Since: 2.10
 	 */
@@ -437,7 +440,7 @@ public class RecentInfo
 	 * Checks whether the resource is local or not by looking at the
 	 * scheme of its URI.
 	 *
-	 * Return: %TRUE if the resource is local.
+	 * Return: %TRUE if the resource is local
 	 *
 	 * Since: 2.10
 	 */
@@ -450,7 +453,7 @@ public class RecentInfo
 	 * Gets the name of the last application that have registered the
 	 * recently used resource represented by @info.
 	 *
-	 * Return: an application name.  Use g_free() to free it.
+	 * Return: an application name. Use g_free() to free it.
 	 *
 	 * Since: 2.10
 	 */
@@ -466,8 +469,8 @@ public class RecentInfo
 	 * Params:
 	 *     infoB = a #GtkRecentInfo
 	 *
-	 * Return: %TRUE if both #GtkRecentInfo-struct point to se same
-	 *     resource, %FALSE otherwise.
+	 * Return: %TRUE if both #GtkRecentInfo-struct point to the same
+	 *     resource, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -479,8 +482,8 @@ public class RecentInfo
 	/**
 	 * Increases the reference count of @recent_info by one.
 	 *
-	 * Return: the recent info object with its reference count increased
-	 *     by one.
+	 * Return: the recent info object with its reference count
+	 *     increased by one
 	 *
 	 * Since: 2.10
 	 */
@@ -497,7 +500,7 @@ public class RecentInfo
 	}
 
 	/**
-	 * Decreases the reference count of @info by one.  If the reference
+	 * Decreases the reference count of @info by one. If the reference
 	 * count reaches zero, @info is deallocated, and the memory freed.
 	 *
 	 * Since: 2.10

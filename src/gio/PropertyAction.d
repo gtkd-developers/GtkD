@@ -143,7 +143,8 @@ public class PropertyAction : ObjectG, ActionIF
 	 *
 	 * Params:
 	 *     name = the name of the action to create
-	 *     object = the object that has the property to wrap
+	 *     object = the object that has the property
+	 *         to wrap
 	 *     propertyName = the name of the property
 	 *
 	 * Return: a new #GPropertyAction
@@ -152,9 +153,9 @@ public class PropertyAction : ObjectG, ActionIF
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string name, void* object, string propertyName)
+	public this(string name, ObjectG object, string propertyName)
 	{
-		auto p = g_property_action_new(Str.toStringz(name), object, Str.toStringz(propertyName));
+		auto p = g_property_action_new(Str.toStringz(name), (object is null) ? null : object.getObjectGStruct(), Str.toStringz(propertyName));
 		
 		if(p is null)
 		{

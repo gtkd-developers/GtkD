@@ -33,8 +33,8 @@ public  import gtkc.giotypes;
 
 
 /**
- * Interface that is used by backends to associate default
- * handlers with URI schemes.
+ * #GDesktopAppInfoLookup is an opaque data structure and can only be accessed
+ * using the following functions.
  */
 public template DesktopAppInfoLookupT(TStruct)
 {

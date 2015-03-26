@@ -30,6 +30,10 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/**
+ * #GStaticResource is an opaque data structure and can only be accessed
+ * using the following functions.
+ */
 public class StaticResource
 {
 	/** the main Gtk struct */

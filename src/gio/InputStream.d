@@ -264,8 +264,14 @@ public class InputStream : ObjectG
 	 * read into @buffer.
 	 *
 	 * If there is an error during the operation %FALSE is returned and @error
-	 * is set to indicate the error status, @bytes_read is updated to contain
-	 * the number of bytes read into @buffer before the error occurred.
+	 * is set to indicate the error status.
+	 *
+	 * As a special exception to the normal conventions for functions that
+	 * use #GError, if this function returns %FALSE (and sets @error) then
+	 * @bytes_read will be set to the number of bytes that were successfully
+	 * read before the error was encountered.  This functionality is only
+	 * available from C.  If you need it from another language then you must
+	 * write your own loop around g_input_stream_read().
 	 *
 	 * Params:
 	 *     buffer = a buffer to
@@ -283,6 +289,69 @@ public class InputStream : ObjectG
 		GError* err = null;
 		
 		auto p = g_input_stream_read_all(gInputStream, buffer.ptr, cast(size_t)buffer.length, &bytesRead, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Request an asynchronous read of @count bytes from the stream into the
+	 * buffer starting at @buffer.
+	 *
+	 * This is the asynchronous equivalent of g_input_stream_read_all().
+	 *
+	 * Call g_input_stream_read_all_finish() to collect the result.
+	 *
+	 * Any outstanding I/O request with higher priority (lower numerical
+	 * value) will be executed before an outstanding request with lower
+	 * priority. Default priority is %G_PRIORITY_DEFAULT.
+	 *
+	 * Params:
+	 *     buffer = a buffer to
+	 *         read data into (which should be at least count bytes long)
+	 *     count = the number of bytes that will be read from the stream
+	 *     ioPriority = the [I/O priority][io-priority] of the request
+	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 *     callback = callback to call when the request is satisfied
+	 *     userData = the data to pass to callback function
+	 *
+	 * Since: 2.44
+	 */
+	public void readAllAsync(ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_input_stream_read_all_async(gInputStream, buffer.ptr, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Finishes an asynchronous stream read operation started with
+	 * g_input_stream_read_all_async().
+	 *
+	 * As a special exception to the normal conventions for functions that
+	 * use #GError, if this function returns %FALSE (and sets @error) then
+	 * @bytes_read will be set to the number of bytes that were successfully
+	 * read before the error was encountered.  This functionality is only
+	 * available from C.  If you need it from another language then you must
+	 * write your own loop around g_input_stream_read_async().
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *     bytesRead = location to store the number of bytes that was read from the stream
+	 *
+	 * Return: %TRUE on success, %FALSE if there was an error
+	 *
+	 * Since: 2.44
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool readAllFinish(AsyncResultIF result, out size_t bytesRead)
+	{
+		GError* err = null;
+		
+		auto p = g_input_stream_read_all_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesRead, &err) != 0;
 		
 		if (err !is null)
 		{

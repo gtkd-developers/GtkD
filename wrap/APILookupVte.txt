@@ -28,3 +28,9 @@ addAliases: start
 addAliases: end
 
 move: get_user_shell Terminal
+
+move: get_features Version
+move: get_major_version Version
+move: get_micro_version Version
+move: get_minor_version Version
+

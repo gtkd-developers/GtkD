@@ -26,6 +26,10 @@ module gtkc.gobjecttypes;
 
 public import gtkc.glibtypes;
 
+public alias void* GInitiallyUnownedAutoptr;
+
+public alias void* GObjectAutoptr;
+
 /**
  * This is the signature of marshaller functions, required to marshall
  * arrays of parameter values to signal emissions into C language callback
@@ -130,7 +134,7 @@ alias GConnectFlags ConnectFlags;
 
 /**
  * Through the #GParamFlags flag values, certain aspects of parameters
- * can be configured. See also #G_PARAM_READWRITE and #G_PARAM_STATIC_STRINGS.
+ * can be configured. See also #G_PARAM_STATIC_STRINGS.
  */
 public enum GParamFlags : uint
 {
@@ -151,7 +155,7 @@ public enum GParamFlags : uint
 	 */
 	CONSTRUCT = 4,
 	/**
-	 * the parameter will only be set upon object construction
+	 * the parameter can only be set upon object construction
 	 */
 	CONSTRUCT_ONLY = 8,
 	/**
@@ -316,9 +320,13 @@ public enum GTypeDebugFlags
 	 */
 	SIGNALS = 2,
 	/**
+	 * Keep a count of instances of each type
+	 */
+	INSTANCE_COUNT = 4,
+	/**
 	 * Mask covering all debug flags
 	 */
-	MASK = 3,
+	MASK = 7,
 }
 alias GTypeDebugFlags TypeDebugFlags;
 
@@ -1316,15 +1324,6 @@ struct GTypeQuery
 }
 
 /**
- * - 'i' - Integers. passed as collect_values[].v_int.
- * - 'l' - Longs. passed as collect_values[].v_long.
- * - 'd' - Doubles. passed as collect_values[].v_double.
- * - 'p' - Pointers. passed as collect_values[].v_pointer.
- *
- * It should be noted that for variable argument list construction,
- * ANSI C promotes every type smaller than an integer to an int, and
- * floats to doubles. So for collection of short int or char, 'i'
- * needs to be used, and for collection of floats 'd'.
  * The #GTypeValueTable provides the functions required by the #GValue
  * implementation, to serve as a container for values of a type.
  */
@@ -1339,6 +1338,14 @@ struct GTypeValueTable
 	 * this value bit-by-bit. Each character in the format represents
 	 * an argument to be collected, and the characters themselves indicate
 	 * the type of the argument. Currently supported arguments are:
+	 * - 'i' - Integers. passed as collect_values[].v_int.
+	 * - 'l' - Longs. passed as collect_values[].v_long.
+	 * - 'd' - Doubles. passed as collect_values[].v_double.
+	 * - 'p' - Pointers. passed as collect_values[].v_pointer.
+	 * It should be noted that for variable argument list construction,
+	 * ANSI C promotes every type smaller than an integer to an int, and
+	 * floats to doubles. So for collection of short int or char, 'i'
+	 * needs to be used, and for collection of floats 'd'.
 	 */
 	const(char)* collectFormat;
 	extern(C) char* function(GValue* value, uint nCollectValues, GTypeCValue* collectValues, uint collectFlags) collectValue;
@@ -1823,6 +1830,25 @@ public alias extern(C) void function(GTypePlugin* plugin) GTypePluginUnuse;
  */
 public alias extern(C) void function(GTypePlugin* plugin) GTypePluginUse;
 
+/**
+ * This is the signature of va_list marshaller functions, an optional
+ * marshaller that can be used in some situations to avoid
+ * marshalling the signal argument into GValues.
+ *
+ * Params:
+ *     closure = the #GClosure to which the marshaller belongs
+ *     returnValue = a #GValue to store the return
+ *         value. May be %NULL if the callback of @closure doesn't return a
+ *         value.
+ *     instanc = the instance on which the closure is invoked.
+ *     args = va_list of arguments to be passed to the closure.
+ *     marshalData = additional data specified when
+ *         registering the marshaller, see g_closure_set_marshal() and
+ *         g_closure_set_meta_marshal()
+ *     nParams = the length of the @param_types array
+ *     paramTypes = the #GType of each argument from
+ *         @args.
+ */
 public alias extern(C) void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) GVaClosureMarshal;
 
 /**

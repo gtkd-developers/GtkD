@@ -427,7 +427,7 @@ public class TextView : Container, ScrollableIF
 	 * attributes in effect at a given text position.
 	 *
 	 * The return value is a copy owned by the caller of this function,
-	 * and should be freed.
+	 * and should be freed with gtk_text_attributes_unref().
 	 *
 	 * Return: a new #GtkTextAttributes
 	 */
@@ -610,6 +610,18 @@ public class TextView : Container, ScrollableIF
 	public void getLineYrange(TextIter iter, out int y, out int height)
 	{
 		gtk_text_view_get_line_yrange(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), &y, &height);
+	}
+
+	/**
+	 * Gets the value of the #GtkTextView:monospace property.
+	 *
+	 * Return: %TRUE if monospace fonts are desired
+	 *
+	 * Since: 3.16
+	 */
+	public bool getMonospace()
+	{
+		return gtk_text_view_get_monospace(gtkTextView) != 0;
 	}
 
 	/**
@@ -1074,6 +1086,21 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
+	 * Sets the #GtkTextView:monospace property, which
+	 * indicates that the text view should use monospace
+	 * fonts.
+	 *
+	 * Params:
+	 *     monospace = %TRUE to request monospace styling
+	 *
+	 * Since: 3.16
+	 */
+	public void setMonospace(bool monospace)
+	{
+		gtk_text_view_set_monospace(gtkTextView, monospace);
+	}
+
+	/**
 	 * Changes the #GtkTextView overwrite mode.
 	 *
 	 * Params:
@@ -1331,6 +1358,50 @@ public class TextView : Container, ScrollableIF
 		{
 			dlg(type, count, _textview);
 		}
+	}
+
+	bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView)[] onExtendSelectionListeners;
+	/**
+	 * The ::extend-selection signal is emitted when the selection needs to be
+	 * extended at @location.
+	 *
+	 * Params:
+	 *     granularity = the granularity type
+	 *     location = the location where to extend the selection
+	 *     start = where the selection should start
+	 *     end = where the selection should end
+	 *
+	 * Return: %GDK_EVENT_STOP to stop other handlers from being invoked for the
+	 *     event. %GDK_EVENT_PROPAGATE to propagate the event further.
+	 *
+	 * Since: 3.16
+	 */
+	void addOnExtendSelection(bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "extend-selection" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"extend-selection",
+				cast(GCallback)&callBackExtendSelection,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["extend-selection"] = 1;
+		}
+		onExtendSelectionListeners ~= dlg;
+	}
+	extern(C) static int callBackExtendSelection(GtkTextView* textviewStruct, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end, TextView _textview)
+	{
+		foreach ( bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg; _textview.onExtendSelectionListeners )
+		{
+			if ( dlg(granularity, ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), _textview) )
+			{
+				return 1;
+			}
+		}
+		
+		return 0;
 	}
 
 	void delegate(string, TextView)[] onInsertAtCursorListeners;

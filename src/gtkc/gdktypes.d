@@ -589,6 +589,9 @@ alias GdkDragProtocol DragProtocol;
  * Most of these masks map onto one or more of the #GdkEventType event types
  * above.
  *
+ * See the [input handling overview][chap-input-handling] for details of
+ * [event masks][event-masks] and [event propagation][event-propagation].
+ *
  * %GDK_POINTER_MOTION_HINT_MASK is deprecated. It is a special mask
  * to reduce the number of %GDK_MOTION_NOTIFY events received. When using
  * %GDK_POINTER_MOTION_HINT_MASK, fewer %GDK_MOTION_NOTIFY events will
@@ -999,6 +1002,28 @@ public enum GdkFullscreenMode
 alias GdkFullscreenMode FullscreenMode;
 
 /**
+ * Error enumeration for #GdkGLContext.
+ *
+ * Since: 3.16
+ */
+public enum GdkGLError
+{
+	/**
+	 * OpenGL support is not available
+	 */
+	NOT_AVAILABLE = 0,
+	/**
+	 * The requested visual format is not supported
+	 */
+	UNSUPPORTED_FORMAT = 1,
+	/**
+	 * The requested profile is not supported
+	 */
+	UNSUPPORTED_PROFILE = 2,
+}
+alias GdkGLError GLError;
+
+/**
  * Defines how device grabs interact with other devices.
  */
 public enum GdkGrabOwnership
@@ -1046,6 +1071,10 @@ public enum GdkGrabStatus
 	 * the resource is frozen by an active grab of another client.
 	 */
 	FROZEN = 4,
+	/**
+	 * the grab failed for some other reason.
+	 */
+	FAILED = 5,
 }
 alias GdkGrabStatus GrabStatus;
 
@@ -3000,6 +3029,8 @@ struct GdkFrameClockClass;
 struct GdkFrameClockPrivate;
 
 struct GdkFrameTimings;
+
+struct GdkGLContext;
 
 /**
  * The #GdkGeometry struct gives the window manager information about

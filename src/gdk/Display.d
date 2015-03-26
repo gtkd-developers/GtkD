@@ -150,6 +150,9 @@ public class Display : ObjectG
 	 * display has previously been set, simply returns that. An internal
 	 * function that should not be used by applications.
 	 *
+	 * Deprecated: This symbol was never meant to be used outside
+	 * of GTK+
+	 *
 	 * Return: the default display, if it
 	 *     could be opened, otherwise %NULL.
 	 */
@@ -696,6 +699,9 @@ public class Display : ObjectG
 	 *
 	 * Currently this only works on X11 with XComposite and
 	 * XDamage extensions available.
+	 *
+	 * Deprecated: Compositing is an outdated technology that
+	 * only ever worked on X11.
 	 *
 	 * Return: %TRUE if windows may be composited.
 	 *

@@ -109,14 +109,18 @@ public class SourceCompletionContext : ObjectG
 	 *
 	 * Params:
 	 *     iter = a #GtkTextIter.
+	 *
+	 * Return: %TRUE if @iter is correctly set, %FALSE otherwise.
 	 */
-	public void getIter(out TextIter iter)
+	public bool getIter(out TextIter iter)
 	{
 		GtkTextIter* outiter = new GtkTextIter;
 		
-		gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter);
+		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
 		
 		iter = ObjectG.getDObject!(TextIter)(outiter);
+		
+		return p;
 	}
 
 	int[string] connectedSignals;

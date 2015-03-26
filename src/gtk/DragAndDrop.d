@@ -42,6 +42,30 @@ public struct DragAndDrop
 	 */
 
 	/**
+	 * Cancels an ongoing drag operation on the source side.
+	 *
+	 * If you want to be able to cancel a drag operation in this way,
+	 * you need to keep a pointer to the drag context, either from an
+	 * explicit call to gtk_drag_begin_with_coordinates(), or by
+	 * connecting to #GtkWidget::drag-begin.
+	 *
+	 * If @context does not refer to an ongoing drag operation, this
+	 * function does nothing.
+	 *
+	 * If a drag is cancelled in this way, the @result argument of
+	 * #GtkWidget::drag-failed is set to @GTK_DRAG_RESULT_ERROR.
+	 *
+	 * Params:
+	 *     context = a #GdkDragContext, as e.g. returned by gtk_drag_begin_with_coordinates()
+	 *
+	 * Since: 3.16
+	 */
+	public static void dragCancel(DragContext context)
+	{
+		gtk_drag_cancel((context is null) ? null : context.getDragContextStruct());
+	}
+
+	/**
 	 * Informs the drag source that the drop is finished, and
 	 * that the data of the drag will no longer be required.
 	 *

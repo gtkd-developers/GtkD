@@ -190,6 +190,24 @@ public class Notebook : Container
 	}
 
 	/**
+	 * Removes the child from the notebook.
+	 *
+	 * This function is very similar to gtk_container_remove(),
+	 * but additionally informs the notebook that the removal
+	 * is happening as part of a tab DND operation, which should
+	 * not be cancelled.
+	 *
+	 * Params:
+	 *     child = a child
+	 *
+	 * Since: 3.16
+	 */
+	public void detachTab(Widget child)
+	{
+		gtk_notebook_detach_tab(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+	}
+
+	/**
 	 * Gets one of the action widgets. See gtk_notebook_set_action_widget().
 	 *
 	 * Params:
@@ -740,6 +758,14 @@ public class Notebook : Container
 	 * destination and accept the target “GTK_NOTEBOOK_TAB”. The notebook
 	 * will fill the selection with a GtkWidget** pointing to the child
 	 * widget that corresponds to the dropped tab.
+	 *
+	 * Note that you should use gtk_notebook_detach_tab() instead
+	 * of gtk_container_remove() if you want to remove the tab from
+	 * the source notebook as part of accepting a drop. Otherwise,
+	 * the source notebook will think that the dragged tab was
+	 * removed from underneath the ongoing drag operation, and
+	 * will initiate a drag cancel animation.
+	 *
 	 * |[<!-- language="C" -->
 	 * static void
 	 * on_drag_data_received (GtkWidget        *widget,
@@ -753,14 +779,12 @@ public class Notebook : Container
 	 * {
 	 * GtkWidget *notebook;
 	 * GtkWidget **child;
-	 * GtkContainer *container;
 	 *
 	 * notebook = gtk_drag_get_source_widget (context);
 	 * child = (void*) gtk_selection_data_get_data (data);
 	 *
 	 * process_widget (*child);
-	 * container = GTK_CONTAINER (notebook);
-	 * gtk_container_remove (container, *child);
+	 * gtk_notebook_detach_tab (GTK_NOTEBOOK (notebook), *child);
 	 * }
 	 * ]|
 	 *

@@ -89,7 +89,7 @@ public class TcpConnection : SocketConnection
 	}
 
 	/**
-	 * This enabled graceful disconnects on close. A graceful disconnect
+	 * This enables graceful disconnects on close. A graceful disconnect
 	 * means that we signal the receiving end that the connection is terminated
 	 * and wait for it to close the connection before closing the connection.
 	 *

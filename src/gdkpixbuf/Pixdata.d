@@ -74,6 +74,8 @@ public class Pixdata
 	 * for validity. This function may fail with %GDK_PIXBUF_ERROR_CORRUPT_IMAGE
 	 * or %GDK_PIXBUF_ERROR_UNKNOWN_TYPE.
 	 *
+	 * Deprecated: Use #GResource instead.
+	 *
 	 * Params:
 	 *     streamLength = length of the stream used for deserialization.
 	 *     stream = stream of bytes containing a
@@ -103,6 +105,8 @@ public class Pixdata
 	 * pixel data is run-length encoded into newly-allocated memory and a
 	 * pointer to that memory is returned.
 	 *
+	 * Deprecated: Use #GResource instead.
+	 *
 	 * Params:
 	 *     pixbuf = the data to fill @pixdata with.
 	 *     useRle = whether to use run-length encoding for the pixel data.
@@ -121,6 +125,8 @@ public class Pixdata
 	 * The byte stream consists of a straightforward writeout of the
 	 * #GdkPixdata fields in network byte order, plus the @pixel_data
 	 * bytes the structure points to.
+	 *
+	 * Deprecated: Use #GResource instead.
 	 *
 	 * Params:
 	 *     streamLengthP = location to store the resulting stream length in.
@@ -145,6 +151,8 @@ public class Pixdata
 	 * gdk-pixbuf ships with a program called
 	 * [gdk-pixbuf-csource][gdk-pixbuf-csource], which offers a command
 	 * line interface to this function.
+	 *
+	 * Deprecated: Use #GResource instead.
 	 *
 	 * Params:
 	 *     name = used for naming generated data structures or macros.

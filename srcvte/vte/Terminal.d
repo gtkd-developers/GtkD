@@ -505,6 +505,22 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Returns the set of characters which will be considered parts of a word
+	 * when doing word-wise selection, in addition to the default which only
+	 * considers alphanumeric characters part of a word.
+	 *
+	 * If %NULL, a built-in set is used.
+	 *
+	 * Return: a string, or %NULL
+	 *
+	 * Since: 0.40
+	 */
+	public string getWordCharExceptions()
+	{
+		return Str.toString(vte_terminal_get_word_char_exceptions(vteTerminal));
+	}
+
+	/**
 	 * Adds the regular expression @regex to the list of matching expressions.  When the
 	 * user moves the mouse cursor over a section of displayed text which matches
 	 * this expression, the text will be highlighted.
@@ -590,6 +606,8 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Sets which cursor the terminal will use if the pointer is over the pattern
 	 * specified by @tag.  The terminal keeps a reference to @cursor.
+	 *
+	 * Deprecated: Use vte_terminal_match_set_cursor_type() or vte_terminal_match_set_cursor_named() instead.
 	 *
 	 * Params:
 	 *     tag = the tag of the regex which should use the specified cursor
@@ -818,9 +836,6 @@ public class Terminal : Widget, ScrollableIF
 	 * when using the UTF-8 encoding (vte_terminal_set_encoding()). In all other encodings,
 	 * the width of ambiguous-width characters is fixed.
 	 *
-	 * This setting only takes effect the next time the terminal is reset, either
-	 * via escape sequence or with vte_terminal_reset().
-	 *
 	 * Params:
 	 *     width = either 1 (narrow) or 2 (wide)
 	 */
@@ -907,19 +922,15 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * The terminal widget uses a 28-color model comprised of the default foreground
-	 * and background colors, the bold foreground color, the dim foreground
-	 * color, an eight color palette, bold versions of the eight color palette,
-	 * and a dim version of the the eight color palette.
+	 * @palette specifies the new values for the 256 palette colors: 8 standard colors,
+	 * their 8 bright counterparts, 6x6x6 color cube, and 24 grayscale colors.
+	 * Omitted entries will default to a hardcoded value.
 	 *
-	 * @palette_size must be either 0, 8, 16, or 24, or between 25 and 256 inclusive.
-	 * If @foreground is %NULL and
-	 * @palette_size is greater than 0, the new foreground color is taken from
-	 * @palette[7].  If @background is %NULL and @palette_size is greater than 0,
-	 * the new background color is taken from @palette[0].  If
-	 * @palette_size is 8 or 16, the third (dim) and possibly the second (bold)
-	 * 8-color palettes are extrapolated from the new background color and the items
-	 * in @palette.
+	 * @palette_size must be 0, 8, 16, 232 or 256.
+	 *
+	 * If @foreground is %NULL and @palette_size is greater than 0, the new foreground
+	 * color is taken from @palette[7].  If @background is %NULL and @palette_size is
+	 * greater than 0, the new background color is taken from @palette[0].
 	 *
 	 * Params:
 	 *     foreground = the new foreground color, or %NULL
@@ -1156,6 +1167,28 @@ public class Terminal : Widget, ScrollableIF
 	public void setSize(glong columns, glong rows)
 	{
 		vte_terminal_set_size(vteTerminal, columns, rows);
+	}
+
+	/**
+	 * With this function you can provide a set of characters which will
+	 * be considered parts of a word when doing word-wise selection, in
+	 * addition to the default which only considers alphanumeric characters
+	 * part of a word.
+	 *
+	 * The characters in @exceptions must be non-alphanumeric, each character
+	 * must occur only once, and if @exceptions contains the character
+	 * U+002D HYPHEN-MINUS, it must be at the start of the string.
+	 *
+	 * Use %NULL to reset the set of exception characters to the default.
+	 *
+	 * Params:
+	 *     exceptions = a string of ASCII punctuation characters, or %NULL
+	 *
+	 * Since: 0.40
+	 */
+	public void setWordCharExceptions(string exceptions)
+	{
+		vte_terminal_set_word_char_exceptions(vteTerminal, Str.toStringz(exceptions));
 	}
 
 	/**

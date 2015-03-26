@@ -1189,6 +1189,25 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
+	 * Inserts the text in @markup at position @iter. @markup will be inserted
+	 * in its entirety and must be nul-terminated and valid UTF-8. Emits the
+	 * #GtkTextBuffer::insert-text signal, possibly multiple times; insertion
+	 * actually occurs in the default handler for the signal. @iter will point
+	 * to the end of the inserted text on return.
+	 *
+	 * Params:
+	 *     iter = location to insert the markup
+	 *     markup = a nul-terminated UTF-8 string containing [Pango markup][PangoMarkupFormat]
+	 *     len = length of @markup in bytes, or -1
+	 *
+	 * Since: 3.16
+	 */
+	public void insertMarkup(TextIter iter, string markup, int len)
+	{
+		gtk_text_buffer_insert_markup(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(markup), len);
+	}
+
+	/**
 	 * Inserts an image into the text buffer at @iter. The image will be
 	 * counted as one character in character counts, and when obtaining
 	 * the buffer contents as a string, will be represented by the Unicode

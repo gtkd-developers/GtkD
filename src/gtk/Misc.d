@@ -121,7 +121,7 @@ public class Misc : Widget
 	/**
 	 * Sets the alignment of the widget.
 	 *
-	 * Deprecated: Use #GtkWidget alignment and margin properties.
+	 * Deprecated: Use #GtkWidget's alignment (#GtkWidget:halign and #GtkWidget:valign) and margin properties or #GtkLabel's #GtkLabel:xalign and #GtkLabel:yalign properties.
 	 *
 	 * Params:
 	 *     xalign = the horizontal alignment, from 0 (left) to 1 (right).

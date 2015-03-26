@@ -1033,6 +1033,26 @@ public class Window : Bin
 	}
 
 	/**
+	 * Returns the custom titlebar that has been set with
+	 * gtk_window_set_titlebar().
+	 *
+	 * Return: the custom titlebar, or %NULL
+	 *
+	 * Since: 3.16
+	 */
+	public Widget getTitlebar()
+	{
+		auto p = gtk_window_get_titlebar(gtkWindow);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+	}
+
+	/**
 	 * Fetches the transient parent for this window. See
 	 * gtk_window_set_transient_for().
 	 *

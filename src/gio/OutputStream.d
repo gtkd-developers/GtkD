@@ -499,8 +499,15 @@ public class OutputStream : ObjectG
 	 * is set to @count.
 	 *
 	 * If there is an error during the operation %FALSE is returned and @error
-	 * is set to indicate the error status, @bytes_written is updated to contain
-	 * the number of bytes written into the stream before the error occurred.
+	 * is set to indicate the error status.
+	 *
+	 * As a special exception to the normal conventions for functions that
+	 * use #GError, if this function returns %FALSE (and sets @error) then
+	 * @bytes_written will be set to the number of bytes that were
+	 * successfully written before the error was encountered.  This
+	 * functionality is only available from C.  If you need it from another
+	 * language then you must write your own loop around
+	 * g_output_stream_write().
 	 *
 	 * Params:
 	 *     buffer = the buffer containing the data to write.
@@ -518,6 +525,74 @@ public class OutputStream : ObjectG
 		GError* err = null;
 		
 		auto p = g_output_stream_write_all(gOutputStream, buffer.ptr, cast(size_t)buffer.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Request an asynchronous write of @count bytes from @buffer into
+	 * the stream. When the operation is finished @callback will be called.
+	 * You can then call g_output_stream_write_all_finish() to get the result of the
+	 * operation.
+	 *
+	 * This is the asynchronous version of g_output_stream_write_all().
+	 *
+	 * Call g_output_stream_write_all_finish() to collect the result.
+	 *
+	 * Any outstanding I/O request with higher priority (lower numerical
+	 * value) will be executed before an outstanding request with lower
+	 * priority. Default priority is %G_PRIORITY_DEFAULT.
+	 *
+	 * Note that no copy of @buffer will be made, so it must stay valid
+	 * until @callback is called.
+	 *
+	 * Params:
+	 *     buffer = the buffer containing the data to write
+	 *     count = the number of bytes to write
+	 *     ioPriority = the io priority of the request
+	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 *     callback = callback to call when the request is satisfied
+	 *     userData = the data to pass to callback function
+	 *
+	 * Since: 2.44
+	 */
+	public void writeAllAsync(ubyte[] buffer, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_output_stream_write_all_async(gOutputStream, buffer.ptr, cast(size_t)buffer.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Finishes an asynchronous stream write operation started with
+	 * g_output_stream_write_all_async().
+	 *
+	 * As a special exception to the normal conventions for functions that
+	 * use #GError, if this function returns %FALSE (and sets @error) then
+	 * @bytes_written will be set to the number of bytes that were
+	 * successfully written before the error was encountered.  This
+	 * functionality is only available from C.  If you need it from another
+	 * language then you must write your own loop around
+	 * g_output_stream_write_async().
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *     bytesWritten = location to store the number of bytes that was written to the stream
+	 *
+	 * Return: %TRUE on success, %FALSE if there was an error
+	 *
+	 * Since: 2.44
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool writeAllFinish(AsyncResultIF result, out size_t bytesWritten)
+	{
+		GError* err = null;
+		
+		auto p = g_output_stream_write_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
 		
 		if (err !is null)
 		{

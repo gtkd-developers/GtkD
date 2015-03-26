@@ -27,6 +27,280 @@ module gtkc.giotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
+public alias void* GActionMapAutoptr;
+
+public alias void* GActionAutoptr;
+
+public alias void* GAppInfoMonitorAutoptr;
+
+public alias void* GAppInfoAutoptr;
+
+public alias void* GAppLaunchContextAutoptr;
+
+public alias void* GApplicationCommandLineAutoptr;
+
+public alias void* GApplicationAutoptr;
+
+public alias void* GAsyncInitableAutoptr;
+
+public alias void* GAsyncResultAutoptr;
+
+public alias void* GBufferedInputStreamAutoptr;
+
+public alias void* GBufferedOutputStreamAutoptr;
+
+public alias void* GBytesIconAutoptr;
+
+public alias void* GCancellableAutoptr;
+
+public alias void* GCharsetConverterAutoptr;
+
+public alias void* GConverterInputStreamAutoptr;
+
+public alias void* GConverterOutputStreamAutoptr;
+
+public alias void* GConverterAutoptr;
+
+public alias void* GCredentialsAutoptr;
+
+public alias void* GDBusActionGroupAutoptr;
+
+public alias void* GDBusAuthObserverAutoptr;
+
+public alias void* GDBusConnectionAutoptr;
+
+public alias void* GDBusInterfaceSkeletonAutoptr;
+
+public alias void* GDBusInterfaceAutoptr;
+
+public alias void* GDBusMenuModelAutoptr;
+
+public alias void* GDBusMessageAutoptr;
+
+public alias void* GDBusMethodInvocationAutoptr;
+
+public alias void* GDBusNodeInfoAutoptr;
+
+public alias void* GDBusObjectManagerClientAutoptr;
+
+public alias void* GDBusObjectManagerServerAutoptr;
+
+public alias void* GDBusObjectManagerAutoptr;
+
+public alias void* GDBusObjectProxyAutoptr;
+
+public alias void* GDBusObjectSkeletonAutoptr;
+
+public alias void* GDBusObjectAutoptr;
+
+public alias void* GDBusProxyAutoptr;
+
+public alias void* GDBusServerAutoptr;
+
+public alias void* GDataInputStreamAutoptr;
+
+public alias void* GDataOutputStreamAutoptr;
+
+public alias void* GDesktopAppInfoAutoptr;
+
+public alias void* GDriveAutoptr;
+
+public alias void* GEmblemAutoptr;
+
+public alias void* GEmblemedIconAutoptr;
+
+public alias void* GFileDescriptorBasedAutoptr;
+
+public alias void* GFileEnumeratorAutoptr;
+
+public alias void* GFileIOStreamAutoptr;
+
+public alias void* GFileIconAutoptr;
+
+public alias void* GFileInfoAutoptr;
+
+public alias void* GFileInputStreamAutoptr;
+
+public alias void* GFileMonitorAutoptr;
+
+public alias void* GFileOutputStreamAutoptr;
+
+public alias void* GFileAutoptr;
+
+public alias void* GFilenameCompleterAutoptr;
+
+public alias void* GFilterInputStreamAutoptr;
+
+public alias void* GFilterOutputStreamAutoptr;
+
+public alias void* GIOModuleAutoptr;
+
+public alias void* GIOStreamAutoptr;
+
+public alias void* GIconAutoptr;
+
+public alias void* GInetAddressMaskAutoptr;
+
+public alias void* GInetAddressAutoptr;
+
+public alias void* GInetSocketAddressAutoptr;
+
+public alias void* GInitableAutoptr;
+
+public alias void* GInputStreamAutoptr;
+
+public alias void* GListModelAutoptr;
+
+public alias void* GListStoreAutoptr;
+
+public alias void* GLoadableIconAutoptr;
+
+public alias void* GMemoryInputStreamAutoptr;
+
+public alias void* GMemoryOutputStreamAutoptr;
+
+public alias void* GMenuAttributeIterAutoptr;
+
+public alias void* GMenuItemAutoptr;
+
+public alias void* GMenuLinkIterAutoptr;
+
+public alias void* GMenuModelAutoptr;
+
+public alias void* GMenuAutoptr;
+
+public alias void* GMountOperationAutoptr;
+
+public alias void* GMountAutoptr;
+
+public alias void* GNativeVolumeMonitorAutoptr;
+
+public alias void* GNetworkAddressAutoptr;
+
+public alias void* GNetworkMonitorAutoptr;
+
+public alias void* GNetworkServiceAutoptr;
+
+public alias void* GNotificationAutoptr;
+
+public alias void* GOutputStreamAutoptr;
+
+public alias void* GPermissionAutoptr;
+
+public alias void* GPollableInputStreamAutoptr;
+
+public alias void* GPollableOutputStreamAutoptr;
+
+public alias void* GPropertyActionAutoptr;
+
+public alias void* GProxyAddressEnumeratorAutoptr;
+
+public alias void* GProxyAddressAutoptr;
+
+public alias void* GProxyResolverAutoptr;
+
+public alias void* GProxyAutoptr;
+
+public alias void* GRemoteActionGroupAutoptr;
+
+public alias void* GResolverAutoptr;
+
+public alias void* GSeekableAutoptr;
+
+public alias void* GSettingsBackendAutoptr;
+
+public alias void* GSettingsSchemaAutoptr;
+
+public alias void* GSettingsAutoptr;
+
+public alias void* GSimpleActionGroupAutoptr;
+
+public alias void* GSimpleActionAutoptr;
+
+public alias void* GSimpleAsyncResultAutoptr;
+
+public alias void* GSimplePermissionAutoptr;
+
+public alias void* GSimpleProxyResolverAutoptr;
+
+public alias void* GSocketAddressEnumeratorAutoptr;
+
+public alias void* GSocketAddressAutoptr;
+
+public alias void* GSocketClientAutoptr;
+
+public alias void* GSocketConnectableAutoptr;
+
+public alias void* GSocketConnectionAutoptr;
+
+public alias void* GSocketControlMessageAutoptr;
+
+public alias void* GSocketListenerAutoptr;
+
+public alias void* GSocketServiceAutoptr;
+
+public alias void* GSocketAutoptr;
+
+public alias void* GSubprocessLauncherAutoptr;
+
+public alias void* GSubprocessAutoptr;
+
+public alias void* GTaskAutoptr;
+
+public alias void* GTcpConnectionAutoptr;
+
+public alias void* GTcpWrapperConnectionAutoptr;
+
+public alias void* GTestDBusAutoptr;
+
+public alias void* GThemedIconAutoptr;
+
+public alias void* GThreadedSocketServiceAutoptr;
+
+public alias void* GTlsBackendAutoptr;
+
+public alias void* GTlsCertificateAutoptr;
+
+public alias void* GTlsClientConnectionAutoptr;
+
+public alias void* GTlsConnectionAutoptr;
+
+public alias void* GTlsDatabaseAutoptr;
+
+public alias void* GTlsFileDatabaseAutoptr;
+
+public alias void* GTlsInteractionAutoptr;
+
+public alias void* GTlsPasswordAutoptr;
+
+public alias void* GTlsServerConnectionAutoptr;
+
+public alias void* GUnixConnectionAutoptr;
+
+public alias void* GUnixCredentialsMessageAutoptr;
+
+public alias void* GUnixFDListAutoptr;
+
+public alias void* GUnixFDMessageAutoptr;
+
+public alias void* GUnixInputStreamAutoptr;
+
+public alias void* GUnixMountMonitorAutoptr;
+
+public alias void* GUnixOutputStreamAutoptr;
+
+public alias void* GUnixSocketAddressAutoptr;
+
+public alias void* GVfsAutoptr;
+
+public alias void* GVolumeMonitorAutoptr;
+
+public alias void* GVolumeAutoptr;
+
+public alias void* GZlibCompressorAutoptr;
+
+public alias void* GZlibDecompressorAutoptr;
+
 /**
  * Flags used when creating a #GAppInfo.
  */
@@ -278,17 +552,17 @@ public enum GCredentialsType
 	 */
 	FREEBSD_CMSGCRED = 2,
 	/**
-	 * The native credentials type is a <type>struct unpcbid</type>.
-	 */
-	NETBSD_UNPCBID = 3,
-	/**
 	 * The native credentials type is a <type>struct sockpeercred</type>. Added in 2.30.
 	 */
-	OPENBSD_SOCKPEERCRED = 4,
+	OPENBSD_SOCKPEERCRED = 3,
 	/**
 	 * The native credentials type is a <type>ucred_t</type>. Added in 2.40.
 	 */
-	SOLARIS_UCRED = 5,
+	SOLARIS_UCRED = 4,
+	/**
+	 * The native credentials type is a <type>struct unpcbid</type>.
+	 */
+	NETBSD_UNPCBID = 5,
 }
 alias GCredentialsType CredentialsType;
 
@@ -1347,7 +1621,7 @@ alias GFilesystemPreviewType FilesystemPreviewType;
  *
  * Note that this domain may be extended in future GLib releases. In
  * general, new error codes either only apply to new APIs, or else
- * replace #G_IO_ERROR_FAILED in cases that were not explicitly
+ * replace %G_IO_ERROR_FAILED in cases that were not explicitly
  * distinguished before. You should therefore avoid writing code like
  * |[<!-- language="C" -->
  * if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_FAILED))
@@ -1550,6 +1824,18 @@ public enum GIOErrorEnum
 	 * Broken pipe. Since 2.36
 	 */
 	BROKEN_PIPE = 44,
+	/**
+	 * Connection closed by peer. Note that this
+	 * is the same code as %G_IO_ERROR_BROKEN_PIPE; before 2.44 some
+	 * "connection closed" errors returned %G_IO_ERROR_BROKEN_PIPE, but others
+	 * returned %G_IO_ERROR_FAILED. Now they should all return the same
+	 * value, which has this more logical name. Since 2.44.
+	 */
+	CONNECTION_CLOSED = 44,
+	/**
+	 * Transport endpoint is not connected. Since 2.44
+	 */
+	NOT_CONNECTED = 45,
 }
 alias GIOErrorEnum IOErrorEnum;
 
@@ -1654,6 +1940,38 @@ public enum GMountUnmountFlags
 	FORCE = 1,
 }
 alias GMountUnmountFlags MountUnmountFlags;
+
+/**
+ * The host's network connectivity state, as reported by #GNetworkMonitor.
+ *
+ * Since: 2.44
+ */
+public enum GNetworkConnectivity
+{
+	/**
+	 * The host is not configured with a
+	 * route to the Internet; it may or may not be connected to a local
+	 * network.
+	 */
+	LOCAL = 1,
+	/**
+	 * The host is connected to a network, but
+	 * does not appear to be able to reach the full Internet, perhaps
+	 * due to upstream network problems.
+	 */
+	LIMITED = 2,
+	/**
+	 * The host is behind a captive portal and
+	 * cannot reach the full Internet.
+	 */
+	PORTAL = 3,
+	/**
+	 * The host is connected to a network, and
+	 * appears to be able to reach the full Internet.
+	 */
+	FULL = 4,
+}
+alias GNetworkConnectivity NetworkConnectivity;
 
 /**
  * Priority levels for #GNotifications.
@@ -3413,6 +3731,16 @@ struct GDBusInterfaceSkeletonPrivate;
  * function. The D-Bus call will be directed to your @method_call function,
  * with the provided @interface_name set to "org.freedesktop.DBus.Properties".
  *
+ * Ownership of the #GDBusMethodInvocation object passed to the
+ * method_call() function is transferred to your handler; you must
+ * call one of the methods of #GDBusMethodInvocation to return a reply
+ * (possibly empty), or an error. These functions also take ownership
+ * of the passed-in invocation object, so unless the invocation
+ * object has otherwise been referenced, it will be then be freed.
+ * Calling one of these functions may be done within your
+ * method_call() implementation but it also can be done at a later
+ * point to handle the method asynchronously.
+ *
  * The usual checks on the validity of the calls is performed. For
  * `Get` calls, an error is automatically returned if the property does
  * not exist or the permissions do not allow access. The same checks are
@@ -3832,6 +4160,10 @@ struct GDesktopAppInfoClass
 
 struct GDesktopAppInfoLookup;
 
+/**
+ * Interface that is used by backends to associate default
+ * handlers with URI schemes.
+ */
 struct GDesktopAppInfoLookupIface
 {
 	GTypeInterface gIface;
@@ -4104,6 +4436,9 @@ struct GFileAttributeMatcher;
 
 struct GFileDescriptorBased;
 
+/**
+ * An interface for file descriptor based io objects.
+ */
 struct GFileDescriptorBasedIface
 {
 	/**
@@ -5506,6 +5841,43 @@ struct GInputVector
 	size_t size;
 }
 
+struct GListModel;
+
+/**
+ * The virtual function table for #GListModel.
+ *
+ * Since: 2.44
+ */
+struct GListModelInterface
+{
+	/**
+	 * parent #GTypeInterface
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     list = a #GListModel
+	 * Return: the #GType of the items contained in @list.
+	 */
+	extern(C) GType function(GListModel* list) getItemType;
+	/**
+	 *
+	 * Params:
+	 *     list = a #GListModel
+	 * Return: the number of items in @list.
+	 */
+	extern(C) uint function(GListModel* list) getNItems;
+	extern(C) void* function(GListModel* list, uint position) getItem;
+}
+
+struct GListStore;
+
+struct GListStoreClass
+{
+	GObjectClass parentClass;
+}
+
 struct GLoadableIcon;
 
 /**
@@ -5940,8 +6312,16 @@ struct GNetworkAddressPrivate;
 
 struct GNetworkMonitor;
 
+/**
+ * The virtual function table for #GNetworkMonitor.
+ *
+ * Since: 2.32
+ */
 struct GNetworkMonitorInterface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface gIface;
 	extern(C) void function(GNetworkMonitor* monitor, int available) networkChanged;
 	/**
@@ -5982,6 +6362,47 @@ struct GNetworkServiceClass
 struct GNetworkServicePrivate;
 
 struct GNotification;
+
+/**
+ * Structure used for scatter/gather data output when sending multiple
+ * messages or packets in one go. You generally pass in an array of
+ * #GOutputVectors and the operation will use all the buffers as if they
+ * were one buffer.
+ *
+ * If @address is %NULL then the message is sent to the default receiver
+ * (as previously set by g_socket_connect()).
+ *
+ * Since: 2.44
+ */
+struct GOutputMessage
+{
+	/**
+	 * a #GSocketAddress, or %NULL
+	 */
+	GSocketAddress* address;
+	/**
+	 * pointer to an array of output vectors
+	 */
+	GOutputVector* vectors;
+	/**
+	 * the number of output vectors pointed to by @vectors.
+	 */
+	uint numVectors;
+	/**
+	 * initialize to 0. Will be set to the number of bytes
+	 * that have been sent
+	 */
+	uint bytesSent;
+	/**
+	 * a pointer
+	 * to an array of #GSocketControlMessages, or %NULL.
+	 */
+	GSocketControlMessage** controlMessages;
+	/**
+	 * number of elements in @control_messages.
+	 */
+	uint numControlMessages;
+}
 
 struct GOutputStream
 {
@@ -6300,6 +6721,11 @@ struct GProxyAddress
 	GProxyAddressPrivate* priv;
 }
 
+/**
+ * Class structure for #GProxyAddress.
+ *
+ * Since: 2.26
+ */
 struct GProxyAddressClass
 {
 	GInetSocketAddressClass parentClass;
@@ -6374,8 +6800,14 @@ struct GProxyInterface
 
 struct GProxyResolver;
 
+/**
+ * The virtual function table for #GProxyResolver.
+ */
 struct GProxyResolverInterface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface gIface;
 	/**
 	 *
@@ -6672,6 +7104,8 @@ struct GSimpleAsyncResult;
 
 struct GSimpleAsyncResultClass;
 
+struct GSimpleIOStream;
+
 struct GSimplePermission;
 
 struct GSimpleProxyResolver
@@ -6857,6 +7291,9 @@ struct GSocketControlMessage
 	GSocketControlMessagePrivate* priv;
 }
 
+/**
+ * Class structure for #GSocketControlMessage.
+ */
 struct GSocketControlMessageClass
 {
 	GObjectClass parentClass;
@@ -6892,6 +7329,9 @@ struct GSocketListener
 	GSocketListenerPrivate* priv;
 }
 
+/**
+ * Class structure for #GSocketListener.
+ */
 struct GSocketListenerClass
 {
 	GObjectClass parentClass;
@@ -6914,6 +7354,9 @@ struct GSocketService
 	GSocketServicePrivate* priv;
 }
 
+/**
+ * Class structure for #GSocketService.
+ */
 struct GSocketServiceClass
 {
 	GSocketListenerClass parentClass;
@@ -7057,8 +7500,16 @@ struct GTlsCertificatePrivate;
 
 struct GTlsClientConnection;
 
+/**
+ * vtable for a #GTlsClientConnection implementation.
+ *
+ * Since: 2.26
+ */
 struct GTlsClientConnectionInterface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface gIface;
 }
 
@@ -7325,6 +7776,9 @@ struct GTlsPassword
 	GTlsPasswordPrivate* priv;
 }
 
+/**
+ * Class structure for #GTlsPassword.
+ */
 struct GTlsPasswordClass
 {
 	GObjectClass parentClass;
@@ -7345,8 +7799,16 @@ struct GTlsPasswordPrivate;
 
 struct GTlsServerConnection;
 
+/**
+ * vtable for a #GTlsServerConnection implementation.
+ *
+ * Since: 2.26
+ */
 struct GTlsServerConnectionInterface
 {
+	/**
+	 * The parent interface.
+	 */
 	GTypeInterface gIface;
 }
 
@@ -7904,7 +8366,7 @@ public alias extern(C) GVariant* function(GDBusConnection* connection, const(cha
  *     interfaceName = The D-Bus interface name the method was invoked on.
  *     methodName = The name of the method that was invoked.
  *     parameters = A #GVariant tuple with parameters.
- *     invocation = A #GDBusMethodInvocation object that can be used to return a value or error.
+ *     invocation = A #GDBusMethodInvocation object that must be used to return a value or error.
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_object().
  *
  * Since: 2.26

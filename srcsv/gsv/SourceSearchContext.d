@@ -33,6 +33,7 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceBuffer;
 private import gsv.SourceSearchSettings;
+private import gsv.SourceStyle;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 private import gtk.TextIter;
@@ -298,6 +299,23 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
+	 * Return: the #GtkSourceStyle to apply on search matches.
+	 *
+	 * Since: 3.16
+	 */
+	public SourceStyle getMatchStyle()
+	{
+		auto p = gtk_source_search_context_get_match_style(gtkSourceSearchContext);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p);
+	}
+
+	/**
 	 * Gets the position of a search occurrence. If the buffer is not already fully
 	 * scanned, the position may be unknown, and -1 is returned. If 0 is returned,
 	 * it means that this part of the buffer has already been scanned, and that
@@ -449,6 +467,22 @@ public class SourceSearchContext : ObjectG
 	public void setHighlight(bool highlight)
 	{
 		gtk_source_search_context_set_highlight(gtkSourceSearchContext, highlight);
+	}
+
+	/**
+	 * Set the style to apply on search matches. If @match_style is %NULL, default
+	 * theme's scheme 'match-style' will be used.
+	 * To enable or disable the search highlighting, use
+	 * gtk_source_search_context_set_highlight().
+	 *
+	 * Params:
+	 *     matchStyle = a #GtkSourceStyle.
+	 *
+	 * Since: 3.16
+	 */
+	public void setMatchStyle(SourceStyle matchStyle)
+	{
+		gtk_source_search_context_set_match_style(gtkSourceSearchContext, (matchStyle is null) ? null : matchStyle.getSourceStyleStruct());
 	}
 
 	/**

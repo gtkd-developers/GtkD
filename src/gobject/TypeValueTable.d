@@ -29,15 +29,6 @@ public  import gtkc.gobjecttypes;
 
 
 /**
- * - 'i' - Integers. passed as collect_values[].v_int.
- * - 'l' - Longs. passed as collect_values[].v_long.
- * - 'd' - Doubles. passed as collect_values[].v_double.
- * - 'p' - Pointers. passed as collect_values[].v_pointer.
- * 
- * It should be noted that for variable argument list construction,
- * ANSI C promotes every type smaller than an integer to an int, and
- * floats to doubles. So for collection of short int or char, 'i'
- * needs to be used, and for collection of floats 'd'.
  * The #GTypeValueTable provides the functions required by the #GValue
  * implementation, to serve as a container for values of a type.
  */

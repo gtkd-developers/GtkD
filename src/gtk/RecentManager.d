@@ -142,15 +142,15 @@ public class RecentManager : ObjectG
 	}
 
 	/**
-	 * Creates a new recent manager object.  Recent manager objects are used to
-	 * handle the list of recently used resources.  A #GtkRecentManager object
+	 * Creates a new recent manager object. Recent manager objects are used to
+	 * handle the list of recently used resources. A #GtkRecentManager object
 	 * monitors the recently used resources list, and emits the “changed” signal
 	 * each time something inside the list changes.
 	 *
 	 * #GtkRecentManager objects are expensive: be sure to create them only when
 	 * needed. You should use gtk_recent_manager_get_default() instead.
 	 *
-	 * Return: A newly created #GtkRecentManager object.
+	 * Return: A newly created #GtkRecentManager object
 	 *
 	 * Since: 2.10
 	 *
@@ -172,7 +172,8 @@ public class RecentManager : ObjectG
 	 * Gets a unique instance of #GtkRecentManager, that you can share
 	 * in your application without caring about memory management.
 	 *
-	 * Return: A unique #GtkRecentManager. Do not ref or unref it.
+	 * Return: A unique #GtkRecentManager. Do not ref or
+	 *     unref it.
 	 *
 	 * Since: 2.10
 	 */
@@ -190,8 +191,8 @@ public class RecentManager : ObjectG
 
 	/**
 	 * Adds a new resource, pointed by @uri, into the recently used
-	 * resources list, using the metadata specified inside the #GtkRecentData-struct
-	 * passed in @recent_data.
+	 * resources list, using the metadata specified inside the
+	 * #GtkRecentData-struct passed in @recent_data.
 	 *
 	 * The passed URI will be used to identify this resource inside the
 	 * list.
@@ -204,9 +205,9 @@ public class RecentManager : ObjectG
 	 * launching the item.
 	 *
 	 * Optionally, a #GtkRecentData-struct might contain a UTF-8 string
-	 * to be used when viewing the item instead of the last component of the
-	 * URI; a short description of the item; whether the item should be
-	 * considered private - that is, should be displayed only by the
+	 * to be used when viewing the item instead of the last component of
+	 * the URI; a short description of the item; whether the item should
+	 * be considered private - that is, should be displayed only by the
 	 * applications that have registered it.
 	 *
 	 * Params:
@@ -214,7 +215,7 @@ public class RecentManager : ObjectG
 	 *     recentData = metadata of the resource
 	 *
 	 * Return: %TRUE if the new item was successfully added to the
-	 *     recently used resources list, %FALSE otherwise.
+	 *     recently used resources list, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -228,8 +229,8 @@ public class RecentManager : ObjectG
 	 * resources list.
 	 *
 	 * This function automatically retrieves some of the needed
-	 * metadata and setting other metadata to common default values; it
-	 * then feeds the data to gtk_recent_manager_add_full().
+	 * metadata and setting other metadata to common default values;
+	 * it then feeds the data to gtk_recent_manager_add_full().
 	 *
 	 * See gtk_recent_manager_add_full() if you want to explicitly
 	 * define the metadata for the resource pointed by @uri.
@@ -276,7 +277,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 *     uri = a URI
 	 *
-	 * Return: %TRUE if the resource was found, %FALSE otherwise.
+	 * Return: %TRUE if the resource was found, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -295,7 +296,7 @@ public class RecentManager : ObjectG
 	 *
 	 * Return: a #GtkRecentInfo-struct containing information
 	 *     about the resource pointed by @uri, or %NULL if the URI was
-	 *     not registered in the recently used resources list.  Free with
+	 *     not registered in the recently used resources list. Free with
 	 *     gtk_recent_info_unref().
 	 *
 	 * Since: 2.10
@@ -329,10 +330,10 @@ public class RecentManager : ObjectG
 	 *
 	 * Params:
 	 *     uri = the URI of a recently used resource
-	 *     newUri = the new URI of the recently used resource, or %NULL to
-	 *         remove the item pointed by @uri in the list
+	 *     newUri = the new URI of the recently used resource, or
+	 *         %NULL to remove the item pointed by @uri in the list
 	 *
-	 * Return: %TRUE on success.
+	 * Return: %TRUE on success
 	 *
 	 * Since: 2.10
 	 *
@@ -356,7 +357,7 @@ public class RecentManager : ObjectG
 	 * Purges every item from the recently used resources list.
 	 *
 	 * Return: the number of items that have been removed from the
-	 *     recently used resources list.
+	 *     recently used resources list
 	 *
 	 * Since: 2.10
 	 *
@@ -384,7 +385,7 @@ public class RecentManager : ObjectG
 	 *     uri = the URI of the item you wish to remove
 	 *
 	 * Return: %TRUE if the item pointed by @uri has been successfully
-	 *     removed by the recently used resources list, and %FALSE otherwise.
+	 *     removed by the recently used resources list, and %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 *
@@ -408,9 +409,9 @@ public class RecentManager : ObjectG
 
 	void delegate(RecentManager)[] onChangedListeners;
 	/**
-	 * Emitted when the current recently used resources manager changes its
-	 * contents, either by calling gtk_recent_manager_add_item() or by another
-	 * application.
+	 * Emitted when the current recently used resources manager changes
+	 * its contents, either by calling gtk_recent_manager_add_item() or
+	 * by another application.
 	 *
 	 * Since: 2.10
 	 */

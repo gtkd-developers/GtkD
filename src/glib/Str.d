@@ -295,7 +295,8 @@ public struct Str
 	 * the string back using g_ascii_strtod() gives the same machine-number
 	 * (on machines with IEEE compatible 64bit doubles). It is
 	 * guaranteed that the size of the resulting string will never
-	 * be larger than @G_ASCII_DTOSTR_BUF_SIZE bytes.
+	 * be larger than @G_ASCII_DTOSTR_BUF_SIZE bytes, including the terminating
+	 * nul character, which is always added.
 	 *
 	 * Params:
 	 *     buffer = A buffer to place the resulting string in
@@ -314,6 +315,8 @@ public struct Str
 	 * decimal point. To format the number you pass in
 	 * a printf()-style format string. Allowed conversion
 	 * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
+	 *
+	 * The returned buffer is guaranteed to be nul-terminated.
 	 *
 	 * If you just want to want to serialize the value into a
 	 * string, use g_ascii_dtostr().
@@ -1024,8 +1027,10 @@ public struct Str
 	}
 
 	/**
-	 * Frees a %NULL-terminated array of strings, and the array itself.
-	 * If called on a %NULL value, g_strfreev() simply returns.
+	 * Frees a %NULL-terminated array of strings, as well as each
+	 * string it contains.
+	 *
+	 * If @str_array is %NULL, this function simply returns.
 	 *
 	 * Params:
 	 *     strArray = a %NULL-terminated array of strings to free
@@ -1404,6 +1409,22 @@ public struct Str
 	public static uint strvLength(string[] strArray)
 	{
 		return g_strv_length(Str.toStringzArray(strArray));
+	}
+
+	/**
+	 * Checks if @strv contains @str. @strv must not be %NULL.
+	 *
+	 * Params:
+	 *     strv = a %NULL-terminated array of strings
+	 *     str = a string
+	 *
+	 * Return: %TRUE if @str is an element of @strv, according to g_str_equal().
+	 *
+	 * Since: 2.44
+	 */
+	public static bool strvContains(string strv, string str)
+	{
+		return g_strv_contains(Str.toStringz(strv), Str.toStringz(str)) != 0;
 	}
 
 	/**

@@ -166,6 +166,19 @@ public class Stack : Container
 	}
 
 	/**
+	 * Gets whether @stack is horizontally homogeneous.
+	 * See gtk_stack_set_hhomogeneous().
+	 *
+	 * Return: whether @stack is horizontally homogeneous.
+	 *
+	 * Since: 3.16
+	 */
+	public bool getHhomogeneous()
+	{
+		return gtk_stack_get_hhomogeneous(gtkStack) != 0;
+	}
+
+	/**
 	 * Gets whether @stack is homogeneous.
 	 * See gtk_stack_set_homogeneous().
 	 *
@@ -218,6 +231,19 @@ public class Stack : Container
 	}
 
 	/**
+	 * Gets whether @stack is vertically homogeneous.
+	 * See gtk_stack_set_vhomogeneous().
+	 *
+	 * Return: whether @stack is vertically homogeneous.
+	 *
+	 * Since: 3.16
+	 */
+	public bool getVhomogeneous()
+	{
+		return gtk_stack_get_vhomogeneous(gtkStack) != 0;
+	}
+
+	/**
 	 * Gets the currently visible child of @stack, or %NULL if
 	 * there are no visible children.
 	 *
@@ -251,10 +277,30 @@ public class Stack : Container
 	}
 
 	/**
+	 * Sets the #GtkStack to be horizontally homogeneous or not.
+	 * If it is homogeneous, the #GtkStack will request the same
+	 * width for all its children. If it isn't, the stack
+	 * may change width when a different child becomes visible.
+	 *
+	 * Params:
+	 *     hhomogeneous = %TRUE to make @stack horizontally homogeneous
+	 *
+	 * Since: 3.16
+	 */
+	public void setHhomogeneous(bool hhomogeneous)
+	{
+		gtk_stack_set_hhomogeneous(gtkStack, hhomogeneous);
+	}
+
+	/**
 	 * Sets the #GtkStack to be homogeneous or not. If it
 	 * is homogeneous, the #GtkStack will request the same
 	 * size for all its children. If it isn't, the stack
 	 * may change size when a different child becomes visible.
+	 *
+	 * Since 3.16, homogeneity can be controlled separately
+	 * for horizontal and vertical size, with the
+	 * #GtkStack:hhomogeneous and #GtkStack:vhomogeneous.
 	 *
 	 * Params:
 	 *     homogeneous = %TRUE to make @stack homogeneous
@@ -297,6 +343,22 @@ public class Stack : Container
 	public void setTransitionType(GtkStackTransitionType transition)
 	{
 		gtk_stack_set_transition_type(gtkStack, transition);
+	}
+
+	/**
+	 * Sets the #GtkStack to be vertically homogeneous or not.
+	 * If it is homogeneous, the #GtkStack will request the same
+	 * height for all its children. If it isn't, the stack
+	 * may change height when a different child becomes visible.
+	 *
+	 * Params:
+	 *     vhomogeneous = %TRUE to make @stack vertically homogeneous
+	 *
+	 * Since: 3.16
+	 */
+	public void setVhomogeneous(bool vhomogeneous)
+	{
+		gtk_stack_set_vhomogeneous(gtkStack, vhomogeneous);
 	}
 
 	/**

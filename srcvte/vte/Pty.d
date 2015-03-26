@@ -126,7 +126,7 @@ public class Pty : ObjectG, InitableIF
 	 * vte_pty_child_setup() directly as the child setup function, or call
 	 * vte_pty_child_setup() from your own child setup function supplied.
 	 *
-	 * When using vte_terminal_fork_command_full() with a custom child setup
+	 * When using vte_terminal_spawn_sync() with a custom child setup
 	 * function, vte_pty_child_setup() will be called before the supplied
 	 * function; you must not call it again.
 	 *

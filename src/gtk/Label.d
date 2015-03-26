@@ -395,7 +395,8 @@ public class Label : Misc
 	 * into coordinates inside the #PangoLayout, e.g. to take some action
 	 * if some part of the label is clicked. Of course you will need to
 	 * create a #GtkEventBox to receive the events, and pack the label
-	 * inside it, since labels are a #GTK_NO_WINDOW widget. Remember
+	 * inside it, since labels are windowless (they return %FALSE from
+	 * gtk_widget_get_has_window()). Remember
 	 * when using the #PangoLayout functions you need to convert to
 	 * and from pixels using PANGO_PIXELS() or #PANGO_SCALE.
 	 *
@@ -589,6 +590,30 @@ public class Label : Misc
 	}
 
 	/**
+	 * Gets the #GtkLabel:xalign property for @label.
+	 *
+	 * Return: the xalign property
+	 *
+	 * Since: 3.16
+	 */
+	public float getXalign()
+	{
+		return gtk_label_get_xalign(gtkLabel);
+	}
+
+	/**
+	 * Gets the #GtkLabel:yalign property for @label.
+	 *
+	 * Return: the yalign property
+	 *
+	 * Since: 3.16
+	 */
+	public float getYalign()
+	{
+		return gtk_label_get_yalign(gtkLabel);
+	}
+
+	/**
 	 * Selects a range of characters in the label, if the label is selectable.
 	 * See gtk_label_set_selectable(). If the label is not selectable,
 	 * this function has no effect. If @start_offset or
@@ -632,7 +657,7 @@ public class Label : Misc
 	 * to the label after the markup string is parsed.
 	 *
 	 * Params:
-	 *     attrs = a #PangoAttrList
+	 *     attrs = a #PangoAttrList, or %NULL
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -930,6 +955,32 @@ public class Label : Misc
 	public void setWidthChars(int nChars)
 	{
 		gtk_label_set_width_chars(gtkLabel, nChars);
+	}
+
+	/**
+	 * Sets the #GtkLabel:xalign property for @label.
+	 *
+	 * Params:
+	 *     xalign = the new xalign value, between 0 and 1
+	 *
+	 * Since: 3.16
+	 */
+	public void setXalign(float xalign)
+	{
+		gtk_label_set_xalign(gtkLabel, xalign);
+	}
+
+	/**
+	 * Sets the #GtkLabel:yalign property for @label.
+	 *
+	 * Params:
+	 *     yalign = the new yalign value, between 0 and 1
+	 *
+	 * Since: 3.16
+	 */
+	public void setYalign(float yalign)
+	{
+		gtk_label_set_yalign(gtkLabel, yalign);
 	}
 
 	int[string] connectedSignals;

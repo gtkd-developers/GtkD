@@ -162,6 +162,29 @@ public class Clipboard : ObjectG
 	}
 
 	/**
+	 * Returns the default clipboard object for use with cut/copy/paste menu items
+	 * and keyboard shortcuts.
+	 *
+	 * Params:
+	 *     display = the #GdkDisplay for which the clipboard is to be retrieved.
+	 *
+	 * Return: the default clipboard object.
+	 *
+	 * Since: 3.16
+	 */
+	public static Clipboard getDefault(Display display)
+	{
+		auto p = gtk_clipboard_get_default((display is null) ? null : display.getDisplayStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
+	}
+
+	/**
 	 * Returns the clipboard object for the given selection.
 	 * Cut/copy/paste menu items and keyboard shortcuts should use
 	 * the default clipboard, returned by passing %GDK_SELECTION_CLIPBOARD for @selection.

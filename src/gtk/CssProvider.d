@@ -1046,7 +1046,7 @@ public  import gtkc.gtktypes;
  * text or icon itself, which is always rendered on top of the shadow layer.
  * 
  * |[
- * text-shadow: text-shadow: 1 1 0 blue, -4 -4 red;
+ * text-shadow: 1 1 0 blue, -4 -4 red;
  * ]|
  * 
  * ## box-shadow: [ inset ] horizontal_offset vertical_offset [ blur_radius ] [ spread ] color;
@@ -1251,7 +1251,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
 	 *     %NULL and a loading error occured. To track errors while loading
-	 *     CSS, connect to the GtkCssProvider::parsing-error signal.
+	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1279,7 +1279,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
 	 *     %NULL and a loading error occured. To track errors while loading
-	 *     CSS, connect to the GtkCssProvider::parsing-error signal.
+	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1307,7 +1307,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
 	 *     %NULL and a loading error occured. To track errors while loading
-	 *     CSS, connect to the GtkCssProvider::parsing-error signal.
+	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1323,6 +1323,23 @@ public class CssProvider : ObjectG, StyleProviderIF
 		}
 		
 		return p;
+	}
+
+	/**
+	 * Loads the data contained in the resource at @resource_path into
+	 * the #GtkCssProvider, clearing any previously loaded information.
+	 *
+	 * To track errors while loading CSS, connect to the
+	 * #GtkCssProvider::parsing-error signal.
+	 *
+	 * Params:
+	 *     resourcePath = a #GResource resource path
+	 *
+	 * Since: 3.16
+	 */
+	public void loadFromResource(string resourcePath)
+	{
+		gtk_css_provider_load_from_resource(gtkCssProvider, Str.toStringz(resourcePath));
 	}
 
 	/**

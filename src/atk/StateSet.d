@@ -31,8 +31,9 @@ public  import gtkc.atktypes;
 
 
 /**
- * An AtkStateSet determines a component's state set. It is composed
- * of a set of AtkStates.
+ * An AtkStateSet is a read-only representation of the full set of #AtkStates
+ * that apply to an object at a given time. This set is not meant to be
+ * modified, but rather created when #atk_object_ref_state_set() is called.
  */
 public class StateSet : ObjectG
 {
@@ -94,8 +95,13 @@ public class StateSet : ObjectG
 	}
 
 	/**
-	 * Add a new state for the specified type to the current state set if
-	 * it is not already present.
+	 * Adds the state of the specified type to the state set if it is not already
+	 * present.
+	 *
+	 * Note that because an #AtkStateSet is a read-only object, this method should
+	 * be used to add a state to a newly-created set which will then be returned by
+	 * #atk_object_ref_state_set. It should not be used to modify the existing state
+	 * of an object. See also #atk_object_notify_state_change.
 	 *
 	 * Params:
 	 *     type = an #AtkStateType
@@ -108,7 +114,12 @@ public class StateSet : ObjectG
 	}
 
 	/**
-	 * Add the states for the specified types to the current state set.
+	 * Adds the states of the specified types to the state set.
+	 *
+	 * Note that because an #AtkStateSet is a read-only object, this method should
+	 * be used to add states to a newly-created set which will then be returned by
+	 * #atk_object_ref_state_set. It should not be used to modify the existing state
+	 * of an object. See also #atk_object_notify_state_change.
 	 *
 	 * Params:
 	 *     types = an array of #AtkStateType
@@ -210,6 +221,11 @@ public class StateSet : ObjectG
 
 	/**
 	 * Removes the state for the specified type from the state set.
+	 *
+	 * Note that because an #AtkStateSet is a read-only object, this method should
+	 * be used to remove a state to a newly-created set which will then be returned
+	 * by #atk_object_ref_state_set. It should not be used to modify the existing
+	 * state of an object. See also #atk_object_notify_state_change.
 	 *
 	 * Params:
 	 *     type = an #AtkType

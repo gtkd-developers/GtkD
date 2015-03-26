@@ -257,6 +257,18 @@ public class Paned : Container, OrientableIF
 	}
 
 	/**
+	 * Gets the #GtkPaned:wide-handle property.
+	 *
+	 * Return: %TRUE if the paned should have a wide handle
+	 *
+	 * Since: 3.16
+	 */
+	public bool getWideHandle()
+	{
+		return gtk_paned_get_wide_handle(gtkPaned) != 0;
+	}
+
+	/**
 	 * Adds a child to the top or left pane.
 	 *
 	 * Params:
@@ -292,6 +304,19 @@ public class Paned : Container, OrientableIF
 	public void setPosition(int position)
 	{
 		gtk_paned_set_position(gtkPaned, position);
+	}
+
+	/**
+	 * Sets the #GtkPaned:wide-handle property.
+	 *
+	 * Params:
+	 *     wide = the new value for the #GtkPaned:wide-handle property
+	 *
+	 * Since: 3.16
+	 */
+	public void setWideHandle(bool wide)
+	{
+		gtk_paned_set_wide_handle(gtkPaned, wide);
 	}
 
 	int[string] connectedSignals;

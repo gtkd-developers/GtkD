@@ -49,6 +49,10 @@ public  import gtkc.gtktypes;
  * and its variants are the preferred way to access styling information
  * from widget implementations and theming engine implementations
  * should use the APIs provided by #GtkThemingEngine instead.
+ * 
+ * #GtkStyleProperties has been deprecated in GTK 3.16. The CSS
+ * machinery does not use it anymore and all users of this object
+ * have been deprecated.
  */
 public class StyleProperties : ObjectG, StyleProviderIF
 {
@@ -95,6 +99,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 
 	/**
 	 * Returns a newly created #GtkStyleProperties
+	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
 	 *
 	 * Return: a new #GtkStyleProperties
 	 *
@@ -161,6 +167,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 
 	/**
 	 * Clears all style information from @props.
+	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
 	 */
 	public void clear()
 	{
@@ -170,6 +178,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	/**
 	 * Gets a style property from @props for the given state. When done with @value,
 	 * g_value_unset() needs to be called to free any allocated memory.
+	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
 	 *
 	 * Params:
 	 *     property = style property name
@@ -193,6 +203,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 
 	/**
 	 * Retrieves several style property values from @props for a given state.
+	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
 	 *
 	 * Params:
 	 *     state = state to retrieve the property values for
@@ -253,6 +265,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 * will be overwritten, if it is %FALSE, the older values
 	 * will prevail.
 	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
+	 *
 	 * Params:
 	 *     propsToMerge = a second #GtkStyleProperties
 	 *     replace = whether to replace values or not
@@ -266,6 +280,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 
 	/**
 	 * Sets a styling property in @props.
+	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
 	 *
 	 * Params:
 	 *     property = styling property to set
@@ -282,6 +298,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	/**
 	 * Sets several style properties on @props.
 	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
+	 *
 	 * Params:
 	 *     state = state to set the values for
 	 *     args = va_list of property name/value pairs, followed by %NULL
@@ -295,6 +313,8 @@ public class StyleProperties : ObjectG, StyleProviderIF
 
 	/**
 	 * Unsets a style property in @props.
+	 *
+	 * Deprecated: #GtkStyleProperties are deprecated.
 	 *
 	 * Params:
 	 *     property = property to unset

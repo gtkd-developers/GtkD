@@ -1034,7 +1034,7 @@ public class ObjectG
 	 * Releases all references to other objects. This can be used to break
 	 * reference cycles.
 	 *
-	 * This functions should only be called from object system implementations.
+	 * This function should only be called from object system implementations.
 	 */
 	public void runDispose()
 	{
@@ -1216,6 +1216,11 @@ public class ObjectG
 	/**
 	 * Decreases the reference count of @object. When its reference count
 	 * drops to 0, the object is finalized (i.e. its memory is freed).
+	 *
+	 * If the pointer to the #GObject may be reused in future (for example, if it is
+	 * an instance variable of another object), it is recommended to clear the
+	 * pointer to %NULL rather than retain a dangling pointer to a potentially
+	 * invalid #GObject instance. Use g_clear_object() for this.
 	 */
 	public void unref()
 	{

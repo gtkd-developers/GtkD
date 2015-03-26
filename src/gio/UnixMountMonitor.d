@@ -76,10 +76,12 @@ public class UnixMountMonitor : ObjectG
 	}
 
 	/**
-	 * Gets a new #GUnixMountMonitor. The default rate limit for which the
-	 * monitor will report consecutive changes for the mount and mount
-	 * point entry files is the default for a #GFileMonitor. Use
-	 * g_unix_mount_monitor_set_rate_limit() to change this.
+	 * Deprecated alias for g_unix_mount_monitor_get().
+	 *
+	 * This function was never a true constructor, which is why it was
+	 * renamed.
+	 *
+	 * Deprecated: Use g_unix_mount_monitor_get() instead.
 	 *
 	 * Return: a #GUnixMountMonitor.
 	 *
@@ -98,8 +100,42 @@ public class UnixMountMonitor : ObjectG
 	}
 
 	/**
-	 * Sets the rate limit to which the @mount_monitor will report
-	 * consecutive change events to the mount and mount point entry files.
+	 * Gets the #GUnixMountMonitor for the current thread-default main
+	 * context.
+	 *
+	 * The mount monitor can be used to monitor for changes to the list of
+	 * mounted filesystems as well as the list of mount points (ie: fstab
+	 * entries).
+	 *
+	 * You must only call g_object_unref() on the return value from under
+	 * the same main context as you called this function.
+	 *
+	 * Return: the #GUnixMountMonitor.
+	 *
+	 * Since: 2.44
+	 */
+	public static UnixMountMonitor get()
+	{
+		auto p = g_unix_mount_monitor_get();
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(UnixMountMonitor)(cast(GUnixMountMonitor*) p, true);
+	}
+
+	/**
+	 * This function does nothing.
+	 *
+	 * Before 2.44, this was a partially-effective way of controlling the
+	 * rate at which events would be reported under some uncommon
+	 * circumstances.  Since @mount_monitor is a singleton, it also meant
+	 * that calling this function would have side effects for other users of
+	 * the monitor.
+	 *
+	 * Deprecated: This function does nothing.  Don't call it.
 	 *
 	 * Params:
 	 *     limitMsec = a integer with the limit in milliseconds to

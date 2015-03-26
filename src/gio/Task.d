@@ -712,6 +712,20 @@ public class Task : ObjectG, AsyncResultIF
 	}
 
 	/**
+	 * Gets the value of #GTask:completed. This changes from %FALSE to %TRUE after
+	 * the task’s callback is invoked, and will return %FALSE if called from inside
+	 * the callback.
+	 *
+	 * Return: %TRUE if the task has completed, %FALSE otherwise.
+	 *
+	 * Since: 2.44
+	 */
+	public bool getCompleted()
+	{
+		return g_task_get_completed(gTask) != 0;
+	}
+
+	/**
 	 * Gets the #GMainContext that @task will return its result in (that
 	 * is, the context that was the
 	 * [thread-default main context][g-main-context-push-thread-default]
@@ -1031,6 +1045,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * Normally this is used with tasks created with a %NULL
 	 * `callback`, but note that even if the task does
 	 * have a callback, it will not be invoked when @task_func returns.
+	 * #GTask:completed will be set to %TRUE just before this function returns.
 	 *
 	 * Params:
 	 *     taskFunc = a #GTaskThreadFunc

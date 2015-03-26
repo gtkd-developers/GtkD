@@ -68,6 +68,41 @@ public class OptionGroup
 	 */
 
 	/**
+	 * Creates a new #GOptionGroup.
+	 *
+	 * Params:
+	 *     name = the name for the option group, this is used to provide
+	 *         help for the options in this group with `--help-`@name
+	 *     description = a description for this group to be shown in
+	 *         `--help`. This string is translated using the translation
+	 *         domain or translation function of the group
+	 *     helpDescription = a description for the `--help-`@name option.
+	 *         This string is translated using the translation domain or translation function
+	 *         of the group
+	 *     userData = user data that will be passed to the pre- and post-parse hooks,
+	 *         the error hook and to callbacks of %G_OPTION_ARG_CALLBACK options, or %NULL
+	 *     destroy = a function that will be called to free @user_data, or %NULL
+	 *
+	 * Return: a newly created option group. It should be added
+	 *     to a #GOptionContext or freed with g_option_group_unref().
+	 *
+	 * Since: 2.6
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
+	{
+		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GOptionGroup*) p);
+	}
+
+	/**
 	 * Adds the options specified in @entries to @group.
 	 *
 	 * Params:
@@ -84,11 +119,32 @@ public class OptionGroup
 	 * Frees a #GOptionGroup. Note that you must not free groups
 	 * which have been added to a #GOptionContext.
 	 *
+	 * Deprecated: Use g_option_group_unref() instead.
+	 *
 	 * Since: 2.6
 	 */
 	public void free()
 	{
 		g_option_group_free(gOptionGroup);
+	}
+
+	/**
+	 * Increments the reference count of @group by one.
+	 *
+	 * Return: a #GoptionGroup
+	 *
+	 * Since: 2.44
+	 */
+	public OptionGroup doref()
+	{
+		auto p = g_option_group_ref(gOptionGroup);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new OptionGroup(cast(GOptionGroup*) p);
 	}
 
 	/**
@@ -163,37 +219,14 @@ public class OptionGroup
 	}
 
 	/**
-	 * Creates a new #GOptionGroup.
+	 * Decrements the reference count of @group by one.
+	 * If the reference count drops to 0, the @group will be freed.
+	 * and all memory allocated by the @group is released.
 	 *
-	 * Params:
-	 *     name = the name for the option group, this is used to provide
-	 *         help for the options in this group with `--help-`@name
-	 *     description = a description for this group to be shown in
-	 *         `--help`. This string is translated using the translation
-	 *         domain or translation function of the group
-	 *     helpDescription = a description for the `--help-`@name option.
-	 *         This string is translated using the translation domain or translation function
-	 *         of the group
-	 *     userData = user data that will be passed to the pre- and post-parse hooks,
-	 *         the error hook and to callbacks of %G_OPTION_ARG_CALLBACK options, or %NULL
-	 *     destroy = a function that will be called to free @user_data, or %NULL
-	 *
-	 * Return: a newly created option group. It should be added
-	 *     to a #GOptionContext or freed with g_option_group_free().
-	 *
-	 * Since: 2.6
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
+	 * Since: 2.44
 	 */
-	public this(string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
+	public void unref()
 	{
-		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-		
-		this(cast(GOptionGroup*) p);
+		g_option_group_unref(gOptionGroup);
 	}
 }

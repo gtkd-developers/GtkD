@@ -220,8 +220,10 @@ public class Timeout
 	 * optimizations and more efficient system power usage.
 	 *
 	 * This internally creates a main loop source using g_timeout_source_new()
-	 * and attaches it to the main loop context using g_source_attach(). You can
-	 * do these steps manually if you need greater control.
+	 * and attaches it to the global #GMainContext using g_source_attach(), so
+	 * the callback will be invoked in whichever thread is running that main
+	 * context. You can do these steps manually if you need greater control or to
+	 * use a custom main context.
 	 *
 	 * The interval given is in terms of monotonic time, not wall clock
 	 * time.  See g_get_monotonic_time().
@@ -254,8 +256,10 @@ public class Timeout
 	 * (it does not try to 'catch up' time lost in delays).
 	 *
 	 * This internally creates a main loop source using g_timeout_source_new()
-	 * and attaches it to the main loop context using g_source_attach(). You can
-	 * do these steps manually if you need greater control.
+	 * and attaches it to the global #GMainContext using g_source_attach(), so
+	 * the callback will be invoked in whichever thread is running that main
+	 * context. You can do these steps manually if you need greater control or to
+	 * use a custom main context.
 	 *
 	 * The interval given in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
