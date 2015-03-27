@@ -411,12 +411,6 @@ code: start
 	}
 code: end
 
-struct: gstreamer
-namespace:
-code: start
-	public import gstreamer.GStreamer;
-code: end
-
 struct: Iterator
 inout: new_list list
 

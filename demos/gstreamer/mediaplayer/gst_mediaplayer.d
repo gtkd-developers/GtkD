@@ -36,7 +36,7 @@ import gobject.Value;
 
 //gstreamerD imports:
 
-import gstreamer.gstreamer;
+import gstreamer.GStreamer;
 
 import gobject.ObjectG;
 import glib.ErrorG;
