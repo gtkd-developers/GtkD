@@ -262,6 +262,8 @@ noCode: get_objects
 noCode: new_from_resource
 noCode: new_from_string
 
+array: add_from_string buffer length
+
 import: gtkc.glib
 import: std.string
 

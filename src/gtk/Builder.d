@@ -608,11 +608,11 @@ public uint addFromResource(string resourcePath)
  *
  * Throws: GException on failure.
  */
-public uint addFromString(string buffer, size_t length)
+public uint addFromString(string buffer)
 {
 	GError* err = null;
 	
-	auto p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), length, &err);
+	auto p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), cast(size_t)buffer.length, &err);
 	
 	if (err !is null)
 	{
