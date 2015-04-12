@@ -1,8 +1,16 @@
 GtkD ChangeLog
 ==============
 
-Release 3.1.0:
--------
+Release: 3.1.2
+--------------
+-Fix Builder.addFromFile.
+
+Release: 3.1.1
+--------------
+-Remove conflicting GStreamer Files
+
+Release: 3.1.0
+--------------
 -Wraps the GTK+ 3.16 API.
 -Add TreeModelFilter and TreeModelSort constructors, Fix #110
 

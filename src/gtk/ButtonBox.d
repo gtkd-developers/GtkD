@@ -128,7 +128,7 @@ public class ButtonBox : Box
 	 * Creates a new #GtkButtonBox.
 	 *
 	 * Params:
-	 *     orientation = the box' orientation.
+	 *     orientation = the box's orientation.
 	 *
 	 * Return: a new #GtkButtonBox.
 	 *
