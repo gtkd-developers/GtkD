@@ -4645,7 +4645,7 @@ struct GtkCellAccessible
 struct GtkCellAccessibleClass
 {
 	GtkAccessibleClass parentClass;
-	extern(C) void function(GtkCellAccessible* cell) updateCache;
+	extern(C) void function(GtkCellAccessible* cell, int emitSignal) updateCache;
 }
 
 struct GtkCellAccessibleParent;

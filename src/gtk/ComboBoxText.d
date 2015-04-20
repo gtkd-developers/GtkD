@@ -156,14 +156,14 @@ public class ComboBoxText : ComboBox
 	/** */
 	int getIndex(string text)
 	{
-		TreeIter iter = new TreeIter();
+		TreeIter iter;
 		TreeModelIF model = getModel();
-		iter.setModel(model);
 		int index = 0;
 		bool found = false;
 		bool end = false;
 		if ( model.getIterFirst(iter) )
 		{
+			iter.setModel(model);
 			while ( !end && iter !is  null && !found )
 			{
 				found = iter.getValueString(0) == text;
