@@ -1877,6 +1877,27 @@ public class GtkDClass
 				collectedStructs ~= "}";
 				collectedStructs ~= structName ~" "~ varName ~";";
 			}
+			else if ( std.string.indexOf(elem, "[") > 0 )
+			{
+				string member;
+				size_t space = std.string.indexOf(elem, " ");
+				size_t startBracket = std.string.indexOf(elem, "[");
+				size_t endBracket = std.string.indexOf(elem, "]");
+
+				member = elem[0..space];
+
+				if ( elem[space+1] == '*' )
+					member ~= "*";
+
+				member ~= elem[startBracket..endBracket+1] ~ " ";
+
+				if ( elem[space+1] == '*' )
+					member ~= elem[space+2..startBracket];
+				else
+					member ~= elem[space+1..startBracket];
+
+				collectedStructs ~= member ~ elem[endBracket+1..$];				
+			}
 			else
 			{
 				collectedStructs ~= elem;

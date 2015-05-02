@@ -45,6 +45,7 @@
  * omit prefixes:
  * 	- gtk_widget_ref
  * omit code:
+ * 	- gtk_widget_destroy
  * 	- gtk_widget_get_window
  * 	- gtk_widget_get_allocation
  * omit signals:
@@ -569,7 +570,7 @@ public class Widget : ObjectGtk, BuildableIF
 	{
 		return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
 	}
-
+	
 	/**
 	 * Destroys a widget.
 	 *

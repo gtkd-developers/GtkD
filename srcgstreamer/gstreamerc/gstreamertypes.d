@@ -1916,7 +1916,7 @@ public struct GstPluginDesc
 	char *source;
 	char *p;
 	char *origin;
-	void* _GstReserved[GST_PADDING];
+	void*[GST_PADDING] _GstReserved;
 }
 
 

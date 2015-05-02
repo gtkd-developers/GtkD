@@ -231,13 +231,13 @@ public class ObjectG
 			// Remove the GDestroyNotify callback,
 			// for when the D object is destroyed before the C one.
 			g_object_steal_data(gObject, cast(char*)"GObject");
-
+			
 			if ( isGcRoot )
 			{
 				GC.removeRoot(cast(void*)this);
 				isGcRoot = false;
 			}
-
+			
 			unref();
 		}
 	}

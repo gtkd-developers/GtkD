@@ -2133,7 +2133,7 @@ public struct GdkBitmap{}
  */
 public struct GdkRgbCmap
 {
-	uint colors[256];
+	uint[256] colors;
 	int nColors;
 }
 
@@ -2976,9 +2976,9 @@ public struct GdkEventClient
 	ushort dataFormat;
 	union Data
 	{
-		char b[20];
-		short s[10];
-		long l[5];
+		char[20] b;
+		short[10] s;
+		long[5] l;
 	}
 	Data data;
 }
@@ -3250,7 +3250,7 @@ public struct GdkDeviceAxis
 public struct GdkTimeCoord
 {
 	uint time;
-	double axes[GDK_MAX_TIMECOORD_AXES];
+	double[GDK_MAX_TIMECOORD_AXES] axes;
 }
 
 

@@ -69,24 +69,24 @@ public class HtmlStrip
 					--markupCount;
 					if ( markHR && (mark == "hr" || mark == "HR") )
 					{
-						stripped ~= "\n<hr>\n";
+						stripped ~= "\n<hr>\n"d;
 					}
 					else if ( markP && (mark == "p" || mark == "P") )
 					{
-						stripped ~= "\n";
+						stripped ~= "\n"d;
 					}
 					else if ( markH && (mark == "/h2" || mark == "/H2") )
 					{
-						stripped ~= "\n";
+						stripped ~= "\n"d;
 					}
 					else if ( markH && (mark == "/h3" || mark == "/H3") )
 					{
-						stripped ~= "\n";
+						stripped ~= "\n"d;
 					}
 					else if ( mark == "div class=\"informalexample\"" || mark == "div class=\"example\"" )
 					{
 						inCode = true;
-						stripped ~= "\n$(DDOC_COMMENT example)\n";
+						stripped ~= "\n$(DDOC_COMMENT example)\n"d;
 					}
 					else if ( mark == "/div" )
 					{

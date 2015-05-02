@@ -2683,13 +2683,13 @@ public struct GtkIconSet{}
 public struct GtkRcStyle
 {
 	char *name;
-	char *bgPixmapName[5];
+	char*[5] bgPixmapName;
 	PangoFontDescription *fontDesc;
-	GtkRcFlags colorFlags[5];
-	GdkColor fg[5];
-	GdkColor bg[5];
-	GdkColor text[5];
-	GdkColor base[5];
+	GtkRcFlags[5] colorFlags;
+	GdkColor[5] fg;
+	GdkColor[5] bg;
+	GdkColor[5] text;
+	GdkColor[5] base;
 	int xthickness;
 	int ythickness;
 }
@@ -2837,30 +2837,30 @@ public struct GtkBindingArg
  */
 public struct GtkStyle
 {
-	GdkColor fg[5];
-	GdkColor bg[5];
-	GdkColor light[5];
-	GdkColor dark[5];
-	GdkColor mid[5];
-	GdkColor text[5];
-	GdkColor base[5];
-	GdkColor textAa[5]; /+* Halfway between text/base +/
+	GdkColor[5] fg;
+	GdkColor[5] bg;
+	GdkColor[5] light;
+	GdkColor[5] dark;
+	GdkColor[5] mid;
+	GdkColor[5] text;
+	GdkColor[5] base;
+	GdkColor[5] textAa; /+* Halfway between text/base +/
 	GdkColor black;
 	GdkColor white;
 	PangoFontDescription *fontDesc;
 	int xthickness;
 	int ythickness;
-	GdkGC *fgGc[5];
-	GdkGC *bgGc[5];
-	GdkGC *lightGc[5];
-	GdkGC *darkGc[5];
-	GdkGC *midGc[5];
-	GdkGC *textGc[5];
-	GdkGC *baseGc[5];
-	GdkGC *textAaGc[5];
+	GdkGC*[5] fgGc;
+	GdkGC*[5] bgGc;
+	GdkGC*[5] lightGc;
+	GdkGC*[5] darkGc;
+	GdkGC*[5] midGc;
+	GdkGC*[5] textGc;
+	GdkGC*[5] baseGc;
+	GdkGC*[5] textAaGc;
 	GdkGC *blackGc;
 	GdkGC *whiteGc;
-	GdkPixmap *bgPixmap[5];
+	GdkPixmap*[5] bgPixmap;
 }
 
 
@@ -4927,8 +4927,8 @@ public struct GtkRulerMetric
 	/+* This should be pointsPerUnit. This is the size of the unit
 	 * inn 1/72nd's of an inch and has nothing to do with screen pixels +/
 	double pixelsPerUnit;
-	double rulerScale[10];
-	int subdivide[5]; /+* five possible modes of subdivision +/
+	double[10] rulerScale;
+	int[5] subdivide; /+* five possible modes of subdivision +/
 }
 
 

@@ -3605,7 +3605,7 @@ public struct GSettingsBackendClass
 	extern(C) void function(GSettingsBackend* backend, char* name) unsubscribe;
 	extern(C) void function(GSettingsBackend* backend) sync;
 	extern(C) GPermission * function(GSettingsBackend* backend, char* path) getPermission;
-	void* padding[24];
+	void*[24] padding;
 }
 
 

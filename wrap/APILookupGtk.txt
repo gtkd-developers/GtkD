@@ -8630,7 +8630,7 @@ code: start
 	 * destruction, because when you destroy a toplevel its children will
 	 * be destroyed as well.
 	 */
-	public void destroy()
+	public override void destroy()
 	{
 		// void gtk_widget_destroy (GtkWidget *widget);
 		gtk_widget_destroy(gtkWidget);
