@@ -120,11 +120,11 @@ public class DBusMessage : ObjectG
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string blob, GDBusCapabilityFlags capabilities)
+	public this(ubyte[] blob, GDBusCapabilityFlags capabilities)
 	{
 		GError* err = null;
 		
-		auto p = g_dbus_message_new_from_blob(Str.toStringz(blob), cast(size_t)blob.length, capabilities, &err);
+		auto p = g_dbus_message_new_from_blob(blob.ptr, cast(size_t)blob.length, capabilities, &err);
 		
 		if(p is null)
 		{
@@ -208,11 +208,11 @@ public class DBusMessage : ObjectG
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static ptrdiff_t bytesNeeded(string blob)
+	public static ptrdiff_t bytesNeeded(ubyte[] blob)
 	{
 		GError* err = null;
 		
-		auto p = g_dbus_message_bytes_needed(Str.toStringz(blob), cast(size_t)blob.length, &err);
+		auto p = g_dbus_message_bytes_needed(blob.ptr, cast(size_t)blob.length, &err);
 		
 		if (err !is null)
 		{
@@ -367,9 +367,11 @@ public class DBusMessage : ObjectG
 	 *
 	 * Since: 2.26
 	 */
-	public string getHeaderFields()
+	public char[] getHeaderFields()
 	{
-		return Str.toString(g_dbus_message_get_header_fields(gDBusMessage));
+		auto p = g_dbus_message_get_header_fields(gDBusMessage);
+		
+		return p[0 .. getArrayLength(p)];
 	}
 
 	/**
@@ -873,7 +875,7 @@ public class DBusMessage : ObjectG
 	 *
 	 * Throws: GException on failure.
 	 */
-	public string toBlob(GDBusCapabilityFlags capabilities)
+	public char[] toBlob(GDBusCapabilityFlags capabilities)
 	{
 		size_t outSize;
 		GError* err = null;
@@ -885,7 +887,7 @@ public class DBusMessage : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p, outSize);
+		return p[0 .. outSize];
 	}
 
 	/**

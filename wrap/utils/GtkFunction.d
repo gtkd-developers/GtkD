@@ -1239,11 +1239,11 @@ final class GtkFunction
 
 	private bool isStringType(GtkType type)
 	{
-		if ( type.cType.startsWith("gchar*", "guchar*", "char*", "const(char)*") )
+		if ( type.cType.startsWith("gchar*", "char*", "const(char)*") )
 			return true;
 		if ( type.name.among("utf8", "filename") )
 			return true;
-		if ( type.isArray() && type.elementType.cType.startsWith("gchar", "guchar", "char", "const(char)") )
+		if ( type.isArray() && type.elementType.cType.startsWith("gchar", "char", "const(char)") )
 			return true;
 
 		return false;

@@ -474,6 +474,11 @@ class: TlsBackend
 extend: GObject.Object
 implements: TlsBackend
 
+struct: TlsPassword
+array: get_value Return length
+array: set_value value length
+array: set_value_full value length
+
 struct: UnixSocketAddress
 noCode: new_abstract
 

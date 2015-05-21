@@ -83,9 +83,9 @@ public struct Utils
 	 *     mem = a pointer to the memory to dump
 	 *     size = the size of the memory block to dump
 	 */
-	public static void dumpMem(string mem, uint size)
+	public static void dumpMem(char* mem, uint size)
 	{
-		gst_util_dump_mem(Str.toStringz(mem), size);
+		gst_util_dump_mem(mem, size);
 	}
 
 	/**

@@ -137,7 +137,9 @@ class: ArrayG
 
 struct: Base64
 move: base64_decode_step Base64 decode_step
+move: base64_decode_inplace Base64 decode_inplace
 noCode: decode_step
+array: decode_inplace Return out_len
 code: start
 	/**
 	 * Incrementally decode a sequence of binary data from its Base-64 stringified
@@ -410,6 +412,10 @@ class: HashTable
 
 struct: Hmac
 noCode: get_digest
+move: compute_hmac_for_data Hmac
+move: compute_hmac_for_string Hmac
+array: compute_hmac_for_data data length
+array: compute_hmac_for_string str length
 code: start
 	/**
 	 * Gets the digest from checksum as a raw binary array and places it
@@ -1648,7 +1654,6 @@ move: atomic_pointer_set Atomic pointer_set
 move: atomic_pointer_xor Atomic pointer_xor
 
 move: base64_decode Base64 decode
-move: base64_decode_inplace Base64 decode_inplace
 move: base64_encode Base64 encode
 move: base64_encode_close Base64 encode_close
 move: base64_encode_step Base64 encode_step
@@ -1727,9 +1732,6 @@ move: int_equal HashTable
 move: int_hash HashTable
 move: str_equal HashTable
 move: str_hash HashTable
-
-move: compute_hmac_for_data Hmac
-move: compute_hmac_for_string Hmac
 
 move: hostname_is_ascii_encoded Hostname is_ascii_encoded
 move: hostname_is_ip_address Hostname is_ip_address

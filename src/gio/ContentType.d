@@ -193,11 +193,11 @@ public struct ContentType
 	 * Return: a string indicating a guessed content type for the
 	 *     given data. Free with g_free()
 	 */
-	public static string typeGuess(string filename, string data, out bool resultUncertain)
+	public static string typeGuess(string filename, char[] data, out bool resultUncertain)
 	{
 		int outresultUncertain;
 		
-		auto p = g_content_type_guess(Str.toStringz(filename), Str.toStringz(data), cast(size_t)data.length, &outresultUncertain);
+		auto p = g_content_type_guess(Str.toStringz(filename), data.ptr, cast(size_t)data.length, &outresultUncertain);
 		
 		resultUncertain = (outresultUncertain == 1);
 		

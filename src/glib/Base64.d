@@ -63,6 +63,31 @@ public struct Base64
 	 */
 
 	/**
+	 * Decode a sequence of Base-64 encoded text into binary data
+	 * by overwriting the input data.
+	 *
+	 * Params:
+	 *     text = zero-terminated
+	 *         string with base64 text to decode
+	 *     outLen = The length of the decoded data is written here
+	 *
+	 * Return: The binary data that @text responds. This pointer
+	 *     is the same as the input @text.
+	 *
+	 * Since: 2.20
+	 */
+	public static char* decodeInplace(ref char[] text)
+	{
+		size_t outLen = cast(size_t)text.length;
+		
+		auto p = g_base64_decode_inplace(text.ptr, &outLen);
+		
+		text = text[0..outLen];
+		
+		return p;
+	}
+
+	/**
 	 * Decode a sequence of Base-64 encoded text into binary data.  Note
 	 * that the returned binary data is not necessarily zero-terminated,
 	 * so it should not be used as a character string.
@@ -77,36 +102,13 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static string decode(string text)
+	public static ubyte[] decode(string text)
 	{
 		size_t outLen;
 		
-		return Str.toString(g_base64_decode(Str.toStringz(text), &outLen));
-	}
-
-	/**
-	 * Decode a sequence of Base-64 encoded text into binary data
-	 * by overwriting the input data.
-	 *
-	 * Params:
-	 *     text = zero-terminated
-	 *         string with base64 text to decode
-	 *     outLen = The length of the decoded data is written here
-	 *
-	 * Return: The binary data that @text responds. This pointer
-	 *     is the same as the input @text.
-	 *
-	 * Since: 2.20
-	 */
-	public static string decodeInplace(ref char[] text)
-	{
-		size_t outLen = cast(size_t)text.length;
+		auto p = g_base64_decode(Str.toStringz(text), &outLen);
 		
-		auto p = g_base64_decode_inplace(text.ptr, &outLen);
-		
-		text = text[0..outLen];
-		
-		return Str.toString(p);
+		return p[0 .. outLen];
 	}
 
 	/**
@@ -123,9 +125,9 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static string encode(string data)
+	public static string encode(ubyte[] data)
 	{
-		return Str.toString(g_base64_encode(Str.toStringz(data), cast(size_t)data.length));
+		return Str.toString(g_base64_encode(data.ptr, cast(size_t)data.length));
 	}
 
 	/**
@@ -183,8 +185,8 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static size_t encodeStep(string inn, bool breakLines, out char[] output, ref int state, ref int save)
+	public static size_t encodeStep(ubyte[] inn, bool breakLines, out char[] output, ref int state, ref int save)
 	{
-		return g_base64_encode_step(Str.toStringz(inn), cast(size_t)inn.length, breakLines, output.ptr, &state, &save);
+		return g_base64_encode_step(inn.ptr, cast(size_t)inn.length, breakLines, output.ptr, &state, &save);
 	}
 }

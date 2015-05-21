@@ -1313,8 +1313,8 @@ shared static this()
 	// glib.Base64
 
 	Linker.link(g_base64_decode_step, "g_base64_decode_step", LIBRARY.GLIB);
-	Linker.link(g_base64_decode, "g_base64_decode", LIBRARY.GLIB);
 	Linker.link(g_base64_decode_inplace, "g_base64_decode_inplace", LIBRARY.GLIB);
+	Linker.link(g_base64_decode, "g_base64_decode", LIBRARY.GLIB);
 	Linker.link(g_base64_encode, "g_base64_encode", LIBRARY.GLIB);
 	Linker.link(g_base64_encode_close, "g_base64_encode_close", LIBRARY.GLIB);
 	Linker.link(g_base64_encode_step, "g_base64_encode_step", LIBRARY.GLIB);
@@ -3014,8 +3014,8 @@ __gshared extern(C)
 	// glib.Base64
 
 	size_t function(char* inn, size_t len, char* output, int* state, uint* save) c_g_base64_decode_step;
-	char* function(const(char)* text, size_t* outLen) c_g_base64_decode;
 	char* function(char* text, size_t* outLen) c_g_base64_decode_inplace;
+	char* function(const(char)* text, size_t* outLen) c_g_base64_decode;
 	char* function(char* data, size_t len) c_g_base64_encode;
 	size_t function(int breakLines, char* output, int* state, int* save) c_g_base64_encode_close;
 	size_t function(char* inn, size_t len, int breakLines, char* output, int* state, int* save) c_g_base64_encode_step;
@@ -4713,8 +4713,8 @@ alias c_g_module_supported g_module_supported;
 // glib.Base64
 
 alias c_g_base64_decode_step g_base64_decode_step;
-alias c_g_base64_decode g_base64_decode;
 alias c_g_base64_decode_inplace g_base64_decode_inplace;
+alias c_g_base64_decode g_base64_decode;
 alias c_g_base64_encode g_base64_encode;
 alias c_g_base64_encode_close g_base64_encode_close;
 alias c_g_base64_encode_step g_base64_encode_step;

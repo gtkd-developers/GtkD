@@ -111,9 +111,9 @@ public GdkAtom internStaticString(string atomName)
  *     nelements = the number of elements of size determined by the format,
  *         contained in @data.
  */
-public void propertyChange(Window window, GdkAtom property, GdkAtom type, int format, GdkPropMode mode, string data, int nelements)
+public void propertyChange(Window window, GdkAtom property, GdkAtom type, int format, GdkPropMode mode, char[] data)
 {
-	gdk_property_change((window is null) ? null : window.getWindowStruct(), property, type, format, mode, Str.toStringz(data), nelements);
+	gdk_property_change((window is null) ? null : window.getWindowStruct(), property, type, format, mode, data.ptr, cast(int)data.length);
 }
 
 /**
@@ -176,14 +176,14 @@ public void propertyDelete(Window window, GdkAtom property)
  * Return: %TRUE if data was successfully received and stored
  *     in @data, otherwise %FALSE.
  */
-public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong offset, gulong length, int pdelete, out GdkAtom actualPropertyType, out int actualFormat, out string data)
+public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong offset, gulong length, int pdelete, out GdkAtom actualPropertyType, out int actualFormat, out char[] data)
 {
 	int actualLength;
 	char* outdata = null;
 	
 	auto p = gdk_property_get((window is null) ? null : window.getWindowStruct(), property, type, offset, length, pdelete, &actualPropertyType, &actualFormat, &actualLength, &outdata) != 0;
 	
-	data = Str.toString(outdata, actualLength);
+	data = outdata[0 .. actualLength];
 	
 	return p;
 }
@@ -206,11 +206,11 @@ public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong of
  *
  * Since: 2.2
  */
-public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, int format, string text, out string[] list)
+public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, int format, char[] text, out string[] list)
 {
 	char** outlist = null;
 	
-	auto p = gdk_text_property_to_utf8_list_for_display((display is null) ? null : display.getDisplayStruct(), encoding, format, Str.toStringz(text), cast(int)text.length, &outlist);
+	auto p = gdk_text_property_to_utf8_list_for_display((display is null) ? null : display.getDisplayStruct(), encoding, format, text.ptr, cast(int)text.length, &outlist);
 	
 	list = Str.toStringArray(outlist);
 	

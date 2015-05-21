@@ -145,14 +145,14 @@ public class PgCoverage
 	 *     bytes = location to store result (must be freed with g_free())
 	 *     nBytes = location to store size of result
 	 */
-	public void toBytes(out string bytes)
+	public void toBytes(out ubyte[] bytes)
 	{
-		char* outbytes = null;
+		ubyte* outbytes = null;
 		int nBytes;
 		
-		pango_coverage_to_bytes(pangoCoverage, &outbytes, &nBytes);
+		pango_coverage_to_bytes(pangoCoverage, cast(char**)&outbytes, &nBytes);
 		
-		bytes = Str.toString(outbytes, nBytes);
+		bytes = outbytes[0 .. nBytes];
 	}
 
 	/**
@@ -176,9 +176,9 @@ public class PgCoverage
 	 * Return: a newly allocated #PangoCoverage, or
 	 *     %NULL if the data was invalid.
 	 */
-	public static PgCoverage fromBytes(string bytes)
+	public static PgCoverage fromBytes(ubyte[] bytes)
 	{
-		auto p = pango_coverage_from_bytes(Str.toStringz(bytes), cast(int)bytes.length);
+		auto p = pango_coverage_from_bytes(bytes.ptr, cast(int)bytes.length);
 		
 		if(p is null)
 		{

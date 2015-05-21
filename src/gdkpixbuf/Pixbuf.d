@@ -298,9 +298,9 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string data, GdkColorspace colorspace, bool hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
+	public this(char[] data, GdkColorspace colorspace, bool hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
 	{
-		auto p = gdk_pixbuf_new_from_data(Str.toStringz(data), colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
+		auto p = gdk_pixbuf_new_from_data(data.ptr, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
 		
 		if(p is null)
 		{
@@ -1243,9 +1243,11 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     This function will cause an implicit copy of the pixbuf data if the
 	 *     pixbuf was created from read-only data.
 	 */
-	public string getPixels()
+	public char[] getPixels()
 	{
-		return Str.toString(gdk_pixbuf_get_pixels(gdkPixbuf));
+		auto p = gdk_pixbuf_get_pixels(gdkPixbuf);
+		
+		return p[0 .. getArrayLength(p)];
 	}
 
 	/**
@@ -1263,11 +1265,13 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *
 	 * Since: 2.26
 	 */
-	public string getPixelsWithLength()
+	public char[] getPixelsWithLength()
 	{
 		uint length;
 		
-		return Str.toString(gdk_pixbuf_get_pixels_with_length(gdkPixbuf, &length));
+		auto p = gdk_pixbuf_get_pixels_with_length(gdkPixbuf, &length);
+		
+		return p[0 .. length];
 	}
 
 	/**

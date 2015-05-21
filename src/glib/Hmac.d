@@ -175,9 +175,9 @@ public class Hmac
 	 *
 	 * Since: 2.30
 	 */
-	public void update(string data)
+	public void update(char[] data)
 	{
-		g_hmac_update(gHmac, Str.toStringz(data), cast(ptrdiff_t)data.length);
+		g_hmac_update(gHmac, data.ptr, cast(ptrdiff_t)data.length);
 	}
 
 	/**
@@ -209,9 +209,9 @@ public class Hmac
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(GChecksumType digestType, string key)
+	public this(GChecksumType digestType, char[] key)
 	{
-		auto p = g_hmac_new(digestType, Str.toStringz(key), cast(size_t)key.length);
+		auto p = g_hmac_new(digestType, key.ptr, cast(size_t)key.length);
 		
 		if(p is null)
 		{
@@ -240,9 +240,9 @@ public class Hmac
 	 *
 	 * Since: 2.30
 	 */
-	public static string computeHmacForData(GChecksumType digestType, string key, string data, size_t length)
+	public static string computeHmacForData(GChecksumType digestType, char[] key, char[] data)
 	{
-		return Str.toString(g_compute_hmac_for_data(digestType, Str.toStringz(key), cast(size_t)key.length, Str.toStringz(data), length));
+		return Str.toString(g_compute_hmac_for_data(digestType, key.ptr, cast(size_t)key.length, data.ptr, cast(size_t)data.length));
 	}
 
 	/**
@@ -263,8 +263,8 @@ public class Hmac
 	 *
 	 * Since: 2.30
 	 */
-	public static string computeHmacForString(GChecksumType digestType, string key, string str, ptrdiff_t length)
+	public static string computeHmacForString(GChecksumType digestType, char[] key, string str)
 	{
-		return Str.toString(g_compute_hmac_for_string(digestType, Str.toStringz(key), cast(size_t)key.length, Str.toStringz(str), length));
+		return Str.toString(g_compute_hmac_for_string(digestType, key.ptr, cast(size_t)key.length, Str.toStringz(str), cast(ptrdiff_t)str.length));
 	}
 }

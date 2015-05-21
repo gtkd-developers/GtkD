@@ -137,9 +137,9 @@ public class TlsPassword : ObjectG
 	 *
 	 * Since: 2.30
 	 */
-	public string getValue(size_t* length)
+	public char* getValue()
 	{
-		return Str.toString(g_tls_password_get_value(gTlsPassword, length));
+		return g_tls_password_get_value(gTlsPassword, cast(size_t).length);
 	}
 
 	/**
@@ -197,9 +197,9 @@ public class TlsPassword : ObjectG
 	 *
 	 * Since: 2.30
 	 */
-	public void setValue(string value, ptrdiff_t length)
+	public void setValue(char[] value)
 	{
-		g_tls_password_set_value(gTlsPassword, Str.toStringz(value), length);
+		g_tls_password_set_value(gTlsPassword, value.ptr, cast(ptrdiff_t)value.length);
 	}
 
 	/**
@@ -220,9 +220,9 @@ public class TlsPassword : ObjectG
 	 *
 	 * Since: 2.30
 	 */
-	public void setValueFull(string value, ptrdiff_t length, GDestroyNotify destroy)
+	public void setValueFull(char[] value, GDestroyNotify destroy)
 	{
-		g_tls_password_set_value_full(gTlsPassword, Str.toStringz(value), length, destroy);
+		g_tls_password_set_value_full(gTlsPassword, value.ptr, cast(ptrdiff_t)value.length, destroy);
 	}
 
 	/**

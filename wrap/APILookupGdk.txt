@@ -46,6 +46,8 @@ addStructs: end
 struct: Atom
 namespace:
 noStruct: true
+move: property_change Atom
+array: property_change data nelements
 
 struct: Cairo
 namespace:
@@ -511,7 +513,6 @@ code: start
 	}
 code: end
 
-move: property_change Atom
 move: property_delete Atom
 move: property_get Atom
 move: text_property_to_utf8_list_for_display Atom

@@ -101,9 +101,11 @@ public class SelectionData
 	 *
 	 * Since: 2.14
 	 */
-	public string getData()
+	public ubyte[] getData()
 	{
-		return Str.toString(gtk_selection_data_get_data(gtkSelectionData));
+		auto p = gtk_selection_data_get_data(gtkSelectionData);
+		
+		return p[0 .. getArrayLength(p)];
 	}
 
 	/**
@@ -128,11 +130,13 @@ public class SelectionData
 	 *
 	 * Since: 3.0
 	 */
-	public string getDataWithLength()
+	public char[] getDataWithLength()
 	{
 		int length;
 		
-		return Str.toString(gtk_selection_data_get_data_with_length(gtkSelectionData, &length));
+		auto p = gtk_selection_data_get_data_with_length(gtkSelectionData, &length);
+		
+		return p[0 .. length];
 	}
 
 	/**
@@ -291,9 +295,9 @@ public class SelectionData
 	 *     data = pointer to the data (will be copied)
 	 *     length = length of the data
 	 */
-	public void set(GdkAtom type, int format, string data)
+	public void set(GdkAtom type, int format, char[] data)
 	{
-		gtk_selection_data_set(gtkSelectionData, type, format, Str.toStringz(data), cast(int)data.length);
+		gtk_selection_data_set(gtkSelectionData, type, format, data.ptr, cast(int)data.length);
 	}
 
 	/**

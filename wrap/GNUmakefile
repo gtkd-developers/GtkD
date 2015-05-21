@@ -35,7 +35,7 @@ SOURCES = $(wildcard utils/*.d)
 BINNAME = gtkwrap
 
 $(BINNAME): $(SOURCES)
-	$(DC) $^ $(output) $(LDFLAGS)
+	$(DC) $^ $(output) $(DCFLAGS) $(LDFLAGS)
 	rm -f *.o
 
 clean:

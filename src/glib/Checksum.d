@@ -198,9 +198,9 @@ public class Checksum
 	 *
 	 * Since: 2.16
 	 */
-	public void update(string data)
+	public void update(ubyte[] data)
 	{
-		g_checksum_update(gChecksum, Str.toStringz(data), cast(ptrdiff_t)data.length);
+		g_checksum_update(gChecksum, data.ptr, cast(ptrdiff_t)data.length);
 	}
 
 	/**
@@ -257,9 +257,9 @@ public class Checksum
 	 *
 	 * Since: 2.16
 	 */
-	public static string computeChecksumForData(GChecksumType checksumType, string data)
+	public static string computeChecksumForData(GChecksumType checksumType, ubyte[] data)
 	{
-		return Str.toString(g_compute_checksum_for_data(checksumType, Str.toStringz(data), cast(size_t)data.length));
+		return Str.toString(g_compute_checksum_for_data(checksumType, data.ptr, cast(size_t)data.length));
 	}
 
 	/**

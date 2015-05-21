@@ -288,11 +288,11 @@ public class PixbufLoader : ObjectG
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool write(string buf)
+	public bool write(char[] buf)
 	{
 		GError* err = null;
 		
-		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, Str.toStringz(buf), cast(size_t)buf.length, &err) != 0;
+		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, cast(size_t)buf.length, &err) != 0;
 		
 		if (err !is null)
 		{

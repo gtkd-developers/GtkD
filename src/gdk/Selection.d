@@ -178,15 +178,9 @@ public struct Selection
 	 *
 	 * Return: the length of the retrieved data.
 	 */
-	public static int propertyGet(Window requestor, out string data, GdkAtom* propType, int* propFormat)
+	public static int propertyGet(Window requestor, out char* data, GdkAtom* propType, int* propFormat)
 	{
-		char* outdata = null;
-		
-		auto p = gdk_selection_property_get((requestor is null) ? null : requestor.getWindowStruct(), &outdata, propType, propFormat);
-		
-		data = Str.toString(outdata);
-		
-		return p;
+		return gdk_selection_property_get((requestor is null) ? null : requestor.getWindowStruct(), &data, propType, propFormat);
 	}
 
 	/**
