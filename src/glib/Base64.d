@@ -76,7 +76,7 @@ public struct Base64
 	 *
 	 * Since: 2.20
 	 */
-	public static char* decodeInplace(ref char[] text)
+	public static char[] decodeInplace(ref char[] text)
 	{
 		size_t outLen = cast(size_t)text.length;
 		
@@ -84,7 +84,7 @@ public struct Base64
 		
 		text = text[0..outLen];
 		
-		return p;
+		return p[0 .. outLen];
 	}
 
 	/**

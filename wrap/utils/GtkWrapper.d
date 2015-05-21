@@ -339,6 +339,12 @@ class GtkWrapper
 							break;
 						}
 
+						GtkType elementType = new GtkType(this);
+
+						elementType.name = func.returnType.name;
+						elementType.cType = func.returnType.cType[0..$-1];
+						func.returnType.elementType = elementType;
+
 						foreach( i, p; func.params )
 						{
 							if ( p.name == vals[2] )

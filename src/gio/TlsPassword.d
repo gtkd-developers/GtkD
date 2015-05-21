@@ -137,9 +137,13 @@ public class TlsPassword : ObjectG
 	 *
 	 * Since: 2.30
 	 */
-	public char* getValue()
+	public char[] getValue()
 	{
-		return g_tls_password_get_value(gTlsPassword, cast(size_t).length);
+		size_t length;
+		
+		auto p = g_tls_password_get_value(gTlsPassword, &length);
+		
+		return p[0 .. length];
 	}
 
 	/**
