@@ -102,7 +102,7 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static ubyte[] decode(string text)
+	public static char[] decode(string text)
 	{
 		size_t outLen;
 		
@@ -125,7 +125,7 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static string encode(ubyte[] data)
+	public static string encode(char[] data)
 	{
 		return Str.toString(g_base64_encode(data.ptr, cast(size_t)data.length));
 	}
@@ -185,7 +185,7 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static size_t encodeStep(ubyte[] inn, bool breakLines, out char[] output, ref int state, ref int save)
+	public static size_t encodeStep(char[] inn, bool breakLines, out char[] output, ref int state, ref int save)
 	{
 		return g_base64_encode_step(inn.ptr, cast(size_t)inn.length, breakLines, output.ptr, &state, &save);
 	}

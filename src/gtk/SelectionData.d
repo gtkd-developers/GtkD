@@ -101,7 +101,7 @@ public class SelectionData
 	 *
 	 * Since: 2.14
 	 */
-	public ubyte[] getData()
+	public char[] getData()
 	{
 		auto p = gtk_selection_data_get_data(gtkSelectionData);
 		

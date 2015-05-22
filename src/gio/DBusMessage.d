@@ -120,7 +120,7 @@ public class DBusMessage : ObjectG
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(ubyte[] blob, GDBusCapabilityFlags capabilities)
+	public this(char[] blob, GDBusCapabilityFlags capabilities)
 	{
 		GError* err = null;
 		
@@ -208,7 +208,7 @@ public class DBusMessage : ObjectG
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static ptrdiff_t bytesNeeded(ubyte[] blob)
+	public static ptrdiff_t bytesNeeded(char[] blob)
 	{
 		GError* err = null;
 		

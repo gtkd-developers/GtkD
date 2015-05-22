@@ -1175,6 +1175,9 @@ final class GtkFunction
 			if ( type.cType == "gconstpointer" && type.elementType.cType == "gconstpointer" )
 				return "void[]";
 
+			if ( type.cType == "guchar*" )
+				return "char[]";
+
 			if ( type.size > -1 )
 				size = to!string(type.size);
 

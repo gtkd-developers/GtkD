@@ -176,7 +176,7 @@ public class PgCoverage
 	 * Return: a newly allocated #PangoCoverage, or
 	 *     %NULL if the data was invalid.
 	 */
-	public static PgCoverage fromBytes(ubyte[] bytes)
+	public static PgCoverage fromBytes(char[] bytes)
 	{
 		auto p = pango_coverage_from_bytes(bytes.ptr, cast(int)bytes.length);
 		
