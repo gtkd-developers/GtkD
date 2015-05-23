@@ -1662,7 +1662,7 @@ public enum GtkMessageType : uint
 	 */
 	ERROR = 3,
 	/**
-	 * None of the above, doesn’t get an icon
+	 * None of the above
 	 */
 	OTHER = 4,
 }

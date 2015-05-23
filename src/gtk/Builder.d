@@ -223,6 +223,7 @@ private import std.string;
  * 
  * Additionally, since 3.10 a special <template> tag has been added
  * to the format allowing one to define a widget class’s components.
+ * See the [GtkWidget documentation][composite-templates] for details.
  */
 public class Builder : ObjectG
 {

@@ -2597,7 +2597,7 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * For optimizization purposes, compositing window managers may
+	 * For optimisation purposes, compositing window managers may
 	 * like to not draw obscured regions of windows, or turn off blending
 	 * during for these regions. With RGB windows with no transparency,
 	 * this is just the shape of the window, but with ARGB32 windows, the
@@ -2606,13 +2606,13 @@ public class Window : ObjectG
 	 *
 	 * This function only works for toplevel windows.
 	 *
-	 * GTK+ will automatically update this property automatically if
+	 * GTK+ will update this property automatically if
 	 * the @window background is opaque, as we know where the opaque regions
 	 * are. If your window background is not opaque, please update this
 	 * property in your #GtkWidget::style-updated handler.
 	 *
 	 * Params:
-	 *     region = a region
+	 *     region = a region, or %NULL
 	 *
 	 * Since: 3.10
 	 */

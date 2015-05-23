@@ -538,6 +538,19 @@ public class GLArea : Widget
 	}
 
 	void delegate(int, int, GLArea)[] onResizeListeners;
+	/**
+	 * The ::resize signal is emitted once when the widget is realized, and
+	 * then each time the widget is changed while realized. This is useful
+	 * in order to keep GL state up to date with the widget size, like for
+	 * instance camera properties which may depend on the width/height ratio.
+	 *
+	 * The GL context for the area is guaranteed to be current when this signal
+	 * is emitted.
+	 *
+	 * The default handler sets up the GL viewport.
+	 *
+	 * Since: 3.16
+	 */
 	void addOnResize(void delegate(int, int, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "resize" !in connectedSignals )

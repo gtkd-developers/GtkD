@@ -469,6 +469,9 @@ public struct Gdk
 	 * the class name part of the `WM_CLASS` property on
 	 * toplevel windows; see the ICCCM.
 	 *
+	 * The program class can still be overridden with the --class command
+	 * line option.
+	 *
 	 * Params:
 	 *     programClass = a string.
 	 */

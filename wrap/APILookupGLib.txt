@@ -574,6 +574,7 @@ code: end
 struct: IOChannel
 array: read_line str_return length
 out: read_line_string terminator_pos
+array: write_chars buf count
 
 struct: List
 class: ListG
