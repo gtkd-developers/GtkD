@@ -760,11 +760,11 @@ public class IOChannel
 	 *
 	 * Throws: GException on failure.
 	 */
-	public GIOStatus writeChars(string buf, ptrdiff_t count, out size_t bytesWritten)
+	public GIOStatus writeChars(string buf, out size_t bytesWritten)
 	{
 		GError* err = null;
 		
-		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, &bytesWritten, &err);
+		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), cast(ptrdiff_t)buf.length, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
