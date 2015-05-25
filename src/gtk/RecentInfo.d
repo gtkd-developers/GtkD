@@ -200,9 +200,6 @@ public class RecentInfo
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 *
-	 * Params:
-	 *     length = return location for the length of the returned list
-	 *
 	 * Return: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
@@ -266,9 +263,6 @@ public class RecentInfo
 	 * Returns all groups registered for the recently used item @info.
 	 * The array of returned group names will be %NULL terminated, so
 	 * length might optionally be %NULL.
-	 *
-	 * Params:
-	 *     length = return location for the number of groups returned
 	 *
 	 * Return: a newly allocated %NULL terminated array of strings.
 	 *     Use g_strfreev() to free it.

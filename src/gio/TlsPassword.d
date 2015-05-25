@@ -130,9 +130,6 @@ public class TlsPassword : ObjectG
 	 * for @length in contexts where you know the password will have a
 	 * certain fixed length.)
 	 *
-	 * Params:
-	 *     length = location to place the length of the password.
-	 *
 	 * Return: The password value (owned by the password object).
 	 *
 	 * Since: 2.30

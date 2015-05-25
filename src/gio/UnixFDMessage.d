@@ -208,10 +208,6 @@ public class UnixFDMessage : SocketControlMessage
 	 * This function never returns %NULL. In case there are no file
 	 * descriptors contained in @message, an empty array is returned.
 	 *
-	 * Params:
-	 *     length = pointer to the length of the returned
-	 *         array, or %NULL
-	 *
 	 * Return: an array of file
 	 *     descriptors
 	 *

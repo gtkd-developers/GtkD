@@ -864,7 +864,6 @@ public class DBusMessage : ObjectG
 	 * g_dbus_message_get_byte_order() will be used.
 	 *
 	 * Params:
-	 *     outSize = Return location for size of generated blob.
 	 *     capabilities = A #GDBusCapabilityFlags describing what protocol features are supported.
 	 *
 	 * Return: A pointer to a

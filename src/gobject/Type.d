@@ -231,8 +231,6 @@ public struct Type
 	 *
 	 * Params:
 	 *     type = the parent type
-	 *     nChildren = location to store the length of
-	 *         the returned array, or %NULL
 	 *
 	 * Return: Newly allocated
 	 *     and 0-terminated array of child types, free with g_free()
@@ -548,8 +546,6 @@ public struct Type
 	 *
 	 * Params:
 	 *     type = the type to list interface types for
-	 *     nInterfaces = location to store the length of
-	 *         the returned array, or %NULL
 	 *
 	 * Return: Newly allocated
 	 *     and 0-terminated array of interface types, free with g_free()

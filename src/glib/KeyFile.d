@@ -146,7 +146,6 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *     key = a key
-	 *     length = the number of booleans returned
 	 *
 	 * Return: the values associated with the key as a list of booleans, or %NULL if the
 	 *     key was not found or could not be parsed. The returned list of booleans
@@ -252,7 +251,6 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *     key = a key
-	 *     length = the number of doubles returned
 	 *
 	 * Return: the values associated with the key as a list of doubles, or %NULL if the
 	 *     key was not found or could not be parsed. The returned list of doubles
@@ -371,7 +369,6 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *     key = a key
-	 *     length = the number of integers returned
 	 *
 	 * Return: the values associated with the key as a list of integers, or %NULL if
 	 *     the key was not found or could not be parsed. The returned list of
@@ -480,7 +477,6 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *     locale = a locale identifier or %NULL
-	 *     length = return location for the number of returned strings or %NULL
 	 *
 	 * Return: a newly allocated %NULL-terminated string array
 	 *     or %NULL if the key isn't found. The string array should be freed
@@ -563,7 +559,6 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *     key = a key
-	 *     length = return location for the number of returned strings, or %NULL
 	 *
 	 * Return: a %NULL-terminated string array or %NULL if the specified
 	 *     key cannot be found. The array should be freed with g_strfreev().

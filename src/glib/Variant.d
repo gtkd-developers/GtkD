@@ -1171,10 +1171,6 @@ public class Variant
 	 *
 	 * The return value must be freed using g_free().
 	 *
-	 * Params:
-	 *     length = a pointer to a #gsize, to store
-	 *         the length (not including the nul terminator)
-	 *
 	 * Return: a newly allocated string
 	 *
 	 * Since: 2.26
@@ -1198,9 +1194,6 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Params:
-	 *     length = the length of the result, or %NULL
-	 *
 	 * Return: an array of strings
 	 *
 	 * Since: 2.26
@@ -1223,9 +1216,6 @@ public class Variant
 	 *
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
-	 *
-	 * Params:
-	 *     length = the length of the result, or %NULL
 	 *
 	 * Return: an array of strings
 	 *
@@ -1269,9 +1259,6 @@ public class Variant
 	 *
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
-	 *
-	 * Params:
-	 *     length = the length of the result, or %NULL
 	 *
 	 * Return: an array of strings
 	 *
@@ -1369,9 +1356,6 @@ public class Variant
 	 *
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
-	 *
-	 * Params:
-	 *     length = the length of the result, or %NULL
 	 *
 	 * Return: an array of constant strings
 	 *
@@ -1519,7 +1503,6 @@ public class Variant
 	 * items in the array.
 	 *
 	 * Params:
-	 *     nElements = a pointer to the location to store the number of items
 	 *     elementSize = the size of each element
 	 *
 	 * Return: a pointer to
@@ -1666,9 +1649,6 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Params:
-	 *     length = the length of the result, or %NULL
-	 *
 	 * Return: an array of constant strings
 	 *
 	 * Since: 2.30
@@ -1742,9 +1722,6 @@ public class Variant
 	 *
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
-	 *
-	 * Params:
-	 *     length = the length of the result, or %NULL
 	 *
 	 * Return: an array of constant strings
 	 *

@@ -285,7 +285,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     list = a #GtkTargetList
-	 *     nTargets = return location for the number ot targets in the table
 	 *
 	 * Return: the new table.
 	 *

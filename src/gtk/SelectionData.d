@@ -121,9 +121,6 @@ public class SelectionData
 	/**
 	 * Retrieves the raw data of the selection along with its length.
 	 *
-	 * Params:
-	 *     length = return location for length of the data segment
-	 *
 	 * Return: the raw data of the selection
 	 *
 	 * Since: 3.0

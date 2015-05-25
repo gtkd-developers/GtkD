@@ -99,9 +99,6 @@ public class CellAreaClass
 	/**
 	 * Returns all cell properties of a cell area class.
 	 *
-	 * Params:
-	 *     nProperties = location to return the number of cell properties found
-	 *
 	 * Return: a newly
 	 *     allocated %NULL-terminated array of #GParamSpec*.  The array
 	 *     must be freed with g_free().

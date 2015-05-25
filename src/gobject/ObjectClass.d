@@ -214,9 +214,6 @@ public class ObjectClass
 	/**
 	 * Get an array of #GParamSpec* for all properties of a class.
 	 *
-	 * Params:
-	 *     nProperties = return location for the length of the returned array
-	 *
 	 * Return: an array of
 	 *     #GParamSpec* which should be freed after use
 	 */

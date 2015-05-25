@@ -1251,9 +1251,6 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
 	 *
-	 * Params:
-	 *     length = The length of the binary data.
-	 *
 	 * Return: A pointer to the pixbuf's
 	 *     pixel data.  Please see the section on [image data](image-data)
 	 *     for information about how the pixel data is stored in memory.

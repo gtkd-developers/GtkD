@@ -298,8 +298,6 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 *     accelKey = key value of the accelerator
 	 *     accelMods = modifier combination of the accelerator
-	 *     nEntries = location to return the number
-	 *         of entries found, or %NULL
 	 *
 	 * Return: an array of
 	 *     @n_entries #GtkAccelGroupEntry elements, or %NULL. The array

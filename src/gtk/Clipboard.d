@@ -608,7 +608,6 @@ public class Clipboard : ObjectG
 	 * Params:
 	 *     buffer = a #GtkTextBuffer
 	 *     format = return location for the format of the returned data
-	 *     length = return location for the length of the returned data
 	 *
 	 * Return: a
 	 *     newly-allocated binary block of data which must be

@@ -471,9 +471,6 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 *
-	 * Params:
-	 *     numRanges = return location for the length of the returned array
-	 *
 	 * Return: an array
 	 *     of #GtkPageRanges.  Use g_free() to free the array when
 	 *     it is no longer needed.

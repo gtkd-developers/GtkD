@@ -194,9 +194,6 @@ public class Bytes
 	 * may represent an empty string with @data non-%NULL and @size as 0. %NULL will
 	 * not be returned if @size is non-zero.
 	 *
-	 * Params:
-	 *     size = location to return size of byte data
-	 *
 	 * Return: a pointer to the
 	 *     byte data, or %NULL
 	 *

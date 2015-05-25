@@ -212,10 +212,6 @@ public class TreePath
 	 * It also returns the number of elements in the array.
 	 * The array should not be freed.
 	 *
-	 * Params:
-	 *     depth = return location for number of elements
-	 *         returned in the integer array, or %NULL
-	 *
 	 * Return: The current
 	 *     indices, or %NULL
 	 *

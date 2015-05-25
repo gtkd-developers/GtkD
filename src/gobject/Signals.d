@@ -501,7 +501,6 @@ public struct Signals
 	 *
 	 * Params:
 	 *     itype = Instance or interface type.
-	 *     nIds = Location to store the number of signal ids for @itype.
 	 *
 	 * Return: Newly allocated array of signal IDs.
 	 */

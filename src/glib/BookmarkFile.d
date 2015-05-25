@@ -211,7 +211,6 @@ public class BookmarkFile
 	 *
 	 * Params:
 	 *     uri = a valid URI
-	 *     length = return location of the length of the returned list, or %NULL
 	 *
 	 * Return: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
@@ -276,7 +275,6 @@ public class BookmarkFile
 	 *
 	 * Params:
 	 *     uri = a valid URI
-	 *     length = return location for the length of the returned string, or %NULL
 	 *
 	 * Return: a newly allocated %NULL-terminated array of group names.
 	 *     Use g_strfreev() to free it.
@@ -477,9 +475,6 @@ public class BookmarkFile
 	 * Returns all URIs of the bookmarks in the bookmark file @bookmark.
 	 * The array of returned URIs will be %NULL-terminated, so @length may
 	 * optionally be %NULL.
-	 *
-	 * Params:
-	 *     length = return location for the number of returned URIs, or %NULL
 	 *
 	 * Return: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.

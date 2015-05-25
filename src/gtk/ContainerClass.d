@@ -116,9 +116,6 @@ public class ContainerClass
 	/**
 	 * Returns all child properties of a container class.
 	 *
-	 * Params:
-	 *     nProperties = location to return the number of child properties found
-	 *
 	 * Return: a newly allocated %NULL-terminated array of #GParamSpec*.
 	 *     The array must be freed with g_free().
 	 */

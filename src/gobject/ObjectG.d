@@ -416,7 +416,6 @@ public class ObjectG
 	 * Params:
 	 *     gIface = any interface vtable for the interface, or the default
 	 *         vtable for the interface
-	 *     nPropertiesP = location to store number of properties returned.
 	 *
 	 * Return: a
 	 *     pointer to an array of pointers to #GParamSpec

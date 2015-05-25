@@ -271,9 +271,6 @@ public class ApplicationCommandLine : ObjectG
 	 * The return value is %NULL-terminated and should be freed using
 	 * g_strfreev().
 	 *
-	 * Params:
-	 *     argc = the length of the arguments array, or %NULL
-	 *
 	 * Return: the string array
 	 *     containing the arguments (the argv)
 	 *

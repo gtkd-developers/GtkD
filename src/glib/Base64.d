@@ -69,7 +69,6 @@ public struct Base64
 	 * Params:
 	 *     text = zero-terminated
 	 *         string with base64 text to decode
-	 *     outLen = The length of the decoded data is written here
 	 *
 	 * Return: The binary data that @text responds. This pointer
 	 *     is the same as the input @text.
@@ -94,7 +93,6 @@ public struct Base64
 	 *
 	 * Params:
 	 *     text = zero-terminated string with base64 text to decode
-	 *     outLen = The length of the decoded data is written here
 	 *
 	 * Return: newly allocated buffer containing the binary data
 	 *     that @text represents. The returned buffer must

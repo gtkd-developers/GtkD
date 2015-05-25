@@ -85,7 +85,6 @@ public class ParamSpecPool
 	 *
 	 * Params:
 	 *     ownerType = the owner to look for
-	 *     nPspecsP = return location for the length of the returned array
 	 *
 	 * Return: a newly
 	 *     allocated array containing pointers to all #GParamSpecs

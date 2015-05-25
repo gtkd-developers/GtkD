@@ -249,9 +249,6 @@ public class HashTable
 	 * appropriate to use g_strfreev() if you call g_hash_table_steal_all()
 	 * first to transfer ownership of the keys.
 	 *
-	 * Params:
-	 *     length = the length of the returned array
-	 *
 	 * Return: a
 	 *     %NULL-terminated array containing each key from the table.
 	 *

@@ -156,8 +156,6 @@ public class TypeInterface
 	 *
 	 * Params:
 	 *     interfaceType = an interface type
-	 *     nPrerequisites = location to return the number
-	 *         of prerequisites, or %NULL
 	 *
 	 * Return: a
 	 *     newly-allocated zero-terminated array of #GType containing

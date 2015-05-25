@@ -1089,6 +1089,9 @@ final class GtkFunction
 					if ( param.doc.empty )
 						continue;
 
+					if ( returnType.length > -1 && param == params[returnType.length] )
+						continue;
+
 					if ( isInstanceParam(param) )
 						continue;
 

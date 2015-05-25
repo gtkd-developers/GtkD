@@ -176,9 +176,6 @@ public struct Testing
 	 * Return the type ids that have been registered after
 	 * calling gtk_test_register_all_types().
 	 *
-	 * Params:
-	 *     nTypes = location to store number of types
-	 *
 	 * Return: 0-terminated array of type ids
 	 *
 	 * Since: 2.14

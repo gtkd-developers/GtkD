@@ -286,8 +286,6 @@ public struct CharacterSet
 	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 *         stored will the byte offset after the last valid
 	 *         input sequence.
-	 *     bytesWritten = the number of bytes stored in the output buffer (not
-	 *         including the terminating nul).
 	 *
 	 * Return: The converted string, or %NULL on an error.
 	 *

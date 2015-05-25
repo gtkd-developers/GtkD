@@ -691,9 +691,6 @@ public class TextBuffer : ObjectG
 	 * with @buffer using gtk_text_buffer_register_deserialize_format() or
 	 * gtk_text_buffer_register_deserialize_tagset()
 	 *
-	 * Params:
-	 *     nFormats = return location for the number of formats
-	 *
 	 * Return: an array of
 	 *     #GdkAtoms representing the registered formats.
 	 *
@@ -994,9 +991,6 @@ public class TextBuffer : ObjectG
 	 * This function returns the rich text serialize formats registered
 	 * with @buffer using gtk_text_buffer_register_serialize_format() or
 	 * gtk_text_buffer_register_serialize_tagset()
-	 *
-	 * Params:
-	 *     nFormats = return location for the number of formats
 	 *
 	 * Return: an array of
 	 *     #GdkAtoms representing the registered formats.
@@ -1509,7 +1503,6 @@ public class TextBuffer : ObjectG
 	 *     format = the rich text format to use for serializing
 	 *     start = start of block of text to serialize
 	 *     end = end of block of test to serialize
-	 *     length = return location for the length of the serialized data
 	 *
 	 * Return: the serialized
 	 *     data, encoded as @format

@@ -535,10 +535,6 @@ public class PgLayout : ObjectG
 	 * need to be attributes corresponding to both the position before
 	 * the first character and the position after the last character.
 	 *
-	 * Params:
-	 *     nAttrs = location to store the number of the attributes in
-	 *         the array
-	 *
 	 * Return: an array of logical attributes
 	 *
 	 * Since: 1.30

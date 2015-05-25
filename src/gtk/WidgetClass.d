@@ -166,9 +166,6 @@ public class WidgetClass
 	/**
 	 * Returns all style properties of a widget class.
 	 *
-	 * Params:
-	 *     nProperties = location to return the number of style properties found
-	 *
 	 * Return: a
 	 *     newly allocated array of #GParamSpec*. The array must be
 	 *     freed with g_free().

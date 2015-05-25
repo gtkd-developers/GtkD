@@ -128,9 +128,6 @@ public class Pixdata
 	 *
 	 * Deprecated: Use #GResource instead.
 	 *
-	 * Params:
-	 *     streamLengthP = location to store the resulting stream length in.
-	 *
 	 * Return: A
 	 *     newly-allocated string containing the serialized #GdkPixdata
 	 *     structure.

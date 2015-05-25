@@ -263,10 +263,6 @@ public template RecentChooserT(TStruct)
 	 *
 	 * Since the returned array is %NULL terminated, @length may be %NULL.
 	 *
-	 * Params:
-	 *     length = return location for a the length of the
-	 *         URI list, or %NULL
-	 *
 	 * Return: A newly allocated, %NULL-terminated array of strings. Use
 	 *     g_strfreev() to free it.
 	 *

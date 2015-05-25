@@ -118,10 +118,6 @@ public class PgLanguage
 	 * The pango_language_includes_script() function uses this function
 	 * internally.
 	 *
-	 * Params:
-	 *     numScripts = location to return number of scripts,
-	 *         or %NULL
-	 *
 	 * Return: An array of #PangoScript
 	 *     values, with the number of entries in the array stored in
 	 *     @num_scripts, or %NULL if Pango does not have any information about
