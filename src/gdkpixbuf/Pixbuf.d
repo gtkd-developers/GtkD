@@ -200,6 +200,21 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		return new Pixbuf(cast(GdkPixbuf*) p, true);
 	}
+	
+	/**
+	 * Queries a pointer to the pixel data of a pixbuf.
+	 *
+	 * Return: A pointer to the pixbuf's pixel data.
+	 *     Please see the section on [image data](image-data) for information
+	 *     about how the pixel data is stored in memory.
+	 *
+	 *     This function will cause an implicit copy of the pixbuf data if the
+	 *     pixbuf was created from read-only data.
+	 */
+	public char* getPixels()
+	{
+		return gdk_pixbuf_get_pixels(gdkPixbuf);
+	}
 
 	/**
 	 */
@@ -1231,23 +1246,6 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		}
 		
 		return new HashTable(cast(GHashTable*) p);
-	}
-
-	/**
-	 * Queries a pointer to the pixel data of a pixbuf.
-	 *
-	 * Return: A pointer to the pixbuf's pixel data.
-	 *     Please see the section on [image data](image-data) for information
-	 *     about how the pixel data is stored in memory.
-	 *
-	 *     This function will cause an implicit copy of the pixbuf data if the
-	 *     pixbuf was created from read-only data.
-	 */
-	public char[] getPixels()
-	{
-		auto p = gdk_pixbuf_get_pixels(gdkPixbuf);
-		
-		return p[0 .. getArrayLength(p)];
 	}
 
 	/**

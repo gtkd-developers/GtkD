@@ -2850,6 +2850,22 @@ code: start
 	}
 code: end
 
+struct: SelectionData
+noCode: get_data
+code: start
+	/**
+	 * Retrieves the raw data of the selection.
+	 *
+	 * Return: the raw data of the selection.
+	 *
+	 * Since: 2.14
+	 */
+	public char* getData()
+	{
+		return gtk_selection_data_get_data(gtkSelectionData);
+	}
+code: end
+
 struct: Socket
 alias: Window ulong
 

@@ -61,6 +61,18 @@ public class SelectionData
 	}
 
 	/**
+	 * Retrieves the raw data of the selection.
+	 *
+	 * Return: the raw data of the selection.
+	 *
+	 * Since: 2.14
+	 */
+	public char* getData()
+	{
+		return gtk_selection_data_get_data(gtkSelectionData);
+	}
+
+	/**
 	 */
 
 	public static GType getType()
@@ -92,20 +104,6 @@ public class SelectionData
 	public void free()
 	{
 		gtk_selection_data_free(gtkSelectionData);
-	}
-
-	/**
-	 * Retrieves the raw data of the selection.
-	 *
-	 * Return: the raw data of the selection.
-	 *
-	 * Since: 2.14
-	 */
-	public char[] getData()
-	{
-		auto p = gtk_selection_data_get_data(gtkSelectionData);
-		
-		return p[0 .. getArrayLength(p)];
 	}
 
 	/**

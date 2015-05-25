@@ -37,6 +37,7 @@ noCode: ref
 noCode: unref
 noCode: new_from_resource
 noCode: new_from_resource_at_scale
+noCode: get_pixels
 
 code: start
 	/**
@@ -147,6 +148,21 @@ code: start
 		}
 
 		return new Pixbuf(cast(GdkPixbuf*) p, true);
+	}
+
+	/**
+	 * Queries a pointer to the pixel data of a pixbuf.
+	 *
+	 * Return: A pointer to the pixbuf's pixel data.
+	 *     Please see the section on [image data](image-data) for information
+	 *     about how the pixel data is stored in memory.
+	 *
+	 *     This function will cause an implicit copy of the pixbuf data if the
+	 *     pixbuf was created from read-only data.
+	 */
+	public char* getPixels()
+	{
+		return gdk_pixbuf_get_pixels(gdkPixbuf);
 	}
 code: end
 
