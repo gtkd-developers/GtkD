@@ -207,6 +207,25 @@ public class Bin : Element, ChildProxyIF
 		super( elem.getElementStruct(), true );
 		this.gstBin = cast(GstBin*)elem.getElementStruct();
 	}
+	
+	/**
+	 * Adds a list of elements to a bin.
+	 * This function is equivalent to calling add() for each member of the list.
+	 * The return value of each add() is ignored.
+	 */
+	public void addMany( Element[] elems... )
+	{
+		foreach( e; elems ) add( e );
+	}
+	
+	/**
+	 * Remove a list of elements from a bin.
+	 * This function is equivalent to calling remove() with each member of the list.
+	 */
+	public void removeMany( Element[] elems... )
+	{
+		foreach( e; elems ) remove( e );
+	}
 
 	/**
 	 */
