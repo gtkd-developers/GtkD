@@ -716,17 +716,14 @@ final class GtkFunction
 		{
 			buff ~= "GError* err = null;";
 			gtkCall ~= ", &err";
-
-			string[] check;
-			check ~= "if (err !is null)";
-			check ~= "{";
-			check ~= "throw new GException( new ErrorG(err) );";
-			check ~= "}";
-
-			if ( !outToD.empty )
-				check ~= "";
-			outToD = check ~ outToD;
 		}
+
+		enum throwGException = [
+			"",
+			"if (err !is null)",
+			"{",
+			"throw new GException( new ErrorG(err) );",
+			"}"];
 
 		gtkCall ~= ")";
 
@@ -736,6 +733,11 @@ final class GtkFunction
 		if ( returnType.name == "none" )
 		{
 			buff ~= gtkCall ~";";
+
+			if ( throws )
+			{
+				buff ~= throwGException;
+			}
 
 			if ( !outToD.empty )
 			{
@@ -748,6 +750,11 @@ final class GtkFunction
 		else if ( type == GtkFunctionType.Constructor )
 		{
 			buff ~= "auto p = " ~ gtkCall ~";";
+
+			if ( throws )
+			{
+				buff ~= throwGException;
+			}
 
 			buff ~= "";
 			buff ~= "if(p is null)";
@@ -775,7 +782,7 @@ final class GtkFunction
 		}
 		else if ( isStringType(returnType) )
 		{
-			if ( outToD.empty )
+			if ( outToD.empty && !throws )
 			{
 				if ( isStringArray(returnType) )
 					buff ~= "return Str.toStringArray(" ~ gtkCall ~");";
@@ -786,6 +793,12 @@ final class GtkFunction
 			}
 
 			buff ~= "auto p = "~ gtkCall ~";";
+
+			if ( throws )
+			{
+				buff ~= throwGException;
+			}
+
 			buff ~= "";
 
 			if ( !outToD.empty )
@@ -808,6 +821,11 @@ final class GtkFunction
 		else if ( isDType(returnDType) )
 		{
 			buff ~= "auto p = "~ gtkCall ~";";
+
+			if ( throws )
+			{
+				buff ~= throwGException;
+			}
 
 			if ( !outToD.empty )
 			{
@@ -850,13 +868,18 @@ final class GtkFunction
 			if ( returnType.name == "gboolean" )
 				gtkCall ~= " != 0";
 
-			if ( !returnType.isArray && outToD.empty )
+			if ( !returnType.isArray && outToD.empty && !throws )
 			{
 				buff ~= "return "~ gtkCall ~";";
 				return buff;
 			}
 
 			buff ~= "auto p = "~ gtkCall ~";";
+
+			if ( throws )
+			{
+				buff ~= throwGException;
+			}
 
 			if ( !outToD.empty )
 			{

@@ -107,14 +107,14 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 		
 		auto p = g_charset_converter_new(Str.toStringz(toCharset), Str.toStringz(fromCharset), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
 		}
 		
 		this(cast(GCharsetConverter*) p, true);

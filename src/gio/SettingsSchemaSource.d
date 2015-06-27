@@ -128,14 +128,14 @@ public class SettingsSchemaSource
 		
 		auto p = g_settings_schema_source_new_from_directory(Str.toStringz(directory), (parent is null) ? null : parent.getSettingsSchemaSourceStruct(), trusted, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_directory");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_directory");
 		}
 		
 		this(cast(GSettingsSchemaSource*) p);

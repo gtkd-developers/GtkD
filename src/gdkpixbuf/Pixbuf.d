@@ -347,14 +347,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_file");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_file");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);
@@ -396,14 +396,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_file_at_scale");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_file_at_scale");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);
@@ -443,14 +443,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_file_at_size");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_file_at_size");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);
@@ -510,14 +510,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_inline(cast(int)data.length, data.ptr, copyPixels, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_inline");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_inline");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);
@@ -554,14 +554,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_stream");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_stream");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);
@@ -613,14 +613,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_stream_at_scale((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_stream_at_scale");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_stream_at_scale");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);
@@ -647,14 +647,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		
 		auto p = gdk_pixbuf_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_stream_finish");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_stream_finish");
 		}
 		
 		this(cast(GdkPixbuf*) p, true);

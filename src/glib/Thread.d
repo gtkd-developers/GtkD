@@ -100,14 +100,14 @@ public class Thread
 		
 		auto p = g_thread_try_new(Str.toStringz(name), func, data, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by try_new");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by try_new");
 		}
 		
 		this(cast(GThread*) p);

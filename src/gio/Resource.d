@@ -186,14 +186,14 @@ public class Resource
 		
 		auto p = g_resource_new_from_data((data is null) ? null : data.getBytesStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_data");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_data");
 		}
 		
 		this(cast(GResource*) p);

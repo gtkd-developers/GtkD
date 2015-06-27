@@ -105,14 +105,14 @@ public class PixbufAnimation : ObjectG
 		
 		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_file");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_file");
 		}
 		
 		this(cast(GdkPixbufAnimation*) p, true);
@@ -149,14 +149,14 @@ public class PixbufAnimation : ObjectG
 		
 		auto p = gdk_pixbuf_animation_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_stream");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_stream");
 		}
 		
 		this(cast(GdkPixbufAnimation*) p, true);
@@ -183,14 +183,14 @@ public class PixbufAnimation : ObjectG
 		
 		auto p = gdk_pixbuf_animation_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_stream_finish");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_stream_finish");
 		}
 		
 		this(cast(GdkPixbufAnimation*) p, true);

@@ -100,14 +100,14 @@ public class DBusNodeInfo
 		
 		auto p = g_dbus_node_info_new_for_xml(Str.toStringz(xmlData), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_for_xml");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_for_xml");
 		}
 		
 		this(cast(GDBusNodeInfo*) p);

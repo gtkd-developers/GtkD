@@ -126,14 +126,14 @@ public class DBusMessage : ObjectG
 		
 		auto p = g_dbus_message_new_from_blob(blob.ptr, cast(size_t)blob.length, capabilities, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_blob");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_blob");
 		}
 		
 		this(cast(GDBusMessage*) p, true);

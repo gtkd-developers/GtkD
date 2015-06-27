@@ -245,14 +245,14 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 		
 		auto p = g_dbus_object_manager_client_new_for_bus_sync(busType, flags, Str.toStringz(name), Str.toStringz(objectPath), getProxyTypeFunc, getProxyTypeUserData, getProxyTypeDestroyNotify, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_for_bus_sync");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_for_bus_sync");
 		}
 		
 		this(cast(GDBusObjectManagerClient*) p, true);
@@ -290,14 +290,14 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 		
 		auto p = g_dbus_object_manager_client_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, Str.toStringz(name), Str.toStringz(objectPath), getProxyTypeFunc, getProxyTypeUserData, getProxyTypeDestroyNotify, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_sync");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_sync");
 		}
 		
 		this(cast(GDBusObjectManagerClient*) p, true);

@@ -226,14 +226,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		
 		auto p = g_dbus_connection_new_for_address_sync(Str.toStringz(address), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_for_address_sync");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_for_address_sync");
 		}
 		
 		this(cast(GDBusConnection*) p, true);
@@ -276,14 +276,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		
 		auto p = g_dbus_connection_new_sync((stream is null) ? null : stream.getIOStreamStruct(), Str.toStringz(guid), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_sync");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_sync");
 		}
 		
 		this(cast(GDBusConnection*) p, true);

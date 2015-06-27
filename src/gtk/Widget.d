@@ -4828,11 +4828,16 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * pixmap will not happen automatically (as it is done in
 		 * gdk_window_begin_paint_region()).
 		 *
-		 * Since 3.10 this function only works for widgets with native
-		 * windows.
+		 * In 3.10 GTK and GDK have been restructured for translucent drawing. Since
+		 * then expose events for double-buffered widgets are culled into a single
+		 * event to the toplevel GDK window. If you now unset double buffering, you
+		 * will cause a separate rendering pass for every widget. This will likely
+		 * cause rendering problems - in particular related to stacking - and usually
+		 * increases rrendering times significantly.
 		 *
-		 * Deprecated: This does not work under non-X11 backends,
-		 * and it should not be used in newly written code.
+		 * Deprecated: This function does not work under non-X11 backends or with
+		 * non-native windows.
+		 * It should not be used in newly written code.
 		 *
 		 * Params:
 		 *     doubleBuffered = %TRUE to double-buffer a widget

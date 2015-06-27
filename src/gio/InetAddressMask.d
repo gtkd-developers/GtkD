@@ -108,14 +108,14 @@ public class InetAddressMask : ObjectG, InitableIF
 		
 		auto p = g_inet_address_mask_new((addr is null) ? null : addr.getInetAddressStruct(), length, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
 		}
 		
 		this(cast(GInetAddressMask*) p, true);
@@ -144,14 +144,14 @@ public class InetAddressMask : ObjectG, InitableIF
 		
 		auto p = g_inet_address_mask_new_from_string(Str.toStringz(maskString), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_string");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_string");
 		}
 		
 		this(cast(GInetAddressMask*) p, true);

@@ -196,14 +196,14 @@ public class PaperSize
 		
 		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_key_file");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_key_file");
 		}
 		
 		this(cast(GtkPaperSize*) p);

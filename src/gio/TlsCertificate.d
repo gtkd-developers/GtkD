@@ -115,14 +115,14 @@ public class TlsCertificate : ObjectG
 		
 		auto p = g_tls_certificate_new_from_file(Str.toStringz(file), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_file");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_file");
 		}
 		
 		this(cast(GTlsCertificate*) p, true);
@@ -162,14 +162,14 @@ public class TlsCertificate : ObjectG
 		
 		auto p = g_tls_certificate_new_from_files(Str.toStringz(certFile), Str.toStringz(keyFile), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_files");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_files");
 		}
 		
 		this(cast(GTlsCertificate*) p, true);
@@ -208,14 +208,14 @@ public class TlsCertificate : ObjectG
 		
 		auto p = g_tls_certificate_new_from_pem(Str.toStringz(data), length, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_pem");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_pem");
 		}
 		
 		this(cast(GTlsCertificate*) p, true);

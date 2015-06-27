@@ -101,14 +101,14 @@ public class Pty : ObjectG, InitableIF
 		
 		auto p = vte_pty_new_foreign_sync(fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_foreign_sync");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_foreign_sync");
 		}
 		
 		this(cast(VtePty*) p, true);
@@ -158,14 +158,14 @@ public class Pty : ObjectG, InitableIF
 		
 		auto p = vte_pty_new_sync(flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_sync");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_sync");
 		}
 		
 		this(cast(VtePty*) p, true);

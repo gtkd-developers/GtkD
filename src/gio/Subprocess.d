@@ -164,14 +164,14 @@ public class Subprocess : ObjectG, InitableIF
 		
 		auto p = g_subprocess_newv(Str.toStringzArray(argv), flags, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by newv");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by newv");
 		}
 		
 		this(cast(GSubprocess*) p, true);

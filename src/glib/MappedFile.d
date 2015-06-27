@@ -102,14 +102,14 @@ public class MappedFile
 		
 		auto p = g_mapped_file_new(Str.toStringz(filename), writable, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
 		}
 		
 		this(cast(GMappedFile*) p);
@@ -146,14 +146,14 @@ public class MappedFile
 		
 		auto p = g_mapped_file_new_from_fd(fd, writable, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_fd");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_fd");
 		}
 		
 		this(cast(GMappedFile*) p);

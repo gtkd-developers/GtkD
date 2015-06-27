@@ -90,14 +90,14 @@ public class IOChannel
 		
 		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_file");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_file");
 		}
 		
 		this(cast(GIOChannel*) p);

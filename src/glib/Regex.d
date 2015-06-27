@@ -153,14 +153,14 @@ public class Regex
 		
 		auto p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
 		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new");
-		}
-		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
 		}
 		
 		this(cast(GRegex*) p);
