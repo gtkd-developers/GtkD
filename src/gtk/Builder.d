@@ -405,7 +405,7 @@ public ObjectG newFromObject(GObject* cobj)
 		return null;
 	}
 	
-	ObjectG obj = cast(ObjectG)_d_newclass(ci);
+	ObjectG obj = cast(ObjectG)gtkc.gtktypes._d_newclass(ci);
 	
 	obj.__ctor(cobj);
 	
