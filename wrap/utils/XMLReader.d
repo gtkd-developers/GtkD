@@ -55,18 +55,23 @@ class XMLReader(T)
 	XMLNode front;
 
 	static if ( is( T == string ) )
-		private ByChar document;
+		private CountLines!ByChar document;
 	else
-		private T document;
+		private CountLines!T document;
 
 	this(T document)
 	{
 		static if ( is( T == string ) )
-			this.document = ByChar(document);
+			this.document = CountLines!ByChar(ByChar(document));
 		else
-			this.document = document;
+			this.document = CountLines!T(document);
 
 		popFront();
+	}
+
+	@property size_t line()
+	{
+		return document.line;
 	}
 
 	void popFront()
@@ -502,4 +507,42 @@ struct ByChar
 	}
 
 	alias data this;
+}
+
+import std.traits;
+
+struct CountLines(Source) if (isSomeChar!(ElementType!Source))
+{
+	import std.range.primitives;
+
+	Source src;
+	size_t line;
+
+	this(Source src)
+	{
+		this.src = src;
+	}
+
+	@property ElementType!Source front()
+	{
+		return src.front;
+	}
+
+	@property bool empty()
+	{
+		return src.empty;
+	}
+
+	void popFront()
+	{
+		src.popFront();
+
+		if ( src.front == '\n' )
+			line++;
+	}
+
+	@property typeof(this) save()
+	{
+		return typeof(this)(src.save);
+	}
 }
