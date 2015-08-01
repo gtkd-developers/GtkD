@@ -31,6 +31,7 @@ import utils.GtkAlias;
 import utils.GtkEnum;
 import utils.GtkFunction;
 import utils.GtkStruct;
+import utils.GtkType;
 import utils.GtkWrapper;
 import utils.IndentedStringBuilder;
 import utils.XML;
@@ -138,6 +139,9 @@ class GtkPackage
 						break;
 
 					collectedAliases[gtkAlias.name] = gtkAlias;
+					break;
+				case "glib:boxed":
+					reader.skipTag();
 					break;
 				case "bitfield":
 				case "enumeration":
