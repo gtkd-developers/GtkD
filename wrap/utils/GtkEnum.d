@@ -84,7 +84,7 @@ final class GtkEnum
 					reader.skipTag();
 					break;
 				default:
-					assert(false, "Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkEnum: "~ name);
 			}
 			reader.popFront();
 		}
@@ -170,9 +170,7 @@ struct GtkEnumMember
 						value = "\""~ value ~"\"";
 					break;
 				default:
-					import std.stdio;
-					writeln(reader.front.type);
-					assert(false, "Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkEnumMember: "~ name);
 			}
 			reader.popFront();
 		}

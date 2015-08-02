@@ -31,7 +31,6 @@ import utils.GtkAlias;
 import utils.GtkEnum;
 import utils.GtkFunction;
 import utils.GtkStruct;
-import utils.GtkType;
 import utils.GtkWrapper;
 import utils.IndentedStringBuilder;
 import utils.XML;
@@ -99,7 +98,7 @@ class GtkPackage
 		if ( !isAbsolute(girFile) )
 			girFile = buildNormalizedPath("/usr/share/gir-1.0", girFile);
 
-		auto reader = new XMLReader!string(readText(girFile));
+		auto reader = new XMLReader!string(readText(girFile), girFile);
 
 		while ( !reader.empty && reader.front.value != "repository" )
 			reader.popFront();
@@ -180,7 +179,7 @@ class GtkPackage
 					parseFunction(reader);
 					break;
 				default:
-					assert(false, "Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkPackage: "~ name);
 			}
 			reader.popFront();
 		}

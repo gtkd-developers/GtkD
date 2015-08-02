@@ -21,6 +21,7 @@ module utils.XML;
 
 import std.algorithm;
 import std.array;
+import std.conv : to;
 import std.exception;
 import std.range;
 import std.string;
@@ -53,18 +54,26 @@ class XMLReader(T)
 	if (isInputRange!T &&  isSomeChar!(ElementType!T) )
 {
 	XMLNode front;
+	string fileName;
 
 	static if ( is( T == string ) )
 		private CountLines!ByChar document;
 	else
 		private CountLines!T document;
 
-	this(T document)
+	/**
+	 * Params:
+	 *     document = The XML document to parse.
+	 *     fileName = File name to print in diagnostic messages.
+	 */
+	this(T document, string fileName = null)
 	{
 		static if ( is( T == string ) )
 			this.document = CountLines!ByChar(ByChar(document));
 		else
 			this.document = CountLines!T(document);
+
+		this.fileName = fileName;
 
 		popFront();
 	}
@@ -118,7 +127,7 @@ class XMLReader(T)
 						parseComment();
 						break;
 					default:
-						throw new XMLException("Invalid XML tag");
+						throw new XMLException(this, "Invalid XML tag");
 				}
 				break;
 			case '?':
@@ -235,7 +244,7 @@ class XMLReader(T)
 					return;
 				}
 
-				throw new XMLException("-- not allowed in comments.");
+				throw new XMLException(this, "-- not allowed in comments.");
 			}
 
 			buff.put(document.front);
@@ -416,7 +425,7 @@ class XMLReader(T)
 				buff.put('>');
 				break;
 			default:
-				throw new XMLException("Unregonized escape secuence");
+				throw new XMLException(this, "Unregonized escape secuence");
 		}
 	}
 
@@ -475,10 +484,29 @@ bool endTag(T)(XMLReader!T reader, string[] tagNames ...)
 
 class XMLException : Exception
 {
-	this (string msg, string file = __FILE__, size_t line = __LINE__, Throwable next = null)
+	this (T)(XMLReader!T reader, string msg)
 	{
-		super(msg, file, line, next);
+		super(msg, reader.fileName, reader.line, null);
 	}
+
+	override string toString()
+	{
+		string s;
+		toString((buf) { s ~= buf; });
+		return s;
+	}
+
+	override void toString(scope void delegate(in char[]) sink) const
+	{
+		sink(file);
+		sink("("); sink(to!string(line)); sink(")");
+
+		if (msg.length)
+		{
+			sink(": "); sink(msg);
+		}
+	}
+
 }
 
 struct ByChar
@@ -509,14 +537,12 @@ struct ByChar
 	alias data this;
 }
 
-import std.traits;
-
 struct CountLines(Source) if (isSomeChar!(ElementType!Source))
 {
-	import std.range.primitives;
+	import std.range.primitives : ElementType;
 
 	Source src;
-	size_t line;
+	size_t line = 1;
 
 	this(Source src)
 	{

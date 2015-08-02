@@ -140,7 +140,7 @@ final class GtkFunction
 								returnType.parse(reader);
 								break;
 							default:
-								assert(false, name ~": Unexpected tag: "~ reader.front.value);
+								throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkFunction: "~ name);
 						}
 						reader.popFront();
 					}
@@ -161,13 +161,13 @@ final class GtkFunction
 								params ~= param;
 								break;
 							default:
-								assert(false, name ~": Unexpected tag: "~ reader.front.value);
+								throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkFunction: "~ name);
 						}
 						reader.popFront();
 					}
 					break;
 				default:
-					assert(false, name ~": Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkFunction: "~ name);
 			}
 			reader.popFront();
 		}
@@ -1533,7 +1533,7 @@ final class GtkParam
 					type.cType = "...";
 					break;
 				default:
-					assert(false, name ~": Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkParam: "~ name);
 			}
 
 			reader.popFront();

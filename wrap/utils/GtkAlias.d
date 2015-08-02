@@ -65,7 +65,7 @@ final class GtkAlias
 					reader.popFront();
 					break;
 				default:
-					assert(false, name ~": Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkAlias: "~ name);
 			}
 			reader.popFront();
 		}

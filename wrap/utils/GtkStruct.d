@@ -181,7 +181,7 @@ final class GtkStruct
 					reader.skipTag();
 					break;
 				default:
-					assert(false, "Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkStruct: "~ name);
 			}
 
 			reader.popFront();
@@ -942,7 +942,7 @@ final class GtkField
 					callback.parse(reader);
 					break;
 				default:
-					assert(false, name ~": Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkField: "~ name);
 			}
 			reader.popFront();
 		}
@@ -1113,9 +1113,7 @@ final class GtkUnion
 					fields ~= field;
 					break;
 				default:
-					import std.stdio;
-					writeln(name);
-					assert(false, "Unexpected tag: "~ reader.front.value);
+					throw new XMLException(reader, "Unexpected tag: "~ reader.front.value ~" in GtkUnion: "~ name);
 			}
 			reader.popFront();
 		}
