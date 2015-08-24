@@ -90,11 +90,24 @@ public class ListSG
 		while(list !is null && count < arr.length)
 		{
 			arr[count] = new T(cast(TC)list.data);
-			list = next();
+			list = list.next();
 			count++;
 		}
 		
 		return arr;
+	}
+	
+	unittest
+	{
+		import gobject.Value;
+		
+		auto list = new ListG(null);
+		list = list.append(new Value(0).getValueStruct());
+		list = list.append(new Value(1).getValueStruct());
+		auto arr = list.toArray!Value();
+		
+		assert(arr[0].getInt() == 0);
+		assert(arr[1].getInt() == 1);
 	}
 
 	/**
