@@ -549,6 +549,10 @@ public class GLArea : Widget
 	 *
 	 * The default handler sets up the GL viewport.
 	 *
+	 * Params:
+	 *     width = the width of the viewport
+	 *     height = the height of the viewport
+	 *
 	 * Since: 3.16
 	 */
 	void addOnResize(void delegate(int, int, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -566,11 +570,11 @@ public class GLArea : Widget
 		}
 		onResizeListeners ~= dlg;
 	}
-	extern(C) static void callBackResize(GtkGLArea* glareaStruct, int object, int p0, GLArea _glarea)
+	extern(C) static void callBackResize(GtkGLArea* glareaStruct, int width, int height, GLArea _glarea)
 	{
 		foreach ( void delegate(int, int, GLArea) dlg; _glarea.onResizeListeners )
 		{
-			dlg(object, p0, _glarea);
+			dlg(width, height, _glarea);
 		}
 	}
 }

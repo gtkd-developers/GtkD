@@ -1296,7 +1296,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         source can provide the data
 		 *     actions = A bitmask of the allowed drag actions for this drag
 		 *     button = The button the user clicked to start the drag
-		 *     event = The event that triggered the start of the drag
+		 *     event = The event that triggered the start of the drag,
+		 *         or %NULL if none can be obtained.
 		 *
 		 * Return: the context for this drag
 		 */
@@ -1344,7 +1345,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         source can provide the data
 		 *     actions = A bitmask of the allowed drag actions for this drag
 		 *     button = The button the user clicked to start the drag
-		 *     event = The event that triggered the start of the drag
+		 *     event = The event that triggered the start of the drag,
+		 *         or %NULL if none can be obtained.
 		 *     x = The initial x coordinate to start dragging from, in the coordinate space
 		 *         of @widget. If -1 is passed, the coordinates are retrieved from @event or
 		 *         the current pointer position
