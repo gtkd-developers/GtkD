@@ -138,17 +138,17 @@ __gshared extern(C)
 
 	// glgdk.GLContext
 
-	GType function() c_gdk_gl_context_get_type;
-	GdkGLContext* function(GdkGLDrawable* gldrawable, GdkGLContext* shareList, int direct, int renderType) c_gdk_gl_context_new;
-	GdkGLContext* function() c_gdk_gl_context_get_current;
-	void function() c_gdk_gl_context_release_current;
-	int function(GdkGLContext* glcontext, GdkGLContext* src, ulong mask) c_gdk_gl_context_copy;
-	GdkGLConfig* function(GdkGLContext* glcontext) c_gdk_gl_context_get_gl_config;
-	GdkGLDrawable* function(GdkGLContext* glcontext) c_gdk_gl_context_get_gl_drawable;
-	int function(GdkGLContext* glcontext) c_gdk_gl_context_get_render_type;
-	GdkGLContext* function(GdkGLContext* glcontext) c_gdk_gl_context_get_share_list;
-	int function(GdkGLContext* glcontext) c_gdk_gl_context_is_direct;
-	int function(GdkGLContext* glcontext, GdkGLDrawable* draw, GdkGLDrawable* read) c_gdk_gl_context_make_current;
+	GType function() glc_gdk_gl_context_get_type;
+	GdkGLContext* function(GdkGLDrawable* gldrawable, GdkGLContext* shareList, int direct, int renderType) glc_gdk_gl_context_new;
+	GdkGLContext* function() glc_gdk_gl_context_get_current;
+	void function() glc_gdk_gl_context_release_current;
+	int function(GdkGLContext* glcontext, GdkGLContext* src, ulong mask) glc_gdk_gl_context_copy;
+	GdkGLConfig* function(GdkGLContext* glcontext) glc_gdk_gl_context_get_gl_config;
+	GdkGLDrawable* function(GdkGLContext* glcontext) glc_gdk_gl_context_get_gl_drawable;
+	int function(GdkGLContext* glcontext) glc_gdk_gl_context_get_render_type;
+	GdkGLContext* function(GdkGLContext* glcontext) glc_gdk_gl_context_get_share_list;
+	int function(GdkGLContext* glcontext) glc_gdk_gl_context_is_direct;
+	int function(GdkGLContext* glcontext, GdkGLDrawable* draw, GdkGLDrawable* read) glc_gdk_gl_context_make_current;
 
 	// glgdk.GLDrawable
 
@@ -218,17 +218,17 @@ alias c_gdk_gl_config_is_stereo gdk_gl_config_is_stereo;
 
 // glgdk.GLContext
 
-alias c_gdk_gl_context_get_type gdk_gl_context_get_type;
-alias c_gdk_gl_context_new gdk_gl_context_new;
-alias c_gdk_gl_context_get_current gdk_gl_context_get_current;
-alias c_gdk_gl_context_release_current gdk_gl_context_release_current;
-alias c_gdk_gl_context_copy gdk_gl_context_copy;
-alias c_gdk_gl_context_get_gl_config gdk_gl_context_get_gl_config;
-alias c_gdk_gl_context_get_gl_drawable gdk_gl_context_get_gl_drawable;
-alias c_gdk_gl_context_get_render_type gdk_gl_context_get_render_type;
-alias c_gdk_gl_context_get_share_list gdk_gl_context_get_share_list;
-alias c_gdk_gl_context_is_direct gdk_gl_context_is_direct;
-alias c_gdk_gl_context_make_current gdk_gl_context_make_current;
+alias glc_gdk_gl_context_get_type gdk_gl_context_get_type;
+alias glc_gdk_gl_context_new gdk_gl_context_new;
+alias glc_gdk_gl_context_get_current gdk_gl_context_get_current;
+alias glc_gdk_gl_context_release_current gdk_gl_context_release_current;
+alias glc_gdk_gl_context_copy gdk_gl_context_copy;
+alias glc_gdk_gl_context_get_gl_config gdk_gl_context_get_gl_config;
+alias glc_gdk_gl_context_get_gl_drawable gdk_gl_context_get_gl_drawable;
+alias glc_gdk_gl_context_get_render_type gdk_gl_context_get_render_type;
+alias glc_gdk_gl_context_get_share_list gdk_gl_context_get_share_list;
+alias glc_gdk_gl_context_is_direct gdk_gl_context_is_direct;
+alias glc_gdk_gl_context_make_current gdk_gl_context_make_current;
 
 // glgdk.GLDrawable
 

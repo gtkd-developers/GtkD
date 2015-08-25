@@ -144,10 +144,10 @@ lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
 
-srcDir: srcgl
-bindDir: gtkglc
-lookup: APILookupGLd.txt
-lookup: APILookupGLt.txt
+#srcDir: srcgl
+#bindDir: gtkglc
+#lookup: APILookupGLd.txt
+#lookup: APILookupGLt.txt
 
 srcDir: srcsv
 bindDir: gsvc
