@@ -392,7 +392,7 @@ define make-shared-lib
 	# Combine all the object files into one file, since some d compilers
 	# don't support building a shared lib from multiple object files.
     ld -r $^ -o $@.o
-    $(DC) -shared $(output) $(SHARED_PHOBOS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
+    $(DC) -shared $(output) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o $(SHARED_PHOBOS)
     rm $@.o
 endef
 

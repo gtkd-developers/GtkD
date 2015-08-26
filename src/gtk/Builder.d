@@ -100,6 +100,7 @@ version(Tango) {
 	private import std.string;
 }
 
+extern (C) Object _d_newclass(const TypeInfo_Class ci);
 
 private import gobject.ObjectG;
 
@@ -444,7 +445,6 @@ public class Builder : ObjectG
 		
 		return objects;
 	}
-	extern (C) Object _d_newclass(const TypeInfo_Class ci);
 	/**
 	 * This function creates an D object corresponding to the Struct pointer passed in.
 	 */
