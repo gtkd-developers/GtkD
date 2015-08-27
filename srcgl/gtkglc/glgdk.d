@@ -115,26 +115,26 @@ __gshared extern(C)
 
 	// glgdk.GLConfig
 
-	GType function() c_gdk_gl_config_get_type;
-	GdkGLConfig* function(int* attribList, size_t nAttribs) c_gdk_gl_config_new;
-	GdkGLConfig* function(GdkGLConfigMode mode) c_gdk_gl_config_new_by_mode;
-	GdkGLConfig* function(GdkScreen* screen, GdkGLConfigMode mode) c_gdk_gl_config_new_by_mode_for_screen;
-	GdkGLConfig* function(GdkDisplay* display, int* attribList, size_t nAttribs) c_gdk_gl_config_new_for_display;
-	GdkGLConfig* function(GdkScreen* screen, int* attribList, size_t nAttribs) c_gdk_gl_config_new_for_screen;
-	int function(GdkGLConfig* glconfig, int attribute, int* value) c_gdk_gl_config_get_attrib;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_get_depth;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_get_layer_plane;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_get_n_aux_buffers;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_get_n_sample_buffers;
-	GdkScreen* function(GdkGLConfig* glconfig) c_gdk_gl_config_get_screen;
-	GdkVisual* function(GdkGLConfig* glconfig) c_gdk_gl_config_get_visual;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_has_accum_buffer;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_has_alpha;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_has_depth_buffer;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_has_stencil_buffer;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_is_double_buffered;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_is_rgba;
-	int function(GdkGLConfig* glconfig) c_gdk_gl_config_is_stereo;
+	GType function() glc_gdk_gl_config_get_type;
+	GdkGLConfig* function(int* attribList, size_t nAttribs) glc_gdk_gl_config_new;
+	GdkGLConfig* function(GdkGLConfigMode mode) glc_gdk_gl_config_new_by_mode;
+	GdkGLConfig* function(GdkScreen* screen, GdkGLConfigMode mode) glc_gdk_gl_config_new_by_mode_for_screen;
+	GdkGLConfig* function(GdkDisplay* display, int* attribList, size_t nAttribs) glc_gdk_gl_config_new_for_display;
+	GdkGLConfig* function(GdkScreen* screen, int* attribList, size_t nAttribs) glc_gdk_gl_config_new_for_screen;
+	int function(GdkGLConfig* glconfig, int attribute, int* value) glc_gdk_gl_config_get_attrib;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_get_depth;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_get_layer_plane;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_get_n_aux_buffers;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_get_n_sample_buffers;
+	GdkScreen* function(GdkGLConfig* glconfig) glc_gdk_gl_config_get_screen;
+	GdkVisual* function(GdkGLConfig* glconfig) glc_gdk_gl_config_get_visual;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_has_accum_buffer;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_has_alpha;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_has_depth_buffer;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_has_stencil_buffer;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_is_double_buffered;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_is_rgba;
+	int function(GdkGLConfig* glconfig) glc_gdk_gl_config_is_stereo;
 
 	// glgdk.GLContext
 
@@ -152,69 +152,69 @@ __gshared extern(C)
 
 	// glgdk.GLDrawable
 
-	GType function() c_gdk_gl_drawable_get_type;
-	GdkGLConfig* function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_get_gl_config;
-	int function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_is_double_buffered;
-	void function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_swap_buffers;
-	void function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_wait_gdk;
-	void function(GdkGLDrawable* gldrawable) c_gdk_gl_drawable_wait_gl;
+	GType function() glc_gdk_gl_drawable_get_type;
+	GdkGLConfig* function(GdkGLDrawable* gldrawable) glc_gdk_gl_drawable_get_gl_config;
+	int function(GdkGLDrawable* gldrawable) glc_gdk_gl_drawable_is_double_buffered;
+	void function(GdkGLDrawable* gldrawable) glc_gdk_gl_drawable_swap_buffers;
+	void function(GdkGLDrawable* gldrawable) glc_gdk_gl_drawable_wait_gdk;
+	void function(GdkGLDrawable* gldrawable) glc_gdk_gl_drawable_wait_gl;
 
 	// glgdk.GLWindow
 
-	GType function() c_gdk_gl_window_get_type;
-	GdkGLWindow* function(GdkGLConfig* glconfig, GdkWindow* window, int* attribList) c_gdk_gl_window_new;
-	GdkGLWindow* function(GdkWindow* window) c_gdk_window_get_gl_window;
-	int function(GdkWindow* window) c_gdk_window_is_gl_capable;
-	GdkGLWindow* function(GdkWindow* window, GdkGLConfig* glconfig, int* attribList) c_gdk_window_set_gl_capability;
-	void function(GdkWindow* window) c_gdk_window_unset_gl_capability;
-	GdkWindow* function(GdkGLWindow* glwindow) c_gdk_gl_window_get_window;
+	GType function() glc_gdk_gl_window_get_type;
+	GdkGLWindow* function(GdkGLConfig* glconfig, GdkWindow* window, int* attribList) glc_gdk_gl_window_new;
+	GdkGLWindow* function(GdkWindow* window) glc_gdk_window_get_gl_window;
+	int function(GdkWindow* window) glc_gdk_window_is_gl_capable;
+	GdkGLWindow* function(GdkWindow* window, GdkGLConfig* glconfig, int* attribList) glc_gdk_window_set_gl_capability;
+	void function(GdkWindow* window) glc_gdk_window_unset_gl_capability;
+	GdkWindow* function(GdkGLWindow* glwindow) glc_gdk_gl_window_get_window;
 
 	// glgdk.GLdInit
 
-	void function(int* argc, char*** argv) c_gdk_gl_init;
-	int function(int* argc, char*** argv) c_gdk_gl_init_check;
+	void function(int* argc, char*** argv) glc_gdk_gl_init;
+	int function(int* argc, char*** argv) glc_gdk_gl_init_check;
 
 	// glgdk.GLQuery
 
-	int function(int* major, int* minor) c_gdk_gl_query_version;
-	int function(GdkDisplay* display, int* major, int* minor) c_gdk_gl_query_version_for_display;
-	GdkGLProc function(const(char)* procName) c_gdk_gl_get_proc_address;
-	int function() c_gdk_gl_query_extension;
-	int function(GdkDisplay* display) c_gdk_gl_query_extension_for_display;
-	int function(const(char)* extension) c_gdk_gl_query_gl_extension;
+	int function(int* major, int* minor) glc_gdk_gl_query_version;
+	int function(GdkDisplay* display, int* major, int* minor) glc_gdk_gl_query_version_for_display;
+	GdkGLProc function(const(char)* procName) glc_gdk_gl_get_proc_address;
+	int function() glc_gdk_gl_query_extension;
+	int function(GdkDisplay* display) glc_gdk_gl_query_extension_for_display;
+	int function(const(char)* extension) glc_gdk_gl_query_gl_extension;
 
 	// glgdk.GLVersion
 
-	int function() c_gdk_gl_get_binary_age;
-	int function() c_gdk_gl_get_interface_age;
-	int function() c_gdk_gl_get_major_version;
-	int function() c_gdk_gl_get_micro_version;
-	int function() c_gdk_gl_get_minor_version;
+	int function() glc_gdk_gl_get_binary_age;
+	int function() glc_gdk_gl_get_interface_age;
+	int function() glc_gdk_gl_get_major_version;
+	int function() glc_gdk_gl_get_micro_version;
+	int function() glc_gdk_gl_get_minor_version;
 }
 
 
 // glgdk.GLConfig
 
-alias c_gdk_gl_config_get_type gdk_gl_config_get_type;
-alias c_gdk_gl_config_new gdk_gl_config_new;
-alias c_gdk_gl_config_new_by_mode gdk_gl_config_new_by_mode;
-alias c_gdk_gl_config_new_by_mode_for_screen gdk_gl_config_new_by_mode_for_screen;
-alias c_gdk_gl_config_new_for_display gdk_gl_config_new_for_display;
-alias c_gdk_gl_config_new_for_screen gdk_gl_config_new_for_screen;
-alias c_gdk_gl_config_get_attrib gdk_gl_config_get_attrib;
-alias c_gdk_gl_config_get_depth gdk_gl_config_get_depth;
-alias c_gdk_gl_config_get_layer_plane gdk_gl_config_get_layer_plane;
-alias c_gdk_gl_config_get_n_aux_buffers gdk_gl_config_get_n_aux_buffers;
-alias c_gdk_gl_config_get_n_sample_buffers gdk_gl_config_get_n_sample_buffers;
-alias c_gdk_gl_config_get_screen gdk_gl_config_get_screen;
-alias c_gdk_gl_config_get_visual gdk_gl_config_get_visual;
-alias c_gdk_gl_config_has_accum_buffer gdk_gl_config_has_accum_buffer;
-alias c_gdk_gl_config_has_alpha gdk_gl_config_has_alpha;
-alias c_gdk_gl_config_has_depth_buffer gdk_gl_config_has_depth_buffer;
-alias c_gdk_gl_config_has_stencil_buffer gdk_gl_config_has_stencil_buffer;
-alias c_gdk_gl_config_is_double_buffered gdk_gl_config_is_double_buffered;
-alias c_gdk_gl_config_is_rgba gdk_gl_config_is_rgba;
-alias c_gdk_gl_config_is_stereo gdk_gl_config_is_stereo;
+alias glc_gdk_gl_config_get_type gdk_gl_config_get_type;
+alias glc_gdk_gl_config_new gdk_gl_config_new;
+alias glc_gdk_gl_config_new_by_mode gdk_gl_config_new_by_mode;
+alias glc_gdk_gl_config_new_by_mode_for_screen gdk_gl_config_new_by_mode_for_screen;
+alias glc_gdk_gl_config_new_for_display gdk_gl_config_new_for_display;
+alias glc_gdk_gl_config_new_for_screen gdk_gl_config_new_for_screen;
+alias glc_gdk_gl_config_get_attrib gdk_gl_config_get_attrib;
+alias glc_gdk_gl_config_get_depth gdk_gl_config_get_depth;
+alias glc_gdk_gl_config_get_layer_plane gdk_gl_config_get_layer_plane;
+alias glc_gdk_gl_config_get_n_aux_buffers gdk_gl_config_get_n_aux_buffers;
+alias glc_gdk_gl_config_get_n_sample_buffers gdk_gl_config_get_n_sample_buffers;
+alias glc_gdk_gl_config_get_screen gdk_gl_config_get_screen;
+alias glc_gdk_gl_config_get_visual gdk_gl_config_get_visual;
+alias glc_gdk_gl_config_has_accum_buffer gdk_gl_config_has_accum_buffer;
+alias glc_gdk_gl_config_has_alpha gdk_gl_config_has_alpha;
+alias glc_gdk_gl_config_has_depth_buffer gdk_gl_config_has_depth_buffer;
+alias glc_gdk_gl_config_has_stencil_buffer gdk_gl_config_has_stencil_buffer;
+alias glc_gdk_gl_config_is_double_buffered gdk_gl_config_is_double_buffered;
+alias glc_gdk_gl_config_is_rgba gdk_gl_config_is_rgba;
+alias glc_gdk_gl_config_is_stereo gdk_gl_config_is_stereo;
 
 // glgdk.GLContext
 
@@ -232,41 +232,41 @@ alias glc_gdk_gl_context_make_current gdk_gl_context_make_current;
 
 // glgdk.GLDrawable
 
-alias c_gdk_gl_drawable_get_type gdk_gl_drawable_get_type;
-alias c_gdk_gl_drawable_get_gl_config gdk_gl_drawable_get_gl_config;
-alias c_gdk_gl_drawable_is_double_buffered gdk_gl_drawable_is_double_buffered;
-alias c_gdk_gl_drawable_swap_buffers gdk_gl_drawable_swap_buffers;
-alias c_gdk_gl_drawable_wait_gdk gdk_gl_drawable_wait_gdk;
-alias c_gdk_gl_drawable_wait_gl gdk_gl_drawable_wait_gl;
+alias glc_gdk_gl_drawable_get_type gdk_gl_drawable_get_type;
+alias glc_gdk_gl_drawable_get_gl_config gdk_gl_drawable_get_gl_config;
+alias glc_gdk_gl_drawable_is_double_buffered gdk_gl_drawable_is_double_buffered;
+alias glc_gdk_gl_drawable_swap_buffers gdk_gl_drawable_swap_buffers;
+alias glc_gdk_gl_drawable_wait_gdk gdk_gl_drawable_wait_gdk;
+alias glc_gdk_gl_drawable_wait_gl gdk_gl_drawable_wait_gl;
 
 // glgdk.GLWindow
 
-alias c_gdk_gl_window_get_type gdk_gl_window_get_type;
-alias c_gdk_gl_window_new gdk_gl_window_new;
-alias c_gdk_window_get_gl_window gdk_window_get_gl_window;
-alias c_gdk_window_is_gl_capable gdk_window_is_gl_capable;
-alias c_gdk_window_set_gl_capability gdk_window_set_gl_capability;
-alias c_gdk_window_unset_gl_capability gdk_window_unset_gl_capability;
-alias c_gdk_gl_window_get_window gdk_gl_window_get_window;
+alias glc_gdk_gl_window_get_type gdk_gl_window_get_type;
+alias glc_gdk_gl_window_new gdk_gl_window_new;
+alias glc_gdk_window_get_gl_window gdk_window_get_gl_window;
+alias glc_gdk_window_is_gl_capable gdk_window_is_gl_capable;
+alias glc_gdk_window_set_gl_capability gdk_window_set_gl_capability;
+alias glc_gdk_window_unset_gl_capability gdk_window_unset_gl_capability;
+alias glc_gdk_gl_window_get_window gdk_gl_window_get_window;
 
 // glgdk.GLdInit
 
-alias c_gdk_gl_init gdk_gl_init;
-alias c_gdk_gl_init_check gdk_gl_init_check;
+alias glc_gdk_gl_init gdk_gl_init;
+alias glc_gdk_gl_init_check gdk_gl_init_check;
 
 // glgdk.GLQuery
 
-alias c_gdk_gl_query_version gdk_gl_query_version;
-alias c_gdk_gl_query_version_for_display gdk_gl_query_version_for_display;
-alias c_gdk_gl_get_proc_address gdk_gl_get_proc_address;
-alias c_gdk_gl_query_extension gdk_gl_query_extension;
-alias c_gdk_gl_query_extension_for_display gdk_gl_query_extension_for_display;
-alias c_gdk_gl_query_gl_extension gdk_gl_query_gl_extension;
+alias glc_gdk_gl_query_version gdk_gl_query_version;
+alias glc_gdk_gl_query_version_for_display gdk_gl_query_version_for_display;
+alias glc_gdk_gl_get_proc_address gdk_gl_get_proc_address;
+alias glc_gdk_gl_query_extension gdk_gl_query_extension;
+alias glc_gdk_gl_query_extension_for_display gdk_gl_query_extension_for_display;
+alias glc_gdk_gl_query_gl_extension gdk_gl_query_gl_extension;
 
 // glgdk.GLVersion
 
-alias c_gdk_gl_get_binary_age gdk_gl_get_binary_age;
-alias c_gdk_gl_get_interface_age gdk_gl_get_interface_age;
-alias c_gdk_gl_get_major_version gdk_gl_get_major_version;
-alias c_gdk_gl_get_micro_version gdk_gl_get_micro_version;
-alias c_gdk_gl_get_minor_version gdk_gl_get_minor_version;
+alias glc_gdk_gl_get_binary_age gdk_gl_get_binary_age;
+alias glc_gdk_gl_get_interface_age gdk_gl_get_interface_age;
+alias glc_gdk_gl_get_major_version gdk_gl_get_major_version;
+alias glc_gdk_gl_get_micro_version gdk_gl_get_micro_version;
+alias glc_gdk_gl_get_minor_version gdk_gl_get_minor_version;

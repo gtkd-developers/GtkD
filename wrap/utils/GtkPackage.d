@@ -400,7 +400,10 @@ class GtkPackage
 				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal || funct.name.empty )
 					continue;
 
-				buff ~= "alias c_"~ funct.cType ~" "~ funct.cType ~";\n";
+				if (name == "glgdk")
+					buff ~= "alias glc_"~ funct.cType ~" "~ funct.cType ~";\n";
+				else
+					buff ~= "alias c_"~ funct.cType ~" "~ funct.cType ~";\n";
 			}
 		}
 

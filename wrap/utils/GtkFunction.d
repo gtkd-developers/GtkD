@@ -217,7 +217,10 @@ final class GtkFunction
 		assert(type != GtkFunctionType.Callback);
 		assert(type != GtkFunctionType.Signal);
 
-		return getExternalFunctionType() ~" c_"~ cType ~";";
+		if (strct.pack.name == "glgdk")
+			return getExternalFunctionType() ~" glc_"~ cType ~";";
+		else
+			return getExternalFunctionType() ~" c_"~ cType ~";";
 	}
 
 	private string getExternalFunctionType()

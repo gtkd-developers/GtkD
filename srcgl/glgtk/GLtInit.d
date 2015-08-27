@@ -69,13 +69,11 @@ public struct GLtInit
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
 	 *
-	 * %FALSE otherwise.
-	 *
 	 * Params:
 	 *     argc = Address of the <parameter>argc</parameter> parameter of your <function>main()</function> function. Changed if any arguments were handled.
 	 *     argv = Address of the <parameter>argv</parameter> parameter of <function>main()</function>. Any parameters understood by gtk_gl_init() are stripped before return.
 	 *
-	 * Return: %TRUE if the GUI has been successfully initialized,
+	 * Return: %TRUE if the GUI has been successfully initialized, %FALSE otherwise.
 	 */
 	public static bool initCheck(ref string[] argv)
 	{
