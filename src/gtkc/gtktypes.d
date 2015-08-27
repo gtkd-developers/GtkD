@@ -43,6 +43,10 @@ version(LDC)
 		extern (C) void* _d_allocclass(ClassInfo ci);
 	}
 }
+else
+{
+	extern(C) Object _d_newclass(ClassInfo ci);
+}
 
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
