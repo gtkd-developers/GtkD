@@ -367,7 +367,7 @@ public struct GObjectClass
 	/* called when done constructing */
 	extern(C) void  function(GObject *object) constructed;
 	/* padding */
-	gpointer dummy[7];
+	gpointer[7] dummy;
 }
 
 /**
