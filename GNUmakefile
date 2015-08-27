@@ -5,9 +5,12 @@ libdir=lib
 OS=$(shell uname || uname -s)
 ARCH=$(shell arch || uname -m)
 
+SHARED_PHOBOS=
+
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
         DC=dmd
+        SHARED_PHOBOS=-defaultlib=libphobos2.so
     else ifneq ($(strip $(shell which ldc 2>/dev/null)),)
         DC=ldc
     else ifneq ($(strip $(shell which ldc2 2>/dev/null)),)
@@ -389,7 +392,7 @@ define make-shared-lib
 	# Combine all the object files into one file, since some d compilers
 	# don't support building a shared lib from multiple object files.
     ld -r $^ -o $@.o
-    $(DC) -shared $(output) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o
+    $(DC) -shared $(output) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $@.o $(SHARED_PHOBOS)
     rm $@.o
 endef
 
