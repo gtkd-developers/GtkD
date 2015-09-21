@@ -81,16 +81,15 @@ public class ObjectG
 				isGcRoot = true;
 			}
 			
-			//If we already owned this reference remove the one added by addToggleRef.
-			if ( ownedRef )
-			{
-				unref();
-			}
-			
 			//Remove the floating reference if there is one.
-			if (isFloating())
+			if ( isFloating() )
 			{
 				refSink();
+				unref();
+			}
+			//If we already owned this reference remove the one added by addToggleRef.
+			else if ( ownedRef )
+			{
 				unref();
 			}
 			
