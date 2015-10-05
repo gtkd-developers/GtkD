@@ -1025,6 +1025,12 @@ public class Task : ObjectG, AsyncResultIF
 	 *
 	 * See #GTaskThreadFunc for more details about how @task_func is handled.
 	 *
+	 * Although GLib currently rate-limits the tasks queued via
+	 * g_task_run_in_thread(), you should not assume that it will always
+	 * do this. If you have a very large number of tasks to run, but don't
+	 * want them to all run at once, you should only queue a limited
+	 * number of them at a time.
+	 *
 	 * Params:
 	 *     taskFunc = a #GTaskThreadFunc
 	 *
@@ -1046,6 +1052,12 @@ public class Task : ObjectG, AsyncResultIF
 	 * `callback`, but note that even if the task does
 	 * have a callback, it will not be invoked when @task_func returns.
 	 * #GTask:completed will be set to %TRUE just before this function returns.
+	 *
+	 * Although GLib currently rate-limits the tasks queued via
+	 * g_task_run_in_thread_sync(), you should not assume that it will
+	 * always do this. If you have a very large number of tasks to run,
+	 * but don't want them to all run at once, you should only queue a
+	 * limited number of them at a time.
 	 *
 	 * Params:
 	 *     taskFunc = a #GTaskThreadFunc

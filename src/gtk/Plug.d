@@ -47,16 +47,14 @@ public  import gtkc.gtktypes;
  * 
  * The communication between a #GtkSocket and a #GtkPlug follows the
  * [XEmbed Protocol](http://www.freedesktop.org/Standards/xembed-spec).
- * This protocol has also been implemented in other toolkits,
- * e.g. Qt, allowing the same level of
- * integration when embedding a Qt widget
+ * This protocol has also been implemented in other toolkits, e.g. Qt,
+ * allowing the same level of integration when embedding a Qt widget
  * in GTK+ or vice versa.
  * 
  * The #GtkPlug and #GtkSocket widgets are only available when GTK+
  * is compiled for the X11 platform and %GDK_WINDOWING_X11 is defined.
  * They can only be used on a #GdkX11Display. To use #GtkPlug and
- * #GtkSocket, you need to include the `gtk/gtkx.h`
- * header.
+ * #GtkSocket, you need to include the `gtk/gtkx.h` header.
  */
 public class Plug : Window
 {

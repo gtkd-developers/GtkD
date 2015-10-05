@@ -248,9 +248,11 @@ public struct Signals
 	 *         is being emitted on. The rest are any arguments to be passed to the signal.
 	 *     signalId = the signal id
 	 *     detail = the detail
-	 *     returnValue = Location to store the return value of the signal emission.
+	 *     returnValue = Location to
+	 *         store the return value of the signal emission. This must be provided if the
+	 *         specified signal returns a value, but may be ignored otherwise.
 	 */
-	public static void emitv(Value[] instanceAndParams, uint signalId, GQuark detail, Value returnValue)
+	public static void emitv(Value[] instanceAndParams, uint signalId, GQuark detail, ref Value returnValue)
 	{
 		GValue[] instanceAndParamsArray = new GValue[instanceAndParams.length];
 		for ( int i = 0; i < instanceAndParams.length; i++ )

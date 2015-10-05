@@ -166,6 +166,16 @@ public interface NetworkMonitorIF{
 	 * Since: 2.32
 	 */
 	public bool getNetworkAvailable();
+
+	/**
+	 * Checks if the network is metered.
+	 * See #GNetworkMonitor:network-metered for more details.
+	 *
+	 * Return: whether the connection is metered
+	 *
+	 * Since: 2.46
+	 */
+	public bool getNetworkMetered();
 	@property void delegate(bool, NetworkMonitorIF)[] onNetworkChangedListeners();
 	/**
 	 * Emitted when the network configuration changes. If @available is

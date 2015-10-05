@@ -214,6 +214,9 @@ public class Timeout
 	 * timeout is recalculated based on the current time and the given interval
 	 * (it does not try to 'catch up' time lost in delays).
 	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle the return value and memory management of @data.
+	 *
 	 * If you want to have a timer in the "seconds" range and do not care
 	 * about the exact time of the first call of the timer, use the
 	 * g_timeout_add_seconds() function; this function allows for more
@@ -255,6 +258,9 @@ public class Timeout
 	 * timeout is recalculated based on the current time and the given interval
 	 * (it does not try to 'catch up' time lost in delays).
 	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle the return value and memory management of @data.
+	 *
 	 * This internally creates a main loop source using g_timeout_source_new()
 	 * and attaches it to the global #GMainContext using g_source_attach(), so
 	 * the callback will be invoked in whichever thread is running that main
@@ -295,6 +301,9 @@ public class Timeout
 	 * of one second. If you need finer precision and have such a timeout,
 	 * you may want to use g_timeout_add() instead.
 	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle the return value and memory management of @data.
+	 *
 	 * The interval given is in terms of monotonic time, not wall clock
 	 * time.  See g_get_monotonic_time().
 	 *
@@ -330,6 +339,9 @@ public class Timeout
 	 * event sources. Thus they should not be relied on for precise timing.
 	 * After each call to the timeout function, the time of the next
 	 * timeout is recalculated based on the current time and the given @interval
+	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle the return value and memory management of @data.
 	 *
 	 * If you want timing more precise than whole seconds, use g_timeout_add()
 	 * instead.

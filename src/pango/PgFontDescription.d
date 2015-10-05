@@ -130,9 +130,10 @@ public class PgFontDescription
 	/**
 	 * Make a copy of a #PangoFontDescription.
 	 *
-	 * Return: the newly allocated #PangoFontDescription, which should
-	 *     be freed with pango_font_description_free(), or %NULL
-	 *     if @desc was %NULL.
+	 * Return: the newly allocated
+	 *     #PangoFontDescription, which should be freed with
+	 *     pango_font_description_free(), or %NULL if @desc was
+	 *     %NULL.
 	 */
 	public PgFontDescription copy()
 	{
@@ -152,9 +153,10 @@ public class PgFontDescription
 	 * be used until @desc is modified or freed. This is meant to be used
 	 * when the copy is only needed temporarily.
 	 *
-	 * Return: the newly allocated #PangoFontDescription, which should
-	 *     be freed with pango_font_description_free(), or %NULL
-	 *     if @desc was %NULL.
+	 * Return: the newly allocated
+	 *     #PangoFontDescription, which should be freed with
+	 *     pango_font_description_free(), or %NULL if @desc was
+	 *     %NULL.
 	 */
 	public PgFontDescription copyStatic()
 	{
@@ -198,9 +200,10 @@ public class PgFontDescription
 	 * Gets the family name field of a font description. See
 	 * pango_font_description_set_family().
 	 *
-	 * Return: the family name field for the font description, or
-	 *     %NULL if not previously set.  This has the same life-time
-	 *     as the font description itself and should not be freed.
+	 * Return: the family name field for the font
+	 *     description, or %NULL if not previously set.  This
+	 *     has the same life-time as the font description itself
+	 *     and should not be freed.
 	 */
 	public string getFamily()
 	{
@@ -548,7 +551,7 @@ public class PgFontDescription
 	 * Creates a new font description from a string representation in the
 	 * form "[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]", where FAMILY-LIST is a
 	 * comma separated list of families optionally terminated by a comma,
-	 * STYLE_OPTIONS is a whitespace separated list of words where each WORD
+	 * STYLE_OPTIONS is a whitespace separated list of words where each word
 	 * describes one of style, variant, weight, stretch, or gravity, and SIZE
 	 * is a decimal number (size in points) or optionally followed by the
 	 * unit modifier "px" for absolute size. Any one of the options may

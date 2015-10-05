@@ -241,7 +241,10 @@ public class Screen : ObjectG
 
 	/**
 	 * Returns the height of @screen in millimeters.
-	 * Note that on some X servers this value will not be correct.
+	 *
+	 * Note that this value is somewhat ill-defined when the screen
+	 * has multiple monitors of different resolution. It is recommended
+	 * to use the monitor dimensions instead.
 	 *
 	 * Return: the heigth of @screen in millimeters.
 	 *
@@ -595,7 +598,10 @@ public class Screen : ObjectG
 
 	/**
 	 * Gets the width of @screen in millimeters.
-	 * Note that on some X servers this value will not be correct.
+	 *
+	 * Note that this value is somewhat ill-defined when the screen
+	 * has multiple monitors of different resolution. It is recommended
+	 * to use the monitor dimensions instead.
 	 *
 	 * Return: the width of @screen in millimeters.
 	 *

@@ -307,7 +307,7 @@ public template ValueT(TStruct)
 	/**
 	 * Gets the current value and the human readable text alternative of
 	 * @obj. @text is a newly created string, that must be freed by the
-	 * caller. Can be NULL if not descriptor is available.
+	 * caller. Can be NULL if no descriptor is available.
 	 *
 	 * Params:
 	 *     value = address of #gdouble to put the current value of @obj

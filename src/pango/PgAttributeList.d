@@ -147,8 +147,8 @@ public class PgAttributeList
 	 *         if an attribute should be filtered out.
 	 *     data = Data to be passed to @func
 	 *
-	 * Return: the new #PangoAttrList or %NULL if
-	 *     no attributes of the given types were found.
+	 * Return: the new #PangoAttrList or
+	 *     %NULL if no attributes of the given types were found.
 	 *
 	 * Since: 1.2
 	 */

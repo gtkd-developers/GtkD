@@ -27,6 +27,7 @@ module gstreamer.DeviceProvider;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gobject.Signals;
 private import gstreamer.Bus;
 private import gstreamer.Device;
 private import gstreamer.DeviceProviderFactory;
@@ -34,6 +35,7 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+public  import gtkc.gdktypes;
 
 
 /**
@@ -207,6 +209,37 @@ public class DeviceProvider : ObjectGst
 	}
 
 	/**
+	 * Get the provider factory names of the #GstDeviceProvider instances that
+	 * are hidden by @provider.
+	 *
+	 * Return: a list of hidden providers factory names or %NULL when
+	 *     nothing is hidden by @provider. Free with g_strfreev.
+	 *
+	 * Since: 1.6
+	 */
+	public string[] getHiddenProviders()
+	{
+		return Str.toStringArray(gst_device_provider_get_hidden_providers(gstDeviceProvider));
+	}
+
+	/**
+	 * Make @provider hide the devices from the factory with @name.
+	 *
+	 * This function is used when @provider will also provide the devices reported
+	 * by provider factory @name. A monitor should stop monitoring the
+	 * device provider with @name to avoid duplicate devices.
+	 *
+	 * Params:
+	 *     name = a provider factory name
+	 *
+	 * Since: 1.6
+	 */
+	public void hideProvider(string name)
+	{
+		gst_device_provider_hide_provider(gstDeviceProvider, Str.toStringz(name));
+	}
+
+	/**
 	 * Starts providering the devices. This will cause #GST_MESSAGE_DEVICE_ADDED
 	 * and #GST_MESSAGE_DEVICE_REMOVED messages to be posted on the provider's bus
 	 * when devices are added or removed from the system.
@@ -235,5 +268,73 @@ public class DeviceProvider : ObjectGst
 	public void stop()
 	{
 		gst_device_provider_stop(gstDeviceProvider);
+	}
+
+	/**
+	 * Make @provider unhide the devices from factory @name.
+	 *
+	 * This function is used when @provider will no longer provide the devices
+	 * reported by provider factory @name. A monitor should start
+	 * monitoring the devices from provider factory @name in order to see
+	 * all devices again.
+	 *
+	 * Params:
+	 *     name = a provider factory name
+	 *
+	 * Since: 1.6
+	 */
+	public void unhideProvider(string name)
+	{
+		gst_device_provider_unhide_provider(gstDeviceProvider, Str.toStringz(name));
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(string, DeviceProvider)[] onProviderHiddenListeners;
+	void addOnProviderHidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "provider-hidden" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"provider-hidden",
+				cast(GCallback)&callBackProviderHidden,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["provider-hidden"] = 1;
+		}
+		onProviderHiddenListeners ~= dlg;
+	}
+	extern(C) static void callBackProviderHidden(GstDeviceProvider* deviceproviderStruct, char* object, DeviceProvider _deviceprovider)
+	{
+		foreach ( void delegate(string, DeviceProvider) dlg; _deviceprovider.onProviderHiddenListeners )
+		{
+			dlg(Str.toString(object), _deviceprovider);
+		}
+	}
+
+	void delegate(string, DeviceProvider)[] onProviderUnhiddenListeners;
+	void addOnProviderUnhidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "provider-unhidden" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"provider-unhidden",
+				cast(GCallback)&callBackProviderUnhidden,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["provider-unhidden"] = 1;
+		}
+		onProviderUnhiddenListeners ~= dlg;
+	}
+	extern(C) static void callBackProviderUnhidden(GstDeviceProvider* deviceproviderStruct, char* object, DeviceProvider _deviceprovider)
+	{
+		foreach ( void delegate(string, DeviceProvider) dlg; _deviceprovider.onProviderUnhiddenListeners )
+		{
+			dlg(Str.toString(object), _deviceprovider);
+		}
 	}
 }

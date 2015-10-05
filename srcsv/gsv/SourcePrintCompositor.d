@@ -542,24 +542,8 @@ public class SourcePrintCompositor : ObjectG
 	}
 
 	/**
-	 * Sets strftime like header format strings, to be printed on the
-	 * left, center and right of the bottom of each page. The strings may
-	 * include strftime(3) codes which will be expanded at print time.
-	 * All strftime() codes are accepted, with the addition of #N for the
-	 * page number and #Q for the page count.
-	 *
-	 * @separator specifies if a solid line should be drawn to separate
-	 * the footer from the document text.
-	 *
-	 * If %NULL is given for any of the three arguments, that particular
-	 * string will not be printed.
-	 *
-	 * For the footer to be printed, in
-	 * addition to specifying format strings, you need to enable footer
-	 * printing with gtk_source_print_compositor_set_print_footer().
-	 *
-	 * This function cannot be called anymore after the first call to the
-	 * gtk_source_print_compositor_paginate() function.
+	 * See gtk_source_print_compositor_set_header_format() for more information
+	 * about the parameters.
 	 *
 	 * Params:
 	 *     separator = %TRUE if you want a separator line to be printed.
@@ -601,8 +585,11 @@ public class SourcePrintCompositor : ObjectG
 	 * Sets strftime like header format strings, to be printed on the
 	 * left, center and right of the top of each page.  The strings may
 	 * include strftime(3) codes which will be expanded at print time.
-	 * All strftime() codes are accepted, with the addition of #N for the
-	 * page number and #Q for the page count.
+	 * A subset of strftime() codes are accepted, see g_date_time_format()
+	 * for more details on the accepted format specifiers.
+	 * Additionally the following format specifiers are accepted:
+	 * - #N: the page number
+	 * - #Q: the page count.
 	 *
 	 * @separator specifies if a solid line should be drawn to separate
 	 * the header from the document text.

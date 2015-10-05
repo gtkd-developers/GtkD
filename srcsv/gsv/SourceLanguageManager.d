@@ -137,11 +137,10 @@ public class SourceLanguageManager : ObjectG
 	/**
 	 * Returns the ids of the available languages.
 	 *
-	 * Return: a %NULL-terminated array of
-	 *     string containing the ids of the available languages or %NULL if no
-	 *     language is available.  The array is sorted alphabetically
-	 *     according to the language name.  The array is owned by @lm and must
-	 *     not be modified.
+	 * Return: a %NULL-terminated array of strings containing the ids of the available
+	 *     languages or %NULL if no language is available.
+	 *     The array is sorted alphabetically according to the language name.
+	 *     The array is owned by @lm and must not be modified.
 	 */
 	public string[] getLanguageIds()
 	{

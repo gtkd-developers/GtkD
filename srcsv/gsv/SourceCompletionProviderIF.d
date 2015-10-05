@@ -25,6 +25,8 @@
 module gsv.SourceCompletionProviderIF;
 
 private import gdkpixbuf.Pixbuf;
+private import gio.Icon;
+private import gio.IconIF;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceCompletionContext;
@@ -75,12 +77,32 @@ public interface SourceCompletionProviderIF{
 	public GtkSourceCompletionActivation getActivation();
 
 	/**
-	 * Get the icon of the provider.
+	 * Gets the #GIcon for the icon of @provider.
+	 *
+	 * Return: The icon to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
+	 *
+	 * Since: 3.18
+	 */
+	public IconIF getGicon();
+
+	/**
+	 * Get the #GdkPixbuf for the icon of the @provider.
 	 *
 	 * Return: The icon to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	public Pixbuf getIcon();
+
+	/**
+	 * Gets the icon name of @provider.
+	 *
+	 * Return: The icon name to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
+	 *
+	 * Since: 3.18
+	 */
+	public string getIconName();
 
 	/**
 	 * Get a customized info widget to show extra information of a proposal.

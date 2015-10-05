@@ -173,8 +173,8 @@ public class PgCoverage
 	 *         representing a #PangoCoverage
 	 *     nBytes = the size of @bytes in bytes
 	 *
-	 * Return: a newly allocated #PangoCoverage, or
-	 *     %NULL if the data was invalid.
+	 * Return: a newly allocated
+	 *     #PangoCoverage, or %NULL if the data was invalid.
 	 */
 	public static PgCoverage fromBytes(char[] bytes)
 	{

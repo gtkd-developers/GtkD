@@ -809,7 +809,9 @@ public class Variant
 	/**
 	 * Creates a string #GVariant with the contents of @string.
 	 *
-	 * @string must be valid UTF-8.
+	 * @string must be valid UTF-8, and must not be %NULL. To encode
+	 * potentially-%NULL strings, use g_variant_new() with `ms` as the
+	 * [format string][gvariant-format-strings-maybe-types].
 	 *
 	 * Params:
 	 *     str = a normal UTF-8 nul-terminated string
@@ -1687,7 +1689,7 @@ public class Variant
 	 * type.  This includes the types %G_VARIANT_TYPE_STRING,
 	 * %G_VARIANT_TYPE_OBJECT_PATH and %G_VARIANT_TYPE_SIGNATURE.
 	 *
-	 * The string will always be UTF-8 encoded.
+	 * The string will always be UTF-8 encoded, and will never be %NULL.
 	 *
 	 * If @length is non-%NULL then the length of the string (in bytes) is
 	 * returned there.  For trusted values, this information is already
@@ -2309,7 +2311,8 @@ public class Variant
 	 * with empty arrays).
 	 *
 	 * In the event that the parsing is successful, the resulting #GVariant
-	 * is returned.
+	 * is returned. It is never floating, and must be freed with
+	 * g_variant_unref().
 	 *
 	 * In case of any error, %NULL will be returned.  If @error is non-%NULL
 	 * then it will be set to reflect the error that occurred.
@@ -2323,7 +2326,7 @@ public class Variant
 	 *     limit = a pointer to the end of @text, or %NULL
 	 *     endptr = a location to store the end pointer, or %NULL
 	 *
-	 * Return: a reference to a #GVariant, or %NULL
+	 * Return: a non-floating reference to a #GVariant, or %NULL
 	 *
 	 * Throws: GException on failure.
 	 */

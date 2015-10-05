@@ -37,7 +37,7 @@ public  import gtkc.giotypes;
 
 
 /**
- * As of GLib 2.36, #GSimpleAsyncResult is deprecated in favor of
+ * As of GLib 2.46, #GSimpleAsyncResult is deprecated in favor of
  * #GTask, which provides a simpler API.
  * 
  * #GSimpleAsyncResult implements #GAsyncResult.
@@ -257,6 +257,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * g_simple_async_result_set_check_cancellable() immediately after
 	 * this function returns.
 	 *
+	 * Deprecated: Use g_task_new() instead.
+	 *
 	 * Params:
 	 *     sourceObject = a #GObject, or %NULL.
 	 *     callback = a #GAsyncReadyCallback.
@@ -281,6 +283,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 
 	/**
 	 * Creates a #GSimpleAsyncResult from an error condition.
+	 *
+	 * Deprecated: Use g_task_new() and g_task_return_error() instead.
 	 *
 	 * Params:
 	 *     sourceObject = a #GObject, or %NULL.
@@ -318,6 +322,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * @source_tag or @result's source tag is %NULL, then the source tag
 	 * check is skipped.)
 	 *
+	 * Deprecated: Use #GTask and g_task_is_valid() instead.
+	 *
 	 * Params:
 	 *     result = the #GAsyncResult passed to the _finish function.
 	 *     source = the #GObject passed to the _finish function.
@@ -340,6 +346,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Calling this function takes a reference to @simple for as long as
 	 * is needed to complete the call.
+	 *
+	 * Deprecated: Use #GTask instead.
 	 */
 	public void complete()
 	{
@@ -354,6 +362,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Calling this function takes a reference to @simple for as long as
 	 * is needed to complete the call.
+	 *
+	 * Deprecated: Use #GTask instead.
 	 */
 	public void completeInIdle()
 	{
@@ -362,6 +372,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 
 	/**
 	 * Gets the operation result boolean from within the asynchronous result.
+	 *
+	 * Deprecated: Use #GTask and g_task_propagate_boolean() instead.
 	 *
 	 * Return: %TRUE if the operation's result was %TRUE, %FALSE
 	 *     if the operation's result was %FALSE.
@@ -374,6 +386,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Gets a pointer result as returned by the asynchronous function.
 	 *
+	 * Deprecated: Use #GTask and g_task_propagate_pointer() instead.
+	 *
 	 * Return: a pointer from the result.
 	 */
 	public void* getOpResGpointer()
@@ -384,6 +398,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Gets a gssize from the asynchronous result.
 	 *
+	 * Deprecated: Use #GTask and g_task_propagate_int() instead.
+	 *
 	 * Return: a gssize returned from the asynchronous function.
 	 */
 	public ptrdiff_t getOpResGssize()
@@ -393,6 +409,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 
 	/**
 	 * Gets the source tag for the #GSimpleAsyncResult.
+	 *
+	 * Deprecated: Use #GTask and g_task_get_source_tag() instead.
 	 *
 	 * Return: a #gpointer to the source object for the #GSimpleAsyncResult.
 	 */
@@ -408,6 +426,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * If the #GCancellable given to a prior call to
 	 * g_simple_async_result_set_check_cancellable() is cancelled then this
 	 * function will return %TRUE with @dest set appropriately.
+	 *
+	 * Deprecated: Use #GTask instead.
 	 *
 	 * Return: %TRUE if the error was propagated to @dest. %FALSE otherwise.
 	 *
@@ -434,6 +454,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Calling this function takes a reference to @simple for as long as
 	 * is needed to run the job and report its completion.
+	 *
+	 * Deprecated: Use #GTask and g_task_run_in_thread() instead.
 	 *
 	 * Params:
 	 *     func = a #GSimpleAsyncThreadFunc.
@@ -462,6 +484,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * The checking described above is done regardless of any call to the
 	 * unrelated g_simple_async_result_set_handle_cancellation() function.
 	 *
+	 * Deprecated: Use #GTask instead.
+	 *
 	 * Params:
 	 *     checkCancellable = a #GCancellable to check, or %NULL to unset
 	 *
@@ -476,6 +500,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Sets an error within the asynchronous result without a #GError.
 	 * Unless writing a binding, see g_simple_async_result_set_error().
 	 *
+	 * Deprecated: Use #GTask and g_task_return_error() instead.
+	 *
 	 * Params:
 	 *     domain = a #GQuark (usually #G_IO_ERROR).
 	 *     code = an error code.
@@ -489,6 +515,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 
 	/**
 	 * Sets the result from a #GError.
+	 *
+	 * Deprecated: Use #GTask and g_task_return_error() instead.
 	 *
 	 * Params:
 	 *     error = #GError.
@@ -516,6 +544,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Sets the operation result to a boolean within the asynchronous result.
 	 *
+	 * Deprecated: Use #GTask and g_task_return_boolean() instead.
+	 *
 	 * Params:
 	 *     opRes = a #gboolean.
 	 */
@@ -526,6 +556,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 
 	/**
 	 * Sets the operation result within the asynchronous result to a pointer.
+	 *
+	 * Deprecated: Use #GTask and g_task_return_pointer() instead.
 	 *
 	 * Params:
 	 *     opRes = a pointer result from an asynchronous function.
@@ -540,6 +572,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Sets the operation result within the asynchronous result to
 	 * the given @op_res.
 	 *
+	 * Deprecated: Use #GTask and g_task_return_int() instead.
+	 *
 	 * Params:
 	 *     opRes = a #gssize.
 	 */
@@ -551,6 +585,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	/**
 	 * Sets the result from @error, and takes over the caller's ownership
 	 * of @error, so the caller does not need to free it any more.
+	 *
+	 * Deprecated: Use #GTask and g_task_return_error() instead.
 	 *
 	 * Params:
 	 *     error = a #GError
@@ -567,6 +603,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * g_simple_async_report_error_in_idle(), but takes a #GError rather
 	 * than building a new one.
 	 *
+	 * Deprecated: Use g_task_report_error().
+	 *
 	 * Params:
 	 *     object = a #GObject, or %NULL
 	 *     callback = a #GAsyncReadyCallback.
@@ -582,6 +620,8 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 * Reports an error in an idle function. Similar to
 	 * g_simple_async_report_gerror_in_idle(), but takes over the caller's
 	 * ownership of @error, so the caller does not have to free it any more.
+	 *
+	 * Deprecated: Use g_task_report_error().
 	 *
 	 * Params:
 	 *     object = a #GObject, or %NULL

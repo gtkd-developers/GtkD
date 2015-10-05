@@ -248,11 +248,14 @@ public class Bus : ObjectGst
 	 * There can only be a single bus watch per bus, you must remove it before you
 	 * can set a new one.
 	 *
+	 * The bus watch will only work if a GLib main loop is being run.
+	 *
 	 * When @func is called, the message belongs to the caller; if you want to
 	 * keep a copy of it, call gst_message_ref() before leaving @func.
 	 *
-	 * The watch can be removed using g_source_remove() or by returning %FALSE
-	 * from @func.
+	 * The watch can be removed using gst_bus_remove_watch() or by returning %FALSE
+	 * from @func. If the watch was added to the default main context it is also
+	 * possible to remove the watch using g_source_remove().
 	 *
 	 * MT safe.
 	 *
@@ -262,7 +265,7 @@ public class Bus : ObjectGst
 	 *     userData = user data passed to @func.
 	 *     notify = the function to call when the source is removed.
 	 *
-	 * Return: The event source id.
+	 * Return: The event source id or 0 if @bus already got an event source.
 	 */
 	public uint addWatchFull(int priority, GstBusFunc func, void* userData, GDestroyNotify notify)
 	{
@@ -514,6 +517,18 @@ public class Bus : ObjectGst
 	public void removeSignalWatch()
 	{
 		gst_bus_remove_signal_watch(gstBus);
+	}
+
+	/**
+	 * Removes an installed bus watch from @bus.
+	 *
+	 * Return: %TRUE on success or %FALSE if @bus has no event source.
+	 *
+	 * Since: 1.6
+	 */
+	public bool removeWatch()
+	{
+		return gst_bus_remove_watch(gstBus) != 0;
 	}
 
 	/**

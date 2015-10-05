@@ -1162,8 +1162,8 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * In the event that the application is marked
 	 * %G_APPLICATION_HANDLES_COMMAND_LINE the "normal processing" will
-	 * send the @option dictionary to the primary instance where it can be
-	 * read with g_application_command_line_get_options().  The signal
+	 * send the @options dictionary to the primary instance where it can be
+	 * read with g_application_command_line_get_options_dict().  The signal
 	 * handler can modify the dictionary before returning, and the
 	 * modified dictionary will be sent.
 	 *

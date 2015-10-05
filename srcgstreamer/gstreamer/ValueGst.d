@@ -274,6 +274,53 @@ public struct ValueGst
 	}
 
 	/**
+	 * Retrieve the flags field of a GstFlagSet @value.
+	 *
+	 * Params:
+	 *     value = a GValue initialized to #GST_TYPE_FLAG_SET
+	 *
+	 * Return: the flags field of the flagset instance.
+	 *
+	 * Since: 1.6
+	 */
+	public static uint getFlagsetFlags(Value value)
+	{
+		return gst_value_get_flagset_flags((value is null) ? null : value.getValueStruct());
+	}
+
+	/**
+	 * Retrieve the mask field of a GstFlagSet @value.
+	 *
+	 * Params:
+	 *     value = a GValue initialized to #GST_TYPE_FLAG_SET
+	 *
+	 * Return: the mask field of the flagset instance.
+	 *
+	 * Since: 1.6
+	 */
+	public static uint getFlagsetMask(Value value)
+	{
+		return gst_value_get_flagset_mask((value is null) ? null : value.getValueStruct());
+	}
+
+	/**
+	 * Sets @value to the flags and mask values provided in @flags and @mask.
+	 * The @flags value indicates the values of flags, the @mask represents
+	 * which bits in the flag value have been set, and which are "don't care"
+	 *
+	 * Params:
+	 *     value = a GValue initialized to %GST_TYPE_FLAG_SET
+	 *     flags = The value of the flags set or unset
+	 *     mask = The mask indicate which flags bits must match for comparisons
+	 *
+	 * Since: 1.6
+	 */
+	public static void setFlagset(Value value, uint flags, uint mask)
+	{
+		gst_value_set_flagset((value is null) ? null : value.getValueStruct(), flags, mask);
+	}
+
+	/**
 	 * Gets the denominator of the fraction specified by @value.
 	 *
 	 * Params:

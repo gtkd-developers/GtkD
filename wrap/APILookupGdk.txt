@@ -299,6 +299,7 @@ code: start
 code: end
 
 struct: Rectangle
+noCode: get_type
 namespace:
 
 struct: RGBA
@@ -591,10 +592,6 @@ move: pango_layout_line_get_clip_region Pango layout_line_get_clip_region
 
 move: pixbuf_get_from_surface Pixbuf get_from_surface
 move: pixbuf_get_from_window Pixbuf get_from_window
-
-#move: rectangle_get_type Rectangle get_type
-move: rectangle_intersect Rectangle intersect
-move: rectangle_union Rectangle union
 
 move: selection_convert Selection convert
 move: selection_owner_get Selection owner_get

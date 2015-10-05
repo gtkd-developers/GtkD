@@ -202,8 +202,8 @@ public class PgFont : ObjectG
 	 * alive.  In most uses this is not an issue as a #PangoContext holds
 	 * a reference to the font map.
 	 *
-	 * Return: the #PangoFontMap for the font, or %NULL
-	 *     if @font is %NULL.
+	 * Return: the #PangoFontMap for the
+	 *     font, or %NULL if @font is %NULL.
 	 *
 	 * Since: 1.10
 	 */

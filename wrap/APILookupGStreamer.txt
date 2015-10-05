@@ -911,6 +911,9 @@ code: start
 	}
 code: end
 
+struct: ProtectionMeta
+class: ProtectionMeta
+
 struct: Query
 inout: parse_accept_caps_result result
 in: parse_nth_format nth
@@ -1160,6 +1163,7 @@ code: start
 code: end
 
 move: debug_add_log_function Debug add_log_function
+move: debug_bin_to_dot_data Debug bin_to_dot_data
 move: debug_bin_to_dot_file Debug bin_to_dot_file
 move: debug_bin_to_dot_file_with_ts Debug bin_to_dot_file_with_ts
 move: debug_construct_term_color Debug construct_term_color
@@ -1191,15 +1195,8 @@ move: event_type_get_flags Event type_get_flags
 move: event_type_get_name Event type_get_name
 move: event_type_to_quark Event type_to_quark
 
-move: filename_to_uri URIHandler
-move: uri_construct URIHandler
-move: uri_error_quark URIHandler
-move: uri_get_location URIHandler
-move: uri_get_protocol URIHandler
-move: uri_has_protocol URIHandler
-move: uri_is_valid URIHandler
-move: uri_protocol_is_supported URIHandler
-move: uri_protocol_is_valid URIHandler
+move: filename_to_uri Uri
+move: uri_error_quark Uri
 
 move: flow_get_name Pad
 move: flow_to_quark Pad
@@ -1227,6 +1224,8 @@ move: version_string GStreamer
 move: message_type_get_name Message type_get_name
 move: message_type_to_quark Message type_to_quark
 
+move: parent_buffer_meta_api_get_type ParentBufferMeta get_type
+
 move: parse_bin_from_description Parse bin_from_description
 move: parse_bin_from_description_full Parse bin_from_description_full
 move: parse_error_quark Parse error_quark
@@ -1235,6 +1234,9 @@ move: parse_launchv Parse launchv
 move: parse_launchv_full Parse launchv_full
 
 move: plugin_error_quark Plugin
+
+move: protection_meta_api_get_type ProtectionMeta get_type
+move: protection_select_system ProtectionMeta
 
 move: query_type_get_flags Query type_get_flags
 move: query_type_get_name Query type_get_name
@@ -1291,6 +1293,9 @@ move: value_get_caps ValueGst get_caps
 move: value_get_caps_features ValueGst get_caps_features
 move: value_get_double_range_max ValueGst get_double_range_max
 move: value_get_double_range_min ValueGst get_double_range_min
+move: value_get_flagset_flags ValueGst get_flagset_flags
+move: value_get_flagset_mask ValueGst get_flagset_mask
+move: value_set_flagset ValueGst set_flagset
 move: value_get_fraction_denominator ValueGst get_fraction_denominator
 move: value_get_fraction_numerator ValueGst get_fraction_numerator
 move: value_get_fraction_range_max ValueGst get_fraction_range_max

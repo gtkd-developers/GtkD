@@ -198,6 +198,9 @@ public class Socket : ObjectG, InitableIF
 	 * On success, the returned #GSocket takes ownership of @fd. On failure, the
 	 * caller must close @fd themselves.
 	 *
+	 * Since GLib 2.46, it is no longer a fatal error to call this on a non-socket
+	 * descriptor.  Instead, a GError will be set with code %G_IO_ERROR_FAILED
+	 *
 	 * Params:
 	 *     fd = a native socket file descriptor.
 	 *

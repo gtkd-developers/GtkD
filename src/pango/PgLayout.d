@@ -309,10 +309,10 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the font description for the layout, if any.
 	 *
-	 * Return: a pointer to the layout's font description,
-	 *     or %NULL if the font description from the layout's
-	 *     context is inherited. This value is owned by the layout
-	 *     and must not be modified or freed.
+	 * Return: a pointer to the layout's font
+	 *     description, or %NULL if the font description from the layout's
+	 *     context is inherited. This value is owned by the layout and must
+	 *     not be modified or freed.
 	 *
 	 * Since: 1.8
 	 */
@@ -392,10 +392,11 @@ public class PgLayout : ObjectG
 	 *     line = the index of a line, which must be between 0 and
 	 *         <literal>pango_layout_get_line_count(layout) - 1</literal>, inclusive.
 	 *
-	 * Return: the requested #PangoLayoutLine, or %NULL if the
-	 *     index is out of range. This layout line can
-	 *     be ref'ed and retained, but will become invalid
-	 *     if changes are made to the #PangoLayout.
+	 * Return: the requested
+	 *     #PangoLayoutLine, or %NULL if the index is out of
+	 *     range. This layout line can be ref'ed and retained,
+	 *     but will become invalid if changes are made to the
+	 *     #PangoLayout.
 	 */
 	public PgLayoutLine getLine(int line)
 	{
@@ -430,11 +431,11 @@ public class PgLayout : ObjectG
 	 *     line = the index of a line, which must be between 0 and
 	 *         <literal>pango_layout_get_line_count(layout) - 1</literal>, inclusive.
 	 *
-	 * Return: the requested #PangoLayoutLine, or %NULL if the
-	 *     index is out of range. This layout line can
-	 *     be ref'ed and retained, but will become invalid
-	 *     if changes are made to the #PangoLayout.
-	 *     No changes should be made to the line.
+	 * Return: the requested
+	 *     #PangoLayoutLine, or %NULL if the index is out of
+	 *     range. This layout line can be ref'ed and retained,
+	 *     but will become invalid if changes are made to the
+	 *     #PangoLayout.  No changes should be made to the line.
 	 *
 	 * Since: 1.16
 	 */
@@ -646,7 +647,8 @@ public class PgLayout : ObjectG
 	 * and %NULL is returned. Default tabs are every 8 spaces.
 	 * The return value should be freed with pango_tab_array_free().
 	 *
-	 * Return: a copy of the tabs for this layout, or %NULL.
+	 * Return: a copy of the tabs for this layout, or
+	 *     %NULL.
 	 */
 	public PgTabArray getTabs()
 	{
@@ -720,7 +722,7 @@ public class PgLayout : ObjectG
 	 * Params:
 	 *     index = the byte index of a grapheme within the layout.
 	 *     trailing = an integer indicating the edge of the grapheme to retrieve the
-	 *         position of. If 0, the trailing edge of the grapheme, if > 0,
+	 *         position of. If > 0, the trailing edge of the grapheme, if 0,
 	 *         the leading of the grapheme.
 	 *     line = location to store resulting line index. (which will
 	 *         between 0 and pango_layout_get_line_count(layout) - 1), or %NULL
@@ -808,9 +810,9 @@ public class PgLayout : ObjectG
 	 *         weak cursor. The strong cursor is the cursor corresponding
 	 *         to text insertion in the base direction for the layout.
 	 *     oldIndex = the byte index of the grapheme for the old index
-	 *     oldTrailing = if 0, the cursor was at the trailing edge of the
+	 *     oldTrailing = if 0, the cursor was at the leading edge of the
 	 *         grapheme indicated by @old_index, if > 0, the cursor
-	 *         was at the leading edge.
+	 *         was at the trailing edge.
 	 *     direction = direction to move cursor. A negative
 	 *         value indicates motion to the left.
 	 *     newIndex = location to store the new cursor byte index. A value of -1
@@ -1140,7 +1142,7 @@ public class PgLayout : ObjectG
 	 *     trailing = location to store a integer indicating where
 	 *         in the grapheme the user clicked. It will either
 	 *         be zero, or the number of characters in the
-	 *         grapheme. 0 represents the trailing edge of the grapheme.
+	 *         grapheme. 0 represents the leading edge of the grapheme.
 	 *
 	 * Return: %TRUE if the coordinates were inside text, %FALSE otherwise.
 	 */

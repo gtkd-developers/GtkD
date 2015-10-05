@@ -132,17 +132,6 @@ public class Pty : ObjectG, InitableIF
 	 *
 	 * Also, you MUST pass the %G_SPAWN_DO_NOT_REAP_CHILD flag.
 	 *
-	 * If GNOME PTY Helper is available and
-	 * unless some of the %VTE_PTY_NO_LASTLOG, %VTE_PTY_NO_UTMP or
-	 * %VTE_PTY_NO_WTMP flags are passed in @flags, the
-	 * session is logged in the corresponding lastlog, utmp or wtmp
-	 * system files.  When passing %VTE_PTY_NO_HELPER in @flags, the
-	 * GNOME PTY Helper is bypassed entirely.
-	 *
-	 * When passing %VTE_PTY_NO_FALLBACK in @flags,
-	 * and opening a PTY using the PTY helper fails, there will
-	 * be no fallback to allocate a PTY using Unix98 PTY functions.
-	 *
 	 * Params:
 	 *     flags = flags from #VtePtyFlags
 	 *     cancellable = a #GCancellable, or %NULL
@@ -177,15 +166,6 @@ public class Pty : ObjectG, InitableIF
 	public void childSetup()
 	{
 		vte_pty_child_setup(vtePty);
-	}
-
-	/**
-	 * Cleans up the PTY, specifically any logging performed for the session.
-	 * The file descriptor to the PTY master remains open.
-	 */
-	public void close()
-	{
-		vte_pty_close(vtePty);
 	}
 
 	/**

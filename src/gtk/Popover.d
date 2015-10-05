@@ -225,6 +225,26 @@ public class Popover : Bin
 	}
 
 	/**
+	 * Gets the widget that should be set as the default while
+	 * the popover is shown.
+	 *
+	 * Return: the default widget, or %NULL if there is none
+	 *
+	 * Since: 3.18
+	 */
+	public Widget getDefaultWidget()
+	{
+		auto p = gtk_popover_get_default_widget(gtkPopover);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+	}
+
+	/**
 	 * Returns whether the popover is modal, see gtk_popover_set_modal to
 	 * see the implications of this.
 	 *
@@ -293,6 +313,22 @@ public class Popover : Bin
 	public bool getTransitionsEnabled()
 	{
 		return gtk_popover_get_transitions_enabled(gtkPopover) != 0;
+	}
+
+	/**
+	 * Sets the widget that should be set as default widget while
+	 * the popover is shown (see gtk_window_set_default()). #GtkPopover
+	 * remembers the previous default widget and reestablishes it
+	 * when the popover is dismissed.
+	 *
+	 * Params:
+	 *     widget = the new default widget, or %NULL
+	 *
+	 * Since: 3.18
+	 */
+	public void setDefaultWidget(Widget widget)
+	{
+		gtk_popover_set_default_widget(gtkPopover, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
 	/**

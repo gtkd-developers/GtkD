@@ -278,6 +278,18 @@ public class Keymap : ObjectG
 	}
 
 	/**
+	 * Returns whether the Scroll Lock modifer is locked.
+	 *
+	 * Return: %TRUE if Scroll Lock is on
+	 *
+	 * Since: 3.18
+	 */
+	public bool getScrollLockState()
+	{
+		return gdk_keymap_get_scroll_lock_state(gdkKeymap) != 0;
+	}
+
+	/**
 	 * Determines if keyboard layouts for both right-to-left and left-to-right
 	 * languages are in use.
 	 *

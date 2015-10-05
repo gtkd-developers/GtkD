@@ -28,6 +28,7 @@ private import cairo.Context;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gobject.ParamSpec;
 private import gobject.Signals;
 private import gobject.Value;
 private import gtk.Adjustment;
@@ -343,7 +344,7 @@ public class Container : Widget
 	/**
 	 * Emits a #GtkWidget::child-notify signal for the
 	 * [child property][child-properties]
-	 * @child_property on widget.
+	 * @child_property on the child.
 	 *
 	 * This is an analogue of g_object_notify() for child properties.
 	 *
@@ -359,6 +360,25 @@ public class Container : Widget
 	public void childNotify(Widget child, string childProperty)
 	{
 		gtk_container_child_notify(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(childProperty));
+	}
+
+	/**
+	 * Emits a #GtkWidget::child-notify signal for the
+	 * [child property][child-properties] specified by
+	 * @pspec on the child.
+	 *
+	 * This is an analogue of g_object_notify_by_pspec() for child properties.
+	 *
+	 * Params:
+	 *     child = the child widget
+	 *     pspec = the #GParamSpec of a child property instealled on
+	 *         the class of @container
+	 *
+	 * Since: 3.18
+	 */
+	public void childNotifyByPspec(Widget child, ParamSpec pspec)
+	{
+		gtk_container_child_notify_by_pspec(gtkContainer, (child is null) ? null : child.getWidgetStruct(), (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 
 	/**

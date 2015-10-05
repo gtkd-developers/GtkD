@@ -295,6 +295,11 @@ public class WidgetPath
 		gtk_widget_path_iter_add_class(gtkWidgetPath, pos, Str.toStringz(name));
 	}
 
+	public void iterAddQclass(int pos, GQuark qname)
+	{
+		gtk_widget_path_iter_add_qclass(gtkWidgetPath, pos, qname);
+	}
+
 	/**
 	 * Adds the region @name to the widget at position @pos in
 	 * the hierarchy defined in @path. See

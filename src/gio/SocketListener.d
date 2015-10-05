@@ -33,6 +33,8 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
 
@@ -494,5 +496,43 @@ public class SocketListener : ObjectG
 	public void setBacklog(int listenBacklog)
 	{
 		g_socket_listener_set_backlog(gSocketListener, listenBacklog);
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(GSocketListenerEvent, Socket, SocketListener)[] onListeners;
+	/**
+	 * Emitted when @listener's activity on @socket changes state.
+	 * Note that when @listener is used to listen on both IPv4 and
+	 * IPv6, a separate set of signals will be emitted for each, and
+	 * the order they happen in is undefined.
+	 *
+	 * Params:
+	 *     event = the event that is occurring
+	 *     socket = the #GSocket the event is occurring on
+	 *
+	 * Since: 2.46
+	 */
+	void addOn(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "event" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"event",
+				cast(GCallback)&callBack,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["event"] = 1;
+		}
+		onListeners ~= dlg;
+	}
+	extern(C) static void callBack(GSocketListener* socketlistenerStruct, GSocketListenerEvent event, GSocket* socket, SocketListener _socketlistener)
+	{
+		foreach ( void delegate(GSocketListenerEvent, Socket, SocketListener) dlg; _socketlistener.onListeners )
+		{
+			dlg(event, ObjectG.getDObject!(Socket)(socket), _socketlistener);
+		}
 	}
 }

@@ -158,6 +158,9 @@ public class Idle
 	 * returns %FALSE it is automatically removed from the list of event
 	 * sources and will not be called again.
 	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle the return value and memory management of @data.
+	 *
 	 * This internally creates a main loop source using g_idle_source_new()
 	 * and attaches it to the global #GMainContext using g_source_attach(), so
 	 * the callback will be invoked in whichever thread is running that main
@@ -179,6 +182,9 @@ public class Idle
 	 * Adds a function to be called whenever there are no higher priority
 	 * events pending.  If the function returns %FALSE it is automatically
 	 * removed from the list of event sources and will not be called again.
+	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle the return value and memory management of @data.
 	 *
 	 * This internally creates a main loop source using g_idle_source_new()
 	 * and attaches it to the global #GMainContext using g_source_attach(), so

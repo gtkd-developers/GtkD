@@ -473,7 +473,7 @@ public class Message
 	 * messages; they are a gift from us to you. Enjoy.
 	 *
 	 * Params:
-	 *     src = the object originating the message.
+	 *     src = The object originating the message.
 	 *     structure = the structure for the message. The message
 	 *         will take ownership of the structure.
 	 *
@@ -567,7 +567,7 @@ public class Message
 	 * be needed to set the pipeline to PAUSED and PLAYING again.
 	 *
 	 * Params:
-	 *     src = the object originating the message.
+	 *     src = The object originating the message.
 	 *     clock = the clock that was lost
 	 *
 	 * Return: The new clock lost message.
@@ -597,7 +597,7 @@ public class Message
 	 * selection.
 	 *
 	 * Params:
-	 *     src = the object originating the message.
+	 *     src = The object originating the message.
 	 *     clock = the clock it provides
 	 *     ready = %TRUE if the sender can provide a clock
 	 *
@@ -778,7 +778,7 @@ public class Message
 	 * pipeline because a higher priority stream is being played.
 	 *
 	 * Params:
-	 *     src = the object originating the message.
+	 *     src = The object originating the message.
 	 *     state = The new requested state
 	 *
 	 * Return: the new request state message.
@@ -804,7 +804,7 @@ public class Message
 	 * changed its state.
 	 *
 	 * Params:
-	 *     src = the object originating the message
+	 *     src = The object originating the message.
 	 *     oldstate = the previous state
 	 *     newstate = the new (current) state
 	 *     pending = the pending (target) state

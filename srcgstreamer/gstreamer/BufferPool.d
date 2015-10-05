@@ -155,18 +155,20 @@ public class BufferPool : ObjectGst
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
-	 *     allocator = a #GstAllocator
-	 *     params = #GstAllocationParams
+	 *     allocator = a #GstAllocator, or %NULL
+	 *     params = #GstAllocationParams, or %NULL
 	 *
 	 * Return: %TRUE, if the values are set.
 	 */
-	public static bool configGetAllocator(Structure config, ref Allocator allocator, AllocationParams params)
+	public static bool configGetAllocator(Structure config, ref Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = allocator.getAllocatorStruct();
+		GstAllocationParams* outparams = new GstAllocationParams;
 		
-		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, (params is null) ? null : params.getAllocationParamsStruct()) != 0;
+		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
 		
 		allocator = ObjectG.getDObject!(Allocator)(outallocator);
+		params = ObjectG.getDObject!(AllocationParams)(outparams);
 		
 		return p;
 	}
@@ -280,9 +282,11 @@ public class BufferPool : ObjectGst
 	 * Validate that changes made to @config are still valid in the context of the
 	 * expected parameters. This function is a helper that can be used to validate
 	 * changes made by a pool to a config when gst_buffer_pool_set_config()
-	 * returns %FALSE. This expects that @caps and @size haven't changed, and that
-	 * @min_buffers aren't lower then what we initially expected. This does not check
-	 * if options or allocator parameters.
+	 * returns %FALSE. This expects that @caps haven't changed and that
+	 * @min_buffers aren't lower then what we initially expected.
+	 * This does not check if options or allocator parameters are still valid,
+	 * won't check if size have changed, since changing the size is valid to adapt
+	 * padding.
 	 *
 	 * Params:
 	 *     config = a #GstBufferPool configuration
@@ -422,9 +426,9 @@ public class BufferPool : ObjectGst
 	/**
 	 * Set the configuration of the pool. If the pool is already configured, and
 	 * the configuration haven't change, this function will return %TRUE. If the
-	 * pool is active, this function will try deactivating it. Buffers allocated
-	 * form this pool must be returned or else this function will do nothing and
-	 * return %FALSE.
+	 * pool is active, this method will return %FALSE and active configuration
+	 * will remain. Buffers allocated form this pool must be returned or else this
+	 * function will do nothing and return %FALSE.
 	 *
 	 * @config is a #GstStructure that contains the configuration parameters for
 	 * the pool. A default and mandatory set of parameters can be configured with

@@ -76,15 +76,15 @@ the -m32 or -m64 flag to rdmd.
 Wraped Versions:
 ----------------
 
-GtkD wraps Gtk+ 3.16 the versions of the associated libraries are:
-Gtk+          3.16
-Gdk           3.16
-Glib          2.44
-GObject       2.44
-Gio           2.44
-Pango         1.36
-Gdk-pixbuf    2.31
+GtkD wraps Gtk+ 3.18 the versions of the associated libraries are:
+Gtk+          3.18
+Gdk           3.18
+Glib          2.46
+GObject       2.46
+Gio           2.46
+Pango         1.38
+Gdk-pixbuf    2.32
 Cairo         1.12.2
-GtksourceView 3.16
-GStreamer     1.4
-Vte           0.40
+GtksourceView 3.18
+GStreamer     1.6
+Vte           0.42

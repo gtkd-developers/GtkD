@@ -340,7 +340,8 @@ public class SourceBuffer : TextBuffer
 	 * see gtk_source_buffer_set_language().  The returned object should not be
 	 * unreferenced by the user.
 	 *
-	 * Return: the #GtkSourceLanguage associated with the buffer, or %NULL.
+	 * Return: the #GtkSourceLanguage associated
+	 *     with the buffer, or %NULL.
 	 */
 	public SourceLanguage getLanguage()
 	{
@@ -417,8 +418,8 @@ public class SourceBuffer : TextBuffer
 	 * see gtk_source_buffer_set_style_scheme().
 	 * The returned object should not be unreferenced by the user.
 	 *
-	 * Return: the #GtkSourceStyleScheme associated
-	 *     with the buffer, or %NULL.
+	 * Return: the #GtkSourceStyleScheme
+	 *     associated with the buffer, or %NULL.
 	 */
 	public SourceStyleScheme getStyleScheme()
 	{
@@ -666,6 +667,22 @@ public class SourceBuffer : TextBuffer
 	public void setUndoManager(SourceUndoManagerIF manager)
 	{
 		gtk_source_buffer_set_undo_manager(gtkSourceBuffer, (manager is null) ? null : manager.getSourceUndoManagerStruct());
+	}
+
+	/**
+	 * Sort the lines of text between the specified iterators.
+	 *
+	 * Params:
+	 *     start = a #GtkTextIter.
+	 *     end = a #GtkTextIter.
+	 *     flags = #GtkSourceSortFlags specifying how the sort should behave
+	 *     column = sort considering the text starting at the given column
+	 *
+	 * Since: 3.18
+	 */
+	public void sortLines(TextIter start, TextIter end, GtkSourceSortFlags flags, int column)
+	{
+		gtk_source_buffer_sort_lines(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), flags, column);
 	}
 
 	/**

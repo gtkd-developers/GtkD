@@ -1213,7 +1213,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	int[string] connectedSignals;
 
-	void delegate(CellRenderer, CellEditableIF, cairo_rectangle_int_t*, string, CellArea)[] onAddEditableListeners;
+	void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea)[] onAddEditableListeners;
 	/**
 	 * Indicates that editing has started on @renderer and that @editable
 	 * should be added to the owning cell-layouting widget at @cell_area.
@@ -1227,7 +1227,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.0
 	 */
-	void addOnAddEditable(void delegate(CellRenderer, CellEditableIF, cairo_rectangle_int_t*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnAddEditable(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "add-editable" !in connectedSignals )
 		{
@@ -1242,9 +1242,9 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		}
 		onAddEditableListeners ~= dlg;
 	}
-	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, cairo_rectangle_int_t* cellArea, char* path, CellArea _cellarea)
+	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, char* path, CellArea _cellarea)
 	{
-		foreach ( void delegate(CellRenderer, CellEditableIF, cairo_rectangle_int_t*, string, CellArea) dlg; _cellarea.onAddEditableListeners )
+		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg; _cellarea.onAddEditableListeners )
 		{
 			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), cellArea, Str.toString(path), _cellarea);
 		}

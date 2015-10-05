@@ -235,8 +235,6 @@ public class SourceView : TextView
 	 * should get indented instead of replaced with the \t character.
 	 *
 	 * Return: %TRUE if the selection is indented when tab is pressed.
-	 *
-	 * Since: 1.8
 	 */
 	public bool getIndentOnTab()
 	{
@@ -327,6 +325,19 @@ public class SourceView : TextView
 	public bool getShowRightMargin()
 	{
 		return gtk_source_view_get_show_right_margin(gtkSourceView) != 0;
+	}
+
+	/**
+	 * Returns %TRUE if pressing the Backspace key will try to delete spaces
+	 * up to the previous tab stop.
+	 *
+	 * Return: %TRUE if smart Backspace handling is enabled.
+	 *
+	 * Since: 3.18
+	 */
+	public bool getSmartBackspace()
+	{
+		return gtk_source_view_get_smart_backspace(gtkSourceView) != 0;
 	}
 
 	/**
@@ -445,8 +456,6 @@ public class SourceView : TextView
 	 *
 	 * Params:
 	 *     enable = whether to indent a block when tab is pressed.
-	 *
-	 * Since: 1.8
 	 */
 	public void setIndentOnTab(bool enable)
 	{
@@ -553,6 +562,20 @@ public class SourceView : TextView
 	public void setShowRightMargin(bool show)
 	{
 		gtk_source_view_set_show_right_margin(gtkSourceView, show);
+	}
+
+	/**
+	 * When set to %TRUE, pressing the Backspace key will try to delete spaces
+	 * up to the previous tab stop.
+	 *
+	 * Params:
+	 *     smartBackspace = whether to enable smart Backspace handling.
+	 *
+	 * Since: 3.18
+	 */
+	public void setSmartBackspace(bool smartBackspace)
+	{
+		gtk_source_view_set_smart_backspace(gtkSourceView, smartBackspace);
 	}
 
 	/**

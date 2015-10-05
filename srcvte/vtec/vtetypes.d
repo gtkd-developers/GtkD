@@ -102,8 +102,7 @@ alias VteEraseBinding EraseBinding;
 public enum VtePtyError
 {
 	/**
-	 * failure when using the GNOME PTY helper to
-	 * allocate the PTY
+	 * Obsolete. Deprecated: 0.42
 	 */
 	PTY_HELPER_FAILED = 0,
 	/**
@@ -116,24 +115,23 @@ alias VtePtyError PtyError;
 public enum VtePtyFlags
 {
 	/**
-	 * don't record the session in lastlog. Deprecated: 0.38
+	 * Unused. Deprecated: 0.38
 	 */
 	NO_LASTLOG = 1,
 	/**
-	 * don't record the session in utmp. Deprecated: 0.38
+	 * Unused. Deprecated: 0.38
 	 */
 	NO_UTMP = 2,
 	/**
-	 * don't record the session in wtmp. Deprecated: 0.38
+	 * Unused. Deprecated: 0.38
 	 */
 	NO_WTMP = 4,
 	/**
-	 * don't use the GNOME PTY helper to allocate the PTY. Deprecated: 0.38
+	 * Unused. Deprecated: 0.38
 	 */
 	NO_HELPER = 8,
 	/**
-	 * when allocating the PTY with the PTY helper fails,
-	 * don't fall back to try using PTY98. Deprecated: 0.38
+	 * Unused. Deprecated: 0.38
 	 */
 	NO_FALLBACK = 16,
 	/**

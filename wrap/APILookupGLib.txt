@@ -1829,6 +1829,7 @@ move: log_set_always_fatal MessageLog
 move: log_set_default_handler MessageLog
 move: log_set_fatal_mask MessageLog
 move: log_set_handler MessageLog
+move: log_set_handler_full MessageLog
 move: logv MessageLog
 
 move: on_error_query Messages

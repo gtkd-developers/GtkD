@@ -211,6 +211,9 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Deletes the action at @index_ from @completion’s action list.
 	 *
+	 * Note that @index_ is a relative position and the position of an
+	 * action may have changed since it was inserted.
+	 *
 	 * Params:
 	 *     index = the index of the item to delete
 	 *
@@ -382,6 +385,9 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Inserts an action in @completion’s action item list at position @index_
 	 * with text @text. If you want the action item to have markup, use
 	 * gtk_entry_completion_insert_action_markup().
+	 *
+	 * Note that @index_ is a relative position in the list of actions and
+	 * the position of an action can change when deleting a different action.
 	 *
 	 * Params:
 	 *     index = the index of the item to insert

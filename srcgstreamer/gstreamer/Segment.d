@@ -271,6 +271,22 @@ public class Segment
 	}
 
 	/**
+	 * Checks for two segments being equal. Equality here is defined
+	 * as perfect equality, including floating point values.
+	 *
+	 * Params:
+	 *     s1 = a #GstSegment structure.
+	 *
+	 * Return: %TRUE if the segments are equal, %FALSE otherwise.
+	 *
+	 * Since: 1.6
+	 */
+	public bool isEqual(Segment s1)
+	{
+		return gst_segment_is_equal(gstSegment, (s1 is null) ? null : s1.getSegmentStruct()) != 0;
+	}
+
+	/**
 	 * Adjust the values in @segment so that @offset is applied to all
 	 * future running-time calculations.
 	 *
@@ -341,6 +357,37 @@ public class Segment
 	public ulong toRunningTime(GstFormat format, ulong position)
 	{
 		return gst_segment_to_running_time(gstSegment, format, position);
+	}
+
+	/**
+	 * Translate @position to the total running time using the currently configured
+	 * segment. Compared to gst_segment_to_running_time() this function can return
+	 * negative running-time.
+	 *
+	 * This function is typically used by elements that need to synchronize buffers
+	 * against the clock or eachother.
+	 *
+	 * @position can be any value and the result of this function for values outside
+	 * of the segment is extrapolated.
+	 *
+	 * When 1 is returned, @position resulted in a positive running-time returned
+	 * in @running_time.
+	 *
+	 * When this function returns -1, the returned @running_time should be negated
+	 * to get the real negative running time.
+	 *
+	 * Params:
+	 *     format = the format of the segment.
+	 *     position = the position in the segment
+	 *     runningTime = result running-time
+	 *
+	 * Return: a 1 or -1 on success, 0 on failure.
+	 *
+	 * Since: 1.6
+	 */
+	public int toRunningTimeFull(GstFormat format, ulong position, ulong* runningTime)
+	{
+		return gst_segment_to_running_time_full(gstSegment, format, position, runningTime);
 	}
 
 	/**

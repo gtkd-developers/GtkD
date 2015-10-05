@@ -32,10 +32,6 @@ private import pango.PgEngine;
 private import pango.PgLanguage;
 
 
-/**
- * A #PangoMap structure can be used to determine the engine to
- * use for each character.
- */
 public class PgMap
 {
 	/** the main Gtk struct */
@@ -65,16 +61,12 @@ public class PgMap
 	 */
 
 	/**
-	 * Returns the best engine listed in the map for a given script
+	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
 	 *     script = a #PangoScript
 	 *
-	 * Return: the best engine, if one is listed for the script,
-	 *     or %NULL. The lookup may cause the engine to be loaded;
-	 *     once an engine is loaded, it won't be unloaded. If multiple
-	 *     engines are exact for the script, the choice of which is
-	 *     returned is arbitrary.
+	 * Return: %NULL.
 	 */
 	public PgEngine getEngine(PangoScript script)
 	{
@@ -89,10 +81,7 @@ public class PgMap
 	}
 
 	/**
-	 * Finds engines in the map that handle the given script. The returned
-	 * lists should be freed with g_slist_free, but the engines in the
-	 * lists are owned by GLib and will be kept around permanently, so
-	 * they should not be unref'ed.
+	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
 	 *     script = a #PangoScript
@@ -115,16 +104,14 @@ public class PgMap
 	}
 
 	/**
-	 * Locate a #PangoMap for a particular engine type and render
-	 * type. The resulting map can be used to determine the engine
-	 * for each character.
+	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
 	 *     language = the language tag for which to find the map
 	 *     engineTypeId = the engine type for the map to find
 	 *     renderTypeId = the render type for the map to find
 	 *
-	 * Return: the suitable #PangoMap.
+	 * Return: %NULL.
 	 */
 	public static PgMap findMap(PgLanguage language, uint engineTypeId, uint renderTypeId)
 	{
@@ -139,10 +126,7 @@ public class PgMap
 	}
 
 	/**
-	 * Registers a statically linked module with Pango. The
-	 * #PangoIncludedModule structure that is passed in contains the
-	 * functions that would otherwise be loaded from a dynamically loaded
-	 * module.
+	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
 	 *     modul = a #PangoIncludedModule

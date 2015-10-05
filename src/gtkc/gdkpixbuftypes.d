@@ -24,7 +24,7 @@
 
 module gtkc.gdkpixbuftypes;
 
-public import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 public  import gtkc.gobjecttypes;
 public  import gtkc.gdktypes;
 public  import gtkc.atktypes;

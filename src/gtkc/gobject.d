@@ -180,6 +180,7 @@ shared static this()
 	Linker.link(g_param_spec_get_blurb, "g_param_spec_get_blurb", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_get_default_value, "g_param_spec_get_default_value", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_get_name, "g_param_spec_get_name", LIBRARY.GOBJECT);
+	Linker.link(g_param_spec_get_name_quark, "g_param_spec_get_name_quark", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_get_nick, "g_param_spec_get_nick", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_get_qdata, "g_param_spec_get_qdata", LIBRARY.GOBJECT);
 	Linker.link(g_param_spec_get_redirect_target, "g_param_spec_get_redirect_target", LIBRARY.GOBJECT);
@@ -643,6 +644,7 @@ __gshared extern(C)
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_blurb;
 	GValue* function(GParamSpec* param) c_g_param_spec_get_default_value;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_name;
+	GQuark function(GParamSpec* param) c_g_param_spec_get_name_quark;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_nick;
 	void* function(GParamSpec* pspec, GQuark quark) c_g_param_spec_get_qdata;
 	GParamSpec* function(GParamSpec* pspec) c_g_param_spec_get_redirect_target;
@@ -1104,6 +1106,7 @@ alias c_g_param_spec_internal g_param_spec_internal;
 alias c_g_param_spec_get_blurb g_param_spec_get_blurb;
 alias c_g_param_spec_get_default_value g_param_spec_get_default_value;
 alias c_g_param_spec_get_name g_param_spec_get_name;
+alias c_g_param_spec_get_name_quark g_param_spec_get_name_quark;
 alias c_g_param_spec_get_nick g_param_spec_get_nick;
 alias c_g_param_spec_get_qdata g_param_spec_get_qdata;
 alias c_g_param_spec_get_redirect_target g_param_spec_get_redirect_target;

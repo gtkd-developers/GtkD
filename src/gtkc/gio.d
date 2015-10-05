@@ -343,6 +343,7 @@ shared static this()
 	Linker.link(g_dbus_connection_get_unique_name, "g_dbus_connection_get_unique_name", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_is_closed, "g_dbus_connection_is_closed", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_register_object, "g_dbus_connection_register_object", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_register_object_with_closures, "g_dbus_connection_register_object_with_closures", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_register_subtree, "g_dbus_connection_register_subtree", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_remove_filter, "g_dbus_connection_remove_filter", LIBRARY.GIO);
 	Linker.link(g_dbus_connection_send_message, "g_dbus_connection_send_message", LIBRARY.GIO);
@@ -1180,6 +1181,7 @@ shared static this()
 	Linker.link(g_list_store_insert_sorted, "g_list_store_insert_sorted", LIBRARY.GIO);
 	Linker.link(g_list_store_remove, "g_list_store_remove", LIBRARY.GIO);
 	Linker.link(g_list_store_remove_all, "g_list_store_remove_all", LIBRARY.GIO);
+	Linker.link(g_list_store_sort, "g_list_store_sort", LIBRARY.GIO);
 	Linker.link(g_list_store_splice, "g_list_store_splice", LIBRARY.GIO);
 
 	// gio.LoadableIcon
@@ -1351,6 +1353,7 @@ shared static this()
 	Linker.link(g_network_monitor_can_reach_finish, "g_network_monitor_can_reach_finish", LIBRARY.GIO);
 	Linker.link(g_network_monitor_get_connectivity, "g_network_monitor_get_connectivity", LIBRARY.GIO);
 	Linker.link(g_network_monitor_get_network_available, "g_network_monitor_get_network_available", LIBRARY.GIO);
+	Linker.link(g_network_monitor_get_network_metered, "g_network_monitor_get_network_metered", LIBRARY.GIO);
 
 	// gio.NetworkService
 
@@ -1588,6 +1591,7 @@ shared static this()
 	Linker.link(g_settings_schema_get_path, "g_settings_schema_get_path", LIBRARY.GIO);
 	Linker.link(g_settings_schema_has_key, "g_settings_schema_has_key", LIBRARY.GIO);
 	Linker.link(g_settings_schema_list_children, "g_settings_schema_list_children", LIBRARY.GIO);
+	Linker.link(g_settings_schema_list_keys, "g_settings_schema_list_keys", LIBRARY.GIO);
 	Linker.link(g_settings_schema_ref, "g_settings_schema_ref", LIBRARY.GIO);
 	Linker.link(g_settings_schema_unref, "g_settings_schema_unref", LIBRARY.GIO);
 
@@ -2010,6 +2014,7 @@ shared static this()
 
 	Linker.link(g_tls_client_connection_get_type, "g_tls_client_connection_get_type", LIBRARY.GIO);
 	Linker.link(g_tls_client_connection_new, "g_tls_client_connection_new", LIBRARY.GIO);
+	Linker.link(g_tls_client_connection_copy_session_state, "g_tls_client_connection_copy_session_state", LIBRARY.GIO);
 	Linker.link(g_tls_client_connection_get_accepted_cas, "g_tls_client_connection_get_accepted_cas", LIBRARY.GIO);
 	Linker.link(g_tls_client_connection_get_server_identity, "g_tls_client_connection_get_server_identity", LIBRARY.GIO);
 	Linker.link(g_tls_client_connection_get_use_ssl3, "g_tls_client_connection_get_use_ssl3", LIBRARY.GIO);
@@ -2651,6 +2656,7 @@ __gshared extern(C)
 	const(char)* function(GDBusConnection* connection) c_g_dbus_connection_get_unique_name;
 	int function(GDBusConnection* connection) c_g_dbus_connection_is_closed;
 	uint function(GDBusConnection* connection, const(char)* objectPath, GDBusInterfaceInfo* interfaceInfo, GDBusInterfaceVTable* vtable, void* userData, GDestroyNotify userDataFreeFunc, GError** err) c_g_dbus_connection_register_object;
+	uint function(GDBusConnection* connection, const(char)* objectPath, GDBusInterfaceInfo* interfaceInfo, GClosure* methodCallClosure, GClosure* getPropertyClosure, GClosure* setPropertyClosure, GError** err) c_g_dbus_connection_register_object_with_closures;
 	uint function(GDBusConnection* connection, const(char)* objectPath, GDBusSubtreeVTable* vtable, GDBusSubtreeFlags flags, void* userData, GDestroyNotify userDataFreeFunc, GError** err) c_g_dbus_connection_register_subtree;
 	void function(GDBusConnection* connection, uint filterId) c_g_dbus_connection_remove_filter;
 	int function(GDBusConnection* connection, GDBusMessage* message, GDBusSendMessageFlags flags, uint* outSerial, GError** err) c_g_dbus_connection_send_message;
@@ -3488,6 +3494,7 @@ __gshared extern(C)
 	uint function(GListStore* store, void* item, GCompareDataFunc compareFunc, void* userData) c_g_list_store_insert_sorted;
 	void function(GListStore* store, uint position) c_g_list_store_remove;
 	void function(GListStore* store) c_g_list_store_remove_all;
+	void function(GListStore* store, GCompareDataFunc compareFunc, void* userData) c_g_list_store_sort;
 	void function(GListStore* store, uint position, uint nRemovals, void** additions, uint nAdditions) c_g_list_store_splice;
 
 	// gio.LoadableIcon
@@ -3659,6 +3666,7 @@ __gshared extern(C)
 	int function(GNetworkMonitor* monitor, GAsyncResult* result, GError** err) c_g_network_monitor_can_reach_finish;
 	GNetworkConnectivity function(GNetworkMonitor* monitor) c_g_network_monitor_get_connectivity;
 	int function(GNetworkMonitor* monitor) c_g_network_monitor_get_network_available;
+	int function(GNetworkMonitor* monitor) c_g_network_monitor_get_network_metered;
 
 	// gio.NetworkService
 
@@ -3896,6 +3904,7 @@ __gshared extern(C)
 	const(char)* function(GSettingsSchema* schema) c_g_settings_schema_get_path;
 	int function(GSettingsSchema* schema, const(char)* name) c_g_settings_schema_has_key;
 	char** function(GSettingsSchema* schema) c_g_settings_schema_list_children;
+	char** function(GSettingsSchema* schema) c_g_settings_schema_list_keys;
 	GSettingsSchema* function(GSettingsSchema* schema) c_g_settings_schema_ref;
 	void function(GSettingsSchema* schema) c_g_settings_schema_unref;
 
@@ -4318,6 +4327,7 @@ __gshared extern(C)
 
 	GType function() c_g_tls_client_connection_get_type;
 	GIOStream* function(GIOStream* baseIoStream, GSocketConnectable* serverIdentity, GError** err) c_g_tls_client_connection_new;
+	void function(GTlsClientConnection* conn, GTlsClientConnection* source) c_g_tls_client_connection_copy_session_state;
 	GList* function(GTlsClientConnection* conn) c_g_tls_client_connection_get_accepted_cas;
 	GSocketConnectable* function(GTlsClientConnection* conn) c_g_tls_client_connection_get_server_identity;
 	int function(GTlsClientConnection* conn) c_g_tls_client_connection_get_use_ssl3;
@@ -4957,6 +4967,7 @@ alias c_g_dbus_connection_get_stream g_dbus_connection_get_stream;
 alias c_g_dbus_connection_get_unique_name g_dbus_connection_get_unique_name;
 alias c_g_dbus_connection_is_closed g_dbus_connection_is_closed;
 alias c_g_dbus_connection_register_object g_dbus_connection_register_object;
+alias c_g_dbus_connection_register_object_with_closures g_dbus_connection_register_object_with_closures;
 alias c_g_dbus_connection_register_subtree g_dbus_connection_register_subtree;
 alias c_g_dbus_connection_remove_filter g_dbus_connection_remove_filter;
 alias c_g_dbus_connection_send_message g_dbus_connection_send_message;
@@ -5794,6 +5805,7 @@ alias c_g_list_store_insert g_list_store_insert;
 alias c_g_list_store_insert_sorted g_list_store_insert_sorted;
 alias c_g_list_store_remove g_list_store_remove;
 alias c_g_list_store_remove_all g_list_store_remove_all;
+alias c_g_list_store_sort g_list_store_sort;
 alias c_g_list_store_splice g_list_store_splice;
 
 // gio.LoadableIcon
@@ -5965,6 +5977,7 @@ alias c_g_network_monitor_can_reach_async g_network_monitor_can_reach_async;
 alias c_g_network_monitor_can_reach_finish g_network_monitor_can_reach_finish;
 alias c_g_network_monitor_get_connectivity g_network_monitor_get_connectivity;
 alias c_g_network_monitor_get_network_available g_network_monitor_get_network_available;
+alias c_g_network_monitor_get_network_metered g_network_monitor_get_network_metered;
 
 // gio.NetworkService
 
@@ -6202,6 +6215,7 @@ alias c_g_settings_schema_get_key g_settings_schema_get_key;
 alias c_g_settings_schema_get_path g_settings_schema_get_path;
 alias c_g_settings_schema_has_key g_settings_schema_has_key;
 alias c_g_settings_schema_list_children g_settings_schema_list_children;
+alias c_g_settings_schema_list_keys g_settings_schema_list_keys;
 alias c_g_settings_schema_ref g_settings_schema_ref;
 alias c_g_settings_schema_unref g_settings_schema_unref;
 
@@ -6624,6 +6638,7 @@ alias c_g_tls_certificate_verify g_tls_certificate_verify;
 
 alias c_g_tls_client_connection_get_type g_tls_client_connection_get_type;
 alias c_g_tls_client_connection_new g_tls_client_connection_new;
+alias c_g_tls_client_connection_copy_session_state g_tls_client_connection_copy_session_state;
 alias c_g_tls_client_connection_get_accepted_cas g_tls_client_connection_get_accepted_cas;
 alias c_g_tls_client_connection_get_server_identity g_tls_client_connection_get_server_identity;
 alias c_g_tls_client_connection_get_use_ssl3 g_tls_client_connection_get_use_ssl3;

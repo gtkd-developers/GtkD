@@ -356,6 +356,18 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
+	 * Gets the bottom margin for text in the @text_view.
+	 *
+	 * Return: bottom margin in pixels
+	 *
+	 * Since: 3.18
+	 */
+	public int getBottomMargin()
+	{
+		return gtk_text_view_get_bottom_margin(gtkTextView);
+	}
+
+	/**
 	 * Returns the #GtkTextBuffer being displayed by this text view.
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won’t own a new reference.
@@ -699,6 +711,18 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
+	 * Gets the top margin for text in the @text_view.
+	 *
+	 * Return: top margin in pixels
+	 *
+	 * Since: 3.18
+	 */
+	public int getTopMargin()
+	{
+		return gtk_text_view_get_top_margin(gtkTextView);
+	}
+
+	/**
 	 * Fills @visible_rect with the currently-visible
 	 * region of the buffer, in buffer coordinates. Convert to window coordinates
 	 * with gtk_text_view_buffer_to_window_coords().
@@ -980,6 +1004,22 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
+	 * Sets the bottom margin for text in @text_view.
+	 *
+	 * Note that this function is confusingly named.
+	 * In CSS terms, the value set here is padding.
+	 *
+	 * Params:
+	 *     bottomMargin = bottom margin in pixels
+	 *
+	 * Since: 3.18
+	 */
+	public void setBottomMargin(int bottomMargin)
+	{
+		gtk_text_view_set_bottom_margin(gtkTextView, bottomMargin);
+	}
+
+	/**
 	 * Sets @buffer as the buffer being displayed by @text_view. The previous
 	 * buffer displayed by the text view is unreferenced, and a reference is
 	 * added to @buffer. If you owned a reference to @buffer before passing it
@@ -1077,6 +1117,9 @@ public class TextView : Container, ScrollableIF
 	 * Sets the default left margin for text in @text_view.
 	 * Tags in the buffer may override the default.
 	 *
+	 * Note that this function is confusingly named.
+	 * In CSS terms, the value set here is padding.
+	 *
 	 * Params:
 	 *     leftMargin = left margin in pixels
 	 */
@@ -1155,6 +1198,9 @@ public class TextView : Container, ScrollableIF
 	 * Sets the default right margin for text in the text view.
 	 * Tags in the buffer may override the default.
 	 *
+	 * Note that this function is confusingly named.
+	 * In CSS terms, the value set here is padding.
+	 *
 	 * Params:
 	 *     rightMargin = right margin in pixels
 	 */
@@ -1173,6 +1219,22 @@ public class TextView : Container, ScrollableIF
 	public void setTabs(PgTabArray tabs)
 	{
 		gtk_text_view_set_tabs(gtkTextView, (tabs is null) ? null : tabs.getPgTabArrayStruct());
+	}
+
+	/**
+	 * Sets the top margin for text in @text_view.
+	 *
+	 * Note that this function is confusingly named.
+	 * In CSS terms, the value set here is padding.
+	 *
+	 * Params:
+	 *     topMargin = top margin in pixels
+	 *
+	 * Since: 3.18
+	 */
+	public void setTopMargin(int topMargin)
+	{
+		gtk_text_view_set_top_margin(gtkTextView, topMargin);
 	}
 
 	/**

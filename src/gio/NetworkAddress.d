@@ -24,7 +24,6 @@
 
 module gio.NetworkAddress;
 
-private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 private import gio.SocketConnectableT;
 private import glib.ConstructionException;
@@ -181,13 +180,14 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 *     hostAndPort = the hostname and optionally a port
 	 *     defaultPort = the default port if not in @host_and_port
 	 *
-	 * Return: the new #GNetworkAddress, or %NULL on error
+	 * Return: the new
+	 *     #GNetworkAddress, or %NULL on error
 	 *
 	 * Since: 2.22
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static SocketConnectableIF parse(string hostAndPort, ushort defaultPort)
+	public static NetworkAddress parse(string hostAndPort, ushort defaultPort)
 	{
 		GError* err = null;
 		
@@ -203,7 +203,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) p, true);
 	}
 
 	/**
@@ -218,13 +218,14 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 *     uri = the hostname and optionally a port
 	 *     defaultPort = The default port if none is found in the URI
 	 *
-	 * Return: the new #GNetworkAddress, or %NULL on error
+	 * Return: the new
+	 *     #GNetworkAddress, or %NULL on error
 	 *
 	 * Since: 2.26
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static SocketConnectableIF parseUri(string uri, ushort defaultPort)
+	public static NetworkAddress parseUri(string uri, ushort defaultPort)
 	{
 		GError* err = null;
 		
@@ -240,7 +241,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) p, true);
 	}
 
 	/**

@@ -119,6 +119,9 @@ final class GtkFunction
 					doc ~= "\n\nDeprecated: "~ reader.front.value;
 					reader.popFront();
 					break;
+				case "doc-version":
+					reader.skipTag();
+					break;
 				case "return-value":
 					if ( "transfer-ownership" in reader.front.attributes )
 						returnOwnership = cast(GtkTransferOwnership)reader.front.attributes["transfer-ownership"];
@@ -479,7 +482,7 @@ final class GtkFunction
 					GtkStruct dElementType = strct.pack.getStruct(elementType.name);
 
 					if ( elementType.cType.empty )
-						elementType.cType = dElementType.cType;
+						elementType.cType = stringToGtkD(param.type.cType, wrapper.aliasses, localAliases())[0 .. $-1];
 
 					// out gtkdType[], ref gtkdType[]
 					if ( param.direction != GtkParamDirection.Default )

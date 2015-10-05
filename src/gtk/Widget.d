@@ -28,6 +28,7 @@ private import atk.ImplementorIF;
 private import atk.ImplementorT;
 private import atk.ObjectAtk;
 private import cairo.Context;
+private import cairo.FontOption;
 private import cairo.Region;
 private import gdk.Color;
 private import gdk.Cursor;
@@ -72,6 +73,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgContext;
 private import pango.PgFontDescription;
+private import pango.PgFontMap;
 private import pango.PgLayout;
 private import std.conv;
 
@@ -236,7 +238,7 @@ private import std.conv;
  * Otherwise, you would not properly consider widget margins,
  * #GtkSizeGroup, and so forth.
  * 
- * Since 3.10 Gtk+ also supports baseline vertical alignment of widgets. This
+ * Since 3.10 GTK+ also supports baseline vertical alignment of widgets. This
  * means that widgets are positioned such that the typographical baseline of
  * widgets in the same row are aligned. This happens if a widget supports baselines,
  * has a vertical alignment of %GTK_ALIGN_BASELINE, and is inside a container
@@ -320,7 +322,7 @@ private import std.conv;
  * 
  * # Building composite widgets from template XML ## {#composite-templates}
  * 
- * GtkWidget exposes some facilities to automate the proceedure
+ * GtkWidget exposes some facilities to automate the procedure
  * of creating composite widgets using #GtkBuilder interface description
  * language.
  * 
@@ -329,7 +331,7 @@ private import std.conv;
  * time using gtk_widget_class_set_template().
  * 
  * The interface description semantics expected in composite template descriptions
- * is slightly different from regulare #GtkBuilder XML.
+ * is slightly different from regular #GtkBuilder XML.
  * 
  * Unlike regular interface descriptions, gtk_widget_class_set_template() will
  * expect a <template> tag as a direct child of the toplevel <interface>
@@ -347,7 +349,7 @@ private import std.conv;
  * would with <object> tags.
  * 
  * Additionally, <object> tags can also be added before and after the initial
- * <template> tag in the normal way, allowing one to define auxilary objects
+ * <template> tag in the normal way, allowing one to define auxiliary objects
  * which might be referenced by other widgets declared as children of the
  * <template> tag.
  * 
@@ -937,7 +939,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * A composite child is a child that’s an implementation detail of the
 		 * container it’s inside and should not be visible to people using the
-		 * container. Composite children aren’t treated differently by GTK (but
+		 * container. Composite children aren’t treated differently by GTK+ (but
 		 * see gtk_container_foreach() vs. gtk_container_forall()), but e.g. GUI
 		 * builders might want to treat them in a different way.
 		 *
@@ -1200,8 +1202,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		/**
 		 * Creates a new #PangoContext with the appropriate font map,
-		 * font description, and base direction for drawing text for
-		 * this widget. See also gtk_widget_get_pango_context().
+		 * font options, font description, and base direction for drawing
+		 * text for this widget. See also gtk_widget_get_pango_context().
 		 *
 		 * Return: the new #PangoContext
 		 */
@@ -2301,6 +2303,45 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
+		 * Gets the font map that has been set with gtk_widget_set_font_map().
+		 *
+		 * Return: A #PangoFontMap, or %NULL
+		 *
+		 * Since: 3.18
+		 */
+		public PgFontMap getFontMap()
+		{
+			auto p = gtk_widget_get_font_map(gtkWidget);
+			
+			if(p is null)
+			{
+				return null;
+			}
+			
+			return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+		}
+
+		/**
+		 * Returns the #cairo_font_options_t used for Pango rendering. When not set,
+		 * the defaults font options for the #GdkScreen will be used.
+		 *
+		 * Return: the #cairo_font_options_t or %NULL if not set
+		 *
+		 * Since: 3.18
+		 */
+		public FontOption getFontOptions()
+		{
+			auto p = gtk_widget_get_font_options(gtkWidget);
+			
+			if(p is null)
+			{
+				return null;
+			}
+			
+			return new FontOption(cast(cairo_font_options_t*) p);
+		}
+
+		/**
 		 * Obtains the frame clock for a widget. The frame clock is a global
 		 * “ticker” that can be used to drive animations and repaints.  The
 		 * most common reason to get the frame clock is to call
@@ -2860,7 +2901,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_set_receives_default().
 		 *
-		 * Return: %TRUE if @widget acts as the default widget when focussed,
+		 * Return: %TRUE if @widget acts as the default widget when focused,
 		 *     %FALSE otherwise
 		 *
 		 * Since: 2.18
@@ -3027,7 +3068,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Gets the size request that was explicitly set for the widget using
 		 * gtk_widget_set_size_request(). A value of -1 stored in @width or
 		 * @height indicates that that dimension has not been set explicitly
-		 * and the natural requisition of the widget will be used intead. See
+		 * and the natural requisition of the widget will be used instead. See
 		 * gtk_widget_set_size_request(). To get the size a widget will
 		 * actually request, call gtk_widget_get_preferred_size() instead of
 		 * this function.
@@ -3455,7 +3496,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * screen, and all widgets added into a hierarchy with a toplevel
 		 * window at the top.
 		 *
-		 * Return: %TRUE if there is a #GdkScreen associcated
+		 * Return: %TRUE if there is a #GdkScreen associated
 		 *     with the widget.
 		 *
 		 * Since: 2.2
@@ -3713,7 +3754,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * gtk_widget_child_focus():
 		 *
 		 * When %TRUE is returned, stay in the widget, the failed keyboard
-		 * navigation is Ok and/or there is nowhere we can/should move the
+		 * navigation is OK and/or there is nowhere we can/should move the
 		 * focus to.
 		 *
 		 * When %FALSE is returned, the caller should continue with keyboard
@@ -4089,7 +4130,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: This function is not useful in the context of CSS-based
 		 * rendering. If you wish to change the color used to render the primary
-		 * and seconday cursors you should use a custom CSS style, through an
+		 * and secondary cursors you should use a custom CSS style, through an
 		 * application-specific #GtkStyleProvider and a CSS style class.
 		 *
 		 * Params:
@@ -4117,7 +4158,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * #GtkStyleProvider and a CSS style class.
 		 *
 		 * Params:
-		 *     fontDesc = the font descriptiong to use, or %NULL to undo
+		 *     fontDesc = the font description to use, or %NULL to undo
 		 *         the effect of previous calls to gtk_widget_override_font()
 		 *
 		 * Since: 3.0
@@ -4379,7 +4420,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * gtk_widget_add_mnemonic_label().
 		 *
 		 * Params:
-		 *     label = a #GtkWidget that was previously set as a mnemnic label for
+		 *     label = a #GtkWidget that was previously set as a mnemonic label for
 		 *         @widget with gtk_widget_add_mnemonic_label().
 		 *
 		 * Since: 2.4
@@ -4505,7 +4546,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Updates the style context of @widget and all descendents
+		 * Updates the style context of @widget and all descendants
 		 * by updating its widget path. #GtkContainers may want
 		 * to use this on a child when reordering it in a way that a different
 		 * style might apply to it. See also gtk_container_get_path_for_child().
@@ -4556,7 +4597,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * fevent->focus_change.type = GDK_FOCUS_CHANGE;
 		 * fevent->focus_change.in = TRUE;
-		 * fevent->focus_change.window = gtk_widget_get_window (widget);
+		 * fevent->focus_change.window = _gtk_widget_get_window (widget);
 		 * if (fevent->focus_change.window != NULL)
 		 * g_object_ref (fevent->focus_change.window);
 		 *
@@ -4712,7 +4753,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Sets the widget’s clip.  This must not be used directly,
 		 * but from within a widget’s size_allocate method.
-		 * It must be called after gtk_widget_set_allocation() (or after chaning up
+		 * It must be called after gtk_widget_set_allocation() (or after chaining up
 		 * to the parent class), because that function resets the clip.
 		 *
 		 * The clip set should be the area that @widget draws on. If @widget is a
@@ -4835,7 +4876,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * event to the toplevel GDK window. If you now unset double buffering, you
 		 * will cause a separate rendering pass for every widget. This will likely
 		 * cause rendering problems - in particular related to stacking - and usually
-		 * increases rrendering times significantly.
+		 * increases rendering times significantly.
 		 *
 		 * Deprecated: This function does not work under non-X11 backends or with
 		 * non-native windows.
@@ -4868,6 +4909,36 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public void setEvents(int events)
 		{
 			gtk_widget_set_events(gtkWidget, events);
+		}
+
+		/**
+		 * Sets the font map to use for Pango rendering. When not set, the widget
+		 * will inherit the font map from its parent.
+		 *
+		 * Params:
+		 *     fontMap = a #PangoFontMap, or %NULL to unset any previously
+		 *         set font map
+		 *
+		 * Since: 3.18
+		 */
+		public void setFontMap(PgFontMap fontMap)
+		{
+			gtk_widget_set_font_map(gtkWidget, (fontMap is null) ? null : fontMap.getPgFontMapStruct());
+		}
+
+		/**
+		 * Sets the #cairo_font_options_t used for Pango rendering in this widget.
+		 * When not set, the default font options for the #GdkScreen will be used.
+		 *
+		 * Params:
+		 *     options = a #cairo_font_options_t, or %NULL to unset any
+		 *         previously set default font options.
+		 *
+		 * Since: 3.18
+		 */
+		public void setFontOptions(FontOption options)
+		{
+			gtk_widget_set_font_options(gtkWidget, (options is null) ? null : options.getFontOptionStruct());
 		}
 
 		/**
@@ -6710,7 +6781,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		bool delegate(DragContext, GtkDragResult, Widget)[] onDragFailedListeners;
 		/**
 		 * The ::drag-failed signal is emitted on the drag source when a drag has
-		 * failed. The signal handler may hook custom code to handle a failed DND
+		 * failed. The signal handler may hook custom code to handle a failed DnD
 		 * operation based on the type of error, it returns %TRUE is the failure has
 		 * been already handled (not showing the default "drag operation failed"
 		 * animation), otherwise it returns %FALSE.

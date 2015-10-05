@@ -33,13 +33,15 @@ public  import gtkc.gtktypes;
 private import pango.PgFontDescription;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;
+private import pango.PgFontMap;
 
 
 /**
  * #GtkFontChooser is an interface that can be implemented by widgets
- * displaying the list of fonts.  In GTK+, the main objects
+ * displaying the list of fonts. In GTK+, the main objects
  * that implement this interface are #GtkFontChooserWidget,
- * #GtkFontChooserDialog and #GtkFontButton.
+ * #GtkFontChooserDialog and #GtkFontButton. The GtkFontChooser interface
+ * has been introducted in GTK+ 3.2.
  */
 public interface FontChooserIF{
 	/** Get the main Gtk struct */
@@ -119,6 +121,16 @@ public interface FontChooserIF{
 	public PgFontFamily getFontFamily();
 
 	/**
+	 * Gets the custom font map of this font chooser widget,
+	 * or %NULL if it does not have one.
+	 *
+	 * Return: a #PangoFontMap, or %NULL
+	 *
+	 * Since: 3.18
+	 */
+	public PgFontMap getFontMap();
+
+	/**
 	 * The selected font size.
 	 *
 	 * Return: A n integer representing the selected font size,
@@ -180,6 +192,39 @@ public interface FontChooserIF{
 	 * Since: 3.2
 	 */
 	public void setFontDesc(PgFontDescription fontDesc);
+
+	/**
+	 * Sets a custom font map to use for this font chooser widget.
+	 * A custom font map can be used to present application-specific
+	 * fonts instead of or in addition to the normal system fonts.
+	 *
+	 * |[<!-- language="C" -->
+	 * FcConfig *config;
+	 * PangoFontMap *fontmap;
+	 *
+	 * config = FcInitLoadConfigAndFonts ();
+	 * FcConfigAppFontAddFile (config, my_app_font_file);
+	 *
+	 * fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+	 * pango_fc_font_map_set_config (PANGO_FC_FONT_MAP (fontmap), config);
+	 *
+	 * gtk_font_chooser_set_font_map (font_chooser, fontmap);
+	 * ]|
+	 *
+	 * Note that other GTK+ widgets will only be able to use the application-specific
+	 * font if it is present in the font map they use:
+	 *
+	 * |[
+	 * context = gtk_widget_get_pango_context (label);
+	 * pango_context_set_font_map (context, fontmap);
+	 * ]|
+	 *
+	 * Params:
+	 *     fontmap = a #PangoFontMap
+	 *
+	 * Since: 3.18
+	 */
+	public void setFontMap(PgFontMap fontmap);
 
 	/**
 	 * Sets the text displayed in the preview area.

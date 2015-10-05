@@ -170,7 +170,7 @@ public class DeviceMonitor : ObjectGst
 	 *     classes = device classes to use as filter or %NULL for any class
 	 *     caps = the #GstCaps to filter or %NULL for ANY
 	 *
-	 * Return: The id of the new filter or %0 if no provider matched the filter's
+	 * Return: The id of the new filter or 0 if no provider matched the filter's
 	 *     classes.
 	 *
 	 * Since: 1.4
@@ -221,6 +221,34 @@ public class DeviceMonitor : ObjectGst
 	}
 
 	/**
+	 * Get a list of the currently selected device provider factories.
+	 *
+	 * This
+	 *
+	 * Return: A list of device provider factory names that are currently being
+	 *     monitored by @monitor or %NULL when nothing is being monitored.
+	 *
+	 * Since: 1.6
+	 */
+	public string[] getProviders()
+	{
+		return Str.toStringArray(gst_device_monitor_get_providers(gstDeviceMonitor));
+	}
+
+	/**
+	 * Get if @monitor is curretly showing all devices, even those from hidden
+	 * providers.
+	 *
+	 * Return: %TRUE when all devices will be shown.
+	 *
+	 * Since: 1.6
+	 */
+	public bool getShowAllDevices()
+	{
+		return gst_device_monitor_get_show_all_devices(gstDeviceMonitor) != 0;
+	}
+
+	/**
 	 * Removes a filter from the #GstDeviceMonitor using the id that was returned
 	 * by gst_device_monitor_add_filter().
 	 *
@@ -234,6 +262,20 @@ public class DeviceMonitor : ObjectGst
 	public bool removeFilter(uint filterId)
 	{
 		return gst_device_monitor_remove_filter(gstDeviceMonitor, filterId) != 0;
+	}
+
+	/**
+	 * Set if all devices should be visible, even those devices from hidden
+	 * providers. Setting @show_all to true might show some devices multiple times.
+	 *
+	 * Params:
+	 *     showAll = show all devices
+	 *
+	 * Since: 1.6
+	 */
+	public void setShowAllDevices(bool showAll)
+	{
+		gst_device_monitor_set_show_all_devices(gstDeviceMonitor, showAll);
 	}
 
 	/**

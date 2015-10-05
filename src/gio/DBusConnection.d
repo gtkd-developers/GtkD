@@ -44,6 +44,7 @@ private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
+private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
@@ -385,6 +386,13 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * g_dbus_connection_send_message_with_reply() relies on) will see the
 	 * message. Similary, if a filter consumes an outgoing message, the
 	 * message will not be sent to the other peer.
+	 *
+	 * If @user_data_free_func is non-%NULL, it will be called (in the
+	 * thread-default main context of the thread you are calling this
+	 * method from) at some point after @user_data is no longer
+	 * needed. (It is not guaranteed to be called synchronously when the
+	 * filter is removed, and may be called after @connection has been
+	 * destroyed.)
 	 *
 	 * Params:
 	 *     filterFunction = a filter function
@@ -1207,6 +1215,38 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	}
 
 	/**
+	 * Version of g_dbus_connection_register_object() using closures instead of a
+	 * #GDBusInterfaceVTable for easier binding in other languages.
+	 *
+	 * Params:
+	 *     objectPath = The object path to register at.
+	 *     interfaceInfo = Introspection data for the interface.
+	 *     methodCallClosure = #GClosure for handling incoming method calls.
+	 *     getPropertyClosure = #GClosure for getting a property.
+	 *     setPropertyClosure = #GClosure for setting a property.
+	 *
+	 * Return: 0 if @error is set, otherwise a registration id (never 0)
+	 *     that can be used with g_dbus_connection_unregister_object() .
+	 *
+	 * Since: 2.46
+	 *
+	 * Throws: GException on failure.
+	 */
+	public uint registerObjectWithClosures(string objectPath, DBusInterfaceInfo interfaceInfo, Closure methodCallClosure, Closure getPropertyClosure, Closure setPropertyClosure)
+	{
+		GError* err = null;
+		
+		auto p = g_dbus_connection_register_object_with_closures(gDBusConnection, Str.toStringz(objectPath), (interfaceInfo is null) ? null : interfaceInfo.getDBusInterfaceInfoStruct(), (methodCallClosure is null) ? null : methodCallClosure.getClosureStruct(), (getPropertyClosure is null) ? null : getPropertyClosure.getClosureStruct(), (setPropertyClosure is null) ? null : setPropertyClosure.getClosureStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
 	 * Registers a whole subtree of dynamic objects.
 	 *
 	 * The @enumerate and @introspection functions in @vtable are used to
@@ -1273,6 +1313,13 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 	/**
 	 * Removes a filter.
+	 *
+	 * Note that since filters run in a different thread, there is a race
+	 * condition where it is possible that the filter will be running even
+	 * after calling g_dbus_connection_remove_filter(), so you cannot just
+	 * free data that the filter might be using. Instead, you should pass
+	 * a #GDestroyNotify to g_dbus_connection_add_filter(), which will be
+	 * called when it is guaranteed that the data is no longer needed.
 	 *
 	 * Params:
 	 *     filterId = an identifier obtained from g_dbus_connection_add_filter()
@@ -1530,6 +1577,13 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * interpreted as part of a namespace or path.  The first argument
 	 * of a signal is matched against that part as specified by D-Bus.
 	 *
+	 * If @user_data_free_func is non-%NULL, it will be called (in the
+	 * thread-default main context of the thread you are calling this
+	 * method from) at some point after @user_data is no longer
+	 * needed. (It is not guaranteed to be called synchronously when the
+	 * signal is unsubscribed from, and may be called after @connection
+	 * has been destroyed.)
+	 *
 	 * Params:
 	 *     sender = sender name to match on (unique or well-known name)
 	 *         or %NULL to listen from all senders
@@ -1541,7 +1595,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *         all object paths
 	 *     arg0 = contents of first string argument to match on or %NULL
 	 *         to match on all kinds of arguments
-	 *     flags = flags describing how to subscribe to the signal (currently unused)
+	 *     flags = #GDBusSignalFlags describing how arg0 is used in subscribing to the
+	 *         signal
 	 *     callback = callback to invoke when there is a signal matching the requested data
 	 *     userData = user data to pass to @callback
 	 *     userDataFreeFunc = function to free @user_data with when

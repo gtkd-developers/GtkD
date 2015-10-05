@@ -490,7 +490,7 @@ public class HashTable
 	 *     key = a key to insert
 	 *     value = the value to associate with the key
 	 *
-	 * Return: %TRUE of the key did not exist yet
+	 * Return: %TRUE if the key did not exist yet
 	 */
 	public bool replace(void* key, void* value)
 	{
@@ -734,6 +734,10 @@ public class HashTable
 	 *
 	 * It can be passed to g_hash_table_new() as the @hash_func parameter,
 	 * when using non-%NULL strings as keys in a #GHashTable.
+	 *
+	 * Note that this function may not be a perfect fit for all use cases.
+	 * For example, it produces some hash collisions with strings as short
+	 * as 2.
 	 *
 	 * Params:
 	 *     v = a string key

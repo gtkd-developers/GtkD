@@ -115,9 +115,9 @@ public class ParamSpec
 	}
 
 	/**
-	 * Gets the default value of @param as a pointer to a #GValue.
+	 * Gets the default value of @pspec as a pointer to a #GValue.
 	 *
-	 * The #GValue will remain value for the life of @param.
+	 * The #GValue will remain value for the life of @pspec.
 	 *
 	 * Return: a pointer to a #GValue which must not be modified
 	 *
@@ -146,6 +146,18 @@ public class ParamSpec
 	public string getName()
 	{
 		return Str.toString(g_param_spec_get_name(gParamSpec));
+	}
+
+	/**
+	 * Gets the GQuark for the name.
+	 *
+	 * Return: the GQuark for @pspec->name.
+	 *
+	 * Since: 2.46
+	 */
+	public GQuark getNameQuark()
+	{
+		return g_param_spec_get_name_quark(gParamSpec);
 	}
 
 	/**

@@ -142,7 +142,8 @@ public struct Util
 	 *     mask = a #gulong containing flags
 	 *     nthBit = the index of the bit to start the search from
 	 *
-	 * Return: the index of the first bit set which is higher than @nth_bit
+	 * Return: the index of the first bit set which is higher than @nth_bit, or -1
+	 *     if no higher bits are set
 	 */
 	public static int bitNthLsf(gulong mask, int nthBit)
 	{
@@ -160,7 +161,8 @@ public struct Util
 	 *     mask = a #gulong containing flags
 	 *     nthBit = the index of the bit to start the search from
 	 *
-	 * Return: the index of the first bit set which is lower than @nth_bit
+	 * Return: the index of the first bit set which is lower than @nth_bit, or -1
+	 *     if no lower bits are set
 	 */
 	public static int bitNthMsf(gulong mask, int nthBit)
 	{
@@ -189,8 +191,7 @@ public struct Util
 	 *     envp = an environment
 	 *         list (eg, as returned from g_get_environ()), or %NULL
 	 *         for an empty environment list
-	 *     variable = the environment variable to get, in the GLib file name
-	 *         encoding
+	 *     variable = the environment variable to get
 	 *
 	 * Return: the value of the environment variable, or %NULL if
 	 *     the environment variable is not set in @envp. The returned
@@ -720,15 +721,14 @@ public struct Util
 	/**
 	 * Returns the value of an environment variable.
 	 *
-	 * The name and value are in the GLib file name encoding. On UNIX,
-	 * this means the actual bytes which might or might not be in some
-	 * consistent character set and encoding. On Windows, it is in UTF-8.
+	 * On UNIX, the name and value are byte strings which might or might not
+	 * be in some consistent character set and encoding. On Windows, they are
+	 * in UTF-8.
 	 * On Windows, in case the environment variable's value contains
 	 * references to other environment variables, they are expanded.
 	 *
 	 * Params:
-	 *     variable = the environment variable to get, in the GLib file name
-	 *         encoding
+	 *     variable = the environment variable to get
 	 *
 	 * Return: the value of the environment variable, or %NULL if
 	 *     the environment variable is not found. The returned string
@@ -958,10 +958,9 @@ public struct Util
 	}
 
 	/**
-	 * Sets an environment variable. Both the variable's name and value
-	 * should be in the GLib file name encoding. On UNIX, this means that
-	 * they can be arbitrary byte strings. On Windows, they should be in
-	 * UTF-8.
+	 * Sets an environment variable. On UNIX, both the variable's name and
+	 * value can be arbitrary byte strings, except that the variable's name
+	 * cannot contain '='. On Windows, they should be in UTF-8.
 	 *
 	 * Note that on some systems, when variables are overwritten, the memory
 	 * used for the previous variables and its value isn't reclaimed.

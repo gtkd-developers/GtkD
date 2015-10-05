@@ -269,6 +269,25 @@ public class Caps
 	}
 
 	/**
+	 * Calls the provided function once for each structure and caps feature in the
+	 * #GstCaps. In contrast to gst_caps_foreach(), the function may modify the
+	 * structure and features. In contrast to gst_caps_filter_and_map_in_place(),
+	 * the structure and features are removed from the caps if %FALSE is returned
+	 * from the function.
+	 * The caps must be mutable.
+	 *
+	 * Params:
+	 *     func = a function to call for each field
+	 *     userData = private data
+	 *
+	 * Since: 1.6
+	 */
+	public void filterAndMapInPlace(GstCapsFilterMapFunc func, void* userData)
+	{
+		gst_caps_filter_and_map_in_place(gstCaps, func, userData);
+	}
+
+	/**
 	 * Modifies the given @caps into a representation with only fixed
 	 * values. First the caps will be truncated and then the first structure will be
 	 * fixated with gst_structure_fixate().
@@ -285,6 +304,25 @@ public class Caps
 		}
 		
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+	}
+
+	/**
+	 * Calls the provided function once for each structure and caps feature in the
+	 * #GstCaps. The function must not modify the fields.
+	 * Also see gst_caps_map_in_place() and gst_caps_filter_and_map_in_place().
+	 *
+	 * Params:
+	 *     func = a function to call for each field
+	 *     userData = private data
+	 *
+	 * Return: %TRUE if the supplied function returns %TRUE for each call,
+	 *     %FALSE otherwise.
+	 *
+	 * Since: 1.6
+	 */
+	public bool foreac(GstCapsForeachFunc func, void* userData)
+	{
+		return gst_caps_foreach(gstCaps, func, userData) != 0;
 	}
 
 	/**
@@ -540,6 +578,25 @@ public class Caps
 	public bool isSubsetStructureFull(Structure structure, CapsFeatures features)
 	{
 		return gst_caps_is_subset_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(), (features is null) ? null : features.getCapsFeaturesStruct()) != 0;
+	}
+
+	/**
+	 * Calls the provided function once for each structure and caps feature in the
+	 * #GstCaps. In contrast to gst_caps_foreach(), the function may modify but not
+	 * delete the structures and features. The caps must be mutable.
+	 *
+	 * Params:
+	 *     func = a function to call for each field
+	 *     userData = private data
+	 *
+	 * Return: %TRUE if the supplied function returns %TRUE for each call,
+	 *     %FALSE otherwise.
+	 *
+	 * Since: 1.6
+	 */
+	public bool mapInPlace(GstCapsMapFunc func, void* userData)
+	{
+		return gst_caps_map_in_place(gstCaps, func, userData) != 0;
 	}
 
 	/**

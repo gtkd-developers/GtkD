@@ -236,8 +236,8 @@ public class WidgetClass
 	}
 
 	/**
-	 * For use in lanuage bindings, this will override the default #GtkBuilderConnectFunc to be
-	 * used when parsing GtkBuilder xml from this class’s template data.
+	 * For use in language bindings, this will override the default #GtkBuilderConnectFunc to be
+	 * used when parsing GtkBuilder XML from this class’s template data.
 	 *
 	 * Note that this must be called from a composite widget classes class
 	 * initializer after calling gtk_widget_class_set_template().

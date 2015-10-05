@@ -871,7 +871,8 @@ public interface FileIF{
 	public string getParseName();
 
 	/**
-	 * Gets the local pathname for #GFile, if one exists.
+	 * Gets the local pathname for #GFile, if one exists. If non-%NULL, this is
+	 * guaranteed to be an absolute, canonical path. It might contain symlinks.
 	 *
 	 * This call does no blocking I/O.
 	 *
@@ -928,13 +929,13 @@ public interface FileIF{
 	 *
 	 * If @parent is %NULL then this function returns %TRUE if @file has any
 	 * parent at all.  If @parent is non-%NULL then %TRUE is only returned
-	 * if @file is a child of @parent.
+	 * if @file is an immediate child of @parent.
 	 *
 	 * Params:
 	 *     parent = the parent to check for, or %NULL
 	 *
-	 * Return: %TRUE if @file is a child of @parent (or any parent in the
-	 *     case that @parent is %NULL).
+	 * Return: %TRUE if @file is an immediate child of @parent (or any parent in
+	 *     the case that @parent is %NULL).
 	 *
 	 * Since: 2.24
 	 */
@@ -2044,7 +2045,9 @@ public interface FileIF{
 	 * or the error %G_IO_ERROR_WRONG_ETAG will be returned.
 	 *
 	 * If @make_backup is %TRUE, this function will attempt to make a backup
-	 * of @file.
+	 * of @file. Internally, it uses g_file_replace(), so will try to replace the
+	 * file contents in the safest way possible. For example, atomic renames are
+	 * used when replacing local files’ contents.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation

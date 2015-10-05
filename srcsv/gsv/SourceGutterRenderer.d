@@ -391,7 +391,7 @@ public class SourceGutterRenderer : ObjectG
 
 	int[string] connectedSignals;
 
-	void delegate(TextIter, cairo_rectangle_int_t*, Event, SourceGutterRenderer)[] onActivateListeners;
+	void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer)[] onActivateListeners;
 	/**
 	 * The ::activate signal is emitted when the renderer is
 	 * activated.
@@ -401,7 +401,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     area = a #GdkRectangle
 	 *     event = the event that caused the activation
 	 */
-	void addOnActivate(void delegate(TextIter, cairo_rectangle_int_t*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnActivate(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "activate" !in connectedSignals )
 		{
@@ -416,15 +416,15 @@ public class SourceGutterRenderer : ObjectG
 		}
 		onActivateListeners ~= dlg;
 	}
-	extern(C) static void callBackActivate(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, cairo_rectangle_int_t* area, GdkEvent* event, SourceGutterRenderer _sourcegutterrenderer)
+	extern(C) static void callBackActivate(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, SourceGutterRenderer _sourcegutterrenderer)
 	{
-		foreach ( void delegate(TextIter, cairo_rectangle_int_t*, Event, SourceGutterRenderer) dlg; _sourcegutterrenderer.onActivateListeners )
+		foreach ( void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg; _sourcegutterrenderer.onActivateListeners )
 		{
 			dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), _sourcegutterrenderer);
 		}
 	}
 
-	bool delegate(TextIter, cairo_rectangle_int_t*, Event, SourceGutterRenderer)[] onQueryActivatableListeners;
+	bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer)[] onQueryActivatableListeners;
 	/**
 	 * The ::query-activatable signal is emitted when the renderer
 	 * can possibly be activated.
@@ -434,7 +434,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     area = a #GdkRectangle
 	 *     event = the #GdkEvent that is causing the activatable query
 	 */
-	void addOnQueryActivatable(bool delegate(TextIter, cairo_rectangle_int_t*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnQueryActivatable(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "query-activatable" !in connectedSignals )
 		{
@@ -449,9 +449,9 @@ public class SourceGutterRenderer : ObjectG
 		}
 		onQueryActivatableListeners ~= dlg;
 	}
-	extern(C) static int callBackQueryActivatable(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, cairo_rectangle_int_t* area, GdkEvent* event, SourceGutterRenderer _sourcegutterrenderer)
+	extern(C) static int callBackQueryActivatable(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, SourceGutterRenderer _sourcegutterrenderer)
 	{
-		foreach ( bool delegate(TextIter, cairo_rectangle_int_t*, Event, SourceGutterRenderer) dlg; _sourcegutterrenderer.onQueryActivatableListeners )
+		foreach ( bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg; _sourcegutterrenderer.onQueryActivatableListeners )
 		{
 			if ( dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), _sourcegutterrenderer) )
 			{
@@ -497,7 +497,7 @@ public class SourceGutterRenderer : ObjectG
 		}
 	}
 
-	bool delegate(TextIter, cairo_rectangle_int_t*, int, int, Tooltip, SourceGutterRenderer)[] onQueryTooltipListeners;
+	bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer)[] onQueryTooltipListeners;
 	/**
 	 * The ::query-tooltip signal is emitted when the renderer can
 	 * show a tooltip.
@@ -509,7 +509,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     y = the y position (in window coordinates)
 	 *     tooltip = a #GtkTooltip
 	 */
-	void addOnQueryTooltip(bool delegate(TextIter, cairo_rectangle_int_t*, int, int, Tooltip, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnQueryTooltip(bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "query-tooltip" !in connectedSignals )
 		{
@@ -524,9 +524,9 @@ public class SourceGutterRenderer : ObjectG
 		}
 		onQueryTooltipListeners ~= dlg;
 	}
-	extern(C) static int callBackQueryTooltip(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, cairo_rectangle_int_t* area, int x, int y, GtkTooltip* tooltip, SourceGutterRenderer _sourcegutterrenderer)
+	extern(C) static int callBackQueryTooltip(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, int x, int y, GtkTooltip* tooltip, SourceGutterRenderer _sourcegutterrenderer)
 	{
-		foreach ( bool delegate(TextIter, cairo_rectangle_int_t*, int, int, Tooltip, SourceGutterRenderer) dlg; _sourcegutterrenderer.onQueryTooltipListeners )
+		foreach ( bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg; _sourcegutterrenderer.onQueryTooltipListeners )
 		{
 			if ( dlg(ObjectG.getDObject!(TextIter)(iter), area, x, y, ObjectG.getDObject!(Tooltip)(tooltip), _sourcegutterrenderer) )
 			{

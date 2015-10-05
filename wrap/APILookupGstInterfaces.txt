@@ -80,6 +80,10 @@ struct: VideoColorimetry
 noCode: true
 noExternal: true
 
+struct: VideoConverter
+noCode: true
+noExternal: true
+
 struct: VideoCropMeta
 noCode: true
 noExternal: true
@@ -92,6 +96,10 @@ struct: VideoDecoderClass
 noExternal: true
 
 struct: VideoDecoderPrivate
+noExternal: true
+
+struct: VideoDither
+noCode: true
 noExternal: true
 
 struct: VideoEncoder
@@ -134,6 +142,10 @@ struct: VideoMetaTransform
 noCode: true
 noExternal: true
 
+struct: VideoMultiviewFlagsSet
+noCode: true
+noExternal: true
+
 struct: VideoOrientation
 noCode: true
 noExternal: true
@@ -168,6 +180,9 @@ struct: VideoOverlayRectangle
 noCode: true
 noExternal: true
 
+struct: VideoColorPrimariesInfo
+noExternal: true
+
 struct: VideoRectangle
 noExternal: true
 
@@ -175,7 +190,15 @@ struct: VideoRegionOfInterestMeta
 noCode: true
 noExternal: true
 
+struct: VideoResampler
+noCode: true
+noExternal: true
+
 struct: VideoSink
+noCode: true
+noExternal: true
+
+struct: VideoScaler
 noCode: true
 noExternal: true
 
@@ -190,23 +213,37 @@ noEnum: NavigationCommand
 noEnum: NavigationEventType
 noEnum: NavigationMessageType
 noEnum: NavigationQueryType
+noEnum: VideoAlphaMode
 noEnum: VideoBufferFlags
 noEnum: VideoChromaFlags
 noEnum: VideoChromaMethod
+noEnum: VideoChromaMode
 noEnum: VideoChromaSite
 noEnum: VideoCodecFrameFlags
 noEnum: VideoColorMatrix
 noEnum: VideoColorPrimaries
 noEnum: VideoColorRange
+noEnum: VideoDitherFlags
+noEnum: VideoDitherMethod
 noEnum: VideoFlags
 noEnum: VideoFormat
 noEnum: VideoFormatFlags
 noEnum: VideoFrameFlags
+noEnum: VideoFrameMapFlags
+noEnum: VideoGammaMode
 noEnum: VideoGLTextureOrientation
 noEnum: VideoGLTextureType
 noEnum: VideoInterlaceMode
+noEnum: VideoMatrixMode
+noEnum: VideoMultiviewFlags
+noEnum: VideoMultiviewFramePacking
+noEnum: VideoMultiviewMode
 noEnum: VideoOverlayFormatFlags
 noEnum: VideoPackFlags
+noEnum: VideoPrimariesMode
+noEnum: VideoResamplerFlags
+noEnum: VideoResamplerMethod
+noEnum: VideoScalerFlags
 noEnum: VideoTileMode
 noEnum: VideoTileType
 noEnum: VideoTransferFunction

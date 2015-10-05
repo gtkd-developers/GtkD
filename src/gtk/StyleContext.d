@@ -1054,6 +1054,10 @@ public class StyleContext : ObjectG
 	 * Sets the background of @window to the background pattern or
 	 * color specified in @context for its current state.
 	 *
+	 * Deprecated: Use gtk_render_background() instead.
+	 * Note that clients still using this function are now responsible
+	 * for calling this function again whenever @context is invalidated.
+	 *
 	 * Params:
 	 *     window = a #GdkWindow
 	 *

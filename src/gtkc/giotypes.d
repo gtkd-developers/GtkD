@@ -583,6 +583,11 @@ public enum GDBusCallFlags
 	 * invocation.
 	 */
 	NO_AUTO_START = 1,
+	/**
+	 * the caller is prepared to
+	 * wait for interactive authorization. Since 2.46.
+	 */
+	ALLOW_INTERACTIVE_AUTHORIZATION = 2,
 }
 alias GDBusCallFlags DBusCallFlags;
 
@@ -902,6 +907,12 @@ public enum GDBusMessageFlags
 	 * owner for the destination name in response to this message.
 	 */
 	NO_AUTO_START = 2,
+	/**
+	 * If set on a method
+	 * call, this flag means that the caller is prepared to wait for interactive
+	 * authorization. Since 2.46.
+	 */
+	ALLOW_INTERACTIVE_AUTHORIZATION = 4,
 }
 alias GDBusMessageFlags DBusMessageFlags;
 
@@ -1505,9 +1516,28 @@ public enum GFileMonitorEvent
 	 */
 	UNMOUNTED = 6,
 	/**
-	 * the file was moved.
+	 * the file was moved -- only sent if the
+	 * (deprecated) %G_FILE_MONITOR_SEND_MOVED flag is set
 	 */
 	MOVED = 7,
+	/**
+	 * the file was renamed within the
+	 * current directory -- only sent if the %G_FILE_MONITOR_WATCH_MOVES
+	 * flag is set.  Since: 2.44.
+	 */
+	RENAMED = 8,
+	/**
+	 * the file was moved into the
+	 * monitored directory from another location -- only sent if the
+	 * %G_FILE_MONITOR_WATCH_MOVES flag is set.  Since: 2.44.
+	 */
+	MOVED_IN = 9,
+	/**
+	 * the file was moved out of the
+	 * monitored directory to another location -- only sent if the
+	 * %G_FILE_MONITOR_WATCH_MOVES flag is set.  Since: 2.44
+	 */
+	MOVED_OUT = 10,
 }
 alias GFileMonitorEvent FileMonitorEvent;
 
@@ -1529,7 +1559,8 @@ public enum GFileMonitorFlags
 	 * by file renames (moves) and send a single G_FILE_MONITOR_EVENT_MOVED
 	 * event instead (NB: not supported on all backends; the default
 	 * behaviour -without specifying this flag- is to send single DELETED
-	 * and CREATED events).
+	 * and CREATED events).  Deprecated since 2.44: use
+	 * %G_FILE_MONITOR_WATCH_MOVES instead.
 	 */
 	SEND_MOVED = 2,
 	/**
@@ -1537,6 +1568,13 @@ public enum GFileMonitorFlags
 	 * via another hard link. Since 2.36.
 	 */
 	WATCH_HARD_LINKS = 4,
+	/**
+	 * Watch for rename operations on a
+	 * monitored directory.  This causes %G_FILE_MONITOR_EVENT_RENAMED,
+	 * %G_FILE_MONITOR_EVENT_MOVED_IN and %G_FILE_MONITOR_EVENT_MOVED_OUT
+	 * events to be emitted when possible.  Since: 2.44.
+	 */
+	WATCH_MOVES = 8,
 }
 alias GFileMonitorFlags FileMonitorFlags;
 
@@ -2306,6 +2344,37 @@ public enum GSocketFamily
 alias GSocketFamily SocketFamily;
 
 /**
+ * Describes an event occurring on a #GSocketListener. See the
+ * #GSocketListener::event signal for more details.
+ *
+ * Additional values may be added to this type in the future.
+ *
+ * Since: 2.46
+ */
+public enum GSocketListenerEvent
+{
+	/**
+	 * The listener is about to bind a socket.
+	 */
+	BINDING = 0,
+	/**
+	 * The listener has bound a socket.
+	 */
+	BOUND = 1,
+	/**
+	 * The listener is about to start
+	 * listening on this socket.
+	 */
+	LISTENING = 2,
+	/**
+	 * The listener is now listening on
+	 * this socket.
+	 */
+	LISTENED = 3,
+}
+alias GSocketListenerEvent SocketListenerEvent;
+
+/**
  * Flags used in g_socket_receive_message() and g_socket_send_message().
  * The flags listed in the enum are some commonly available flags, but the
  * values used for them are the same as on the platform, and any other flags
@@ -2884,8 +2953,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to query
-	 * Return: the state type, if the action
-	 *     is stateful
+	 * Return: the state type, if the action is stateful
 	 */
 	extern(C) GVariantType* function(GActionGroup* actionGroup, const(char)* actionName) getActionStateType;
 	/**
@@ -5459,7 +5527,7 @@ struct GFileMonitorClass
 	 *
 	 * Params:
 	 *     monitor = a #GFileMonitor.
-	 * Return: %TRUE if monitor was cancelled.
+	 * Return: always %TRUE
 	 */
 	extern(C) int function(GFileMonitor* monitor) cancel;
 	extern(C) void function() GReserved1;
@@ -6285,6 +6353,11 @@ struct GMountOperationClass
 }
 
 struct GMountOperationPrivate;
+
+/**
+ * An socket address of some unknown native type.
+ */
+struct GNativeSocketAddress;
 
 struct GNativeVolumeMonitor
 {
@@ -7336,7 +7409,7 @@ struct GSocketListenerClass
 {
 	GObjectClass parentClass;
 	extern(C) void function(GSocketListener* listener) changed;
-	extern(C) void function() GReserved1;
+	extern(C) void function(GSocketListener* listener, GSocketListenerEvent* event, GSocket* socket) event;
 	extern(C) void function() GReserved2;
 	extern(C) void function() GReserved3;
 	extern(C) void function() GReserved4;
@@ -7511,6 +7584,7 @@ struct GTlsClientConnectionInterface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	extern(C) void function(GTlsClientConnection* conn, GTlsClientConnection* source) copySessionState;
 }
 
 struct GTlsConnection
@@ -7556,6 +7630,13 @@ struct GTlsDatabase
 	GTlsDatabasePrivate* priv;
 }
 
+/**
+ * The class for #GTlsDatabase. Derived classes should implement the various
+ * virtual methods. _async and _finish methods have a default
+ * implementation that runs the corresponding sync method in a thread.
+ *
+ * Since: 2.30
+ */
 struct GTlsDatabaseClass
 {
 	GObjectClass parentClass;

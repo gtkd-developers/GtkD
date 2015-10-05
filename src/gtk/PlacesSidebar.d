@@ -35,7 +35,6 @@ private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.Menu;
 private import gtk.ScrolledWindow;
 private import gtk.Widget;
 public  import gtkc.gdktypes;
@@ -235,9 +234,10 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_connect_to_server()
 	 *
-	 * Return: %TRUE if the sidebar will display a “Connect to Server” item.
+	 * Deprecated: It is recommended to group this functionality with the drives
+	 * and network location under the new 'Other Location' item
 	 *
-	 * Since: 3.10
+	 * Return: %TRUE if the sidebar will display a “Connect to Server” item.
 	 */
 	public bool getShowConnectToServer()
 	{
@@ -266,6 +266,42 @@ public class PlacesSidebar : ScrolledWindow
 	public bool getShowEnterLocation()
 	{
 		return gtk_places_sidebar_get_show_enter_location(gtkPlacesSidebar) != 0;
+	}
+
+	/**
+	 * Returns the value previously set with gtk_places_sidebar_set_show_other_locations()
+	 *
+	 * Return: %TRUE if the sidebar will display an “Other Locations” item.
+	 *
+	 * Since: 3.18
+	 */
+	public bool getShowOtherLocations()
+	{
+		return gtk_places_sidebar_get_show_other_locations(gtkPlacesSidebar) != 0;
+	}
+
+	/**
+	 * Returns the value previously set with gtk_places_sidebar_set_show_recent()
+	 *
+	 * Return: %TRUE if the sidebar will display a builtin shortcut for recent files
+	 *
+	 * Since: 3.18
+	 */
+	public bool getShowRecent()
+	{
+		return gtk_places_sidebar_get_show_recent(gtkPlacesSidebar) != 0;
+	}
+
+	/**
+	 * Returns the value previously set with gtk_places_sidebar_set_show_trash()
+	 *
+	 * Return: %TRUE if the sidebar will display a “Trash” item.
+	 *
+	 * Since: 3.18
+	 */
+	public bool getShowTrash()
+	{
+		return gtk_places_sidebar_get_show_trash(gtkPlacesSidebar) != 0;
 	}
 
 	/**
@@ -305,6 +341,29 @@ public class PlacesSidebar : ScrolledWindow
 	public void removeShortcut(FileIF location)
 	{
 		gtk_places_sidebar_remove_shortcut(gtkPlacesSidebar, (location is null) ? null : location.getFileStruct());
+	}
+
+	/**
+	 * Make the GtkPlacesSidebar show drop targets, so it can show the available
+	 * drop targets and a "new bookmark" row. This improves the Drag-and-Drop
+	 * experience of the user and allows applications to show all available
+	 * drop targets at once.
+	 *
+	 * This needs to be called when the application is aware of an ongoing drag
+	 * that might target the sidebar. The drop-targets-visible state will be unset
+	 * automatically if the drag finishes in the GtkPlacesSidebar. You only need
+	 * to unset the state when the drag ends on some other widget on your application.
+	 *
+	 * Params:
+	 *     visible = whether to show the valid targets or not.
+	 *     context = drag context used to ask the source about the action that wants to
+	 *         perform, so hints are more accurate.
+	 *
+	 * Since: 3.18
+	 */
+	public void setDropTargetsVisible(bool visible, DragContext context)
+	{
+		gtk_places_sidebar_set_drop_targets_visible(gtkPlacesSidebar, visible, (context is null) ? null : context.getDragContextStruct());
 	}
 
 	/**
@@ -365,9 +424,15 @@ public class PlacesSidebar : ScrolledWindow
 	}
 
 	/**
-	 * Sets whether the @sidebar should show an item for connecting to a network server; this is off by default.
-	 * An application may want to turn this on if it implements a way for the user to connect
-	 * to network servers directly.
+	 * Sets whether the @sidebar should show an item for connecting to a network server;
+	 * this is off by default. An application may want to turn this on if it implements
+	 * a way for the user to connect to network servers directly.
+	 *
+	 * If you enable this, you should connect to the
+	 * #GtkPlacesSidebar::show-connect-to-server signal.
+	 *
+	 * Deprecated: It is recommended to group this functionality with the drives
+	 * and network location under the new 'Other Location' item
 	 *
 	 * Params:
 	 *     showConnectToServer = whether to show an item for the Connect to Server command
@@ -396,18 +461,70 @@ public class PlacesSidebar : ScrolledWindow
 	}
 
 	/**
-	 * Sets whether the @sidebar should show an item for connecting to a network server; this is off by default.
-	 * An application may want to turn this on if it implements a way for the user to connect
-	 * to network servers directly.
+	 * Sets whether the @sidebar should show an item for entering a location;
+	 * this is off by default. An application may want to turn this on if manually
+	 * entering URLs is an expected user action.
+	 *
+	 * If you enable this, you should connect to the
+	 * #GtkPlacesSidebar::show-enter-location signal.
 	 *
 	 * Params:
-	 *     showEnterLocation = whether to show an item for the Connect to Server command
+	 *     showEnterLocation = whether to show an item to enter a location
 	 *
 	 * Since: 3.14
 	 */
 	public void setShowEnterLocation(bool showEnterLocation)
 	{
 		gtk_places_sidebar_set_show_enter_location(gtkPlacesSidebar, showEnterLocation);
+	}
+
+	/**
+	 * Sets whether the @sidebar should show an item for the application to show
+	 * an Other Locations view; this is off by default. When set to %TRUE, persistent
+	 * devices such as hard drives are hidden, otherwise they are shown in the sidebar.
+	 * An application may want to turn this on if it implements a way for the user to
+	 * see and interact with drives and network servers directly.
+	 *
+	 * If you enable this, you should connect to the
+	 * #GtkPlacesSidebar::show-other-locations signal.
+	 *
+	 * Params:
+	 *     showOtherLocations = whether to show an item for the Other Locations view
+	 *
+	 * Since: 3.18
+	 */
+	public void setShowOtherLocations(bool showOtherLocations)
+	{
+		gtk_places_sidebar_set_show_other_locations(gtkPlacesSidebar, showOtherLocations);
+	}
+
+	/**
+	 * Sets whether the @sidebar should show an item for recent files.
+	 * The default value for this option is determined by the desktop
+	 * environment, but this function can be used to override it on a
+	 * per-application basis.
+	 *
+	 * Params:
+	 *     showRecent = whether to show an item for recent files
+	 *
+	 * Since: 3.18
+	 */
+	public void setShowRecent(bool showRecent)
+	{
+		gtk_places_sidebar_set_show_recent(gtkPlacesSidebar, showRecent);
+	}
+
+	/**
+	 * Sets whether the @sidebar should show an item for the Trash location.
+	 *
+	 * Params:
+	 *     showTrash = whether to show an item for the Trash location
+	 *
+	 * Since: 3.18
+	 */
+	public void setShowTrash(bool showTrash)
+	{
+		gtk_places_sidebar_set_show_trash(gtkPlacesSidebar, showTrash);
 	}
 
 	int[string] connectedSignals;
@@ -562,35 +679,42 @@ public class PlacesSidebar : ScrolledWindow
 		}
 	}
 
-	void delegate(Menu, FileIF, VolumeIF, PlacesSidebar)[] onPopulatePopupListeners;
+	void delegate(Widget, FileIF, VolumeIF, PlacesSidebar)[] onPopulatePopupListeners;
 	/**
 	 * The places sidebar emits this signal when the user invokes a contextual
-	 * menu on one of its items.  In the signal handler, the application may
-	 * add extra items to the menu as appropriate.  For example, a file manager
+	 * popup on one of its items. In the signal handler, the application may
+	 * add extra items to the menu as appropriate. For example, a file manager
 	 * may want to add a "Properties" command to the menu.
 	 *
 	 * It is not necessary to store the @selected_item for each menu item;
-	 * during their GtkMenuItem::activate callbacks, the application can use
-	 * gtk_places_sidebar_get_location() to get the file to which the item
-	 * refers.
+	 * during their callbacks, the application can use gtk_places_sidebar_get_location()
+	 * to get the file to which the item refers.
 	 *
-	 * The @selected_item argument may be #NULL in case the selection refers to
-	 * a volume.  In this case, @selected_volume will be non-NULL.  In this case,
+	 * The @selected_item argument may be %NULL in case the selection refers to
+	 * a volume. In this case, @selected_volume will be non-%NULL. In this case,
 	 * the calling application will have to g_object_ref() the @selected_volume and
-	 * keep it around for the purposes of its menu item's "activate" callback.
+	 * keep it around to use it in the callback.
 	 *
-	 * The @menu and all its menu items are destroyed after the user
-	 * dismisses the menu.  The menu is re-created (and thus, this signal is
+	 * The @container and all its contents are destroyed after the user
+	 * dismisses the popup. The popup is re-created (and thus, this signal is
 	 * emitted) every time the user activates the contextual menu.
 	 *
+	 * Before 3.18, the @container always was a #GtkMenu, and you were expected
+	 * to add your items as #GtkMenuItems. Since 3.18, the popup may be implemented
+	 * as a #GtkPopover, in which case @container will be something else, e.g. a
+	 * #GtkBox, to which you may add #GtkModelButtons or other widgets, such as
+	 * #GtkEntries, #GtkSpinButtons, etc. If your application can deal with this
+	 * situation, you can set #GtkPlacesSidebar::populate-all to %TRUE to request
+	 * that this signal is emitted for populating popovers as well.
+	 *
 	 * Params:
-	 *     menu = a #GtkMenu.
-	 *     selectedItem = #GFile with the item to which the menu should refer, or #NULL in the case of a @selected_volume.
+	 *     container = a #GtkMenu or another #GtkContainer
+	 *     selectedItem = #GFile with the item to which the popup should refer, or #NULL in the case of a @selected_volume.
 	 *     selectedVolume = #GVolume if the selected item is a volume, or #NULL if it is a file.
 	 *
 	 * Since: 3.10
 	 */
-	void addOnPopulatePopup(void delegate(Menu, FileIF, VolumeIF, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnPopulatePopup(void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "populate-popup" !in connectedSignals )
 		{
@@ -605,11 +729,11 @@ public class PlacesSidebar : ScrolledWindow
 		}
 		onPopulatePopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopulatePopup(GtkPlacesSidebar* placessidebarStruct, GtkMenu* menu, GFile* selectedItem, GVolume* selectedVolume, PlacesSidebar _placessidebar)
+	extern(C) static void callBackPopulatePopup(GtkPlacesSidebar* placessidebarStruct, GtkWidget* container, GFile* selectedItem, GVolume* selectedVolume, PlacesSidebar _placessidebar)
 	{
-		foreach ( void delegate(Menu, FileIF, VolumeIF, PlacesSidebar) dlg; _placessidebar.onPopulatePopupListeners )
+		foreach ( void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg; _placessidebar.onPopulatePopupListeners )
 		{
-			dlg(ObjectG.getDObject!(Menu)(menu), ObjectG.getDObject!(File, FileIF)(selectedItem), ObjectG.getDObject!(Volume, VolumeIF)(selectedVolume), _placessidebar);
+			dlg(ObjectG.getDObject!(Widget)(container), ObjectG.getDObject!(File, FileIF)(selectedItem), ObjectG.getDObject!(Volume, VolumeIF)(selectedVolume), _placessidebar);
 		}
 	}
 
@@ -621,7 +745,8 @@ public class PlacesSidebar : ScrolledWindow
 	 * a URL like "sftp://ftp.example.com".  It is up to the application to create
 	 * the corresponding mount by using, for example, g_file_mount_enclosing_volume().
 	 *
-	 * Since: 3.10
+	 * Deprecated: use the #GtkPlacesSidebar::show-other-locations signal
+	 * to connect to network servers.
 	 */
 	void addOnShowConnectToServer(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -711,6 +836,39 @@ public class PlacesSidebar : ScrolledWindow
 		foreach ( void delegate(string, string, PlacesSidebar) dlg; _placessidebar.onShowErrorMessageListeners )
 		{
 			dlg(Str.toString(primary), Str.toString(secondary), _placessidebar);
+		}
+	}
+
+	void delegate(PlacesSidebar)[] onShowOtherLocationsListeners;
+	/**
+	 * The places sidebar emits this signal when it needs the calling
+	 * application to present a way to show other locations e.g. drives
+	 * and network access points.
+	 * For example, the application may bring up a page showing persistent
+	 * volumes and discovered network addresses.
+	 *
+	 * Since: 3.18
+	 */
+	void addOnShowOtherLocations(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "show-other-locations" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"show-other-locations",
+				cast(GCallback)&callBackShowOtherLocations,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["show-other-locations"] = 1;
+		}
+		onShowOtherLocationsListeners ~= dlg;
+	}
+	extern(C) static void callBackShowOtherLocations(GtkPlacesSidebar* placessidebarStruct, PlacesSidebar _placessidebar)
+	{
+		foreach ( void delegate(PlacesSidebar) dlg; _placessidebar.onShowOtherLocationsListeners )
+		{
+			dlg(_placessidebar);
 		}
 	}
 }

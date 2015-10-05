@@ -107,7 +107,7 @@ public class ToolButton : ToolItem, ActionableIF
 	}
 
 	/**
-	 * Creates a new %GtkToolButton using @icon_widget as contents and @label as
+	 * Creates a new #GtkToolButton using @icon_widget as contents and @label as
 	 * label.
 	 *
 	 * Params:
@@ -139,7 +139,8 @@ public class ToolButton : ToolItem, ActionableIF
 	 *
 	 * It is an error if @stock_id is not a name of a stock item.
 	 *
-	 * Deprecated: Use gtk_tool_button_new() instead.
+	 * Deprecated: Use gtk_tool_button_new() together with
+	 * gtk_image_new_from_icon_name() instead.
 	 *
 	 * Params:
 	 *     stockId = the name of the stock item
@@ -264,9 +265,9 @@ public class ToolButton : ToolItem, ActionableIF
 	/**
 	 * Sets the icon for the tool button from a named themed icon.
 	 * See the docs for #GtkIconTheme for more details.
-	 * The “icon_name” property only has an effect if not
-	 * overridden by non-%NULL “label”, “icon_widget” and “stock_id”
-	 * properties.
+	 * The #GtkToolButton:icon-name property only has an effect if not
+	 * overridden by non-%NULL #GtkToolButton:label-widget,
+	 * #GtkToolButton:icon-widget and #GtkToolButton:stock-id properties.
 	 *
 	 * Params:
 	 *     iconName = the name of the themed icon
@@ -280,8 +281,8 @@ public class ToolButton : ToolItem, ActionableIF
 
 	/**
 	 * Sets @icon as the widget used as icon on @button. If @icon_widget is
-	 * %NULL the icon is determined by the “stock_id” property. If the
-	 * “stock_id” property is also %NULL, @button will not have an icon.
+	 * %NULL the icon is determined by the #GtkToolButton:stock-id property. If the
+	 * #GtkToolButton:stock-id property is also %NULL, @button will not have an icon.
 	 *
 	 * Params:
 	 *     iconWidget = the widget used as icon, or %NULL
@@ -294,11 +295,12 @@ public class ToolButton : ToolItem, ActionableIF
 	}
 
 	/**
-	 * Sets @label as the label used for the tool button. The “label” property
-	 * only has an effect if not overridden by a non-%NULL “label_widget” property.
-	 * If both the “label_widget” and “label” properties are %NULL, the label
-	 * is determined by the “stock_id” property. If the “stock_id” property is also
-	 * %NULL, @button will not have a label.
+	 * Sets @label as the label used for the tool button. The #GtkToolButton:label
+	 * property only has an effect if not overridden by a non-%NULL
+	 * #GtkToolButton:label-widget property. If both the #GtkToolButton:label-widget
+	 * and #GtkToolButton:label properties are %NULL, the label is determined by the
+	 * #GtkToolButton:stock-id property. If the #GtkToolButton:stock-id property is
+	 * also %NULL, @button will not have a label.
 	 *
 	 * Params:
 	 *     label = a string that will be used as label, or %NULL.
@@ -312,10 +314,10 @@ public class ToolButton : ToolItem, ActionableIF
 
 	/**
 	 * Sets @label_widget as the widget that will be used as the label
-	 * for @button. If @label_widget is %NULL the “label” property is used
-	 * as label. If “label” is also %NULL, the label in the stock item
-	 * determined by the “stock_id” property is used as label. If
-	 * “stock_id” is also %NULL, @button does not have a label.
+	 * for @button. If @label_widget is %NULL the #GtkToolButton:label property is used
+	 * as label. If #GtkToolButton:label is also %NULL, the label in the stock item
+	 * determined by the #GtkToolButton:stock-id property is used as label. If
+	 * #GtkToolButton:stock-id is also %NULL, @button does not have a label.
 	 *
 	 * Params:
 	 *     labelWidget = the widget used as label, or %NULL
@@ -329,8 +331,8 @@ public class ToolButton : ToolItem, ActionableIF
 
 	/**
 	 * Sets the name of the stock item. See gtk_tool_button_new_from_stock().
-	 * The stock_id property only has an effect if not
-	 * overridden by non-%NULL “label” and “icon_widget” properties.
+	 * The stock_id property only has an effect if not overridden by non-%NULL
+	 * #GtkToolButton:label-widget and #GtkToolButton:icon-widget properties.
 	 *
 	 * Deprecated: Use gtk_tool_button_set_icon_name() instead.
 	 *

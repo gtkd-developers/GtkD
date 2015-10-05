@@ -37,15 +37,12 @@ public struct PgMiscellaneous
 	 */
 
 	/**
-	 * Looks up a key in the Pango config database
-	 * (pseudo-win.ini style, read from $sysconfdir/pango/pangorc,
-	 * $XDG_CONFIG_HOME/pango/pangorc, and getenv (PANGO_RC_FILE).)
+	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
 	 *     key = Key to look up, in the form "SECTION/KEY".
 	 *
-	 * Return: the value, if found, otherwise %NULL. The value is a
-	 *     newly-allocated string and must be freed with g_free().
+	 * Return: %NULL
 	 */
 	public static string configKeyGet(string key)
 	{
@@ -53,14 +50,12 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Looks up a key, consulting only the Pango system config database
-	 * in $sysconfdir/pango/pangorc.
+	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
 	 *     key = Key to look up, in the form "SECTION/KEY".
 	 *
-	 * Return: the value, if found, otherwise %NULL. The value is a
-	 *     newly-allocated string and must be freed with g_free().
+	 * Return: %NULL
 	 */
 	public static string configKeyGetSystem(string key)
 	{
@@ -68,10 +63,8 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * On Unix, returns the name of the "pango" subdirectory of LIBDIR
-	 * (which is set at compile time). On Windows, returns the lib\pango
-	 * subdirectory of the Pango installation directory (which is deduced
-	 * at run time from the DLL's location).
+	 * Returns the name of the "pango" subdirectory of LIBDIR
+	 * (which is set at compile time).
 	 *
 	 * Return: the Pango lib directory. The returned string should
 	 *     not be freed.
@@ -82,10 +75,8 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * On Unix, returns the name of the "pango" subdirectory of SYSCONFDIR
-	 * (which is set at compile time). On Windows, returns the etc\pango
-	 * subdirectory of the Pango installation directory (which is deduced
-	 * at run time from the DLL's location).
+	 * Returns the name of the "pango" subdirectory of SYSCONFDIR
+	 * (which is set at compile time).
 	 *
 	 * Return: the Pango sysconf directory. The returned string should
 	 *     not be freed.

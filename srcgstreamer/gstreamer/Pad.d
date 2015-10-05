@@ -218,7 +218,7 @@ public class Pad : ObjectGst
 	 *
 	 * Params:
 	 *     templ = the #GstStaticPadTemplate to use
-	 *     name = the name of the element
+	 *     name = the name of the pad
 	 *
 	 * Return: a new #GstPad, or %NULL in
 	 *     case of an error.
@@ -245,7 +245,7 @@ public class Pad : ObjectGst
 	 *
 	 * Params:
 	 *     templ = the pad template to use
-	 *     name = the name of the element
+	 *     name = the name of the pad
 	 *
 	 * Return: a new #GstPad, or %NULL in
 	 *     case of an error.
@@ -311,7 +311,7 @@ public class Pad : ObjectGst
 	 *
 	 * Return: an id or 0 if no probe is pending. The id can be used to remove the
 	 *     probe with gst_pad_remove_probe(). When using GST_PAD_PROBE_TYPE_IDLE it can
-	 *     happend that the probe can be run immediately and if the probe returns
+	 *     happen that the probe can be run immediately and if the probe returns
 	 *     GST_PAD_PROBE_REMOVE this functions returns 0.
 	 *
 	 *     MT safe.
@@ -468,7 +468,7 @@ public class Pad : ObjectGst
 	 * The EOS event will pause the task associated with @pad before it is forwarded
 	 * to all internally linked pads,
 	 *
-	 * The the event is sent to all pads internally linked to @pad. This function
+	 * The event is sent to all pads internally linked to @pad. This function
 	 * takes ownership of @event.
 	 *
 	 * Params:

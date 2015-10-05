@@ -75,8 +75,8 @@ public class SourceLanguage : ObjectG
 	 * an utility wrapper around gtk_source_language_get_metadata() to
 	 * retrieve the "globs" metadata property and split it into an array.
 	 *
-	 * Return: a newly-allocated
-	 *     %NULL terminated array containing the globs or %NULL if no globs are found.
+	 * Return: a newly-allocated %NULL terminated array containing the globs or %NULL
+	 *     if no globs are found.
 	 *     The returned array must be freed with g_strfreev().
 	 */
 	public string[] getGlobs()
@@ -110,8 +110,9 @@ public class SourceLanguage : ObjectG
 	 *
 	 * Params:
 	 *     name = metadata property name.
-	 * Return: value of property @name stored in the metadata of @language
-	 *     or %NULL if language doesn't contain that metadata property.
+	 * Return: value of property @name stored in
+	 *     the metadata of @language or %NULL if language does not contain the
+	 *     specified metadata property.
 	 *     The returned string is owned by @language and should not be freed
 	 *     or modified.
 	 */
@@ -126,9 +127,8 @@ public class SourceLanguage : ObjectG
 	 * retrieve the "mimetypes" metadata property and split it into an
 	 * array.
 	 *
-	 * Return: a newly-allocated
-	 *     %NULL terminated array containing the mime types or %NULL if no
-	 *     mime types are found.
+	 * Return: a newly-allocated %NULL terminated array containing the mime types
+	 *     or %NULL if no mime types are found.
 	 *     The returned array must be freed with g_strfreev().
 	 */
 	public string[] getMimeTypes()
@@ -169,9 +169,9 @@ public class SourceLanguage : ObjectG
 	 * Params:
 	 *     styleId = a style ID.
 	 *
-	 * Return: the ID of the style to use if the specified @style_id
-	 *     is not present in the current style scheme or %NULL if the style has
-	 *     no fallback defined.
+	 * Return: the ID of the style to use if the
+	 *     specified @style_id is not present in the current style scheme or %NULL
+	 *     if the style has no fallback defined.
 	 *     The returned string is owned by the @language and must not be modified.
 	 *
 	 * Since: 3.4
@@ -184,9 +184,8 @@ public class SourceLanguage : ObjectG
 	/**
 	 * Returns the ids of the styles defined by this @language.
 	 *
-	 * Return: a  %NULL terminated
-	 *     array containing ids of the styles defined by this @language or
-	 *     %NULL if no style is defined.
+	 * Return: a newly-allocated %NULL terminated array containing ids of the
+	 *     styles defined by this @language or %NULL if no style is defined.
 	 *     The returned array must be freed with g_strfreev().
 	 */
 	public string[] getStyleIds()
@@ -200,10 +199,10 @@ public class SourceLanguage : ObjectG
 	 * Params:
 	 *     styleId = a style ID.
 	 *
-	 * Return: the name of the style with ID @style_id defined by this @language or
-	 *     %NULL if the style has no name or there is no style with ID @style_id defined
-	 *     by this @language. The returned string is owned by the @language and must
-	 *     not be modified.
+	 * Return: the name of the style with ID @style_id
+	 *     defined by this @language or %NULL if the style has no name or there is no
+	 *     style with ID @style_id defined by this @language.
+	 *     The returned string is owned by the @language and must not be modified.
 	 */
 	public string getStyleName(string styleId)
 	{

@@ -157,6 +157,29 @@ public class PgAttribute
 	}
 
 	/**
+	 * Create a new background alpha attribute.
+	 *
+	 * Params:
+	 *     alpha = the alpha value, between 1 and 65536
+	 *
+	 * Return: the new allocated #PangoAttribute,
+	 *     which should be freed with pango_attribute_destroy().
+	 *
+	 * Since: 1.38
+	 */
+	public static PgAttribute backgroundAlphaNew(ushort alpha)
+	{
+		auto p = pango_attr_background_alpha_new(alpha);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+	}
+
+	/**
 	 * Create a new font fallback attribute.
 	 *
 	 * If fallback is disabled, characters will only be used from the
@@ -220,6 +243,29 @@ public class PgAttribute
 	public static PgAttribute foregroundNew(ushort red, ushort green, ushort blue)
 	{
 		auto p = pango_attr_foreground_new(red, green, blue);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+	}
+
+	/**
+	 * Create a new foreground alpha attribute.
+	 *
+	 * Params:
+	 *     alpha = the alpha value, between 1 and 65536
+	 *
+	 * Return: the new allocated #PangoAttribute,
+	 *     which should be freed with pango_attribute_destroy().
+	 *
+	 * Since: 1.38
+	 */
+	public static PgAttribute foregroundAlphaNew(ushort alpha)
+	{
+		auto p = pango_attr_foreground_alpha_new(alpha);
 		
 		if(p is null)
 		{
@@ -443,8 +489,8 @@ public class PgAttribute
 	 * Params:
 	 *     type = an attribute type ID to fetch the name for
 	 *
-	 * Return: the type ID name (which may be %NULL), or %NULL if @type is
-	 *     a built-in Pango attribute type or invalid.
+	 * Return: the type ID name (which may be %NULL), or
+	 *     %NULL if @type is a built-in Pango attribute type or invalid.
 	 *
 	 * Since: 1.22
 	 */

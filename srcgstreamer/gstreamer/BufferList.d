@@ -125,6 +125,26 @@ public class BufferList
 	}
 
 	/**
+	 * Create a copy of the given buffer list. This will make a newly allocated
+	 * copy of the buffer that the source buffer list contains.
+	 *
+	 * Return: a new copy of @list.
+	 *
+	 * Since: 1.6
+	 */
+	public BufferList copyDeep()
+	{
+		auto p = gst_buffer_list_copy_deep(gstBufferList);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
+	}
+
+	/**
 	 * Call @func with @data for each buffer in @list.
 	 *
 	 * @func can modify the passed buffer pointer or its contents. The return value
@@ -151,7 +171,7 @@ public class BufferList
 	 *
 	 * Return: the buffer at @idx in @group
 	 *     or %NULL when there is no buffer. The buffer remains valid as
-	 *     long as @list is valid.
+	 *     long as @list is valid and buffer is not removed from the list.
 	 */
 	public Buffer get(uint idx)
 	{

@@ -199,7 +199,13 @@ public class DateTime
 
 	/**
 	 * Tries to parse common variants of ISO-8601 datetime strings into a
-	 * #GstDateTime.
+	 * #GstDateTime. Possible input formats are (for example):
+	 * 2012-06-30T22:46:43Z, 2012, 2012-06, 2012-06-30, 2012-06-30T22:46:43-0430,
+	 * 2012-06-30T22:46Z, 2012-06-30T22:46-0430, 2012-06-30 22:46,
+	 * 2012-06-30 22:46:43, 2012-06-00, 2012-00-00, 2012-00-30, 22:46:43Z, 22:46Z,
+	 * 22:46:43-0430, 22:46-0430, 22:46:30, 22:46
+	 * If no date is provided, it is assumed to be "today" in the timezone
+	 * provided (if any), otherwise UTC.
 	 *
 	 * Free-function: gst_date_time_unref
 	 *

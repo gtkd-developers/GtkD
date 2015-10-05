@@ -196,7 +196,12 @@ public class Pipeline : Bin
 	}
 
 	/**
-	 * Gets the current clock used by @pipeline.
+	 * Gets the current clock used by @pipeline. Users of object
+	 * oriented languages should use gst_pipeline_get_pipeline_clock()
+	 * to avoid confusion with gst_element_get_clock() which has a different behavior.
+	 *
+	 * Unlike gst_element_get_clock(), this function will always return a
+	 * clock, even if the pipeline is not in the PLAYING state.
 	 *
 	 * Return: a #GstClock, unref after usage.
 	 */
@@ -222,6 +227,41 @@ public class Pipeline : Bin
 	public GstClockTime getDelay()
 	{
 		return gst_pipeline_get_delay(gstPipeline);
+	}
+
+	/**
+	 * Gets the latency that should be configured on the pipeline. See
+	 * gst_pipeline_set_latency().
+	 *
+	 * Return: Latency to configure on the pipeline or GST_CLOCK_TIME_NONE
+	 *
+	 * Since: 1.6
+	 */
+	public GstClockTime getLatency()
+	{
+		return gst_pipeline_get_latency(gstPipeline);
+	}
+
+	/**
+	 * Gets the current clock used by @pipeline.
+	 *
+	 * Unlike gst_element_get_clock(), this function will always return a
+	 * clock, even if the pipeline is not in the PLAYING state.
+	 *
+	 * Return: a #GstClock, unref after usage.
+	 *
+	 * Since: 1.6
+	 */
+	public Clock getPipelineClock()
+	{
+		auto p = gst_pipeline_get_pipeline_clock(gstPipeline);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 
 	/**
@@ -284,6 +324,25 @@ public class Pipeline : Bin
 	public void setDelay(GstClockTime delay)
 	{
 		gst_pipeline_set_delay(gstPipeline, delay);
+	}
+
+	/**
+	 * Sets the latency that should be configured on the pipeline. Setting
+	 * GST_CLOCK_TIME_NONE will restore the default behaviour of using the minimum
+	 * latency from the LATENCY query. Setting this is usually not required and
+	 * the pipeline will figure out an appropriate latency automatically.
+	 *
+	 * Setting a too low latency, especially lower than the minimum latency from
+	 * the LATENCY query, will most likely cause the pipeline to fail.
+	 *
+	 * Params:
+	 *     latency = latency to configure
+	 *
+	 * Since: 1.6
+	 */
+	public void setLatency(GstClockTime latency)
+	{
+		gst_pipeline_set_latency(gstPipeline, latency);
 	}
 
 	/**

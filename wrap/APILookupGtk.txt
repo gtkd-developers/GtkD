@@ -1482,6 +1482,10 @@ code: start
 	}
 code: end
 
+struct: FontChooser
+override: get_font_map
+override: set_font_map
+
 struct: FontSelectionDialog
 import: gtk.FontSelection
 noCode: get_font_selection

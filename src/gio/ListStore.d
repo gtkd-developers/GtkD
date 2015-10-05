@@ -120,9 +120,9 @@ public class ListStore : ObjectG, ListModelIF
 	 *
 	 * Since: 2.44
 	 */
-	public void append(void* item)
+	public void append(ObjectG item)
 	{
-		g_list_store_append(gListStore, item);
+		g_list_store_append(gListStore, (item is null) ? null : item.getObjectGStruct());
 	}
 
 	/**
@@ -141,9 +141,9 @@ public class ListStore : ObjectG, ListModelIF
 	 *
 	 * Since: 2.44
 	 */
-	public void insert(uint position, void* item)
+	public void insert(uint position, ObjectG item)
 	{
-		g_list_store_insert(gListStore, position, item);
+		g_list_store_insert(gListStore, position, (item is null) ? null : item.getObjectGStruct());
 	}
 
 	/**
@@ -165,9 +165,9 @@ public class ListStore : ObjectG, ListModelIF
 	 *
 	 * Since: 2.44
 	 */
-	public uint insertSorted(void* item, GCompareDataFunc compareFunc, void* userData)
+	public uint insertSorted(ObjectG item, GCompareDataFunc compareFunc, void* userData)
 	{
-		return g_list_store_insert_sorted(gListStore, item, compareFunc, userData);
+		return g_list_store_insert_sorted(gListStore, (item is null) ? null : item.getObjectGStruct(), compareFunc, userData);
 	}
 
 	/**
@@ -198,6 +198,20 @@ public class ListStore : ObjectG, ListModelIF
 	}
 
 	/**
+	 * Sort the items in @store according to @compare_func.
+	 *
+	 * Params:
+	 *     compareFunc = pairwise comparison function for sorting
+	 *     userData = user data for @compare_func
+	 *
+	 * Since: 2.46
+	 */
+	public void sort(GCompareDataFunc compareFunc, void* userData)
+	{
+		g_list_store_sort(gListStore, compareFunc, userData);
+	}
+
+	/**
 	 * Changes @store by removing @n_removals items and adding @n_additions
 	 * items to it. @additions must contain @n_additions items of type
 	 * #GListStore:item-type.  %NULL is not permitted.
@@ -220,8 +234,14 @@ public class ListStore : ObjectG, ListModelIF
 	 *
 	 * Since: 2.44
 	 */
-	public void splice(uint position, uint nRemovals, void*[] additions)
+	public void splice(uint position, uint nRemovals, ObjectG[] additions)
 	{
-		g_list_store_splice(gListStore, position, nRemovals, additions.ptr, cast(uint)additions.length);
+		void*[] additionsArray = new void*[additions.length];
+		for ( int i = 0; i < additions.length; i++ )
+		{
+			additionsArray[i] = additions[i].getObjectGStruct();
+		}
+		
+		g_list_store_splice(gListStore, position, nRemovals, additionsArray.ptr, cast(uint)additions.length);
 	}
 }

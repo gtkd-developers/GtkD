@@ -139,7 +139,8 @@ public struct Memory
 	 * This function is useful for avoiding an extra copy of allocated memory returned
 	 * by a non-GLib-based API.
 	 *
-	 * A different allocator can be set using g_mem_set_vtable().
+	 * Deprecated: GLib always uses the system malloc, so this function always
+	 * returns %TRUE.
 	 *
 	 * Return: if %TRUE, malloc() and g_malloc() can be mixed.
 	 */
@@ -149,16 +150,11 @@ public struct Memory
 	}
 
 	/**
-	 * Outputs a summary of memory usage.
+	 * GLib used to support some tools for memory profiling, but this
+	 * no longer works. There are many other useful tools for memory
+	 * profiling these days which can be used instead.
 	 *
-	 * It outputs the frequency of allocations of different sizes,
-	 * the total number of bytes which have been allocated,
-	 * the total number of bytes which have been freed,
-	 * and the difference between the previous two values, i.e. the number of bytes
-	 * still in use.
-	 *
-	 * Note that this function will not output anything unless you have
-	 * previously installed the #glib_mem_profiler_table with g_mem_set_vtable().
+	 * Deprecated: Use other memory profiling tools instead
 	 */
 	public static void memProfile()
 	{
@@ -166,17 +162,12 @@ public struct Memory
 	}
 
 	/**
-	 * Sets the #GMemVTable to use for memory allocation. You can use this
-	 * to provide custom memory allocation routines.
+	 * This function used to let you override the memory allocation function.
+	 * However, its use was incompatible with the use of global constructors
+	 * in GLib and GIO, because those use the GLib allocators before main is
+	 * reached. Therefore this function is now deprecated and is just a stub.
 	 *
-	 * The @vtable only needs to provide malloc(), realloc(), and free()
-	 * functions; GLib can provide default implementations of the others.
-	 * The malloc() and realloc() implementations should return %NULL on
-	 * failure, GLib will handle error-checking for you. @vtable is copied,
-	 * so need not persist after this function has been called.
-	 *
-	 * Note that this function must be called before using any other GLib
-	 * functions.
+	 * Deprecated: Use other memory profiling tools instead
 	 *
 	 * Params:
 	 *     vtable = table of memory allocation routines.

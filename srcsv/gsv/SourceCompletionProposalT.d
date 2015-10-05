@@ -25,6 +25,8 @@
 module gsv.SourceCompletionProposalT;
 
 public  import gdkpixbuf.Pixbuf;
+public  import gio.Icon;
+public  import gio.IconIF;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
@@ -70,9 +72,28 @@ public template SourceCompletionProposalT(TStruct)
 	}
 
 	/**
-	 * Gets the icon of @proposal.
+	 * Gets the #GIcon for the icon of @proposal.
 	 *
-	 * Return: The icon of @proposal.
+	 * Return: A #GIcon with the icon of @proposal.
+	 *
+	 * Since: 3.18
+	 */
+	public IconIF getGicon()
+	{
+		auto p = gtk_source_completion_proposal_get_gicon(getSourceCompletionProposalStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+	}
+
+	/**
+	 * Gets the #GdkPixbuf for the icon of @proposal.
+	 *
+	 * Return: A #GdkPixbuf with the icon of @proposal.
 	 */
 	public Pixbuf getIcon()
 	{
@@ -87,12 +108,25 @@ public template SourceCompletionProposalT(TStruct)
 	}
 
 	/**
+	 * Gets the icon name of @proposal.
+	 *
+	 * Return: The icon name of @proposal.
+	 *
+	 * Since: 3.18
+	 */
+	public string getIconName()
+	{
+		return Str.toString(gtk_source_completion_proposal_get_icon_name(getSourceCompletionProposalStruct()));
+	}
+
+	/**
 	 * Gets extra information associated to the proposal. This information will be
 	 * used to present the user with extra, detailed information about the
 	 * selected proposal. The returned string must be freed with g_free().
 	 *
-	 * Return: a new string containing extra information of @proposal or %NULL if
-	 *     no extra information is associated to @proposal.
+	 * Return: a newly-allocated string containing
+	 *     extra information of @proposal or %NULL if no extra information is associated
+	 *     to @proposal.
 	 */
 	public string getInfo()
 	{

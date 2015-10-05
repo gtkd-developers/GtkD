@@ -535,7 +535,7 @@ public class ObjectAtk : ObjectG
 	 * The signal "focus-event" is emitted when an object gained or lost
 	 * focus.
 	 *
-	 * Deprecated: Use #AtkObject::state-change signal instead.
+	 * Deprecated: Use the #AtkObject::state-change signal instead.
 	 *
 	 * Params:
 	 *     arg1 = a boolean value which indicates whether the object gained

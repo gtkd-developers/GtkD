@@ -25,6 +25,8 @@
 module gsv.SourceCompletionProposalIF;
 
 private import gdkpixbuf.Pixbuf;
+private import gio.Icon;
+private import gio.IconIF;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -63,19 +65,38 @@ public interface SourceCompletionProposalIF{
 	public bool equal(SourceCompletionProposalIF other);
 
 	/**
-	 * Gets the icon of @proposal.
+	 * Gets the #GIcon for the icon of @proposal.
 	 *
-	 * Return: The icon of @proposal.
+	 * Return: A #GIcon with the icon of @proposal.
+	 *
+	 * Since: 3.18
+	 */
+	public IconIF getGicon();
+
+	/**
+	 * Gets the #GdkPixbuf for the icon of @proposal.
+	 *
+	 * Return: A #GdkPixbuf with the icon of @proposal.
 	 */
 	public Pixbuf getIcon();
+
+	/**
+	 * Gets the icon name of @proposal.
+	 *
+	 * Return: The icon name of @proposal.
+	 *
+	 * Since: 3.18
+	 */
+	public string getIconName();
 
 	/**
 	 * Gets extra information associated to the proposal. This information will be
 	 * used to present the user with extra, detailed information about the
 	 * selected proposal. The returned string must be freed with g_free().
 	 *
-	 * Return: a new string containing extra information of @proposal or %NULL if
-	 *     no extra information is associated to @proposal.
+	 * Return: a newly-allocated string containing
+	 *     extra information of @proposal or %NULL if no extra information is associated
+	 *     to @proposal.
 	 */
 	public string getInfo();
 

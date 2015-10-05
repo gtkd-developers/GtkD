@@ -36,6 +36,10 @@ shared static this()
 
 	Linker.link(pango_attr_font_desc_new, "pango_attr_font_desc_new", LIBRARY.PANGO);
 
+	// pango.PgAttrFontFeatures
+
+	Linker.link(pango_attr_font_features_new, "pango_attr_font_features_new", LIBRARY.PANGO);
+
 	// pango.PgAttributeIterator
 
 	Linker.link(pango_attr_iterator_copy, "pango_attr_iterator_copy", LIBRARY.PANGO);
@@ -81,9 +85,11 @@ shared static this()
 	Linker.link(pango_attribute_equal, "pango_attribute_equal", LIBRARY.PANGO);
 	Linker.link(pango_attribute_init, "pango_attribute_init", LIBRARY.PANGO);
 	Linker.link(pango_attr_background_new, "pango_attr_background_new", LIBRARY.PANGO);
+	Linker.link(pango_attr_background_alpha_new, "pango_attr_background_alpha_new", LIBRARY.PANGO);
 	Linker.link(pango_attr_fallback_new, "pango_attr_fallback_new", LIBRARY.PANGO);
 	Linker.link(pango_attr_family_new, "pango_attr_family_new", LIBRARY.PANGO);
 	Linker.link(pango_attr_foreground_new, "pango_attr_foreground_new", LIBRARY.PANGO);
+	Linker.link(pango_attr_foreground_alpha_new, "pango_attr_foreground_alpha_new", LIBRARY.PANGO);
 	Linker.link(pango_attr_gravity_hint_new, "pango_attr_gravity_hint_new", LIBRARY.PANGO);
 	Linker.link(pango_attr_gravity_new, "pango_attr_gravity_new", LIBRARY.PANGO);
 	Linker.link(pango_attr_letter_spacing_new, "pango_attr_letter_spacing_new", LIBRARY.PANGO);
@@ -439,6 +445,7 @@ shared static this()
 	Linker.link(pango_matrix_copy, "pango_matrix_copy", LIBRARY.PANGO);
 	Linker.link(pango_matrix_free, "pango_matrix_free", LIBRARY.PANGO);
 	Linker.link(pango_matrix_get_font_scale_factor, "pango_matrix_get_font_scale_factor", LIBRARY.PANGO);
+	Linker.link(pango_matrix_get_font_scale_factors, "pango_matrix_get_font_scale_factors", LIBRARY.PANGO);
 	Linker.link(pango_matrix_rotate, "pango_matrix_rotate", LIBRARY.PANGO);
 	Linker.link(pango_matrix_scale, "pango_matrix_scale", LIBRARY.PANGO);
 	Linker.link(pango_matrix_transform_distance, "pango_matrix_transform_distance", LIBRARY.PANGO);
@@ -463,11 +470,13 @@ shared static this()
 	Linker.link(pango_renderer_draw_layout_line, "pango_renderer_draw_layout_line", LIBRARY.PANGO);
 	Linker.link(pango_renderer_draw_rectangle, "pango_renderer_draw_rectangle", LIBRARY.PANGO);
 	Linker.link(pango_renderer_draw_trapezoid, "pango_renderer_draw_trapezoid", LIBRARY.PANGO);
+	Linker.link(pango_renderer_get_alpha, "pango_renderer_get_alpha", LIBRARY.PANGO);
 	Linker.link(pango_renderer_get_color, "pango_renderer_get_color", LIBRARY.PANGO);
 	Linker.link(pango_renderer_get_layout, "pango_renderer_get_layout", LIBRARY.PANGO);
 	Linker.link(pango_renderer_get_layout_line, "pango_renderer_get_layout_line", LIBRARY.PANGO);
 	Linker.link(pango_renderer_get_matrix, "pango_renderer_get_matrix", LIBRARY.PANGO);
 	Linker.link(pango_renderer_part_changed, "pango_renderer_part_changed", LIBRARY.PANGO);
+	Linker.link(pango_renderer_set_alpha, "pango_renderer_set_alpha", LIBRARY.PANGO);
 	Linker.link(pango_renderer_set_color, "pango_renderer_set_color", LIBRARY.PANGO);
 	Linker.link(pango_renderer_set_matrix, "pango_renderer_set_matrix", LIBRARY.PANGO);
 
@@ -576,6 +585,10 @@ __gshared extern(C)
 
 	PangoAttribute* function(PangoFontDescription* desc) c_pango_attr_font_desc_new;
 
+	// pango.PgAttrFontFeatures
+
+	PangoAttribute* function(const(char)* features) c_pango_attr_font_features_new;
+
 	// pango.PgAttributeIterator
 
 	PangoAttrIterator* function(PangoAttrIterator* iterator) c_pango_attr_iterator_copy;
@@ -621,9 +634,11 @@ __gshared extern(C)
 	int function(PangoAttribute* attr1, PangoAttribute* attr2) c_pango_attribute_equal;
 	void function(PangoAttribute* attr, PangoAttrClass* klass) c_pango_attribute_init;
 	PangoAttribute* function(ushort red, ushort green, ushort blue) c_pango_attr_background_new;
+	PangoAttribute* function(ushort alpha) c_pango_attr_background_alpha_new;
 	PangoAttribute* function(int enableFallback) c_pango_attr_fallback_new;
 	PangoAttribute* function(const(char)* family) c_pango_attr_family_new;
 	PangoAttribute* function(ushort red, ushort green, ushort blue) c_pango_attr_foreground_new;
+	PangoAttribute* function(ushort alpha) c_pango_attr_foreground_alpha_new;
 	PangoAttribute* function(PangoGravityHint hint) c_pango_attr_gravity_hint_new;
 	PangoAttribute* function(PangoGravity gravity) c_pango_attr_gravity_new;
 	PangoAttribute* function(int letterSpacing) c_pango_attr_letter_spacing_new;
@@ -979,6 +994,7 @@ __gshared extern(C)
 	PangoMatrix* function(PangoMatrix* matrix) c_pango_matrix_copy;
 	void function(PangoMatrix* matrix) c_pango_matrix_free;
 	double function(PangoMatrix* matrix) c_pango_matrix_get_font_scale_factor;
+	void function(PangoMatrix* matrix, double* xscale, double* yscale) c_pango_matrix_get_font_scale_factors;
 	void function(PangoMatrix* matrix, double degrees) c_pango_matrix_rotate;
 	void function(PangoMatrix* matrix, double scaleX, double scaleY) c_pango_matrix_scale;
 	void function(PangoMatrix* matrix, double* dx, double* dy) c_pango_matrix_transform_distance;
@@ -1003,11 +1019,13 @@ __gshared extern(C)
 	void function(PangoRenderer* renderer, PangoLayoutLine* line, int x, int y) c_pango_renderer_draw_layout_line;
 	void function(PangoRenderer* renderer, PangoRenderPart part, int x, int y, int width, int height) c_pango_renderer_draw_rectangle;
 	void function(PangoRenderer* renderer, PangoRenderPart part, double y1, double x11, double x21, double y2, double x12, double x22) c_pango_renderer_draw_trapezoid;
+	ushort function(PangoRenderer* renderer, PangoRenderPart part) c_pango_renderer_get_alpha;
 	PangoColor* function(PangoRenderer* renderer, PangoRenderPart part) c_pango_renderer_get_color;
 	PangoLayout* function(PangoRenderer* renderer) c_pango_renderer_get_layout;
 	PangoLayoutLine* function(PangoRenderer* renderer) c_pango_renderer_get_layout_line;
 	PangoMatrix* function(PangoRenderer* renderer) c_pango_renderer_get_matrix;
 	void function(PangoRenderer* renderer, PangoRenderPart part) c_pango_renderer_part_changed;
+	void function(PangoRenderer* renderer, PangoRenderPart part, ushort alpha) c_pango_renderer_set_alpha;
 	void function(PangoRenderer* renderer, PangoRenderPart part, PangoColor* color) c_pango_renderer_set_color;
 	void function(PangoRenderer* renderer, PangoMatrix* matrix) c_pango_renderer_set_matrix;
 
@@ -1114,6 +1132,10 @@ __gshared extern(C)
 
 alias c_pango_attr_font_desc_new pango_attr_font_desc_new;
 
+// pango.PgAttrFontFeatures
+
+alias c_pango_attr_font_features_new pango_attr_font_features_new;
+
 // pango.PgAttributeIterator
 
 alias c_pango_attr_iterator_copy pango_attr_iterator_copy;
@@ -1159,9 +1181,11 @@ alias c_pango_attribute_destroy pango_attribute_destroy;
 alias c_pango_attribute_equal pango_attribute_equal;
 alias c_pango_attribute_init pango_attribute_init;
 alias c_pango_attr_background_new pango_attr_background_new;
+alias c_pango_attr_background_alpha_new pango_attr_background_alpha_new;
 alias c_pango_attr_fallback_new pango_attr_fallback_new;
 alias c_pango_attr_family_new pango_attr_family_new;
 alias c_pango_attr_foreground_new pango_attr_foreground_new;
+alias c_pango_attr_foreground_alpha_new pango_attr_foreground_alpha_new;
 alias c_pango_attr_gravity_hint_new pango_attr_gravity_hint_new;
 alias c_pango_attr_gravity_new pango_attr_gravity_new;
 alias c_pango_attr_letter_spacing_new pango_attr_letter_spacing_new;
@@ -1517,6 +1541,7 @@ alias c_pango_matrix_concat pango_matrix_concat;
 alias c_pango_matrix_copy pango_matrix_copy;
 alias c_pango_matrix_free pango_matrix_free;
 alias c_pango_matrix_get_font_scale_factor pango_matrix_get_font_scale_factor;
+alias c_pango_matrix_get_font_scale_factors pango_matrix_get_font_scale_factors;
 alias c_pango_matrix_rotate pango_matrix_rotate;
 alias c_pango_matrix_scale pango_matrix_scale;
 alias c_pango_matrix_transform_distance pango_matrix_transform_distance;
@@ -1541,11 +1566,13 @@ alias c_pango_renderer_draw_layout pango_renderer_draw_layout;
 alias c_pango_renderer_draw_layout_line pango_renderer_draw_layout_line;
 alias c_pango_renderer_draw_rectangle pango_renderer_draw_rectangle;
 alias c_pango_renderer_draw_trapezoid pango_renderer_draw_trapezoid;
+alias c_pango_renderer_get_alpha pango_renderer_get_alpha;
 alias c_pango_renderer_get_color pango_renderer_get_color;
 alias c_pango_renderer_get_layout pango_renderer_get_layout;
 alias c_pango_renderer_get_layout_line pango_renderer_get_layout_line;
 alias c_pango_renderer_get_matrix pango_renderer_get_matrix;
 alias c_pango_renderer_part_changed pango_renderer_part_changed;
+alias c_pango_renderer_set_alpha pango_renderer_set_alpha;
 alias c_pango_renderer_set_color pango_renderer_set_color;
 alias c_pango_renderer_set_matrix pango_renderer_set_matrix;
 

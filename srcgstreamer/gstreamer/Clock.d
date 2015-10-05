@@ -25,9 +25,11 @@
 module gstreamer.Clock;
 
 private import gobject.ObjectG;
+private import gobject.Signals;
 private import gstreamer.ObjectGst;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+public  import gtkc.gdktypes;
 
 
 /**
@@ -306,6 +308,30 @@ public class Clock : ObjectGst
 	}
 
 	/**
+	 * Add a clock observation to the internal slaving algorithm the same as
+	 * gst_clock_add_observation(), and return the result of the master clock
+	 * estimation, without updating the internal calibration.
+	 *
+	 * The caller can then take the results and call gst_clock_set_calibration()
+	 * with the values, or some modified version of them.
+	 *
+	 * Params:
+	 *     slave = a time on the slave
+	 *     master = a time on the master
+	 *     rSquared = a pointer to hold the result
+	 *     internal = a location to store the internal time
+	 *     external = a location to store the external time
+	 *     rateNum = a location to store the rate numerator
+	 *     rateDenom = a location to store the rate denominator
+	 *
+	 * Since: 1.6
+	 */
+	public bool addObservationUnapplied(GstClockTime slave, GstClockTime master, out double rSquared, out GstClockTime internal, out GstClockTime external, out GstClockTime rateNum, out GstClockTime rateDenom)
+	{
+		return gst_clock_add_observation_unapplied(gstClock, slave, master, &rSquared, &internal, &external, &rateNum, &rateDenom) != 0;
+	}
+
+	/**
 	 * Converts the given @internal clock time to the external time, adjusting for the
 	 * rate and reference time set with gst_clock_set_calibration() and making sure
 	 * that the returned time is increasing. This function should be called with the
@@ -321,6 +347,30 @@ public class Clock : ObjectGst
 	public GstClockTime adjustUnlocked(GstClockTime internal)
 	{
 		return gst_clock_adjust_unlocked(gstClock, internal);
+	}
+
+	/**
+	 * Converts the given @internal_target clock time to the external time,
+	 * using the passed calibration parameters. This function performs the
+	 * same calculation as gst_clock_adjust_unlocked() when called using the
+	 * current calibration parameters, but doesn't ensure a monotonically
+	 * increasing result as gst_clock_adjust_unlocked() does.
+	 *
+	 * Params:
+	 *     internalTarget = a clock time
+	 *     cinternal = a reference internal time
+	 *     cexternal = a reference external time
+	 *     cnum = the numerator of the rate of the clock relative to its
+	 *         internal time
+	 *     cdenom = the denominator of the rate of the clock
+	 *
+	 * Return: the converted time of the clock.
+	 *
+	 * Since: 1.6
+	 */
+	public GstClockTime adjustWithCalibration(GstClockTime internalTarget, GstClockTime cinternal, GstClockTime cexternal, GstClockTime cnum, GstClockTime cdenom)
+	{
+		return gst_clock_adjust_with_calibration(gstClock, internalTarget, cinternal, cexternal, cnum, cdenom);
 	}
 
 	/**
@@ -415,6 +465,20 @@ public class Clock : ObjectGst
 	public GstClockTime getTimeout()
 	{
 		return gst_clock_get_timeout(gstClock);
+	}
+
+	/**
+	 * Checks if the clock is currently synced.
+	 *
+	 * This returns if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC is not set on the clock.
+	 *
+	 * Return: %TRUE if the clock is currently synced
+	 *
+	 * Since: 1.6
+	 */
+	public bool isSynced()
+	{
+		return gst_clock_is_synced(gstClock) != 0;
 	}
 
 	/**
@@ -557,6 +621,23 @@ public class Clock : ObjectGst
 	}
 
 	/**
+	 * Sets @clock to synced and emits the GstClock::synced signal, and wakes up any
+	 * thread waiting in gst_clock_wait_for_sync().
+	 *
+	 * This function must only be called if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
+	 * is set on the clock, and is intended to be called by subclasses only.
+	 *
+	 * Params:
+	 *     synced = if the clock is synced
+	 *
+	 * Since: 1.6
+	 */
+	public void setSynced(bool synced)
+	{
+		gst_clock_set_synced(gstClock, synced);
+	}
+
+	/**
 	 * Set the amount of time, in nanoseconds, to sample master and slave
 	 * clocks
 	 *
@@ -600,5 +681,67 @@ public class Clock : ObjectGst
 	public GstClockTime unadjustUnlocked(GstClockTime external)
 	{
 		return gst_clock_unadjust_unlocked(gstClock, external);
+	}
+
+	/**
+	 * Waits until @clock is synced for reporting the current time. If @timeout
+	 * is %GST_CLOCK_TIME_NONE it will wait forever, otherwise it will time out
+	 * after @timeout nanoseconds.
+	 *
+	 * For asynchronous waiting, the GstClock::synced signal can be used.
+	 *
+	 *
+	 * This returns immediately with TRUE if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
+	 * is not set on the clock, or if the clock is already synced.
+	 *
+	 * Params:
+	 *     timeout = timeout for waiting or %GST_CLOCK_TIME_NONE
+	 *
+	 * Return: %TRUE if waiting was successful, or %FALSE on timeout
+	 *
+	 * Since: 1.6
+	 */
+	public bool waitForSync(GstClockTime timeout)
+	{
+		return gst_clock_wait_for_sync(gstClock, timeout) != 0;
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(bool, Clock)[] onSyncedListeners;
+	/**
+	 * Signaled on clocks with GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once
+	 * the clock is synchronized, or when it completely lost synchronization.
+	 * This signal will not be emitted on clocks without the flag.
+	 *
+	 * This signal will be emitted from an arbitrary thread, most likely not
+	 * the application's main thread.
+	 *
+	 * Params:
+	 *     synced = if the clock is synced now
+	 *
+	 * Since: 1.6
+	 */
+	void addOnSynced(void delegate(bool, Clock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "synced" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"synced",
+				cast(GCallback)&callBackSynced,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["synced"] = 1;
+		}
+		onSyncedListeners ~= dlg;
+	}
+	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced, Clock _clock)
+	{
+		foreach ( void delegate(bool, Clock) dlg; _clock.onSyncedListeners )
+		{
+			dlg(synced, _clock);
+		}
 	}
 }

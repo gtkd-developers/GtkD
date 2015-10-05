@@ -74,10 +74,10 @@ public struct PgVersion
 	 *     requiredMinor = the required minor version.
 	 *     requiredMicro = the required major version.
 	 *
-	 * Return: %NULL if the Pango library is compatible with the
-	 *     given version, or a string describing the version mismatch.
-	 *     The returned string is owned by Pango and should not be modified
-	 *     or freed.
+	 * Return: %NULL if the Pango library is compatible
+	 *     with the given version, or a string describing the version
+	 *     mismatch.  The returned string is owned by Pango and should not
+	 *     be modified or freed.
 	 *
 	 * Since: 1.16
 	 */

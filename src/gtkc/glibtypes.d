@@ -218,6 +218,8 @@ public alias void* GSourceAutoptr;
 
 public alias void* GStringChunkAutoptr;
 
+public alias void* GStringAutoptr;
+
 /**
  * A C representable type name for #G_TYPE_STRV.
  */
@@ -3911,6 +3913,8 @@ struct GMatchInfo;
  * A set of functions used to perform memory allocation. The same #GMemVTable must
  * be used for all allocations in the same program; a call to g_mem_set_vtable(),
  * if it exists, should be prior to any use of GLib.
+ *
+ * This functions related to this has been deprecated in 2.46, and no longer work.
  */
 struct GMemVTable
 {

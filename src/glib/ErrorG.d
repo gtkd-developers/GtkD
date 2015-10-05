@@ -150,7 +150,7 @@ public class ErrorG
 	 * If @domain contains a `FAILED` (or otherwise generic) error code,
 	 * you should generally not check for it explicitly, but should
 	 * instead treat any not-explicitly-recognized error code as being
-	 * equilalent to the `FAILED` code. This way, if the domain is
+	 * equivalent to the `FAILED` code. This way, if the domain is
 	 * extended in the future to provide a more specific error code for
 	 * a certain case, your code will still work.
 	 *

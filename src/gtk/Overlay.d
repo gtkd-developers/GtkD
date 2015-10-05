@@ -36,14 +36,14 @@ public  import gtkc.gtktypes;
 
 /**
  * GtkOverlay is a container which contains a single main child, on top
- * of which it can place “overlay” widgets. The
- * position of each overlay widget is determined by its #GtkWidget:halign
- * and #GtkWidget:valign properties. E.g. a widget with both alignments
- * set to %GTK_ALIGN_START will be placed at the top left corner of the
- * main widget, whereas an overlay with halign set to %GTK_ALIGN_CENTER
- * and valign set to %GTK_ALIGN_END will be placed a the bottom edge of
- * the main widget, horizontally centered. The position can be adjusted
- * by setting the margin properties of the child to non-zero values.
+ * of which it can place “overlay” widgets. The position of each overlay
+ * widget is determined by its #GtkWidget:halign and #GtkWidget:valign
+ * properties. E.g. a widget with both alignments set to %GTK_ALIGN_START
+ * will be placed at the top left corner of the GtkOverlay container,
+ * whereas an overlay with halign set to %GTK_ALIGN_CENTER and valign set
+ * to %GTK_ALIGN_END will be placed a the bottom edge of the GtkOverlay,
+ * horizontally centered. The position can be adjusted by setting the margin
+ * properties of the child to non-zero values.
  * 
  * More complicated placement of overlays is possible by connecting
  * to the #GtkOverlay::get-child-position signal.
@@ -132,6 +132,57 @@ public class Overlay : Bin
 	public void addOverlay(Widget widget)
 	{
 		gtk_overlay_add_overlay(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct());
+	}
+
+	/**
+	 * Convenience function to get the value of the #GtkOverlay:pass-through
+	 * child property for @widget.
+	 *
+	 * Params:
+	 *     widget = an overlay child of #GtkOverlay
+	 *
+	 * Return: whether the widget is a pass through child.
+	 *
+	 * Since: 3.18
+	 */
+	public bool getOverlayPassThrough(Widget widget)
+	{
+		return gtk_overlay_get_overlay_pass_through(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct()) != 0;
+	}
+
+	/**
+	 * Moves @child to a new @index in the list of @overlay children.
+	 * The list contains overlays in the order that these were
+	 * added to @overlay.
+	 *
+	 * A widget’s index in the @overlay children list determines which order
+	 * the children are drawn if they overlap. The first child is drawn at
+	 * the bottom. It also affects the default focus chain order.
+	 *
+	 * Params:
+	 *     child = the overlaid #GtkWidget to move
+	 *     position = the new index for @child in the list of overlay children
+	 *         of @overlay, starting from 0. If negative, indicates the end of
+	 *         the list
+	 */
+	public void reorderOverlay(Widget child, int position)
+	{
+		gtk_overlay_reorder_overlay(gtkOverlay, (child is null) ? null : child.getWidgetStruct(), position);
+	}
+
+	/**
+	 * Convenience function to set the value of the #GtkOverlay:pass-through
+	 * child property for @widget.
+	 *
+	 * Params:
+	 *     widget = an overlay child of #GtkOverlay
+	 *     passThrough = whether the child should pass the input through
+	 *
+	 * Since: 3.18
+	 */
+	public void setOverlayPassThrough(Widget widget, bool passThrough)
+	{
+		gtk_overlay_set_overlay_pass_through(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct(), passThrough);
 	}
 
 	int[string] connectedSignals;

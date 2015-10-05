@@ -191,6 +191,12 @@ public enum GstBufferFlags
 	 */
 	TAG_MEMORY = 16384,
 	/**
+	 * Elements which write to disk or permanent
+	 * storage should ensure the data is synced after
+	 * writing the contents of this buffer. (Since 1.6)
+	 */
+	SYNC_AFTER = 32768,
+	/**
 	 * additional media specific flags can be added starting from
 	 * this flag.
 	 */
@@ -382,6 +388,11 @@ public enum GstClockFlags
 	 */
 	CAN_SET_MASTER = 512,
 	/**
+	 * clock needs to be synced before it can be used
+	 * (Since 1.6)
+	 */
+	NEEDS_STARTUP_SYNC = 1024,
+	/**
 	 * subclasses can add additional flags starting from this flag
 	 */
 	LAST = 4096,
@@ -443,7 +454,7 @@ public enum GstClockType
 	 */
 	MONOTONIC = 1,
 	/**
-	 * some other time source is used (Since: 1.0.5)
+	 * some other time source is used (Since 1.0.5)
 	 */
 	OTHER = 2,
 }
@@ -635,7 +646,8 @@ public enum GstDebugGraphDetails
 	 */
 	CAPS_DETAILS = 2,
 	/**
-	 * show modified parameters on elements
+	 * show modified parameters on
+	 * elements
 	 */
 	NON_DEFAULT_PARAMS = 4,
 	/**
@@ -643,9 +655,19 @@ public enum GstDebugGraphDetails
 	 */
 	STATES = 8,
 	/**
-	 * show all details
+	 * show full element parameter values even
+	 * if they are very long
+	 */
+	FULL_PARAMS = 16,
+	/**
+	 * show all the typical details that one might want
 	 */
 	ALL = 15,
+	/**
+	 * show all details regardless of how large or
+	 * verbose they make the resulting output
+	 */
+	VERBOSE = -1,
 }
 alias GstDebugGraphDetails DebugGraphDetails;
 
@@ -701,10 +723,10 @@ public enum GstDebugLevel
 	DEBUG = 5,
 	/**
 	 * Log messages are messages that are very common but might be
-	 * useful to know. As a rule of thumb a pipeline that is iterating as expected
-	 * should never output anything else but LOG messages. Use this log level to
-	 * log recurring information in chain functions and loop functions, for
-	 * example.
+	 * useful to know. As a rule of thumb a pipeline that is running as expected
+	 * should never output anything else but LOG messages whilst processing data.
+	 * Use this log level to log recurring information in chain functions and
+	 * loop functions, for example.
 	 */
 	LOG = 6,
 	/**
@@ -828,6 +850,11 @@ public enum GstEventType
 	 * was found or updated.
 	 */
 	TOC = 30750,
+	/**
+	 * An event which indicates that new or updated
+	 * encryption information has been found in the stream.
+	 */
+	PROTECTION = 33310,
 	/**
 	 * Marks the end of a segment playback.
 	 */
@@ -1192,11 +1219,11 @@ public enum GstMemoryFlags
 	 */
 	ZERO_PADDED = 64,
 	/**
-	 * the memory is physically contiguous. Since 1.2
+	 * the memory is physically contiguous. (Since 2.2)
 	 */
 	PHYSICALLY_CONTIGUOUS = 128,
 	/**
-	 * the memory can't be mapped via gst_memory_map() without any preconditions. Since 1.2
+	 * the memory can't be mapped via gst_memory_map() without any preconditions. (Since 1.2)
 	 */
 	NOT_MAPPABLE = 256,
 	/**
@@ -1553,6 +1580,13 @@ public enum GstPadFlags
 	 */
 	ACCEPT_INTERSECT = 32768,
 	/**
+	 * the default accept-caps handler will use
+	 * the template pad caps instead of query caps to
+	 * compare with the accept caps. Use this in combination
+	 * with %GST_PAD_FLAG_ACCEPT_INTERSECT. (Since 1.6)
+	 */
+	ACCEPT_TEMPLATE = 65536,
+	/**
 	 * offset to define more flags
 	 */
 	LAST = 1048576,
@@ -1688,24 +1722,39 @@ public enum GstPadProbeReturn
 {
 	/**
 	 * drop data in data probes. For push mode this means that
-	 * the data item is not sent downstream. For pull mode, it means that the
-	 * data item is not passed upstream. In both cases, this result code
-	 * means that #GST_FLOW_OK or %TRUE is returned to the caller.
+	 * the data item is not sent downstream. For pull mode, it means that
+	 * the data item is not passed upstream. In both cases, no more probes
+	 * are called and #GST_FLOW_OK or %TRUE is returned to the caller.
 	 */
 	DROP = 0,
 	/**
-	 * normal probe return value
+	 * normal probe return value. This leaves the probe in
+	 * place, and defers decisions about dropping or passing data to other
+	 * probes, if any. If there are no other probes, the default behaviour
+	 * for the probe type applies (block for blocking probes, and pass for
+	 * non-blocking probes).
 	 */
 	OK = 1,
 	/**
-	 * remove probe
+	 * remove this probe.
 	 */
 	REMOVE = 2,
 	/**
-	 * pass the data item in the block probe and block on
-	 * the next item
+	 * pass the data item in the block probe and block on the
+	 * next item.
 	 */
 	PASS = 3,
+	/**
+	 * Data has been handled in the probe and will not be
+	 * forwarded further. For events and buffers this is the same behaviour as
+	 * @GST_PAD_PROBE_DROP (except that in this case you need to unref the buffer
+	 * or event yourself). For queries it will also return %TRUE to the caller.
+	 * The probe can also modify the #GstFlowReturn value by using the
+	 * #GST_PAD_PROBE_INFO_FLOW_RETURN() accessor.
+	 * Note that the resulting query must contain valid entries.
+	 * Since: 1.6
+	 */
+	HANDLED = 4,
 }
 alias GstPadProbeReturn PadProbeReturn;
 
@@ -1997,21 +2046,21 @@ alias GstProgressType ProgressType;
 public enum GstQOSType
 {
 	/**
-	 * The QoS event type that is produced when downstream
+	 * The QoS event type that is produced when upstream
 	 * elements are producing data too quickly and the element can't keep up
-	 * processing the data. Upstream should reduce their processing rate. This
+	 * processing the data. Upstream should reduce their production rate. This
 	 * type is also used when buffers arrive early or in time.
 	 */
 	OVERFLOW = 0,
 	/**
-	 * The QoS event type that is produced when downstream
-	 * elements are producing data too slowly and need to speed up their processing
-	 * rate.
+	 * The QoS event type that is produced when upstream
+	 * elements are producing data too slowly and need to speed up their
+	 * production rate.
 	 */
 	UNDERFLOW = 1,
 	/**
 	 * The QoS event type that is produced when the
-	 * application enabled throttling to limit the datarate.
+	 * application enabled throttling to limit the data rate.
 	 */
 	THROTTLE = 2,
 }
@@ -2224,7 +2273,7 @@ public enum GstResourceError
 	/**
 	 * used when the resource can't be opened
 	 * due to missing authorization.
-	 * Since: 1.2.4
+	 * (Since 1.2.4)
 	 */
 	NOT_AUTHORIZED = 15,
 	/**
@@ -2287,22 +2336,28 @@ alias GstSearchMode SearchMode;
  *
  * When performing a segment seek: after the playback of the segment completes,
  * no EOS will be emitted by the element that performed the seek, but a
- * #GST_MESSAGE_SEGMENT_DONE message will be posted on the bus by the element.
+ * %GST_MESSAGE_SEGMENT_DONE message will be posted on the bus by the element.
  * When this message is posted, it is possible to send a new seek event to
  * continue playback. With this seek method it is possible to perform seamless
  * looping or simple linear editing.
  *
  * When doing fast forward (rate > 1.0) or fast reverse (rate < -1.0) trickmode
- * playback, the @GST_SEEK_FLAG_SKIP flag can be used to instruct decoders
+ * playback, the %GST_SEEK_FLAG_TRICKMODE flag can be used to instruct decoders
  * and demuxers to adjust the playback rate by skipping frames. This can improve
  * performance and decrease CPU usage because not all frames need to be decoded.
  *
- * The @GST_SEEK_FLAG_SNAP_BEFORE flag can be used to snap to the previous
- * relevant location, and the @GST_SEEK_FLAG_SNAP_AFTER flag can be used to
- * select the next relevant location. If KEY_UNIT is specified, the relevant
- * location is a keyframe. If both flags are specified, the nearest of these
- * locations will be selected. If none are specified, the implementation is
+ * Beyond that, the %GST_SEEK_FLAG_TRICKMODE_KEY_UNITS flag can be used to
+ * request that decoders skip all frames except key units, and
+ * %GST_SEEK_FLAG_TRICKMODE_NO_AUDIO flags can be used to request that audio
+ * decoders do no decoding at all, and simple output silence.
+ *
+ * The %GST_SEEK_FLAG_SNAP_BEFORE flag can be used to snap to the previous
+ * relevant location, and the %GST_SEEK_FLAG_SNAP_AFTER flag can be used to
+ * select the next relevant location. If %GST_SEEK_FLAG_KEY_UNIT is specified,
+ * the relevant location is a keyframe. If both flags are specified, the nearest
+ * of these locations will be selected. If none are specified, the implementation is
  * free to select whichever it wants.
+ *
  * The before and after here are in running time, so when playing backwards,
  * the next location refers to the one that will played in next, and not the
  * one that is located after in the actual source stream.
@@ -2338,28 +2393,46 @@ public enum GstSeekFlags
 	/**
 	 * when doing fast forward or fast reverse playback, allow
 	 * elements to skip frames instead of generating all
-	 * frames.
+	 * frames. (Since 1.6)
+	 */
+	TRICKMODE = 16,
+	/**
+	 * Deprecated backward compatibility flag, replaced
+	 * by %GST_SEEK_FLAG_TRICKMODE
 	 */
 	SKIP = 16,
 	/**
 	 * go to a location before the requested position,
-	 * if KEY_UNIT this means the keyframe at or before the
-	 * requested position the one at or before the seek target.
+	 * if %GST_SEEK_FLAG_KEY_UNIT this means the keyframe at or before
+	 * the requested position the one at or before the seek target.
 	 */
 	SNAP_BEFORE = 32,
 	/**
 	 * go to a location after the requested position,
-	 * if KEY_UNIT this means the keyframe at of after the
+	 * if %GST_SEEK_FLAG_KEY_UNIT this means the keyframe at of after the
 	 * requested position.
 	 */
 	SNAP_AFTER = 64,
 	/**
 	 * go to a position near the requested position,
-	 * if KEY_UNIT this means the keyframe closest to the
-	 * requested position, if both keyframes are at an equal
-	 * distance, behaves like SNAP_BEFORE.
+	 * if %GST_SEEK_FLAG_KEY_UNIT this means the keyframe closest
+	 * to the requested position, if both keyframes are at an equal
+	 * distance, behaves like %GST_SEEK_FLAG_SNAP_BEFORE.
 	 */
 	SNAP_NEAREST = 96,
+	/**
+	 * when doing fast forward or fast reverse
+	 * playback, request that elements only decode keyframes
+	 * and skip all other content, for formats that have
+	 * keyframes. (Since 1.6)
+	 */
+	TRICKMODE_KEY_UNITS = 128,
+	/**
+	 * when doing fast forward or fast reverse
+	 * playback, request that audio decoder elements skip
+	 * decoding and output only gap events or silence. (Since 1.6)
+	 */
+	TRICKMODE_NO_AUDIO = 256,
 }
 alias GstSeekFlags SeekFlags;
 
@@ -2400,13 +2473,28 @@ public enum GstSegmentFlags
 	 */
 	RESET = 1,
 	/**
-	 * perform skip playback
+	 * perform skip playback (Since 1.6)
+	 */
+	TRICKMODE = 16,
+	/**
+	 * Deprecated backward compatibility flag, replaced
+	 * by @GST_SEGMENT_FLAG_TRICKMODE
 	 */
 	SKIP = 16,
 	/**
 	 * send SEGMENT_DONE instead of EOS
 	 */
 	SEGMENT = 8,
+	/**
+	 * Decode only keyframes, where
+	 * possible (Since 1.6)
+	 */
+	TRICKMODE_KEY_UNITS = 128,
+	/**
+	 * Do not decode any audio, where
+	 * possible (Since 1.6)
+	 */
+	TRICKMODE_NO_AUDIO = 256,
 }
 alias GstSegmentFlags SegmentFlags;
 
@@ -3155,7 +3243,17 @@ struct GstAllocator
 	 * the implementation of the GstMemoryIsSpanFunction
 	 */
 	GstMemoryIsSpanFunction memIsSpan;
-	void*[4] GstReserved;
+	/**
+	 * the implementation of the GstMemoryMapFullFunction.
+	 * Will be used instead of @mem_map if present. (Since 1.6)
+	 */
+	GstMemoryMapFullFunction memMapFull;
+	/**
+	 * the implementation of the GstMemoryUnmapFullFunction.
+	 * Will be used instead of @mem_unmap if present. (Since 1.6)
+	 */
+	GstMemoryUnmapFullFunction memUnmapFull;
+	void*[2] GstReserved;
 	GstAllocatorPrivate* priv;
 }
 
@@ -3880,6 +3978,18 @@ struct GstElementClass
 	extern(C) void function(GstElement* element, GstPad* pad) padAdded;
 	extern(C) void function(GstElement* element, GstPad* pad) padRemoved;
 	extern(C) void function(GstElement* element) noMorePads;
+	/**
+	 *
+	 * Params:
+	 *     element = a #GstElement to find a request pad of.
+	 *     templ = a #GstPadTemplate of which we want a pad of.
+	 *     name = the name of the request #GstPad
+	 *         to retrieve. Can be %NULL.
+	 *     caps = the caps of the pad we want to
+	 *         request. Can be %NULL.
+	 * Return: requested #GstPad if found,
+	 *     otherwise %NULL.  Release after usage.
+	 */
 	extern(C) GstPad* function(GstElement* element, GstPadTemplate* templ, const(char)* name, GstCaps* caps) requestNewPad;
 	extern(C) void function(GstElement* element, GstPad* pad) releasePad;
 	/**
@@ -3999,6 +4109,7 @@ struct GstEvent
 	 */
 	uint seqnum;
 }
+
 
 /**
  * A format definition
@@ -4447,7 +4558,16 @@ struct GstPadProbeInfo
 	 * #GST_PAD_PROBE_TYPE_PULL
 	 */
 	uint size;
-	void*[4] GstReserved;
+	union ABI
+	{
+		void*[4] GstReserved;
+		struct Abi
+		{
+			GstFlowReturn flowRet;
+		}
+		Abi abi;
+	}
+	ABI abi;
 }
 
 struct GstPadTemplate
@@ -4502,6 +4622,30 @@ struct GstParamSpecFraction
 	 * default denominator
 	 */
 	int defDen;
+}
+
+/**
+ * The #GstParentBufferMeta is a #GstMeta which can be attached to a #GstBuffer
+ * to hold a reference to another buffer that is only released when the child
+ * #GstBuffer is released.
+ *
+ * Typically, #GstParentBufferMeta is used when the child buffer is directly
+ * using the #GstMemory of the parent buffer, and wants to prevent the parent
+ * buffer from being returned to a buffer pool until the #GstMemory is available
+ * for re-use.
+ *
+ * Since: 1.6
+ */
+struct GstParentBufferMeta
+{
+	/**
+	 * the parent #GstMeta structure
+	 */
+	GstMeta parent;
+	/**
+	 * the #GstBuffer on which a reference is being held.
+	 */
+	GstBuffer* buffer;
 }
 
 struct GstParseContext;
@@ -4596,7 +4740,7 @@ struct GstPluginDesc
 	 * format (or rather, a subset thereof), or %NULL. Allowed are the
 	 * following formats: "YYYY-MM-DD" and "YYY-MM-DDTHH:MMZ" (with
 	 * 'T' a separator and 'Z' indicating UTC/Zulu time). This field
-	 * should be set via the %GST_PACKAGE_RELEASE_DATETIME
+	 * should be set via the GST_PACKAGE_RELEASE_DATETIME
 	 * preprocessor macro.
 	 */
 	const(char)* releaseDatetime;
@@ -4701,6 +4845,24 @@ struct GstPresetInterface
 	void*[4] GstReserved;
 }
 
+/**
+ * Metadata type that holds information about a sample from a protection-protected
+ * track, including the information needed to decrypt it (if it is encrypted).
+ *
+ * Since: 1.6
+ */
+struct GstProtectionMeta
+{
+	/**
+	 * the parent #GstMeta.
+	 */
+	GstMeta meta;
+	/**
+	 * the cryptographic information needed to decrypt the sample.
+	 */
+	GstStructure* info;
+}
+
 struct GstProxyPad
 {
 	GstPad pad;
@@ -4781,7 +4943,8 @@ struct GstSegment
 	 */
 	ulong time;
 	/**
-	 * the position in the segment
+	 * the position in the segment (used internally by elements
+	 * such as sources, demuxers or parsers to track progress)
 	 */
 	ulong position;
 	/**
@@ -5032,6 +5195,8 @@ struct GstURIHandlerInterface
 	extern(C) int function(GstURIHandler* handler, const(char)* uri, GError** err) setUri;
 }
 
+struct GstUri;
+
 struct GstValueArray;
 
 
@@ -5136,6 +5301,51 @@ public alias extern(C) int function(GstBus* bus, GstMessage* message, void* user
  * Return: #GstBusSyncReply stating what to do with the message
  */
 public alias extern(C) GstBusSyncReply function(GstBus* bus, GstMessage* message, void* userData) GstBusSyncHandler;
+
+/**
+ * A function that will be called in gst_caps_filter_and_map_in_place().
+ * The function may modify @features and @structure, and both will be
+ * removed from the caps if %FALSE is returned.
+ *
+ * Params:
+ *     features = the #GstCapsFeatures
+ *     structure = the #GstStructure
+ *     userData = user data
+ *
+ * Return: %TRUE if the features and structure should be preserved,
+ *     %FALSE if it should be removed.
+ */
+public alias extern(C) int function(GstCapsFeatures* features, GstStructure* structure, void* userData) GstCapsFilterMapFunc;
+
+/**
+ * A function that will be called in gst_caps_foreach(). The function may
+ * not modify @features or @structure.
+ *
+ * Params:
+ *     features = the #GstCapsFeatures
+ *     structure = the #GstStructure
+ *     userData = user data
+ *
+ * Return: %TRUE if the foreach operation should continue, %FALSE if
+ *     the foreach operation should stop with %FALSE.
+ *
+ * Since: 1.6
+ */
+public alias extern(C) int function(GstCapsFeatures* features, GstStructure* structure, void* userData) GstCapsForeachFunc;
+
+/**
+ * A function that will be called in gst_caps_map_in_place(). The function
+ * may modify @features and @structure.
+ *
+ * Params:
+ *     features = the #GstCapsFeatures
+ *     structure = the #GstStructure
+ *     userData = user data
+ *
+ * Return: %TRUE if the map operation should continue, %FALSE if
+ *     the map operation should stop with %FALSE.
+ */
+public alias extern(C) int function(GstCapsFeatures* features, GstStructure* structure, void* userData) GstCapsMapFunc;
 
 /**
  * The function prototype of the callback.
@@ -5317,6 +5527,21 @@ public alias extern(C) int function(GstMemory* mem1, GstMemory* mem2, size_t* of
 
 /**
  * Get the memory of @mem that can be accessed according to the mode specified
+ * in @info's flags. The function should return a pointer that contains at least
+ * @maxsize bytes.
+ *
+ * Params:
+ *     mem = a #GstMemory
+ *     info = the #GstMapInfo to map with
+ *     maxsize = size to map
+ *
+ * Return: a pointer to memory of which at least @maxsize bytes can be
+ *     accessed according to the access pattern in @info's flags.
+ */
+public alias extern(C) void* function(GstMemory* mem, GstMapInfo* info, size_t maxsize) GstMemoryMapFullFunction;
+
+/**
+ * Get the memory of @mem that can be accessed according to the mode specified
  * in @flags. The function should return a pointer that contains at least
  * @maxsize bytes.
  *
@@ -5345,12 +5570,19 @@ public alias extern(C) void* function(GstMemory* mem, size_t maxsize, GstMapFlag
 public alias extern(C) GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptrdiff_t size) GstMemoryShareFunction;
 
 /**
+ * Return the pointer previously retrieved with gst_memory_map() with @info.
+ *
+ * Params:
+ *     mem = a #GstMemory
+ *     info = a #GstMapInfo
+ */
+public alias extern(C) void function(GstMemory* mem, GstMapInfo* info) GstMemoryUnmapFullFunction;
+
+/**
  * Return the pointer previously retrieved with gst_memory_map().
  *
  * Params:
  *     mem = a #GstMemory
- *
- * Return: %TRUE on success.
  */
 public alias extern(C) void function(GstMemory* mem) GstMemoryUnmapFunction;
 
@@ -5725,6 +5957,21 @@ public alias extern(C) int function(GstPlugin* plugin, void* userData) GstPlugin
  * Return: %TRUE if plugin initialised successfully
  */
 public alias extern(C) int function(GstPlugin* plugin) GstPluginInitFunc;
+
+/**
+ * A function that will be called in gst_structure_filter_and_map_in_place().
+ * The function may modify @value, and the value will be removed from
+ * the structure if %FALSE is returned.
+ *
+ * Params:
+ *     fieldId = the #GQuark of the field name
+ *     value = the #GValue of the field
+ *     userData = user data
+ *
+ * Return: %TRUE if the field should be preserved, %FALSE if it
+ *     should be removed.
+ */
+public alias extern(C) int function(GQuark fieldId, GValue* value, void* userData) GstStructureFilterMapFunc;
 
 /**
  * A function that will be called in gst_structure_foreach(). The function may

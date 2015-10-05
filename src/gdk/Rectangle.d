@@ -29,6 +29,10 @@ public  import gtkc.gdktypes;
 
 
 /**
+ * Defines the position and size of a rectangle. It is identical to
+ * #cairo_rectangle_int_t.
+ */
+/**
  */
 
 /**
@@ -40,7 +44,6 @@ public  import gtkc.gdktypes;
  * pass %NULL for @dest.
  *
  * Params:
- *     src1 = a #GdkRectangle
  *     src2 = a #GdkRectangle
  *     dest = return location for the
  *         intersection of @src1 and @src2, or %NULL
@@ -59,7 +62,6 @@ public bool intersect(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle d
  * It is allowed for @dest to be the same as either @src1 or @src2.
  *
  * Params:
- *     src1 = a #GdkRectangle
  *     src2 = a #GdkRectangle
  *     dest = return location for the union of @src1 and @src2
  */

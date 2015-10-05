@@ -33,13 +33,15 @@ public  import gtkc.gtktypes;
 public  import pango.PgFontDescription;
 public  import pango.PgFontFace;
 public  import pango.PgFontFamily;
+public  import pango.PgFontMap;
 
 
 /**
  * #GtkFontChooser is an interface that can be implemented by widgets
- * displaying the list of fonts.  In GTK+, the main objects
+ * displaying the list of fonts. In GTK+, the main objects
  * that implement this interface are #GtkFontChooserWidget,
- * #GtkFontChooserDialog and #GtkFontButton.
+ * #GtkFontChooserDialog and #GtkFontButton. The GtkFontChooser interface
+ * has been introducted in GTK+ 3.2.
  */
 public template FontChooserT(TStruct)
 {
@@ -153,6 +155,26 @@ public template FontChooserT(TStruct)
 	}
 
 	/**
+	 * Gets the custom font map of this font chooser widget,
+	 * or %NULL if it does not have one.
+	 *
+	 * Return: a #PangoFontMap, or %NULL
+	 *
+	 * Since: 3.18
+	 */
+	public override PgFontMap getFontMap()
+	{
+		auto p = gtk_font_chooser_get_font_map(getFontChooserStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p, true);
+	}
+
+	/**
 	 * The selected font size.
 	 *
 	 * Return: A n integer representing the selected font size,
@@ -231,6 +253,42 @@ public template FontChooserT(TStruct)
 	public void setFontDesc(PgFontDescription fontDesc)
 	{
 		gtk_font_chooser_set_font_desc(getFontChooserStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
+	}
+
+	/**
+	 * Sets a custom font map to use for this font chooser widget.
+	 * A custom font map can be used to present application-specific
+	 * fonts instead of or in addition to the normal system fonts.
+	 *
+	 * |[<!-- language="C" -->
+	 * FcConfig *config;
+	 * PangoFontMap *fontmap;
+	 *
+	 * config = FcInitLoadConfigAndFonts ();
+	 * FcConfigAppFontAddFile (config, my_app_font_file);
+	 *
+	 * fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+	 * pango_fc_font_map_set_config (PANGO_FC_FONT_MAP (fontmap), config);
+	 *
+	 * gtk_font_chooser_set_font_map (font_chooser, fontmap);
+	 * ]|
+	 *
+	 * Note that other GTK+ widgets will only be able to use the application-specific
+	 * font if it is present in the font map they use:
+	 *
+	 * |[
+	 * context = gtk_widget_get_pango_context (label);
+	 * pango_context_set_font_map (context, fontmap);
+	 * ]|
+	 *
+	 * Params:
+	 *     fontmap = a #PangoFontMap
+	 *
+	 * Since: 3.18
+	 */
+	public override void setFontMap(PgFontMap fontmap)
+	{
+		gtk_font_chooser_set_font_map(getFontChooserStruct(), (fontmap is null) ? null : fontmap.getPgFontMapStruct());
 	}
 
 	/**

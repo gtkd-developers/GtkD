@@ -518,6 +518,9 @@ public class Source
 	 * should not count on @func being called with @data as its first
 	 * parameter.
 	 *
+	 * See [memory management of sources][mainloop-memory-management] for details
+	 * on how to handle memory management of @data.
+	 *
 	 * Typically, you won't use this function. Instead use functions specific
 	 * to the type of source you are using.
 	 *

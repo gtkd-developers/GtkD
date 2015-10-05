@@ -172,10 +172,10 @@ public class PgCairoFontMap : PgFontMap
 	 * Params:
 	 *     fonttype = desired #cairo_font_type_t
 	 *
-	 * Return: the newly allocated #PangoFontMap
-	 *     of suitable type which should be freed with
-	 *     g_object_unref(), or %NULL if the requested cairo
-	 *     font backend is not supported / compiled in.
+	 * Return: the newly allocated
+	 *     #PangoFontMap of suitable type which should be freed
+	 *     with g_object_unref(), or %NULL if the requested
+	 *     cairo font backend is not supported / compiled in.
 	 *
 	 * Since: 1.18
 	 *

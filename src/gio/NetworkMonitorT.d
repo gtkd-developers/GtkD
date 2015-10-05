@@ -211,6 +211,19 @@ public template NetworkMonitorT(TStruct)
 		return g_network_monitor_get_network_available(getNetworkMonitorStruct()) != 0;
 	}
 
+	/**
+	 * Checks if the network is metered.
+	 * See #GNetworkMonitor:network-metered for more details.
+	 *
+	 * Return: whether the connection is metered
+	 *
+	 * Since: 2.46
+	 */
+	public bool getNetworkMetered()
+	{
+		return g_network_monitor_get_network_metered(getNetworkMonitorStruct()) != 0;
+	}
+
 	int[string] connectedSignals;
 
 	void delegate(bool, NetworkMonitorIF)[] _onNetworkChangedListeners;

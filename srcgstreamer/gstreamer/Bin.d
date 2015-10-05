@@ -565,6 +565,20 @@ public class Bin : Element, ChildProxyIF
 		return gst_bin_remove(gstBin, (element is null) ? null : element.getElementStruct()) != 0;
 	}
 
+	/**
+	 * Synchronizes the state of every child of @bin with the state
+	 * of @bin. See also gst_element_sync_state_with_parent().
+	 *
+	 * Return: %TRUE if syncing the state was successful for all children,
+	 *     otherwise %FALSE.
+	 *
+	 * Since: 1.6
+	 */
+	public bool syncChildrenStates()
+	{
+		return gst_bin_sync_children_states(gstBin) != 0;
+	}
+
 	int[string] connectedSignals;
 
 	bool delegate(Bin)[] onDoLatencyListeners;

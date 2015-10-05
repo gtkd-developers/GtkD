@@ -441,6 +441,24 @@ public class ObjectGst : ObjectG
 	 * Check if @object has an ancestor @ancestor somewhere up in
 	 * the hierarchy. One can e.g. check if a #GstElement is inside a #GstPipeline.
 	 *
+	 * Deprecated: Use gst_object_has_as_ancestor() instead.
+	 *
+	 * MT safe. Grabs and releases @object's locks.
+	 *
+	 * Params:
+	 *     ancestor = a #GstObject to check as ancestor
+	 *
+	 * Return: %TRUE if @ancestor is an ancestor of @object.
+	 */
+	public bool hasAncestor(ObjectGst ancestor)
+	{
+		return gst_object_has_ancestor(gstObject, (ancestor is null) ? null : ancestor.getObjectGstStruct()) != 0;
+	}
+
+	/**
+	 * Check if @object has an ancestor @ancestor somewhere up in
+	 * the hierarchy. One can e.g. check if a #GstElement is inside a #GstPipeline.
+	 *
 	 * Params:
 	 *     ancestor = a #GstObject to check as ancestor
 	 *
@@ -448,9 +466,28 @@ public class ObjectGst : ObjectG
 	 *
 	 *     MT safe. Grabs and releases @object's locks.
 	 */
-	public bool hasAncestor(ObjectGst ancestor)
+	public bool hasAsAncestor(ObjectGst ancestor)
 	{
-		return gst_object_has_ancestor(gstObject, (ancestor is null) ? null : ancestor.getObjectGstStruct()) != 0;
+		return gst_object_has_as_ancestor(gstObject, (ancestor is null) ? null : ancestor.getObjectGstStruct()) != 0;
+	}
+
+	/**
+	 * Check if @parent is the parent of @object.
+	 * E.g. a #GstElement can check if it owns a given #GstPad.
+	 *
+	 * Params:
+	 *     parent = a #GstObject to check as parent
+	 *
+	 * Return: %FALSE if either @object or @parent is %NULL. %TRUE if @parent is
+	 *     the parent of @object. Otherwise %FALSE.
+	 *
+	 *     MT safe. Grabs and releases @object's locks.
+	 *
+	 * Since: 1.6
+	 */
+	public bool hasAsParent(ObjectGst parent)
+	{
+		return gst_object_has_as_parent(gstObject, (parent is null) ? null : parent.getObjectGstStruct()) != 0;
 	}
 
 	/**

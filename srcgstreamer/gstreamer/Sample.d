@@ -27,6 +27,7 @@ module gstreamer.Sample;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.Buffer;
+private import gstreamer.BufferList;
 private import gstreamer.Caps;
 private import gstreamer.Segment;
 private import gstreamer.Structure;
@@ -120,6 +121,28 @@ public class Sample
 	}
 
 	/**
+	 * Get the buffer list associated with @sample
+	 *
+	 * Return: the buffer list of @sample or %NULL
+	 *     when there is no buffer list. The buffer list remains valid as long as
+	 *     @sample is valid.  If you need to hold on to it for longer than
+	 *     that, take a ref to the buffer list with gst_mini_object_ref ().
+	 *
+	 * Since: 1.6
+	 */
+	public BufferList getBufferList()
+	{
+		auto p = gst_sample_get_buffer_list(gstSample);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
+	}
+
+	/**
 	 * Get the caps associated with @sample
 	 *
 	 * Return: the caps of @sample or %NULL
@@ -173,5 +196,18 @@ public class Sample
 		}
 		
 		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p);
+	}
+
+	/**
+	 * Set the buffer list associated with @sample
+	 *
+	 * Params:
+	 *     bufferList = a #GstBufferList
+	 *
+	 * Since: 1.6
+	 */
+	public void setBufferList(BufferList bufferList)
+	{
+		gst_sample_set_buffer_list(gstSample, (bufferList is null) ? null : bufferList.getBufferListStruct());
 	}
 }

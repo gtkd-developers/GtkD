@@ -184,6 +184,29 @@ public struct MessageLog
 	}
 
 	/**
+	 * Like g_log_sets_handler(), but takes a destroy notify for the @user_data.
+	 *
+	 * Params:
+	 *     logDomain = the log domain, or %NULL for the default ""
+	 *         application domain
+	 *     logLevels = the log levels to apply the log handler for.
+	 *         To handle fatal and recursive messages as well, combine
+	 *         the log levels with the #G_LOG_FLAG_FATAL and
+	 *         #G_LOG_FLAG_RECURSION bit flags.
+	 *     logFunc = the log handler function
+	 *     userData = data passed to the log handler
+	 *     destroy = destroy notify for @user_data, or %NULL
+	 *
+	 * Return: the id of the new handler
+	 *
+	 * Since: 2.46
+	 */
+	public static uint logSetHandlerFull(string logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData, GDestroyNotify destroy)
+	{
+		return g_log_set_handler_full(Str.toStringz(logDomain), logLevels, logFunc, userData, destroy);
+	}
+
+	/**
 	 * Logs an error or debugging message.
 	 *
 	 * If the log level has been set as fatal, the abort()

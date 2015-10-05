@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.2.0
+--------------
+-Update to GTK 3.18.
+
 Release: 3.1.5
 --------------
 -The Wrapper now shows file and linenumber on errors in the GIR files.

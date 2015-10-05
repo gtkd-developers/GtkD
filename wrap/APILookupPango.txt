@@ -63,6 +63,9 @@ struct: AttrFontDesc
 class: PgAttributeFontDesc
 extend: Attribute
 
+struct: AttrFontFeatures
+noCode: true
+
 struct: Attribute
 code: start
 	protected void setStruct(GObject* obj)
@@ -159,9 +162,11 @@ struct: PgMiscellaneous
 import: core.stdc.stdio
 
 move: attr_background_new Attribute background_new
+move: attr_background_alpha_new Attribute background_alpha_new
 move: attr_fallback_new Attribute fallback_new
 move: attr_family_new Attribute family_new
 move: attr_foreground_new Attribute foreground_new
+move: attr_foreground_alpha_new Attribute foreground_alpha_new
 move: attr_gravity_hint_new Attribute gravity_hint_new
 move: attr_gravity_new Attribute gravity_new
 move: attr_letter_spacing_new Attribute letter_spacing_new

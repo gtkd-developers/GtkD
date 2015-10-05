@@ -713,6 +713,20 @@ public class Window : ObjectG
 	}
 
 	/**
+	 * Moves the window into fullscreen mode on the given monitor. This means
+	 * the window covers the entire screen and is above any panels or task bars.
+	 *
+	 * If the window was already fullscreen, then this function does nothing.
+	 *
+	 * Params:
+	 *     monitor = Which monitor to display fullscreen on.
+	 */
+	public void fullscreenOnMonitor(int monitor)
+	{
+		gdk_window_fullscreen_on_monitor(gdkWindow, monitor);
+	}
+
+	/**
 	 * This function informs GDK that the geometry of an embedded
 	 * offscreen window has changed. This is necessary for GDK to keep
 	 * track of which offscreen window the pointer is in.
@@ -1288,6 +1302,19 @@ public class Window : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+
+	/**
+	 * Returns whether input to the window is passed through to the window
+	 * below.
+	 *
+	 * See gdk_window_set_pass_through() for details
+	 *
+	 * Since: 3.18
+	 */
+	public bool getPassThrough()
+	{
+		return gdk_window_get_pass_through(gdkWindow) != 0;
 	}
 
 	/**
@@ -2637,6 +2664,36 @@ public class Window : ObjectG
 	public void setOverrideRedirect(bool overrideRedirect)
 	{
 		gdk_window_set_override_redirect(gdkWindow, overrideRedirect);
+	}
+
+	/**
+	 * Sets whether input to the window is passed through to the window
+	 * below.
+	 *
+	 * The default value of this is %FALSE, which means that pointer
+	 * events that happen inside the window are send first to the window,
+	 * but if the event is not selected by the event mask then the event
+	 * is sent to the parent window, and so on up the hierarchy.
+	 *
+	 * If @pass_through is %TRUE then such pointer events happen as if the
+	 * window wasn't there at all, and thus will be sent first to any
+	 * windows below @window. This is useful if the window is used in a
+	 * transparent fashion. In the terminology of the web this would be called
+	 * "pointer-events: none".
+	 *
+	 * Note that a window with @pass_through %TRUE can still have a subwindow
+	 * without pass through, so you can get events on a subset of a window. And in
+	 * that cases you would get the in-between related events such as the pointer
+	 * enter/leave events on its way to the destination window.
+	 *
+	 * Params:
+	 *     passThrough = a boolean
+	 *
+	 * Since: 3.18
+	 */
+	public void setPassThrough(bool passThrough)
+	{
+		gdk_window_set_pass_through(gdkWindow, passThrough);
 	}
 
 	/**

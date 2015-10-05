@@ -37,7 +37,6 @@ shared static this()
 	Linker.link(vte_pty_new_foreign_sync, "vte_pty_new_foreign_sync", LIBRARY.VTE);
 	Linker.link(vte_pty_new_sync, "vte_pty_new_sync", LIBRARY.VTE);
 	Linker.link(vte_pty_child_setup, "vte_pty_child_setup", LIBRARY.VTE);
-	Linker.link(vte_pty_close, "vte_pty_close", LIBRARY.VTE);
 	Linker.link(vte_pty_get_fd, "vte_pty_get_fd", LIBRARY.VTE);
 	Linker.link(vte_pty_get_size, "vte_pty_get_size", LIBRARY.VTE);
 	Linker.link(vte_pty_set_size, "vte_pty_set_size", LIBRARY.VTE);
@@ -84,7 +83,6 @@ shared static this()
 	Linker.link(vte_terminal_match_check_event, "vte_terminal_match_check_event", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_remove, "vte_terminal_match_remove", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_remove_all, "vte_terminal_match_remove_all", LIBRARY.VTE);
-	Linker.link(vte_terminal_match_set_cursor, "vte_terminal_match_set_cursor", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_set_cursor_name, "vte_terminal_match_set_cursor_name", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_set_cursor_type, "vte_terminal_match_set_cursor_type", LIBRARY.VTE);
 	Linker.link(vte_terminal_paste_clipboard, "vte_terminal_paste_clipboard", LIBRARY.VTE);
@@ -149,7 +147,6 @@ __gshared extern(C)
 	VtePty* function(int fd, GCancellable* cancellable, GError** err) c_vte_pty_new_foreign_sync;
 	VtePty* function(VtePtyFlags flags, GCancellable* cancellable, GError** err) c_vte_pty_new_sync;
 	void function(VtePty* pty) c_vte_pty_child_setup;
-	void function(VtePty* pty) c_vte_pty_close;
 	int function(VtePty* pty) c_vte_pty_get_fd;
 	int function(VtePty* pty, int* rows, int* columns, GError** err) c_vte_pty_get_size;
 	int function(VtePty* pty, int rows, int columns, GError** err) c_vte_pty_set_size;
@@ -196,7 +193,6 @@ __gshared extern(C)
 	char* function(VteTerminal* terminal, GdkEvent* event, int* tag) c_vte_terminal_match_check_event;
 	void function(VteTerminal* terminal, int tag) c_vte_terminal_match_remove;
 	void function(VteTerminal* terminal) c_vte_terminal_match_remove_all;
-	void function(VteTerminal* terminal, int tag, GdkCursor* cursor) c_vte_terminal_match_set_cursor;
 	void function(VteTerminal* terminal, int tag, const(char)* cursorName) c_vte_terminal_match_set_cursor_name;
 	void function(VteTerminal* terminal, int tag, GdkCursorType cursorType) c_vte_terminal_match_set_cursor_type;
 	void function(VteTerminal* terminal) c_vte_terminal_paste_clipboard;
@@ -259,7 +255,6 @@ alias c_vte_pty_get_type vte_pty_get_type;
 alias c_vte_pty_new_foreign_sync vte_pty_new_foreign_sync;
 alias c_vte_pty_new_sync vte_pty_new_sync;
 alias c_vte_pty_child_setup vte_pty_child_setup;
-alias c_vte_pty_close vte_pty_close;
 alias c_vte_pty_get_fd vte_pty_get_fd;
 alias c_vte_pty_get_size vte_pty_get_size;
 alias c_vte_pty_set_size vte_pty_set_size;
@@ -306,7 +301,6 @@ alias c_vte_terminal_match_check vte_terminal_match_check;
 alias c_vte_terminal_match_check_event vte_terminal_match_check_event;
 alias c_vte_terminal_match_remove vte_terminal_match_remove;
 alias c_vte_terminal_match_remove_all vte_terminal_match_remove_all;
-alias c_vte_terminal_match_set_cursor vte_terminal_match_set_cursor;
 alias c_vte_terminal_match_set_cursor_name vte_terminal_match_set_cursor_name;
 alias c_vte_terminal_match_set_cursor_type vte_terminal_match_set_cursor_type;
 alias c_vte_terminal_paste_clipboard vte_terminal_paste_clipboard;

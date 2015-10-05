@@ -697,7 +697,7 @@ public class Label : Misc
 	/**
 	 * Sets the text of the label. The label is interpreted as
 	 * including embedded underlines and/or Pango markup depending
-	 * on the values of the #GtkLabel:use-underline" and
+	 * on the values of the #GtkLabel:use-underline and
 	 * #GtkLabel:use-markup properties.
 	 *
 	 * Params:
@@ -761,9 +761,11 @@ public class Label : Misc
 	/**
 	 * Parses @str which is marked up with the
 	 * [Pango text markup language][PangoMarkupFormat], setting the
-	 * label’s text and attribute list based on the parse results. If the @str is
-	 * external data, you may need to escape it with g_markup_escape_text() or
-	 * g_markup_printf_escaped():
+	 * label’s text and attribute list based on the parse results.
+	 *
+	 * If the @str is external data, you may need to escape it with
+	 * g_markup_escape_text() or g_markup_printf_escaped():
+	 *
 	 * |[<!-- language="C" -->
 	 * const char *format = "<span style=\"italic\">\%s</span>";
 	 * char *markup;
@@ -772,6 +774,15 @@ public class Label : Misc
 	 * gtk_label_set_markup (GTK_LABEL (label), markup);
 	 * g_free (markup);
 	 * ]|
+	 *
+	 * This function will set the #GtkLabel:use-markup property to %TRUE as
+	 * a side effect.
+	 *
+	 * If you set the label contents using the #GtkLabel:label property you
+	 * should also ensure that you set the #GtkLabel:use-markup property
+	 * accordingly.
+	 *
+	 * See also: gtk_label_set_text()
 	 *
 	 * Params:
 	 *     str = a markup string (see [Pango markup format][PangoMarkupFormat])
@@ -880,7 +891,13 @@ public class Label : Misc
 	 * Sets the text within the #GtkLabel widget. It overwrites any text that
 	 * was there before.
 	 *
-	 * This will also clear any previously set mnemonic accelerators.
+	 * This function will clear any previously set mnemonic accelerators, and
+	 * set the #GtkLabel:use-underline property to %FALSE as a side effect.
+	 *
+	 * This function will set the #GtkLabel:use-markup property to %FALSE
+	 * as a side effect.
+	 *
+	 * See also: gtk_label_set_markup()
 	 *
 	 * Params:
 	 *     str = The text you want to set

@@ -93,6 +93,24 @@ public class SourceFile : ObjectG
 	}
 
 	/**
+	 * Checks synchronously the file on disk, to know whether the file is externally
+	 * modified, or has been deleted, and whether the file is read-only.
+	 *
+	 * #GtkSourceFile doesn't create a #GFileMonitor to track those properties, so
+	 * this function needs to be called instead. Creating lots of #GFileMonitor's
+	 * would take lots of resources.
+	 *
+	 * Since this function is synchronous, it is advised to call it only on local
+	 * files. See gtk_source_file_is_local().
+	 *
+	 * Since: 3.18
+	 */
+	public void checkFileOnDisk()
+	{
+		gtk_source_file_check_file_on_disk(gtkSourceFile);
+	}
+
+	/**
 	 * Return: the compression type.
 	 *
 	 * Since: 3.14
@@ -147,6 +165,67 @@ public class SourceFile : ObjectG
 	public GtkSourceNewlineType getNewlineType()
 	{
 		return gtk_source_file_get_newline_type(gtkSourceFile);
+	}
+
+	/**
+	 * Returns whether the file has been deleted. If the
+	 * #GtkSourceFile:location is %NULL, returns %FALSE.
+	 *
+	 * To have an up-to-date value, you must first call
+	 * gtk_source_file_check_file_on_disk().
+	 *
+	 * Return: whether the file has been deleted.
+	 *
+	 * Since: 3.18
+	 */
+	public bool isDeleted()
+	{
+		return gtk_source_file_is_deleted(gtkSourceFile) != 0;
+	}
+
+	/**
+	 * Returns whether the file is externally modified. If the
+	 * #GtkSourceFile:location is %NULL, returns %FALSE.
+	 *
+	 * To have an up-to-date value, you must first call
+	 * gtk_source_file_check_file_on_disk().
+	 *
+	 * Return: whether the file is externally modified.
+	 *
+	 * Since: 3.18
+	 */
+	public bool isExternallyModified()
+	{
+		return gtk_source_file_is_externally_modified(gtkSourceFile) != 0;
+	}
+
+	/**
+	 * Returns whether the file is local. If the #GtkSourceFile:location is %NULL,
+	 * returns %FALSE.
+	 *
+	 * Return: whether the file is local.
+	 *
+	 * Since: 3.18
+	 */
+	public bool isLocal()
+	{
+		return gtk_source_file_is_local(gtkSourceFile) != 0;
+	}
+
+	/**
+	 * Returns whether the file is read-only. If the
+	 * #GtkSourceFile:location is %NULL, returns %FALSE.
+	 *
+	 * To have an up-to-date value, you must first call
+	 * gtk_source_file_check_file_on_disk().
+	 *
+	 * Return: whether the file is read-only.
+	 *
+	 * Since: 3.18
+	 */
+	public bool isReadonly()
+	{
+		return gtk_source_file_is_readonly(gtkSourceFile) != 0;
 	}
 
 	/**

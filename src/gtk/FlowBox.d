@@ -24,6 +24,7 @@
 
 module gtk.FlowBox;
 
+private import gio.ListModelIF;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
@@ -126,6 +127,37 @@ public class FlowBox : Container, OrientableIF
 		}
 		
 		this(cast(GtkFlowBox*) p);
+	}
+
+	/**
+	 * Binds @model to @box.
+	 *
+	 * If @box was already bound to a model, that previous binding is
+	 * destroyed.
+	 *
+	 * The contents of @box are cleared and then filled with widgets that
+	 * represent items from @model. @box is updated whenever @model changes.
+	 * If @model is %NULL, @box is left empty.
+	 *
+	 * It is undefined to add or remove widgets directly (for example, with
+	 * gtk_flow_box_insert() or gtk_container_add()) while @box is bound to a
+	 * model.
+	 *
+	 * Note that using a model is incompatible with the filtering and sorting
+	 * functionality in GtkFlowBox. When using a model, filtering and sorting
+	 * should be implemented by the model.
+	 *
+	 * Params:
+	 *     model = the #GListModel to be bound to @box
+	 *     createWidgetFunc = a function that creates widgets for items
+	 *     userData = user data passed to @create_widget_func
+	 *     userDataFreeFunc = function for freeing @user_data
+	 *
+	 * Since: 3.18
+	 */
+	public void bindModel(ListModelIF model, GtkFlowBoxCreateWidgetFunc createWidgetFunc, void* userData, GDestroyNotify userDataFreeFunc)
+	{
+		gtk_flow_box_bind_model(gtkFlowBox, (model is null) ? null : model.getListModelStruct(), createWidgetFunc, userData, userDataFreeFunc);
 	}
 
 	/**
@@ -387,6 +419,9 @@ public class FlowBox : Container, OrientableIF
 	 * gtk_flow_box_child_changed()) or when gtk_flow_box_invalidate_filter()
 	 * is called.
 	 *
+	 * Note that using a filter function is incompatible with using a model
+	 * (see gtk_flow_box_bind_model()).
+	 *
 	 * Params:
 	 *     filterFunc = callback that
 	 *         lets you filter which children to show
@@ -508,6 +543,9 @@ public class FlowBox : Container, OrientableIF
 	 * and will continue to be called each time a child changes (via
 	 * gtk_flow_box_child_changed()) and when gtk_flow_box_invalidate_sort()
 	 * is called.
+	 *
+	 * + * Note that using a sort function is incompatible with using a model
+	 * + * (see gtk_list_box_bind_model()).
 	 *
 	 * Params:
 	 *     sortFunc = the sort function

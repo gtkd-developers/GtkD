@@ -254,6 +254,23 @@ public class SettingsSchema
 	}
 
 	/**
+	 * Introspects the list of keys on @schema.
+	 *
+	 * You should probably not be calling this function from "normal" code
+	 * (since you should already know what keys are in your schema).  This
+	 * function is intended for introspection reasons.
+	 *
+	 * Return: a list of the keys on
+	 *     @schema
+	 *
+	 * Since: 2.46
+	 */
+	public string[] listKeys()
+	{
+		return Str.toStringArray(g_settings_schema_list_keys(gSettingsSchema));
+	}
+
+	/**
 	 * Increase the reference count of @schema, returning a new reference.
 	 *
 	 * Return: a new reference to @schema

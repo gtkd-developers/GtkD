@@ -92,26 +92,13 @@ public class FileMonitor : ObjectG
 	/**
 	 * Cancels a file monitor.
 	 *
-	 * Return: %TRUE if monitor was cancelled.
+	 * Return: always %TRUE
 	 */
 	public bool cancel()
 	{
 		return g_file_monitor_cancel(gFileMonitor) != 0;
 	}
 
-	/**
-	 * Emits the #GFileMonitor::changed signal if a change
-	 * has taken place. Should be called from file monitor
-	 * implementations only.
-	 *
-	 * The signal will be emitted from an idle handler (in the
-	 * [thread-default main context][g-main-context-push-thread-default]).
-	 *
-	 * Params:
-	 *     child = a #GFile.
-	 *     otherFile = a #GFile.
-	 *     eventType = a set of #GFileMonitorEvent flags.
-	 */
 	public void emitEvent(FileIF child, FileIF otherFile, GFileMonitorEvent eventType)
 	{
 		g_file_monitor_emit_event(gFileMonitor, (child is null) ? null : child.getFileStruct(), (otherFile is null) ? null : otherFile.getFileStruct(), eventType);
@@ -146,7 +133,28 @@ public class FileMonitor : ObjectG
 	/**
 	 * Emitted when @file has been changed.
 	 *
-	 * If using #G_FILE_MONITOR_SEND_MOVED flag and @event_type is
+	 * If using %G_FILE_MONITOR_WATCH_RENAMES on a directory monitor, and
+	 * the information is available (and if supported by the backend),
+	 * @event_type may be %G_FILE_MONITOR_EVENT_RENAMED,
+	 * %G_FILE_MONITOR_EVENT_MOVED_IN or %G_FILE_MONITOR_EVENT_MOVED_OUT.
+	 *
+	 * In all cases @file will be a child of the monitored directory.  For
+	 * renames, @file will be the old name and @other_file is the new
+	 * name.  For "moved in" events, @file is the name of the file that
+	 * appeared and @other_file is the old name that it was moved from (in
+	 * another directory).  For "moved out" events, @file is the name of
+	 * the file that used to be in this directory and @other_file is the
+	 * name of the file at its new location.
+	 *
+	 * It makes sense to treat %G_FILE_MONITOR_EVENT_MOVED_IN as
+	 * equivalent to %G_FILE_MONITOR_EVENT_CREATED and
+	 * %G_FILE_MONITOR_EVENT_MOVED_OUT as equivalent to
+	 * %G_FILE_MONITOR_EVENT_DELETED, with extra information.
+	 * %G_FILE_MONITOR_EVENT_RENAMED is equivalent to a delete/create
+	 * pair.  This is exactly how the events will be reported in the case
+	 * that the %G_FILE_MONITOR_WATCH_RENAMES flag is not in use.
+	 *
+	 * If using the deprecated flag %G_FILE_MONITOR_SEND_MOVED flag and @event_type is
 	 * #G_FILE_MONITOR_EVENT_MOVED, @file will be set to a #GFile containing the
 	 * old path, and @other_file will be set to a #GFile containing the new path.
 	 *

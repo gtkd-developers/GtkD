@@ -77,6 +77,7 @@ shared static this()
 	Linker.link(gst_bin_recalculate_latency, "gst_bin_recalculate_latency", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_remove, "gst_bin_remove", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_remove_many, "gst_bin_remove_many", LIBRARY.GSTREAMER);
+	Linker.link(gst_bin_sync_children_states, "gst_bin_sync_children_states", LIBRARY.GSTREAMER);
 
 	// gstreamer.Bitmask
 
@@ -90,9 +91,12 @@ shared static this()
 	Linker.link(gst_buffer_new_wrapped, "gst_buffer_new_wrapped", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_new_wrapped_full, "gst_buffer_new_wrapped_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_add_meta, "gst_buffer_add_meta", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_add_parent_buffer_meta, "gst_buffer_add_parent_buffer_meta", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_add_protection_meta, "gst_buffer_add_protection_meta", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_append, "gst_buffer_append", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_append_memory, "gst_buffer_append_memory", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_append_region, "gst_buffer_append_region", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_copy_deep, "gst_buffer_copy_deep", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_copy_into, "gst_buffer_copy_into", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_copy_region, "gst_buffer_copy_region", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_extract, "gst_buffer_extract", LIBRARY.GSTREAMER);
@@ -136,6 +140,7 @@ shared static this()
 	Linker.link(gst_buffer_list_get_type, "gst_buffer_list_get_type", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_list_new, "gst_buffer_list_new", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_list_new_sized, "gst_buffer_list_new_sized", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_list_copy_deep, "gst_buffer_list_copy_deep", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_list_foreach, "gst_buffer_list_foreach", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_list_get, "gst_buffer_list_get", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_list_insert, "gst_buffer_list_insert", LIBRARY.GSTREAMER);
@@ -184,6 +189,7 @@ shared static this()
 	Linker.link(gst_bus_pop_filtered, "gst_bus_pop_filtered", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_post, "gst_bus_post", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_remove_signal_watch, "gst_bus_remove_signal_watch", LIBRARY.GSTREAMER);
+	Linker.link(gst_bus_remove_watch, "gst_bus_remove_watch", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_set_flushing, "gst_bus_set_flushing", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_set_sync_handler, "gst_bus_set_sync_handler", LIBRARY.GSTREAMER);
 	Linker.link(gst_bus_sync_signal_handler, "gst_bus_sync_signal_handler", LIBRARY.GSTREAMER);
@@ -204,7 +210,9 @@ shared static this()
 	Linker.link(gst_caps_append_structure_full, "gst_caps_append_structure_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_can_intersect, "gst_caps_can_intersect", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_copy_nth, "gst_caps_copy_nth", LIBRARY.GSTREAMER);
+	Linker.link(gst_caps_filter_and_map_in_place, "gst_caps_filter_and_map_in_place", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_fixate, "gst_caps_fixate", LIBRARY.GSTREAMER);
+	Linker.link(gst_caps_foreach, "gst_caps_foreach", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_get_features, "gst_caps_get_features", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_get_size, "gst_caps_get_size", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_get_structure, "gst_caps_get_structure", LIBRARY.GSTREAMER);
@@ -220,6 +228,7 @@ shared static this()
 	Linker.link(gst_caps_is_subset, "gst_caps_is_subset", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_is_subset_structure, "gst_caps_is_subset_structure", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_is_subset_structure_full, "gst_caps_is_subset_structure_full", LIBRARY.GSTREAMER);
+	Linker.link(gst_caps_map_in_place, "gst_caps_map_in_place", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_merge, "gst_caps_merge", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_merge_structure, "gst_caps_merge_structure", LIBRARY.GSTREAMER);
 	Linker.link(gst_caps_merge_structure_full, "gst_caps_merge_structure_full", LIBRARY.GSTREAMER);
@@ -289,22 +298,27 @@ shared static this()
 	Linker.link(gst_clock_id_wait, "gst_clock_id_wait", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_id_wait_async, "gst_clock_id_wait_async", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_add_observation, "gst_clock_add_observation", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_add_observation_unapplied, "gst_clock_add_observation_unapplied", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_adjust_unlocked, "gst_clock_adjust_unlocked", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_adjust_with_calibration, "gst_clock_adjust_with_calibration", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_calibration, "gst_clock_get_calibration", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_internal_time, "gst_clock_get_internal_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_master, "gst_clock_get_master", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_resolution, "gst_clock_get_resolution", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_time, "gst_clock_get_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_get_timeout, "gst_clock_get_timeout", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_is_synced, "gst_clock_is_synced", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_new_periodic_id, "gst_clock_new_periodic_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_new_single_shot_id, "gst_clock_new_single_shot_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_periodic_id_reinit, "gst_clock_periodic_id_reinit", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_set_calibration, "gst_clock_set_calibration", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_set_master, "gst_clock_set_master", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_set_resolution, "gst_clock_set_resolution", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_set_synced, "gst_clock_set_synced", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_set_timeout, "gst_clock_set_timeout", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_single_shot_id_reinit, "gst_clock_single_shot_id_reinit", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_unadjust_unlocked, "gst_clock_unadjust_unlocked", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_wait_for_sync, "gst_clock_wait_for_sync", LIBRARY.GSTREAMER);
 
 	// gstreamer.Context
 
@@ -385,6 +399,7 @@ shared static this()
 	Linker.link(gst_device_get_caps, "gst_device_get_caps", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_get_device_class, "gst_device_get_device_class", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_get_display_name, "gst_device_get_display_name", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_get_properties, "gst_device_get_properties", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_has_classes, "gst_device_has_classes", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_has_classesv, "gst_device_has_classesv", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_reconfigure_element, "gst_device_reconfigure_element", LIBRARY.GSTREAMER);
@@ -396,7 +411,10 @@ shared static this()
 	Linker.link(gst_device_monitor_add_filter, "gst_device_monitor_add_filter", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_monitor_get_bus, "gst_device_monitor_get_bus", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_monitor_get_devices, "gst_device_monitor_get_devices", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_monitor_get_providers, "gst_device_monitor_get_providers", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_monitor_get_show_all_devices, "gst_device_monitor_get_show_all_devices", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_monitor_remove_filter, "gst_device_monitor_remove_filter", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_monitor_set_show_all_devices, "gst_device_monitor_set_show_all_devices", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_monitor_start, "gst_device_monitor_start", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_monitor_stop, "gst_device_monitor_stop", LIBRARY.GSTREAMER);
 
@@ -410,8 +428,11 @@ shared static this()
 	Linker.link(gst_device_provider_get_bus, "gst_device_provider_get_bus", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_provider_get_devices, "gst_device_provider_get_devices", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_provider_get_factory, "gst_device_provider_get_factory", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_provider_get_hidden_providers, "gst_device_provider_get_hidden_providers", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_provider_hide_provider, "gst_device_provider_hide_provider", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_provider_start, "gst_device_provider_start", LIBRARY.GSTREAMER);
 	Linker.link(gst_device_provider_stop, "gst_device_provider_stop", LIBRARY.GSTREAMER);
+	Linker.link(gst_device_provider_unhide_provider, "gst_device_provider_unhide_provider", LIBRARY.GSTREAMER);
 
 	// gstreamer.DeviceProviderClass
 
@@ -542,6 +563,7 @@ shared static this()
 	Linker.link(gst_event_new_gap, "gst_event_new_gap", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_latency, "gst_event_new_latency", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_navigation, "gst_event_new_navigation", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_new_protection, "gst_event_new_protection", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_qos, "gst_event_new_qos", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_reconfigure, "gst_event_new_reconfigure", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_seek, "gst_event_new_seek", LIBRARY.GSTREAMER);
@@ -564,6 +586,7 @@ shared static this()
 	Linker.link(gst_event_parse_gap, "gst_event_parse_gap", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_group_id, "gst_event_parse_group_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_latency, "gst_event_parse_latency", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_parse_protection, "gst_event_parse_protection", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_qos, "gst_event_parse_qos", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_seek, "gst_event_parse_seek", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_segment, "gst_event_parse_segment", LIBRARY.GSTREAMER);
@@ -583,6 +606,11 @@ shared static this()
 	Linker.link(gst_event_type_get_flags, "gst_event_type_get_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_type_get_name, "gst_event_type_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_type_to_quark, "gst_event_type_to_quark", LIBRARY.GSTREAMER);
+
+	// gstreamer.FlagSet
+
+	Linker.link(gst_flagset_get_type, "gst_flagset_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_flagset_register, "gst_flagset_register", LIBRARY.GSTREAMER);
 
 	// gstreamer.Fraction
 
@@ -769,6 +797,8 @@ shared static this()
 	Linker.link(gst_object_get_value_array, "gst_object_get_value_array", LIBRARY.GSTREAMER);
 	Linker.link(gst_object_has_active_control_bindings, "gst_object_has_active_control_bindings", LIBRARY.GSTREAMER);
 	Linker.link(gst_object_has_ancestor, "gst_object_has_ancestor", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_has_as_ancestor, "gst_object_has_as_ancestor", LIBRARY.GSTREAMER);
+	Linker.link(gst_object_has_as_parent, "gst_object_has_as_parent", LIBRARY.GSTREAMER);
 	Linker.link(gst_object_ref, "gst_object_ref", LIBRARY.GSTREAMER);
 	Linker.link(gst_object_remove_control_binding, "gst_object_remove_control_binding", LIBRARY.GSTREAMER);
 	Linker.link(gst_object_set_control_binding_disabled, "gst_object_set_control_binding_disabled", LIBRARY.GSTREAMER);
@@ -890,6 +920,11 @@ shared static this()
 
 	Linker.link(gst_param_spec_fraction, "gst_param_spec_fraction", LIBRARY.GSTREAMER);
 
+	// gstreamer.ParentBufferMeta
+
+	Linker.link(gst_parent_buffer_meta_get_info, "gst_parent_buffer_meta_get_info", LIBRARY.GSTREAMER);
+	Linker.link(gst_parent_buffer_meta_api_get_type, "gst_parent_buffer_meta_api_get_type", LIBRARY.GSTREAMER);
+
 	// gstreamer.ParseContext
 
 	Linker.link(gst_parse_context_get_type, "gst_parse_context_get_type", LIBRARY.GSTREAMER);
@@ -906,9 +941,12 @@ shared static this()
 	Linker.link(gst_pipeline_get_bus, "gst_pipeline_get_bus", LIBRARY.GSTREAMER);
 	Linker.link(gst_pipeline_get_clock, "gst_pipeline_get_clock", LIBRARY.GSTREAMER);
 	Linker.link(gst_pipeline_get_delay, "gst_pipeline_get_delay", LIBRARY.GSTREAMER);
+	Linker.link(gst_pipeline_get_latency, "gst_pipeline_get_latency", LIBRARY.GSTREAMER);
+	Linker.link(gst_pipeline_get_pipeline_clock, "gst_pipeline_get_pipeline_clock", LIBRARY.GSTREAMER);
 	Linker.link(gst_pipeline_set_auto_flush_bus, "gst_pipeline_set_auto_flush_bus", LIBRARY.GSTREAMER);
 	Linker.link(gst_pipeline_set_clock, "gst_pipeline_set_clock", LIBRARY.GSTREAMER);
 	Linker.link(gst_pipeline_set_delay, "gst_pipeline_set_delay", LIBRARY.GSTREAMER);
+	Linker.link(gst_pipeline_set_latency, "gst_pipeline_set_latency", LIBRARY.GSTREAMER);
 	Linker.link(gst_pipeline_use_clock, "gst_pipeline_use_clock", LIBRARY.GSTREAMER);
 
 	// gstreamer.Plugin
@@ -985,10 +1023,17 @@ shared static this()
 	Linker.link(gst_preset_get_meta, "gst_preset_get_meta", LIBRARY.GSTREAMER);
 	Linker.link(gst_preset_get_preset_names, "gst_preset_get_preset_names", LIBRARY.GSTREAMER);
 	Linker.link(gst_preset_get_property_names, "gst_preset_get_property_names", LIBRARY.GSTREAMER);
+	Linker.link(gst_preset_is_editable, "gst_preset_is_editable", LIBRARY.GSTREAMER);
 	Linker.link(gst_preset_load_preset, "gst_preset_load_preset", LIBRARY.GSTREAMER);
 	Linker.link(gst_preset_rename_preset, "gst_preset_rename_preset", LIBRARY.GSTREAMER);
 	Linker.link(gst_preset_save_preset, "gst_preset_save_preset", LIBRARY.GSTREAMER);
 	Linker.link(gst_preset_set_meta, "gst_preset_set_meta", LIBRARY.GSTREAMER);
+
+	// gstreamer.ProtectionMeta
+
+	Linker.link(gst_protection_meta_get_info, "gst_protection_meta_get_info", LIBRARY.GSTREAMER);
+	Linker.link(gst_protection_meta_api_get_type, "gst_protection_meta_api_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_protection_select_system, "gst_protection_select_system", LIBRARY.GSTREAMER);
 
 	// gstreamer.ProxyPad
 
@@ -1115,9 +1160,11 @@ shared static this()
 	Linker.link(gst_sample_get_type, "gst_sample_get_type", LIBRARY.GSTREAMER);
 	Linker.link(gst_sample_new, "gst_sample_new", LIBRARY.GSTREAMER);
 	Linker.link(gst_sample_get_buffer, "gst_sample_get_buffer", LIBRARY.GSTREAMER);
+	Linker.link(gst_sample_get_buffer_list, "gst_sample_get_buffer_list", LIBRARY.GSTREAMER);
 	Linker.link(gst_sample_get_caps, "gst_sample_get_caps", LIBRARY.GSTREAMER);
 	Linker.link(gst_sample_get_info, "gst_sample_get_info", LIBRARY.GSTREAMER);
 	Linker.link(gst_sample_get_segment, "gst_sample_get_segment", LIBRARY.GSTREAMER);
+	Linker.link(gst_sample_set_buffer_list, "gst_sample_set_buffer_list", LIBRARY.GSTREAMER);
 
 	// gstreamer.Segment
 
@@ -1129,10 +1176,12 @@ shared static this()
 	Linker.link(gst_segment_do_seek, "gst_segment_do_seek", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_free, "gst_segment_free", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_init, "gst_segment_init", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_is_equal, "gst_segment_is_equal", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_offset_running_time, "gst_segment_offset_running_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_set_running_time, "gst_segment_set_running_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_position, "gst_segment_to_position", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_running_time, "gst_segment_to_running_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_to_running_time_full, "gst_segment_to_running_time_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_stream_time, "gst_segment_to_stream_time", LIBRARY.GSTREAMER);
 
 	// gstreamer.StaticCaps
@@ -1156,6 +1205,7 @@ shared static this()
 	Linker.link(gst_structure_new_valist, "gst_structure_new_valist", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_can_intersect, "gst_structure_can_intersect", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_copy, "gst_structure_copy", LIBRARY.GSTREAMER);
+	Linker.link(gst_structure_filter_and_map_in_place, "gst_structure_filter_and_map_in_place", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_fixate, "gst_structure_fixate", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_fixate_field, "gst_structure_fixate_field", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_fixate_field_boolean, "gst_structure_fixate_field_boolean", LIBRARY.GSTREAMER);
@@ -1173,6 +1223,7 @@ shared static this()
 	Linker.link(gst_structure_get_double, "gst_structure_get_double", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_enum, "gst_structure_get_enum", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_field_type, "gst_structure_get_field_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_structure_get_flagset, "gst_structure_get_flagset", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_fraction, "gst_structure_get_fraction", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_int, "gst_structure_get_int", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_int64, "gst_structure_get_int64", LIBRARY.GSTREAMER);
@@ -1386,15 +1437,58 @@ shared static this()
 	Linker.link(gst_uri_handler_get_uri, "gst_uri_handler_get_uri", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_handler_get_uri_type, "gst_uri_handler_get_uri_type", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_handler_set_uri, "gst_uri_handler_set_uri", LIBRARY.GSTREAMER);
-	Linker.link(gst_filename_to_uri, "gst_filename_to_uri", LIBRARY.GSTREAMER);
+
+	// gstreamer.Uri
+
+	Linker.link(gst_uri_get_type, "gst_uri_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_new, "gst_uri_new", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_append_path, "gst_uri_append_path", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_append_path_segment, "gst_uri_append_path_segment", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_equal, "gst_uri_equal", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_from_string_with_base, "gst_uri_from_string_with_base", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_fragment, "gst_uri_get_fragment", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_host, "gst_uri_get_host", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_path, "gst_uri_get_path", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_path_segments, "gst_uri_get_path_segments", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_path_string, "gst_uri_get_path_string", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_port, "gst_uri_get_port", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_query_keys, "gst_uri_get_query_keys", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_query_string, "gst_uri_get_query_string", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_query_table, "gst_uri_get_query_table", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_query_value, "gst_uri_get_query_value", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_scheme, "gst_uri_get_scheme", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_userinfo, "gst_uri_get_userinfo", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_is_normalized, "gst_uri_is_normalized", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_is_writable, "gst_uri_is_writable", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_join, "gst_uri_join", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_make_writable, "gst_uri_make_writable", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_new_with_base, "gst_uri_new_with_base", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_normalize, "gst_uri_normalize", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_query_has_key, "gst_uri_query_has_key", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_remove_query_key, "gst_uri_remove_query_key", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_fragment, "gst_uri_set_fragment", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_host, "gst_uri_set_host", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_path, "gst_uri_set_path", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_path_segments, "gst_uri_set_path_segments", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_path_string, "gst_uri_set_path_string", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_port, "gst_uri_set_port", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_query_string, "gst_uri_set_query_string", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_query_table, "gst_uri_set_query_table", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_query_value, "gst_uri_set_query_value", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_scheme, "gst_uri_set_scheme", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_set_userinfo, "gst_uri_set_userinfo", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_to_string, "gst_uri_to_string", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_construct, "gst_uri_construct", LIBRARY.GSTREAMER);
-	Linker.link(gst_uri_error_quark, "gst_uri_error_quark", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_from_string, "gst_uri_from_string", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_location, "gst_uri_get_location", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_protocol, "gst_uri_get_protocol", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_has_protocol, "gst_uri_has_protocol", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_is_valid, "gst_uri_is_valid", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_join_strings, "gst_uri_join_strings", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_protocol_is_supported, "gst_uri_protocol_is_supported", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_protocol_is_valid, "gst_uri_protocol_is_valid", LIBRARY.GSTREAMER);
+	Linker.link(gst_filename_to_uri, "gst_filename_to_uri", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_error_quark, "gst_uri_error_quark", LIBRARY.GSTREAMER);
 
 	// gstreamer.ValueArray
 
@@ -1419,6 +1513,7 @@ shared static this()
 	// gstreamer.Debug
 
 	Linker.link(gst_debug_add_log_function, "gst_debug_add_log_function", LIBRARY.GSTREAMER);
+	Linker.link(gst_debug_bin_to_dot_data, "gst_debug_bin_to_dot_data", LIBRARY.GSTREAMER);
 	Linker.link(gst_debug_bin_to_dot_file, "gst_debug_bin_to_dot_file", LIBRARY.GSTREAMER);
 	Linker.link(gst_debug_bin_to_dot_file_with_ts, "gst_debug_bin_to_dot_file_with_ts", LIBRARY.GSTREAMER);
 	Linker.link(gst_debug_construct_term_color, "gst_debug_construct_term_color", LIBRARY.GSTREAMER);
@@ -1522,6 +1617,9 @@ shared static this()
 	Linker.link(gst_value_get_caps_features, "gst_value_get_caps_features", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_get_double_range_max, "gst_value_get_double_range_max", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_get_double_range_min, "gst_value_get_double_range_min", LIBRARY.GSTREAMER);
+	Linker.link(gst_value_get_flagset_flags, "gst_value_get_flagset_flags", LIBRARY.GSTREAMER);
+	Linker.link(gst_value_get_flagset_mask, "gst_value_get_flagset_mask", LIBRARY.GSTREAMER);
+	Linker.link(gst_value_set_flagset, "gst_value_set_flagset", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_get_fraction_denominator, "gst_value_get_fraction_denominator", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_get_fraction_numerator, "gst_value_get_fraction_numerator", LIBRARY.GSTREAMER);
 	Linker.link(gst_value_get_fraction_range_max, "gst_value_get_fraction_range_max", LIBRARY.GSTREAMER);
@@ -1604,6 +1702,7 @@ __gshared extern(C)
 	int function(GstBin* bin) c_gst_bin_recalculate_latency;
 	int function(GstBin* bin, GstElement* element) c_gst_bin_remove;
 	void function(GstBin* bin, GstElement* element1, ... ) c_gst_bin_remove_many;
+	int function(GstBin* bin) c_gst_bin_sync_children_states;
 
 	// gstreamer.Bitmask
 
@@ -1617,9 +1716,12 @@ __gshared extern(C)
 	GstBuffer* function(void* data, size_t size) c_gst_buffer_new_wrapped;
 	GstBuffer* function(GstMemoryFlags flags, void* data, size_t maxsize, size_t offset, size_t size, void* userData, GDestroyNotify notify) c_gst_buffer_new_wrapped_full;
 	GstMeta* function(GstBuffer* buffer, GstMetaInfo* info, void* params) c_gst_buffer_add_meta;
+	GstParentBufferMeta* function(GstBuffer* buffer, GstBuffer* doref) c_gst_buffer_add_parent_buffer_meta;
+	GstProtectionMeta* function(GstBuffer* buffer, GstStructure* info) c_gst_buffer_add_protection_meta;
 	GstBuffer* function(GstBuffer* buf1, GstBuffer* buf2) c_gst_buffer_append;
 	void function(GstBuffer* buffer, GstMemory* mem) c_gst_buffer_append_memory;
 	GstBuffer* function(GstBuffer* buf1, GstBuffer* buf2, ptrdiff_t offset, ptrdiff_t size) c_gst_buffer_append_region;
+	GstBuffer* function(GstBuffer* buf) c_gst_buffer_copy_deep;
 	int function(GstBuffer* dest, GstBuffer* src, GstBufferCopyFlags flags, size_t offset, size_t size) c_gst_buffer_copy_into;
 	GstBuffer* function(GstBuffer* parent, GstBufferCopyFlags flags, size_t offset, size_t size) c_gst_buffer_copy_region;
 	size_t function(GstBuffer* buffer, size_t offset, void* dest, size_t size) c_gst_buffer_extract;
@@ -1663,6 +1765,7 @@ __gshared extern(C)
 	GType function() c_gst_buffer_list_get_type;
 	GstBufferList* function() c_gst_buffer_list_new;
 	GstBufferList* function(uint size) c_gst_buffer_list_new_sized;
+	GstBufferList* function(GstBufferList* list) c_gst_buffer_list_copy_deep;
 	int function(GstBufferList* list, GstBufferListFunc func, void* userData) c_gst_buffer_list_foreach;
 	GstBuffer* function(GstBufferList* list, uint idx) c_gst_buffer_list_get;
 	void function(GstBufferList* list, int idx, GstBuffer* buffer) c_gst_buffer_list_insert;
@@ -1711,6 +1814,7 @@ __gshared extern(C)
 	GstMessage* function(GstBus* bus, GstMessageType types) c_gst_bus_pop_filtered;
 	int function(GstBus* bus, GstMessage* message) c_gst_bus_post;
 	void function(GstBus* bus) c_gst_bus_remove_signal_watch;
+	int function(GstBus* bus) c_gst_bus_remove_watch;
 	void function(GstBus* bus, int flushing) c_gst_bus_set_flushing;
 	void function(GstBus* bus, GstBusSyncHandler func, void* userData, GDestroyNotify notify) c_gst_bus_set_sync_handler;
 	GstBusSyncReply function(GstBus* bus, GstMessage* message, void* data) c_gst_bus_sync_signal_handler;
@@ -1731,7 +1835,9 @@ __gshared extern(C)
 	void function(GstCaps* caps, GstStructure* structure, GstCapsFeatures* features) c_gst_caps_append_structure_full;
 	int function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_can_intersect;
 	GstCaps* function(GstCaps* caps, uint nth) c_gst_caps_copy_nth;
+	void function(GstCaps* caps, GstCapsFilterMapFunc func, void* userData) c_gst_caps_filter_and_map_in_place;
 	GstCaps* function(GstCaps* caps) c_gst_caps_fixate;
+	int function(GstCaps* caps, GstCapsForeachFunc func, void* userData) c_gst_caps_foreach;
 	GstCapsFeatures* function(GstCaps* caps, uint index) c_gst_caps_get_features;
 	uint function(GstCaps* caps) c_gst_caps_get_size;
 	GstStructure* function(GstCaps* caps, uint index) c_gst_caps_get_structure;
@@ -1747,6 +1853,7 @@ __gshared extern(C)
 	int function(GstCaps* subset, GstCaps* superset) c_gst_caps_is_subset;
 	int function(GstCaps* caps, GstStructure* structure) c_gst_caps_is_subset_structure;
 	int function(GstCaps* caps, GstStructure* structure, GstCapsFeatures* features) c_gst_caps_is_subset_structure_full;
+	int function(GstCaps* caps, GstCapsMapFunc func, void* userData) c_gst_caps_map_in_place;
 	GstCaps* function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_merge;
 	GstCaps* function(GstCaps* caps, GstStructure* structure) c_gst_caps_merge_structure;
 	GstCaps* function(GstCaps* caps, GstStructure* structure, GstCapsFeatures* features) c_gst_caps_merge_structure_full;
@@ -1816,22 +1923,27 @@ __gshared extern(C)
 	GstClockReturn function(GstClockID id, GstClockTimeDiff* jitter) c_gst_clock_id_wait;
 	GstClockReturn function(GstClockID id, GstClockCallback func, void* userData, GDestroyNotify destroyData) c_gst_clock_id_wait_async;
 	int function(GstClock* clock, GstClockTime slave, GstClockTime master, double* rSquared) c_gst_clock_add_observation;
+	int function(GstClock* clock, GstClockTime slave, GstClockTime master, double* rSquared, GstClockTime* internal, GstClockTime* external, GstClockTime* rateNum, GstClockTime* rateDenom) c_gst_clock_add_observation_unapplied;
 	GstClockTime function(GstClock* clock, GstClockTime internal) c_gst_clock_adjust_unlocked;
+	GstClockTime function(GstClock* clock, GstClockTime internalTarget, GstClockTime cinternal, GstClockTime cexternal, GstClockTime cnum, GstClockTime cdenom) c_gst_clock_adjust_with_calibration;
 	void function(GstClock* clock, GstClockTime* internal, GstClockTime* external, GstClockTime* rateNum, GstClockTime* rateDenom) c_gst_clock_get_calibration;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_internal_time;
 	GstClock* function(GstClock* clock) c_gst_clock_get_master;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_resolution;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_time;
 	GstClockTime function(GstClock* clock) c_gst_clock_get_timeout;
+	int function(GstClock* clock) c_gst_clock_is_synced;
 	GstClockID function(GstClock* clock, GstClockTime startTime, GstClockTime interval) c_gst_clock_new_periodic_id;
 	GstClockID function(GstClock* clock, GstClockTime time) c_gst_clock_new_single_shot_id;
 	int function(GstClock* clock, GstClockID id, GstClockTime startTime, GstClockTime interval) c_gst_clock_periodic_id_reinit;
 	void function(GstClock* clock, GstClockTime internal, GstClockTime external, GstClockTime rateNum, GstClockTime rateDenom) c_gst_clock_set_calibration;
 	int function(GstClock* clock, GstClock* master) c_gst_clock_set_master;
 	GstClockTime function(GstClock* clock, GstClockTime resolution) c_gst_clock_set_resolution;
+	void function(GstClock* clock, int synced) c_gst_clock_set_synced;
 	void function(GstClock* clock, GstClockTime timeout) c_gst_clock_set_timeout;
 	int function(GstClock* clock, GstClockID id, GstClockTime time) c_gst_clock_single_shot_id_reinit;
 	GstClockTime function(GstClock* clock, GstClockTime external) c_gst_clock_unadjust_unlocked;
+	int function(GstClock* clock, GstClockTime timeout) c_gst_clock_wait_for_sync;
 
 	// gstreamer.Context
 
@@ -1912,6 +2024,7 @@ __gshared extern(C)
 	GstCaps* function(GstDevice* device) c_gst_device_get_caps;
 	char* function(GstDevice* device) c_gst_device_get_device_class;
 	char* function(GstDevice* device) c_gst_device_get_display_name;
+	GstStructure* function(GstDevice* device) c_gst_device_get_properties;
 	int function(GstDevice* device, const(char)* classes) c_gst_device_has_classes;
 	int function(GstDevice* device, char** classes) c_gst_device_has_classesv;
 	int function(GstDevice* device, GstElement* element) c_gst_device_reconfigure_element;
@@ -1923,7 +2036,10 @@ __gshared extern(C)
 	uint function(GstDeviceMonitor* monitor, const(char)* classes, GstCaps* caps) c_gst_device_monitor_add_filter;
 	GstBus* function(GstDeviceMonitor* monitor) c_gst_device_monitor_get_bus;
 	GList* function(GstDeviceMonitor* monitor) c_gst_device_monitor_get_devices;
+	char** function(GstDeviceMonitor* monitor) c_gst_device_monitor_get_providers;
+	int function(GstDeviceMonitor* monitor) c_gst_device_monitor_get_show_all_devices;
 	int function(GstDeviceMonitor* monitor, uint filterId) c_gst_device_monitor_remove_filter;
+	void function(GstDeviceMonitor* monitor, int showAll) c_gst_device_monitor_set_show_all_devices;
 	int function(GstDeviceMonitor* monitor) c_gst_device_monitor_start;
 	void function(GstDeviceMonitor* monitor) c_gst_device_monitor_stop;
 
@@ -1937,8 +2053,11 @@ __gshared extern(C)
 	GstBus* function(GstDeviceProvider* provider) c_gst_device_provider_get_bus;
 	GList* function(GstDeviceProvider* provider) c_gst_device_provider_get_devices;
 	GstDeviceProviderFactory* function(GstDeviceProvider* provider) c_gst_device_provider_get_factory;
+	char** function(GstDeviceProvider* provider) c_gst_device_provider_get_hidden_providers;
+	void function(GstDeviceProvider* provider, const(char)* name) c_gst_device_provider_hide_provider;
 	int function(GstDeviceProvider* provider) c_gst_device_provider_start;
 	void function(GstDeviceProvider* provider) c_gst_device_provider_stop;
+	void function(GstDeviceProvider* provider, const(char)* name) c_gst_device_provider_unhide_provider;
 
 	// gstreamer.DeviceProviderClass
 
@@ -2069,6 +2188,7 @@ __gshared extern(C)
 	GstEvent* function(GstClockTime timestamp, GstClockTime duration) c_gst_event_new_gap;
 	GstEvent* function(GstClockTime latency) c_gst_event_new_latency;
 	GstEvent* function(GstStructure* structure) c_gst_event_new_navigation;
+	GstEvent* function(const(char)* systemId, GstBuffer* data, const(char)* origin) c_gst_event_new_protection;
 	GstEvent* function(GstQOSType type, double proportion, GstClockTimeDiff diff, GstClockTime timestamp) c_gst_event_new_qos;
 	GstEvent* function() c_gst_event_new_reconfigure;
 	GstEvent* function(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop) c_gst_event_new_seek;
@@ -2091,6 +2211,7 @@ __gshared extern(C)
 	void function(GstEvent* event, GstClockTime* timestamp, GstClockTime* duration) c_gst_event_parse_gap;
 	int function(GstEvent* event, uint* groupId) c_gst_event_parse_group_id;
 	void function(GstEvent* event, GstClockTime* latency) c_gst_event_parse_latency;
+	void function(GstEvent* event, char** systemId, GstBuffer** data, char** origin) c_gst_event_parse_protection;
 	void function(GstEvent* event, GstQOSType* type, double* proportion, GstClockTimeDiff* diff, GstClockTime* timestamp) c_gst_event_parse_qos;
 	void function(GstEvent* event, double* rate, GstFormat* format, GstSeekFlags* flags, GstSeekType* startType, long* start, GstSeekType* stopType, long* stop) c_gst_event_parse_seek;
 	void function(GstEvent* event, GstSegment** segment) c_gst_event_parse_segment;
@@ -2110,6 +2231,11 @@ __gshared extern(C)
 	GstEventTypeFlags function(GstEventType type) c_gst_event_type_get_flags;
 	const(char)* function(GstEventType type) c_gst_event_type_get_name;
 	GQuark function(GstEventType type) c_gst_event_type_to_quark;
+
+	// gstreamer.FlagSet
+
+	GType function() c_gst_flagset_get_type;
+	GType function(GType flagsType) c_gst_flagset_register;
 
 	// gstreamer.Fraction
 
@@ -2296,6 +2422,8 @@ __gshared extern(C)
 	int function(GstObject* object, const(char)* propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, void* values) c_gst_object_get_value_array;
 	int function(GstObject* object) c_gst_object_has_active_control_bindings;
 	int function(GstObject* object, GstObject* ancestor) c_gst_object_has_ancestor;
+	int function(GstObject* object, GstObject* ancestor) c_gst_object_has_as_ancestor;
+	int function(GstObject* object, GstObject* parent) c_gst_object_has_as_parent;
 	void* function(void* object) c_gst_object_ref;
 	int function(GstObject* object, GstControlBinding* binding) c_gst_object_remove_control_binding;
 	void function(GstObject* object, const(char)* propertyName, int disabled) c_gst_object_set_control_binding_disabled;
@@ -2417,6 +2545,11 @@ __gshared extern(C)
 
 	GParamSpec* function(const(char)* name, const(char)* nick, const(char)* blurb, int minNum, int minDenom, int maxNum, int maxDenom, int defaultNum, int defaultDenom, GParamFlags flags) c_gst_param_spec_fraction;
 
+	// gstreamer.ParentBufferMeta
+
+	GstMetaInfo* function() c_gst_parent_buffer_meta_get_info;
+	GType function() c_gst_parent_buffer_meta_api_get_type;
+
 	// gstreamer.ParseContext
 
 	GType function() c_gst_parse_context_get_type;
@@ -2433,9 +2566,12 @@ __gshared extern(C)
 	GstBus* function(GstPipeline* pipeline) c_gst_pipeline_get_bus;
 	GstClock* function(GstPipeline* pipeline) c_gst_pipeline_get_clock;
 	GstClockTime function(GstPipeline* pipeline) c_gst_pipeline_get_delay;
+	GstClockTime function(GstPipeline* pipeline) c_gst_pipeline_get_latency;
+	GstClock* function(GstPipeline* pipeline) c_gst_pipeline_get_pipeline_clock;
 	void function(GstPipeline* pipeline, int autoFlush) c_gst_pipeline_set_auto_flush_bus;
 	int function(GstPipeline* pipeline, GstClock* clock) c_gst_pipeline_set_clock;
 	void function(GstPipeline* pipeline, GstClockTime delay) c_gst_pipeline_set_delay;
+	void function(GstPipeline* pipeline, GstClockTime latency) c_gst_pipeline_set_latency;
 	void function(GstPipeline* pipeline, GstClock* clock) c_gst_pipeline_use_clock;
 
 	// gstreamer.Plugin
@@ -2512,10 +2648,17 @@ __gshared extern(C)
 	int function(GstPreset* preset, const(char)* name, const(char)* tag, char** value) c_gst_preset_get_meta;
 	char** function(GstPreset* preset) c_gst_preset_get_preset_names;
 	char** function(GstPreset* preset) c_gst_preset_get_property_names;
+	int function(GstPreset* preset) c_gst_preset_is_editable;
 	int function(GstPreset* preset, const(char)* name) c_gst_preset_load_preset;
 	int function(GstPreset* preset, const(char)* oldName, const(char)* newName) c_gst_preset_rename_preset;
 	int function(GstPreset* preset, const(char)* name) c_gst_preset_save_preset;
 	int function(GstPreset* preset, const(char)* name, const(char)* tag, const(char)* value) c_gst_preset_set_meta;
+
+	// gstreamer.ProtectionMeta
+
+	GstMetaInfo* function() c_gst_protection_meta_get_info;
+	GType function() c_gst_protection_meta_api_get_type;
+	const(char)* function(char** systemIdentifiers) c_gst_protection_select_system;
 
 	// gstreamer.ProxyPad
 
@@ -2642,9 +2785,11 @@ __gshared extern(C)
 	GType function() c_gst_sample_get_type;
 	GstSample* function(GstBuffer* buffer, GstCaps* caps, GstSegment* segment, GstStructure* info) c_gst_sample_new;
 	GstBuffer* function(GstSample* sample) c_gst_sample_get_buffer;
+	GstBufferList* function(GstSample* sample) c_gst_sample_get_buffer_list;
 	GstCaps* function(GstSample* sample) c_gst_sample_get_caps;
 	GstStructure* function(GstSample* sample) c_gst_sample_get_info;
 	GstSegment* function(GstSample* sample) c_gst_sample_get_segment;
+	void function(GstSample* sample, GstBufferList* bufferList) c_gst_sample_set_buffer_list;
 
 	// gstreamer.Segment
 
@@ -2656,10 +2801,12 @@ __gshared extern(C)
 	int function(GstSegment* segment, double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, ulong start, GstSeekType stopType, ulong stop, int* update) c_gst_segment_do_seek;
 	void function(GstSegment* segment) c_gst_segment_free;
 	void function(GstSegment* segment, GstFormat format) c_gst_segment_init;
+	int function(GstSegment* s0, GstSegment* s1) c_gst_segment_is_equal;
 	int function(GstSegment* segment, GstFormat format, long offset) c_gst_segment_offset_running_time;
 	int function(GstSegment* segment, GstFormat format, ulong runningTime) c_gst_segment_set_running_time;
 	ulong function(GstSegment* segment, GstFormat format, ulong runningTime) c_gst_segment_to_position;
 	ulong function(GstSegment* segment, GstFormat format, ulong position) c_gst_segment_to_running_time;
+	int function(GstSegment* segment, GstFormat format, ulong position, ulong* runningTime) c_gst_segment_to_running_time_full;
 	ulong function(GstSegment* segment, GstFormat format, ulong position) c_gst_segment_to_stream_time;
 
 	// gstreamer.StaticCaps
@@ -2683,6 +2830,7 @@ __gshared extern(C)
 	GstStructure* function(const(char)* name, const(char)* firstfield, void* varargs) c_gst_structure_new_valist;
 	int function(GstStructure* struct1, GstStructure* struct2) c_gst_structure_can_intersect;
 	GstStructure* function(GstStructure* structure) c_gst_structure_copy;
+	void function(GstStructure* structure, GstStructureFilterMapFunc func, void* userData) c_gst_structure_filter_and_map_in_place;
 	void function(GstStructure* structure) c_gst_structure_fixate;
 	int function(GstStructure* structure, const(char)* fieldName) c_gst_structure_fixate_field;
 	int function(GstStructure* structure, const(char)* fieldName, int target) c_gst_structure_fixate_field_boolean;
@@ -2700,6 +2848,7 @@ __gshared extern(C)
 	int function(GstStructure* structure, const(char)* fieldname, double* value) c_gst_structure_get_double;
 	int function(GstStructure* structure, const(char)* fieldname, GType enumtype, int* value) c_gst_structure_get_enum;
 	GType function(GstStructure* structure, const(char)* fieldname) c_gst_structure_get_field_type;
+	int function(GstStructure* structure, const(char)* fieldname, uint* valueFlags, uint* valueMask) c_gst_structure_get_flagset;
 	int function(GstStructure* structure, const(char)* fieldname, int* valueNumerator, int* valueDenominator) c_gst_structure_get_fraction;
 	int function(GstStructure* structure, const(char)* fieldname, int* value) c_gst_structure_get_int;
 	int function(GstStructure* structure, const(char)* fieldname, long* value) c_gst_structure_get_int64;
@@ -2913,15 +3062,58 @@ __gshared extern(C)
 	char* function(GstURIHandler* handler) c_gst_uri_handler_get_uri;
 	GstURIType function(GstURIHandler* handler) c_gst_uri_handler_get_uri_type;
 	int function(GstURIHandler* handler, const(char)* uri, GError** err) c_gst_uri_handler_set_uri;
-	char* function(const(char)* filename, GError** err) c_gst_filename_to_uri;
+
+	// gstreamer.Uri
+
+	GType function() c_gst_uri_get_type;
+	GstUri* function(const(char)* scheme, const(char)* userinfo, const(char)* host, uint port, const(char)* path, const(char)* query, const(char)* fragment) c_gst_uri_new;
+	int function(GstUri* uri, const(char)* relativePath) c_gst_uri_append_path;
+	int function(GstUri* uri, const(char)* pathSegment) c_gst_uri_append_path_segment;
+	int function(GstUri* first, GstUri* second) c_gst_uri_equal;
+	GstUri* function(GstUri* base, const(char)* uri) c_gst_uri_from_string_with_base;
+	const(char)* function(GstUri* uri) c_gst_uri_get_fragment;
+	const(char)* function(GstUri* uri) c_gst_uri_get_host;
+	char* function(GstUri* uri) c_gst_uri_get_path;
+	GList* function(GstUri* uri) c_gst_uri_get_path_segments;
+	char* function(GstUri* uri) c_gst_uri_get_path_string;
+	uint function(GstUri* uri) c_gst_uri_get_port;
+	GList* function(GstUri* uri) c_gst_uri_get_query_keys;
+	char* function(GstUri* uri) c_gst_uri_get_query_string;
+	GHashTable* function(GstUri* uri) c_gst_uri_get_query_table;
+	const(char)* function(GstUri* uri, const(char)* queryKey) c_gst_uri_get_query_value;
+	const(char)* function(GstUri* uri) c_gst_uri_get_scheme;
+	const(char)* function(GstUri* uri) c_gst_uri_get_userinfo;
+	int function(GstUri* uri) c_gst_uri_is_normalized;
+	int function(GstUri* uri) c_gst_uri_is_writable;
+	GstUri* function(GstUri* baseUri, GstUri* refUri) c_gst_uri_join;
+	GstUri* function(GstUri* uri) c_gst_uri_make_writable;
+	GstUri* function(GstUri* base, const(char)* scheme, const(char)* userinfo, const(char)* host, uint port, const(char)* path, const(char)* query, const(char)* fragment) c_gst_uri_new_with_base;
+	int function(GstUri* uri) c_gst_uri_normalize;
+	int function(GstUri* uri, const(char)* queryKey) c_gst_uri_query_has_key;
+	int function(GstUri* uri, const(char)* queryKey) c_gst_uri_remove_query_key;
+	int function(GstUri* uri, const(char)* fragment) c_gst_uri_set_fragment;
+	int function(GstUri* uri, const(char)* host) c_gst_uri_set_host;
+	int function(GstUri* uri, const(char)* path) c_gst_uri_set_path;
+	int function(GstUri* uri, GList* pathSegments) c_gst_uri_set_path_segments;
+	int function(GstUri* uri, const(char)* path) c_gst_uri_set_path_string;
+	int function(GstUri* uri, uint port) c_gst_uri_set_port;
+	int function(GstUri* uri, const(char)* query) c_gst_uri_set_query_string;
+	int function(GstUri* uri, GHashTable* queryTable) c_gst_uri_set_query_table;
+	int function(GstUri* uri, const(char)* queryKey, const(char)* queryValue) c_gst_uri_set_query_value;
+	int function(GstUri* uri, const(char)* scheme) c_gst_uri_set_scheme;
+	int function(GstUri* uri, const(char)* userinfo) c_gst_uri_set_userinfo;
+	char* function(GstUri* uri) c_gst_uri_to_string;
 	char* function(const(char)* protocol, const(char)* location) c_gst_uri_construct;
-	GQuark function() c_gst_uri_error_quark;
+	GstUri* function(const(char)* uri) c_gst_uri_from_string;
 	char* function(const(char)* uri) c_gst_uri_get_location;
 	char* function(const(char)* uri) c_gst_uri_get_protocol;
 	int function(const(char)* uri, const(char)* protocol) c_gst_uri_has_protocol;
 	int function(const(char)* uri) c_gst_uri_is_valid;
+	char* function(const(char)* baseUri, const(char)* refUri) c_gst_uri_join_strings;
 	int function(GstURIType type, const(char)* protocol) c_gst_uri_protocol_is_supported;
 	int function(const(char)* protocol) c_gst_uri_protocol_is_valid;
+	char* function(const(char)* filename, GError** err) c_gst_filename_to_uri;
+	GQuark function() c_gst_uri_error_quark;
 
 	// gstreamer.ValueArray
 
@@ -2946,6 +3138,7 @@ __gshared extern(C)
 	// gstreamer.Debug
 
 	void function(GstLogFunction func, void* userData, GDestroyNotify notify) c_gst_debug_add_log_function;
+	char* function(GstBin* bin, GstDebugGraphDetails details) c_gst_debug_bin_to_dot_data;
 	void function(GstBin* bin, GstDebugGraphDetails details, const(char)* fileName) c_gst_debug_bin_to_dot_file;
 	void function(GstBin* bin, GstDebugGraphDetails details, const(char)* fileName) c_gst_debug_bin_to_dot_file_with_ts;
 	char* function(uint colorinfo) c_gst_debug_construct_term_color;
@@ -2957,7 +3150,7 @@ __gshared extern(C)
 	int function() c_gst_debug_is_colored;
 	const(char)* function(GstDebugLevel level) c_gst_debug_level_get_name;
 	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, const(char)* format, ... ) c_gst_debug_log;
-	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, GstDebugMessage* message, void* unused) c_gst_debug_log_default;
+	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, GstDebugMessage* message, void* userData) c_gst_debug_log_default;
 	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, const(char)* format, void* args) c_gst_debug_log_valist;
 	void function() c_gst_debug_print_stack_trace;
 	uint function(GstLogFunction func) c_gst_debug_remove_log_function;
@@ -3049,6 +3242,9 @@ __gshared extern(C)
 	GstCapsFeatures* function(GValue* value) c_gst_value_get_caps_features;
 	double function(GValue* value) c_gst_value_get_double_range_max;
 	double function(GValue* value) c_gst_value_get_double_range_min;
+	uint function(GValue* value) c_gst_value_get_flagset_flags;
+	uint function(GValue* value) c_gst_value_get_flagset_mask;
+	void function(GValue* value, uint flags, uint mask) c_gst_value_set_flagset;
 	int function(GValue* value) c_gst_value_get_fraction_denominator;
 	int function(GValue* value) c_gst_value_get_fraction_numerator;
 	GValue* function(GValue* value) c_gst_value_get_fraction_range_max;
@@ -3129,6 +3325,7 @@ alias c_gst_bin_iterate_sources gst_bin_iterate_sources;
 alias c_gst_bin_recalculate_latency gst_bin_recalculate_latency;
 alias c_gst_bin_remove gst_bin_remove;
 alias c_gst_bin_remove_many gst_bin_remove_many;
+alias c_gst_bin_sync_children_states gst_bin_sync_children_states;
 
 // gstreamer.Bitmask
 
@@ -3142,9 +3339,12 @@ alias c_gst_buffer_new_allocate gst_buffer_new_allocate;
 alias c_gst_buffer_new_wrapped gst_buffer_new_wrapped;
 alias c_gst_buffer_new_wrapped_full gst_buffer_new_wrapped_full;
 alias c_gst_buffer_add_meta gst_buffer_add_meta;
+alias c_gst_buffer_add_parent_buffer_meta gst_buffer_add_parent_buffer_meta;
+alias c_gst_buffer_add_protection_meta gst_buffer_add_protection_meta;
 alias c_gst_buffer_append gst_buffer_append;
 alias c_gst_buffer_append_memory gst_buffer_append_memory;
 alias c_gst_buffer_append_region gst_buffer_append_region;
+alias c_gst_buffer_copy_deep gst_buffer_copy_deep;
 alias c_gst_buffer_copy_into gst_buffer_copy_into;
 alias c_gst_buffer_copy_region gst_buffer_copy_region;
 alias c_gst_buffer_extract gst_buffer_extract;
@@ -3188,6 +3388,7 @@ alias c_gst_buffer_get_max_memory gst_buffer_get_max_memory;
 alias c_gst_buffer_list_get_type gst_buffer_list_get_type;
 alias c_gst_buffer_list_new gst_buffer_list_new;
 alias c_gst_buffer_list_new_sized gst_buffer_list_new_sized;
+alias c_gst_buffer_list_copy_deep gst_buffer_list_copy_deep;
 alias c_gst_buffer_list_foreach gst_buffer_list_foreach;
 alias c_gst_buffer_list_get gst_buffer_list_get;
 alias c_gst_buffer_list_insert gst_buffer_list_insert;
@@ -3236,6 +3437,7 @@ alias c_gst_bus_pop gst_bus_pop;
 alias c_gst_bus_pop_filtered gst_bus_pop_filtered;
 alias c_gst_bus_post gst_bus_post;
 alias c_gst_bus_remove_signal_watch gst_bus_remove_signal_watch;
+alias c_gst_bus_remove_watch gst_bus_remove_watch;
 alias c_gst_bus_set_flushing gst_bus_set_flushing;
 alias c_gst_bus_set_sync_handler gst_bus_set_sync_handler;
 alias c_gst_bus_sync_signal_handler gst_bus_sync_signal_handler;
@@ -3256,7 +3458,9 @@ alias c_gst_caps_append_structure gst_caps_append_structure;
 alias c_gst_caps_append_structure_full gst_caps_append_structure_full;
 alias c_gst_caps_can_intersect gst_caps_can_intersect;
 alias c_gst_caps_copy_nth gst_caps_copy_nth;
+alias c_gst_caps_filter_and_map_in_place gst_caps_filter_and_map_in_place;
 alias c_gst_caps_fixate gst_caps_fixate;
+alias c_gst_caps_foreach gst_caps_foreach;
 alias c_gst_caps_get_features gst_caps_get_features;
 alias c_gst_caps_get_size gst_caps_get_size;
 alias c_gst_caps_get_structure gst_caps_get_structure;
@@ -3272,6 +3476,7 @@ alias c_gst_caps_is_strictly_equal gst_caps_is_strictly_equal;
 alias c_gst_caps_is_subset gst_caps_is_subset;
 alias c_gst_caps_is_subset_structure gst_caps_is_subset_structure;
 alias c_gst_caps_is_subset_structure_full gst_caps_is_subset_structure_full;
+alias c_gst_caps_map_in_place gst_caps_map_in_place;
 alias c_gst_caps_merge gst_caps_merge;
 alias c_gst_caps_merge_structure gst_caps_merge_structure;
 alias c_gst_caps_merge_structure_full gst_caps_merge_structure_full;
@@ -3341,22 +3546,27 @@ alias c_gst_clock_id_unschedule gst_clock_id_unschedule;
 alias c_gst_clock_id_wait gst_clock_id_wait;
 alias c_gst_clock_id_wait_async gst_clock_id_wait_async;
 alias c_gst_clock_add_observation gst_clock_add_observation;
+alias c_gst_clock_add_observation_unapplied gst_clock_add_observation_unapplied;
 alias c_gst_clock_adjust_unlocked gst_clock_adjust_unlocked;
+alias c_gst_clock_adjust_with_calibration gst_clock_adjust_with_calibration;
 alias c_gst_clock_get_calibration gst_clock_get_calibration;
 alias c_gst_clock_get_internal_time gst_clock_get_internal_time;
 alias c_gst_clock_get_master gst_clock_get_master;
 alias c_gst_clock_get_resolution gst_clock_get_resolution;
 alias c_gst_clock_get_time gst_clock_get_time;
 alias c_gst_clock_get_timeout gst_clock_get_timeout;
+alias c_gst_clock_is_synced gst_clock_is_synced;
 alias c_gst_clock_new_periodic_id gst_clock_new_periodic_id;
 alias c_gst_clock_new_single_shot_id gst_clock_new_single_shot_id;
 alias c_gst_clock_periodic_id_reinit gst_clock_periodic_id_reinit;
 alias c_gst_clock_set_calibration gst_clock_set_calibration;
 alias c_gst_clock_set_master gst_clock_set_master;
 alias c_gst_clock_set_resolution gst_clock_set_resolution;
+alias c_gst_clock_set_synced gst_clock_set_synced;
 alias c_gst_clock_set_timeout gst_clock_set_timeout;
 alias c_gst_clock_single_shot_id_reinit gst_clock_single_shot_id_reinit;
 alias c_gst_clock_unadjust_unlocked gst_clock_unadjust_unlocked;
+alias c_gst_clock_wait_for_sync gst_clock_wait_for_sync;
 
 // gstreamer.Context
 
@@ -3437,6 +3647,7 @@ alias c_gst_device_create_element gst_device_create_element;
 alias c_gst_device_get_caps gst_device_get_caps;
 alias c_gst_device_get_device_class gst_device_get_device_class;
 alias c_gst_device_get_display_name gst_device_get_display_name;
+alias c_gst_device_get_properties gst_device_get_properties;
 alias c_gst_device_has_classes gst_device_has_classes;
 alias c_gst_device_has_classesv gst_device_has_classesv;
 alias c_gst_device_reconfigure_element gst_device_reconfigure_element;
@@ -3448,7 +3659,10 @@ alias c_gst_device_monitor_new gst_device_monitor_new;
 alias c_gst_device_monitor_add_filter gst_device_monitor_add_filter;
 alias c_gst_device_monitor_get_bus gst_device_monitor_get_bus;
 alias c_gst_device_monitor_get_devices gst_device_monitor_get_devices;
+alias c_gst_device_monitor_get_providers gst_device_monitor_get_providers;
+alias c_gst_device_monitor_get_show_all_devices gst_device_monitor_get_show_all_devices;
 alias c_gst_device_monitor_remove_filter gst_device_monitor_remove_filter;
+alias c_gst_device_monitor_set_show_all_devices gst_device_monitor_set_show_all_devices;
 alias c_gst_device_monitor_start gst_device_monitor_start;
 alias c_gst_device_monitor_stop gst_device_monitor_stop;
 
@@ -3462,8 +3676,11 @@ alias c_gst_device_provider_device_remove gst_device_provider_device_remove;
 alias c_gst_device_provider_get_bus gst_device_provider_get_bus;
 alias c_gst_device_provider_get_devices gst_device_provider_get_devices;
 alias c_gst_device_provider_get_factory gst_device_provider_get_factory;
+alias c_gst_device_provider_get_hidden_providers gst_device_provider_get_hidden_providers;
+alias c_gst_device_provider_hide_provider gst_device_provider_hide_provider;
 alias c_gst_device_provider_start gst_device_provider_start;
 alias c_gst_device_provider_stop gst_device_provider_stop;
+alias c_gst_device_provider_unhide_provider gst_device_provider_unhide_provider;
 
 // gstreamer.DeviceProviderClass
 
@@ -3594,6 +3811,7 @@ alias c_gst_event_new_flush_stop gst_event_new_flush_stop;
 alias c_gst_event_new_gap gst_event_new_gap;
 alias c_gst_event_new_latency gst_event_new_latency;
 alias c_gst_event_new_navigation gst_event_new_navigation;
+alias c_gst_event_new_protection gst_event_new_protection;
 alias c_gst_event_new_qos gst_event_new_qos;
 alias c_gst_event_new_reconfigure gst_event_new_reconfigure;
 alias c_gst_event_new_seek gst_event_new_seek;
@@ -3616,6 +3834,7 @@ alias c_gst_event_parse_flush_stop gst_event_parse_flush_stop;
 alias c_gst_event_parse_gap gst_event_parse_gap;
 alias c_gst_event_parse_group_id gst_event_parse_group_id;
 alias c_gst_event_parse_latency gst_event_parse_latency;
+alias c_gst_event_parse_protection gst_event_parse_protection;
 alias c_gst_event_parse_qos gst_event_parse_qos;
 alias c_gst_event_parse_seek gst_event_parse_seek;
 alias c_gst_event_parse_segment gst_event_parse_segment;
@@ -3635,6 +3854,11 @@ alias c_gst_event_writable_structure gst_event_writable_structure;
 alias c_gst_event_type_get_flags gst_event_type_get_flags;
 alias c_gst_event_type_get_name gst_event_type_get_name;
 alias c_gst_event_type_to_quark gst_event_type_to_quark;
+
+// gstreamer.FlagSet
+
+alias c_gst_flagset_get_type gst_flagset_get_type;
+alias c_gst_flagset_register gst_flagset_register;
 
 // gstreamer.Fraction
 
@@ -3821,6 +4045,8 @@ alias c_gst_object_get_value gst_object_get_value;
 alias c_gst_object_get_value_array gst_object_get_value_array;
 alias c_gst_object_has_active_control_bindings gst_object_has_active_control_bindings;
 alias c_gst_object_has_ancestor gst_object_has_ancestor;
+alias c_gst_object_has_as_ancestor gst_object_has_as_ancestor;
+alias c_gst_object_has_as_parent gst_object_has_as_parent;
 alias c_gst_object_ref gst_object_ref;
 alias c_gst_object_remove_control_binding gst_object_remove_control_binding;
 alias c_gst_object_set_control_binding_disabled gst_object_set_control_binding_disabled;
@@ -3942,6 +4168,11 @@ alias c_gst_param_spec_fraction_get_type gst_param_spec_fraction_get_type;
 
 alias c_gst_param_spec_fraction gst_param_spec_fraction;
 
+// gstreamer.ParentBufferMeta
+
+alias c_gst_parent_buffer_meta_get_info gst_parent_buffer_meta_get_info;
+alias c_gst_parent_buffer_meta_api_get_type gst_parent_buffer_meta_api_get_type;
+
 // gstreamer.ParseContext
 
 alias c_gst_parse_context_get_type gst_parse_context_get_type;
@@ -3958,9 +4189,12 @@ alias c_gst_pipeline_get_auto_flush_bus gst_pipeline_get_auto_flush_bus;
 alias c_gst_pipeline_get_bus gst_pipeline_get_bus;
 alias c_gst_pipeline_get_clock gst_pipeline_get_clock;
 alias c_gst_pipeline_get_delay gst_pipeline_get_delay;
+alias c_gst_pipeline_get_latency gst_pipeline_get_latency;
+alias c_gst_pipeline_get_pipeline_clock gst_pipeline_get_pipeline_clock;
 alias c_gst_pipeline_set_auto_flush_bus gst_pipeline_set_auto_flush_bus;
 alias c_gst_pipeline_set_clock gst_pipeline_set_clock;
 alias c_gst_pipeline_set_delay gst_pipeline_set_delay;
+alias c_gst_pipeline_set_latency gst_pipeline_set_latency;
 alias c_gst_pipeline_use_clock gst_pipeline_use_clock;
 
 // gstreamer.Plugin
@@ -4037,10 +4271,17 @@ alias c_gst_preset_delete_preset gst_preset_delete_preset;
 alias c_gst_preset_get_meta gst_preset_get_meta;
 alias c_gst_preset_get_preset_names gst_preset_get_preset_names;
 alias c_gst_preset_get_property_names gst_preset_get_property_names;
+alias c_gst_preset_is_editable gst_preset_is_editable;
 alias c_gst_preset_load_preset gst_preset_load_preset;
 alias c_gst_preset_rename_preset gst_preset_rename_preset;
 alias c_gst_preset_save_preset gst_preset_save_preset;
 alias c_gst_preset_set_meta gst_preset_set_meta;
+
+// gstreamer.ProtectionMeta
+
+alias c_gst_protection_meta_get_info gst_protection_meta_get_info;
+alias c_gst_protection_meta_api_get_type gst_protection_meta_api_get_type;
+alias c_gst_protection_select_system gst_protection_select_system;
 
 // gstreamer.ProxyPad
 
@@ -4167,9 +4408,11 @@ alias c_gst_registry_scan_path gst_registry_scan_path;
 alias c_gst_sample_get_type gst_sample_get_type;
 alias c_gst_sample_new gst_sample_new;
 alias c_gst_sample_get_buffer gst_sample_get_buffer;
+alias c_gst_sample_get_buffer_list gst_sample_get_buffer_list;
 alias c_gst_sample_get_caps gst_sample_get_caps;
 alias c_gst_sample_get_info gst_sample_get_info;
 alias c_gst_sample_get_segment gst_sample_get_segment;
+alias c_gst_sample_set_buffer_list gst_sample_set_buffer_list;
 
 // gstreamer.Segment
 
@@ -4181,10 +4424,12 @@ alias c_gst_segment_copy_into gst_segment_copy_into;
 alias c_gst_segment_do_seek gst_segment_do_seek;
 alias c_gst_segment_free gst_segment_free;
 alias c_gst_segment_init gst_segment_init;
+alias c_gst_segment_is_equal gst_segment_is_equal;
 alias c_gst_segment_offset_running_time gst_segment_offset_running_time;
 alias c_gst_segment_set_running_time gst_segment_set_running_time;
 alias c_gst_segment_to_position gst_segment_to_position;
 alias c_gst_segment_to_running_time gst_segment_to_running_time;
+alias c_gst_segment_to_running_time_full gst_segment_to_running_time_full;
 alias c_gst_segment_to_stream_time gst_segment_to_stream_time;
 
 // gstreamer.StaticCaps
@@ -4208,6 +4453,7 @@ alias c_gst_structure_new_id_empty gst_structure_new_id_empty;
 alias c_gst_structure_new_valist gst_structure_new_valist;
 alias c_gst_structure_can_intersect gst_structure_can_intersect;
 alias c_gst_structure_copy gst_structure_copy;
+alias c_gst_structure_filter_and_map_in_place gst_structure_filter_and_map_in_place;
 alias c_gst_structure_fixate gst_structure_fixate;
 alias c_gst_structure_fixate_field gst_structure_fixate_field;
 alias c_gst_structure_fixate_field_boolean gst_structure_fixate_field_boolean;
@@ -4225,6 +4471,7 @@ alias c_gst_structure_get_date_time gst_structure_get_date_time;
 alias c_gst_structure_get_double gst_structure_get_double;
 alias c_gst_structure_get_enum gst_structure_get_enum;
 alias c_gst_structure_get_field_type gst_structure_get_field_type;
+alias c_gst_structure_get_flagset gst_structure_get_flagset;
 alias c_gst_structure_get_fraction gst_structure_get_fraction;
 alias c_gst_structure_get_int gst_structure_get_int;
 alias c_gst_structure_get_int64 gst_structure_get_int64;
@@ -4438,15 +4685,58 @@ alias c_gst_uri_handler_get_protocols gst_uri_handler_get_protocols;
 alias c_gst_uri_handler_get_uri gst_uri_handler_get_uri;
 alias c_gst_uri_handler_get_uri_type gst_uri_handler_get_uri_type;
 alias c_gst_uri_handler_set_uri gst_uri_handler_set_uri;
-alias c_gst_filename_to_uri gst_filename_to_uri;
+
+// gstreamer.Uri
+
+alias c_gst_uri_get_type gst_uri_get_type;
+alias c_gst_uri_new gst_uri_new;
+alias c_gst_uri_append_path gst_uri_append_path;
+alias c_gst_uri_append_path_segment gst_uri_append_path_segment;
+alias c_gst_uri_equal gst_uri_equal;
+alias c_gst_uri_from_string_with_base gst_uri_from_string_with_base;
+alias c_gst_uri_get_fragment gst_uri_get_fragment;
+alias c_gst_uri_get_host gst_uri_get_host;
+alias c_gst_uri_get_path gst_uri_get_path;
+alias c_gst_uri_get_path_segments gst_uri_get_path_segments;
+alias c_gst_uri_get_path_string gst_uri_get_path_string;
+alias c_gst_uri_get_port gst_uri_get_port;
+alias c_gst_uri_get_query_keys gst_uri_get_query_keys;
+alias c_gst_uri_get_query_string gst_uri_get_query_string;
+alias c_gst_uri_get_query_table gst_uri_get_query_table;
+alias c_gst_uri_get_query_value gst_uri_get_query_value;
+alias c_gst_uri_get_scheme gst_uri_get_scheme;
+alias c_gst_uri_get_userinfo gst_uri_get_userinfo;
+alias c_gst_uri_is_normalized gst_uri_is_normalized;
+alias c_gst_uri_is_writable gst_uri_is_writable;
+alias c_gst_uri_join gst_uri_join;
+alias c_gst_uri_make_writable gst_uri_make_writable;
+alias c_gst_uri_new_with_base gst_uri_new_with_base;
+alias c_gst_uri_normalize gst_uri_normalize;
+alias c_gst_uri_query_has_key gst_uri_query_has_key;
+alias c_gst_uri_remove_query_key gst_uri_remove_query_key;
+alias c_gst_uri_set_fragment gst_uri_set_fragment;
+alias c_gst_uri_set_host gst_uri_set_host;
+alias c_gst_uri_set_path gst_uri_set_path;
+alias c_gst_uri_set_path_segments gst_uri_set_path_segments;
+alias c_gst_uri_set_path_string gst_uri_set_path_string;
+alias c_gst_uri_set_port gst_uri_set_port;
+alias c_gst_uri_set_query_string gst_uri_set_query_string;
+alias c_gst_uri_set_query_table gst_uri_set_query_table;
+alias c_gst_uri_set_query_value gst_uri_set_query_value;
+alias c_gst_uri_set_scheme gst_uri_set_scheme;
+alias c_gst_uri_set_userinfo gst_uri_set_userinfo;
+alias c_gst_uri_to_string gst_uri_to_string;
 alias c_gst_uri_construct gst_uri_construct;
-alias c_gst_uri_error_quark gst_uri_error_quark;
+alias c_gst_uri_from_string gst_uri_from_string;
 alias c_gst_uri_get_location gst_uri_get_location;
 alias c_gst_uri_get_protocol gst_uri_get_protocol;
 alias c_gst_uri_has_protocol gst_uri_has_protocol;
 alias c_gst_uri_is_valid gst_uri_is_valid;
+alias c_gst_uri_join_strings gst_uri_join_strings;
 alias c_gst_uri_protocol_is_supported gst_uri_protocol_is_supported;
 alias c_gst_uri_protocol_is_valid gst_uri_protocol_is_valid;
+alias c_gst_filename_to_uri gst_filename_to_uri;
+alias c_gst_uri_error_quark gst_uri_error_quark;
 
 // gstreamer.ValueArray
 
@@ -4471,6 +4761,7 @@ alias c_gst_value_list_prepend_value gst_value_list_prepend_value;
 // gstreamer.Debug
 
 alias c_gst_debug_add_log_function gst_debug_add_log_function;
+alias c_gst_debug_bin_to_dot_data gst_debug_bin_to_dot_data;
 alias c_gst_debug_bin_to_dot_file gst_debug_bin_to_dot_file;
 alias c_gst_debug_bin_to_dot_file_with_ts gst_debug_bin_to_dot_file_with_ts;
 alias c_gst_debug_construct_term_color gst_debug_construct_term_color;
@@ -4574,6 +4865,9 @@ alias c_gst_value_get_caps gst_value_get_caps;
 alias c_gst_value_get_caps_features gst_value_get_caps_features;
 alias c_gst_value_get_double_range_max gst_value_get_double_range_max;
 alias c_gst_value_get_double_range_min gst_value_get_double_range_min;
+alias c_gst_value_get_flagset_flags gst_value_get_flagset_flags;
+alias c_gst_value_get_flagset_mask gst_value_get_flagset_mask;
+alias c_gst_value_set_flagset gst_value_set_flagset;
 alias c_gst_value_get_fraction_denominator gst_value_get_fraction_denominator;
 alias c_gst_value_get_fraction_numerator gst_value_get_fraction_numerator;
 alias c_gst_value_get_fraction_range_max gst_value_get_fraction_range_max;

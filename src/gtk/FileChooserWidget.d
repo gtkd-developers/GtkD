@@ -87,7 +87,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	}
 
 	/**
-	 * Creates a new #GtkFileChooserWidget.  This is a file chooser widget that can
+	 * Creates a new #GtkFileChooserWidget. This is a file chooser widget that can
 	 * be embedded in custom windows, and it is the same widget that is used by
 	 * #GtkFileChooserDialog.
 	 *
@@ -116,8 +116,7 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onDesktopFolderListeners;
 	/**
-	 * The ::desktop-folder signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::desktop-folder signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the user's Desktop
@@ -150,16 +149,14 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onDownFolderListeners;
 	/**
-	 * The ::down-folder signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::down-folder signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser go to a child of the
-	 * current folder in the file hierarchy.  The subfolder that
-	 * will be used is displayed in the path bar widget of the file
-	 * chooser.  For example, if the path bar is showing
-	 * "/foo/bar/baz", with bar currently displayed, then this will cause
-	 * the file chooser to switch to the "baz" subfolder.
+	 * This is used to make the file chooser go to a child of the current folder
+	 * in the file hierarchy. The subfolder that will be used is displayed in the
+	 * path bar widget of the file chooser. For example, if the path bar is showing
+	 * "/foo/bar/baz", with bar currently displayed, then this will cause the file
+	 * chooser to switch to the "baz" subfolder.
 	 *
 	 * The default binding for this signal is `Alt + Down`.
 	 */
@@ -188,8 +185,7 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onHomeFolderListeners;
 	/**
-	 * The ::home-folder signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::home-folder signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the user's home
@@ -222,27 +218,20 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(string, FileChooserWidget)[] onLocationPopupListeners;
 	/**
-	 * The ::location-popup signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::location-popup signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser show a "Location"
-	 * prompt which the user can use to manually type the name of
-	 * the file he wishes to select.
+	 * This is used to make the file chooser show a "Location" prompt which
+	 * the user can use to manually type the name of the file he wishes to select.
 	 *
-	 * The default bindings for this signal are
-	 * `Control + L`
-	 * with a @path string of "" (the empty
-	 * string).  It is also bound to `/` with a
-	 * @path string of "`/`"
-	 * (a slash):  this lets you type `/` and
-	 * immediately type a path name.  On Unix systems, this is bound to
-	 * `~` (tilde) with a @path string
-	 * of "~" itself for access to home directories.
+	 * The default bindings for this signal are `Control + L` with a @path string
+	 * of "" (the empty string).  It is also bound to `/` with a @path string of
+	 * "`/`" (a slash):  this lets you type `/` and immediately type a path name.
+	 * On Unix systems, this is bound to `~` (tilde) with a @path string of "~"
+	 * itself for access to home directories.
 	 *
 	 * Params:
-	 *     path = a string that gets put in the text entry for the file
-	 *         name.
+	 *     path = a string that gets put in the text entry for the file name
 	 */
 	void addOnLocationPopup(void delegate(string, FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -269,12 +258,11 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onLocationPopupOnPasteListeners;
 	/**
-	 * The ::location-popup-on-paste signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::location-popup-on-paste signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser show a "Location"
-	 * prompt when the user pastes into a #GtkFileChooserWidget.
+	 * This is used to make the file chooser show a "Location" prompt when the user
+	 * pastes into a #GtkFileChooserWidget.
 	 *
 	 * The default binding for this signal is `Control + V`.
 	 */
@@ -303,13 +291,11 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onLocationTogglePopupListeners;
 	/**
-	 * The ::location-toggle-popup signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::location-toggle-popup signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
-	 * This is used to toggle the visibility of a "Location"
-	 * prompt which the user can use to manually type the name of
-	 * the file he wishes to select.
+	 * This is used to toggle the visibility of a "Location" prompt which the user
+	 * can use to manually type the name of the file he wishes to select.
 	 *
 	 * The default binding for this signal is `Control + L`.
 	 */
@@ -336,16 +322,46 @@ public class FileChooserWidget : Box, FileChooserIF
 		}
 	}
 
-	void delegate(int, FileChooserWidget)[] onQuickBookmarkListeners;
+	void delegate(FileChooserWidget)[] onPlacesShortcutListeners;
 	/**
-	 * The ::quick-bookmark signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::places-shortcut signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser switch to the bookmark
-	 * specified in the @bookmark_index parameter.
-	 * For example, if you have three bookmarks, you can pass 0, 1, 2 to
-	 * this signal to switch to each of them, respectively.
+	 * This is used to move the focus to the places sidebar.
+	 *
+	 * The default binding for this signal is `Alt + P`.
+	 */
+	void addOnPlacesShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "places-shortcut" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"places-shortcut",
+				cast(GCallback)&callBackPlacesShortcut,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["places-shortcut"] = 1;
+		}
+		onPlacesShortcutListeners ~= dlg;
+	}
+	extern(C) static void callBackPlacesShortcut(GtkFileChooserWidget* filechooserwidgetStruct, FileChooserWidget _filechooserwidget)
+	{
+		foreach ( void delegate(FileChooserWidget) dlg; _filechooserwidget.onPlacesShortcutListeners )
+		{
+			dlg(_filechooserwidget);
+		}
+	}
+
+	void delegate(int, FileChooserWidget)[] onQuickBookmarkListeners;
+	/**
+	 * The ::quick-bookmark signal is a [keybinding signal][GtkBindingSignal]
+	 * which gets emitted when the user asks for it.
+	 *
+	 * This is used to make the file chooser switch to the bookmark specified
+	 * in the @bookmark_index parameter. For example, if you have three bookmarks,
+	 * you can pass 0, 1, 2 to this signal to switch to each of them, respectively.
 	 *
 	 * The default binding for this signal is `Alt + 1`, `Alt + 2`,
 	 * etc. until `Alt + 0`.  Note that in the default binding, that
@@ -381,8 +397,7 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onRecentShortcutListeners;
 	/**
-	 * The ::recent-shortcut signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::recent-shortcut signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the Recent location.
@@ -414,8 +429,7 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onSearchShortcutListeners;
 	/**
-	 * The ::search-shortcut signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::search-shortcut signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser show the search entry.
@@ -447,8 +461,7 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onShowHiddenListeners;
 	/**
-	 * The ::show-hidden signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::show-hidden signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
 	 * This is used to make the file chooser display hidden files.
@@ -480,12 +493,11 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	void delegate(FileChooserWidget)[] onUpFolderListeners;
 	/**
-	 * The ::up-folder signal is a
-	 * [keybinding signal][GtkBindingSignal]
+	 * The ::up-folder signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
 	 *
-	 * This is used to make the file chooser go to the parent of
-	 * the current folder in the file hierarchy.
+	 * This is used to make the file chooser go to the parent of the current folder
+	 * in the file hierarchy.
 	 *
 	 * The default binding for this signal is `Alt + Up`.
 	 */

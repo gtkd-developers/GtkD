@@ -177,6 +177,18 @@ public enum PangoAttrType
 	 * gravity hint (#PangoAttrInt)
 	 */
 	GRAVITY_HINT = 22,
+	/**
+	 * OpenType font features (#PangoAttrString). Since 1.38
+	 */
+	FONT_FEATURES = 23,
+	/**
+	 * foreground alpha (#PangoAttrInt). Since 1.38
+	 */
+	FOREGROUND_ALPHA = 24,
+	/**
+	 * background alpha (#PangoAttrInt). Since 1.38
+	 */
+	BACKGROUND_ALPHA = 25,
 }
 
 /**
@@ -1199,6 +1211,24 @@ struct PangoAttrFontDesc
 }
 
 /**
+ * The #PangoAttrFontFeatures structure is used to represent OpenType
+ * font features as an attribute.
+ *
+ * Since: 1.38
+ */
+struct PangoAttrFontFeatures
+{
+	/**
+	 * the common portion of the attribute
+	 */
+	PangoAttribute attr;
+	/**
+	 * the featues, as a string in CSS syntax
+	 */
+	char* features;
+}
+
+/**
  * The #PangoAttrInt structure is used to represent attributes with
  * an integer or enumeration value.
  */
@@ -1484,8 +1514,8 @@ struct PangoFontClass
 	 *
 	 * Params:
 	 *     font = a #PangoFont, or %NULL
-	 * Return: the #PangoFontMap for the font, or %NULL
-	 *     if @font is %NULL.
+	 * Return: the #PangoFontMap for the
+	 *     font, or %NULL if @font is %NULL.
 	 */
 	extern(C) PangoFontMap* function(PangoFont* font) getFontMap;
 	extern(C) PangoFontDescription* function(PangoFont* font) describeAbsolute;
@@ -1582,8 +1612,8 @@ struct PangoFontMapClass
 	 *     fontmap = a #PangoFontMap
 	 *     context = the #PangoContext the font will be used with
 	 *     desc = a #PangoFontDescription describing the font to load
-	 * Return: the newly allocated #PangoFont loaded,
-	 *     or %NULL if no font matched.
+	 * Return: the newly allocated #PangoFont
+	 *     loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFont* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc) loadFont;
 	extern(C) void function(PangoFontMap* fontmap, PangoFontFamily*** families, int* nFamilies) listFamilies;
@@ -1594,8 +1624,8 @@ struct PangoFontMapClass
 	 *     context = the #PangoContext the font will be used with
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *     language = a #PangoLanguage the fonts will be used for
-	 * Return: the newly allocated #PangoFontset
-	 *     loaded, or %NULL if no font matched.
+	 * Return: the newly allocated
+	 *     #PangoFontset loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFontset* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language) loadFontset;
 	/**
@@ -1715,7 +1745,13 @@ struct PangoGlyphInfo
 
 struct PangoGlyphItem
 {
+	/**
+	 * corresponding #PangoItem.
+	 */
 	PangoItem* item;
+	/**
+	 * corresponding #PangoGlyphString.
+	 */
 	PangoGlyphString* glyphs;
 }
 
@@ -1733,8 +1769,19 @@ struct PangoGlyphItemIter
 
 struct PangoGlyphString
 {
+	/**
+	 * number of the glyphs in this glyph string.
+	 */
 	int numGlyphs;
+	/**
+	 * array of glyph information
+	 * for the glyph string.
+	 */
 	PangoGlyphInfo* glyphs;
+	/**
+	 * logical cluster info, indexed by the byte index
+	 * within the text corresponding to the glyph string.
+	 */
 	int* logClusters;
 	int space;
 }
@@ -1768,9 +1815,21 @@ struct PangoIncludedModule
 
 struct PangoItem
 {
+	/**
+	 * byte offset of the start of this item in text.
+	 */
 	int offset;
+	/**
+	 * length of this item in bytes.
+	 */
 	int length;
+	/**
+	 * number of Unicode characters in the item.
+	 */
 	int numChars;
+	/**
+	 * analysis results for the item.
+	 */
 	PangoAnalysis analysis;
 }
 
@@ -1784,6 +1843,9 @@ struct PangoLayoutIter;
 
 struct PangoLayoutLine
 {
+	/**
+	 * the layout this line belongs to, might be %NULL
+	 */
 	PangoLayout* layout;
 	/**
 	 * start of line as byte index into layout->text
@@ -1793,6 +1855,10 @@ struct PangoLayoutLine
 	 * length of line in bytes
 	 */
 	int length;
+	/**
+	 * list of runs in the
+	 * line, from left to right
+	 */
 	GSList* runs;
 	import std.bitmanip: bitfields;
 	mixin(bitfields!(
@@ -1829,11 +1895,6 @@ struct PangoLogAttr
 
 struct PangoMap;
 
-/**
- * A #PangoMapEntry contains information about the engine that should be used
- * for the codepoint to which this entry belongs and also whether the engine
- * matches the language tag for this entry's map exactly or just approximately.
- */
 struct PangoMapEntry;
 
 struct PangoMatrix
@@ -1896,8 +1957,9 @@ struct PangoRenderer
 	bool strikethrough;
 	int activeCount;
 	/**
-	 * the current transformation matrix for the Renderer; may
-	 * be %NULL, which should be treated the same as the identity matrix.
+	 * the current transformation matrix for
+	 * the Renderer; may be %NULL, which should be treated the
+	 * same as the identity matrix.
 	 */
 	PangoMatrix* matrix;
 	PangoRendererPrivate* priv;

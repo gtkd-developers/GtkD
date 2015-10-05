@@ -301,6 +301,7 @@ shared static this()
 	Linker.link(gdk_keymap_get_modifier_mask, "gdk_keymap_get_modifier_mask", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_get_modifier_state, "gdk_keymap_get_modifier_state", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_get_num_lock_state, "gdk_keymap_get_num_lock_state", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_keymap_get_scroll_lock_state, "gdk_keymap_get_scroll_lock_state", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_have_bidi_layouts, "gdk_keymap_have_bidi_layouts", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_lookup_key, "gdk_keymap_lookup_key", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_keymap_map_virtual_modifiers, "gdk_keymap_map_virtual_modifiers", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -324,6 +325,12 @@ shared static this()
 	Linker.link(gdk_rgba_hash, "gdk_rgba_hash", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_rgba_parse, "gdk_rgba_parse", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_rgba_to_string, "gdk_rgba_to_string", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+
+	// gdk.Rectangle
+
+	Linker.link(gdk_rectangle_get_type, "gdk_rectangle_get_type", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_rectangle_intersect, "gdk_rectangle_intersect", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_rectangle_union, "gdk_rectangle_union", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.Screen
 
@@ -420,6 +427,7 @@ shared static this()
 	Linker.link(gdk_window_freeze_toplevel_updates_libgtk_only, "gdk_window_freeze_toplevel_updates_libgtk_only", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_freeze_updates, "gdk_window_freeze_updates", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_fullscreen, "gdk_window_fullscreen", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_fullscreen_on_monitor, "gdk_window_fullscreen_on_monitor", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_geometry_changed, "gdk_window_geometry_changed", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_accept_focus, "gdk_window_get_accept_focus", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_background_pattern, "gdk_window_get_background_pattern", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -449,6 +457,7 @@ shared static this()
 	Linker.link(gdk_window_get_modal_hint, "gdk_window_get_modal_hint", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_origin, "gdk_window_get_origin", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_parent, "gdk_window_get_parent", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_get_pass_through, "gdk_window_get_pass_through", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_pointer, "gdk_window_get_pointer", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_position, "gdk_window_get_position", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_get_root_coords, "gdk_window_get_root_coords", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -522,6 +531,7 @@ shared static this()
 	Linker.link(gdk_window_set_opacity, "gdk_window_set_opacity", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_opaque_region, "gdk_window_set_opaque_region", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_override_redirect, "gdk_window_set_override_redirect", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_window_set_pass_through, "gdk_window_set_pass_through", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_role, "gdk_window_set_role", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_shadow_width, "gdk_window_set_shadow_width", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_window_set_skip_pager_hint, "gdk_window_set_skip_pager_hint", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
@@ -592,11 +602,6 @@ shared static this()
 
 	Linker.link(gdk_pixbuf_get_from_surface, "gdk_pixbuf_get_from_surface", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_from_window, "gdk_pixbuf_get_from_window", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
-
-	// gdk.Rectangle
-
-	Linker.link(gdk_rectangle_intersect, "gdk_rectangle_intersect", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
-	Linker.link(gdk_rectangle_union, "gdk_rectangle_union", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.Threads
 
@@ -925,6 +930,7 @@ __gshared extern(C)
 	GdkModifierType function(GdkKeymap* keymap, GdkModifierIntent intent) c_gdk_keymap_get_modifier_mask;
 	uint function(GdkKeymap* keymap) c_gdk_keymap_get_modifier_state;
 	int function(GdkKeymap* keymap) c_gdk_keymap_get_num_lock_state;
+	int function(GdkKeymap* keymap) c_gdk_keymap_get_scroll_lock_state;
 	int function(GdkKeymap* keymap) c_gdk_keymap_have_bidi_layouts;
 	uint function(GdkKeymap* keymap, GdkKeymapKey* key) c_gdk_keymap_lookup_key;
 	int function(GdkKeymap* keymap, GdkModifierType* state) c_gdk_keymap_map_virtual_modifiers;
@@ -948,6 +954,12 @@ __gshared extern(C)
 	uint function(void* p) c_gdk_rgba_hash;
 	int function(GdkRGBA* rgba, const(char)* spec) c_gdk_rgba_parse;
 	char* function(GdkRGBA* rgba) c_gdk_rgba_to_string;
+
+	// gdk.Rectangle
+
+	GType function() c_gdk_rectangle_get_type;
+	int function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_intersect;
+	void function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_union;
 
 	// gdk.Screen
 
@@ -1044,6 +1056,7 @@ __gshared extern(C)
 	void function(GdkWindow* window) c_gdk_window_freeze_toplevel_updates_libgtk_only;
 	void function(GdkWindow* window) c_gdk_window_freeze_updates;
 	void function(GdkWindow* window) c_gdk_window_fullscreen;
+	void function(GdkWindow* window, int monitor) c_gdk_window_fullscreen_on_monitor;
 	void function(GdkWindow* window) c_gdk_window_geometry_changed;
 	int function(GdkWindow* window) c_gdk_window_get_accept_focus;
 	cairo_pattern_t* function(GdkWindow* window) c_gdk_window_get_background_pattern;
@@ -1073,6 +1086,7 @@ __gshared extern(C)
 	int function(GdkWindow* window) c_gdk_window_get_modal_hint;
 	int function(GdkWindow* window, int* x, int* y) c_gdk_window_get_origin;
 	GdkWindow* function(GdkWindow* window) c_gdk_window_get_parent;
+	int function(GdkWindow* window) c_gdk_window_get_pass_through;
 	GdkWindow* function(GdkWindow* window, int* x, int* y, GdkModifierType* mask) c_gdk_window_get_pointer;
 	void function(GdkWindow* window, int* x, int* y) c_gdk_window_get_position;
 	void function(GdkWindow* window, int x, int y, int* rootX, int* rootY) c_gdk_window_get_root_coords;
@@ -1146,6 +1160,7 @@ __gshared extern(C)
 	void function(GdkWindow* window, double opacity) c_gdk_window_set_opacity;
 	void function(GdkWindow* window, cairo_region_t* region) c_gdk_window_set_opaque_region;
 	void function(GdkWindow* window, int overrideRedirect) c_gdk_window_set_override_redirect;
+	void function(GdkWindow* window, int passThrough) c_gdk_window_set_pass_through;
 	void function(GdkWindow* window, const(char)* role) c_gdk_window_set_role;
 	void function(GdkWindow* window, int left, int right, int top, int bottom) c_gdk_window_set_shadow_width;
 	void function(GdkWindow* window, int skipsPager) c_gdk_window_set_skip_pager_hint;
@@ -1216,11 +1231,6 @@ __gshared extern(C)
 
 	GdkPixbuf* function(cairo_surface_t* surface, int srcX, int srcY, int width, int height) c_gdk_pixbuf_get_from_surface;
 	GdkPixbuf* function(GdkWindow* window, int srcX, int srcY, int width, int height) c_gdk_pixbuf_get_from_window;
-
-	// gdk.Rectangle
-
-	int function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_intersect;
-	void function(GdkRectangle* src1, GdkRectangle* src2, GdkRectangle* dest) c_gdk_rectangle_union;
 
 	// gdk.Threads
 
@@ -1547,6 +1557,7 @@ alias c_gdk_keymap_get_entries_for_keyval gdk_keymap_get_entries_for_keyval;
 alias c_gdk_keymap_get_modifier_mask gdk_keymap_get_modifier_mask;
 alias c_gdk_keymap_get_modifier_state gdk_keymap_get_modifier_state;
 alias c_gdk_keymap_get_num_lock_state gdk_keymap_get_num_lock_state;
+alias c_gdk_keymap_get_scroll_lock_state gdk_keymap_get_scroll_lock_state;
 alias c_gdk_keymap_have_bidi_layouts gdk_keymap_have_bidi_layouts;
 alias c_gdk_keymap_lookup_key gdk_keymap_lookup_key;
 alias c_gdk_keymap_map_virtual_modifiers gdk_keymap_map_virtual_modifiers;
@@ -1570,6 +1581,12 @@ alias c_gdk_rgba_free gdk_rgba_free;
 alias c_gdk_rgba_hash gdk_rgba_hash;
 alias c_gdk_rgba_parse gdk_rgba_parse;
 alias c_gdk_rgba_to_string gdk_rgba_to_string;
+
+// gdk.Rectangle
+
+alias c_gdk_rectangle_get_type gdk_rectangle_get_type;
+alias c_gdk_rectangle_intersect gdk_rectangle_intersect;
+alias c_gdk_rectangle_union gdk_rectangle_union;
 
 // gdk.Screen
 
@@ -1666,6 +1683,7 @@ alias c_gdk_window_focus gdk_window_focus;
 alias c_gdk_window_freeze_toplevel_updates_libgtk_only gdk_window_freeze_toplevel_updates_libgtk_only;
 alias c_gdk_window_freeze_updates gdk_window_freeze_updates;
 alias c_gdk_window_fullscreen gdk_window_fullscreen;
+alias c_gdk_window_fullscreen_on_monitor gdk_window_fullscreen_on_monitor;
 alias c_gdk_window_geometry_changed gdk_window_geometry_changed;
 alias c_gdk_window_get_accept_focus gdk_window_get_accept_focus;
 alias c_gdk_window_get_background_pattern gdk_window_get_background_pattern;
@@ -1695,6 +1713,7 @@ alias c_gdk_window_get_height gdk_window_get_height;
 alias c_gdk_window_get_modal_hint gdk_window_get_modal_hint;
 alias c_gdk_window_get_origin gdk_window_get_origin;
 alias c_gdk_window_get_parent gdk_window_get_parent;
+alias c_gdk_window_get_pass_through gdk_window_get_pass_through;
 alias c_gdk_window_get_pointer gdk_window_get_pointer;
 alias c_gdk_window_get_position gdk_window_get_position;
 alias c_gdk_window_get_root_coords gdk_window_get_root_coords;
@@ -1768,6 +1787,7 @@ alias c_gdk_window_set_modal_hint gdk_window_set_modal_hint;
 alias c_gdk_window_set_opacity gdk_window_set_opacity;
 alias c_gdk_window_set_opaque_region gdk_window_set_opaque_region;
 alias c_gdk_window_set_override_redirect gdk_window_set_override_redirect;
+alias c_gdk_window_set_pass_through gdk_window_set_pass_through;
 alias c_gdk_window_set_role gdk_window_set_role;
 alias c_gdk_window_set_shadow_width gdk_window_set_shadow_width;
 alias c_gdk_window_set_skip_pager_hint gdk_window_set_skip_pager_hint;
@@ -1838,11 +1858,6 @@ alias c_gdk_pango_layout_line_get_clip_region gdk_pango_layout_line_get_clip_reg
 
 alias c_gdk_pixbuf_get_from_surface gdk_pixbuf_get_from_surface;
 alias c_gdk_pixbuf_get_from_window gdk_pixbuf_get_from_window;
-
-// gdk.Rectangle
-
-alias c_gdk_rectangle_intersect gdk_rectangle_intersect;
-alias c_gdk_rectangle_union gdk_rectangle_union;
 
 // gdk.Threads
 

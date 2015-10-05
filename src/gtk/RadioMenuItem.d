@@ -241,6 +241,42 @@ public class RadioMenuItem : CheckMenuItem
 	}
 
 	/**
+	 * Joins a #GtkRadioMenuItem object to the group of another #GtkRadioMenuItem
+	 * object.
+	 *
+	 * This function should be used by language bindings to avoid the memory
+	 * manangement of the opaque #GSList of gtk_radio_menu_item_get_group()
+	 * and gtk_radio_menu_item_set_group().
+	 *
+	 * A common way to set up a group of #GtkRadioMenuItem instances is:
+	 *
+	 * |[
+	 * GtkRadioMenuItem *last_item = NULL;
+	 *
+	 * while ( ...more items to add... )
+	 * {
+	 * GtkRadioMenuItem *radio_item;
+	 *
+	 * radio_item = gtk_radio_menu_item_new (...);
+	 *
+	 * gtk_radio_menu_item_join_group (radio_item, last_item);
+	 * last_item = radio_item;
+	 * }
+	 * ]|
+	 *
+	 * Params:
+	 *     groupSource = a #GtkRadioMenuItem whose group we are
+	 *         joining, or %NULL to remove the @radio_menu_item from its current
+	 *         group
+	 *
+	 * Since: 3.18
+	 */
+	public void joinGroup(RadioMenuItem groupSource)
+	{
+		gtk_radio_menu_item_join_group(gtkRadioMenuItem, (groupSource is null) ? null : groupSource.getRadioMenuItemStruct());
+	}
+
+	/**
 	 * Sets the group of a radio menu item, or changes it.
 	 *
 	 * Params:

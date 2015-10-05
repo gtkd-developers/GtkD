@@ -151,6 +151,34 @@ public class AsyncQueue
 	}
 
 	/**
+	 * Pushes the @data into the @queue. @data must not be %NULL.
+	 * In contrast to g_async_queue_push(), this function
+	 * pushes the new item ahead of the items already in the queue,
+	 * so that it will be the next one to be popped off the queue.
+	 *
+	 * Since: 2.46
+	 */
+	public void pushFront(void* item)
+	{
+		g_async_queue_push_front(gAsyncQueue, item);
+	}
+
+	/**
+	 * Pushes the @data into the @queue. @data must not be %NULL.
+	 * In contrast to g_async_queue_push_unlocked(), this function
+	 * pushes the new item ahead of the items already in the queue,
+	 * so that it will be the next one to be popped off the queue.
+	 *
+	 * This function must be called while holding the @queue's lock.
+	 *
+	 * Since: 2.46
+	 */
+	public void pushFrontUnlocked(void* item)
+	{
+		g_async_queue_push_front_unlocked(gAsyncQueue, item);
+	}
+
+	/**
 	 * Inserts @data into @queue using @func to determine the new
 	 * position.
 	 *
@@ -244,6 +272,32 @@ public class AsyncQueue
 	public void refUnlocked()
 	{
 		g_async_queue_ref_unlocked(gAsyncQueue);
+	}
+
+	/**
+	 * Remove an item from the queue.
+	 *
+	 * Return: %TRUE if the item was removed
+	 *
+	 * Since: 2.46
+	 */
+	public bool remove(void* item)
+	{
+		return g_async_queue_remove(gAsyncQueue, item) != 0;
+	}
+
+	/**
+	 * Remove an item from the queue.
+	 *
+	 * This function must be called while holding the @queue's lock.
+	 *
+	 * Return: %TRUE if the item was removed
+	 *
+	 * Since: 2.46
+	 */
+	public bool removeUnlocked(void* item)
+	{
+		return g_async_queue_remove_unlocked(gAsyncQueue, item) != 0;
 	}
 
 	/**

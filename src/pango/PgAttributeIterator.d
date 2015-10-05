@@ -106,9 +106,9 @@ public class PgAttributeIterator
 	 * Params:
 	 *     type = the type of attribute to find.
 	 *
-	 * Return: the current attribute of the given type, or %NULL if
-	 *     no attribute of that type applies to the current
-	 *     location.
+	 * Return: the current attribute of the given type,
+	 *     or %NULL if no attribute of that type applies to the
+	 *     current location.
 	 */
 	public PgAttribute get(PangoAttrType type)
 	{

@@ -31,12 +31,6 @@ public import gtkc.pangotypes;
 public import gtkc.gdkpixbuftypes;
 
 /**
- * Defines the position and size of a rectangle. It is identical to
- * #cairo_rectangle_int_t.
- */
-public alias cairo_rectangle_int_t GdkRectangle;
-
-/**
  * Used to represent native events (XEvents for the X11
  * backend, MSGs for Win32).
  */
@@ -155,7 +149,12 @@ public enum GdkCrossingMode
 alias GdkCrossingMode CrossingMode;
 
 /**
- * The standard cursors available.
+ * Predefined cursors.
+ *
+ * Note that these IDs are directly taken from the X cursor font, and many
+ * of these cursors are either not useful, or are not available on other platforms.
+ *
+ * The recommended way to create cursors is to use gdk_cursor_new_from_name().
  */
 public enum GdkCursorType
 {
@@ -707,6 +706,7 @@ public enum GdkEventMask
 	 * receive smooth scrolling events. Since 3.4
 	 */
 	SMOOTH_SCROLL_MASK = 8388608,
+	TOUCHPAD_GESTURE_MASK = 16777216,
 	/**
 	 * the combination of all the above event masks.
 	 */
@@ -911,9 +911,19 @@ public enum GdkEventType
 	 */
 	TOUCH_CANCEL = 40,
 	/**
+	 * A touchpad swipe gesture event, the current state
+	 * is determined by its phase field. This event type was added in 3.18.
+	 */
+	TOUCHPAD_SWIPE = 41,
+	/**
+	 * A touchpad pinch gesture event, the current state
+	 * is determined by its phase field. This event type was added in 3.18.
+	 */
+	TOUCHPAD_PINCH = 42,
+	/**
 	 * marks the end of the GdkEventType enumeration. Added in 2.18
 	 */
-	EVENT_LAST = 41,
+	EVENT_LAST = 43,
 }
 alias GdkEventType EventType;
 
@@ -1240,6 +1250,14 @@ public enum GdkModifierIntent
 	 * groups (AltGr on X11/Windows and Option/Alt on OS X).
 	 */
 	SHIFT_GROUP = 5,
+	/**
+	 * The set of modifier masks accepted
+	 * as modifiers in accelerators. Needed because Command is mapped to MOD2 on
+	 * OSX, which is widely used, but on X11 MOD2 is NumLock and using that for a
+	 * mod key is problematic at best.
+	 * Ref: https://bugzilla.gnome.org/show_bug.cgi?id=736125.
+	 */
+	DEFAULT_MOD_MASK = 6,
 }
 alias GdkModifierIntent ModifierIntent;
 
@@ -1562,6 +1580,49 @@ public enum GdkStatus
 	ERROR_MEM = -4,
 }
 alias GdkStatus Status;
+
+/**
+ * Specifies the current state of a touchpad gesture. All gestures are
+ * guaranteed to begin with an event with phase %GDK_TOUCHPAD_GESTURE_PHASE_BEGIN,
+ * followed by 0 or several events with phase %GDK_TOUCHPAD_GESTURE_PHASE_UPDATE.
+ *
+ * A finished gesture may have 2 possible outcomes, an event with phase
+ * %GDK_TOUCHPAD_GESTURE_PHASE_END will be emitted when the gesture is
+ * considered successful, this should be used as the hint to perform any
+ * permanent changes.
+ *
+ * Cancelled gestures may be so for a variety of reasons, due to hardware
+ * or the compositor, or due to the gesture recognition layers hinting the
+ * gesture did not finish resolutely (eg. a 3rd finger being added during
+ * a pinch gesture). In these cases, the last event will report the phase
+ * %GDK_TOUCHPAD_GESTURE_PHASE_CANCEL, this should be used as a hint
+ * to undo any visible/permanent changes that were done throughout the
+ * progress of the gesture.
+ *
+ * See also #GdkEventTouchpadSwipe and #GdkEventTouchpadPinch.
+ */
+public enum GdkTouchpadGesturePhase
+{
+	/**
+	 * The gesture has begun.
+	 */
+	BEGIN = 0,
+	/**
+	 * The gesture has been updated.
+	 */
+	UPDATE = 1,
+	/**
+	 * The gesture was finished, changes
+	 * should be permanently applied.
+	 */
+	END = 2,
+	/**
+	 * The gesture was cancelled, all
+	 * changes should be undone.
+	 */
+	CANCEL = 3,
+}
+alias GdkTouchpadGesturePhase TouchpadGesturePhase;
 
 /**
  * Specifies the visiblity status of a window for a #GdkEventVisibility.
@@ -2147,6 +2208,8 @@ struct GdkEvent
 		 * a #GdkEventGrabBroken
 		 */
 		GdkEventGrabBroken grabBroken;
+		GdkEventTouchpadSwipe touchpadSwipe;
+		GdkEventTouchpadPinch touchpadPinch;
 	}
 }
 
@@ -2970,6 +3033,142 @@ struct GdkEventTouch
 }
 
 /**
+ * Generated during touchpad swipe gestures.
+ */
+struct GdkEventTouchpadPinch
+{
+	/**
+	 * the type of the event (%GDK_TOUCHPAD_PINCH)
+	 */
+	GdkEventType type;
+	/**
+	 * the window which received the event
+	 */
+	GdkWindow* window;
+	/**
+	 * %TRUE if the event was sent explicitly
+	 */
+	byte sendEvent;
+	/**
+	 * the current phase of the gesture
+	 */
+	TouchpadGesturePhase phase;
+	/**
+	 * The number of fingers triggering the pinch
+	 */
+	byte nFingers;
+	/**
+	 * the time of the event in milliseconds
+	 */
+	uint time;
+	/**
+	 * The X coordinate of the pointer
+	 */
+	double x;
+	/**
+	 * The Y coordinate of the pointer
+	 */
+	double y;
+	/**
+	 * Movement delta in the X axis of the swipe focal point
+	 */
+	double dx;
+	/**
+	 * Movement delta in the Y axis of the swipe focal point
+	 */
+	double dy;
+	/**
+	 * The angle change in radians, negative angles
+	 * denote counter-clockwise movements
+	 */
+	double angleDelta;
+	/**
+	 * The current scale, relative to that at the time of
+	 * the corresponding %GDK_TOUCHPAD_GESTURE_PHASE_BEGIN event
+	 */
+	double scale;
+	/**
+	 * The X coordinate of the pointer, relative to the
+	 * root of the screen.
+	 */
+	double xRoot;
+	/**
+	 * The Y coordinate of the pointer, relative to the
+	 * root of the screen.
+	 */
+	double yRoot;
+	/**
+	 * a bit-mask representing the state of
+	 * the modifier keys (e.g. Control, Shift and Alt) and the pointer
+	 * buttons. See #GdkModifierType.
+	 */
+	ModifierType state;
+}
+
+/**
+ * Generated during touchpad swipe gestures.
+ */
+struct GdkEventTouchpadSwipe
+{
+	/**
+	 * the type of the event (%GDK_TOUCHPAD_SWIPE)
+	 */
+	GdkEventType type;
+	/**
+	 * the window which received the event
+	 */
+	GdkWindow* window;
+	/**
+	 * %TRUE if the event was sent explicitly
+	 */
+	byte sendEvent;
+	/**
+	 * the current phase of the gesture
+	 */
+	TouchpadGesturePhase phase;
+	/**
+	 * The number of fingers triggering the swipe
+	 */
+	byte nFingers;
+	/**
+	 * the time of the event in milliseconds
+	 */
+	uint time;
+	/**
+	 * The X coordinate of the pointer
+	 */
+	double x;
+	/**
+	 * The Y coordinate of the pointer
+	 */
+	double y;
+	/**
+	 * Movement delta in the X axis of the swipe focal point
+	 */
+	double dx;
+	/**
+	 * Movement delta in the Y axis of the swipe focal point
+	 */
+	double dy;
+	/**
+	 * The X coordinate of the pointer, relative to the
+	 * root of the screen.
+	 */
+	double xRoot;
+	/**
+	 * The Y coordinate of the pointer, relative to the
+	 * root of the screen.
+	 */
+	double yRoot;
+	/**
+	 * a bit-mask representing the state of
+	 * the modifier keys (e.g. Control, Shift and Alt) and the pointer
+	 * buttons. See #GdkModifierType.
+	 */
+	ModifierType state;
+}
+
+/**
  * Generated when the window visibility status has changed.
  *
  * Deprecated: Modern composited windowing systems with pervasive
@@ -3211,6 +3410,18 @@ struct GdkRGBA
 	 * 1.0 for opaque
 	 */
 	double alpha;
+}
+
+/**
+ * Defines the position and size of a rectangle. It is identical to
+ * #cairo_rectangle_int_t.
+ */
+struct GdkRectangle
+{
+	int x;
+	int y;
+	int width;
+	int height;
 }
 
 struct GdkScreen;

@@ -199,8 +199,8 @@ public class PgFontMap : ObjectG
 	 *     context = the #PangoContext the font will be used with
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *
-	 * Return: the newly allocated #PangoFont loaded,
-	 *     or %NULL if no font matched.
+	 * Return: the newly allocated #PangoFont
+	 *     loaded, or %NULL if no font matched.
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
@@ -223,8 +223,8 @@ public class PgFontMap : ObjectG
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *     language = a #PangoLanguage the fonts will be used for
 	 *
-	 * Return: the newly allocated #PangoFontset
-	 *     loaded, or %NULL if no font matched.
+	 * Return: the newly allocated
+	 *     #PangoFontset loaded, or %NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{

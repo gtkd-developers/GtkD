@@ -54,6 +54,24 @@ public template TlsClientConnectionT(TStruct)
 	 */
 
 	/**
+	 * Copies session state from one connection to another. This is
+	 * not normally needed, but may be used when the same session
+	 * needs to be used between different endpoints as is required
+	 * by some protocols such as FTP over TLS. @source should have
+	 * already completed a handshake, and @conn should not have
+	 * completed a handshake.
+	 *
+	 * Params:
+	 *     source = a #GTlsClientConnection
+	 *
+	 * Since: 2.46
+	 */
+	public void copySessionState(TlsClientConnectionIF source)
+	{
+		g_tls_client_connection_copy_session_state(getTlsClientConnectionStruct(), (source is null) ? null : source.getTlsClientConnectionStruct());
+	}
+
+	/**
 	 * Gets the list of distinguished names of the Certificate Authorities
 	 * that the server will accept certificates from. This will be set
 	 * during the TLS handshake if the server requests a certificate.

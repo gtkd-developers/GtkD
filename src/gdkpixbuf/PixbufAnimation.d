@@ -83,8 +83,8 @@ public class PixbufAnimation : ObjectG
 	}
 
 	/**
-	 * Creates a new animation by loading it from a file.  The file format is
-	 * detected automatically.  If the file's format does not support multi-frame
+	 * Creates a new animation by loading it from a file. The file format is
+	 * detected automatically. If the file's format does not support multi-frame
 	 * images, then an animation with a single frame will be created. Possible errors
 	 * are in the #GDK_PIXBUF_ERROR and #G_FILE_ERROR domains.
 	 *
@@ -231,14 +231,14 @@ public class PixbufAnimation : ObjectG
 
 	/**
 	 * Get an iterator for displaying an animation. The iterator provides
-	 * the frames that should be displayed at a given time.
-	 * It should be freed after use with g_object_unref().
+	 * the frames that should be displayed at a given time. It should be
+	 * freed after use with g_object_unref().
 	 *
-	 * @start_time would normally come from g_get_current_time(), and
-	 * marks the beginning of animation playback. After creating an
-	 * iterator, you should immediately display the pixbuf returned by
-	 * gdk_pixbuf_animation_iter_get_pixbuf(). Then, you should install a
-	 * timeout (with g_timeout_add()) or by some other mechanism ensure
+	 * @start_time would normally come from g_get_current_time(), and marks
+	 * the beginning of animation playback. After creating an iterator, you
+	 * should immediately display the pixbuf returned by
+	 * gdk_pixbuf_animation_iter_get_pixbuf(). Then, you should install
+	 * a timeout (with g_timeout_add()) or by some other mechanism ensure
 	 * that you'll update the image after
 	 * gdk_pixbuf_animation_iter_get_delay_time() milliseconds. Each time
 	 * the image is updated, you should reinstall the timeout with the new,
@@ -314,9 +314,9 @@ public class PixbufAnimation : ObjectG
 	}
 
 	/**
-	 * If you load a file with gdk_pixbuf_animation_new_from_file() and it turns
-	 * out to be a plain, unanimated image, then this function will return
-	 * %TRUE. Use gdk_pixbuf_animation_get_static_image() to retrieve
+	 * If you load a file with gdk_pixbuf_animation_new_from_file() and it
+	 * turns out to be a plain, unanimated image, then this function will
+	 * return %TRUE. Use gdk_pixbuf_animation_get_static_image() to retrieve
 	 * the image.
 	 *
 	 * Return: %TRUE if the "animation" was really just an image

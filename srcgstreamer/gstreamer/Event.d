@@ -27,6 +27,7 @@ module gstreamer.Event;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gstreamer.Buffer;
 private import gstreamer.Caps;
 private import gstreamer.Message;
 private import gstreamer.Segment;
@@ -375,6 +376,65 @@ public class Event
 	}
 
 	/**
+	 * Creates a new event containing information specific to a particular
+	 * protection system (uniquely identified by @system_id), by which that
+	 * protection system can acquire key(s) to decrypt a protected stream.
+	 *
+	 * In order for a decryption element to decrypt media
+	 * protected using a specific system, it first needs all the
+	 * protection system specific information necessary to acquire the decryption
+	 * key(s) for that stream. The functions defined here enable this information
+	 * to be passed in events from elements that extract it
+	 * (e.g., ISOBMFF demuxers, MPEG DASH demuxers) to protection decrypter
+	 * elements that use it.
+	 *
+	 * Events containing protection system specific information are created using
+	 * #gst_event_new_protection, and they can be parsed by downstream elements
+	 * using #gst_event_parse_protection.
+	 *
+	 * In Common Encryption, protection system specific information may be located
+	 * within ISOBMFF files, both in movie (moov) boxes and movie fragment (moof)
+	 * boxes; it may also be contained in ContentProtection elements within MPEG
+	 * DASH MPDs. The events created by #gst_event_new_protection contain data
+	 * identifying from which of these locations the encapsulated protection system
+	 * specific information originated. This origin information is required as
+	 * some protection systems use different encodings depending upon where the
+	 * information originates.
+	 *
+	 * The events returned by gst_event_new_protection() are implemented
+	 * in such a way as to ensure that the most recently-pushed protection info
+	 * event of a particular @origin and @system_id will
+	 * be stuck to the output pad of the sending element.
+	 *
+	 * Params:
+	 *     systemId = a string holding a UUID that uniquely
+	 *         identifies a protection system.
+	 *     data = a #GstBuffer holding protection system specific
+	 *         information. The reference count of the buffer will be incremented by one.
+	 *     origin = a string indicating where the protection
+	 *         information carried in the event was extracted from. The allowed values
+	 *         of this string will depend upon the protection scheme.
+	 *
+	 * Return: a #GST_EVENT_PROTECTION event, if successful; %NULL
+	 *     if unsuccessful.
+	 *
+	 * Since: 1.6
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string systemId, Buffer data, string origin)
+	{
+		auto p = gst_event_new_protection(Str.toStringz(systemId), (data is null) ? null : data.getBufferStruct(), Str.toStringz(origin));
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_protection");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
 	 * Allocate a new qos event with the given values.
 	 * The QOS event is generated in an element that wants an upstream
 	 * element to either reduce or increase its rate because of
@@ -525,7 +585,7 @@ public class Event
 	 * downstream synchronized with the buffer flow and contains timing information
 	 * and playback properties for the buffers that will follow.
 	 *
-	 * The newsegment event marks the range of buffers to be processed. All
+	 * The segment event marks the range of buffers to be processed. All
 	 * data not within the segment range is not to be processed. This can be
 	 * used intelligently by plugins to apply more efficient methods of skipping
 	 * unneeded data. The valid range is expressed with the @start and @stop
@@ -546,10 +606,10 @@ public class Event
 	 * stream. (@rate * @applied_rate) should always equal the rate that has been
 	 * requested for playback. For example, if an element has an input segment
 	 * with intended playback @rate of 2.0 and applied_rate of 1.0, it can adjust
-	 * incoming timestamps and buffer content by half and output a newsegment event
+	 * incoming timestamps and buffer content by half and output a segment event
 	 * with @rate of 1.0 and @applied_rate of 2.0
 	 *
-	 * After a newsegment event, the buffer stream time is calculated with:
+	 * After a segment event, the buffer stream time is calculated with:
 	 *
 	 * time + (TIMESTAMP(buf) - start) * ABS (rate * applied_rate)
 	 *
@@ -668,7 +728,7 @@ public class Event
 	 *
 	 * Source elements, demuxers and other elements that create new streams
 	 * are supposed to send this event as the first event of a new stream. It
-	 * should not be send after a flushing seek or in similar situations
+	 * should not be sent after a flushing seek or in similar situations
 	 * and is used to mark the beginning of a new logical stream. Elements
 	 * combining multiple streams must ensure that this event is only forwarded
 	 * downstream once and not for every single input stream.
@@ -931,6 +991,33 @@ public class Event
 	public void parseLatency(out GstClockTime latency)
 	{
 		gst_event_parse_latency(gstEvent, &latency);
+	}
+
+	/**
+	 * Parses an event containing protection system specific information and stores
+	 * the results in @system_id, @data and @origin. The data stored in @system_id,
+	 * @origin and @data are valid until @event is released.
+	 *
+	 * Params:
+	 *     systemId = pointer to store the UUID
+	 *         string uniquely identifying a content protection system.
+	 *     data = pointer to store a #GstBuffer
+	 *         holding protection system specific information.
+	 *     origin = pointer to store a value that
+	 *         indicates where the protection information carried by @event was extracted
+	 *         from.
+	 *
+	 * Since: 1.6
+	 */
+	public void parseProtection(out string systemId, out Buffer data, string[] origin)
+	{
+		char* outsystemId = null;
+		GstBuffer* outdata = null;
+		
+		gst_event_parse_protection(gstEvent, &outsystemId, &outdata, Str.toStringzArray(origin));
+		
+		systemId = Str.toString(outsystemId);
+		data = ObjectG.getDObject!(Buffer)(outdata);
 	}
 
 	/**

@@ -405,6 +405,10 @@ public enum GtkBuilderError
 	 * The specified signal is unknown for the object class.
 	 */
 	INVALID_SIGNAL = 12,
+	/**
+	 * An object id is unknown
+	 */
+	INVALID_ID = 13,
 }
 alias GtkBuilderError BuilderError;
 
@@ -437,7 +441,10 @@ public enum GtkButtonBoxStyle
 	 */
 	CENTER = 5,
 	/**
-	 * Buttons expand to fill the box. Since 3.12.
+	 * Buttons expand to fill the box. This entails giving
+	 * buttons a "linked" appearance, making button sizes homogeneous, and
+	 * setting spacing to 0 (same as calling gtk_box_set_homogeneous() and
+	 * gtk_box_set_spacing() manually). Since 3.12.
 	 */
 	EXPAND = 6,
 }
@@ -1392,6 +1399,10 @@ public enum GtkInputHints
 	 * (e.g for a calculator that already has all the keys).
 	 */
 	INHIBIT_OSK = 128,
+	/**
+	 * The text is vertical. Since 3.18
+	 */
+	VERTICAL_WRITING = 256,
 }
 alias GtkInputHints InputHints;
 
@@ -5885,7 +5896,15 @@ struct GtkFontChooserIface
 	extern(C) int function(GtkFontChooser* fontchooser) getFontSize;
 	extern(C) void function(GtkFontChooser* fontchooser, GtkFontFilterFunc filter, void* userData, GDestroyNotify destroy) setFilterFunc;
 	extern(C) void function(GtkFontChooser* chooser, const(char)* fontname) fontActivated;
-	void*[12] padding;
+	extern(C) void function(GtkFontChooser* fontchooser, PangoFontMap* fontmap) setFontMap;
+	/**
+	 *
+	 * Params:
+	 *     fontchooser = a #GtkFontChooser
+	 * Return: a #PangoFontMap, or %NULL
+	 */
+	extern(C) PangoFontMap* function(GtkFontChooser* fontchooser) getFontMap;
+	void*[10] padding;
 }
 
 struct GtkFontChooserWidget
@@ -8790,7 +8809,11 @@ struct GtkTextAttributes
 	 * Extra space to insert between graphemes, in Pango units
 	 */
 	int letterSpacing;
-	uint[2] padding;
+	union
+	{
+		char* fontFeatures;
+		uint[2] padding;
+	}
 }
 
 struct GtkTextBTree;
@@ -9832,28 +9855,6 @@ struct GtkWidgetAccessibleClass
 
 struct GtkWidgetAccessiblePrivate;
 
-struct GtkWidgetAuxInfo
-{
-	/**
-	 * the widget’s width
-	 */
-	int width;
-	/**
-	 * the widget’s height
-	 */
-	int height;
-	import std.bitmanip: bitfields;
-	mixin(bitfields!(
-		uint, "halign", 4,
-		uint, "valign", 4,
-		uint, "", 24
-	));
-	/**
-	 * the widget’s #GtkBorder margins
-	 */
-	GtkBorder margin;
-}
-
 struct GtkWidgetClass
 {
 	/**
@@ -10335,6 +10336,20 @@ public alias extern(C) int function(GtkEntryCompletion* completion, const(char)*
 public alias extern(C) int function(GtkFileFilterInfo* filterInfo, void* data) GtkFileFilterFunc;
 
 /**
+ * Called for flow boxes that are bound to a #GListModel with
+ * gtk_flow_box_bind_model() for each item that gets added to the model.
+ *
+ * Params:
+ *     item = the item from the model for which to create a widget for
+ *     userData = user data from gtk_flow_box_bind_model()
+ *
+ * Return: a #GtkWidget that represents @item
+ *
+ * Since: 3.18
+ */
+public alias extern(C) GtkWidget* function(void* item, void* userData) GtkFlowBoxCreateWidgetFunc;
+
+/**
  * A function that will be called whenrever a child changes
  * or is added. It lets you control if the child should be
  * visible or not.
@@ -10418,6 +10433,11 @@ public alias extern(C) int function(GtkWidget* grabWidget, GdkEventKey* event, v
 /**
  * Called for list boxes that are bound to a #GListModel with
  * gtk_list_box_bind_model() for each item that gets added to the model.
+ *
+ * Versions of GTK+ prior to 3.18 called gtk_widget_show_all() on the rows
+ * created by the GtkListBoxCreateWidgetFunc, but this forced all widgets
+ * inside the row to be shown, and is no longer the case. Applications should
+ * be updated to show the desired row widgets.
  *
  * Params:
  *     item = the item from the model for which to create a widget for

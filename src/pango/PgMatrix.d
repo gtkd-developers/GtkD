@@ -92,8 +92,8 @@ public class PgMatrix
 	/**
 	 * Copies a #PangoMatrix.
 	 *
-	 * Return: the newly allocated #PangoMatrix, which should
-	 *     be freed with pango_matrix_free(), or %NULL if
+	 * Return: the newly allocated #PangoMatrix, which
+	 *     should be freed with pango_matrix_free(), or %NULL if
 	 *     @matrix was %NULL.
 	 *
 	 * Since: 1.6
@@ -123,7 +123,8 @@ public class PgMatrix
 	/**
 	 * Returns the scale factor of a matrix on the height of the font.
 	 * That is, the scale factor in the direction perpendicular to the
-	 * vector that the X coordinate is mapped to.
+	 * vector that the X coordinate is mapped to.  If the scale in the X
+	 * coordinate is needed as well, use pango_matrix_get_font_scale_factors().
 	 *
 	 * Return: the scale factor of @matrix on the height of the font,
 	 *     or 1.0 if @matrix is %NULL.
@@ -133,6 +134,25 @@ public class PgMatrix
 	public double getFontScaleFactor()
 	{
 		return pango_matrix_get_font_scale_factor(pangoMatrix);
+	}
+
+	/**
+	 * Calculates the scale factor of a matrix on the width and height of the font.
+	 * That is, @xscale is the scale factor in the direction of the X coordinate,
+	 * and @yscale is the scale factor in the direction perpendicular to the
+	 * vector that the X coordinate is mapped to.
+	 *
+	 * Note that output numbers will always be non-negative.
+	 *
+	 * Params:
+	 *     xscale = output scale factor in the x direction, or %NULL
+	 *     yscale = output scale factor perpendicular to the x direction, or %NULL
+	 *
+	 * Since: 1.38
+	 */
+	public void getFontScaleFactors(out double xscale, out double yscale)
+	{
+		pango_matrix_get_font_scale_factors(pangoMatrix, &xscale, &yscale);
 	}
 
 	/**

@@ -29,6 +29,8 @@ private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
 private import gstreamer.Memory;
+private import gstreamer.ProtectionMeta;
+private import gstreamer.Structure;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
@@ -113,6 +115,15 @@ public  import gstreamerc.gstreamertypes;
  * the refcount drops to 0, any memory and metadata pointed to by the buffer is
  * unreffed as well. Buffers allocated from a #GstBufferPool will be returned to
  * the pool when the refcount drops to 0.
+ * 
+ * The #GstParentBufferMeta is a meta which can be attached to a #GstBuffer
+ * to hold a reference to another buffer that is only released when the child
+ * #GstBuffer is released.
+ * 
+ * Typically, #GstParentBufferMeta is used when the child buffer is directly
+ * using the #GstMemory of the parent buffer, and wants to prevent the parent
+ * buffer from being returned to a buffer pool until the #GstMemory is available
+ * for re-use. (Since 1.6)
  */
 public class Buffer
 {
@@ -278,6 +289,47 @@ public class Buffer
 	}
 
 	/**
+	 * Add a #GstParentBufferMeta to @buffer that holds a reference on
+	 * @ref until the buffer is freed.
+	 *
+	 * Params:
+	 *     doref = a #GstBuffer to ref
+	 *
+	 * Return: The #GstParentBufferMeta that was added to the buffer
+	 *
+	 * Since: 1.6
+	 */
+	public GstParentBufferMeta* addParentBufferMeta(Buffer doref)
+	{
+		return gst_buffer_add_parent_buffer_meta(gstBuffer, (doref is null) ? null : doref.getBufferStruct());
+	}
+
+	/**
+	 * Attaches protection metadata to a #GstBuffer.
+	 *
+	 * Params:
+	 *     info = a #GstStructure holding cryptographic
+	 *         information relating to the sample contained in @buffer. This
+	 *         function takes ownership of @info.
+	 *
+	 * Return: a pointer to the added #GstProtectionMeta if successful; %NULL if
+	 *     unsuccessful.
+	 *
+	 * Since: 1.6
+	 */
+	public ProtectionMeta addProtectionMeta(Structure info)
+	{
+		auto p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ProtectionMeta)(cast(GstProtectionMeta*) p);
+	}
+
+	/**
 	 * Append all the memory from @buf2 to @buf1. The result buffer will contain a
 	 * concatenation of the memory of @buf1 and @buf2.
 	 *
@@ -340,6 +392,26 @@ public class Buffer
 	}
 
 	/**
+	 * Create a copy of the given buffer. This will make a newly allocated
+	 * copy of the data the source buffer contains.
+	 *
+	 * Return: a new copy of @buf.
+	 *
+	 * Since: 1.6
+	 */
+	public Buffer copyDeep()
+	{
+		auto p = gst_buffer_copy_deep(gstBuffer);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+	}
+
+	/**
 	 * Copies the information from @src into @dest.
 	 *
 	 * If @dest already contains memory and @flags contains GST_BUFFER_COPY_MEMORY,
@@ -376,7 +448,8 @@ public class Buffer
 	 *     flags = the #GstBufferCopyFlags
 	 *     offset = the offset into parent #GstBuffer at which the new sub-buffer
 	 *         begins.
-	 *     size = the size of the new #GstBuffer sub-buffer, in bytes.
+	 *     size = the size of the new #GstBuffer sub-buffer, in bytes. If -1, all
+	 *         data is copied.
 	 *
 	 * Return: the new #GstBuffer or %NULL if the arguments were
 	 *     invalid.
@@ -410,8 +483,8 @@ public class Buffer
 	}
 
 	/**
-	 * Extracts a copy of at most @size bytes the data at @offset into a #GBytes.
-	 * @dest must be freed using g_free() when done.
+	 * Extracts a copy of at most @size bytes the data at @offset into
+	 * newly-allocated memory. @dest must be freed using g_free() when done.
 	 *
 	 * Params:
 	 *     offset = the offset to extract
@@ -453,9 +526,9 @@ public class Buffer
 	 * in @buffer.
 	 *
 	 * When this function returns %TRUE, @idx will contain the index of the first
-	 * memory bock where the byte for @offset can be found and @length contains the
+	 * memory block where the byte for @offset can be found and @length contains the
 	 * number of memory blocks containing the @size remaining bytes. @skip contains
-	 * the number of bytes to skip in the memory bock at @idx to get to the byte
+	 * the number of bytes to skip in the memory block at @idx to get to the byte
 	 * for @offset.
 	 *
 	 * @size can be -1 to get all the memory blocks after @idx.
@@ -559,8 +632,11 @@ public class Buffer
 	}
 
 	/**
-	 * Get the metadata for @api on buffer. When there is no such
-	 * metadata, %NULL is returned.
+	 * Get the metadata for @api on buffer. When there is no such metadata, %NULL is
+	 * returned. If multiple metadata with the given @api are attached to this
+	 * buffer only the first one is returned.  To handle multiple metadata with a
+	 * given API use gst_buffer_iterate_meta() or gst_buffer_foreach_meta() instead
+	 * and check the meta->info.api member for the API type.
 	 *
 	 * Params:
 	 *     api = the #GType of an API

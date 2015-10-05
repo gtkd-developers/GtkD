@@ -110,6 +110,22 @@ public class ThreadPool
 	}
 
 	/**
+	 * Moves the item to the front of the queue of unprocessed
+	 * items, so that it will be processed next.
+	 *
+	 * Params:
+	 *     data = an unprocessed item in the pool
+	 *
+	 * Return: %TRUE if the item was found and moved
+	 *
+	 * Since: 2.46
+	 */
+	public bool moveToFront(void* data)
+	{
+		return g_thread_pool_move_to_front(gThreadPool, data) != 0;
+	}
+
+	/**
 	 * Inserts @data into the list of tasks to be executed by @pool.
 	 *
 	 * When the number of currently running threads is lower than the

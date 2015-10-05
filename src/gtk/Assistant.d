@@ -235,6 +235,21 @@ public class Assistant : Window
 	}
 
 	/**
+	 * Gets whether page has padding.
+	 *
+	 * Params:
+	 *     page = a page of @assistant
+	 *
+	 * Return: %TRUE if @page has padding
+	 *
+	 * Since: 3.18
+	 */
+	public bool getPageHasPadding(Widget page)
+	{
+		return gtk_assistant_get_page_has_padding(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) != 0;
+	}
+
+	/**
 	 * Gets the header image for @page.
 	 *
 	 * Deprecated: Since GTK+ 3.2, a header is no longer shown;
@@ -464,6 +479,21 @@ public class Assistant : Window
 	public void setPageComplete(Widget page, bool complete)
 	{
 		gtk_assistant_set_page_complete(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), complete);
+	}
+
+	/**
+	 * Sets whether the assistant is adding padding around
+	 * the page.
+	 *
+	 * Params:
+	 *     page = a page of @assistant
+	 *     hasPadding = whether this page has padding
+	 *
+	 * Since: 3.18
+	 */
+	public void setPageHasPadding(Widget page, bool hasPadding)
+	{
+		gtk_assistant_set_page_has_padding(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), hasPadding);
 	}
 
 	/**

@@ -279,7 +279,7 @@ public class SocketConnection : IOStream
 	 * This can be useful if you want to do something unusual on it
 	 * not supported by the #GSocketConnection APIs.
 	 *
-	 * Return: a #GSocketAddress or %NULL on error.
+	 * Return: a #GSocket or %NULL on error.
 	 *
 	 * Since: 2.22
 	 */

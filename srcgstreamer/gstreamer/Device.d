@@ -30,6 +30,7 @@ private import gobject.Signals;
 private import gstreamer.Caps;
 private import gstreamer.Element;
 private import gstreamer.ObjectGst;
+private import gstreamer.Structure;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
@@ -153,6 +154,26 @@ public class Device : ObjectGst
 	public string getDisplayName()
 	{
 		return Str.toString(gst_device_get_display_name(gstDevice));
+	}
+
+	/**
+	 * Gets the extra properties of a device.
+	 *
+	 * Return: The extra properties or %NULL when there are none.
+	 *     Free with gst_structure_free() after use.
+	 *
+	 * Since: 1.6
+	 */
+	public Structure getProperties()
+	{
+		auto p = gst_device_get_properties(gstDevice);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
 	/**

@@ -181,6 +181,8 @@ public class KeyFile
 	 * @group_name. If both @key and @group_name are %NULL, then
 	 * @comment will be read from above the first group in the file.
 	 *
+	 * Note that the returned string includes the '#' comment markers.
+	 *
 	 * Params:
 	 *     groupName = a group name, or %NULL
 	 *     key = a key
@@ -1004,9 +1006,13 @@ public class KeyFile
 
 	/**
 	 * Places a comment above @key from @group_name.
+	 *
 	 * If @key is %NULL then @comment will be written above @group_name.
 	 * If both @key and @group_name  are %NULL, then @comment will be
 	 * written above the first group in the file.
+	 *
+	 * Note that this function prepends a '#' comment marker to
+	 * each line of @comment.
 	 *
 	 * Params:
 	 *     groupName = a group name, or %NULL

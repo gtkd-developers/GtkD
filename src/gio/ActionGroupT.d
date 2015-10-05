@@ -337,8 +337,7 @@ public template ActionGroupT(TStruct)
 	 * Params:
 	 *     actionName = the name of the action to query
 	 *
-	 * Return: the state type, if the action
-	 *     is stateful
+	 * Return: the state type, if the action is stateful
 	 *
 	 * Since: 2.28
 	 */

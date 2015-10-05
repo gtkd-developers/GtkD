@@ -136,9 +136,14 @@ public class ListBox : Container
 	 * gtk_list_box_insert() or gtk_container_add()) while @box is bound to a
 	 * model.
 	 *
+	 * Note that using a model is incompatible with the filtering and sorting
+	 * functionality in GtkListBox. When using a model, filtering and sorting
+	 * should be implemented by the model.
+	 *
 	 * Params:
 	 *     model = the #GListModel to be bound to @box
 	 *     createWidgetFunc = a function that creates widgets for items
+	 *         or %NULL in case you also passed %NULL as @model
 	 *     userData = user data passed to @create_widget_func
 	 *     userDataFreeFunc = function for freeing @user_data
 	 *
@@ -465,6 +470,9 @@ public class ListBox : Container
 	 * continue to be called each time a row changes (via gtk_list_box_row_changed()) or
 	 * when gtk_list_box_invalidate_filter() is called.
 	 *
+	 * Note that using a filter function is incompatible with using a model
+	 * (see gtk_list_box_bind_model()).
+	 *
 	 * Params:
 	 *     filterFunc = callback that lets you filter which rows to show
 	 *     userData = user data passed to @filter_func
@@ -544,6 +552,9 @@ public class ListBox : Container
 	 * The @sort_func will be called for each row after the call, and will continue to
 	 * be called each time a row changes (via gtk_list_box_row_changed()) and when
 	 * gtk_list_box_invalidate_sort() is called.
+	 *
+	 * Note that using a sort function is incompatible with using a model
+	 * (see gtk_list_box_bind_model()).
 	 *
 	 * Params:
 	 *     sortFunc = the sort function

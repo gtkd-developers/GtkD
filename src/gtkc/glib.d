@@ -59,11 +59,15 @@ shared static this()
 	Linker.link(g_async_queue_pop, "g_async_queue_pop", LIBRARY.GLIB);
 	Linker.link(g_async_queue_pop_unlocked, "g_async_queue_pop_unlocked", LIBRARY.GLIB);
 	Linker.link(g_async_queue_push, "g_async_queue_push", LIBRARY.GLIB);
+	Linker.link(g_async_queue_push_front, "g_async_queue_push_front", LIBRARY.GLIB);
+	Linker.link(g_async_queue_push_front_unlocked, "g_async_queue_push_front_unlocked", LIBRARY.GLIB);
 	Linker.link(g_async_queue_push_sorted, "g_async_queue_push_sorted", LIBRARY.GLIB);
 	Linker.link(g_async_queue_push_sorted_unlocked, "g_async_queue_push_sorted_unlocked", LIBRARY.GLIB);
 	Linker.link(g_async_queue_push_unlocked, "g_async_queue_push_unlocked", LIBRARY.GLIB);
 	Linker.link(g_async_queue_ref, "g_async_queue_ref", LIBRARY.GLIB);
 	Linker.link(g_async_queue_ref_unlocked, "g_async_queue_ref_unlocked", LIBRARY.GLIB);
+	Linker.link(g_async_queue_remove, "g_async_queue_remove", LIBRARY.GLIB);
+	Linker.link(g_async_queue_remove_unlocked, "g_async_queue_remove_unlocked", LIBRARY.GLIB);
 	Linker.link(g_async_queue_sort, "g_async_queue_sort", LIBRARY.GLIB);
 	Linker.link(g_async_queue_sort_unlocked, "g_async_queue_sort_unlocked", LIBRARY.GLIB);
 	Linker.link(g_async_queue_timed_pop, "g_async_queue_timed_pop", LIBRARY.GLIB);
@@ -1061,6 +1065,7 @@ shared static this()
 	Linker.link(g_thread_pool_free, "g_thread_pool_free", LIBRARY.GLIB);
 	Linker.link(g_thread_pool_get_max_threads, "g_thread_pool_get_max_threads", LIBRARY.GLIB);
 	Linker.link(g_thread_pool_get_num_threads, "g_thread_pool_get_num_threads", LIBRARY.GLIB);
+	Linker.link(g_thread_pool_move_to_front, "g_thread_pool_move_to_front", LIBRARY.GLIB);
 	Linker.link(g_thread_pool_push, "g_thread_pool_push", LIBRARY.GLIB);
 	Linker.link(g_thread_pool_set_max_threads, "g_thread_pool_set_max_threads", LIBRARY.GLIB);
 	Linker.link(g_thread_pool_set_sort_function, "g_thread_pool_set_sort_function", LIBRARY.GLIB);
@@ -1609,6 +1614,7 @@ shared static this()
 	Linker.link(g_log_set_default_handler, "g_log_set_default_handler", LIBRARY.GLIB);
 	Linker.link(g_log_set_fatal_mask, "g_log_set_fatal_mask", LIBRARY.GLIB);
 	Linker.link(g_log_set_handler, "g_log_set_handler", LIBRARY.GLIB);
+	Linker.link(g_log_set_handler_full, "g_log_set_handler_full", LIBRARY.GLIB);
 	Linker.link(g_logv, "g_logv", LIBRARY.GLIB);
 
 	// glib.Messages
@@ -1760,11 +1766,15 @@ __gshared extern(C)
 	void* function(GAsyncQueue* queue) c_g_async_queue_pop;
 	void* function(GAsyncQueue* queue) c_g_async_queue_pop_unlocked;
 	void function(GAsyncQueue* queue, void* data) c_g_async_queue_push;
+	void function(GAsyncQueue* queue, void* item) c_g_async_queue_push_front;
+	void function(GAsyncQueue* queue, void* item) c_g_async_queue_push_front_unlocked;
 	void function(GAsyncQueue* queue, void* data, GCompareDataFunc func, void* userData) c_g_async_queue_push_sorted;
 	void function(GAsyncQueue* queue, void* data, GCompareDataFunc func, void* userData) c_g_async_queue_push_sorted_unlocked;
 	void function(GAsyncQueue* queue, void* data) c_g_async_queue_push_unlocked;
 	GAsyncQueue* function(GAsyncQueue* queue) c_g_async_queue_ref;
 	void function(GAsyncQueue* queue) c_g_async_queue_ref_unlocked;
+	int function(GAsyncQueue* queue, void* item) c_g_async_queue_remove;
+	int function(GAsyncQueue* queue, void* item) c_g_async_queue_remove_unlocked;
 	void function(GAsyncQueue* queue, GCompareDataFunc func, void* userData) c_g_async_queue_sort;
 	void function(GAsyncQueue* queue, GCompareDataFunc func, void* userData) c_g_async_queue_sort_unlocked;
 	void* function(GAsyncQueue* queue, GTimeVal* endTime) c_g_async_queue_timed_pop;
@@ -2762,6 +2772,7 @@ __gshared extern(C)
 	void function(GThreadPool* pool, int immediate, int wait) c_g_thread_pool_free;
 	int function(GThreadPool* pool) c_g_thread_pool_get_max_threads;
 	uint function(GThreadPool* pool) c_g_thread_pool_get_num_threads;
+	int function(GThreadPool* pool, void* data) c_g_thread_pool_move_to_front;
 	int function(GThreadPool* pool, void* data, GError** err) c_g_thread_pool_push;
 	int function(GThreadPool* pool, int maxThreads, GError** err) c_g_thread_pool_set_max_threads;
 	void function(GThreadPool* pool, GCompareDataFunc func, void* userData) c_g_thread_pool_set_sort_function;
@@ -3310,6 +3321,7 @@ __gshared extern(C)
 	GLogFunc function(GLogFunc logFunc, void* userData) c_g_log_set_default_handler;
 	GLogLevelFlags function(const(char)* logDomain, GLogLevelFlags fatalMask) c_g_log_set_fatal_mask;
 	uint function(const(char)* logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData) c_g_log_set_handler;
+	uint function(const(char)* logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData, GDestroyNotify destroy) c_g_log_set_handler_full;
 	void function(const(char)* logDomain, GLogLevelFlags logLevel, const(char)* format, void* args) c_g_logv;
 
 	// glib.Messages
@@ -3459,11 +3471,15 @@ alias c_g_async_queue_lock g_async_queue_lock;
 alias c_g_async_queue_pop g_async_queue_pop;
 alias c_g_async_queue_pop_unlocked g_async_queue_pop_unlocked;
 alias c_g_async_queue_push g_async_queue_push;
+alias c_g_async_queue_push_front g_async_queue_push_front;
+alias c_g_async_queue_push_front_unlocked g_async_queue_push_front_unlocked;
 alias c_g_async_queue_push_sorted g_async_queue_push_sorted;
 alias c_g_async_queue_push_sorted_unlocked g_async_queue_push_sorted_unlocked;
 alias c_g_async_queue_push_unlocked g_async_queue_push_unlocked;
 alias c_g_async_queue_ref g_async_queue_ref;
 alias c_g_async_queue_ref_unlocked g_async_queue_ref_unlocked;
+alias c_g_async_queue_remove g_async_queue_remove;
+alias c_g_async_queue_remove_unlocked g_async_queue_remove_unlocked;
 alias c_g_async_queue_sort g_async_queue_sort;
 alias c_g_async_queue_sort_unlocked g_async_queue_sort_unlocked;
 alias c_g_async_queue_timed_pop g_async_queue_timed_pop;
@@ -4461,6 +4477,7 @@ alias c_g_pointer_bit_unlock g_pointer_bit_unlock;
 alias c_g_thread_pool_free g_thread_pool_free;
 alias c_g_thread_pool_get_max_threads g_thread_pool_get_max_threads;
 alias c_g_thread_pool_get_num_threads g_thread_pool_get_num_threads;
+alias c_g_thread_pool_move_to_front g_thread_pool_move_to_front;
 alias c_g_thread_pool_push g_thread_pool_push;
 alias c_g_thread_pool_set_max_threads g_thread_pool_set_max_threads;
 alias c_g_thread_pool_set_sort_function g_thread_pool_set_sort_function;
@@ -5009,6 +5026,7 @@ alias c_g_log_set_always_fatal g_log_set_always_fatal;
 alias c_g_log_set_default_handler g_log_set_default_handler;
 alias c_g_log_set_fatal_mask g_log_set_fatal_mask;
 alias c_g_log_set_handler g_log_set_handler;
+alias c_g_log_set_handler_full g_log_set_handler_full;
 alias c_g_logv g_logv;
 
 // glib.Messages

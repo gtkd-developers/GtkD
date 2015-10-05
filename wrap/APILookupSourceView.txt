@@ -129,6 +129,9 @@ class: SourceLanguage
 struct: LanguageManager
 class: SourceLanguageManager
 
+struct: Map
+class: SourceMap
+
 struct: Mark
 class: SourceMark
 

@@ -168,6 +168,31 @@ public class SourceEncoding
 	}
 
 	/**
+	 * Gets the list of default candidate encodings to try when loading a file. See
+	 * gtk_source_file_loader_set_candidate_encodings().
+	 *
+	 * This function returns a different list depending on the current locale (i.e.
+	 * language, country and default encoding). The UTF-8 encoding and the current
+	 * locale encoding are guaranteed to be present in the returned list.
+	 *
+	 * Return: the list of
+	 *     default candidate encodings. Free with g_slist_free().
+	 *
+	 * Since: 3.18
+	 */
+	public static ListSG getDefaultCandidates()
+	{
+		auto p = gtk_source_encoding_get_default_candidates();
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListSG(cast(GSList*) p);
+	}
+
+	/**
 	 * Gets a #GtkSourceEncoding from a character set such as "UTF-8" or
 	 * "ISO-8859-1".
 	 *

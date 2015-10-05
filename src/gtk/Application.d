@@ -235,6 +235,10 @@ public class Application : GioApplication
 	/**
 	 * Adds a window to @application.
 	 *
+	 * This call can only happen after the @application has started;
+	 * typically, you should add new application windows in response
+	 * to the emission of the #GApplication::activate signal.
+	 *
 	 * This call is equivalent to setting the #GtkWindow:application
 	 * property of @window to @application.
 	 *
@@ -242,7 +246,7 @@ public class Application : GioApplication
 	 * will remain until the window is destroyed, but you can explicitly
 	 * remove it with gtk_application_remove_window().
 	 *
-	 * GTK+ will keep the application running as long as it has
+	 * GTK+ will keep the @application running as long as it has
 	 * any windows.
 	 *
 	 * Params:

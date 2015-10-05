@@ -84,9 +84,9 @@ public class PgLayoutIter
 	/**
 	 * Copies a #PangoLayoutIter.
 	 *
-	 * Return: the newly allocated #PangoLayoutIter, which should
-	 *     be freed with pango_layout_iter_free(), or %NULL if
-	 *     @iter was %NULL.
+	 * Return: the newly allocated #PangoLayoutIter,
+	 *     which should be freed with pango_layout_iter_free(),
+	 *     or %NULL if @iter was %NULL.
 	 *
 	 * Since: 1.20
 	 */
@@ -315,7 +315,8 @@ public class PgLayoutIter
 	 * but the user is not expected
 	 * to modify the contents of the run (glyphs, glyph widths, etc.).
 	 *
-	 * Return: the current run, that should not be modified.
+	 * Return: the current run, that
+	 *     should not be modified.
 	 *
 	 * Since: 1.16
 	 */

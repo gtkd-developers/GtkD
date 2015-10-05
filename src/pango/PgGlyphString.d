@@ -94,8 +94,8 @@ public class PgGlyphString
 	/**
 	 * Copy a glyph string and associated storage.
 	 *
-	 * Return: the newly allocated #PangoGlyphString, which
-	 *     should be freed with pango_glyph_string_free(),
+	 * Return: the newly allocated #PangoGlyphString,
+	 *     which should be freed with pango_glyph_string_free(),
 	 *     or %NULL if @string was %NULL.
 	 */
 	public PgGlyphString copy()
@@ -138,12 +138,12 @@ public class PgGlyphString
 	 *     end = end index (the range is the set of bytes with
 	 *         indices such that start <= index < end)
 	 *     font = a #PangoFont
-	 *     inkRect = rectangle used to store the
-	 *         extents of the glyph string range as drawn or %NULL to
-	 *         indicate that the result is not needed.
-	 *     logicalRect = rectangle used to store the
-	 *         logical extents of the glyph string range or %NULL to
-	 *         indicate that the result is not needed.
+	 *     inkRect = rectangle used to
+	 *         store the extents of the glyph string range as drawn or
+	 *         %NULL to indicate that the result is not needed.
+	 *     logicalRect = rectangle used to
+	 *         store the logical extents of the glyph string range or
+	 *         %NULL to indicate that the result is not needed.
 	 */
 	public void extentsRange(int start, int end, PgFont font, out PangoRectangle inkRect, out PangoRectangle logicalRect)
 	{

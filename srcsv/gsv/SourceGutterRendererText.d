@@ -91,14 +91,32 @@ public class SourceGutterRendererText : SourceGutterRenderer
 		this(cast(GtkSourceGutterRendererText*) p, true);
 	}
 
-	public void measure(string text, int* width, int* height)
+	/**
+	 * Measures the text provided using the pango layout used by the
+	 * #GtkSourceGutterRendererText.
+	 *
+	 * Params:
+	 *     text = the text to measure
+	 *     width = The width of the text in pixels
+	 *     height = The height of the text in pixels
+	 */
+	public void measure(string text, out int width, out int height)
 	{
-		gtk_source_gutter_renderer_text_measure(gtkSourceGutterRendererText, Str.toStringz(text), width, height);
+		gtk_source_gutter_renderer_text_measure(gtkSourceGutterRendererText, Str.toStringz(text), &width, &height);
 	}
 
-	public void measureMarkup(string markup, int* width, int* height)
+	/**
+	 * Measures the pango markup provided using the pango layout used by the
+	 * #GtkSourceGutterRendererText.
+	 *
+	 * Params:
+	 *     markup = the pango markup to measure
+	 *     width = The width of the text in pixels
+	 *     height = The height of the text in pixels
+	 */
+	public void measureMarkup(string markup, out int width, out int height)
 	{
-		gtk_source_gutter_renderer_text_measure_markup(gtkSourceGutterRendererText, Str.toStringz(markup), width, height);
+		gtk_source_gutter_renderer_text_measure_markup(gtkSourceGutterRendererText, Str.toStringz(markup), &width, &height);
 	}
 
 	public void setMarkup(string markup, int length)

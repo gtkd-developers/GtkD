@@ -24,7 +24,6 @@
 
 module vte.Terminal;
 
-private import gdk.Cursor;
 private import gdk.Event;
 private import gdk.RGBA;
 private import gio.Cancellable;
@@ -601,22 +600,6 @@ public class Terminal : Widget, ScrollableIF
 	public void matchRemoveAll()
 	{
 		vte_terminal_match_remove_all(vteTerminal);
-	}
-
-	/**
-	 * Sets which cursor the terminal will use if the pointer is over the pattern
-	 * specified by @tag.  The terminal keeps a reference to @cursor.
-	 *
-	 * Deprecated: Use vte_terminal_match_set_cursor_type() or vte_terminal_match_set_cursor_named() instead.
-	 *
-	 * Params:
-	 *     tag = the tag of the regex which should use the specified cursor
-	 *     cursor = the #GdkCursor which the terminal should use when the pattern is
-	 *         highlighted, or %NULL to use the standard cursor
-	 */
-	public void matchSetCursor(int tag, Cursor cursor)
-	{
-		vte_terminal_match_set_cursor(vteTerminal, tag, (cursor is null) ? null : cursor.getCursorStruct());
 	}
 
 	/**

@@ -272,14 +272,31 @@ public class PgRenderer : ObjectG
 	}
 
 	/**
+	 * Gets the current alpha for the specified part.
+	 *
+	 * Params:
+	 *     part = the part to get the alpha for
+	 *
+	 * Return: the alpha for the specified part,
+	 *     or 0 if it hasn't been set and should be
+	 *     inherited from the environment.
+	 *
+	 * Since: 1.38
+	 */
+	public ushort getAlpha(PangoRenderPart part)
+	{
+		return pango_renderer_get_alpha(pangoRenderer, part);
+	}
+
+	/**
 	 * Gets the current rendering color for the specified part.
 	 *
 	 * Params:
 	 *     part = the part to get the color for
 	 *
-	 * Return: the color for the specified part, or
-	 *     %NULL if it hasn't been set and should be inherited from the
-	 *     environment.
+	 * Return: the color for the
+	 *     specified part, or %NULL if it hasn't been set and should be
+	 *     inherited from the environment.
 	 *
 	 * Since: 1.8
 	 */
@@ -303,8 +320,8 @@ public class PgRenderer : ObjectG
 	 * The returned layout should not be modified while still being
 	 * rendered.
 	 *
-	 * Return: the layout, or %NULL if no layout is being
-	 *     rendered using @renderer at this time.
+	 * Return: the layout, or %NULL if
+	 *     no layout is being rendered using @renderer at this time.
 	 *
 	 * Since: 1.20
 	 */
@@ -328,8 +345,8 @@ public class PgRenderer : ObjectG
 	 * The returned layout line should not be modified while still being
 	 * rendered.
 	 *
-	 * Return: the layout line, or %NULL if no
-	 *     layout line is being rendered using @renderer at this time.
+	 * Return: the layout line, or %NULL
+	 *     if no layout line is being rendered using @renderer at this time.
 	 *
 	 * Since: 1.20
 	 */
@@ -349,10 +366,9 @@ public class PgRenderer : ObjectG
 	 * Gets the transformation matrix that will be applied when
 	 * rendering. See pango_renderer_set_matrix().
 	 *
-	 * Return: the matrix, or %NULL if no matrix has been set
-	 *     (which is the same as the identity matrix). The returned
-	 *     matrix is owned by Pango and must not be modified or
-	 *     freed.
+	 * Return: the matrix, or %NULL if no matrix has
+	 *     been set (which is the same as the identity matrix). The returned
+	 *     matrix is owned by Pango and must not be modified or freed.
 	 *
 	 * Since: 1.8
 	 */
@@ -394,7 +410,24 @@ public class PgRenderer : ObjectG
 	}
 
 	/**
+	 * Sets the alpha for part of the rendering.
+	 * Note that the alpha may only be used if a color is
+	 * specified for @part as well.
+	 *
+	 * Params:
+	 *     part = the part to set the alpha for
+	 *     alpha = an alpha value between 1 and 65536, or 0 to unset the alpha
+	 *
+	 * Since: 1.38
+	 */
+	public void setAlpha(PangoRenderPart part, ushort alpha)
+	{
+		pango_renderer_set_alpha(pangoRenderer, part, alpha);
+	}
+
+	/**
 	 * Sets the color for part of the rendering.
+	 * Also see pango_renderer_set_alpha().
 	 *
 	 * Params:
 	 *     part = the part to change the color of

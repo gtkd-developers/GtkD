@@ -192,6 +192,17 @@ public class Stack : Container
 	}
 
 	/**
+	 * Return: %TRUE If the #GtkStack is set up to interpolate between
+	 *     visible-child sizes, %FALSE otherwise.
+	 *
+	 * Since: 3.18
+	 */
+	public bool getInterpolateSize()
+	{
+		return gtk_stack_get_interpolate_size(gtkStack) != 0;
+	}
+
+	/**
 	 * Returns the amount of time (in milliseconds) that
 	 * transitions between pages in @stack will take.
 	 *
@@ -310,6 +321,23 @@ public class Stack : Container
 	public void setHomogeneous(bool homogeneous)
 	{
 		gtk_stack_set_homogeneous(gtkStack, homogeneous);
+	}
+
+	/**
+	 * Sets whether or not @stack will interpolate its size when
+	 * changing the visible child. If the interpolate-size property
+	 * is set to %TRUE, @stack will interpolate its size between
+	 * the current one and the one it'll take after changing the visible-child,
+	 * according to the set transition-duration.
+	 *
+	 * Params:
+	 *     interpolateSize = the new value
+	 *
+	 * Since: 3.18
+	 */
+	public void setInterpolateSize(bool interpolateSize)
+	{
+		gtk_stack_set_interpolate_size(gtkStack, interpolateSize);
 	}
 
 	/**

@@ -500,6 +500,24 @@ public class Window : Bin
 	}
 
 	/**
+	 * Asks to place @window in the fullscreen state. Note that you shouldn't assume
+	 * the window is definitely full screen afterward.
+	 *
+	 * You can track the fullscreen state via the "window-state-event" signal
+	 * on #GtkWidget.
+	 *
+	 * Params:
+	 *     screen = a #GdkScreen to draw to
+	 *     monitor = which monitor to go fullscreen on
+	 *
+	 * Since: 3.18
+	 */
+	public void fullscreenOnMonitor(Screen screen, int monitor)
+	{
+		gtk_window_fullscreen_on_monitor(gtkWindow, (screen is null) ? null : screen.getScreenStruct(), monitor);
+	}
+
+	/**
 	 * Gets the value set by gtk_window_set_accept_focus().
 	 *
 	 * Return: %TRUE if window should receive the input focus

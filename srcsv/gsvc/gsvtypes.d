@@ -335,6 +335,27 @@ public enum GtkSourceSmartHomeEndType
 }
 alias GtkSourceSmartHomeEndType SmartHomeEndType;
 
+public enum GtkSourceSortFlags
+{
+	/**
+	 * no flags specified
+	 */
+	NONE = 0,
+	/**
+	 * case sensitive sort
+	 */
+	CASE_SENSITIVE = 1,
+	/**
+	 * sort in reverse order
+	 */
+	REVERSE_ORDER = 2,
+	/**
+	 * remove duplicates
+	 */
+	REMOVE_DUPLICATES = 4,
+}
+alias GtkSourceSortFlags SortFlags;
+
 public enum GtkSourceViewGutterPosition
 {
 	/**
@@ -469,15 +490,30 @@ struct GtkSourceCompletionProposalIface
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: The icon of @proposal.
+	 * Return: A #GdkPixbuf with the icon of @proposal.
 	 */
 	extern(C) GdkPixbuf* function(GtkSourceCompletionProposal* proposal) getIcon;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: a new string containing extra information of @proposal or %NULL if
-	 *     no extra information is associated to @proposal.
+	 * Return: The icon name of @proposal.
+	 */
+	extern(C) const(char)* function(GtkSourceCompletionProposal* proposal) getIconName;
+	/**
+	 *
+	 * Params:
+	 *     proposal = a #GtkSourceCompletionProposal.
+	 * Return: A #GIcon with the icon of @proposal.
+	 */
+	extern(C) GIcon* function(GtkSourceCompletionProposal* proposal) getGicon;
+	/**
+	 *
+	 * Params:
+	 *     proposal = a #GtkSourceCompletionProposal.
+	 * Return: a newly-allocated string containing
+	 *     extra information of @proposal or %NULL if no extra information is associated
+	 *     to @proposal.
 	 */
 	extern(C) char* function(GtkSourceCompletionProposal* proposal) getInfo;
 	/**
@@ -524,6 +560,22 @@ struct GtkSourceCompletionProviderIface
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	extern(C) GdkPixbuf* function(GtkSourceCompletionProvider* provider) getIcon;
+	/**
+	 *
+	 * Params:
+	 *     provider = The #GtkSourceCompletionProvider
+	 * Return: The icon name to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
+	 */
+	extern(C) const(char)* function(GtkSourceCompletionProvider* provider) getIconName;
+	/**
+	 *
+	 * Params:
+	 *     provider = The #GtkSourceCompletionProvider
+	 * Return: The icon to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
+	 */
+	extern(C) GIcon* function(GtkSourceCompletionProvider* provider) getGicon;
 	extern(C) void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) populate;
 	/**
 	 *
@@ -757,6 +809,17 @@ struct GtkSourceLanguageManagerClass
 struct GtkSourceLanguageManagerPrivate;
 
 struct GtkSourceLanguagePrivate;
+
+struct GtkSourceMap
+{
+	GtkSourceView parentInstance;
+}
+
+struct GtkSourceMapClass
+{
+	GtkSourceViewClass parentClass;
+	void*[10] padding;
+}
 
 struct GtkSourceMark
 {

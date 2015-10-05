@@ -25,6 +25,8 @@
 module gsv.SourceCompletionProviderT;
 
 public  import gdkpixbuf.Pixbuf;
+public  import gio.Icon;
+public  import gio.IconIF;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gsv.SourceCompletionContext;
@@ -82,7 +84,27 @@ public template SourceCompletionProviderT(TStruct)
 	}
 
 	/**
-	 * Get the icon of the provider.
+	 * Gets the #GIcon for the icon of @provider.
+	 *
+	 * Return: The icon to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
+	 *
+	 * Since: 3.18
+	 */
+	public IconIF getGicon()
+	{
+		auto p = gtk_source_completion_provider_get_gicon(getSourceCompletionProviderStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+	}
+
+	/**
+	 * Get the #GdkPixbuf for the icon of the @provider.
 	 *
 	 * Return: The icon to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
@@ -97,6 +119,19 @@ public template SourceCompletionProviderT(TStruct)
 		}
 		
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+	}
+
+	/**
+	 * Gets the icon name of @provider.
+	 *
+	 * Return: The icon name to be used for the provider,
+	 *     or %NULL if the provider does not have a special icon.
+	 *
+	 * Since: 3.18
+	 */
+	public string getIconName()
+	{
+		return Str.toString(gtk_source_completion_provider_get_icon_name(getSourceCompletionProviderStruct()));
 	}
 
 	/**

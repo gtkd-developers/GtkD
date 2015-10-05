@@ -53,7 +53,7 @@ public struct Util
 	 *
 	 * Deprecated: Focus tracking has been dropped as a feature
 	 * to be implemented by ATK itself. If you need focus tracking on your
-	 * implementation, subscribe to the state-changed:focused signal.
+	 * implementation, subscribe to the #AtkObject::state-change "focused" signal.
 	 *
 	 * Params:
 	 *     focusTracker = Function to be added to the list of functions to be called
@@ -217,7 +217,7 @@ public struct Util
 	 *
 	 * Deprecated: Focus tracking has been dropped as a feature
 	 * to be implemented by ATK itself. If you need focus tracking on your
-	 * implementation, subscribe to the state-changed:focused signal.
+	 * implementation, subscribe to the #AtkObject::state-change "focused" signal.
 	 *
 	 * Removes the specified focus tracker from the list of functions
 	 * to be called when any object receives focus.

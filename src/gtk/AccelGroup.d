@@ -440,7 +440,10 @@ public class AccelGroup : ObjectG
 	}
 
 	/**
-	 * Gets the value set by gtk_accelerator_set_default_mod_mask().
+	 * Gets the modifier mask.
+	 *
+	 * The modifier mask determines which modifiers are considered significant
+	 * for keyboard accelerators. See gtk_accelerator_set_default_mod_mask().
 	 *
 	 * Return: the default accelerator modifier mask
 	 */
@@ -593,11 +596,12 @@ public class AccelGroup : ObjectG
 
 	/**
 	 * Sets the modifiers that will be considered significant for keyboard
-	 * accelerators. The default mod mask is #GDK_CONTROL_MASK |
-	 * #GDK_SHIFT_MASK | #GDK_MOD1_MASK | #GDK_SUPER_MASK |
-	 * #GDK_HYPER_MASK | #GDK_META_MASK, that is, Control, Shift, Alt,
-	 * Super, Hyper and Meta. Other modifiers will by default be ignored
-	 * by #GtkAccelGroup.
+	 * accelerators. The default mod mask depends on the GDK backend in use,
+	 * but will typically include #GDK_CONTROL_MASK | #GDK_SHIFT_MASK |
+	 * #GDK_MOD1_MASK | #GDK_SUPER_MASK | #GDK_HYPER_MASK | #GDK_META_MASK.
+	 * In other words, Control, Shift, Alt, Super, Hyper and Meta. Other
+	 * modifiers will by default be ignored by #GtkAccelGroup.
+	 *
 	 * You must include at least the three modifiers Control, Shift
 	 * and Alt in any value you pass to this function.
 	 *

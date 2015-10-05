@@ -73,9 +73,9 @@ public class PgColor
 	 * not that useful otherwise (since colors can just be copied
 	 * by assignment in C).
 	 *
-	 * Return: the newly allocated #PangoColor, which should
-	 *     be freed with pango_color_free(), or %NULL
-	 *     if @src was %NULL.
+	 * Return: the newly allocated #PangoColor, which
+	 *     should be freed with pango_color_free(), or %NULL if
+	 *     @src was %NULL.
 	 */
 	public PgColor copy()
 	{

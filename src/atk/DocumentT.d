@@ -99,7 +99,7 @@ public template DocumentT(TStruct)
 	 * how to cast this pointer.
 	 *
 	 * Deprecated: Since 2.12. @document is already a representation of
-	 * the document. Use it directly, or one of his children, as an
+	 * the document. Use it directly, or one of its children, as an
 	 * instance of the DOM.
 	 *
 	 * Return: a %gpointer that points to an instance of the DOM.

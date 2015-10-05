@@ -46,7 +46,7 @@ public  import gtkc.gtktypes;
 
 /**
  * The #GtkTreeStore object is a list model for use with a #GtkTreeView
- * widget.  It implements the #GtkTreeModel interface, and consequentialy,
+ * widget.  It implements the #GtkTreeModel interface, and consequentially,
  * can use all of the methods available there.  It also implements the
  * #GtkTreeSortable interface so it can be sorted by the view.  Finally,
  * it also implements the tree

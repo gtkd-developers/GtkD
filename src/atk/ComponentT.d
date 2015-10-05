@@ -61,7 +61,7 @@ public template ComponentT(TStruct)
 	 * already added it is not added again
 	 *
 	 * Deprecated: If you need to track when an object gains or
-	 * lose the focus, use state-changed:focused notification instead.
+	 * lose the focus, use the #AtkObject::state-change "focused" notification instead.
 	 *
 	 * Params:
 	 *     handler = The #AtkFocusHandler to be attached to @component
@@ -220,7 +220,7 @@ public template ComponentT(TStruct)
 	 * (in or out).
 	 *
 	 * Deprecated: If you need to track when an object gains or
-	 * lose the focus, use state-changed:focused notification instead.
+	 * lose the focus, use the #AtkObject::state-change "focused" notification instead.
 	 *
 	 * Params:
 	 *     handlerId = the handler id of the focus handler to be removed

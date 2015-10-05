@@ -51,9 +51,9 @@ public struct PgCairo
 	 * Params:
 	 *     context = a #PangoContext, from a pangocairo font map
 	 *
-	 * Return: the font options previously set on the context, or %NULL
-	 *     if no options have been set. This value is owned by the context
-	 *     and must not be modified or freed.
+	 * Return: the font options previously set on the
+	 *     context, or %NULL if no options have been set. This value is
+	 *     owned by the context and must not be modified or freed.
 	 *
 	 * Since: 1.10
 	 */
@@ -98,8 +98,9 @@ public struct PgCairo
 	 *     context = a #PangoContext, from a pangocairo font map
 	 *     data = Pointer to #gpointer to return user data
 	 *
-	 * Return: the shape rendering callback previously set on the context, or %NULL
-	 *     if no shape rendering callback have been set.
+	 * Return: the shape rendering callback previously
+	 *     set on the context, or %NULL if no shape rendering callback have
+	 *     been set.
 	 *
 	 * Since: 1.18
 	 */
@@ -115,8 +116,8 @@ public struct PgCairo
 	 *
 	 * Params:
 	 *     context = a #PangoContext, from a pangocairo font map
-	 *     options = a #cairo_font_options_t, or %NULL to unset any previously set
-	 *         options. A copy is made.
+	 *     options = a #cairo_font_options_t, or %NULL to unset
+	 *         any previously set options. A copy is made.
 	 *
 	 * Since: 1.10
 	 */
@@ -151,8 +152,8 @@ public struct PgCairo
 	 *
 	 * Params:
 	 *     context = a #PangoContext, from a pangocairo font map
-	 *     func = Callback function for rendering attributes of type
-	 *         %PANGO_ATTR_SHAPE, or %NULL to disable shape rendering.
+	 *     func = Callback function for rendering attributes of
+	 *         type %PANGO_ATTR_SHAPE, or %NULL to disable shape rendering.
 	 *     data = User data that will be passed to @func.
 	 *     dnotify = Callback that will be called when the
 	 *         context is freed to release @data, or %NULL.

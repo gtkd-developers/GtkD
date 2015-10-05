@@ -102,6 +102,27 @@ public class ContainerClass
 	}
 
 	/**
+	 * Installs child properties on a container class.
+	 *
+	 * Params:
+	 *     nPspecs = the length of the #GParamSpec array
+	 *     pspecs = the #GParamSpec array defining the new
+	 *         child properties
+	 *
+	 * Since: 3.18
+	 */
+	public void installChildProperties(ParamSpec[] pspecs)
+	{
+		GParamSpec*[] pspecsArray = new GParamSpec*[pspecs.length];
+		for ( int i = 0; i < pspecs.length; i++ )
+		{
+			pspecsArray[i] = pspecs[i].getParamSpecStruct();
+		}
+		
+		gtk_container_class_install_child_properties(gtkContainerClass, cast(uint)pspecs.length, pspecsArray.ptr);
+	}
+
+	/**
 	 * Installs a child property on a container class.
 	 *
 	 * Params:

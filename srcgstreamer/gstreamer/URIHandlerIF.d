@@ -32,8 +32,8 @@ public  import gstreamerc.gstreamertypes;
 
 
 /**
- * The URIHandler is an interface that is implemented by Source and Sink
- * #GstElement to simplify then handling of URI.
+ * The #GstURIHandler is an interface that is implemented by Source and Sink
+ * #GstElement to unify handling of URI.
  * 
  * An application can use the following functions to quickly get an element
  * that handles the given URI for reading or writing
@@ -91,110 +91,4 @@ public interface URIHandlerIF{
 	 * Throws: GException on failure.
 	 */
 	public bool setUri(string uri);
-
-	/**
-	 * Similar to g_filename_to_uri(), but attempts to handle relative file paths
-	 * as well. Before converting @filename into an URI, it will be prefixed by
-	 * the current working directory if it is a relative path, and then the path
-	 * will be canonicalised so that it doesn't contain any './' or '../' segments.
-	 *
-	 * On Windows #filename should be in UTF-8 encoding.
-	 *
-	 * Params:
-	 *     filename = absolute or relative file name path
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static string filenameToUri(string filename);
-
-	/**
-	 * Constructs a URI for a given valid protocol and location.
-	 *
-	 * Free-function: g_free
-	 *
-	 * Params:
-	 *     protocol = Protocol for URI
-	 *     location = Location for URI
-	 *
-	 * Return: a new string for this URI. Returns %NULL if the
-	 *     given URI protocol is not valid, or the given location is %NULL.
-	 */
-	public static string uriConstruct(string protocol, string location);
-
-	public static GQuark uriErrorQuark();
-
-	/**
-	 * Extracts the location out of a given valid URI, ie. the protocol and "://"
-	 * are stripped from the URI, which means that the location returned includes
-	 * the hostname if one is specified. The returned string must be freed using
-	 * g_free().
-	 *
-	 * Free-function: g_free
-	 *
-	 * Params:
-	 *     uri = A URI string
-	 *
-	 * Return: the location for this URI. Returns %NULL if the
-	 *     URI isn't valid. If the URI does not contain a location, an empty
-	 *     string is returned.
-	 */
-	public static string uriGetLocation(string uri);
-
-	/**
-	 * Extracts the protocol out of a given valid URI. The returned string must be
-	 * freed using g_free().
-	 *
-	 * Params:
-	 *     uri = A URI string
-	 *
-	 * Return: The protocol for this URI.
-	 */
-	public static string uriGetProtocol(string uri);
-
-	/**
-	 * Checks if the protocol of a given valid URI matches @protocol.
-	 *
-	 * Params:
-	 *     uri = a URI string
-	 *     protocol = a protocol string (e.g. "http")
-	 *
-	 * Return: %TRUE if the protocol matches.
-	 */
-	public static bool uriHasProtocol(string uri, string protocol);
-
-	/**
-	 * Tests if the given string is a valid URI identifier. URIs start with a valid
-	 * scheme followed by ":" and maybe a string identifying the location.
-	 *
-	 * Params:
-	 *     uri = A URI string
-	 *
-	 * Return: %TRUE if the string is a valid URI
-	 */
-	public static bool uriIsValid(string uri);
-
-	/**
-	 * Checks if an element exists that supports the given URI protocol. Note
-	 * that a positive return value does not imply that a subsequent call to
-	 * gst_element_make_from_uri() is guaranteed to work.
-	 *
-	 * Params:
-	 *     type = Whether to check for a source or a sink
-	 *     protocol = Protocol that should be checked for (e.g. "http" or "smb")
-	 *
-	 * Return: %TRUE
-	 */
-	public static bool uriProtocolIsSupported(GstURIType type, string protocol);
-
-	/**
-	 * Tests if the given string is a valid protocol identifier. Protocols
-	 * must consist of alphanumeric characters, '+', '-' and '.' and must
-	 * start with a alphabetic character. See RFC 3986 Section 3.1.
-	 *
-	 * Params:
-	 *     protocol = A string
-	 *
-	 * Return: %TRUE if the string is a valid protocol identifier, %FALSE otherwise.
-	 */
-	public static bool uriProtocolIsValid(string protocol);
 }

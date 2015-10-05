@@ -52,6 +52,11 @@ public struct Debug
 		gst_debug_add_log_function(func, userData, notify);
 	}
 
+	public static string binToDotData(Bin bin, GstDebugGraphDetails details)
+	{
+		return Str.toString(gst_debug_bin_to_dot_data((bin is null) ? null : bin.getBinStruct(), details));
+	}
+
 	public static void binToDotFile(Bin bin, GstDebugGraphDetails details, string fileName)
 	{
 		gst_debug_bin_to_dot_file((bin is null) ? null : bin.getBinStruct(), details, Str.toStringz(fileName));
@@ -172,9 +177,10 @@ public struct Debug
 
 	/**
 	 * The default logging handler used by GStreamer. Logging functions get called
-	 * whenever a macro like GST_DEBUG or similar is used. This function outputs the
-	 * message and additional info to stderr (or the log file specified via the
-	 * GST_DEBUG_FILE environment variable).
+	 * whenever a macro like GST_DEBUG or similar is used. By default this function
+	 * is setup to output the message and additional info to stderr (or the log file
+	 * specified via the GST_DEBUG_FILE environment variable) as received via
+	 * @user_data.
 	 *
 	 * You can add other handlers by using gst_debug_add_log_function().
 	 * And you can remove this handler by calling
@@ -189,11 +195,11 @@ public struct Debug
 	 *     object = the object this message relates to,
 	 *         or %NULL if none
 	 *     message = the actual message
-	 *     unused = an unused variable, reserved for some user_data.
+	 *     userData = the FILE* to log to
 	 */
-	public static void logDefault(DebugCategory category, GstDebugLevel level, string file, string funct, int line, ObjectG object, GstDebugMessage* message, void* unused)
+	public static void logDefault(DebugCategory category, GstDebugLevel level, string file, string funct, int line, ObjectG object, GstDebugMessage* message, void* userData)
 	{
-		gst_debug_log_default((category is null) ? null : category.getDebugCategoryStruct(), level, Str.toStringz(file), Str.toStringz(funct), line, (object is null) ? null : object.getObjectGStruct(), message, unused);
+		gst_debug_log_default((category is null) ? null : category.getDebugCategoryStruct(), level, Str.toStringz(file), Str.toStringz(funct), line, (object is null) ? null : object.getObjectGStruct(), message, userData);
 	}
 
 	/**

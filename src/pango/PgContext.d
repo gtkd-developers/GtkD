@@ -246,10 +246,9 @@ public class PgContext : ObjectG
 	 * Gets the transformation matrix that will be applied when
 	 * rendering with this context. See pango_context_set_matrix().
 	 *
-	 * Return: the matrix, or %NULL if no matrix has been set
-	 *     (which is the same as the identity matrix). The returned
-	 *     matrix is owned by Pango and must not be modified or
-	 *     freed.
+	 * Return: the matrix, or %NULL if no matrix has
+	 *     been set (which is the same as the identity matrix). The returned
+	 *     matrix is owned by Pango and must not be modified or freed.
 	 *
 	 * Since: 1.6
 	 */
@@ -354,8 +353,8 @@ public class PgContext : ObjectG
 	 * Params:
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *
-	 * Return: the newly allocated #PangoFont that
-	 *     was loaded, or %NULL if no font matched.
+	 * Return: the newly allocated #PangoFont
+	 *     that was loaded, or %NULL if no font matched.
 	 */
 	public PgFont loadFont(PgFontDescription desc)
 	{
@@ -377,8 +376,8 @@ public class PgContext : ObjectG
 	 *     desc = a #PangoFontDescription describing the fonts to load
 	 *     language = a #PangoLanguage the fonts will be used for
 	 *
-	 * Return: the newly allocated #PangoFontset loaded,
-	 *     or %NULL if no font matched.
+	 * Return: the newly allocated
+	 *     #PangoFontset loaded, or %NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
 	{

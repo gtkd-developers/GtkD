@@ -422,6 +422,9 @@ public class Element : ObjectGst
 	 * Gets the currently configured clock of the element. This is the clock as was
 	 * last set with gst_element_set_clock().
 	 *
+	 * Elements in a pipeline will only have their clock set when the
+	 * pipeline is in the PLAYING state.
+	 *
 	 * Return: the #GstClock of the element. unref after usage.
 	 *
 	 *     MT safe.
@@ -515,7 +518,7 @@ public class Element : ObjectGst
 	 *
 	 * This method is slower than manually getting the pad template and calling
 	 * gst_element_request_pad() if the pads should have a specific name (e.g.
-	 * @name is "src_1" instead of "src_%u").
+	 * @name is "src_1" instead of "src_\%u").
 	 *
 	 * Params:
 	 *     name = the name of the request #GstPad to retrieve.

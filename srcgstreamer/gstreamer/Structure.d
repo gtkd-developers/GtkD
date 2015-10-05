@@ -229,6 +229,24 @@ public class Structure
 	}
 
 	/**
+	 * Calls the provided function once for each field in the #GstStructure. In
+	 * contrast to gst_structure_foreach(), the function may modify the fields.
+	 * In contrast to gst_structure_map_in_place(), the field is removed from
+	 * the structure if %FALSE is returned from the function.
+	 * The structure must be mutable.
+	 *
+	 * Params:
+	 *     func = a function to call for each field
+	 *     userData = private data
+	 *
+	 * Since: 1.6
+	 */
+	public void filterAndMapInPlace(GstStructureFilterMapFunc func, void* userData)
+	{
+		gst_structure_filter_and_map_in_place(gstStructure, func, userData);
+	}
+
+	/**
 	 * Fixate all values in @structure using gst_value_fixate().
 	 * @structure will be modified in-place and should be writable.
 	 */
@@ -329,7 +347,8 @@ public class Structure
 
 	/**
 	 * Calls the provided function once for each field in the #GstStructure. The
-	 * function must not modify the fields. Also see gst_structure_map_in_place().
+	 * function must not modify the fields. Also see gst_structure_map_in_place()
+	 * and gst_structure_filter_and_map_in_place().
 	 *
 	 * Params:
 	 *     func = a function to call for each field
@@ -502,6 +521,26 @@ public class Structure
 	public GType getFieldType(string fieldname)
 	{
 		return gst_structure_get_field_type(gstStructure, Str.toStringz(fieldname));
+	}
+
+	/**
+	 * Read the GstFlagSet flags and mask out of the structure into the
+	 * provided pointers.
+	 *
+	 * Params:
+	 *     fieldname = the name of a field
+	 *     valueFlags = a pointer to a guint for the flags field
+	 *     valueMask = a pointer to a guint for the mask field
+	 *
+	 * Return: %TRUE if the values could be set correctly. If there was no field
+	 *     with @fieldname or the existing field did not contain a GstFlagSet, this
+	 *     function returns %FALSE.
+	 *
+	 * Since: 1.6
+	 */
+	public bool getFlagset(string fieldname, out uint valueFlags, out uint valueMask)
+	{
+		return gst_structure_get_flagset(gstStructure, Str.toStringz(fieldname), &valueFlags, &valueMask) != 0;
 	}
 
 	/**

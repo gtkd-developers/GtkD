@@ -303,8 +303,8 @@ public class Date
 
 	/**
 	 * Returns the week of the year, where weeks are understood to start on
-	 * Monday. If the date is before the first Monday of the year, return
-	 * 0. The date must be valid.
+	 * Monday. If the date is before the first Monday of the year, return 0.
+	 * The date must be valid.
 	 *
 	 * Return: week of the year
 	 */
@@ -324,9 +324,9 @@ public class Date
 	}
 
 	/**
-	 * Returns the week of the year during which this date falls, if weeks
-	 * are understood to being on Sunday. The date must be valid. Can return
-	 * 0 if the day is before the first Sunday of the year.
+	 * Returns the week of the year during which this date falls, if
+	 * weeks are understood to being on Sunday. The date must be valid.
+	 * Can return 0 if the day is before the first Sunday of the year.
 	 *
 	 * Return: week number
 	 */
