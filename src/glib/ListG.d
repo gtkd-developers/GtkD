@@ -97,7 +97,7 @@ public class ListG
 	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
 	{
 		T[] arr = new T[length()];
-		ListSG list = this;
+		ListG list = this;
 		size_t count;
 		
 		while(list !is null && count < arr.length)
