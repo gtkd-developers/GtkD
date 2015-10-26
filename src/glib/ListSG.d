@@ -101,7 +101,7 @@ public class ListSG
 	{
 		import gobject.Value;
 		
-		auto list = new ListG(null);
+		auto list = new ListSG(null);
 		list = list.append(new Value(0).getValueStruct());
 		list = list.append(new Value(1).getValueStruct());
 		auto arr = list.toArray!Value();
