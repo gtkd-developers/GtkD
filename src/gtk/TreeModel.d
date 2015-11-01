@@ -233,10 +233,11 @@ public class TreeModel : ObjectG, TreeModelIF
 			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
-			auto p = tm.iterChildren(ti, ObjectG.getDObject!(TreeIter)(parent));
+			if ( !tm.iterChildren(ti, ObjectG.getDObject!(TreeIter)(parent)) )
+				return false;
 			
 			iter = ti.getTreeIterStruct();
-			return p;
+			return true;
 		}
 		
 		static int customTreeModelIterHasChild(GtkTreeModel *tree_model, GtkTreeIter *iter)
@@ -258,10 +259,11 @@ public class TreeModel : ObjectG, TreeModelIF
 			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
-			auto p = tm.iterNthChild(ti, ObjectG.getDObject!(TreeIter)(parent), n);
+			if ( !tm.iterNthChild(ti, ObjectG.getDObject!(TreeIter)(parent), n) )
+				return false;
 			
 			iter = ti.getTreeIterStruct();
-			return p;
+			return true;
 		}
 		
 		static int customTreeModelIterParent(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreeIter *child)
@@ -269,10 +271,11 @@ public class TreeModel : ObjectG, TreeModelIF
 			TreeIter ti;
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
 			
-			auto p = tm.iterParent(ti, ObjectG.getDObject!(TreeIter)(child));
+			if ( !tm.iterParent(ti, ObjectG.getDObject!(TreeIter)(child)) )
+				return false;
 			
 			iter = ti.getTreeIterStruct();
-			return p;
+			return true;
 		}
 	}
 }
