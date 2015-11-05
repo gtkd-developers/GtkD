@@ -16,7 +16,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
-// To compile: gdc CoreGL.d `pkg-config gtkd-3 gl --cflags --libs`
+// To compile:
+// [gdc] gdc CoreGL.d `pkg-config gtkd-3 gl --cflags --libs`
+// [dmd] rdmd `pkg-config gtkd-3 --cflags` -L-lGL -L-ldl CoreGL.d
 
 module coreGL.CoreGL;
 
