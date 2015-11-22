@@ -46,6 +46,7 @@ import gtk.Box;
 import gtk.Button;
 import gtk.CellRendererText;
 import gdk.Event;
+import gdk.Threads;
 import gtk.ListStore;
 import gtk.ScrolledWindow;
 import gtk.TreeIter;
