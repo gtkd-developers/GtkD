@@ -1506,6 +1506,13 @@ public class StyleContext : ObjectG
 	/**
 	 * Renders the icon in @pixbuf at the specified @x and @y coordinates.
 	 *
+	 * This function will render the icon in @pixbuf at exactly its size,
+	 * regardless of scaling factors, which may not be appropriate when
+	 * drawing on displays with high pixel densities.
+	 *
+	 * You probably want to use gtk_render_icon_surface() instead, if you
+	 * already have a Cairo surface.
+	 *
 	 * Params:
 	 *     context = a #GtkStyleContext
 	 *     cr = a #cairo_t

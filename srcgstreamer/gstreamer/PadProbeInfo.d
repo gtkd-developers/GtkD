@@ -79,6 +79,9 @@ public class PadProbeInfo
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 
+	/**
+	 * Return: The #GstBufferlist from the probe
+	 */
 	public BufferList getBufferList()
 	{
 		auto p = gst_pad_probe_info_get_buffer_list(gstPadProbeInfo);

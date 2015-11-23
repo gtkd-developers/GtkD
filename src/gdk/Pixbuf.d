@@ -99,8 +99,8 @@ public Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int
  *     window = Source window
  *     srcX = Source X coordinate within @window
  *     srcY = Source Y coordinate within @window
- *     width = Width in pixels of region to get
- *     height = Height in pixels of region to get
+ *     width = Width in logical pixels of region to get
+ *     height = Height in logical pixels of region to get
  *
  * Return: A newly-created pixbuf with a
  *     reference count of 1, or %NULL on error

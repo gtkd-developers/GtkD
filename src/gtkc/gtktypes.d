@@ -5814,7 +5814,7 @@ struct GtkFlowBoxClass
 	extern(C) void function(GtkFlowBox* box) selectedChildrenChanged;
 	extern(C) void function(GtkFlowBox* box) activateCursorChild;
 	extern(C) void function(GtkFlowBox* box) toggleCursorChild;
-	extern(C) void function(GtkFlowBox* box, GtkMovementStep step, int count) moveCursor;
+	extern(C) int function(GtkFlowBox* box, GtkMovementStep step, int count) moveCursor;
 	extern(C) void function(GtkFlowBox* box) selectAll;
 	extern(C) void function(GtkFlowBox* box) unselectAll;
 	extern(C) void function() GtkReserved1;

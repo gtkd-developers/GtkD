@@ -351,7 +351,7 @@ public class Screen : ObjectG
 	 * on very high density outputs this can be a higher value (often 2).
 	 *
 	 * This can be used if you want to create pixel based data for a
-	 * particula monitor, but most of the time you’re drawing to a window
+	 * particular monitor, but most of the time you’re drawing to a window
 	 * where it is better to use gdk_window_get_scale_factor() instead.
 	 *
 	 * Params:

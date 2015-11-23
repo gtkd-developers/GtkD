@@ -669,13 +669,11 @@ public class FlowBox : Container, OrientableIF
 		}
 	}
 
-	void delegate(GtkMovementStep, int, FlowBox)[] onMoveCursorListeners;
+	bool delegate(GtkMovementStep, int, FlowBox)[] onMoveCursorListeners;
 	/**
 	 * The ::move-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user initiates a cursor movement.
-	 * If the cursor is not visible in @text_view, this signal causes
-	 * the viewport to be moved instead.
 	 *
 	 * Applications should not connect to it, but may emit it with
 	 * g_signal_emit_by_name() if they need to control the cursor
@@ -692,8 +690,11 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     step = the granularity fo the move, as a #GtkMovementStep
 	 *     count = the number of @step units to move
+	 *
+	 * Return: %TRUE to stop other handlers from being invoked for the event.
+	 *     %FALSE to propagate the event further.
 	 */
-	void addOnMoveCursor(void delegate(GtkMovementStep, int, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnMoveCursor(bool delegate(GtkMovementStep, int, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "move-cursor" !in connectedSignals )
 		{
@@ -708,12 +709,17 @@ public class FlowBox : Container, OrientableIF
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkFlowBox* flowboxStruct, GtkMovementStep step, int count, FlowBox _flowbox)
+	extern(C) static int callBackMoveCursor(GtkFlowBox* flowboxStruct, GtkMovementStep step, int count, FlowBox _flowbox)
 	{
-		foreach ( void delegate(GtkMovementStep, int, FlowBox) dlg; _flowbox.onMoveCursorListeners )
+		foreach ( bool delegate(GtkMovementStep, int, FlowBox) dlg; _flowbox.onMoveCursorListeners )
 		{
-			dlg(step, count, _flowbox);
+			if ( dlg(step, count, _flowbox) )
+			{
+				return 1;
+			}
 		}
+		
+		return 0;
 	}
 
 	void delegate(FlowBox)[] onSelectAllListeners;
