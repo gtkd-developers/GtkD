@@ -1,6 +1,14 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.2.1
+--------------
+-Fix ListG.toArray, and the unittest. #129
+-Returning a TreeIter from a custom TreeModel should be optional. #130
+-New CoreGL demo by: Sebastien Alaiwan. #132
+-New Multithreading demo by: Gerald Nunn. #134
+-Fix the vte path. #135
+
 Release: 3.2.0
 --------------
 -Update to GTK 3.18.
