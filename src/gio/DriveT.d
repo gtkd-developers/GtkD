@@ -76,8 +76,6 @@ public template DriveT(TStruct)
 		return cast(GDrive*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Checks if a drive can be ejected.

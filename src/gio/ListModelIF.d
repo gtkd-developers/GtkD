@@ -87,8 +87,6 @@ public interface ListModelIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Get the item at @position. If @position is greater than the number of

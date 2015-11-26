@@ -88,8 +88,6 @@ public class CellAreaBox : CellArea, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkCellAreaBox);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

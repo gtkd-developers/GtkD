@@ -83,8 +83,6 @@ public class HBox : Box
 		super(cast(GtkBox*)gtkHBox, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

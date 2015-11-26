@@ -60,8 +60,6 @@ public interface RemoteActionGroupIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Activates the remote action.

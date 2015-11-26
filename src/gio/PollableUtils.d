@@ -35,8 +35,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
-/**
- */
+/** */
 
 /**
  * Utility method for #GPollableInputStream and #GPollableOutputStream

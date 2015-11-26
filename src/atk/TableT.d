@@ -71,8 +71,6 @@ public template TableT(TStruct)
 		return cast(AtkTable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds the specified @column to the selection.

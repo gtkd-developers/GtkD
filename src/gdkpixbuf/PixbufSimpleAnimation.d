@@ -67,8 +67,6 @@ public class PixbufSimpleAnimation : PixbufAnimation
 		super(cast(GdkPixbufAnimation*)gdkPixbufSimpleAnim, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

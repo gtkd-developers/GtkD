@@ -100,8 +100,6 @@ public class Closure
 		this.gClosure = gClosure;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

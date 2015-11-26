@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class CellAreaClass
 {
 	/** the main Gtk struct */
@@ -56,8 +57,6 @@ public class CellAreaClass
 		this.gtkCellAreaClass = gtkCellAreaClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Finds a cell property of a cell area class by name.

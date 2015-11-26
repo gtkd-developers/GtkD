@@ -49,8 +49,6 @@ public template URIHandlerT(TStruct)
 		return cast(GstURIHandler*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the list of protocols supported by @handler. This list may not be

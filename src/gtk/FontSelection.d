@@ -35,6 +35,7 @@ private import pango.PgFontFace;
 private import pango.PgFontFamily;
 
 
+/** */
 public class FontSelection : Box
 {
 	/** the main Gtk struct */
@@ -67,8 +68,6 @@ public class FontSelection : Box
 		super(cast(GtkBox*)gtkFontSelection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

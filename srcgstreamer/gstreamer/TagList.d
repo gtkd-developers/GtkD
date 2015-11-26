@@ -66,8 +66,6 @@ public class TagList
 		this.gstTagList = gstTagList;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the #GType used for this tag.

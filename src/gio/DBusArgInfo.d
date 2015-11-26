@@ -59,8 +59,6 @@ public class DBusArgInfo
 		this.gDBusArgInfo = gDBusArgInfo;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

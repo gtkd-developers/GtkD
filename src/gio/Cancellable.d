@@ -72,8 +72,6 @@ public class Cancellable : ObjectG
 		super(cast(GObject*)gCancellable, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

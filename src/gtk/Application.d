@@ -143,8 +143,6 @@ public class Application : GioApplication
 		super(cast(GApplication*)gtkApplication, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -58,8 +58,6 @@ public class SequenceIter
 		this.gSequenceIter = gSequenceIter;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns a negative number if @a comes before @b, 0 if they are equal,

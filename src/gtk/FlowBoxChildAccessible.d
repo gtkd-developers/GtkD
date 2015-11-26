@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class FlowBoxChildAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class FlowBoxChildAccessible : ContainerAccessible
 		super(cast(GtkContainerAccessible*)gtkFlowBoxChildAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

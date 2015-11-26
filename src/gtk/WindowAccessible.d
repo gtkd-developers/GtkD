@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class WindowAccessible : ContainerAccessible, WindowIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class WindowAccessible : ContainerAccessible, WindowIF
 	// add the Window capabilities
 	mixin WindowT!(GtkWindowAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

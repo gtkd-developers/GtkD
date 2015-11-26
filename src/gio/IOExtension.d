@@ -60,8 +60,6 @@ public class IOExtension
 		this.gIOExtension = gIOExtension;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the name under which @extension was registered.

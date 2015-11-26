@@ -33,6 +33,7 @@ public  import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public template TreeDragSourceT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -41,8 +42,6 @@ public template TreeDragSourceT(TStruct)
 		return cast(GtkTreeDragSource*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Asks the #GtkTreeDragSource to delete the row at @path, because

@@ -97,8 +97,6 @@ public class MenuShell : Container
 		super(cast(GtkContainer*)gtkMenuShell, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

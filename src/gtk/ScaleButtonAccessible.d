@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ScaleButtonAccessible : ButtonAccessible, ValueIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ScaleButtonAccessible : ButtonAccessible, ValueIF
 	// add the Value capabilities
 	mixin ValueT!(GtkScaleButtonAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

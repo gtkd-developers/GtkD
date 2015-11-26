@@ -82,8 +82,6 @@ public class Screen : ObjectG
 		super(cast(GObject*)gdkScreen, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

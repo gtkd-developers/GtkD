@@ -73,8 +73,6 @@ public interface IconIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Deserializes a #GIcon previously serialized using g_icon_serialize().

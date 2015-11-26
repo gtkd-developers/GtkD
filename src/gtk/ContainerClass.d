@@ -59,8 +59,6 @@ public class ContainerClass
 		this.gtkContainerClass = gtkContainerClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Finds a child property of a container class by name.

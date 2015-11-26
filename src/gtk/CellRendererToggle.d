@@ -72,8 +72,6 @@ public class CellRendererToggle : CellRenderer
 		super(cast(GtkCellRenderer*)gtkCellRendererToggle, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

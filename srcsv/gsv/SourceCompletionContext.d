@@ -35,6 +35,7 @@ private import gtk.TextIter;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceCompletionContext : ObjectG
 {
 	/** the main Gtk struct */
@@ -67,8 +68,6 @@ public class SourceCompletionContext : ObjectG
 		super(cast(GObject*)gtkSourceCompletionContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

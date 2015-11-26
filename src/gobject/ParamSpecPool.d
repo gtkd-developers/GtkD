@@ -64,8 +64,6 @@ public class ParamSpecPool
 		this.gParamSpecPool = gParamSpecPool;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Inserts a #GParamSpec in the pool.

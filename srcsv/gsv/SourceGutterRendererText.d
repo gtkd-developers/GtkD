@@ -32,6 +32,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceGutterRendererText : SourceGutterRenderer
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class SourceGutterRendererText : SourceGutterRenderer
 		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererText, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -71,8 +71,6 @@ public class ProxyAddress : InetSocketAddress
 		super(cast(GInetSocketAddress*)gProxyAddress, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

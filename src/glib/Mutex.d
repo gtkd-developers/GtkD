@@ -99,8 +99,6 @@ public class Mutex
 		this.gMutex = gMutex;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees the resources allocated to a mutex with g_mutex_init().

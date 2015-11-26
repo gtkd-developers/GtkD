@@ -149,8 +149,6 @@ public class SpinButton : Entry, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkSpinButton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

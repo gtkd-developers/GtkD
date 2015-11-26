@@ -73,8 +73,6 @@ public class DataInputStream : BufferedInputStream
 		super(cast(GBufferedInputStream*)gDataInputStream, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

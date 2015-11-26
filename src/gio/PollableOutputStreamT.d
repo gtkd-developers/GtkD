@@ -48,8 +48,6 @@ public template PollableOutputStreamT(TStruct)
 		return cast(GPollableOutputStream*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Checks if @stream is actually pollable. Some classes may implement

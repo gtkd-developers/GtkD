@@ -136,8 +136,6 @@ public class SizeGroup : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkSizeGroup);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

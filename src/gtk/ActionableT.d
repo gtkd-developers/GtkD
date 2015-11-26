@@ -52,8 +52,6 @@ public template ActionableT(TStruct)
 		return cast(GtkActionable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the action name for @actionable.

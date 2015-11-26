@@ -28,6 +28,7 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 class ConstructionException : Exception
 {
 	this(string message)

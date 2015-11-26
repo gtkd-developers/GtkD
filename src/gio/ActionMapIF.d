@@ -50,8 +50,6 @@ public interface ActionMapIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds an action to the @action_map.

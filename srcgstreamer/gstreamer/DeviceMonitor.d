@@ -131,8 +131,6 @@ public class DeviceMonitor : ObjectGst
 		super(cast(GstObject*)gstDeviceMonitor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

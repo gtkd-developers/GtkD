@@ -40,6 +40,7 @@ private import gtk.Button;
 private import gtk.Widget;
 
 
+/** */
 public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 {
 	/** the main Gtk struct */
@@ -75,8 +76,6 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 	// add the StyleSchemeChooser capabilities
 	mixin StyleSchemeChooserT!(GtkSourceStyleSchemeChooserButton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

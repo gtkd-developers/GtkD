@@ -48,8 +48,6 @@ public template ColorChooserT(TStruct)
 		return cast(GtkColorChooser*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds a palette to the color chooser. If @orientation is horizontal,

@@ -88,8 +88,6 @@ public class Plug : Window
 		super(cast(GtkWindow*)gtkPlug, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

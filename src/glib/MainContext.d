@@ -61,8 +61,6 @@ public class MainContext
 		this.gMainContext = gMainContext;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GMainContext structure.

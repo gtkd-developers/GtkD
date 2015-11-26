@@ -64,8 +64,6 @@ public class Sample
 		this.gstSample = gstSample;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

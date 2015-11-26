@@ -29,10 +29,9 @@ private import gtkc.atk;
 public  import gtkc.atktypes;
 
 
+/** */
 public struct Version
 {
-	/**
-	 */
 
 	/**
 	 * Returns the binary age as passed to libtool when building the ATK

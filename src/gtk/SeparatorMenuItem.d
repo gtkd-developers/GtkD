@@ -69,8 +69,6 @@ public class SeparatorMenuItem : MenuItem
 		super(cast(GtkMenuItem*)gtkSeparatorMenuItem, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

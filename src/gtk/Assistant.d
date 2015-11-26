@@ -94,8 +94,6 @@ public class Assistant : Window
 		super(cast(GtkWindow*)gtkAssistant, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

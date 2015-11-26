@@ -88,8 +88,6 @@ public class Calendar : Widget
 		super(cast(GtkWidget*)gtkCalendar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

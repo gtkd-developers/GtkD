@@ -59,8 +59,6 @@ public class PgColor
 		this.pangoColor = pangoColor;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

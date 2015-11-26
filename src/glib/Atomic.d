@@ -28,10 +28,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Atomic
 {
-	/**
-	 */
 
 	/**
 	 * Atomically adds @val to the value of @atomic.

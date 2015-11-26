@@ -202,8 +202,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	// add the ActionMap capabilities
 	mixin ActionMapT!(GApplication);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class LinkButtonAccessible : ButtonAccessible, HyperlinkImplIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class LinkButtonAccessible : ButtonAccessible, HyperlinkImplIF
 	// add the HyperlinkImpl capabilities
 	mixin HyperlinkImplT!(GtkLinkButtonAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

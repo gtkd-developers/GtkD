@@ -79,8 +79,6 @@ public class UnixCredentialsMessage : SocketControlMessage
 		super(cast(GSocketControlMessage*)gUnixCredentialsMessage, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

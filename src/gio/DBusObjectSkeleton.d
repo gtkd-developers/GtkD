@@ -81,8 +81,6 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	// add the DBusObject capabilities
 	mixin DBusObjectT!(GDBusObjectSkeleton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

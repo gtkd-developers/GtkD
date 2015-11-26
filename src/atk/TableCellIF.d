@@ -45,8 +45,6 @@ public interface TableCellIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Returns the column headers as an array of cell accessibles.

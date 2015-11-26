@@ -34,6 +34,7 @@ public  import gsvc.gsvtypes;
 private import gtk.PrintContext;
 
 
+/** */
 public class SourcePrintCompositor : ObjectG
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class SourcePrintCompositor : ObjectG
 		super(cast(GObject*)gtkSourcePrintCompositor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

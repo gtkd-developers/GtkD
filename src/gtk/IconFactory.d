@@ -141,8 +141,6 @@ public class IconFactory : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkIconFactory);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -64,8 +64,6 @@ public class IOChannel
 		this.gIOChannel = gIOChannel;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Open a file @filename as a #GIOChannel using mode @mode. This

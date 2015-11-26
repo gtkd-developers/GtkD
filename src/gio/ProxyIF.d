@@ -55,8 +55,6 @@ public interface ProxyIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Lookup "gio-proxy" extension point for a proxy implementation that supports

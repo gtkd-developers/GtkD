@@ -42,8 +42,6 @@ public  import gstreamerc.gstreamertypes;
  */
 public struct ParentBufferMeta
 {
-	/**
-	 */
 
 	/**
 	 * Get the global #GstMetaInfo describing  the #GstParentBufferMeta meta.

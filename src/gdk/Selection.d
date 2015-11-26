@@ -32,10 +32,9 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public struct Selection
 {
-	/**
-	 */
 
 	/**
 	 * Retrieves the contents of a selection in a given

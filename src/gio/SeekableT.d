@@ -55,8 +55,6 @@ public template SeekableT(TStruct)
 		return cast(GSeekable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Tests if the stream supports the #GSeekableIface.

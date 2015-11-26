@@ -85,8 +85,6 @@ public template TypePluginT(TStruct)
 		return cast(GTypePlugin*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Calls the @complete_interface_info function from the

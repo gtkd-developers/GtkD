@@ -78,8 +78,6 @@ public class EmblemedIcon : ObjectG, IconIF
 	// add the Icon capabilities
 	mixin IconT!(GEmblemedIcon);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

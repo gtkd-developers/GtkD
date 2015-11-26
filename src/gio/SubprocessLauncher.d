@@ -78,8 +78,6 @@ public class SubprocessLauncher : ObjectG
 		super(cast(GObject*)gSubprocessLauncher, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

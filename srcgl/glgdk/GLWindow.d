@@ -34,6 +34,7 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public class GLWindow : ObjectG, GLDrawableIF
 {
 	/** the main Gtk struct */
@@ -69,8 +70,6 @@ public class GLWindow : ObjectG, GLDrawableIF
 	// add the GLDrawable capabilities
 	mixin GLDrawableT!(GdkGLWindow);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

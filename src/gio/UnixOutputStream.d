@@ -84,8 +84,6 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 	// add the PollableOutputStream capabilities
 	mixin PollableOutputStreamT!(GUnixOutputStream);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

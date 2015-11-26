@@ -32,6 +32,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceLanguageManager : ObjectG
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class SourceLanguageManager : ObjectG
 		super(cast(GObject*)gtkSourceLanguageManager, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

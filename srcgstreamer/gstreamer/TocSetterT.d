@@ -54,8 +54,6 @@ public template TocSetterT(TStruct)
 		return cast(GstTocSetter*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Return current TOC the setter uses. The TOC should not be

@@ -97,8 +97,6 @@ public template AppInfoT(TStruct)
 		return cast(GAppInfo*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GAppInfo from the given information.

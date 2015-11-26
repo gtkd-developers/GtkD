@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Child
 {
-	/**
-	 */
 
 	/**
 	 * Sets a function to be called when the child indicated by @pid

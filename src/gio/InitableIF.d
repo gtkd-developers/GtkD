@@ -69,8 +69,6 @@ public interface InitableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Initializes the object implementing the interface.

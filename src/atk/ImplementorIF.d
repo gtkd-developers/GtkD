@@ -30,6 +30,7 @@ private import gtkc.atk;
 public  import gtkc.atktypes;
 
 
+/** */
 public interface ImplementorIF{
 	/** Get the main Gtk struct */
 	public AtkImplementor* getImplementorStruct();
@@ -37,8 +38,6 @@ public interface ImplementorIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets a reference to an object's #AtkObject implementation, if

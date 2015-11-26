@@ -35,8 +35,6 @@ public  import gtkc.gdktypes;
  * An opaque type representing a string as an index into a table
  * of strings on the X server.
  */
-/**
- */
 
 /**
  * Determines the string corresponding to an atom.

@@ -34,6 +34,7 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public class ProxyPad : Pad
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ProxyPad : Pad
 		super(cast(GstPad*)gstProxyPad, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

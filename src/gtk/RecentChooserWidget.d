@@ -81,8 +81,6 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserWidget);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

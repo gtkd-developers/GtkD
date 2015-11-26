@@ -28,10 +28,9 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public struct EventSequence
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

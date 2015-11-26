@@ -135,8 +135,6 @@ public class LevelBar : Widget, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkLevelBar);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

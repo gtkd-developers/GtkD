@@ -59,8 +59,6 @@ public template AppChooserT(TStruct)
 		return cast(GtkAppChooser*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the currently selected application.

@@ -30,10 +30,9 @@ public  import gtkc.pangotypes;
 private import pango.PgLanguage;
 
 
+/** */
 public struct PgScript
 {
-	/**
-	 */
 
 	/**
 	 * Looks up the #PangoScript for a particular character (as defined by

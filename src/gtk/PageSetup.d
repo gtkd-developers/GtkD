@@ -112,8 +112,6 @@ public class PageSetup : ObjectG
 		super(cast(GObject*)gtkPageSetup, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -97,8 +97,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	// add the AppChooser capabilities
 	mixin AppChooserT!(GtkAppChooserButton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

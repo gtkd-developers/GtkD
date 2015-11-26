@@ -57,8 +57,6 @@ public class Hook
 		this.gHook = gHook;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Compares the ids of two #GHook elements, returning a negative value

@@ -134,8 +134,6 @@ public class ObjectGst : ObjectG
 		super(cast(GObject*)gstObject, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

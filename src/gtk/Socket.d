@@ -120,8 +120,6 @@ public class Socket : Container
 		super(cast(GtkContainer*)gtkSocket, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -61,8 +61,6 @@ public class ThreadPool
 		this.gThreadPool = gThreadPool;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees all resources allocated for @pool.

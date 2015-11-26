@@ -43,8 +43,6 @@ public template WindowT(TStruct)
 		return cast(AtkWindow*)getStruct();
 	}
 
-	/**
-	 */
 
 	int[string] connectedSignals;
 

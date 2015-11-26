@@ -47,8 +47,6 @@ public template LoadableIconT(TStruct)
 		return cast(GLoadableIcon*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Loads a loadable icon. For the asynchronous version of this function,

@@ -85,8 +85,6 @@ public class AccelGroup : ObjectG
 		super(cast(GObject*)gtkAccelGroup, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

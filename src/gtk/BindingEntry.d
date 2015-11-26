@@ -37,8 +37,6 @@ public  import gtkc.gtktypes;
  */
 public struct BindingEntry
 {
-	/**
-	 */
 
 	/**
 	 * Parses a signal description from @signal_desc and incorporates

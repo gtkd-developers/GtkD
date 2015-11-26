@@ -58,8 +58,6 @@ public interface AppChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Returns the currently selected application.

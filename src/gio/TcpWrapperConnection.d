@@ -73,8 +73,6 @@ public class TcpWrapperConnection : TcpConnection
 		super(cast(GTcpConnection*)gTcpWrapperConnection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -47,8 +47,6 @@ public interface EditableTextIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Copy text from @start_pos up to, but not including @end_pos

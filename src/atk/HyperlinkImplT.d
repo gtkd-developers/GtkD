@@ -68,8 +68,6 @@ public template HyperlinkImplT(TStruct)
 		return cast(AtkHyperlinkImpl*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the hyperlink associated with this object.

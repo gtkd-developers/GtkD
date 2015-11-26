@@ -95,8 +95,6 @@ public class Memory
 		this.gstMemory = gstMemory;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

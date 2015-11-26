@@ -75,8 +75,6 @@ public class CellRendererSpinner : CellRenderer
 		super(cast(GtkCellRenderer*)gtkCellRendererSpinner, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

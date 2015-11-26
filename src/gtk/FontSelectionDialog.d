@@ -34,6 +34,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class FontSelectionDialog : Dialog
 {
 	/** the main Gtk struct */

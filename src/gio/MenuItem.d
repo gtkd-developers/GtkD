@@ -73,8 +73,6 @@ public class MenuItem : ObjectG
 		super(cast(GObject*)gMenuItem, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

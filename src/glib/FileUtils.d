@@ -31,10 +31,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct FileUtils
 {
-	/**
-	 */
 
 	/**
 	 * A wrapper for the POSIX access() function. This function is used to

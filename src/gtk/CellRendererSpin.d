@@ -79,8 +79,6 @@ public class CellRendererSpin : CellRendererText
 		super(cast(GtkCellRendererText*)gtkCellRendererSpin, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

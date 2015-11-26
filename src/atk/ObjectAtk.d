@@ -88,8 +88,6 @@ public class ObjectAtk : ObjectG
 		super(cast(GObject*)atkObject, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

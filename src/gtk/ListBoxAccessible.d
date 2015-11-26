@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ListBoxAccessible : ContainerAccessible, SelectionIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ListBoxAccessible : ContainerAccessible, SelectionIF
 	// add the Selection capabilities
 	mixin SelectionT!(GtkListBoxAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

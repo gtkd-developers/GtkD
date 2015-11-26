@@ -33,6 +33,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ButtonAccessible : ContainerAccessible, ActionIF, ImageIF
 {
 	/** the main Gtk struct */
@@ -71,8 +72,6 @@ public class ButtonAccessible : ContainerAccessible, ActionIF, ImageIF
 	// add the Image capabilities
 	mixin ImageT!(GtkButtonAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

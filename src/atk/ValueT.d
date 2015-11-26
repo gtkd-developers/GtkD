@@ -185,8 +185,6 @@ public template ValueT(TStruct)
 		return cast(AtkValue*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the value of this object.

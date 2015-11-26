@@ -74,8 +74,6 @@ public template MountT(TStruct)
 		return cast(GMount*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Checks if @mount can be eject.

@@ -66,8 +66,6 @@ public class VariantBuilder
 		this.gVariantBuilder = gVariantBuilder;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Allocates and initialises a new #GVariantBuilder.

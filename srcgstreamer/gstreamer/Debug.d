@@ -33,10 +33,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct Debug
 {
-	/**
-	 */
 
 	/**
 	 * Adds the logging function to the list of logging functions.

@@ -60,8 +60,6 @@ public class HashTable
 		this.gHashTable = gHashTable;
 	}
 
-	/**
-	 */
 
 	/**
 	 * This is a convenience function for using a #GHashTable as a set.  It

@@ -29,10 +29,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct GError
 {
-	/**
-	 */
 
 	/**
 	 * Get a string describing the error message in the current locale.

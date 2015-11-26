@@ -76,8 +76,6 @@ public class Revealer : Bin
 		super(cast(GtkBin*)gtkRevealer, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

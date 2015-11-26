@@ -31,6 +31,7 @@ private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 
 
+/** */
 public class TypePlugin : ObjectG, TypePluginIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class TypePlugin : ObjectG, TypePluginIF
 	// add the TypePlugin capabilities
 	mixin TypePluginT!(GTypePlugin);
 
-	/**
-	 */
 }

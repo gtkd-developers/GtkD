@@ -65,8 +65,6 @@ public class DBusNodeInfo
 		this.gDBusNodeInfo = gDBusNodeInfo;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -53,8 +53,6 @@ public interface RecentChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds @filter to the list of #GtkRecentFilter objects held by @chooser.

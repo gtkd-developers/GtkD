@@ -42,8 +42,6 @@ public interface TreeSortableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Fills in @sort_column_id and @order with the current sort column and the

@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class AppInfo : ObjectG, AppInfoIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class AppInfo : ObjectG, AppInfoIF
 	// add the AppInfo capabilities
 	mixin AppInfoT!(GAppInfo);
 
-	/**
-	 */
 }

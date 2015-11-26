@@ -76,8 +76,6 @@ public class ControlSource : ObjectGst
 		super(cast(GstObject*)gstControlSource, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

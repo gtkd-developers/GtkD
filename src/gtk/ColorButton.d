@@ -79,8 +79,6 @@ public class ColorButton : Button, ColorChooserIF
 	// add the ColorChooser capabilities
 	mixin ColorChooserT!(GtkColorButton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -59,8 +59,6 @@ public class DBusPropertyInfo
 		this.gDBusPropertyInfo = gDBusPropertyInfo;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

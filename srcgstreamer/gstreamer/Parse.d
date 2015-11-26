@@ -35,10 +35,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct Parse
 {
-	/**
-	 */
 
 	/**
 	 * This is a convenience wrapper around gst_parse_launch() to create a

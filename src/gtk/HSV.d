@@ -75,8 +75,6 @@ public class HSV : Widget
 		super(cast(GtkWidget*)gtkHSV, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

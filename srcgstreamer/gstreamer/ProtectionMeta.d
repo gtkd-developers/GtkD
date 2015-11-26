@@ -60,8 +60,6 @@ public class ProtectionMeta
 		this.gstProtectionMeta = gstProtectionMeta;
 	}
 
-	/**
-	 */
 
 	public static GstMetaInfo* getInfo()
 	{

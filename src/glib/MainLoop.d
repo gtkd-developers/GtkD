@@ -60,8 +60,6 @@ public class MainLoop
 		this.gMainLoop = gMainLoop;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GMainLoop structure.

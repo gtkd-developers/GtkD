@@ -123,8 +123,6 @@ public class PropertyAction : ObjectG, ActionIF
 	// add the Action capabilities
 	mixin ActionT!(GPropertyAction);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

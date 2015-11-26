@@ -70,8 +70,6 @@ public interface TableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds the specified @column to the selection.

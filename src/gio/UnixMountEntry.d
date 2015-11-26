@@ -39,8 +39,6 @@ public  import gtkc.giotypes;
  */
 public struct UnixMountEntry
 {
-	/**
-	 */
 
 	/**
 	 * Determines if @mount_path is considered an implementation of the

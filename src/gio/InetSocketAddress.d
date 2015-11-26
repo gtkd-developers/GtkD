@@ -69,8 +69,6 @@ public class InetSocketAddress : SocketAddress
 		super(cast(GSocketAddress*)gInetSocketAddress, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

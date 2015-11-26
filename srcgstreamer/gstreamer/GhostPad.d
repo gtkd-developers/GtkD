@@ -82,8 +82,6 @@ public class GhostPad : ProxyPad
 		super(cast(GstProxyPad*)gstGhostPad, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

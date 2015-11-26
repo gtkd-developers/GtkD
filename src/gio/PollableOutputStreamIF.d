@@ -47,8 +47,6 @@ public interface PollableOutputStreamIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Checks if @stream is actually pollable. Some classes may implement

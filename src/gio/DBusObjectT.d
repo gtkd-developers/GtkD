@@ -49,8 +49,6 @@ public template DBusObjectT(TStruct)
 		return cast(GDBusObject*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the D-Bus interface with name @interface_name associated with

@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class DBusObject : ObjectG, DBusObjectIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class DBusObject : ObjectG, DBusObjectIF
 	// add the DBusObject capabilities
 	mixin DBusObjectT!(GDBusObject);
 
-	/**
-	 */
 }

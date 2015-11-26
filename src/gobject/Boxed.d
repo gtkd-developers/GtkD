@@ -29,10 +29,9 @@ private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 
 
+/** */
 public struct Boxed
 {
-	/**
-	 */
 
 	/**
 	 * Provide a copy of a boxed structure @src_boxed which is of type @boxed_type.

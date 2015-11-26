@@ -30,10 +30,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public class ValueList
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

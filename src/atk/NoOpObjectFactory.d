@@ -68,8 +68,6 @@ public class NoOpObjectFactory : ObjectFactory
 		super(cast(AtkObjectFactory*)atkNoOpObjectFactory, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

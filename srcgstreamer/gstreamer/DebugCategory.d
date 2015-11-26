@@ -58,8 +58,6 @@ public class DebugCategory
 		this.gstDebugCategory = gstDebugCategory;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Removes and frees the category and all associated resources.

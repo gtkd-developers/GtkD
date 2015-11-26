@@ -93,8 +93,6 @@ public class SearchEntry : Entry
 		super(cast(GtkEntry*)gtkSearchEntry, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

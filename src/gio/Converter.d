@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Converter : ObjectG, ConverterIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Converter : ObjectG, ConverterIF
 	// add the Converter capabilities
 	mixin ConverterT!(GConverter);
 
-	/**
-	 */
 }

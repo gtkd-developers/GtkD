@@ -80,8 +80,6 @@ public class DBusMethodInvocation : ObjectG
 		super(cast(GObject*)gDBusMethodInvocation, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

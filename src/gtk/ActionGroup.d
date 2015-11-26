@@ -125,8 +125,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkActionGroup);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

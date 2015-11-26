@@ -70,8 +70,6 @@ public class SimplePermission : Permission
 		super(cast(GPermission*)gSimplePermission, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

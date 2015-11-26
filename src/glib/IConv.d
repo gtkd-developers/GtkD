@@ -33,8 +33,6 @@ public  import gtkc.glibtypes;
  * The GIConv struct wraps an iconv() conversion descriptor. It contains
  * private data and should only be accessed using the following functions.
  */
-/**
- */
 
 /**
  * Same as the standard UNIX routine iconv(), but

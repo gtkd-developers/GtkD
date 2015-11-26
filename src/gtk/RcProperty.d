@@ -36,8 +36,6 @@ public  import gtkc.gtktypes;
  */
 public struct RcProperty
 {
-	/**
-	 */
 
 	/**
 	 * A #GtkRcPropertyParser for use with gtk_settings_install_property_parser()

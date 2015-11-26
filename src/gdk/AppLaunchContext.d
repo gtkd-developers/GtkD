@@ -89,8 +89,6 @@ public class AppLaunchContext : GioAppLaunchContext
 		super(cast(GAppLaunchContext*)gdkAppLaunchContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

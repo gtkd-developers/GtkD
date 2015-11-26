@@ -54,8 +54,6 @@ public template DBusObjectManagerT(TStruct)
 		return cast(GDBusObjectManager*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the interface proxy for @interface_name at @object_path, if

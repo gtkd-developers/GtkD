@@ -77,8 +77,6 @@ public class RadioToolButton : ToggleToolButton
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

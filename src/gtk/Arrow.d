@@ -86,8 +86,6 @@ public class Arrow : Misc
 		super(cast(GtkMisc*)gtkArrow, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

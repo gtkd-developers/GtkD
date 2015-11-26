@@ -83,8 +83,6 @@ public class MountOperation : ObjectG
 		super(cast(GObject*)gMountOperation, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

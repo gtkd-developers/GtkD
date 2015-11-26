@@ -104,8 +104,6 @@ public class Segment
 		this.gstSegment = gstSegment;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -68,8 +68,6 @@ public class PluginFeature : ObjectGst
 		super(cast(GstObject*)gstPluginFeature, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

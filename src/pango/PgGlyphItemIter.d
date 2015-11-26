@@ -97,8 +97,6 @@ public class PgGlyphItemIter
 		this.pangoGlyphItemIter = pangoGlyphItemIter;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

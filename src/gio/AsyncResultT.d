@@ -122,8 +122,6 @@ public template AsyncResultT(TStruct)
 		return cast(GAsyncResult*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the source object from a #GAsyncResult.

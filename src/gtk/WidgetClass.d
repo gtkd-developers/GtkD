@@ -32,6 +32,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class WidgetClass
 {
 	/** the main Gtk struct */
@@ -57,8 +58,6 @@ public class WidgetClass
 		this.gtkWidgetClass = gtkWidgetClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Declares a @callback_symbol to handle @callback_name from the template XML

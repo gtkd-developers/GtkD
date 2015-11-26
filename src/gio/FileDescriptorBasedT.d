@@ -44,8 +44,6 @@ public template FileDescriptorBasedT(TStruct)
 		return cast(GFileDescriptorBased*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the underlying file descriptor.

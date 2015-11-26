@@ -81,8 +81,6 @@ public class Poll
 		this.gstPoll = gstPoll;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Add a file descriptor to the file descriptor set.

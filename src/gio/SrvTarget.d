@@ -73,8 +73,6 @@ public class SrvTarget
 		this.gSrvTarget = gSrvTarget;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

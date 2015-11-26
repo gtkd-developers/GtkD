@@ -81,8 +81,6 @@ public class TearoffMenuItem : MenuItem
 		super(cast(GtkMenuItem*)gtkTearoffMenuItem, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

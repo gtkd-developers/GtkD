@@ -30,6 +30,7 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public class ValueArray
 {
 	/** the main Gtk struct */
@@ -55,8 +56,6 @@ public class ValueArray
 		this.gstValueArray = gstValueArray;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

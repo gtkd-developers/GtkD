@@ -76,8 +76,6 @@ public class Device : ObjectG
 		super(cast(GObject*)gdkDevice, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

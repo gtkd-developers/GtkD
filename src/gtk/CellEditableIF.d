@@ -42,8 +42,6 @@ public interface CellEditableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Emits the #GtkCellEditable::editing-done signal.

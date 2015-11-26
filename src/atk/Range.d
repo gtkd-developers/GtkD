@@ -63,8 +63,6 @@ public class Range
 		this.atkRange = atkRange;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

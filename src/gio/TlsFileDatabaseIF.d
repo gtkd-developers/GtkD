@@ -47,6 +47,4 @@ public interface TlsFileDatabaseIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 }

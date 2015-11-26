@@ -30,6 +30,7 @@ public  import gtkc.atk;
 public  import gtkc.atktypes;
 
 
+/** */
 public template ImplementorT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -38,8 +39,6 @@ public template ImplementorT(TStruct)
 		return cast(AtkImplementor*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets a reference to an object's #AtkObject implementation, if

@@ -401,8 +401,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkCellArea);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

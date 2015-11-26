@@ -59,8 +59,6 @@ public class ValueArray
 		this.gValueArray = gValueArray;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

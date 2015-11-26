@@ -85,8 +85,6 @@ public class OffscreenWindow : Window
 		super(cast(GtkWindow*)gtkOffscreenWindow, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

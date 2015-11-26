@@ -72,8 +72,6 @@ public class Keymap : ObjectG
 		super(cast(GObject*)gdkKeymap, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

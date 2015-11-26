@@ -60,8 +60,6 @@ public class Once
 		this.gOnce = gOnce;
 	}
 
-	/**
-	 */
 
 	public void* impl(GThreadFunc func, void* arg)
 	{

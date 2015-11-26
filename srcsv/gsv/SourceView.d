@@ -45,6 +45,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceView : TextView
 {
 	/** the main Gtk struct */

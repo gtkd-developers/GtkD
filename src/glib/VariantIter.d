@@ -59,8 +59,6 @@ public class VariantIter
 		this.gVariantIter = gVariantIter;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new heap-allocated #GVariantIter to iterate over the

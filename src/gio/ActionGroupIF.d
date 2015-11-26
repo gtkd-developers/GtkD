@@ -87,8 +87,6 @@ public interface ActionGroupIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Emits the #GActionGroup::action-added signal on @action_group.

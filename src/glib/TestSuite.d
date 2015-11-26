@@ -56,8 +56,6 @@ public class TestSuite
 		this.gTestSuite = gTestSuite;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds @test_case to @suite.

@@ -50,6 +50,7 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class Window : ObjectG
 {
 	/** the main Gtk struct */
@@ -82,8 +83,6 @@ public class Window : ObjectG
 		super(cast(GObject*)gdkWindow, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -59,8 +59,6 @@ public class FileAttributeMatcher
 		this.gFileAttributeMatcher = gFileAttributeMatcher;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

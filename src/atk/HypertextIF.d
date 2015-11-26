@@ -49,8 +49,6 @@ public interface HypertextIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the link in this hypertext document at index

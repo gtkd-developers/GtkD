@@ -29,10 +29,9 @@ private import vtec.vte;
 public  import vtec.vtetypes;
 
 
+/** */
 public struct Version
 {
-	/**
-	 */
 
 	/**
 	 * Gets a list of features vte was compiled with.

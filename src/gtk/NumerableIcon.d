@@ -81,8 +81,6 @@ public class NumerableIcon : EmblemedIcon
 		super(cast(GEmblemedIcon*)gtkNumerableIcon, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

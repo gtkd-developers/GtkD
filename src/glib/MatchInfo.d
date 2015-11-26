@@ -61,8 +61,6 @@ public class MatchInfo
 		this.gMatchInfo = gMatchInfo;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns a new string containing the text in @string_to_expand with

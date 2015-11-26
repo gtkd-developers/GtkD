@@ -88,8 +88,6 @@ public class Plugin : ObjectGst
 		super(cast(GstObject*)gstPlugin, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

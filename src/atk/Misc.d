@@ -65,8 +65,6 @@ public class Misc : ObjectG
 		super(cast(GObject*)atkMisc, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

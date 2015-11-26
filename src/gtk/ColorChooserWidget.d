@@ -87,8 +87,6 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	// add the ColorChooser capabilities
 	mixin ColorChooserT!(GtkColorChooserWidget);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

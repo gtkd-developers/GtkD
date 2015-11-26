@@ -41,6 +41,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceFileLoader : ObjectG
 {
 	/** the main Gtk struct */
@@ -73,8 +74,6 @@ public class SourceFileLoader : ObjectG
 		super(cast(GObject*)gtkSourceFileLoader, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

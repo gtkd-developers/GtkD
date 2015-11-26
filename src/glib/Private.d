@@ -72,8 +72,6 @@ public class Private
 		this.gPrivate = gPrivate;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the current value of the thread local variable @key.

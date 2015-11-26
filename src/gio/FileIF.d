@@ -139,8 +139,6 @@ public interface FileIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Constructs a #GFile with the given @parse_name (i.e. something

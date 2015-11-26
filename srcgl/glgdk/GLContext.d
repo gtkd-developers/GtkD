@@ -33,6 +33,7 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public class GLContext : ObjectG
 {
 	/** the main Gtk struct */
@@ -65,8 +66,6 @@ public class GLContext : ObjectG
 		super(cast(GObject*)gdkGLContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

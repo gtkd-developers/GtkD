@@ -29,10 +29,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct DebugMessage
 {
-	/**
-	 */
 
 	/**
 	 * Gets the string representation of a #GstDebugMessage. This function is used

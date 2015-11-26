@@ -145,8 +145,6 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	// add the Scrollable capabilities
 	mixin ScrollableT!(GtkToolPalette);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

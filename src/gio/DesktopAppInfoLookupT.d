@@ -44,8 +44,6 @@ public template DesktopAppInfoLookupT(TStruct)
 		return cast(GDesktopAppInfoLookup*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the default application for launching applications

@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class PopoverAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class PopoverAccessible : ContainerAccessible
 		super(cast(GtkContainerAccessible*)gtkPopoverAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

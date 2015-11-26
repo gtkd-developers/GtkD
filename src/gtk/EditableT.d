@@ -76,8 +76,6 @@ public template EditableT(TStruct)
 		return cast(GtkEditable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copies the contents of the currently selected content in the editable and

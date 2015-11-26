@@ -70,8 +70,6 @@ public class FilenameCompleter : ObjectG
 		super(cast(GObject*)gFilenameCompleter, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

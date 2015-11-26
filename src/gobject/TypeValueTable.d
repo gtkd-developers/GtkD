@@ -34,8 +34,6 @@ public  import gtkc.gobjecttypes;
  */
 public struct TypeValueTable
 {
-	/**
-	 */
 
 	/**
 	 * Returns the location of the #GTypeValueTable associated with @type.

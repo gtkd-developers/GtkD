@@ -35,6 +35,7 @@ public  import gtkc.glibtypes;
 private import std.string;
 
 
+/** */
 public class Spawn
 {
 	//we need fdopen.

@@ -69,8 +69,6 @@ public class Cursor : ObjectG
 		super(cast(GObject*)gdkCursor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

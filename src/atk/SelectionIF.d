@@ -51,8 +51,6 @@ public interface SelectionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds the specified accessible child of the object to the

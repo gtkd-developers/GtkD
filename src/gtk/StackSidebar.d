@@ -74,8 +74,6 @@ public class StackSidebar : Bin
 		super(cast(GtkBin*)gtkStackSidebar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

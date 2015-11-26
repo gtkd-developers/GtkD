@@ -75,8 +75,6 @@ public interface EditableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Copies the contents of the currently selected content in the editable and

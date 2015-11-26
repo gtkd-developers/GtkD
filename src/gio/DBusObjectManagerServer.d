@@ -87,8 +87,6 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	// add the DBusObjectManager capabilities
 	mixin DBusObjectManagerT!(GDBusObjectManagerServer);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

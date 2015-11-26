@@ -116,8 +116,6 @@ public class RWLock
 		this.gRWLock = gRWLock;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees the resources allocated to a lock with g_rw_lock_init().

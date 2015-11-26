@@ -68,8 +68,6 @@ public template ScrollableT(TStruct)
 		return cast(GtkScrollable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the size of a non-scrolling border around the

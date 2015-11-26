@@ -69,8 +69,6 @@ public class ObjectFactory : ObjectG
 		super(cast(GObject*)atkObjectFactory, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

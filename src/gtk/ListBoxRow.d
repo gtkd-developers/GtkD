@@ -34,6 +34,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ListBoxRow : Bin
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ListBoxRow : Bin
 		super(cast(GtkBin*)gtkListBoxRow, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

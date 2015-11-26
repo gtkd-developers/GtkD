@@ -61,8 +61,6 @@ public class ElementClass
 		this.gstElementClass = gstElementClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Set @key with @value as metadata in @klass.

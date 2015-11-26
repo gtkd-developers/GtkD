@@ -77,8 +77,6 @@ public class FontButton : Button, FontChooserIF
 	// add the FontChooser capabilities
 	mixin FontChooserT!(GtkFontButton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

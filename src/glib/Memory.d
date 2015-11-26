@@ -28,10 +28,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Memory
 {
-	/**
-	 */
 
 	/**
 	 * Clears a reference to a variable.

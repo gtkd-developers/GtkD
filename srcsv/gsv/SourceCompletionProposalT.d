@@ -35,6 +35,7 @@ public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
 
 
+/** */
 public template SourceCompletionProposalT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -43,8 +44,6 @@ public template SourceCompletionProposalT(TStruct)
 		return cast(GtkSourceCompletionProposal*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Emits the "changed" signal on @proposal. This should be called by

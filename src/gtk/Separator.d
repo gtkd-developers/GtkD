@@ -74,8 +74,6 @@ public class Separator : Widget, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkSeparator);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

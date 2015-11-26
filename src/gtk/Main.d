@@ -38,6 +38,7 @@ public  import gtkc.gtktypes;
 private import pango.PgLanguage;
 
 
+/** */
 public struct Main
 {
 	/**

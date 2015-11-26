@@ -105,8 +105,6 @@ public class DBusAuthObserver : ObjectG
 		super(cast(GObject*)gDBusAuthObserver, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

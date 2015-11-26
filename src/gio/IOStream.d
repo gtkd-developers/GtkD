@@ -93,8 +93,6 @@ public class IOStream : ObjectG
 		super(cast(GObject*)gIOStream, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

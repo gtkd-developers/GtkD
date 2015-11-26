@@ -73,8 +73,6 @@ public class PaperSize
 		this.gtkPaperSize = gtkPaperSize;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

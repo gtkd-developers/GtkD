@@ -59,8 +59,6 @@ public interface TextIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Frees the memory associated with an array of AtkTextRange. It is assumed

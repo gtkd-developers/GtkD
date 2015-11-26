@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ImageAccessible : WidgetAccessible, ImageIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ImageAccessible : WidgetAccessible, ImageIF
 	// add the Image capabilities
 	mixin ImageT!(GtkImageAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

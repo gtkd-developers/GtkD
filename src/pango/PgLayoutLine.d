@@ -64,8 +64,6 @@ public class PgLayoutLine
 		this.pangoLayoutLine = pangoLayoutLine;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

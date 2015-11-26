@@ -34,6 +34,7 @@ public  import gtkc.gtktypes;
 private import gtkc.paths;
 
 
+/** */
 public class IconSource
 {
 	/** the main Gtk struct */

@@ -55,8 +55,6 @@ public interface ActionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Perform the specified action on the object.

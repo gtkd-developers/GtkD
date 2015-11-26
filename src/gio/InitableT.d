@@ -70,8 +70,6 @@ public template InitableT(TStruct)
 		return cast(GInitable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Initializes the object implementing the interface.

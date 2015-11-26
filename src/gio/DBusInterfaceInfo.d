@@ -64,8 +64,6 @@ public class DBusInterfaceInfo
 		this.gDBusInterfaceInfo = gDBusInterfaceInfo;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

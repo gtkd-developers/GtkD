@@ -127,8 +127,6 @@ public class Regex
 		this.gRegex = gRegex;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Compiles the regular expression to an internal form, and does

@@ -29,10 +29,9 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public struct Utils
 {
-	/**
-	 */
 
 	/**
 	 * Use this function to escape the following characters: \n, \r, \t and \.

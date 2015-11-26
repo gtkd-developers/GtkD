@@ -76,8 +76,6 @@ public class PgRenderer : ObjectG
 		super(cast(GObject*)pangoRenderer, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

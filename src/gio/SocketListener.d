@@ -82,8 +82,6 @@ public class SocketListener : ObjectG
 		super(cast(GObject*)gSocketListener, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -30,6 +30,7 @@ public  import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public template CellAccessibleParentT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -38,8 +39,6 @@ public template CellAccessibleParentT(TStruct)
 		return cast(GtkCellAccessibleParent*)getStruct();
 	}
 
-	/**
-	 */
 
 	public void activate(CellAccessible cell)
 	{

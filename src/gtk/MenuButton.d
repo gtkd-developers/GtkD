@@ -147,8 +147,6 @@ public class MenuButton : ToggleButton
 		super(cast(GtkToggleButton*)gtkMenuButton, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

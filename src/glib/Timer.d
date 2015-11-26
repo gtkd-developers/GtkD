@@ -57,8 +57,6 @@ public class Timer
 		this.gTimer = gTimer;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Resumes a timer that has previously been stopped with

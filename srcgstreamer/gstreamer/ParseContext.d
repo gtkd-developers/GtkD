@@ -59,8 +59,6 @@ public class ParseContext
 		this.gstParseContext = gstParseContext;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

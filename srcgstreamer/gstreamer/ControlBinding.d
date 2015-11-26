@@ -69,8 +69,6 @@ public class ControlBinding : ObjectGst
 		super(cast(GstObject*)gstControlBinding, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -93,8 +93,6 @@ public class HandleBox : Bin
 		super(cast(GtkBin*)gtkHandleBox, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -29,10 +29,9 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public struct GLdInit
 {
-	/**
-	 */
 
 	/**
 	 * Call this function before using any other GdkGLExt functions in your

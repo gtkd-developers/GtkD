@@ -74,8 +74,6 @@ public class CellRendererAccel : CellRendererText
 		super(cast(GtkCellRendererText*)gtkCellRendererAccel, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

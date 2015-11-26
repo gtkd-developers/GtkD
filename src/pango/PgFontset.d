@@ -71,8 +71,6 @@ public class PgFontset : ObjectG
 		super(cast(GObject*)pangoFontset, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

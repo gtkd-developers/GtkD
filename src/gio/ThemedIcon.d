@@ -77,8 +77,6 @@ public class ThemedIcon : ObjectG, IconIF
 	// add the Icon capabilities
 	mixin IconT!(GThemedIcon);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

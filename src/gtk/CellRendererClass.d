@@ -28,6 +28,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class CellRendererClass
 {
 	/** the main Gtk struct */
@@ -53,8 +54,6 @@ public class CellRendererClass
 		this.gtkCellRendererClass = gtkCellRendererClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Sets the type to be used for creating accessibles for cells rendered by

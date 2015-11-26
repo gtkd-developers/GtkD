@@ -60,8 +60,6 @@ public class FileAttributeInfoList
 		this.gFileAttributeInfoList = gFileAttributeInfoList;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

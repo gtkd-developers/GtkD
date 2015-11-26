@@ -63,8 +63,6 @@ public class MappedFile
 		this.gMappedFile = gMappedFile;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Maps a file into memory. On UNIX, this is using the mmap() function.

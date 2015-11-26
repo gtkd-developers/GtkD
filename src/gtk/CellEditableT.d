@@ -43,8 +43,6 @@ public template CellEditableT(TStruct)
 		return cast(GtkCellEditable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Emits the #GtkCellEditable::editing-done signal.

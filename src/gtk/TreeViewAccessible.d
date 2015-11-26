@@ -35,6 +35,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class TreeViewAccessible : ContainerAccessible, SelectionIF, TableIF, CellAccessibleParentIF
 {
 	/** the main Gtk struct */
@@ -76,8 +77,6 @@ public class TreeViewAccessible : ContainerAccessible, SelectionIF, TableIF, Cel
 	// add the CellAccessibleParent capabilities
 	mixin CellAccessibleParentT!(GtkTreeViewAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

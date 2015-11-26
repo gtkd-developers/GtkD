@@ -78,8 +78,6 @@ public class OutputStream : ObjectG
 		super(cast(GObject*)gOutputStream, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

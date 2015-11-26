@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ImageCellAccessible : RendererCellAccessible, ImageIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ImageCellAccessible : RendererCellAccessible, ImageIF
 	// add the Image capabilities
 	mixin ImageT!(GtkImageCellAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

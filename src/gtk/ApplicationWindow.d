@@ -177,8 +177,6 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	// add the ActionMap capabilities
 	mixin ActionMapT!(GtkApplicationWindow);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

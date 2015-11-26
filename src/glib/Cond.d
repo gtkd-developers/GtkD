@@ -121,8 +121,6 @@ public class Cond
 		this.gCond = gCond;
 	}
 
-	/**
-	 */
 
 	/**
 	 * If threads are waiting for @cond, all of them are unblocked.

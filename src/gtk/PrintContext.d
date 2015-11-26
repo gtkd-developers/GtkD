@@ -135,8 +135,6 @@ public class PrintContext : ObjectG
 		super(cast(GObject*)gtkPrintContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

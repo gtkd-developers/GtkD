@@ -90,8 +90,6 @@ public class DBusServer : ObjectG, InitableIF
 	// add the Initable capabilities
 	mixin InitableT!(GDBusServer);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

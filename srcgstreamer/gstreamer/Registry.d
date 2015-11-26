@@ -148,8 +148,6 @@ public class Registry : ObjectGst
 		super(cast(GstObject*)gstRegistry, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

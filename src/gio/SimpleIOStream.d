@@ -77,8 +77,6 @@ public class SimpleIOStream : IOStream
 		super(cast(GIOStream*)gSimpleIOStream, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

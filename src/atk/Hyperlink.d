@@ -78,8 +78,6 @@ public class Hyperlink : ObjectG, ActionIF
 	// add the Action capabilities
 	mixin ActionT!(AtkHyperlink);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

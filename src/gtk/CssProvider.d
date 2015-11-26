@@ -1169,8 +1169,6 @@ public class CssProvider : ObjectG, StyleProviderIF
 	// add the StyleProvider capabilities
 	mixin StyleProviderT!(GtkCssProvider);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

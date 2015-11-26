@@ -92,8 +92,6 @@ public class PgLayout : ObjectG
 		super(cast(GObject*)pangoLayout, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

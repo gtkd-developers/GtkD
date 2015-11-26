@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Mount : ObjectG, MountIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Mount : ObjectG, MountIF
 	// add the Mount capabilities
 	mixin MountT!(GMount);
 
-	/**
-	 */
 }

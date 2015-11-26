@@ -33,8 +33,7 @@ private import gtkglc.glgtk;
 public  import gtkglc.glgtktypes;
 
 
-/**
- */
+/** */
 
 public bool beginGl(Widget widget)
 {

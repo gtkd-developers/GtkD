@@ -45,8 +45,6 @@ public interface StyleProviderIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Returns the #GtkIconFactory defined to be in use for @path, or %NULL if none

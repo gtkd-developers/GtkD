@@ -98,8 +98,6 @@ public class Iterator
 		this.gstIterator = gstIterator;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

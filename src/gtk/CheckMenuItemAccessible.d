@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class CheckMenuItemAccessible : MenuItemAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class CheckMenuItemAccessible : MenuItemAccessible
 		super(cast(GtkMenuItemAccessible*)gtkCheckMenuItemAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

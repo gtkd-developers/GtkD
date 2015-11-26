@@ -30,10 +30,9 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public struct DBusError
 {
-	/**
-	 */
 
 	/**
 	 * Creates a D-Bus error name to use for @error. If @error matches

@@ -32,6 +32,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ContainerCellAccessible : CellAccessible
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class ContainerCellAccessible : CellAccessible
 		super(cast(GtkCellAccessible*)gtkContainerCellAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

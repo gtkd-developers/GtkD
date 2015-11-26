@@ -47,8 +47,6 @@ public template DBusInterfaceT(TStruct)
 		return cast(GDBusInterface*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the #GDBusObject that @interface_ belongs to, if any.

@@ -74,8 +74,6 @@ public class ActionBar : Bin
 		super(cast(GtkBin*)gtkActionBar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

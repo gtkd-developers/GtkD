@@ -88,8 +88,6 @@ public template ActionGroupT(TStruct)
 		return cast(GActionGroup*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Emits the #GActionGroup::action-added signal on @action_group.

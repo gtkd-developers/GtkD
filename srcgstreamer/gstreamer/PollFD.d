@@ -56,8 +56,6 @@ public class PollFD
 		this.gstPollFD = gstPollFD;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Initializes @fd. Alternatively you can initialize it with

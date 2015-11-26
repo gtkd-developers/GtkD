@@ -32,6 +32,7 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public  import gdkpixbuf.Pixbuf;
 
 /**

@@ -33,6 +33,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class IMMulticontext : IMContext
 {
 	/** the main Gtk struct */
@@ -65,8 +66,6 @@ public class IMMulticontext : IMContext
 		super(cast(GtkIMContext*)gtkIMMulticontext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

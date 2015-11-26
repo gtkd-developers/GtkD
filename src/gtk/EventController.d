@@ -68,8 +68,6 @@ public class EventController : ObjectG
 		super(cast(GObject*)gtkEventController, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

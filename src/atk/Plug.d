@@ -72,8 +72,6 @@ public class Plug : ObjectAtk, ComponentIF
 	// add the Component capabilities
 	mixin ComponentT!(AtkPlug);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

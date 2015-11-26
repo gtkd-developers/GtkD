@@ -85,8 +85,6 @@ public class ToolItem : Bin, ActivatableIF
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkToolItem);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

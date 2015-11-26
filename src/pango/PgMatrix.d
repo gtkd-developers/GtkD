@@ -66,8 +66,6 @@ public class PgMatrix
 		this.pangoMatrix = pangoMatrix;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

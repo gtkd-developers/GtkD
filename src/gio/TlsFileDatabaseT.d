@@ -48,6 +48,4 @@ public template TlsFileDatabaseT(TStruct)
 		return cast(GTlsFileDatabase*)getStruct();
 	}
 
-	/**
-	 */
 }

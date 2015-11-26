@@ -68,8 +68,6 @@ public class PgAttributeLanguage : PgAttribute
 		super(cast(PangoAttribute*)pangoAttrLanguage);
 	}
 
-	/**
-	 */
 
 	/**
 	 * Create a new language tag attribute.

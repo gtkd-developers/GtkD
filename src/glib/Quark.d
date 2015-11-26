@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Quark
 {
-	/**
-	 */
 
 	/**
 	 * Returns a canonical representation for @string. Interned strings

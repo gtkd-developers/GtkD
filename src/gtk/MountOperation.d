@@ -71,8 +71,6 @@ public class MountOperation : GioMountOperation
 		super(cast(GMountOperation*)gtkMountOperation, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

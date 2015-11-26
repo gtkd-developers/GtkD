@@ -49,6 +49,7 @@ private import vtec.vte;
 public  import vtec.vtetypes;
 
 
+/** */
 public class Terminal : Widget, ScrollableIF
 {
 	/** the main Gtk struct */
@@ -84,8 +85,6 @@ public class Terminal : Widget, ScrollableIF
 	// add the Scrollable capabilities
 	mixin ScrollableT!(VteTerminal);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

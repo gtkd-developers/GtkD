@@ -33,6 +33,7 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 /**
  * Looks up the #GdkWindow that wraps the given native window handle.
  *

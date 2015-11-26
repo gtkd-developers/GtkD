@@ -143,8 +143,6 @@ public interface AsyncInitableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Helper function for constructing #GAsyncInitable object. This is

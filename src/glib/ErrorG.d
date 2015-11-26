@@ -59,8 +59,6 @@ public class ErrorG
 		this.gError = gError;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GError; unlike g_error_new(), @message is

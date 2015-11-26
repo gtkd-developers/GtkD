@@ -285,7 +285,7 @@ final class GtkStruct
 		writeImports(buff, isInterface() );
 		writeDocs(buff);
 
-	if ( isInterface() )
+		if ( isInterface() )
 			buff ~= "public template "~ name ~"T(TStruct)";
 		else
 			buff ~= "public class "~ name;
@@ -417,9 +417,10 @@ final class GtkStruct
 		{
 			buff ~= indenter.format(lookupCode);
 			buff ~= "\n";
+
+			buff ~= indenter.format(["/**", "*/"]);
 		}
 
-		buff ~= indenter.format(["/**", "*/"]);
 		bool firstSignal = true;
 
 		foreach ( func; functions )
@@ -518,9 +519,9 @@ final class GtkStruct
 			{
 				buff ~= indenter.format(lookupInterfaceCode);
 				buff ~= "\n";
-			}
 
-			buff ~= indenter.format(["/**", "*/"]);
+				buff ~= indenter.format(["/**", "*/"]);
+			}
 
 			foreach ( func; functions )
 			{
@@ -573,9 +574,9 @@ final class GtkStruct
 		{
 			buff ~= indenter.format(lookupCode);
 			buff ~= "\n";
-		}
 
-		buff ~= indenter.format(["/**", "*/"]);
+			buff ~= indenter.format(["/**", "*/"]);
+		}
 
 		foreach ( func; functions )
 		{
@@ -821,6 +822,10 @@ final class GtkStruct
 			}
 
 			buff ~= " */\n";
+		}
+		else if ( wrapper.includeComments )
+		{
+			buff ~= "/** */\n";
 		}
 	}
 

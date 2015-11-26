@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class CellEditable : ObjectG, CellEditableIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class CellEditable : ObjectG, CellEditableIF
 	// add the CellEditable capabilities
 	mixin CellEditableT!(GtkCellEditable);
 
-	/**
-	 */
 }

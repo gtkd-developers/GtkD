@@ -59,8 +59,6 @@ public class DBusMethodInfo
 		this.gDBusMethodInfo = gDBusMethodInfo;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

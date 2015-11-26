@@ -28,8 +28,7 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
-/**
- */
+/** */
 
 /**
  * A wrapper for the common usage of gdk_threads_add_idle_full()

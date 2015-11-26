@@ -78,8 +78,6 @@ public class FileChooserWidget : Box, FileChooserIF
 	// add the FileChooser capabilities
 	mixin FileChooserT!(GtkFileChooserWidget);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

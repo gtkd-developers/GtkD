@@ -83,8 +83,6 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	// add the AppChooser capabilities
 	mixin AppChooserT!(GtkAppChooserDialog);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

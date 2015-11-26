@@ -61,8 +61,6 @@ public class TimeZone
 		this.gTimeZone = gTimeZone;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a #GTimeZone corresponding to @identifier.

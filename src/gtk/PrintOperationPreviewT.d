@@ -32,6 +32,7 @@ public  import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public template PrintOperationPreviewT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -40,8 +41,6 @@ public template PrintOperationPreviewT(TStruct)
 		return cast(GtkPrintOperationPreview*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Ends a preview.

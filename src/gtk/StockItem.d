@@ -33,6 +33,7 @@ public  import gtkc.gtktypes;
 private import gtkc.paths;
 
 
+/** */
 public class StockItem
 {
 	/** the main Gtk struct */

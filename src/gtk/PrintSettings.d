@@ -81,8 +81,6 @@ public class PrintSettings : ObjectG
 		super(cast(GObject*)gtkPrintSettings, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

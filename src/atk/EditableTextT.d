@@ -48,8 +48,6 @@ public template EditableTextT(TStruct)
 		return cast(AtkEditableText*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copy text from @start_pos up to, but not including @end_pos

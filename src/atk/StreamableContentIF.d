@@ -55,8 +55,6 @@ public interface StreamableContentIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the character string of the specified mime type. The first mime

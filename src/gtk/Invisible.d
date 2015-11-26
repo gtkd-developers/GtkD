@@ -71,8 +71,6 @@ public class Invisible : Widget
 		super(cast(GtkWidget*)gtkInvisible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

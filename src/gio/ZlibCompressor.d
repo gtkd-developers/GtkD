@@ -71,8 +71,6 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	// add the Converter capabilities
 	mixin ConverterT!(GZlibCompressor);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

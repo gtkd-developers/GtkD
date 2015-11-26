@@ -106,8 +106,6 @@ public class CellRenderer : ObjectG
 		super(cast(GObject*)gtkCellRenderer, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

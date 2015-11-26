@@ -77,8 +77,6 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	// add the LoadableIcon capabilities
 	mixin LoadableIconT!(GBytesIcon);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

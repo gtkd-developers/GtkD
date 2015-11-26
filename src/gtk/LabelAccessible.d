@@ -33,6 +33,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class LabelAccessible : WidgetAccessible, HypertextIF, TextIF
 {
 	/** the main Gtk struct */
@@ -71,8 +72,6 @@ public class LabelAccessible : WidgetAccessible, HypertextIF, TextIF
 	// add the Text capabilities
 	mixin TextT!(GtkLabelAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

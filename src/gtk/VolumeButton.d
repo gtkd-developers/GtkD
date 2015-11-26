@@ -69,8 +69,6 @@ public class VolumeButton : ScaleButton
 		super(cast(GtkScaleButton*)gtkVolumeButton, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

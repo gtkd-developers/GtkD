@@ -61,8 +61,6 @@ public class Source
 		this.gSource = gSource;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GSource structure. The size is specified to

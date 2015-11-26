@@ -35,6 +35,7 @@ public  import gsvc.gsvtypes;
 private import gtk.TextBuffer;
 
 
+/** */
 public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 {
 	/** the main Gtk struct */
@@ -70,8 +71,6 @@ public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 	// add the SourceCompletionProvider capabilities
 	mixin SourceCompletionProviderT!(GtkSourceCompletionWords);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

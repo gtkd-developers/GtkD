@@ -74,8 +74,6 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GSocketAddress);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -34,6 +34,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class FlowBoxChild : Bin
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class FlowBoxChild : Bin
 		super(cast(GtkBin*)gtkFlowBoxChild, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -45,8 +45,6 @@ public template TlsBackendT(TStruct)
 		return cast(GTlsBackend*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the default #GTlsBackend for the system.

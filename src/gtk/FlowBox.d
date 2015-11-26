@@ -100,8 +100,6 @@ public class FlowBox : Container, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkFlowBox);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

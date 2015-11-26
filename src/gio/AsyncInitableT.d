@@ -144,8 +144,6 @@ public template AsyncInitableT(TStruct)
 		return cast(GAsyncInitable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Helper function for constructing #GAsyncInitable object. This is

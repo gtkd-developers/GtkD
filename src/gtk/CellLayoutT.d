@@ -146,8 +146,6 @@ public template CellLayoutT(TStruct)
 		return cast(GtkCellLayout*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds an attribute mapping to the list in @cell_layout.

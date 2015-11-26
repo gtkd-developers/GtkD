@@ -58,8 +58,6 @@ public class ByteArray
 		this.gByteArray = gByteArray;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds the given bytes to the end of the #GByteArray.

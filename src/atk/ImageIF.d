@@ -51,8 +51,6 @@ public interface ImageIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Get a textual description of this image.

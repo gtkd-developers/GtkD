@@ -32,6 +32,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public interface PrintOperationPreviewIF{
 	/** Get the main Gtk struct */
 	public GtkPrintOperationPreview* getPrintOperationPreviewStruct();
@@ -39,8 +40,6 @@ public interface PrintOperationPreviewIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Ends a preview.

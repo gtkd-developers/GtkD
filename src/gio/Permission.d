@@ -82,8 +82,6 @@ public class Permission : ObjectG
 		super(cast(GObject*)gPermission, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

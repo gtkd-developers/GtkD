@@ -118,8 +118,6 @@ public class GLContext : ObjectG
 		super(cast(GObject*)gdkGLContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -64,8 +64,6 @@ public class OptionGroup
 		this.gOptionGroup = gOptionGroup;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GOptionGroup.

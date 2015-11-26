@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class NetworkMonitor : ObjectG, NetworkMonitorIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class NetworkMonitor : ObjectG, NetworkMonitorIF
 	// add the NetworkMonitor capabilities
 	mixin NetworkMonitorT!(GNetworkMonitor);
 
-	/**
-	 */
 }

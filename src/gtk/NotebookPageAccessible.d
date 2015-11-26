@@ -35,6 +35,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class NotebookPageAccessible : ObjectAtk, ComponentIF
 {
 	/** the main Gtk struct */
@@ -70,8 +71,6 @@ public class NotebookPageAccessible : ObjectAtk, ComponentIF
 	// add the Component capabilities
 	mixin ComponentT!(GtkNotebookPageAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

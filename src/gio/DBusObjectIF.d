@@ -48,8 +48,6 @@ public interface DBusObjectIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the D-Bus interface with name @interface_name associated with

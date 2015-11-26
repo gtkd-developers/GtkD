@@ -96,8 +96,6 @@ public interface SocketConnectableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Creates a #GSocketAddressEnumerator for @connectable.

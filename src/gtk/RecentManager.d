@@ -133,8 +133,6 @@ public class RecentManager : ObjectG
 		super(cast(GObject*)gtkRecentManager, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -84,8 +84,6 @@ public class TextTag : ObjectG
 		super(cast(GObject*)gtkTextTag, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

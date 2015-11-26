@@ -28,10 +28,9 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public struct ErrorGIO
 {
-	/**
-	 */
 
 	/**
 	 * Converts errno.h error codes into GIO error codes. The fallback

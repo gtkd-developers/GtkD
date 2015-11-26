@@ -80,8 +80,6 @@ public class PgContext : ObjectG
 		super(cast(GObject*)pangoContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

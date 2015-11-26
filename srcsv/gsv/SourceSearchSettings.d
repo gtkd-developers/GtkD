@@ -31,6 +31,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceSearchSettings : ObjectG
 {
 	/** the main Gtk struct */
@@ -63,8 +64,6 @@ public class SourceSearchSettings : ObjectG
 		super(cast(GObject*)gtkSourceSearchSettings, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

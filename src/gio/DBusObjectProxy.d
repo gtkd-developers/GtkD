@@ -77,8 +77,6 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	// add the DBusObject capabilities
 	mixin DBusObjectT!(GDBusObjectProxy);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

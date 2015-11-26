@@ -75,8 +75,6 @@ public class ColorChooserDialog : Dialog, ColorChooserIF
 	// add the ColorChooser capabilities
 	mixin ColorChooserT!(GtkColorChooserDialog);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

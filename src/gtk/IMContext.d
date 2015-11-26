@@ -134,8 +134,6 @@ public class IMContext : ObjectG
 		super(cast(GObject*)gtkIMContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

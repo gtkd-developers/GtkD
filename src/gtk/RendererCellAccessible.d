@@ -33,6 +33,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class RendererCellAccessible : CellAccessible
 {
 	/** the main Gtk struct */
@@ -65,8 +66,6 @@ public class RendererCellAccessible : CellAccessible
 		super(cast(GtkCellAccessible*)gtkRendererCellAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

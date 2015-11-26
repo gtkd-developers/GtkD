@@ -34,8 +34,7 @@ private import pango.PgLayout;
 private import pango.PgLayoutLine;
 
 
-/**
- */
+/** */
 
 /**
  * Creates a #PangoContext for the default GDK screen.

@@ -83,8 +83,6 @@ public class SocketControlMessage : ObjectG
 		super(cast(GObject*)gSocketControlMessage, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

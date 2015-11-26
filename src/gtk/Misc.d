@@ -78,8 +78,6 @@ public class Misc : Widget
 		super(cast(GtkWidget*)gtkMisc, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

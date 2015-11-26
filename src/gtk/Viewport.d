@@ -88,8 +88,6 @@ public class Viewport : Bin, ScrollableIF
 	// add the Scrollable capabilities
 	mixin ScrollableT!(GtkViewport);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

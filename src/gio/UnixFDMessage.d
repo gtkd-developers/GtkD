@@ -81,8 +81,6 @@ public class UnixFDMessage : SocketControlMessage
 		super(cast(GSocketControlMessage*)gUnixFDMessage, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

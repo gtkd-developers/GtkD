@@ -32,6 +32,7 @@ public  import gtkc.pangotypes;
 private import pango.PgFontMap;
 
 
+/** */
 public class PgCairoFontMap : PgFontMap
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class PgCairoFontMap : PgFontMap
 		super(cast(PangoFontMap*)pangoCairoFcFontMap, ownedRef);
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the #cairo_scaled_font_t used by @font.

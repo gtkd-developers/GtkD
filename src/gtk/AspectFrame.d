@@ -74,8 +74,6 @@ public class AspectFrame : Frame
 		super(cast(GtkFrame*)gtkAspectFrame, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

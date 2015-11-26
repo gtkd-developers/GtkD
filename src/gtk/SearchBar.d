@@ -87,8 +87,6 @@ public class SearchBar : Bin
 		super(cast(GtkBin*)gtkSearchBar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -28,6 +28,7 @@ private import gtkc.gthread;
 public  import gtkc.gthreadtypes;
 
 
+/** */
 public  import glib.Cond;
 
 /**

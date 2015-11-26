@@ -84,8 +84,6 @@ public class LinkButton : Button
 		super(cast(GtkButton*)gtkLinkButton, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

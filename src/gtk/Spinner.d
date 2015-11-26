@@ -71,8 +71,6 @@ public class Spinner : Widget
 		super(cast(GtkWidget*)gtkSpinner, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

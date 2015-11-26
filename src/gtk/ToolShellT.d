@@ -42,8 +42,6 @@ public template ToolShellT(TStruct)
 		return cast(GtkToolShell*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Retrieves the current ellipsize mode for the tool shell. Tool items must not

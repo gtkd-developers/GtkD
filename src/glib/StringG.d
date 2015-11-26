@@ -58,8 +58,6 @@ public class StringG
 		this.gString = gString;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds a string onto the end of a #GString, expanding

@@ -56,8 +56,6 @@ public template ProxyT(TStruct)
 		return cast(GProxy*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Lookup "gio-proxy" extension point for a proxy implementation that supports

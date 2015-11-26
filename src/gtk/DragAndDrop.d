@@ -36,10 +36,9 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public struct DragAndDrop
 {
-	/**
-	 */
 
 	/**
 	 * Cancels an ongoing drag operation on the source side.

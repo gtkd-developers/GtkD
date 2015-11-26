@@ -49,8 +49,6 @@ public interface TlsClientConnectionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Copies session state from one connection to another. This is

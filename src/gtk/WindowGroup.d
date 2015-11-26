@@ -83,8 +83,6 @@ public class WindowGroup : ObjectG
 		super(cast(GObject*)gtkWindowGroup, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

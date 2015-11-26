@@ -83,8 +83,6 @@ public class GesturePan : GestureDrag
 		super(cast(GtkGestureDrag*)gtkGesturePan, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

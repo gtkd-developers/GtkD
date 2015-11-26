@@ -62,8 +62,6 @@ public class PgFontMetrics
 		this.pangoFontMetrics = pangoFontMetrics;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -63,8 +63,6 @@ public class PgGlyphString
 		this.pangoGlyphString = pangoGlyphString;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

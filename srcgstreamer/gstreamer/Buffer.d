@@ -150,8 +150,6 @@ public class Buffer
 		this.gstBuffer = gstBuffer;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

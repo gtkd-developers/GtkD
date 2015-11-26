@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Hostname
 {
-	/**
-	 */
 
 	/**
 	 * Tests if @hostname contains segments with an ASCII-compatible

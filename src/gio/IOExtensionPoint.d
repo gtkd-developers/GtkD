@@ -61,8 +61,6 @@ public class IOExtensionPoint
 		this.gIOExtensionPoint = gIOExtensionPoint;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Finds a #GIOExtension for an extension point by name.

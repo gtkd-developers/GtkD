@@ -58,8 +58,6 @@ public class PgItem
 		this.pangoItem = pangoItem;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

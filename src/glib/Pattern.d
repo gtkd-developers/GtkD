@@ -59,8 +59,6 @@ public class Pattern
 		this.gPatternSpec = gPatternSpec;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Compares two compiled pattern specs and returns whether they will

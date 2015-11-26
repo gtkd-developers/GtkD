@@ -60,8 +60,6 @@ public class StaticCaps
 		this.gstStaticCaps = gstStaticCaps;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Clean up the cached caps contained in @static_caps.

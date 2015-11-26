@@ -97,8 +97,6 @@ public class FileEnumerator : ObjectG
 		super(cast(GObject*)gFileEnumerator, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

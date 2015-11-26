@@ -54,8 +54,6 @@ public interface SeekableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Tests if the stream supports the #GSeekableIface.

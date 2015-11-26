@@ -67,8 +67,6 @@ public interface ScrollableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Returns the size of a non-scrolling border around the

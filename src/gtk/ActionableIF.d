@@ -51,8 +51,6 @@ public interface ActionableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the action name for @actionable.

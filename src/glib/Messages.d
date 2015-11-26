@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Messages
 {
-	/**
-	 */
 
 	/**
 	 * Prompts the user with

@@ -30,6 +30,7 @@ public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
 
 
+/** */
 public template SourceUndoManagerT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -38,8 +39,6 @@ public template SourceUndoManagerT(TStruct)
 		return cast(GtkSourceUndoManager*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Begin a not undoable action on the buffer. All changes between this call

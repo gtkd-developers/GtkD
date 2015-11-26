@@ -59,8 +59,6 @@ public class DBusSignalInfo
 		this.gDBusSignalInfo = gDBusSignalInfo;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

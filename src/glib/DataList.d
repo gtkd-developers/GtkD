@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct DataList
 {
-	/**
-	 */
 
 	/**
 	 * Frees all the data elements of the datalist.

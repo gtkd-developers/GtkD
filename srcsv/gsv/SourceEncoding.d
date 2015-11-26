@@ -31,6 +31,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceEncoding
 {
 	/** the main Gtk struct */
@@ -56,8 +57,6 @@ public class SourceEncoding
 		this.gtkSourceEncoding = gtkSourceEncoding;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

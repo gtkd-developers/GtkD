@@ -68,8 +68,6 @@ public class ParamSpec
 		this.gParamSpec = gParamSpec;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GParamSpec instance.

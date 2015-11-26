@@ -83,8 +83,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	// add the Activatable capabilities
 	mixin ActivatableT!(GtkSwitch);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

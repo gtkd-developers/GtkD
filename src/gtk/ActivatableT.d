@@ -274,8 +274,6 @@ public template ActivatableT(TStruct)
 		return cast(GtkActivatable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * This is a utility function for #GtkActivatable implementors.

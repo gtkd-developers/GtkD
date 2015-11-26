@@ -29,10 +29,9 @@ private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 
 
+/** */
 public struct Enums
 {
-	/**
-	 */
 
 	/**
 	 * This function is meant to be called from the `complete_type_info`

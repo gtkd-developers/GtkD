@@ -31,10 +31,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Unicode
 {
-	/**
-	 */
 
 	/**
 	 * Convert a string from UCS-4 to UTF-16. A 0 character will be

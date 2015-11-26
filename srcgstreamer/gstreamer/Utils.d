@@ -31,10 +31,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct Utils
 {
-	/**
-	 */
 
 	/**
 	 * Searches inside @array for @search_data by using the comparison function

@@ -31,6 +31,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceGutter : ObjectG
 {
 	/** the main Gtk struct */
@@ -63,8 +64,6 @@ public class SourceGutter : ObjectG
 		super(cast(GObject*)gtkSourceGutter, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -71,8 +71,6 @@ public class GestureRotate : Gesture
 		super(cast(GtkGesture*)gtkGestureRotate, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -86,8 +86,6 @@ public class Overlay : Bin
 		super(cast(GtkBin*)gtkOverlay, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

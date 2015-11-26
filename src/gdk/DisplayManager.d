@@ -106,8 +106,6 @@ public class DisplayManager : ObjectG
 		super(cast(GObject*)gdkDisplayManager, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

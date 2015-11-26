@@ -73,8 +73,6 @@ public class SystemClock : Clock
 		super(cast(GstClock*)gstSystemClock, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

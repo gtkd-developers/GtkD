@@ -30,6 +30,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public interface CellAccessibleParentIF{
 	/** Get the main Gtk struct */
 	public GtkCellAccessibleParent* getCellAccessibleParentStruct();
@@ -37,8 +38,6 @@ public interface CellAccessibleParentIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	public void activate(CellAccessible cell);
 

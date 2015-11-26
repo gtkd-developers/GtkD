@@ -353,8 +353,6 @@ public class Settings : ObjectG
 		super(cast(GObject*)gSettings, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

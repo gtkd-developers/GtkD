@@ -32,6 +32,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 
 /**
  * A top Level window that will stop the main event cycle when it's closed.

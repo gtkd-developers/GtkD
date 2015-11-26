@@ -79,8 +79,6 @@ public class Stack : Container
 		super(cast(GtkContainer*)gtkStack, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

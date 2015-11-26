@@ -43,8 +43,6 @@ public interface FileDescriptorBasedIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the underlying file descriptor.

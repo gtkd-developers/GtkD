@@ -79,8 +79,6 @@ public class SimpleAction : ObjectG, ActionIF
 	// add the Action capabilities
 	mixin ActionT!(GSimpleAction);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

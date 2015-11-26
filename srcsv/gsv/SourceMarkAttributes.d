@@ -39,6 +39,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceMarkAttributes : ObjectG
 {
 	/** the main Gtk struct */

@@ -33,6 +33,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 {
 	/** the main Gtk struct */

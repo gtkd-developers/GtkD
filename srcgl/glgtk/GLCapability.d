@@ -28,6 +28,7 @@ private import gtkglc.glgtk;
 public  import gtkglc.glgtktypes;
 
 
+/** */
 public import cairo.Context;
 public import gdk.Event;
 public import glgdk.GLWindow;

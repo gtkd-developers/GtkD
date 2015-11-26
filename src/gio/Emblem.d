@@ -76,8 +76,6 @@ public class Emblem : ObjectG, IconIF
 	// add the Icon capabilities
 	mixin IconT!(GEmblem);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

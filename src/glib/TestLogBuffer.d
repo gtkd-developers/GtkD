@@ -30,6 +30,7 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public class TestLogBuffer
 {
 	/** the main Gtk struct */
@@ -55,8 +56,6 @@ public class TestLogBuffer
 		this.gTestLogBuffer = gTestLogBuffer;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Internal function for gtester to free test log messages, no ABI guarantees provided.

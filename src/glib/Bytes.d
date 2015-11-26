@@ -83,8 +83,6 @@ public class Bytes
 		this.gBytes = gBytes;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new #GBytes from @data.

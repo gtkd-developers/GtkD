@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class SpinnerAccessible : WidgetAccessible, ImageIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class SpinnerAccessible : WidgetAccessible, ImageIF
 	// add the Image capabilities
 	mixin ImageT!(GtkSpinnerAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

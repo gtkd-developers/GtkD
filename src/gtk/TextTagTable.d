@@ -92,8 +92,6 @@ public class TextTagTable : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkTextTagTable);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

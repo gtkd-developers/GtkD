@@ -40,6 +40,7 @@ public  import gtkc.gtktypes;
 private import gtkc.paths;
 
 
+/** */
 struct CustomTreeModelClass
 {
 	GObjectClass parentClass;

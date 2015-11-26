@@ -566,8 +566,6 @@ public class Task : ObjectG, AsyncResultIF
 	// add the AsyncResult capabilities
 	mixin AsyncResultT!(GTask);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

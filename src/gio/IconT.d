@@ -74,8 +74,6 @@ public template IconT(TStruct)
 		return cast(GIcon*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Deserializes a #GIcon previously serialized using g_icon_serialize().

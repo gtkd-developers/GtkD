@@ -38,10 +38,9 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public struct DBusUtilities
 {
-	/**
-	 */
 
 	/**
 	 * Escape @string so it can appear in a D-Bus address as the value

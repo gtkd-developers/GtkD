@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class LockButtonAccessible : ButtonAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class LockButtonAccessible : ButtonAccessible
 		super(cast(GtkButtonAccessible*)gtkLockButtonAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

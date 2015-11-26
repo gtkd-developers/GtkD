@@ -69,8 +69,6 @@ public class MenuAttributeIter : ObjectG
 		super(cast(GObject*)gMenuAttributeIter, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

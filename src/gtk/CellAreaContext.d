@@ -74,8 +74,6 @@ public class CellAreaContext : ObjectG
 		super(cast(GObject*)gtkCellAreaContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

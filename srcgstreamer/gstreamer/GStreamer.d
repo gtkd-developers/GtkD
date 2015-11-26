@@ -32,10 +32,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct GStreamer
 {
-	/**
-	 */
 
 	/**
 	 * Clean up any resources created by GStreamer in gst_init().

@@ -32,8 +32,6 @@ public  import gtkc.gdktypes;
  * Defines the position and size of a rectangle. It is identical to
  * #cairo_rectangle_int_t.
  */
-/**
- */
 
 /**
  * Calculates the intersection of two rectangles. It is allowed for

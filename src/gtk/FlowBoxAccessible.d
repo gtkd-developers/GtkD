@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class FlowBoxAccessible : ContainerAccessible, SelectionIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class FlowBoxAccessible : ContainerAccessible, SelectionIF
 	// add the Selection capabilities
 	mixin SelectionT!(GtkFlowBoxAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class BooleanCellAccessible : RendererCellAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class BooleanCellAccessible : RendererCellAccessible
 		super(cast(GtkRendererCellAccessible*)gtkBooleanCellAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -33,6 +33,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class CellAccessible : Accessible, ActionIF, ComponentIF
 {
 	/** the main Gtk struct */
@@ -71,8 +72,6 @@ public class CellAccessible : Accessible, ActionIF, ComponentIF
 	// add the Component capabilities
 	mixin ComponentT!(GtkCellAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

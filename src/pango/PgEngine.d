@@ -65,8 +65,6 @@ public class PgEngine : ObjectG
 		super(cast(GObject*)pangoEngine, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

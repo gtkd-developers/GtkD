@@ -98,8 +98,6 @@ public class PlacesSidebar : ScrolledWindow
 		super(cast(GtkScrolledWindow*)gtkPlacesSidebar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

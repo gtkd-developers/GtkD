@@ -69,8 +69,6 @@ public class PgEngineLang : PgEngine
 		super(cast(PangoEngine*)pangoEngineLang, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

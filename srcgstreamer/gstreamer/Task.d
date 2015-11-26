@@ -106,8 +106,6 @@ public class Task : ObjectGst
 		super(cast(GstObject*)gstTask, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class File : ObjectG, FileIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class File : ObjectG, FileIF
 	// add the File capabilities
 	mixin FileT!(GFile);
 
-	/**
-	 */
 }

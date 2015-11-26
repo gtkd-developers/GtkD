@@ -89,8 +89,6 @@ public class FileOutputStream : OutputStream, SeekableIF
 	// add the Seekable capabilities
 	mixin SeekableT!(GFileOutputStream);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

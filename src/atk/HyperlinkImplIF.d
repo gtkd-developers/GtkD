@@ -67,8 +67,6 @@ public interface HyperlinkImplIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the hyperlink associated with this object.

@@ -78,8 +78,6 @@ public class Allocator : ObjectGst
 		super(cast(GstObject*)gstAllocator, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -30,6 +30,7 @@ public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
 
 
+/** */
 public interface SourceUndoManagerIF{
 	/** Get the main Gtk struct */
 	public GtkSourceUndoManager* getSourceUndoManagerStruct();
@@ -37,8 +38,6 @@ public interface SourceUndoManagerIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Begin a not undoable action on the buffer. All changes between this call

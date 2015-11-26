@@ -107,8 +107,6 @@ public class AboutDialog : Dialog
 		super(cast(GtkDialog*)gtkAboutDialog, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -51,8 +51,6 @@ public template ActionMapT(TStruct)
 		return cast(GActionMap*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds an action to the @action_map.

@@ -80,8 +80,6 @@ public class UnixSocketAddress : SocketAddress
 		super(cast(GSocketAddress*)gUnixSocketAddress, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

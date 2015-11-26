@@ -36,6 +36,7 @@ private import gtk.BuildableT;
 private import gtk.Widget;
 
 
+/** */
 public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 {
 	/** the main Gtk struct */
@@ -71,8 +72,6 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	// add the StyleSchemeChooser capabilities
 	mixin StyleSchemeChooserT!(GtkSourceStyleSchemeChooserWidget);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

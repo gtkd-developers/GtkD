@@ -63,8 +63,6 @@ public class PgLayoutIter
 		this.pangoLayoutIter = pangoLayoutIter;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

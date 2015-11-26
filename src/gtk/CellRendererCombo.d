@@ -82,8 +82,6 @@ public class CellRendererCombo : CellRendererText
 		super(cast(GtkCellRendererText*)gtkCellRendererCombo, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class SocketConnectable : ObjectG, SocketConnectableIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class SocketConnectable : ObjectG, SocketConnectableIF
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GSocketConnectable);
 
-	/**
-	 */
 }

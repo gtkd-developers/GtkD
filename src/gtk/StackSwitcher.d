@@ -78,8 +78,6 @@ public class StackSwitcher : Box
 		super(cast(GtkBox*)gtkStackSwitcher, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

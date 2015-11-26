@@ -93,8 +93,6 @@ public class SocketClient : ObjectG
 		super(cast(GObject*)gSocketClient, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

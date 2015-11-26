@@ -114,8 +114,6 @@ public class Pipeline : Bin
 		super(cast(GstBin*)gstPipeline, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

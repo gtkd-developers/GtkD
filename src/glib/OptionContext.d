@@ -63,8 +63,6 @@ public class OptionContext
 		this.gOptionContext = gOptionContext;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds a #GOptionGroup to the @context, so that parsing with @context

@@ -141,8 +141,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	// add the PrintOperationPreview capabilities
 	mixin PrintOperationPreviewT!(GtkPrintOperation);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

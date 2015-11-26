@@ -32,6 +32,7 @@ public  import gsvc.gsvtypes;
 private import gtk.TextMark;
 
 
+/** */
 public class SourceMark : TextMark
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class SourceMark : TextMark
 		super(cast(GtkTextMark*)gtkSourceMark, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

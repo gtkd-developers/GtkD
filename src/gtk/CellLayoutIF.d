@@ -145,8 +145,6 @@ public interface CellLayoutIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds an attribute mapping to the list in @cell_layout.

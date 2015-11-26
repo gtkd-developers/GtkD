@@ -66,8 +66,6 @@ public class BufferList
 		this.gstBufferList = gstBufferList;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

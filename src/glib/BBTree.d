@@ -59,8 +59,6 @@ public class BBTree
 		this.gTree = gTree;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Removes all keys and values from the #GTree and decreases its

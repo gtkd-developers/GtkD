@@ -28,10 +28,9 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public struct GLVersion
 {
-	/**
-	 */
 
 	/**
 	 * Returns the GtkGLExt library binary age.

@@ -89,8 +89,6 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	// add the StyleProvider capabilities
 	mixin StyleProviderT!(GtkStyleProperties);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

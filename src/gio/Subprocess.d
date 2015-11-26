@@ -133,8 +133,6 @@ public class Subprocess : ObjectG, InitableIF
 	// add the Initable capabilities
 	mixin InitableT!(GSubprocess);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

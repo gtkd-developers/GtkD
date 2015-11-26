@@ -52,8 +52,6 @@ public  import gstreamerc.gstreamertypes;
  */
 public struct Meta
 {
-	/**
-	 */
 
 	/**
 	 *

@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class PanedAccessible : ContainerAccessible, ValueIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class PanedAccessible : ContainerAccessible, ValueIF
 	// add the Value capabilities
 	mixin ValueT!(GtkPanedAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

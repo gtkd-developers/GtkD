@@ -68,8 +68,6 @@ public class PgAttributeFontDesc : PgAttribute
 		super(cast(PangoAttribute*)pangoAttrFontDesc);
 	}
 
-	/**
-	 */
 
 	/**
 	 * Create a new font description attribute. This attribute

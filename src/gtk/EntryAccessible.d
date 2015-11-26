@@ -35,6 +35,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class EntryAccessible : WidgetAccessible, ActionIF, EditableTextIF, TextIF
 {
 	/** the main Gtk struct */
@@ -76,8 +77,6 @@ public class EntryAccessible : WidgetAccessible, ActionIF, EditableTextIF, TextI
 	// add the Text capabilities
 	mixin TextT!(GtkEntryAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

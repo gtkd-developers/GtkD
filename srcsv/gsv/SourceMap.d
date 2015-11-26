@@ -32,6 +32,7 @@ public  import gsvc.gsvtypes;
 private import gtk.Widget;
 
 
+/** */
 public class SourceMap : SourceView
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class SourceMap : SourceView
 		super(cast(GtkSourceView*)gtkSourceMap, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

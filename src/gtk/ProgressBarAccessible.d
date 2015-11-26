@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ProgressBarAccessible : WidgetAccessible, ValueIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ProgressBarAccessible : WidgetAccessible, ValueIF
 	// add the Value capabilities
 	mixin ValueT!(GtkProgressBarAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

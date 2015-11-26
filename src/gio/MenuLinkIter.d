@@ -69,8 +69,6 @@ public class MenuLinkIter : ObjectG
 		super(cast(GObject*)gMenuLinkIter, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

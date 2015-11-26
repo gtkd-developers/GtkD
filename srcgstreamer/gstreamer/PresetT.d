@@ -60,8 +60,6 @@ public template PresetT(TStruct)
 		return cast(GstPreset*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the directory for application specific presets if set by the

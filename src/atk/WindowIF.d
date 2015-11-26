@@ -42,8 +42,6 @@ public interface WindowIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 	@property void delegate(WindowIF)[] onActivateListeners();
 	/**
 	 * The signal #AtkWindow::activate is emitted when a window

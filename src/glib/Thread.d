@@ -72,8 +72,6 @@ public class Thread
 		this.gThread = gThread;
 	}
 
-	/**
-	 */
 
 	/**
 	 * This function is the same as g_thread_new() except that

@@ -29,10 +29,9 @@ public  import gtkc.pangotypes;
 private import pango.PgMatrix;
 
 
+/** */
 public struct PgVertical
 {
-	/**
-	 */
 
 	/**
 	 * Finds the gravity that best matches the rotation component

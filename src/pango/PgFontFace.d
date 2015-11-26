@@ -67,8 +67,6 @@ public class PgFontFace : ObjectG
 		super(cast(GObject*)pangoFontFace, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

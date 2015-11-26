@@ -60,8 +60,6 @@ public class HashTableIter
 		this.gHashTableIter = gHashTableIter;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the #GHashTable associated with @iter.

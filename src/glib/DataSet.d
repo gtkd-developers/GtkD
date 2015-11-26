@@ -28,10 +28,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct DataSet
 {
-	/**
-	 */
 
 	/**
 	 * Destroys the dataset, freeing all memory allocated, and calling any

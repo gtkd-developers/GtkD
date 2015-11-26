@@ -32,6 +32,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceStyleSchemeManager : ObjectG
 {
 	/** the main Gtk struct */
@@ -64,8 +65,6 @@ public class SourceStyleSchemeManager : ObjectG
 		super(cast(GObject*)gtkSourceStyleSchemeManager, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -108,8 +108,6 @@ public class FileFilter : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkFileFilter);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

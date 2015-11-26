@@ -75,8 +75,6 @@ public class AppLaunchContext : ObjectG
 		super(cast(GObject*)gAppLaunchContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

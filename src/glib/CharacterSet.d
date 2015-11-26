@@ -31,10 +31,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct CharacterSet
 {
-	/**
-	 */
 
 	/**
 	 * Converts a string from one character set to another.

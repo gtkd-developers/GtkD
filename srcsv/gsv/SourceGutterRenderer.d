@@ -37,6 +37,7 @@ private import gtk.Tooltip;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceGutterRenderer : ObjectG
 {
 	/** the main Gtk struct */
@@ -69,8 +70,6 @@ public class SourceGutterRenderer : ObjectG
 		super(cast(GObject*)gtkSourceGutterRenderer, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

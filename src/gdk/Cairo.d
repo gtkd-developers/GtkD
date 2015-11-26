@@ -35,8 +35,7 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
-/**
- */
+/** */
 
 /**
  * Creates a Cairo context for drawing to @window.

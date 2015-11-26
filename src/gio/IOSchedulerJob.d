@@ -57,8 +57,6 @@ public class IOSchedulerJob
 		this.gIOSchedulerJob = gIOSchedulerJob;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Used from an I/O job to send a callback to be run in the thread

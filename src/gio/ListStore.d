@@ -74,8 +74,6 @@ public class ListStore : ObjectG, ListModelIF
 	// add the ListModel capabilities
 	mixin ListModelT!(GListStore);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

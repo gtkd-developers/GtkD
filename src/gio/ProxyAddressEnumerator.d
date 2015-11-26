@@ -66,8 +66,6 @@ public class ProxyAddressEnumerator : SocketAddressEnumerator
 		super(cast(GSocketAddressEnumerator*)gProxyAddressEnumerator, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

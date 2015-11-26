@@ -78,8 +78,6 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GNetworkAddress);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

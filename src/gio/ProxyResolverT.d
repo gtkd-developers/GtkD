@@ -51,8 +51,6 @@ public template ProxyResolverT(TStruct)
 		return cast(GProxyResolver*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the default #GProxyResolver for the system.

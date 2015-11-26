@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Version
 {
-	/**
-	 */
 
 	/**
 	 * Checks that the GLib library in use is compatible with the

@@ -70,8 +70,6 @@ public class Registry : ObjectG
 		super(cast(GObject*)atkRegistry, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

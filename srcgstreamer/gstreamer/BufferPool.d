@@ -108,8 +108,6 @@ public class BufferPool : ObjectGst
 		super(cast(GstObject*)gstBufferPool, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

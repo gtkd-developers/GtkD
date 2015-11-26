@@ -56,8 +56,6 @@ public class TypeInstance
 		this.gTypeInstance = gTypeInstance;
 	}
 
-	/**
-	 */
 
 	public void* getPrivate(GType privateType)
 	{

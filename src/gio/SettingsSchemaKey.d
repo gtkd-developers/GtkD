@@ -61,8 +61,6 @@ public class SettingsSchemaKey
 		this.gSettingsSchemaKey = gSettingsSchemaKey;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

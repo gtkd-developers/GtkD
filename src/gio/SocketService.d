@@ -96,8 +96,6 @@ public class SocketService : SocketListener
 		super(cast(GSocketListener*)gSocketService, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

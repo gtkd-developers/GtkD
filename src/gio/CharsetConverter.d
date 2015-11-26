@@ -79,8 +79,6 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	// add the Initable capabilities
 	mixin InitableT!(GCharsetConverter);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

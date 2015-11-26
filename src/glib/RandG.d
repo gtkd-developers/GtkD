@@ -58,8 +58,6 @@ public class RandG
 		this.gRand = gRand;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copies a #GRand into a new one with the same exact state as before.

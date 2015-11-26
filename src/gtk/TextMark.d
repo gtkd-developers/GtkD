@@ -95,8 +95,6 @@ public class TextMark : ObjectG
 		super(cast(GObject*)gtkTextMark, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

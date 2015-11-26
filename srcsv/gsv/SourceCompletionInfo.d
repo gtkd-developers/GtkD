@@ -38,6 +38,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceCompletionInfo : Window
 {
 	/** the main Gtk struct */
@@ -70,8 +71,6 @@ public class SourceCompletionInfo : Window
 		super(cast(GtkWindow*)gtkSourceCompletionInfo, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

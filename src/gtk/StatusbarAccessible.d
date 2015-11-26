@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class StatusbarAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class StatusbarAccessible : ContainerAccessible
 		super(cast(GtkContainerAccessible*)gtkStatusbarAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

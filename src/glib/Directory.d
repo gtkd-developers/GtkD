@@ -59,8 +59,6 @@ public class Directory
 		this.gDir = gDir;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Closes the directory and deallocates all related resources.

@@ -35,6 +35,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class TextViewAccessible : ContainerAccessible, EditableTextIF, StreamableContentIF, TextIF
 {
 	/** the main Gtk struct */
@@ -76,8 +77,6 @@ public class TextViewAccessible : ContainerAccessible, EditableTextIF, Streamabl
 	// add the Text capabilities
 	mixin TextT!(GtkTextViewAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -29,10 +29,9 @@ private import gtkc.pango;
 public  import gtkc.pangotypes;
 
 
+/** */
 public struct PgVersion
 {
-	/**
-	 */
 
 	/**
 	 * This is similar to the macro %PANGO_VERSION except that

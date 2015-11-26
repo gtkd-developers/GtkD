@@ -28,10 +28,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public class Int64Range
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

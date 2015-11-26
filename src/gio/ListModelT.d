@@ -88,8 +88,6 @@ public template ListModelT(TStruct)
 		return cast(GListModel*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Get the item at @position. If @position is greater than the number of

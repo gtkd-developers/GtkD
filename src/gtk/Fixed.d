@@ -102,8 +102,6 @@ public class Fixed : Container
 		super(cast(GtkContainer*)gtkFixed, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

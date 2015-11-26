@@ -46,8 +46,6 @@ public template OrientableT(TStruct)
 		return cast(GtkOrientable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Retrieves the orientation of the @orientable.

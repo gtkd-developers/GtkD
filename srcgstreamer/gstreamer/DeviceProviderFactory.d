@@ -77,8 +77,6 @@ public class DeviceProviderFactory : PluginFeature
 		super(cast(GstPluginFeature*)gstDeviceProviderFactory, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ScaleAccessible : RangeAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class ScaleAccessible : RangeAccessible
 		super(cast(GtkRangeAccessible*)gtkScaleAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

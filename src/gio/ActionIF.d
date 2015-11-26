@@ -71,8 +71,6 @@ public interface ActionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Checks if @action_name is valid.

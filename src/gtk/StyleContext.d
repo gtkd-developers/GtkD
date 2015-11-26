@@ -149,8 +149,6 @@ public class StyleContext : ObjectG
 		super(cast(GObject*)gtkStyleContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

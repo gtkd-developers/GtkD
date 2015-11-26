@@ -82,8 +82,6 @@ public template TagSetterT(TStruct)
 		return cast(GstTagSetter*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds the given tag / value pairs on the setter using the given merge mode.

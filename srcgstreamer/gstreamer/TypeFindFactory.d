@@ -117,8 +117,6 @@ public class TypeFindFactory : PluginFeature
 		super(cast(GstPluginFeature*)gstTypeFindFactory, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

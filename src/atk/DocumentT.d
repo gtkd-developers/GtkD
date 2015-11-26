@@ -48,8 +48,6 @@ public template DocumentT(TStruct)
 		return cast(AtkDocument*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 *

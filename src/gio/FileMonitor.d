@@ -81,8 +81,6 @@ public class FileMonitor : ObjectG
 		super(cast(GObject*)gFileMonitor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

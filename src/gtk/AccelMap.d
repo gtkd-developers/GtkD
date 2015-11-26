@@ -120,8 +120,6 @@ public class AccelMap : ObjectG
 		super(cast(GObject*)gtkAccelMap, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

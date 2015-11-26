@@ -69,8 +69,6 @@ public class RecMutex
 		this.gRecMutex = gRecMutex;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees the resources allocated to a recursive mutex with

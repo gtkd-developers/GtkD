@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct Internationalization
 {
-	/**
-	 */
 
 	/**
 	 * This is a variant of g_dgettext() that allows specifying a locale

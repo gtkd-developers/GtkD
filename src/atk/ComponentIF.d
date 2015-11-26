@@ -51,8 +51,6 @@ public interface ComponentIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Add the specified handler to the set of functions to be called

@@ -39,8 +39,6 @@ public  import gtkc.atktypes;
  */
 public struct Util
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

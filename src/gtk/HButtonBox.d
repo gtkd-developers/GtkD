@@ -32,6 +32,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class HButtonBox : ButtonBox
 {
 	/** the main Gtk struct */

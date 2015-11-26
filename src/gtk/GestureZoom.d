@@ -72,8 +72,6 @@ public class GestureZoom : Gesture
 		super(cast(GtkGesture*)gtkGestureZoom, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

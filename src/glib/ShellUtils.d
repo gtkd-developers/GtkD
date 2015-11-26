@@ -31,10 +31,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct ShellUtils
 {
-	/**
-	 */
 
 	public static GQuark shellErrorQuark()
 	{

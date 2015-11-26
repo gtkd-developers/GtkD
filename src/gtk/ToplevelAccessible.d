@@ -30,6 +30,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ToplevelAccessible : ObjectAtk
 {
 	/** the main Gtk struct */
@@ -62,8 +63,6 @@ public class ToplevelAccessible : ObjectAtk
 		super(cast(AtkObject*)gtkToplevelAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

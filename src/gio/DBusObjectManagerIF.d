@@ -53,8 +53,6 @@ public interface DBusObjectManagerIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the interface proxy for @interface_name at @object_path, if

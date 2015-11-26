@@ -33,6 +33,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class MenuItemAccessible : ContainerAccessible, ActionIF, SelectionIF
 {
 	/** the main Gtk struct */
@@ -71,8 +72,6 @@ public class MenuItemAccessible : ContainerAccessible, ActionIF, SelectionIF
 	// add the Selection capabilities
 	mixin SelectionT!(GtkMenuItemAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

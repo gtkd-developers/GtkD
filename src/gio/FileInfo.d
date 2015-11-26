@@ -94,8 +94,6 @@ public class FileInfo : ObjectG
 		super(cast(GObject*)gFileInfo, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

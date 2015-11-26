@@ -34,8 +34,6 @@ public  import gtkc.atktypes;
  */
 public struct Rectangle
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

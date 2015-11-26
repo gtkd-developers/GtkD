@@ -223,8 +223,6 @@ public class ApplicationCommandLine : ObjectG
 		super(cast(GObject*)gApplicationCommandLine, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

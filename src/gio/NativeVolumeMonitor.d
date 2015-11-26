@@ -29,6 +29,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class NativeVolumeMonitor : VolumeMonitor
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class NativeVolumeMonitor : VolumeMonitor
 		super(cast(GVolumeMonitor*)gNativeVolumeMonitor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

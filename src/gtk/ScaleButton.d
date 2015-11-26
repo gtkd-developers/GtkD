@@ -79,8 +79,6 @@ public class ScaleButton : Button, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkScaleButton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -150,8 +150,6 @@ public class VariantDict
 		this.gVariantDict = gVariantDict;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Allocates and initialises a new #GVariantDict.

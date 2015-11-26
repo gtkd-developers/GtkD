@@ -81,8 +81,6 @@ public class MiniObject
 		this.gstMiniObject = gstMiniObject;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a copy of the mini-object.

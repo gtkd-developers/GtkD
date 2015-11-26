@@ -60,8 +60,6 @@ public class PgCoverage
 		this.pangoCoverage = pangoCoverage;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copy an existing #PangoCoverage. (This function may now be unnecessary

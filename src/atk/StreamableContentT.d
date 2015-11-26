@@ -56,8 +56,6 @@ public template StreamableContentT(TStruct)
 		return cast(AtkStreamableContent*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the character string of the specified mime type. The first mime

@@ -73,8 +73,6 @@ public class DBusMessage : ObjectG
 		super(cast(GObject*)gDBusMessage, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

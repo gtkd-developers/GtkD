@@ -53,8 +53,6 @@ public interface TocSetterIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Return current TOC the setter uses. The TOC should not be

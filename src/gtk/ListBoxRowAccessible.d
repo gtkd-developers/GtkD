@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ListBoxRowAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class ListBoxRowAccessible : ContainerAccessible
 		super(cast(GtkContainerAccessible*)gtkListBoxRowAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

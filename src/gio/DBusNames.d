@@ -31,10 +31,9 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public struct DBusNames
 {
-	/**
-	 */
 
 	/**
 	 * Starts acquiring @name on the bus specified by @bus_type and calls

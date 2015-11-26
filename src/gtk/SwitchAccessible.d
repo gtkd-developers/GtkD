@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class SwitchAccessible : WidgetAccessible, ActionIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class SwitchAccessible : WidgetAccessible, ActionIF
 	// add the Action capabilities
 	mixin ActionT!(GtkSwitchAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

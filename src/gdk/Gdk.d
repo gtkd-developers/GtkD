@@ -31,10 +31,9 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public struct Gdk
 {
-	/**
-	 */
 
 	/**
 	 * Emits a short beep on the default display.

@@ -79,8 +79,6 @@ public class TlsConnection : IOStream
 		super(cast(GIOStream*)gTlsConnection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -69,8 +69,6 @@ public class Date
 		this.gDate = gDate;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Allocates a #GDate and initializes

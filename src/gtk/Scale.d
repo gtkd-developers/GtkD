@@ -91,8 +91,6 @@ public class Scale : Range
 		super(cast(GtkRange*)gtkScale, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

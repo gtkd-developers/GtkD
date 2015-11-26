@@ -80,8 +80,6 @@ public class Scrollbar : Range
 		super(cast(GtkRange*)gtkScrollbar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

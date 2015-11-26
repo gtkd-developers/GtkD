@@ -85,8 +85,6 @@ public class Grid : Container, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkGrid);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

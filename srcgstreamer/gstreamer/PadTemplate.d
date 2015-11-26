@@ -131,8 +131,6 @@ public class PadTemplate : ObjectGst
 		super(cast(GstObject*)gstPadTemplate, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

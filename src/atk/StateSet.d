@@ -67,8 +67,6 @@ public class StateSet : ObjectG
 		super(cast(GObject*)atkStateSet, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -74,8 +74,6 @@ public class PixbufAnimation : ObjectG
 		super(cast(GObject*)gdkPixbufAnimation, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -90,8 +90,6 @@ public class Display : ObjectG
 		super(cast(GObject*)gdkDisplay, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

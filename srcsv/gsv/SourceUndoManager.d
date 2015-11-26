@@ -31,6 +31,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceUndoManager : ObjectG, SourceUndoManagerIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class SourceUndoManager : ObjectG, SourceUndoManagerIF
 	// add the SourceUndoManager capabilities
 	mixin SourceUndoManagerT!(GtkSourceUndoManager);
 
-	/**
-	 */
 }

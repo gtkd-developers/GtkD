@@ -57,8 +57,6 @@ public class PtrArray
 		this.gPtrArray = gPtrArray;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds a pointer to the end of the pointer array. The array will grow

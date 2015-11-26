@@ -76,8 +76,6 @@ public class UnixFDList : ObjectG
 		super(cast(GObject*)gUnixFDList, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

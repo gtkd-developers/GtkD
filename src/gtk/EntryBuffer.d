@@ -78,8 +78,6 @@ public class EntryBuffer : ObjectG
 		super(cast(GObject*)gtkEntryBuffer, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

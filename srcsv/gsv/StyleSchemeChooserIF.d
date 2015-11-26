@@ -30,6 +30,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public interface StyleSchemeChooserIF{
 	/** Get the main Gtk struct */
 	public GtkSourceStyleSchemeChooser* getStyleSchemeChooserStruct();
@@ -37,8 +38,6 @@ public interface StyleSchemeChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the currently-selected scheme.

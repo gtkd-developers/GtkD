@@ -59,8 +59,6 @@ public class StaticResource
 		this.gStaticResource = gStaticResource;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Finalized a GResource initialized by g_static_resource_init().

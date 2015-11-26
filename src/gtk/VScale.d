@@ -74,8 +74,6 @@ public class VScale : Scale
 		super(cast(GtkScale*)gtkVScale, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

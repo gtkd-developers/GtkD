@@ -71,8 +71,6 @@ public class PgFontsetSimple : PgFontset
 		super(cast(PangoFontset*)pangoFontsetSimple, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

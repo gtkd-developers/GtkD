@@ -54,8 +54,6 @@ public template BuildableT(TStruct)
 		return cast(GtkBuildable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds a child to @buildable. @type is an optional string

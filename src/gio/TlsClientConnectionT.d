@@ -50,8 +50,6 @@ public template TlsClientConnectionT(TStruct)
 		return cast(GTlsClientConnection*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copies session state from one connection to another. This is

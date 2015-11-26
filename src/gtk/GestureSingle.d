@@ -75,8 +75,6 @@ public class GestureSingle : Gesture
 		super(cast(GtkGesture*)gtkGestureSingle, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

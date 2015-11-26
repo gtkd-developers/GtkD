@@ -45,8 +45,6 @@ public interface OrientableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Retrieves the orientation of the @orientable.

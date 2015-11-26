@@ -60,8 +60,6 @@ public class PgScriptIter
 		this.pangoScriptIter = pangoScriptIter;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees a #PangoScriptIter created with pango_script_iter_new().

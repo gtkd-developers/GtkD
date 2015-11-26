@@ -46,8 +46,6 @@ public interface LoadableIconIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Loads a loadable icon. For the asynchronous version of this function,

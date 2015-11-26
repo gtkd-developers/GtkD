@@ -129,8 +129,6 @@ public class Clipboard : ObjectG
 		super(cast(GObject*)gtkClipboard, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

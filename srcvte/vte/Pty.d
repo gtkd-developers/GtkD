@@ -35,6 +35,7 @@ private import vtec.vte;
 public  import vtec.vtetypes;
 
 
+/** */
 public class Pty : ObjectG, InitableIF
 {
 	/** the main Gtk struct */
@@ -70,8 +71,6 @@ public class Pty : ObjectG, InitableIF
 	// add the Initable capabilities
 	mixin InitableT!(VtePty);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

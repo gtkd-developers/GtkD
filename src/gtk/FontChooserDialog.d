@@ -81,8 +81,6 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	// add the FontChooser capabilities
 	mixin FontChooserT!(GtkFontChooserDialog);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

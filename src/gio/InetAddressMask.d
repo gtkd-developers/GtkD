@@ -79,8 +79,6 @@ public class InetAddressMask : ObjectG, InitableIF
 	// add the Initable capabilities
 	mixin InitableT!(GInetAddressMask);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

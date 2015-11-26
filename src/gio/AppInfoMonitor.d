@@ -84,8 +84,6 @@ public class AppInfoMonitor : ObjectG
 		super(cast(GObject*)gAppInfoMonitor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

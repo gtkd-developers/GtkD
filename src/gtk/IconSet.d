@@ -40,6 +40,7 @@ public  import gtkc.gtktypes;
 private import gtkc.paths;
 
 
+/** */
 public class IconSet
 {
 	/** the main Gtk struct */

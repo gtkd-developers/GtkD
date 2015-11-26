@@ -139,8 +139,6 @@ public class TestDBus : ObjectG
 		super(cast(GObject*)gTestDBus, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

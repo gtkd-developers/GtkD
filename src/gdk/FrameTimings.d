@@ -62,8 +62,6 @@ public class FrameTimings
 		this.gdkFrameTimings = gdkFrameTimings;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

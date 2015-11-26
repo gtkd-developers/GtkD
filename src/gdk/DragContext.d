@@ -33,6 +33,7 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class DragContext : ObjectG
 {
 	/** the main Gtk struct */
@@ -65,8 +66,6 @@ public class DragContext : ObjectG
 		super(cast(GObject*)gdkDragContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

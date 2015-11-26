@@ -69,8 +69,6 @@ public class EventBox : Bin
 		super(cast(GtkBin*)gtkEventBox, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

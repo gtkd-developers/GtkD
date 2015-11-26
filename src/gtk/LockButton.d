@@ -97,8 +97,6 @@ public class LockButton : Button
 		super(cast(GtkButton*)gtkLockButton, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

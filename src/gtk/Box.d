@@ -114,8 +114,6 @@ public class Box : Container, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkBox);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

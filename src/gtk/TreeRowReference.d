@@ -64,8 +64,6 @@ public class TreeRowReference
 		this.gtkTreeRowReference = gtkTreeRowReference;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -87,8 +87,6 @@ public class VBox : Box
 		super(cast(GtkBox*)gtkVBox, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -65,8 +65,6 @@ public class Uri
 		this.gstUri = gstUri;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -59,8 +59,6 @@ public class Module
 		this.gModule = gModule;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Closes a module.

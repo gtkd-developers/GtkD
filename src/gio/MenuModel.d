@@ -185,8 +185,6 @@ public class MenuModel : ObjectG
 		super(cast(GObject*)gMenuModel, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

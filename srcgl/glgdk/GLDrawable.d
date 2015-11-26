@@ -31,6 +31,7 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public class GLDrawable : ObjectG, GLDrawableIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class GLDrawable : ObjectG, GLDrawableIF
 	// add the GLDrawable capabilities
 	mixin GLDrawableT!(GdkGLDrawable);
 
-	/**
-	 */
 }

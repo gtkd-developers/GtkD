@@ -49,8 +49,6 @@ public template ConverterT(TStruct)
 		return cast(GConverter*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * This is the main operation used when converting data. It is to be called

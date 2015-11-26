@@ -94,8 +94,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	// add the AppChooser capabilities
 	mixin AppChooserT!(GtkAppChooserWidget);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

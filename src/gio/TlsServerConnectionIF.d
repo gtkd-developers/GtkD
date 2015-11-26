@@ -47,6 +47,4 @@ public interface TlsServerConnectionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 }

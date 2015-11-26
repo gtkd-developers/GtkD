@@ -131,8 +131,6 @@ public class Socket : ObjectG, InitableIF
 	// add the Initable capabilities
 	mixin InitableT!(GSocket);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

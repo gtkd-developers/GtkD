@@ -81,8 +81,6 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	// add the Seekable capabilities
 	mixin SeekableT!(GMemoryInputStream);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -80,8 +80,6 @@ public class ThemingEngine : ObjectG
 		super(cast(GObject*)gtkThemingEngine, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

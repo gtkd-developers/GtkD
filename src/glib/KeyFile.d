@@ -61,8 +61,6 @@ public class KeyFile
 		this.gKeyFile = gKeyFile;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new empty #GKeyFile object. Use

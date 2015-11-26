@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class RangeAccessible : WidgetAccessible, ValueIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class RangeAccessible : WidgetAccessible, ValueIF
 	// add the Value capabilities
 	mixin ValueT!(GtkRangeAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

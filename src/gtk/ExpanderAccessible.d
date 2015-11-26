@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ExpanderAccessible : ContainerAccessible, ActionIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class ExpanderAccessible : ContainerAccessible, ActionIF
 	// add the Action capabilities
 	mixin ActionT!(GtkExpanderAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

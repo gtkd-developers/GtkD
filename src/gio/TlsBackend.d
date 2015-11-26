@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class TlsBackend : ObjectG, TlsBackendIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class TlsBackend : ObjectG, TlsBackendIF
 	// add the TlsBackend capabilities
 	mixin TlsBackendT!(GTlsBackend);
 
-	/**
-	 */
 }

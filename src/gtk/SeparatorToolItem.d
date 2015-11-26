@@ -74,8 +74,6 @@ public class SeparatorToolItem : ToolItem
 		super(cast(GtkToolItem*)gtkSeparatorToolItem, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

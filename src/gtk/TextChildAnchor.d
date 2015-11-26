@@ -68,8 +68,6 @@ public class TextChildAnchor : ObjectG
 		super(cast(GObject*)gtkTextChildAnchor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

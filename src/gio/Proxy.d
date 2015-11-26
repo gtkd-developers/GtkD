@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Proxy : ObjectG, ProxyIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Proxy : ObjectG, ProxyIF
 	// add the Proxy capabilities
 	mixin ProxyT!(GProxy);
 
-	/**
-	 */
 }

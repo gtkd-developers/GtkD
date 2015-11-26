@@ -35,6 +35,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceGutterRendererPixbuf : SourceGutterRenderer
 {
 	/** the main Gtk struct */

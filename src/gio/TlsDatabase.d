@@ -81,8 +81,6 @@ public class TlsDatabase : ObjectG
 		super(cast(GObject*)gTlsDatabase, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

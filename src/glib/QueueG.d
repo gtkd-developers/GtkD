@@ -59,8 +59,6 @@ public class QueueG
 		this.gQueue = gQueue;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Removes all the elements in @queue. If queue elements contain

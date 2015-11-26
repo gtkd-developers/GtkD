@@ -98,8 +98,6 @@ public class FrameClock : ObjectG
 		super(cast(GObject*)gdkFrameClock, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

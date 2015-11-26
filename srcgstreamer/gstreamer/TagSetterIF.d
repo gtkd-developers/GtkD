@@ -81,8 +81,6 @@ public interface TagSetterIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds the given tag / value pairs on the setter using the given merge mode.

@@ -120,8 +120,6 @@ public class Popover : Bin
 		super(cast(GtkBin*)gtkPopover, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

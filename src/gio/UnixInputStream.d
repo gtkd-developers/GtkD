@@ -84,8 +84,6 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	// add the PollableInputStream capabilities
 	mixin PollableInputStreamT!(GUnixInputStream);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

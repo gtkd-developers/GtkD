@@ -88,8 +88,6 @@ public class SocketConnection : IOStream
 		super(cast(GIOStream*)gSocketConnection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

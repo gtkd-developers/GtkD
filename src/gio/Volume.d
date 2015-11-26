@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Volume : ObjectG, VolumeIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Volume : ObjectG, VolumeIF
 	// add the Volume capabilities
 	mixin VolumeT!(GVolume);
 
-	/**
-	 */
 }

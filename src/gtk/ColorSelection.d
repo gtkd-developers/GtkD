@@ -37,6 +37,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ColorSelection : Box
 {
 	/** the main Gtk struct */
@@ -69,8 +70,6 @@ public class ColorSelection : Box
 		super(cast(GtkBox*)gtkColorSelection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

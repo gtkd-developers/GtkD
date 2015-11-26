@@ -85,8 +85,6 @@ public class ThreadedSocketService : SocketService
 		super(cast(GSocketService*)gThreadedSocketService, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

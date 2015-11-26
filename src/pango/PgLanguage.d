@@ -62,8 +62,6 @@ public class PgLanguage
 		this.pangoLanguage = pangoLanguage;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

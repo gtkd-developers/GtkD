@@ -61,8 +61,6 @@ public class UnixMountPoint
 		this.gUnixMountPoint = gUnixMountPoint;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Compares two unix mount points.

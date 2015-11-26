@@ -52,8 +52,6 @@ public template ImageT(TStruct)
 		return cast(AtkImage*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Get a textual description of this image.

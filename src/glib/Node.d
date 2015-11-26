@@ -57,8 +57,6 @@ public class Node
 		this.gNode = gNode;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the position of the first child of a #GNode

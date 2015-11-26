@@ -52,8 +52,6 @@ public template ComponentT(TStruct)
 		return cast(AtkComponent*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Add the specified handler to the set of functions to be called

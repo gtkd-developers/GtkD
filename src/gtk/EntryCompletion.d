@@ -122,8 +122,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkEntryCompletion);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

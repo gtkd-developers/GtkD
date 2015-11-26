@@ -39,6 +39,7 @@ public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 
 
+/** */
 public class SourceSearchContext : ObjectG
 {
 	/** the main Gtk struct */
@@ -71,8 +72,6 @@ public class SourceSearchContext : ObjectG
 		super(cast(GObject*)gtkSourceSearchContext, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -75,8 +75,6 @@ public class HScrollbar : Scrollbar
 		super(cast(GtkScrollbar*)gtkHScrollbar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

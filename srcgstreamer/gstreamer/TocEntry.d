@@ -34,6 +34,7 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public class TocEntry
 {
 	/** the main Gtk struct */
@@ -59,8 +60,6 @@ public class TocEntry
 		this.gstTocEntry = gstTocEntry;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

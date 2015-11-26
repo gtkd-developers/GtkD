@@ -96,8 +96,6 @@ public template VolumeT(TStruct)
 		return cast(GVolume*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Checks if a volume can be ejected.

@@ -95,8 +95,6 @@ public class TypeModule : ObjectG, TypePluginIF
 	// add the TypePlugin capabilities
 	mixin TypePluginT!(GTypeModule);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

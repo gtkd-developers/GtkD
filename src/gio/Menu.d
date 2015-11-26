@@ -77,8 +77,6 @@ public class Menu : MenuModel
 		super(cast(GMenuModel*)gMenu, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

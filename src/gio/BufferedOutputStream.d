@@ -85,8 +85,6 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	// add the Seekable capabilities
 	mixin SeekableT!(GBufferedOutputStream);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

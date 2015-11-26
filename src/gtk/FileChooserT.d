@@ -173,8 +173,6 @@ public template FileChooserT(TStruct)
 		return cast(GtkFileChooser*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds @filter to the list of filters that the user can select between.

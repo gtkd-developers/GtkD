@@ -44,8 +44,6 @@ public interface TlsBackendIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the default #GTlsBackend for the system.

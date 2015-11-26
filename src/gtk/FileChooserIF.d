@@ -172,8 +172,6 @@ public interface FileChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds @filter to the list of filters that the user can select between.

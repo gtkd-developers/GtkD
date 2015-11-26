@@ -73,8 +73,6 @@ public class Adjustment : ObjectG
 		super(cast(GObject*)gtkAdjustment, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

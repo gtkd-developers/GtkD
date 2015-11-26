@@ -144,8 +144,6 @@ public class IconTheme : ObjectG
 		super(cast(GObject*)gtkIconTheme, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

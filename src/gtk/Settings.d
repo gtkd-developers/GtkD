@@ -107,8 +107,6 @@ public class Settings : ObjectG, StyleProviderIF
 	// add the StyleProvider capabilities
 	mixin StyleProviderT!(GtkSettings);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

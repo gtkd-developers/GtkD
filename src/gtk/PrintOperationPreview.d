@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class PrintOperationPreview : ObjectG, PrintOperationPreviewIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class PrintOperationPreview : ObjectG, PrintOperationPreviewIF
 	// add the PrintOperationPreview capabilities
 	mixin PrintOperationPreviewT!(GtkPrintOperationPreview);
 
-	/**
-	 */
 }

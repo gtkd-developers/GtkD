@@ -273,8 +273,6 @@ public interface ActivatableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * This is a utility function for #GtkActivatable implementors.

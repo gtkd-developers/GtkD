@@ -59,8 +59,6 @@ public class PgTabArray
 		this.pangoTabArray = pangoTabArray;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

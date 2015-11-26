@@ -97,8 +97,6 @@ public template SocketConnectableT(TStruct)
 		return cast(GSocketConnectable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a #GSocketAddressEnumerator for @connectable.

@@ -34,8 +34,6 @@ public  import gtkc.glibtypes;
  */
 public struct TrashStack
 {
-	/**
-	 */
 
 	/**
 	 * Returns the height of a #GTrashStack.

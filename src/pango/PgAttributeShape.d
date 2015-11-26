@@ -67,8 +67,6 @@ public class PgAttributeShape : PgAttribute
 		super(cast(PangoAttribute*)pangoAttrShape);
 	}
 
-	/**
-	 */
 
 	/**
 	 * Create a new shape attribute. A shape is used to impose a

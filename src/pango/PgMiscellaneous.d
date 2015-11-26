@@ -31,10 +31,9 @@ private import gtkc.pango;
 public  import gtkc.pangotypes;
 
 
+/** */
 public struct PgMiscellaneous
 {
-	/**
-	 */
 
 	/**
 	 * Do not use.  Does not do anything.

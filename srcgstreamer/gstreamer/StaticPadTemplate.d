@@ -59,8 +59,6 @@ public class StaticPadTemplate
 		this.gstStaticPadTemplate = gstStaticPadTemplate;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Converts a #GstStaticPadTemplate into a #GstPadTemplate.

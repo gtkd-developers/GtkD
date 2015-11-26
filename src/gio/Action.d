@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Action : ObjectG, ActionIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Action : ObjectG, ActionIF
 	// add the Action capabilities
 	mixin ActionT!(GAction);
 
-	/**
-	 */
 }

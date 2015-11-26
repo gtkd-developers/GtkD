@@ -71,8 +71,6 @@ public class PgEngineShape : PgEngine
 		super(cast(PangoEngine*)pangoEngineShape, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

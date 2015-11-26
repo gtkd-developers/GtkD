@@ -78,8 +78,6 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	// add the ProxyResolver capabilities
 	mixin ProxyResolverT!(GSimpleProxyResolver);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

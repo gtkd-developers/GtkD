@@ -80,8 +80,6 @@ public class Resolver : ObjectG
 		super(cast(GObject*)gResolver, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

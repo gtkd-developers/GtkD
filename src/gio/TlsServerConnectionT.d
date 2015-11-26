@@ -48,6 +48,4 @@ public template TlsServerConnectionT(TStruct)
 		return cast(GTlsServerConnection*)getStruct();
 	}
 
-	/**
-	 */
 }

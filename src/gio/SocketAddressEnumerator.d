@@ -70,8 +70,6 @@ public class SocketAddressEnumerator : ObjectG
 		super(cast(GObject*)gSocketAddressEnumerator, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

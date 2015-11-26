@@ -43,6 +43,7 @@ private import gtk.TextTagTable;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceBuffer : TextBuffer
 {
 	/** the main Gtk struct */
@@ -75,8 +76,6 @@ public class SourceBuffer : TextBuffer
 		super(cast(GtkTextBuffer*)gtkSourceBuffer, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

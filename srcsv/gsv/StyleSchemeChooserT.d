@@ -30,6 +30,7 @@ public  import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public template StyleSchemeChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -38,8 +39,6 @@ public template StyleSchemeChooserT(TStruct)
 		return cast(GtkSourceStyleSchemeChooser*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the currently-selected scheme.

@@ -76,8 +76,6 @@ public class TlsCertificate : ObjectG
 		super(cast(GObject*)gTlsCertificate, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class WidgetAccessible : Accessible, ComponentIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class WidgetAccessible : Accessible, ComponentIF
 	// add the Component capabilities
 	mixin ComponentT!(GtkWidgetAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

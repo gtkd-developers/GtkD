@@ -32,6 +32,7 @@ public  import gtkc.glibtypes;
 public  import gtkc.gobjecttypes;
 
 
+/** */
 public struct Str
 {
 	/*************************************************

@@ -28,6 +28,7 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public class TestLogMsg
 {
 	/** the main Gtk struct */
@@ -53,8 +54,6 @@ public class TestLogMsg
 		this.gTestLogMsg = gTestLogMsg;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Internal function for gtester to free test log messages, no ABI guarantees provided.

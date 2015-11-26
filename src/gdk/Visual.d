@@ -67,8 +67,6 @@ public class Visual : ObjectG
 		super(cast(GObject*)gdkVisual, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

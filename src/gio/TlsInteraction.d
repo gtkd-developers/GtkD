@@ -91,8 +91,6 @@ public class TlsInteraction : ObjectG
 		super(cast(GObject*)gTlsInteraction, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

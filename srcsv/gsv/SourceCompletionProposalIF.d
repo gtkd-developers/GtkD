@@ -35,6 +35,7 @@ public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
 
 
+/** */
 public interface SourceCompletionProposalIF{
 	/** Get the main Gtk struct */
 	public GtkSourceCompletionProposal* getSourceCompletionProposalStruct();
@@ -42,8 +43,6 @@ public interface SourceCompletionProposalIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Emits the "changed" signal on @proposal. This should be called by

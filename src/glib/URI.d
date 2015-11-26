@@ -31,10 +31,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct URI
 {
-	/**
-	 */
 
 	/**
 	 * Converts an escaped ASCII-encoded URI to a local filename in the

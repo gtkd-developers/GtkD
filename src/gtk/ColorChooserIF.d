@@ -47,8 +47,6 @@ public interface ColorChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds a palette to the color chooser. If @orientation is horizontal,

@@ -53,8 +53,6 @@ public template NetworkMonitorT(TStruct)
 		return cast(GNetworkMonitor*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the default #GNetworkMonitor for the system.

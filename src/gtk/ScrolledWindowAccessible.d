@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ScrolledWindowAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class ScrolledWindowAccessible : ContainerAccessible
 		super(cast(GtkContainerAccessible*)gtkScrolledWindowAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

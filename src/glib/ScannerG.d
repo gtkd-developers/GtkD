@@ -71,8 +71,6 @@ public class ScannerG
 		this.gScanner = gScanner;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the current line in the input stream (counting

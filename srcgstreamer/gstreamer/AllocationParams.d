@@ -57,8 +57,6 @@ public class AllocationParams
 		this.gstAllocationParams = gstAllocationParams;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -34,10 +34,9 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public struct ContentType
 {
-	/**
-	 */
 
 	/**
 	 * Checks if a content type can be executable. Note that for instance

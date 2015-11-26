@@ -53,8 +53,6 @@ public interface BuildableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Adds a child to @buildable. @type is an optional string

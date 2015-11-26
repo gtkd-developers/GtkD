@@ -106,8 +106,6 @@ public class Toc
 		this.gstToc = gstToc;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

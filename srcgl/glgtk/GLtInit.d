@@ -29,10 +29,9 @@ private import gtkglc.glgtk;
 public  import gtkglc.glgtktypes;
 
 
+/** */
 public struct GLtInit
 {
-	/**
-	 */
 
 	/**
 	 * Call this function before using any other GtkGLExt functions in your

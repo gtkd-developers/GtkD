@@ -64,8 +64,6 @@ public class BindingSet
 		this.gtkBindingSet = gtkBindingSet;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Find a key binding matching @keyval and @modifiers within

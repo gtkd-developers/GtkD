@@ -64,8 +64,6 @@ public class PgGlyphItem
 		this.pangoGlyphItem = pangoGlyphItem;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

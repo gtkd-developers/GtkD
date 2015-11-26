@@ -81,8 +81,6 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	// add the DBusInterface capabilities
 	mixin DBusInterfaceT!(GDBusInterfaceSkeleton);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

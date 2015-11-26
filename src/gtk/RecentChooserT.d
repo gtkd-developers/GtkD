@@ -54,8 +54,6 @@ public template RecentChooserT(TStruct)
 		return cast(GtkRecentChooser*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds @filter to the list of #GtkRecentFilter objects held by @chooser.

@@ -59,8 +59,6 @@ public class DeviceProviderClass
 		this.gstDeviceProviderClass = gstDeviceProviderClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Set @key with @value as metadata in @klass.

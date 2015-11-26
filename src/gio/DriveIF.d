@@ -75,8 +75,6 @@ public interface DriveIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Checks if a drive can be ejected.

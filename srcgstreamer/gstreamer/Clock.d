@@ -138,8 +138,6 @@ public class Clock : ObjectGst
 		super(cast(GstObject*)gstClock, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -62,8 +62,6 @@ public class Pixdata
 		this.gdkPixdata = gdkPixdata;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Deserializes (reconstruct) a #GdkPixdata structure from a byte stream.

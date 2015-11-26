@@ -68,8 +68,6 @@ public class GObjectAccessible : ObjectAtk
 		super(cast(AtkObject*)atkGObjectAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

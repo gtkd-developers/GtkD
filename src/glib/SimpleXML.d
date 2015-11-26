@@ -65,8 +65,6 @@ public class SimpleXML
 		this.gMarkupParseContext = gMarkupParseContext;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Creates a new parse context. A parse context is used to parse

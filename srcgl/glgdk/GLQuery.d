@@ -30,10 +30,9 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public struct GLQuery
 {
-	/**
-	 */
 
 	/**
 	 * Returns the version numbers of the OpenGL extension to the window system.

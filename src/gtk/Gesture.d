@@ -159,8 +159,6 @@ public class Gesture : EventController
 		super(cast(GtkEventController*)gtkGesture, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

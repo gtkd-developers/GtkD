@@ -60,8 +60,6 @@ public template TextT(TStruct)
 		return cast(AtkText*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees the memory associated with an array of AtkTextRange. It is assumed

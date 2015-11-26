@@ -81,8 +81,6 @@ public class Context
 		this.gstContext = gstContext;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

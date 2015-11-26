@@ -43,8 +43,6 @@ public interface DesktopAppInfoLookupIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the default application for launching applications

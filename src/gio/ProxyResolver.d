@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class ProxyResolver : ObjectG, ProxyResolverIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class ProxyResolver : ObjectG, ProxyResolverIF
 	// add the ProxyResolver capabilities
 	mixin ProxyResolverT!(GProxyResolver);
 
-	/**
-	 */
 }

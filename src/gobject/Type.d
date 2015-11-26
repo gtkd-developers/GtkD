@@ -36,6 +36,7 @@ private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 
 
+/** */
 public struct Type
 {
 	public static T* getInstanceClass(T)(ObjectG obj)

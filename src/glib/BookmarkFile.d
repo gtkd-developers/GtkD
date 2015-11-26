@@ -61,8 +61,6 @@ public class BookmarkFile
 		this.gBookmarkFile = gBookmarkFile;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds the application with @name and @exec to the list of

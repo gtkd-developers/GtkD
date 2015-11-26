@@ -28,6 +28,7 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct MemorySlice
 {
 	T* mewSlice(T)()

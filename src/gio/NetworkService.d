@@ -79,8 +79,6 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	// add the SocketConnectable capabilities
 	mixin SocketConnectableT!(GNetworkService);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

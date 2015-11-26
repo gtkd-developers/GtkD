@@ -143,8 +143,6 @@ public class Binding : ObjectG
 		super(cast(GObject*)gBinding, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

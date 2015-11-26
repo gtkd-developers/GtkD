@@ -56,8 +56,6 @@ public class HookList
 		this.gHookList = gHookList;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Removes all the #GHook elements from a #GHookList.

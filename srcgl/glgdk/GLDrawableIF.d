@@ -30,6 +30,7 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public interface GLDrawableIF{
 	/** Get the main Gtk struct */
 	public GdkGLDrawable* getGLDrawableStruct();
@@ -37,8 +38,6 @@ public interface GLDrawableIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets #GdkGLConfig with which the @gldrawable is configured.

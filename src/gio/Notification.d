@@ -90,8 +90,6 @@ public class Notification : ObjectG
 		super(cast(GObject*)gNotification, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

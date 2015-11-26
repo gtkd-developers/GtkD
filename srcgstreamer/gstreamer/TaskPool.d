@@ -71,8 +71,6 @@ public class TaskPool : ObjectGst
 		super(cast(GstObject*)gstTaskPool, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

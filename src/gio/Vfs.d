@@ -67,8 +67,6 @@ public class Vfs : ObjectG
 		super(cast(GObject*)gVfs, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

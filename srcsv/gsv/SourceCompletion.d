@@ -41,6 +41,7 @@ private import gtk.TextIter;
 public  import gtkc.gdktypes;
 
 
+/** */
 public class SourceCompletion : ObjectG, BuildableIF
 {
 	/** the main Gtk struct */
@@ -76,8 +77,6 @@ public class SourceCompletion : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkSourceCompletion);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

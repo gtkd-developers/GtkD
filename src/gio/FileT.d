@@ -140,8 +140,6 @@ public template FileT(TStruct)
 		return cast(GFile*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Constructs a #GFile with the given @parse_name (i.e. something

@@ -71,8 +71,6 @@ public class Bin : Container
 		super(cast(GtkContainer*)gtkBin, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

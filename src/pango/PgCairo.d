@@ -38,10 +38,9 @@ private import pango.PgLayout;
 private import pango.PgLayoutLine;
 
 
+/** */
 public struct PgCairo
 {
-	/**
-	 */
 
 	/**
 	 * Retrieves any font rendering options previously set with

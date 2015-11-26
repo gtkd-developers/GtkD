@@ -93,8 +93,6 @@ public class ListBox : Container
 		super(cast(GtkContainer*)gtkListBox, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

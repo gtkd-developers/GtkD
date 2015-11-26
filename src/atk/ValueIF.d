@@ -184,8 +184,6 @@ public interface ValueIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the value of this object.

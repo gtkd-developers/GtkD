@@ -59,8 +59,6 @@ public class AtomicQueue
 		this.gstAtomicQueue = gstAtomicQueue;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

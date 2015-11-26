@@ -30,6 +30,7 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 class GException : Exception
 {
 	ErrorG error;

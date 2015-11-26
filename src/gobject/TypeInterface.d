@@ -60,8 +60,6 @@ public class TypeInterface
 		this.gTypeInterface = gTypeInterface;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the corresponding #GTypeInterface structure of the parent type

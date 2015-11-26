@@ -67,8 +67,6 @@ public class PgAttributeIterator
 		this.pangoAttrIterator = pangoAttrIterator;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copy a #PangoAttrIterator

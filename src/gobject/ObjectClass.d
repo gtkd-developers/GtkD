@@ -85,8 +85,6 @@ public class ObjectClass
 		this.gObjectClass = gObjectClass;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Looks up the #GParamSpec for a property of a class.

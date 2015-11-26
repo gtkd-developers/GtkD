@@ -72,8 +72,6 @@ public template ActionT(TStruct)
 		return cast(GAction*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Checks if @action_name is valid.

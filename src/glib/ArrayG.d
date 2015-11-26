@@ -58,8 +58,6 @@ public class ArrayG
 		this.gArray = gArray;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds @len elements onto the end of the array.

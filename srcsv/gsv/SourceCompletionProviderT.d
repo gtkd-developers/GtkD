@@ -38,6 +38,7 @@ public  import gtk.TextIter;
 public  import gtk.Widget;
 
 
+/** */
 public template SourceCompletionProviderT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -46,8 +47,6 @@ public template SourceCompletionProviderT(TStruct)
 		return cast(GtkSourceCompletionProvider*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Activate @proposal at @iter. When this functions returns %FALSE, the default

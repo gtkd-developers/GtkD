@@ -30,10 +30,9 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public struct IconSize
 {
-	/**
-	 */
 
 	/**
 	 * Looks up the icon size associated with @name.

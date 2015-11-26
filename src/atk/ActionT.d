@@ -56,8 +56,6 @@ public template ActionT(TStruct)
 		return cast(AtkAction*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Perform the specified action on the object.

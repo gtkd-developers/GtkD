@@ -34,10 +34,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct ValueGst
 {
-	/**
-	 */
 
 	/**
 	 * Determines if @value1 and @value2 can be compared.

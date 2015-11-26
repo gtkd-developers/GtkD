@@ -30,6 +30,7 @@ public  import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public template GLDrawableT(TStruct)
 {
 	/** Get the main Gtk struct */
@@ -38,8 +39,6 @@ public template GLDrawableT(TStruct)
 		return cast(GdkGLDrawable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets #GdkGLConfig with which the @gldrawable is configured.

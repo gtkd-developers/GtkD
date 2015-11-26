@@ -79,8 +79,6 @@ public class Range : Widget, OrientableIF
 	// add the Orientable capabilities
 	mixin OrientableT!(GtkRange);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -81,8 +81,6 @@ public class PgFontMap : ObjectG
 		super(cast(GObject*)pangoFontMap, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

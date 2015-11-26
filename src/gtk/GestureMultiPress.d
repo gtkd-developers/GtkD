@@ -79,8 +79,6 @@ public class GestureMultiPress : GestureSingle
 		super(cast(GtkGestureSingle*)gtkGestureMultiPress, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

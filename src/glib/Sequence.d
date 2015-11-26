@@ -59,8 +59,6 @@ public class Sequence
 		this.gSequence = gSequence;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds a new item to the end of @seq.

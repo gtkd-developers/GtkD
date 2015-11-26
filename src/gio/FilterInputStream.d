@@ -68,8 +68,6 @@ public class FilterInputStream : InputStream
 		super(cast(GInputStream*)gFilterInputStream, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

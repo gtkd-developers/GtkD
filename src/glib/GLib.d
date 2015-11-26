@@ -28,6 +28,7 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 static import glib.Version;
 deprecated("moves to the glib.Version module")
 alias glib.Version.Version Version;

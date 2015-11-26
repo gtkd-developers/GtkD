@@ -30,6 +30,7 @@ private import gtkc.gdkpixbuf;
 public  import gtkc.gdkpixbuftypes;
 
 
+/** */
 public class PixbufFormat
 {
 	/** the main Gtk struct */
@@ -55,8 +56,6 @@ public class PixbufFormat
 		this.gdkPixbufFormat = gdkPixbufFormat;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

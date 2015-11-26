@@ -31,10 +31,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public struct Format
 {
-	/**
-	 */
 
 	/**
 	 * Return the format registered with the given nick.

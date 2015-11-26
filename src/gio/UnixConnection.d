@@ -78,8 +78,6 @@ public class UnixConnection : SocketConnection
 		super(cast(GSocketConnection*)gUnixConnection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

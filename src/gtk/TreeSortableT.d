@@ -43,8 +43,6 @@ public template TreeSortableT(TStruct)
 		return cast(GtkTreeSortable*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Fills in @sort_column_id and @order with the current sort column and the

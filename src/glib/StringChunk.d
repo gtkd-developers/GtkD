@@ -59,8 +59,6 @@ public class StringChunk
 		this.gStringChunk = gStringChunk;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Frees all strings contained within the #GStringChunk.

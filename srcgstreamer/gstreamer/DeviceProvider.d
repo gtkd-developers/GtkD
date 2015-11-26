@@ -83,8 +83,6 @@ public class DeviceProvider : ObjectGst
 		super(cast(GstObject*)gstDeviceProvider, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

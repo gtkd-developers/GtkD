@@ -93,8 +93,6 @@ public class Socket : ObjectAtk, ComponentIF
 	// add the Component capabilities
 	mixin ComponentT!(AtkSocket);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

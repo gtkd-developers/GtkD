@@ -57,8 +57,6 @@ public template ChildProxyT(TStruct)
 		return cast(GstChildProxy*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Emits the "child-added" signal.

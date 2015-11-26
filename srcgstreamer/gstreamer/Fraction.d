@@ -28,10 +28,9 @@ private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
 
+/** */
 public class Fraction
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

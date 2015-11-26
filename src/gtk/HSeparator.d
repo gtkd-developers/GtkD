@@ -76,8 +76,6 @@ public class HSeparator : Separator
 		super(cast(GtkSeparator*)gtkHSeparator, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

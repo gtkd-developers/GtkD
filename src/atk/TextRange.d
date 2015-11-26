@@ -33,8 +33,6 @@ public  import gtkc.atktypes;
  */
 public struct TextRange
 {
-	/**
-	 */
 
 	public static GType getType()
 	{

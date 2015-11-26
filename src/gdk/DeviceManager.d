@@ -177,8 +177,6 @@ public class DeviceManager : ObjectG
 		super(cast(GObject*)gdkDeviceManager, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

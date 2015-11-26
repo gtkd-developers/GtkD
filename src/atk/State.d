@@ -29,10 +29,9 @@ private import gtkc.atk;
 public  import gtkc.atktypes;
 
 
+/** */
 public struct State
 {
-	/**
-	 */
 
 	/**
 	 * Gets the #AtkStateType corresponding to the description string @name.

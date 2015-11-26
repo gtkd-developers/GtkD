@@ -78,8 +78,6 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	// add the LoadableIcon capabilities
 	mixin LoadableIconT!(GFileIcon);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

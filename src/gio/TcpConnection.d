@@ -67,8 +67,6 @@ public class TcpConnection : SocketConnection
 		super(cast(GSocketConnection*)gTcpConnection, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

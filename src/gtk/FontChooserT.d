@@ -51,8 +51,6 @@ public template FontChooserT(TStruct)
 		return cast(GtkFontChooser*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the currently-selected font name.

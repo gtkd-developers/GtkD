@@ -77,8 +77,6 @@ public class CellRendererPixbuf : CellRenderer
 		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

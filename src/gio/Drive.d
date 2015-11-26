@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Drive : ObjectG, DriveIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Drive : ObjectG, DriveIF
 	// add the Drive capabilities
 	mixin DriveT!(GDrive);
 
-	/**
-	 */
 }

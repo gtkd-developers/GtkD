@@ -121,8 +121,6 @@ public interface AsyncResultIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the source object from a #GAsyncResult.

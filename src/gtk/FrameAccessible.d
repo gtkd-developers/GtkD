@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class FrameAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class FrameAccessible : ContainerAccessible
 		super(cast(GtkContainerAccessible*)gtkFrameAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -29,10 +29,9 @@ private import gtkc.glib;
 public  import gtkc.glibtypes;
 
 
+/** */
 public struct MessageLog
 {
-	/**
-	 */
 
 	/**
 	 * The default log handler set up by GLib; g_log_set_default_handler()

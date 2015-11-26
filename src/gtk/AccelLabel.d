@@ -116,8 +116,6 @@ public class AccelLabel : Label
 		super(cast(GtkLabel*)gtkAccelLabel, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

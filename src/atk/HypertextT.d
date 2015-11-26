@@ -50,8 +50,6 @@ public template HypertextT(TStruct)
 		return cast(AtkHypertext*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Gets the link in this hypertext document at index

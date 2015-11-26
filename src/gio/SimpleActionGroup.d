@@ -81,8 +81,6 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	// add the ActionMap capabilities
 	mixin ActionMapT!(GSimpleActionGroup);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

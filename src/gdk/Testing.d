@@ -29,10 +29,9 @@ private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
 
+/** */
 public struct Testing
 {
-	/**
-	 */
 
 	/**
 	 * Retrieves a pixel from @window to force the windowing

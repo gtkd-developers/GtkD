@@ -60,8 +60,6 @@ public class AsyncQueue
 		this.gAsyncQueue = gAsyncQueue;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the length of the queue.

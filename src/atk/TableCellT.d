@@ -46,8 +46,6 @@ public template TableCellT(TStruct)
 		return cast(AtkTableCell*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the column headers as an array of cell accessibles.

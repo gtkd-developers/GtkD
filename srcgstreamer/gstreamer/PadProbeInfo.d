@@ -61,8 +61,6 @@ public class PadProbeInfo
 		this.gstPadProbeInfo = gstPadProbeInfo;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Return: The #GstBuffer from the probe

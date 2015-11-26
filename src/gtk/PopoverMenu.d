@@ -135,8 +135,6 @@ public class PopoverMenu : Popover
 		super(cast(GtkPopover*)gtkPopoverMenu, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

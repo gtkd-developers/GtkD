@@ -73,8 +73,6 @@ public interface MountIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Checks if @mount can be eject.

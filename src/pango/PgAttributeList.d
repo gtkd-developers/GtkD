@@ -69,8 +69,6 @@ public class PgAttributeList
 		this.pangoAttrList = pangoAttrList;
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

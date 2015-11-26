@@ -76,8 +76,6 @@ public class GestureLongPress : GestureSingle
 		super(cast(GtkGestureSingle*)gtkGestureLongPress, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

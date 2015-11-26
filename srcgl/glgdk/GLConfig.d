@@ -33,6 +33,7 @@ private import gtkglc.glgdk;
 public  import gtkglc.glgdktypes;
 
 
+/** */
 public class GLConfig : ObjectG
 {
 	/** the main Gtk struct */

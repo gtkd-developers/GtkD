@@ -56,8 +56,6 @@ public interface ChildProxyIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Emits the "child-added" signal.

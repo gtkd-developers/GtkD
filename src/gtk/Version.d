@@ -29,10 +29,9 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public struct Version
 {
-	/**
-	 */
 
 	/**
 	 * Checks that the GTK+ library in use is compatible with the

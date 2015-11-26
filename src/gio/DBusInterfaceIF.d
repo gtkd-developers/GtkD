@@ -46,8 +46,6 @@ public interface DBusInterfaceIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the #GDBusObject that @interface_ belongs to, if any.

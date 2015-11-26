@@ -76,8 +76,6 @@ public class InputStream : ObjectG
 		super(cast(GObject*)gInputStream, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

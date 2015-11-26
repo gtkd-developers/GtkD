@@ -67,8 +67,6 @@ public class UnixMountMonitor : ObjectG
 		super(cast(GObject*)gUnixMountMonitor, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

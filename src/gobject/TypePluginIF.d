@@ -84,8 +84,6 @@ public interface TypePluginIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Calls the @complete_interface_info function from the

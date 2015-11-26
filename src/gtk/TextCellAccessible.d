@@ -31,6 +31,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class TextCellAccessible : RendererCellAccessible, TextIF
 {
 	/** the main Gtk struct */
@@ -66,8 +67,6 @@ public class TextCellAccessible : RendererCellAccessible, TextIF
 	// add the Text capabilities
 	mixin TextT!(GtkTextCellAccessible);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

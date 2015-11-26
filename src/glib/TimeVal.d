@@ -63,8 +63,6 @@ public class TimeVal
 		this.gTimeVal = gTimeVal;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds the given number of microseconds to @time_. @microseconds can

@@ -31,6 +31,7 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
+/** */
 public class Icon : ObjectG, IconIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class Icon : ObjectG, IconIF
 	// add the Icon capabilities
 	mixin IconT!(GIcon);
 
-	/**
-	 */
 }

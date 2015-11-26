@@ -32,6 +32,7 @@ private import pango.PgEngine;
 private import pango.PgLanguage;
 
 
+/** */
 public class PgMap
 {
 	/** the main Gtk struct */
@@ -57,8 +58,6 @@ public class PgMap
 		this.pangoMap = pangoMap;
 	}
 
-	/**
-	 */
 
 	/**
 	 * Do not use.  Does not do anything.

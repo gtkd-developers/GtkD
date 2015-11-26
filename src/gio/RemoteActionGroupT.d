@@ -61,8 +61,6 @@ public template RemoteActionGroupT(TStruct)
 		return cast(GRemoteActionGroup*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Activates the remote action.

@@ -30,6 +30,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public interface TreeDragDestIF{
 	/** Get the main Gtk struct */
 	public GtkTreeDragDest* getTreeDragDestStruct();
@@ -37,8 +38,6 @@ public interface TreeDragDestIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Asks the #GtkTreeDragDest to insert a row before the path @dest,

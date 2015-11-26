@@ -31,6 +31,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
 
+/** */
 public class SourceCompletionProvider : ObjectG, SourceCompletionProviderIF
 {
 	/** the main Gtk struct */
@@ -66,6 +67,4 @@ public class SourceCompletionProvider : ObjectG, SourceCompletionProviderIF
 	// add the SourceCompletionProvider capabilities
 	mixin SourceCompletionProviderT!(GtkSourceCompletionProvider);
 
-	/**
-	 */
 }

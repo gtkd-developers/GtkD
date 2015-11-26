@@ -78,8 +78,6 @@ public class HeaderBar : Container
 		super(cast(GtkContainer*)gtkHeaderBar, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

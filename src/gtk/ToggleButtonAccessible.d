@@ -29,6 +29,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ToggleButtonAccessible : ButtonAccessible
 {
 	/** the main Gtk struct */
@@ -61,8 +62,6 @@ public class ToggleButtonAccessible : ButtonAccessible
 		super(cast(GtkButtonAccessible*)gtkToggleButtonAccessible, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

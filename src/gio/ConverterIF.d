@@ -48,8 +48,6 @@ public interface ConverterIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * This is the main operation used when converting data. It is to be called

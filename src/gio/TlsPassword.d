@@ -68,8 +68,6 @@ public class TlsPassword : ObjectG
 		super(cast(GObject*)gTlsPassword, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -74,8 +74,6 @@ public class RelationSet : ObjectG
 		super(cast(GObject*)atkRelationSet, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

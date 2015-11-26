@@ -46,8 +46,6 @@ public template StyleProviderT(TStruct)
 		return cast(GtkStyleProvider*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Returns the #GtkIconFactory defined to be in use for @path, or %NULL if none

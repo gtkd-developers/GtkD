@@ -52,8 +52,6 @@ public template SelectionT(TStruct)
 		return cast(AtkSelection*)getStruct();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Adds the specified accessible child of the object to the

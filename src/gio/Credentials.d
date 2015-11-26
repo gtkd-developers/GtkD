@@ -99,8 +99,6 @@ public class Credentials : ObjectG
 		super(cast(GObject*)gCredentials, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

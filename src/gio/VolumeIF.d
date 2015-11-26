@@ -95,8 +95,6 @@ public interface VolumeIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Checks if a volume can be ejected.

@@ -237,8 +237,6 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	// add the AsyncResult capabilities
 	mixin AsyncResultT!(GSimpleAsyncResult);
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -35,6 +35,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
+/** */
 public class ButtonBox : Box
 {
 	/** the main Gtk struct */

@@ -170,8 +170,6 @@ public class GLArea : Widget
 		super(cast(GtkWidget*)gtkGLArea, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

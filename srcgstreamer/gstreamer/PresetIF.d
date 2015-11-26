@@ -59,8 +59,6 @@ public interface PresetIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	/**
-	 */
 
 	/**
 	 * Gets the directory for application specific presets if set by the

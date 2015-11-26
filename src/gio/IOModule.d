@@ -73,8 +73,6 @@ public class IOModule : TypeModule
 		super(cast(GTypeModule*)gIOModule, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{

@@ -128,8 +128,6 @@ public class ModelButton : Button
 		super(cast(GtkButton*)gtkModelButton, ownedRef);
 	}
 
-	/**
-	 */
 
 	public static GType getType()
 	{
