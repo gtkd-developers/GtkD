@@ -4,7 +4,7 @@ libdir=lib
 datadir=$(prefix)/share
 
 OS=$(shell uname || uname -s)
-ARCH=$(shell arch || uname -m)
+ARCH=$(shell uname -m || arch)
 
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
