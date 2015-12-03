@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Next release
+------------
+-Don't create new objects in ListG and ListSG toArray.
+
 Release: 3.2.1
 --------------
 -Fix ListG.toArray, and the unittest. #129

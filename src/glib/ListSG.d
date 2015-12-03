@@ -24,6 +24,7 @@
 
 module glib.ListSG;
 
+private import gobject.ObjectG;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
 
@@ -89,7 +90,7 @@ public class ListSG
 		
 		while(list !is null && count < arr.length)
 		{
-			arr[count] = new T(cast(TC)list.data);
+			arr[count] = ObjectG.getDObject!(T)(cast(TC)list.data);
 			list = list.next();
 			count++;
 		}

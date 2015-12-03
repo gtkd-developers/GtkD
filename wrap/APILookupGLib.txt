@@ -578,6 +578,7 @@ array: write_chars buf count
 
 struct: List
 class: ListG
+import: gobject.ObjectG
 code: start
   	/** */
 	@property void* data()
@@ -625,7 +626,7 @@ code: start
 
 		while(list !is null && count < arr.length)
 		{
-			arr[count] = new T(cast(TC)list.data);
+			arr[count] = ObjectG.getDObject!(T)(cast(TC)list.data);
 			list = list.next();
 			count++;
 		}
@@ -700,6 +701,7 @@ class: ScannerG
 
 struct: SList
 class: ListSG
+import: gobject.ObjectG
 code: start
   	/** */
 	@property void* data()
@@ -733,7 +735,7 @@ code: start
 
 		while(list !is null && count < arr.length)
 		{
-			arr[count] = new T(cast(TC)list.data);
+			arr[count] = ObjectG.getDObject!(T)(cast(TC)list.data);
 			list = list.next();
 			count++;
 		}
