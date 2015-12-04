@@ -77,7 +77,7 @@ version (Windows)
 		LIBRARY.GSV1:          "libgtksourceview-3.0-1.dll",
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.dll",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dll",
-		LIBRARY.VTE:           "libvte2.91.dll",
+		LIBRARY.VTE:           "libvte-2.91.dll",
 	];
 }
 else version(darwin)
@@ -103,7 +103,7 @@ else version(darwin)
 		LIBRARY.GSV1:          "libgtksourceview-3.0.dylib",
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.dylib",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dylib",
-		LIBRARY.VTE:           "libvte2.91.dylib"
+		LIBRARY.VTE:           "libvte-2.91.dylib"
 	];
 }
 else
@@ -129,6 +129,6 @@ else
 		LIBRARY.GSV1:          "libgtksourceview-3.0.so.1",
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.so.0",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0",
-		LIBRARY.VTE:           "libvte2.91.so",
+		LIBRARY.VTE:           "libvte-2.91.so",
 	];
 }
