@@ -16,25 +16,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
-
 /*****************************************************************************
 
-    Authors: Gerald Nunn <gerald.b.nunn@gmail.com>
+Authors: Gerald Nunn <gerald.b.nunn@gmail.com>
 
-    This is a demo of using GIO actions with GTK Popover. It demonstrates
-    stateless and stateful actions displayed as normal, checkbox and radiobutton
-    menu items
-    
-    See here for information about GIO actions: https://wiki.gnome.org/HowDoI/GAction
+This is a demo of using GIO actions with GTK PopOver. It demonstrates
+stateless and stateful actions displayed as normal, checkbox and radiobutton
+menu items
+
+See here for information about GIO actions: https://wiki.gnome.org/HowDoI/GAction
 
 *****************************************************************************/
 
 import std.stdio;
 
-import gtk.Application: Application;
-import gio.Application: GioApplication = Application;
-import gtk.ApplicationWindow: ApplicationWindow;
-import gtkc.giotypes: GApplicationFlags;
+import gtk.Application : Application;
+import gio.Application : GioApplication = Application;
+import gtk.ApplicationWindow : ApplicationWindow;
+import gtkc.giotypes : GApplicationFlags;
 
 import gdk.Event;
 
@@ -52,26 +51,26 @@ import gtk.MessageDialog;
 import gtk.Popover;
 import gtk.Widget;
 
-class MainWindow: ApplicationWindow {
+class MainWindow : ApplicationWindow {
 
-	this(Application application) {
-		super(application);
-		initUI();
-		showAll();
-	}
+    this(Application application) {
+        super(application);
+        initUI();
+        showAll();
+    }
 
-	/**
-	 * Create and initialize the GTK widgets
-	 */
-	private void initUI() {
-		this.setSizeRequest(1024,640);
-        
+    /**
+     * Create and initialize the GTK widgets
+     */
+    private void initUI() {
+        this.setSizeRequest(1024, 640);
+
         //HeaderBar
         HeaderBar hb = new HeaderBar();
-		hb.setShowCloseButton(true);
-		hb.setTitle("Actions Demo, Click the menu button >>>");
-		this.setTitlebar(hb);
-        
+        hb.setShowCloseButton(true);
+        hb.setTitle("Actions Demo, Click the menu button >>>");
+        this.setTitlebar(hb);
+
         //Normal stateless action
         SimpleAction saNormal = new SimpleAction("normal", null);
         saNormal.addOnActivate(delegate(Variant, SimpleAction) {
@@ -79,19 +78,16 @@ class MainWindow: ApplicationWindow {
             scope (exit) {
                 dialog.destroy();
             }
-            dialog.run();        
+            dialog.run();
         });
         addAction(saNormal);
-        
+
         //Stateful action which generates a Checkbox in popover
         SimpleAction saCheck = new SimpleAction("check", null, new Variant(false));
-        saCheck.addOnActivate(delegate(Variant value, SimpleAction sa) {
-            bool newState = !sa.getState().getBoolean();
-            sa.setState(new Variant(newState));
-        });
+        saCheck.addOnActivate(delegate(Variant value, SimpleAction sa) { bool newState = !sa.getState().getBoolean(); sa.setState(new Variant(newState)); });
         addAction(saCheck);
-        
-        // Stateful action which uses targets and is displayed as radio buttons. A target is essentially
+
+        // Stateful action which uses targets. A target is essentially
         // one of a set of actions that an action can hold as state. When
         // using this type of action there is only one action for it however
         // when creating the menu model there is one menu item for each target.
@@ -101,12 +97,12 @@ class MainWindow: ApplicationWindow {
         // says that it is a string in this example. See GtkD documentation on VariantType
         // for more information.
         SimpleAction saRadio = new SimpleAction("radio", new VariantType("s"), new Variant("left"));
-        saCheck.addOnActivate(delegate(Variant value, SimpleAction sa) {
+        saRadio.addOnActivate(delegate(Variant value, SimpleAction sa) {
             //The selected target is passed as the value.
             sa.setState(value);
         });
         addAction(saRadio);
-        
+
         //Menu Model
         Menu model = new Menu();
         // Note that action names consist of a prefix and an id which when 
@@ -117,31 +113,29 @@ class MainWindow: ApplicationWindow {
         // Widget.insertActionGroup with your own prefix. 
         model.append("Normal", "win.normal");
         model.append("Checkbox", "win.check");
-        
+
         Menu section = new Menu();
         //Note the target of the action is represented by the portion after the double colon
         section.append("Left", "win.radio::left");
         section.append("Center", "win.radio::center");
         section.append("Left", "win.radio::right");
         model.appendSection(null, section);
-        
+
         //MenuButton
         MenuButton mb = new MenuButton();
-		mb.setFocusOnClick(false);
-		Image imgHamburger = new Image("open-menu-symbolic", IconSize.MENU);
-		mb.add(imgHamburger);
-		hb.packEnd(mb);
-        
+        mb.setFocusOnClick(false);
+        Image imgHamburger = new Image("open-menu-symbolic", IconSize.MENU);
+        mb.add(imgHamburger);
+        hb.packEnd(mb);
+
         //Popover
         Popover po = new Popover(mb, model);
         mb.setPopover(po);
-	}
+    }
 }
 
 int main(string[] args) {
-	auto application = new Application("demo.gtkd.Actions", GApplicationFlags.FLAGS_NONE);
-	application.addOnActivate(delegate void(GioApplication app){ 
-			MainWindow mainWindow = new MainWindow(application); 
-		});
-	return application.run(args);
+    auto application = new Application("demo.gtkd.Actions", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(delegate void(GioApplication app) { MainWindow mainWindow = new MainWindow(application); });
+    return application.run(args);
 }
