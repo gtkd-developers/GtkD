@@ -129,6 +129,6 @@ else
 		LIBRARY.GSV1:          "libgtksourceview-3.0.so.1",
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.so.0",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0",
-		LIBRARY.VTE:           "libvte-2.91.so",
+		LIBRARY.VTE:           "libvte-2.91.so.0",
 	];
 }
