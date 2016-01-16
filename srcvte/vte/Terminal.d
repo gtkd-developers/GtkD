@@ -427,7 +427,7 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string getText(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
-		GArray* outattributes = new GArray;
+		GArray* outattributes = gMalloc!GArray();
 		
 		auto p = vte_terminal_get_text(vteTerminal, isSelected, userData, outattributes);
 		
@@ -454,7 +454,7 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string getTextIncludeTrailingSpaces(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
-		GArray* outattributes = new GArray;
+		GArray* outattributes = gMalloc!GArray();
 		
 		auto p = vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, outattributes);
 		
@@ -485,7 +485,7 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string getTextRange(glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
-		GArray* outattributes = new GArray;
+		GArray* outattributes = gMalloc!GArray();
 		
 		auto p = vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, outattributes);
 		

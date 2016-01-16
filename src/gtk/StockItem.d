@@ -170,7 +170,7 @@ public class StockItem
 	 */
 	public static bool stockLookup(string stockId, out StockItem item)
 	{
-		GtkStockItem* outitem = new GtkStockItem;
+		GtkStockItem* outitem = gMalloc!GtkStockItem();
 		
 		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
 		

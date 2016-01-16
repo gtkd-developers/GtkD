@@ -305,7 +305,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 */
 	public bool getSizeOfRow(TreePath path, out Requisition requisition)
 	{
-		GtkRequisition* outrequisition = new GtkRequisition;
+		GtkRequisition* outrequisition = gMalloc!GtkRequisition();
 		
 		auto p = gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), outrequisition) != 0;
 		

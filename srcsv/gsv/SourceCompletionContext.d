@@ -113,7 +113,7 @@ public class SourceCompletionContext : ObjectG
 	 */
 	public bool getIter(out TextIter iter)
 	{
-		GtkTextIter* outiter = new GtkTextIter;
+		GtkTextIter* outiter = gMalloc!GtkTextIter();
 		
 		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
 		

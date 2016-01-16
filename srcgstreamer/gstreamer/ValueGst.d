@@ -134,7 +134,7 @@ public struct ValueGst
 	 */
 	public static bool deserialize(out Value dest, string src)
 	{
-		GValue* outdest = new GValue;
+		GValue* outdest = gMalloc!GValue();
 		
 		auto p = gst_value_deserialize(outdest, Str.toStringz(src)) != 0;
 		
@@ -493,7 +493,7 @@ public struct ValueGst
 	 */
 	public static void initAndCopy(out Value dest, Value src)
 	{
-		GValue* outdest = new GValue;
+		GValue* outdest = gMalloc!GValue();
 		
 		gst_value_init_and_copy(outdest, (src is null) ? null : src.getValueStruct());
 		
@@ -517,7 +517,7 @@ public struct ValueGst
 	 */
 	public static bool intersect(out Value dest, Value value1, Value value2)
 	{
-		GValue* outdest = new GValue;
+		GValue* outdest = gMalloc!GValue();
 		
 		auto p = gst_value_intersect(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
 		
@@ -761,7 +761,7 @@ public struct ValueGst
 	 */
 	public static bool subtract(out Value dest, Value minuend, Value subtrahend)
 	{
-		GValue* outdest = new GValue;
+		GValue* outdest = gMalloc!GValue();
 		
 		auto p = gst_value_subtract(outdest, (minuend is null) ? null : minuend.getValueStruct(), (subtrahend is null) ? null : subtrahend.getValueStruct()) != 0;
 		
@@ -782,7 +782,7 @@ public struct ValueGst
 	 */
 	public static bool unio(out Value dest, Value value1, Value value2)
 	{
-		GValue* outdest = new GValue;
+		GValue* outdest = gMalloc!GValue();
 		
 		auto p = gst_value_union(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
 		

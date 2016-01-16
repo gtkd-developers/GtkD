@@ -362,7 +362,7 @@ public class RcStyle : ObjectG
 	 */
 	public static uint parseColor(ScannerG scanner, out Color color)
 	{
-		GdkColor* outcolor = new GdkColor;
+		GdkColor* outcolor = gMalloc!GdkColor();
 		
 		auto p = gtk_rc_parse_color((scanner is null) ? null : scanner.getScannerGStruct(), outcolor);
 		
@@ -391,7 +391,7 @@ public class RcStyle : ObjectG
 	 */
 	public static uint parseColorFull(ScannerG scanner, RcStyle style, out Color color)
 	{
-		GdkColor* outcolor = new GdkColor;
+		GdkColor* outcolor = gMalloc!GdkColor();
 		
 		auto p = gtk_rc_parse_color_full((scanner is null) ? null : scanner.getScannerGStruct(), (style is null) ? null : style.getRcStyleStruct(), outcolor);
 		

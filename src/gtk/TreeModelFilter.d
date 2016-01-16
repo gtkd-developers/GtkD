@@ -205,7 +205,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 */
 	public bool convertChildIterToIter(out TreeIter filterIter, TreeIter childIter)
 	{
-		GtkTreeIter* outfilterIter = new GtkTreeIter;
+		GtkTreeIter* outfilterIter = gMalloc!GtkTreeIter();
 		
 		auto p = gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, outfilterIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 		
@@ -251,7 +251,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 */
 	public void convertIterToChildIter(out TreeIter childIter, TreeIter filterIter)
 	{
-		GtkTreeIter* outchildIter = new GtkTreeIter;
+		GtkTreeIter* outchildIter = gMalloc!GtkTreeIter();
 		
 		gtk_tree_model_filter_convert_iter_to_child_iter(gtkTreeModelFilter, outchildIter, (filterIter is null) ? null : filterIter.getTreeIterStruct());
 		

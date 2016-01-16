@@ -512,7 +512,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public void getIterAtLocation(out TextIter iter, int x, int y)
 	{
-		GtkTextIter* outiter = new GtkTextIter;
+		GtkTextIter* outiter = gMalloc!GtkTextIter();
 		
 		gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y);
 		
@@ -544,7 +544,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public void getIterAtPosition(out TextIter iter, out int trailing, int x, int y)
 	{
-		GtkTextIter* outiter = new GtkTextIter;
+		GtkTextIter* outiter = gMalloc!GtkTextIter();
 		
 		gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y);
 		
@@ -602,7 +602,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public void getLineAtY(out TextIter targetIter, int y, out int lineTop)
 	{
-		GtkTextIter* outtargetIter = new GtkTextIter;
+		GtkTextIter* outtargetIter = gMalloc!GtkTextIter();
 		
 		gtk_text_view_get_line_at_y(gtkTextView, outtargetIter, y, &lineTop);
 		
@@ -763,7 +763,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Usually used to find out which window an event corresponds to.
 	 * If you connect to an event signal on @text_view, this function
-	 * should be called on `event-&gt;window` to
+	 * should be called on `event->window` to
 	 * see which window it was.
 	 *
 	 * Params:

@@ -210,7 +210,7 @@ public class Style : ObjectG
 	 */
 	public void getStyleProperty(GType widgetType, string propertyName, out Value value)
 	{
-		GValue* outvalue = new GValue;
+		GValue* outvalue = gMalloc!GValue();
 		
 		gtk_style_get_style_property(gtkStyle, widgetType, Str.toStringz(propertyName), outvalue);
 		
@@ -266,7 +266,7 @@ public class Style : ObjectG
 	 */
 	public bool lookupColor(string colorName, out Color color)
 	{
-		GdkColor* outcolor = new GdkColor;
+		GdkColor* outcolor = gMalloc!GdkColor();
 		
 		auto p = gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), outcolor) != 0;
 		

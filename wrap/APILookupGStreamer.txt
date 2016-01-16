@@ -180,6 +180,10 @@ alias: get_valist childGetValist
 alias: set_property childSetProperty
 alias: set_valist childSetValist
 
+struct: ControlSource
+alias: control_source_get_value getValue
+alias: control_source_get_value_array getValueArray
+
 struct: DateTime
 import: glib.DateTime : GLibDateTime = DateTime
 structWrap: GLib.DateTime GLibDateTime

@@ -284,7 +284,7 @@ public struct Utils
 	 */
 	public static void setValueFromString(out Value value, string valueStr)
 	{
-		GValue* outvalue = new GValue;
+		GValue* outvalue = gMalloc!GValue();
 		
 		gst_util_set_value_from_string(outvalue, Str.toStringz(valueStr));
 		

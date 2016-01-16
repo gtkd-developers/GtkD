@@ -706,6 +706,9 @@ public enum GdkEventMask
 	 * receive smooth scrolling events. Since 3.4
 	 */
 	SMOOTH_SCROLL_MASK = 8388608,
+	/**
+	 * receive touchpad gesture events. Since 3.18
+	 */
 	TOUCHPAD_GESTURE_MASK = 16777216,
 	/**
 	 * the combination of all the above event masks.

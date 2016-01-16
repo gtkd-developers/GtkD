@@ -264,7 +264,7 @@ public class Color
 	 */
 	public static bool parse(string spec, out Color color)
 	{
-		GdkColor* outcolor = new GdkColor;
+		GdkColor* outcolor = gMalloc!GdkColor();
 		
 		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
 		

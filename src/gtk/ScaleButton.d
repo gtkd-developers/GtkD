@@ -140,11 +140,11 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the minus button of the #GtkScaleButton.
 	 *
-	 * Return: the minus button of the #GtkScaleButton
+	 * Return: the minus button of the #GtkScaleButton as a #GtkButton
 	 *
 	 * Since: 2.14
 	 */
-	public Widget getMinusButton()
+	public Button getMinusButton()
 	{
 		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
 		
@@ -153,17 +153,17 @@ public class ScaleButton : Button, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
 	/**
 	 * Retrieves the plus button of the #GtkScaleButton.
 	 *
-	 * Return: the plus button of the #GtkScaleButton
+	 * Return: the plus button of the #GtkScaleButton as a #GtkButton
 	 *
 	 * Since: 2.14
 	 */
-	public Widget getPlusButton()
+	public Button getPlusButton()
 	{
 		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
 		
@@ -172,7 +172,7 @@ public class ScaleButton : Button, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
 	/**

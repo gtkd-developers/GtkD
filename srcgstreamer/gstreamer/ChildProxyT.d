@@ -154,7 +154,7 @@ public template ChildProxyT(TStruct)
 	 */
 	public void childGetProperty(string name, out Value value)
 	{
-		GValue* outvalue = new GValue;
+		GValue* outvalue = gMalloc!GValue();
 		
 		gst_child_proxy_get_property(getChildProxyStruct(), Str.toStringz(name), outvalue);
 		

@@ -125,7 +125,7 @@ public class DBusNodeInfo
 	 */
 	public void generateXml(uint indent, out StringG stringBuilder)
 	{
-		GString* outstringBuilder = new GString;
+		GString* outstringBuilder = gMalloc!GString();
 		
 		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, outstringBuilder);
 		

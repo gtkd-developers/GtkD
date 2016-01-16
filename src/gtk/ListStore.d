@@ -325,7 +325,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void append(out TreeIter iter)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_list_store_append(gtkListStore, outiter);
 		
@@ -353,7 +353,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insert(out TreeIter iter, int position)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_list_store_insert(gtkListStore, outiter, position);
 		
@@ -372,7 +372,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insertAfter(out TreeIter iter, TreeIter sibling)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_list_store_insert_after(gtkListStore, outiter, (sibling is null) ? null : sibling.getTreeIterStruct());
 		
@@ -391,7 +391,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insertBefore(out TreeIter iter, TreeIter sibling)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_list_store_insert_before(gtkListStore, outiter, (sibling is null) ? null : sibling.getTreeIterStruct());
 		
@@ -415,7 +415,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insertWithValuesv(out TreeIter iter, int position, int[] columns, Value[] values)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		GValue[] valuesArray = new GValue[values.length];
 		for ( int i = 0; i < values.length; i++ )
@@ -488,7 +488,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void prepend(out TreeIter iter)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_list_store_prepend(gtkListStore, outiter);
 		

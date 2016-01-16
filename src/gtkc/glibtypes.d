@@ -115,6 +115,12 @@ unittest
 	assert(getArrayLength("aaaaaaaaa\0".ptr) == 9);
 }
 
+Type* gMalloc(Type)()
+{
+	import gtkc.glib;
+	return cast(Type*)g_malloc0(Type.sizeof);
+}
+
 alias void* GIConv;
 
 public alias void* GArrayAutoptr;

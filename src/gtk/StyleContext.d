@@ -375,7 +375,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getBackgroundColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = new GdkRGBA;
+		GdkRGBA* outcolor = gMalloc!GdkRGBA();
 		
 		gtk_style_context_get_background_color(gtkStyleContext, state, outcolor);
 		
@@ -394,7 +394,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getBorder(GtkStateFlags state, out Border border)
 	{
-		GtkBorder* outborder = new GtkBorder;
+		GtkBorder* outborder = gMalloc!GtkBorder();
 		
 		gtk_style_context_get_border(gtkStyleContext, state, outborder);
 		
@@ -414,7 +414,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getBorderColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = new GdkRGBA;
+		GdkRGBA* outcolor = gMalloc!GdkRGBA();
 		
 		gtk_style_context_get_border_color(gtkStyleContext, state, outcolor);
 		
@@ -432,7 +432,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = new GdkRGBA;
+		GdkRGBA* outcolor = gMalloc!GdkRGBA();
 		
 		gtk_style_context_get_color(gtkStyleContext, state, outcolor);
 		
@@ -528,7 +528,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getMargin(GtkStateFlags state, out Border margin)
 	{
-		GtkBorder* outmargin = new GtkBorder;
+		GtkBorder* outmargin = gMalloc!GtkBorder();
 		
 		gtk_style_context_get_margin(gtkStyleContext, state, outmargin);
 		
@@ -547,7 +547,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getPadding(GtkStateFlags state, out Border padding)
 	{
-		GtkBorder* outpadding = new GtkBorder;
+		GtkBorder* outpadding = gMalloc!GtkBorder();
 		
 		gtk_style_context_get_padding(gtkStyleContext, state, outpadding);
 		
@@ -608,7 +608,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getProperty(string property, GtkStateFlags state, out Value value)
 	{
-		GValue* outvalue = new GValue;
+		GValue* outvalue = gMalloc!GValue();
 		
 		gtk_style_context_get_property(gtkStyleContext, Str.toStringz(property), state, outvalue);
 		
@@ -833,7 +833,7 @@ public class StyleContext : ObjectG
 	 */
 	public bool lookupColor(string colorName, out RGBA color)
 	{
-		GdkRGBA* outcolor = new GdkRGBA;
+		GdkRGBA* outcolor = gMalloc!GdkRGBA();
 		
 		auto p = gtk_style_context_lookup_color(gtkStyleContext, Str.toStringz(colorName), outcolor) != 0;
 		
@@ -1287,7 +1287,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Renders an arrow pointing to @angle.
 	 *
-	 * Typical arrow rendering at 0, 1&solidus;2 &pi;, &pi; and 3&solidus;2 &pi;:
+	 * Typical arrow rendering at 0, 1⁄2 π;, π; and 3⁄2 π:
 	 *
 	 * ![](arrows.png)
 	 *

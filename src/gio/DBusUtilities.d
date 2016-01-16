@@ -281,7 +281,7 @@ public struct DBusUtilities
 	 */
 	public static void gvariantToGvalue(Variant value, out Value outGvalue)
 	{
-		GValue* outoutGvalue = new GValue;
+		GValue* outoutGvalue = gMalloc!GValue();
 		
 		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), outoutGvalue);
 		

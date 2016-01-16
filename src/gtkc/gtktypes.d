@@ -7737,7 +7737,7 @@ struct GtkRecentData
 	char* appName;
 	/**
 	 * command line used to launch this resource; may contain the
-	 * “&percnt;f” and “&percnt;u” escape characters which will be expanded
+	 * “\%f” and “\%u” escape characters which will be expanded
 	 * to the resource file path and URI respectively when the command line
 	 * is retrieved;
 	 */

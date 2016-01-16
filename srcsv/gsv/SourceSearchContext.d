@@ -122,8 +122,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backward(TextIter iter, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = new GtkTextIter;
-		GtkTextIter* outmatchEnd = new GtkTextIter;
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		
 		auto p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 		
@@ -171,8 +171,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backwardFinish(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = new GtkTextIter;
-		GtkTextIter* outmatchEnd = new GtkTextIter;
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		GError* err = null;
 		
 		auto p = gtk_source_search_context_backward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
@@ -204,8 +204,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forward(TextIter iter, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = new GtkTextIter;
-		GtkTextIter* outmatchEnd = new GtkTextIter;
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		
 		auto p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 		
@@ -253,8 +253,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forwardFinish(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = new GtkTextIter;
-		GtkTextIter* outmatchEnd = new GtkTextIter;
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		GError* err = null;
 		
 		auto p = gtk_source_search_context_forward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;

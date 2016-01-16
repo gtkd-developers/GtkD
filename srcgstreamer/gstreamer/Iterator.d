@@ -281,7 +281,7 @@ public class Iterator
 	 */
 	public bool findCustom(GCompareFunc func, out Value elem, void* userData)
 	{
-		GValue* outelem = new GValue;
+		GValue* outelem = gMalloc!GValue();
 		
 		auto p = gst_iterator_find_custom(gstIterator, func, outelem, userData) != 0;
 		
@@ -376,7 +376,7 @@ public class Iterator
 	 */
 	public GstIteratorResult next(out Value elem)
 	{
-		GValue* outelem = new GValue;
+		GValue* outelem = gMalloc!GValue();
 		
 		auto p = gst_iterator_next(gstIterator, outelem);
 		

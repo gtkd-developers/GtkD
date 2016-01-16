@@ -115,7 +115,7 @@ public template StyleProviderT(TStruct)
 	 */
 	public bool getStyleProperty(WidgetPath path, GtkStateFlags state, ParamSpec pspec, out Value value)
 	{
-		GValue* outvalue = new GValue;
+		GValue* outvalue = gMalloc!GValue();
 		
 		auto p = gtk_style_provider_get_style_property(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct(), state, (pspec is null) ? null : pspec.getParamSpecStruct(), outvalue) != 0;
 		

@@ -489,7 +489,7 @@ public class FileInfo : ObjectG
 	 */
 	public void getModificationTime(out TimeVal result)
 	{
-		GTimeVal* outresult = new GTimeVal;
+		GTimeVal* outresult = gMalloc!GTimeVal();
 		
 		g_file_info_get_modification_time(gFileInfo, outresult);
 		

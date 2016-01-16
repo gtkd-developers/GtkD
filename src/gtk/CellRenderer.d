@@ -236,8 +236,8 @@ public class CellRenderer : ObjectG
 	 */
 	public void getPreferredSize(Widget widget, out Requisition minimumSize, out Requisition naturalSize)
 	{
-		GtkRequisition* outminimumSize = new GtkRequisition;
-		GtkRequisition* outnaturalSize = new GtkRequisition;
+		GtkRequisition* outminimumSize = gMalloc!GtkRequisition();
+		GtkRequisition* outnaturalSize = gMalloc!GtkRequisition();
 		
 		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), outminimumSize, outnaturalSize);
 		

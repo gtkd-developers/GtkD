@@ -300,7 +300,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void append(out TreeIter iter, TreeIter parent)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_tree_store_append(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct());
 		
@@ -331,7 +331,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insert(out TreeIter iter, TreeIter parent, int position)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_tree_store_insert(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), position);
 		
@@ -356,7 +356,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insertAfter(out TreeIter iter, TreeIter parent, TreeIter sibling)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_tree_store_insert_after(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 		
@@ -381,7 +381,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insertBefore(out TreeIter iter, TreeIter parent, TreeIter sibling)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_tree_store_insert_before(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 		
@@ -405,7 +405,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void insertWithValuesv(out TreeIter iter, TreeIter parent, int position, int[] columns, Value[] values)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		GValue[] valuesArray = new GValue[values.length];
 		for ( int i = 0; i < values.length; i++ )
@@ -512,7 +512,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public void prepend(out TreeIter iter, TreeIter parent)
 	{
-		GtkTreeIter* outiter = new GtkTreeIter;
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
 		
 		gtk_tree_store_prepend(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct());
 		

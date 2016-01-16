@@ -2117,7 +2117,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public void getChildRequisition(out Requisition requisition)
 		{
-			GtkRequisition* outrequisition = new GtkRequisition;
+			GtkRequisition* outrequisition = gMalloc!GtkRequisition();
 			
 			gtk_widget_get_child_requisition(gtkWidget, outrequisition);
 			
@@ -2829,8 +2829,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public void getPreferredSize(out Requisition minimumSize, out Requisition naturalSize)
 		{
-			GtkRequisition* outminimumSize = new GtkRequisition;
-			GtkRequisition* outnaturalSize = new GtkRequisition;
+			GtkRequisition* outminimumSize = gMalloc!GtkRequisition();
+			GtkRequisition* outnaturalSize = gMalloc!GtkRequisition();
 			
 			gtk_widget_get_preferred_size(gtkWidget, outminimumSize, outnaturalSize);
 			
@@ -2950,7 +2950,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public void getRequisition(out Requisition requisition)
 		{
-			GtkRequisition* outrequisition = new GtkRequisition;
+			GtkRequisition* outrequisition = gMalloc!GtkRequisition();
 			
 			gtk_widget_get_requisition(gtkWidget, outrequisition);
 			
@@ -5703,7 +5703,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public void sizeRequest(out Requisition requisition)
 		{
-			GtkRequisition* outrequisition = new GtkRequisition;
+			GtkRequisition* outrequisition = gMalloc!GtkRequisition();
 			
 			gtk_widget_size_request(gtkWidget, outrequisition);
 			
