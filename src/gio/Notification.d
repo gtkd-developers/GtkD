@@ -91,6 +91,7 @@ public class Notification : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_notification_get_type();

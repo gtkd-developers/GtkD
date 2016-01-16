@@ -85,6 +85,7 @@ public class Layout : Container, ScrollableIF
 	mixin ScrollableT!(GtkLayout);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_layout_get_type();

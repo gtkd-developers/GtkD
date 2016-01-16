@@ -77,6 +77,7 @@ public class Revealer : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_revealer_get_type();

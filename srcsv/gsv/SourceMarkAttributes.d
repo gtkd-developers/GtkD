@@ -81,6 +81,7 @@ public class SourceMarkAttributes : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_mark_attributes_get_type();

@@ -169,6 +169,7 @@ public class RadioMenuItem : CheckMenuItem
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_radio_menu_item_get_type();
@@ -290,6 +291,7 @@ public class RadioMenuItem : CheckMenuItem
 	int[string] connectedSignals;
 
 	void delegate(RadioMenuItem)[] onGroupChangedListeners;
+	/** */
 	void addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "group-changed" !in connectedSignals )

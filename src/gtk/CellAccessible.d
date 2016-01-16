@@ -73,6 +73,7 @@ public class CellAccessible : Accessible, ActionIF, ComponentIF
 	mixin ComponentT!(GtkCellAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_accessible_get_type();

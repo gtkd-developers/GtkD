@@ -232,6 +232,7 @@ public class TextBuffer : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_buffer_get_type();

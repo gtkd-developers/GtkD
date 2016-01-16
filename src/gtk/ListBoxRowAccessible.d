@@ -63,6 +63,7 @@ public class ListBoxRowAccessible : ContainerAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_list_box_row_accessible_get_type();

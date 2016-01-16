@@ -72,6 +72,7 @@ public class Pty : ObjectG, InitableIF
 	mixin InitableT!(VtePty);
 
 
+	/** */
 	public static GType getType()
 	{
 		return vte_pty_get_type();

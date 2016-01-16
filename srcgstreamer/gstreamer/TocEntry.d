@@ -61,6 +61,7 @@ public class TocEntry
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_toc_entry_get_type();

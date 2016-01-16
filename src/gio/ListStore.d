@@ -75,6 +75,7 @@ public class ListStore : ObjectG, ListModelIF
 	mixin ListModelT!(GListStore);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_list_store_get_type();

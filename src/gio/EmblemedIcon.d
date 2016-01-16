@@ -79,6 +79,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	mixin IconT!(GEmblemedIcon);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_emblemed_icon_get_type();

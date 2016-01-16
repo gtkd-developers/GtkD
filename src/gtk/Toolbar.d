@@ -109,6 +109,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_toolbar_get_type();

@@ -86,6 +86,7 @@ public class OffscreenWindow : Window
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_offscreen_window_get_type();

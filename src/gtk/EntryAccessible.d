@@ -78,6 +78,7 @@ public class EntryAccessible : WidgetAccessible, ActionIF, EditableTextIF, TextI
 	mixin TextT!(GtkEntryAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_entry_accessible_get_type();

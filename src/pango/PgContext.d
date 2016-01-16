@@ -81,6 +81,7 @@ public class PgContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_context_get_type();

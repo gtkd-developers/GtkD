@@ -35,6 +35,7 @@ public  import gtkglc.glgtktypes;
 
 /** */
 
+/** */
 public bool beginGl(Widget widget)
 {
 	return gtk_widget_begin_gl((widget is null) ? null : widget.getWidgetStruct()) != 0;
@@ -65,6 +66,7 @@ public GLContext createGlContext(Widget widget, GLContext shareList, bool direct
 	return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 }
 
+/** */
 public void widgetEndGl(Widget widget, bool doSwap)
 {
 	gtk_widget_end_gl((widget is null) ? null : widget.getWidgetStruct(), doSwap);

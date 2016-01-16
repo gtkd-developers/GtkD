@@ -126,6 +126,7 @@ public class Notebook : Container
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_notebook_get_type();
@@ -860,6 +861,7 @@ public class Notebook : Container
 	int[string] connectedSignals;
 
 	bool delegate(int, Notebook)[] onChangeCurrentPageListeners;
+	/** */
 	void addOnChangeCurrentPage(bool delegate(int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "change-current-page" !in connectedSignals )
@@ -936,6 +938,7 @@ public class Notebook : Container
 	}
 
 	bool delegate(GtkNotebookTab, Notebook)[] onFocusTabListeners;
+	/** */
 	void addOnFocusTab(bool delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "focus-tab" !in connectedSignals )
@@ -965,6 +968,7 @@ public class Notebook : Container
 	}
 
 	void delegate(GtkDirectionType, Notebook)[] onMoveFocusOutListeners;
+	/** */
 	void addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "move-focus-out" !in connectedSignals )
@@ -1091,6 +1095,7 @@ public class Notebook : Container
 	}
 
 	bool delegate(GtkDirectionType, bool, Notebook)[] onReorderTabListeners;
+	/** */
 	void addOnReorderTab(bool delegate(GtkDirectionType, bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "reorder-tab" !in connectedSignals )
@@ -1120,6 +1125,7 @@ public class Notebook : Container
 	}
 
 	bool delegate(bool, Notebook)[] onSelectPageListeners;
+	/** */
 	void addOnSelectPage(bool delegate(bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "select-page" !in connectedSignals )

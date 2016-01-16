@@ -160,6 +160,7 @@ public class Table : Container
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_table_get_type();

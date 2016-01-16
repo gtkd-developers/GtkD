@@ -89,6 +89,7 @@ public class Plug : Window
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_plug_get_type();

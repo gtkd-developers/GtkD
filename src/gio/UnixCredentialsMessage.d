@@ -80,6 +80,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_unix_credentials_message_get_type();

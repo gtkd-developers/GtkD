@@ -135,6 +135,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_view_get_type();

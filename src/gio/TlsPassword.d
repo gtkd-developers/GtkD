@@ -69,6 +69,7 @@ public class TlsPassword : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tls_password_get_type();

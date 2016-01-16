@@ -76,6 +76,7 @@ public class HScrollbar : Scrollbar
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hscrollbar_get_type();

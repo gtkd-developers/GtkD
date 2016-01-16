@@ -184,33 +184,61 @@ struct VteTerminal
 struct VteTerminalClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(VteTerminal* terminal) eof;
+	/** */
 	extern(C) void function(VteTerminal* terminal, int status) childExited;
+	/** */
 	extern(C) void function(VteTerminal* terminal) encodingChanged;
+	/** */
 	extern(C) void function(VteTerminal* terminal, uint charWidth, uint charHeight) charSizeChanged;
+	/** */
 	extern(C) void function(VteTerminal* terminal) windowTitleChanged;
+	/** */
 	extern(C) void function(VteTerminal* terminal) iconTitleChanged;
+	/** */
 	extern(C) void function(VteTerminal* terminal) selectionChanged;
+	/** */
 	extern(C) void function(VteTerminal* terminal) contentsChanged;
+	/** */
 	extern(C) void function(VteTerminal* terminal) cursorMoved;
+	/** */
 	extern(C) void function(VteTerminal* terminal, const(char)* text, uint size) commit;
+	/** */
 	extern(C) void function(VteTerminal* terminal) deiconifyWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) iconifyWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) raiseWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) lowerWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) refreshWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) restoreWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) maximizeWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal, uint width, uint height) resizeWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal, uint x, uint y) moveWindow;
+	/** */
 	extern(C) void function(VteTerminal* terminal) increaseFontSize;
+	/** */
 	extern(C) void function(VteTerminal* terminal) decreaseFontSize;
+	/** */
 	extern(C) void function(VteTerminal* terminal) textModified;
+	/** */
 	extern(C) void function(VteTerminal* terminal) textInserted;
+	/** */
 	extern(C) void function(VteTerminal* terminal) textDeleted;
+	/** */
 	extern(C) void function(VteTerminal* terminal, int delta) textScrolled;
+	/** */
 	extern(C) void function(VteTerminal* terminal) copyClipboard;
+	/** */
 	extern(C) void function(VteTerminal* terminal) pasteClipboard;
+	/** */
 	extern(C) void function(VteTerminal* terminal) bell;
 	void*[16] padding;
 	VteTerminalClassPrivate* priv;

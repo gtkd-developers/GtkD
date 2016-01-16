@@ -203,6 +203,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	mixin ActionMapT!(GApplication);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_application_get_type();

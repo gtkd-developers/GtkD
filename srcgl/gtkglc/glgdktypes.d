@@ -181,11 +181,17 @@ struct GdkGLDrawable;
 struct GdkGLDrawableClass
 {
 	GTypeInterface baseIface;
+	/** */
 	extern(C) GdkGLContext* function(GdkGLDrawable* gldrawable, GdkGLContext* shareList, int direct, int renderType) createGlContext;
+	/** */
 	extern(C) int function(GdkGLDrawable* gldrawable) isDoubleBuffered;
+	/** */
 	extern(C) void function(GdkGLDrawable* gldrawable) swapBuffers;
+	/** */
 	extern(C) void function(GdkGLDrawable* gldrawable) waitGl;
+	/** */
 	extern(C) void function(GdkGLDrawable* gldrawable) waitGdk;
+	/** */
 	extern(C) GdkGLConfig* function(GdkGLDrawable* gldrawable) getGlConfig;
 }
 
@@ -201,4 +207,5 @@ struct GdkGLWindowClass
 	GObjectClass parentClass;
 }
 
+/** */
 public alias extern(C) void function() GdkGLProc;

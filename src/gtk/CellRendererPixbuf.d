@@ -78,6 +78,7 @@ public class CellRendererPixbuf : CellRenderer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_pixbuf_get_type();

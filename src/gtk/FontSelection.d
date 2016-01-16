@@ -69,6 +69,7 @@ public class FontSelection : Box
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_font_selection_get_type();

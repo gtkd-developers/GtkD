@@ -70,6 +70,7 @@ public class SeparatorMenuItem : MenuItem
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_separator_menu_item_get_type();

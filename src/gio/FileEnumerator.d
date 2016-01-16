@@ -98,6 +98,7 @@ public class FileEnumerator : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_enumerator_get_type();

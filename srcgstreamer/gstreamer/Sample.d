@@ -65,6 +65,7 @@ public class Sample
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_sample_get_type();

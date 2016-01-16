@@ -73,6 +73,7 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	mixin StyleSchemeChooserT!(GtkSourceStyleSchemeChooserWidget);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_style_scheme_chooser_widget_get_type();

@@ -80,6 +80,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	mixin SocketConnectableT!(GNetworkService);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_network_service_get_type();

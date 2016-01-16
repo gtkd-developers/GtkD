@@ -66,6 +66,7 @@ public class Uri
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_uri_get_type();
@@ -894,6 +895,7 @@ public class Uri
 		return Str.toString(p);
 	}
 
+	/** */
 	public static GQuark uriErrorQuark()
 	{
 		return gst_uri_error_quark();

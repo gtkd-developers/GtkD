@@ -111,6 +111,7 @@ public class CheckMenuItem : MenuItem
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_check_menu_item_get_type();

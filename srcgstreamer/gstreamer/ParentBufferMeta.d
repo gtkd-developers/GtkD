@@ -55,6 +55,7 @@ public struct ParentBufferMeta
 		return gst_parent_buffer_meta_get_info();
 	}
 
+	/** */
 	public static GType getType()
 	{
 		return gst_parent_buffer_meta_api_get_type();

@@ -63,6 +63,7 @@ public class PopoverAccessible : ContainerAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_popover_accessible_get_type();

@@ -72,6 +72,7 @@ public class SourceCompletionInfo : Window
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_completion_info_get_type();

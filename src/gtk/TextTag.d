@@ -85,6 +85,7 @@ public class TextTag : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_tag_get_type();

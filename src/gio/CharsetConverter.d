@@ -80,6 +80,7 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	mixin InitableT!(GCharsetConverter);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_charset_converter_get_type();

@@ -73,6 +73,7 @@ public class SourceSearchContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_search_context_get_type();

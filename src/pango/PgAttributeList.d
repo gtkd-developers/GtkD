@@ -70,6 +70,7 @@ public class PgAttributeList
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_attr_list_get_type();

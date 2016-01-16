@@ -95,6 +95,7 @@ public class FileInfo : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_info_get_type();

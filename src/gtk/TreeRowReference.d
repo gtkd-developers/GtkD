@@ -65,6 +65,7 @@ public class TreeRowReference
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_row_reference_get_type();

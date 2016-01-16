@@ -83,6 +83,7 @@ public class GhostPad : ProxyPad
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_ghost_pad_get_type();

@@ -107,6 +107,7 @@ public class Task : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_task_get_type();

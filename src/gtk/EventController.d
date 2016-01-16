@@ -69,6 +69,7 @@ public class EventController : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_event_controller_get_type();

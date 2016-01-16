@@ -68,6 +68,7 @@ public class StateSet : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_state_set_get_type();

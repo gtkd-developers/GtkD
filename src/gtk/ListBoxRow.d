@@ -68,6 +68,7 @@ public class ListBoxRow : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_list_box_row_get_type();
@@ -235,6 +236,7 @@ public class ListBoxRow : Bin
 	int[string] connectedSignals;
 
 	void delegate(ListBoxRow)[] onActivateListeners;
+	/** */
 	void addOnActivate(void delegate(ListBoxRow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "activate" !in connectedSignals )

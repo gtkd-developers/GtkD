@@ -72,6 +72,7 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 	mixin ConverterT!(GZlibDecompressor);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_zlib_decompressor_get_type();

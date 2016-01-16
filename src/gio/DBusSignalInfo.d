@@ -60,6 +60,7 @@ public class DBusSignalInfo
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_signal_info_get_type();

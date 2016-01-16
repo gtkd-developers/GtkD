@@ -134,6 +134,7 @@ public struct FileUtils
 		return g_file_error_from_errno(errNo);
 	}
 
+	/** */
 	public static GQuark fileErrorQuark()
 	{
 		return g_file_error_quark();

@@ -86,6 +86,7 @@ public class Terminal : Widget, ScrollableIF
 	mixin ScrollableT!(VteTerminal);
 
 
+	/** */
 	public static GType getType()
 	{
 		return vte_terminal_get_type();

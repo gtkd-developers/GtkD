@@ -68,6 +68,7 @@ public class WindowAccessible : ContainerAccessible, WindowIF
 	mixin WindowT!(GtkWindowAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_window_accessible_get_type();

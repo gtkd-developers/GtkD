@@ -101,6 +101,7 @@ public class Closure
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_closure_get_type();

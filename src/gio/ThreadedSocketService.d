@@ -86,6 +86,7 @@ public class ThreadedSocketService : SocketService
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_threaded_socket_service_get_type();

@@ -123,6 +123,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	mixin CellLayoutT!(GtkEntryCompletion);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_entry_completion_get_type();

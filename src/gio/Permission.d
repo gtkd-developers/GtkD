@@ -83,6 +83,7 @@ public class Permission : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_permission_get_type();

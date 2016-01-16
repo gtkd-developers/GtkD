@@ -73,6 +73,7 @@ public class GestureZoom : Gesture
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_zoom_get_type();

@@ -98,6 +98,7 @@ public class LockButton : Button
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_lock_button_get_type();

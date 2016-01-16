@@ -83,6 +83,7 @@ public class Screen : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_screen_get_type();

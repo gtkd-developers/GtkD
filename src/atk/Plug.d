@@ -73,11 +73,13 @@ public class Plug : ObjectAtk, ComponentIF
 	mixin ComponentT!(AtkPlug);
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_plug_get_type();
 	}
 
+	/** */
 	public this()
 	{
 		auto p = atk_plug_new();

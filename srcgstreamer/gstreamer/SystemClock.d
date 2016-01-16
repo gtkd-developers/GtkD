@@ -74,6 +74,7 @@ public class SystemClock : Clock
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_system_clock_get_type();

@@ -70,6 +70,7 @@ public class MenuAttributeIter : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_menu_attribute_iter_get_type();

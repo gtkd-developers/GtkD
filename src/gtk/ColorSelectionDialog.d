@@ -89,6 +89,7 @@ public class ColorSelectionDialog : Dialog
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_color_selection_dialog_get_type();

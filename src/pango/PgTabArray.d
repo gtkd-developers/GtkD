@@ -60,6 +60,7 @@ public class PgTabArray
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_tab_array_get_type();

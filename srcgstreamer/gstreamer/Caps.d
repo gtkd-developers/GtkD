@@ -117,6 +117,7 @@ public class Caps
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_caps_get_type();

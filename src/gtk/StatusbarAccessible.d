@@ -63,6 +63,7 @@ public class StatusbarAccessible : ContainerAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_statusbar_accessible_get_type();

@@ -127,6 +127,7 @@ public class MenuToolButton : ToolButton
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_tool_button_get_type();

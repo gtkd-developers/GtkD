@@ -82,6 +82,7 @@ public class TearoffMenuItem : MenuItem
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tearoff_menu_item_get_type();

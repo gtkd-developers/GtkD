@@ -3275,6 +3275,7 @@ struct GstAllocatorClass
 	 * Return: a new #GstMemory.
 	 */
 	extern(C) GstMemory* function(GstAllocator* allocator, size_t size, GstAllocationParams* params) alloc;
+	/** */
 	extern(C) void function(GstAllocator* allocator, GstMemory* memory) free;
 	void*[4] GstReserved;
 }
@@ -3345,11 +3346,17 @@ struct GstBinClass
 	 */
 	GstElementClass parentClass;
 	GThreadPool* pool;
+	/** */
 	extern(C) void function(GstBin* bin, GstElement* child) elementAdded;
+	/** */
 	extern(C) void function(GstBin* bin, GstElement* child) elementRemoved;
+	/** */
 	extern(C) int function(GstBin* bin, GstElement* element) addElement;
+	/** */
 	extern(C) int function(GstBin* bin, GstElement* element) removeElement;
+	/** */
 	extern(C) void function(GstBin* bin, GstMessage* message) handleMessage;
+	/** */
 	extern(C) int function(GstBin* bin) doLatency;
 	void*[4] GstReserved;
 }
@@ -3463,7 +3470,9 @@ struct GstBufferPoolClass
 	 * Return: %TRUE when the configuration could be set.
 	 */
 	extern(C) int function(GstBufferPool* pool, GstStructure* config) setConfig;
+	/** */
 	extern(C) int function(GstBufferPool* pool) start;
+	/** */
 	extern(C) int function(GstBufferPool* pool) stop;
 	/**
 	 *
@@ -3475,11 +3484,17 @@ struct GstBufferPoolClass
 	 *     inactive.
 	 */
 	extern(C) GstFlowReturn function(GstBufferPool* pool, GstBuffer** buffer, GstBufferPoolAcquireParams* params) acquireBuffer;
+	/** */
 	extern(C) GstFlowReturn function(GstBufferPool* pool, GstBuffer** buffer, GstBufferPoolAcquireParams* params) allocBuffer;
+	/** */
 	extern(C) void function(GstBufferPool* pool, GstBuffer* buffer) resetBuffer;
+	/** */
 	extern(C) void function(GstBufferPool* pool, GstBuffer* buffer) releaseBuffer;
+	/** */
 	extern(C) void function(GstBufferPool* pool, GstBuffer* buffer) freeBuffer;
+	/** */
 	extern(C) void function(GstBufferPool* pool) flushStart;
+	/** */
 	extern(C) void function(GstBufferPool* pool) flushStop;
 	void*[2] GstReserved;
 }
@@ -3496,7 +3511,9 @@ struct GstBus
 struct GstBusClass
 {
 	GstObjectClass parentClass;
+	/** */
 	extern(C) void function(GstBus* bus, GstMessage* message) message;
+	/** */
 	extern(C) void function(GstBus* bus, GstMessage* message) syncMessage;
 	void*[4] GstReserved;
 }
@@ -3555,7 +3572,9 @@ struct GstChildProxyInterface
 	 *     MT safe.
 	 */
 	extern(C) uint function(GstChildProxy* parent) getChildrenCount;
+	/** */
 	extern(C) void function(GstChildProxy* parent, GObject* child, const(char)* name) childAdded;
+	/** */
 	extern(C) void function(GstChildProxy* parent, GObject* child, const(char)* name) childRemoved;
 	void*[4] GstReserved;
 }
@@ -3577,6 +3596,7 @@ struct GstClockClass
 	 * the parent class structure
 	 */
 	GstObjectClass parentClass;
+	/** */
 	extern(C) GstClockTime function(GstClock* clock, GstClockTime oldResolution, GstClockTime newResolution) changeResolution;
 	/**
 	 *
@@ -3597,8 +3617,11 @@ struct GstClockClass
 	 *     MT safe.
 	 */
 	extern(C) GstClockTime function(GstClock* clock) getInternalTime;
+	/** */
 	extern(C) GstClockReturn function(GstClock* clock, GstClockEntry* entry, GstClockTimeDiff* jitter) wait;
+	/** */
 	extern(C) GstClockReturn function(GstClock* clock, GstClockEntry* entry) waitAsync;
+	/** */
 	extern(C) void function(GstClock* clock, GstClockEntry* entry) unschedule;
 	void*[4] GstReserved;
 }
@@ -3835,6 +3858,7 @@ struct GstDeviceProviderClass
 	 * provider
 	 */
 	GstDeviceProviderFactory* factory;
+	/** */
 	extern(C) GList* function(GstDeviceProvider* provider) probe;
 	/**
 	 *
@@ -3843,6 +3867,7 @@ struct GstDeviceProviderClass
 	 * Return: %TRUE if the device providering could be started
 	 */
 	extern(C) int function(GstDeviceProvider* provider) start;
+	/** */
 	extern(C) void function(GstDeviceProvider* provider) stop;
 	void* metadata;
 	void*[4] GstReserved;
@@ -3975,8 +4000,11 @@ struct GstElementClass
 	 * changed whenever the padtemplates change
 	 */
 	uint padTemplCookie;
+	/** */
 	extern(C) void function(GstElement* element, GstPad* pad) padAdded;
+	/** */
 	extern(C) void function(GstElement* element, GstPad* pad) padRemoved;
+	/** */
 	extern(C) void function(GstElement* element) noMorePads;
 	/**
 	 *
@@ -3991,6 +4019,7 @@ struct GstElementClass
 	 *     otherwise %NULL.  Release after usage.
 	 */
 	extern(C) GstPad* function(GstElement* element, GstPadTemplate* templ, const(char)* name, GstCaps* caps) requestNewPad;
+	/** */
 	extern(C) void function(GstElement* element, GstPad* pad) releasePad;
 	/**
 	 *
@@ -4028,7 +4057,9 @@ struct GstElementClass
 	 * Return: the #GstStateChangeReturn of the state transition.
 	 */
 	extern(C) GstStateChangeReturn function(GstElement* element, GstStateChange transition) changeState;
+	/** */
 	extern(C) void function(GstElement* element, GstState oldstate, GstState newstate, GstState pending) stateChanged;
+	/** */
 	extern(C) void function(GstElement* element, GstBus* bus) setBus;
 	/**
 	 *
@@ -4082,6 +4113,7 @@ struct GstElementClass
 	 *     MT safe.
 	 */
 	extern(C) int function(GstElement* element, GstMessage* message) postMessage;
+	/** */
 	extern(C) void function(GstElement* element, GstContext* context) setContext;
 	void*[18] GstReserved;
 }
@@ -4451,6 +4483,7 @@ struct GstObjectClass
 	 * separator used by gst_object_get_path_string()
 	 */
 	const(char)* pathStringSeparator;
+	/** */
 	extern(C) void function(GstObject* object, GstObject* orig, GParamSpec* pspec) deepNotify;
 	void*[4] GstReserved;
 }
@@ -4526,7 +4559,9 @@ struct GstPad
 struct GstPadClass
 {
 	GstObjectClass parentClass;
+	/** */
 	extern(C) void function(GstPad* pad, GstPad* peer) linked;
+	/** */
 	extern(C) void function(GstPad* pad, GstPad* peer) unlinked;
 	void*[4] GstReserved;
 }
@@ -4583,6 +4618,7 @@ struct GstPadTemplate
 struct GstPadTemplateClass
 {
 	GstObjectClass parentClass;
+	/** */
 	extern(C) void function(GstPadTemplate* templ, GstPad* pad) padCreated;
 	void*[4] GstReserved;
 }
@@ -5091,7 +5127,9 @@ struct GstTaskPoolClass
 	 * the parent class structure
 	 */
 	GstObjectClass parentClass;
+	/** */
 	extern(C) void function(GstTaskPool* pool, GError** err) prepare;
+	/** */
 	extern(C) void function(GstTaskPool* pool) cleanup;
 	/**
 	 *
@@ -5106,6 +5144,7 @@ struct GstTaskPoolClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) void* function(GstTaskPool* pool, GstTaskPoolFunction func, void* userData, GError** err) push;
+	/** */
 	extern(C) void function(GstTaskPool* pool, void* id) join;
 	void*[4] GstReserved;
 }
@@ -5146,12 +5185,15 @@ struct GstTocSetterInterface
 
 struct GstTypeFind
 {
+	/** */
 	extern(C) ubyte* function(void* data, long offset, uint size) peek;
+	/** */
 	extern(C) void function(void* data, uint probability, GstCaps* caps) suggest;
 	/**
 	 * The data used by the caller of the typefinding function.
 	 */
 	void* data;
+	/** */
 	extern(C) ulong function(void* data) getLength;
 	void*[4] GstReserved;
 }
@@ -5171,7 +5213,9 @@ struct GstURIHandlerInterface
 	 * The parent interface type
 	 */
 	GTypeInterface parent;
+	/** */
 	extern(C) GstURIType function(GType type) getType;
+	/** */
 	extern(C) char** function(GType type) getProtocols;
 	/**
 	 *
@@ -5360,6 +5404,7 @@ public alias extern(C) int function(GstCapsFeatures* features, GstStructure* str
  */
 public alias extern(C) int function(GstClock* clock, GstClockTime time, GstClockID id, void* userData) GstClockCallback;
 
+/** */
 public alias extern(C) void function(GstControlBinding* binding, double srcValue, GValue* destValue) GstControlBindingConvert;
 
 /**
@@ -5388,6 +5433,7 @@ public alias extern(C) int function(GstControlSource* self, GstClockTime timesta
  */
 public alias extern(C) int function(GstControlSource* self, GstClockTime timestamp, GstClockTime interval, uint nValues, double* values) GstControlSourceGetValueArray;
 
+/** */
 public alias extern(C) void function() GstDebugFuncPtr;
 
 /**

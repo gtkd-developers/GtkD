@@ -96,6 +96,7 @@ public class TextMark : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_mark_get_type();

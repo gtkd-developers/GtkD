@@ -147,6 +147,7 @@ public class TreeSelection : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_selection_get_type();

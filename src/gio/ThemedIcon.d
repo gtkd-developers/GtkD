@@ -78,6 +78,7 @@ public class ThemedIcon : ObjectG, IconIF
 	mixin IconT!(GThemedIcon);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_themed_icon_get_type();

@@ -65,6 +65,7 @@ public class DBusInterfaceInfo
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_interface_info_get_type();

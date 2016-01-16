@@ -124,6 +124,7 @@ public class DateTime
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_date_time_get_type();

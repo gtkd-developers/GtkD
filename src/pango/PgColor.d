@@ -60,6 +60,7 @@ public class PgColor
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_color_get_type();

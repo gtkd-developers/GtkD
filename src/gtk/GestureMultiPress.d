@@ -80,6 +80,7 @@ public class GestureMultiPress : GestureSingle
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_multi_press_get_type();

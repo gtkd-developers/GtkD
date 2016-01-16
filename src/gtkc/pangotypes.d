@@ -1157,8 +1157,11 @@ struct PangoAttrClass
 	 * the type ID for this attribute
 	 */
 	PangoAttrType type;
+	/** */
 	extern(C) PangoAttribute* function(PangoAttribute* attr) copy;
+	/** */
 	extern(C) void function(PangoAttribute* attr) destroy;
+	/** */
 	extern(C) int function(PangoAttribute* attr1, PangoAttribute* attr2) equal;
 }
 
@@ -1425,6 +1428,7 @@ struct PangoEngineLang
 struct PangoEngineLangClass
 {
 	PangoEngineClass parentClass;
+	/** */
 	extern(C) void function(PangoEngineLang* engine, const(char)* text, int len, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen) scriptBreak;
 }
 
@@ -1464,7 +1468,9 @@ struct PangoEngineShape
 struct PangoEngineShapeClass
 {
 	PangoEngineClass parentClass;
+	/** */
 	extern(C) void function(PangoEngineShape* engine, PangoFont* font, const(char)* itemText, uint itemLength, PangoAnalysis* analysis, PangoGlyphString* glyphs, const(char)* paragraphText, uint paragraphLength) scriptShape;
+	/** */
 	extern(C) PangoCoverageLevel function(PangoEngineShape* engine, PangoFont* font, PangoLanguage* language, dchar wc) covers;
 }
 
@@ -1499,6 +1505,7 @@ struct PangoFontClass
 	 * Return: the best matching shaper.
 	 */
 	extern(C) PangoEngineShape* function(PangoFont* font, PangoLanguage* lang, uint ch) findShaper;
+	/** */
 	extern(C) void function(PangoFont* font, PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect) getGlyphExtents;
 	/**
 	 *
@@ -1518,8 +1525,11 @@ struct PangoFontClass
 	 *     font, or %NULL if @font is %NULL.
 	 */
 	extern(C) PangoFontMap* function(PangoFont* font) getFontMap;
+	/** */
 	extern(C) PangoFontDescription* function(PangoFont* font) describeAbsolute;
+	/** */
 	extern(C) void function() PangoReserved1;
+	/** */
 	extern(C) void function() PangoReserved2;
 }
 
@@ -1550,6 +1560,7 @@ struct PangoFontFaceClass
 	 *     to free the result.
 	 */
 	extern(C) PangoFontDescription* function(PangoFontFace* face) describe;
+	/** */
 	extern(C) void function(PangoFontFace* face, int** sizes, int* nSizes) listSizes;
 	/**
 	 *
@@ -1558,7 +1569,9 @@ struct PangoFontFaceClass
 	 * Return: whether @face is synthesized.
 	 */
 	extern(C) int function(PangoFontFace* face) isSynthesized;
+	/** */
 	extern(C) void function() PangoReserved3;
+	/** */
 	extern(C) void function() PangoReserved4;
 }
 
@@ -1570,6 +1583,7 @@ struct PangoFontFamily
 struct PangoFontFamilyClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(PangoFontFamily* family, PangoFontFace*** faces, int* nFaces) listFaces;
 	/**
 	 *
@@ -1586,8 +1600,11 @@ struct PangoFontFamilyClass
 	 * Return: %TRUE if the family is monospace.
 	 */
 	extern(C) int function(PangoFontFamily* family) isMonospace;
+	/** */
 	extern(C) void function() PangoReserved2;
+	/** */
 	extern(C) void function() PangoReserved3;
+	/** */
 	extern(C) void function() PangoReserved4;
 }
 
@@ -1616,6 +1633,7 @@ struct PangoFontMapClass
 	 *     loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFont* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc) loadFont;
+	/** */
 	extern(C) void function(PangoFontMap* fontmap, PangoFontFamily*** families, int* nFamilies) listFamilies;
 	/**
 	 *
@@ -1640,8 +1658,11 @@ struct PangoFontMapClass
 	 * Return: The current serial number of @fontmap.
 	 */
 	extern(C) uint function(PangoFontMap* fontmap) getSerial;
+	/** */
 	extern(C) void function(PangoFontMap* fontmap) changed;
+	/** */
 	extern(C) void function() PangoReserved1;
+	/** */
 	extern(C) void function() PangoReserved2;
 }
 
@@ -1690,11 +1711,17 @@ struct PangoFontsetClass
 	 *     when finished using the object.
 	 */
 	extern(C) PangoFontMetrics* function(PangoFontset* fontset) getMetrics;
+	/** */
 	extern(C) PangoLanguage* function(PangoFontset* fontset) getLanguage;
+	/** */
 	extern(C) void function(PangoFontset* fontset, PangoFontsetForeachFunc func, void* data) foreac;
+	/** */
 	extern(C) void function() PangoReserved1;
+	/** */
 	extern(C) void function() PangoReserved2;
+	/** */
 	extern(C) void function() PangoReserved3;
+	/** */
 	extern(C) void function() PangoReserved4;
 }
 
@@ -1807,9 +1834,13 @@ struct PangoGlyphVisAttr
  */
 struct PangoIncludedModule
 {
+	/** */
 	extern(C) void function(PangoEngineInfo** engines, int* nEngines) list;
+	/** */
 	extern(C) void function(GTypeModule* modul) init;
+	/** */
 	extern(C) void function() exit;
+	/** */
 	extern(C) PangoEngine* function(const(char)* id) create;
 }
 
@@ -1973,19 +2004,33 @@ struct PangoRenderer
 struct PangoRendererClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoFont* font, PangoGlyphString* glyphs, int x, int y) drawGlyphs;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoRenderPart part, int x, int y, int width, int height) drawRectangle;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, int x, int y, int width, int height) drawErrorUnderline;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoAttrShape* attr, int x, int y) drawShape;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoRenderPart part, double y1, double x11, double x21, double y2, double x12, double x22) drawTrapezoid;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoFont* font, PangoGlyph glyph, double x, double y) drawGlyph;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoRenderPart part) partChanged;
+	/** */
 	extern(C) void function(PangoRenderer* renderer) begin;
+	/** */
 	extern(C) void function(PangoRenderer* renderer) end;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, PangoLayoutRun* run) prepareRun;
+	/** */
 	extern(C) void function(PangoRenderer* renderer, const(char)* text, PangoGlyphItem* glyphItem, int x, int y) drawGlyphItem;
+	/** */
 	extern(C) void function() PangoReserved2;
+	/** */
 	extern(C) void function() PangoReserved3;
+	/** */
 	extern(C) void function() PangoReserved4;
 }
 

@@ -115,6 +115,7 @@ public class Box : Container, OrientableIF
 	mixin OrientableT!(GtkBox);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_box_get_type();

@@ -76,6 +76,7 @@ public class HSV : Widget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hsv_get_type();
@@ -203,6 +204,7 @@ public class HSV : Widget
 	int[string] connectedSignals;
 
 	void delegate(HSV)[] onChangedListeners;
+	/** */
 	void addOnChanged(void delegate(HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "changed" !in connectedSignals )
@@ -227,6 +229,7 @@ public class HSV : Widget
 	}
 
 	void delegate(GtkDirectionType, HSV)[] onMoveListeners;
+	/** */
 	void addOnMove(void delegate(GtkDirectionType, HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "move" !in connectedSignals )

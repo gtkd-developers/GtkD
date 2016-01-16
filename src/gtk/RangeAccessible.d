@@ -68,6 +68,7 @@ public class RangeAccessible : WidgetAccessible, ValueIF
 	mixin ValueT!(GtkRangeAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_range_accessible_get_type();

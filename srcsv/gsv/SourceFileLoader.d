@@ -75,6 +75,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_file_loader_get_type();

@@ -98,6 +98,7 @@ public class MenuShell : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_shell_get_type();

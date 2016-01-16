@@ -65,6 +65,7 @@ public class PgLayoutLine
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_layout_line_get_type();

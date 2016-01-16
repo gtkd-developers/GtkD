@@ -74,6 +74,7 @@ public class DataInputStream : BufferedInputStream
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_data_input_stream_get_type();

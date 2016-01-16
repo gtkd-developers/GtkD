@@ -85,6 +85,7 @@ public class FontChooserWidget : Box, FontChooserIF
 	mixin FontChooserT!(GtkFontChooserWidget);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_font_chooser_widget_get_type();

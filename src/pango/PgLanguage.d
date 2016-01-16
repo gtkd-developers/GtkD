@@ -63,6 +63,7 @@ public class PgLanguage
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_language_get_type();

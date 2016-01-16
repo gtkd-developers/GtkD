@@ -35,6 +35,7 @@ public  import gtkc.glibtypes;
 public struct UnixUtils
 {
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_unix_error_quark();

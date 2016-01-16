@@ -75,6 +75,7 @@ public class SeparatorToolItem : ToolItem
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_separator_tool_item_get_type();

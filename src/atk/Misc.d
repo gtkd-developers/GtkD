@@ -66,6 +66,7 @@ public class Misc : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_misc_get_type();

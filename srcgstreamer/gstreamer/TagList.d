@@ -433,6 +433,7 @@ public class TagList
 		return gst_tag_list_get_int(gstTagList, Str.toStringz(tag), &value) != 0;
 	}
 
+	/** */
 	public bool getInt64(string tag, long* value)
 	{
 		return gst_tag_list_get_int64(gstTagList, Str.toStringz(tag), value) != 0;

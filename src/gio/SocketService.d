@@ -97,6 +97,7 @@ public class SocketService : SocketListener
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_service_get_type();

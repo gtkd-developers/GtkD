@@ -88,6 +88,7 @@ public class DBusAnnotationInfo
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_annotation_info_get_type();

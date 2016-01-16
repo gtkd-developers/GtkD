@@ -119,6 +119,7 @@ public class GLContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_gl_context_get_type();

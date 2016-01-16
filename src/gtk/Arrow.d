@@ -87,6 +87,7 @@ public class Arrow : Misc
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_arrow_get_type();

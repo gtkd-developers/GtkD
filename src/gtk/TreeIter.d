@@ -424,6 +424,7 @@ public class TreeIter
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_iter_get_type();

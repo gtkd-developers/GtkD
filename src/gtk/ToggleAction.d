@@ -93,6 +93,7 @@ public class ToggleAction : Action
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_toggle_action_get_type();

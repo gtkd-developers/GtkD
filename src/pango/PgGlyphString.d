@@ -64,6 +64,7 @@ public class PgGlyphString
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_glyph_string_get_type();

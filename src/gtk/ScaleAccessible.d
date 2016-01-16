@@ -63,6 +63,7 @@ public class ScaleAccessible : RangeAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_scale_accessible_get_type();

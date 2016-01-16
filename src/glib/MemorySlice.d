@@ -155,16 +155,19 @@ public struct MemorySlice
 		g_slice_free_chain_with_offset(blockSize, memChain, nextOffset);
 	}
 
+	/** */
 	public static long sliceGetConfig(GSliceConfig ckey)
 	{
 		return g_slice_get_config(ckey);
 	}
 
+	/** */
 	public static long* sliceGetConfigState(GSliceConfig ckey, long address, uint* nValues)
 	{
 		return g_slice_get_config_state(ckey, address, nValues);
 	}
 
+	/** */
 	public static void sliceSetConfig(GSliceConfig ckey, long value)
 	{
 		g_slice_set_config(ckey, value);

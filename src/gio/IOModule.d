@@ -74,6 +74,7 @@ public class IOModule : TypeModule
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_io_module_get_type();

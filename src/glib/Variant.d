@@ -2393,6 +2393,7 @@ public class Variant
 		return Str.toString(g_variant_parse_error_print_context((error is null) ? null : error.getErrorGStruct(), Str.toStringz(sourceStr)));
 	}
 
+	/** */
 	public static GQuark parseErrorQuark()
 	{
 		return g_variant_parse_error_quark();

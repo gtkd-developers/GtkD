@@ -79,6 +79,7 @@ public class Misc : Widget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_misc_get_type();

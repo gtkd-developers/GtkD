@@ -82,6 +82,7 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	mixin SeekableT!(GMemoryInputStream);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_memory_input_stream_get_type();

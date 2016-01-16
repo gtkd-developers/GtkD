@@ -170,6 +170,7 @@ public class Thread
 		g_thread_unref(gThread);
 	}
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_thread_error_quark();

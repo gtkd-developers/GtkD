@@ -80,6 +80,7 @@ public class ColorButton : Button, ColorChooserIF
 	mixin ColorChooserT!(GtkColorButton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_color_button_get_type();

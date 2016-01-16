@@ -78,6 +78,7 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	mixin LoadableIconT!(GBytesIcon);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_bytes_icon_get_type();

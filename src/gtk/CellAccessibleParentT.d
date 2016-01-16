@@ -40,46 +40,55 @@ public template CellAccessibleParentT(TStruct)
 	}
 
 
+	/** */
 	public void activate(CellAccessible cell)
 	{
 		gtk_cell_accessible_parent_activate(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 	}
 
+	/** */
 	public void edit(CellAccessible cell)
 	{
 		gtk_cell_accessible_parent_edit(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 	}
 
+	/** */
 	public void expandCollapse(CellAccessible cell)
 	{
 		gtk_cell_accessible_parent_expand_collapse(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 	}
 
+	/** */
 	public void getCellArea(CellAccessible cell, GdkRectangle* cellRect)
 	{
 		gtk_cell_accessible_parent_get_cell_area(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), cellRect);
 	}
 
+	/** */
 	public void getCellExtents(CellAccessible cell, int* x, int* y, int* width, int* height, AtkCoordType coordType)
 	{
 		gtk_cell_accessible_parent_get_cell_extents(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), x, y, width, height, coordType);
 	}
 
+	/** */
 	public int getChildIndex(CellAccessible cell)
 	{
 		return gtk_cell_accessible_parent_get_child_index(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 	}
 
+	/** */
 	public GtkCellRendererState getRendererState(CellAccessible cell)
 	{
 		return gtk_cell_accessible_parent_get_renderer_state(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 	}
 
+	/** */
 	public bool grabFocus(CellAccessible cell)
 	{
 		return gtk_cell_accessible_parent_grab_focus(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct()) != 0;
 	}
 
+	/** */
 	public void updateRelationset(CellAccessible cell, RelationSet relationset)
 	{
 		gtk_cell_accessible_parent_update_relationset(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), (relationset is null) ? null : relationset.getRelationSetStruct());

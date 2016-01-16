@@ -110,6 +110,7 @@ public class InetAddress : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_inet_address_get_type();

@@ -265,6 +265,7 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_file_chooser_dialog_get_type();

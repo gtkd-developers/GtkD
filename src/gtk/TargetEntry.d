@@ -74,6 +74,7 @@ public class TargetEntry
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_target_entry_get_type();

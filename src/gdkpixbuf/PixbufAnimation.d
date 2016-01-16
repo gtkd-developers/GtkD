@@ -75,6 +75,7 @@ public class PixbufAnimation : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_pixbuf_animation_get_type();

@@ -81,6 +81,7 @@ public class VButtonBox : ButtonBox
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_vbutton_box_get_type();

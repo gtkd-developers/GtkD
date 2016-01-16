@@ -211,6 +211,7 @@ public class Element : ObjectGst
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_element_get_type();

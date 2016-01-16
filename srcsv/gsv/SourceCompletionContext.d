@@ -69,6 +69,7 @@ public class SourceCompletionContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_completion_context_get_type();

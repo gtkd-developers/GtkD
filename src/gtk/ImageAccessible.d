@@ -68,6 +68,7 @@ public class ImageAccessible : WidgetAccessible, ImageIF
 	mixin ImageT!(GtkImageAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_image_accessible_get_type();

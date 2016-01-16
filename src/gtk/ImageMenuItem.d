@@ -188,6 +188,7 @@ public class ImageMenuItem : MenuItem
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_image_menu_item_get_type();

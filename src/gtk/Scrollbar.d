@@ -81,6 +81,7 @@ public class Scrollbar : Range
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_scrollbar_get_type();

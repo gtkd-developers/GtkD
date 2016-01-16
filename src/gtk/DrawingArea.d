@@ -156,6 +156,7 @@ public class DrawingArea : Widget
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_drawing_area_get_type();

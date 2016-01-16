@@ -99,6 +99,7 @@ public struct Type
 		g_type_add_class_private(classType, privateSize);
 	}
 
+	/** */
 	public static int addInstancePrivate(GType classType, size_t privateSize)
 	{
 		return g_type_add_instance_private(classType, privateSize);
@@ -158,6 +159,7 @@ public struct Type
 		g_type_add_interface_static(instanceType, interfaceType, info);
 	}
 
+	/** */
 	public static TypeClass checkClassCast(TypeClass gClass, GType isAType)
 	{
 		auto p = g_type_check_class_cast((gClass is null) ? null : gClass.getTypeClassStruct(), isAType);
@@ -170,6 +172,7 @@ public struct Type
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
 	}
 
+	/** */
 	public static bool checkClassIsA(TypeClass gClass, GType isAType)
 	{
 		return g_type_check_class_is_a((gClass is null) ? null : gClass.getTypeClassStruct(), isAType) != 0;
@@ -189,6 +192,7 @@ public struct Type
 		return g_type_check_instance((instanc is null) ? null : instanc.getTypeInstanceStruct()) != 0;
 	}
 
+	/** */
 	public static TypeInstance checkInstanceCast(TypeInstance instanc, GType ifaceType)
 	{
 		auto p = g_type_check_instance_cast((instanc is null) ? null : instanc.getTypeInstanceStruct(), ifaceType);
@@ -201,26 +205,31 @@ public struct Type
 		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) p);
 	}
 
+	/** */
 	public static bool checkInstanceIsA(TypeInstance instanc, GType ifaceType)
 	{
 		return g_type_check_instance_is_a((instanc is null) ? null : instanc.getTypeInstanceStruct(), ifaceType) != 0;
 	}
 
+	/** */
 	public static bool checkInstanceIsFundamentallyA(TypeInstance instanc, GType fundamentalType)
 	{
 		return g_type_check_instance_is_fundamentally_a((instanc is null) ? null : instanc.getTypeInstanceStruct(), fundamentalType) != 0;
 	}
 
+	/** */
 	public static bool checkIsValueType(GType type)
 	{
 		return g_type_check_is_value_type(type) != 0;
 	}
 
+	/** */
 	public static bool checkValue(Value value)
 	{
 		return g_type_check_value((value is null) ? null : value.getValueStruct()) != 0;
 	}
 
+	/** */
 	public static bool checkValueHolds(Value value, GType type)
 	{
 		return g_type_check_value_holds((value is null) ? null : value.getValueStruct(), type) != 0;
@@ -594,11 +603,13 @@ public struct Type
 		return Str.toString(g_type_name(type));
 	}
 
+	/** */
 	public static string nameFromClass(TypeClass gClass)
 	{
 		return Str.toString(g_type_name_from_class((gClass is null) ? null : gClass.getTypeClassStruct()));
 	}
 
+	/** */
 	public static string nameFromInstance(TypeInstance instanc)
 	{
 		return Str.toString(g_type_name_from_instance((instanc is null) ? null : instanc.getTypeInstanceStruct()));
@@ -798,6 +809,7 @@ public struct Type
 		g_type_set_qdata(type, quark, data);
 	}
 
+	/** */
 	public static bool testFlags(GType type, uint flags)
 	{
 		return g_type_test_flags(type, flags) != 0;

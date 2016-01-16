@@ -57,6 +57,7 @@ public class TypeInstance
 	}
 
 
+	/** */
 	public void* getPrivate(GType privateType)
 	{
 		return g_type_instance_get_private(gTypeInstance, privateType);

@@ -73,6 +73,7 @@ public class CellRendererToggle : CellRenderer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_toggle_get_type();

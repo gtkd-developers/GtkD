@@ -32,6 +32,7 @@ public  import gstreamerc.gstreamertypes;
 public class FractionRange
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_fraction_range_get_type();

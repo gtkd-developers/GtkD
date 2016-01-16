@@ -93,6 +93,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	mixin BuildableT!(GtkTextTagTable);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_tag_table_get_type();
@@ -196,6 +197,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	int[string] connectedSignals;
 
 	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
+	/** */
 	void addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "tag-added" !in connectedSignals )
@@ -220,6 +222,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	void delegate(TextTag, bool, TextTagTable)[] onTagChangedListeners;
+	/** */
 	void addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "tag-changed" !in connectedSignals )
@@ -244,6 +247,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	}
 
 	void delegate(TextTag, TextTagTable)[] onTagRemovedListeners;
+	/** */
 	void addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "tag-removed" !in connectedSignals )

@@ -91,6 +91,7 @@ public class Gradient
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gradient_get_type();
@@ -224,6 +225,7 @@ public class Gradient
 		return p;
 	}
 
+	/** */
 	public Pattern resolveForContext(StyleContext context)
 	{
 		auto p = gtk_gradient_resolve_for_context(gtkGradient, (context is null) ? null : context.getStyleContextStruct());

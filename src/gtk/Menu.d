@@ -178,6 +178,7 @@ public class Menu : MenuShell
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_get_type();
@@ -679,6 +680,7 @@ public class Menu : MenuShell
 	int[string] connectedSignals;
 
 	void delegate(GtkScrollType, Menu)[] onMoveScrollListeners;
+	/** */
 	void addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "move-scroll" !in connectedSignals )

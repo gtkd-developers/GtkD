@@ -1285,6 +1285,7 @@ public class KeyFile
 		g_key_file_unref(gKeyFile);
 	}
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_key_file_error_quark();

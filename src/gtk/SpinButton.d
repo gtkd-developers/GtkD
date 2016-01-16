@@ -150,6 +150,7 @@ public class SpinButton : Entry, OrientableIF
 	mixin OrientableT!(GtkSpinButton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_spin_button_get_type();

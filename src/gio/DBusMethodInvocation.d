@@ -81,6 +81,7 @@ public class DBusMethodInvocation : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_method_invocation_get_type();

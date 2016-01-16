@@ -71,6 +71,7 @@ public class ColorSelection : Box
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_color_selection_get_type();

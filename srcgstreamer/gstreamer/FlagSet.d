@@ -32,6 +32,7 @@ public  import gstreamerc.gstreamertypes;
 public class FlagSet
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_flagset_get_type();

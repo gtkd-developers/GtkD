@@ -84,6 +84,7 @@ public class DeviceProvider : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_device_provider_get_type();
@@ -109,6 +110,7 @@ public class DeviceProvider : ObjectGst
 		return gst_device_provider_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, type) != 0;
 	}
 
+	/** */
 	public bool canMonitor()
 	{
 		return gst_device_provider_can_monitor(gstDeviceProvider) != 0;
@@ -289,6 +291,7 @@ public class DeviceProvider : ObjectGst
 	int[string] connectedSignals;
 
 	void delegate(string, DeviceProvider)[] onProviderHiddenListeners;
+	/** */
 	void addOnProviderHidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "provider-hidden" !in connectedSignals )
@@ -313,6 +316,7 @@ public class DeviceProvider : ObjectGst
 	}
 
 	void delegate(string, DeviceProvider)[] onProviderUnhiddenListeners;
+	/** */
 	void addOnProviderUnhidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "provider-unhidden" !in connectedSignals )

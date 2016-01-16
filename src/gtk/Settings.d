@@ -108,6 +108,7 @@ public class Settings : ObjectG, StyleProviderIF
 	mixin StyleProviderT!(GtkSettings);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_settings_get_type();

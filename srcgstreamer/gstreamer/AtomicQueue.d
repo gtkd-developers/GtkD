@@ -60,6 +60,7 @@ public class AtomicQueue
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_atomic_queue_get_type();

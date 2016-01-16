@@ -73,6 +73,7 @@ public class Keymap : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_keymap_get_type();

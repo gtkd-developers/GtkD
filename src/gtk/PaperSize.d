@@ -74,6 +74,7 @@ public class PaperSize
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_paper_size_get_type();

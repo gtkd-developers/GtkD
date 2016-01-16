@@ -86,6 +86,7 @@ public class AccelGroup : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_accel_group_get_type();

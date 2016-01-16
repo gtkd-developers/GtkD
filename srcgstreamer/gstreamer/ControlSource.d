@@ -77,6 +77,7 @@ public class ControlSource : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_control_source_get_type();

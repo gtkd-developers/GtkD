@@ -60,6 +60,7 @@ public class DBusMethodInfo
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_method_info_get_type();

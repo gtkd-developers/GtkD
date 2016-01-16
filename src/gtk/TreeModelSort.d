@@ -200,6 +200,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_model_sort_get_type();

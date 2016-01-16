@@ -98,6 +98,7 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	mixin AppChooserT!(GtkAppChooserButton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_app_chooser_button_get_type();

@@ -63,6 +63,7 @@ public class LockButtonAccessible : ButtonAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_lock_button_accessible_get_type();

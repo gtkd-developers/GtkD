@@ -68,6 +68,7 @@ public class NotebookAccessible : ContainerAccessible, SelectionIF
 	mixin SelectionT!(GtkNotebookAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_notebook_accessible_get_type();

@@ -145,6 +145,7 @@ public struct DBusError
 		return new ErrorG(cast(GError*) p);
 	}
 
+	/** */
 	public static GQuark quark()
 	{
 		return g_dbus_error_quark();

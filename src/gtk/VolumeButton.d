@@ -70,6 +70,7 @@ public class VolumeButton : ScaleButton
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_volume_button_get_type();

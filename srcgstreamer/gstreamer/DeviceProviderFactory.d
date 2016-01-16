@@ -78,6 +78,7 @@ public class DeviceProviderFactory : PluginFeature
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_device_provider_factory_get_type();

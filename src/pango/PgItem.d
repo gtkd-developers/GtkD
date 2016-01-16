@@ -59,6 +59,7 @@ public class PgItem
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_item_get_type();

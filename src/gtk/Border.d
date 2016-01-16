@@ -72,6 +72,7 @@ public class Border
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_border_get_type();

@@ -61,6 +61,7 @@ public class Once
 	}
 
 
+	/** */
 	public void* impl(GThreadFunc func, void* arg)
 	{
 		return g_once_impl(gOnce, func, arg);

@@ -82,6 +82,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	mixin DBusInterfaceT!(GDBusInterfaceSkeleton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_interface_skeleton_get_type();

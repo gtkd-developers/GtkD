@@ -68,6 +68,7 @@ public class IconViewAccessible : ContainerAccessible, SelectionIF
 	mixin SelectionT!(GtkIconViewAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_view_accessible_get_type();

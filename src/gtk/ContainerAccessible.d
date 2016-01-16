@@ -63,6 +63,7 @@ public class ContainerAccessible : WidgetAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_container_accessible_get_type();

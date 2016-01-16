@@ -171,6 +171,7 @@ public class GLArea : Widget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gl_area_get_type();

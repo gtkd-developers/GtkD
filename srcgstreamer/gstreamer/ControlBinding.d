@@ -70,6 +70,7 @@ public class ControlBinding : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_control_binding_get_type();

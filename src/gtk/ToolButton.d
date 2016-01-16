@@ -101,6 +101,7 @@ public class ToolButton : ToolItem, ActionableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tool_button_get_type();

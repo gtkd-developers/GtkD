@@ -67,6 +67,7 @@ public class GLContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_gl_context_get_type();
@@ -212,6 +213,7 @@ public class GLContext : ObjectG
 		return gdk_gl_context_is_direct(gdkGLContext) != 0;
 	}
 
+	/** */
 	public bool makeCurrent(GLDrawableIF draw, GLDrawableIF read)
 	{
 		return gdk_gl_context_make_current(gdkGLContext, (draw is null) ? null : draw.getGLDrawableStruct(), (read is null) ? null : read.getGLDrawableStruct()) != 0;

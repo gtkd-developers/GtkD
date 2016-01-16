@@ -38,8 +38,12 @@ struct GstVideoOverlayInterface
 	 * parent interface type.
 	 */
 	GTypeInterface iface;
+	/** */
 	extern(C) void function(GstVideoOverlay* overlay) expose;
+	/** */
 	extern(C) void function(GstVideoOverlay* overlay, int handleEvents) handleEvents;
+	/** */
 	extern(C) void function(GstVideoOverlay* overlay, int x, int y, int width, int height) setRenderRectangle;
+	/** */
 	extern(C) void function(GstVideoOverlay* overlay, size_t handle) setWindowHandle;
 }

@@ -103,6 +103,7 @@ public class Frame : Bin
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_frame_get_type();

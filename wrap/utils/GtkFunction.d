@@ -1162,6 +1162,10 @@ final class GtkFunction
 
 			buff ~= " */";
 		}
+		else if ( wrapper.includeComments )
+		{
+			buff ~= "/** */\n";
+		}
 	}
 
 	private void resolveLength()

@@ -463,6 +463,7 @@ public class Message
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_message_get_type();

@@ -73,6 +73,7 @@ public class Cancellable : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_cancellable_get_type();

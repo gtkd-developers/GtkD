@@ -64,6 +64,7 @@ public class Range
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_range_get_type();

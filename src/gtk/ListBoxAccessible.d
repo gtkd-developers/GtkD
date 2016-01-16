@@ -68,6 +68,7 @@ public class ListBoxAccessible : ContainerAccessible, SelectionIF
 	mixin SelectionT!(GtkListBoxAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_list_box_accessible_get_type();

@@ -185,6 +185,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_connection_get_type();

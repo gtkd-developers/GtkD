@@ -32,6 +32,7 @@ public  import gstreamerc.gstreamertypes;
 public class DoubleRange
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_double_range_get_type();

@@ -77,6 +77,7 @@ public class Device : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_device_get_type();

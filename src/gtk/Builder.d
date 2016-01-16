@@ -455,6 +455,7 @@ private bool startsWith(string str, string prefix)
 /**
  */
 
+/** */
 public static GType getType()
 {
 	return gtk_builder_get_type();

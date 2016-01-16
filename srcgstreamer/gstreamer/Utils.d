@@ -155,6 +155,7 @@ public struct Utils
 		gst_util_fraction_to_double(srcN, srcD, &dest);
 	}
 
+	/** */
 	public static ulong gdoubleToGuint64(double value)
 	{
 		return gst_util_gdouble_to_guint64(value);
@@ -215,6 +216,7 @@ public struct Utils
 		return gst_util_group_id_next();
 	}
 
+	/** */
 	public static double guint64ToGdouble(ulong value)
 	{
 		return gst_util_guint64_to_gdouble(value);

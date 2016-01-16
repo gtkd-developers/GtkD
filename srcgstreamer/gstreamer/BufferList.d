@@ -67,6 +67,7 @@ public class BufferList
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_buffer_list_get_type();

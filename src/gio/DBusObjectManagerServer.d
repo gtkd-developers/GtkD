@@ -88,6 +88,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	mixin DBusObjectManagerT!(GDBusObjectManagerServer);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_object_manager_server_get_type();

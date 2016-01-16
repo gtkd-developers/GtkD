@@ -80,6 +80,7 @@ public class SimpleAction : ObjectG, ActionIF
 	mixin ActionT!(GSimpleAction);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_simple_action_get_type();

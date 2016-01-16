@@ -57,6 +57,7 @@ public class ValueArray
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_value_array_get_type();

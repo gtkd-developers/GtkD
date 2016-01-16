@@ -84,6 +84,7 @@ public class Window : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_window_get_type();
@@ -587,6 +588,7 @@ public class Window : ObjectG
 		gdk_window_destroy(gdkWindow);
 	}
 
+	/** */
 	public void destroyNotify()
 	{
 		gdk_window_destroy_notify(gdkWindow);

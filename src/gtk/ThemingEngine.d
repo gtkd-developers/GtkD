@@ -81,6 +81,7 @@ public class ThemingEngine : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_theming_engine_get_type();

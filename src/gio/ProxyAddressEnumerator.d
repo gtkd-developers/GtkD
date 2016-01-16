@@ -67,6 +67,7 @@ public class ProxyAddressEnumerator : SocketAddressEnumerator
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_proxy_address_enumerator_get_type();

@@ -90,6 +90,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	mixin SeekableT!(GFileOutputStream);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_output_stream_get_type();

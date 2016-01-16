@@ -60,6 +60,7 @@ public class DBusPropertyInfo
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_property_info_get_type();

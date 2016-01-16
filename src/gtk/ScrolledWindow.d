@@ -149,6 +149,7 @@ public class ScrolledWindow : Bin
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_scrolled_window_get_type();

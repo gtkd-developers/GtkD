@@ -165,6 +165,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_chooser_dialog_get_type();

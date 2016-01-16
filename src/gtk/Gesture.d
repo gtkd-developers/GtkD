@@ -160,6 +160,7 @@ public class Gesture : EventController
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_get_type();

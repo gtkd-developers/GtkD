@@ -82,6 +82,7 @@ public class NumerableIcon : EmblemedIcon
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_numerable_icon_get_type();

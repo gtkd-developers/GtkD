@@ -68,6 +68,7 @@ public class LinkButtonAccessible : ButtonAccessible, HyperlinkImplIF
 	mixin HyperlinkImplT!(GtkLinkButtonAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_link_button_accessible_get_type();

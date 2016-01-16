@@ -77,6 +77,7 @@ public class TextIter
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_iter_get_type();

@@ -272,6 +272,7 @@ public class Label : Misc
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_label_get_type();

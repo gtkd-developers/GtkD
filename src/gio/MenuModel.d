@@ -186,6 +186,7 @@ public class MenuModel : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_menu_model_get_type();

@@ -75,6 +75,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	mixin SocketConnectableT!(GSocketAddress);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_address_get_type();

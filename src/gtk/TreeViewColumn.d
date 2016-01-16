@@ -153,6 +153,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_view_column_get_type();
@@ -744,6 +745,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	int[string] connectedSignals;
 
 	void delegate(TreeViewColumn)[] onClickedListeners;
+	/** */
 	void addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "clicked" !in connectedSignals )

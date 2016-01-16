@@ -75,6 +75,7 @@ public class CellRendererText : CellRenderer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_text_get_type();

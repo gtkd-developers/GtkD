@@ -78,6 +78,7 @@ public class PgFontDescription
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return pango_font_description_get_type();

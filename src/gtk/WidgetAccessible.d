@@ -68,6 +68,7 @@ public class WidgetAccessible : Accessible, ComponentIF
 	mixin ComponentT!(GtkWidgetAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_widget_accessible_get_type();

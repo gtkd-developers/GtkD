@@ -71,6 +71,7 @@ public class FilenameCompleter : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_filename_completer_get_type();

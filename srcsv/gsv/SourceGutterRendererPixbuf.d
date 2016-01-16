@@ -77,6 +77,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_gutter_renderer_pixbuf_get_type();
@@ -118,6 +119,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
+	/** */
 	public string getIconName()
 	{
 		return Str.toString(gtk_source_gutter_renderer_pixbuf_get_icon_name(gtkSourceGutterRendererPixbuf));
@@ -152,16 +154,19 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 		return Str.toString(gtk_source_gutter_renderer_pixbuf_get_stock_id(gtkSourceGutterRendererPixbuf));
 	}
 
+	/** */
 	public void setGicon(IconIF icon)
 	{
 		gtk_source_gutter_renderer_pixbuf_set_gicon(gtkSourceGutterRendererPixbuf, (icon is null) ? null : icon.getIconStruct());
 	}
 
+	/** */
 	public void setIconName(string iconName)
 	{
 		gtk_source_gutter_renderer_pixbuf_set_icon_name(gtkSourceGutterRendererPixbuf, Str.toStringz(iconName));
 	}
 
+	/** */
 	public void setPixbuf(Pixbuf pixbuf)
 	{
 		gtk_source_gutter_renderer_pixbuf_set_pixbuf(gtkSourceGutterRendererPixbuf, (pixbuf is null) ? null : pixbuf.getPixbufStruct());

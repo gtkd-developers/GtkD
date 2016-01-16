@@ -75,6 +75,7 @@ public class AspectFrame : Frame
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_aspect_frame_get_type();

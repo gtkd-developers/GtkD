@@ -160,6 +160,7 @@ public class Color
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_color_get_type();

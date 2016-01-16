@@ -136,6 +136,7 @@ public class PopoverMenu : Popover
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_popover_menu_get_type();

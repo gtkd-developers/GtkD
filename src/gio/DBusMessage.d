@@ -74,6 +74,7 @@ public class DBusMessage : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_message_get_type();

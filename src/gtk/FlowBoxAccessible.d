@@ -68,6 +68,7 @@ public class FlowBoxAccessible : ContainerAccessible, SelectionIF
 	mixin SelectionT!(GtkFlowBoxAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_flow_box_accessible_get_type();

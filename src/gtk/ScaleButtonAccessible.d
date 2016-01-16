@@ -68,6 +68,7 @@ public class ScaleButtonAccessible : ButtonAccessible, ValueIF
 	mixin ValueT!(GtkScaleButtonAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_scale_button_accessible_get_type();

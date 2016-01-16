@@ -103,6 +103,7 @@ public class Fixed : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_fixed_get_type();

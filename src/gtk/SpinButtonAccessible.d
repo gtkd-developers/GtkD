@@ -68,6 +68,7 @@ public class SpinButtonAccessible : EntryAccessible, ValueIF
 	mixin ValueT!(GtkSpinButtonAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_spin_button_accessible_get_type();

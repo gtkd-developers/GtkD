@@ -61,11 +61,13 @@ public class ProtectionMeta
 	}
 
 
+	/** */
 	public static GstMetaInfo* getInfo()
 	{
 		return gst_protection_meta_get_info();
 	}
 
+	/** */
 	public static GType getType()
 	{
 		return gst_protection_meta_api_get_type();

@@ -76,6 +76,7 @@ public class GestureSingle : Gesture
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_single_get_type();

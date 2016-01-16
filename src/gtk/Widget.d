@@ -885,6 +885,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 */
 
+		/** */
 		public static GType getType()
 		{
 			return gtk_widget_get_type();
@@ -5865,6 +5866,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		int[string] connectedSignals;
 
 		void delegate(Widget)[] onAccelClosuresChangedListeners;
+		/** */
 		void addOnAccelClosuresChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "accel-closures-changed" !in connectedSignals )
@@ -7454,6 +7456,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		void delegate(Widget)[] onGrabFocusListeners;
+		/** */
 		void addOnGrabFocus(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "grab-focus" !in connectedSignals )
@@ -8137,6 +8140,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		void delegate(GtkDirectionType, Widget)[] onMoveFocusListeners;
+		/** */
 		void addOnMoveFocus(void delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "move-focus" !in connectedSignals )
@@ -8783,6 +8787,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		void delegate(SelectionData, uint, uint, Widget)[] onSelectionGetListeners;
+		/** */
 		void addOnSelectionGet(void delegate(SelectionData, uint, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "selection-get" !in connectedSignals )
@@ -8871,6 +8876,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		void delegate(SelectionData, uint, Widget)[] onSelectionReceivedListeners;
+		/** */
 		void addOnSelectionReceived(void delegate(SelectionData, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "selection-received" !in connectedSignals )
@@ -9038,6 +9044,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		void delegate(Allocation, Widget)[] onSizeAllocateListeners;
+		/** */
 		void addOnSizeAllocate(void delegate(Allocation, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "size-allocate" !in connectedSignals )
@@ -9198,6 +9205,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		bool delegate(Event, Widget)[] onTouchListeners;
+		/** */
 		void addOnTouch(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			if ( "touch-event" !in connectedSignals )

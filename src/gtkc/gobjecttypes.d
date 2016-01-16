@@ -406,6 +406,7 @@ struct GClosure
 		uint, "inMarshal", 1,
 		uint, "isInvalid", 1
 	));
+	/** */
 	extern(C) void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) marshal;
 	void* data;
 	GClosureNotifyData* notifiers;
@@ -545,13 +546,21 @@ struct GObjectClass
 	 */
 	GTypeClass gTypeClass;
 	GSList* constructProperties;
+	/** */
 	extern(C) GObject* function(GType type, uint nConstructProperties, GObjectConstructParam* constructProperties) constructor;
+	/** */
 	extern(C) void function(GObject* object, uint propertyId, GValue* value, GParamSpec* pspec) setProperty;
+	/** */
 	extern(C) void function(GObject* object, uint propertyId, GValue* value, GParamSpec* pspec) getProperty;
+	/** */
 	extern(C) void function(GObject* object) dispose;
+	/** */
 	extern(C) void function(GObject* object) finalize;
+	/** */
 	extern(C) void function(GObject* object, uint nPspecs, GParamSpec** pspecs) dispatchPropertiesChanged;
+	/** */
 	extern(C) void function(GObject* object, GParamSpec* pspec) notify;
+	/** */
 	extern(C) void function(GObject* object) constructed;
 	size_t flags;
 	void*[6] pdummy;
@@ -658,9 +667,13 @@ struct GParamSpecClass
 	 * the #GValue type for this parameter
 	 */
 	GType valueType;
+	/** */
 	extern(C) void function(GParamSpec* pspec) finalize;
+	/** */
 	extern(C) void function(GParamSpec* pspec, GValue* value) valueSetDefault;
+	/** */
 	extern(C) int function(GParamSpec* pspec, GValue* value) valueValidate;
+	/** */
 	extern(C) int function(GParamSpec* pspec, GValue* value1, GValue* value2) valuesCmp;
 	void*[4] dummy;
 }
@@ -900,14 +913,19 @@ struct GParamSpecTypeInfo
 	 * Prior to GLib 2.10, it specified the number of pre-allocated (cached) instances to reserve memory for (0 indicates no caching). Since GLib 2.10, it is ignored, since instances are allocated with the [slice allocator][glib-Memory-Slices] now.
 	 */
 	ushort nPreallocs;
+	/** */
 	extern(C) void function(GParamSpec* pspec) instanceInit;
 	/**
 	 * The #GType of values conforming to this #GParamSpec
 	 */
 	GType valueType;
+	/** */
 	extern(C) void function(GParamSpec* pspec) finalize;
+	/** */
 	extern(C) void function(GParamSpec* pspec, GValue* value) valueSetDefault;
+	/** */
 	extern(C) int function(GParamSpec* pspec, GValue* value) valueValidate;
+	/** */
 	extern(C) int function(GParamSpec* pspec, GValue* value1, GValue* value2) valuesCmp;
 }
 
@@ -1260,11 +1278,17 @@ struct GTypeModuleClass
 	 * the parent class
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) int function(GTypeModule* modul) load;
+	/** */
 	extern(C) void function(GTypeModule* modul) unload;
+	/** */
 	extern(C) void function() reserved1;
+	/** */
 	extern(C) void function() reserved2;
+	/** */
 	extern(C) void function() reserved3;
+	/** */
 	extern(C) void function() reserved4;
 }
 
@@ -1329,9 +1353,13 @@ struct GTypeQuery
  */
 struct GTypeValueTable
 {
+	/** */
 	extern(C) void function(GValue* value) valueInit;
+	/** */
 	extern(C) void function(GValue* value) valueFree;
+	/** */
 	extern(C) void function(GValue* srcValue, GValue* destValue) valueCopy;
+	/** */
 	extern(C) void* function(GValue* value) valuePeekPointer;
 	/**
 	 * A string format describing how to collect the contents of
@@ -1348,6 +1376,7 @@ struct GTypeValueTable
 	 * needs to be used, and for collection of floats 'd'.
 	 */
 	const(char)* collectFormat;
+	/** */
 	extern(C) char* function(GValue* value, uint nCollectValues, GTypeCValue* collectValues, uint collectFlags) collectValue;
 	/**
 	 * Format description of the arguments to collect for @lcopy_value,
@@ -1355,6 +1384,7 @@ struct GTypeValueTable
 	 * only of 'p's to provide lcopy_value() with pointers to storage locations.
 	 */
 	const(char)* lcopyFormat;
+	/** */
 	extern(C) char* function(GValue* value, uint nCollectValues, GTypeCValue* collectValues, uint collectFlags) lcopyValue;
 }
 

@@ -79,6 +79,7 @@ public class RcStyle : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_rc_style_get_type();

@@ -115,6 +115,7 @@ public class Pipeline : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_pipeline_get_type();

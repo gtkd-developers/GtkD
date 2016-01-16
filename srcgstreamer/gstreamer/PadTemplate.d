@@ -132,6 +132,7 @@ public class PadTemplate : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_pad_template_get_type();

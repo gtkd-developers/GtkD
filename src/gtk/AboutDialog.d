@@ -108,6 +108,7 @@ public class AboutDialog : Dialog
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_about_dialog_get_type();

@@ -207,6 +207,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_object_manager_client_get_type();

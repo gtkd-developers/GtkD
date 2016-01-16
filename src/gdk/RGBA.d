@@ -146,6 +146,7 @@ public class RGBA
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_rgba_get_type();

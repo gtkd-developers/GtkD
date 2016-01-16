@@ -32,6 +32,7 @@ public  import gstreamerc.gstreamertypes;
 public class IntRange
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_int_range_get_type();

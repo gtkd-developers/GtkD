@@ -66,6 +66,7 @@ public class SourceMap : SourceView
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_map_get_type();

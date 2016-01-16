@@ -140,6 +140,7 @@ public class TestDBus : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_test_dbus_get_type();

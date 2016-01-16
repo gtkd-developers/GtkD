@@ -58,6 +58,7 @@ public class SourceEncoding
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_encoding_get_type();

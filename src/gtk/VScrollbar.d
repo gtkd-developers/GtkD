@@ -76,6 +76,7 @@ public class VScrollbar : Scrollbar
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_vscrollbar_get_type();

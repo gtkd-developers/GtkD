@@ -83,6 +83,7 @@ public class SocketListener : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_listener_get_type();

@@ -219,6 +219,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_pixbuf_get_type();

@@ -168,6 +168,7 @@ public class Expander : Bin
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_expander_get_type();
@@ -418,6 +419,7 @@ public class Expander : Bin
 	int[string] connectedSignals;
 
 	void delegate(Expander)[] onActivateListeners;
+	/** */
 	void addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "activate" !in connectedSignals )

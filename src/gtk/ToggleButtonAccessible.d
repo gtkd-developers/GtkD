@@ -63,6 +63,7 @@ public class ToggleButtonAccessible : ButtonAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_toggle_button_accessible_get_type();

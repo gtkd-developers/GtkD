@@ -75,6 +75,7 @@ public class CellAreaContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_area_context_get_type();

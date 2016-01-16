@@ -69,6 +69,7 @@ public class FilterInputStream : InputStream
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_filter_input_stream_get_type();

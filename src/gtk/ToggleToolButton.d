@@ -86,6 +86,7 @@ public class ToggleToolButton : ToolButton
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_toggle_tool_button_get_type();

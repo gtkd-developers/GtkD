@@ -230,6 +230,7 @@ public class Bin : Element, ChildProxyIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_bin_get_type();

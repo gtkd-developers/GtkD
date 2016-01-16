@@ -775,6 +775,7 @@ public class VariantType
 		return new VariantType(cast(GVariantType*) p);
 	}
 
+	/** */
 	public static VariantType checked(string arg0)
 	{
 		auto p = g_variant_type_checked_(Str.toStringz(arg0));

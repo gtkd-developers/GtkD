@@ -178,6 +178,7 @@ public class DeviceManager : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_device_manager_get_type();

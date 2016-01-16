@@ -73,6 +73,7 @@ public class ComboBoxAccessible : ContainerAccessible, ActionIF, SelectionIF
 	mixin SelectionT!(GtkComboBoxAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_combo_box_accessible_get_type();

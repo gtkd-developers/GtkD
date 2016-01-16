@@ -71,6 +71,7 @@ public class Registry : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_registry_get_type();

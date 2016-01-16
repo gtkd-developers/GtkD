@@ -1395,6 +1395,7 @@ public struct Str
 		return Str.toString(g_strup(Str.toStringz(str)));
 	}
 
+	/** */
 	public static GType strvGetType()
 	{
 		return g_strv_get_type();

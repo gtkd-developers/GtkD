@@ -403,6 +403,7 @@ public class ComboBoxText : ComboBox
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_combo_box_text_get_type();

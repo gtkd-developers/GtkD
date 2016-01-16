@@ -75,6 +75,7 @@ public class CellRendererProgress : CellRenderer, OrientableIF
 	mixin OrientableT!(GtkCellRendererProgress);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_progress_get_type();

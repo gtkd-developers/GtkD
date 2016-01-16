@@ -68,6 +68,7 @@ public class ExpanderAccessible : ContainerAccessible, ActionIF
 	mixin ActionT!(GtkExpanderAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_expander_accessible_get_type();

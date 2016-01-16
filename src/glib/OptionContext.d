@@ -524,6 +524,7 @@ public class OptionContext
 		this(cast(GOptionContext*) p);
 	}
 
+	/** */
 	public static GQuark optionErrorQuark()
 	{
 		return g_option_error_quark();

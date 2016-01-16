@@ -134,6 +134,7 @@ public class Subprocess : ObjectG, InitableIF
 	mixin InitableT!(GSubprocess);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_subprocess_get_type();

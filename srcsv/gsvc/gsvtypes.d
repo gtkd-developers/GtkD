@@ -380,11 +380,17 @@ struct GtkSourceBuffer
 struct GtkSourceBufferClass
 {
 	GtkTextBufferClass parentClass;
+	/** */
 	extern(C) void function(GtkSourceBuffer* buffer) undo;
+	/** */
 	extern(C) void function(GtkSourceBuffer* buffer) redo;
+	/** */
 	extern(C) void function(GtkSourceBuffer* buffer, GtkTextIter* iter, GtkSourceBracketMatchType state) bracketMatched;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
+	/** */
 	extern(C) void function() GtkSourceReserved3;
 }
 
@@ -399,12 +405,19 @@ struct GtkSourceCompletion
 struct GtkSourceCompletionClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) int function(GtkSourceCompletion* completion, GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal) proposalActivated;
+	/** */
 	extern(C) void function(GtkSourceCompletion* completion) show;
+	/** */
 	extern(C) void function(GtkSourceCompletion* completion) hide;
+	/** */
 	extern(C) void function(GtkSourceCompletion* completion, GtkSourceCompletionContext* context) populateContext;
+	/** */
 	extern(C) void function(GtkSourceCompletion* completion, GtkScrollStep step, int num) moveCursor;
+	/** */
 	extern(C) void function(GtkSourceCompletion* completion, GtkScrollStep step, int num) movePage;
+	/** */
 	extern(C) void function(GtkSourceCompletion* completion) activateProposal;
 }
 
@@ -417,9 +430,13 @@ struct GtkSourceCompletionContext
 struct GtkSourceCompletionContextClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkSourceCompletionContext* context) cancelled;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
+	/** */
 	extern(C) void function() GtkSourceReserved3;
 }
 
@@ -434,6 +451,7 @@ struct GtkSourceCompletionInfo
 struct GtkSourceCompletionInfoClass
 {
 	GtkWindowClass parentClass;
+	/** */
 	extern(C) void function(GtkSourceCompletionInfo* info) beforeShow;
 }
 
@@ -531,6 +549,7 @@ struct GtkSourceCompletionProposalIface
 	 * Return: %TRUE if @proposal and @object are the same proposal
 	 */
 	extern(C) int function(GtkSourceCompletionProposal* proposal, GtkSourceCompletionProposal* other) equal;
+	/** */
 	extern(C) void function(GtkSourceCompletionProposal* proposal) changed;
 }
 
@@ -576,6 +595,7 @@ struct GtkSourceCompletionProviderIface
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	extern(C) GIcon* function(GtkSourceCompletionProvider* provider) getGicon;
+	/** */
 	extern(C) void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) populate;
 	/**
 	 *
@@ -602,6 +622,7 @@ struct GtkSourceCompletionProviderIface
 	 *     info widget.
 	 */
 	extern(C) GtkWidget* function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal) getInfoWidget;
+	/** */
 	extern(C) void function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkSourceCompletionInfo* info) updateInfo;
 	/**
 	 *
@@ -718,10 +739,15 @@ struct GtkSourceGutterRenderer
 struct GtkSourceGutterRendererClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, cairo_t* cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkTextIter* start, GtkTextIter* end) begin;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, cairo_t* cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state) draw;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer) end;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, GtkTextView* oldView) changeView;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, GtkTextBuffer* oldBuffer) changeBuffer;
 	/**
 	 *
@@ -733,7 +759,9 @@ struct GtkSourceGutterRendererClass
 	 * Return: %TRUE if the renderer can be activated, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event) queryActivatable;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event) activate;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer) queueDraw;
 	/**
 	 *
@@ -747,6 +775,7 @@ struct GtkSourceGutterRendererClass
 	 * Return: %TRUE if the tooltip has been set, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, int x, int y, GtkTooltip* tooltip) queryTooltip;
+	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state) queryData;
 }
 
@@ -787,7 +816,9 @@ struct GtkSourceLanguage
 struct GtkSourceLanguageClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
 }
 
@@ -800,9 +831,13 @@ struct GtkSourceLanguageManager
 struct GtkSourceLanguageManagerClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
+	/** */
 	extern(C) void function() GtkSourceReserved3;
+	/** */
 	extern(C) void function() GtkSourceReserved4;
 }
 
@@ -843,7 +878,9 @@ struct GtkSourceMarkAttributesPrivate;
 struct GtkSourceMarkClass
 {
 	GtkTextMarkClass parentClass;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
 }
 
@@ -858,7 +895,9 @@ struct GtkSourcePrintCompositor
 struct GtkSourcePrintCompositorClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
 }
 
@@ -924,6 +963,7 @@ struct GtkSourceStyleSchemeChooserInterface
 	 * Return: the currently-selected scheme.
 	 */
 	extern(C) GtkSourceStyleScheme* function(GtkSourceStyleSchemeChooser* chooser) getStyleScheme;
+	/** */
 	extern(C) void function(GtkSourceStyleSchemeChooser* chooser, GtkSourceStyleScheme* scheme) setStyleScheme;
 	void*[12] padding;
 }
@@ -941,7 +981,9 @@ struct GtkSourceStyleSchemeChooserWidgetClass
 struct GtkSourceStyleSchemeClass
 {
 	GObjectClass baseClass;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
 }
 
@@ -954,9 +996,13 @@ struct GtkSourceStyleSchemeManager
 struct GtkSourceStyleSchemeManagerClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkSourceReserved1;
+	/** */
 	extern(C) void function() GtkSourceReserved2;
+	/** */
 	extern(C) void function() GtkSourceReserved3;
+	/** */
 	extern(C) void function() GtkSourceReserved4;
 }
 
@@ -983,11 +1029,17 @@ struct GtkSourceUndoManagerIface
 	 * Return: %TRUE if there are redo operations available, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceUndoManager* manager) canRedo;
+	/** */
 	extern(C) void function(GtkSourceUndoManager* manager) undo;
+	/** */
 	extern(C) void function(GtkSourceUndoManager* manager) redo;
+	/** */
 	extern(C) void function(GtkSourceUndoManager* manager) beginNotUndoableAction;
+	/** */
 	extern(C) void function(GtkSourceUndoManager* manager) endNotUndoableAction;
+	/** */
 	extern(C) void function(GtkSourceUndoManager* manager) canUndoChanged;
+	/** */
 	extern(C) void function(GtkSourceUndoManager* manager) canRedoChanged;
 }
 
@@ -1000,11 +1052,17 @@ struct GtkSourceView
 struct GtkSourceViewClass
 {
 	GtkTextViewClass parentClass;
+	/** */
 	extern(C) void function(GtkSourceView* view) undo;
+	/** */
 	extern(C) void function(GtkSourceView* view) redo;
+	/** */
 	extern(C) void function(GtkSourceView* view, GtkTextIter* iter, GdkEvent* event) lineMarkActivated;
+	/** */
 	extern(C) void function(GtkSourceView* view) showCompletion;
+	/** */
 	extern(C) void function(GtkSourceView* view, int copy, int step) moveLines;
+	/** */
 	extern(C) void function(GtkSourceView* view, int step) moveWords;
 }
 

@@ -78,6 +78,7 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	mixin DBusObjectT!(GDBusObjectProxy);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_object_proxy_get_type();

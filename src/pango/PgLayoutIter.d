@@ -64,6 +64,7 @@ public class PgLayoutIter
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_layout_iter_get_type();

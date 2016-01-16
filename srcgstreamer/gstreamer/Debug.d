@@ -51,16 +51,19 @@ public struct Debug
 		gst_debug_add_log_function(func, userData, notify);
 	}
 
+	/** */
 	public static string binToDotData(Bin bin, GstDebugGraphDetails details)
 	{
 		return Str.toString(gst_debug_bin_to_dot_data((bin is null) ? null : bin.getBinStruct(), details));
 	}
 
+	/** */
 	public static void binToDotFile(Bin bin, GstDebugGraphDetails details, string fileName)
 	{
 		gst_debug_bin_to_dot_file((bin is null) ? null : bin.getBinStruct(), details, Str.toStringz(fileName));
 	}
 
+	/** */
 	public static void binToDotFileWithTs(Bin bin, GstDebugGraphDetails details, string fileName)
 	{
 		gst_debug_bin_to_dot_file_with_ts((bin is null) ? null : bin.getBinStruct(), details, Str.toStringz(fileName));

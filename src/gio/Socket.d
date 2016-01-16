@@ -132,6 +132,7 @@ public class Socket : ObjectG, InitableIF
 	mixin InitableT!(GSocket);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_get_type();

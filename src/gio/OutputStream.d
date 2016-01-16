@@ -79,6 +79,7 @@ public class OutputStream : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_output_stream_get_type();

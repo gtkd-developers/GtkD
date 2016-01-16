@@ -80,6 +80,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	mixin InitableT!(GInetAddressMask);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_inet_address_mask_get_type();

@@ -95,6 +95,7 @@ public class Assistant : Window
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_assistant_get_type();
@@ -684,6 +685,7 @@ public class Assistant : Window
 	}
 
 	void delegate(Assistant)[] onEscapeListeners;
+	/** */
 	void addOnEscape(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "escape" !in connectedSignals )

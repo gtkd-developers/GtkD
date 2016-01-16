@@ -80,6 +80,7 @@ public class Range : Widget, OrientableIF
 	mixin OrientableT!(GtkRange);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_range_get_type();

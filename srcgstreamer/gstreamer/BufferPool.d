@@ -109,6 +109,7 @@ public class BufferPool : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_buffer_pool_get_type();

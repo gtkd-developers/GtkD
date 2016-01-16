@@ -78,6 +78,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	mixin SeekableT!(GDataOutputStream);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_data_output_stream_get_type();

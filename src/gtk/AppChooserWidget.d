@@ -95,6 +95,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	mixin AppChooserT!(GtkAppChooserWidget);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_app_chooser_widget_get_type();

@@ -134,6 +134,7 @@ public class RecentManager : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_manager_get_type();

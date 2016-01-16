@@ -73,6 +73,7 @@ public class Requisition
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_requisition_get_type();

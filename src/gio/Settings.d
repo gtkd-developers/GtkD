@@ -354,6 +354,7 @@ public class Settings : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_settings_get_type();

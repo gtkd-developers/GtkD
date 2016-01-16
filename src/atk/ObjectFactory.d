@@ -70,6 +70,7 @@ public class ObjectFactory : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_object_factory_get_type();

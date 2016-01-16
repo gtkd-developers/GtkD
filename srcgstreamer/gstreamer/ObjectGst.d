@@ -135,6 +135,7 @@ public class ObjectGst : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_object_get_type();

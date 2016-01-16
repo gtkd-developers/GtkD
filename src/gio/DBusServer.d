@@ -91,6 +91,7 @@ public class DBusServer : ObjectG, InitableIF
 	mixin InitableT!(GDBusServer);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_server_get_type();

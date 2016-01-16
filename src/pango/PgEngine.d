@@ -66,6 +66,7 @@ public class PgEngine : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_engine_get_type();

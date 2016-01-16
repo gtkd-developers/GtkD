@@ -68,6 +68,7 @@ public class MenuShellAccessible : ContainerAccessible, SelectionIF
 	mixin SelectionT!(GtkMenuShellAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_shell_accessible_get_type();

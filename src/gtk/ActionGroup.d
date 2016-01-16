@@ -126,6 +126,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	mixin BuildableT!(GtkActionGroup);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_action_group_get_type();

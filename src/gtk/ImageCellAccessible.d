@@ -68,6 +68,7 @@ public class ImageCellAccessible : RendererCellAccessible, ImageIF
 	mixin ImageT!(GtkImageCellAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_image_cell_accessible_get_type();

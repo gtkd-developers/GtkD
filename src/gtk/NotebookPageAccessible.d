@@ -72,11 +72,13 @@ public class NotebookPageAccessible : ObjectAtk, ComponentIF
 	mixin ComponentT!(GtkNotebookPageAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_notebook_page_accessible_get_type();
 	}
 
+	/** */
 	public this(NotebookAccessible notebook, Widget child)
 	{
 		auto p = gtk_notebook_page_accessible_new((notebook is null) ? null : notebook.getNotebookAccessibleStruct(), (child is null) ? null : child.getWidgetStruct());
@@ -89,6 +91,7 @@ public class NotebookPageAccessible : ObjectAtk, ComponentIF
 		this(cast(GtkNotebookPageAccessible*) p, true);
 	}
 
+	/** */
 	public void invalidate()
 	{
 		gtk_notebook_page_accessible_invalidate(gtkNotebookPageAccessible);

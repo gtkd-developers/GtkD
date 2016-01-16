@@ -89,6 +89,7 @@ public class SocketConnection : IOStream
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_connection_get_type();

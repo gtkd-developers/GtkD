@@ -224,6 +224,7 @@ public class ApplicationCommandLine : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_application_command_line_get_type();

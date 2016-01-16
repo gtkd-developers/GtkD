@@ -77,6 +77,7 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 	mixin StyleSchemeChooserT!(GtkSourceStyleSchemeChooserButton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_style_scheme_chooser_button_get_type();

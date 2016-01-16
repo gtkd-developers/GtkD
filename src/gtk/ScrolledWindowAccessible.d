@@ -63,6 +63,7 @@ public class ScrolledWindowAccessible : ContainerAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_scrolled_window_accessible_get_type();

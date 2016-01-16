@@ -81,6 +81,7 @@ public class UnixSocketAddress : SocketAddress
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_unix_socket_address_get_type();

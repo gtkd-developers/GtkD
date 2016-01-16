@@ -72,6 +72,7 @@ public class PgFontsetSimple : PgFontset
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_fontset_simple_get_type();

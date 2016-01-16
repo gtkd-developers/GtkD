@@ -68,6 +68,7 @@ public class ArrowAccessible : WidgetAccessible, ImageIF
 	mixin ImageT!(GtkArrowAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_arrow_accessible_get_type();

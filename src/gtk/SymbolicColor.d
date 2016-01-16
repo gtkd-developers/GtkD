@@ -122,6 +122,7 @@ public class SymbolicColor
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_symbolic_color_get_type();

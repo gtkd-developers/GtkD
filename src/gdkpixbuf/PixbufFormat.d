@@ -57,6 +57,7 @@ public class PixbufFormat
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_pixbuf_format_get_type();

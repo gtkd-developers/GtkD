@@ -144,6 +144,7 @@ public class Application : GioApplication
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_application_get_type();

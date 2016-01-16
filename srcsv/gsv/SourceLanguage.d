@@ -64,6 +64,7 @@ public class SourceLanguage : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_language_get_type();

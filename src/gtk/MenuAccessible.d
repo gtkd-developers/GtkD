@@ -63,6 +63,7 @@ public class MenuAccessible : MenuShellAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_accessible_get_type();

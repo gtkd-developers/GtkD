@@ -82,6 +82,7 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	mixin RecentChooserT!(GtkRecentChooserWidget);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_chooser_widget_get_type();

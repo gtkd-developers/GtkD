@@ -84,6 +84,7 @@ public class HBox : Box
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hbox_get_type();

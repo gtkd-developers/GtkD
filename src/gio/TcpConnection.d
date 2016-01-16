@@ -68,6 +68,7 @@ public class TcpConnection : SocketConnection
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tcp_connection_get_type();

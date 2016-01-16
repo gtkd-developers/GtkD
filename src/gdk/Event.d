@@ -225,6 +225,7 @@ public class Event
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_event_get_type();

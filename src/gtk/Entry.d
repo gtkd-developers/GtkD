@@ -164,6 +164,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_entry_get_type();

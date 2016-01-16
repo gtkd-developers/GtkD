@@ -90,6 +90,7 @@ public class AppLaunchContext : GioAppLaunchContext
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_app_launch_context_get_type();

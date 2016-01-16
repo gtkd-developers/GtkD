@@ -99,6 +99,7 @@ public class FrameClock : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_frame_clock_get_type();

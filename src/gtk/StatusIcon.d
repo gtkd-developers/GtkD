@@ -158,6 +158,7 @@ public class StatusIcon : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_status_icon_get_type();

@@ -67,6 +67,7 @@ public class SourceFile : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_file_get_type();

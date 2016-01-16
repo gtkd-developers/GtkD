@@ -62,6 +62,7 @@ public class SettingsSchemaKey
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_settings_schema_key_get_type();

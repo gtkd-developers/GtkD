@@ -63,6 +63,7 @@ public class FrameTimings
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_frame_timings_get_type();

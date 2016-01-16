@@ -106,6 +106,7 @@ public class DBusAuthObserver : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_auth_observer_get_type();

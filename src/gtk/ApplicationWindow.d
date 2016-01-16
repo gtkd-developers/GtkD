@@ -178,6 +178,7 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	mixin ActionMapT!(GtkApplicationWindow);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_application_window_get_type();

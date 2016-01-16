@@ -99,6 +99,7 @@ public class PlacesSidebar : ScrolledWindow
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_places_sidebar_get_type();

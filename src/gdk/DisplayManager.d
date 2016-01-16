@@ -107,6 +107,7 @@ public class DisplayManager : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_display_manager_get_type();

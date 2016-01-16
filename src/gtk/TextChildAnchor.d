@@ -69,6 +69,7 @@ public class TextChildAnchor : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_child_anchor_get_type();

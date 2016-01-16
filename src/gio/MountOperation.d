@@ -84,6 +84,7 @@ public class MountOperation : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_mount_operation_get_type();

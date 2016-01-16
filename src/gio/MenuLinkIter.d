@@ -70,6 +70,7 @@ public class MenuLinkIter : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_menu_link_iter_get_type();

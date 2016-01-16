@@ -77,6 +77,7 @@ public class SettingsSchemaSource
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_settings_schema_source_get_type();

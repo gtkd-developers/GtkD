@@ -76,6 +76,7 @@ public class GestureDrag : GestureSingle
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_drag_get_type();

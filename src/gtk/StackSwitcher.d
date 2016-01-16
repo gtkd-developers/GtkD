@@ -79,6 +79,7 @@ public class StackSwitcher : Box
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_stack_switcher_get_type();

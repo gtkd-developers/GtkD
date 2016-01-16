@@ -80,6 +80,7 @@ public class HButtonBox : ButtonBox
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hbutton_box_get_type();

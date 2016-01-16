@@ -79,6 +79,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	mixin FileChooserT!(GtkFileChooserWidget);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_file_chooser_widget_get_type();

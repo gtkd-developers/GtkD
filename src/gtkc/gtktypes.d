@@ -3806,10 +3806,15 @@ struct GtkAboutDialog
 struct GtkAboutDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) int function(GtkAboutDialog* dialog, const(char)* uri) activateLink;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -3827,10 +3832,15 @@ struct GtkAccelGroupClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkAccelGroup* accelGroup, uint keyval, GdkModifierType modifier, GClosure* accelClosure) accelChanged;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -3875,9 +3885,13 @@ struct GtkAccelLabelClass
 	char* modNameControl;
 	char* modNameAlt;
 	char* modSeparator;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -3896,10 +3910,15 @@ struct GtkAccessible
 struct GtkAccessibleClass
 {
 	AtkObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkAccessible* accessible) connectWidgetDestroyed;
+	/** */
 	extern(C) void function(GtkAccessible* accessible) widgetSet;
+	/** */
 	extern(C) void function(GtkAccessible* accessible) widgetUnset;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -3919,9 +3938,13 @@ struct GtkActionBar
 struct GtkActionBarClass
 {
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -3933,6 +3956,7 @@ struct GtkActionClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkAction* action) activate;
 	GType menuItemType;
 	GType toolbarItemType;
@@ -3950,7 +3974,9 @@ struct GtkActionClass
 	 * Return: a toolbar item connected to the action.
 	 */
 	extern(C) GtkWidget* function(GtkAction* action) createToolItem;
+	/** */
 	extern(C) void function(GtkAction* action, GtkWidget* proxy) connectProxy;
+	/** */
 	extern(C) void function(GtkAction* action, GtkWidget* proxy) disconnectProxy;
 	/**
 	 *
@@ -3960,9 +3986,13 @@ struct GtkActionClass
 	 *     action, or %NULL.
 	 */
 	extern(C) GtkWidget* function(GtkAction* action) createMenu;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4023,9 +4053,13 @@ struct GtkActionGroupClass
 	 * Return: the action, or %NULL if no action by that name exists
 	 */
 	extern(C) GtkAction* function(GtkActionGroup* actionGroup, const(char)* actionName) getAction;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4048,6 +4082,7 @@ struct GtkActionableInterface
 	 * Return: the action name, or %NULL if none is set
 	 */
 	extern(C) const(char)* function(GtkActionable* actionable) getActionName;
+	/** */
 	extern(C) void function(GtkActionable* actionable, const(char)* actionName) setActionName;
 	/**
 	 *
@@ -4056,6 +4091,7 @@ struct GtkActionableInterface
 	 * Return: the current target value
 	 */
 	extern(C) GVariant* function(GtkActionable* actionable) getActionTargetValue;
+	/** */
 	extern(C) void function(GtkActionable* actionable, GVariant* targetValue) setActionTargetValue;
 }
 
@@ -4069,7 +4105,9 @@ struct GtkActivatable;
 struct GtkActivatableIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkActivatable* activatable, GtkAction* action, const(char)* propertyName) update;
+	/** */
 	extern(C) void function(GtkActivatable* activatable, GtkAction* action) syncActionProperties;
 }
 
@@ -4082,11 +4120,17 @@ struct GtkAdjustment
 struct GtkAdjustmentClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkAdjustment* adjustment) changed;
+	/** */
 	extern(C) void function(GtkAdjustment* adjustment) valueChanged;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4104,9 +4148,13 @@ struct GtkAlignmentClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4126,6 +4174,7 @@ struct GtkAppChooserButtonClass
 	 * The parent class.
 	 */
 	GtkComboBoxClass parentClass;
+	/** */
 	extern(C) void function(GtkAppChooserButton* self, const(char)* itemName) customItemActivated;
 	void*[16] padding;
 }
@@ -4161,8 +4210,11 @@ struct GtkAppChooserWidgetClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function(GtkAppChooserWidget* self, GAppInfo* appInfo) applicationSelected;
+	/** */
 	extern(C) void function(GtkAppChooserWidget* self, GAppInfo* appInfo) applicationActivated;
+	/** */
 	extern(C) void function(GtkAppChooserWidget* self, GtkMenu* menu, GAppInfo* appInfo) populatePopup;
 	void*[16] padding;
 }
@@ -4181,7 +4233,9 @@ struct GtkApplicationClass
 	 * The parent class.
 	 */
 	GApplicationClass parentClass;
+	/** */
 	extern(C) void function(GtkApplication* application, GtkWindow* window) windowAdded;
+	/** */
 	extern(C) void function(GtkApplication* application, GtkWindow* window) windowRemoved;
 	void*[12] padding;
 }
@@ -4227,9 +4281,13 @@ struct GtkArrowAccessiblePrivate;
 struct GtkArrowClass
 {
 	GtkMiscClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4247,9 +4305,13 @@ struct GtkAspectFrameClass
 	 * The parent class.
 	 */
 	GtkFrameClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4267,14 +4329,23 @@ struct GtkAssistantClass
 	 * The parent class.
 	 */
 	GtkWindowClass parentClass;
+	/** */
 	extern(C) void function(GtkAssistant* assistant, GtkWidget* page) prepare;
+	/** */
 	extern(C) void function(GtkAssistant* assistant) apply;
+	/** */
 	extern(C) void function(GtkAssistant* assistant) close;
+	/** */
 	extern(C) void function(GtkAssistant* assistant) cancel;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
 }
 
@@ -4292,9 +4363,13 @@ struct GtkBinClass
 	 * The parent class.
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4466,9 +4541,13 @@ struct GtkBoxClass
 	 * The parent class.
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4487,6 +4566,7 @@ struct GtkBuildableIface
 	 * the parent class
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkBuildable* buildable, const(char)* name) setName;
 	/**
 	 *
@@ -4495,7 +4575,9 @@ struct GtkBuildableIface
 	 * Return: the name set with gtk_buildable_set_name()
 	 */
 	extern(C) const(char)* function(GtkBuildable* buildable) getName;
+	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* type) addChild;
+	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, const(char)* name, GValue* value) setBuildableProperty;
 	/**
 	 *
@@ -4520,8 +4602,11 @@ struct GtkBuildableIface
 	 *     if it doesn't.
 	 */
 	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, GMarkupParser* parser, void** data) customTagStart;
+	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, void** data) customTagEnd;
+	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, void* data) customFinished;
+	/** */
 	extern(C) void function(GtkBuildable* buildable, GtkBuilder* builder) parserFinished;
 	/**
 	 *
@@ -4552,13 +4637,21 @@ struct GtkBuilderClass
 	 *     if no type was found
 	 */
 	extern(C) GType function(GtkBuilder* builder, const(char)* typeName) getTypeFromName;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -4595,9 +4688,13 @@ struct GtkButtonBoxClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4609,15 +4706,25 @@ struct GtkButtonClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkButton* button) pressed;
+	/** */
 	extern(C) void function(GtkButton* button) released;
+	/** */
 	extern(C) void function(GtkButton* button) clicked;
+	/** */
 	extern(C) void function(GtkButton* button) enter;
+	/** */
 	extern(C) void function(GtkButton* button) leave;
+	/** */
 	extern(C) void function(GtkButton* button) activate;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4632,16 +4739,27 @@ struct GtkCalendar
 struct GtkCalendarClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) monthChanged;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) daySelected;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) daySelectedDoubleClick;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) prevMonth;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) nextMonth;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) prevYear;
+	/** */
 	extern(C) void function(GtkCalendar* calendar) nextYear;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4656,6 +4774,7 @@ struct GtkCellAccessible
 struct GtkCellAccessibleClass
 {
 	GtkAccessibleClass parentClass;
+	/** */
 	extern(C) void function(GtkCellAccessible* cell, int emitSignal) updateCache;
 }
 
@@ -4664,14 +4783,23 @@ struct GtkCellAccessibleParent;
 struct GtkCellAccessibleParentIface
 {
 	GTypeInterface parent;
+	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, int* x, int* y, int* width, int* height, AtkCoordType coordType) getCellExtents;
+	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, GdkRectangle* cellRect) getCellArea;
+	/** */
 	extern(C) int function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) grabFocus;
+	/** */
 	extern(C) int function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getChildIndex;
+	/** */
 	extern(C) GtkCellRendererState function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getRendererState;
+	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) expandCollapse;
+	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) activate;
+	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) edit;
+	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, AtkRelationSet* relationset) updateRelationset;
 }
 
@@ -4692,9 +4820,13 @@ struct GtkCellAreaBox
 struct GtkCellAreaBoxClass
 {
 	GtkCellAreaClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4703,9 +4835,13 @@ struct GtkCellAreaBoxPrivate;
 struct GtkCellAreaClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellRenderer* renderer) add;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellRenderer* renderer) remove;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellCallback callback, void* callbackData) foreac;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GdkRectangle* backgroundArea, GtkCellAllocCallback callback, void* callbackData) foreachAlloc;
 	/**
 	 *
@@ -4719,7 +4855,9 @@ struct GtkCellAreaClass
 	 * Return: %TRUE if the event was handled by @area.
 	 */
 	extern(C) int function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkEvent* event, GdkRectangle* cellArea, GtkCellRendererState flags) event;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, cairo_t* cr, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags, int paintFocus) render;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkTreeModel* treeModel, GtkTreeIter* iter, int isExpander, int isExpanded) applyAttributes;
 	/**
 	 *
@@ -4743,11 +4881,17 @@ struct GtkCellAreaClass
 	 * Return: The #GtkSizeRequestMode preferred by @area.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkCellArea* area) getRequestMode;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, int* minimumWidth, int* naturalWidth) getPreferredWidth;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, int width, int* minimumHeight, int* naturalHeight) getPreferredHeightForWidth;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, int* minimumHeight, int* naturalHeight) getPreferredHeight;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, int height, int* minimumWidth, int* naturalWidth) getPreferredWidthForHeight;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellRenderer* renderer, uint propertyId, GValue* value, GParamSpec* pspec) setCellProperty;
+	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellRenderer* renderer, uint propertyId, GValue* value, GParamSpec* pspec) getCellProperty;
 	/**
 	 *
@@ -4777,13 +4921,21 @@ struct GtkCellAreaClass
 	 * Return: Whether @area was successfully activated.
 	 */
 	extern(C) int function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GtkCellRendererState flags, int editOnly) activate;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -4796,15 +4948,25 @@ struct GtkCellAreaContext
 struct GtkCellAreaContextClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkCellAreaContext* context, int width, int height) allocate;
+	/** */
 	extern(C) void function(GtkCellAreaContext* context) reset;
+	/** */
 	extern(C) void function(GtkCellAreaContext* context, int width, int* minimumHeight, int* naturalHeight) getPreferredHeightForWidth;
+	/** */
 	extern(C) void function(GtkCellAreaContext* context, int height, int* minimumWidth, int* naturalWidth) getPreferredWidthForHeight;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
 }
 
@@ -4817,8 +4979,11 @@ struct GtkCellEditable;
 struct GtkCellEditableIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkCellEditable* cellEditable) editingDone;
+	/** */
 	extern(C) void function(GtkCellEditable* cellEditable) removeWidget;
+	/** */
 	extern(C) void function(GtkCellEditable* cellEditable, GdkEvent* event) startEditing;
 }
 
@@ -4827,12 +4992,19 @@ struct GtkCellLayout;
 struct GtkCellLayoutIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, int expand) packStart;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, int expand) packEnd;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout) clear;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, const(char)* attribute, int column) addAttribute;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy) setCellDataFunc;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell) clearAttributes;
+	/** */
 	extern(C) void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, int position) reorder;
 	/**
 	 *
@@ -4867,12 +5039,19 @@ struct GtkCellRendererAccel
 struct GtkCellRendererAccelClass
 {
 	GtkCellRendererTextClass parentClass;
+	/** */
 	extern(C) void function(GtkCellRendererAccel* accel, const(char)* pathString, uint accelKey, GdkModifierType accelMods, uint hardwareKeycode) accelEdited;
+	/** */
 	extern(C) void function(GtkCellRendererAccel* accel, const(char)* pathString) accelCleared;
+	/** */
 	extern(C) void function() GtkReserved0;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4888,12 +5067,19 @@ struct GtkCellRendererClass
 	 * Return: The #GtkSizeRequestMode preferred by this renderer.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkCellRenderer* cell) getRequestMode;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, int* minimumSize, int* naturalSize) getPreferredWidth;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, int width, int* minimumHeight, int* naturalHeight) getPreferredHeightForWidth;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, int* minimumSize, int* naturalSize) getPreferredHeight;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, int height, int* minimumWidth, int* naturalWidth) getPreferredWidthForHeight;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, GtkCellRendererState flags, GdkRectangle* cellArea, GdkRectangle* alignedArea) getAlignedArea;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkWidget* widget, GdkRectangle* cellArea, int* xOffset, int* yOffset, int* width, int* height) getSize;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, cairo_t* cr, GtkWidget* widget, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) render;
 	/**
 	 *
@@ -4923,11 +5109,16 @@ struct GtkCellRendererClass
 	 * Return: A new #GtkCellEditable, or %NULL
 	 */
 	extern(C) GtkCellEditable* function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, const(char)* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) startEditing;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell) editingCanceled;
+	/** */
 	extern(C) void function(GtkCellRenderer* cell, GtkCellEditable* editable, const(char)* path) editingStarted;
 	GtkCellRendererClassPrivate* priv;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4942,9 +5133,13 @@ struct GtkCellRendererCombo
 struct GtkCellRendererComboClass
 {
 	GtkCellRendererTextClass parent;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4959,9 +5154,13 @@ struct GtkCellRendererPixbuf
 struct GtkCellRendererPixbufClass
 {
 	GtkCellRendererClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4978,9 +5177,13 @@ struct GtkCellRendererProgress
 struct GtkCellRendererProgressClass
 {
 	GtkCellRendererClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -4995,9 +5198,13 @@ struct GtkCellRendererSpin
 struct GtkCellRendererSpinClass
 {
 	GtkCellRendererTextClass parent;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5012,9 +5219,13 @@ struct GtkCellRendererSpinner
 struct GtkCellRendererSpinnerClass
 {
 	GtkCellRendererClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5029,10 +5240,15 @@ struct GtkCellRendererText
 struct GtkCellRendererTextClass
 {
 	GtkCellRendererClass parentClass;
+	/** */
 	extern(C) void function(GtkCellRendererText* cellRendererText, const(char)* path, const(char)* newText) edited;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5047,10 +5263,15 @@ struct GtkCellRendererToggle
 struct GtkCellRendererToggleClass
 {
 	GtkCellRendererClass parentClass;
+	/** */
 	extern(C) void function(GtkCellRendererToggle* cellRendererToggle, const(char)* path) toggled;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5068,9 +5289,13 @@ struct GtkCellViewClass
 	 * The parent class.
 	 */
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5084,10 +5309,15 @@ struct GtkCheckButton
 struct GtkCheckButtonClass
 {
 	GtkToggleButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkCheckButton* checkButton, cairo_t* cr) drawIndicator;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5116,11 +5346,17 @@ struct GtkCheckMenuItemClass
 	 * The parent class.
 	 */
 	GtkMenuItemClass parentClass;
+	/** */
 	extern(C) void function(GtkCheckMenuItem* checkMenuItem) toggled;
+	/** */
 	extern(C) void function(GtkCheckMenuItem* checkMenuItem, cairo_t* cr) drawIndicator;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5137,10 +5373,15 @@ struct GtkColorButton
 struct GtkColorButtonClass
 {
 	GtkButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkColorButton* cp) colorSet;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5157,9 +5398,13 @@ struct GtkColorChooserDialog
 struct GtkColorChooserDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5168,9 +5413,13 @@ struct GtkColorChooserDialogPrivate;
 struct GtkColorChooserInterface
 {
 	GTypeInterface baseInterface;
+	/** */
 	extern(C) void function(GtkColorChooser* chooser, GdkRGBA* color) getRgba;
+	/** */
 	extern(C) void function(GtkColorChooser* chooser, GdkRGBA* color) setRgba;
+	/** */
 	extern(C) void function(GtkColorChooser* chooser, GtkOrientation orientation, int colorsPerLine, int nColors, GdkRGBA* colors) addPalette;
+	/** */
 	extern(C) void function(GtkColorChooser* chooser, GdkRGBA* color) colorActivated;
 	void*[12] padding;
 }
@@ -5187,13 +5436,21 @@ struct GtkColorChooserWidgetClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -5211,10 +5468,15 @@ struct GtkColorSelectionClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function(GtkColorSelection* colorSelection) colorChanged;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5227,9 +5489,13 @@ struct GtkColorSelectionDialog
 struct GtkColorSelectionDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5262,10 +5528,15 @@ struct GtkComboBoxClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkComboBox* comboBox) changed;
+	/** */
 	extern(C) char* function(GtkComboBox* comboBox, const(char)* path) formatEntryText;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
 }
 
@@ -5280,9 +5551,13 @@ struct GtkComboBoxText
 struct GtkComboBoxTextClass
 {
 	GtkComboBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5303,7 +5578,9 @@ struct GtkContainerAccessible
 struct GtkContainerAccessibleClass
 {
 	GtkWidgetAccessibleClass parentClass;
+	/** */
 	extern(C) int function(GtkContainer* container, GtkWidget* widget, void* data) addGtk;
+	/** */
 	extern(C) int function(GtkContainer* container, GtkWidget* widget, void* data) removeGtk;
 }
 
@@ -5328,10 +5605,15 @@ struct GtkContainerClass
 	 * The parent class.
 	 */
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(GtkContainer* container, GtkWidget* widget) add;
+	/** */
 	extern(C) void function(GtkContainer* container, GtkWidget* widget) remove;
+	/** */
 	extern(C) void function(GtkContainer* container) checkResize;
+	/** */
 	extern(C) void function(GtkContainer* container, int includeInternals, GtkCallback callback, void* callbackData) forall;
+	/** */
 	extern(C) void function(GtkContainer* container, GtkWidget* child) setFocusChild;
 	/**
 	 *
@@ -5340,8 +5622,11 @@ struct GtkContainerClass
 	 * Return: a #GType.
 	 */
 	extern(C) GType function(GtkContainer* container) childType;
+	/** */
 	extern(C) char* function(GtkContainer* container, GtkWidget* child) compositeName;
+	/** */
 	extern(C) void function(GtkContainer* container, GtkWidget* child, uint propertyId, GValue* value, GParamSpec* pspec) setChildProperty;
+	/** */
 	extern(C) void function(GtkContainer* container, GtkWidget* child, uint propertyId, GValue* value, GParamSpec* pspec) getChildProperty;
 	/**
 	 *
@@ -5356,13 +5641,21 @@ struct GtkContainerClass
 		uint, "HandleBorderWidth", 1,
 		uint, "", 31
 	));
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -5377,9 +5670,13 @@ struct GtkCssProvider
 struct GtkCssProviderClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkCssProvider* provider, GtkCssSection* section, GError* error) parsingError;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5399,11 +5696,17 @@ struct GtkDialogClass
 	 * The parent class.
 	 */
 	GtkWindowClass parentClass;
+	/** */
 	extern(C) void function(GtkDialog* dialog, int responseId) response;
+	/** */
 	extern(C) void function(GtkDialog* dialog) close;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5418,9 +5721,13 @@ struct GtkDrawingArea
 struct GtkDrawingAreaClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5429,10 +5736,15 @@ struct GtkEditable;
 struct GtkEditableInterface
 {
 	GTypeInterface baseIface;
+	/** */
 	extern(C) void function(GtkEditable* editable, const(char)* newText, int newTextLength, int* position) insertText;
+	/** */
 	extern(C) void function(GtkEditable* editable, int startPos, int endPos) deleteText;
+	/** */
 	extern(C) void function(GtkEditable* editable) changed;
+	/** */
 	extern(C) void function(GtkEditable* editable, const(char)* newText, int newTextLength, int* position) doInsertText;
+	/** */
 	extern(C) void function(GtkEditable* editable, int startPos, int endPos) doDeleteText;
 	/**
 	 *
@@ -5445,6 +5757,7 @@ struct GtkEditableInterface
 	 *     implementation and should be freed by the caller.
 	 */
 	extern(C) char* function(GtkEditable* editable, int startPos, int endPos) getChars;
+	/** */
 	extern(C) void function(GtkEditable* editable, int startPos, int endPos) setSelectionBounds;
 	/**
 	 *
@@ -5455,6 +5768,7 @@ struct GtkEditableInterface
 	 * Return: %TRUE if an area is selected, %FALSE otherwise
 	 */
 	extern(C) int function(GtkEditable* editable, int* startPos, int* endPos) getSelectionBounds;
+	/** */
 	extern(C) void function(GtkEditable* editable, int position) setPosition;
 	/**
 	 *
@@ -5493,8 +5807,11 @@ struct GtkEntryBuffer
 struct GtkEntryBufferClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkEntryBuffer* buffer, uint position, const(char)* chars, uint nChars) insertedText;
+	/** */
 	extern(C) void function(GtkEntryBuffer* buffer, uint position, uint nChars) deletedText;
+	/** */
 	extern(C) const(char)* function(GtkEntryBuffer* buffer, size_t* nBytes) getText;
 	/**
 	 *
@@ -5522,13 +5839,21 @@ struct GtkEntryBufferClass
 	 * Return: The number of characters deleted.
 	 */
 	extern(C) uint function(GtkEntryBuffer* buffer, uint position, uint nChars) deleteText;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -5547,24 +5872,43 @@ struct GtkEntryClass
 	 * The parent class.
 	 */
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(GtkEntry* entry, GtkWidget* popup) populatePopup;
+	/** */
 	extern(C) void function(GtkEntry* entry) activate;
+	/** */
 	extern(C) void function(GtkEntry* entry, GtkMovementStep step, int count, int extendSelection) moveCursor;
+	/** */
 	extern(C) void function(GtkEntry* entry, const(char)* str) insertAtCursor;
+	/** */
 	extern(C) void function(GtkEntry* entry, GtkDeleteType type, int count) deleteFromCursor;
+	/** */
 	extern(C) void function(GtkEntry* entry) backspace;
+	/** */
 	extern(C) void function(GtkEntry* entry) cutClipboard;
+	/** */
 	extern(C) void function(GtkEntry* entry) copyClipboard;
+	/** */
 	extern(C) void function(GtkEntry* entry) pasteClipboard;
+	/** */
 	extern(C) void function(GtkEntry* entry) toggleOverwrite;
+	/** */
 	extern(C) void function(GtkEntry* entry, int* x, int* y, int* width, int* height) getTextAreaSize;
+	/** */
 	extern(C) void function(GtkEntry* entry, int* x, int* y, int* width, int* height) getFrameSize;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
 }
 
@@ -5577,13 +5921,21 @@ struct GtkEntryCompletion
 struct GtkEntryCompletionClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) int function(GtkEntryCompletion* completion, GtkTreeModel* model, GtkTreeIter* iter) matchSelected;
+	/** */
 	extern(C) void function(GtkEntryCompletion* completion, int index) actionActivated;
+	/** */
 	extern(C) int function(GtkEntryCompletion* completion, const(char)* prefix) insertPrefix;
+	/** */
 	extern(C) int function(GtkEntryCompletion* completion, GtkTreeModel* model, GtkTreeIter* iter) cursorOnMatch;
+	/** */
 	extern(C) void function(GtkEntryCompletion* completion) noMatches;
+	/** */
 	extern(C) void function() GtkReserved0;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
 }
 
@@ -5604,9 +5956,13 @@ struct GtkEventBoxClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5641,10 +5997,15 @@ struct GtkExpanderClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkExpander* expander) activate;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5664,6 +6025,7 @@ struct GtkFileChooserButtonClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function(GtkFileChooserButton* fc) fileSet;
 	void* GtkReserved1;
 	void* GtkReserved2;
@@ -5682,9 +6044,13 @@ struct GtkFileChooserDialog
 struct GtkFileChooserDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5702,9 +6068,13 @@ struct GtkFileChooserWidgetClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5758,9 +6128,13 @@ struct GtkFixedChild
 struct GtkFixedClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5802,26 +6176,42 @@ struct GtkFlowBoxChildAccessibleClass
 struct GtkFlowBoxChildClass
 {
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkFlowBoxChild* child) activate;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
 }
 
 struct GtkFlowBoxClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkFlowBox* box, GtkFlowBoxChild* child) childActivated;
+	/** */
 	extern(C) void function(GtkFlowBox* box) selectedChildrenChanged;
+	/** */
 	extern(C) void function(GtkFlowBox* box) activateCursorChild;
+	/** */
 	extern(C) void function(GtkFlowBox* box) toggleCursorChild;
+	/** */
 	extern(C) int function(GtkFlowBox* box, GtkMovementStep step, int count) moveCursor;
+	/** */
 	extern(C) void function(GtkFlowBox* box) selectAll;
+	/** */
 	extern(C) void function(GtkFlowBox* box) unselectAll;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
 }
 
@@ -5834,10 +6224,15 @@ struct GtkFontButton
 struct GtkFontButtonClass
 {
 	GtkButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkFontButton* gfp) fontSet;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5857,9 +6252,13 @@ struct GtkFontChooserDialogClass
 	 * The parent class.
 	 */
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5894,8 +6293,11 @@ struct GtkFontChooserIface
 	 *     or -1 if no font size is selected.
 	 */
 	extern(C) int function(GtkFontChooser* fontchooser) getFontSize;
+	/** */
 	extern(C) void function(GtkFontChooser* fontchooser, GtkFontFilterFunc filter, void* userData, GDestroyNotify destroy) setFilterFunc;
+	/** */
 	extern(C) void function(GtkFontChooser* chooser, const(char)* fontname) fontActivated;
+	/** */
 	extern(C) void function(GtkFontChooser* fontchooser, PangoFontMap* fontmap) setFontMap;
 	/**
 	 *
@@ -5919,13 +6321,21 @@ struct GtkFontChooserWidgetClass
 	 * The parent class.
 	 */
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -5940,9 +6350,13 @@ struct GtkFontSelection
 struct GtkFontSelectionClass
 {
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5955,9 +6369,13 @@ struct GtkFontSelectionDialog
 struct GtkFontSelectionDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -5990,10 +6408,15 @@ struct GtkFrameClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkFrame* frame, GtkAllocation* allocation) computeChildAllocation;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6012,8 +6435,11 @@ struct GtkGLArea
 struct GtkGLAreaClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) int function(GtkGLArea* area, GdkGLContext* context) render;
+	/** */
 	extern(C) void function(GtkGLArea* area, int width, int height) resize;
+	/** */
 	extern(C) GdkGLContext* function(GtkGLArea* area) createContext;
 	void*[6] Padding;
 }
@@ -6068,13 +6494,21 @@ struct GtkGridClass
 	 * The parent class.
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -6119,11 +6553,17 @@ struct GtkHSV
 struct GtkHSVClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(GtkHSV* hsv) changed;
+	/** */
 	extern(C) void function(GtkHSV* hsv, GtkDirectionType type) move;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6171,11 +6611,17 @@ struct GtkHandleBoxClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkHandleBox* handleBox, GtkWidget* child) childAttached;
+	/** */
 	extern(C) void function(GtkHandleBox* handleBox, GtkWidget* child) childDetached;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6189,9 +6635,13 @@ struct GtkHeaderBar
 struct GtkHeaderBarClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6205,10 +6655,15 @@ struct GtkIMContext
 struct GtkIMContextClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkIMContext* context) preeditStart;
+	/** */
 	extern(C) void function(GtkIMContext* context) preeditEnd;
+	/** */
 	extern(C) void function(GtkIMContext* context) preeditChanged;
+	/** */
 	extern(C) void function(GtkIMContext* context, const(char)* str) commit;
+	/** */
 	extern(C) int function(GtkIMContext* context) retrieveSurrounding;
 	/**
 	 *
@@ -6220,7 +6675,9 @@ struct GtkIMContextClass
 	 * Return: %TRUE if the signal was handled.
 	 */
 	extern(C) int function(GtkIMContext* context, int offset, int nChars) deleteSurrounding;
+	/** */
 	extern(C) void function(GtkIMContext* context, GdkWindow* window) setClientWindow;
+	/** */
 	extern(C) void function(GtkIMContext* context, char** str, PangoAttrList** attrs, int* cursorPos) getPreeditString;
 	/**
 	 *
@@ -6230,11 +6687,17 @@ struct GtkIMContextClass
 	 * Return: %TRUE if the input method handled the key event.
 	 */
 	extern(C) int function(GtkIMContext* context, GdkEventKey* event) filterKeypress;
+	/** */
 	extern(C) void function(GtkIMContext* context) focusIn;
+	/** */
 	extern(C) void function(GtkIMContext* context) focusOut;
+	/** */
 	extern(C) void function(GtkIMContext* context) reset;
+	/** */
 	extern(C) void function(GtkIMContext* context, GdkRectangle* area) setCursorLocation;
+	/** */
 	extern(C) void function(GtkIMContext* context, int usePreedit) setUsePreedit;
+	/** */
 	extern(C) void function(GtkIMContext* context, const(char)* text, int len, int cursorIndex) setSurrounding;
 	/**
 	 *
@@ -6250,11 +6713,17 @@ struct GtkIMContextClass
 	 *     you must free the result stored in *text.
 	 */
 	extern(C) int function(GtkIMContext* context, char** text, int* cursorIndex) getSurrounding;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
 }
 
@@ -6308,9 +6777,13 @@ struct GtkIMMulticontext
 struct GtkIMMulticontextClass
 {
 	GtkIMContextClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6328,9 +6801,13 @@ struct GtkIconFactoryClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6356,10 +6833,15 @@ struct GtkIconThemeClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkIconTheme* iconTheme) changed;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6387,17 +6869,29 @@ struct GtkIconViewAccessiblePrivate;
 struct GtkIconViewClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkIconView* iconView, GtkTreePath* path) itemActivated;
+	/** */
 	extern(C) void function(GtkIconView* iconView) selectionChanged;
+	/** */
 	extern(C) void function(GtkIconView* iconView) selectAll;
+	/** */
 	extern(C) void function(GtkIconView* iconView) unselectAll;
+	/** */
 	extern(C) void function(GtkIconView* iconView) selectCursorItem;
+	/** */
 	extern(C) void function(GtkIconView* iconView) toggleCursorItem;
+	/** */
 	extern(C) int function(GtkIconView* iconView, GtkMovementStep step, int count) moveCursor;
+	/** */
 	extern(C) int function(GtkIconView* iconView) activateCursorItem;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6438,9 +6932,13 @@ struct GtkImageCellAccessiblePrivate;
 struct GtkImageClass
 {
 	GtkMiscClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6456,9 +6954,13 @@ struct GtkImageMenuItemClass
 	 * The parent class.
 	 */
 	GtkMenuItemClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6475,11 +6977,17 @@ struct GtkInfoBar
 struct GtkInfoBarClass
 {
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function(GtkInfoBar* infoBar, int responseId) response;
+	/** */
 	extern(C) void function(GtkInfoBar* infoBar) close;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6494,9 +7002,13 @@ struct GtkInvisible
 struct GtkInvisibleClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6524,17 +7036,29 @@ struct GtkLabelAccessiblePrivate;
 struct GtkLabelClass
 {
 	GtkMiscClass parentClass;
+	/** */
 	extern(C) void function(GtkLabel* label, GtkMovementStep step, int count, int extendSelection) moveCursor;
+	/** */
 	extern(C) void function(GtkLabel* label) copyClipboard;
+	/** */
 	extern(C) void function(GtkLabel* label, GtkMenu* menu) populatePopup;
+	/** */
 	extern(C) int function(GtkLabel* label, const(char)* uri) activateLink;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -6551,9 +7075,13 @@ struct GtkLayout
 struct GtkLayoutClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6581,6 +7109,7 @@ struct GtkLevelBarAccessiblePrivate;
 struct GtkLevelBarClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(GtkLevelBar* self, const(char)* name) offsetChanged;
 	void*[16] padding;
 }
@@ -6613,10 +7142,15 @@ struct GtkLinkButtonAccessiblePrivate;
 struct GtkLinkButtonClass
 {
 	GtkButtonClass parentClass;
+	/** */
 	extern(C) int function(GtkLinkButton* button) activateLink;
+	/** */
 	extern(C) void function() GtkPadding1;
+	/** */
 	extern(C) void function() GtkPadding2;
+	/** */
 	extern(C) void function() GtkPadding3;
+	/** */
 	extern(C) void function() GtkPadding4;
 }
 
@@ -6646,16 +7180,27 @@ struct GtkListBoxClass
 	 * The parent class.
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkListBox* box, GtkListBoxRow* row) rowSelected;
+	/** */
 	extern(C) void function(GtkListBox* box, GtkListBoxRow* row) rowActivated;
+	/** */
 	extern(C) void function(GtkListBox* box) activateCursorRow;
+	/** */
 	extern(C) void function(GtkListBox* box) toggleCursorRow;
+	/** */
 	extern(C) void function(GtkListBox* box, GtkMovementStep step, int count) moveCursor;
+	/** */
 	extern(C) void function(GtkListBox* box) selectedRowsChanged;
+	/** */
 	extern(C) void function(GtkListBox* box) selectAll;
+	/** */
 	extern(C) void function(GtkListBox* box) unselectAll;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
 }
 
@@ -6680,8 +7225,11 @@ struct GtkListBoxRowClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkListBoxRow* row) activate;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
 }
 
@@ -6694,9 +7242,13 @@ struct GtkListStore
 struct GtkListStoreClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6727,13 +7279,21 @@ struct GtkLockButtonClass
 	 * The parent class.
 	 */
 	GtkButtonClass parentClass;
+	/** */
 	extern(C) void function() reserved0;
+	/** */
 	extern(C) void function() reserved1;
+	/** */
 	extern(C) void function() reserved2;
+	/** */
 	extern(C) void function() reserved3;
+	/** */
 	extern(C) void function() reserved4;
+	/** */
 	extern(C) void function() reserved5;
+	/** */
 	extern(C) void function() reserved6;
+	/** */
 	extern(C) void function() reserved7;
 }
 
@@ -6767,9 +7327,13 @@ struct GtkMenuBar
 struct GtkMenuBarClass
 {
 	GtkMenuShellClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6797,9 +7361,13 @@ struct GtkMenuButtonAccessiblePrivate;
 struct GtkMenuButtonClass
 {
 	GtkToggleButtonClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6808,9 +7376,13 @@ struct GtkMenuButtonPrivate;
 struct GtkMenuClass
 {
 	GtkMenuShellClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6844,10 +7416,15 @@ struct GtkMenuItemClass
 		uint, "hideOnActivate", 1,
 		uint, "", 31
 	));
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem) activate;
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem) activateItem;
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem, int* requisition) toggleSizeRequest;
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem, int allocation) toggleSizeAllocate;
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem, const(char)* label) setLabel;
 	/**
 	 *
@@ -6857,11 +7434,17 @@ struct GtkMenuItemClass
 	 *     string used by the label, and must not be modified.
 	 */
 	extern(C) const(char)* function(GtkMenuItem* menuItem) getLabel;
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem) select;
+	/** */
 	extern(C) void function(GtkMenuItem* menuItem) deselect;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6896,18 +7479,31 @@ struct GtkMenuShellClass
 		uint, "submenuPlacement", 1,
 		uint, "", 31
 	));
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell) deactivate;
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell) selectionDone;
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell, GtkMenuDirectionType direction) moveCurrent;
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell, int forceHide) activateCurrent;
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell) cancel;
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell, GtkWidget* menuItem) selectItem;
+	/** */
 	extern(C) void function(GtkMenuShell* menuShell, GtkWidget* child, int position) insert;
+	/** */
 	extern(C) int function(GtkMenuShell* menuShell) getPopupDelay;
+	/** */
 	extern(C) int function(GtkMenuShell* menuShell, int distance) moveSelected;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6925,10 +7521,15 @@ struct GtkMenuToolButtonClass
 	 * The parent class.
 	 */
 	GtkToolButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkMenuToolButton* button) showMenu;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6943,9 +7544,13 @@ struct GtkMessageDialog
 struct GtkMessageDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6960,9 +7565,13 @@ struct GtkMisc
 struct GtkMiscClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -6982,9 +7591,13 @@ struct GtkMountOperationClass
 	 * The parent class.
 	 */
 	GMountOperationClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7012,24 +7625,43 @@ struct GtkNotebookAccessiblePrivate;
 struct GtkNotebookClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkNotebook* notebook, GtkWidget* page, uint pageNum) switchPage;
+	/** */
 	extern(C) int function(GtkNotebook* notebook, int moveFocus) selectPage;
+	/** */
 	extern(C) int function(GtkNotebook* notebook, GtkNotebookTab type) focusTab;
+	/** */
 	extern(C) int function(GtkNotebook* notebook, int offset) changeCurrentPage;
+	/** */
 	extern(C) void function(GtkNotebook* notebook, GtkDirectionType direction) moveFocusOut;
+	/** */
 	extern(C) int function(GtkNotebook* notebook, GtkDirectionType direction, int moveToLast) reorderTab;
+	/** */
 	extern(C) int function(GtkNotebook* notebook, GtkWidget* child, GtkWidget* tabLabel, GtkWidget* menuLabel, int position) insertPage;
+	/** */
 	extern(C) GtkNotebook* function(GtkNotebook* notebook, GtkWidget* page, int x, int y) createWindow;
+	/** */
 	extern(C) void function(GtkNotebook* notebook, GtkWidget* child, uint pageNum) pageReordered;
+	/** */
 	extern(C) void function(GtkNotebook* notebook, GtkWidget* child, uint pageNum) pageRemoved;
+	/** */
 	extern(C) void function(GtkNotebook* notebook, GtkWidget* child, uint pageNum) pageAdded;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -7073,9 +7705,13 @@ struct GtkOffscreenWindowClass
 	 * The parent class.
 	 */
 	GtkWindowClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7098,14 +7734,23 @@ struct GtkOverlayClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) int function(GtkOverlay* overlay, GtkWidget* widget, GtkAllocation* allocation) getChildPosition;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -7150,15 +7795,25 @@ struct GtkPanedAccessiblePrivate;
 struct GtkPanedClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) int function(GtkPaned* paned, int reverse) cycleChildFocus;
+	/** */
 	extern(C) int function(GtkPaned* paned) toggleHandleFocus;
+	/** */
 	extern(C) int function(GtkPaned* paned, GtkScrollType scroll) moveHandle;
+	/** */
 	extern(C) int function(GtkPaned* paned, int reverse) cycleHandleFocus;
+	/** */
 	extern(C) int function(GtkPaned* paned) acceptPosition;
+	/** */
 	extern(C) int function(GtkPaned* paned) cancelPosition;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7179,10 +7834,15 @@ struct GtkPlug
 struct GtkPlugClass
 {
 	GtkWindowClass parentClass;
+	/** */
 	extern(C) void function(GtkPlug* plug) embedded;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7207,6 +7867,7 @@ struct GtkPopoverAccessibleClass
 struct GtkPopoverClass
 {
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkPopover* popover) closed;
 	void*[10] reserved;
 }
@@ -7235,24 +7896,43 @@ struct GtkPrintOperationClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkPrintOperationResult result) done;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkPrintContext* context) beginPrint;
+	/** */
 	extern(C) int function(GtkPrintOperation* operation, GtkPrintContext* context) paginate;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkPrintContext* context, int pageNr, GtkPageSetup* setup) requestPageSetup;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkPrintContext* context, int pageNr) drawPage;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkPrintContext* context) endPrint;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation) statusChanged;
+	/** */
 	extern(C) GtkWidget* function(GtkPrintOperation* operation) createCustomWidget;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkWidget* widget) customWidgetApply;
+	/** */
 	extern(C) int function(GtkPrintOperation* operation, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent) preview;
+	/** */
 	extern(C) void function(GtkPrintOperation* operation, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings) updateCustomWidget;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -7261,8 +7941,11 @@ struct GtkPrintOperationPreview;
 struct GtkPrintOperationPreviewIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkPrintOperationPreview* preview, GtkPrintContext* context) ready;
+	/** */
 	extern(C) void function(GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkPageSetup* pageSetup) gotPageSize;
+	/** */
 	extern(C) void function(GtkPrintOperationPreview* preview, int pageNr) renderPage;
 	/**
 	 *
@@ -7272,14 +7955,23 @@ struct GtkPrintOperationPreviewIface
 	 * Return: %TRUE if the page has been selected for printing
 	 */
 	extern(C) int function(GtkPrintOperationPreview* preview, int pageNr) isSelected;
+	/** */
 	extern(C) void function(GtkPrintOperationPreview* preview) endPreview;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -7309,9 +8001,13 @@ struct GtkProgressBarAccessiblePrivate;
 struct GtkProgressBarClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7326,10 +8022,15 @@ struct GtkRadioAction
 struct GtkRadioActionClass
 {
 	GtkToggleActionClass parentClass;
+	/** */
 	extern(C) void function(GtkRadioAction* action, GtkRadioAction* current) changed;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7394,10 +8095,15 @@ struct GtkRadioButtonAccessiblePrivate;
 struct GtkRadioButtonClass
 {
 	GtkCheckButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkRadioButton* radioButton) groupChanged;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7425,10 +8131,15 @@ struct GtkRadioMenuItemAccessiblePrivate;
 struct GtkRadioMenuItemClass
 {
 	GtkCheckMenuItemClass parentClass;
+	/** */
 	extern(C) void function(GtkRadioMenuItem* radioMenuItem) groupChanged;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7442,9 +8153,13 @@ struct GtkRadioToolButton
 struct GtkRadioToolButtonClass
 {
 	GtkToggleToolButtonClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7472,14 +8187,23 @@ struct GtkRangeClass
 	GtkWidgetClass parentClass;
 	char* sliderDetail;
 	char* stepperDetail;
+	/** */
 	extern(C) void function(GtkRange* range) valueChanged;
+	/** */
 	extern(C) void function(GtkRange* range, double newValue) adjustBounds;
+	/** */
 	extern(C) void function(GtkRange* range, GtkScrollType scroll) moveSlider;
+	/** */
 	extern(C) void function(GtkRange* range, GtkBorder* border) getRangeBorder;
+	/** */
 	extern(C) int function(GtkRange* range, GtkScrollType scroll, double newValue) changeValue;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7570,13 +8294,21 @@ struct GtkRcStyleClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) GtkRcStyle* function(GtkRcStyle* rcStyle) createRcStyle;
+	/** */
 	extern(C) uint function(GtkRcStyle* rcStyle, GtkSettings* settings, GScanner* scanner) parse;
+	/** */
 	extern(C) void function(GtkRcStyle* dest, GtkRcStyle* src) merge;
+	/** */
 	extern(C) GtkStyle* function(GtkRcStyle* rcStyle) createStyle;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7589,9 +8321,13 @@ struct GtkRecentAction
 struct GtkRecentActionClass
 {
 	GtkActionClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7608,9 +8344,13 @@ struct GtkRecentChooserDialog
 struct GtkRecentChooserDialogClass
 {
 	GtkDialogClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7646,8 +8386,11 @@ struct GtkRecentChooserIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GtkRecentChooser* chooser, const(char)* uri, GError** err) selectUri;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser, const(char)* uri) unselectUri;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser) selectAll;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser) unselectAll;
 	/**
 	 *
@@ -7659,8 +8402,11 @@ struct GtkRecentChooserIface
 	 *     the list itself using g_list_free().
 	 */
 	extern(C) GList* function(GtkRecentChooser* chooser) getItems;
+	/** */
 	extern(C) GtkRecentManager* function(GtkRecentChooser* chooser) getRecentManager;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser, GtkRecentFilter* filter) addFilter;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser, GtkRecentFilter* filter) removeFilter;
 	/**
 	 *
@@ -7671,8 +8417,11 @@ struct GtkRecentChooserIface
 	 *     should just free the returned list using g_slist_free().
 	 */
 	extern(C) GSList* function(GtkRecentChooser* chooser) listFilters;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser, GtkRecentSortFunc sortFunc, void* sortData, GDestroyNotify dataDestroy) setSortFunc;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser) itemActivated;
+	/** */
 	extern(C) void function(GtkRecentChooser* chooser) selectionChanged;
 }
 
@@ -7685,9 +8434,13 @@ struct GtkRecentChooserMenu
 struct GtkRecentChooserMenuClass
 {
 	GtkMenuClass parentClass;
+	/** */
 	extern(C) void function() gtkRecent1;
+	/** */
 	extern(C) void function() gtkRecent2;
+	/** */
 	extern(C) void function() gtkRecent3;
+	/** */
 	extern(C) void function() gtkRecent4;
 }
 
@@ -7702,9 +8455,13 @@ struct GtkRecentChooserWidget
 struct GtkRecentChooserWidgetClass
 {
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7812,10 +8569,15 @@ struct GtkRecentManager
 struct GtkRecentManagerClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkRecentManager* manager) changed;
+	/** */
 	extern(C) void function() GtkRecent1;
+	/** */
 	extern(C) void function() GtkRecent2;
+	/** */
 	extern(C) void function() GtkRecent3;
+	/** */
 	extern(C) void function() GtkRecent4;
 }
 
@@ -7921,10 +8683,15 @@ struct GtkScaleButtonAccessiblePrivate;
 struct GtkScaleButtonClass
 {
 	GtkButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkScaleButton* button, double value) valueChanged;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7933,12 +8700,19 @@ struct GtkScaleButtonPrivate;
 struct GtkScaleClass
 {
 	GtkRangeClass parentClass;
+	/** */
 	extern(C) char* function(GtkScale* scale, double value) formatValue;
+	/** */
 	extern(C) void function(GtkScale* scale) drawValue;
+	/** */
 	extern(C) void function(GtkScale* scale, int* x, int* y) getLayoutOffsets;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7967,9 +8741,13 @@ struct GtkScrollbar
 struct GtkScrollbarClass
 {
 	GtkRangeClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -7999,11 +8777,17 @@ struct GtkScrolledWindowClass
 	 */
 	GtkBinClass parentClass;
 	int scrollbarSpacing;
+	/** */
 	extern(C) int function(GtkScrolledWindow* scrolledWindow, GtkScrollType scroll, int horizontal) scrollChild;
+	/** */
 	extern(C) void function(GtkScrolledWindow* scrolledWindow, GtkDirectionType direction) moveFocusOut;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8020,9 +8804,13 @@ struct GtkSearchBarClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8034,9 +8822,13 @@ struct GtkSearchEntry
 struct GtkSearchEntryClass
 {
 	GtkEntryClass parentClass;
+	/** */
 	extern(C) void function(GtkSearchEntry* entry) searchChanged;
+	/** */
 	extern(C) void function(GtkSearchEntry* entry) nextMatch;
+	/** */
 	extern(C) void function(GtkSearchEntry* entry) previousMatch;
+	/** */
 	extern(C) void function(GtkSearchEntry* entry) stopSearch;
 }
 
@@ -8051,9 +8843,13 @@ struct GtkSeparator
 struct GtkSeparatorClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8068,9 +8864,13 @@ struct GtkSeparatorMenuItemClass
 	 * The parent class.
 	 */
 	GtkMenuItemClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8088,9 +8888,13 @@ struct GtkSeparatorToolItemClass
 	 * The parent class.
 	 */
 	GtkToolItemClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8105,9 +8909,13 @@ struct GtkSettings
 struct GtkSettingsClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8136,9 +8944,13 @@ struct GtkSizeGroup
 struct GtkSizeGroupClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8153,11 +8965,17 @@ struct GtkSocket
 struct GtkSocketClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkSocket* socket) plugAdded;
+	/** */
 	extern(C) int function(GtkSocket* socket) plugRemoved;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8185,14 +9003,23 @@ struct GtkSpinButtonAccessiblePrivate;
 struct GtkSpinButtonClass
 {
 	GtkEntryClass parentClass;
+	/** */
 	extern(C) int function(GtkSpinButton* spinButton, double* newValue) input;
+	/** */
 	extern(C) int function(GtkSpinButton* spinButton) output;
+	/** */
 	extern(C) void function(GtkSpinButton* spinButton) valueChanged;
+	/** */
 	extern(C) void function(GtkSpinButton* spinButton, GtkScrollType scroll) changeValue;
+	/** */
 	extern(C) void function(GtkSpinButton* spinButton) wrapped;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8220,9 +9047,13 @@ struct GtkSpinnerAccessiblePrivate;
 struct GtkSpinnerClass
 {
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8246,9 +9077,13 @@ struct GtkStackSidebar
 struct GtkStackSidebarClass
 {
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8262,9 +9097,13 @@ struct GtkStackSwitcher
 struct GtkStackSwitcherClass
 {
 	GtkBoxClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8277,12 +9116,19 @@ struct GtkStatusIcon
 struct GtkStatusIconClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkStatusIcon* statusIcon) activate;
+	/** */
 	extern(C) void function(GtkStatusIcon* statusIcon, uint button, uint activateTime) popupMenu;
+	/** */
 	extern(C) int function(GtkStatusIcon* statusIcon, int size) sizeChanged;
+	/** */
 	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventButton* event) buttonPressEvent;
+	/** */
 	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventButton* event) buttonReleaseEvent;
+	/** */
 	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventScroll* event) scrollEvent;
+	/** */
 	extern(C) int function(GtkStatusIcon* statusIcon, int x, int y, int keyboardMode, GtkTooltip* tooltip) queryTooltip;
 	void* GtkReserved1;
 	void* GtkReserved2;
@@ -8315,11 +9161,17 @@ struct GtkStatusbarClass
 {
 	GtkBoxClass parentClass;
 	void* reserved;
+	/** */
 	extern(C) void function(GtkStatusbar* statusbar, uint contextId, const(char)* text) textPushed;
+	/** */
 	extern(C) void function(GtkStatusbar* statusbar, uint contextId, const(char)* text) textPopped;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8423,11 +9275,17 @@ struct GtkStyleClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkStyle* style) realize;
+	/** */
 	extern(C) void function(GtkStyle* style) unrealize;
+	/** */
 	extern(C) void function(GtkStyle* style, GtkStyle* src) copy;
+	/** */
 	extern(C) GtkStyle* function(GtkStyle* style) clone;
+	/** */
 	extern(C) void function(GtkStyle* style, GtkRcStyle* rcStyle) initFromRc;
+	/** */
 	extern(C) void function(GtkStyle* style, GdkWindow* window, GtkStateType stateType) setBackground;
 	/**
 	 *
@@ -8445,36 +9303,67 @@ struct GtkStyleClass
 	 *     containing the rendered icon
 	 */
 	extern(C) GdkPixbuf* function(GtkStyle* style, GtkIconSource* source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, GtkWidget* widget, const(char)* detail) renderIcon;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int x1, int x2, int y) drawHline;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int y1, int y2, int x) drawVline;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawShadow;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, GtkArrowType arrowType, int fill, int x, int y, int width, int height) drawArrow;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawDiamond;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawBox;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawFlatBox;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawCheck;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawOption;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawTab;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth) drawShadowGap;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkPositionType gapSide, int gapX, int gapWidth) drawBoxGap;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkPositionType gapSide) drawExtension;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height) drawFocus;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkOrientation orientation) drawSlider;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkShadowType shadowType, GtkWidget* widget, const(char)* detail, int x, int y, int width, int height, GtkOrientation orientation) drawHandle;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, int x, int y, GtkExpanderStyle expanderStyle) drawExpander;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, int useText, GtkWidget* widget, const(char)* detail, int x, int y, PangoLayout* layout) drawLayout;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, GdkWindowEdge edge, int x, int y, int width, int height) drawResizeGrip;
+	/** */
 	extern(C) void function(GtkStyle* style, cairo_t* cr, GtkStateType stateType, GtkWidget* widget, const(char)* detail, uint step, int x, int y, int width, int height) drawSpinner;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
+	/** */
 	extern(C) void function() GtkReserved9;
+	/** */
 	extern(C) void function() GtkReserved10;
+	/** */
 	extern(C) void function() GtkReserved11;
 }
 
@@ -8487,10 +9376,15 @@ struct GtkStyleContext
 struct GtkStyleContextClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkStyleContext* context) changed;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8505,9 +9399,13 @@ struct GtkStyleProperties
 struct GtkStylePropertiesClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8573,12 +9471,19 @@ struct GtkSwitchClass
 	 * The parent class.
 	 */
 	GtkWidgetClass parentClass;
+	/** */
 	extern(C) void function(GtkSwitch* sw) activate;
+	/** */
 	extern(C) int function(GtkSwitch* sw, int state) stateSet;
+	/** */
 	extern(C) void function() SwitchPadding1;
+	/** */
 	extern(C) void function() SwitchPadding2;
+	/** */
 	extern(C) void function() SwitchPadding3;
+	/** */
 	extern(C) void function() SwitchPadding4;
+	/** */
 	extern(C) void function() SwitchPadding5;
 }
 
@@ -8616,9 +9521,13 @@ struct GtkTableChild
 struct GtkTableClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8697,9 +9606,13 @@ struct GtkTearoffMenuItemClass
 	 * The parent class.
 	 */
 	GtkMenuItemClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8830,22 +9743,39 @@ struct GtkTextBufferClass
 	 * The object class structure needs to be the first.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* pos, const(char)* newText, int newTextLength) insertText;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* iter, GdkPixbuf* pixbuf) insertPixbuf;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* iter, GtkTextChildAnchor* anchor) insertChildAnchor;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* start, GtkTextIter* end) deleteRange;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer) changed;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer) modifiedChanged;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextIter* location, GtkTextMark* mark) markSet;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextMark* mark) markDeleted;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end) applyTag;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end) removeTag;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer) beginUserAction;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer) endUserAction;
+	/** */
 	extern(C) void function(GtkTextBuffer* buffer, GtkClipboard* clipboard) pasteDone;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8873,9 +9803,13 @@ struct GtkTextChildAnchor
 struct GtkTextChildAnchorClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8906,9 +9840,13 @@ struct GtkTextMark
 struct GtkTextMarkClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8931,9 +9869,13 @@ struct GtkTextTagClass
 	 * Return: result of signal emission (whether the event was handled)
 	 */
 	extern(C) int function(GtkTextTag* tag, GObject* eventObject, GdkEvent* event, GtkTextIter* iter) event;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8948,12 +9890,19 @@ struct GtkTextTagTable
 struct GtkTextTagTableClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkTextTagTable* table, GtkTextTag* tag, int sizeChanged) tagChanged;
+	/** */
 	extern(C) void function(GtkTextTagTable* table, GtkTextTag* tag) tagAdded;
+	/** */
 	extern(C) void function(GtkTextTagTable* table, GtkTextTag* tag) tagRemoved;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -8984,23 +9933,41 @@ struct GtkTextViewClass
 	 * The object class structure needs to be the first
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkTextView* textView, GtkWidget* popup) populatePopup;
+	/** */
 	extern(C) void function(GtkTextView* textView, GtkMovementStep step, int count, int extendSelection) moveCursor;
+	/** */
 	extern(C) void function(GtkTextView* textView) setAnchor;
+	/** */
 	extern(C) void function(GtkTextView* textView, const(char)* str) insertAtCursor;
+	/** */
 	extern(C) void function(GtkTextView* textView, GtkDeleteType type, int count) deleteFromCursor;
+	/** */
 	extern(C) void function(GtkTextView* textView) backspace;
+	/** */
 	extern(C) void function(GtkTextView* textView) cutClipboard;
+	/** */
 	extern(C) void function(GtkTextView* textView) copyClipboard;
+	/** */
 	extern(C) void function(GtkTextView* textView) pasteClipboard;
+	/** */
 	extern(C) void function(GtkTextView* textView) toggleOverwrite;
+	/** */
 	extern(C) GtkTextBuffer* function(GtkTextView* textView) createBuffer;
+	/** */
 	extern(C) void function(GtkTextView* textView, GtkTextViewLayer layer, cairo_t* cr) drawLayer;
+	/** */
 	extern(C) int function(GtkTextView* textView, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end) extendSelection;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
 }
 
@@ -9023,22 +9990,39 @@ struct GtkThemingEngineClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x0, double y0, double x1, double y1) renderLine;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderBackground;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderFrame;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height, GtkPositionType gapSide, double xy0Gap, double xy1Gap) renderFrameGap;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height, GtkPositionType gapSide) renderExtension;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderCheck;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderOption;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double angle, double x, double y, double size) renderArrow;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderExpander;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderFocus;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, PangoLayout* layout) renderLayout;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height, GtkOrientation orientation) renderSlider;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderHandle;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, double x, double y, double width, double height) renderActivity;
+	/** */
 	extern(C) GdkPixbuf* function(GtkThemingEngine* engine, GtkIconSource* source, GtkIconSize size) renderIconPixbuf;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, GdkPixbuf* pixbuf, double x, double y) renderIcon;
+	/** */
 	extern(C) void function(GtkThemingEngine* engine, cairo_t* cr, cairo_surface_t* surface, double x, double y) renderIconSurface;
 	void*[14] padding;
 }
@@ -9054,10 +10038,15 @@ struct GtkToggleAction
 struct GtkToggleActionClass
 {
 	GtkActionClass parentClass;
+	/** */
 	extern(C) void function(GtkToggleAction* action) toggled;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9125,10 +10114,15 @@ struct GtkToggleButtonAccessiblePrivate;
 struct GtkToggleButtonClass
 {
 	GtkButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkToggleButton* toggleButton) toggled;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9146,10 +10140,15 @@ struct GtkToggleToolButtonClass
 	 * The parent class.
 	 */
 	GtkToolButtonClass parentClass;
+	/** */
 	extern(C) void function(GtkToggleToolButton* button) toggled;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9168,10 +10167,15 @@ struct GtkToolButtonClass
 	 */
 	GtkToolItemClass parentClass;
 	GType buttonType;
+	/** */
 	extern(C) void function(GtkToolButton* toolItem) clicked;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9189,11 +10193,17 @@ struct GtkToolItemClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) int function(GtkToolItem* toolItem) createMenuProxy;
+	/** */
 	extern(C) void function(GtkToolItem* toolItem) toolbarReconfigured;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9209,9 +10219,13 @@ struct GtkToolItemGroupClass
 	 * The parent class.
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9231,9 +10245,13 @@ struct GtkToolPaletteClass
 	 * The parent class.
 	 */
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9247,6 +10265,7 @@ struct GtkToolShell;
 struct GtkToolShellIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) GtkIconSize function(GtkToolShell* shell) getIconSize;
 	/**
 	 *
@@ -9269,6 +10288,7 @@ struct GtkToolShellIface
 	 * Return: The relief style of buttons on @shell.
 	 */
 	extern(C) GtkReliefStyle function(GtkToolShell* shell) getReliefStyle;
+	/** */
 	extern(C) void function(GtkToolShell* shell) rebuildMenu;
 	/**
 	 *
@@ -9309,12 +10329,19 @@ struct GtkToolbar
 struct GtkToolbarClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkToolbar* toolbar, GtkOrientation orientation) orientationChanged;
+	/** */
 	extern(C) void function(GtkToolbar* toolbar, GtkToolbarStyle style) styleChanged;
+	/** */
 	extern(C) int function(GtkToolbar* toolbar, int x, int y, int buttonNumber) popupContextMenu;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9424,11 +10451,17 @@ struct GtkTreeModelFilter
 struct GtkTreeModelFilterClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) int function(GtkTreeModelFilter* self, GtkTreeModel* childModel, GtkTreeIter* iter) visible;
+	/** */
 	extern(C) void function(GtkTreeModelFilter* self, GtkTreeModel* childModel, GtkTreeIter* iter, GValue* value, int column) modify;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9437,10 +10470,15 @@ struct GtkTreeModelFilterPrivate;
 struct GtkTreeModelIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) rowChanged;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) rowInserted;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) rowHasChildToggled;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path) rowDeleted;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, int* newOrder) rowsReordered;
 	/**
 	 *
@@ -9481,6 +10519,7 @@ struct GtkTreeModelIface
 	 * Return: a newly-created #GtkTreePath-struct
 	 */
 	extern(C) GtkTreePath* function(GtkTreeModel* treeModel, GtkTreeIter* iter) getPath;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreeIter* iter, int column, GValue* value) getValue;
 	/**
 	 *
@@ -9542,7 +10581,9 @@ struct GtkTreeModelIface
 	 * Return: %TRUE, if @iter is set to the parent of @child
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* child) iterParent;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreeIter* iter) refNode;
+	/** */
 	extern(C) void function(GtkTreeModel* treeModel, GtkTreeIter* iter) unrefNode;
 }
 
@@ -9555,9 +10596,13 @@ struct GtkTreeModelSort
 struct GtkTreeModelSortClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9579,10 +10624,15 @@ struct GtkTreeSelectionClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkTreeSelection* selection) changed;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9593,6 +10643,7 @@ struct GtkTreeSortable;
 struct GtkTreeSortableIface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GtkTreeSortable* sortable) sortColumnChanged;
 	/**
 	 *
@@ -9604,8 +10655,11 @@ struct GtkTreeSortableIface
 	 *     column ids.
 	 */
 	extern(C) int function(GtkTreeSortable* sortable, int* sortColumnId, GtkSortType* order) getSortColumnId;
+	/** */
 	extern(C) void function(GtkTreeSortable* sortable, int sortColumnId, GtkSortType order) setSortColumnId;
+	/** */
 	extern(C) void function(GtkTreeSortable* sortable, int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy) setSortFunc;
+	/** */
 	extern(C) void function(GtkTreeSortable* sortable, GtkTreeIterCompareFunc sortFunc, void* userData, GDestroyNotify destroy) setDefaultSortFunc;
 	/**
 	 *
@@ -9625,9 +10679,13 @@ struct GtkTreeStore
 struct GtkTreeStoreClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9655,28 +10713,51 @@ struct GtkTreeViewAccessiblePrivate;
 struct GtkTreeViewClass
 {
 	GtkContainerClass parentClass;
+	/** */
 	extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, GtkTreeViewColumn* column) rowActivated;
+	/** */
 	extern(C) int function(GtkTreeView* treeView, GtkTreeIter* iter, GtkTreePath* path) testExpandRow;
+	/** */
 	extern(C) int function(GtkTreeView* treeView, GtkTreeIter* iter, GtkTreePath* path) testCollapseRow;
+	/** */
 	extern(C) void function(GtkTreeView* treeView, GtkTreeIter* iter, GtkTreePath* path) rowExpanded;
+	/** */
 	extern(C) void function(GtkTreeView* treeView, GtkTreeIter* iter, GtkTreePath* path) rowCollapsed;
+	/** */
 	extern(C) void function(GtkTreeView* treeView) columnsChanged;
+	/** */
 	extern(C) void function(GtkTreeView* treeView) cursorChanged;
+	/** */
 	extern(C) int function(GtkTreeView* treeView, GtkMovementStep step, int count) moveCursor;
+	/** */
 	extern(C) int function(GtkTreeView* treeView) selectAll;
+	/** */
 	extern(C) int function(GtkTreeView* treeView) unselectAll;
+	/** */
 	extern(C) int function(GtkTreeView* treeView, int startEditing) selectCursorRow;
+	/** */
 	extern(C) int function(GtkTreeView* treeView) toggleCursorRow;
+	/** */
 	extern(C) int function(GtkTreeView* treeView, int logical, int expand, int openAll) expandCollapseCursorRow;
+	/** */
 	extern(C) int function(GtkTreeView* treeView) selectCursorParent;
+	/** */
 	extern(C) int function(GtkTreeView* treeView) startInteractiveSearch;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
+	/** */
 	extern(C) void function() GtkReserved5;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
+	/** */
 	extern(C) void function() GtkReserved8;
 }
 
@@ -9689,10 +10770,15 @@ struct GtkTreeViewColumn
 struct GtkTreeViewColumnClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkTreeViewColumn* treeColumn) clicked;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9709,11 +10795,17 @@ struct GtkUIManager
 struct GtkUIManagerClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GtkUIManager* manager, GtkWidget* widget) addWidget;
+	/** */
 	extern(C) void function(GtkUIManager* manager) actionsChanged;
+	/** */
 	extern(C) void function(GtkUIManager* manager, GtkAction* action, GtkWidget* proxy) connectProxy;
+	/** */
 	extern(C) void function(GtkUIManager* manager, GtkAction* action, GtkWidget* proxy) disconnectProxy;
+	/** */
 	extern(C) void function(GtkUIManager* manager, GtkAction* action) preActivate;
+	/** */
 	extern(C) void function(GtkUIManager* manager, GtkAction* action) postActivate;
 	/**
 	 *
@@ -9733,9 +10825,13 @@ struct GtkUIManagerClass
 	 *     or %NULL if no widget was found.
 	 */
 	extern(C) GtkAction* function(GtkUIManager* manager, const(char)* path) getAction;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9813,9 +10909,13 @@ struct GtkViewportClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9829,9 +10929,13 @@ struct GtkVolumeButton
 struct GtkVolumeButtonClass
 {
 	GtkScaleButtonClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -9850,6 +10954,7 @@ struct GtkWidgetAccessible
 struct GtkWidgetAccessibleClass
 {
 	GtkAccessibleClass parentClass;
+	/** */
 	extern(C) void function(GObject* object, GParamSpec* pspec) notifyGtk;
 }
 
@@ -9870,24 +10975,43 @@ struct GtkWidgetClass
 	 * Implementation of this signal is optional.
 	 */
 	uint activateSignal;
+	/** */
 	extern(C) void function(GtkWidget* widget, uint nPspecs, GParamSpec** pspecs) dispatchChildPropertiesChanged;
+	/** */
 	extern(C) void function(GtkWidget* widget) destroy;
+	/** */
 	extern(C) void function(GtkWidget* widget) show;
+	/** */
 	extern(C) void function(GtkWidget* widget) showAll;
+	/** */
 	extern(C) void function(GtkWidget* widget) hide;
+	/** */
 	extern(C) void function(GtkWidget* widget) map;
+	/** */
 	extern(C) void function(GtkWidget* widget) unmap;
+	/** */
 	extern(C) void function(GtkWidget* widget) realize;
+	/** */
 	extern(C) void function(GtkWidget* widget) unrealize;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkAllocation* allocation) sizeAllocate;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkStateType previousState) stateChanged;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkStateFlags previousStateFlags) stateFlagsChanged;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkWidget* previousParent) parentSet;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkWidget* previousToplevel) hierarchyChanged;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkStyle* previousStyle) styleSet;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkTextDirection previousDirection) directionChanged;
+	/** */
 	extern(C) void function(GtkWidget* widget, int wasGrabbed) grabNotify;
+	/** */
 	extern(C) void function(GtkWidget* widget, GParamSpec* childProperty) childNotify;
+	/** */
 	extern(C) int function(GtkWidget* widget, cairo_t* cr) draw;
 	/**
 	 *
@@ -9896,9 +11020,13 @@ struct GtkWidgetClass
 	 * Return: The #GtkSizeRequestMode preferred by @widget.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkWidget* widget) getRequestMode;
+	/** */
 	extern(C) void function(GtkWidget* widget, int* minimumHeight, int* naturalHeight) getPreferredHeight;
+	/** */
 	extern(C) void function(GtkWidget* widget, int height, int* minimumWidth, int* naturalWidth) getPreferredWidthForHeight;
+	/** */
 	extern(C) void function(GtkWidget* widget, int* minimumWidth, int* naturalWidth) getPreferredWidth;
+	/** */
 	extern(C) void function(GtkWidget* widget, int width, int* minimumHeight, int* naturalHeight) getPreferredHeightForWidth;
 	/**
 	 *
@@ -9908,8 +11036,11 @@ struct GtkWidgetClass
 	 * Return: %TRUE if the signal has been handled
 	 */
 	extern(C) int function(GtkWidget* widget, int groupCycling) mnemonicActivate;
+	/** */
 	extern(C) void function(GtkWidget* widget) grabFocus;
+	/** */
 	extern(C) int function(GtkWidget* widget, GtkDirectionType direction) focus;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkDirectionType direction) moveFocus;
 	/**
 	 *
@@ -9930,43 +11061,81 @@ struct GtkWidgetClass
 	 *     the event was handled)
 	 */
 	extern(C) int function(GtkWidget* widget, GdkEvent* event) event;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventButton* event) buttonPressEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventButton* event) buttonReleaseEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventScroll* event) scrollEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventMotion* event) motionNotifyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventAny* event) deleteEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventAny* event) destroyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventKey* event) keyPressEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventKey* event) keyReleaseEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventCrossing* event) enterNotifyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventCrossing* event) leaveNotifyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventConfigure* event) configureEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventFocus* event) focusInEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventFocus* event) focusOutEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventAny* event) mapEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventAny* event) unmapEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventProperty* event) propertyNotifyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventSelection* event) selectionClearEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventSelection* event) selectionRequestEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventSelection* event) selectionNotifyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventProximity* event) proximityInEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventProximity* event) proximityOutEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventVisibility* event) visibilityNotifyEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventWindowState* event) windowStateEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventExpose* event) damageEvent;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventGrabBroken* event) grabBrokenEvent;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkSelectionData* selectionData, uint info, uint time) selectionGet;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkSelectionData* selectionData, uint time) selectionReceived;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkDragContext* context) dragBegin;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkDragContext* context) dragEnd;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkDragContext* context, GtkSelectionData* selectionData, uint info, uint time) dragDataGet;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkDragContext* context) dragDataDelete;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkDragContext* context, uint time) dragLeave;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkDragContext* context, int x, int y, uint time) dragMotion;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkDragContext* context, int x, int y, uint time) dragDrop;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkDragContext* context, int x, int y, GtkSelectionData* selectionData, uint info, uint time) dragDataReceived;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkDragContext* context, GtkDragResult result) dragFailed;
+	/** */
 	extern(C) int function(GtkWidget* widget) popupMenu;
+	/** */
 	extern(C) int function(GtkWidget* widget, GtkWidgetHelpType helpType) showHelp;
 	/**
 	 *
@@ -9975,6 +11144,7 @@ struct GtkWidgetClass
 	 * Return: the #AtkObject associated with @widget
 	 */
 	extern(C) AtkObject* function(GtkWidget* widget) getAccessible;
+	/** */
 	extern(C) void function(GtkWidget* widget, GdkScreen* previousScreen) screenChanged;
 	/**
 	 *
@@ -9984,19 +11154,32 @@ struct GtkWidgetClass
 	 * Return: %TRUE if the accelerator can be activated.
 	 */
 	extern(C) int function(GtkWidget* widget, uint signalId) canActivateAccel;
+	/** */
 	extern(C) void function(GtkWidget* widget) compositedChanged;
+	/** */
 	extern(C) int function(GtkWidget* widget, int x, int y, int keyboardTooltip, GtkTooltip* tooltip) queryTooltip;
+	/** */
 	extern(C) void function(GtkWidget* widget, int* hexpandP, int* vexpandP) computeExpand;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, int* minimumSize, int* naturalSize) adjustSizeRequest;
+	/** */
 	extern(C) void function(GtkWidget* widget, GtkOrientation orientation, int* minimumSize, int* naturalSize, int* allocatedPos, int* allocatedSize) adjustSizeAllocation;
+	/** */
 	extern(C) void function(GtkWidget* widget) styleUpdated;
+	/** */
 	extern(C) int function(GtkWidget* widget, GdkEventTouch* event) touchEvent;
+	/** */
 	extern(C) void function(GtkWidget* widget, int width, int* minimumHeight, int* naturalHeight, int* minimumBaseline, int* naturalBaseline) getPreferredHeightAndBaselineForWidth;
+	/** */
 	extern(C) void function(GtkWidget* widget, int* minimumBaseline, int* naturalBaseline) adjustBaselineRequest;
+	/** */
 	extern(C) void function(GtkWidget* widget, int* baseline) adjustBaselineAllocation;
+	/** */
 	extern(C) void function(GtkWidget* widget, cairo_region_t* region) queueDrawRegion;
 	GtkWidgetClassPrivate* priv;
+	/** */
 	extern(C) void function() GtkReserved6;
+	/** */
 	extern(C) void function() GtkReserved7;
 }
 
@@ -10031,13 +11214,21 @@ struct GtkWindowClass
 	 * The parent class.
 	 */
 	GtkBinClass parentClass;
+	/** */
 	extern(C) void function(GtkWindow* window, GtkWidget* focus) setFocus;
+	/** */
 	extern(C) void function(GtkWindow* window) activateFocus;
+	/** */
 	extern(C) void function(GtkWindow* window) activateDefault;
+	/** */
 	extern(C) void function(GtkWindow* window) keysChanged;
+	/** */
 	extern(C) int function(GtkWindow* window, int toggle) enableDebugging;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
 }
 
@@ -10052,9 +11243,13 @@ struct GtkWindowGroup
 struct GtkWindowGroupClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GtkReserved1;
+	/** */
 	extern(C) void function() GtkReserved2;
+	/** */
 	extern(C) void function() GtkReserved3;
+	/** */
 	extern(C) void function() GtkReserved4;
 }
 
@@ -10062,10 +11257,13 @@ struct GtkWindowGroupPrivate;
 
 struct GtkWindowPrivate;
 
+/** */
 public alias extern(C) int function(GtkAccelGroup* accelGroup, GObject* acceleratable, uint keyval, GdkModifierType modifier) GtkAccelGroupActivate;
 
+/** */
 public alias extern(C) int function(GtkAccelKey* key, GClosure* closure, void* data) GtkAccelGroupFindFunc;
 
+/** */
 public alias extern(C) void function(void* data, const(char)* accelPath, uint accelKey, GdkModifierType accelMods, int changed) GtkAccelMapForeach;
 
 /**
@@ -10299,8 +11497,10 @@ public alias extern(C) void function(GtkClipboard* clipboard, const(char)* text,
  */
 public alias extern(C) void function(GtkClipboard* clipboard, char** uris, void* data) GtkClipboardURIReceivedFunc;
 
+/** */
 public alias extern(C) void function(GdkColor* colors, int nColors) GtkColorSelectionChangePaletteFunc;
 
+/** */
 public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nColors) GtkColorSelectionChangePaletteWithScreenFunc;
 
 /**
@@ -10581,8 +11781,10 @@ public alias extern(C) void function(int* argc, char*** argv) GtkModuleInitFunc;
  */
 public alias extern(C) void function(GtkPageSetup* pageSetup, void* data) GtkPageSetupDoneFunc;
 
+/** */
 public alias extern(C) void function(const(char)* key, const(char)* value, void* userData) GtkPrintSettingsFunc;
 
+/** */
 public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue* propertyValue) GtkRcPropertyParser;
 
 /**
@@ -10598,8 +11800,10 @@ public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue
  */
 public alias extern(C) int function(GtkRecentFilterInfo* filterInfo, void* userData) GtkRecentFilterFunc;
 
+/** */
 public alias extern(C) int function(GtkRecentInfo* a, GtkRecentInfo* b, void* userData) GtkRecentSortFunc;
 
+/** */
 public alias extern(C) int function(const(char)* str, GValue* value, GError** err) GtkStylePropertyParser;
 
 /**
@@ -10638,8 +11842,10 @@ public alias extern(C) int function(GtkTextBuffer* registerBuffer, GtkTextBuffer
  */
 public alias extern(C) ubyte* function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* start, GtkTextIter* end, size_t* length, void* userData) GtkTextBufferSerializeFunc;
 
+/** */
 public alias extern(C) int function(dchar ch, void* userData) GtkTextCharPredicate;
 
+/** */
 public alias extern(C) void function(GtkTextTag* tag, void* data) GtkTextTagTableForeach;
 
 /**
@@ -10688,6 +11894,7 @@ public alias extern(C) char* function(const(char)* path, void* funcData) GtkTran
  */
 public alias extern(C) void function(GtkTreeViewColumn* treeColumn, GtkCellRenderer* cell, GtkTreeModel* treeModel, GtkTreeIter* iter, void* data) GtkTreeCellDataFunc;
 
+/** */
 public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, int children, void* userData) GtkTreeDestroyCountFunc;
 
 /**
@@ -10852,6 +12059,7 @@ public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void
  */
 public alias extern(C) int function(GtkTreeModel* model, int column, const(char)* key, GtkTreeIter* iter, void* searchData) GtkTreeViewSearchEqualFunc;
 
+/** */
 public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDialog, void* userData) GtkTreeViewSearchPositionFunc;
 
 /**

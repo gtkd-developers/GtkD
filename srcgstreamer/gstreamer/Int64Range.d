@@ -32,6 +32,7 @@ public  import gstreamerc.gstreamertypes;
 public class Int64Range
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_int64_range_get_type();

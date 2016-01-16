@@ -1170,6 +1170,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	mixin StyleProviderT!(GtkCssProvider);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_css_provider_get_type();

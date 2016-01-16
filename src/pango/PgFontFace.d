@@ -68,6 +68,7 @@ public class PgFontFace : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_font_face_get_type();

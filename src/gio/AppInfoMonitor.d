@@ -85,6 +85,7 @@ public class AppInfoMonitor : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_app_info_monitor_get_type();

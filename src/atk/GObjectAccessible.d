@@ -69,6 +69,7 @@ public class GObjectAccessible : ObjectAtk
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_gobject_accessible_get_type();

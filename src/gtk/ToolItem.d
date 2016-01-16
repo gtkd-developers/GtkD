@@ -86,6 +86,7 @@ public class ToolItem : Bin, ActivatableIF
 	mixin ActivatableT!(GtkToolItem);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tool_item_get_type();

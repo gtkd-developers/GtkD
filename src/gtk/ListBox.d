@@ -94,6 +94,7 @@ public class ListBox : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_list_box_get_type();
@@ -592,6 +593,7 @@ public class ListBox : Container
 	int[string] connectedSignals;
 
 	void delegate(ListBox)[] onActivateCursorRowListeners;
+	/** */
 	void addOnActivateCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "activate-cursor-row" !in connectedSignals )
@@ -616,6 +618,7 @@ public class ListBox : Container
 	}
 
 	void delegate(GtkMovementStep, int, ListBox)[] onMoveCursorListeners;
+	/** */
 	void addOnMoveCursor(void delegate(GtkMovementStep, int, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "move-cursor" !in connectedSignals )
@@ -772,6 +775,7 @@ public class ListBox : Container
 	}
 
 	void delegate(ListBox)[] onToggleCursorRowListeners;
+	/** */
 	void addOnToggleCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "toggle-cursor-row" !in connectedSignals )

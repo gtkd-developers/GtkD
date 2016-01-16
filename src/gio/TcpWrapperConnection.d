@@ -74,6 +74,7 @@ public class TcpWrapperConnection : TcpConnection
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tcp_wrapper_connection_get_type();

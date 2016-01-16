@@ -282,6 +282,7 @@ public class Container : Widget
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_container_get_type();
@@ -309,6 +310,7 @@ public class Container : Widget
 		gtk_container_add(gtkContainer, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
+	/** */
 	public void checkResize()
 	{
 		gtk_container_check_resize(gtkContainer);
@@ -656,6 +658,7 @@ public class Container : Widget
 		gtk_container_remove(gtkContainer, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
+	/** */
 	public void resizeChildren()
 	{
 		gtk_container_resize_children(gtkContainer);
@@ -802,6 +805,7 @@ public class Container : Widget
 	int[string] connectedSignals;
 
 	void delegate(Widget, Container)[] onAddListeners;
+	/** */
 	void addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "add" !in connectedSignals )
@@ -826,6 +830,7 @@ public class Container : Widget
 	}
 
 	void delegate(Container)[] onCheckResizeListeners;
+	/** */
 	void addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "check-resize" !in connectedSignals )
@@ -850,6 +855,7 @@ public class Container : Widget
 	}
 
 	void delegate(Widget, Container)[] onRemoveListeners;
+	/** */
 	void addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "remove" !in connectedSignals )
@@ -874,6 +880,7 @@ public class Container : Widget
 	}
 
 	void delegate(Widget, Container)[] onSetFocusChildListeners;
+	/** */
 	void addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "set-focus-child" !in connectedSignals )

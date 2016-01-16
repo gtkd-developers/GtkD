@@ -63,6 +63,7 @@ public class RadioButtonAccessible : ToggleButtonAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_radio_button_accessible_get_type();

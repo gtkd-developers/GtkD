@@ -80,6 +80,7 @@ public class Stack : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_stack_get_type();

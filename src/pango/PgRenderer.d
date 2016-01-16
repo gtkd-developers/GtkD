@@ -77,6 +77,7 @@ public class PgRenderer : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_renderer_get_type();

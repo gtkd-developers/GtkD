@@ -82,6 +82,7 @@ public class Context
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_context_get_type();

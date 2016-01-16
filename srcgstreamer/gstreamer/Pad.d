@@ -176,6 +176,7 @@ public class Pad : ObjectGst
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_pad_get_type();

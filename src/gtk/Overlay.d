@@ -87,6 +87,7 @@ public class Overlay : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_overlay_get_type();

@@ -92,6 +92,7 @@ public class Scale : Range
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_scale_get_type();

@@ -142,6 +142,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	mixin PrintOperationPreviewT!(GtkPrintOperation);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_print_operation_get_type();

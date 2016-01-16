@@ -65,6 +65,7 @@ public class SourceGutter : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_gutter_get_type();

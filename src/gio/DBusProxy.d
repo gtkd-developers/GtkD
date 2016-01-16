@@ -172,6 +172,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_proxy_get_type();

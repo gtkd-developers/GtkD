@@ -94,11 +94,13 @@ public class Socket : ObjectAtk, ComponentIF
 	mixin ComponentT!(AtkSocket);
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_socket_get_type();
 	}
 
+	/** */
 	public this()
 	{
 		auto p = atk_socket_new();

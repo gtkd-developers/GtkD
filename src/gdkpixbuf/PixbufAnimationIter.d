@@ -68,6 +68,7 @@ public class PixbufAnimationIter : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_pixbuf_animation_iter_get_type();

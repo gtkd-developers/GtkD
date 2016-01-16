@@ -75,6 +75,7 @@ public class HScale : Scale
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hscale_get_type();

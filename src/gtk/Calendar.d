@@ -89,6 +89,7 @@ public class Calendar : Widget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_calendar_get_type();

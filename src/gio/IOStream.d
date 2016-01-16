@@ -94,6 +94,7 @@ public class IOStream : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_io_stream_get_type();

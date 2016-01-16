@@ -84,6 +84,7 @@ public class RecentInfo
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_info_get_type();

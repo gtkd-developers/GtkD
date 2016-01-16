@@ -222,6 +222,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_view_get_type();
@@ -1924,6 +1925,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(bool, bool, bool, TreeView)[] onExpandCollapseCursorRowListeners;
+	/** */
 	void addOnExpandCollapseCursorRow(bool delegate(bool, bool, bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "expand-collapse-cursor-row" !in connectedSignals )
@@ -2109,6 +2111,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(TreeView)[] onSelectAllListeners;
+	/** */
 	void addOnSelectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "select-all" !in connectedSignals )
@@ -2138,6 +2141,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(TreeView)[] onSelectCursorParentListeners;
+	/** */
 	void addOnSelectCursorParent(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "select-cursor-parent" !in connectedSignals )
@@ -2167,6 +2171,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(bool, TreeView)[] onSelectCursorRowListeners;
+	/** */
 	void addOnSelectCursorRow(bool delegate(bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "select-cursor-row" !in connectedSignals )
@@ -2196,6 +2201,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(TreeView)[] onStartInteractiveSearchListeners;
+	/** */
 	void addOnStartInteractiveSearch(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "start-interactive-search" !in connectedSignals )
@@ -2303,6 +2309,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(TreeView)[] onToggleCursorRowListeners;
+	/** */
 	void addOnToggleCursorRow(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "toggle-cursor-row" !in connectedSignals )
@@ -2332,6 +2339,7 @@ public class TreeView : Container, ScrollableIF
 	}
 
 	bool delegate(TreeView)[] onUnselectAllListeners;
+	/** */
 	void addOnUnselectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "unselect-all" !in connectedSignals )

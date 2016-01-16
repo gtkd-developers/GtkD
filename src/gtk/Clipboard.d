@@ -130,6 +130,7 @@ public class Clipboard : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_clipboard_get_type();

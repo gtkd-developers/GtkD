@@ -84,6 +84,7 @@ public class SocketControlMessage : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_control_message_get_type();

@@ -71,6 +71,7 @@ public class SocketAddressEnumerator : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_address_enumerator_get_type();

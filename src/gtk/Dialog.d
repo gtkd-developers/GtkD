@@ -286,6 +286,7 @@ public class Dialog : Window
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_dialog_get_type();

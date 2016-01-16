@@ -68,6 +68,7 @@ public class ProgressBarAccessible : WidgetAccessible, ValueIF
 	mixin ValueT!(GtkProgressBarAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_progress_bar_accessible_get_type();

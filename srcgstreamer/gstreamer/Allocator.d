@@ -79,6 +79,7 @@ public class Allocator : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_allocator_get_type();

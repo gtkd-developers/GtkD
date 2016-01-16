@@ -195,6 +195,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_combo_box_get_type();

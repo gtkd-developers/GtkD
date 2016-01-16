@@ -82,6 +82,7 @@ public class PrintSettings : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_print_settings_get_type();

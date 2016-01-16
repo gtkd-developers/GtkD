@@ -68,6 +68,7 @@ public class SpinnerAccessible : WidgetAccessible, ImageIF
 	mixin ImageT!(GtkSpinnerAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_spinner_accessible_get_type();

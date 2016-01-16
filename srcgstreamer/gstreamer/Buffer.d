@@ -151,6 +151,7 @@ public class Buffer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_buffer_get_type();

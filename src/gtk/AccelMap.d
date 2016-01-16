@@ -121,6 +121,7 @@ public class AccelMap : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_accel_map_get_type();

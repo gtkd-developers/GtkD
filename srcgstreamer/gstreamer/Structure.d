@@ -110,6 +110,7 @@ public class Structure
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_structure_get_type();

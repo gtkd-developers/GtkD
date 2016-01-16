@@ -179,6 +179,7 @@ public class Image : Misc
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_image_get_type();

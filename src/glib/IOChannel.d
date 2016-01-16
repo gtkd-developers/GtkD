@@ -811,6 +811,7 @@ public class IOChannel
 		return g_io_channel_error_from_errno(en);
 	}
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_io_channel_error_quark();

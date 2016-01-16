@@ -69,6 +69,7 @@ public class NoOpObjectFactory : ObjectFactory
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_no_op_object_factory_get_type();

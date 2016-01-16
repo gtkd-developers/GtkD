@@ -139,6 +139,7 @@ public class Clock : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_clock_get_type();

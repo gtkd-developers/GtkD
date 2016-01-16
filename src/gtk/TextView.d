@@ -139,6 +139,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_view_get_type();

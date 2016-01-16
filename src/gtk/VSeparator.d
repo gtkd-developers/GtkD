@@ -72,6 +72,7 @@ public class VSeparator : Separator
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_vseparator_get_type();

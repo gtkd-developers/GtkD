@@ -60,6 +60,7 @@ public class ValueArray
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_value_array_get_type();

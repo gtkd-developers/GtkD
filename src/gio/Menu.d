@@ -78,6 +78,7 @@ public class Menu : MenuModel
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_menu_get_type();

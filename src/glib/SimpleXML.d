@@ -425,6 +425,7 @@ public class SimpleXML
 		g_markup_parse_context_unref(gMarkupParseContext);
 	}
 
+	/** */
 	public static GQuark markupErrorQuark()
 	{
 		return g_markup_error_quark();

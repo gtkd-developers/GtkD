@@ -72,6 +72,7 @@ public class Spinner : Widget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_spinner_get_type();

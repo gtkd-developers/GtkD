@@ -92,6 +92,7 @@ public class MenuBar : MenuShell
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_bar_get_type();

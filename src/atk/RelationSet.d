@@ -75,6 +75,7 @@ public class RelationSet : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_relation_set_get_type();

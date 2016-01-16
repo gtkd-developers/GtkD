@@ -122,6 +122,7 @@ public class PixbufLoader : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_pixbuf_loader_get_type();

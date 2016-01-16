@@ -142,6 +142,7 @@ public class IconFactory : ObjectG, BuildableIF
 	mixin BuildableT!(GtkIconFactory);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_factory_get_type();

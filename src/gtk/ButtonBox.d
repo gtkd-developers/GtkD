@@ -120,6 +120,7 @@ public class ButtonBox : Box
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_button_box_get_type();

@@ -169,6 +169,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_model_filter_get_type();

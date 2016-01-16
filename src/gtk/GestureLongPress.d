@@ -77,6 +77,7 @@ public class GestureLongPress : GestureSingle
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_long_press_get_type();

@@ -70,6 +70,7 @@ public class PgEngineLang : PgEngine
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_engine_lang_get_type();

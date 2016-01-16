@@ -82,6 +82,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	mixin SeekableT!(GMemoryOutputStream);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_memory_output_stream_get_type();

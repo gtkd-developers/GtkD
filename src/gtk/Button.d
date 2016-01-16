@@ -197,6 +197,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_button_get_type();

@@ -106,6 +106,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_desktop_app_info_get_type();

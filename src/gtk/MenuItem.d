@@ -204,6 +204,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_item_get_type();
@@ -528,6 +529,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	}
 
 	void delegate(MenuItem)[] onDeselectListeners;
+	/** */
 	void addOnDeselect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "deselect" !in connectedSignals )
@@ -552,6 +554,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	}
 
 	void delegate(MenuItem)[] onSelectListeners;
+	/** */
 	void addOnSelect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "select" !in connectedSignals )
@@ -576,6 +579,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	}
 
 	void delegate(int, MenuItem)[] onToggleSizeAllocateListeners;
+	/** */
 	void addOnToggleSizeAllocate(void delegate(int, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "toggle-size-allocate" !in connectedSignals )
@@ -600,6 +604,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	}
 
 	void delegate(void*, MenuItem)[] onToggleSizeRequestListeners;
+	/** */
 	void addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "toggle-size-request" !in connectedSignals )

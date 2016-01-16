@@ -137,6 +137,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	mixin BuildableT!(GtkSizeGroup);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_size_group_get_type();

@@ -72,6 +72,7 @@ public class GestureRotate : Gesture
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_rotate_get_type();

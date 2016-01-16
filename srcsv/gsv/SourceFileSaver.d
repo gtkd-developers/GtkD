@@ -73,6 +73,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_file_saver_get_type();
@@ -320,6 +321,7 @@ public class SourceFileSaver : ObjectG
 		gtk_source_file_saver_set_encoding(gtkSourceFileSaver, (encoding is null) ? null : encoding.getSourceEncodingStruct());
 	}
 
+	/** */
 	public void setFlags(GtkSourceFileSaverFlags flags)
 	{
 		gtk_source_file_saver_set_flags(gtkSourceFileSaver, flags);

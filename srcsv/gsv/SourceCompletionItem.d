@@ -104,6 +104,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_completion_item_get_type();

@@ -125,6 +125,7 @@ public class RecentAction : Action, RecentChooserIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_action_get_type();

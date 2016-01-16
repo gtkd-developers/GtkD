@@ -72,6 +72,7 @@ public class Bin : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_bin_get_type();

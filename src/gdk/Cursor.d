@@ -70,6 +70,7 @@ public class Cursor : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_cursor_get_type();

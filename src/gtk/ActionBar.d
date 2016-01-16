@@ -75,6 +75,7 @@ public class ActionBar : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_action_bar_get_type();

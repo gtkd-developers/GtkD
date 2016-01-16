@@ -63,6 +63,7 @@ public class PgFontMetrics
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_font_metrics_get_type();

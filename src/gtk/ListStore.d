@@ -287,6 +287,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_list_store_get_type();

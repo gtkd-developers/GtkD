@@ -77,6 +77,7 @@ public class SourceBuffer : TextBuffer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_buffer_get_type();

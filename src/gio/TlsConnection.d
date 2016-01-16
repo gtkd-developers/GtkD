@@ -80,6 +80,7 @@ public class TlsConnection : IOStream
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tls_connection_get_type();

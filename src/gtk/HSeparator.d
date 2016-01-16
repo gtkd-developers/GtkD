@@ -77,6 +77,7 @@ public class HSeparator : Separator
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hseparator_get_type();

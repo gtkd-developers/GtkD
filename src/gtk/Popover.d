@@ -121,6 +121,7 @@ public class Popover : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_popover_get_type();
@@ -413,6 +414,7 @@ public class Popover : Bin
 	int[string] connectedSignals;
 
 	void delegate(Popover)[] onClosedListeners;
+	/** */
 	void addOnClosed(void delegate(Popover) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "closed" !in connectedSignals )

@@ -68,6 +68,7 @@ public class TextCellAccessible : RendererCellAccessible, TextIF
 	mixin TextT!(GtkTextCellAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_cell_accessible_get_type();

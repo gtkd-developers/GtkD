@@ -83,6 +83,7 @@ public class CellRendererCombo : CellRendererText
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_combo_get_type();

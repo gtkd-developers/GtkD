@@ -91,6 +91,7 @@ public class IconInfo : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_info_get_type();

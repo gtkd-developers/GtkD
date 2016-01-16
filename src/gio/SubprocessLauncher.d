@@ -79,6 +79,7 @@ public class SubprocessLauncher : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_subprocess_launcher_get_type();

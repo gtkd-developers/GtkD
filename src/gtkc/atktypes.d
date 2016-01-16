@@ -1389,8 +1389,11 @@ struct AtkComponentIface
 	 *     child, if one exists
 	 */
 	extern(C) AtkObject* function(AtkComponent* component, int x, int y, AtkCoordType coordType) refAccessibleAtPoint;
+	/** */
 	extern(C) void function(AtkComponent* component, int* x, int* y, int* width, int* height, AtkCoordType coordType) getExtents;
+	/** */
 	extern(C) void function(AtkComponent* component, int* x, int* y, AtkCoordType coordType) getPosition;
+	/** */
 	extern(C) void function(AtkComponent* component, int* width, int* height) getSize;
 	/**
 	 *
@@ -1399,6 +1402,7 @@ struct AtkComponentIface
 	 * Return: %TRUE if successful, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkComponent* component) grabFocus;
+	/** */
 	extern(C) void function(AtkComponent* component, uint handlerId) removeFocusHandler;
 	/**
 	 *
@@ -1449,6 +1453,7 @@ struct AtkComponentIface
 	 *     container.
 	 */
 	extern(C) int function(AtkComponent* component) getMdiZorder;
+	/** */
 	extern(C) void function(AtkComponent* component, AtkRectangle* bounds) boundsChanged;
 	/**
 	 *
@@ -1478,9 +1483,13 @@ struct AtkDocumentIface
 	 * Return: a %gpointer that points to an instance of the DOM.
 	 */
 	extern(C) void* function(AtkDocument* document) getDocument;
+	/** */
 	extern(C) const(char)* function(AtkDocument* document) getDocumentLocale;
+	/** */
 	extern(C) AtkAttributeSet* function(AtkDocument* document) getDocumentAttributes;
+	/** */
 	extern(C) const(char)* function(AtkDocument* document, const(char)* attributeName) getDocumentAttributeValue;
+	/** */
 	extern(C) int function(AtkDocument* document, const(char)* attributeName, const(char)* attributeValue) setDocumentAttribute;
 	/**
 	 *
@@ -1516,11 +1525,17 @@ struct AtkEditableTextIface
 	 *     range, otherwise %FALSE
 	 */
 	extern(C) int function(AtkEditableText* text, AtkAttributeSet* attribSet, int startOffset, int endOffset) setRunAttributes;
+	/** */
 	extern(C) void function(AtkEditableText* text, const(char)* str) setTextContents;
+	/** */
 	extern(C) void function(AtkEditableText* text, const(char)* str, int length, int* position) insertText;
+	/** */
 	extern(C) void function(AtkEditableText* text, int startPos, int endPos) copyText;
+	/** */
 	extern(C) void function(AtkEditableText* text, int startPos, int endPos) cutText;
+	/** */
 	extern(C) void function(AtkEditableText* text, int startPos, int endPos) deleteText;
+	/** */
 	extern(C) void function(AtkEditableText* text, int position) pasteText;
 }
 
@@ -1589,6 +1604,7 @@ struct AtkHyperlinkClass
 	 * Return: the number of anchors associated with this hyperlink
 	 */
 	extern(C) int function(AtkHyperlink* link) getNAnchors;
+	/** */
 	extern(C) uint function(AtkHyperlink* link) linkState;
 	/**
 	 *
@@ -1597,6 +1613,7 @@ struct AtkHyperlinkClass
 	 * Return: True if the AtkHyperlink is selected, False otherwise
 	 */
 	extern(C) int function(AtkHyperlink* link) isSelectedLink;
+	/** */
 	extern(C) void function(AtkHyperlink* link) linkActivated;
 	AtkFunction pad1;
 }
@@ -1646,6 +1663,7 @@ struct AtkHypertextIface
 	 *     or -1 if there is no hyperlink associated with this character.
 	 */
 	extern(C) int function(AtkHypertext* hypertext, int charIndex) getLinkIndex;
+	/** */
 	extern(C) void function(AtkHypertext* hypertext, int linkIndex) linkSelected;
 }
 
@@ -1654,6 +1672,7 @@ struct AtkImage;
 struct AtkImageIface
 {
 	GTypeInterface parent;
+	/** */
 	extern(C) void function(AtkImage* image, int* x, int* y, AtkCoordType coordType) getImagePosition;
 	/**
 	 *
@@ -1662,6 +1681,7 @@ struct AtkImageIface
 	 * Return: a string representing the image description
 	 */
 	extern(C) const(char)* function(AtkImage* image) getImageDescription;
+	/** */
 	extern(C) void function(AtkImage* image, int* width, int* height) getImageSize;
 	/**
 	 *
@@ -1740,7 +1760,9 @@ struct AtkMisc
 struct AtkMiscClass
 {
 	GObjectClass parent;
+	/** */
 	extern(C) void function(AtkMisc* misc) threadsEnter;
+	/** */
 	extern(C) void function(AtkMisc* misc) threadsLeave;
 	void*[32] vfuncs;
 }
@@ -1802,7 +1824,9 @@ struct AtkObjectClass
 	 *     parent of the accessible
 	 */
 	extern(C) AtkObject* function(AtkObject* accessible) getParent;
+	/** */
 	extern(C) int function(AtkObject* accessible) getNChildren;
+	/** */
 	extern(C) AtkObject* function(AtkObject* accessible, int i) refChild;
 	/**
 	 *
@@ -1850,9 +1874,13 @@ struct AtkObjectClass
 	 *     set of the accessible
 	 */
 	extern(C) AtkStateSet* function(AtkObject* accessible) refStateSet;
+	/** */
 	extern(C) void function(AtkObject* accessible, const(char)* name) setName;
+	/** */
 	extern(C) void function(AtkObject* accessible, const(char)* description) setDescription;
+	/** */
 	extern(C) void function(AtkObject* accessible, AtkObject* parent) setParent;
+	/** */
 	extern(C) void function(AtkObject* accessible, AtkRole role) setRole;
 	/**
 	 *
@@ -1863,13 +1891,21 @@ struct AtkObjectClass
 	 *     atk_object_remove_property_change_handler()
 	 */
 	extern(C) uint function(AtkObject* accessible, AtkPropertyChangeHandler* handler) connectPropertyChangeHandler;
+	/** */
 	extern(C) void function(AtkObject* accessible, uint handlerId) removePropertyChangeHandler;
+	/** */
 	extern(C) void function(AtkObject* accessible, void* data) initialize;
+	/** */
 	extern(C) void function(AtkObject* accessible, uint changeIndex, void* changedChild) childrenChanged;
+	/** */
 	extern(C) void function(AtkObject* accessible, int focusIn) focusEvent;
+	/** */
 	extern(C) void function(AtkObject* accessible, AtkPropertyValues* values) propertyChange;
+	/** */
 	extern(C) void function(AtkObject* accessible, const(char)* name, int stateSet) stateChange;
+	/** */
 	extern(C) void function(AtkObject* accessible) visibleDataChanged;
+	/** */
 	extern(C) void function(AtkObject* accessible, void** child) activeDescendantChanged;
 	/**
 	 *
@@ -1901,8 +1937,11 @@ struct AtkObjectFactory
 struct AtkObjectFactoryClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) AtkObject* function(GObject* obj) createAccessible;
+	/** */
 	extern(C) void function(AtkObjectFactory* factory) invalidate;
+	/** */
 	extern(C) GType function() getAccessibleType;
 	AtkFunction pad1;
 	AtkFunction pad2;
@@ -1916,6 +1955,7 @@ struct AtkPlug
 struct AtkPlugClass
 {
 	AtkObjectClass parentClass;
+	/** */
 	extern(C) char* function(AtkPlug* obj) getObjectId;
 }
 
@@ -2067,6 +2107,7 @@ struct AtkSelectionIface
 	 * Return: TRUE if success, FALSE otherwise.
 	 */
 	extern(C) int function(AtkSelection* selection) selectAllSelection;
+	/** */
 	extern(C) void function(AtkSelection* selection) selectionChanged;
 }
 
@@ -2079,6 +2120,7 @@ struct AtkSocket
 struct AtkSocketClass
 {
 	AtkObjectClass parentClass;
+	/** */
 	extern(C) void function(AtkSocket* obj, char* plugId) embed;
 }
 
@@ -2337,11 +2379,17 @@ struct AtkTableIface
 	 *     of the table, or zero if value does not implement this interface.
 	 */
 	extern(C) AtkObject* function(AtkTable* table) getSummary;
+	/** */
 	extern(C) void function(AtkTable* table, AtkObject* caption) setCaption;
+	/** */
 	extern(C) void function(AtkTable* table, int column, const(char)* description) setColumnDescription;
+	/** */
 	extern(C) void function(AtkTable* table, int column, AtkObject* header) setColumnHeader;
+	/** */
 	extern(C) void function(AtkTable* table, int row, const(char)* description) setRowDescription;
+	/** */
 	extern(C) void function(AtkTable* table, int row, AtkObject* header) setRowHeader;
+	/** */
 	extern(C) void function(AtkTable* table, AtkObject* accessible) setSummary;
 	/**
 	 *
@@ -2425,12 +2473,19 @@ struct AtkTableIface
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int column) removeColumnSelection;
+	/** */
 	extern(C) void function(AtkTable* table, int row, int numInserted) rowInserted;
+	/** */
 	extern(C) void function(AtkTable* table, int column, int numInserted) columnInserted;
+	/** */
 	extern(C) void function(AtkTable* table, int row, int numDeleted) rowDeleted;
+	/** */
 	extern(C) void function(AtkTable* table, int column, int numDeleted) columnDeleted;
+	/** */
 	extern(C) void function(AtkTable* table) rowReordered;
+	/** */
 	extern(C) void function(AtkTable* table) columnReordered;
+	/** */
 	extern(C) void function(AtkTable* table) modelChanged;
 }
 
@@ -2525,6 +2580,7 @@ struct AtkTextIface
 	 *     a call to atk_attribute_set_free().
 	 */
 	extern(C) AtkAttributeSet* function(AtkText* text) getDefaultAttributes;
+	/** */
 	extern(C) void function(AtkText* text, int offset, int* x, int* y, int* width, int* height, AtkCoordType coords) getCharacterExtents;
 	/**
 	 *
@@ -2613,11 +2669,17 @@ struct AtkTextIface
 	 * Return: %TRUE if success, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkText* text, int offset) setCaretOffset;
+	/** */
 	extern(C) void function(AtkText* text, int position, int length) textChanged;
+	/** */
 	extern(C) void function(AtkText* text, int location) textCaretMoved;
+	/** */
 	extern(C) void function(AtkText* text) textSelectionChanged;
+	/** */
 	extern(C) void function(AtkText* text) textAttributesChanged;
+	/** */
 	extern(C) void function(AtkText* text, int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect) getRangeExtents;
+	/** */
 	extern(C) AtkTextRange** function(AtkText* text, AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType) getBoundedRanges;
 	/**
 	 *
@@ -2697,12 +2759,19 @@ struct AtkUtil
 struct AtkUtilClass
 {
 	GObjectClass parent;
+	/** */
 	extern(C) uint function(GSignalEmissionHook listener, const(char)* eventType) addGlobalEventListener;
+	/** */
 	extern(C) void function(uint listenerId) removeGlobalEventListener;
+	/** */
 	extern(C) uint function(AtkKeySnoopFunc listener, void* data) addKeyEventListener;
+	/** */
 	extern(C) void function(uint listenerId) removeKeyEventListener;
+	/** */
 	extern(C) AtkObject* function() getRoot;
+	/** */
 	extern(C) const(char)* function() getToolkitName;
+	/** */
 	extern(C) const(char)* function() getToolkitVersion;
 }
 
@@ -2711,8 +2780,11 @@ struct AtkValue;
 struct AtkValueIface
 {
 	GTypeInterface parent;
+	/** */
 	extern(C) void function(AtkValue* obj, GValue* value) getCurrentValue;
+	/** */
 	extern(C) void function(AtkValue* obj, GValue* value) getMaximumValue;
+	/** */
 	extern(C) void function(AtkValue* obj, GValue* value) getMinimumValue;
 	/**
 	 *
@@ -2722,7 +2794,9 @@ struct AtkValueIface
 	 * Return: %TRUE if new value is successfully set, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkValue* obj, GValue* value) setCurrentValue;
+	/** */
 	extern(C) void function(AtkValue* obj, GValue* value) getMinimumIncrement;
+	/** */
 	extern(C) void function(AtkValue* obj, double* value, char** text) getValueAndText;
 	/**
 	 *
@@ -2750,6 +2824,7 @@ struct AtkValueIface
 	 *     the returns list with g_slist_free().
 	 */
 	extern(C) GSList* function(AtkValue* obj) getSubRanges;
+	/** */
 	extern(C) void function(AtkValue* obj, double newValue) setValue;
 }
 

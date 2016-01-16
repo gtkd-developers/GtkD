@@ -402,6 +402,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	mixin CellLayoutT!(GtkCellArea);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_area_get_type();

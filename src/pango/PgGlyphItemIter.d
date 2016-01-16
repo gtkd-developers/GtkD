@@ -98,6 +98,7 @@ public class PgGlyphItemIter
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_glyph_item_iter_get_type();

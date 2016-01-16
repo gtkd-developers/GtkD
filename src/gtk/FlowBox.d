@@ -101,6 +101,7 @@ public class FlowBox : Container, OrientableIF
 	mixin OrientableT!(GtkFlowBox);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_flow_box_get_type();

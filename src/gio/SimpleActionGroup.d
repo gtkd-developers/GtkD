@@ -82,6 +82,7 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	mixin ActionMapT!(GSimpleActionGroup);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_simple_action_group_get_type();

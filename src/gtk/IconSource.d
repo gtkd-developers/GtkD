@@ -71,6 +71,7 @@ public class IconSource
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_source_get_type();

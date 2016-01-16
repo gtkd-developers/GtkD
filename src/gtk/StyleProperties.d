@@ -90,6 +90,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	mixin StyleProviderT!(GtkStyleProperties);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_style_properties_get_type();

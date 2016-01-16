@@ -63,6 +63,7 @@ public class FrameAccessible : ContainerAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_frame_accessible_get_type();

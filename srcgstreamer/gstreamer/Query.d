@@ -282,6 +282,7 @@ public class Query
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_query_get_type();

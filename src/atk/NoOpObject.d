@@ -146,6 +146,7 @@ public class NoOpObject : ObjectAtk, ActionIF, ComponentIF, DocumentIF, Editable
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return atk_no_op_object_get_type();

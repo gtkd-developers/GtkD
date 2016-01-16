@@ -67,6 +67,7 @@ public class IMMulticontext : IMContext
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_im_multicontext_get_type();

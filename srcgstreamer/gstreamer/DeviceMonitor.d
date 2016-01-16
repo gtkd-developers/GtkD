@@ -132,6 +132,7 @@ public class DeviceMonitor : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_device_monitor_get_type();

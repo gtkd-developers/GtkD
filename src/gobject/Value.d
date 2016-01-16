@@ -118,6 +118,7 @@ public class Value
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_value_get_type();

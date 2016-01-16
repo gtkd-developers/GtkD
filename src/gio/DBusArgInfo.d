@@ -60,6 +60,7 @@ public class DBusArgInfo
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_arg_info_get_type();

@@ -306,9 +306,13 @@ struct GdkPixbufLoader
 struct GdkPixbufLoaderClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GdkPixbufLoader* loader, int width, int height) sizePrepared;
+	/** */
 	extern(C) void function(GdkPixbufLoader* loader) areaPrepared;
+	/** */
 	extern(C) void function(GdkPixbufLoader* loader, int x, int y, int width, int height) areaUpdated;
+	/** */
 	extern(C) void function(GdkPixbufLoader* loader) closed;
 }
 

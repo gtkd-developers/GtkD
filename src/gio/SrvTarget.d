@@ -74,6 +74,7 @@ public class SrvTarget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_srv_target_get_type();

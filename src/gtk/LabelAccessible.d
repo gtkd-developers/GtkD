@@ -73,6 +73,7 @@ public class LabelAccessible : WidgetAccessible, HypertextIF, TextIF
 	mixin TextT!(GtkLabelAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_label_accessible_get_type();

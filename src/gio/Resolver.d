@@ -81,6 +81,7 @@ public class Resolver : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_resolver_get_type();

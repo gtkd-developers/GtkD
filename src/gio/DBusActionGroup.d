@@ -96,6 +96,7 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_action_group_get_type();

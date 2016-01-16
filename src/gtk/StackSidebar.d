@@ -75,6 +75,7 @@ public class StackSidebar : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_stack_sidebar_get_type();

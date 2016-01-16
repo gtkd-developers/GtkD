@@ -114,6 +114,7 @@ public class Tooltip : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tooltip_get_type();

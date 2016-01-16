@@ -77,6 +77,7 @@ public class TlsCertificate : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tls_certificate_get_type();

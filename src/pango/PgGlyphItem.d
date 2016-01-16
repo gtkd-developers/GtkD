@@ -65,6 +65,7 @@ public class PgGlyphItem
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_glyph_item_get_type();

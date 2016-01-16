@@ -68,6 +68,7 @@ public class Vfs : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_vfs_get_type();

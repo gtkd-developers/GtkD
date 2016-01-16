@@ -241,6 +241,7 @@ public class Action : ObjectG, BuildableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_action_get_type();

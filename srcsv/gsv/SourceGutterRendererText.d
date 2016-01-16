@@ -66,6 +66,7 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_gutter_renderer_text_get_type();
@@ -118,11 +119,13 @@ public class SourceGutterRendererText : SourceGutterRenderer
 		gtk_source_gutter_renderer_text_measure_markup(gtkSourceGutterRendererText, Str.toStringz(markup), &width, &height);
 	}
 
+	/** */
 	public void setMarkup(string markup, int length)
 	{
 		gtk_source_gutter_renderer_text_set_markup(gtkSourceGutterRendererText, Str.toStringz(markup), length);
 	}
 
+	/** */
 	public void setText(string text, int length)
 	{
 		gtk_source_gutter_renderer_text_set_text(gtkSourceGutterRendererText, Str.toStringz(text), length);

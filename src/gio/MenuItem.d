@@ -74,6 +74,7 @@ public class MenuItem : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_menu_item_get_type();

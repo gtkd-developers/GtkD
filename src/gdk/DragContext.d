@@ -67,6 +67,7 @@ public class DragContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_drag_context_get_type();

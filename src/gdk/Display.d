@@ -91,6 +91,7 @@ public class Display : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_display_get_type();

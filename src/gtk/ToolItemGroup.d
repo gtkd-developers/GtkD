@@ -91,6 +91,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tool_item_group_get_type();

@@ -99,6 +99,7 @@ public class Iterator
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_iterator_get_type();

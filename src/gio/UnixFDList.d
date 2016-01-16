@@ -77,6 +77,7 @@ public class UnixFDList : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_unix_fd_list_get_type();

@@ -105,6 +105,7 @@ public class FileChooserButton : Box, FileChooserIF
 	mixin FileChooserT!(GtkFileChooserButton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_file_chooser_button_get_type();

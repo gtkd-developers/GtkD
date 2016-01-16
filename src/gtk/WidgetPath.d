@@ -120,6 +120,7 @@ public class WidgetPath
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_widget_path_get_type();
@@ -295,6 +296,7 @@ public class WidgetPath
 		gtk_widget_path_iter_add_class(gtkWidgetPath, pos, Str.toStringz(name));
 	}
 
+	/** */
 	public void iterAddQclass(int pos, GQuark qname)
 	{
 		gtk_widget_path_iter_add_qclass(gtkWidgetPath, pos, qname);

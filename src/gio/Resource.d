@@ -163,6 +163,7 @@ public class Resource
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_resource_get_type();

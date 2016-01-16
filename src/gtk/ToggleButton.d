@@ -156,6 +156,7 @@ public class ToggleButton : Button
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_toggle_button_get_type();

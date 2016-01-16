@@ -82,6 +82,7 @@ public class UnixFDMessage : SocketControlMessage
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_unix_fd_message_get_type();

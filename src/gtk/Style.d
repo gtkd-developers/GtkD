@@ -97,6 +97,7 @@ public class Style : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_style_get_type();

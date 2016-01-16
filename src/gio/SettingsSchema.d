@@ -163,6 +163,7 @@ public class SettingsSchema
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_settings_schema_get_type();

@@ -1086,6 +1086,7 @@ public class BookmarkFile
 		return p;
 	}
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_bookmark_file_error_quark();

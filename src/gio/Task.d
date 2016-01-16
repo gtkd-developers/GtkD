@@ -567,6 +567,7 @@ public class Task : ObjectG, AsyncResultIF
 	mixin AsyncResultT!(GTask);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_task_get_type();

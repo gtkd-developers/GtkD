@@ -237,6 +237,7 @@ public class MessageDialog : Dialog
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_message_dialog_get_type();

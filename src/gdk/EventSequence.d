@@ -32,6 +32,7 @@ public  import gtkc.gdktypes;
 public struct EventSequence
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_event_sequence_get_type();

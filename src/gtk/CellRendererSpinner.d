@@ -76,6 +76,7 @@ public class CellRendererSpinner : CellRenderer
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_spinner_get_type();

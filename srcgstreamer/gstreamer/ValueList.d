@@ -34,6 +34,7 @@ public  import gstreamerc.gstreamertypes;
 public class ValueList
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_value_list_get_type();

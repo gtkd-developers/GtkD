@@ -63,6 +63,7 @@ public class BooleanCellAccessible : RendererCellAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_boolean_cell_accessible_get_type();

@@ -93,6 +93,7 @@ public class GLConfig : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_gl_config_get_type();

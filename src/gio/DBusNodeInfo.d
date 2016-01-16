@@ -66,6 +66,7 @@ public class DBusNodeInfo
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_node_info_get_type();

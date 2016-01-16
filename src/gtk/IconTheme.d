@@ -145,6 +145,7 @@ public class IconTheme : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_theme_get_type();

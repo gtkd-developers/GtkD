@@ -58,6 +58,7 @@ public class AllocationParams
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_allocation_params_get_type();

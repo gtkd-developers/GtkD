@@ -88,6 +88,7 @@ public class SearchBar : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_search_bar_get_type();

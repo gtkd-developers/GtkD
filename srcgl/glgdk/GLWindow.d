@@ -71,6 +71,7 @@ public class GLWindow : ObjectG, GLDrawableIF
 	mixin GLDrawableT!(GdkGLWindow);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_gl_window_get_type();

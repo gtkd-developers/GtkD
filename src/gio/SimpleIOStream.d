@@ -78,6 +78,7 @@ public class SimpleIOStream : IOStream
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_simple_io_stream_get_type();

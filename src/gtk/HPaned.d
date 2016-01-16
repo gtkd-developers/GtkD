@@ -88,6 +88,7 @@ public class HPaned : Paned
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_hpaned_get_type();

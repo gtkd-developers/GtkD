@@ -72,6 +72,7 @@ public class PgEngineShape : PgEngine
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_engine_shape_get_type();

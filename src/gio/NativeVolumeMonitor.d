@@ -63,6 +63,7 @@ public class NativeVolumeMonitor : VolumeMonitor
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_native_volume_monitor_get_type();

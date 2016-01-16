@@ -77,6 +77,7 @@ public class IconSet
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_set_get_type();

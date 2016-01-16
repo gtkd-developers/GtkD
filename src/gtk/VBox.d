@@ -88,6 +88,7 @@ public class VBox : Box
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_vbox_get_type();

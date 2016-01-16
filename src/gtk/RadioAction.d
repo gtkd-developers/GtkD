@@ -97,6 +97,7 @@ public class RadioAction : ToggleAction
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_radio_action_get_type();

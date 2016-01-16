@@ -82,6 +82,7 @@ public class TlsDatabase : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tls_database_get_type();

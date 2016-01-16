@@ -88,6 +88,7 @@ public class DBusMenuModel : MenuModel
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_menu_model_get_type();

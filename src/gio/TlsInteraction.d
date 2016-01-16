@@ -92,6 +92,7 @@ public class TlsInteraction : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_tls_interaction_get_type();

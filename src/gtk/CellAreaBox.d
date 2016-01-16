@@ -89,6 +89,7 @@ public class CellAreaBox : CellArea, OrientableIF
 	mixin OrientableT!(GtkCellAreaBox);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_area_box_get_type();

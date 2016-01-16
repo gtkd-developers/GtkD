@@ -82,6 +82,7 @@ public class FileMonitor : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_monitor_get_type();
@@ -97,6 +98,7 @@ public class FileMonitor : ObjectG
 		return g_file_monitor_cancel(gFileMonitor) != 0;
 	}
 
+	/** */
 	public void emitEvent(FileIF child, FileIF otherFile, GFileMonitorEvent eventType)
 	{
 		g_file_monitor_emit_event(gFileMonitor, (child is null) ? null : child.getFileStruct(), (otherFile is null) ? null : otherFile.getFileStruct(), eventType);

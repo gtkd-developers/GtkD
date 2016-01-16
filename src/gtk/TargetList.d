@@ -75,6 +75,7 @@ public class TargetList
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_target_list_get_type();

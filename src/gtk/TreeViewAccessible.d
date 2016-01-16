@@ -78,6 +78,7 @@ public class TreeViewAccessible : ContainerAccessible, SelectionIF, TableIF, Cel
 	mixin CellAccessibleParentT!(GtkTreeViewAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_view_accessible_get_type();

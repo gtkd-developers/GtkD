@@ -91,6 +91,7 @@ public class FontSelectionDialog : Dialog
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_font_selection_dialog_get_type();

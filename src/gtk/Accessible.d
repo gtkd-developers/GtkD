@@ -77,6 +77,7 @@ public class Accessible : ObjectAtk
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_accessible_get_type();

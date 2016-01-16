@@ -68,6 +68,7 @@ public class SwitchAccessible : WidgetAccessible, ActionIF
 	mixin ActionT!(GtkSwitchAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_switch_accessible_get_type();

@@ -68,6 +68,7 @@ public class LevelBarAccessible : WidgetAccessible, ValueIF
 	mixin ValueT!(GtkLevelBarAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_level_bar_accessible_get_type();

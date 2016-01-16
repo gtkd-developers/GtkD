@@ -66,6 +66,7 @@ public class SourceMark : TextMark
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_mark_get_type();

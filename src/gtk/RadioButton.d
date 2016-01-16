@@ -226,6 +226,7 @@ public class RadioButton : CheckButton
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_radio_button_get_type();

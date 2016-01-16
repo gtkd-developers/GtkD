@@ -118,6 +118,7 @@ public class CheckButton : ToggleButton
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_check_button_get_type();

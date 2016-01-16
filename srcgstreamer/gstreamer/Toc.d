@@ -107,6 +107,7 @@ public class Toc
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_toc_get_type();
@@ -146,6 +147,7 @@ public class Toc
 		gst_toc_append_entry(gstToc, (entry is null) ? null : entry.getTocEntryStruct());
 	}
 
+	/** */
 	public void dump()
 	{
 		gst_toc_dump(gstToc);

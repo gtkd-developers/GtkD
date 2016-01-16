@@ -66,11 +66,13 @@ public class ContainerCellAccessible : CellAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_container_cell_accessible_get_type();
 	}
 
+	/** */
 	public this()
 	{
 		auto p = gtk_container_cell_accessible_new();
@@ -83,6 +85,7 @@ public class ContainerCellAccessible : CellAccessible
 		this(cast(GtkContainerCellAccessible*) p, true);
 	}
 
+	/** */
 	public void addChild(CellAccessible child)
 	{
 		gtk_container_cell_accessible_add_child(gtkContainerCellAccessible, (child is null) ? null : child.getCellAccessibleStruct());
@@ -103,6 +106,7 @@ public class ContainerCellAccessible : CellAccessible
 		return new ListG(cast(GList*) p);
 	}
 
+	/** */
 	public void removeChild(CellAccessible child)
 	{
 		gtk_container_cell_accessible_remove_child(gtkContainerCellAccessible, (child is null) ? null : child.getCellAccessibleStruct());

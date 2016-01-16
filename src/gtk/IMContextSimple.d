@@ -65,6 +65,7 @@ public class IMContextSimple : IMContext
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_im_context_simple_get_type();

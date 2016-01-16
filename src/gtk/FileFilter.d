@@ -109,6 +109,7 @@ public class FileFilter : ObjectG, BuildableIF
 	mixin BuildableT!(GtkFileFilter);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_file_filter_get_type();

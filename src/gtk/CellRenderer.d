@@ -107,6 +107,7 @@ public class CellRenderer : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_get_type();

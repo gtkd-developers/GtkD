@@ -2887,6 +2887,7 @@ struct GActionEntry
 	 * the name of the action
 	 */
 	const(char)* name;
+	/** */
 	extern(C) void function(GSimpleAction* action, GVariant* parameter, void* userData) activate;
 	/**
 	 * the type of the parameter that must be passed to the
@@ -2902,6 +2903,7 @@ struct GActionEntry
 	 * give %NULL here.
 	 */
 	const(char)* state;
+	/** */
 	extern(C) void function(GSimpleAction* action, GVariant* value, void* userData) changeState;
 	size_t[3] padding;
 }
@@ -2972,11 +2974,17 @@ struct GActionGroupInterface
 	 * Return: the current state of the action
 	 */
 	extern(C) GVariant* function(GActionGroup* actionGroup, const(char)* actionName) getActionState;
+	/** */
 	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, GVariant* value) changeActionState;
+	/** */
 	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, GVariant* parameter) activateAction;
+	/** */
 	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName) actionAdded;
+	/** */
 	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName) actionRemoved;
+	/** */
 	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, int enabled) actionEnabledChanged;
+	/** */
 	extern(C) void function(GActionGroup* actionGroup, const(char)* actionName, GVariant* state) actionStateChanged;
 	/**
 	 *
@@ -3043,7 +3051,9 @@ struct GActionInterface
 	 * Return: the current state of the action
 	 */
 	extern(C) GVariant* function(GAction* action) getState;
+	/** */
 	extern(C) void function(GAction* action, GVariant* value) changeState;
+	/** */
 	extern(C) void function(GAction* action, GVariant* parameter) activate;
 }
 
@@ -3065,7 +3075,9 @@ struct GActionMapInterface
 	 * Return: a #GAction, or %NULL
 	 */
 	extern(C) GAction* function(GActionMap* actionMap, const(char)* actionName) lookupAction;
+	/** */
 	extern(C) void function(GActionMap* actionMap, GAction* action) addAction;
+	/** */
 	extern(C) void function(GActionMap* actionMap, const(char)* actionName) removeAction;
 }
 
@@ -3303,11 +3315,17 @@ struct GAppLaunchContextClass
 	 *     not supported.
 	 */
 	extern(C) char* function(GAppLaunchContext* context, GAppInfo* info, GList* files) getStartupNotifyId;
+	/** */
 	extern(C) void function(GAppLaunchContext* context, const(char)* startupNotifyId) launchFailed;
+	/** */
 	extern(C) void function(GAppLaunchContext* context, GAppInfo* info, GVariant* platformData) launched;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
 }
 
@@ -3327,9 +3345,13 @@ struct GApplication
 struct GApplicationClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GApplication* application) startup;
+	/** */
 	extern(C) void function(GApplication* application) activate;
+	/** */
 	extern(C) void function(GApplication* application, GFile** files, int nFiles, const(char)* hint) open;
+	/** */
 	extern(C) int function(GApplication* application, GApplicationCommandLine* commandLine) commandLine;
 	/**
 	 *
@@ -3340,14 +3362,23 @@ struct GApplicationClass
 	 * Return: %TRUE if the commandline has been completely handled
 	 */
 	extern(C) int function(GApplication* application, char*** arguments, int* exitStatus) localCommandLine;
+	/** */
 	extern(C) void function(GApplication* application, GVariant* platformData) beforeEmit;
+	/** */
 	extern(C) void function(GApplication* application, GVariant* platformData) afterEmit;
+	/** */
 	extern(C) void function(GApplication* application, GVariantBuilder* builder) addPlatformData;
+	/** */
 	extern(C) void function(GApplication* application) quitMainloop;
+	/** */
 	extern(C) void function(GApplication* application) runMainloop;
+	/** */
 	extern(C) void function(GApplication* application) shutdown;
+	/** */
 	extern(C) int function(GApplication* application, GDBusConnection* connection, const(char)* objectPath, GError** err) dbusRegister;
+	/** */
 	extern(C) void function(GApplication* application, GDBusConnection* connection, const(char)* objectPath) dbusUnregister;
+	/** */
 	extern(C) int function(GApplication* application, GVariantDict* options) handleLocalOptions;
 	void*[8] padding;
 }
@@ -3367,7 +3398,9 @@ struct GApplicationCommandLine
 struct GApplicationCommandLineClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GApplicationCommandLine* cmdline, const(char)* message) printLiteral;
+	/** */
 	extern(C) void function(GApplicationCommandLine* cmdline, const(char)* message) printerrLiteral;
 	/**
 	 *
@@ -3397,6 +3430,7 @@ struct GAsyncInitableIface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GAsyncInitable* initable, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) initAsync;
 	/**
 	 *
@@ -3469,6 +3503,7 @@ struct GBufferedInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GBufferedInputStream* stream, ptrdiff_t count, GCancellable* cancellable, GError** err) fill;
+	/** */
 	extern(C) void function(GBufferedInputStream* stream, ptrdiff_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) fillAsync;
 	/**
 	 *
@@ -3480,10 +3515,15 @@ struct GBufferedInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GBufferedInputStream* stream, GAsyncResult* result, GError** err) fillFinish;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -3498,7 +3538,9 @@ struct GBufferedOutputStream
 struct GBufferedOutputStreamClass
 {
 	GFilterOutputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
 }
 
@@ -3515,11 +3557,17 @@ struct GCancellable
 struct GCancellableClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GCancellable* cancellable) cancelled;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -3564,6 +3612,7 @@ struct GConverterIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GConverterResult function(GConverter* converter, void* inbuf, size_t inbufSize, void* outbuf, size_t outbufSize, GConverterFlags flags, size_t* bytesRead, size_t* bytesWritten, GError** err) convert;
+	/** */
 	extern(C) void function(GConverter* converter) reset;
 }
 
@@ -3576,10 +3625,15 @@ struct GConverterInputStream
 struct GConverterInputStreamClass
 {
 	GFilterInputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -3594,10 +3648,15 @@ struct GConverterOutputStream
 struct GConverterOutputStreamClass
 {
 	GFilterOutputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -3703,6 +3762,7 @@ struct GDBusInterfaceIface
 	 *     reference belongs to @interface_ and should not be freed.
 	 */
 	extern(C) GDBusObject* function(GDBusInterface* iface) getObject;
+	/** */
 	extern(C) void function(GDBusInterface* iface, GDBusObject* object) setObject;
 	/**
 	 *
@@ -3782,8 +3842,10 @@ struct GDBusInterfaceSkeletonClass
 	 *     Free with g_variant_unref().
 	 */
 	extern(C) GVariant* function(GDBusInterfaceSkeleton* iface) getProperties;
+	/** */
 	extern(C) void function(GDBusInterfaceSkeleton* iface) flush;
 	void*[8] vfuncPadding;
+	/** */
 	extern(C) int function(GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) gAuthorizeMethod;
 	void*[8] signalPadding;
 }
@@ -3944,7 +4006,9 @@ struct GDBusObjectIface
 	 *     #GDBusInterface that must be freed with g_object_unref().
 	 */
 	extern(C) GDBusInterface* function(GDBusObject* object, const(char)* interfaceName) getInterface;
+	/** */
 	extern(C) void function(GDBusObject* object, GDBusInterface* iface) interfaceAdded;
+	/** */
 	extern(C) void function(GDBusObject* object, GDBusInterface* iface) interfaceRemoved;
 }
 
@@ -3967,7 +4031,9 @@ struct GDBusObjectManagerClientClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GDBusObjectManagerClient* manager, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, const(char)* senderName, const(char)* signalName, GVariant* parameters) interfaceProxySignal;
+	/** */
 	extern(C) void function(GDBusObjectManagerClient* manager, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, GVariant* changedProperties, const(char)* invalidatedProperties) interfaceProxyPropertiesChanged;
 	void*[8] padding;
 }
@@ -4021,9 +4087,13 @@ struct GDBusObjectManagerIface
 	 *     with g_object_unref().
 	 */
 	extern(C) GDBusInterface* function(GDBusObjectManager* manager, const(char)* objectPath, const(char)* interfaceName) getInterface;
+	/** */
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object) objectAdded;
+	/** */
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object) objectRemoved;
+	/** */
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* iface) interfaceAdded;
+	/** */
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* iface) interfaceRemoved;
 }
 
@@ -4088,6 +4158,7 @@ struct GDBusObjectSkeletonClass
 	 * The parent class.
 	 */
 	GObjectClass parentClass;
+	/** */
 	extern(C) int function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) authorizeMethod;
 	void*[8] padding;
 }
@@ -4132,7 +4203,9 @@ struct GDBusProxy
 struct GDBusProxyClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GDBusProxy* proxy, GVariant* changedProperties, const(char)* invalidatedProperties) gPropertiesChanged;
+	/** */
 	extern(C) void function(GDBusProxy* proxy, const(char)* senderName, const(char)* signalName, GVariant* parameters) gSignal;
 	void*[32] padding;
 }
@@ -4192,10 +4265,15 @@ struct GDataInputStream
 struct GDataInputStreamClass
 {
 	GBufferedInputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -4210,10 +4288,15 @@ struct GDataOutputStream
 struct GDataOutputStreamClass
 {
 	GFilterOutputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -4256,8 +4339,11 @@ struct GDriveIface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GDrive* drive) changed;
+	/** */
 	extern(C) void function(GDrive* drive) disconnected;
+	/** */
 	extern(C) void function(GDrive* drive) ejectButton;
 	/**
 	 *
@@ -4326,6 +4412,7 @@ struct GDriveIface
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canPollForMedia;
+	/** */
 	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) eject;
 	/**
 	 *
@@ -4338,6 +4425,7 @@ struct GDriveIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) ejectFinish;
+	/** */
 	extern(C) void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) pollForMedia;
 	/**
 	 *
@@ -4390,6 +4478,7 @@ struct GDriveIface
 	 * Return: %TRUE if the @drive can be started degraded, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canStartDegraded;
+	/** */
 	extern(C) void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) start;
 	/**
 	 *
@@ -4409,6 +4498,7 @@ struct GDriveIface
 	 * Return: %TRUE if the @drive can be stopped, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canStop;
+	/** */
 	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) stop;
 	/**
 	 *
@@ -4421,7 +4511,9 @@ struct GDriveIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GDrive* drive, GAsyncResult* result, GError** err) stopFinish;
+	/** */
 	extern(C) void function(GDrive* drive) stopButton;
+	/** */
 	extern(C) void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectWithOperation;
 	/**
 	 *
@@ -4543,7 +4635,9 @@ struct GFileEnumeratorClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** err) nextFile;
+	/** */
 	extern(C) int function(GFileEnumerator* enumerator, GCancellable* cancellable, GError** err) closeFn;
+	/** */
 	extern(C) void function(GFileEnumerator* enumerator, int numFiles, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) nextFilesAsync;
 	/**
 	 *
@@ -4557,6 +4651,7 @@ struct GFileEnumeratorClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GList* function(GFileEnumerator* enumerator, GAsyncResult* result, GError** err) nextFilesFinish;
+	/** */
 	extern(C) void function(GFileEnumerator* enumerator, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
 	/**
 	 *
@@ -4568,12 +4663,19 @@ struct GFileEnumeratorClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFileEnumerator* enumerator, GAsyncResult* result, GError** err) closeFinish;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
+	/** */
 	extern(C) void function() GReserved7;
 }
 
@@ -4588,10 +4690,15 @@ struct GFileIOStream
 struct GFileIOStreamClass
 {
 	GIOStreamClass parentClass;
+	/** */
 	extern(C) long function(GFileIOStream* stream) tell;
+	/** */
 	extern(C) int function(GFileIOStream* stream) canSeek;
+	/** */
 	extern(C) int function(GFileIOStream* stream, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
+	/** */
 	extern(C) int function(GFileIOStream* stream) canTruncate;
+	/** */
 	extern(C) int function(GFileIOStream* stream, long size, GCancellable* cancellable, GError** err) truncateFn;
 	/**
 	 *
@@ -4604,6 +4711,7 @@ struct GFileIOStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFileIOStream* stream, const(char)* attributes, GCancellable* cancellable, GError** err) queryInfo;
+	/** */
 	extern(C) void function(GFileIOStream* stream, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
 	/**
 	 *
@@ -4622,10 +4730,15 @@ struct GFileIOStreamClass
 	 * Return: the entity tag for the stream.
 	 */
 	extern(C) char* function(GFileIOStream* stream) getEtag;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -4797,6 +4910,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileEnumerator* function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) enumerateChildren;
+	/** */
 	extern(C) void function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) enumerateChildrenAsync;
 	/**
 	 *
@@ -4824,6 +4938,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) queryInfo;
+	/** */
 	extern(C) void function(GFile* file, const(char)* attributes, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
 	/**
 	 *
@@ -4850,6 +4965,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFile* file, const(char)* attributes, GCancellable* cancellable, GError** err) queryFilesystemInfo;
+	/** */
 	extern(C) void function(GFile* file, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryFilesystemInfoAsync;
 	/**
 	 *
@@ -4876,6 +4992,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GMount* function(GFile* file, GCancellable* cancellable, GError** err) findEnclosingMount;
+	/** */
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) findEnclosingMountAsync;
 	/**
 	 *
@@ -4902,6 +5019,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFile* function(GFile* file, const(char)* displayName, GCancellable* cancellable, GError** err) setDisplayName;
+	/** */
 	extern(C) void function(GFile* file, const(char)* displayName, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) setDisplayNameAsync;
 	/**
 	 *
@@ -4927,7 +5045,9 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** err) querySettableAttributes;
+	/** */
 	extern(C) void function() QuerySettableAttributesAsync;
+	/** */
 	extern(C) void function() QuerySettableAttributesFinish;
 	/**
 	 *
@@ -4942,7 +5062,9 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileAttributeInfoList* function(GFile* file, GCancellable* cancellable, GError** err) queryWritableNamespaces;
+	/** */
 	extern(C) void function() QueryWritableNamespacesAsync;
+	/** */
 	extern(C) void function() QueryWritableNamespacesFinish;
 	/**
 	 *
@@ -4973,6 +5095,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) setAttributesFromInfo;
+	/** */
 	extern(C) void function(GFile* file, GFileInfo* info, GFileQueryInfoFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) setAttributesAsync;
 	/**
 	 *
@@ -4996,6 +5119,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInputStream* function(GFile* file, GCancellable* cancellable, GError** err) readFn;
+	/** */
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) readAsync;
 	/**
 	 *
@@ -5021,6 +5145,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) appendTo;
+	/** */
 	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) appendToAsync;
 	/**
 	 *
@@ -5048,6 +5173,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileOutputStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) create;
+	/** */
 	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) createAsync;
 	/**
 	 *
@@ -5076,6 +5202,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileOutputStream* function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** err) replace;
+	/** */
 	extern(C) void function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) replaceAsync;
 	/**
 	 *
@@ -5099,6 +5226,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GCancellable* cancellable, GError** err) deleteFile;
+	/** */
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) deleteFileAsync;
 	/**
 	 *
@@ -5121,6 +5249,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GCancellable* cancellable, GError** err) trash;
+	/** */
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) trashAsync;
 	/**
 	 *
@@ -5143,6 +5272,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GCancellable* cancellable, GError** err) makeDirectory;
+	/** */
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) makeDirectoryAsync;
 	/**
 	 *
@@ -5166,7 +5296,9 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, const(char)* symlinkValue, GCancellable* cancellable, GError** err) makeSymbolicLink;
+	/** */
 	extern(C) void function() MakeSymbolicLinkAsync;
+	/** */
 	extern(C) void function() MakeSymbolicLinkFinish;
 	/**
 	 *
@@ -5184,6 +5316,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) copy;
+	/** */
 	extern(C) void function(GFile* source, GFile* destination, GFileCopyFlags flags, int ioPriority, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GAsyncReadyCallback callback, void* userData) copyAsync;
 	/**
 	 *
@@ -5212,8 +5345,11 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* source, GFile* destination, GFileCopyFlags flags, GCancellable* cancellable, GFileProgressCallback progressCallback, void* progressCallbackData, GError** err) move;
+	/** */
 	extern(C) void function() MoveAsync;
+	/** */
 	extern(C) void function() MoveFinish;
+	/** */
 	extern(C) void function(GFile* file, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountMountable;
 	/**
 	 *
@@ -5226,6 +5362,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFile* function(GFile* file, GAsyncResult* result, GError** err) mountMountableFinish;
+	/** */
 	extern(C) void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmountMountable;
 	/**
 	 *
@@ -5238,6 +5375,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) unmountMountableFinish;
+	/** */
 	extern(C) void function(GFile* file, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectMountable;
 	/**
 	 *
@@ -5250,6 +5388,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) ejectMountableFinish;
+	/** */
 	extern(C) void function(GFile* location, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountEnclosingVolume;
 	/**
 	 *
@@ -5302,6 +5441,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** err) openReadwrite;
+	/** */
 	extern(C) void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) openReadwriteAsync;
 	/**
 	 *
@@ -5328,6 +5468,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileIOStream* function(GFile* file, GFileCreateFlags flags, GCancellable* cancellable, GError** err) createReadwrite;
+	/** */
 	extern(C) void function(GFile* file, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) createReadwriteAsync;
 	/**
 	 *
@@ -5356,6 +5497,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileIOStream* function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** err) replaceReadwrite;
+	/** */
 	extern(C) void function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) replaceReadwriteAsync;
 	/**
 	 *
@@ -5368,6 +5510,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) replaceReadwriteFinish;
+	/** */
 	extern(C) void function(GFile* file, GDriveStartFlags flags, GMountOperation* startOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) startMountable;
 	/**
 	 *
@@ -5380,6 +5523,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) startMountableFinish;
+	/** */
 	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) stopMountable;
 	/**
 	 *
@@ -5396,6 +5540,7 @@ struct GFileIface
 	 * a boolean that indicates whether the #GFile implementation supports thread-default contexts. Since 2.22.
 	 */
 	bool supportsThreadContexts;
+	/** */
 	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmountMountableWithOperation;
 	/**
 	 *
@@ -5408,6 +5553,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) unmountMountableWithOperationFinish;
+	/** */
 	extern(C) void function(GFile* file, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectMountableWithOperation;
 	/**
 	 *
@@ -5420,6 +5566,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GAsyncResult* result, GError** err) ejectMountableWithOperationFinish;
+	/** */
 	extern(C) void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) pollMountable;
 	/**
 	 *
@@ -5449,6 +5596,7 @@ struct GFileIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GFile* file, GFileMeasureFlags flags, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** err) measureDiskUsage;
+	/** */
 	extern(C) void function(GFile* file, GFileMeasureFlags flags, int ioPriority, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData) measureDiskUsageAsync;
 	/**
 	 *
@@ -5479,8 +5627,11 @@ struct GFileInputStream
 struct GFileInputStreamClass
 {
 	GInputStreamClass parentClass;
+	/** */
 	extern(C) long function(GFileInputStream* stream) tell;
+	/** */
 	extern(C) int function(GFileInputStream* stream) canSeek;
+	/** */
 	extern(C) int function(GFileInputStream* stream, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
 	/**
 	 *
@@ -5493,6 +5644,7 @@ struct GFileInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFileInputStream* stream, const(char)* attributes, GCancellable* cancellable, GError** err) queryInfo;
+	/** */
 	extern(C) void function(GFileInputStream* stream, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
 	/**
 	 *
@@ -5504,10 +5656,15 @@ struct GFileInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFileInputStream* stream, GAsyncResult* result, GError** err) queryInfoFinish;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -5522,6 +5679,7 @@ struct GFileMonitor
 struct GFileMonitorClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GFileMonitor* monitor, GFile* file, GFile* otherFile, GFileMonitorEvent eventType) changed;
 	/**
 	 *
@@ -5530,10 +5688,15 @@ struct GFileMonitorClass
 	 * Return: always %TRUE
 	 */
 	extern(C) int function(GFileMonitor* monitor) cancel;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -5548,10 +5711,15 @@ struct GFileOutputStream
 struct GFileOutputStreamClass
 {
 	GOutputStreamClass parentClass;
+	/** */
 	extern(C) long function(GFileOutputStream* stream) tell;
+	/** */
 	extern(C) int function(GFileOutputStream* stream) canSeek;
+	/** */
 	extern(C) int function(GFileOutputStream* stream, long offset, GSeekType type, GCancellable* cancellable, GError** err) seek;
+	/** */
 	extern(C) int function(GFileOutputStream* stream) canTruncate;
+	/** */
 	extern(C) int function(GFileOutputStream* stream, long size, GCancellable* cancellable, GError** err) truncateFn;
 	/**
 	 *
@@ -5564,6 +5732,7 @@ struct GFileOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GFileInfo* function(GFileOutputStream* stream, const(char)* attributes, GCancellable* cancellable, GError** err) queryInfo;
+	/** */
 	extern(C) void function(GFileOutputStream* stream, const(char)* attributes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) queryInfoAsync;
 	/**
 	 *
@@ -5582,10 +5751,15 @@ struct GFileOutputStreamClass
 	 * Return: the entity tag for the stream.
 	 */
 	extern(C) char* function(GFileOutputStream* stream) getEtag;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -5596,9 +5770,13 @@ struct GFilenameCompleter;
 struct GFilenameCompleterClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GFilenameCompleter* filenameCompleter) gotCompletionData;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
 }
 
@@ -5611,8 +5789,11 @@ struct GFilterInputStream
 struct GFilterInputStreamClass
 {
 	GInputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
 }
 
@@ -5625,8 +5806,11 @@ struct GFilterOutputStream
 struct GFilterOutputStreamClass
 {
 	GOutputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
 }
 
@@ -5669,7 +5853,9 @@ struct GIOStreamClass
 	 *     Do not free.
 	 */
 	extern(C) GOutputStream* function(GIOStream* stream) getOutputStream;
+	/** */
 	extern(C) int function(GIOStream* stream, GCancellable* cancellable, GError** err) closeFn;
+	/** */
 	extern(C) void function(GIOStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
 	/**
 	 *
@@ -5681,15 +5867,25 @@ struct GIOStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GIOStream* stream, GAsyncResult* result, GError** err) closeFinish;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
+	/** */
 	extern(C) void function() GReserved7;
+	/** */
 	extern(C) void function() GReserved8;
+	/** */
 	extern(C) void function() GReserved9;
+	/** */
 	extern(C) void function() GReserved10;
 }
 
@@ -5732,6 +5928,7 @@ struct GIconIface
 	 *     %NULL if @icon can't be serialized. Use g_free() to free.
 	 */
 	extern(C) int function(GIcon* icon, GPtrArray* tokens, int* outVersion) toTokens;
+	/** */
 	extern(C) GIcon* function(char** tokens, int numTokens, int versio, GError** err) fromTokens;
 	/**
 	 *
@@ -5834,6 +6031,7 @@ struct GInputStream
 struct GInputStreamClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) ptrdiff_t function(GInputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) readFn;
 	/**
 	 *
@@ -5846,7 +6044,9 @@ struct GInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GInputStream* stream, size_t count, GCancellable* cancellable, GError** err) skip;
+	/** */
 	extern(C) int function(GInputStream* stream, GCancellable* cancellable, GError** err) closeFn;
+	/** */
 	extern(C) void function(GInputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) readAsync;
 	/**
 	 *
@@ -5858,6 +6058,7 @@ struct GInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GInputStream* stream, GAsyncResult* result, GError** err) readFinish;
+	/** */
 	extern(C) void function(GInputStream* stream, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) skipAsync;
 	/**
 	 *
@@ -5869,6 +6070,7 @@ struct GInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GInputStream* stream, GAsyncResult* result, GError** err) skipFinish;
+	/** */
 	extern(C) void function(GInputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
 	/**
 	 *
@@ -5880,10 +6082,15 @@ struct GInputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GInputStream* stream, GAsyncResult* result, GError** err) closeFinish;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -5936,6 +6143,7 @@ struct GListModelInterface
 	 * Return: the number of items in @list.
 	 */
 	extern(C) uint function(GListModel* list) getNItems;
+	/** */
 	extern(C) void* function(GListModel* list, uint position) getItem;
 }
 
@@ -5971,6 +6179,7 @@ struct GLoadableIconIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GInputStream* function(GLoadableIcon* icon, int size, char** type, GCancellable* cancellable, GError** err) load;
+	/** */
 	extern(C) void function(GLoadableIcon* icon, int size, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) loadAsync;
 	/**
 	 *
@@ -5995,10 +6204,15 @@ struct GMemoryInputStream
 struct GMemoryInputStreamClass
 {
 	GInputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -6013,10 +6227,15 @@ struct GMemoryOutputStream
 struct GMemoryOutputStreamClass
 {
 	GOutputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -6095,6 +6314,7 @@ struct GMenuModelClass
 	 * Return: the number of items
 	 */
 	extern(C) int function(GMenuModel* model) getNItems;
+	/** */
 	extern(C) void function(GMenuModel* model, int itemIndex, GHashTable** attributes) getItemAttributes;
 	/**
 	 *
@@ -6115,6 +6335,7 @@ struct GMenuModelClass
 	 * Return: the value of the attribute
 	 */
 	extern(C) GVariant* function(GMenuModel* model, int itemIndex, const(char)* attribute, GVariantType* expectedType) getItemAttributeValue;
+	/** */
 	extern(C) void function(GMenuModel* model, int itemIndex, GHashTable** links) getItemLinks;
 	/**
 	 *
@@ -6148,7 +6369,9 @@ struct GMountIface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GMount* mount) changed;
+	/** */
 	extern(C) void function(GMount* mount) unmounted;
 	/**
 	 *
@@ -6218,6 +6441,7 @@ struct GMountIface
 	 * Return: %TRUE if the @mount can be ejected.
 	 */
 	extern(C) int function(GMount* mount) canEject;
+	/** */
 	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmount;
 	/**
 	 *
@@ -6229,6 +6453,7 @@ struct GMountIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) unmountFinish;
+	/** */
 	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) eject;
 	/**
 	 *
@@ -6240,6 +6465,7 @@ struct GMountIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) ejectFinish;
+	/** */
 	extern(C) void function(GMount* mount, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) remount;
 	/**
 	 *
@@ -6251,6 +6477,7 @@ struct GMountIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) remountFinish;
+	/** */
 	extern(C) void function(GMount* mount, int forceRescan, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) guessContentType;
 	/**
 	 *
@@ -6276,7 +6503,9 @@ struct GMountIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) char** function(GMount* mount, int forceRescan, GCancellable* cancellable, GError** err) guessContentTypeSync;
+	/** */
 	extern(C) void function(GMount* mount) preUnmount;
+	/** */
 	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) unmountWithOperation;
 	/**
 	 *
@@ -6288,6 +6517,7 @@ struct GMountIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GMount* mount, GAsyncResult* result, GError** err) unmountWithOperationFinish;
+	/** */
 	extern(C) void function(GMount* mount, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectWithOperation;
 	/**
 	 *
@@ -6335,20 +6565,35 @@ struct GMountOperation
 struct GMountOperationClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* defaultUser, const(char)* defaultDomain, GAskPasswordFlags flags) askPassword;
+	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* choices) askQuestion;
+	/** */
 	extern(C) void function(GMountOperation* op, GMountOperationResult result) reply;
+	/** */
 	extern(C) void function(GMountOperation* op) aborted;
+	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, GArray* processes, const(char)* choices) showProcesses;
+	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, long timeLeft, long bytesLeft) showUnmountProgress;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
+	/** */
 	extern(C) void function() GReserved7;
+	/** */
 	extern(C) void function() GReserved8;
+	/** */
 	extern(C) void function() GReserved9;
 }
 
@@ -6367,6 +6612,7 @@ struct GNativeVolumeMonitor
 struct GNativeVolumeMonitorClass
 {
 	GVolumeMonitorClass parentClass;
+	/** */
 	extern(C) GMount* function(const(char)* mountPath, GCancellable* cancellable) getMountForMountPath;
 }
 
@@ -6396,6 +6642,7 @@ struct GNetworkMonitorInterface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GNetworkMonitor* monitor, int available) networkChanged;
 	/**
 	 *
@@ -6408,6 +6655,7 @@ struct GNetworkMonitorInterface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GError** err) canReach;
+	/** */
 	extern(C) void function(GNetworkMonitor* monitor, GSocketConnectable* connectable, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) canReachAsync;
 	/**
 	 *
@@ -6524,7 +6772,9 @@ struct GOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GOutputStream* stream, GCancellable* cancellable, GError** err) flush;
+	/** */
 	extern(C) int function(GOutputStream* stream, GCancellable* cancellable, GError** err) closeFn;
+	/** */
 	extern(C) void function(GOutputStream* stream, void* buffer, size_t count, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) writeAsync;
 	/**
 	 *
@@ -6536,6 +6786,7 @@ struct GOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GOutputStream* stream, GAsyncResult* result, GError** err) writeFinish;
+	/** */
 	extern(C) void function(GOutputStream* stream, GInputStream* source, GOutputStreamSpliceFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) spliceAsync;
 	/**
 	 *
@@ -6550,6 +6801,7 @@ struct GOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GOutputStream* stream, GAsyncResult* result, GError** err) spliceFinish;
+	/** */
 	extern(C) void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) flushAsync;
 	/**
 	 *
@@ -6561,6 +6813,7 @@ struct GOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GOutputStream* stream, GAsyncResult* result, GError** err) flushFinish;
+	/** */
 	extern(C) void function(GOutputStream* stream, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) closeAsync;
 	/**
 	 *
@@ -6572,13 +6825,21 @@ struct GOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GOutputStream* stream, GAsyncResult* result, GError** err) closeFinish;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
+	/** */
 	extern(C) void function() GReserved7;
+	/** */
 	extern(C) void function() GReserved8;
 }
 
@@ -6623,6 +6884,7 @@ struct GPermissionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GPermission* permission, GCancellable* cancellable, GError** err) acquire;
+	/** */
 	extern(C) void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) acquireAsync;
 	/**
 	 *
@@ -6644,6 +6906,7 @@ struct GPermissionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GPermission* permission, GCancellable* cancellable, GError** err) release;
+	/** */
 	extern(C) void function(GPermission* permission, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) releaseAsync;
 	/**
 	 *
@@ -6813,12 +7076,19 @@ struct GProxyAddressEnumerator
 struct GProxyAddressEnumeratorClass
 {
 	GSocketAddressEnumeratorClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
+	/** */
 	extern(C) void function() GReserved7;
 }
 
@@ -6851,6 +7121,7 @@ struct GProxyInterface
 	 * Throws: GException on failure.
 	 */
 	extern(C) GIOStream* function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GError** err) connect;
+	/** */
 	extern(C) void function(GProxy* proxy, GIOStream* connection, GProxyAddress* proxyAddress, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) connectAsync;
 	/**
 	 *
@@ -6902,6 +7173,7 @@ struct GProxyResolverInterface
 	 * Throws: GException on failure.
 	 */
 	extern(C) char** function(GProxyResolver* resolver, const(char)* uri, GCancellable* cancellable, GError** err) lookup;
+	/** */
 	extern(C) void function(GProxyResolver* resolver, const(char)* uri, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupAsync;
 	/**
 	 *
@@ -6927,7 +7199,9 @@ struct GRemoteActionGroup;
 struct GRemoteActionGroupInterface
 {
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GRemoteActionGroup* remote, const(char)* actionName, GVariant* parameter, GVariant* platformData) activateActionFull;
+	/** */
 	extern(C) void function(GRemoteActionGroup* remote, const(char)* actionName, GVariant* value, GVariant* platformData) changeActionStateFull;
 }
 
@@ -6940,6 +7214,7 @@ struct GResolver
 struct GResolverClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GResolver* resolver) reload;
 	/**
 	 *
@@ -6955,6 +7230,7 @@ struct GResolverClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GList* function(GResolver* resolver, const(char)* hostname, GCancellable* cancellable, GError** err) lookupByName;
+	/** */
 	extern(C) void function(GResolver* resolver, const(char)* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupByNameAsync;
 	/**
 	 *
@@ -6980,6 +7256,7 @@ struct GResolverClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) char* function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GError** err) lookupByAddress;
+	/** */
 	extern(C) void function(GResolver* resolver, GInetAddress* address, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupByAddressAsync;
 	/**
 	 *
@@ -6992,7 +7269,9 @@ struct GResolverClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) char* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupByAddressFinish;
+	/** */
 	extern(C) GList* function(GResolver* resolver, const(char)* rrname, GCancellable* cancellable, GError** err) lookupService;
+	/** */
 	extern(C) void function(GResolver* resolver, const(char)* rrname, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupServiceAsync;
 	/**
 	 *
@@ -7021,6 +7300,7 @@ struct GResolverClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GList* function(GResolver* resolver, const(char)* rrname, GResolverRecordType recordType, GCancellable* cancellable, GError** err) lookupRecords;
+	/** */
 	extern(C) void function(GResolver* resolver, const(char)* rrname, GResolverRecordType recordType, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupRecordsAsync;
 	/**
 	 *
@@ -7035,8 +7315,11 @@ struct GResolverClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GList* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupRecordsFinish;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
 }
 
@@ -7142,9 +7425,13 @@ struct GSettingsBackend;
 struct GSettingsClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GSettings* settings, const(char)* key) writableChanged;
+	/** */
 	extern(C) void function(GSettings* settings, const(char)* key) changed;
+	/** */
 	extern(C) int function(GSettings* settings, GQuark key) writableChangeEvent;
+	/** */
 	extern(C) int function(GSettings* settings, GQuark* keys, int nKeys) changeEvent;
 	void*[20] padding;
 }
@@ -7190,10 +7477,15 @@ struct GSimpleProxyResolver
 struct GSimpleProxyResolverClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -7263,6 +7555,7 @@ struct GSocketAddressEnumeratorClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GSocketAddress* function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GError** err) next;
+	/** */
 	extern(C) void function(GSocketAddressEnumerator* enumerator, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) nextAsync;
 	/**
 	 *
@@ -7281,15 +7574,25 @@ struct GSocketAddressEnumeratorClass
 struct GSocketClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
+	/** */
 	extern(C) void function() GReserved7;
+	/** */
 	extern(C) void function() GReserved8;
+	/** */
 	extern(C) void function() GReserved9;
+	/** */
 	extern(C) void function() GReserved10;
 }
 
@@ -7302,10 +7605,15 @@ struct GSocketClient
 struct GSocketClientClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GSocketClient* client, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection) event;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
 }
 
@@ -7348,11 +7656,17 @@ struct GSocketConnection
 struct GSocketConnectionClass
 {
 	GIOStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
 }
 
@@ -7384,13 +7698,21 @@ struct GSocketControlMessageClass
 	 * Return: an integer describing the level
 	 */
 	extern(C) int function(GSocketControlMessage* message) getLevel;
+	/** */
 	extern(C) int function(GSocketControlMessage* message) getType;
+	/** */
 	extern(C) void function(GSocketControlMessage* message, void* data) serialize;
+	/** */
 	extern(C) GSocketControlMessage* function(int level, int type, size_t size, void* data) deserialize;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -7408,12 +7730,19 @@ struct GSocketListener
 struct GSocketListenerClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GSocketListener* listener) changed;
+	/** */
 	extern(C) void function(GSocketListener* listener, GSocketListenerEvent* event, GSocket* socket) event;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
 }
 
@@ -7433,12 +7762,19 @@ struct GSocketService
 struct GSocketServiceClass
 {
 	GSocketListenerClass parentClass;
+	/** */
 	extern(C) int function(GSocketService* service, GSocketConnection* connection, GObject* sourceObject) incoming;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
 }
 
@@ -7504,11 +7840,17 @@ struct GThreadedSocketService
 struct GThreadedSocketServiceClass
 {
 	GSocketServiceClass parentClass;
+	/** */
 	extern(C) int function(GThreadedSocketService* service, GSocketConnection* connection, GObject* sourceObject) run;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -7534,9 +7876,13 @@ struct GTlsBackendInterface
 	 * Return: whether or not TLS is supported
 	 */
 	extern(C) int function(GTlsBackend* backend) supportsTls;
+	/** */
 	extern(C) GType function() getCertificateType;
+	/** */
 	extern(C) GType function() getClientConnectionType;
+	/** */
 	extern(C) GType function() getServerConnectionType;
+	/** */
 	extern(C) GType function() getFileDatabaseType;
 	/**
 	 *
@@ -7584,6 +7930,7 @@ struct GTlsClientConnectionInterface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GTlsClientConnection* conn, GTlsClientConnection* source) copySessionState;
 }
 
@@ -7596,6 +7943,7 @@ struct GTlsConnection
 struct GTlsConnectionClass
 {
 	GIOStreamClass parentClass;
+	/** */
 	extern(C) int function(GTlsConnection* connection, GTlsCertificate* peerCert, GTlsCertificateFlags errors) acceptCertificate;
 	/**
 	 *
@@ -7607,6 +7955,7 @@ struct GTlsConnectionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GTlsConnection* conn, GCancellable* cancellable, GError** err) handshake;
+	/** */
 	extern(C) void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) handshakeAsync;
 	/**
 	 *
@@ -7656,6 +8005,7 @@ struct GTlsDatabaseClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GTlsCertificateFlags function(GTlsDatabase* self, GTlsCertificate* chain, const(char)* purpose, GSocketConnectable* identity, GTlsInteraction* interaction, GTlsDatabaseVerifyFlags flags, GCancellable* cancellable, GError** err) verifyChain;
+	/** */
 	extern(C) void function(GTlsDatabase* self, GTlsCertificate* chain, const(char)* purpose, GSocketConnectable* identity, GTlsInteraction* interaction, GTlsDatabaseVerifyFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) verifyChainAsync;
 	/**
 	 *
@@ -7691,6 +8041,7 @@ struct GTlsDatabaseClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GTlsCertificate* function(GTlsDatabase* self, const(char)* handle, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** err) lookupCertificateForHandle;
+	/** */
 	extern(C) void function(GTlsDatabase* self, const(char)* handle, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupCertificateForHandleAsync;
 	/**
 	 *
@@ -7717,6 +8068,7 @@ struct GTlsDatabaseClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GTlsCertificate* function(GTlsDatabase* self, GTlsCertificate* certificate, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** err) lookupCertificateIssuer;
+	/** */
 	extern(C) void function(GTlsDatabase* self, GTlsCertificate* certificate, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupCertificateIssuerAsync;
 	/**
 	 *
@@ -7743,6 +8095,7 @@ struct GTlsDatabaseClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GList* function(GTlsDatabase* self, GByteArray* issuerRawDn, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GError** err) lookupCertificatesIssuedBy;
+	/** */
 	extern(C) void function(GTlsDatabase* self, GByteArray* issuerRawDn, GTlsInteraction* interaction, GTlsDatabaseLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupCertificatesIssuedByAsync;
 	/**
 	 *
@@ -7812,6 +8165,7 @@ struct GTlsInteractionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GTlsInteractionResult function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GError** err) askPassword;
+	/** */
 	extern(C) void function(GTlsInteraction* interaction, GTlsPassword* password, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) askPasswordAsync;
 	/**
 	 *
@@ -7835,6 +8189,7 @@ struct GTlsInteractionClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) GTlsInteractionResult function(GTlsInteraction* interaction, GTlsConnection* connection, GTlsCertificateRequestFlags flags, GCancellable* cancellable, GError** err) requestCertificate;
+	/** */
 	extern(C) void function(GTlsInteraction* interaction, GTlsConnection* connection, GTlsCertificateRequestFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) requestCertificateAsync;
 	/**
 	 *
@@ -7871,7 +8226,9 @@ struct GTlsPasswordClass
 	 * Return: The password value (owned by the password object).
 	 */
 	extern(C) char* function(GTlsPassword* password, size_t* length) getValue;
+	/** */
 	extern(C) void function(GTlsPassword* password, char* value, ptrdiff_t length, GDestroyNotify destroy) setValue;
+	/** */
 	extern(C) const(char)* function(GTlsPassword* password) getDefaultWarning;
 	void*[4] padding;
 }
@@ -7920,7 +8277,9 @@ struct GUnixCredentialsMessage
 struct GUnixCredentialsMessageClass
 {
 	GSocketControlMessageClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
 }
 
@@ -7935,10 +8294,15 @@ struct GUnixFDList
 struct GUnixFDListClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -7953,7 +8317,9 @@ struct GUnixFDMessage
 struct GUnixFDMessageClass
 {
 	GSocketControlMessageClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
 }
 
@@ -7968,10 +8334,15 @@ struct GUnixInputStream
 struct GUnixInputStreamClass
 {
 	GInputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -7998,10 +8369,15 @@ struct GUnixOutputStream
 struct GUnixOutputStreamClass
 {
 	GOutputStreamClass parentClass;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
 }
 
@@ -8072,17 +8448,29 @@ struct GVfsClass
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GFile* function(GVfs* vfs, const(char)* parseName) parseName;
+	/** */
 	extern(C) void function(GVfs* vfs, const(char)* filename, ulong device, GFileAttributeMatcher* attributeMatcher, GFileInfo* info, GCancellable* cancellable, void** extraData, GDestroyNotify* freeExtraData) localFileAddInfo;
+	/** */
 	extern(C) void function(GVfs* vfs, GFileAttributeInfoList* list) addWritableNamespaces;
+	/** */
 	extern(C) int function(GVfs* vfs, const(char)* filename, GFileInfo* info, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) localFileSetAttributes;
+	/** */
 	extern(C) void function(GVfs* vfs, const(char)* filename) localFileRemoved;
+	/** */
 	extern(C) void function(GVfs* vfs, const(char)* source, const(char)* dest) localFileMoved;
+	/** */
 	extern(C) GIcon* function(GVfs* vfs, GVariant* value) deserializeIcon;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
 }
 
@@ -8097,7 +8485,9 @@ struct GVolumeIface
 	 * The parent interface.
 	 */
 	GTypeInterface gIface;
+	/** */
 	extern(C) void function(GVolume* volume) changed;
+	/** */
 	extern(C) void function(GVolume* volume) removed;
 	/**
 	 *
@@ -8157,6 +8547,7 @@ struct GVolumeIface
 	 * Return: %TRUE if the @volume can be ejected. %FALSE otherwise
 	 */
 	extern(C) int function(GVolume* volume) canEject;
+	/** */
 	extern(C) void function(GVolume* volume, GMountMountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) mountFn;
 	/**
 	 *
@@ -8168,6 +8559,7 @@ struct GVolumeIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GVolume* volume, GAsyncResult* result, GError** err) mountFinish;
+	/** */
 	extern(C) void function(GVolume* volume, GMountUnmountFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) eject;
 	/**
 	 *
@@ -8212,6 +8604,7 @@ struct GVolumeIface
 	 *     or %NULL. Use g_object_unref() to free.
 	 */
 	extern(C) GFile* function(GVolume* volume) getActivationRoot;
+	/** */
 	extern(C) void function(GVolume* volume, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) ejectWithOperation;
 	/**
 	 *
@@ -8250,16 +8643,27 @@ struct GVolumeMonitor
 struct GVolumeMonitorClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GVolume* volume) volumeAdded;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GVolume* volume) volumeRemoved;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GVolume* volume) volumeChanged;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountAdded;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountRemoved;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountPreUnmount;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GMount* mount) mountChanged;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveConnected;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveDisconnected;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveChanged;
+	/** */
 	extern(C) int function() isSupported;
 	/**
 	 *
@@ -8300,14 +8704,23 @@ struct GVolumeMonitorClass
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GMount* function(GVolumeMonitor* volumeMonitor, const(char)* uuid) getMountForUuid;
+	/** */
 	extern(C) GVolume* function(GMount* mount, GVolumeMonitor* volumeMonitor) adoptOrphanMount;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveEjectButton;
+	/** */
 	extern(C) void function(GVolumeMonitor* volumeMonitor, GDrive* drive) driveStopButton;
+	/** */
 	extern(C) void function() GReserved1;
+	/** */
 	extern(C) void function() GReserved2;
+	/** */
 	extern(C) void function() GReserved3;
+	/** */
 	extern(C) void function() GReserved4;
+	/** */
 	extern(C) void function() GReserved5;
+	/** */
 	extern(C) void function() GReserved6;
 }
 

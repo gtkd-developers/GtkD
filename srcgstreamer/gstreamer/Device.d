@@ -79,6 +79,7 @@ public class Device : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_device_get_type();
@@ -230,6 +231,7 @@ public class Device : ObjectGst
 	int[string] connectedSignals;
 
 	void delegate(Device)[] onRemovedListeners;
+	/** */
 	void addOnRemoved(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "removed" !in connectedSignals )

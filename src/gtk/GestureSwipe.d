@@ -80,6 +80,7 @@ public class GestureSwipe : GestureSingle
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_swipe_get_type();

@@ -58,6 +58,7 @@ public class TypeClass
 	}
 
 
+	/** */
 	public void* getPrivate(GType privateType)
 	{
 		return g_type_class_get_private(gTypeClass, privateType);
@@ -185,6 +186,7 @@ public class TypeClass
 		g_type_class_add_private(gClass, privateSize);
 	}
 
+	/** */
 	public static void adjustPrivateOffset(void* gClass, int* privateSizeOrOffset)
 	{
 		g_type_class_adjust_private_offset(gClass, privateSizeOrOffset);

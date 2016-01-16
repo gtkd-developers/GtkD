@@ -72,6 +72,7 @@ public class Invisible : Widget
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_invisible_get_type();

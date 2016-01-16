@@ -82,6 +82,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	mixin DBusObjectT!(GDBusObjectSkeleton);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_dbus_object_skeleton_get_type();

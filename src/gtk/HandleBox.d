@@ -94,6 +94,7 @@ public class HandleBox : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_handle_box_get_type();

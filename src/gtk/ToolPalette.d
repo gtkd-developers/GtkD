@@ -146,6 +146,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	mixin ScrollableT!(GtkToolPalette);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tool_palette_get_type();

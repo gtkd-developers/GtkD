@@ -100,6 +100,7 @@ public class Credentials : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_credentials_get_type();

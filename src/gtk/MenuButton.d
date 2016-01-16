@@ -148,6 +148,7 @@ public class MenuButton : ToggleButton
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_menu_button_get_type();

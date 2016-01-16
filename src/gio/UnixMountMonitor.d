@@ -68,6 +68,7 @@ public class UnixMountMonitor : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_unix_mount_monitor_get_type();

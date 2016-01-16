@@ -120,6 +120,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_element_factory_get_type();

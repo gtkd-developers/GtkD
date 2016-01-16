@@ -68,6 +68,7 @@ public class SourcePrintCompositor : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_print_compositor_get_type();

@@ -133,6 +133,7 @@ public class Window : Bin
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_window_get_type();
@@ -2507,6 +2508,7 @@ public class Window : Bin
 	}
 
 	void delegate(Widget, Window)[] onSetFocusListeners;
+	/** */
 	void addOnSetFocus(void delegate(Widget, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "set-focus" !in connectedSignals )

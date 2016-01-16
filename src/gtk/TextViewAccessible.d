@@ -78,6 +78,7 @@ public class TextViewAccessible : ContainerAccessible, EditableTextIF, Streamabl
 	mixin TextT!(GtkTextViewAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_view_accessible_get_type();

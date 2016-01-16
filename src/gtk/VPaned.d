@@ -88,6 +88,7 @@ public class VPaned : Paned
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_vpaned_get_type();

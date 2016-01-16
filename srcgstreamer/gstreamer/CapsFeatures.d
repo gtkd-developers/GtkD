@@ -104,6 +104,7 @@ public class CapsFeatures
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_caps_features_get_type();

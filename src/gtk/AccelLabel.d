@@ -117,6 +117,7 @@ public class AccelLabel : Label
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_accel_label_get_type();

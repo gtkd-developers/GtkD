@@ -70,6 +70,7 @@ public class EventBox : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_event_box_get_type();

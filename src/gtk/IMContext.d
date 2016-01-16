@@ -135,6 +135,7 @@ public class IMContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_im_context_get_type();

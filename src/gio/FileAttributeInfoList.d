@@ -61,6 +61,7 @@ public class FileAttributeInfoList
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_attribute_info_list_get_type();

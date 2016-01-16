@@ -72,6 +72,7 @@ public class TaskPool : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_task_pool_get_type();

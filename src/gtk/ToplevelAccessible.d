@@ -64,6 +64,7 @@ public class ToplevelAccessible : ObjectAtk
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_toplevel_accessible_get_type();

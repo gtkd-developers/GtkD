@@ -79,6 +79,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	mixin LoadableIconT!(GFileIcon);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_icon_get_type();

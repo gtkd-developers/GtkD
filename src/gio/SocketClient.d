@@ -94,6 +94,7 @@ public class SocketClient : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_socket_client_get_type();

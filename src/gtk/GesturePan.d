@@ -84,6 +84,7 @@ public class GesturePan : GestureDrag
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_gesture_pan_get_type();

@@ -67,11 +67,13 @@ public class RendererCellAccessible : CellAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_renderer_cell_accessible_get_type();
 	}
 
+	/** */
 	public this(CellRenderer renderer)
 	{
 		auto p = gtk_renderer_cell_accessible_new((renderer is null) ? null : renderer.getCellRendererStruct());

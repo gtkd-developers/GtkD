@@ -68,6 +68,7 @@ public class PanedAccessible : ContainerAccessible, ValueIF
 	mixin ValueT!(GtkPanedAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_paned_accessible_get_type();

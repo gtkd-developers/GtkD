@@ -79,6 +79,7 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 	mixin PollableInputStreamT!(GConverterInputStream);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_converter_input_stream_get_type();

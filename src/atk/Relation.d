@@ -72,6 +72,7 @@ public class Relation : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_relation_get_type();

@@ -79,6 +79,7 @@ public class Hyperlink : ObjectG, ActionIF
 	mixin ActionT!(AtkHyperlink);
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_hyperlink_get_type();

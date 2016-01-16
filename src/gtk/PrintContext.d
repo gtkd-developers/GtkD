@@ -136,6 +136,7 @@ public class PrintContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_print_context_get_type();

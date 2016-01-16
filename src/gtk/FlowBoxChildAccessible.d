@@ -63,6 +63,7 @@ public class FlowBoxChildAccessible : ContainerAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_flow_box_child_accessible_get_type();

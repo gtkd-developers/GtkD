@@ -76,6 +76,7 @@ public class TextAttributes
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_text_attributes_get_type();

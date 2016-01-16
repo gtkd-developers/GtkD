@@ -76,6 +76,7 @@ public class SelectionData
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_selection_data_get_type();

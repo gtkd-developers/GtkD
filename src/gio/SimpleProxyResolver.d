@@ -79,6 +79,7 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	mixin ProxyResolverT!(GSimpleProxyResolver);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_simple_proxy_resolver_get_type();

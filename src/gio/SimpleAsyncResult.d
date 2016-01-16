@@ -238,6 +238,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	mixin AsyncResultT!(GSimpleAsyncResult);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_simple_async_result_get_type();

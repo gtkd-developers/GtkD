@@ -67,6 +67,7 @@ public class PgMatrix
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_matrix_get_type();

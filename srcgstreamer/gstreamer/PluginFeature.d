@@ -69,6 +69,7 @@ public class PluginFeature : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_plugin_feature_get_type();

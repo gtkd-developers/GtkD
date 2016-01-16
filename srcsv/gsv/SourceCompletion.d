@@ -78,6 +78,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	mixin BuildableT!(GtkSourceCompletion);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_completion_get_type();

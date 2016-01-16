@@ -111,6 +111,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_buffered_input_stream_get_type();

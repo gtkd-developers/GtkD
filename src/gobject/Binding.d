@@ -144,6 +144,7 @@ public class Binding : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_binding_get_type();

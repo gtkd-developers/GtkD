@@ -3515,17 +3515,29 @@ struct GdkWindowAttr
 struct GdkWindowClass
 {
 	GObjectClass parentClass;
+	/** */
 	extern(C) GdkWindow* function(GdkWindow* window, double x, double y) pickEmbeddedChild;
+	/** */
 	extern(C) void function(GdkWindow* window, double offscreenX, double offscreenY, double* embedderX, double* embedderY) toEmbedder;
+	/** */
 	extern(C) void function(GdkWindow* window, double embedderX, double embedderY, double* offscreenX, double* offscreenY) fromEmbedder;
+	/** */
 	extern(C) cairo_surface_t* function(GdkWindow* window, int width, int height) createSurface;
+	/** */
 	extern(C) void function() GdkReserved1;
+	/** */
 	extern(C) void function() GdkReserved2;
+	/** */
 	extern(C) void function() GdkReserved3;
+	/** */
 	extern(C) void function() GdkReserved4;
+	/** */
 	extern(C) void function() GdkReserved5;
+	/** */
 	extern(C) void function() GdkReserved6;
+	/** */
 	extern(C) void function() GdkReserved7;
+	/** */
 	extern(C) void function() GdkReserved8;
 }
 

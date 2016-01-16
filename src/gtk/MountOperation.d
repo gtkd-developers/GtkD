@@ -72,6 +72,7 @@ public class MountOperation : GioMountOperation
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_mount_operation_get_type();

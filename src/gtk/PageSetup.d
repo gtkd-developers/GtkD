@@ -113,6 +113,7 @@ public class PageSetup : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_page_setup_get_type();

@@ -75,6 +75,7 @@ public class VScale : Scale
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_vscale_get_type();

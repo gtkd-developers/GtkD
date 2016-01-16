@@ -96,6 +96,7 @@ public class Memory
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_memory_get_type();

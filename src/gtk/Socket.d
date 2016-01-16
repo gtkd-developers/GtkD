@@ -121,6 +121,7 @@ public class Socket : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_socket_get_type();

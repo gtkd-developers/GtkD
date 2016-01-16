@@ -79,6 +79,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	mixin SocketConnectableT!(GNetworkAddress);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_network_address_get_type();

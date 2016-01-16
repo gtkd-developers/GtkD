@@ -79,6 +79,7 @@ public class UnixConnection : SocketConnection
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_unix_connection_get_type();

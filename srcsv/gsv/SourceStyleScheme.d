@@ -65,6 +65,7 @@ public class SourceStyleScheme : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_style_scheme_get_type();

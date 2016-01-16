@@ -79,6 +79,7 @@ public class EntryBuffer : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_entry_buffer_get_type();

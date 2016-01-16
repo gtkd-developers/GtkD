@@ -150,6 +150,7 @@ public class StyleContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_style_context_get_type();
@@ -1241,6 +1242,7 @@ public class StyleContext : ObjectG
 	int[string] connectedSignals;
 
 	void delegate(StyleContext)[] onChangedListeners;
+	/** */
 	void addOnChanged(void delegate(StyleContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "changed" !in connectedSignals )

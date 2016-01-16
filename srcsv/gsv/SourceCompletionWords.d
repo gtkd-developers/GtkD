@@ -72,6 +72,7 @@ public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 	mixin SourceCompletionProviderT!(GtkSourceCompletionWords);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_source_completion_words_get_type();

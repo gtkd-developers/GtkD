@@ -71,6 +71,7 @@ public class SimplePermission : Permission
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_simple_permission_get_type();

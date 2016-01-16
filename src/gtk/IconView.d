@@ -100,6 +100,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	mixin ScrollableT!(GtkIconView);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_icon_view_get_type();

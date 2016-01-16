@@ -223,6 +223,7 @@ public class InfoBar : Box
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_info_bar_get_type();

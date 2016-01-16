@@ -100,6 +100,7 @@ public class TreePath
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_path_get_type();

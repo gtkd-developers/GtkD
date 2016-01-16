@@ -3854,13 +3854,21 @@ struct GIOChannel
  */
 struct GIOFuncs
 {
+	/** */
 	extern(C) GIOStatus function(GIOChannel* channel, char* buf, size_t count, size_t* bytesRead, GError** err) ioRead;
+	/** */
 	extern(C) GIOStatus function(GIOChannel* channel, const(char)* buf, size_t count, size_t* bytesWritten, GError** err) ioWrite;
+	/** */
 	extern(C) GIOStatus function(GIOChannel* channel, long offset, GSeekType type, GError** err) ioSeek;
+	/** */
 	extern(C) GIOStatus function(GIOChannel* channel, GError** err) ioClose;
+	/** */
 	extern(C) GSource* function(GIOChannel* channel, GIOCondition condition) ioCreateWatch;
+	/** */
 	extern(C) void function(GIOChannel* channel) ioFree;
+	/** */
 	extern(C) GIOStatus function(GIOChannel* channel, GIOFlags flags, GError** err) ioSetFlags;
+	/** */
 	extern(C) GIOFlags function(GIOChannel* channel) ioGetFlags;
 }
 
@@ -3906,10 +3914,15 @@ struct GMarkupParseContext;
  */
 struct GMarkupParser
 {
+	/** */
 	extern(C) void function(GMarkupParseContext* context, const(char)* elementName, char** attributeNames, char** attributeValues, void* userData, GError** err) startElement;
+	/** */
 	extern(C) void function(GMarkupParseContext* context, const(char)* elementName, void* userData, GError** err) endElement;
+	/** */
 	extern(C) void function(GMarkupParseContext* context, const(char)* text, size_t textLen, void* userData, GError** err) text;
+	/** */
 	extern(C) void function(GMarkupParseContext* context, const(char)* passthroughText, size_t textLen, void* userData, GError** err) passthrough;
+	/** */
 	extern(C) void function(GMarkupParseContext* context, GError* error, void* userData) error;
 }
 
@@ -3924,11 +3937,17 @@ struct GMatchInfo;
  */
 struct GMemVTable
 {
+	/** */
 	extern(C) void* function(size_t nBytes) malloc;
+	/** */
 	extern(C) void* function(void* mem, size_t nBytes) realloc;
+	/** */
 	extern(C) void function(void* mem) free;
+	/** */
 	extern(C) void* function(size_t nBlocks, size_t nBlockBytes) calloc;
+	/** */
 	extern(C) void* function(size_t nBytes) tryMalloc;
+	/** */
 	extern(C) void* function(void* mem, size_t nBytes) tryRealloc;
 }
 
@@ -4308,8 +4327,11 @@ struct GSource
  */
 struct GSourceCallbackFuncs
 {
+	/** */
 	extern(C) void function(void* cbData) doref;
+	/** */
 	extern(C) void function(void* cbData) unref;
+	/** */
 	extern(C) void function(void* cbData, GSource* source, GSourceFunc* func, void** data) get;
 }
 
@@ -4337,9 +4359,13 @@ struct GSourceCallbackFuncs
  */
 struct GSourceFuncs
 {
+	/** */
 	extern(C) int function(GSource* source, int* timeout) prepare;
+	/** */
 	extern(C) int function(GSource* source) check;
+	/** */
 	extern(C) int function(GSource* source, GSourceFunc callback, void* userData) dispatch;
+	/** */
 	extern(C) void function(GSource* source) finalize;
 	GSourceFunc closureCallback;
 	GSourceDummyMarshal closureMarshal;

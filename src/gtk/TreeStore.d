@@ -259,6 +259,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_tree_store_get_type();

@@ -391,6 +391,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_ui_manager_get_type();

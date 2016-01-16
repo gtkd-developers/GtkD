@@ -68,6 +68,7 @@ public class ProxyPad : Pad
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_proxy_pad_get_type();

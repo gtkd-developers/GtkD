@@ -68,6 +68,7 @@ public class PixbufSimpleAnimation : PixbufAnimation
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_pixbuf_simple_anim_get_type();

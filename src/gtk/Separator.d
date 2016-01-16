@@ -75,6 +75,7 @@ public class Separator : Widget, OrientableIF
 	mixin OrientableT!(GtkSeparator);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_separator_get_type();

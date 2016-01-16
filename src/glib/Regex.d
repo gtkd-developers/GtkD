@@ -839,6 +839,7 @@ public class Regex
 		return p;
 	}
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_regex_error_quark();

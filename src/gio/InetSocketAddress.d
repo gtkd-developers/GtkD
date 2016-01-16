@@ -70,6 +70,7 @@ public class InetSocketAddress : SocketAddress
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_inet_socket_address_get_type();

@@ -68,6 +68,7 @@ public class Visual : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gdk_visual_get_type();

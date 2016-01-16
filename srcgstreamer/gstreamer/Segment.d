@@ -105,6 +105,7 @@ public class Segment
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_segment_get_type();

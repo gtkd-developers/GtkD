@@ -60,6 +60,7 @@ public class FileAttributeMatcher
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_attribute_matcher_get_type();

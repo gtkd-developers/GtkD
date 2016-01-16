@@ -93,6 +93,7 @@ public class PgLayout : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return pango_layout_get_type();

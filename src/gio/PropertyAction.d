@@ -124,6 +124,7 @@ public class PropertyAction : ObjectG, ActionIF
 	mixin ActionT!(GPropertyAction);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_property_action_get_type();

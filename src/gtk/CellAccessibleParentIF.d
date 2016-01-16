@@ -39,21 +39,30 @@ public interface CellAccessibleParentIF{
 	protected void* getStruct();
 
 
+	/** */
 	public void activate(CellAccessible cell);
 
+	/** */
 	public void edit(CellAccessible cell);
 
+	/** */
 	public void expandCollapse(CellAccessible cell);
 
+	/** */
 	public void getCellArea(CellAccessible cell, GdkRectangle* cellRect);
 
+	/** */
 	public void getCellExtents(CellAccessible cell, int* x, int* y, int* width, int* height, AtkCoordType coordType);
 
+	/** */
 	public int getChildIndex(CellAccessible cell);
 
+	/** */
 	public GtkCellRendererState getRendererState(CellAccessible cell);
 
+	/** */
 	public bool grabFocus(CellAccessible cell);
 
+	/** */
 	public void updateRelationset(CellAccessible cell, RelationSet relationset);
 }

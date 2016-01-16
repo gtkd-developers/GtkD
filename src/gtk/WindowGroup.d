@@ -84,6 +84,7 @@ public class WindowGroup : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_window_group_get_type();

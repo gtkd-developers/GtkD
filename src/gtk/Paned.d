@@ -131,6 +131,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_paned_get_type();

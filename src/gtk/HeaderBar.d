@@ -79,6 +79,7 @@ public class HeaderBar : Container
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_header_bar_get_type();

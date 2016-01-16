@@ -117,6 +117,7 @@ public class RecentFilter : ObjectG, BuildableIF
 	mixin BuildableT!(GtkRecentFilter);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_filter_get_type();

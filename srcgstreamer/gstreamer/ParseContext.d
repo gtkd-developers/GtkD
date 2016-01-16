@@ -60,6 +60,7 @@ public class ParseContext
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_parse_context_get_type();

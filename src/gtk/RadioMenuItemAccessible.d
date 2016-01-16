@@ -63,6 +63,7 @@ public class RadioMenuItemAccessible : CheckMenuItemAccessible
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_radio_menu_item_accessible_get_type();

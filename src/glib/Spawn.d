@@ -531,11 +531,13 @@ public class Spawn
 		return p;
 	}
 
+	/** */
 	public static GQuark errorQuark()
 	{
 		return g_spawn_error_quark();
 	}
 
+	/** */
 	public static GQuark exitErrorQuark()
 	{
 		return g_spawn_exit_error_quark();

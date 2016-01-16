@@ -76,6 +76,7 @@ public class CssSection
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_css_section_get_type();

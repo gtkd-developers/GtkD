@@ -165,6 +165,7 @@ public class Bus : ObjectGst
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_bus_get_type();

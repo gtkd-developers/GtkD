@@ -149,6 +149,7 @@ public class Registry : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_registry_get_type();

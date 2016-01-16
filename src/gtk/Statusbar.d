@@ -116,6 +116,7 @@ public class Statusbar : Box
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_statusbar_get_type();

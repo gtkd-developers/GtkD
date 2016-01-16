@@ -118,6 +118,7 @@ public class TypeFindFactory : PluginFeature
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_type_find_factory_get_type();

@@ -76,6 +76,7 @@ public class AppLaunchContext : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_app_launch_context_get_type();

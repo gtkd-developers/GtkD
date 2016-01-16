@@ -90,6 +90,7 @@ public struct CharacterSet
 		return Str.toString(p);
 	}
 
+	/** */
 	public static GQuark convertErrorQuark()
 	{
 		return g_convert_error_quark();

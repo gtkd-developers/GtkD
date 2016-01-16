@@ -177,6 +177,7 @@ public class Event
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gst_event_get_type();
@@ -1120,6 +1121,7 @@ public class Event
 		intermediate = (outintermediate == 1);
 	}
 
+	/** */
 	public void parseStreamFlags(out GstStreamFlags flags)
 	{
 		gst_event_parse_stream_flags(gstEvent, &flags);
@@ -1246,6 +1248,7 @@ public class Event
 		gst_event_set_seqnum(gstEvent, seqnum);
 	}
 
+	/** */
 	public void setStreamFlags(GstStreamFlags flags)
 	{
 		gst_event_set_stream_flags(gstEvent, flags);

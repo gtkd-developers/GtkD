@@ -85,6 +85,7 @@ public class LinkButton : Button
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_link_button_get_type();

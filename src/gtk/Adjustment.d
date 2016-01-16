@@ -74,6 +74,7 @@ public class Adjustment : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_adjustment_get_type();

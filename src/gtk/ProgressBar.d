@@ -94,6 +94,7 @@ public class ProgressBar : Widget, OrientableIF
 	mixin OrientableT!(GtkProgressBar);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_progress_bar_get_type();

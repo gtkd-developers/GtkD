@@ -282,6 +282,7 @@ public class ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_initially_unowned_get_type();
@@ -343,6 +344,7 @@ public class ObjectG
 		this(cast(GObject*) p, true);
 	}
 
+	/** */
 	public static size_t compatControl(size_t what, void* data)
 	{
 		return g_object_compat_control(what, data);

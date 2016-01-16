@@ -158,6 +158,7 @@ public class Alignment : Bin
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_alignment_get_type();

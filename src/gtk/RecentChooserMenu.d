@@ -96,6 +96,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	mixin RecentChooserT!(GtkRecentChooserMenu);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_recent_chooser_menu_get_type();

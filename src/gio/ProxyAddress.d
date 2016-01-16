@@ -72,6 +72,7 @@ public class ProxyAddress : InetSocketAddress
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_proxy_address_get_type();

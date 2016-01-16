@@ -132,6 +132,7 @@ public class TypeFind
 		return gst_type_find_register((plugin is null) ? null : plugin.getPluginStruct(), Str.toStringz(name), rank, func, Str.toStringz(extensions), (possibleCaps is null) ? null : possibleCaps.getCapsStruct(), data, dataNotify) != 0;
 	}
 
+	/** */
 	public static GType typeFindGetType()
 	{
 		return gst_type_find_get_type();

@@ -88,6 +88,7 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	mixin ColorChooserT!(GtkColorChooserWidget);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_color_chooser_widget_get_type();

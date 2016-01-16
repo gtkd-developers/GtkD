@@ -73,6 +73,7 @@ public class ButtonAccessible : ContainerAccessible, ActionIF, ImageIF
 	mixin ImageT!(GtkButtonAccessible);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_button_accessible_get_type();

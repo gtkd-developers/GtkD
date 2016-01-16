@@ -89,6 +89,7 @@ public class ObjectAtk : ObjectG
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return atk_object_get_type();

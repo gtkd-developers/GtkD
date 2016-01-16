@@ -80,6 +80,7 @@ public class CellRendererSpin : CellRendererText
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_cell_renderer_spin_get_type();

@@ -89,6 +89,7 @@ public class Plugin : ObjectGst
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gst_plugin_get_type();

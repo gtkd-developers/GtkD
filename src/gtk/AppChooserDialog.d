@@ -84,6 +84,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	mixin AppChooserT!(GtkAppChooserDialog);
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_app_chooser_dialog_get_type();

@@ -68,6 +68,7 @@ public class FlowBoxChild : Bin
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_flow_box_child_get_type();

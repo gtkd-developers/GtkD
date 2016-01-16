@@ -129,6 +129,7 @@ public class ModelButton : Button
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_model_button_get_type();

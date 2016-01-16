@@ -103,6 +103,7 @@ public class VolumeMonitor : ObjectG
 	/**
 	 */
 
+	/** */
 	public static GType getType()
 	{
 		return g_volume_monitor_get_type();

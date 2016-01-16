@@ -96,6 +96,7 @@ public class FileIOStream : IOStream, SeekableIF
 	mixin SeekableT!(GFileIOStream);
 
 
+	/** */
 	public static GType getType()
 	{
 		return g_file_io_stream_get_type();

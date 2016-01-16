@@ -94,6 +94,7 @@ public class SearchEntry : Entry
 	}
 
 
+	/** */
 	public static GType getType()
 	{
 		return gtk_search_entry_get_type();

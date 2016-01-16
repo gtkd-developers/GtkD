@@ -32,6 +32,7 @@ public  import gstreamerc.gstreamertypes;
 public class Bitmask
 {
 
+	/** */
 	public static GType getType()
 	{
 		return gst_bitmask_get_type();
