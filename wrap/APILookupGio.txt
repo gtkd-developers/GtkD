@@ -43,6 +43,42 @@ class: AppInfo
 extend: GObject.Object
 implements: AppInfo
 
+struct: Application
+code: start
+int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineListeners;
+	/**
+	 * The ::command-line signal is emitted on the primary instance when
+	 * a commandline is not handled locally. See g_application_run() and
+	 * the #GApplicationCommandLine documentation for more information.
+	 *
+	 * Params:
+	 *     commandLine = a #GApplicationCommandLine representing the
+	 *         passed commandline
+	 *
+	 * Return: An integer that is set as the exit status for the calling
+	 *     process. See g_application_command_line_set_exit_status().
+	 */
+	void addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "command-line-scoped" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"command-line",
+				cast(GCallback)&callBackScopedCommandLine,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["command-line-scoped"] = 1;
+		}
+		scopedOnCommandLineListeners ~= dlg;
+	}
+	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
+	{
+		return _application.onCommandLineListeners[0](Scoped!ApplicationCommandLine(ObjectG.getDObject!(ApplicationCommandLine)(commandLine)), _application);
+	}
+code: end
+
 struct: BufferedInputStream
 noCode: peek_buffer
 code: start
