@@ -76,8 +76,9 @@ public Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int
  * This allows you to efficiently read individual pixels on the client side.
  *
  * This function will create an RGB pixbuf with 8 bits per channel with
- * the same size specified by the @width and @height arguments. The pixbuf
- * will contain an alpha channel if the @window contains one.
+ * the size specified by the @width and @height arguments scaled by the
+ * scale factor of @window. The pixbuf will contain an alpha channel if
+ * the @window contains one.
  *
  * If the window is off the screen, then there is no image data in the
  * obscured/offscreen regions to be placed in the pixbuf. The contents of

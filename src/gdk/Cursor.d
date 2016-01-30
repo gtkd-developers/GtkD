@@ -138,6 +138,7 @@ public class Cursor : ObjectG
 	 * - ![](default_cursor.png) "default"
 	 * - ![](help_cursor.png) "help"
 	 * - ![](pointer_cursor.png) "pointer"
+	 * - ![](pointer_cursor.png) "context-menu"
 	 * - ![](progress_cursor.png) "progress"
 	 * - ![](wait_cursor.png) "wait"
 	 * - ![](cell_cursor.png) "cell"

@@ -5019,7 +5019,8 @@ struct GtkCellLayoutIface
 	 *
 	 * Params:
 	 *     cellLayout = a #GtkCellLayout
-	 * Return: the cell area used by @cell_layout.
+	 * Return: the cell area used by @cell_layout,
+	 *     or %NULL in case no cell area is used.
 	 */
 	extern(C) GtkCellArea* function(GtkCellLayout* cellLayout) getArea;
 }

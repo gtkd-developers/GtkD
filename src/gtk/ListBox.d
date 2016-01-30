@@ -244,7 +244,8 @@ public class ListBox : Container
 	 * Params:
 	 *     y = position
 	 *
-	 * Return: the row
+	 * Return: the row or %NULL
+	 *     in case no row exists for the given y coordinate.
 	 *
 	 * Since: 3.10
 	 */

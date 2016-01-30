@@ -179,7 +179,8 @@ public class FlowBox : Container, OrientableIF
 	 *     idx = the position of the child
 	 *
 	 * Return: the child widget, which will
-	 *     always be a #GtkFlowBoxChild
+	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
+	 *     with the given index exists.
 	 *
 	 * Since: 3.12
 	 */
@@ -543,8 +544,8 @@ public class FlowBox : Container, OrientableIF
 	 * gtk_flow_box_child_changed()) and when gtk_flow_box_invalidate_sort()
 	 * is called.
 	 *
-	 * + * Note that using a sort function is incompatible with using a model
-	 * + * (see gtk_list_box_bind_model()).
+	 * Note that using a sort function is incompatible with using a model
+	 * (see gtk_flow_box_bind_model()).
 	 *
 	 * Params:
 	 *     sortFunc = the sort function
