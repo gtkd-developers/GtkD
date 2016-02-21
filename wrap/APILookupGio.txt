@@ -75,7 +75,7 @@ int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineLi
 	}
 	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
 	{
-		return _application.onCommandLineListeners[0](Scoped!ApplicationCommandLine(ObjectG.getDObject!(ApplicationCommandLine)(commandLine)), _application);
+		return _application.onCommandLineListeners[0](scoped!ApplicationCommandLine(commandLine), _application);
 	}
 code: end
 

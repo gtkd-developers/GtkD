@@ -39,6 +39,54 @@ addAliases: start
 	alias GtkAllocation* Allocation;
 addAliases: end
 
+addConstants: start
+	/**
+	 * A priority that can be used when adding a gtk.StyleProvider
+	 * for application-specific style information.
+	 */
+	public enum STYLE_PROVIDER_PRIORITY_APPLICATION = 600;
+	alias STYLE_PROVIDER_PRIORITY_APPLICATION GTK_STYLE_PROVIDER_PRIORITY_APPLICATION;
+
+	/**
+	 * The priority used for default style information
+	 * that is used in the absence of themes.
+	 *
+	 * Note that this is not very useful for providing default
+	 * styling for custom style classes - themes are likely to
+	 * override styling provided at this priority with
+	 * catch-all `* {...}` rules.
+	 */
+	public enum STYLE_PROVIDER_PRIORITY_FALLBACK = 1;
+	alias STYLE_PROVIDER_PRIORITY_FALLBACK GTK_STYLE_PROVIDER_PRIORITY_FALLBACK;
+
+	/**
+	 * The priority used for style information provided
+	 * via gtk.Settings.
+	 *
+	 * This priority is higher than STYLE_PROVIDER_PRIORITY_THEME
+	 * to let settings override themes.
+	 */
+	public enum STYLE_PROVIDER_PRIORITY_SETTINGS = 400;
+	alias STYLE_PROVIDER_PRIORITY_SETTINGS GTK_STYLE_PROVIDER_PRIORITY_SETTINGS;
+
+	/**
+	 * The priority used for style information provided
+	 * by themes.
+	 */
+	public enum STYLE_PROVIDER_PRIORITY_THEME = 200;
+	alias STYLE_PROVIDER_PRIORITY_THEME GTK_STYLE_PROVIDER_PRIORITY_THEME;
+
+	/**
+	 * The priority used for the style information from
+	 * `~/.gtk-3.0.css`.
+	 *
+	 * You should not use priorities higher than this, to
+	 * give the user the last word.
+	 */
+	public enum STYLE_PROVIDER_PRIORITY_USER = 800;
+	alias STYLE_PROVIDER_PRIORITY_USER GTK_STYLE_PROVIDER_PRIORITY_USER;
+addConstants: end
+
 struct: Action
 import: gtk.Image
 import: gtk.Menu
