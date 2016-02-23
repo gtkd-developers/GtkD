@@ -89,6 +89,7 @@ public class RGBA
 		if ( Linker.isLoaded(LIBRARY.GDK) && gdkRGBA !is null )
 		{
 			gdk_rgba_free(gdkRGBA);
+			gdkRGBA = null;
 		}
 	}
 	
