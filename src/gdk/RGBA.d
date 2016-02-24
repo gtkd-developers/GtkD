@@ -61,6 +61,8 @@ public class RGBA
 		this.gdkRGBA = gdkRGBA;
 	}
 
+	bool ownedRef = false;
+	
 	/**
 	 * Creates a new RGBA Color
 	 */
@@ -69,6 +71,8 @@ public class RGBA
 		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
 		
 		this(gdk_rgba_copy(&rgba));
+		
+		ownedRef = true;
 	}
 	
 	/** ditto */
@@ -82,14 +86,15 @@ public class RGBA
 		rgba.alpha = alpha;
 		
 		this(gdk_rgba_copy(&rgba));
+		
+		ownedRef = true;
 	}
 	
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && gdkRGBA !is null )
+		if ( Linker.isLoaded(LIBRARY.GDK) && ownedRef )
 		{
 			gdk_rgba_free(gdkRGBA);
-			gdkRGBA = null;
 		}
 	}
 	
