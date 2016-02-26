@@ -36,6 +36,7 @@ public class Node
 {
 	/** the main Gtk struct */
 	protected GNode* gNode;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GNode* getNodeStruct()
@@ -52,9 +53,10 @@ public class Node
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GNode* gNode)
+	public this (GNode* gNode, bool ownedRef = false)
 	{
 		this.gNode = gNode;
+		this.ownedRef = ownedRef;
 	}
 
 

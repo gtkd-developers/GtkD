@@ -242,8 +242,8 @@ public class CellRenderer : ObjectG
 		
 		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), outminimumSize, outnaturalSize);
 		
-		minimumSize = ObjectG.getDObject!(Requisition)(outminimumSize);
-		naturalSize = ObjectG.getDObject!(Requisition)(outnaturalSize);
+		minimumSize = ObjectG.getDObject!(Requisition)(outminimumSize, true);
+		naturalSize = ObjectG.getDObject!(Requisition)(outnaturalSize, true);
 	}
 
 	/**

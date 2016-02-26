@@ -119,7 +119,7 @@ public template StyleProviderT(TStruct)
 		
 		auto p = gtk_style_provider_get_style_property(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct(), state, (pspec is null) ? null : pspec.getParamSpecStruct(), outvalue) != 0;
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 		
 		return p;
 	}

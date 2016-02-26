@@ -167,7 +167,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_background_color(gtkThemingEngine, state, outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_border(gtkThemingEngine, state, outborder);
 		
-		border = ObjectG.getDObject!(Border)(outborder);
+		border = ObjectG.getDObject!(Border)(outborder, true);
 	}
 
 	/**
@@ -203,7 +203,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_border_color(gtkThemingEngine, state, outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_color(gtkThemingEngine, state, outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_margin(gtkThemingEngine, state, outmargin);
 		
-		margin = ObjectG.getDObject!(Border)(outmargin);
+		margin = ObjectG.getDObject!(Border)(outmargin, true);
 	}
 
 	/**
@@ -311,7 +311,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_padding(gtkThemingEngine, state, outpadding);
 		
-		padding = ObjectG.getDObject!(Border)(outpadding);
+		padding = ObjectG.getDObject!(Border)(outpadding, true);
 	}
 
 	/**
@@ -352,7 +352,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_property(gtkThemingEngine, Str.toStringz(property), state, outvalue);
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
 	/**
@@ -400,7 +400,7 @@ public class ThemingEngine : ObjectG
 		
 		gtk_theming_engine_get_style_property(gtkThemingEngine, Str.toStringz(propertyName), outvalue);
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
 	/**
@@ -483,7 +483,7 @@ public class ThemingEngine : ObjectG
 		
 		auto p = gtk_theming_engine_lookup_color(gtkThemingEngine, Str.toStringz(colorName), outcolor) != 0;
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 		
 		return p;
 	}

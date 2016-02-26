@@ -100,6 +100,7 @@ public class Cond
 {
 	/** the main Gtk struct */
 	protected GCond* gCond;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GCond* getCondStruct()
@@ -116,9 +117,10 @@ public class Cond
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GCond* gCond)
+	public this (GCond* gCond, bool ownedRef = false)
 	{
 		this.gCond = gCond;
+		this.ownedRef = ownedRef;
 	}
 
 

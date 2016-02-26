@@ -74,6 +74,7 @@ public class Memory
 {
 	/** the main Gtk struct */
 	protected GstMemory* gstMemory;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstMemory* getMemoryStruct()
@@ -90,9 +91,10 @@ public class Memory
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstMemory* gstMemory)
+	public this (GstMemory* gstMemory, bool ownedRef = false)
 	{
 		this.gstMemory = gstMemory;
+		this.ownedRef = ownedRef;
 	}
 
 

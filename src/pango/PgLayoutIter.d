@@ -42,6 +42,7 @@ public class PgLayoutIter
 {
 	/** the main Gtk struct */
 	protected PangoLayoutIter* pangoLayoutIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoLayoutIter* getPgLayoutIterStruct()
@@ -58,9 +59,10 @@ public class PgLayoutIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoLayoutIter* pangoLayoutIter)
+	public this (PangoLayoutIter* pangoLayoutIter, bool ownedRef = false)
 	{
 		this.pangoLayoutIter = pangoLayoutIter;
+		this.ownedRef = ownedRef;
 	}
 
 

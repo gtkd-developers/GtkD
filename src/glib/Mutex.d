@@ -78,6 +78,7 @@ public class Mutex
 {
 	/** the main Gtk struct */
 	protected GMutex* gMutex;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GMutex* getMutexStruct()
@@ -94,9 +95,10 @@ public class Mutex
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GMutex* gMutex)
+	public this (GMutex* gMutex, bool ownedRef = false)
 	{
 		this.gMutex = gMutex;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -45,6 +45,7 @@ public class TreeIter
 {
 	/** the main Gtk struct */
 	protected GtkTreeIter* gtkTreeIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkTreeIter* getTreeIterStruct()
@@ -61,9 +62,10 @@ public class TreeIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTreeIter* gtkTreeIter)
+	public this (GtkTreeIter* gtkTreeIter, bool ownedRef = false)
 	{
 		this.gtkTreeIter = gtkTreeIter;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

@@ -43,6 +43,7 @@ public class BindingSet
 {
 	/** the main Gtk struct */
 	protected GtkBindingSet* gtkBindingSet;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkBindingSet* getBindingSetStruct()
@@ -59,9 +60,10 @@ public class BindingSet
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkBindingSet* gtkBindingSet)
+	public this (GtkBindingSet* gtkBindingSet, bool ownedRef = false)
 	{
 		this.gtkBindingSet = gtkBindingSet;
+		this.ownedRef = ownedRef;
 	}
 
 

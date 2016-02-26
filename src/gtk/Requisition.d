@@ -41,6 +41,7 @@ public class Requisition
 {
 	/** the main Gtk struct */
 	protected GtkRequisition* gtkRequisition;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkRequisition* getRequisitionStruct()
@@ -57,9 +58,10 @@ public class Requisition
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkRequisition* gtkRequisition)
+	public this (GtkRequisition* gtkRequisition, bool ownedRef = false)
 	{
 		this.gtkRequisition = gtkRequisition;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

@@ -33,6 +33,7 @@ public class TestLogMsg
 {
 	/** the main Gtk struct */
 	protected GTestLogMsg* gTestLogMsg;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTestLogMsg* getTestLogMsgStruct()
@@ -49,9 +50,10 @@ public class TestLogMsg
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTestLogMsg* gTestLogMsg)
+	public this (GTestLogMsg* gTestLogMsg, bool ownedRef = false)
 	{
 		this.gTestLogMsg = gTestLogMsg;
+		this.ownedRef = ownedRef;
 	}
 
 

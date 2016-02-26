@@ -37,6 +37,7 @@ public class ArrayG
 {
 	/** the main Gtk struct */
 	protected GArray* gArray;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GArray* getArrayGStruct()
@@ -53,9 +54,10 @@ public class ArrayG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GArray* gArray)
+	public this (GArray* gArray, bool ownedRef = false)
 	{
 		this.gArray = gArray;
+		this.ownedRef = ownedRef;
 	}
 
 

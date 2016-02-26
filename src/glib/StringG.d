@@ -37,6 +37,7 @@ public class StringG
 {
 	/** the main Gtk struct */
 	protected GString* gString;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GString* getStringGStruct()
@@ -53,9 +54,10 @@ public class StringG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GString* gString)
+	public this (GString* gString, bool ownedRef = false)
 	{
 		this.gString = gString;
+		this.ownedRef = ownedRef;
 	}
 
 

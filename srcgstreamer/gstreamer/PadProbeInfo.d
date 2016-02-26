@@ -40,6 +40,7 @@ public class PadProbeInfo
 {
 	/** the main Gtk struct */
 	protected GstPadProbeInfo* gstPadProbeInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstPadProbeInfo* getPadProbeInfoStruct()
@@ -56,9 +57,10 @@ public class PadProbeInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstPadProbeInfo* gstPadProbeInfo)
+	public this (GstPadProbeInfo* gstPadProbeInfo, bool ownedRef = false)
 	{
 		this.gstPadProbeInfo = gstPadProbeInfo;
+		this.ownedRef = ownedRef;
 	}
 
 

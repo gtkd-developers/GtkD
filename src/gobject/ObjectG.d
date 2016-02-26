@@ -47,6 +47,7 @@ public class ObjectG
 {
 	/** the main Gtk struct */
 	protected GObject* gObject;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GObject* getObjectGStruct()

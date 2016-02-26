@@ -74,6 +74,7 @@ public class Structure
 {
 	/** the main Gtk struct */
 	protected GstStructure* gstStructure;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstStructure* getStructureStruct()
@@ -90,9 +91,10 @@ public class Structure
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstStructure* gstStructure)
+	public this (GstStructure* gstStructure, bool ownedRef = false)
 	{
 		this.gstStructure = gstStructure;
+		this.ownedRef = ownedRef;
 	}
 
 	public static Structure fromString(string name)

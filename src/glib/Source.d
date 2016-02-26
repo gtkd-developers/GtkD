@@ -40,6 +40,7 @@ public class Source
 {
 	/** the main Gtk struct */
 	protected GSource* gSource;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GSource* getSourceStruct()
@@ -56,9 +57,10 @@ public class Source
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GSource* gSource)
+	public this (GSource* gSource, bool ownedRef = false)
 	{
 		this.gSource = gSource;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -60,6 +60,7 @@ public class Poll
 {
 	/** the main Gtk struct */
 	protected GstPoll* gstPoll;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstPoll* getPollStruct()
@@ -76,9 +77,10 @@ public class Poll
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstPoll* gstPoll)
+	public this (GstPoll* gstPoll, bool ownedRef = false)
 	{
 		this.gstPoll = gstPoll;
+		this.ownedRef = ownedRef;
 	}
 
 

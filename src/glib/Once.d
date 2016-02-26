@@ -39,6 +39,7 @@ public class Once
 {
 	/** the main Gtk struct */
 	protected GOnce* gOnce;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GOnce* getOnceStruct()
@@ -55,9 +56,10 @@ public class Once
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GOnce* gOnce)
+	public this (GOnce* gOnce, bool ownedRef = false)
 	{
 		this.gOnce = gOnce;
+		this.ownedRef = ownedRef;
 	}
 
 

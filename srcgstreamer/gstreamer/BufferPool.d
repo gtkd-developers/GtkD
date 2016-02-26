@@ -167,7 +167,7 @@ public class BufferPool : ObjectGst
 		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
 		
 		allocator = ObjectG.getDObject!(Allocator)(outallocator);
-		params = ObjectG.getDObject!(AllocationParams)(outparams);
+		params = ObjectG.getDObject!(AllocationParams)(outparams, true);
 		
 		return p;
 	}

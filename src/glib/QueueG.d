@@ -38,6 +38,7 @@ public class QueueG
 {
 	/** the main Gtk struct */
 	protected GQueue* gQueue;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GQueue* getQueueGStruct()
@@ -54,9 +55,10 @@ public class QueueG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GQueue* gQueue)
+	public this (GQueue* gQueue, bool ownedRef = false)
 	{
 		this.gQueue = gQueue;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -40,6 +40,7 @@ public class UnixMountPoint
 {
 	/** the main Gtk struct */
 	protected GUnixMountPoint* gUnixMountPoint;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GUnixMountPoint* getUnixMountPointStruct()
@@ -56,9 +57,10 @@ public class UnixMountPoint
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GUnixMountPoint* gUnixMountPoint)
+	public this (GUnixMountPoint* gUnixMountPoint, bool ownedRef = false)
 	{
 		this.gUnixMountPoint = gUnixMountPoint;
+		this.ownedRef = ownedRef;
 	}
 
 

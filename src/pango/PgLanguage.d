@@ -41,6 +41,7 @@ public class PgLanguage
 {
 	/** the main Gtk struct */
 	protected PangoLanguage* pangoLanguage;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoLanguage* getPgLanguageStruct()
@@ -57,9 +58,10 @@ public class PgLanguage
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoLanguage* pangoLanguage)
+	public this (PangoLanguage* pangoLanguage, bool ownedRef = false)
 	{
 		this.pangoLanguage = pangoLanguage;
+		this.ownedRef = ownedRef;
 	}
 
 

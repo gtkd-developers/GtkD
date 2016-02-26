@@ -42,6 +42,7 @@ public class OptionContext
 {
 	/** the main Gtk struct */
 	protected GOptionContext* gOptionContext;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GOptionContext* getOptionContextStruct()
@@ -58,9 +59,10 @@ public class OptionContext
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GOptionContext* gOptionContext)
+	public this (GOptionContext* gOptionContext, bool ownedRef = false)
 	{
 		this.gOptionContext = gOptionContext;
+		this.ownedRef = ownedRef;
 	}
 
 

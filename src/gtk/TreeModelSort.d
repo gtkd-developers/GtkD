@@ -237,7 +237,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 		
 		auto p = gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, outsortIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 		
-		sortIter = ObjectG.getDObject!(TreeIter)(outsortIter);
+		sortIter = ObjectG.getDObject!(TreeIter)(outsortIter, true);
 		
 		return p;
 	}
@@ -278,7 +278,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 		
 		gtk_tree_model_sort_convert_iter_to_child_iter(gtkTreeModelSort, outchildIter, (sortedIter is null) ? null : sortedIter.getTreeIterStruct());
 		
-		childIter = ObjectG.getDObject!(TreeIter)(outchildIter);
+		childIter = ObjectG.getDObject!(TreeIter)(outchildIter, true);
 	}
 
 	/**

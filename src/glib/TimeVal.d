@@ -42,6 +42,7 @@ public class TimeVal
 {
 	/** the main Gtk struct */
 	protected GTimeVal* gTimeVal;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTimeVal* getTimeValStruct()
@@ -58,9 +59,10 @@ public class TimeVal
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTimeVal* gTimeVal)
+	public this (GTimeVal* gTimeVal, bool ownedRef = false)
 	{
 		this.gTimeVal = gTimeVal;
+		this.ownedRef = ownedRef;
 	}
 
 
@@ -130,7 +132,7 @@ public class TimeVal
 		
 		auto p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
 		
-		time = new TimeVal(outtime);
+		time = new TimeVal(outtime, true);
 		
 		return p;
 	}

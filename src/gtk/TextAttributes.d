@@ -42,6 +42,7 @@ public class TextAttributes
 {
 	/** the main Gtk struct */
 	protected GtkTextAttributes* gtkTextAttributes;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkTextAttributes* getTextAttributesStruct()
@@ -58,9 +59,10 @@ public class TextAttributes
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTextAttributes* gtkTextAttributes)
+	public this (GtkTextAttributes* gtkTextAttributes, bool ownedRef = false)
 	{
 		this.gtkTextAttributes = gtkTextAttributes;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

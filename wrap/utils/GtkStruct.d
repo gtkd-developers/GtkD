@@ -331,6 +331,12 @@ final class GtkStruct
 			{
 				buff ~= indenter.format("/** the main Gtk struct */");
 				buff ~= indenter.format("protected "~ cType ~"* "~ getHandleVar() ~";");
+
+				if ( !parentStruct )
+				{
+					buff ~= indenter.format("protected bool ownedRef;");
+				}
+																																												
 				buff ~= "\n";
 			}
 			buff ~= indenter.format("/** Get the main Gtk struct */");
@@ -375,19 +381,15 @@ final class GtkStruct
 				buff ~= indenter.format("/**");
 				buff ~= indenter.format(" * Sets our main struct and passes it to the parent class.");
 				buff ~= indenter.format(" */");
-
-				if ( parentStruct && getAncestor().name == "ObjectG" )
-					buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~", bool ownedRef = false)");
-				else
-					buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~")");
-
+																																												
+				buff ~= indenter.format("public this ("~ cType ~"* "~ getHandleVar() ~", bool ownedRef = false)");
 				buff ~= indenter.format("{");
 				buff ~= indenter.format("this."~ getHandleVar() ~" = "~ getHandleVar() ~";");
 
-				if ( parentStruct && getAncestor().name == "ObjectG" )
+				if ( parentStruct )
 					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~", ownedRef);");
-				else if ( parentStruct )
-					buff ~= indenter.format("super(cast("~ parentStruct.cType ~"*)"~ getHandleVar() ~");");
+				else
+					buff ~= indenter.format("this.ownedRef = ownedRef;");
 
 				buff ~= indenter.format("}");
 				buff ~= "\n";

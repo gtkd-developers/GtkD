@@ -38,6 +38,7 @@ public class PgColor
 {
 	/** the main Gtk struct */
 	protected PangoColor* pangoColor;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoColor* getPgColorStruct()
@@ -54,9 +55,10 @@ public class PgColor
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoColor* pangoColor)
+	public this (PangoColor* pangoColor, bool ownedRef = false)
 	{
 		this.pangoColor = pangoColor;
+		this.ownedRef = ownedRef;
 	}
 
 

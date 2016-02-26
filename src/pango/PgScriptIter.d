@@ -39,6 +39,7 @@ public class PgScriptIter
 {
 	/** the main Gtk struct */
 	protected PangoScriptIter* pangoScriptIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoScriptIter* getPgScriptIterStruct()
@@ -55,9 +56,10 @@ public class PgScriptIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoScriptIter* pangoScriptIter)
+	public this (PangoScriptIter* pangoScriptIter, bool ownedRef = false)
 	{
 		this.pangoScriptIter = pangoScriptIter;
+		this.ownedRef = ownedRef;
 	}
 
 

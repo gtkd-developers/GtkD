@@ -38,6 +38,7 @@ public class ParamSpecFraction
 {
 	/** the main Gtk struct */
 	protected GstParamSpecFraction* gstParamSpecFraction;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstParamSpecFraction* getParamSpecFractionStruct()
@@ -54,9 +55,10 @@ public class ParamSpecFraction
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstParamSpecFraction* gstParamSpecFraction)
+	public this (GstParamSpecFraction* gstParamSpecFraction, bool ownedRef = false)
 	{
 		this.gstParamSpecFraction = gstParamSpecFraction;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

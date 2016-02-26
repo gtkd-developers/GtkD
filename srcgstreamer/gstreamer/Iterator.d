@@ -77,6 +77,7 @@ public class Iterator
 {
 	/** the main Gtk struct */
 	protected GstIterator* gstIterator;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstIterator* getIteratorStruct()
@@ -93,9 +94,10 @@ public class Iterator
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstIterator* gstIterator)
+	public this (GstIterator* gstIterator, bool ownedRef = false)
 	{
 		this.gstIterator = gstIterator;
+		this.ownedRef = ownedRef;
 	}
 
 
@@ -286,7 +288,7 @@ public class Iterator
 		
 		auto p = gst_iterator_find_custom(gstIterator, func, outelem, userData) != 0;
 		
-		elem = ObjectG.getDObject!(Value)(outelem);
+		elem = ObjectG.getDObject!(Value)(outelem, true);
 		
 		return p;
 	}
@@ -381,7 +383,7 @@ public class Iterator
 		
 		auto p = gst_iterator_next(gstIterator, outelem);
 		
-		elem = ObjectG.getDObject!(Value)(outelem);
+		elem = ObjectG.getDObject!(Value)(outelem, true);
 		
 		return p;
 	}

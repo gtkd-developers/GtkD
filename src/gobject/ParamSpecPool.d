@@ -43,6 +43,7 @@ public class ParamSpecPool
 {
 	/** the main Gtk struct */
 	protected GParamSpecPool* gParamSpecPool;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GParamSpecPool* getParamSpecPoolStruct()
@@ -59,9 +60,10 @@ public class ParamSpecPool
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GParamSpecPool* gParamSpecPool)
+	public this (GParamSpecPool* gParamSpecPool, bool ownedRef = false)
 	{
 		this.gParamSpecPool = gParamSpecPool;
+		this.ownedRef = ownedRef;
 	}
 
 

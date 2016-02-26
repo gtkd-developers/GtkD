@@ -48,6 +48,7 @@ public class Date
 {
 	/** the main Gtk struct */
 	protected GDate* gDate;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDate* getDateStruct()
@@ -64,9 +65,10 @@ public class Date
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDate* gDate)
+	public this (GDate* gDate, bool ownedRef = false)
 	{
 		this.gDate = gDate;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -193,7 +193,7 @@ public class ColorButton : Button, ColorChooserIF
 		
 		gtk_color_button_get_color(gtkColorButton, outcolor);
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 	}
 
 	/**

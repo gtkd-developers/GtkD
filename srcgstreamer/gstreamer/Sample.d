@@ -43,6 +43,7 @@ public class Sample
 {
 	/** the main Gtk struct */
 	protected GstSample* gstSample;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstSample* getSampleStruct()
@@ -59,9 +60,10 @@ public class Sample
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstSample* gstSample)
+	public this (GstSample* gstSample, bool ownedRef = false)
 	{
 		this.gstSample = gstSample;
+		this.ownedRef = ownedRef;
 	}
 
 

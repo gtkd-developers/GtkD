@@ -106,6 +106,7 @@ public class Regex
 {
 	/** the main Gtk struct */
 	protected GRegex* gRegex;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GRegex* getRegexStruct()
@@ -122,9 +123,10 @@ public class Regex
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GRegex* gRegex)
+	public this (GRegex* gRegex, bool ownedRef = false)
 	{
 		this.gRegex = gRegex;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -44,6 +44,7 @@ public class DateTime
 {
 	/** the main Gtk struct */
 	protected GstDateTime* gstDateTime;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstDateTime* getDateTimeStruct()
@@ -60,9 +61,10 @@ public class DateTime
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstDateTime* gstDateTime)
+	public this (GstDateTime* gstDateTime, bool ownedRef = false)
 	{
 		this.gstDateTime = gstDateTime;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

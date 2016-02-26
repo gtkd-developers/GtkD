@@ -290,7 +290,7 @@ public struct Utils
 		
 		gst_util_set_value_from_string(outvalue, Str.toStringz(valueStr));
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
 	/**

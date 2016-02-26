@@ -38,6 +38,7 @@ public class AtomicQueue
 {
 	/** the main Gtk struct */
 	protected GstAtomicQueue* gstAtomicQueue;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstAtomicQueue* getAtomicQueueStruct()
@@ -54,9 +55,10 @@ public class AtomicQueue
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstAtomicQueue* gstAtomicQueue)
+	public this (GstAtomicQueue* gstAtomicQueue, bool ownedRef = false)
 	{
 		this.gstAtomicQueue = gstAtomicQueue;
+		this.ownedRef = ownedRef;
 	}
 
 

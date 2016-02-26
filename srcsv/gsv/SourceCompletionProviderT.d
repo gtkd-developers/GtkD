@@ -232,7 +232,7 @@ public template SourceCompletionProviderT(TStruct)
 		
 		auto p = gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), outiter) != 0;
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 		
 		return p;
 	}

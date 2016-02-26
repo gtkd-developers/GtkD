@@ -36,6 +36,7 @@ public class TreePath
 {
 	/** the main Gtk struct */
 	protected GtkTreePath* gtkTreePath;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkTreePath* getTreePathStruct()
@@ -52,9 +53,10 @@ public class TreePath
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTreePath* gtkTreePath)
+	public this (GtkTreePath* gtkTreePath, bool ownedRef = false)
 	{
 		this.gtkTreePath = gtkTreePath;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

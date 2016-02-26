@@ -35,6 +35,7 @@ public class PixbufFormat
 {
 	/** the main Gtk struct */
 	protected GdkPixbufFormat* gdkPixbufFormat;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GdkPixbufFormat* getPixbufFormatStruct()
@@ -51,9 +52,10 @@ public class PixbufFormat
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GdkPixbufFormat* gdkPixbufFormat)
+	public this (GdkPixbufFormat* gdkPixbufFormat, bool ownedRef = false)
 	{
 		this.gdkPixbufFormat = gdkPixbufFormat;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -37,6 +37,7 @@ public class PgMap
 {
 	/** the main Gtk struct */
 	protected PangoMap* pangoMap;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoMap* getPgMapStruct()
@@ -53,9 +54,10 @@ public class PgMap
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoMap* pangoMap)
+	public this (PangoMap* pangoMap, bool ownedRef = false)
 	{
 		this.pangoMap = pangoMap;
+		this.ownedRef = ownedRef;
 	}
 
 

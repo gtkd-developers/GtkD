@@ -42,6 +42,7 @@ public class MappedFile
 {
 	/** the main Gtk struct */
 	protected GMappedFile* gMappedFile;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GMappedFile* getMappedFileStruct()
@@ -58,9 +59,10 @@ public class MappedFile
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GMappedFile* gMappedFile)
+	public this (GMappedFile* gMappedFile, bool ownedRef = false)
 	{
 		this.gMappedFile = gMappedFile;
+		this.ownedRef = ownedRef;
 	}
 
 

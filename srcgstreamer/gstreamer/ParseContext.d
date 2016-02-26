@@ -38,6 +38,7 @@ public class ParseContext
 {
 	/** the main Gtk struct */
 	protected GstParseContext* gstParseContext;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstParseContext* getParseContextStruct()
@@ -54,9 +55,10 @@ public class ParseContext
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstParseContext* gstParseContext)
+	public this (GstParseContext* gstParseContext, bool ownedRef = false)
 	{
 		this.gstParseContext = gstParseContext;
+		this.ownedRef = ownedRef;
 	}
 
 

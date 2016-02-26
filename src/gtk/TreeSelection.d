@@ -209,7 +209,7 @@ public class TreeSelection : ObjectG
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 		
 		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}

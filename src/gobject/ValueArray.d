@@ -38,6 +38,7 @@ public class ValueArray
 {
 	/** the main Gtk struct */
 	protected GValueArray* gValueArray;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GValueArray* getValueArrayStruct()
@@ -54,9 +55,10 @@ public class ValueArray
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GValueArray* gValueArray)
+	public this (GValueArray* gValueArray, bool ownedRef = false)
 	{
 		this.gValueArray = gValueArray;
+		this.ownedRef = ownedRef;
 	}
 
 

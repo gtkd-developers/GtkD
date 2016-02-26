@@ -647,8 +647,8 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_bounds(gtkTextBuffer, outstart, outend);
 		
-		start = ObjectG.getDObject!(TextIter)(outstart);
-		end = ObjectG.getDObject!(TextIter)(outend);
+		start = ObjectG.getDObject!(TextIter)(outstart, true);
+		end = ObjectG.getDObject!(TextIter)(outend, true);
 	}
 
 	/**
@@ -723,7 +723,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_end_iter(gtkTextBuffer, outiter);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -771,7 +771,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, outiter, (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -788,7 +788,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, outiter, lineNumber);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -808,7 +808,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, outiter, lineNumber, byteIndex);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -828,7 +828,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, outiter, lineNumber, charOffset);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -844,7 +844,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_iter_at_mark(gtkTextBuffer, outiter, (mark is null) ? null : mark.getTextMarkStruct());
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -863,7 +863,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_iter_at_offset(gtkTextBuffer, outiter, charOffset);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -982,8 +982,8 @@ public class TextBuffer : ObjectG
 		
 		auto p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
 		
-		start = ObjectG.getDObject!(TextIter)(outstart);
-		end = ObjectG.getDObject!(TextIter)(outend);
+		start = ObjectG.getDObject!(TextIter)(outstart, true);
+		end = ObjectG.getDObject!(TextIter)(outend, true);
 		
 		return p;
 	}
@@ -1045,7 +1045,7 @@ public class TextBuffer : ObjectG
 		
 		gtk_text_buffer_get_start_iter(gtkTextBuffer, outiter);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**

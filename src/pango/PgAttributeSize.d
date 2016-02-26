@@ -60,10 +60,10 @@ public class PgAttributeSize : PgAttribute
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttrSize* pangoAttrSize)
+	public this (PangoAttrSize* pangoAttrSize, bool ownedRef = false)
 	{
 		this.pangoAttrSize = pangoAttrSize;
-		super(cast(PangoAttribute*)pangoAttrSize);
+		super(cast(PangoAttribute*)pangoAttrSize, ownedRef);
 	}
 
 	/**

@@ -52,6 +52,7 @@ public class SrvTarget
 {
 	/** the main Gtk struct */
 	protected GSrvTarget* gSrvTarget;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GSrvTarget* getSrvTargetStruct()
@@ -68,9 +69,10 @@ public class SrvTarget
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GSrvTarget* gSrvTarget)
+	public this (GSrvTarget* gSrvTarget, bool ownedRef = false)
 	{
 		this.gSrvTarget = gSrvTarget;
+		this.ownedRef = ownedRef;
 	}
 
 

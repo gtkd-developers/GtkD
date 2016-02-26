@@ -50,6 +50,7 @@ public class ScannerG
 {
 	/** the main Gtk struct */
 	protected GScanner* gScanner;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GScanner* getScannerGStruct()
@@ -66,9 +67,10 @@ public class ScannerG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GScanner* gScanner)
+	public this (GScanner* gScanner, bool ownedRef = false)
 	{
 		this.gScanner = gScanner;
+		this.ownedRef = ownedRef;
 	}
 
 

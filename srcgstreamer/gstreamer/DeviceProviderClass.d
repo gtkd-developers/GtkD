@@ -38,6 +38,7 @@ public class DeviceProviderClass
 {
 	/** the main Gtk struct */
 	protected GstDeviceProviderClass* gstDeviceProviderClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstDeviceProviderClass* getDeviceProviderClassStruct()
@@ -54,9 +55,10 @@ public class DeviceProviderClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstDeviceProviderClass* gstDeviceProviderClass)
+	public this (GstDeviceProviderClass* gstDeviceProviderClass, bool ownedRef = false)
 	{
 		this.gstDeviceProviderClass = gstDeviceProviderClass;
+		this.ownedRef = ownedRef;
 	}
 
 

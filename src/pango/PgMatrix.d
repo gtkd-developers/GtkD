@@ -45,6 +45,7 @@ public class PgMatrix
 {
 	/** the main Gtk struct */
 	protected PangoMatrix* pangoMatrix;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoMatrix* getPgMatrixStruct()
@@ -61,9 +62,10 @@ public class PgMatrix
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoMatrix* pangoMatrix)
+	public this (PangoMatrix* pangoMatrix, bool ownedRef = false)
 	{
 		this.pangoMatrix = pangoMatrix;
+		this.ownedRef = ownedRef;
 	}
 
 

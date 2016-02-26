@@ -85,6 +85,7 @@ public class Toc
 {
 	/** the main Gtk struct */
 	protected GstToc* gstToc;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstToc* getTocStruct()
@@ -101,9 +102,10 @@ public class Toc
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstToc* gstToc)
+	public this (GstToc* gstToc, bool ownedRef = false)
 	{
 		this.gstToc = gstToc;
+		this.ownedRef = ownedRef;
 	}
 
 

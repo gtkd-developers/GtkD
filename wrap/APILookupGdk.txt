@@ -307,8 +307,6 @@ import: gtkc.Loader
 import: gtkc.paths
 override: to_string
 code: start
-	bool ownedRef = false;
-
 	/**
 	 * Creates a new RGBA Color
 	 */
@@ -316,9 +314,7 @@ code: start
 	{
 		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
 
-		this(gdk_rgba_copy(&rgba));
-
-		ownedRef = true;
+		this(gdk_rgba_copy(&rgba), true);
 	}
 
 	/** ditto */
@@ -331,9 +327,7 @@ code: start
 		rgba.blue = blue;
 		rgba.alpha = alpha;
 
-		this(gdk_rgba_copy(&rgba));
-
-		ownedRef = true;
+		this(gdk_rgba_copy(&rgba), true);
 	}
 
 	~this ()

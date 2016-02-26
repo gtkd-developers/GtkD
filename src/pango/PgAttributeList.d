@@ -48,6 +48,7 @@ public class PgAttributeList
 {
 	/** the main Gtk struct */
 	protected PangoAttrList* pangoAttrList;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoAttrList* getPgAttributeListStruct()
@@ -64,9 +65,10 @@ public class PgAttributeList
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttrList* pangoAttrList)
+	public this (PangoAttrList* pangoAttrList, bool ownedRef = false)
 	{
 		this.pangoAttrList = pangoAttrList;
+		this.ownedRef = ownedRef;
 	}
 
 

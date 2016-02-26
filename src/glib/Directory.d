@@ -38,6 +38,7 @@ public class Directory
 {
 	/** the main Gtk struct */
 	protected GDir* gDir;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDir* getDirectoryStruct()
@@ -54,9 +55,10 @@ public class Directory
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDir* gDir)
+	public this (GDir* gDir, bool ownedRef = false)
 	{
 		this.gDir = gDir;
+		this.ownedRef = ownedRef;
 	}
 
 

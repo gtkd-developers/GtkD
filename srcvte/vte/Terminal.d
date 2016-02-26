@@ -432,7 +432,7 @@ public class Terminal : Widget, ScrollableIF
 		
 		auto p = vte_terminal_get_text(vteTerminal, isSelected, userData, outattributes);
 		
-		attributes = new ArrayG(outattributes);
+		attributes = new ArrayG(outattributes, true);
 		
 		return Str.toString(p);
 	}
@@ -459,7 +459,7 @@ public class Terminal : Widget, ScrollableIF
 		
 		auto p = vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, outattributes);
 		
-		attributes = new ArrayG(outattributes);
+		attributes = new ArrayG(outattributes, true);
 		
 		return Str.toString(p);
 	}
@@ -490,7 +490,7 @@ public class Terminal : Widget, ScrollableIF
 		
 		auto p = vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, outattributes);
 		
-		attributes = new ArrayG(outattributes);
+		attributes = new ArrayG(outattributes, true);
 		
 		return Str.toString(p);
 	}

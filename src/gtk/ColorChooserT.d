@@ -102,7 +102,7 @@ public template ColorChooserT(TStruct)
 		
 		gtk_color_chooser_get_rgba(getColorChooserStruct(), outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**

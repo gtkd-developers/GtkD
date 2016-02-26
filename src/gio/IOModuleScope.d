@@ -46,6 +46,7 @@ public class IOModuleScope
 {
 	/** the main Gtk struct */
 	protected GIOModuleScope* gIOModuleScope;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GIOModuleScope* getIOModuleScopeStruct()
@@ -62,9 +63,10 @@ public class IOModuleScope
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GIOModuleScope* gIOModuleScope)
+	public this (GIOModuleScope* gIOModuleScope, bool ownedRef = false)
 	{
 		this.gIOModuleScope = gIOModuleScope;
+		this.ownedRef = ownedRef;
 	}
 
 	~this()

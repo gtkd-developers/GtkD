@@ -62,10 +62,10 @@ public class PgAttributeLanguage : PgAttribute
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttrLanguage* pangoAttrLanguage)
+	public this (PangoAttrLanguage* pangoAttrLanguage, bool ownedRef = false)
 	{
 		this.pangoAttrLanguage = pangoAttrLanguage;
-		super(cast(PangoAttribute*)pangoAttrLanguage);
+		super(cast(PangoAttribute*)pangoAttrLanguage, ownedRef);
 	}
 
 

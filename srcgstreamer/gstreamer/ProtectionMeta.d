@@ -39,6 +39,7 @@ public class ProtectionMeta
 {
 	/** the main Gtk struct */
 	protected GstProtectionMeta* gstProtectionMeta;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstProtectionMeta* getProtectionMetaStruct()
@@ -55,9 +56,10 @@ public class ProtectionMeta
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstProtectionMeta* gstProtectionMeta)
+	public this (GstProtectionMeta* gstProtectionMeta, bool ownedRef = false)
 	{
 		this.gstProtectionMeta = gstProtectionMeta;
+		this.ownedRef = ownedRef;
 	}
 
 

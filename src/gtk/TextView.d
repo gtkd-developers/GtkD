@@ -517,7 +517,7 @@ public class TextView : Container, ScrollableIF
 		
 		gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -549,7 +549,7 @@ public class TextView : Container, ScrollableIF
 		
 		gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y);
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
 	/**
@@ -607,7 +607,7 @@ public class TextView : Container, ScrollableIF
 		
 		gtk_text_view_get_line_at_y(gtkTextView, outtargetIter, y, &lineTop);
 		
-		targetIter = ObjectG.getDObject!(TextIter)(outtargetIter);
+		targetIter = ObjectG.getDObject!(TextIter)(outtargetIter, true);
 	}
 
 	/**

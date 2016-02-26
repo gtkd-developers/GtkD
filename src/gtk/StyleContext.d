@@ -380,7 +380,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_background_color(gtkStyleContext, state, outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -399,7 +399,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_border(gtkStyleContext, state, outborder);
 		
-		border = ObjectG.getDObject!(Border)(outborder);
+		border = ObjectG.getDObject!(Border)(outborder, true);
 	}
 
 	/**
@@ -419,7 +419,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_border_color(gtkStyleContext, state, outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -437,7 +437,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_color(gtkStyleContext, state, outcolor);
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -533,7 +533,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_margin(gtkStyleContext, state, outmargin);
 		
-		margin = ObjectG.getDObject!(Border)(outmargin);
+		margin = ObjectG.getDObject!(Border)(outmargin, true);
 	}
 
 	/**
@@ -552,7 +552,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_padding(gtkStyleContext, state, outpadding);
 		
-		padding = ObjectG.getDObject!(Border)(outpadding);
+		padding = ObjectG.getDObject!(Border)(outpadding, true);
 	}
 
 	/**
@@ -613,7 +613,7 @@ public class StyleContext : ObjectG
 		
 		gtk_style_context_get_property(gtkStyleContext, Str.toStringz(property), state, outvalue);
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
 	/**
@@ -838,7 +838,7 @@ public class StyleContext : ObjectG
 		
 		auto p = gtk_style_context_lookup_color(gtkStyleContext, Str.toStringz(colorName), outcolor) != 0;
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 		
 		return p;
 	}

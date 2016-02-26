@@ -39,6 +39,7 @@ public class HashTableIter
 {
 	/** the main Gtk struct */
 	protected GHashTableIter* gHashTableIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GHashTableIter* getHashTableIterStruct()
@@ -55,9 +56,10 @@ public class HashTableIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GHashTableIter* gHashTableIter)
+	public this (GHashTableIter* gHashTableIter, bool ownedRef = false)
 	{
 		this.gHashTableIter = gHashTableIter;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -60,6 +60,7 @@ public class Context
 {
 	/** the main Gtk struct */
 	protected GstContext* gstContext;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstContext* getContextStruct()
@@ -76,9 +77,10 @@ public class Context
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstContext* gstContext)
+	public this (GstContext* gstContext, bool ownedRef = false)
 	{
 		this.gstContext = gstContext;
+		this.ownedRef = ownedRef;
 	}
 
 

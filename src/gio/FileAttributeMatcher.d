@@ -38,6 +38,7 @@ public class FileAttributeMatcher
 {
 	/** the main Gtk struct */
 	protected GFileAttributeMatcher* gFileAttributeMatcher;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GFileAttributeMatcher* getFileAttributeMatcherStruct()
@@ -54,9 +55,10 @@ public class FileAttributeMatcher
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GFileAttributeMatcher* gFileAttributeMatcher)
+	public this (GFileAttributeMatcher* gFileAttributeMatcher, bool ownedRef = false)
 	{
 		this.gFileAttributeMatcher = gFileAttributeMatcher;
+		this.ownedRef = ownedRef;
 	}
 
 

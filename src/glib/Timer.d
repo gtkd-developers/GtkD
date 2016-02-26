@@ -36,6 +36,7 @@ public class Timer
 {
 	/** the main Gtk struct */
 	protected GTimer* gTimer;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTimer* getTimerStruct()
@@ -52,9 +53,10 @@ public class Timer
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTimer* gTimer)
+	public this (GTimer* gTimer, bool ownedRef = false)
 	{
 		this.gTimer = gTimer;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -44,6 +44,7 @@ public class Uri
 {
 	/** the main Gtk struct */
 	protected GstUri* gstUri;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstUri* getUriStruct()
@@ -60,9 +61,10 @@ public class Uri
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstUri* gstUri)
+	public this (GstUri* gstUri, bool ownedRef = false)
 	{
 		this.gstUri = gstUri;
+		this.ownedRef = ownedRef;
 	}
 
 

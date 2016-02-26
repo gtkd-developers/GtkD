@@ -38,6 +38,7 @@ public class VariantIter
 {
 	/** the main Gtk struct */
 	protected GVariantIter* gVariantIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GVariantIter* getVariantIterStruct()
@@ -54,9 +55,10 @@ public class VariantIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GVariantIter* gVariantIter)
+	public this (GVariantIter* gVariantIter, bool ownedRef = false)
 	{
 		this.gVariantIter = gVariantIter;
+		this.ownedRef = ownedRef;
 	}
 
 

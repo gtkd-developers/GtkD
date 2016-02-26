@@ -38,6 +38,7 @@ public class Pattern
 {
 	/** the main Gtk struct */
 	protected GPatternSpec* gPatternSpec;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GPatternSpec* getPatternStruct()
@@ -54,9 +55,10 @@ public class Pattern
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GPatternSpec* gPatternSpec)
+	public this (GPatternSpec* gPatternSpec, bool ownedRef = false)
 	{
 		this.gPatternSpec = gPatternSpec;
+		this.ownedRef = ownedRef;
 	}
 
 

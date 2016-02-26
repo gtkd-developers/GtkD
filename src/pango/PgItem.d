@@ -37,6 +37,7 @@ public class PgItem
 {
 	/** the main Gtk struct */
 	protected PangoItem* pangoItem;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoItem* getPgItemStruct()
@@ -53,9 +54,10 @@ public class PgItem
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoItem* pangoItem)
+	public this (PangoItem* pangoItem, bool ownedRef = false)
 	{
 		this.pangoItem = pangoItem;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -35,6 +35,7 @@ public class TypeInstance
 {
 	/** the main Gtk struct */
 	protected GTypeInstance* gTypeInstance;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTypeInstance* getTypeInstanceStruct()
@@ -51,9 +52,10 @@ public class TypeInstance
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTypeInstance* gTypeInstance)
+	public this (GTypeInstance* gTypeInstance, bool ownedRef = false)
 	{
 		this.gTypeInstance = gTypeInstance;
+		this.ownedRef = ownedRef;
 	}
 
 

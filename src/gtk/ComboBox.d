@@ -256,7 +256,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		
 		auto p = gtk_combo_box_get_active_iter(gtkComboBox, outiter) != 0;
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}

@@ -38,6 +38,7 @@ public class ContainerClass
 {
 	/** the main Gtk struct */
 	protected GtkContainerClass* gtkContainerClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkContainerClass* getContainerClassStruct()
@@ -54,9 +55,10 @@ public class ContainerClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkContainerClass* gtkContainerClass)
+	public this (GtkContainerClass* gtkContainerClass, bool ownedRef = false)
 	{
 		this.gtkContainerClass = gtkContainerClass;
+		this.ownedRef = ownedRef;
 	}
 
 

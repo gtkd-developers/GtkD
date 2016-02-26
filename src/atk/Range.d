@@ -42,6 +42,7 @@ public class Range
 {
 	/** the main Gtk struct */
 	protected AtkRange* atkRange;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public AtkRange* getRangeStruct()
@@ -58,9 +59,10 @@ public class Range
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (AtkRange* atkRange)
+	public this (AtkRange* atkRange, bool ownedRef = false)
 	{
 		this.atkRange = atkRange;
+		this.ownedRef = ownedRef;
 	}
 
 

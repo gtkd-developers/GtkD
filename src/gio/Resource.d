@@ -131,6 +131,7 @@ public class Resource
 {
 	/** the main Gtk struct */
 	protected GResource* gResource;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GResource* getResourceStruct()
@@ -147,9 +148,10 @@ public class Resource
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GResource* gResource)
+	public this (GResource* gResource, bool ownedRef = false)
 	{
 		this.gResource = gResource;
+		this.ownedRef = ownedRef;
 	}
 
 	~this()

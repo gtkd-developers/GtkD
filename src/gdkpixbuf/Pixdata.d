@@ -41,6 +41,7 @@ public class Pixdata
 {
 	/** the main Gtk struct */
 	protected GdkPixdata* gdkPixdata;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GdkPixdata* getPixdataStruct()
@@ -57,9 +58,10 @@ public class Pixdata
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GdkPixdata* gdkPixdata)
+	public this (GdkPixdata* gdkPixdata, bool ownedRef = false)
 	{
 		this.gdkPixdata = gdkPixdata;
+		this.ownedRef = ownedRef;
 	}
 
 

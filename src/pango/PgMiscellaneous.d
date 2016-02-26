@@ -303,7 +303,7 @@ public struct PgMiscellaneous
 		
 		auto p = pango_read_line(stream, outstr);
 		
-		str = new StringG(outstr);
+		str = new StringG(outstr, true);
 		
 		return p;
 	}
@@ -349,7 +349,7 @@ public struct PgMiscellaneous
 		auto p = pango_scan_string(&outpos, outoutput) != 0;
 		
 		pos = Str.toString(outpos);
-		output = new StringG(outoutput);
+		output = new StringG(outoutput, true);
 		
 		return p;
 	}
@@ -373,7 +373,7 @@ public struct PgMiscellaneous
 		auto p = pango_scan_word(&outpos, outoutput) != 0;
 		
 		pos = Str.toString(outpos);
-		output = new StringG(outoutput);
+		output = new StringG(outoutput, true);
 		
 		return p;
 	}

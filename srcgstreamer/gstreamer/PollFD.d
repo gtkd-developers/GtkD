@@ -35,6 +35,7 @@ public class PollFD
 {
 	/** the main Gtk struct */
 	protected GstPollFD* gstPollFD;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstPollFD* getPollFDStruct()
@@ -51,9 +52,10 @@ public class PollFD
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstPollFD* gstPollFD)
+	public this (GstPollFD* gstPollFD, bool ownedRef = false)
 	{
 		this.gstPollFD = gstPollFD;
+		this.ownedRef = ownedRef;
 	}
 
 

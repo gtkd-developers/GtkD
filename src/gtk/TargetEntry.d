@@ -42,6 +42,7 @@ public class TargetEntry
 {
 	/** the main Gtk struct */
 	protected GtkTargetEntry* gtkTargetEntry;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkTargetEntry* getTargetEntryStruct()
@@ -58,9 +59,10 @@ public class TargetEntry
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTargetEntry* gtkTargetEntry)
+	public this (GtkTargetEntry* gtkTargetEntry, bool ownedRef = false)
 	{
 		this.gtkTargetEntry = gtkTargetEntry;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

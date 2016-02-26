@@ -37,6 +37,7 @@ public class ByteArray
 {
 	/** the main Gtk struct */
 	protected GByteArray* gByteArray;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GByteArray* getByteArrayStruct()
@@ -53,9 +54,10 @@ public class ByteArray
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GByteArray* gByteArray)
+	public this (GByteArray* gByteArray, bool ownedRef = false)
 	{
 		this.gByteArray = gByteArray;
+		this.ownedRef = ownedRef;
 	}
 
 

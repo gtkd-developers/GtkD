@@ -48,6 +48,7 @@ public class RecMutex
 {
 	/** the main Gtk struct */
 	protected GRecMutex* gRecMutex;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GRecMutex* getRecMutexStruct()
@@ -64,9 +65,10 @@ public class RecMutex
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GRecMutex* gRecMutex)
+	public this (GRecMutex* gRecMutex, bool ownedRef = false)
 	{
 		this.gRecMutex = gRecMutex;
+		this.ownedRef = ownedRef;
 	}
 
 

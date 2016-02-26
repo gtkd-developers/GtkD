@@ -37,6 +37,7 @@ public class RandG
 {
 	/** the main Gtk struct */
 	protected GRand* gRand;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GRand* getRandGStruct()
@@ -53,9 +54,10 @@ public class RandG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GRand* gRand)
+	public this (GRand* gRand, bool ownedRef = false)
 	{
 		this.gRand = gRand;
+		this.ownedRef = ownedRef;
 	}
 
 

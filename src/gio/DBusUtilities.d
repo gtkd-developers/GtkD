@@ -285,7 +285,7 @@ public struct DBusUtilities
 		
 		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), outoutGvalue);
 		
-		outGvalue = ObjectG.getDObject!(Value)(outoutGvalue);
+		outGvalue = ObjectG.getDObject!(Value)(outoutGvalue, true);
 	}
 
 	/**

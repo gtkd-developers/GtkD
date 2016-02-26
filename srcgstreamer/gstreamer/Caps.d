@@ -74,6 +74,7 @@ public class Caps
 {
 	/** the main Gtk struct */
 	protected GstCaps* gstCaps;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstCaps* getCapsStruct()
@@ -90,9 +91,10 @@ public class Caps
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstCaps* gstCaps)
+	public this (GstCaps* gstCaps, bool ownedRef = false)
 	{
 		this.gstCaps = gstCaps;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

@@ -558,7 +558,7 @@ final class GtkFunction
 
 						gtkCall ~= "out"~ id;
 
-						outToD ~= id ~" = "~ construct(param.type.name) ~"(out"~ id ~");";
+						outToD ~= id ~" = "~ construct(param.type.name) ~"(out"~ id ~", true);";
 					}
 					// gtkdType
 					else

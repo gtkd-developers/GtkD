@@ -36,6 +36,7 @@ public class TypeClass
 {
 	/** the main Gtk struct */
 	protected GTypeClass* gTypeClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTypeClass* getTypeClassStruct()
@@ -52,9 +53,10 @@ public class TypeClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTypeClass* gTypeClass)
+	public this (GTypeClass* gTypeClass, bool ownedRef = false)
 	{
 		this.gTypeClass = gTypeClass;
+		this.ownedRef = ownedRef;
 	}
 
 

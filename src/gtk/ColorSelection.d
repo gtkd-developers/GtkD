@@ -188,7 +188,7 @@ public class ColorSelection : Box
 		
 		gtk_color_selection_get_current_color(gtkColorSelection, outcolor);
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class ColorSelection : Box
 		
 		gtk_color_selection_get_current_rgba(gtkColorSelection, outrgba);
 		
-		rgba = ObjectG.getDObject!(RGBA)(outrgba);
+		rgba = ObjectG.getDObject!(RGBA)(outrgba, true);
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class ColorSelection : Box
 		
 		gtk_color_selection_get_previous_color(gtkColorSelection, outcolor);
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 	}
 
 	/**
@@ -270,7 +270,7 @@ public class ColorSelection : Box
 		
 		gtk_color_selection_get_previous_rgba(gtkColorSelection, outrgba);
 		
-		rgba = ObjectG.getDObject!(RGBA)(outrgba);
+		rgba = ObjectG.getDObject!(RGBA)(outrgba, true);
 	}
 
 	/**

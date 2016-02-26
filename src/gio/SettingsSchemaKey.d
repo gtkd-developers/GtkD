@@ -40,6 +40,7 @@ public class SettingsSchemaKey
 {
 	/** the main Gtk struct */
 	protected GSettingsSchemaKey* gSettingsSchemaKey;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GSettingsSchemaKey* getSettingsSchemaKeyStruct()
@@ -56,9 +57,10 @@ public class SettingsSchemaKey
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GSettingsSchemaKey* gSettingsSchemaKey)
+	public this (GSettingsSchemaKey* gSettingsSchemaKey, bool ownedRef = false)
 	{
 		this.gSettingsSchemaKey = gSettingsSchemaKey;
+		this.ownedRef = ownedRef;
 	}
 
 

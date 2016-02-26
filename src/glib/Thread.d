@@ -51,6 +51,7 @@ public class Thread
 {
 	/** the main Gtk struct */
 	protected GThread* gThread;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GThread* getThreadStruct()
@@ -67,9 +68,10 @@ public class Thread
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GThread* gThread)
+	public this (GThread* gThread, bool ownedRef = false)
 	{
 		this.gThread = gThread;
+		this.ownedRef = ownedRef;
 	}
 
 

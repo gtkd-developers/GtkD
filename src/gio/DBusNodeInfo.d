@@ -44,6 +44,7 @@ public class DBusNodeInfo
 {
 	/** the main Gtk struct */
 	protected GDBusNodeInfo* gDBusNodeInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDBusNodeInfo* getDBusNodeInfoStruct()
@@ -60,9 +61,10 @@ public class DBusNodeInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDBusNodeInfo* gDBusNodeInfo)
+	public this (GDBusNodeInfo* gDBusNodeInfo, bool ownedRef = false)
 	{
 		this.gDBusNodeInfo = gDBusNodeInfo;
+		this.ownedRef = ownedRef;
 	}
 
 
@@ -130,7 +132,7 @@ public class DBusNodeInfo
 		
 		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, outstringBuilder);
 		
-		stringBuilder = new StringG(outstringBuilder);
+		stringBuilder = new StringG(outstringBuilder, true);
 	}
 
 	/**

@@ -45,6 +45,7 @@ public class BufferList
 {
 	/** the main Gtk struct */
 	protected GstBufferList* gstBufferList;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstBufferList* getBufferListStruct()
@@ -61,9 +62,10 @@ public class BufferList
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstBufferList* gstBufferList)
+	public this (GstBufferList* gstBufferList, bool ownedRef = false)
 	{
 		this.gstBufferList = gstBufferList;
+		this.ownedRef = ownedRef;
 	}
 
 

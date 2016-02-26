@@ -88,6 +88,7 @@ public class WidgetPath
 {
 	/** the main Gtk struct */
 	protected GtkWidgetPath* gtkWidgetPath;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkWidgetPath* getWidgetPathStruct()
@@ -104,9 +105,10 @@ public class WidgetPath
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkWidgetPath* gtkWidgetPath)
+	public this (GtkWidgetPath* gtkWidgetPath, bool ownedRef = false)
 	{
 		this.gtkWidgetPath = gtkWidgetPath;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

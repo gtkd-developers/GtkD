@@ -37,6 +37,7 @@ public class WidgetClass
 {
 	/** the main Gtk struct */
 	protected GtkWidgetClass* gtkWidgetClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkWidgetClass* getWidgetClassStruct()
@@ -53,9 +54,10 @@ public class WidgetClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkWidgetClass* gtkWidgetClass)
+	public this (GtkWidgetClass* gtkWidgetClass, bool ownedRef = false)
 	{
 		this.gtkWidgetClass = gtkWidgetClass;
+		this.ownedRef = ownedRef;
 	}
 
 

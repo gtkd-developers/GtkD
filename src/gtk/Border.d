@@ -40,6 +40,7 @@ public class Border
 {
 	/** the main Gtk struct */
 	protected GtkBorder* gtkBorder;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkBorder* getBorderStruct()
@@ -56,9 +57,10 @@ public class Border
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkBorder* gtkBorder)
+	public this (GtkBorder* gtkBorder, bool ownedRef = false)
 	{
 		this.gtkBorder = gtkBorder;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

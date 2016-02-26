@@ -44,6 +44,7 @@ public class SimpleXML
 {
 	/** the main Gtk struct */
 	protected GMarkupParseContext* gMarkupParseContext;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GMarkupParseContext* getSimpleXMLStruct()
@@ -60,9 +61,10 @@ public class SimpleXML
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GMarkupParseContext* gMarkupParseContext)
+	public this (GMarkupParseContext* gMarkupParseContext, bool ownedRef = false)
 	{
 		this.gMarkupParseContext = gMarkupParseContext;
+		this.ownedRef = ownedRef;
 	}
 
 

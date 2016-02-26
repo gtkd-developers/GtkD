@@ -48,6 +48,7 @@ public class Value
 {
 	/** the main Gtk struct */
 	protected GValue* gValue;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GValue* getValueStruct()
@@ -64,9 +65,10 @@ public class Value
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GValue* gValue)
+	public this (GValue* gValue, bool ownedRef = false)
 	{
 		this.gValue = gValue;
+		this.ownedRef = ownedRef;
 	}
 
 	/** */

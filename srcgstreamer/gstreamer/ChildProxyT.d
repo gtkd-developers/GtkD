@@ -158,7 +158,7 @@ public template ChildProxyT(TStruct)
 		
 		gst_child_proxy_get_property(getChildProxyStruct(), Str.toStringz(name), outvalue);
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
 	/**

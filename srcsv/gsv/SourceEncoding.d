@@ -36,6 +36,7 @@ public class SourceEncoding
 {
 	/** the main Gtk struct */
 	protected GtkSourceEncoding* gtkSourceEncoding;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkSourceEncoding* getSourceEncodingStruct()
@@ -52,9 +53,10 @@ public class SourceEncoding
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkSourceEncoding* gtkSourceEncoding)
+	public this (GtkSourceEncoding* gtkSourceEncoding, bool ownedRef = false)
 	{
 		this.gtkSourceEncoding = gtkSourceEncoding;
+		this.ownedRef = ownedRef;
 	}
 
 

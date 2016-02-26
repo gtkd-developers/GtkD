@@ -260,6 +260,7 @@ public class Variant
 {
 	/** the main Gtk struct */
 	protected GVariant* gVariant;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GVariant* getVariantStruct()
@@ -276,9 +277,10 @@ public class Variant
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GVariant* gVariant)
+	public this (GVariant* gVariant, bool ownedRef = false)
 	{
 		this.gVariant = gVariant;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

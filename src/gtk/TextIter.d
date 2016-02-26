@@ -47,6 +47,7 @@ public class TextIter
 {
 	/** the main Gtk struct */
 	protected GtkTextIter* gtkTextIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkTextIter* getTextIterStruct()
@@ -63,9 +64,10 @@ public class TextIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTextIter* gtkTextIter)
+	public this (GtkTextIter* gtkTextIter, bool ownedRef = false)
 	{
 		this.gtkTextIter = gtkTextIter;
+		this.ownedRef = ownedRef;
 	}
 
 	/** */
@@ -226,8 +228,8 @@ public class TextIter
 		
 		auto p = gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 		
-		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart);
-		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd);
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		
 		return p;
 	}
@@ -729,8 +731,8 @@ public class TextIter
 		
 		auto p = gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 		
-		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart);
-		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd);
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		
 		return p;
 	}
@@ -965,7 +967,7 @@ public class TextIter
 		
 		auto p = gtk_text_iter_get_attributes(gtkTextIter, outvalues) != 0;
 		
-		values = ObjectG.getDObject!(TextAttributes)(outvalues);
+		values = ObjectG.getDObject!(TextAttributes)(outvalues, true);
 		
 		return p;
 	}

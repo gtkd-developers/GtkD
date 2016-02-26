@@ -305,7 +305,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_tree_store_append(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct());
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_tree_store_insert(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), position);
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -361,7 +361,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_tree_store_insert_after(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -386,7 +386,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_tree_store_insert_before(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -416,7 +416,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_tree_store_insert_with_valuesv(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), position, columns.ptr, valuesArray.ptr, cast(int)values.length);
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -517,7 +517,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_tree_store_prepend(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct());
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**

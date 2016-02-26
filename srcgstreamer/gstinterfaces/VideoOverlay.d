@@ -316,6 +316,7 @@ public class VideoOverlay
 {
 	/** the main Gtk struct */
 	protected GstVideoOverlay* gstVideoOverlay;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstVideoOverlay* getVideoOverlayStruct()
@@ -332,9 +333,10 @@ public class VideoOverlay
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstVideoOverlay* gstVideoOverlay)
+	public this (GstVideoOverlay* gstVideoOverlay, bool ownedRef = false)
 	{
 		this.gstVideoOverlay = gstVideoOverlay;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

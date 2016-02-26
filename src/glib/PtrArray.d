@@ -36,6 +36,7 @@ public class PtrArray
 {
 	/** the main Gtk struct */
 	protected GPtrArray* gPtrArray;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GPtrArray* getPtrArrayStruct()
@@ -52,9 +53,10 @@ public class PtrArray
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GPtrArray* gPtrArray)
+	public this (GPtrArray* gPtrArray, bool ownedRef = false)
 	{
 		this.gPtrArray = gPtrArray;
+		this.ownedRef = ownedRef;
 	}
 
 

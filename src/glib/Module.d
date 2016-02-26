@@ -38,6 +38,7 @@ public class Module
 {
 	/** the main Gtk struct */
 	protected GModule* gModule;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GModule* getModuleStruct()
@@ -54,9 +55,10 @@ public class Module
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GModule* gModule)
+	public this (GModule* gModule, bool ownedRef = false)
 	{
 		this.gModule = gModule;
+		this.ownedRef = ownedRef;
 	}
 
 

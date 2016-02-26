@@ -35,6 +35,7 @@ public class TestSuite
 {
 	/** the main Gtk struct */
 	protected GTestSuite* gTestSuite;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTestSuite* getTestSuiteStruct()
@@ -51,9 +52,10 @@ public class TestSuite
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTestSuite* gTestSuite)
+	public this (GTestSuite* gTestSuite, bool ownedRef = false)
 	{
 		this.gTestSuite = gTestSuite;
+		this.ownedRef = ownedRef;
 	}
 
 

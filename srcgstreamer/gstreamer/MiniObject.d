@@ -60,6 +60,7 @@ public class MiniObject
 {
 	/** the main Gtk struct */
 	protected GstMiniObject* gstMiniObject;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstMiniObject* getMiniObjectStruct()
@@ -76,9 +77,10 @@ public class MiniObject
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstMiniObject* gstMiniObject)
+	public this (GstMiniObject* gstMiniObject, bool ownedRef = false)
 	{
 		this.gstMiniObject = gstMiniObject;
+		this.ownedRef = ownedRef;
 	}
 
 

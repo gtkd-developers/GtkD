@@ -42,6 +42,7 @@ public class PgGlyphString
 {
 	/** the main Gtk struct */
 	protected PangoGlyphString* pangoGlyphString;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoGlyphString* getPgGlyphStringStruct()
@@ -58,9 +59,10 @@ public class PgGlyphString
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoGlyphString* pangoGlyphString)
+	public this (PangoGlyphString* pangoGlyphString, bool ownedRef = false)
 	{
 		this.pangoGlyphString = pangoGlyphString;
+		this.ownedRef = ownedRef;
 	}
 
 

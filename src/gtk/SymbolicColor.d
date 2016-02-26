@@ -56,6 +56,7 @@ public class SymbolicColor
 {
 	/** the main Gtk struct */
 	protected GtkSymbolicColor* gtkSymbolicColor;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkSymbolicColor* getSymbolicColorStruct()
@@ -72,9 +73,10 @@ public class SymbolicColor
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkSymbolicColor* gtkSymbolicColor)
+	public this (GtkSymbolicColor* gtkSymbolicColor, bool ownedRef = false)
 	{
 		this.gtkSymbolicColor = gtkSymbolicColor;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()
@@ -292,7 +294,7 @@ public class SymbolicColor
 		
 		auto p = gtk_symbolic_color_resolve(gtkSymbolicColor, (props is null) ? null : props.getStylePropertiesStruct(), outresolvedColor) != 0;
 		
-		resolvedColor = ObjectG.getDObject!(RGBA)(outresolvedColor);
+		resolvedColor = ObjectG.getDObject!(RGBA)(outresolvedColor, true);
 		
 		return p;
 	}

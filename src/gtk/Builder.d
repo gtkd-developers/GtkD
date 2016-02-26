@@ -943,7 +943,7 @@ public bool valueFromString(ParamSpec pspec, string str, out Value value)
 		throw new GException( new ErrorG(err) );
 	}
 	
-	value = ObjectG.getDObject!(Value)(outvalue);
+	value = ObjectG.getDObject!(Value)(outvalue, true);
 	
 	return p;
 }
@@ -980,7 +980,7 @@ public bool valueFromStringType(GType type, string str, out Value value)
 		throw new GException( new ErrorG(err) );
 	}
 	
-	value = ObjectG.getDObject!(Value)(outvalue);
+	value = ObjectG.getDObject!(Value)(outvalue, true);
 	
 	return p;
 }

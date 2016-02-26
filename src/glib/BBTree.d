@@ -38,6 +38,7 @@ public class BBTree
 {
 	/** the main Gtk struct */
 	protected GTree* gTree;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTree* getBBTreeStruct()
@@ -54,9 +55,10 @@ public class BBTree
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTree* gTree)
+	public this (GTree* gTree, bool ownedRef = false)
 	{
 		this.gTree = gTree;
+		this.ownedRef = ownedRef;
 	}
 
 

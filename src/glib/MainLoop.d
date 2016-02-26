@@ -39,6 +39,7 @@ public class MainLoop
 {
 	/** the main Gtk struct */
 	protected GMainLoop* gMainLoop;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GMainLoop* getMainLoopStruct()
@@ -55,9 +56,10 @@ public class MainLoop
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GMainLoop* gMainLoop)
+	public this (GMainLoop* gMainLoop, bool ownedRef = false)
 	{
 		this.gMainLoop = gMainLoop;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -118,7 +118,7 @@ public class SourceCompletionContext : ObjectG
 		
 		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
 		
-		iter = ObjectG.getDObject!(TextIter)(outiter);
+		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 		
 		return p;
 	}

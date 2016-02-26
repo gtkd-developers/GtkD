@@ -66,6 +66,7 @@ public class Query
 {
 	/** the main Gtk struct */
 	protected GstQuery* gstQuery;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstQuery* getQueryStruct()
@@ -82,9 +83,10 @@ public class Query
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstQuery* gstQuery)
+	public this (GstQuery* gstQuery, bool ownedRef = false)
 	{
 		this.gstQuery = gstQuery;
+		this.ownedRef = ownedRef;
 	}
 
 	/**
@@ -927,7 +929,7 @@ public class Query
 		gst_query_parse_nth_allocation_param(gstQuery, index, &outallocator, outparams);
 		
 		allocator = ObjectG.getDObject!(Allocator)(outallocator);
-		params = ObjectG.getDObject!(AllocationParams)(outparams);
+		params = ObjectG.getDObject!(AllocationParams)(outparams, true);
 	}
 
 	/**

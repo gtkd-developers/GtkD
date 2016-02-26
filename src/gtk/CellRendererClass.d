@@ -33,6 +33,7 @@ public class CellRendererClass
 {
 	/** the main Gtk struct */
 	protected GtkCellRendererClass* gtkCellRendererClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkCellRendererClass* getCellRendererClassStruct()
@@ -49,9 +50,10 @@ public class CellRendererClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkCellRendererClass* gtkCellRendererClass)
+	public this (GtkCellRendererClass* gtkCellRendererClass, bool ownedRef = false)
 	{
 		this.gtkCellRendererClass = gtkCellRendererClass;
+		this.ownedRef = ownedRef;
 	}
 
 

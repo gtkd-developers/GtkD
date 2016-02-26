@@ -55,6 +55,7 @@ public class WeakRef
 {
 	/** the main Gtk struct */
 	protected GWeakRef* gWeakRef;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GWeakRef* getWeakRefStruct()
@@ -71,9 +72,10 @@ public class WeakRef
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GWeakRef* gWeakRef)
+	public this (GWeakRef* gWeakRef, bool ownedRef = false)
 	{
 		this.gWeakRef = gWeakRef;
+		this.ownedRef = ownedRef;
 	}
 
 	/** */

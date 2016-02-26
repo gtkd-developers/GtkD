@@ -36,6 +36,7 @@ public class AllocationParams
 {
 	/** the main Gtk struct */
 	protected GstAllocationParams* gstAllocationParams;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstAllocationParams* getAllocationParamsStruct()
@@ -52,9 +53,10 @@ public class AllocationParams
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstAllocationParams* gstAllocationParams)
+	public this (GstAllocationParams* gstAllocationParams, bool ownedRef = false)
 	{
 		this.gstAllocationParams = gstAllocationParams;
+		this.ownedRef = ownedRef;
 	}
 
 

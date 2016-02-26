@@ -51,6 +51,7 @@ public class Private
 {
 	/** the main Gtk struct */
 	protected GPrivate* gPrivate;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GPrivate* getPrivateStruct()
@@ -67,9 +68,10 @@ public class Private
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GPrivate* gPrivate)
+	public this (GPrivate* gPrivate, bool ownedRef = false)
 	{
 		this.gPrivate = gPrivate;
+		this.ownedRef = ownedRef;
 	}
 
 

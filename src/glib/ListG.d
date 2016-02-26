@@ -36,6 +36,7 @@ public class ListG
 {
 	/** the main Gtk struct */
 	protected GList* gList;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GList* getListGStruct()
@@ -52,9 +53,10 @@ public class ListG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GList* gList)
+	public this (GList* gList, bool ownedRef = false)
 	{
 		this.gList = gList;
+		this.ownedRef = ownedRef;
 	}
 
 	/** */

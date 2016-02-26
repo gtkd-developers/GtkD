@@ -45,6 +45,7 @@ public class IconSet
 {
 	/** the main Gtk struct */
 	protected GtkIconSet* gtkIconSet;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkIconSet* getIconSetStruct()
@@ -61,9 +62,10 @@ public class IconSet
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkIconSet* gtkIconSet)
+	public this (GtkIconSet* gtkIconSet, bool ownedRef = false)
 	{
 		this.gtkIconSet = gtkIconSet;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

@@ -43,6 +43,7 @@ public class TreeRowReference
 {
 	/** the main Gtk struct */
 	protected GtkTreeRowReference* gtkTreeRowReference;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkTreeRowReference* getTreeRowReferenceStruct()
@@ -59,9 +60,10 @@ public class TreeRowReference
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkTreeRowReference* gtkTreeRowReference)
+	public this (GtkTreeRowReference* gtkTreeRowReference, bool ownedRef = false)
 	{
 		this.gtkTreeRowReference = gtkTreeRowReference;
+		this.ownedRef = ownedRef;
 	}
 
 

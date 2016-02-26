@@ -38,6 +38,7 @@ public class StringChunk
 {
 	/** the main Gtk struct */
 	protected GStringChunk* gStringChunk;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GStringChunk* getStringChunkStruct()
@@ -54,9 +55,10 @@ public class StringChunk
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GStringChunk* gStringChunk)
+	public this (GStringChunk* gStringChunk, bool ownedRef = false)
 	{
 		this.gStringChunk = gStringChunk;
+		this.ownedRef = ownedRef;
 	}
 
 

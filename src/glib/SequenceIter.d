@@ -37,6 +37,7 @@ public class SequenceIter
 {
 	/** the main Gtk struct */
 	protected GSequenceIter* gSequenceIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GSequenceIter* getSequenceIterStruct()
@@ -53,9 +54,10 @@ public class SequenceIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GSequenceIter* gSequenceIter)
+	public this (GSequenceIter* gSequenceIter, bool ownedRef = false)
 	{
 		this.gSequenceIter = gSequenceIter;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -43,6 +43,7 @@ public class IOChannel
 {
 	/** the main Gtk struct */
 	protected GIOChannel* gIOChannel;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GIOChannel* getIOChannelStruct()
@@ -59,9 +60,10 @@ public class IOChannel
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GIOChannel* gIOChannel)
+	public this (GIOChannel* gIOChannel, bool ownedRef = false)
 	{
 		this.gIOChannel = gIOChannel;
+		this.ownedRef = ownedRef;
 	}
 
 

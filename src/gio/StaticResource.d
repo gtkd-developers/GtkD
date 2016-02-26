@@ -38,6 +38,7 @@ public class StaticResource
 {
 	/** the main Gtk struct */
 	protected GStaticResource* gStaticResource;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GStaticResource* getStaticResourceStruct()
@@ -54,9 +55,10 @@ public class StaticResource
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GStaticResource* gStaticResource)
+	public this (GStaticResource* gStaticResource, bool ownedRef = false)
 	{
 		this.gStaticResource = gStaticResource;
+		this.ownedRef = ownedRef;
 	}
 
 

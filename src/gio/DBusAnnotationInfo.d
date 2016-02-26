@@ -39,6 +39,7 @@ public class DBusAnnotationInfo
 {
 	/** the main Gtk struct */
 	protected GDBusAnnotationInfo* gDBusAnnotationInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDBusAnnotationInfo* getDBusAnnotationInfoStruct()
@@ -55,9 +56,10 @@ public class DBusAnnotationInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDBusAnnotationInfo* gDBusAnnotationInfo)
+	public this (GDBusAnnotationInfo* gDBusAnnotationInfo, bool ownedRef = false)
 	{
 		this.gDBusAnnotationInfo = gDBusAnnotationInfo;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

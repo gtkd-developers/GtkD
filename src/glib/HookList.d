@@ -35,6 +35,7 @@ public class HookList
 {
 	/** the main Gtk struct */
 	protected GHookList* gHookList;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GHookList* getHookListStruct()
@@ -51,9 +52,10 @@ public class HookList
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GHookList* gHookList)
+	public this (GHookList* gHookList, bool ownedRef = false)
 	{
 		this.gHookList = gHookList;
+		this.ownedRef = ownedRef;
 	}
 
 

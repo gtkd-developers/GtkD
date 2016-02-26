@@ -39,6 +39,7 @@ public class TypeInterface
 {
 	/** the main Gtk struct */
 	protected GTypeInterface* gTypeInterface;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTypeInterface* getTypeInterfaceStruct()
@@ -55,9 +56,10 @@ public class TypeInterface
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTypeInterface* gTypeInterface)
+	public this (GTypeInterface* gTypeInterface, bool ownedRef = false)
 	{
 		this.gTypeInterface = gTypeInterface;
+		this.ownedRef = ownedRef;
 	}
 
 

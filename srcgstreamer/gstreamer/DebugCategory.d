@@ -37,6 +37,7 @@ public class DebugCategory
 {
 	/** the main Gtk struct */
 	protected GstDebugCategory* gstDebugCategory;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstDebugCategory* getDebugCategoryStruct()
@@ -53,9 +54,10 @@ public class DebugCategory
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstDebugCategory* gstDebugCategory)
+	public this (GstDebugCategory* gstDebugCategory, bool ownedRef = false)
 	{
 		this.gstDebugCategory = gstDebugCategory;
+		this.ownedRef = ownedRef;
 	}
 
 

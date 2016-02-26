@@ -45,6 +45,7 @@ public class VariantBuilder
 {
 	/** the main Gtk struct */
 	protected GVariantBuilder* gVariantBuilder;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GVariantBuilder* getVariantBuilderStruct()
@@ -61,9 +62,10 @@ public class VariantBuilder
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GVariantBuilder* gVariantBuilder)
+	public this (GVariantBuilder* gVariantBuilder, bool ownedRef = false)
 	{
 		this.gVariantBuilder = gVariantBuilder;
+		this.ownedRef = ownedRef;
 	}
 
 

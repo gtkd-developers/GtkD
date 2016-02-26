@@ -39,6 +39,7 @@ public class HashTable
 {
 	/** the main Gtk struct */
 	protected GHashTable* gHashTable;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GHashTable* getHashTableStruct()
@@ -55,9 +56,10 @@ public class HashTable
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GHashTable* gHashTable)
+	public this (GHashTable* gHashTable, bool ownedRef = false)
 	{
 		this.gHashTable = gHashTable;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -62,6 +62,7 @@ public class Message
 {
 	/** the main Gtk struct */
 	protected GstMessage* gstMessage;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstMessage* getMessageStruct()
@@ -78,9 +79,10 @@ public class Message
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstMessage* gstMessage)
+	public this (GstMessage* gstMessage, bool ownedRef = false)
 	{
 		this.gstMessage = gstMessage;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

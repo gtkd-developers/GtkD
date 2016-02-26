@@ -39,6 +39,7 @@ public class StaticCaps
 {
 	/** the main Gtk struct */
 	protected GstStaticCaps* gstStaticCaps;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstStaticCaps* getStaticCapsStruct()
@@ -55,9 +56,10 @@ public class StaticCaps
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstStaticCaps* gstStaticCaps)
+	public this (GstStaticCaps* gstStaticCaps, bool ownedRef = false)
 	{
 		this.gstStaticCaps = gstStaticCaps;
+		this.ownedRef = ownedRef;
 	}
 
 

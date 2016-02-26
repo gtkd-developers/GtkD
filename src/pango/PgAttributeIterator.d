@@ -46,6 +46,7 @@ public class PgAttributeIterator
 {
 	/** the main Gtk struct */
 	protected PangoAttrIterator* pangoAttrIterator;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoAttrIterator* getPgAttributeIteratorStruct()
@@ -62,9 +63,10 @@ public class PgAttributeIterator
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttrIterator* pangoAttrIterator)
+	public this (PangoAttrIterator* pangoAttrIterator, bool ownedRef = false)
 	{
 		this.pangoAttrIterator = pangoAttrIterator;
+		this.ownedRef = ownedRef;
 	}
 
 

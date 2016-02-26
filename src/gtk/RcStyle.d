@@ -367,7 +367,7 @@ public class RcStyle : ObjectG
 		
 		auto p = gtk_rc_parse_color((scanner is null) ? null : scanner.getScannerGStruct(), outcolor);
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 		
 		return p;
 	}
@@ -396,7 +396,7 @@ public class RcStyle : ObjectG
 		
 		auto p = gtk_rc_parse_color_full((scanner is null) ? null : scanner.getScannerGStruct(), (style is null) ? null : style.getRcStyleStruct(), outcolor);
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 		
 		return p;
 	}

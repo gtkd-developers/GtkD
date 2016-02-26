@@ -43,6 +43,7 @@ public class DBusInterfaceInfo
 {
 	/** the main Gtk struct */
 	protected GDBusInterfaceInfo* gDBusInterfaceInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDBusInterfaceInfo* getDBusInterfaceInfoStruct()
@@ -59,9 +60,10 @@ public class DBusInterfaceInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDBusInterfaceInfo* gDBusInterfaceInfo)
+	public this (GDBusInterfaceInfo* gDBusInterfaceInfo, bool ownedRef = false)
 	{
 		this.gDBusInterfaceInfo = gDBusInterfaceInfo;
+		this.ownedRef = ownedRef;
 	}
 
 
@@ -122,7 +124,7 @@ public class DBusInterfaceInfo
 		
 		g_dbus_interface_info_generate_xml(gDBusInterfaceInfo, indent, outstringBuilder);
 		
-		stringBuilder = new StringG(outstringBuilder);
+		stringBuilder = new StringG(outstringBuilder, true);
 	}
 
 	/**

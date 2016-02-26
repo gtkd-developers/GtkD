@@ -39,6 +39,7 @@ public class IOExtension
 {
 	/** the main Gtk struct */
 	protected GIOExtension* gIOExtension;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GIOExtension* getIOExtensionStruct()
@@ -55,9 +56,10 @@ public class IOExtension
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GIOExtension* gIOExtension)
+	public this (GIOExtension* gIOExtension, bool ownedRef = false)
 	{
 		this.gIOExtension = gIOExtension;
+		this.ownedRef = ownedRef;
 	}
 
 

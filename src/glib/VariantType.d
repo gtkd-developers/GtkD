@@ -180,6 +180,7 @@ public class VariantType
 {
 	/** the main Gtk struct */
 	protected GVariantType* gVariantType;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GVariantType* getVariantTypeStruct()
@@ -196,9 +197,10 @@ public class VariantType
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GVariantType* gVariantType)
+	public this (GVariantType* gVariantType, bool ownedRef = false)
 	{
 		this.gVariantType = gVariantType;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

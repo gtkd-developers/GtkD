@@ -38,6 +38,7 @@ public class ErrorG
 {
 	/** the main Gtk struct */
 	protected GError* gError;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GError* getErrorGStruct()
@@ -54,9 +55,10 @@ public class ErrorG
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GError* gError)
+	public this (GError* gError, bool ownedRef = false)
 	{
 		this.gError = gError;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -38,6 +38,7 @@ public class Sequence
 {
 	/** the main Gtk struct */
 	protected GSequence* gSequence;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GSequence* getSequenceStruct()
@@ -54,9 +55,10 @@ public class Sequence
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GSequence* gSequence)
+	public this (GSequence* gSequence, bool ownedRef = false)
 	{
 		this.gSequence = gSequence;
+		this.ownedRef = ownedRef;
 	}
 
 

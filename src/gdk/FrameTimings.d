@@ -41,6 +41,7 @@ public class FrameTimings
 {
 	/** the main Gtk struct */
 	protected GdkFrameTimings* gdkFrameTimings;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GdkFrameTimings* getFrameTimingsStruct()
@@ -57,9 +58,10 @@ public class FrameTimings
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GdkFrameTimings* gdkFrameTimings)
+	public this (GdkFrameTimings* gdkFrameTimings, bool ownedRef = false)
 	{
 		this.gdkFrameTimings = gdkFrameTimings;
+		this.ownedRef = ownedRef;
 	}
 
 

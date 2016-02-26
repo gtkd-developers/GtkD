@@ -41,6 +41,7 @@ public class Hmac
 {
 	/** the main Gtk struct */
 	protected GHmac* gHmac;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GHmac* getHmacStruct()
@@ -57,9 +58,10 @@ public class Hmac
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GHmac* gHmac)
+	public this (GHmac* gHmac, bool ownedRef = false)
 	{
 		this.gHmac = gHmac;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

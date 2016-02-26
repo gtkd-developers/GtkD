@@ -38,6 +38,7 @@ public class DBusMethodInfo
 {
 	/** the main Gtk struct */
 	protected GDBusMethodInfo* gDBusMethodInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDBusMethodInfo* getDBusMethodInfoStruct()
@@ -54,9 +55,10 @@ public class DBusMethodInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDBusMethodInfo* gDBusMethodInfo)
+	public this (GDBusMethodInfo* gDBusMethodInfo, bool ownedRef = false)
 	{
 		this.gDBusMethodInfo = gDBusMethodInfo;
+		this.ownedRef = ownedRef;
 	}
 
 

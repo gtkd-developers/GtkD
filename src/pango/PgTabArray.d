@@ -38,6 +38,7 @@ public class PgTabArray
 {
 	/** the main Gtk struct */
 	protected PangoTabArray* pangoTabArray;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoTabArray* getPgTabArrayStruct()
@@ -54,9 +55,10 @@ public class PgTabArray
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoTabArray* pangoTabArray)
+	public this (PangoTabArray* pangoTabArray, bool ownedRef = false)
 	{
 		this.pangoTabArray = pangoTabArray;
+		this.ownedRef = ownedRef;
 	}
 
 

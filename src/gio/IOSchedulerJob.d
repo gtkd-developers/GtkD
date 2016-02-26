@@ -36,6 +36,7 @@ public class IOSchedulerJob
 {
 	/** the main Gtk struct */
 	protected GIOSchedulerJob* gIOSchedulerJob;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GIOSchedulerJob* getIOSchedulerJobStruct()
@@ -52,9 +53,10 @@ public class IOSchedulerJob
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GIOSchedulerJob* gIOSchedulerJob)
+	public this (GIOSchedulerJob* gIOSchedulerJob, bool ownedRef = false)
 	{
 		this.gIOSchedulerJob = gIOSchedulerJob;
+		this.ownedRef = ownedRef;
 	}
 
 

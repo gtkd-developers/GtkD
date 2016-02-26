@@ -95,6 +95,7 @@ public class RWLock
 {
 	/** the main Gtk struct */
 	protected GRWLock* gRWLock;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GRWLock* getRWLockStruct()
@@ -111,9 +112,10 @@ public class RWLock
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GRWLock* gRWLock)
+	public this (GRWLock* gRWLock, bool ownedRef = false)
 	{
 		this.gRWLock = gRWLock;
+		this.ownedRef = ownedRef;
 	}
 
 

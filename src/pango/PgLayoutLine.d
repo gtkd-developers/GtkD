@@ -43,6 +43,7 @@ public class PgLayoutLine
 {
 	/** the main Gtk struct */
 	protected PangoLayoutLine* pangoLayoutLine;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoLayoutLine* getPgLayoutLineStruct()
@@ -59,9 +60,10 @@ public class PgLayoutLine
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoLayoutLine* pangoLayoutLine)
+	public this (PangoLayoutLine* pangoLayoutLine, bool ownedRef = false)
 	{
 		this.pangoLayoutLine = pangoLayoutLine;
+		this.ownedRef = ownedRef;
 	}
 
 

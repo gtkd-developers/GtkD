@@ -42,6 +42,7 @@ public class Color
 {
 	/** the main Gtk struct */
 	protected GdkColor* gdkColor;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GdkColor* getColorStruct()
@@ -58,9 +59,10 @@ public class Color
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GdkColor* gdkColor)
+	public this (GdkColor* gdkColor, bool ownedRef = false)
 	{
 		this.gdkColor = gdkColor;
+		this.ownedRef = ownedRef;
 	}
 
 	/**
@@ -269,7 +271,7 @@ public class Color
 		
 		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 		
 		return p;
 	}

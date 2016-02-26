@@ -494,7 +494,7 @@ public class FileInfo : ObjectG
 		
 		g_file_info_get_modification_time(gFileInfo, outresult);
 		
-		result = new TimeVal(outresult);
+		result = new TimeVal(outresult, true);
 	}
 
 	/**

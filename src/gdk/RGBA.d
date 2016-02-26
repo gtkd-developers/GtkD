@@ -40,6 +40,7 @@ public class RGBA
 {
 	/** the main Gtk struct */
 	protected GdkRGBA* gdkRGBA;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GdkRGBA* getRGBAStruct()
@@ -56,13 +57,12 @@ public class RGBA
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GdkRGBA* gdkRGBA)
+	public this (GdkRGBA* gdkRGBA, bool ownedRef = false)
 	{
 		this.gdkRGBA = gdkRGBA;
+		this.ownedRef = ownedRef;
 	}
 
-	bool ownedRef = false;
-	
 	/**
 	 * Creates a new RGBA Color
 	 */
@@ -70,9 +70,7 @@ public class RGBA
 	{
 		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
 		
-		this(gdk_rgba_copy(&rgba));
-		
-		ownedRef = true;
+		this(gdk_rgba_copy(&rgba), true);
 	}
 	
 	/** ditto */
@@ -85,9 +83,7 @@ public class RGBA
 		rgba.blue = blue;
 		rgba.alpha = alpha;
 		
-		this(gdk_rgba_copy(&rgba));
-		
-		ownedRef = true;
+		this(gdk_rgba_copy(&rgba), true);
 	}
 	
 	~this ()

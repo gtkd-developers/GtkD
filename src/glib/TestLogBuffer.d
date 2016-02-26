@@ -35,6 +35,7 @@ public class TestLogBuffer
 {
 	/** the main Gtk struct */
 	protected GTestLogBuffer* gTestLogBuffer;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTestLogBuffer* getTestLogBufferStruct()
@@ -51,9 +52,10 @@ public class TestLogBuffer
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTestLogBuffer* gTestLogBuffer)
+	public this (GTestLogBuffer* gTestLogBuffer, bool ownedRef = false)
 	{
 		this.gTestLogBuffer = gTestLogBuffer;
+		this.ownedRef = ownedRef;
 	}
 
 

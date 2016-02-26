@@ -40,6 +40,7 @@ public class MatchInfo
 {
 	/** the main Gtk struct */
 	protected GMatchInfo* gMatchInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GMatchInfo* getMatchInfoStruct()
@@ -56,9 +57,10 @@ public class MatchInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GMatchInfo* gMatchInfo)
+	public this (GMatchInfo* gMatchInfo, bool ownedRef = false)
 	{
 		this.gMatchInfo = gMatchInfo;
+		this.ownedRef = ownedRef;
 	}
 
 

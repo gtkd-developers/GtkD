@@ -310,7 +310,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 		
 		auto p = gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), outrequisition) != 0;
 		
-		requisition = ObjectG.getDObject!(Requisition)(outrequisition);
+		requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		
 		return p;
 	}

@@ -128,8 +128,8 @@ public class SourceSearchContext : ObjectG
 		
 		auto p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 		
-		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart);
-		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd);
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		
 		return p;
 	}
@@ -183,8 +183,8 @@ public class SourceSearchContext : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart);
-		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd);
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		
 		return p;
 	}
@@ -210,8 +210,8 @@ public class SourceSearchContext : ObjectG
 		
 		auto p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 		
-		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart);
-		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd);
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		
 		return p;
 	}
@@ -265,8 +265,8 @@ public class SourceSearchContext : ObjectG
 			throw new GException( new ErrorG(err) );
 		}
 		
-		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart);
-		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd);
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		
 		return p;
 	}

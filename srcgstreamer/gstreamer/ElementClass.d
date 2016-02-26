@@ -40,6 +40,7 @@ public class ElementClass
 {
 	/** the main Gtk struct */
 	protected GstElementClass* gstElementClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstElementClass* getElementClassStruct()
@@ -56,9 +57,10 @@ public class ElementClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstElementClass* gstElementClass)
+	public this (GstElementClass* gstElementClass, bool ownedRef = false)
 	{
 		this.gstElementClass = gstElementClass;
+		this.ownedRef = ownedRef;
 	}
 
 

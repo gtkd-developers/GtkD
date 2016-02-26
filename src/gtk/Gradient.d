@@ -59,6 +59,7 @@ public class Gradient
 {
 	/** the main Gtk struct */
 	protected GtkGradient* gtkGradient;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkGradient* getGradientStruct()
@@ -75,9 +76,10 @@ public class Gradient
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkGradient* gtkGradient)
+	public this (GtkGradient* gtkGradient, bool ownedRef = false)
 	{
 		this.gtkGradient = gtkGradient;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

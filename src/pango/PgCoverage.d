@@ -39,6 +39,7 @@ public class PgCoverage
 {
 	/** the main Gtk struct */
 	protected PangoCoverage* pangoCoverage;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoCoverage* getPgCoverageStruct()
@@ -55,9 +56,10 @@ public class PgCoverage
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoCoverage* pangoCoverage)
+	public this (PangoCoverage* pangoCoverage, bool ownedRef = false)
 	{
 		this.pangoCoverage = pangoCoverage;
+		this.ownedRef = ownedRef;
 	}
 
 

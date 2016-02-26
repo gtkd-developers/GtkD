@@ -43,6 +43,7 @@ public class OptionGroup
 {
 	/** the main Gtk struct */
 	protected GOptionGroup* gOptionGroup;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GOptionGroup* getOptionGroupStruct()
@@ -59,9 +60,10 @@ public class OptionGroup
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GOptionGroup* gOptionGroup)
+	public this (GOptionGroup* gOptionGroup, bool ownedRef = false)
 	{
 		this.gOptionGroup = gOptionGroup;
+		this.ownedRef = ownedRef;
 	}
 
 

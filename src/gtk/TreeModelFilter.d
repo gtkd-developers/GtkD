@@ -210,7 +210,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 		
 		auto p = gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, outfilterIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 		
-		filterIter = ObjectG.getDObject!(TreeIter)(outfilterIter);
+		filterIter = ObjectG.getDObject!(TreeIter)(outfilterIter, true);
 		
 		return p;
 	}
@@ -256,7 +256,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 		
 		gtk_tree_model_filter_convert_iter_to_child_iter(gtkTreeModelFilter, outchildIter, (filterIter is null) ? null : filterIter.getTreeIterStruct());
 		
-		childIter = ObjectG.getDObject!(TreeIter)(outchildIter);
+		childIter = ObjectG.getDObject!(TreeIter)(outchildIter, true);
 	}
 
 	/**

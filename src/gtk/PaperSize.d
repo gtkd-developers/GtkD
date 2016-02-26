@@ -52,6 +52,7 @@ public class PaperSize
 {
 	/** the main Gtk struct */
 	protected GtkPaperSize* gtkPaperSize;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkPaperSize* getPaperSizeStruct()
@@ -68,9 +69,10 @@ public class PaperSize
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkPaperSize* gtkPaperSize)
+	public this (GtkPaperSize* gtkPaperSize, bool ownedRef = false)
 	{
 		this.gtkPaperSize = gtkPaperSize;
+		this.ownedRef = ownedRef;
 	}
 
 

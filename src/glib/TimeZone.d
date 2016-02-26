@@ -40,6 +40,7 @@ public class TimeZone
 {
 	/** the main Gtk struct */
 	protected GTimeZone* gTimeZone;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GTimeZone* getTimeZoneStruct()
@@ -56,9 +57,10 @@ public class TimeZone
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GTimeZone* gTimeZone)
+	public this (GTimeZone* gTimeZone, bool ownedRef = false)
 	{
 		this.gTimeZone = gTimeZone;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -40,6 +40,7 @@ public class BookmarkFile
 {
 	/** the main Gtk struct */
 	protected GBookmarkFile* gBookmarkFile;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GBookmarkFile* getBookmarkFileStruct()
@@ -56,9 +57,10 @@ public class BookmarkFile
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GBookmarkFile* gBookmarkFile)
+	public this (GBookmarkFile* gBookmarkFile, bool ownedRef = false)
 	{
 		this.gBookmarkFile = gBookmarkFile;
+		this.ownedRef = ownedRef;
 	}
 
 

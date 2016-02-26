@@ -120,7 +120,7 @@ public class SourceMarkAttributes : ObjectG
 		
 		auto p = gtk_source_mark_attributes_get_background(gtkSourceMarkAttributes, outbackground) != 0;
 		
-		background = ObjectG.getDObject!(RGBA)(outbackground);
+		background = ObjectG.getDObject!(RGBA)(outbackground, true);
 		
 		return p;
 	}

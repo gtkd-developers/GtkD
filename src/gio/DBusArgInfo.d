@@ -38,6 +38,7 @@ public class DBusArgInfo
 {
 	/** the main Gtk struct */
 	protected GDBusArgInfo* gDBusArgInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GDBusArgInfo* getDBusArgInfoStruct()
@@ -54,9 +55,10 @@ public class DBusArgInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GDBusArgInfo* gDBusArgInfo)
+	public this (GDBusArgInfo* gDBusArgInfo, bool ownedRef = false)
 	{
 		this.gDBusArgInfo = gDBusArgInfo;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -46,6 +46,7 @@ public class PgAttribute
 {
 	/** the main Gtk struct */
 	protected PangoAttribute* pangoAttribute;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoAttribute* getPgAttributeStruct()
@@ -62,9 +63,10 @@ public class PgAttribute
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttribute* pangoAttribute)
+	public this (PangoAttribute* pangoAttribute, bool ownedRef = false)
 	{
 		this.pangoAttribute = pangoAttribute;
+		this.ownedRef = ownedRef;
 	}
 
 	protected void setStruct(GObject* obj)

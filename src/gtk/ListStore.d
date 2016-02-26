@@ -330,7 +330,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_list_store_append(gtkListStore, outiter);
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_list_store_insert(gtkListStore, outiter, position);
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -377,7 +377,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_list_store_insert_after(gtkListStore, outiter, (sibling is null) ? null : sibling.getTreeIterStruct());
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -396,7 +396,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_list_store_insert_before(gtkListStore, outiter, (sibling is null) ? null : sibling.getTreeIterStruct());
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -426,7 +426,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_list_store_insert_with_valuesv(gtkListStore, outiter, position, columns.ptr, valuesArray.ptr, cast(int)values.length);
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**
@@ -493,7 +493,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		
 		gtk_list_store_prepend(gtkListStore, outiter);
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
 	/**

@@ -2122,7 +2122,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			
 			gtk_widget_get_child_requisition(gtkWidget, outrequisition);
 			
-			requisition = ObjectG.getDObject!(Requisition)(outrequisition);
+			requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		}
 
 		/**
@@ -2835,8 +2835,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			
 			gtk_widget_get_preferred_size(gtkWidget, outminimumSize, outnaturalSize);
 			
-			minimumSize = ObjectG.getDObject!(Requisition)(outminimumSize);
-			naturalSize = ObjectG.getDObject!(Requisition)(outnaturalSize);
+			minimumSize = ObjectG.getDObject!(Requisition)(outminimumSize, true);
+			naturalSize = ObjectG.getDObject!(Requisition)(outnaturalSize, true);
 		}
 
 		/**
@@ -2955,7 +2955,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			
 			gtk_widget_get_requisition(gtkWidget, outrequisition);
 			
-			requisition = ObjectG.getDObject!(Requisition)(outrequisition);
+			requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		}
 
 		/**
@@ -5708,7 +5708,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			
 			gtk_widget_size_request(gtkWidget, outrequisition);
 			
-			requisition = ObjectG.getDObject!(Requisition)(outrequisition);
+			requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		}
 
 		/**

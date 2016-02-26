@@ -41,6 +41,7 @@ public class PgFontMetrics
 {
 	/** the main Gtk struct */
 	protected PangoFontMetrics* pangoFontMetrics;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoFontMetrics* getPgFontMetricsStruct()
@@ -57,9 +58,10 @@ public class PgFontMetrics
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoFontMetrics* pangoFontMetrics)
+	public this (PangoFontMetrics* pangoFontMetrics, bool ownedRef = false)
 	{
 		this.pangoFontMetrics = pangoFontMetrics;
+		this.ownedRef = ownedRef;
 	}
 
 

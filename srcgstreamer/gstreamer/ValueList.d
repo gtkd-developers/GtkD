@@ -82,7 +82,7 @@ public class ValueList
 		
 		gst_value_list_concat(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
 		
-		dest = ObjectG.getDObject!(Value)(outdest);
+		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class ValueList
 		
 		gst_value_list_merge(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
 		
-		dest = ObjectG.getDObject!(Value)(outdest);
+		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
 	/**

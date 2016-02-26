@@ -39,6 +39,7 @@ public class TypeFind
 {
 	/** the main Gtk struct */
 	protected GstTypeFind* gstTypeFind;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstTypeFind* getTypeFindStruct()
@@ -55,9 +56,10 @@ public class TypeFind
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstTypeFind* gstTypeFind)
+	public this (GstTypeFind* gstTypeFind, bool ownedRef = false)
 	{
 		this.gstTypeFind = gstTypeFind;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

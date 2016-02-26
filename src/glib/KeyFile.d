@@ -40,6 +40,7 @@ public class KeyFile
 {
 	/** the main Gtk struct */
 	protected GKeyFile* gKeyFile;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GKeyFile* getKeyFileStruct()
@@ -56,9 +57,10 @@ public class KeyFile
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GKeyFile* gKeyFile)
+	public this (GKeyFile* gKeyFile, bool ownedRef = false)
 	{
 		this.gKeyFile = gKeyFile;
+		this.ownedRef = ownedRef;
 	}
 
 

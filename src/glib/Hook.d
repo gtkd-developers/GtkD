@@ -36,6 +36,7 @@ public class Hook
 {
 	/** the main Gtk struct */
 	protected GHook* gHook;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GHook* getHookStruct()
@@ -52,9 +53,10 @@ public class Hook
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GHook* gHook)
+	public this (GHook* gHook, bool ownedRef = false)
 	{
 		this.gHook = gHook;
+		this.ownedRef = ownedRef;
 	}
 
 

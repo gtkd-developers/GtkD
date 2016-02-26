@@ -42,6 +42,7 @@ public class Checksum
 {
 	/** the main Gtk struct */
 	protected GChecksum* gChecksum;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GChecksum* getChecksumStruct()
@@ -58,9 +59,10 @@ public class Checksum
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GChecksum* gChecksum)
+	public this (GChecksum* gChecksum, bool ownedRef = false)
 	{
 		this.gChecksum = gChecksum;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

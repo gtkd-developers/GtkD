@@ -45,6 +45,7 @@ public class TagList
 {
 	/** the main Gtk struct */
 	protected GstTagList* gstTagList;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstTagList* getTagListStruct()
@@ -61,9 +62,10 @@ public class TagList
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstTagList* gstTagList)
+	public this (GstTagList* gstTagList, bool ownedRef = false)
 	{
 		this.gstTagList = gstTagList;
+		this.ownedRef = ownedRef;
 	}
 
 
@@ -900,7 +902,7 @@ public class TagList
 		
 		auto p = gst_tag_list_copy_value(outdest, (list is null) ? null : list.getTagListStruct(), Str.toStringz(tag)) != 0;
 		
-		dest = ObjectG.getDObject!(Value)(outdest);
+		dest = ObjectG.getDObject!(Value)(outdest, true);
 		
 		return p;
 	}
@@ -988,7 +990,7 @@ public class TagList
 		
 		gst_tag_merge_strings_with_comma(outdest, (src is null) ? null : src.getValueStruct());
 		
-		dest = ObjectG.getDObject!(Value)(outdest);
+		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
 	/**
@@ -1005,7 +1007,7 @@ public class TagList
 		
 		gst_tag_merge_use_first(outdest, (src is null) ? null : src.getValueStruct());
 		
-		dest = ObjectG.getDObject!(Value)(outdest);
+		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
 	/**

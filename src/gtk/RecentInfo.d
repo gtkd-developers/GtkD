@@ -52,6 +52,7 @@ public class RecentInfo
 {
 	/** the main Gtk struct */
 	protected GtkRecentInfo* gtkRecentInfo;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkRecentInfo* getRecentInfoStruct()
@@ -68,9 +69,10 @@ public class RecentInfo
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkRecentInfo* gtkRecentInfo)
+	public this (GtkRecentInfo* gtkRecentInfo, bool ownedRef = false)
 	{
 		this.gtkRecentInfo = gtkRecentInfo;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

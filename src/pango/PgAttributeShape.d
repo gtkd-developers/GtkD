@@ -61,10 +61,10 @@ public class PgAttributeShape : PgAttribute
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttrShape* pangoAttrShape)
+	public this (PangoAttrShape* pangoAttrShape, bool ownedRef = false)
 	{
 		this.pangoAttrShape = pangoAttrShape;
-		super(cast(PangoAttribute*)pangoAttrShape);
+		super(cast(PangoAttribute*)pangoAttrShape, ownedRef);
 	}
 
 

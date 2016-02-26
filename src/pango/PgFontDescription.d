@@ -41,6 +41,7 @@ public class PgFontDescription
 {
 	/** the main Gtk struct */
 	protected PangoFontDescription* pangoFontDescription;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoFontDescription* getPgFontDescriptionStruct()
@@ -57,9 +58,10 @@ public class PgFontDescription
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoFontDescription* pangoFontDescription)
+	public this (PangoFontDescription* pangoFontDescription, bool ownedRef = false)
 	{
 		this.pangoFontDescription = pangoFontDescription;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

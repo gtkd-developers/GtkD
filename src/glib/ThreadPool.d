@@ -40,6 +40,7 @@ public class ThreadPool
 {
 	/** the main Gtk struct */
 	protected GThreadPool* gThreadPool;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GThreadPool* getThreadPoolStruct()
@@ -56,9 +57,10 @@ public class ThreadPool
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GThreadPool* gThreadPool)
+	public this (GThreadPool* gThreadPool, bool ownedRef = false)
 	{
 		this.gThreadPool = gThreadPool;
+		this.ownedRef = ownedRef;
 	}
 
 

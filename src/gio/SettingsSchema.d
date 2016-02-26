@@ -131,6 +131,7 @@ public class SettingsSchema
 {
 	/** the main Gtk struct */
 	protected GSettingsSchema* gSettingsSchema;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GSettingsSchema* getSettingsSchemaStruct()
@@ -147,9 +148,10 @@ public class SettingsSchema
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GSettingsSchema* gSettingsSchema)
+	public this (GSettingsSchema* gSettingsSchema, bool ownedRef = false)
 	{
 		this.gSettingsSchema = gSettingsSchema;
+		this.ownedRef = ownedRef;
 	}
 
 	~this()

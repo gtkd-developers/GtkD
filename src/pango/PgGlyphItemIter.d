@@ -76,6 +76,7 @@ public class PgGlyphItemIter
 {
 	/** the main Gtk struct */
 	protected PangoGlyphItemIter* pangoGlyphItemIter;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public PangoGlyphItemIter* getPgGlyphItemIterStruct()
@@ -92,9 +93,10 @@ public class PgGlyphItemIter
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoGlyphItemIter* pangoGlyphItemIter)
+	public this (PangoGlyphItemIter* pangoGlyphItemIter, bool ownedRef = false)
 	{
 		this.pangoGlyphItemIter = pangoGlyphItemIter;
+		this.ownedRef = ownedRef;
 	}
 
 

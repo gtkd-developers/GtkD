@@ -129,6 +129,7 @@ public class Buffer
 {
 	/** the main Gtk struct */
 	protected GstBuffer* gstBuffer;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstBuffer* getBufferStruct()
@@ -145,9 +146,10 @@ public class Buffer
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstBuffer* gstBuffer)
+	public this (GstBuffer* gstBuffer, bool ownedRef = false)
 	{
 		this.gstBuffer = gstBuffer;
+		this.ownedRef = ownedRef;
 	}
 
 

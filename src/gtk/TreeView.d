@@ -1083,7 +1083,7 @@ public class TreeView : Container, ScrollableIF
 		
 		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}

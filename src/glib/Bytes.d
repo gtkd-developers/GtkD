@@ -62,6 +62,7 @@ public class Bytes
 {
 	/** the main Gtk struct */
 	protected GBytes* gBytes;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GBytes* getBytesStruct()
@@ -78,9 +79,10 @@ public class Bytes
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GBytes* gBytes)
+	public this (GBytes* gBytes, bool ownedRef = false)
 	{
 		this.gBytes = gBytes;
+		this.ownedRef = ownedRef;
 	}
 
 

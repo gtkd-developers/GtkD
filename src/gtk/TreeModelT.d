@@ -381,7 +381,7 @@ public template TreeModelT(TStruct)
 		
 		auto p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}
@@ -402,7 +402,7 @@ public template TreeModelT(TStruct)
 		
 		auto p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}
@@ -494,7 +494,7 @@ public template TreeModelT(TStruct)
 		
 		auto p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}
@@ -566,7 +566,7 @@ public template TreeModelT(TStruct)
 		
 		auto p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}
@@ -591,7 +591,7 @@ public template TreeModelT(TStruct)
 		
 		auto p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
 		
-		iter = ObjectG.getDObject!(TreeIter)(outiter);
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 		
 		return p;
 	}

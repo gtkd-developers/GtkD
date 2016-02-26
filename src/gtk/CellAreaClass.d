@@ -36,6 +36,7 @@ public class CellAreaClass
 {
 	/** the main Gtk struct */
 	protected GtkCellAreaClass* gtkCellAreaClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkCellAreaClass* getCellAreaClassStruct()
@@ -52,9 +53,10 @@ public class CellAreaClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkCellAreaClass* gtkCellAreaClass)
+	public this (GtkCellAreaClass* gtkCellAreaClass, bool ownedRef = false)
 	{
 		this.gtkCellAreaClass = gtkCellAreaClass;
+		this.ownedRef = ownedRef;
 	}
 
 

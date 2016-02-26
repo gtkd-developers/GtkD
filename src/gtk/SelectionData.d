@@ -40,6 +40,7 @@ public class SelectionData
 {
 	/** the main Gtk struct */
 	protected GtkSelectionData* gtkSelectionData;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkSelectionData* getSelectionDataStruct()
@@ -56,9 +57,10 @@ public class SelectionData
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkSelectionData* gtkSelectionData)
+	public this (GtkSelectionData* gtkSelectionData, bool ownedRef = false)
 	{
 		this.gtkSelectionData = gtkSelectionData;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

@@ -195,7 +195,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 		
 		auto p = gtk_style_properties_get_property(gtkStyleProperties, Str.toStringz(property), state, outvalue) != 0;
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 		
 		return p;
 	}

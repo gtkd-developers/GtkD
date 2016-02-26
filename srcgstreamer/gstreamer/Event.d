@@ -85,6 +85,7 @@ public class Event
 {
 	/** the main Gtk struct */
 	protected GstEvent* gstEvent;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstEvent* getEventStruct()
@@ -101,9 +102,10 @@ public class Event
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstEvent* gstEvent)
+	public this (GstEvent* gstEvent, bool ownedRef = false)
 	{
 		this.gstEvent = gstEvent;
+		this.ownedRef = ownedRef;
 	}
 
 	/**

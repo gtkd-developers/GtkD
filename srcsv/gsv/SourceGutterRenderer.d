@@ -181,7 +181,7 @@ public class SourceGutterRenderer : ObjectG
 		
 		auto p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
 		
-		color = ObjectG.getDObject!(RGBA)(outcolor);
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 		
 		return p;
 	}

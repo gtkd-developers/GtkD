@@ -62,10 +62,10 @@ public class PgAttributeFontDesc : PgAttribute
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoAttrFontDesc* pangoAttrFontDesc)
+	public this (PangoAttrFontDesc* pangoAttrFontDesc, bool ownedRef = false)
 	{
 		this.pangoAttrFontDesc = pangoAttrFontDesc;
-		super(cast(PangoAttribute*)pangoAttrFontDesc);
+		super(cast(PangoAttribute*)pangoAttrFontDesc, ownedRef);
 	}
 
 

@@ -40,6 +40,7 @@ public class IOExtensionPoint
 {
 	/** the main Gtk struct */
 	protected GIOExtensionPoint* gIOExtensionPoint;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GIOExtensionPoint* getIOExtensionPointStruct()
@@ -56,9 +57,10 @@ public class IOExtensionPoint
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GIOExtensionPoint* gIOExtensionPoint)
+	public this (GIOExtensionPoint* gIOExtensionPoint, bool ownedRef = false)
 	{
 		this.gIOExtensionPoint = gIOExtensionPoint;
+		this.ownedRef = ownedRef;
 	}
 
 

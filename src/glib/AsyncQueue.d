@@ -39,6 +39,7 @@ public class AsyncQueue
 {
 	/** the main Gtk struct */
 	protected GAsyncQueue* gAsyncQueue;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GAsyncQueue* getAsyncQueueStruct()
@@ -55,9 +56,10 @@ public class AsyncQueue
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GAsyncQueue* gAsyncQueue)
+	public this (GAsyncQueue* gAsyncQueue, bool ownedRef = false)
 	{
 		this.gAsyncQueue = gAsyncQueue;
+		this.ownedRef = ownedRef;
 	}
 
 

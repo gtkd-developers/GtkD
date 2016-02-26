@@ -38,6 +38,7 @@ public class StaticPadTemplate
 {
 	/** the main Gtk struct */
 	protected GstStaticPadTemplate* gstStaticPadTemplate;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstStaticPadTemplate* getStaticPadTemplateStruct()
@@ -54,9 +55,10 @@ public class StaticPadTemplate
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstStaticPadTemplate* gstStaticPadTemplate)
+	public this (GstStaticPadTemplate* gstStaticPadTemplate, bool ownedRef = false)
 	{
 		this.gstStaticPadTemplate = gstStaticPadTemplate;
+		this.ownedRef = ownedRef;
 	}
 
 

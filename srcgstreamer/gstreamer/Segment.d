@@ -83,6 +83,7 @@ public class Segment
 {
 	/** the main Gtk struct */
 	protected GstSegment* gstSegment;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GstSegment* getSegmentStruct()
@@ -99,9 +100,10 @@ public class Segment
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstSegment* gstSegment)
+	public this (GstSegment* gstSegment, bool ownedRef = false)
 	{
 		this.gstSegment = gstSegment;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -79,6 +79,7 @@ public class Closure
 {
 	/** the main Gtk struct */
 	protected GClosure* gClosure;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GClosure* getClosureStruct()
@@ -95,9 +96,10 @@ public class Closure
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GClosure* gClosure)
+	public this (GClosure* gClosure, bool ownedRef = false)
 	{
 		this.gClosure = gClosure;
+		this.ownedRef = ownedRef;
 	}
 
 

@@ -38,6 +38,7 @@ public class StockItem
 {
 	/** the main Gtk struct */
 	protected GtkStockItem* gtkStockItem;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkStockItem* getStockItemStruct()
@@ -54,9 +55,10 @@ public class StockItem
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkStockItem* gtkStockItem)
+	public this (GtkStockItem* gtkStockItem, bool ownedRef = false)
 	{
 		this.gtkStockItem = gtkStockItem;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()
@@ -174,7 +176,7 @@ public class StockItem
 		
 		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
 		
-		item = ObjectG.getDObject!(StockItem)(outitem);
+		item = ObjectG.getDObject!(StockItem)(outitem, true);
 		
 		return p;
 	}

@@ -129,6 +129,7 @@ public class VariantDict
 {
 	/** the main Gtk struct */
 	protected GVariantDict* gVariantDict;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GVariantDict* getVariantDictStruct()
@@ -145,9 +146,10 @@ public class VariantDict
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GVariantDict* gVariantDict)
+	public this (GVariantDict* gVariantDict, bool ownedRef = false)
 	{
 		this.gVariantDict = gVariantDict;
+		this.ownedRef = ownedRef;
 	}
 
 

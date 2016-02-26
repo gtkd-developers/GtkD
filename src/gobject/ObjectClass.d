@@ -64,6 +64,7 @@ public class ObjectClass
 {
 	/** the main Gtk struct */
 	protected GObjectClass* gObjectClass;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GObjectClass* getObjectClassStruct()
@@ -80,9 +81,10 @@ public class ObjectClass
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GObjectClass* gObjectClass)
+	public this (GObjectClass* gObjectClass, bool ownedRef = false)
 	{
 		this.gObjectClass = gObjectClass;
+		this.ownedRef = ownedRef;
 	}
 
 

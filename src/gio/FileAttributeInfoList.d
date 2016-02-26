@@ -39,6 +39,7 @@ public class FileAttributeInfoList
 {
 	/** the main Gtk struct */
 	protected GFileAttributeInfoList* gFileAttributeInfoList;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GFileAttributeInfoList* getFileAttributeInfoListStruct()
@@ -55,9 +56,10 @@ public class FileAttributeInfoList
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GFileAttributeInfoList* gFileAttributeInfoList)
+	public this (GFileAttributeInfoList* gFileAttributeInfoList, bool ownedRef = false)
 	{
 		this.gFileAttributeInfoList = gFileAttributeInfoList;
+		this.ownedRef = ownedRef;
 	}
 
 

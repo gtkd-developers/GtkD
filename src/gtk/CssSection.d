@@ -44,6 +44,7 @@ public class CssSection
 {
 	/** the main Gtk struct */
 	protected GtkCssSection* gtkCssSection;
+	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
 	public GtkCssSection* getCssSectionStruct()
@@ -60,9 +61,10 @@ public class CssSection
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkCssSection* gtkCssSection)
+	public this (GtkCssSection* gtkCssSection, bool ownedRef = false)
 	{
 		this.gtkCssSection = gtkCssSection;
+		this.ownedRef = ownedRef;
 	}
 
 	~this ()

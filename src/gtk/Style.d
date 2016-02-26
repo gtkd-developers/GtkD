@@ -215,7 +215,7 @@ public class Style : ObjectG
 		
 		gtk_style_get_style_property(gtkStyle, widgetType, Str.toStringz(propertyName), outvalue);
 		
-		value = ObjectG.getDObject!(Value)(outvalue);
+		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
 	/**
@@ -271,7 +271,7 @@ public class Style : ObjectG
 		
 		auto p = gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), outcolor) != 0;
 		
-		color = ObjectG.getDObject!(Color)(outcolor);
+		color = ObjectG.getDObject!(Color)(outcolor, true);
 		
 		return p;
 	}
