@@ -70,7 +70,7 @@ public class IconSet
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSet !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_icon_set_unref(gtkIconSet);
 		}

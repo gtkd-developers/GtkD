@@ -290,7 +290,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && gtkBorder !is null )
+		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_border_free(gtkBorder);
 		}
@@ -1272,7 +1272,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && gtkCssSection !is null )
+		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_css_section_unref(gtkCssSection);
 		}
@@ -1578,7 +1578,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_gradient_unref(gtkGradient);
 		}
@@ -1622,7 +1622,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_icon_info_free(gtkIconInfo);
 		}
@@ -1635,7 +1635,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSet !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_icon_set_unref(gtkIconSet);
 		}
@@ -1648,7 +1648,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconSource !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_icon_source_free(gtkIconSource);
 		}
@@ -2854,7 +2854,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRecentInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_recent_info_unref(gtkRecentInfo);
 		}
@@ -2867,7 +2867,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRequisition !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_requisition_free(gtkRequisition);
 		}
@@ -3007,7 +3007,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_stock_item_free(gtkStockItem);
 		}
@@ -3033,7 +3033,7 @@ noCode: new_alpha
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_symbolic_color_unref(gtkSymbolicColor);
 		}
@@ -3153,7 +3153,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetEntry !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_target_entry_free(gtkTargetEntry);
 		}
@@ -3166,7 +3166,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetList !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_target_list_unref(gtkTargetList);
 		}
@@ -3203,7 +3203,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextAttributes !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_text_attributes_unref(gtkTextAttributes);
 		}
@@ -5329,7 +5329,7 @@ import: gtkc.paths
 code: start
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkWidgetPath !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_widget_path_free(gtkWidgetPath);
 		}

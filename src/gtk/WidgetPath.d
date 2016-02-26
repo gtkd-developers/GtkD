@@ -113,7 +113,7 @@ public class WidgetPath
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkWidgetPath !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_widget_path_free(gtkWidgetPath);
 		}

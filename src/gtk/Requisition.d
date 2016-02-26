@@ -66,7 +66,7 @@ public class Requisition
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRequisition !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_requisition_free(gtkRequisition);
 		}

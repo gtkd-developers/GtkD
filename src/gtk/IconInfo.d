@@ -82,7 +82,7 @@ public class IconInfo : ObjectG
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkIconInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_icon_info_free(gtkIconInfo);
 		}

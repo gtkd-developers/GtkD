@@ -77,7 +77,7 @@ public class RecentInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkRecentInfo !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_recent_info_unref(gtkRecentInfo);
 		}

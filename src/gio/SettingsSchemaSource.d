@@ -70,7 +70,7 @@ public class SettingsSchemaSource
 
 	~this()
 	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && gSettingsSchemaSource !is null )
+		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
 		{
 			g_settings_schema_source_unref(gSettingsSchemaSource);
 		}

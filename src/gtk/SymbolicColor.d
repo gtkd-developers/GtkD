@@ -81,7 +81,7 @@ public class SymbolicColor
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkSymbolicColor !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_symbolic_color_unref(gtkSymbolicColor);
 		}

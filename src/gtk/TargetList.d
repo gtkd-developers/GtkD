@@ -68,7 +68,7 @@ public class TargetList
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetList !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_target_list_unref(gtkTargetList);
 		}

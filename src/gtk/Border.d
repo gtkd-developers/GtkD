@@ -65,7 +65,7 @@ public class Border
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && gtkBorder !is null )
+		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_border_free(gtkBorder);
 		}

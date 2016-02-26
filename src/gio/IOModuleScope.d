@@ -71,7 +71,7 @@ public class IOModuleScope
 
 	~this()
 	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && gIOModuleScope != null)
+		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
 		{
 			g_io_module_scope_free(gIOModuleScope);
 		}

@@ -101,7 +101,7 @@ public class Color
 	
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && gdkColor !is null )
+		if ( Linker.isLoaded(LIBRARY.GDK) && ownedRef )
 		{
 			gdk_color_free(gdkColor);
 		}

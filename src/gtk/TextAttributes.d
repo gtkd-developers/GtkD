@@ -67,7 +67,7 @@ public class TextAttributes
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTextAttributes !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_text_attributes_unref(gtkTextAttributes);
 		}

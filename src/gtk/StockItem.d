@@ -63,7 +63,7 @@ public class StockItem
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkStockItem !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_stock_item_free(gtkStockItem);
 		}

@@ -84,7 +84,7 @@ public class Gradient
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkGradient !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_gradient_unref(gtkGradient);
 		}

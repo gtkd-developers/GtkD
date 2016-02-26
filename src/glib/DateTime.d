@@ -146,7 +146,7 @@ public class DateTime
 	
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && gDateTime !is null )
+		if ( Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
 		{
 			g_date_time_unref(gDateTime);
 		}

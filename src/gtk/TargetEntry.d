@@ -67,7 +67,7 @@ public class TargetEntry
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && gtkTargetEntry !is null )
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
 		{
 			gtk_target_entry_free(gtkTargetEntry);
 		}
