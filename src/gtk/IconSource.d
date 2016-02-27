@@ -143,7 +143,7 @@ public class IconSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!(IconSource)(cast(GtkIconSource*) p);
+		return ObjectG.getDObject!(IconSource)(cast(GtkIconSource*) p, true);
 	}
 
 	/**

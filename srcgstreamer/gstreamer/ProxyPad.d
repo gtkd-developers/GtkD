@@ -149,7 +149,7 @@ public class ProxyPad : Pad
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
 	/**

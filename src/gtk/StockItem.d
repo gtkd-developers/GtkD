@@ -157,7 +157,7 @@ public class StockItem
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**

@@ -152,7 +152,7 @@ public class UnixMountPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class UnixMountPoint
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

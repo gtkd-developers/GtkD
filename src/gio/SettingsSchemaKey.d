@@ -89,7 +89,7 @@ public class SettingsSchemaKey
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class SettingsSchemaKey
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class SettingsSchemaKey
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p);
+		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p, true);
 	}
 
 	/**

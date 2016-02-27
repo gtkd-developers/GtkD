@@ -87,7 +87,7 @@ public class VariantIter
 			return null;
 		}
 		
-		return new VariantIter(cast(GVariantIter*) p);
+		return new VariantIter(cast(GVariantIter*) p, true);
 	}
 
 	/**
@@ -180,6 +180,6 @@ public class VariantIter
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 }

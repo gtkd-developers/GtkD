@@ -530,7 +530,7 @@ public class PrintSettings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p, true);
 	}
 
 	/**

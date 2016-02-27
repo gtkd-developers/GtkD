@@ -229,7 +229,7 @@ public class Iterator
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
 	/**
@@ -258,7 +258,7 @@ public class Iterator
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
 	/**

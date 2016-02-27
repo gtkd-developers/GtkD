@@ -182,7 +182,7 @@ public class Segment
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p);
+		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p, true);
 	}
 
 	/**

@@ -333,7 +333,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
 	/**
@@ -558,7 +558,7 @@ public class Display : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
 	/**

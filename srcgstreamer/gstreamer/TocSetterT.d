@@ -71,7 +71,7 @@ public template TocSetterT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Toc)(cast(GstToc*) p);
+		return ObjectG.getDObject!(Toc)(cast(GstToc*) p, true);
 	}
 
 	/**

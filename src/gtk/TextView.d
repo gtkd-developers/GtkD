@@ -453,7 +453,7 @@ public class TextView : Container, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
 	}
 
 	/**
@@ -708,7 +708,7 @@ public class TextView : Container, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
 	}
 
 	/**

@@ -277,7 +277,7 @@ public template ValueT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Range)(cast(AtkRange*) p);
+		return ObjectG.getDObject!(Range)(cast(AtkRange*) p, true);
 	}
 
 	/**
@@ -299,7 +299,7 @@ public template ValueT(TStruct)
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**

@@ -279,7 +279,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -352,7 +352,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -373,7 +373,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -405,7 +405,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -479,7 +479,7 @@ public class Registry : ObjectGst
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

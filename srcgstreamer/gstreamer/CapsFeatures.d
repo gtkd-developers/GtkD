@@ -263,7 +263,7 @@ public class CapsFeatures
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p, true);
 	}
 
 	/**
@@ -434,6 +434,6 @@ public class CapsFeatures
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
+		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p, true);
 	}
 }

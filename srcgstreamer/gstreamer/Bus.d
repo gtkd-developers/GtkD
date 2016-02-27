@@ -304,7 +304,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) p, true);
 	}
 
 	/**
@@ -382,7 +382,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
 	/**
@@ -440,7 +440,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
 	/**
@@ -462,7 +462,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
 	/**
@@ -491,7 +491,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
 	/**
@@ -588,7 +588,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
 	/**
@@ -621,7 +621,7 @@ public class Bus : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Message)(cast(GstMessage*) p);
+		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
 	int[string] connectedSignals;

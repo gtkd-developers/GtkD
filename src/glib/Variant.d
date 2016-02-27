@@ -1090,7 +1090,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1402,7 +1402,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1460,7 +1460,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -1604,7 +1604,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1638,7 +1638,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1875,7 +1875,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1989,7 +1989,7 @@ public class Variant
 			return null;
 		}
 		
-		return new VariantIter(cast(GVariantIter*) p);
+		return new VariantIter(cast(GVariantIter*) p, true);
 	}
 
 	/**
@@ -2032,7 +2032,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -2102,7 +2102,7 @@ public class Variant
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -2121,7 +2121,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -2161,7 +2161,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -2233,7 +2233,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -2348,7 +2348,7 @@ public class Variant
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

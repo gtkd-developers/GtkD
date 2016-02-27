@@ -82,7 +82,7 @@ public class PixbufFormat
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
+		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p, true);
 	}
 
 	/**

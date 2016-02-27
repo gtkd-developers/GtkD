@@ -88,7 +88,7 @@ public template RecentChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public template RecentChooserT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

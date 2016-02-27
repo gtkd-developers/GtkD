@@ -510,7 +510,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -588,7 +588,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -656,7 +656,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -706,7 +706,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

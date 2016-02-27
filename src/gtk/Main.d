@@ -153,7 +153,7 @@ public struct Main
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
 	/**
@@ -321,7 +321,7 @@ public struct Main
 			return null;
 		}
 		
-		return new OptionGroup(cast(GOptionGroup*) p);
+		return new OptionGroup(cast(GOptionGroup*) p, true);
 	}
 
 	/**

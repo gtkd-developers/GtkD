@@ -172,7 +172,7 @@ public class RGBA
 			return null;
 		}
 		
-		return ObjectG.getDObject!(RGBA)(cast(GdkRGBA*) p);
+		return ObjectG.getDObject!(RGBA)(cast(GdkRGBA*) p, true);
 	}
 
 	/**

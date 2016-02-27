@@ -238,7 +238,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
 	}
 
 	/**
@@ -298,7 +298,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
 	}
 
 	/**
@@ -678,7 +678,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -713,7 +713,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -740,7 +740,7 @@ public class PgContext : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

@@ -452,7 +452,7 @@ public class InputStream : ObjectG
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -519,7 +519,7 @@ public class InputStream : ObjectG
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**

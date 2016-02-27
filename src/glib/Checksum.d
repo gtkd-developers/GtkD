@@ -147,7 +147,7 @@ public class Checksum
 			return null;
 		}
 		
-		return new Checksum(cast(GChecksum*) p);
+		return new Checksum(cast(GChecksum*) p, true);
 	}
 
 	/**

@@ -216,7 +216,7 @@ public class Value
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -469,7 +469,7 @@ public class Value
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -538,7 +538,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
 	}
 
 	/**
@@ -1073,7 +1073,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1100,7 +1100,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1126,7 +1126,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1155,7 +1155,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1183,7 +1183,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1211,7 +1211,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1239,7 +1239,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1269,7 +1269,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1297,7 +1297,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1325,7 +1325,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1353,7 +1353,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1380,7 +1380,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1432,7 +1432,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1459,7 +1459,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1485,7 +1485,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1511,7 +1511,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1539,7 +1539,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1568,7 +1568,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1597,7 +1597,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1625,7 +1625,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**
@@ -1688,7 +1688,7 @@ public class Value
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
 	}
 
 	/**

@@ -124,7 +124,7 @@ public class ByteArray
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**

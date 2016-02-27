@@ -165,7 +165,7 @@ public class MenuItem : ObjectG
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

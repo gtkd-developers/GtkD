@@ -113,7 +113,7 @@ public class DBusAnnotationInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p);
+		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p, true);
 	}
 
 	/**

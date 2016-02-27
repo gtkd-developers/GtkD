@@ -262,7 +262,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**
@@ -302,7 +302,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**

@@ -100,7 +100,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class MiniObject
 			return null;
 		}
 		
-		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
+		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
 	/**

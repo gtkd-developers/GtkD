@@ -77,7 +77,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p);
+		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p, true);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p);
+		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p, true);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	int[string] connectedSignals;

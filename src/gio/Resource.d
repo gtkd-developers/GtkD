@@ -347,7 +347,7 @@ public class Resource
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -403,7 +403,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
 	}
 
 	/**
@@ -451,7 +451,7 @@ public class Resource
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
 	}
 
 	/**
@@ -563,7 +563,7 @@ public class Resource
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**

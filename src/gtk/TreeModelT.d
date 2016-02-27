@@ -320,7 +320,7 @@ public template TreeModelT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p, true);
 	}
 
 	/**
@@ -436,7 +436,7 @@ public template TreeModelT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**
@@ -757,7 +757,7 @@ public template TreeModelT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p, true);
 	}
 
 	/**

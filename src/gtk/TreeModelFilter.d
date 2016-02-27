@@ -238,7 +238,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**
@@ -281,7 +281,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**

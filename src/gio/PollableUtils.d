@@ -60,7 +60,7 @@ public Source pollableSourceNew(ObjectG pollableStream)
 		return null;
 	}
 	
-	return new Source(cast(GSource*) p);
+	return new Source(cast(GSource*) p, true);
 }
 
 /**
@@ -88,7 +88,7 @@ public Source pollableSourceNewFull(ObjectG pollableStream, Source childSource, 
 		return null;
 	}
 	
-	return new Source(cast(GSource*) p);
+	return new Source(cast(GSource*) p, true);
 }
 
 /**

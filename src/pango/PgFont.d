@@ -123,7 +123,7 @@ public class PgFont : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class PgFont : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class PgFont : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p);
+		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p, true);
 	}
 
 	/**
@@ -267,6 +267,6 @@ public class PgFont : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
 	}
 }

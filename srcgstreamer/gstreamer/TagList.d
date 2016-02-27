@@ -794,7 +794,7 @@ public class TagList
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
+		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p, true);
 	}
 
 	/**

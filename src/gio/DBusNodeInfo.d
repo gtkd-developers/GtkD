@@ -176,7 +176,7 @@ public class DBusNodeInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusNodeInfo)(cast(GDBusNodeInfo*) p);
+		return ObjectG.getDObject!(DBusNodeInfo)(cast(GDBusNodeInfo*) p, true);
 	}
 
 	/**

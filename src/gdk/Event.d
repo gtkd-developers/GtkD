@@ -331,7 +331,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
 	/**
@@ -717,7 +717,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
 	/**
@@ -756,7 +756,7 @@ public class Event
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
 	/**

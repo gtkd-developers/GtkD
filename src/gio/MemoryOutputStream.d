@@ -242,7 +242,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**

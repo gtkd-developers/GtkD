@@ -272,7 +272,7 @@ public template ActionGroupT(TStruct)
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -311,7 +311,7 @@ public template ActionGroupT(TStruct)
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

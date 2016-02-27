@@ -225,7 +225,7 @@ public class CssSection
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p, true);
 	}
 
 	/**

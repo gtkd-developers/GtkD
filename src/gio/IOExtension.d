@@ -111,6 +111,6 @@ public class IOExtension
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
+		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p, true);
 	}
 }

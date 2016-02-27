@@ -217,7 +217,7 @@ public class PgFontMetrics
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
 	}
 
 	/**

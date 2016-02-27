@@ -783,6 +783,6 @@ public struct Signals
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p, true);
 	}
 }

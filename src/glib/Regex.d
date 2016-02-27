@@ -536,7 +536,7 @@ public class Regex
 			return null;
 		}
 		
-		return new Regex(cast(GRegex*) p);
+		return new Regex(cast(GRegex*) p, true);
 	}
 
 	/**

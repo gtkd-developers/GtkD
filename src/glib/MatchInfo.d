@@ -295,7 +295,7 @@ public class MatchInfo
 			return null;
 		}
 		
-		return new Regex(cast(GRegex*) p);
+		return new Regex(cast(GRegex*) p, true);
 	}
 
 	/**
@@ -413,7 +413,7 @@ public class MatchInfo
 			return null;
 		}
 		
-		return new MatchInfo(cast(GMatchInfo*) p);
+		return new MatchInfo(cast(GMatchInfo*) p, true);
 	}
 
 	/**

@@ -254,7 +254,7 @@ public class ApplicationCommandLine : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -403,7 +403,7 @@ public class ApplicationCommandLine : ObjectG
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

@@ -168,7 +168,7 @@ public struct UnixMountEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -218,7 +218,7 @@ public struct UnixMountEntry
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -280,7 +280,7 @@ public struct UnixMountEntry
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -316,6 +316,6 @@ public struct UnixMountEntry
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 }

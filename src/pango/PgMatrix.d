@@ -108,7 +108,7 @@ public class PgMatrix
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
+		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p, true);
 	}
 
 	/**

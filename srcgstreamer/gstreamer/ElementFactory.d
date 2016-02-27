@@ -176,7 +176,7 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

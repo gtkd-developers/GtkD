@@ -469,7 +469,7 @@ public class IOChannel
 			return null;
 		}
 		
-		return new IOChannel(cast(GIOChannel*) p);
+		return new IOChannel(cast(GIOChannel*) p, true);
 	}
 
 	/**
@@ -887,6 +887,6 @@ public class IOChannel
 			return null;
 		}
 		
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) p, true);
 	}
 }

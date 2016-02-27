@@ -401,7 +401,7 @@ public class Timeout
 			return null;
 		}
 		
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) p, true);
 	}
 
 	/**
@@ -433,6 +433,6 @@ public class Timeout
 			return null;
 		}
 		
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) p, true);
 	}
 }

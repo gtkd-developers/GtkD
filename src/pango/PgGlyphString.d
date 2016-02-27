@@ -108,7 +108,7 @@ public class PgGlyphString
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgGlyphString)(cast(PangoGlyphString*) p);
+		return ObjectG.getDObject!(PgGlyphString)(cast(PangoGlyphString*) p, true);
 	}
 
 	/**

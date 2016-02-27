@@ -673,7 +673,7 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p, true);
 	}
 
 	/**

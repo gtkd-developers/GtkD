@@ -126,7 +126,7 @@ public class Vfs : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class Vfs : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -197,6 +197,6 @@ public class Vfs : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 }

@@ -445,7 +445,7 @@ public class MainContext
 			return null;
 		}
 		
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) p, true);
 	}
 
 	/**
@@ -623,6 +623,6 @@ public class MainContext
 			return null;
 		}
 		
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) p, true);
 	}
 }

@@ -524,7 +524,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
 	/**
@@ -542,7 +542,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
 	/**
@@ -625,7 +625,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
 	/**
@@ -740,7 +740,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
+		return ObjectG.getDObject!(Event)(cast(GstEvent*) p, true);
 	}
 
 	/**
@@ -847,7 +847,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
 	/**
@@ -873,7 +873,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p);
+		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
 	/**
@@ -1005,7 +1005,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
 	/**
@@ -1279,7 +1279,7 @@ public class Pad : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
 	/**

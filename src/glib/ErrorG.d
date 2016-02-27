@@ -131,7 +131,7 @@ public class ErrorG
 			return null;
 		}
 		
-		return new ErrorG(cast(GError*) p);
+		return new ErrorG(cast(GError*) p, true);
 	}
 
 	/**

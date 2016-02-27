@@ -121,7 +121,7 @@ public class ControlBinding : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
 	}
 
 	/**

@@ -124,7 +124,7 @@ public class PgGlyphItemIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgGlyphItemIter)(cast(PangoGlyphItemIter*) p);
+		return ObjectG.getDObject!(PgGlyphItemIter)(cast(PangoGlyphItemIter*) p, true);
 	}
 
 	/**

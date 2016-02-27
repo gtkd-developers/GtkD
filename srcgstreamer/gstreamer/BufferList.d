@@ -142,7 +142,7 @@ public class BufferList
 			return null;
 		}
 		
-		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
+		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
 	}
 
 	/**

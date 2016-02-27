@@ -164,7 +164,7 @@ public class TreeRowReference
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreeRowReference)(cast(GtkTreeRowReference*) p);
+		return ObjectG.getDObject!(TreeRowReference)(cast(GtkTreeRowReference*) p, true);
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class TreeRowReference
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**

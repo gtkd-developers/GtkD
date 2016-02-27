@@ -191,7 +191,7 @@ public class MappedFile
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class MappedFile
 			return null;
 		}
 		
-		return new MappedFile(cast(GMappedFile*) p);
+		return new MappedFile(cast(GMappedFile*) p, true);
 	}
 
 	/**

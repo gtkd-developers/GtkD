@@ -132,7 +132,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -203,7 +203,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -251,7 +251,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -279,7 +279,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -406,7 +406,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**

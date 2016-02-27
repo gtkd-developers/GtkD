@@ -413,7 +413,7 @@ public class SimpleXML
 			return null;
 		}
 		
-		return new SimpleXML(cast(GMarkupParseContext*) p);
+		return new SimpleXML(cast(GMarkupParseContext*) p, true);
 	}
 
 	/**

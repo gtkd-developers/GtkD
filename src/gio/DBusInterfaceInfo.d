@@ -219,7 +219,7 @@ public class DBusInterfaceInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p, true);
 	}
 
 	/**

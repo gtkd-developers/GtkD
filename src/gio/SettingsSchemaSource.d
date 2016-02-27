@@ -207,7 +207,7 @@ public class SettingsSchemaSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class SettingsSchemaSource
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p, true);
 	}
 
 	/**

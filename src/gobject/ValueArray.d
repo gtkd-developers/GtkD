@@ -134,7 +134,7 @@ public class ValueArray
 			return null;
 		}
 		
-		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
+		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p, true);
 	}
 
 	/**

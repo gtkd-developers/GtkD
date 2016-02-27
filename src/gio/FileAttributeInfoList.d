@@ -116,7 +116,7 @@ public class FileAttributeInfoList
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class FileAttributeInfoList
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
 	}
 
 	/**

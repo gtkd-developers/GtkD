@@ -85,7 +85,7 @@ public class DBusSignalInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p);
+		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p, true);
 	}
 
 	/**

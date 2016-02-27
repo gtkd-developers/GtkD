@@ -78,7 +78,7 @@ public template ProxyT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Proxy, ProxyIF)(cast(GProxy*) p);
+		return ObjectG.getDObject!(Proxy, ProxyIF)(cast(GProxy*) p, true);
 	}
 
 	/**

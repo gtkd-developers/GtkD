@@ -847,7 +847,7 @@ public class KeyFile
 			return null;
 		}
 		
-		return new KeyFile(cast(GKeyFile*) p);
+		return new KeyFile(cast(GKeyFile*) p, true);
 	}
 
 	/**

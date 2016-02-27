@@ -263,7 +263,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -282,7 +282,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p);
+		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p, true);
 	}
 
 	/**
@@ -301,7 +301,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -337,7 +337,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
 	}
 
 	/**
@@ -381,7 +381,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

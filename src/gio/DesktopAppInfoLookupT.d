@@ -71,6 +71,6 @@ public template DesktopAppInfoLookupT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 }

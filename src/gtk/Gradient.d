@@ -196,7 +196,7 @@ public class Gradient
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Gradient)(cast(GtkGradient*) p);
+		return ObjectG.getDObject!(Gradient)(cast(GtkGradient*) p, true);
 	}
 
 	/**

@@ -324,7 +324,7 @@ public class VariantDict
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -346,7 +346,7 @@ public class VariantDict
 			return null;
 		}
 		
-		return new VariantDict(cast(GVariantDict*) p);
+		return new VariantDict(cast(GVariantDict*) p, true);
 	}
 
 	/**

@@ -367,7 +367,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p);
+		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p, true);
 	}
 
 	/**
@@ -658,7 +658,7 @@ public class PgLayout : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
+		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
 	}
 
 	/**

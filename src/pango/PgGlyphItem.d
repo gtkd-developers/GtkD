@@ -111,7 +111,7 @@ public class PgGlyphItem
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class PgGlyphItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p);
+		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p, true);
 	}
 
 	/**
@@ -222,6 +222,6 @@ public class PgGlyphItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p);
+		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p, true);
 	}
 }

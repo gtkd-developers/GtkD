@@ -156,7 +156,7 @@ public class Memory
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class Memory
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
 	/**
@@ -314,7 +314,7 @@ public class Memory
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
 	/**

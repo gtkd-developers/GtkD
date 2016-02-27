@@ -257,7 +257,7 @@ public template DriveT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -327,7 +327,7 @@ public template DriveT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -347,7 +347,7 @@ public template DriveT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

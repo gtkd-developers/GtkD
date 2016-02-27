@@ -480,7 +480,7 @@ public class TextIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TextIter)(cast(GtkTextIter*) p);
+		return ObjectG.getDObject!(TextIter)(cast(GtkTextIter*) p, true);
 	}
 
 	/**
@@ -1063,7 +1063,7 @@ public class TextIter
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
 	}
 
 	/**

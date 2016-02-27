@@ -98,7 +98,7 @@ public class SelectionData
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) p);
+		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) p, true);
 	}
 
 	/**

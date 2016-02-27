@@ -861,7 +861,7 @@ final class GtkFunction
 			}
 			else
 			{
-				if ( returnOwnership == GtkTransferOwnership.Full && returnDType.getAncestor().name == "ObjectG" )
+				if ( returnOwnership == GtkTransferOwnership.Full && !(returnDType.pack.name == "cairo") )
 					buff ~= "return "~ construct(returnType.name) ~"(cast("~ returnDType.cType ~"*) p, true);";
 				else
 					buff ~= "return "~ construct(returnType.name) ~"(cast("~ returnDType.cType ~"*) p);";

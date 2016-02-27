@@ -223,7 +223,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
 	}
 
 	/**
@@ -737,7 +737,7 @@ public class WidgetPath
 			return null;
 		}
 		
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
 	}
 
 	/**

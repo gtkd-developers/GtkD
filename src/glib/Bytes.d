@@ -261,7 +261,7 @@ public class Bytes
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class Bytes
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -316,7 +316,7 @@ public class Bytes
 			return null;
 		}
 		
-		return new ByteArray(cast(GByteArray*) p);
+		return new ByteArray(cast(GByteArray*) p, true);
 	}
 
 	/**

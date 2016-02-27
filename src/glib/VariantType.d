@@ -370,7 +370,7 @@ public class VariantType
 			return null;
 		}
 		
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) p, true);
 	}
 
 	/**

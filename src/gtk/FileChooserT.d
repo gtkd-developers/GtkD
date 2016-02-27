@@ -321,7 +321,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -426,7 +426,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -471,7 +471,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**
@@ -494,7 +494,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**
@@ -547,7 +547,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -678,7 +678,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**
@@ -735,7 +735,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**
@@ -758,7 +758,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**

@@ -161,7 +161,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -740,7 +740,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -1022,7 +1022,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
 	}
 
 	/**
@@ -1076,7 +1076,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
 	}
 
 	/**
@@ -1127,7 +1127,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -1165,7 +1165,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -1188,7 +1188,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -2053,7 +2053,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -2315,7 +2315,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -2649,7 +2649,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
 	}
 
 	/**
@@ -2687,7 +2687,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p);
+		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
 	}
 
 	/**
@@ -3195,7 +3195,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -3572,7 +3572,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -3627,7 +3627,7 @@ public template FileT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
 	/**

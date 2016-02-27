@@ -236,7 +236,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**

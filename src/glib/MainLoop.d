@@ -141,7 +141,7 @@ public class MainLoop
 			return null;
 		}
 		
-		return new MainLoop(cast(GMainLoop*) p);
+		return new MainLoop(cast(GMainLoop*) p, true);
 	}
 
 	/**

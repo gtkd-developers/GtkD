@@ -153,7 +153,7 @@ public class Allocator : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
+		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
 	/**

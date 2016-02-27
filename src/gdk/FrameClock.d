@@ -150,7 +150,7 @@ public class FrameClock : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class FrameClock : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
 	}
 
 	/**

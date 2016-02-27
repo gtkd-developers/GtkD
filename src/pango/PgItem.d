@@ -103,7 +103,7 @@ public class PgItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p);
+		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
 	}
 
 	/**
@@ -142,6 +142,6 @@ public class PgItem
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p);
+		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
 	}
 }

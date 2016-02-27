@@ -175,7 +175,7 @@ public class Uri
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class Uri
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -319,7 +319,7 @@ public class Uri
 			return null;
 		}
 		
-		return new HashTable(cast(GHashTable*) p);
+		return new HashTable(cast(GHashTable*) p, true);
 	}
 
 	/**
@@ -419,7 +419,7 @@ public class Uri
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
 	/**
@@ -443,7 +443,7 @@ public class Uri
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
 	/**
@@ -474,7 +474,7 @@ public class Uri
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
 	/**
@@ -753,7 +753,7 @@ public class Uri
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Uri)(cast(GstUri*) p);
+		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
 	/**

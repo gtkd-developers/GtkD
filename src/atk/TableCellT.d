@@ -64,7 +64,7 @@ public template TableCellT(TStruct)
 			return null;
 		}
 		
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) p, true);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public template TableCellT(TStruct)
 			return null;
 		}
 		
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) p, true);
 	}
 
 	/**

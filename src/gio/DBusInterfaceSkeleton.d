@@ -178,7 +178,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

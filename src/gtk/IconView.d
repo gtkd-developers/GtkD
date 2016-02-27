@@ -566,7 +566,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 		
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
 	/**
@@ -630,7 +630,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

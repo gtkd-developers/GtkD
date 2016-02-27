@@ -168,6 +168,6 @@ public class Pixdata
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 }

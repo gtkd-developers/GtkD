@@ -154,7 +154,7 @@ public class Thread
 			return null;
 		}
 		
-		return new Thread(cast(GThread*) p);
+		return new Thread(cast(GThread*) p, true);
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class Thread
 			return null;
 		}
 		
-		return new Thread(cast(GThread*) p);
+		return new Thread(cast(GThread*) p, true);
 	}
 
 	/**

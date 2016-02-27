@@ -203,7 +203,7 @@ public class SettingsSchema
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p);
+		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p, true);
 	}
 
 	/**
@@ -289,7 +289,7 @@ public class SettingsSchema
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
 	}
 
 	/**

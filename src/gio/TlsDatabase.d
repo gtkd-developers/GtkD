@@ -341,7 +341,7 @@ public class TlsDatabase : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -397,7 +397,7 @@ public class TlsDatabase : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

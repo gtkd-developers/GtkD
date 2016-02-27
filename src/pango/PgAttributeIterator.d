@@ -86,7 +86,7 @@ public class PgAttributeIterator
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p);
+		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p, true);
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class PgAttributeIterator
 			return null;
 		}
 		
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) p, true);
 	}
 
 	/**

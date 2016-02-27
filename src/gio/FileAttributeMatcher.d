@@ -181,7 +181,7 @@ public class FileAttributeMatcher
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p);
+		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p, true);
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class FileAttributeMatcher
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p);
+		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p, true);
 	}
 
 	/**

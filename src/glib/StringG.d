@@ -79,7 +79,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -311,7 +311,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -354,7 +354,7 @@ public class StringG
 			return null;
 		}
 		
-		return new Bytes(cast(GBytes*) p);
+		return new Bytes(cast(GBytes*) p, true);
 	}
 
 	/**
@@ -386,7 +386,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -407,7 +407,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -437,7 +437,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -460,7 +460,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -483,7 +483,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -508,7 +508,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -529,7 +529,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -550,7 +550,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -577,7 +577,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -598,7 +598,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -622,7 +622,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -642,7 +642,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -663,7 +663,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -700,7 +700,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -727,7 +727,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 
 	/**
@@ -751,6 +751,6 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) p, true);
 	}
 }

@@ -145,7 +145,7 @@ public class TypeFindFactory : PluginFeature
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

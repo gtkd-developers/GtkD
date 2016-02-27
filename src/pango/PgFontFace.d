@@ -92,7 +92,7 @@ public class PgFontFace : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
 	/**

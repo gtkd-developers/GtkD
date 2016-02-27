@@ -126,7 +126,7 @@ public class Device : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class Device : ObjectGst
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 
 	/**

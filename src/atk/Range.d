@@ -114,7 +114,7 @@ public class Range
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Range)(cast(AtkRange*) p);
+		return ObjectG.getDObject!(Range)(cast(AtkRange*) p, true);
 	}
 
 	/**

@@ -92,7 +92,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -228,7 +228,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -251,7 +251,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -274,7 +274,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -297,7 +297,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -344,7 +344,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -366,7 +366,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -388,7 +388,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -409,7 +409,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -436,7 +436,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -457,7 +457,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -478,7 +478,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -539,7 +539,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -560,7 +560,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -581,7 +581,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**
@@ -602,7 +602,7 @@ public class PgAttribute
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p);
+		return ObjectG.getDObject!(PgAttribute)(cast(PangoAttribute*) p, true);
 	}
 
 	/**

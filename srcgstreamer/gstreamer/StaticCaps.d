@@ -87,6 +87,6 @@ public class StaticCaps
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 }

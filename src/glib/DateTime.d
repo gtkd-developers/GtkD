@@ -312,7 +312,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -389,7 +389,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -413,7 +413,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -437,7 +437,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -461,7 +461,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -485,7 +485,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -509,7 +509,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -909,7 +909,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -932,7 +932,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -989,7 +989,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**
@@ -1028,7 +1028,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new DateTime(cast(GDateTime*) p);
+		return new DateTime(cast(GDateTime*) p, true);
 	}
 
 	/**

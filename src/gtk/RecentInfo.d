@@ -122,7 +122,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p);
+		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -259,7 +259,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -493,7 +493,7 @@ public class RecentInfo
 			return null;
 		}
 		
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
 	}
 
 	/**

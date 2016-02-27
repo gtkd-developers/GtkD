@@ -453,7 +453,7 @@ public class Source
 			return null;
 		}
 		
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) p, true);
 	}
 
 	/**

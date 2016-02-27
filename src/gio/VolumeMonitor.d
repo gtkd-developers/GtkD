@@ -160,7 +160,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p);
+		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p);
+		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p);
+		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
 	}
 
 	/**
@@ -262,7 +262,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	int[string] connectedSignals;

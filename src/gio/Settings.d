@@ -749,7 +749,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p);
+		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p, true);
 	}
 
 	/**
@@ -850,7 +850,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1019,7 +1019,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1119,7 +1119,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**
@@ -1144,7 +1144,7 @@ public class Settings : ObjectG
 			return null;
 		}
 		
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) p, true);
 	}
 
 	/**

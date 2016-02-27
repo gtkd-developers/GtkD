@@ -174,7 +174,7 @@ public class PgLayoutLine
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p, true);
 	}
 
 	/**

@@ -128,7 +128,7 @@ public class SrvTarget
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SrvTarget)(cast(GSrvTarget*) p);
+		return ObjectG.getDObject!(SrvTarget)(cast(GSrvTarget*) p, true);
 	}
 
 	/**
@@ -215,6 +215,6 @@ public class SrvTarget
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 }

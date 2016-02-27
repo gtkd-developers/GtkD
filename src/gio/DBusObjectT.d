@@ -71,7 +71,7 @@ public template DBusObjectT(TStruct)
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p);
+		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p, true);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public template DBusObjectT(TStruct)
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

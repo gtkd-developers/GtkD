@@ -187,7 +187,7 @@ public class FrameTimings
 			return null;
 		}
 		
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
 	}
 
 	/**

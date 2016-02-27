@@ -517,7 +517,7 @@ public class DateTime
 			return null;
 		}
 		
-		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p);
+		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p, true);
 	}
 
 	/**
@@ -537,7 +537,7 @@ public class DateTime
 			return null;
 		}
 		
-		return new GLibDateTime(cast(GDateTime*) p);
+		return new GLibDateTime(cast(GDateTime*) p, true);
 	}
 
 	/**

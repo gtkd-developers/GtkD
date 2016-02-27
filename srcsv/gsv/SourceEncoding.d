@@ -82,7 +82,7 @@ public class SourceEncoding
 			return null;
 		}
 		
-		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
+		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p, true);
 	}
 
 	/**

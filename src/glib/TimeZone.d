@@ -287,7 +287,7 @@ public class TimeZone
 			return null;
 		}
 		
-		return new TimeZone(cast(GTimeZone*) p);
+		return new TimeZone(cast(GTimeZone*) p, true);
 	}
 
 	/**

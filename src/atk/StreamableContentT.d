@@ -100,7 +100,7 @@ public template StreamableContentT(TStruct)
 			return null;
 		}
 		
-		return new IOChannel(cast(GIOChannel*) p);
+		return new IOChannel(cast(GIOChannel*) p, true);
 	}
 
 	/**

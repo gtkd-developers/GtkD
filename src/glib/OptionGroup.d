@@ -144,7 +144,7 @@ public class OptionGroup
 			return null;
 		}
 		
-		return new OptionGroup(cast(GOptionGroup*) p);
+		return new OptionGroup(cast(GOptionGroup*) p, true);
 	}
 
 	/**

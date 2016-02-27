@@ -83,7 +83,7 @@ public class AllocationParams
 			return null;
 		}
 		
-		return ObjectG.getDObject!(AllocationParams)(cast(GstAllocationParams*) p);
+		return ObjectG.getDObject!(AllocationParams)(cast(GstAllocationParams*) p, true);
 	}
 
 	/**

@@ -259,7 +259,7 @@ public class PaperSize
 			return null;
 		}
 		
-		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p, true);
 	}
 
 	/**
@@ -501,6 +501,6 @@ public class PaperSize
 			return null;
 		}
 		
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) p, true);
 	}
 }

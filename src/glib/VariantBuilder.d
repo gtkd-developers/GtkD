@@ -271,7 +271,7 @@ public class VariantBuilder
 			return null;
 		}
 		
-		return new VariantBuilder(cast(GVariantBuilder*) p);
+		return new VariantBuilder(cast(GVariantBuilder*) p, true);
 	}
 
 	/**
