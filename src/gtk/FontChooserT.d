@@ -72,7 +72,10 @@ public template FontChooserT(TStruct)
 	 */
 	public string getFont()
 	{
-		return Str.toString(gtk_font_chooser_get_font(getFontChooserStruct()));
+		auto retStr = gtk_font_chooser_get_font(getFontChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -195,7 +198,10 @@ public template FontChooserT(TStruct)
 	 */
 	public string getPreviewText()
 	{
-		return Str.toString(gtk_font_chooser_get_preview_text(getFontChooserStruct()));
+		auto retStr = gtk_font_chooser_get_preview_text(getFontChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

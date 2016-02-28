@@ -265,6 +265,9 @@ public class RGBA
 	 */
 	public override string toString()
 	{
-		return Str.toString(gdk_rgba_to_string(gdkRGBA));
+		auto retStr = gdk_rgba_to_string(gdkRGBA);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

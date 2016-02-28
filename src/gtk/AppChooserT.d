@@ -89,7 +89,10 @@ public template AppChooserT(TStruct)
 	 */
 	public string getContentType()
 	{
-		return Str.toString(gtk_app_chooser_get_content_type(getAppChooserStruct()));
+		auto retStr = gtk_app_chooser_get_content_type(getAppChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

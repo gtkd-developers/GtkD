@@ -312,7 +312,10 @@ public class SymbolicColor
 	 */
 	public override string toString()
 	{
-		return Str.toString(gtk_symbolic_color_to_string(gtkSymbolicColor));
+		auto retStr = gtk_symbolic_color_to_string(gtkSymbolicColor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

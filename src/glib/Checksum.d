@@ -239,7 +239,10 @@ public class Checksum
 	 */
 	public static string computeChecksumForBytes(GChecksumType checksumType, Bytes data)
 	{
-		return Str.toString(g_compute_checksum_for_bytes(checksumType, (data is null) ? null : data.getBytesStruct()));
+		auto retStr = g_compute_checksum_for_bytes(checksumType, (data is null) ? null : data.getBytesStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -261,7 +264,10 @@ public class Checksum
 	 */
 	public static string computeChecksumForData(GChecksumType checksumType, char[] data)
 	{
-		return Str.toString(g_compute_checksum_for_data(checksumType, data.ptr, cast(size_t)data.length));
+		auto retStr = g_compute_checksum_for_data(checksumType, data.ptr, cast(size_t)data.length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -281,6 +287,9 @@ public class Checksum
 	 */
 	public static string computeChecksumForString(GChecksumType checksumType, string str, ptrdiff_t length)
 	{
-		return Str.toString(g_compute_checksum_for_string(checksumType, Str.toStringz(str), length));
+		auto retStr = g_compute_checksum_for_string(checksumType, Str.toStringz(str), length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -273,7 +273,10 @@ public class Application : GioApplication
 	 */
 	public string[] getAccelsForAction(string detailedActionName)
 	{
-		return Str.toStringArray(gtk_application_get_accels_for_action(gtkApplication, Str.toStringz(detailedActionName)));
+		auto retStr = gtk_application_get_accels_for_action(gtkApplication, Str.toStringz(detailedActionName));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -302,7 +305,10 @@ public class Application : GioApplication
 	 */
 	public string[] getActionsForAccel(string accel)
 	{
-		return Str.toStringArray(gtk_application_get_actions_for_accel(gtkApplication, Str.toStringz(accel)));
+		auto retStr = gtk_application_get_actions_for_accel(gtkApplication, Str.toStringz(accel));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -512,7 +518,10 @@ public class Application : GioApplication
 	 */
 	public string[] listActionDescriptions()
 	{
-		return Str.toStringArray(gtk_application_list_action_descriptions(gtkApplication));
+		auto retStr = gtk_application_list_action_descriptions(gtkApplication);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

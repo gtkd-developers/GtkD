@@ -433,7 +433,10 @@ public class Pad : ObjectGst
 	 */
 	public string createStreamId(Element parent, string streamId)
 	{
-		return Str.toString(gst_pad_create_stream_id(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId)));
+		auto retStr = gst_pad_create_stream_id(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -460,7 +463,10 @@ public class Pad : ObjectGst
 	 */
 	public string createStreamIdPrintfValist(Element parent, string streamId, void* varArgs)
 	{
-		return Str.toString(gst_pad_create_stream_id_printf_valist(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId), varArgs));
+		auto retStr = gst_pad_create_stream_id_printf_valist(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId), varArgs);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -761,7 +767,10 @@ public class Pad : ObjectGst
 	 */
 	public string getStreamId()
 	{
-		return Str.toString(gst_pad_get_stream_id(gstPad));
+		auto retStr = gst_pad_get_stream_id(gstPad);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -247,14 +247,15 @@ public struct FileUtils
 	{
 		GError* err = null;
 		
-		auto p = g_file_read_link(Str.toStringz(filename), &err);
+		auto retStr = g_file_read_link(Str.toStringz(filename), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -406,7 +407,10 @@ public struct FileUtils
 	 */
 	public static string mkdtemp(string tmpl)
 	{
-		return Str.toString(g_mkdtemp(Str.toStringz(tmpl)));
+		auto retStr = g_mkdtemp(Str.toStringz(tmpl));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -434,7 +438,10 @@ public struct FileUtils
 	 */
 	public static string mkdtempFull(string tmpl, int mode)
 	{
-		return Str.toString(g_mkdtemp_full(Str.toStringz(tmpl), mode));
+		auto retStr = g_mkdtemp_full(Str.toStringz(tmpl), mode);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

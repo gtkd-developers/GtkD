@@ -55,7 +55,7 @@ public struct URI
 		char* outhostname = null;
 		GError* err = null;
 		
-		auto p = g_filename_from_uri(Str.toStringz(uri), &outhostname, &err);
+		auto retStr = g_filename_from_uri(Str.toStringz(uri), &outhostname, &err);
 		
 		if (err !is null)
 		{
@@ -64,7 +64,8 @@ public struct URI
 		
 		hostname = Str.toString(outhostname);
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -86,14 +87,15 @@ public struct URI
 	{
 		GError* err = null;
 		
-		auto p = g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), &err);
+		auto retStr = g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -119,7 +121,10 @@ public struct URI
 	 */
 	public static string uriEscapeString(string unescaped, string reservedCharsAllowed, bool allowUtf8)
 	{
-		return Str.toString(g_uri_escape_string(Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8));
+		auto retStr = g_uri_escape_string(Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -138,7 +143,10 @@ public struct URI
 	 */
 	public static string[] uriListExtractUris(string uriList)
 	{
-		return Str.toStringArray(g_uri_list_extract_uris(Str.toStringz(uriList)));
+		auto retStr = g_uri_list_extract_uris(Str.toStringz(uriList));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -158,7 +166,10 @@ public struct URI
 	 */
 	public static string uriParseScheme(string uri)
 	{
-		return Str.toString(g_uri_parse_scheme(Str.toStringz(uri)));
+		auto retStr = g_uri_parse_scheme(Str.toStringz(uri));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -184,7 +195,10 @@ public struct URI
 	 */
 	public static string uriUnescapeSegment(string escapedString, string escapedStringEnd, string illegalCharacters)
 	{
-		return Str.toString(g_uri_unescape_segment(Str.toStringz(escapedString), Str.toStringz(escapedStringEnd), Str.toStringz(illegalCharacters)));
+		auto retStr = g_uri_unescape_segment(Str.toStringz(escapedString), Str.toStringz(escapedStringEnd), Str.toStringz(illegalCharacters));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -208,6 +222,9 @@ public struct URI
 	 */
 	public static string uriUnescapeString(string escapedString, string illegalCharacters)
 	{
-		return Str.toString(g_uri_unescape_string(Str.toStringz(escapedString), Str.toStringz(illegalCharacters)));
+		auto retStr = g_uri_unescape_string(Str.toStringz(escapedString), Str.toStringz(illegalCharacters));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

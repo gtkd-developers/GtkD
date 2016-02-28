@@ -279,7 +279,10 @@ public class ApplicationCommandLine : ObjectG
 	{
 		int argc;
 		
-		return Str.toStringArray(g_application_command_line_get_arguments(gApplicationCommandLine, &argc));
+		auto retStr = g_application_command_line_get_arguments(gApplicationCommandLine, &argc);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, argc);
 	}
 
 	/**

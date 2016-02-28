@@ -154,7 +154,10 @@ public class Hyperlink : ObjectG, ActionIF
 	 */
 	public string getUri(int i)
 	{
-		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i));
+		auto retStr = atk_hyperlink_get_uri(atkHyperlink, i);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

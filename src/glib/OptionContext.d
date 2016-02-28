@@ -143,7 +143,10 @@ public class OptionContext
 	 */
 	public string getHelp(bool mainHelp, OptionGroup group)
 	{
-		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct()));
+		auto retStr = g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

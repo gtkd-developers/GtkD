@@ -264,7 +264,10 @@ public class SelectionData
 	 */
 	public string getText()
 	{
-		return Str.toString(gtk_selection_data_get_text(gtkSelectionData));
+		auto retStr = gtk_selection_data_get_text(gtkSelectionData);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -280,7 +283,10 @@ public class SelectionData
 	 */
 	public string[] getUris()
 	{
-		return Str.toStringArray(gtk_selection_data_get_uris(gtkSelectionData));
+		auto retStr = gtk_selection_data_get_uris(gtkSelectionData);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

@@ -457,7 +457,10 @@ public class SimpleXML
 	 */
 	public static string markupEscapeText(string text, ptrdiff_t length)
 	{
-		return Str.toString(g_markup_escape_text(Str.toStringz(text), length));
+		auto retStr = g_markup_escape_text(Str.toStringz(text), length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -476,6 +479,9 @@ public class SimpleXML
 	 */
 	public static string markupVprintfEscaped(string format, void* args)
 	{
-		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args));
+		auto retStr = g_markup_vprintf_escaped(Str.toStringz(format), args);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

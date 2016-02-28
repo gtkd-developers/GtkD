@@ -2202,7 +2202,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public string getCompositeName()
 		{
-			return Str.toString(gtk_widget_get_composite_name(gtkWidget));
+			auto retStr = gtk_widget_get_composite_name(gtkWidget);
+			
+			scope(exit) Str.freeString(retStr);
+			return Str.toString(retStr);
 		}
 
 		/**
@@ -3185,7 +3188,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public string getTooltipMarkup()
 		{
-			return Str.toString(gtk_widget_get_tooltip_markup(gtkWidget));
+			auto retStr = gtk_widget_get_tooltip_markup(gtkWidget);
+			
+			scope(exit) Str.freeString(retStr);
+			return Str.toString(retStr);
 		}
 
 		/**
@@ -3198,7 +3204,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public string getTooltipText()
 		{
-			return Str.toString(gtk_widget_get_tooltip_text(gtkWidget));
+			auto retStr = gtk_widget_get_tooltip_text(gtkWidget);
+			
+			scope(exit) Str.freeString(retStr);
+			return Str.toString(retStr);
 		}
 
 		/**

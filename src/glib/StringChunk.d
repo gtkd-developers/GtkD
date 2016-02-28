@@ -105,7 +105,10 @@ public class StringChunk
 	 */
 	public string insert(string str)
 	{
-		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(str)));
+		auto retStr = g_string_chunk_insert(gStringChunk, Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -131,7 +134,10 @@ public class StringChunk
 	 */
 	public string insertConst(string str)
 	{
-		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(str)));
+		auto retStr = g_string_chunk_insert_const(gStringChunk, Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -156,7 +162,10 @@ public class StringChunk
 	 */
 	public string insertLen(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(str), len));
+		auto retStr = g_string_chunk_insert_len(gStringChunk, Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

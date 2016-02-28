@@ -96,14 +96,15 @@ public class MatchInfo
 	{
 		GError* err = null;
 		
-		auto p = g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), &err);
+		auto retStr = g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -134,7 +135,10 @@ public class MatchInfo
 	 */
 	public string fetch(int matchNum)
 	{
-		return Str.toString(g_match_info_fetch(gMatchInfo, matchNum));
+		auto retStr = g_match_info_fetch(gMatchInfo, matchNum);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -163,7 +167,10 @@ public class MatchInfo
 	 */
 	public string[] fetchAll()
 	{
-		return Str.toStringArray(g_match_info_fetch_all(gMatchInfo));
+		auto retStr = g_match_info_fetch_all(gMatchInfo);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -186,7 +193,10 @@ public class MatchInfo
 	 */
 	public string fetchNamed(string name)
 	{
-		return Str.toString(g_match_info_fetch_named(gMatchInfo, Str.toStringz(name)));
+		auto retStr = g_match_info_fetch_named(gMatchInfo, Str.toStringz(name));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

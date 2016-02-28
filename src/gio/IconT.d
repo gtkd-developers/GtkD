@@ -172,6 +172,9 @@ public template IconT(TStruct)
 	 */
 	public override string toString()
 	{
-		return Str.toString(g_icon_to_string(getIconStruct()));
+		auto retStr = g_icon_to_string(getIconStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

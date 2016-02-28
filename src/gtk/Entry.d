@@ -536,7 +536,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 */
 	public string getIconTooltipMarkup(GtkEntryIconPosition iconPos)
 	{
-		return Str.toString(gtk_entry_get_icon_tooltip_markup(gtkEntry, iconPos));
+		auto retStr = gtk_entry_get_icon_tooltip_markup(gtkEntry, iconPos);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -553,7 +556,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 */
 	public string getIconTooltipText(GtkEntryIconPosition iconPos)
 	{
-		return Str.toString(gtk_entry_get_icon_tooltip_text(gtkEntry, iconPos));
+		auto retStr = gtk_entry_get_icon_tooltip_text(gtkEntry, iconPos);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

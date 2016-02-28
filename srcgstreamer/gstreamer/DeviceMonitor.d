@@ -231,7 +231,10 @@ public class DeviceMonitor : ObjectGst
 	 */
 	public string[] getProviders()
 	{
-		return Str.toStringArray(gst_device_monitor_get_providers(gstDeviceMonitor));
+		auto retStr = gst_device_monitor_get_providers(gstDeviceMonitor);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

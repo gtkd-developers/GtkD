@@ -1183,7 +1183,10 @@ public class Variant
 	{
 		size_t length;
 		
-		return Str.toString(g_variant_dup_bytestring(gVariant, &length));
+		auto retStr = g_variant_dup_bytestring(gVariant, &length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr, length);
 	}
 
 	/**
@@ -1206,7 +1209,10 @@ public class Variant
 	{
 		size_t length;
 		
-		return Str.toStringArray(g_variant_dup_bytestring_array(gVariant, &length));
+		auto retStr = g_variant_dup_bytestring_array(gVariant, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -1229,7 +1235,10 @@ public class Variant
 	{
 		size_t length;
 		
-		return Str.toStringArray(g_variant_dup_objv(gVariant, &length));
+		auto retStr = g_variant_dup_objv(gVariant, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -1249,7 +1258,10 @@ public class Variant
 	 */
 	public string dupString(out size_t length)
 	{
-		return Str.toString(g_variant_dup_string(gVariant, &length));
+		auto retStr = g_variant_dup_string(gVariant, &length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1272,7 +1284,10 @@ public class Variant
 	{
 		size_t length;
 		
-		return Str.toStringArray(g_variant_dup_strv(gVariant, &length));
+		auto retStr = g_variant_dup_strv(gVariant, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -2075,7 +2090,10 @@ public class Variant
 	 */
 	public string print(bool typeAnnotate)
 	{
-		return Str.toString(g_variant_print(gVariant, typeAnnotate));
+		auto retStr = g_variant_print(gVariant, typeAnnotate);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -2392,7 +2410,10 @@ public class Variant
 	 */
 	public static string parseErrorPrintContext(ErrorG error, string sourceStr)
 	{
-		return Str.toString(g_variant_parse_error_print_context((error is null) ? null : error.getErrorGStruct(), Str.toStringz(sourceStr)));
+		auto retStr = g_variant_parse_error_print_context((error is null) ? null : error.getErrorGStruct(), Str.toStringz(sourceStr));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/** */

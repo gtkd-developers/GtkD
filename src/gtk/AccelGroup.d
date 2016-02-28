@@ -465,7 +465,10 @@ public class AccelGroup : ObjectG
 	 */
 	public static string acceleratorGetLabel(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
-		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods));
+		auto retStr = gtk_accelerator_get_label(acceleratorKey, acceleratorMods);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -489,7 +492,10 @@ public class AccelGroup : ObjectG
 	 */
 	public static string acceleratorGetLabelWithKeycode(Display display, uint acceleratorKey, uint keycode, GdkModifierType acceleratorMods)
 	{
-		return Str.toString(gtk_accelerator_get_label_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods));
+		auto retStr = gtk_accelerator_get_label_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -508,7 +514,10 @@ public class AccelGroup : ObjectG
 	 */
 	public static string acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
-		return Str.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods));
+		auto retStr = gtk_accelerator_name(acceleratorKey, acceleratorMods);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -530,7 +539,10 @@ public class AccelGroup : ObjectG
 	 */
 	public static string acceleratorNameWithKeycode(Display display, uint acceleratorKey, uint keycode, GdkModifierType acceleratorMods)
 	{
-		return Str.toString(gtk_accelerator_name_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods));
+		auto retStr = gtk_accelerator_name_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -174,7 +174,10 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getBodyFontName()
 	{
-		return Str.toString(gtk_source_print_compositor_get_body_font_name(gtkSourcePrintCompositor));
+		auto retStr = gtk_source_print_compositor_get_body_font_name(gtkSourcePrintCompositor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -224,7 +227,10 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getFooterFontName()
 	{
-		return Str.toString(gtk_source_print_compositor_get_footer_font_name(gtkSourcePrintCompositor));
+		auto retStr = gtk_source_print_compositor_get_footer_font_name(gtkSourcePrintCompositor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -238,7 +244,10 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getHeaderFontName()
 	{
-		return Str.toString(gtk_source_print_compositor_get_header_font_name(gtkSourcePrintCompositor));
+		auto retStr = gtk_source_print_compositor_get_header_font_name(gtkSourcePrintCompositor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -281,7 +290,10 @@ public class SourcePrintCompositor : ObjectG
 	 */
 	public string getLineNumbersFontName()
 	{
-		return Str.toString(gtk_source_print_compositor_get_line_numbers_font_name(gtkSourcePrintCompositor));
+		auto retStr = gtk_source_print_compositor_get_line_numbers_font_name(gtkSourcePrintCompositor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

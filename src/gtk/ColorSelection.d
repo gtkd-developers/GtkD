@@ -141,7 +141,10 @@ public class ColorSelection : Box
 			colorsArray[i] = *(colors[i].getColorStruct());
 		}
 		
-		return Str.toString(gtk_color_selection_palette_to_string(colorsArray.ptr, cast(int)colors.length));
+		auto retStr = gtk_color_selection_palette_to_string(colorsArray.ptr, cast(int)colors.length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

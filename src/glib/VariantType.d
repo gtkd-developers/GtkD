@@ -384,7 +384,10 @@ public class VariantType
 	 */
 	public string dupString()
 	{
-		return Str.toString(g_variant_type_dup_string(gVariantType));
+		auto retStr = g_variant_type_dup_string(gVariantType);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

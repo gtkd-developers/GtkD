@@ -382,7 +382,10 @@ public class IconTheme : ObjectG
 	 */
 	public string getExampleIconName()
 	{
-		return Str.toString(gtk_icon_theme_get_example_icon_name(gtkIconTheme));
+		auto retStr = gtk_icon_theme_get_example_icon_name(gtkIconTheme);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

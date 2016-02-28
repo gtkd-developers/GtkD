@@ -131,7 +131,10 @@ public template PresetT(TStruct)
 	 */
 	public string[] getPresetNames()
 	{
-		return Str.toStringArray(gst_preset_get_preset_names(getPresetStruct()));
+		auto retStr = gst_preset_get_preset_names(getPresetStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -142,7 +145,10 @@ public template PresetT(TStruct)
 	 */
 	public string[] getPropertyNames()
 	{
-		return Str.toStringArray(gst_preset_get_property_names(getPresetStruct()));
+		auto retStr = gst_preset_get_property_names(getPresetStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

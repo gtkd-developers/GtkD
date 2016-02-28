@@ -113,7 +113,10 @@ public class FileIOStream : IOStream, SeekableIF
 	 */
 	public string getEtag()
 	{
-		return Str.toString(g_file_io_stream_get_etag(gFileIOStream));
+		auto retStr = g_file_io_stream_get_etag(gFileIOStream);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

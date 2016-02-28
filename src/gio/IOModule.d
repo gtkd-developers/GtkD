@@ -137,7 +137,10 @@ public class IOModule : TypeModule
 	 */
 	public static string[] query()
 	{
-		return Str.toStringArray(g_io_module_query());
+		auto retStr = g_io_module_query();
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

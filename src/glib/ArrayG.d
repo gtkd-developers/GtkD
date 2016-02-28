@@ -102,7 +102,10 @@ public class ArrayG
 	 */
 	public string free(bool freeSegment)
 	{
-		return Str.toString(g_array_free(gArray, freeSegment));
+		auto retStr = g_array_free(gArray, freeSegment);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

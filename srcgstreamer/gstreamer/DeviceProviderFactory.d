@@ -217,7 +217,10 @@ public class DeviceProviderFactory : PluginFeature
 	 */
 	public string[] getMetadataKeys()
 	{
-		return Str.toStringArray(gst_device_provider_factory_get_metadata_keys(gstDeviceProviderFactory));
+		auto retStr = gst_device_provider_factory_get_metadata_keys(gstDeviceProviderFactory);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

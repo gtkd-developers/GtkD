@@ -56,7 +56,10 @@ public struct DBusError
 	 */
 	public static string encodeGerror(ErrorG error)
 	{
-		return Str.toString(g_dbus_error_encode_gerror((error is null) ? null : error.getErrorGStruct()));
+		auto retStr = g_dbus_error_encode_gerror((error is null) ? null : error.getErrorGStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -77,7 +80,10 @@ public struct DBusError
 	 */
 	public static string getRemoteError(ErrorG error)
 	{
-		return Str.toString(g_dbus_error_get_remote_error((error is null) ? null : error.getErrorGStruct()));
+		auto retStr = g_dbus_error_get_remote_error((error is null) ? null : error.getErrorGStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

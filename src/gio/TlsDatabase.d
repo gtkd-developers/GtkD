@@ -108,7 +108,10 @@ public class TlsDatabase : ObjectG
 	 */
 	public string createCertificateHandle(TlsCertificate certificate)
 	{
-		return Str.toString(g_tls_database_create_certificate_handle(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct()));
+		auto retStr = g_tls_database_create_certificate_handle(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

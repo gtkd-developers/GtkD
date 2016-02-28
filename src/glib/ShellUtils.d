@@ -95,7 +95,10 @@ public struct ShellUtils
 	 */
 	public static string shellQuote(string unquotedString)
 	{
-		return Str.toString(g_shell_quote(Str.toStringz(unquotedString)));
+		auto retStr = g_shell_quote(Str.toStringz(unquotedString));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -132,13 +135,14 @@ public struct ShellUtils
 	{
 		GError* err = null;
 		
-		auto p = g_shell_unquote(Str.toStringz(quotedString), &err);
+		auto retStr = g_shell_unquote(Str.toStringz(quotedString), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

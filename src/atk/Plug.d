@@ -108,6 +108,9 @@ public class Plug : ObjectAtk, ComponentIF
 	 */
 	public string getId()
 	{
-		return Str.toString(atk_plug_get_id(atkPlug));
+		auto retStr = atk_plug_get_id(atkPlug);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -105,7 +105,10 @@ public class PixbufFormat
 	 */
 	public string getDescription()
 	{
-		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat));
+		auto retStr = gdk_pixbuf_format_get_description(gdkPixbufFormat);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -119,7 +122,10 @@ public class PixbufFormat
 	 */
 	public string[] getExtensions()
 	{
-		return Str.toStringArray(gdk_pixbuf_format_get_extensions(gdkPixbufFormat));
+		auto retStr = gdk_pixbuf_format_get_extensions(gdkPixbufFormat);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -134,7 +140,10 @@ public class PixbufFormat
 	 */
 	public string getLicense()
 	{
-		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat));
+		auto retStr = gdk_pixbuf_format_get_license(gdkPixbufFormat);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -147,7 +156,10 @@ public class PixbufFormat
 	 */
 	public string[] getMimeTypes()
 	{
-		return Str.toStringArray(gdk_pixbuf_format_get_mime_types(gdkPixbufFormat));
+		auto retStr = gdk_pixbuf_format_get_mime_types(gdkPixbufFormat);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -159,7 +171,10 @@ public class PixbufFormat
 	 */
 	public string getName()
 	{
-		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat));
+		auto retStr = gdk_pixbuf_format_get_name(gdkPixbufFormat);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -299,6 +299,9 @@ public class Credentials : ObjectG
 	 */
 	public override string toString()
 	{
-		return Str.toString(g_credentials_to_string(gCredentials));
+		auto retStr = g_credentials_to_string(gCredentials);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -170,7 +170,10 @@ public class FileInfo : ObjectG
 	 */
 	public string getAttributeAsString(string attribute)
 	{
-		return Str.toString(g_file_info_get_attribute_as_string(gFileInfo, Str.toStringz(attribute)));
+		auto retStr = g_file_info_get_attribute_as_string(gFileInfo, Str.toStringz(attribute));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -600,7 +603,10 @@ public class FileInfo : ObjectG
 	 */
 	public string[] listAttributes(string nameSpace)
 	{
-		return Str.toStringArray(g_file_info_list_attributes(gFileInfo, Str.toStringz(nameSpace)));
+		auto retStr = g_file_info_list_attributes(gFileInfo, Str.toStringz(nameSpace));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

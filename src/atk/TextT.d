@@ -267,7 +267,10 @@ public template TextT(TStruct)
 	 */
 	public string getSelection(int selectionNum, out int startOffset, out int endOffset)
 	{
-		return Str.toString(atk_text_get_selection(getTextStruct(), selectionNum, &startOffset, &endOffset));
+		auto retStr = atk_text_get_selection(getTextStruct(), selectionNum, &startOffset, &endOffset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -319,7 +322,10 @@ public template TextT(TStruct)
 	 */
 	public string getStringAtOffset(int offset, AtkTextGranularity granularity, out int startOffset, out int endOffset)
 	{
-		return Str.toString(atk_text_get_string_at_offset(getTextStruct(), offset, granularity, &startOffset, &endOffset));
+		auto retStr = atk_text_get_string_at_offset(getTextStruct(), offset, granularity, &startOffset, &endOffset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -334,7 +340,10 @@ public template TextT(TStruct)
 	 */
 	public string getText(int startOffset, int endOffset)
 	{
-		return Str.toString(atk_text_get_text(getTextStruct(), startOffset, endOffset));
+		auto retStr = atk_text_get_text(getTextStruct(), startOffset, endOffset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -354,7 +363,10 @@ public template TextT(TStruct)
 	 */
 	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
-		return Str.toString(atk_text_get_text_after_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset));
+		auto retStr = atk_text_get_text_after_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -398,7 +410,10 @@ public template TextT(TStruct)
 	 */
 	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
-		return Str.toString(atk_text_get_text_at_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset));
+		auto retStr = atk_text_get_text_at_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -418,7 +433,10 @@ public template TextT(TStruct)
 	 */
 	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
-		return Str.toString(atk_text_get_text_before_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset));
+		auto retStr = atk_text_get_text_before_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

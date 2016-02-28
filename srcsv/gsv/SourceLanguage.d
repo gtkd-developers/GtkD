@@ -81,7 +81,10 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] getGlobs()
 	{
-		return Str.toStringArray(gtk_source_language_get_globs(gtkSourceLanguage));
+		auto retStr = gtk_source_language_get_globs(gtkSourceLanguage);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -133,7 +136,10 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] getMimeTypes()
 	{
-		return Str.toStringArray(gtk_source_language_get_mime_types(gtkSourceLanguage));
+		auto retStr = gtk_source_language_get_mime_types(gtkSourceLanguage);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -190,7 +196,10 @@ public class SourceLanguage : ObjectG
 	 */
 	public string[] getStyleIds()
 	{
-		return Str.toStringArray(gtk_source_language_get_style_ids(gtkSourceLanguage));
+		auto retStr = gtk_source_language_get_style_ids(gtkSourceLanguage);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

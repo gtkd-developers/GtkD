@@ -95,14 +95,15 @@ public struct Unicode
 	{
 		GError* err = null;
 		
-		auto p = g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, &err);
+		auto retStr = g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -848,14 +849,15 @@ public struct Unicode
 	{
 		GError* err = null;
 		
-		auto p = g_utf16_to_utf8(str, len, itemsRead, itemsWritten, &err);
+		auto retStr = g_utf16_to_utf8(str, len, itemsRead, itemsWritten, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -880,7 +882,10 @@ public struct Unicode
 	 */
 	public static string utf8Casefold(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_utf8_casefold(Str.toStringz(str), len));
+		auto retStr = g_utf8_casefold(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -923,7 +928,10 @@ public struct Unicode
 	 */
 	public static string utf8CollateKey(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_utf8_collate_key(Str.toStringz(str), len));
+		auto retStr = g_utf8_collate_key(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -950,7 +958,10 @@ public struct Unicode
 	 */
 	public static string utf8CollateKeyForFilename(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_utf8_collate_key_for_filename(Str.toStringz(str), len));
+		auto retStr = g_utf8_collate_key_for_filename(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -969,7 +980,10 @@ public struct Unicode
 	 */
 	public static string utf8FindNextChar(string p, string end)
 	{
-		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end)));
+		auto retStr = g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -989,7 +1003,10 @@ public struct Unicode
 	 */
 	public static string utf8FindPrevChar(string str, string p)
 	{
-		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p)));
+		auto retStr = g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1070,7 +1087,10 @@ public struct Unicode
 	 */
 	public static string utf8Normalize(string str, ptrdiff_t len, GNormalizeMode mode)
 	{
-		return Str.toString(g_utf8_normalize(Str.toStringz(str), len, mode));
+		auto retStr = g_utf8_normalize(Str.toStringz(str), len, mode);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1096,7 +1116,10 @@ public struct Unicode
 	 */
 	public static string utf8OffsetToPointer(string str, glong offset)
 	{
-		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset));
+		auto retStr = g_utf8_offset_to_pointer(Str.toStringz(str), offset);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1132,7 +1155,10 @@ public struct Unicode
 	 */
 	public static string utf8PrevChar(string p)
 	{
-		return Str.toString(g_utf8_prev_char(Str.toStringz(p)));
+		auto retStr = g_utf8_prev_char(Str.toStringz(p));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1151,7 +1177,10 @@ public struct Unicode
 	 */
 	public static string utf8Strchr(string p, ptrdiff_t len, dchar c)
 	{
-		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c));
+		auto retStr = g_utf8_strchr(Str.toStringz(p), len, c);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1169,7 +1198,10 @@ public struct Unicode
 	 */
 	public static string utf8Strdown(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_utf8_strdown(Str.toStringz(str), len));
+		auto retStr = g_utf8_strdown(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1207,7 +1239,10 @@ public struct Unicode
 	 */
 	public static string utf8Strncpy(string dest, string src, size_t n)
 	{
-		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n));
+		auto retStr = g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1226,7 +1261,10 @@ public struct Unicode
 	 */
 	public static string utf8Strrchr(string p, ptrdiff_t len, dchar c)
 	{
-		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c));
+		auto retStr = g_utf8_strrchr(Str.toStringz(p), len, c);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1255,7 +1293,10 @@ public struct Unicode
 	 */
 	public static string utf8Strreverse(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_utf8_strreverse(Str.toStringz(str), len));
+		auto retStr = g_utf8_strreverse(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1274,7 +1315,10 @@ public struct Unicode
 	 */
 	public static string utf8Strup(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_utf8_strup(Str.toStringz(str), len));
+		auto retStr = g_utf8_strup(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1293,7 +1337,10 @@ public struct Unicode
 	 */
 	public static string utf8Substring(string str, glong startPos, glong endPos)
 	{
-		return Str.toString(g_utf8_substring(Str.toStringz(str), startPos, endPos));
+		auto retStr = g_utf8_substring(Str.toStringz(str), startPos, endPos);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

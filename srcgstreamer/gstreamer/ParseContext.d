@@ -110,6 +110,9 @@ public class ParseContext
 	 */
 	public string[] getMissingElements()
 	{
-		return Str.toStringArray(gst_parse_context_get_missing_elements(gstParseContext));
+		auto retStr = gst_parse_context_get_missing_elements(gstParseContext);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 }

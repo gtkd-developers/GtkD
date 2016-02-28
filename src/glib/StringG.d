@@ -328,7 +328,10 @@ public class StringG
 	 */
 	public string free(bool freeSegment)
 	{
-		return Str.toString(g_string_free(gString, freeSegment));
+		auto retStr = g_string_free(gString, freeSegment);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

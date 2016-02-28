@@ -214,7 +214,10 @@ public class Uri
 	 */
 	public string getPath()
 	{
-		return Str.toString(gst_uri_get_path(gstUri));
+		auto retStr = gst_uri_get_path(gstUri);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -248,7 +251,10 @@ public class Uri
 	 */
 	public string getPathString()
 	{
-		return Str.toString(gst_uri_get_path_string(gstUri));
+		auto retStr = gst_uri_get_path_string(gstUri);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -294,7 +300,10 @@ public class Uri
 	 */
 	public string getQueryString()
 	{
-		return Str.toString(gst_uri_get_query_string(gstUri));
+		auto retStr = gst_uri_get_query_string(gstUri);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -713,7 +722,10 @@ public class Uri
 	 */
 	public override string toString()
 	{
-		return Str.toString(gst_uri_to_string(gstUri));
+		auto retStr = gst_uri_to_string(gstUri);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -730,7 +742,10 @@ public class Uri
 	 */
 	public static string construct(string protocol, string location)
 	{
-		return Str.toString(gst_uri_construct(Str.toStringz(protocol), Str.toStringz(location)));
+		auto retStr = gst_uri_construct(Str.toStringz(protocol), Str.toStringz(location));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -773,7 +788,10 @@ public class Uri
 	 */
 	public static string getLocation(string uri)
 	{
-		return Str.toString(gst_uri_get_location(Str.toStringz(uri)));
+		auto retStr = gst_uri_get_location(Str.toStringz(uri));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -787,7 +805,10 @@ public class Uri
 	 */
 	public static string getProtocol(string uri)
 	{
-		return Str.toString(gst_uri_get_protocol(Str.toStringz(uri)));
+		auto retStr = gst_uri_get_protocol(Str.toStringz(uri));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -833,7 +854,10 @@ public class Uri
 	 */
 	public static string joinStrings(string baseUri, string refUri)
 	{
-		return Str.toString(gst_uri_join_strings(Str.toStringz(baseUri), Str.toStringz(refUri)));
+		auto retStr = gst_uri_join_strings(Str.toStringz(baseUri), Str.toStringz(refUri));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -887,14 +911,15 @@ public class Uri
 	{
 		GError* err = null;
 		
-		auto p = gst_filename_to_uri(Str.toStringz(filename), &err);
+		auto retStr = gst_filename_to_uri(Str.toStringz(filename), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/** */

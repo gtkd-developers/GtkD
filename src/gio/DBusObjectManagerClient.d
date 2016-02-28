@@ -423,7 +423,10 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 */
 	public string getNameOwner()
 	{
-		return Str.toString(g_dbus_object_manager_client_get_name_owner(gDBusObjectManagerClient));
+		auto retStr = g_dbus_object_manager_client_get_name_owner(gDBusObjectManagerClient);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	int[string] connectedSignals;

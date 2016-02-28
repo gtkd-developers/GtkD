@@ -500,7 +500,10 @@ public class StatusIcon : ObjectG
 	 */
 	public string getTooltipMarkup()
 	{
-		return Str.toString(gtk_status_icon_get_tooltip_markup(gtkStatusIcon));
+		auto retStr = gtk_status_icon_get_tooltip_markup(gtkStatusIcon);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -515,7 +518,10 @@ public class StatusIcon : ObjectG
 	 */
 	public string getTooltipText()
 	{
-		return Str.toString(gtk_status_icon_get_tooltip_text(gtkStatusIcon));
+		auto retStr = gtk_status_icon_get_tooltip_text(gtkStatusIcon);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

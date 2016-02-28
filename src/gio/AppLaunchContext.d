@@ -115,7 +115,10 @@ public class AppLaunchContext : ObjectG
 	 */
 	public string getDisplay(AppInfoIF info, ListG files)
 	{
-		return Str.toString(g_app_launch_context_get_display(gAppLaunchContext, (info is null) ? null : info.getAppInfoStruct(), (files is null) ? null : files.getListGStruct()));
+		auto retStr = g_app_launch_context_get_display(gAppLaunchContext, (info is null) ? null : info.getAppInfoStruct(), (files is null) ? null : files.getListGStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -131,7 +134,10 @@ public class AppLaunchContext : ObjectG
 	 */
 	public string[] getEnvironment()
 	{
-		return Str.toStringArray(g_app_launch_context_get_environment(gAppLaunchContext));
+		auto retStr = g_app_launch_context_get_environment(gAppLaunchContext);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -150,7 +156,10 @@ public class AppLaunchContext : ObjectG
 	 */
 	public string getStartupNotifyId(AppInfoIF info, ListG files)
 	{
-		return Str.toString(g_app_launch_context_get_startup_notify_id(gAppLaunchContext, (info is null) ? null : info.getAppInfoStruct(), (files is null) ? null : files.getListGStruct()));
+		auto retStr = g_app_launch_context_get_startup_notify_id(gAppLaunchContext, (info is null) ? null : info.getAppInfoStruct(), (files is null) ? null : files.getListGStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -788,7 +788,7 @@ final class GtkFunction
 		}
 		else if ( isStringType(returnType) )
 		{
-			if ( outToD.empty && !throws )
+			if ( outToD.empty && !throws && !(returnOwnership == GtkTransferOwnership.Full) )
 			{
 				if ( isStringArray(returnType) )
 					buff ~= "return Str.toStringArray(" ~ gtkCall ~");";
@@ -798,7 +798,7 @@ final class GtkFunction
 				return buff;
 			}
 
-			buff ~= "auto p = "~ gtkCall ~";";
+			buff ~= "auto retStr = "~ gtkCall ~";";
 
 			if ( throws )
 			{
@@ -813,14 +813,22 @@ final class GtkFunction
 				buff ~= "";
 			}
 
+			if ( returnOwnership == GtkTransferOwnership.Full )
+			{
+				if ( isStringArray(returnType) )
+					buff ~= "scope(exit) Str.freeStringArray(retStr);";
+				else
+					buff ~= "scope(exit) Str.freeString(retStr);";
+			}
+
 			string len = lenId(returnType);
 			if ( !len.empty )
 				len = ", "~ len;
 
 			if ( isStringArray(returnType) )
-				buff ~= "return Str.toStringArray(p"~ len ~");";
+				buff ~= "return Str.toStringArray(retStr"~ len ~");";
 			else
-				buff ~= "return Str.toString(p"~ len ~");";
+				buff ~= "return Str.toString(retStr"~ len ~");";
 
 			return buff;
 		}

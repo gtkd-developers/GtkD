@@ -190,7 +190,10 @@ public template SourceCompletionProviderT(TStruct)
 	 */
 	public string getName()
 	{
-		return Str.toString(gtk_source_completion_provider_get_name(getSourceCompletionProviderStruct()));
+		auto retStr = gtk_source_completion_provider_get_name(getSourceCompletionProviderStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

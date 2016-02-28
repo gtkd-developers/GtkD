@@ -134,7 +134,10 @@ public class Module
 	 */
 	public static string buildPath(string directory, string moduleName)
 	{
-		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName)));
+		auto retStr = g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

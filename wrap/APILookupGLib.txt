@@ -1064,7 +1064,7 @@ import: core.stdc.stdio
 import: core.stdc.string
 import: gtkc.gobjecttypes
 code: start
-	/*************************************************
+	/*
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
 	 */
@@ -1079,7 +1079,7 @@ code: start
 		return s[0 .. len].idup;
 	}
 
-	/*********************************
+	/*
 	 * Convert array of chars s[] to a C-style 0 terminated string.
 	 * copied from phobos
 	 */
@@ -1189,113 +1189,28 @@ code: start
 		return argv;
 	}
 
-	deprecated ("Use std.conv.to.")
+	/** */
+	public static void freeString(char* str)
 	{
-		const static char[10] digits    = "0123456789";			/// 0..9
+		g_free(str);
+	}
 
-		/** */
-		public static string toString(bool b)
+	/** */
+	public static void freeStringArray(char** str)
+	{
+		g_strfreev(str);
+	}
+
+	/** */
+	public static void freeStringArray(char*** str)
+	{
+		while ( *str !is null )
 		{
-			return b ? "true" : "false";
+			g_strfreev(*str);
+			str++;
 		}
 
-		/** */
-		public static char[] toString(char c)
-		{
-			char[] result = new char[2];
-			result[0] = c;
-			result[1] = 0;
-			return result[0 .. 1];
-		}
-
-		/** */
-		public static string toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
-		/** */
-		public static string toString(ushort us) { return toString(cast(uint) us); } /// ditto
-
-		/** */
-		public static string toString(uint u)
-		{
-			char[uint.sizeof * 3] buffer = void;
-			int ndigits;
-			char c;
-			string result;
-
-			ndigits = 0;
-			if (u < 10)
-			{
-				result = digits[u .. u + 1].idup;
-			}
-			else
-			{
-				while (u)
-				{
-					c = cast(char)((u % 10) + '0');
-					u /= 10;
-					ndigits++;
-					buffer[buffer.length - ndigits] = c;
-				}
-
-				result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			}
-			return result;
-		}
-
-		/** */
-		public static string toString(ulong u)
-		{
-			char[ulong.sizeof * 3] buffer;
-			int ndigits;
-			char c;
-			string result;
-
-			if (u < 0x1_0000_0000)
-				return toString(cast(uint)u);
-
-			ndigits = 0;
-			while (u)
-			{
-				c = cast(char)((u % 10) + '0');
-				u /= 10;
-				ndigits++;
-				buffer[buffer.length - ndigits] = c;
-			}
-
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-
-			return result;
-		}
-
-		/** */
-		public static string toString(byte b)  { return toString(cast(int) b); } /// ditto
-		/** */
-		public static string toString(short s) { return toString(cast(int) s); } /// ditto
-
-		/** */
-		public static string toString(int i)
-		{
-			char[1 + int.sizeof * 3] buffer;
-			char c;
-			string result;
-
-			if (i >= 0)
-				return toString(cast(uint)i);
-
-			uint u = -i;
-			int ndigits = 1;
-			while (u)
-			{
-				c = cast(char)((u % 10) + '0');
-				u /= 10;
-				buffer[buffer.length - ndigits] = c;
-				ndigits++;
-			}
-			buffer[buffer.length - ndigits] = '-';
-
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-
-			return result;
-		}
+		g_free(str);
 	}
 code: end
 

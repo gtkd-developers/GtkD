@@ -260,14 +260,15 @@ public class Resource
 	{
 		GError* err = null;
 		
-		auto p = g_resource_enumerate_children(gResource, Str.toStringz(path), lookupFlags, &err);
+		auto retStr = g_resource_enumerate_children(gResource, Str.toStringz(path), lookupFlags, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -476,14 +477,15 @@ public class Resource
 	{
 		GError* err = null;
 		
-		auto p = g_resources_enumerate_children(Str.toStringz(path), lookupFlags, &err);
+		auto retStr = g_resources_enumerate_children(Str.toStringz(path), lookupFlags, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

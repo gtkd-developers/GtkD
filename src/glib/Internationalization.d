@@ -230,7 +230,10 @@ public struct Internationalization
 	 */
 	public static string[] getLocaleVariants(string locale)
 	{
-		return Str.toStringArray(g_get_locale_variants(Str.toStringz(locale)));
+		auto retStr = g_get_locale_variants(Str.toStringz(locale));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

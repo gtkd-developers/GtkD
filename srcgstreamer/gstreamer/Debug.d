@@ -54,7 +54,10 @@ public struct Debug
 	/** */
 	public static string binToDotData(Bin bin, GstDebugGraphDetails details)
 	{
-		return Str.toString(gst_debug_bin_to_dot_data((bin is null) ? null : bin.getBinStruct(), details));
+		auto retStr = gst_debug_bin_to_dot_data((bin is null) ? null : bin.getBinStruct(), details);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/** */
@@ -82,7 +85,10 @@ public struct Debug
 	 */
 	public static string constructTermColor(uint colorinfo)
 	{
-		return Str.toString(gst_debug_construct_term_color(colorinfo));
+		auto retStr = gst_debug_construct_term_color(colorinfo);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

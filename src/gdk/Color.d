@@ -242,7 +242,10 @@ public class Color
 	 */
 	public override string toString()
 	{
-		return Str.toString(gdk_color_to_string(gdkColor));
+		auto retStr = gdk_color_to_string(gdkColor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

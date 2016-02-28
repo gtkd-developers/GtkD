@@ -133,14 +133,15 @@ public class Directory
 	{
 		GError* err = null;
 		
-		auto p = g_dir_make_tmp(Str.toStringz(tmpl), &err);
+		auto retStr = g_dir_make_tmp(Str.toStringz(tmpl), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

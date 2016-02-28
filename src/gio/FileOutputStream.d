@@ -105,7 +105,10 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 */
 	public string getEtag()
 	{
-		return Str.toString(g_file_output_stream_get_etag(gFileOutputStream));
+		auto retStr = g_file_output_stream_get_etag(gFileOutputStream);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

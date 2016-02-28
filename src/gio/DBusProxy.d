@@ -650,7 +650,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 */
 	public string[] getCachedPropertyNames()
 	{
-		return Str.toStringArray(g_dbus_proxy_get_cached_property_names(gDBusProxy));
+		auto retStr = g_dbus_proxy_get_cached_property_names(gDBusProxy);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -758,7 +761,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 */
 	public string getNameOwner()
 	{
-		return Str.toString(g_dbus_proxy_get_name_owner(gDBusProxy));
+		auto retStr = g_dbus_proxy_get_name_owner(gDBusProxy);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

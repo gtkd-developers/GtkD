@@ -62,7 +62,10 @@ public struct DBusUtilities
 	 */
 	public static string addressEscapeValue(string str)
 	{
-		return Str.toString(g_dbus_address_escape_value(Str.toStringz(str)));
+		auto retStr = g_dbus_address_escape_value(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -85,14 +88,15 @@ public struct DBusUtilities
 	{
 		GError* err = null;
 		
-		auto p = g_dbus_address_get_for_bus_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_dbus_address_get_for_bus_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -209,7 +213,10 @@ public struct DBusUtilities
 	 */
 	public static string generateGuid()
 	{
-		return Str.toString(g_dbus_generate_guid());
+		auto retStr = g_dbus_generate_guid();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

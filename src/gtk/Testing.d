@@ -271,7 +271,10 @@ public struct Testing
 	 */
 	public static string textGet(Widget widget)
 	{
-		return Str.toString(gtk_test_text_get((widget is null) ? null : widget.getWidgetStruct()));
+		auto retStr = gtk_test_text_get((widget is null) ? null : widget.getWidgetStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

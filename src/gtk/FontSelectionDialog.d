@@ -160,7 +160,10 @@ public class FontSelectionDialog : Dialog
 	 */
 	public string getFontName()
 	{
-		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog));
+		auto retStr = gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

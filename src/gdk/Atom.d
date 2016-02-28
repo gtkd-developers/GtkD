@@ -45,7 +45,10 @@ public  import gtkc.gdktypes;
  */
 public string name(GdkAtom atom)
 {
-	return Str.toString(gdk_atom_name(atom));
+	auto retStr = gdk_atom_name(atom);
+	
+	scope(exit) Str.freeString(retStr);
+	return Str.toString(retStr);
 }
 
 /**
@@ -231,5 +234,8 @@ public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, i
  */
 public string utf8ToStringTarget(string str)
 {
-	return Str.toString(gdk_utf8_to_string_target(Str.toStringz(str)));
+	auto retStr = gdk_utf8_to_string_target(Str.toStringz(str));
+	
+	scope(exit) Str.freeString(retStr);
+	return Str.toString(retStr);
 }

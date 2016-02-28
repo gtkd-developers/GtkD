@@ -197,14 +197,15 @@ public class KeyFile
 	{
 		GError* err = null;
 		
-		auto p = g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto retStr = g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -292,7 +293,10 @@ public class KeyFile
 	 */
 	public string[] getGroups(out size_t length)
 	{
-		return Str.toStringArray(g_key_file_get_groups(gKeyFile, &length));
+		auto retStr = g_key_file_get_groups(gKeyFile, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -417,14 +421,15 @@ public class KeyFile
 	{
 		GError* err = null;
 		
-		auto p = g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err);
+		auto retStr = g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -453,14 +458,15 @@ public class KeyFile
 	{
 		GError* err = null;
 		
-		auto p = g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &err);
+		auto retStr = g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -493,14 +499,15 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 		
-		auto p = g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err);
+		auto retStr = g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p, length);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -512,7 +519,10 @@ public class KeyFile
 	 */
 	public string getStartGroup()
 	{
-		return Str.toString(g_key_file_get_start_group(gKeyFile));
+		auto retStr = g_key_file_get_start_group(gKeyFile);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -540,14 +550,15 @@ public class KeyFile
 	{
 		GError* err = null;
 		
-		auto p = g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto retStr = g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -574,14 +585,15 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 		
-		auto p = g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto retStr = g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p, length);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -638,14 +650,15 @@ public class KeyFile
 	{
 		GError* err = null;
 		
-		auto p = g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto retStr = g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1266,14 +1279,15 @@ public class KeyFile
 	{
 		GError* err = null;
 		
-		auto p = g_key_file_to_data(gKeyFile, &length, &err);
+		auto retStr = g_key_file_to_data(gKeyFile, &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

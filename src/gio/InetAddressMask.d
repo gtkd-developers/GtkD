@@ -239,6 +239,9 @@ public class InetAddressMask : ObjectG, InitableIF
 	 */
 	public override string toString()
 	{
-		return Str.toString(g_inet_address_mask_to_string(gInetAddressMask));
+		auto retStr = g_inet_address_mask_to_string(gInetAddressMask);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -582,7 +582,10 @@ public struct ValueGst
 	 */
 	public static string serialize(Value value)
 	{
-		return Str.toString(gst_value_serialize((value is null) ? null : value.getValueStruct()));
+		auto retStr = gst_value_serialize((value is null) ? null : value.getValueStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

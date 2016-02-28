@@ -236,6 +236,9 @@ public struct GStreamer
 	 */
 	public static string versionString()
 	{
-		return Str.toString(gst_version_string());
+		auto retStr = gst_version_string();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

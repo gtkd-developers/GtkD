@@ -196,7 +196,10 @@ public class Value
 	 */
 	public string dupString()
 	{
-		return Str.toString(g_value_dup_string(gValue));
+		auto retStr = g_value_dup_string(gValue);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1704,6 +1707,9 @@ public class Value
 	 */
 	public static string strdupValueContents(Value value)
 	{
-		return Str.toString(g_strdup_value_contents((value is null) ? null : value.getValueStruct()));
+		auto retStr = g_strdup_value_contents((value is null) ? null : value.getValueStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

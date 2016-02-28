@@ -672,7 +672,10 @@ public class Clipboard : ObjectG
 	 */
 	public string waitForText()
 	{
-		return Str.toString(gtk_clipboard_wait_for_text(gtkClipboard));
+		auto retStr = gtk_clipboard_wait_for_text(gtkClipboard);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -690,7 +693,10 @@ public class Clipboard : ObjectG
 	 */
 	public string[] waitForUris()
 	{
-		return Str.toStringArray(gtk_clipboard_wait_for_uris(gtkClipboard));
+		auto retStr = gtk_clipboard_wait_for_uris(gtkClipboard);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

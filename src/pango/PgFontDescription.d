@@ -521,7 +521,10 @@ public class PgFontDescription
 	 */
 	public string toFilename()
 	{
-		return Str.toString(pango_font_description_to_filename(pangoFontDescription));
+		auto retStr = pango_font_description_to_filename(pangoFontDescription);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -535,7 +538,10 @@ public class PgFontDescription
 	 */
 	public override string toString()
 	{
-		return Str.toString(pango_font_description_to_string(pangoFontDescription));
+		auto retStr = pango_font_description_to_string(pangoFontDescription);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

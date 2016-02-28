@@ -630,7 +630,10 @@ public class DateTime
 	 */
 	public string format(string format)
 	{
-		return Str.toString(g_date_time_format(gDateTime, Str.toStringz(format)));
+		auto retStr = g_date_time_format(gDateTime, Str.toStringz(format));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

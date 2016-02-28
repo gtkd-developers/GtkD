@@ -129,7 +129,10 @@ public template SourceCompletionProposalT(TStruct)
 	 */
 	public string getInfo()
 	{
-		return Str.toString(gtk_source_completion_proposal_get_info(getSourceCompletionProposalStruct()));
+		auto retStr = gtk_source_completion_proposal_get_info(getSourceCompletionProposalStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -142,7 +145,10 @@ public template SourceCompletionProposalT(TStruct)
 	 */
 	public string getLabel()
 	{
-		return Str.toString(gtk_source_completion_proposal_get_label(getSourceCompletionProposalStruct()));
+		auto retStr = gtk_source_completion_proposal_get_label(getSourceCompletionProposalStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -155,7 +161,10 @@ public template SourceCompletionProposalT(TStruct)
 	 */
 	public string getMarkup()
 	{
-		return Str.toString(gtk_source_completion_proposal_get_markup(getSourceCompletionProposalStruct()));
+		auto retStr = gtk_source_completion_proposal_get_markup(getSourceCompletionProposalStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -170,7 +179,10 @@ public template SourceCompletionProposalT(TStruct)
 	 */
 	public string getText()
 	{
-		return Str.toString(gtk_source_completion_proposal_get_text(getSourceCompletionProposalStruct()));
+		auto retStr = gtk_source_completion_proposal_get_text(getSourceCompletionProposalStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

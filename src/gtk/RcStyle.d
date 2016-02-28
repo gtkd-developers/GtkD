@@ -157,7 +157,10 @@ public class RcStyle : ObjectG
 	 */
 	public static string findModuleInPath(string moduleFile)
 	{
-		return Str.toString(gtk_rc_find_module_in_path(Str.toStringz(moduleFile)));
+		auto retStr = gtk_rc_find_module_in_path(Str.toStringz(moduleFile));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -177,7 +180,10 @@ public class RcStyle : ObjectG
 	 */
 	public static string findPixmapInPath(Settings settings, ScannerG scanner, string pixmapFile)
 	{
-		return Str.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), (scanner is null) ? null : scanner.getScannerGStruct(), Str.toStringz(pixmapFile)));
+		auto retStr = gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), (scanner is null) ? null : scanner.getScannerGStruct(), Str.toStringz(pixmapFile));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -207,7 +213,10 @@ public class RcStyle : ObjectG
 	 */
 	public static string getImModuleFile()
 	{
-		return Str.toString(gtk_rc_get_im_module_file());
+		auto retStr = gtk_rc_get_im_module_file();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -224,7 +233,10 @@ public class RcStyle : ObjectG
 	 */
 	public static string getImModulePath()
 	{
-		return Str.toString(gtk_rc_get_im_module_path());
+		auto retStr = gtk_rc_get_im_module_path();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -238,7 +250,10 @@ public class RcStyle : ObjectG
 	 */
 	public static string getModuleDir()
 	{
-		return Str.toString(gtk_rc_get_module_dir());
+		auto retStr = gtk_rc_get_module_dir();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -327,7 +342,10 @@ public class RcStyle : ObjectG
 	 */
 	public static string getThemeDir()
 	{
-		return Str.toString(gtk_rc_get_theme_dir());
+		auto retStr = gtk_rc_get_theme_dir();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -164,7 +164,10 @@ public class UnixMountPoint
 	 */
 	public string guessName()
 	{
-		return Str.toString(g_unix_mount_point_guess_name(gUnixMountPoint));
+		auto retStr = g_unix_mount_point_guess_name(gUnixMountPoint);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -202,7 +202,10 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public string getTooltipMarkup(SourceMark mark)
 	{
-		return Str.toString(gtk_source_mark_attributes_get_tooltip_markup(gtkSourceMarkAttributes, (mark is null) ? null : mark.getSourceMarkStruct()));
+		auto retStr = gtk_source_mark_attributes_get_tooltip_markup(gtkSourceMarkAttributes, (mark is null) ? null : mark.getSourceMarkStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -218,7 +221,10 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public string getTooltipText(SourceMark mark)
 	{
-		return Str.toString(gtk_source_mark_attributes_get_tooltip_text(gtkSourceMarkAttributes, (mark is null) ? null : mark.getSourceMarkStruct()));
+		auto retStr = gtk_source_mark_attributes_get_tooltip_text(gtkSourceMarkAttributes, (mark is null) ? null : mark.getSourceMarkStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

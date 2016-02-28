@@ -341,7 +341,10 @@ public class ElementFactory : PluginFeature
 	 */
 	public string[] getMetadataKeys()
 	{
-		return Str.toStringArray(gst_element_factory_get_metadata_keys(gstElementFactory));
+		auto retStr = gst_element_factory_get_metadata_keys(gstElementFactory);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

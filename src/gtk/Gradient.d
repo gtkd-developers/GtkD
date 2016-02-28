@@ -250,7 +250,10 @@ public class Gradient
 	 */
 	public override string toString()
 	{
-		return Str.toString(gtk_gradient_to_string(gtkGradient));
+		auto retStr = gtk_gradient_to_string(gtkGradient);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

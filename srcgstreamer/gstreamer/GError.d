@@ -45,6 +45,9 @@ public struct GError
 	 */
 	public static string errorGetMessage(GQuark domain, int code)
 	{
-		return Str.toString(gst_error_get_message(domain, code));
+		auto retStr = gst_error_get_message(domain, code);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

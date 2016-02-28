@@ -132,7 +132,10 @@ public struct Gdk
 	 */
 	public static string getDisplay()
 	{
-		return Str.toString(gdk_get_display());
+		auto retStr = gdk_get_display();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

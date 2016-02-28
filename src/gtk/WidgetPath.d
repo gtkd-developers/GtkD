@@ -754,7 +754,10 @@ public class WidgetPath
 	 */
 	public override string toString()
 	{
-		return Str.toString(gtk_widget_path_to_string(gtkWidgetPath));
+		auto retStr = gtk_widget_path_to_string(gtkWidgetPath);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

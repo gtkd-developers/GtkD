@@ -239,7 +239,10 @@ public template DriveT(TStruct)
 	 */
 	public string[] enumerateIdentifiers()
 	{
-		return Str.toStringArray(g_drive_enumerate_identifiers(getDriveStruct()));
+		auto retStr = g_drive_enumerate_identifiers(getDriveStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -272,7 +275,10 @@ public template DriveT(TStruct)
 	 */
 	public string getIdentifier(string kind)
 	{
-		return Str.toString(g_drive_get_identifier(getDriveStruct(), Str.toStringz(kind)));
+		auto retStr = g_drive_get_identifier(getDriveStruct(), Str.toStringz(kind));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -283,7 +289,10 @@ public template DriveT(TStruct)
 	 */
 	public string getName()
 	{
-		return Str.toString(g_drive_get_name(getDriveStruct()));
+		auto retStr = g_drive_get_name(getDriveStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -456,7 +456,10 @@ public template TreeModelT(TStruct)
 	 */
 	public string getStringFromIter(TreeIter iter)
 	{
-		return Str.toString(gtk_tree_model_get_string_from_iter(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct()));
+		auto retStr = gtk_tree_model_get_string_from_iter(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

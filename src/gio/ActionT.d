@@ -173,7 +173,10 @@ public template ActionT(TStruct)
 	 */
 	public static string printDetailedName(string actionName, Variant targetValue)
 	{
-		return Str.toString(g_action_print_detailed_name(Str.toStringz(actionName), (targetValue is null) ? null : targetValue.getVariantStruct()));
+		auto retStr = g_action_print_detailed_name(Str.toStringz(actionName), (targetValue is null) ? null : targetValue.getVariantStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

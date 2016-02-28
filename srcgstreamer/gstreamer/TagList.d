@@ -879,7 +879,10 @@ public class TagList
 	 */
 	public override string toString()
 	{
-		return Str.toString(gst_tag_list_to_string(gstTagList));
+		auto retStr = gst_tag_list_to_string(gstTagList);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

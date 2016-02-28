@@ -1068,7 +1068,10 @@ public class Structure
 	 */
 	public override string toString()
 	{
-		return Str.toString(gst_structure_to_string(gstStructure));
+		auto retStr = gst_structure_to_string(gstStructure);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

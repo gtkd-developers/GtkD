@@ -430,11 +430,12 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GArray* outattributes = gMalloc!GArray();
 		
-		auto p = vte_terminal_get_text(vteTerminal, isSelected, userData, outattributes);
+		auto retStr = vte_terminal_get_text(vteTerminal, isSelected, userData, outattributes);
 		
 		attributes = new ArrayG(outattributes, true);
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -457,11 +458,12 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GArray* outattributes = gMalloc!GArray();
 		
-		auto p = vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, outattributes);
+		auto retStr = vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, outattributes);
 		
 		attributes = new ArrayG(outattributes, true);
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -488,11 +490,12 @@ public class Terminal : Widget, ScrollableIF
 	{
 		GArray* outattributes = gMalloc!GArray();
 		
-		auto p = vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, outattributes);
+		auto retStr = vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, outattributes);
 		
 		attributes = new ArrayG(outattributes, true);
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -555,7 +558,10 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string matchCheck(glong column, glong row, out int tag)
 	{
-		return Str.toString(vte_terminal_match_check(vteTerminal, column, row, &tag));
+		auto retStr = vte_terminal_match_check(vteTerminal, column, row, &tag);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -577,7 +583,10 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string matchCheckEvent(Event event, out int tag)
 	{
-		return Str.toString(vte_terminal_match_check_event(vteTerminal, (event is null) ? null : event.getEventStruct(), &tag));
+		auto retStr = vte_terminal_match_check_event(vteTerminal, (event is null) ? null : event.getEventStruct(), &tag);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -2148,6 +2157,9 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public static string getUserShell()
 	{
-		return Str.toString(vte_get_user_shell());
+		auto retStr = vte_get_user_shell();
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

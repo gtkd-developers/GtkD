@@ -140,7 +140,10 @@ public class Device : ObjectGst
 	 */
 	public string getDeviceClass()
 	{
-		return Str.toString(gst_device_get_device_class(gstDevice));
+		auto retStr = gst_device_get_device_class(gstDevice);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -152,7 +155,10 @@ public class Device : ObjectGst
 	 */
 	public string getDisplayName()
 	{
-		return Str.toString(gst_device_get_display_name(gstDevice));
+		auto retStr = gst_device_get_display_name(gstDevice);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

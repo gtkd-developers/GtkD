@@ -1356,7 +1356,10 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	public override string toString()
 	{
-		return Str.toString(gtk_css_provider_to_string(gtkCssProvider));
+		auto retStr = gtk_css_provider_to_string(gtkCssProvider);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	int[string] connectedSignals;

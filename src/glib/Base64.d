@@ -126,7 +126,10 @@ public struct Base64
 	 */
 	public static string encode(char[] data)
 	{
-		return Str.toString(g_base64_encode(data.ptr, cast(size_t)data.length));
+		auto retStr = g_base64_encode(data.ptr, cast(size_t)data.length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -183,7 +183,10 @@ public struct UnixMountEntry
 	 */
 	public static string guessName(GUnixMountEntry* mountEntry)
 	{
-		return Str.toString(g_unix_mount_guess_name(mountEntry));
+		auto retStr = g_unix_mount_guess_name(mountEntry);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

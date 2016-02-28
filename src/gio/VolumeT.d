@@ -218,7 +218,10 @@ public template VolumeT(TStruct)
 	 */
 	public string[] enumerateIdentifiers()
 	{
-		return Str.toStringArray(g_volume_enumerate_identifiers(getVolumeStruct()));
+		auto retStr = g_volume_enumerate_identifiers(getVolumeStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -318,7 +321,10 @@ public template VolumeT(TStruct)
 	 */
 	public string getIdentifier(string kind)
 	{
-		return Str.toString(g_volume_get_identifier(getVolumeStruct(), Str.toStringz(kind)));
+		auto retStr = g_volume_get_identifier(getVolumeStruct(), Str.toStringz(kind));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -348,7 +354,10 @@ public template VolumeT(TStruct)
 	 */
 	public string getName()
 	{
-		return Str.toString(g_volume_get_name(getVolumeStruct()));
+		auto retStr = g_volume_get_name(getVolumeStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -396,7 +405,10 @@ public template VolumeT(TStruct)
 	 */
 	public string getUuid()
 	{
-		return Str.toString(g_volume_get_uuid(getVolumeStruct()));
+		auto retStr = g_volume_get_uuid(getVolumeStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

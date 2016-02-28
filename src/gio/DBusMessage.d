@@ -636,7 +636,10 @@ public class DBusMessage : ObjectG
 	 */
 	public string print(uint indent)
 	{
-		return Str.toString(g_dbus_message_print(gDBusMessage, indent));
+		auto retStr = g_dbus_message_print(gDBusMessage, indent);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

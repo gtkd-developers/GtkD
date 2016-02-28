@@ -1039,7 +1039,10 @@ public class Settings : ObjectG
 	 */
 	public string getString(string key)
 	{
-		return Str.toString(g_settings_get_string(gSettings, Str.toStringz(key)));
+		auto retStr = g_settings_get_string(gSettings, Str.toStringz(key));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1059,7 +1062,10 @@ public class Settings : ObjectG
 	 */
 	public string[] getStrv(string key)
 	{
-		return Str.toStringArray(g_settings_get_strv(gSettings, Str.toStringz(key)));
+		auto retStr = g_settings_get_strv(gSettings, Str.toStringz(key));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -1187,7 +1193,10 @@ public class Settings : ObjectG
 	 */
 	public string[] listChildren()
 	{
-		return Str.toStringArray(g_settings_list_children(gSettings));
+		auto retStr = g_settings_list_children(gSettings);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -1204,7 +1213,10 @@ public class Settings : ObjectG
 	 */
 	public string[] listKeys()
 	{
-		return Str.toStringArray(g_settings_list_keys(gSettings));
+		auto retStr = g_settings_list_keys(gSettings);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

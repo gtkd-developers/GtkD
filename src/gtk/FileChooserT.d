@@ -301,7 +301,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getCurrentFolder()
 	{
-		return Str.toString(gtk_file_chooser_get_current_folder(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_current_folder(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -345,7 +348,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getCurrentFolderUri()
 	{
-		return Str.toString(gtk_file_chooser_get_current_folder_uri(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_current_folder_uri(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -367,7 +373,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getCurrentName()
 	{
-		return Str.toString(gtk_file_chooser_get_current_name(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_current_name(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -446,7 +455,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getFilename()
 	{
-		return Str.toString(gtk_file_chooser_get_filename(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_filename(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -562,7 +574,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getPreviewFilename()
 	{
-		return Str.toString(gtk_file_chooser_get_preview_filename(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_preview_filename(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -576,7 +591,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getPreviewUri()
 	{
-		return Str.toString(gtk_file_chooser_get_preview_uri(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_preview_uri(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -656,7 +674,10 @@ public template FileChooserT(TStruct)
 	 */
 	public string getUri()
 	{
-		return Str.toString(gtk_file_chooser_get_uri(getFileChooserStruct()));
+		auto retStr = gtk_file_chooser_get_uri(getFileChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

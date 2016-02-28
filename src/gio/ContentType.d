@@ -81,7 +81,10 @@ public struct ContentType
 	 */
 	public static string fromMimeType(string mimeType)
 	{
-		return Str.toString(g_content_type_from_mime_type(Str.toStringz(mimeType)));
+		auto retStr = g_content_type_from_mime_type(Str.toStringz(mimeType));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -95,7 +98,10 @@ public struct ContentType
 	 */
 	public static string getDescription(string type)
 	{
-		return Str.toString(g_content_type_get_description(Str.toStringz(type)));
+		auto retStr = g_content_type_get_description(Str.toStringz(type));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -115,7 +121,10 @@ public struct ContentType
 	 */
 	public static string getGenericIconName(string type)
 	{
-		return Str.toString(g_content_type_get_generic_icon_name(Str.toStringz(type)));
+		auto retStr = g_content_type_get_generic_icon_name(Str.toStringz(type));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -150,7 +159,10 @@ public struct ContentType
 	 */
 	public static string getMimeType(string type)
 	{
-		return Str.toString(g_content_type_get_mime_type(Str.toStringz(type)));
+		auto retStr = g_content_type_get_mime_type(Str.toStringz(type));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -196,11 +208,12 @@ public struct ContentType
 	{
 		int outresultUncertain;
 		
-		auto p = g_content_type_guess(Str.toStringz(filename), data.ptr, cast(size_t)data.length, &outresultUncertain);
+		auto retStr = g_content_type_guess(Str.toStringz(filename), data.ptr, cast(size_t)data.length, &outresultUncertain);
 		
 		resultUncertain = (outresultUncertain == 1);
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -227,7 +240,10 @@ public struct ContentType
 	 */
 	public static string[] guessForTree(FileIF root)
 	{
-		return Str.toStringArray(g_content_type_guess_for_tree((root is null) ? null : root.getFileStruct()));
+		auto retStr = g_content_type_guess_for_tree((root is null) ? null : root.getFileStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

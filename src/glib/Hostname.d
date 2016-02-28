@@ -108,7 +108,10 @@ public struct Hostname
 	 */
 	public static string toAscii(string hostname)
 	{
-		return Str.toString(g_hostname_to_ascii(Str.toStringz(hostname)));
+		auto retStr = g_hostname_to_ascii(Str.toStringz(hostname));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -130,6 +133,9 @@ public struct Hostname
 	 */
 	public static string toUnicode(string hostname)
 	{
-		return Str.toString(g_hostname_to_unicode(Str.toStringz(hostname)));
+		auto retStr = g_hostname_to_unicode(Str.toStringz(hostname));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

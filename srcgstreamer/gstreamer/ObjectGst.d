@@ -337,7 +337,10 @@ public class ObjectGst : ObjectG
 	 */
 	public string getName()
 	{
-		return Str.toString(gst_object_get_name(gstObject));
+		auto retStr = gst_object_get_name(gstObject);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -375,7 +378,10 @@ public class ObjectGst : ObjectG
 	 */
 	public string getPathString()
 	{
-		return Str.toString(gst_object_get_path_string(gstObject));
+		auto retStr = gst_object_get_path_string(gstObject);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

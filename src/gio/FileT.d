@@ -1100,7 +1100,10 @@ public template FileT(TStruct)
 	 */
 	public string getBasename()
 	{
-		return Str.toString(g_file_get_basename(getFileStruct()));
+		auto retStr = g_file_get_basename(getFileStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1213,7 +1216,10 @@ public template FileT(TStruct)
 	 */
 	public string getParseName()
 	{
-		return Str.toString(g_file_get_parse_name(getFileStruct()));
+		auto retStr = g_file_get_parse_name(getFileStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1228,7 +1234,10 @@ public template FileT(TStruct)
 	 */
 	public string getPath()
 	{
-		return Str.toString(g_file_get_path(getFileStruct()));
+		auto retStr = g_file_get_path(getFileStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1246,7 +1255,10 @@ public template FileT(TStruct)
 	 */
 	public string getRelativePath(FileIF descendant)
 	{
-		return Str.toString(g_file_get_relative_path(getFileStruct(), (descendant is null) ? null : descendant.getFileStruct()));
+		auto retStr = g_file_get_relative_path(getFileStruct(), (descendant is null) ? null : descendant.getFileStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1260,7 +1272,10 @@ public template FileT(TStruct)
 	 */
 	public string getUri()
 	{
-		return Str.toString(g_file_get_uri(getFileStruct()));
+		auto retStr = g_file_get_uri(getFileStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1279,7 +1294,10 @@ public template FileT(TStruct)
 	 */
 	public string getUriScheme()
 	{
-		return Str.toString(g_file_get_uri_scheme(getFileStruct()));
+		auto retStr = g_file_get_uri_scheme(getFileStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

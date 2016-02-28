@@ -1175,7 +1175,10 @@ public class TextIter
 	 */
 	public string getSlice(TextIter end)
 	{
-		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
+		auto retStr = gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1212,7 +1215,10 @@ public class TextIter
 	 */
 	public string getText(TextIter end)
 	{
-		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
+		auto retStr = gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1278,7 +1284,10 @@ public class TextIter
 	 */
 	public string getVisibleSlice(TextIter end)
 	{
-		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
+		auto retStr = gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1294,7 +1303,10 @@ public class TextIter
 	 */
 	public string getVisibleText(TextIter end)
 	{
-		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()));
+		auto retStr = gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

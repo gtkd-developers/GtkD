@@ -212,7 +212,10 @@ public class RecentInfo
 	{
 		size_t length;
 		
-		return Str.toStringArray(gtk_recent_info_get_applications(gtkRecentInfo, &length));
+		auto retStr = gtk_recent_info_get_applications(gtkRecentInfo, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -276,7 +279,10 @@ public class RecentInfo
 	{
 		size_t length;
 		
-		return Str.toStringArray(gtk_recent_info_get_groups(gtkRecentInfo, &length));
+		auto retStr = gtk_recent_info_get_groups(gtkRecentInfo, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -356,7 +362,10 @@ public class RecentInfo
 	 */
 	public string getShortName()
 	{
-		return Str.toString(gtk_recent_info_get_short_name(gtkRecentInfo));
+		auto retStr = gtk_recent_info_get_short_name(gtkRecentInfo);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -384,7 +393,10 @@ public class RecentInfo
 	 */
 	public string getUriDisplay()
 	{
-		return Str.toString(gtk_recent_info_get_uri_display(gtkRecentInfo));
+		auto retStr = gtk_recent_info_get_uri_display(gtkRecentInfo);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -456,7 +468,10 @@ public class RecentInfo
 	 */
 	public string lastApplication()
 	{
-		return Str.toString(gtk_recent_info_last_application(gtkRecentInfo));
+		auto retStr = gtk_recent_info_last_application(gtkRecentInfo);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

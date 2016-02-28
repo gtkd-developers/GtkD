@@ -357,6 +357,9 @@ public class InetAddress : ObjectG
 	 */
 	public override string toString()
 	{
-		return Str.toString(g_inet_address_to_string(gInetAddress));
+		auto retStr = g_inet_address_to_string(gInetAddress);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

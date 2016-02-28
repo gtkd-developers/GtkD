@@ -139,7 +139,10 @@ public template EditableT(TStruct)
 	 */
 	public string getChars(int startPos, int endPos)
 	{
-		return Str.toString(gtk_editable_get_chars(getEditableStruct(), startPos, endPos));
+		auto retStr = gtk_editable_get_chars(getEditableStruct(), startPos, endPos);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

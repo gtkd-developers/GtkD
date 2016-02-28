@@ -225,7 +225,10 @@ public class FileAttributeMatcher
 	 */
 	public override string toString()
 	{
-		return Str.toString(g_file_attribute_matcher_to_string(gFileAttributeMatcher));
+		auto retStr = g_file_attribute_matcher_to_string(gFileAttributeMatcher);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

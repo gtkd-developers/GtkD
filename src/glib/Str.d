@@ -35,7 +35,7 @@ public  import gtkc.gobjecttypes;
 /** */
 public struct Str
 {
-	/*************************************************
+	/*
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
 	 */
@@ -50,7 +50,7 @@ public struct Str
 		return s[0 .. len].idup;
 	}
 	
-	/*********************************
+	/*
 	 * Convert array of chars s[] to a C-style 0 terminated string.
 	 * copied from phobos
 	 */
@@ -160,113 +160,28 @@ public struct Str
 		return argv;
 	}
 	
-	deprecated ("Use std.conv.to.")
+	/** */
+	public static void freeString(char* str)
 	{
-		const static char[10] digits    = "0123456789";			/// 0..9
-		
-		/** */
-		public static string toString(bool b)
+		g_free(str);
+	}
+	
+	/** */
+	public static void freeStringArray(char** str)
+	{
+		g_strfreev(str);
+	}
+	
+	/** */
+	public static void freeStringArray(char*** str)
+	{
+		while ( *str !is null )
 		{
-			return b ? "true" : "false";
+			g_strfreev(*str);
+			str++;
 		}
 		
-		/** */
-		public static char[] toString(char c)
-		{
-			char[] result = new char[2];
-			result[0] = c;
-			result[1] = 0;
-			return result[0 .. 1];
-		}
-		
-		/** */
-		public static string toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
-		/** */
-		public static string toString(ushort us) { return toString(cast(uint) us); } /// ditto
-		
-		/** */
-		public static string toString(uint u)
-		{
-			char[uint.sizeof * 3] buffer = void;
-			int ndigits;
-			char c;
-			string result;
-			
-			ndigits = 0;
-			if (u < 10)
-			{
-				result = digits[u .. u + 1].idup;
-			}
-			else
-			{
-				while (u)
-				{
-					c = cast(char)((u % 10) + '0');
-					u /= 10;
-					ndigits++;
-					buffer[buffer.length - ndigits] = c;
-				}
-				
-				result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			}
-			return result;
-		}
-		
-		/** */
-		public static string toString(ulong u)
-		{
-			char[ulong.sizeof * 3] buffer;
-			int ndigits;
-			char c;
-			string result;
-			
-			if (u < 0x1_0000_0000)
-				return toString(cast(uint)u);
-			
-			ndigits = 0;
-			while (u)
-			{
-				c = cast(char)((u % 10) + '0');
-				u /= 10;
-				ndigits++;
-				buffer[buffer.length - ndigits] = c;
-			}
-			
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			
-			return result;
-		}
-		
-		/** */
-		public static string toString(byte b)  { return toString(cast(int) b); } /// ditto
-		/** */
-		public static string toString(short s) { return toString(cast(int) s); } /// ditto
-		
-		/** */
-		public static string toString(int i)
-		{
-			char[1 + int.sizeof * 3] buffer;
-			char c;
-			string result;
-			
-			if (i >= 0)
-				return toString(cast(uint)i);
-			
-			uint u = -i;
-			int ndigits = 1;
-			while (u)
-			{
-				c = cast(char)((u % 10) + '0');
-				u /= 10;
-				buffer[buffer.length - ndigits] = c;
-				ndigits++;
-			}
-			buffer[buffer.length - ndigits] = '-';
-			
-			result = buffer[buffer.length - ndigits .. buffer.length].idup;
-			
-			return result;
-		}
+		g_free(str);
 	}
 
 	/**
@@ -308,7 +223,10 @@ public struct Str
 	 */
 	public static string asciiDtostr(string buffer, int bufLen, double d)
 	{
-		return Str.toString(g_ascii_dtostr(Str.toStringz(buffer), bufLen, d));
+		auto retStr = g_ascii_dtostr(Str.toStringz(buffer), bufLen, d);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -333,7 +251,10 @@ public struct Str
 	 */
 	public static string asciiFormatd(string buffer, int bufLen, string format, double d)
 	{
-		return Str.toString(g_ascii_formatd(Str.toStringz(buffer), bufLen, Str.toStringz(format), d));
+		auto retStr = g_ascii_formatd(Str.toStringz(buffer), bufLen, Str.toStringz(format), d);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -379,7 +300,10 @@ public struct Str
 	 */
 	public static string asciiStrdown(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_ascii_strdown(Str.toStringz(str), len));
+		auto retStr = g_ascii_strdown(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -526,7 +450,10 @@ public struct Str
 	 */
 	public static string asciiStrup(string str, ptrdiff_t len)
 	{
-		return Str.toString(g_ascii_strup(Str.toStringz(str), len));
+		auto retStr = g_ascii_strup(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -619,7 +546,10 @@ public struct Str
 	 */
 	public static string stpcpy(string dest, string src)
 	{
-		return Str.toString(g_stpcpy(Str.toStringz(dest), Str.toStringz(src)));
+		auto retStr = g_stpcpy(Str.toStringz(dest), Str.toStringz(src));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -736,7 +666,10 @@ public struct Str
 	 */
 	public static string toAscii(string str, string fromLocale)
 	{
-		return Str.toString(g_str_to_ascii(Str.toStringz(str), Str.toStringz(fromLocale)));
+		auto retStr = g_str_to_ascii(Str.toStringz(str), Str.toStringz(fromLocale));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -771,11 +704,12 @@ public struct Str
 	{
 		char** outasciiAlternates = null;
 		
-		auto p = g_str_tokenize_and_fold(Str.toStringz(str), Str.toStringz(translitLocale), &outasciiAlternates);
+		auto retStr = g_str_tokenize_and_fold(Str.toStringz(str), Str.toStringz(translitLocale), &outasciiAlternates);
 		
 		asciiAlternates = Str.toStringArray(outasciiAlternates);
 		
-		return Str.toStringArray(p);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -796,7 +730,10 @@ public struct Str
 	 */
 	public static string strcanon(string str, string validChars, char substitutor)
 	{
-		return Str.toString(g_strcanon(Str.toStringz(str), Str.toStringz(validChars), substitutor));
+		auto retStr = g_strcanon(Str.toStringz(str), Str.toStringz(validChars), substitutor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -836,7 +773,10 @@ public struct Str
 	 */
 	public static string strchomp(string str)
 	{
-		return Str.toString(g_strchomp(Str.toStringz(str)));
+		auto retStr = g_strchomp(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -858,7 +798,10 @@ public struct Str
 	 */
 	public static string strchug(string str)
 	{
-		return Str.toString(g_strchug(Str.toStringz(str)));
+		auto retStr = g_strchug(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -892,7 +835,10 @@ public struct Str
 	 */
 	public static string strcompress(string source)
 	{
-		return Str.toString(g_strcompress(Str.toStringz(source)));
+		auto retStr = g_strcompress(Str.toStringz(source));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -915,7 +861,10 @@ public struct Str
 	 */
 	public static string strdelimit(string str, string delimiters, char newDelimiter)
 	{
-		return Str.toString(g_strdelimit(Str.toStringz(str), Str.toStringz(delimiters), newDelimiter));
+		auto retStr = g_strdelimit(Str.toStringz(str), Str.toStringz(delimiters), newDelimiter);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -932,7 +881,10 @@ public struct Str
 	 */
 	public static string strdown(string str)
 	{
-		return Str.toString(g_strdown(Str.toStringz(str)));
+		auto retStr = g_strdown(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -947,7 +899,10 @@ public struct Str
 	 */
 	public static string strdup(string str)
 	{
-		return Str.toString(g_strdup(Str.toStringz(str)));
+		auto retStr = g_strdup(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -968,7 +923,10 @@ public struct Str
 	 */
 	public static string strdupVprintf(string format, void* args)
 	{
-		return Str.toString(g_strdup_vprintf(Str.toStringz(format), args));
+		auto retStr = g_strdup_vprintf(Str.toStringz(format), args);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1028,7 +986,10 @@ public struct Str
 	 */
 	public static string strescape(string source, string exceptions)
 	{
-		return Str.toString(g_strescape(Str.toStringz(source), Str.toStringz(exceptions)));
+		auto retStr = g_strescape(Str.toStringz(source), Str.toStringz(exceptions));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1060,7 +1021,10 @@ public struct Str
 	 */
 	public static string strjoinv(string separator, string[] strArray)
 	{
-		return Str.toString(g_strjoinv(Str.toStringz(separator), Str.toStringzArray(strArray)));
+		auto retStr = g_strjoinv(Str.toStringz(separator), Str.toStringzArray(strArray));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1174,7 +1138,10 @@ public struct Str
 	 */
 	public static string strndup(string str, size_t n)
 	{
-		return Str.toString(g_strndup(Str.toStringz(str), n));
+		auto retStr = g_strndup(Str.toStringz(str), n);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1189,7 +1156,10 @@ public struct Str
 	 */
 	public static string strnfill(size_t length, char fillChar)
 	{
-		return Str.toString(g_strnfill(length, fillChar));
+		auto retStr = g_strnfill(length, fillChar);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1207,7 +1177,10 @@ public struct Str
 	 */
 	public static string strreverse(string str)
 	{
-		return Str.toString(g_strreverse(Str.toStringz(str)));
+		auto retStr = g_strreverse(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1223,7 +1196,10 @@ public struct Str
 	 */
 	public static string strrstr(string haystack, string needle)
 	{
-		return Str.toString(g_strrstr(Str.toStringz(haystack), Str.toStringz(needle)));
+		auto retStr = g_strrstr(Str.toStringz(haystack), Str.toStringz(needle));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1241,7 +1217,10 @@ public struct Str
 	 */
 	public static string strrstrLen(string haystack, ptrdiff_t haystackLen, string needle)
 	{
-		return Str.toString(g_strrstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)));
+		auto retStr = g_strrstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1350,7 +1329,10 @@ public struct Str
 	 */
 	public static string strstrLen(string haystack, ptrdiff_t haystackLen, string needle)
 	{
-		return Str.toString(g_strstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)));
+		auto retStr = g_strstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -1392,7 +1374,10 @@ public struct Str
 	 */
 	public static string strup(string str)
 	{
-		return Str.toString(g_strup(Str.toStringz(str)));
+		auto retStr = g_strup(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/** */

@@ -408,7 +408,10 @@ public class CapsFeatures
 	 */
 	public override string toString()
 	{
-		return Str.toString(gst_caps_features_to_string(gstCapsFeatures));
+		auto retStr = gst_caps_features_to_string(gstCapsFeatures);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

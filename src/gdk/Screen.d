@@ -341,7 +341,10 @@ public class Screen : ObjectG
 	 */
 	public string getMonitorPlugName(int monitorNum)
 	{
-		return Str.toString(gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum));
+		auto retStr = gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -697,7 +700,10 @@ public class Screen : ObjectG
 	 */
 	public string makeDisplayName()
 	{
-		return Str.toString(gdk_screen_make_display_name(gdkScreen));
+		auto retStr = gdk_screen_make_display_name(gdkScreen);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

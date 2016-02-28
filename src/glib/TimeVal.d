@@ -106,7 +106,10 @@ public class TimeVal
 	 */
 	public string toIso8601()
 	{
-		return Str.toString(g_time_val_to_iso8601(gTimeVal));
+		auto retStr = g_time_val_to_iso8601(gTimeVal);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

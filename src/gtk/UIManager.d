@@ -673,7 +673,10 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public string getUi()
 	{
-		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager));
+		auto retStr = gtk_ui_manager_get_ui(gtkUIManager);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

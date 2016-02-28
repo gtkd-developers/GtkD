@@ -456,7 +456,10 @@ public class ComboBoxText : ComboBox
 	 */
 	public string getActiveText()
 	{
-		return Str.toString(gtk_combo_box_text_get_active_text(gtkComboBoxText));
+		auto retStr = gtk_combo_box_text_get_active_text(gtkComboBoxText);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

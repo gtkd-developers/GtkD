@@ -60,7 +60,10 @@ public struct Utils
 	 */
 	public static string escapeSearchText(string text)
 	{
-		return Str.toString(gtk_source_utils_escape_search_text(Str.toStringz(text)));
+		auto retStr = gtk_source_utils_escape_search_text(Str.toStringz(text));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -82,6 +85,9 @@ public struct Utils
 	 */
 	public static string unescapeSearchText(string text)
 	{
-		return Str.toString(gtk_source_utils_unescape_search_text(Str.toStringz(text)));
+		auto retStr = gtk_source_utils_unescape_search_text(Str.toStringz(text));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -224,14 +224,15 @@ public class BookmarkFile
 		size_t length;
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err);
+		auto retStr = g_bookmark_file_get_applications(gBookmarkFile, Str.toStringz(uri), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p, length);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -254,14 +255,15 @@ public class BookmarkFile
 	{
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), &err);
+		auto retStr = g_bookmark_file_get_description(gBookmarkFile, Str.toStringz(uri), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -288,14 +290,15 @@ public class BookmarkFile
 		size_t length;
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err);
+		auto retStr = g_bookmark_file_get_groups(gBookmarkFile, Str.toStringz(uri), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p, length);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -388,14 +391,15 @@ public class BookmarkFile
 	{
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), &err);
+		auto retStr = g_bookmark_file_get_mime_type(gBookmarkFile, Str.toStringz(uri), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -461,14 +465,15 @@ public class BookmarkFile
 	{
 		GError* err = null;
 		
-		auto p = g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), &err);
+		auto retStr = g_bookmark_file_get_title(gBookmarkFile, Str.toStringz(uri), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -485,7 +490,10 @@ public class BookmarkFile
 	{
 		size_t length;
 		
-		return Str.toStringArray(g_bookmark_file_get_uris(gBookmarkFile, &length));
+		auto retStr = g_bookmark_file_get_uris(gBookmarkFile, &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**
@@ -1051,14 +1059,15 @@ public class BookmarkFile
 	{
 		GError* err = null;
 		
-		auto p = g_bookmark_file_to_data(gBookmarkFile, &length, &err);
+		auto retStr = g_bookmark_file_to_data(gBookmarkFile, &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

@@ -205,7 +205,10 @@ public class FontSelection : Box
 	 */
 	public string getFontName()
 	{
-		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection));
+		auto retStr = gtk_font_selection_get_font_name(gtkFontSelection);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

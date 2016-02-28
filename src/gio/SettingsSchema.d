@@ -253,7 +253,10 @@ public class SettingsSchema
 	 */
 	public string[] listChildren()
 	{
-		return Str.toStringArray(g_settings_schema_list_children(gSettingsSchema));
+		auto retStr = g_settings_schema_list_children(gSettingsSchema);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -270,7 +273,10 @@ public class SettingsSchema
 	 */
 	public string[] listKeys()
 	{
-		return Str.toStringArray(g_settings_schema_list_keys(gSettingsSchema));
+		auto retStr = g_settings_schema_list_keys(gSettingsSchema);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

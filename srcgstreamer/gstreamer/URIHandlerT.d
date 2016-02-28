@@ -74,7 +74,10 @@ public template URIHandlerT(TStruct)
 	 */
 	public string getUri()
 	{
-		return Str.toString(gst_uri_handler_get_uri(getURIHandlerStruct()));
+		auto retStr = gst_uri_handler_get_uri(getURIHandlerStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

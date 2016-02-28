@@ -45,7 +45,10 @@ public struct PgMiscellaneous
 	 */
 	public static string configKeyGet(string key)
 	{
-		return Str.toString(pango_config_key_get(Str.toStringz(key)));
+		auto retStr = pango_config_key_get(Str.toStringz(key));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -58,7 +61,10 @@ public struct PgMiscellaneous
 	 */
 	public static string configKeyGetSystem(string key)
 	{
-		return Str.toString(pango_config_key_get_system(Str.toStringz(key)));
+		auto retStr = pango_config_key_get_system(Str.toStringz(key));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -410,7 +416,10 @@ public struct PgMiscellaneous
 	 */
 	public static string[] splitFileList(string str)
 	{
-		return Str.toStringArray(pango_split_file_list(Str.toStringz(str)));
+		auto retStr = pango_split_file_list(Str.toStringz(str));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -423,6 +432,9 @@ public struct PgMiscellaneous
 	 */
 	public static string trimString(string str)
 	{
-		return Str.toString(pango_trim_string(Str.toStringz(str)));
+		auto retStr = pango_trim_string(Str.toStringz(str));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

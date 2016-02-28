@@ -379,7 +379,10 @@ public template ActionGroupT(TStruct)
 	 */
 	public string[] listActions()
 	{
-		return Str.toStringArray(g_action_group_list_actions(getActionGroupStruct()));
+		auto retStr = g_action_group_list_actions(getActionGroupStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

@@ -100,7 +100,10 @@ public template RecentChooserT(TStruct)
 	 */
 	public string getCurrentUri()
 	{
-		return Str.toString(gtk_recent_chooser_get_current_uri(getRecentChooserStruct()));
+		auto retStr = gtk_recent_chooser_get_current_uri(getRecentChooserStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -270,7 +273,10 @@ public template RecentChooserT(TStruct)
 	{
 		size_t length;
 		
-		return Str.toStringArray(gtk_recent_chooser_get_uris(getRecentChooserStruct(), &length));
+		auto retStr = gtk_recent_chooser_get_uris(getRecentChooserStruct(), &length);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
 	}
 
 	/**

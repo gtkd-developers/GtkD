@@ -108,7 +108,10 @@ public class FilenameCompleter : ObjectG
 	 */
 	public string getCompletionSuffix(string initialText)
 	{
-		return Str.toString(g_filename_completer_get_completion_suffix(gFilenameCompleter, Str.toStringz(initialText)));
+		auto retStr = g_filename_completer_get_completion_suffix(gFilenameCompleter, Str.toStringz(initialText));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -122,7 +125,10 @@ public class FilenameCompleter : ObjectG
 	 */
 	public string[] getCompletions(string initialText)
 	{
-		return Str.toStringArray(g_filename_completer_get_completions(gFilenameCompleter, Str.toStringz(initialText)));
+		auto retStr = g_filename_completer_get_completions(gFilenameCompleter, Str.toStringz(initialText));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

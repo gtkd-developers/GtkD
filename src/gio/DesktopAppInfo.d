@@ -213,7 +213,10 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public static string[][] search(string searchString)
 	{
-		return Str.toStringArray(g_desktop_app_info_search(Str.toStringz(searchString)));
+		auto retStr = g_desktop_app_info_search(Str.toStringz(searchString));
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -253,7 +256,10 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public string getActionName(string actionName)
 	{
-		return Str.toString(g_desktop_app_info_get_action_name(gDesktopAppInfo, Str.toStringz(actionName)));
+		auto retStr = g_desktop_app_info_get_action_name(gDesktopAppInfo, Str.toStringz(actionName));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -403,7 +409,10 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 */
 	public string getString(string key)
 	{
-		return Str.toString(g_desktop_app_info_get_string(gDesktopAppInfo, Str.toStringz(key)));
+		auto retStr = g_desktop_app_info_get_string(gDesktopAppInfo, Str.toStringz(key));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

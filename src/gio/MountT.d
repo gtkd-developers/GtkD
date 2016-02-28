@@ -258,7 +258,10 @@ public template MountT(TStruct)
 	 */
 	public string getName()
 	{
-		return Str.toString(g_mount_get_name(getMountStruct()));
+		auto retStr = g_mount_get_name(getMountStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -325,7 +328,10 @@ public template MountT(TStruct)
 	 */
 	public string getUuid()
 	{
-		return Str.toString(g_mount_get_uuid(getMountStruct()));
+		auto retStr = g_mount_get_uuid(getMountStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -395,14 +401,15 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 		
-		auto p = g_mount_guess_content_type_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto retStr = g_mount_guess_content_type_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
@@ -432,14 +439,15 @@ public template MountT(TStruct)
 	{
 		GError* err = null;
 		
-		auto p = g_mount_guess_content_type_sync(getMountStruct(), forceRescan, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_mount_guess_content_type_sync(getMountStruct(), forceRescan, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toStringArray(p);
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

@@ -131,6 +131,9 @@ public class PgColor
 	 */
 	public override string toString()
 	{
-		return Str.toString(pango_color_to_string(pangoColor));
+		auto retStr = pango_color_to_string(pangoColor);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -208,7 +208,10 @@ public class MappedFile
 	 */
 	public string getContents()
 	{
-		return Str.toString(g_mapped_file_get_contents(gMappedFile));
+		auto retStr = g_mapped_file_get_contents(gMappedFile);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

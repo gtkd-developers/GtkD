@@ -239,14 +239,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_line(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_data_input_stream_read_line(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -294,14 +295,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_line_finish(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
+		auto retStr = g_data_input_stream_read_line_finish(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -327,14 +329,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_line_finish_utf8(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
+		auto retStr = g_data_input_stream_read_line_finish_utf8(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -364,14 +367,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_line_utf8(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_data_input_stream_read_line_utf8(gDataInputStream, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -495,14 +499,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_until(gDataInputStream, Str.toStringz(stopChars), &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_data_input_stream_read_until(gDataInputStream, Str.toStringz(stopChars), &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -557,14 +562,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_until_finish(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
+		auto retStr = g_data_input_stream_read_until_finish(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -599,14 +605,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_upto(gDataInputStream, Str.toStringz(stopChars), stopCharsLen, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_data_input_stream_read_upto(gDataInputStream, Str.toStringz(stopChars), stopCharsLen, &length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -666,14 +673,15 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 		
-		auto p = g_data_input_stream_read_upto_finish(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
+		auto retStr = g_data_input_stream_read_upto_finish(gDataInputStream, (result is null) ? null : result.getAsyncResultStruct(), &length, &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

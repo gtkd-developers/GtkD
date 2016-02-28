@@ -825,7 +825,10 @@ public class Caps
 	 */
 	public override string toString()
 	{
-		return Str.toString(gst_caps_to_string(gstCaps));
+		auto retStr = gst_caps_to_string(gstCaps);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

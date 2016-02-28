@@ -204,7 +204,10 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public string computePrefix(string key)
 	{
-		return Str.toString(gtk_entry_completion_compute_prefix(gtkEntryCompletion, Str.toStringz(key)));
+		auto retStr = gtk_entry_completion_compute_prefix(gtkEntryCompletion, Str.toStringz(key));
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

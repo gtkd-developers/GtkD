@@ -166,14 +166,15 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 		
-		auto p = g_resolver_lookup_by_address(gResolver, (address is null) ? null : address.getInetAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto retStr = g_resolver_lookup_by_address(gResolver, (address is null) ? null : address.getInetAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -216,14 +217,15 @@ public class Resolver : ObjectG
 	{
 		GError* err = null;
 		
-		auto p = g_resolver_lookup_by_address_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto retStr = g_resolver_lookup_by_address_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
 		
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 		
-		return Str.toString(p);
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

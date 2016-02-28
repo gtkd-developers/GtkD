@@ -219,7 +219,10 @@ public class DeviceProvider : ObjectGst
 	 */
 	public string[] getHiddenProviders()
 	{
-		return Str.toStringArray(gst_device_provider_get_hidden_providers(gstDeviceProvider));
+		auto retStr = gst_device_provider_get_hidden_providers(gstDeviceProvider);
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**

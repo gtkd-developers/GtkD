@@ -244,7 +244,10 @@ public class Hmac
 	 */
 	public static string computeHmacForData(GChecksumType digestType, char[] key, char[] data)
 	{
-		return Str.toString(g_compute_hmac_for_data(digestType, key.ptr, cast(size_t)key.length, data.ptr, cast(size_t)data.length));
+		auto retStr = g_compute_hmac_for_data(digestType, key.ptr, cast(size_t)key.length, data.ptr, cast(size_t)data.length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -267,6 +270,9 @@ public class Hmac
 	 */
 	public static string computeHmacForString(GChecksumType digestType, char[] key, string str)
 	{
-		return Str.toString(g_compute_hmac_for_string(digestType, key.ptr, cast(size_t)key.length, Str.toStringz(str), cast(ptrdiff_t)str.length));
+		auto retStr = g_compute_hmac_for_string(digestType, key.ptr, cast(size_t)key.length, Str.toStringz(str), cast(ptrdiff_t)str.length);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

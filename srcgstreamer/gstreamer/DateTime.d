@@ -552,7 +552,10 @@ public class DateTime
 	 */
 	public string toIso8601String()
 	{
-		return Str.toString(gst_date_time_to_iso8601_string(gstDateTime));
+		auto retStr = gst_date_time_to_iso8601_string(gstDateTime);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**

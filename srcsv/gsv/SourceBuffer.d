@@ -299,7 +299,10 @@ public class SourceBuffer : TextBuffer
 	 */
 	public string[] getContextClassesAtIter(TextIter iter)
 	{
-		return Str.toStringArray(gtk_source_buffer_get_context_classes_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct()));
+		auto retStr = gtk_source_buffer_get_context_classes_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct());
+		
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr);
 	}
 
 	/**
