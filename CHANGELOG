@@ -1,6 +1,11 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.2.3
+------------
+-Fix some memory errors, #146
+-Add a scoped version of addOnCommandline. #142
+
 Release: 3.2.2
 ------------
 -Add ddox generation script by Gerald Nunn.
