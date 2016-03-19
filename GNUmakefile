@@ -391,6 +391,7 @@ endef
 
 define install-so
     install -m 755 $< $(DESTDIR)$(prefix)/$(libdir)/$<.$(SO_VERSION).$(MINOR).$(BUGFIX)
-    cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION).$(MINOR).$(BUGFIX) $<.$(SO_VERSION) 
-    cd $(DESTDIR)$(prefix)/$(libdir)/; ln -s $<.$(SO_VERSION) $<
+	ldconfig -n $(DESTDIR)$(prefix)/$(libdir)/
+    cd $(DESTDIR)$(prefix)/$(libdir)/; ln -sf $<.$(SO_VERSION).$(MINOR).$(BUGFIX) $<.$(SO_VERSION) 
+    cd $(DESTDIR)$(prefix)/$(libdir)/; ln -sf $<.$(SO_VERSION) $<
 endef
