@@ -18,28 +18,27 @@
 
 module gtk.HelloWorld;
 
-private import gtk.MainWindow;
-private import gtk.Label;
-private import gtk.Main;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
+import gtk.Label;
 
-class HelloWorld : MainWindow
+class HelloWorld : ApplicationWindow
 {
-	this()
+	this(Application application)
 	{
-		super("GtkD");
+		super(application);
+		setTitle("GtkD");
 		setBorderWidth(10);
 		add(new Label("Hello World"));
 
 		showAll();
 	}
-
 }
 
-void main(string[] args)
+int main(string[] args)
 {
-
-	Main.init(args);
-	new HelloWorld();
-	Main.run();
-
+    auto application = new Application("org.gtkd.demo.helloworld", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(delegate void(GioApplication app) { new HelloWorld(application); });
+    return application.run(args);
 }
