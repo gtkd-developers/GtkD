@@ -143,6 +143,36 @@ public class Application : GioApplication
 		super(cast(GApplication*)gtkApplication, ownedRef);
 	}
 
+	/**
+	 * Sets zero or more keyboard accelerators that will trigger the
+	 * given action. The first item in accels will be the primary
+	 * accelerator, which may be displayed in the UI.
+	 *
+	 * To remove all accelerators for an action, use an empty
+	 * array for accels.
+	 *
+	 * Params:
+	 *     detailedActionName = a detailed action name, specifying an action
+	 *         and target to associate accelerators with
+	 *     accels = a list of accelerators in the format
+	 *         understood by gtk_accelerator_parse()
+	 *
+	 * Since: 3.12
+	 */
+	public void setAccelsForAction(string detailedActionName, string[] accels)
+	{
+		char** accel;
+		
+		if (accels)
+			accel = Str.toStringzArray(accels);
+		else
+			accel = [cast(char*)null].ptr;
+		
+		gtk_application_set_accels_for_action(gtkApplication, Str.toStringz(detailedActionName), accel);
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
@@ -605,27 +635,6 @@ public class Application : GioApplication
 	public void removeWindow(Window window)
 	{
 		gtk_application_remove_window(gtkApplication, (window is null) ? null : window.getWindowStruct());
-	}
-
-	/**
-	 * Sets zero or more keyboard accelerators that will trigger the
-	 * given action. The first item in @accels will be the primary
-	 * accelerator, which may be displayed in the UI.
-	 *
-	 * To remove all accelerators for an action, use an empty, zero-terminated
-	 * array for @accels.
-	 *
-	 * Params:
-	 *     detailedActionName = a detailed action name, specifying an action
-	 *         and target to associate accelerators with
-	 *     accels = a list of accelerators in the format
-	 *         understood by gtk_accelerator_parse()
-	 *
-	 * Since: 3.12
-	 */
-	public void setAccelsForAction(string detailedActionName, string[] accels)
-	{
-		gtk_application_set_accels_for_action(gtkApplication, Str.toStringz(detailedActionName), Str.toStringzArray(accels));
 	}
 
 	/**
