@@ -26,6 +26,7 @@ module gdk.Event;
 
 private import gdk.Device;
 private import gdk.Screen;
+private import gdk.Seat;
 private import gdk.Window;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -551,6 +552,25 @@ public class Event
 	}
 
 	/**
+	 * Returns the #GdkSeat this event was generated for.
+	 *
+	 * Return: The #GdkSeat of this event
+	 *
+	 * Since: 3.20
+	 */
+	public Seat getSeat()
+	{
+		auto p = gdk_event_get_seat(gdkEvent);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+	}
+
+	/**
 	 * This function returns the hardware (slave) #GdkDevice that has
 	 * triggered the event, falling back to the virtual (master) device
 	 * (as in gdk_event_get_device()) if the event wasn’t caused by
@@ -621,6 +641,24 @@ public class Event
 		}
 		
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+
+	/**
+	 * Check whether a scroll event is a stop scroll event. Scroll sequences
+	 * with smooth scroll information may provide a stop scroll event once the
+	 * interaction with the device finishes, e.g. by lifting a finger. This
+	 * stop scroll event is the signal that a widget may trigger kinetic
+	 * scrolling based on the current velocity.
+	 *
+	 * Stop scroll events always have a a delta of 0/0.
+	 *
+	 * Return: %TRUE if the event is a scroll stop event
+	 *
+	 * Since: 3.20
+	 */
+	public bool isScrollStopEvent()
+	{
+		return gdk_event_is_scroll_stop_event(gdkEvent) != 0;
 	}
 
 	/**

@@ -913,6 +913,10 @@ final class GtkFunction
 					buff ~= "}";
 					buff ~= "return r;";
 				}
+				else if ( returnType.elementType.cType.empty && returnType.cType[0..$-1] != returnType.elementType.name )
+				{
+					buff ~= "return cast("~ getType(returnType) ~")p[0 .. "~ lenId(returnType) ~"];";
+				}
 				else
 				{
 					buff ~= "return p[0 .. "~ lenId(returnType) ~"];";
@@ -1370,10 +1374,10 @@ final class GtkFunction
 	{
 		if ( name == "get_type" )
 			return false;
-		if ( name == "to_string" )
+		if ( name == "to_string" && params.empty )
 			return true;
 
-		GtkStruct ancestor = strct.parentStruct;
+		GtkStruct ancestor = strct.getParent();
 
 		while(ancestor)
 		{
@@ -1385,7 +1389,7 @@ final class GtkFunction
 					return true;
 			}
 
-			ancestor = ancestor.parentStruct;
+			ancestor = ancestor.getParent();
 		}
 
 		return false;

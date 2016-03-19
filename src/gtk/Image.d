@@ -119,6 +119,10 @@ public  import gtkc.gtktypes;
  * allows you to convert an image into a C variable declaration, which
  * can then be loaded into a #GdkPixbuf using
  * gdk_pixbuf_new_from_inline().
+ * 
+ * # CSS nodes
+ * 
+ * GtkImage has a single CSS node with the name image.
  */
 public class Image : Misc
 {
@@ -279,7 +283,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     icon = an icon
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Return: a new #GtkImage displaying the themed icon
 	 *
@@ -307,7 +311,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     iconName = an icon name
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Return: a new #GtkImage displaying the themed icon
 	 *
@@ -344,7 +348,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     iconSet = a #GtkIconSet
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Return: a new #GtkImage
 	 *
@@ -460,8 +464,8 @@ public class Image : Misc
 	 * Params:
 	 *     gicon = place to store a
 	 *         #GIcon, or %NULL
-	 *     size = place to store an icon size,
-	 *         or %NULL
+	 *     size = place to store an icon size
+	 *         (#GtkIconSize), or %NULL
 	 *
 	 * Since: 2.14
 	 */
@@ -484,8 +488,8 @@ public class Image : Misc
 	 * Params:
 	 *     iconName = place to store an
 	 *         icon name, or %NULL
-	 *     size = place to store an icon size,
-	 *         or %NULL
+	 *     size = place to store an icon size
+	 *         (#GtkIconSize), or %NULL
 	 *
 	 * Since: 2.6
 	 */
@@ -509,7 +513,7 @@ public class Image : Misc
 	 *     iconSet = location to store a
 	 *         #GtkIconSet, or %NULL
 	 *     size = location to store a stock
-	 *         icon size, or %NULL
+	 *         icon size (#GtkIconSize), or %NULL
 	 */
 	public void getIconSet(out IconSet iconSet, out GtkIconSize size)
 	{
@@ -567,7 +571,7 @@ public class Image : Misc
 	 *     stockId = place to store a
 	 *         stock icon name, or %NULL
 	 *     size = place to store a stock icon
-	 *         size, or %NULL
+	 *         size (#GtkIconSize), or %NULL
 	 */
 	public void getStock(out string stockId, out GtkIconSize size)
 	{
@@ -618,7 +622,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     icon = an icon
-	 *     size = an icon size
+	 *     size = an icon size (#GtkIconSize)
 	 *
 	 * Since: 2.14
 	 */
@@ -632,7 +636,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     iconName = an icon name
-	 *     size = an icon size
+	 *     size = an icon size (#GtkIconSize)
 	 *
 	 * Since: 2.6
 	 */
@@ -648,7 +652,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     iconSet = a #GtkIconSet
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 */
 	public void setFromIconSet(IconSet iconSet, GtkIconSize size)
 	{
@@ -684,7 +688,7 @@ public class Image : Misc
 	 *
 	 * Params:
 	 *     stockId = a stock icon name
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 */
 	public void setFromStock(string stockId, GtkIconSize size)
 	{

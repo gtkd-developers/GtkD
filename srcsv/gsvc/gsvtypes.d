@@ -1010,6 +1010,17 @@ struct GtkSourceStyleSchemeManagerPrivate;
 
 struct GtkSourceStyleSchemePrivate;
 
+struct GtkSourceTag
+{
+	GtkTextTag parentInstance;
+}
+
+struct GtkSourceTagClass
+{
+	GtkTextTagClass parentClass;
+	void*[10] padding;
+}
+
 struct GtkSourceUndoManager;
 
 struct GtkSourceUndoManagerIface

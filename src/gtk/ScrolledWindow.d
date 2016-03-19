@@ -88,6 +88,22 @@ public  import gtkc.gtktypes;
  * scrollbars are desired although no mouse is present, this behaviour
  * can be turned off with the #GtkScrolledWindow:overlay-scrolling
  * property.
+ * 
+ * # CSS nodes
+ * 
+ * GtkScrolledWindow has a main CSS node with name scrolledwindow.
+ * 
+ * It uses subnodes with names overshoot and undershoot to
+ * draw the overflow and underflow indications. These nodes get
+ * the .left, .right, .top or .bottom style class added depending
+ * on where the indication is drawn.
+ * 
+ * GtkScrolledWindow also sets the positional style classes (.left,
+ * .right, .top, .bottom) and style classes related to overlay
+ * scrolling (.overlay-indicator, .dragging, .hovering) on its scrollbars.
+ * 
+ * If both scrollbars are visible, the area where they meet is drawn
+ * with a subnode named junction.
  */
 public class ScrolledWindow : Bin
 {

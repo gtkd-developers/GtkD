@@ -478,6 +478,9 @@ public struct Signals
 	 * consistent with how a signal emitted with @detail would be delivered
 	 * to those handlers.
 	 *
+	 * Since 2.46 this also checks for a non-default class closure being
+	 * installed, as this is basically always what you want.
+	 *
 	 * One example of when you might use this is when the arguments to the
 	 * signal are difficult to compute. A class implementor may opt to not
 	 * emit the signal if no one is attached anyway, thus saving the cost

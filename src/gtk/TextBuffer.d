@@ -793,9 +793,14 @@ public class TextBuffer : ObjectG
 
 	/**
 	 * Obtains an iterator pointing to @byte_index within the given line.
-	 * @byte_index must be the start of a UTF-8 character, and must not be
-	 * beyond the end of the line.  Note bytes, not
+	 * @byte_index must be the start of a UTF-8 character. Note bytes, not
 	 * characters; UTF-8 may encode one character as multiple bytes.
+	 *
+	 * Before the 3.20 version, it was not allowed to pass an invalid location.
+	 *
+	 * Since the 3.20 version, if @line_number is greater than the number of lines
+	 * in the @buffer, the end iterator is returned. And if @byte_index is off the
+	 * end of the line, the iterator at the end of the line is returned.
 	 *
 	 * Params:
 	 *     iter = iterator to initialize
@@ -812,10 +817,14 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * Obtains an iterator pointing to @char_offset within the given
-	 * line. The @char_offset must exist, offsets off the end of the line
-	 * are not allowed. Note characters, not bytes;
-	 * UTF-8 may encode one character as multiple bytes.
+	 * Obtains an iterator pointing to @char_offset within the given line. Note
+	 * characters, not bytes; UTF-8 may encode one character as multiple bytes.
+	 *
+	 * Before the 3.20 version, it was not allowed to pass an invalid location.
+	 *
+	 * Since the 3.20 version, if @line_number is greater than the number of lines
+	 * in the @buffer, the end iterator is returned. And if @char_offset is off the
+	 * end of the line, the iterator at the end of the line is returned.
 	 *
 	 * Params:
 	 *     iter = iterator to initialize

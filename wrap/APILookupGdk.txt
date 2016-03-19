@@ -536,7 +536,9 @@ move: disable_multidevice DeviceManager
 move: drag_abort DragContext
 move: drag_begin DragContext
 move: drag_begin_for_device DragContext
+move: drag_begin_from_point DragContext
 move: drag_drop DragContext
+move: drag_drop_done DragContext
 move: drag_drop_succeeded DragContext
 move: drag_find_window_for_screen DragContext
 move: drag_get_selection DragContext

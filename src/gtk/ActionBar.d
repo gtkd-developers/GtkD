@@ -41,6 +41,10 @@ public  import gtkc.gtktypes;
  * contains an internal centered box which is centered with respect to
  * the full width of the box, even if the children at either side take
  * up different amounts of space.
+ * 
+ * # CSS nodes
+ * 
+ * GtkActionBar has a single CSS node with name actionbar.
  */
 public class ActionBar : Bin
 {
@@ -105,7 +109,7 @@ public class ActionBar : Bin
 	/**
 	 * Retrieves the center bar widget of the bar.
 	 *
-	 * Return: the center #GtkWidget.
+	 * Return: the center #GtkWidget or %NULL.
 	 *
 	 * Since: 3.12
 	 */

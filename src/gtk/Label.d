@@ -43,6 +43,27 @@ private import pango.PgLayout;
  * implies, most labels are used to label another widget such as a
  * #GtkButton, a #GtkMenuItem, or a #GtkComboBox.
  * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * label
+ * ├── [selection]
+ * ├── [link]
+ * ┊
+ * ╰── [link]
+ * ]|
+ * 
+ * GtkLabel has a single CSS node with the name label. A wide variety
+ * of style classes may be applied to labels, such as .title, .subtitle,
+ * .dim-label, etc. In the #GtkShortcutsWindow, labels are used wth the
+ * .keycap style class.
+ * 
+ * If the label has a selection, it gets a subnode with name selection.
+ * 
+ * If the label has links, there is one subnode per link. These subnodes
+ * carry the link or visited state depending on whether they have been
+ * visited.
+ * 
  * # GtkLabel as GtkBuildable
  * 
  * The GtkLabel implementation of the GtkBuildable interface supports a
@@ -157,7 +178,7 @@ private import pango.PgLayout;
  * 
  * gtk_label_set_justify() sets how the lines in a label align
  * with one another. If you want to set how the label as a whole
- * aligns in its available space, see the #GtkWidget::halign and
+ * aligns in its available space, see the #GtkWidget:halign and
  * #GtkWidget:valign properties.
  * 
  * The #GtkLabel:width-chars and #GtkLabel:max-width-chars properties

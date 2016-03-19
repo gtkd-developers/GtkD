@@ -298,12 +298,6 @@ public class WidgetPath
 		gtk_widget_path_iter_add_class(gtkWidgetPath, pos, Str.toStringz(name));
 	}
 
-	/** */
-	public void iterAddQclass(int pos, GQuark qname)
-	{
-		gtk_widget_path_iter_add_qclass(gtkWidgetPath, pos, qname);
-	}
-
 	/**
 	 * Adds the region @name to the widget at position @pos in
 	 * the hierarchy defined in @path. See
@@ -369,6 +363,22 @@ public class WidgetPath
 	public string iterGetName(int pos)
 	{
 		return Str.toString(gtk_widget_path_iter_get_name(gtkWidgetPath, pos));
+	}
+
+	/**
+	 * Returns the object name that is at position @pos in the widget
+	 * hierarchy defined in @path.
+	 *
+	 * Params:
+	 *     pos = position to get the object name for, -1 for the path head
+	 *
+	 * Return: the name or %NULL
+	 *
+	 * Since: 3.20
+	 */
+	public string iterGetObjectName(int pos)
+	{
+		return Str.toString(gtk_widget_path_iter_get_object_name(gtkWidgetPath, pos));
 	}
 
 	/**
@@ -648,6 +658,24 @@ public class WidgetPath
 	public void iterSetName(int pos, string name)
 	{
 		gtk_widget_path_iter_set_name(gtkWidgetPath, pos, Str.toStringz(name));
+	}
+
+	/**
+	 * Sets the object name for a given position in the widget hierarchy
+	 * defined by @path.
+	 *
+	 * When set, the object name overrides the object type when matching
+	 * CSS.
+	 *
+	 * Params:
+	 *     pos = position to modify, -1 for the path head
+	 *     name = object name to set or %NULL to unset
+	 *
+	 * Since: 3.20
+	 */
+	public void iterSetObjectName(int pos, string name)
+	{
+		gtk_widget_path_iter_set_object_name(gtkWidgetPath, pos, Str.toStringz(name));
 	}
 
 	/**

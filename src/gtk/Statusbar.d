@@ -65,6 +65,10 @@ public  import gtkc.gtktypes;
  * gtk_statusbar_pop(). A message can be removed from anywhere in the
  * stack if its message id was recorded at the time it was added. This
  * is done using gtk_statusbar_remove().
+ * 
+ * # CSS node
+ * 
+ * GtkStatusbar has a single CSS node with name statusbar.
  */
 public class Statusbar : Box
 {

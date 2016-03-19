@@ -290,8 +290,8 @@ public template FileChooserT(TStruct)
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
 	 *
-	 * Return: the full path of the current folder,
-	 *     or %NULL if the current path cannot be represented as a local
+	 * Return: the full path of the current
+	 *     folder, or %NULL if the current path cannot be represented as a local
 	 *     filename.  Free with g_free().  This function will also return
 	 *     %NULL if the file chooser was unable to load the last folder that
 	 *     was requested from it; for example, as would be for calling
@@ -339,10 +339,11 @@ public template FileChooserT(TStruct)
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
 	 *
-	 * Return: the URI for the current folder.  Free with g_free().  This
-	 *     function will also return %NULL if the file chooser was unable to load the
-	 *     last folder that was requested from it; for example, as would be for calling
-	 *     gtk_file_chooser_set_current_folder_uri() on a nonexistent folder.
+	 * Return: the URI for the current folder.
+	 *     Free with g_free().  This function will also return %NULL if the file chooser
+	 *     was unable to load the last folder that was requested from it; for example,
+	 *     as would be for calling gtk_file_chooser_set_current_folder_uri() on a
+	 *     nonexistent folder.
 	 *
 	 * Since: 2.4
 	 */
@@ -447,8 +448,8 @@ public template FileChooserT(TStruct)
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 *
-	 * Return: The currently selected filename, or %NULL
-	 *     if no file is selected, or the selected file can't
+	 * Return: The currently selected filename,
+	 *     or %NULL if no file is selected, or the selected file can't
 	 *     be represented with a local filename. Free with g_free().
 	 *
 	 * Since: 2.4
@@ -584,8 +585,8 @@ public template FileChooserT(TStruct)
 	 * Gets the URI that should be previewed in a custom preview
 	 * widget. See gtk_file_chooser_set_preview_widget().
 	 *
-	 * Return: the URI for the file to preview, or %NULL if no file is
-	 *     selected. Free with g_free().
+	 * Return: the URI for the file to preview,
+	 *     or %NULL if no file is selected. Free with g_free().
 	 *
 	 * Since: 2.4
 	 */
@@ -666,8 +667,8 @@ public template FileChooserT(TStruct)
 	 * folder.
 	 *
 	 * Return: The currently selected URI, or %NULL
-	 *     if no file is selected. If gtk_file_chooser_set_local_only() is set to %TRUE
-	 *     (the default) a local URI will be returned for any FUSE locations.
+	 *     if no file is selected. If gtk_file_chooser_set_local_only() is set to
+	 *     %TRUE (the default) a local URI will be returned for any FUSE locations.
 	 *     Free with g_free()
 	 *
 	 * Since: 2.4

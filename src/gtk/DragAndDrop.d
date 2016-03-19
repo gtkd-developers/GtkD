@@ -208,20 +208,15 @@ public struct DragAndDrop
 	}
 
 	/**
-	 * Changes the icon for a widget to a given widget.
-	 * GTK+ will not destroy the icon, so if you don’t want
+	 * Changes the icon for drag operation to a given widget.
+	 * GTK+ will not destroy the widget, so if you don’t want
 	 * it to persist, you should connect to the “drag-end”
 	 * signal and destroy it yourself.
 	 *
-	 * GTK+ will, however, change the opacity and position of
-	 * the window as part of the drag animation. If you want
-	 * to reuse the window, you have to restore these to
-	 * the values you need after each drag operation.
-	 *
 	 * Params:
 	 *     context = the context for a drag. (This must be called
-	 *         with a  context for the source side of a drag)
-	 *     widget = a toplevel window to use as an icon
+	 *         with a context for the source side of a drag)
+	 *     widget = a widget to use as an icon
 	 *     hotX = the X offset within @widget of the hotspot
 	 *     hotY = the Y offset within @widget of the hotspot
 	 */

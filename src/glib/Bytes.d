@@ -136,7 +136,7 @@ public class Bytes
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(void[] data, GDestroyNotify freeFunc, void* userData)
+	public this(ubyte[] data, GDestroyNotify freeFunc, void* userData)
 	{
 		auto p = g_bytes_new_with_free_func(data.ptr, cast(size_t)data.length, freeFunc, userData);
 		
@@ -194,18 +194,17 @@ public class Bytes
 	 * may represent an empty string with @data non-%NULL and @size as 0. %NULL will
 	 * not be returned if @size is non-zero.
 	 *
-	 * Return: a pointer to the
-	 *     byte data, or %NULL
+	 * Return: a pointer to the byte data, or %NULL
 	 *
 	 * Since: 2.32
 	 */
-	public void[] getData()
+	public ubyte[] getData()
 	{
 		size_t size;
 		
 		auto p = g_bytes_get_data(gBytes, &size);
 		
-		return p[0 .. size];
+		return cast(ubyte[])p[0 .. size];
 	}
 
 	/**
@@ -328,16 +327,16 @@ public class Bytes
 	 * g_bytes_new_take() or g_byte_array_free_to_bytes(). In all other cases the
 	 * data is copied.
 	 *
-	 * Params:
-	 *     size = location to place the length of the returned data
-	 *
-	 * Return: a pointer to the same byte data, which should
-	 *     be freed with g_free()
+	 * Return: a pointer to the same byte data, which should be freed with g_free()
 	 *
 	 * Since: 2.32
 	 */
-	public void* unrefToData(size_t* size)
+	public ubyte[] unrefToData()
 	{
-		return g_bytes_unref_to_data(gBytes, size);
+		size_t size;
+		
+		auto p = g_bytes_unref_to_data(gBytes, &size);
+		
+		return cast(ubyte[])p[0 .. size];
 	}
 }

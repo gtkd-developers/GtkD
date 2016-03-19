@@ -42,6 +42,10 @@ public  import gtkc.gtktypes;
  * It exposes the #GtkFileChooser interface, and you should
  * use the methods of this interface to interact with the
  * widget.
+ * 
+ * # CSS nodes
+ * 
+ * GtkFileChooserWidget has a single CSS node with name filechooser.
  */
 public class FileChooserWidget : Box, FileChooserIF
 {

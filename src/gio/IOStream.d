@@ -37,12 +37,12 @@ public  import gtkc.giotypes;
 
 /**
  * GIOStream represents an object that has both read and write streams.
- * Generally the two streams acts as separate input and output streams,
+ * Generally the two streams act as separate input and output streams,
  * but they share some common resources and state. For instance, for
- * seekable streams they may use the same position in both streams.
+ * seekable streams, both streams may use the same position.
  * 
- * Examples of #GIOStream objects are #GSocketConnection which represents
- * a two-way network connection, and #GFileIOStream which represent a
+ * Examples of #GIOStream objects are #GSocketConnection, which represents
+ * a two-way network connection; and #GFileIOStream, which represents a
  * file handle opened in read-write mode.
  * 
  * To do the actual reading and writing you need to get the substreams
@@ -51,8 +51,8 @@ public  import gtkc.giotypes;
  * The #GIOStream object owns the input and the output streams, not the other
  * way around, so keeping the substreams alive will not keep the #GIOStream
  * object alive. If the #GIOStream object is freed it will be closed, thus
- * closing the substream, so even if the substreams stay alive they will
- * always just return a %G_IO_ERROR_CLOSED for all operations.
+ * closing the substreams, so even if the substreams stay alive they will
+ * always return %G_IO_ERROR_CLOSED for all operations.
  * 
  * To close a stream use g_io_stream_close() which will close the common
  * stream object and also the individual substreams. You can also close
@@ -138,7 +138,7 @@ public class IOStream : ObjectG
 
 	/**
 	 * Closes the stream, releasing resources related to it. This will also
-	 * closes the individual input and output streams, if they are not already
+	 * close the individual input and output streams, if they are not already
 	 * closed.
 	 *
 	 * Once the stream is closed, all other operations will return

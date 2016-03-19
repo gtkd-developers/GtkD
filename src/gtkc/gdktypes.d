@@ -542,6 +542,28 @@ public enum GdkDragAction
 alias GdkDragAction DragAction;
 
 /**
+ * Used in #GdkDragContext to the reason of a cancelled DND operation.
+ *
+ * Since: 3.20
+ */
+public enum GdkDragCancelReason
+{
+	/**
+	 * There is no suitable drop target.
+	 */
+	NO_TARGET = 0,
+	/**
+	 * Drag cancelled by the user
+	 */
+	USER_CANCELLED = 1,
+	/**
+	 * Unspecified error.
+	 */
+	ERROR = 2,
+}
+alias GdkDragCancelReason DragCancelReason;
+
+/**
  * Used in #GdkDragContext to indicate the protocol according to
  * which DND is done.
  */
@@ -1552,6 +1574,44 @@ public enum GdkScrollDirection
 	SMOOTH = 4,
 }
 alias GdkScrollDirection ScrollDirection;
+
+/**
+ * Flags describing the seat capabilities.
+ *
+ * Since: 3.20
+ */
+public enum GdkSeatCapabilities
+{
+	/**
+	 * No input capabilities
+	 */
+	NONE = 0,
+	/**
+	 * The seat has a pointer (e.g. mouse)
+	 */
+	POINTER = 1,
+	/**
+	 * The seat has touchscreen(s) attached
+	 */
+	TOUCH = 2,
+	/**
+	 * The seat has drawing tablet(s) attached
+	 */
+	TABLET_STYLUS = 4,
+	/**
+	 * The seat has keyboard(s) attached
+	 */
+	KEYBOARD = 8,
+	/**
+	 * The union of all pointing capabilities
+	 */
+	ALL_POINTING = 7,
+	/**
+	 * The union of all capabilities
+	 */
+	ALL = 15,
+}
+alias GdkSeatCapabilities SeatCapabilities;
 
 /**
  * Specifies the kind of modification applied to a setting in a
@@ -2886,6 +2946,11 @@ struct GdkEventScroll
 	 * the y coordinate of the scroll delta
 	 */
 	double deltaY;
+	import std.bitmanip: bitfields;
+	mixin(bitfields!(
+		uint, "isStop", 1,
+		uint, "", 31
+	));
 }
 
 /**
@@ -3429,6 +3494,11 @@ struct GdkRectangle
 
 struct GdkScreen;
 
+struct GdkSeat
+{
+	GObject parentInstance;
+}
+
 /**
  * A #GdkTimeCoord stores a single event in a motion history.
  */
@@ -3576,6 +3646,21 @@ public alias extern(C) void function(GdkEvent* event, void* data) GdkEventFunc;
  * Return: a #GdkFilterReturn value.
  */
 public alias extern(C) GdkFilterReturn function(GdkXEvent* xevent, GdkEvent* event, void* data) GdkFilterFunc;
+
+/**
+ * Type of the callback used to set up @window so it can be
+ * grabbed. A typical action would be ensuring the window is
+ * visible, although there's room for other initialization
+ * actions.
+ *
+ * Params:
+ *     seat = the #GdkSeat being grabbed
+ *     window = the #GdkWindow being grabbed
+ *     userData = user data passed in gdk_seat_grab()
+ *
+ * Since: 3.20
+ */
+public alias extern(C) void function(GdkSeat* seat, GdkWindow* window, void* userData) GdkSeatGrabPrepareFunc;
 
 /**
  * A function of this type is passed to gdk_window_invalidate_maybe_recurse().

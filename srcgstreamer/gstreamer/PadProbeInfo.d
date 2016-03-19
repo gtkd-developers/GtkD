@@ -80,7 +80,7 @@ public class PadProbeInfo
 	}
 
 	/**
-	 * Return: The #GstBufferlist from the probe
+	 * Return: The #GstBufferList from the probe
 	 */
 	public BufferList getBufferList()
 	{

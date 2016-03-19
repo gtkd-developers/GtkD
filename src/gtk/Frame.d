@@ -34,11 +34,10 @@ public  import gtkc.gtktypes;
 
 
 /**
- * The frame widget is a Bin that surrounds its child
- * with a decorative frame and an optional label.
- * If present, the label is drawn in a gap in the
- * top side of the frame. The position of the
- * label can be controlled with gtk_frame_set_label_align().
+ * The frame widget is a bin that surrounds its child with a decorative
+ * frame and an optional label. If present, the label is drawn in a gap
+ * in the top side of the frame. The position of the label can be
+ * controlled with gtk_frame_set_label_align().
  * 
  * # GtkFrame as GtkBuildable
  * 
@@ -58,6 +57,19 @@ public  import gtkc.gtktypes;
  * </child>
  * </object>
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * frame
+ * ├── border
+ * ├── <label widget>
+ * ╰── <child>
+ * ]|
+ * 
+ * GtkFrame has a main CSS node with name frame and a subnode with
+ * name border. The border node is used to render the visible border.
+ * The style class .flat can appear with the main node.
  */
 public class Frame : Bin
 {

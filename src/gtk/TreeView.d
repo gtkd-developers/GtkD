@@ -107,6 +107,23 @@ public  import gtkc.gtktypes;
  * </child>
  * </object>
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * treeview.view
+ * ├── header
+ * │   ├── <column header>
+ * ┊   ┊
+ * │   ╰── <column header>
+ * │
+ * ╰── [rubberband]
+ * ]|
+ * 
+ * GtkTreeView has a main CSS node with name treeview and style class .view.
+ * It has a subnode with name header, which is the parent for all the column
+ * header widgets' CSS nodes.
+ * For rubberband selection, a subnode with name rubberband is used.
  */
 public class TreeView : Container, ScrollableIF
 {
@@ -556,7 +573,7 @@ public class TreeView : Container, ScrollableIF
 	 * to confirm that the event on @tree_view is on the right window.
 	 *
 	 * Return: A #GdkWindow, or %NULL when @tree_view
-	 *     hasn’t been realized yet
+	 *     hasn’t been realized yet.
 	 */
 	public Window getBinWindow()
 	{

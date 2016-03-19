@@ -911,6 +911,7 @@ shared static this()
 	Linker.link(g_sequence_get_length, "g_sequence_get_length", LIBRARY.GLIB);
 	Linker.link(g_sequence_insert_sorted, "g_sequence_insert_sorted", LIBRARY.GLIB);
 	Linker.link(g_sequence_insert_sorted_iter, "g_sequence_insert_sorted_iter", LIBRARY.GLIB);
+	Linker.link(g_sequence_is_empty, "g_sequence_is_empty", LIBRARY.GLIB);
 	Linker.link(g_sequence_lookup, "g_sequence_lookup", LIBRARY.GLIB);
 	Linker.link(g_sequence_lookup_iter, "g_sequence_lookup_iter", LIBRARY.GLIB);
 	Linker.link(g_sequence_prepend, "g_sequence_prepend", LIBRARY.GLIB);
@@ -2618,6 +2619,7 @@ __gshared extern(C)
 	int function(GSequence* seq) c_g_sequence_get_length;
 	GSequenceIter* function(GSequence* seq, void* data, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_insert_sorted;
 	GSequenceIter* function(GSequence* seq, void* data, GSequenceIterCompareFunc iterCmp, void* cmpData) c_g_sequence_insert_sorted_iter;
+	int function(GSequence* seq) c_g_sequence_is_empty;
 	GSequenceIter* function(GSequence* seq, void* data, GCompareDataFunc cmpFunc, void* cmpData) c_g_sequence_lookup;
 	GSequenceIter* function(GSequence* seq, void* data, GSequenceIterCompareFunc iterCmp, void* cmpData) c_g_sequence_lookup_iter;
 	GSequenceIter* function(GSequence* seq, void* data) c_g_sequence_prepend;
@@ -4323,6 +4325,7 @@ alias c_g_sequence_get_iter_at_pos g_sequence_get_iter_at_pos;
 alias c_g_sequence_get_length g_sequence_get_length;
 alias c_g_sequence_insert_sorted g_sequence_insert_sorted;
 alias c_g_sequence_insert_sorted_iter g_sequence_insert_sorted_iter;
+alias c_g_sequence_is_empty g_sequence_is_empty;
 alias c_g_sequence_lookup g_sequence_lookup;
 alias c_g_sequence_lookup_iter g_sequence_lookup_iter;
 alias c_g_sequence_prepend g_sequence_prepend;

@@ -27,6 +27,10 @@ addAliases: start
 	public import gtkc.gtktypes;
 addAliases: end
 
+struct: Terminal
+in: event_check_gregex_simple n_regexes
+in: event_check_gregex_simple matches
+
 move: get_user_shell Terminal
 
 move: get_features Version

@@ -29,6 +29,7 @@ private import gdk.Screen;
 private import gdk.Window;
 private import glib.ListG;
 private import gobject.ObjectG;
+private import gobject.Signals;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
@@ -123,6 +124,30 @@ public class DragContext : ObjectG
 	}
 
 	/**
+	 * Returns the window on which the drag icon should be rendered
+	 * during the drag operation. Note that the window may not be
+	 * available until the drag operation has begun. GDK will move
+	 * the window in accordance with the ongoing drag operation.
+	 * The window is owned by @context and will be destroyed when
+	 * the drag operation is over.
+	 *
+	 * Return: the drag window, or %NULL
+	 *
+	 * Since: 3.20
+	 */
+	public Window getDragWindow()
+	{
+		auto p = gdk_drag_context_get_drag_window(gdkDragContext);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+
+	/**
 	 * Returns the drag protocol thats used by this context.
 	 *
 	 * Return: the drag protocol
@@ -197,6 +222,35 @@ public class DragContext : ObjectG
 	}
 
 	/**
+	 * Requests the drag and drop operation to be managed by @context.
+	 * When a drag and drop operation becomes managed, the #GdkDragContext
+	 * will internally handle all input and source-side #GdkEventDND events
+	 * as required by the windowing system.
+	 *
+	 * Once the drag and drop operation is managed, the drag context will
+	 * emit the following signals:
+	 * - The #GdkDragContext::action-changed signal whenever the final action
+	 * to be performed by the drag and drop operation changes.
+	 * - The #GdkDragContext::drop-performed signal after the user performs
+	 * the drag and drop gesture (typically by releasing the mouse button).
+	 * - The #GdkDragContext::dnd-finished signal after the drag and drop
+	 * operation concludes (after all #GdkSelection transfers happen).
+	 * - The #GdkDragContext::cancel signal if the drag and drop operation is
+	 * finished but doesn't happen over an accepting destination, or is
+	 * cancelled through other means.
+	 *
+	 * Params:
+	 *     ipcWindow = Window to use for IPC messaging/events
+	 *     actions = the actions supported by the drag source
+	 *
+	 * Return: #TRUE if the drag and drop operation is managed.
+	 */
+	public bool manageDnd(Window ipcWindow, GdkDragAction actions)
+	{
+		return gdk_drag_context_manage_dnd(gdkDragContext, (ipcWindow is null) ? null : ipcWindow.getWindowStruct(), actions) != 0;
+	}
+
+	/**
 	 * Associates a #GdkDevice to @context, so all Drag and Drop events
 	 * for @context are emitted as if they came from this device.
 	 *
@@ -209,9 +263,170 @@ public class DragContext : ObjectG
 	}
 
 	/**
+	 * Sets the position of the drag window that will be kept
+	 * under the cursor hotspot. Initially, the hotspot is at the
+	 * top left corner of the drag window.
+	 *
+	 * Params:
+	 *     hotX = x coordinate of the drag window hotspot
+	 *     hotY = y coordinate of the drag window hotspot
+	 *
+	 * Since: 3.20
+	 */
+	public void setHotspot(int hotX, int hotY)
+	{
+		gdk_drag_context_set_hotspot(gdkDragContext, hotX, hotY);
+	}
+
+	int[string] connectedSignals;
+
+	void delegate(GdkDragAction, DragContext)[] onActionChangedListeners;
+	/**
+	 * A new action is being chosen for the drag and drop operation.
+	 *
+	 * This signal will only be emitted if the #GdkDragContext manages
+	 * the drag and drop operation. See gdk_drag_context_manage_dnd()
+	 * for more information.
+	 *
+	 * Params:
+	 *     action = The action currently chosen
+	 *
+	 * Since: 3.20
+	 */
+	void addOnActionChanged(void delegate(GdkDragAction, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "action-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"action-changed",
+				cast(GCallback)&callBackActionChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["action-changed"] = 1;
+		}
+		onActionChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackActionChanged(GdkDragContext* dragcontextStruct, GdkDragAction action, DragContext _dragcontext)
+	{
+		foreach ( void delegate(GdkDragAction, DragContext) dlg; _dragcontext.onActionChangedListeners )
+		{
+			dlg(action, _dragcontext);
+		}
+	}
+
+	void delegate(GdkDragCancelReason, DragContext)[] onCancelListeners;
+	/**
+	 * The drag and drop operation was cancelled.
+	 *
+	 * This signal will only be emitted if the #GdkDragContext manages
+	 * the drag and drop operation. See gdk_drag_context_manage_dnd()
+	 * for more information.
+	 *
+	 * Since: 3.20
+	 */
+	void addOnCancel(void delegate(GdkDragCancelReason, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "cancel" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"cancel",
+				cast(GCallback)&callBackCancel,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["cancel"] = 1;
+		}
+		onCancelListeners ~= dlg;
+	}
+	extern(C) static void callBackCancel(GdkDragContext* dragcontextStruct, GdkDragCancelReason object, DragContext _dragcontext)
+	{
+		foreach ( void delegate(GdkDragCancelReason, DragContext) dlg; _dragcontext.onCancelListeners )
+		{
+			dlg(object, _dragcontext);
+		}
+	}
+
+	void delegate(DragContext)[] onDndFinishedListeners;
+	/**
+	 * The drag and drop operation was finished, the drag destination
+	 * finished reading all data. The drag source can now free all
+	 * miscellaneous data.
+	 *
+	 * This signal will only be emitted if the #GdkDragContext manages
+	 * the drag and drop operation. See gdk_drag_context_manage_dnd()
+	 * for more information.
+	 *
+	 * Since: 3.20
+	 */
+	void addOnDndFinished(void delegate(DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "dnd-finished" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"dnd-finished",
+				cast(GCallback)&callBackDndFinished,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["dnd-finished"] = 1;
+		}
+		onDndFinishedListeners ~= dlg;
+	}
+	extern(C) static void callBackDndFinished(GdkDragContext* dragcontextStruct, DragContext _dragcontext)
+	{
+		foreach ( void delegate(DragContext) dlg; _dragcontext.onDndFinishedListeners )
+		{
+			dlg(_dragcontext);
+		}
+	}
+
+	void delegate(int, DragContext)[] onDropPerformedListeners;
+	/**
+	 * The drag and drop operation was performed on an accepting client.
+	 *
+	 * This signal will only be emitted if the #GdkDragContext manages
+	 * the drag and drop operation. See gdk_drag_context_manage_dnd()
+	 * for more information.
+	 *
+	 * Params:
+	 *     time = the time at which the drop happened.
+	 *
+	 * Since: 3.20
+	 */
+	void addOnDropPerformed(void delegate(int, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "drop-performed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"drop-performed",
+				cast(GCallback)&callBackDropPerformed,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["drop-performed"] = 1;
+		}
+		onDropPerformedListeners ~= dlg;
+	}
+	extern(C) static void callBackDropPerformed(GdkDragContext* dragcontextStruct, int time, DragContext _dragcontext)
+	{
+		foreach ( void delegate(int, DragContext) dlg; _dragcontext.onDropPerformedListeners )
+		{
+			dlg(time, _dragcontext);
+		}
+	}
+
+	/**
 	 * Aborts a drag without dropping.
 	 *
 	 * This function is called by the drag source.
+	 *
+	 * This function does not need to be called in managed drag and drop
+	 * operations. See gdk_drag_context_manage_dnd() for more information.
 	 *
 	 * Params:
 	 *     context = a #GdkDragContext
@@ -275,9 +490,41 @@ public class DragContext : ObjectG
 	}
 
 	/**
+	 * Starts a drag and creates a new drag context for it.
+	 *
+	 * This function is called by the drag source.
+	 *
+	 * Params:
+	 *     window = the source window for this drag
+	 *     device = the device that controls this drag
+	 *     targets = the offered targets,
+	 *         as list of #GdkAtoms
+	 *     xRoot = the x coordinate where the drag nominally started
+	 *     yRoot = the y coordinate where the drag nominally started
+	 *
+	 * Return: a newly created #GdkDragContext
+	 *
+	 * Since: 3.20
+	 */
+	public static DragContext dragBeginFromPoint(Window window, Device device, ListG targets, int xRoot, int yRoot)
+	{
+		auto p = gdk_drag_begin_from_point((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct(), xRoot, yRoot);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
+	}
+
+	/**
 	 * Drops on the current destination.
 	 *
 	 * This function is called by the drag source.
+	 *
+	 * This function does not need to be called in managed drag and drop
+	 * operations. See gdk_drag_context_manage_dnd() for more information.
 	 *
 	 * Params:
 	 *     context = a #GdkDragContext
@@ -286,6 +533,29 @@ public class DragContext : ObjectG
 	public static void dragDrop(DragContext context, uint time)
 	{
 		gdk_drag_drop((context is null) ? null : context.getDragContextStruct(), time);
+	}
+
+	/**
+	 * Inform GDK if the drop ended successfully. Passing %FALSE
+	 * for @success may trigger a drag cancellation animation.
+	 *
+	 * This function is called by the drag source, and should
+	 * be the last call before dropping the reference to the
+	 * @context.
+	 *
+	 * The #GdkDragContext will only take the first gdk_drag_drop_done()
+	 * call as effective, if this function is called multiple times,
+	 * all subsequent calls will be ignored.
+	 *
+	 * Params:
+	 *     context = a #GdkDragContext
+	 *     success = whether the drag was ultimatively successful
+	 *
+	 * Since: 3.20
+	 */
+	public static void dragDropDone(DragContext context, bool success)
+	{
+		gdk_drag_drop_done((context is null) ? null : context.getDragContextStruct(), success);
 	}
 
 	/**
@@ -352,6 +622,9 @@ public class DragContext : ObjectG
 	 * set of actions changes.
 	 *
 	 * This function is called by the drag source.
+	 *
+	 * This function does not need to be called in managed drag and drop
+	 * operations. See gdk_drag_context_manage_dnd() for more information.
 	 *
 	 * Params:
 	 *     context = a #GdkDragContext

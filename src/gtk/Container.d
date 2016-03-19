@@ -62,6 +62,16 @@ public  import gtkc.gtktypes;
  * children in a horizontal row, and a #GtkGrid arranges the widgets it contains
  * in a two-dimensional grid.
  * 
+ * For implementations of #GtkContainer the virtual method #GtkContainerClass.forall()
+ * is always required, since it's used for drawing and other internal operations
+ * on the children.
+ * If the #GtkContainer implementation expect to have non internal children
+ * it's needed to implement both #GtkContainerClass.add() and #GtkContainerClass.remove().
+ * If the GtkContainer implementation has internal children, they should be added
+ * with gtk_widget_set_parent() on init() and removed with gtk_widget_unparent()
+ * in the #GtkWidgetClass.destroy() implementation.
+ * See more about implementing custom widgets at https://wiki.gnome.org/HowDoI/CustomWidgets
+ * 
  * # Height for width geometry management
  * 
  * GTK+ uses a height-for-width (and width-for-height) geometry management system.
@@ -425,12 +435,14 @@ public class Container : Widget
 	}
 
 	/**
-	 * Invokes @callback on each child of @container, including children
-	 * that are considered “internal” (implementation details of the
-	 * container). “Internal” children generally weren’t added by the user
-	 * of the container, but were added by the container implementation
-	 * itself.  Most applications should use gtk_container_foreach(),
-	 * rather than gtk_container_forall().
+	 * Invokes @callback on each direct child of @container, including
+	 * children that are considered “internal” (implementation details
+	 * of the container). “Internal” children generally weren’t added
+	 * by the user of the container, but were added by the container
+	 * implementation itself.
+	 *
+	 * Most applications should use gtk_container_foreach(), rather
+	 * than gtk_container_forall().
 	 *
 	 * Params:
 	 *     callback = a callback
@@ -442,10 +454,15 @@ public class Container : Widget
 	}
 
 	/**
-	 * Invokes @callback on each non-internal child of @container. See
-	 * gtk_container_forall() for details on what constitutes an
-	 * “internal” child.  Most applications should use
-	 * gtk_container_foreach(), rather than gtk_container_forall().
+	 * Invokes @callback on each non-internal child of @container.
+	 * See gtk_container_forall() for details on what constitutes
+	 * an “internal” child. For all practical purposes, this function
+	 * should iterate over precisely those child widgets that were
+	 * added to the container by the application with explicit add()
+	 * calls.
+	 *
+	 * Most applications should use gtk_container_foreach(),
+	 * rather than gtk_container_forall().
 	 *
 	 * Params:
 	 *     callback = a callback
@@ -560,8 +577,8 @@ public class Container : Widget
 	 * Retrieves the vertical focus adjustment for the container. See
 	 * gtk_container_set_focus_vadjustment().
 	 *
-	 * Return: the vertical focus adjustment, or %NULL if
-	 *     none has been set.
+	 * Return: the vertical focus adjustment, or
+	 *     %NULL if none has been set.
 	 */
 	public Adjustment getFocusVadjustment()
 	{
@@ -644,7 +661,7 @@ public class Container : Widget
 	 * Note that @container will own a reference to @widget, and that this
 	 * may be the last reference held; so removing a widget from its
 	 * container can destroy that widget. If you want to use @widget
-	 * again, you need to add a reference to it while it’s not inside
+	 * again, you need to add a reference to it before removing it from
 	 * a container, using g_object_ref(). If you don’t want to use @widget
 	 * again it’s usually more efficient to simply destroy it directly
 	 * using gtk_widget_destroy() since this will remove it from the

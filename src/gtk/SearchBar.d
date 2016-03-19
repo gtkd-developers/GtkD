@@ -51,6 +51,10 @@ public  import gtkc.gtktypes;
  * The following example shows you how to create a more complex search
  * entry.
  * 
+ * # CSS nodes
+ * 
+ * GtkSearchBar has a single CSS node with name searchbar.
+ * 
  * ## Creating a search bar
  * 
  * [A simple example](https://git.gnome.org/browse/gtk+/tree/examples/search-bar.c)

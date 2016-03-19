@@ -26,10 +26,6 @@ module gtkc.gobjecttypes;
 
 public import gtkc.glibtypes;
 
-public alias void* GInitiallyUnownedAutoptr;
-
-public alias void* GObjectAutoptr;
-
 /**
  * This is the signature of marshaller functions, required to marshall
  * arrays of parameter values to signal emissions into C language callback
@@ -1436,8 +1432,8 @@ struct ValueDataUnion
  * A callback function used by the type system to finalize those portions
  * of a derived types class structure that were setup from the corresponding
  * GBaseInitFunc() function. Class finalization basically works the inverse
- * way in which class intialization is performed.
- * See GClassInitFunc() for a discussion of the class intialization process.
+ * way in which class initialization is performed.
+ * See GClassInitFunc() for a discussion of the class initialization process.
  *
  * Params:
  *     gClass = The #GTypeClass structure to finalize
@@ -1452,7 +1448,7 @@ public alias extern(C) void function(void* gClass) GBaseFinalizeFunc;
  * For example, class members (such as strings) that are not sufficiently
  * handled by a plain memory copy of the parent class into the derived class
  * have to be altered. See GClassInitFunc() for a discussion of the class
- * intialization process.
+ * initialization process.
  *
  * Params:
  *     gClass = The #GTypeClass structure to initialize
@@ -1672,7 +1668,8 @@ public alias extern(C) void function(void* data, GClosure* closure) GClosureNoti
  *
  * Params:
  *     instanc = The instance to initialize
- *     gClass = The class of the type the instance is created for
+ *     gClass = The class of the type the instance is
+ *         created for
  */
 public alias extern(C) void function(GTypeInstance* instanc, void* gClass) GInstanceInitFunc;
 
@@ -1801,7 +1798,8 @@ public alias extern(C) void function(void* data, GObject* object, int isLastRef)
  *
  * Params:
  *     cacheData = data that was given to the g_type_add_class_cache_func() call
- *     gClass = The #GTypeClass structure which is unreferenced
+ *     gClass = The #GTypeClass structure which is
+ *         unreferenced
  *
  * Return: %TRUE to stop further #GTypeClassCacheFuncs from being
  *     called, %FALSE to continue
@@ -1814,7 +1812,8 @@ public alias extern(C) int function(void* cacheData, GTypeClass* gClass) GTypeCl
  *
  * Params:
  *     checkData = data passed to g_type_add_interface_check()
- *     gIface = the interface that has been initialized
+ *     gIface = the interface that has been
+ *         initialized
  *
  * Since: 2.4
  */
@@ -1870,7 +1869,8 @@ public alias extern(C) void function(GTypePlugin* plugin) GTypePluginUse;
  *     returnValue = a #GValue to store the return
  *         value. May be %NULL if the callback of @closure doesn't return a
  *         value.
- *     instanc = the instance on which the closure is invoked.
+ *     instanc = the instance on which the closure is
+ *         invoked.
  *     args = va_list of arguments to be passed to the closure.
  *     marshalData = additional data specified when
  *         registering the marshaller, see g_closure_set_marshal() and

@@ -45,7 +45,7 @@ public struct Utils
 	 * See also: gtk_source_utils_unescape_search_text().
 	 *
 	 * <warning>
-	 * The escape and unescape functions are not reciprocal! For example,
+	 * Warning: the escape and unescape functions are not reciprocal! For example,
 	 * escape (unescape (\)) = \\. So avoid cycles such as: search entry -> unescape
 	 * -> search settings -> escape -> search entry. The original search entry text
 	 * may be modified.

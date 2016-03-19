@@ -45,6 +45,11 @@ public  import gtkc.gtktypes;
  * own.  Instead, you should use the functions that work on a
  * #GtkFileChooser.
  * 
+ * If you want to integrate well with the platform you should use the
+ * #GtkFileChooserNative API, which will use a platform-specific
+ * dialog if available and fall back to GtkFileChooserDialog
+ * otherwise.
+ * 
  * ## Typical usage ## {#gtkfilechooser-typical-usage}
  * 
  * In the simplest of cases, you can the following code to use

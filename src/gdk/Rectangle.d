@@ -34,6 +34,21 @@ public  import gtkc.gdktypes;
  */
 
 /**
+ * Checks if the two given rectangles are equal.
+ *
+ * Params:
+ *     rect2 = a #GdkRectangle
+ *
+ * Return: %TRUE if the rectangles are equal.
+ *
+ * Since: 3.20
+ */
+public bool equal(GdkRectangle* rect1, GdkRectangle* rect2)
+{
+	return gdk_rectangle_equal(rect1, rect2) != 0;
+}
+
+/**
  * Calculates the intersection of two rectangles. It is allowed for
  * @dest to be the same as either @src1 or @src2. If the rectangles
  * do not intersect, @dest’s width and height is set to 0 and its x
@@ -58,6 +73,9 @@ public bool intersect(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle d
  * The union of rectangles @src1 and @src2 is the smallest rectangle which
  * includes both @src1 and @src2 within it.
  * It is allowed for @dest to be the same as either @src1 or @src2.
+ *
+ * Note that this function does not ignore 'empty' rectangles (ie. with
+ * zero width or height).
  *
  * Params:
  *     src2 = a #GdkRectangle

@@ -36,6 +36,10 @@ public  import gtkc.gtktypes;
  * The #GtkSeparatorMenuItem is a separator used to group
  * items within a menu. It displays a horizontal line with a shadow to
  * make it appear sunken into the interface.
+ * 
+ * # CSS nodes
+ * 
+ * GtkSeparatorMenuItem has a single CSS node with name separator.
  */
 public class SeparatorMenuItem : MenuItem
 {

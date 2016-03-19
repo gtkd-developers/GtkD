@@ -38,6 +38,11 @@ public  import gtkc.gtktypes;
  * value of the #GtkOrientable:orientation property, used to group the widgets
  * within a window. It displays a line with a shadow to make it appear sunken
  * into the interface.
+ * 
+ * # CSS nodes
+ * 
+ * GtkSeparator has a single CSS node with name separator. The node
+ * gets one of the .horizontal or .vertical style classes.
  */
 public class Separator : Widget, OrientableIF
 {

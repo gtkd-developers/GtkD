@@ -60,6 +60,12 @@ public  import gtkc.gtktypes;
  * as selected when the user tries to select it.
  * 
  * The GtkListBox widget was added in GTK+ 3.10.
+ * 
+ * # CSS nodes
+ * 
+ * GtkListBox uses a single CSS node with name list. GtkListBoxRow uses
+ * a single CSS node with name row. The row nodes get the .activatable
+ * style class added when appropriate.
  */
 public class ListBox : Container
 {

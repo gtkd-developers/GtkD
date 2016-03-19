@@ -45,6 +45,15 @@ public  import gtkc.gtktypes;
  * with the same stack widget.
  * 
  * The GtkStackSwitcher widget was added in 3.10.
+ * 
+ * # CSS nodes
+ * 
+ * GtkStackSwitcher has a single CSS node named stackswitcher and
+ * style class .stack-switcher.
+ * 
+ * When circumstances require it, GtkStackSwitcher adds the
+ * .needs-attention style class to the widgets representing the
+ * stack pages.
  */
 public class StackSwitcher : Box
 {

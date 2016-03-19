@@ -737,7 +737,7 @@ public struct ValueGst
 	}
 
 	/**
-	 * Sets the contents of @value to @structure.  The actual
+	 * Sets the contents of @value to @structure.
 	 *
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_STRUCTURE

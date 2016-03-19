@@ -112,7 +112,7 @@ public class GestureLongPress : GestureSingle
 	void delegate(GestureLongPress)[] onCancelledListeners;
 	/**
 	 * This signal is emitted whenever a press moved too far, or was released
-	 * before #GtkGestureLongPress:pressed happened.
+	 * before #GtkGestureLongPress::pressed happened.
 	 *
 	 * Since: 3.14
 	 */

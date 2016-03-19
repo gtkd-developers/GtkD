@@ -27,6 +27,28 @@ module gstreamerc.gstinterfacestypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
+public alias void* GstColorBalanceChannelAutoptr;
+
+public alias void* GstVideoBufferPoolAutoptr;
+
+public alias void* GstVideoCodecFrameAutoptr;
+
+public alias void* GstVideoCodecStateAutoptr;
+
+public alias void* GstVideoDecoderAutoptr;
+
+public alias void* GstVideoEncoderAutoptr;
+
+public alias void* GstVideoFilterAutoptr;
+
+public alias void* GstVideoInfoAutoptr;
+
+public alias void* GstVideoOverlayCompositionAutoptr;
+
+public alias void* GstVideoOverlayRectangleAutoptr;
+
+public alias void* GstVideoSinkAutoptr;
+
 struct GstVideoOverlay;
 
 /**

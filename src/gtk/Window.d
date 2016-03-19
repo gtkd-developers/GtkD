@@ -76,6 +76,28 @@ public  import gtkc.gtktypes;
  * The GtkWindow implementation of the GtkBuildable interface supports
  * setting a child as the titlebar by specifying “titlebar” as the “type”
  * attribute of a <child> element.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * window
+ * ├── decoration
+ * ╰── <child>
+ * ]|
+ * 
+ * GtkWindow has a main CSS node with name window and style class .background,
+ * and a subnode with name decoration.
+ * 
+ * Style classes that are typically used with the main CSS node are .csd (when
+ * client-side decorations are in use), .solid-csd (for client-side decorations
+ * without invisible borders), .ssd (used by mutter when rendering server-side
+ * decorations). GtkWindow also represents window states with the following
+ * style classes on the main node: .tiled, .maximized, .fullscreen. Specialized
+ * types of window often add their own discriminating style classes, such as
+ * .popup or .tooltip.
+ * 
+ * GtkWindow adds the .titlebar and .default-decoration style classes to the
+ * widget that is added as a titlebar child.
  */
 public class Window : Bin
 {
@@ -553,8 +575,8 @@ public class Window : Bin
 	 * Fetches the attach widget for this window. See
 	 * gtk_window_set_attached_to().
 	 *
-	 * Return: the widget where the window is attached,
-	 *     or %NULL if the window is not attached to any widget.
+	 * Return: the widget where the window
+	 *     is attached, or %NULL if the window is not attached to any widget.
 	 *
 	 * Since: 3.4
 	 */
@@ -597,10 +619,11 @@ public class Window : Bin
 	}
 
 	/**
-	 * Returns the default widget for @window. See gtk_window_set_default()
-	 * for more details.
+	 * Returns the default widget for @window. See
+	 * gtk_window_set_default() for more details.
 	 *
-	 * Return: the default widget, or %NULL if there is none.
+	 * Return: the default widget, or %NULL
+	 *     if there is none.
 	 *
 	 * Since: 2.14
 	 */
@@ -647,7 +670,8 @@ public class Window : Bin
 	 * is not focused then  `gtk_widget_has_focus (widget)` will
 	 * not be %TRUE for the widget.
 	 *
-	 * Return: the currently focused widget, or %NULL if there is none.
+	 * Return: the currently focused widget,
+	 *     or %NULL if there is none.
 	 */
 	public Widget getFocus()
 	{
@@ -932,8 +956,7 @@ public class Window : Bin
 	 * further explanation.
 	 *
 	 * Return: the role of the window if set, or %NULL. The
-	 *     returned is owned by the widget and must not be modified
-	 *     or freed.
+	 *     returned is owned by the widget and must not be modified or freed.
 	 */
 	public string getRole()
 	{
@@ -1000,6 +1023,13 @@ public class Window : Bin
 	 * manager handles it. Also, the window manager can take the size
 	 * of the window decorations/border into account, while your
 	 * application cannot.
+	 *
+	 * Note 4: When using client side decorations, GTK+ will do its best to
+	 * adjust the returned values to match the logical size of the window
+	 * excluding the widgets added for client side decorations, but there
+	 * is no garantee that the result will be totally accurate because
+	 * these widgets depend on the theme and may not be realized or
+	 * visible at the time gtk_window_get_size() is invoked.
 	 *
 	 * In any case, if you insist on application-specified window
 	 * positioning, there’s still a better way than
@@ -1075,8 +1105,8 @@ public class Window : Bin
 	 * Fetches the transient parent for this window. See
 	 * gtk_window_set_transient_for().
 	 *
-	 * Return: the transient parent for this window, or %NULL
-	 *     if no transient parent has been set.
+	 * Return: the transient parent for this
+	 *     window, or %NULL if no transient parent has been set.
 	 */
 	public Window getTransientFor()
 	{
@@ -1360,6 +1390,8 @@ public class Window : Bin
 	 * }
 	 * ]|
 	 *
+	 * Deprecated: Geometry handling in GTK is deprecated.
+	 *
 	 * Params:
 	 *     geometry = geometry string
 	 *
@@ -1479,6 +1511,22 @@ public class Window : Bin
 	 *
 	 * Windows may not be resized smaller than 1 by 1 pixels.
 	 *
+	 * When using client side decorations, GTK+ will do its best to adjust
+	 * the given size so that the resulting window size matches the
+	 * requested size without the title bar, borders and shadows added for
+	 * the client side decorations, but there is no garantee that the
+	 * result will be totally accurate because these widgets added for
+	 * client side decorations depend on the theme and may not be realized
+	 * or visible at the time gtk_window_resize() is issued.
+	 *
+	 * Typically, gtk_window_resize() will compensate for the GtkHeaderBar
+	 * height only if it's known at the time the resulting GtkWindow
+	 * configuration is issued.
+	 * For example, if new widgets are added after the GtkWindow configuration
+	 * and cause the GtkHeaderBar to grow in height, this will result in a
+	 * window content smaller that specified by gtk_window_resize() and not
+	 * a larger window.
+	 *
 	 * Params:
 	 *     width = width in pixels to resize the window to
 	 *     height = height in pixels to resize the window to
@@ -1506,6 +1554,9 @@ public class Window : Bin
 	 * Like gtk_window_resize(), but @width and @height are interpreted
 	 * in terms of the base size and increment set with
 	 * gtk_window_set_geometry_hints.
+	 *
+	 * Deprecated: This function does nothing. Use
+	 * gtk_window_resize() and compute the geometry yourself.
 	 *
 	 * Params:
 	 *     width = width in resize increments to resize the window to
@@ -1618,6 +1669,9 @@ public class Window : Bin
 	 * in terms of the base size and increment set with
 	 * gtk_window_set_geometry_hints.
 	 *
+	 * Deprecated: This function does nothing. If you want to set a default
+	 * size, use gtk_window_set_default_size() instead.
+	 *
 	 * Params:
 	 *     width = width in resize increments, or -1 to unset the default width
 	 *     height = height in resize increments, or -1 to unset the default height
@@ -1658,6 +1712,11 @@ public class Window : Bin
 	 *
 	 * Windows can’t actually be 0x0 in size, they must be at least 1x1, but
 	 * passing 0 for @width and @height is OK, resulting in a 1x1 default size.
+	 *
+	 * If you use this function to reestablish a previously saved window size,
+	 * note that the appropriate size to save is the one returned by
+	 * gtk_window_get_size(). Using the window allocation directly will not
+	 * work in all circumstances and can lead to growing or shrinking windows.
 	 *
 	 * Params:
 	 *     width = width in pixels, or -1 to unset the default width
@@ -1755,7 +1814,9 @@ public class Window : Bin
 	 * character); aspect ratios; and more. See the #GdkGeometry struct.
 	 *
 	 * Params:
-	 *     geometryWidget = widget the geometry hints will be applied to or %NULL
+	 *     geometryWidget = widget the geometry hints used to be applied to
+	 *         or %NULL. Since 3.18 this argument is ignored and GTK behaves as if %NULL was
+	 *         set.
 	 *     geometry = struct containing geometry information or %NULL
 	 *     geomMask = mask indicating which struct fields should be paid attention to
 	 */
@@ -2240,6 +2301,12 @@ public class Window : Bin
 	 * gtk_window_set_transient_for() on your behalf.
 	 *
 	 * Passing %NULL for @parent unsets the current transient window.
+	 *
+	 * On Wayland, this function can also be used to attach a new
+	 * #GTK_WINDOW_POPUP to a #GTK_WINDOW_TOPLEVEL parent already mapped
+	 * on screen so that the #GTK_WINDOW_POPUP will be created as a
+	 * subsurface-based window #GDK_WINDOW_SUBSURFACE which can be
+	 * positioned at will relatively to the #GTK_WINDOW_TOPLEVEL surface.
 	 *
 	 * On Windows, this function puts the child window on top of the parent,
 	 * much as the window manager would have done on X.

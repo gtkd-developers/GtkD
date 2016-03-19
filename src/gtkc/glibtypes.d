@@ -123,25 +123,11 @@ Type* gMalloc(Type)()
 
 alias void* GIConv;
 
-public alias void* GArrayAutoptr;
-
-public alias void* GAsyncQueueAutoptr;
-
-public alias void* GBookmarkFileAutoptr;
-
-public alias void* GByteArrayAutoptr;
-
-public alias void* GBytesAutoptr;
-
-public alias void* GChecksumAutoptr;
-
 /**
  * Integer representing a day of the month; between 1 and 31.
  * #G_DATE_BAD_DAY represents an invalid day of the month.
  */
 public alias ubyte GDateDay;
-
-public alias void* GDateTimeAutoptr;
 
 /**
  * Integer representing a year; #G_DATE_BAD_YEAR is the invalid
@@ -150,44 +136,10 @@ public alias void* GDateTimeAutoptr;
  */
 public alias ushort GDateYear;
 
-public alias void* GDirAutoptr;
-
-public alias void* GErrorAutoptr;
-
-public alias void* GHashTableAutoptr;
-
-public alias void* GHmacAutoptr;
-
-public alias void* GIOChannelAutoptr;
-
-public alias void* GKeyFileAutoptr;
-
-public alias void* GListAutoptr;
-
-public alias void* GMainContextAutoptr;
-
-public alias void* GMainLoopAutoptr;
-
-public alias void* GMappedFileAutoptr;
-
-public alias void* GMarkupParseContextAutoptr;
-
-public alias void* GMatchInfoAutoptr;
-
 /**
  * Opaque type. See g_mutex_locker_new() for details.
  */
 public alias void* GMutexLocker;
-
-public alias void* GMutexLockerAutoptr;
-
-public alias void* GNodeAutoptr;
-
-public alias void* GOptionContextAutoptr;
-
-public alias void* GOptionGroupAutoptr;
-
-public alias void* GPatternSpecAutoptr;
 
 /**
  * A type which is used to hold a process identification.
@@ -200,38 +152,17 @@ public alias void* GPatternSpecAutoptr;
  */
 public alias int GPid;
 
-public alias void* GPtrArrayAutoptr;
-
 /**
  * A GQuark is a non-zero integer which uniquely identifies a
  * particular string. A GQuark value of zero is associated to %NULL.
  */
 public alias uint GQuark;
 
-public alias void* GQueueAutoptr;
-
-public alias void* GRandAutoptr;
-
-public alias void* GRegexAutoptr;
-
-public alias void* GSListAutoptr;
-
-public alias void* GScannerAutoptr;
-
-public alias void* GSequenceAutoptr;
-
-public alias void* GSourceAutoptr;
-
-public alias void* GStringChunkAutoptr;
-
-public alias void* GStringAutoptr;
-
 /**
- * A C representable type name for #G_TYPE_STRV.
+ * A typedef alias for gchar**. This is mostly useful when used together with
+ * g_auto().
  */
 public alias void* GStrv;
-
-public alias void* GThreadAutoptr;
 
 /**
  * Simply a replacement for time_t. It has been deprecated
@@ -259,22 +190,6 @@ public alias int GTime;
  * A value representing an interval of time, in microseconds.
  */
 public alias long GTimeSpan;
-
-public alias void* GTimeZoneAutoptr;
-
-public alias void* GTimerAutoptr;
-
-public alias void* GTreeAutoptr;
-
-public alias void* GVariantBuilderAutoptr;
-
-public alias void* GVariantDictAutoptr;
-
-public alias void* GVariantIterAutoptr;
-
-public alias void* GVariantTypeAutoptr;
-
-public alias void* GVariantAutoptr;
 
 enum GPriority
 {
@@ -3197,6 +3112,30 @@ public enum GUnicodeScript
 	 * Warang Citi. Since: 2.42
 	 */
 	WARANG_CITI = 125,
+	/**
+	 * Ahom. Since: 2.48
+	 */
+	AHOM = 126,
+	/**
+	 * Anatolian Hieroglyphs. Since: 2.48
+	 */
+	ANATOLIAN_HIEROGLYPHS = 127,
+	/**
+	 * Hatran. Since: 2.48
+	 */
+	HATRAN = 128,
+	/**
+	 * Multani. Since: 2.48
+	 */
+	MULTANI = 129,
+	/**
+	 * Old Hungarian. Since: 2.48
+	 */
+	OLD_HUNGARIAN = 130,
+	/**
+	 * Signwriting. Since: 2.48
+	 */
+	SIGNWRITING = 131,
 }
 alias GUnicodeScript UnicodeScript;
 

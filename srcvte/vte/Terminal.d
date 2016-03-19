@@ -24,6 +24,7 @@
 
 module vte.Terminal;
 
+private import gdk.Cursor;
 private import gdk.Event;
 private import gdk.RGBA;
 private import gio.Cancellable;
@@ -127,6 +128,32 @@ public class Terminal : Widget, ScrollableIF
 	public void copyPrimary()
 	{
 		vte_terminal_copy_primary(vteTerminal);
+	}
+
+	/**
+	 * Checks each regex in @regexes if the text in and around the position of
+	 * the event matches the regular expressions.  If a match exists, the matched
+	 * text is stored in @matches at the position of the regex in @regexes; otherwise
+	 * %NULL is stored there.
+	 *
+	 * Params:
+	 *     event = a #GdkEvent
+	 *     regexes = an array of #GRegex
+	 *     nRegexes = number of items in @regexes
+	 *     matchFlags = the #GRegexMatchFlags to use when matching the regexes
+	 *     matches = a location to store the matches
+	 *
+	 * Return: %TRUE iff any of the regexes produced a match
+	 */
+	public bool eventCheckGregexSimple(Event event, Regex[] regexes, GRegexMatchFlags matchFlags, string[] matches)
+	{
+		GRegex*[] regexesArray = new GRegex*[regexes.length];
+		for ( int i = 0; i < regexes.length; i++ )
+		{
+			regexesArray[i] = regexes[i].getRegexStruct();
+		}
+		
+		return vte_terminal_event_check_gregex_simple(vteTerminal, (event is null) ? null : event.getEventStruct(), regexesArray.ptr, cast(size_t)matches.length, matchFlags, Str.toStringzArray(matches)) != 0;
 	}
 
 	/**
@@ -528,14 +555,15 @@ public class Terminal : Widget, ScrollableIF
 	 * this expression, the text will be highlighted.
 	 *
 	 * Params:
-	 *     regex = a #GRegex
-	 *     flags = the #GRegexMatchFlags to use when matching the regex
+	 *     gregex = a #GRegex
+	 *     gflags = the #GRegexMatchFlags to use when matching the regex
 	 *
-	 * Return: an integer associated with this expression
+	 * Return: an integer associated with this expression, or -1 if @gregex could not be
+	 *     transformed into a #VteRegex or @flags were incompatible
 	 */
-	public int matchAddGregex(Regex regex, GRegexMatchFlags flags)
+	public int matchAddGregex(Regex gregex, GRegexMatchFlags gflags)
 	{
-		return vte_terminal_match_add_gregex(vteTerminal, (regex is null) ? null : regex.getRegexStruct(), flags);
+		return vte_terminal_match_add_gregex(vteTerminal, (gregex is null) ? null : gregex.getRegexStruct(), gflags);
 	}
 
 	/**
@@ -547,6 +575,8 @@ public class Terminal : Widget, ScrollableIF
 	 * If more than one regular expression has been set with
 	 * vte_terminal_match_add(), then expressions are checked in the order in
 	 * which they were added.
+	 *
+	 * Deprecated: Use vte_terminal_match_check_event() instead.
 	 *
 	 * Params:
 	 *     column = the text column
@@ -609,6 +639,22 @@ public class Terminal : Widget, ScrollableIF
 	public void matchRemoveAll()
 	{
 		vte_terminal_match_remove_all(vteTerminal);
+	}
+
+	/**
+	 * Sets which cursor the terminal will use if the pointer is over the pattern
+	 * specified by @tag.  The terminal keeps a reference to @cursor.
+	 *
+	 * Deprecated: Use vte_terminal_match_set_cursor_type() or vte_terminal_match_set_cursor_named() instead.
+	 *
+	 * Params:
+	 *     tag = the tag of the regex which should use the specified cursor
+	 *     cursor = the #GdkCursor which the terminal should use when the pattern is
+	 *         highlighted, or %NULL to use the standard cursor
+	 */
+	public void matchSetCursor(int tag, Cursor cursor)
+	{
+		vte_terminal_match_set_cursor(vteTerminal, tag, (cursor is null) ? null : cursor.getCursorStruct());
 	}
 
 	/**
@@ -757,12 +803,12 @@ public class Terminal : Widget, ScrollableIF
 	 * Sets the #GRegex regex to search for. Unsets the search regex when passed %NULL.
 	 *
 	 * Params:
-	 *     regex = a #GRegex, or %NULL
-	 *     flags = flags from #GRegexMatchFlags
+	 *     gregex = a #GRegex, or %NULL
+	 *     gflags = flags from #GRegexMatchFlags
 	 */
-	public void searchSetGregex(Regex regex, GRegexMatchFlags flags)
+	public void searchSetGregex(Regex gregex, GRegexMatchFlags gflags)
 	{
-		vte_terminal_search_set_gregex(vteTerminal, (regex is null) ? null : regex.getRegexStruct(), flags);
+		vte_terminal_search_set_gregex(vteTerminal, (gregex is null) ? null : gregex.getRegexStruct(), gflags);
 	}
 
 	/**
@@ -872,6 +918,21 @@ public class Terminal : Widget, ScrollableIF
 	public void setColorCursor(RGBA cursorBackground)
 	{
 		vte_terminal_set_color_cursor(vteTerminal, (cursorBackground is null) ? null : cursorBackground.getRGBAStruct());
+	}
+
+	/**
+	 * Sets the foreground color for text which is under the cursor.  If %NULL, text
+	 * under the cursor will be drawn with foreground and background colors
+	 * reversed.
+	 *
+	 * Params:
+	 *     cursorForeground = the new color to use for the text cursor, or %NULL
+	 *
+	 * Since: 0.44
+	 */
+	public void setColorCursorForeground(RGBA cursorForeground)
+	{
+		vte_terminal_set_color_cursor_foreground(vteTerminal, (cursorForeground is null) ? null : cursorForeground.getRGBAStruct());
 	}
 
 	/**
@@ -1137,8 +1198,7 @@ public class Terminal : Widget, ScrollableIF
 	 * A negative value means "infinite scrollback".
 	 *
 	 * Note that this setting only affects the normal screen buffer.
-	 * For terminal types which have an alternate screen buffer, no scrollback is
-	 * allowed on the alternate screen buffer.
+	 * No scrollback is allowed on the alternate screen buffer.
 	 *
 	 * Params:
 	 *     lines = the length of the history buffer
@@ -1192,9 +1252,10 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * Note that %G_SPAWN_DO_NOT_REAP_CHILD will always be added to @spawn_flags.
 	 *
-	 * Note that unless @spawn_flags contains %G_SPAWN_LEAVE_DESCRIPTORS_OPEN, all file
-	 * descriptors except stdin/stdout/stderr will be closed before calling exec()
-	 * in the child.
+	 * Note that all open file descriptors will be closed in the child. If you want
+	 * to keep some file descriptor open for use in the child process, you need to
+	 * use a child setup function that unsets the FD_CLOEXEC flag on that file
+	 * descriptor.
 	 *
 	 * See vte_pty_new(), g_spawn_async() and vte_terminal_watch_child() for more information.
 	 *

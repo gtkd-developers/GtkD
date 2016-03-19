@@ -26,6 +26,7 @@ module gstreamer.Element;
 
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -492,6 +493,73 @@ public class Element : ObjectGst
 		}
 		
 		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
+	}
+
+	/**
+	 * Gets the context with @context_type set on the element or NULL.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     contextType = a name of a context to retrieve
+	 *
+	 * Return: A #GstContext or NULL
+	 *
+	 * Since: 1.8
+	 */
+	public Context getContext(string contextType)
+	{
+		auto p = gst_element_get_context(gstElement, Str.toStringz(contextType));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Context)(cast(GstContext*) p, true);
+	}
+
+	/**
+	 * Gets the context with @context_type set on the element or NULL.
+	 *
+	 * Params:
+	 *     contextType = a name of a context to retrieve
+	 *
+	 * Return: A #GstContext or NULL
+	 *
+	 * Since: 1.8
+	 */
+	public Context getContextUnlocked(string contextType)
+	{
+		auto p = gst_element_get_context_unlocked(gstElement, Str.toStringz(contextType));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Context)(cast(GstContext*) p, true);
+	}
+
+	/**
+	 * Gets the contexts set on the element.
+	 *
+	 * MT safe.
+	 *
+	 * Return: List of #GstContext
+	 *
+	 * Since: 1.8
+	 */
+	public ListG getContexts()
+	{
+		auto p = gst_element_get_contexts(gstElement);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p, true);
 	}
 
 	/**

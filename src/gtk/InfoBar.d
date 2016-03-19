@@ -102,6 +102,12 @@ public  import gtkc.gtktypes;
  * multiple <action-widget> elements. The “response” attribute specifies a
  * numeric response, and the content of the element is the id of widget
  * (which should be a child of the dialogs @action_area).
+ * 
+ * # CSS nodes
+ * 
+ * GtkInfoBar has a single CSS node with name infobar. The node may get
+ * one of the style classes .info, warning, .error or .question, depending
+ * on the message type.
  */
 public class InfoBar : Box
 {

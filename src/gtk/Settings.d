@@ -118,8 +118,8 @@ public class Settings : ObjectG, StyleProviderIF
 	 * Gets the #GtkSettings object for the default GDK screen, creating
 	 * it if necessary. See gtk_settings_get_for_screen().
 	 *
-	 * Return: a #GtkSettings object. If there is no default
-	 *     screen, then returns %NULL.
+	 * Return: a #GtkSettings object. If there is
+	 *     no default screen, then returns %NULL.
 	 */
 	public static Settings getDefault()
 	{
@@ -173,6 +173,22 @@ public class Settings : ObjectG, StyleProviderIF
 	public static void installPropertyParser(ParamSpec pspec, GtkRcPropertyParser parser)
 	{
 		gtk_settings_install_property_parser((pspec is null) ? null : pspec.getParamSpecStruct(), parser);
+	}
+
+	/**
+	 * Undoes the effect of calling g_object_set() to install an
+	 * application-specific value for a setting. After this call,
+	 * the setting will again follow the session-wide value for
+	 * this setting.
+	 *
+	 * Params:
+	 *     name = the name of the setting to reset
+	 *
+	 * Since: 3.20
+	 */
+	public void resetProperty(string name)
+	{
+		gtk_settings_reset_property(gtkSettings, Str.toStringz(name));
 	}
 
 	/**

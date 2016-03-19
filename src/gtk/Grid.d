@@ -49,6 +49,10 @@ public  import gtkc.gtktypes;
  * GtkGrid can be used like a #GtkBox by just using gtk_container_add(),
  * which will place children next to each other in the direction determined
  * by the #GtkOrientable:orientation property.
+ * 
+ * # CSS nodes
+ * 
+ * GtkGrid uses a single CSS node with name grid.
  */
 public class Grid : Container, OrientableIF
 {
@@ -345,8 +349,6 @@ public class Grid : Container, OrientableIF
 	 *
 	 * Params:
 	 *     row = the row index
-	 *
-	 * Return: the row index defining the global baseline
 	 *
 	 * Since: 3.10
 	 */

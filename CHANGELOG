@@ -1,13 +1,17 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.3.0
+--------------
+-Update to GTK 3.20.
+
 Release: 3.2.3
-------------
+--------------
 -Fix some memory errors, #146
 -Add a scoped version of addOnCommandline. #142
 
 Release: 3.2.2
-------------
+--------------
 -Add ddox generation script by Gerald Nunn.
 -Allocate GTK structs with g_malloc0.
 -GIO Action and Popover demo by Gerald Nunn. #140

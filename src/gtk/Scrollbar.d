@@ -47,6 +47,33 @@ public  import gtkc.gtktypes;
  * #GtkAdjustment:page-increment fields are properties when the user asks to
  * step down (using the small stepper arrows) or page down (using for
  * example the `Page Down` key).
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * scrollbar[.fine-tune]
+ * ╰── contents
+ * ├── [button.up]
+ * ├── [button.down]
+ * ├── trough
+ * │   ╰── slider
+ * ├── [button.up]
+ * ╰── [button.down]
+ * ]|
+ * 
+ * GtkScrollbar has a main CSS node with name scrollbar and a subnode for its
+ * contents, with subnodes named trough and slider.
+ * 
+ * The main node gets the style class .fine-tune added when the scrollbar is
+ * in 'fine-tuning' mode.
+ * 
+ * If steppers are enabled, they are represented by up to four additional
+ * subnodes with name button. These get the style classes .up and .down to
+ * indicate in which direction they are moving.
+ * 
+ * Other style classes that may be added to scrollbars inside #GtkScrolledWindow
+ * include the positional classes (.left, .right, .top, .bottom) and style
+ * classes related to overlay scrolling (.overlay-indicator, .dragging, .hovering).
  */
 public class Scrollbar : Range
 {

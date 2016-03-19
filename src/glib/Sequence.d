@@ -252,6 +252,22 @@ public class Sequence
 	}
 
 	/**
+	 * Returns %TRUE if the sequence contains zero items.
+	 *
+	 * This function is functionally identical to checking the result of
+	 * g_sequence_get_length() being equal to zero. However this function is
+	 * implemented in O(1) running time.
+	 *
+	 * Return: %TRUE if the sequence is empty, otherwise %FALSE.
+	 *
+	 * Since: 2.48
+	 */
+	public bool isEmpty()
+	{
+		return g_sequence_is_empty(gSequence) != 0;
+	}
+
+	/**
 	 * Returns an iterator pointing to the position of the first item found
 	 * equal to @data according to @cmp_func and @cmp_data. If more than one
 	 * item is equal, it is not guaranteed that it is the first which is

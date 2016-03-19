@@ -49,6 +49,20 @@ public  import gtkc.gtktypes;
  * The #GtkButton widget can hold any valid child widget.  That is, it can hold
  * almost any other standard #GtkWidget.  The most commonly used child is the
  * #GtkLabel.
+ * 
+ * # CSS nodes
+ * 
+ * GtkButton has a single CSS node with name button. The node will get the
+ * style classes .image-button or .text-button, if the content is just an
+ * image or label, respectively. It may also receive the .flat style class.
+ * 
+ * Other style classes that are commonly used with GtkButton include
+ * .suggested-action and .destructive-action.
+ * 
+ * Button-like widgets like #GtkToggleButton, #GtkMenuButton, #GtkVolumeButton,
+ * #GtkLockButton, #GtkColorButton, #GtkFontButton or #GtkFileChooserButton use
+ * style classes such as .toggle, .popup, .scale, .lock, .color, .font, .file
+ * to differentiate themselves from a plain GtkButton.
  */
 public class Button : Bin, ActionableIF, ActivatableIF
 {
@@ -235,7 +249,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 *
 	 * Params:
 	 *     iconName = an icon name
-	 *     size = an icon size
+	 *     size = an icon size (#GtkIconSize)
 	 *
 	 * Return: a new #GtkButton displaying the themed icon
 	 *
@@ -332,7 +346,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 *
 	 * Since: 2.4
 	 */
-	public bool getFocusOnClick()
+	public override bool getFocusOnClick()
 	{
 		return gtk_button_get_focus_on_click(gtkButton) != 0;
 	}
@@ -342,7 +356,8 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * This may have been explicitly set by gtk_button_set_image()
 	 * or constructed by gtk_button_new_from_stock().
 	 *
-	 * Return: a #GtkWidget or %NULL in case there is no image
+	 * Return: a #GtkWidget or %NULL in case
+	 *     there is no image
 	 *
 	 * Since: 2.6
 	 */
@@ -498,7 +513,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 *
 	 * Since: 2.4
 	 */
-	public void setFocusOnClick(bool focusOnClick)
+	public override void setFocusOnClick(bool focusOnClick)
 	{
 		gtk_button_set_focus_on_click(gtkButton, focusOnClick);
 	}

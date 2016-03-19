@@ -47,7 +47,7 @@ public  import gstreamerc.gstreamertypes;
  * gst_query_parse_*() helpers.
  * 
  * The following example shows how to query the duration of a pipeline:
- * |[
+ * |[<!-- language="C" -->
  * GstQuery *query;
  * gboolean res;
  * query = gst_query_new_duration (GST_FORMAT_TIME);
@@ -527,8 +527,8 @@ public class Query
 
 	/**
 	 * Check if @query has metadata @api set. When this function returns %TRUE,
-	 * @index will contain the index where the requested API and the flags can be
-	 * found.
+	 * @index will contain the index where the requested API and the parameters
+	 * can be found.
 	 *
 	 * Params:
 	 *     api = the metadata API
@@ -897,7 +897,7 @@ public class Query
 	 *
 	 * Params:
 	 *     index = position in the metadata API array to read
-	 *     params = API specific flags
+	 *     params = API specific parameters
 	 *
 	 * Return: a #GType of the metadata API at @index.
 	 */

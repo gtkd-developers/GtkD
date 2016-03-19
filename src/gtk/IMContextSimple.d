@@ -25,13 +25,29 @@
 module gtk.IMContextSimple;
 
 private import glib.ConstructionException;
+private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.IMContext;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 
 
-/** */
+/**
+ * GtkIMContextSimple is a simple input method context supporting table-based
+ * input methods. It has a built-in table of compose sequences that is derived
+ * from the X11 Compose files.
+ * 
+ * GtkIMContextSimple reads additional compose sequences from the first of the
+ * following files that is found: ~/.config/gtk-3.0/Compose, ~/.XCompose,
+ * /usr/share/X11/locale/$locale/Compose (for locales that have a nontrivial
+ * Compose file). The syntax of these files is described in the Compose(5)
+ * manual page.
+ * 
+ * GtkIMContextSimple also supports numeric entry of Unicode characters
+ * by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint.
+ * For example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER
+ * G WITH CEDILLA, i.e. ģ.
+ */
 public class IMContextSimple : IMContext
 {
 	/** the main Gtk struct */
@@ -88,6 +104,12 @@ public class IMContextSimple : IMContext
 		}
 		
 		this(cast(GtkIMContextSimple*) p, true);
+	}
+
+	/** */
+	public void addComposeFile(string composeFile)
+	{
+		gtk_im_context_simple_add_compose_file(gtkIMContextSimple, Str.toStringz(composeFile));
 	}
 
 	/**

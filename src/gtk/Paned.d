@@ -68,6 +68,23 @@ public  import gtkc.gtktypes;
  * The application can set the position of the slider as if it were set
  * by the user, by calling gtk_paned_set_position().
  * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * paned
+ * ├── <child>
+ * ├── separator[.wide]
+ * ╰── <child>
+ * ]|
+ * 
+ * GtkPaned has a main CSS node with name paned, and a subnode for
+ * the separator with name separator. The subnodes gets a .wide style
+ * class when the paned is supposed to be wide.
+ * 
+ * In horizontal orientation, the nodes of the children are always arranged
+ * from left to right. So :first-child will always select the leftmost child,
+ * regardless of text direction.
+ * 
  * ## Creating a paned widget with minimum sizes.
  * 
  * |[<!-- language="C" -->

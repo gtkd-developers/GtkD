@@ -86,6 +86,43 @@ private import pango.PgTabArray;
  * able to use a mouse or other pointing device. It is therefore recommended
  * that any such functionality should also be available by other means, e.g.
  * via the context menu of the entry.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * entry
+ * ├── image.left
+ * ├── image.right
+ * ├── undershoot.left
+ * ├── undershoot.right
+ * ├── [selection]
+ * ├── [progress[.pulse]]
+ * ╰── [window.popup]
+ * ]|
+ * 
+ * GtkEntry has a main node with the name entry. Depending on the properties
+ * of the entry, the style classes .read-only and .flat may appear. The style
+ * classes .warning and .error may also be used with entries.
+ * 
+ * When the entry shows icons, it adds subnodes with the name image and the
+ * style class .left or .right, depending on where the icon appears.
+ * 
+ * When the entry has a selection, it adds a subnode with the name selection.
+ * 
+ * When the entry shows progress, it adds a subnode with the name progress.
+ * The node has the style class .pulse when the shown progress is pulsing.
+ * 
+ * The CSS node for a context menu is added as a subnode below entry as well.
+ * 
+ * The undershoot nodes are used to draw the underflow indication when content
+ * is scrolled out of view. These nodes get the .left and .right style classes
+ * added depending on where the indication is drawn.
+ * 
+ * When touch is used and touch selection handles are shown, they are using
+ * CSS nodes with name cursor-handle. They get the .top or .bottom style class
+ * depending on where they are shown in relation to the selection. If there is
+ * just a single handle for the text cursor, it gets the style class
+ * .insertion-cursor.
  */
 public class Entry : Widget, CellEditableIF, EditableIF
 {
@@ -1356,7 +1393,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * first key event arrives.
 	 *
 	 * Params:
-	 *     text = a string to be displayed when @entry is empty an unfocused, or %NULL
+	 *     text = a string to be displayed when @entry is empty and unfocused, or %NULL
 	 *
 	 * Since: 3.2
 	 */

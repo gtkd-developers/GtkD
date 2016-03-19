@@ -115,6 +115,23 @@ public class TextTag : ObjectG
 	}
 
 	/**
+	 * Emits the #GtkTextTagTable::tag-changed signal on the #GtkTextTagTable where
+	 * the tag is included.
+	 *
+	 * The signal is already emitted when setting a #GtkTextTag property. This
+	 * function is useful for a #GtkTextTag subclass.
+	 *
+	 * Params:
+	 *     sizeChanged = whether the change affects the #GtkTextView layout.
+	 *
+	 * Since: 3.20
+	 */
+	public void changed(bool sizeChanged)
+	{
+		gtk_text_tag_changed(gtkTextTag, sizeChanged);
+	}
+
+	/**
 	 * Emits the “event” signal on the #GtkTextTag.
 	 *
 	 * Params:

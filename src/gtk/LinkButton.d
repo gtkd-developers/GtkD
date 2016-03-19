@@ -51,6 +51,11 @@ public  import gtkc.gtktypes;
  * clicked. This behaviour can be overridden by connecting to the
  * #GtkLinkButton::activate-link signal and returning %TRUE from the
  * signal handler.
+ * 
+ * # CSS nodes
+ * 
+ * GtkLinkButton has a single CSS node with name button. To differentiate
+ * it from a plain #GtkButton, it gets the .link style class.
  */
 public class LinkButton : Button
 {

@@ -61,6 +61,10 @@ public  import gtkc.gtktypes;
  * To add pages to an assistant in #GtkBuilder, simply add it as a
  * child to the GtkAssistant object, and set its child properties
  * as necessary.
+ * 
+ * # CSS nodes
+ * 
+ * GtkAssistant has a single CSS node with the name assistant.
  */
 public class Assistant : Window
 {

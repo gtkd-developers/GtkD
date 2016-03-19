@@ -169,6 +169,14 @@ public class Pty : ObjectG, InitableIF
 	}
 
 	/**
+	 * Since 0.42 this is a no-op.
+	 */
+	public void close()
+	{
+		vte_pty_close(vtePty);
+	}
+
+	/**
 	 * Return: the file descriptor of the PTY master in @pty. The
 	 *     file descriptor belongs to @pty and must not be closed
 	 */

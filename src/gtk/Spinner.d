@@ -38,6 +38,10 @@ public  import gtkc.gtktypes;
  * 
  * To start the animation, use gtk_spinner_start(), to stop it
  * use gtk_spinner_stop().
+ * 
+ * # CSS nodes
+ * 
+ * GtkSpinner has a single CSS node with the name spinner.
  */
 public class Spinner : Widget
 {

@@ -97,6 +97,21 @@ public  import gtkc.gtktypes;
  * return FALSE;
  * }
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * menu
+ * ├── arrow.top
+ * ├── <child>
+ * ┊
+ * ├── <child>
+ * ╰── arrow.bottom
+ * ]|
+ * 
+ * The main CSS node of GtkMenu has name menu, and there are two subnodes
+ * with name arrow, for scrolling menu arrows. These subnodes get the
+ * .top and .bottom style classes.
  */
 public class Menu : MenuShell
 {

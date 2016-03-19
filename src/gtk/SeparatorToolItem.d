@@ -41,6 +41,10 @@ public  import gtkc.gtktypes;
  * a “spring” that forces other items to the ends of the toolbar.
  * 
  * Use gtk_separator_tool_item_new() to create a new #GtkSeparatorToolItem.
+ * 
+ * # CSS nodes
+ * 
+ * GtkSeparatorToolItem has a single CSS node with name separator.
  */
 public class SeparatorToolItem : ToolItem
 {

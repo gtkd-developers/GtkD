@@ -29,6 +29,26 @@ public import gtkc.gobjecttypes;
 
 enum GST_CLOCK_TIME_NONE = 18446744073709551615UL;
 
+public alias void* GstAllocationParamsAutoptr;
+
+public alias void* GstAllocatorAutoptr;
+
+public alias void* GstAtomicQueueAutoptr;
+
+public alias void* GstBinAutoptr;
+
+public alias void* GstBufferListAutoptr;
+
+public alias void* GstBufferPoolAutoptr;
+
+public alias void* GstBufferAutoptr;
+
+public alias void* GstBusAutoptr;
+
+public alias void* GstCapsFeaturesAutoptr;
+
+public alias void* GstCapsAutoptr;
+
 /**
  * A datatype to hold the handle to an outstanding sync or async clock callback.
  */
@@ -44,7 +64,89 @@ public alias ulong GstClockTime;
  */
 public alias long GstClockTimeDiff;
 
+public alias void* GstClockAutoptr;
+
+public alias void* GstContextAutoptr;
+
+public alias void* GstControlBindingAutoptr;
+
+public alias void* GstControlSourceAutoptr;
+
+public alias void* GstDateTimeAutoptr;
+
+public alias void* GstDeviceMonitorAutoptr;
+
+public alias void* GstDeviceProviderFactoryAutoptr;
+
+public alias void* GstDeviceProviderAutoptr;
+
+public alias void* GstDeviceAutoptr;
+
 public alias ulong GstElementFactoryListType;
+
+public alias void* GstElementFactoryAutoptr;
+
+public alias void* GstElementAutoptr;
+
+public alias void* GstEventAutoptr;
+
+public alias void* GstGhostPadAutoptr;
+
+public alias void* GstIteratorAutoptr;
+
+public alias void* GstMemoryAutoptr;
+
+public alias void* GstMessageAutoptr;
+
+public alias void* GstObjectAutoptr;
+
+public alias void* GstPadTemplateAutoptr;
+
+public alias void* GstPadAutoptr;
+
+public alias void* GstParseContextAutoptr;
+
+public alias void* GstPipelineAutoptr;
+
+public alias void* GstPluginFeatureAutoptr;
+
+public alias void* GstPluginAutoptr;
+
+public alias void* GstProxyPadAutoptr;
+
+public alias void* GstQueryAutoptr;
+
+public alias void* GstRegistryAutoptr;
+
+public alias void* GstSampleAutoptr;
+
+public alias void* GstSegmentAutoptr;
+
+public alias void* GstStructureAutoptr;
+
+public alias void* GstSystemClockAutoptr;
+
+public alias void* GstTagListAutoptr;
+
+public alias void* GstTaskPoolAutoptr;
+
+public alias void* GstTaskAutoptr;
+
+public alias void* GstTocEntryAutoptr;
+
+public alias void* GstTocAutoptr;
+
+public alias void* GstTracerFactoryAutoptr;
+
+public alias void* GstTracerRecordAutoptr;
+
+public alias void* GstTracerAutoptr;
+
+public alias void* GstTypeFindFactoryAutoptr;
+
+public alias void* GstUriAutoptr;
+
+public alias void* GstValueArrayAutoptr;
 
 /**
  * Flags for allocators.
@@ -1219,7 +1321,7 @@ public enum GstMemoryFlags
 	 */
 	ZERO_PADDED = 64,
 	/**
-	 * the memory is physically contiguous. (Since 2.2)
+	 * the memory is physically contiguous. (Since 1.2)
 	 */
 	PHYSICALLY_CONTIGUOUS = 128,
 	/**
@@ -1904,6 +2006,10 @@ public enum GstParseError
 	 * An empty description was specified
 	 */
 	EMPTY = 6,
+	/**
+	 * A delayed link did not get resolved.
+	 */
+	DELAYED_LINK = 7,
 }
 alias GstParseError ParseError;
 
@@ -1970,6 +2076,12 @@ public enum GstPluginDependencyFlags
 	 * the directory
 	 */
 	FILE_NAME_IS_SUFFIX = 4,
+	/**
+	 * interpret
+	 * filename argument as filter prefix and check all matching files in
+	 * the directory. Since 1.8.
+	 */
+	FILE_NAME_IS_PREFIX = 8,
 }
 alias GstPluginDependencyFlags PluginDependencyFlags;
 
@@ -3120,6 +3232,60 @@ public enum GstTocScope
 alias GstTocScope TocScope;
 
 /**
+ * Flag that describe the value. These flags help applications processing the
+ * logs to understand the values.
+ */
+public enum GstTracerValueFlags
+{
+	/**
+	 * no flags
+	 */
+	NONE = 0,
+	/**
+	 * the value is optional. When using this flag
+	 * one need to have an additional boolean arg before this value in the
+	 * var-args list passed to  gst_tracer_record_log().
+	 */
+	OPTIONAL = 1,
+	/**
+	 * the value is combined since the start of
+	 * tracing
+	 */
+	AGGREGATED = 2,
+}
+alias GstTracerValueFlags TracerValueFlags;
+
+/**
+ * Tracing record will contain fields that contain a meassured value or extra
+ * meta-data. One such meta data are values that tell where a measurement was
+ * taken. This enumerating declares to which scope such a meta data field
+ * relates to. If it is e.g. %GST_TRACER_VALUE_SCOPE_PAD, then each of the log
+ * events may contain values for different #GstPads.
+ *
+ * Since: 1.8
+ */
+public enum GstTracerValueScope
+{
+	/**
+	 * the value is related to the process
+	 */
+	PROCESS = 0,
+	/**
+	 * the value is related to a thread
+	 */
+	THREAD = 1,
+	/**
+	 * the value is related to an #GstElement
+	 */
+	ELEMENT = 2,
+	/**
+	 * the value is related to a #GstPad
+	 */
+	PAD = 3,
+}
+alias GstTracerValueScope TracerValueScope;
+
+/**
  * The probability of the typefind function. Higher values have more certainty
  * in doing a reliable typefind.
  */
@@ -3733,7 +3899,7 @@ struct GstControlSource
 	 */
 	GstControlSourceGetValue getValue;
 	/**
-	 * Function for returning a #GstValueArray for a given timestamp
+	 * Function for returning a values array for a given timestamp
 	 */
 	GstControlSourceGetValueArray getValueArray;
 	void*[4] GstReserved;
@@ -3971,7 +4137,8 @@ struct GstElement
 	 * updated whenever the a pad is added or removed
 	 */
 	uint padsCookie;
-	void*[4] GstReserved;
+	GList* contexts;
+	void*[3] GstReserved;
 }
 
 struct GstElementClass
@@ -4550,6 +4717,7 @@ struct GstPad
 		struct Abi
 		{
 			GstFlowReturn lastFlowret;
+			GstPadEventFullFunction eventfullfunc;
 		}
 		Abi abi;
 	}
@@ -4947,7 +5115,7 @@ struct GstSegment
 	 */
 	GstSegmentFlags flags;
 	/**
-	 * the rate of the segment
+	 * the playback rate of the segment
 	 */
 	double rate;
 	/**
@@ -4959,28 +5127,29 @@ struct GstSegment
 	 */
 	GstFormat format;
 	/**
-	 * the base of the segment
+	 * the running time (plus elapsed time, see offset) of the segment start
 	 */
 	ulong base;
 	/**
-	 * the offset to apply to @start or @stop
+	 * the amount (in buffer timestamps) that has already been elapsed in
+	 * the segment
 	 */
 	ulong offset;
 	/**
-	 * the start of the segment
+	 * the start of the segment in buffer timestamp time (PTS)
 	 */
 	ulong start;
 	/**
-	 * the stop of the segment
+	 * the stop of the segment in buffer timestamp time (PTS)
 	 */
 	ulong stop;
 	/**
-	 * the stream time of the segment
+	 * the stream time of the segment start
 	 */
 	ulong time;
 	/**
-	 * the position in the segment (used internally by elements
-	 * such as sources, demuxers or parsers to track progress)
+	 * the buffer timestamp position in the segment (used internally by
+	 * elements such as sources, demuxers or parsers to track progress)
 	 */
 	ulong position;
 	/**
@@ -5182,6 +5351,29 @@ struct GstTocSetterInterface
 	 */
 	GTypeInterface gIface;
 }
+
+struct GstTracer
+{
+	GstObject parent;
+	GstTracerPrivate* priv;
+	void*[4] GstReserved;
+}
+
+struct GstTracerClass
+{
+	GstObjectClass parentClass;
+	void*[4] GstReserved;
+}
+
+struct GstTracerFactory;
+
+struct GstTracerFactoryClass;
+
+struct GstTracerPrivate;
+
+struct GstTracerRecord;
+
+struct GstTracerRecordClass;
 
 struct GstTypeFind
 {
@@ -5413,7 +5605,7 @@ public alias extern(C) void function(GstControlBinding* binding, double srcValue
  * Params:
  *     self = the #GstControlSource instance
  *     timestamp = timestamp for which a value should be calculated
- *     value = a #GValue which will be set to the result. It must be initialized to the correct type.
+ *     value = a value which will be set to the result.
  *
  * Return: %TRUE if the value was successfully calculated.
  */
@@ -5785,6 +5977,27 @@ public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, Gs
  * Return: #GST_FLOW_OK for success
  */
 public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, GstBufferList* list) GstPadChainListFunction;
+
+/**
+ * Function signature to handle an event for the pad.
+ *
+ * This variant is for specific elements that will take into account the
+ * last downstream flow return (from a pad push), in which case they can
+ * return it.
+ *
+ * Params:
+ *     pad = the #GstPad to handle the event.
+ *     parent = the parent of @pad. If the #GST_PAD_FLAG_NEED_PARENT
+ *         flag is set, @parent is guaranteed to be not-%NULL and remain valid
+ *         during the execution of this function.
+ *     event = the #GstEvent to handle.
+ *
+ * Return: %GST_FLOW_OK if the event was handled properly, or any other
+ *     #GstFlowReturn dependent on downstream state.
+ *
+ * Since: 1.8
+ */
+public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, GstEvent* event) GstPadEventFullFunction;
 
 /**
  * Function signature to handle an event for the pad.

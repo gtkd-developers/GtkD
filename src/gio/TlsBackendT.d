@@ -111,6 +111,18 @@ public template TlsBackendT(TStruct)
 		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p, true);
 	}
 
+	/** */
+	public GType getDtlsClientConnectionType()
+	{
+		return g_tls_backend_get_dtls_client_connection_type(getTlsBackendStruct());
+	}
+
+	/** */
+	public GType getDtlsServerConnectionType()
+	{
+		return g_tls_backend_get_dtls_server_connection_type(getTlsBackendStruct());
+	}
+
 	/**
 	 * Gets the #GType of @backend's #GTlsFileDatabase implementation.
 	 *
@@ -134,6 +146,12 @@ public template TlsBackendT(TStruct)
 	public GType getServerConnectionType()
 	{
 		return g_tls_backend_get_server_connection_type(getTlsBackendStruct());
+	}
+
+	/** */
+	public bool supportsDtls()
+	{
+		return g_tls_backend_supports_dtls(getTlsBackendStruct()) != 0;
 	}
 
 	/**

@@ -43,6 +43,11 @@ public  import gtkc.gtktypes;
  * This kind of widget is commonly used for volume controls in multimedia
  * applications, and GTK+ provides a #GtkVolumeButton subclass that
  * is tailored for this use case.
+ * 
+ * # CSS nodes
+ * 
+ * GtkScaleButton has a single CSS node with name button. To differentiate
+ * it from a plain #GtkButton, it gets the .scale style class.
  */
 public class ScaleButton : Button, OrientableIF
 {
@@ -91,7 +96,7 @@ public class ScaleButton : Button, OrientableIF
 	 * a stepping of @step.
 	 *
 	 * Params:
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *     min = the minimum value of the scale (usually 0)
 	 *     max = the maximum value of the scale (usually 100)
 	 *     step = the stepping of value when a scroll-wheel event,

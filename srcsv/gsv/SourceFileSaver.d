@@ -270,6 +270,9 @@ public class SourceFileSaver : ObjectG
 	 * properties will be updated: the location, the encoding, the newline type and
 	 * the compression type.
 	 *
+	 * Since the 3.20 version, gtk_text_buffer_set_modified() is called with %FALSE
+	 * if the file has been saved successfully.
+	 *
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *

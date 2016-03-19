@@ -41,6 +41,15 @@ public  import gtkc.gtktypes;
  * organize your UI flow, and add the sidebar to your sidebar area. You
  * can use gtk_stack_sidebar_set_stack() to connect the #GtkStackSidebar
  * to the #GtkStack.
+ * 
+ * # CSS nodes
+ * 
+ * GtkStackSidebar has a single CSS node with name stacksidebar and
+ * style class .sidebar.
+ * 
+ * When circumstances require it, GtkStackSidebar adds the
+ * .needs-attention style class to the widgets representing the stack
+ * pages.
  */
 public class StackSidebar : Bin
 {
@@ -120,7 +129,7 @@ public class StackSidebar : Bin
 			return null;
 		}
 		
-		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p, true);
+		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p);
 	}
 
 	/**

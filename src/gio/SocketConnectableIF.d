@@ -25,6 +25,7 @@
 module gio.SocketConnectableIF;
 
 private import gio.SocketAddressEnumerator;
+private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
@@ -120,4 +121,19 @@ public interface SocketConnectableIF{
 	 * Since: 2.26
 	 */
 	public SocketAddressEnumerator proxyEnumerate();
+
+	/**
+	 * Format a #GSocketConnectable as a string. This is a human-readable format for
+	 * use in debugging output, and is not a stable serialization format. It is not
+	 * suitable for use in user interfaces as it exposes too much information for a
+	 * user.
+	 *
+	 * If the #GSocketConnectable implementation does not support string formatting,
+	 * the implementation’s type name will be returned as a fallback.
+	 *
+	 * Return: the formatted string
+	 *
+	 * Since: 2.48
+	 */
+	public string toString();
 }

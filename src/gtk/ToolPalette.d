@@ -106,6 +106,10 @@ public  import gtkc.gtktypes;
  * GTK_TOOL_PALETTE_DRAG_ITEMS,
  * GDK_ACTION_COPY);
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * GtkToolPalette has a single CSS node named toolpalette.
  */
 public class ToolPalette : Container, OrientableIF, ScrollableIF
 {
@@ -261,8 +265,8 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 *     x = the x position
 	 *     y = the y position
 	 *
-	 * Return: the #GtkToolItemGroup at position or %NULL
-	 *     if there is no such group
+	 * Return: the #GtkToolItemGroup at position
+	 *     or %NULL if there is no such group
 	 *
 	 * Since: 2.20
 	 */

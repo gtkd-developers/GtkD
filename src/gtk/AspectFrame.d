@@ -41,6 +41,10 @@ public  import gtkc.gtktypes;
  * derives from #GtkFrame, so it can draw a label and
  * a frame around the child. The frame will be
  * “shrink-wrapped” to the size of the child.
+ * 
+ * # CSS nodes
+ * 
+ * GtkAspectFrame uses a CSS node with name frame.
  */
 public class AspectFrame : Frame
 {

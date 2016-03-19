@@ -206,7 +206,7 @@ public class IconSet
 	 *
 	 * Params:
 	 *     sizes = return location
-	 *         for array of sizes
+	 *         for array of sizes (#GtkIconSize)
 	 *     nSizes = location to store number of elements in returned array
 	 */
 	public void getSizes(out GtkIconSize[] sizes)
@@ -252,7 +252,7 @@ public class IconSet
 	 *     style = a #GtkStyle associated with @widget, or %NULL
 	 *     direction = text direction
 	 *     state = widget state
-	 *     size = icon size. A size of (GtkIconSize)-1
+	 *     size = icon size (#GtkIconSize). A size of `(GtkIconSize)-1`
 	 *         means render at the size of the source and don’t scale.
 	 *     widget = widget that will display the icon, or %NULL.
 	 *         The only use that is typically made of this
@@ -287,7 +287,7 @@ public class IconSet
 	 *
 	 * Params:
 	 *     context = a #GtkStyleContext
-	 *     size = icon size. A size of (GtkIconSize)-1
+	 *     size = icon size (#GtkIconSize). A size of `(GtkIconSize)-1`
 	 *         means render at the size of the source and don’t scale.
 	 *
 	 * Return: a #GdkPixbuf to be displayed
@@ -318,7 +318,7 @@ public class IconSet
 	 *
 	 * Params:
 	 *     context = a #GtkStyleContext
-	 *     size = icon size. A size of (GtkIconSize)-1
+	 *     size = icon size (#GtkIconSize). A size of `(GtkIconSize)-1`
 	 *         means render at the size of the source and don’t scale.
 	 *     scale = the window scale to render for
 	 *     forWindow = #GdkWindow to optimize drawing for, or %NULL

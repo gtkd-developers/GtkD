@@ -419,6 +419,8 @@ public class TextIter
 	 * %TRUE, gtk_text_iter_has_tag() will also return %TRUE for the same
 	 * parameters.
 	 *
+	 * Deprecated: Use gtk_text_iter_starts_tag() instead.
+	 *
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
@@ -544,7 +546,7 @@ public class TextIter
 	 * Note that if gtk_text_iter_ends_tag() returns %TRUE, it means that @iter is
 	 * at the end of the tagged range, but that the character
 	 * at @iter is outside the tagged range. In other words,
-	 * unlike gtk_text_iter_begins_tag(), if gtk_text_iter_ends_tag() returns %TRUE,
+	 * unlike gtk_text_iter_starts_tag(), if gtk_text_iter_ends_tag() returns %TRUE,
 	 * gtk_text_iter_has_tag() will return %FALSE for the same parameters.
 	 *
 	 * Params:
@@ -1311,7 +1313,7 @@ public class TextIter
 
 	/**
 	 * Returns %TRUE if @iter points to a character that is part of a range tagged
-	 * with @tag. See also gtk_text_iter_begins_tag() and gtk_text_iter_ends_tag().
+	 * with @tag. See also gtk_text_iter_starts_tag() and gtk_text_iter_ends_tag().
 	 *
 	 * Params:
 	 *     tag = a #GtkTextTag
@@ -1528,6 +1530,29 @@ public class TextIter
 	}
 
 	/**
+	 * Returns %TRUE if @tag is toggled on at exactly this point. If @tag
+	 * is %NULL, returns %TRUE if any tag is toggled on at this point.
+	 *
+	 * Note that if gtk_text_iter_starts_tag() returns %TRUE, it means that @iter is
+	 * at the beginning of the tagged range, and that the
+	 * character at @iter is inside the tagged range. In other
+	 * words, unlike gtk_text_iter_ends_tag(), if gtk_text_iter_starts_tag() returns
+	 * %TRUE, gtk_text_iter_has_tag() will also return %TRUE for the same
+	 * parameters.
+	 *
+	 * Params:
+	 *     tag = a #GtkTextTag, or %NULL
+	 *
+	 * Return: whether @iter is the start of a range tagged with @tag
+	 *
+	 * Since: 3.20
+	 */
+	public bool startsTag(TextTag tag)
+	{
+		return gtk_text_iter_starts_tag(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct()) != 0;
+	}
+
+	/**
 	 * Determines whether @iter begins a natural-language word.  Word
 	 * breaks are determined by Pango and should be correct for nearly any
 	 * language (if not, the correct fix would be to the Pango word break
@@ -1541,7 +1566,7 @@ public class TextIter
 	}
 
 	/**
-	 * This is equivalent to (gtk_text_iter_begins_tag() ||
+	 * This is equivalent to (gtk_text_iter_starts_tag() ||
 	 * gtk_text_iter_ends_tag()), i.e. it tells you whether a range with
 	 * @tag applied to it begins or ends at @iter.
 	 *

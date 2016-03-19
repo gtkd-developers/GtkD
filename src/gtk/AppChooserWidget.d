@@ -58,6 +58,10 @@ public  import gtkc.gtktypes;
  * 
  * To keep track of the selected application, use the
  * #GtkAppChooserWidget::application-selected and #GtkAppChooserWidget::application-activated signals.
+ * 
+ * # CSS nodes
+ * 
+ * GtkAppChooserWidget has a single CSS node with name appchooser.
  */
 public class AppChooserWidget : Box, AppChooserIF
 {

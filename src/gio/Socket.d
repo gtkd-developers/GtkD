@@ -26,6 +26,8 @@ module gio.Socket;
 
 private import gio.Cancellable;
 private import gio.Credentials;
+private import gio.DatagramBasedIF;
+private import gio.DatagramBasedT;
 private import gio.InetAddress;
 private import gio.InitableIF;
 private import gio.InitableT;
@@ -60,7 +62,8 @@ public  import gtkc.giotypes;
  * %NULL.
  * 
  * Sockets operate in two general modes, blocking or non-blocking. When
- * in blocking mode all operations block until the requested operation
+ * in blocking mode all operations (which don’t take an explicit blocking
+ * parameter) block until the requested operation
  * is finished or there is an error. In non-blocking mode all calls that
  * would block return immediately with a %G_IO_ERROR_WOULD_BLOCK error.
  * To know when a call would successfully run you can call g_socket_condition_check(),
@@ -96,7 +99,7 @@ public  import gtkc.giotypes;
  *
  * Since: 2.22
  */
-public class Socket : ObjectG, InitableIF
+public class Socket : ObjectG, DatagramBasedIF, InitableIF
 {
 	/** the main Gtk struct */
 	protected GSocket* gSocket;
@@ -127,6 +130,9 @@ public class Socket : ObjectG, InitableIF
 		this.gSocket = gSocket;
 		super(cast(GObject*)gSocket, ownedRef);
 	}
+
+	// add the DatagramBased capabilities
+	mixin DatagramBasedT!(GSocket);
 
 	// add the Initable capabilities
 	mixin InitableT!(GSocket);
@@ -611,7 +617,7 @@ public class Socket : ObjectG, InitableIF
 	}
 
 	/**
-	 * Get the amount of data pending in the OS input buffer.
+	 * Get the amount of data pending in the OS input buffer, without blocking.
 	 *
 	 * If @socket is a UDP or SCTP socket, this will return the size of
 	 * just the next packet, even if additional packets are buffered after
@@ -952,6 +958,11 @@ public class Socket : ObjectG, InitableIF
 	 * Check whether the socket is connected. This is only useful for
 	 * connection-oriented sockets.
 	 *
+	 * If using g_socket_shutdown(), this function will return %TRUE until the
+	 * socket has been shut down for reading and writing. If you do a non-blocking
+	 * connect, this function will not return %TRUE until after you call
+	 * g_socket_check_connect_result().
+	 *
 	 * Return: %TRUE if socket is connected, %FALSE otherwise.
 	 *
 	 * Since: 2.22
@@ -1156,8 +1167,8 @@ public class Socket : ObjectG, InitableIF
 	}
 
 	/**
-	 * Receive data from a socket.  This is the most complicated and
-	 * fully-featured version of this call. For easier use, see
+	 * Receive data from a socket.  For receiving multiple messages, see
+	 * g_socket_receive_messages(); for easier use, see
 	 * g_socket_receive() and g_socket_receive_from().
 	 *
 	 * If @address is non-%NULL then @address will be set equal to the
@@ -1196,6 +1207,8 @@ public class Socket : ObjectG, InitableIF
 	 * values there are the same as the system values, and the flags
 	 * are passed in as-is, so you can pass in system-specific flags too
 	 * (and g_socket_receive_message() may pass system-specific flags out).
+	 * Flags passed in to the parameter affect the receive operation; flags returned
+	 * out of it are relevant to the specific returned message.
 	 *
 	 * As with g_socket_receive(), data may be discarded if @socket is
 	 * %G_SOCKET_TYPE_DATAGRAM or %G_SOCKET_TYPE_SEQPACKET and you do not
@@ -1253,6 +1266,86 @@ public class Socket : ObjectG, InitableIF
 		for(size_t i = 0; i < numMessages; i++)
 		{
 			messages[i] = ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) outmessages[i]);
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Receive multiple data messages from @socket in one go.  This is the most
+	 * complicated and fully-featured version of this call. For easier use, see
+	 * g_socket_receive(), g_socket_receive_from(), and g_socket_receive_message().
+	 *
+	 * @messages must point to an array of #GInputMessage structs and
+	 * @num_messages must be the length of this array. Each #GInputMessage
+	 * contains a pointer to an array of #GInputVector structs describing the
+	 * buffers that the data received in each message will be written to. Using
+	 * multiple #GInputVectors is more memory-efficient than manually copying data
+	 * out of a single buffer to multiple sources, and more system-call-efficient
+	 * than making multiple calls to g_socket_receive(), such as in scenarios where
+	 * a lot of data packets need to be received (e.g. high-bandwidth video
+	 * streaming over RTP/UDP).
+	 *
+	 * @flags modify how all messages are received. The commonly available
+	 * arguments for this are available in the #GSocketMsgFlags enum, but the
+	 * values there are the same as the system values, and the flags
+	 * are passed in as-is, so you can pass in system-specific flags too. These
+	 * flags affect the overall receive operation. Flags affecting individual
+	 * messages are returned in #GInputMessage.flags.
+	 *
+	 * The other members of #GInputMessage are treated as described in its
+	 * documentation.
+	 *
+	 * If #GSocket:blocking is %TRUE the call will block until @num_messages have
+	 * been received, or the end of the stream is reached.
+	 *
+	 * If #GSocket:blocking is %FALSE the call will return up to @num_messages
+	 * without blocking, or %G_IO_ERROR_WOULD_BLOCK if no messages are queued in the
+	 * operating system to be received.
+	 *
+	 * In blocking mode, if #GSocket:timeout is positive and is reached before any
+	 * messages are received, %G_IO_ERROR_TIMED_OUT is returned, otherwise up to
+	 * @num_messages are returned. (Note: This is effectively the
+	 * behaviour of `MSG_WAITFORONE` with recvmmsg().)
+	 *
+	 * To be notified when messages are available, wait for the
+	 * %G_IO_IN condition. Note though that you may still receive
+	 * %G_IO_ERROR_WOULD_BLOCK from g_socket_receive_messages() even if you were
+	 * previously notified of a %G_IO_IN condition.
+	 *
+	 * If the remote peer closes the connection, any messages queued in the
+	 * operating system will be returned, and subsequent calls to
+	 * g_socket_receive_messages() will return 0 (with no error set).
+	 *
+	 * On error -1 is returned and @error is set accordingly. An error will only
+	 * be returned if zero messages could be received; otherwise the number of
+	 * messages successfully received before the error will be returned.
+	 *
+	 * Params:
+	 *     messages = an array of #GInputMessage structs
+	 *     numMessages = the number of elements in @messages
+	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation
+	 *     cancellable = a %GCancellable or %NULL
+	 *
+	 * Return: number of messages received, or -1 on error. Note that the number
+	 *     of messages received may be smaller than @num_messages if in non-blocking
+	 *     mode, if the peer closed the connection, or if @num_messages
+	 *     was larger than `UIO_MAXIOV` (1024), in which case the caller may re-try
+	 *     to receive the remaining messages.
+	 *
+	 * Since: 2.48
+	 *
+	 * Throws: GException on failure.
+	 */
+	public int receiveMessages(GInputMessage[] messages, int flags, Cancellable cancellable)
+	{
+		GError* err = null;
+		
+		auto p = g_socket_receive_messages(gSocket, messages.ptr, cast(uint)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
 		}
 		
 		return p;
@@ -1335,8 +1428,8 @@ public class Socket : ObjectG, InitableIF
 	}
 
 	/**
-	 * Send data to @address on @socket.  This is the most complicated and
-	 * fully-featured version of this call. For easier use, see
+	 * Send data to @address on @socket.  For sending multiple messages see
+	 * g_socket_send_messages(); for easier use, see
 	 * g_socket_send() and g_socket_send_to().
 	 *
 	 * If @address is %NULL then the message is sent to the default receiver
@@ -1442,7 +1535,9 @@ public class Socket : ObjectG, InitableIF
 	 * notified of a %G_IO_OUT condition. (On Windows in particular, this is
 	 * very common due to the way the underlying APIs work.)
 	 *
-	 * On error -1 is returned and @error is set accordingly.
+	 * On error -1 is returned and @error is set accordingly. An error will only
+	 * be returned if zero messages could be sent; otherwise the number of messages
+	 * successfully sent before the error will be returned.
 	 *
 	 * Params:
 	 *     messages = an array of #GOutputMessage structs
@@ -1543,7 +1638,8 @@ public class Socket : ObjectG, InitableIF
 
 	/**
 	 * Sets the blocking mode of the socket. In blocking mode
-	 * all operations block until they succeed or there is an error. In
+	 * all operations (which don’t take an explicit blocking parameter) block until
+	 * they succeed or there is an error. In
 	 * non-blocking mode all functions return results immediately or
 	 * with a %G_IO_ERROR_WOULD_BLOCK error.
 	 *
@@ -1738,7 +1834,7 @@ public class Socket : ObjectG, InitableIF
 	}
 
 	/**
-	 * Shut down part of a full-duplex connection.
+	 * Shut down part or all of a full-duplex connection.
 	 *
 	 * If @shutdown_read is %TRUE then the receiving side of the connection
 	 * is shut down, and further reading is disallowed.
@@ -1748,9 +1844,10 @@ public class Socket : ObjectG, InitableIF
 	 *
 	 * It is allowed for both @shutdown_read and @shutdown_write to be %TRUE.
 	 *
-	 * One example where this is used is graceful disconnect for TCP connections
-	 * where you close the sending side, then wait for the other side to close
-	 * the connection, thus ensuring that the other side saw all sent data.
+	 * One example where it is useful to shut down only one side of a connection is
+	 * graceful disconnect for TCP connections where you close the sending side,
+	 * then wait for the other side to close the connection, thus ensuring that the
+	 * other side saw all sent data.
 	 *
 	 * Params:
 	 *     shutdownRead = whether to shut down the read side

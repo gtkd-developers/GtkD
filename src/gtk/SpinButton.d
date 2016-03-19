@@ -47,7 +47,35 @@ public  import gtkc.gtktypes;
  * 
  * The main properties of a GtkSpinButton are through an adjustment.
  * See the #GtkAdjustment section for more details about an adjustment's
- * properties.
+ * properties. Note that GtkSpinButton will by default make its entry
+ * large enough to accomodate the lower and upper bounds of the adjustment,
+ * which can lead to surprising results. Best practice is to set both
+ * the #GtkEntry:width-chars and #GtkEntry:max-width-chars poperties
+ * to the desired number of characters to display in the entry.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * spinbutton.horizontal
+ * ├── entry
+ * │   ╰── ...
+ * ├── button.down
+ * ╰── button.up
+ * ]|
+ * 
+ * |[<!-- language="plain" -->
+ * spinbutton.vertical
+ * ├── button.up
+ * ├── entry
+ * │   ╰── ...
+ * ╰── button.down
+ * ]|
+ * 
+ * GtkSpinButtons main CSS node has the name spinbutton. It creates subnodes
+ * for the entry and the two buttons, with these names. The button nodes have
+ * the style classes .up and .down. The GtkEntry subnodes (if present) are put
+ * below the entry node. The orientation of the spin button is reflected in
+ * the .vertical or .horizontal style class on the main node.
  * 
  * ## Using a GtkSpinButton to get an integer
  * 

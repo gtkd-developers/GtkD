@@ -27,280 +27,6 @@ module gtkc.giotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 
-public alias void* GActionMapAutoptr;
-
-public alias void* GActionAutoptr;
-
-public alias void* GAppInfoMonitorAutoptr;
-
-public alias void* GAppInfoAutoptr;
-
-public alias void* GAppLaunchContextAutoptr;
-
-public alias void* GApplicationCommandLineAutoptr;
-
-public alias void* GApplicationAutoptr;
-
-public alias void* GAsyncInitableAutoptr;
-
-public alias void* GAsyncResultAutoptr;
-
-public alias void* GBufferedInputStreamAutoptr;
-
-public alias void* GBufferedOutputStreamAutoptr;
-
-public alias void* GBytesIconAutoptr;
-
-public alias void* GCancellableAutoptr;
-
-public alias void* GCharsetConverterAutoptr;
-
-public alias void* GConverterInputStreamAutoptr;
-
-public alias void* GConverterOutputStreamAutoptr;
-
-public alias void* GConverterAutoptr;
-
-public alias void* GCredentialsAutoptr;
-
-public alias void* GDBusActionGroupAutoptr;
-
-public alias void* GDBusAuthObserverAutoptr;
-
-public alias void* GDBusConnectionAutoptr;
-
-public alias void* GDBusInterfaceSkeletonAutoptr;
-
-public alias void* GDBusInterfaceAutoptr;
-
-public alias void* GDBusMenuModelAutoptr;
-
-public alias void* GDBusMessageAutoptr;
-
-public alias void* GDBusMethodInvocationAutoptr;
-
-public alias void* GDBusNodeInfoAutoptr;
-
-public alias void* GDBusObjectManagerClientAutoptr;
-
-public alias void* GDBusObjectManagerServerAutoptr;
-
-public alias void* GDBusObjectManagerAutoptr;
-
-public alias void* GDBusObjectProxyAutoptr;
-
-public alias void* GDBusObjectSkeletonAutoptr;
-
-public alias void* GDBusObjectAutoptr;
-
-public alias void* GDBusProxyAutoptr;
-
-public alias void* GDBusServerAutoptr;
-
-public alias void* GDataInputStreamAutoptr;
-
-public alias void* GDataOutputStreamAutoptr;
-
-public alias void* GDesktopAppInfoAutoptr;
-
-public alias void* GDriveAutoptr;
-
-public alias void* GEmblemAutoptr;
-
-public alias void* GEmblemedIconAutoptr;
-
-public alias void* GFileDescriptorBasedAutoptr;
-
-public alias void* GFileEnumeratorAutoptr;
-
-public alias void* GFileIOStreamAutoptr;
-
-public alias void* GFileIconAutoptr;
-
-public alias void* GFileInfoAutoptr;
-
-public alias void* GFileInputStreamAutoptr;
-
-public alias void* GFileMonitorAutoptr;
-
-public alias void* GFileOutputStreamAutoptr;
-
-public alias void* GFileAutoptr;
-
-public alias void* GFilenameCompleterAutoptr;
-
-public alias void* GFilterInputStreamAutoptr;
-
-public alias void* GFilterOutputStreamAutoptr;
-
-public alias void* GIOModuleAutoptr;
-
-public alias void* GIOStreamAutoptr;
-
-public alias void* GIconAutoptr;
-
-public alias void* GInetAddressMaskAutoptr;
-
-public alias void* GInetAddressAutoptr;
-
-public alias void* GInetSocketAddressAutoptr;
-
-public alias void* GInitableAutoptr;
-
-public alias void* GInputStreamAutoptr;
-
-public alias void* GListModelAutoptr;
-
-public alias void* GListStoreAutoptr;
-
-public alias void* GLoadableIconAutoptr;
-
-public alias void* GMemoryInputStreamAutoptr;
-
-public alias void* GMemoryOutputStreamAutoptr;
-
-public alias void* GMenuAttributeIterAutoptr;
-
-public alias void* GMenuItemAutoptr;
-
-public alias void* GMenuLinkIterAutoptr;
-
-public alias void* GMenuModelAutoptr;
-
-public alias void* GMenuAutoptr;
-
-public alias void* GMountOperationAutoptr;
-
-public alias void* GMountAutoptr;
-
-public alias void* GNativeVolumeMonitorAutoptr;
-
-public alias void* GNetworkAddressAutoptr;
-
-public alias void* GNetworkMonitorAutoptr;
-
-public alias void* GNetworkServiceAutoptr;
-
-public alias void* GNotificationAutoptr;
-
-public alias void* GOutputStreamAutoptr;
-
-public alias void* GPermissionAutoptr;
-
-public alias void* GPollableInputStreamAutoptr;
-
-public alias void* GPollableOutputStreamAutoptr;
-
-public alias void* GPropertyActionAutoptr;
-
-public alias void* GProxyAddressEnumeratorAutoptr;
-
-public alias void* GProxyAddressAutoptr;
-
-public alias void* GProxyResolverAutoptr;
-
-public alias void* GProxyAutoptr;
-
-public alias void* GRemoteActionGroupAutoptr;
-
-public alias void* GResolverAutoptr;
-
-public alias void* GSeekableAutoptr;
-
-public alias void* GSettingsBackendAutoptr;
-
-public alias void* GSettingsSchemaAutoptr;
-
-public alias void* GSettingsAutoptr;
-
-public alias void* GSimpleActionGroupAutoptr;
-
-public alias void* GSimpleActionAutoptr;
-
-public alias void* GSimpleAsyncResultAutoptr;
-
-public alias void* GSimplePermissionAutoptr;
-
-public alias void* GSimpleProxyResolverAutoptr;
-
-public alias void* GSocketAddressEnumeratorAutoptr;
-
-public alias void* GSocketAddressAutoptr;
-
-public alias void* GSocketClientAutoptr;
-
-public alias void* GSocketConnectableAutoptr;
-
-public alias void* GSocketConnectionAutoptr;
-
-public alias void* GSocketControlMessageAutoptr;
-
-public alias void* GSocketListenerAutoptr;
-
-public alias void* GSocketServiceAutoptr;
-
-public alias void* GSocketAutoptr;
-
-public alias void* GSubprocessLauncherAutoptr;
-
-public alias void* GSubprocessAutoptr;
-
-public alias void* GTaskAutoptr;
-
-public alias void* GTcpConnectionAutoptr;
-
-public alias void* GTcpWrapperConnectionAutoptr;
-
-public alias void* GTestDBusAutoptr;
-
-public alias void* GThemedIconAutoptr;
-
-public alias void* GThreadedSocketServiceAutoptr;
-
-public alias void* GTlsBackendAutoptr;
-
-public alias void* GTlsCertificateAutoptr;
-
-public alias void* GTlsClientConnectionAutoptr;
-
-public alias void* GTlsConnectionAutoptr;
-
-public alias void* GTlsDatabaseAutoptr;
-
-public alias void* GTlsFileDatabaseAutoptr;
-
-public alias void* GTlsInteractionAutoptr;
-
-public alias void* GTlsPasswordAutoptr;
-
-public alias void* GTlsServerConnectionAutoptr;
-
-public alias void* GUnixConnectionAutoptr;
-
-public alias void* GUnixCredentialsMessageAutoptr;
-
-public alias void* GUnixFDListAutoptr;
-
-public alias void* GUnixFDMessageAutoptr;
-
-public alias void* GUnixInputStreamAutoptr;
-
-public alias void* GUnixMountMonitorAutoptr;
-
-public alias void* GUnixOutputStreamAutoptr;
-
-public alias void* GUnixSocketAddressAutoptr;
-
-public alias void* GVfsAutoptr;
-
-public alias void* GVolumeMonitorAutoptr;
-
-public alias void* GVolumeAutoptr;
-
-public alias void* GZlibCompressorAutoptr;
-
-public alias void* GZlibDecompressorAutoptr;
-
 /**
  * Flags used when creating a #GAppInfo.
  */
@@ -1059,9 +785,9 @@ public enum GDBusProxyFlags
 	 */
 	DO_NOT_CONNECT_SIGNALS = 2,
 	/**
-	 * If not set and the proxy if for a well-known name,
-	 * then request the bus to launch an owner for the name if no-one owns the name. This flag can
-	 * only be used in proxies for well-known names.
+	 * If the proxy is for a well-known name,
+	 * do not ask the bus to launch an owner during proxy initialization or a method call.
+	 * This flag is only meaningful in proxies for well-known names.
 	 */
 	DO_NOT_AUTO_START = 4,
 	/**
@@ -1072,7 +798,7 @@ public enum GDBusProxyFlags
 	 * If the proxy is for a well-known name,
 	 * do not ask the bus to launch an owner during proxy initialization, but allow it to be
 	 * autostarted by a method call. This flag is only meaningful in proxies for well-known names,
-	 * and only if %G_DBUS_PROXY_FLAGS_DO_NOT_AUTOSTART is not also specified.
+	 * and only if %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START is not also specified.
 	 */
 	DO_NOT_AUTO_START_AT_CONSTRUCTION = 16,
 }
@@ -1874,6 +1600,10 @@ public enum GIOErrorEnum
 	 * Transport endpoint is not connected. Since 2.44
 	 */
 	NOT_CONNECTED = 45,
+	/**
+	 * Message too large. Since 2.48.
+	 */
+	MESSAGE_TOO_LARGE = 46,
 }
 alias GIOErrorEnum IOErrorEnum;
 
@@ -4302,6 +4032,92 @@ struct GDataOutputStreamClass
 
 struct GDataOutputStreamPrivate;
 
+struct GDatagramBased;
+
+/**
+ * Provides an interface for socket-like objects which have datagram semantics,
+ * following the Berkeley sockets API. The interface methods are thin wrappers
+ * around the corresponding virtual methods, and no pre-processing of inputs is
+ * implemented — so implementations of this API must handle all functionality
+ * documented in the interface methods.
+ *
+ * Since: 2.48
+ */
+struct GDatagramBasedInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/**
+	 *
+	 * Params:
+	 *     datagramBased = a #GDatagramBased
+	 *     messages = an array of #GInputMessage structs
+	 *     numMessages = the number of elements in @messages
+	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation
+	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
+	 *         to block indefinitely
+	 *     cancellable = a %GCancellable
+	 * Return: number of messages received, or -1 on error. Note that the number
+	 *     of messages received may be smaller than @num_messages if @timeout is
+	 *     zero or positive, if the peer closed the connection, or if @num_messages
+	 *     was larger than `UIO_MAXIOV` (1024), in which case the caller may re-try
+	 *     to receive the remaining messages.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDatagramBased* datagramBased, GInputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) receiveMessages;
+	/**
+	 *
+	 * Params:
+	 *     datagramBased = a #GDatagramBased
+	 *     messages = an array of #GOutputMessage structs
+	 *     numMessages = the number of elements in @messages
+	 *     flags = an int containing #GSocketMsgFlags flags
+	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
+	 *         to block indefinitely
+	 *     cancellable = a %GCancellable
+	 * Return: number of messages sent, or -1 on error. Note that the number of
+	 *     messages sent may be smaller than @num_messages if @timeout is zero
+	 *     or positive, or if @num_messages was larger than `UIO_MAXIOV` (1024), in
+	 *     which case the caller may re-try to send the remaining messages.
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDatagramBased* datagramBased, GOutputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) sendMessages;
+	/**
+	 *
+	 * Params:
+	 *     datagramBased = a #GDatagramBased
+	 *     condition = a #GIOCondition mask to monitor
+	 *     cancellable = a #GCancellable
+	 * Return: a newly allocated #GSource
+	 */
+	extern(C) GSource* function(GDatagramBased* datagramBased, GIOCondition condition, GCancellable* cancellable) createSource;
+	/**
+	 *
+	 * Params:
+	 *     datagramBased = a #GDatagramBased
+	 *     condition = a #GIOCondition mask to check
+	 * Return: the #GIOCondition mask of the current state
+	 */
+	extern(C) GIOCondition function(GDatagramBased* datagramBased, GIOCondition condition) conditionCheck;
+	/**
+	 *
+	 * Params:
+	 *     datagramBased = a #GDatagramBased
+	 *     condition = a #GIOCondition mask to wait for
+	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
+	 *         to block indefinitely
+	 *     cancellable = a #GCancellable
+	 * Return: %TRUE if the condition was met, %FALSE otherwise
+	 *
+	 * Throws: GException on failure.
+	 */
+	extern(C) int function(GDatagramBased* datagramBased, GIOCondition condition, long timeout, GCancellable* cancellable, GError** err) conditionWait;
+}
+
 struct GDesktopAppInfo;
 
 struct GDesktopAppInfoClass
@@ -4540,6 +4356,65 @@ struct GDriveIface
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GIcon* function(GDrive* drive) getSymbolicIcon;
+}
+
+struct GDtlsClientConnection;
+
+/**
+ * vtable for a #GDtlsClientConnection implementation.
+ *
+ * Since: 2.48
+ */
+struct GDtlsClientConnectionInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+}
+
+struct GDtlsConnection;
+
+/**
+ * Virtual method table for a #GDtlsConnection implementation.
+ *
+ * Since: 2.48
+ */
+struct GDtlsConnectionInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
+	/** */
+	extern(C) int function(GDtlsConnection* connection, GTlsCertificate* peerCert, GTlsCertificateFlags errors) acceptCertificate;
+	/** */
+	extern(C) int function(GDtlsConnection* conn, GCancellable* cancellable, GError** err) handshake;
+	/** */
+	extern(C) void function(GDtlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) handshakeAsync;
+	/** */
+	extern(C) int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) handshakeFinish;
+	/** */
+	extern(C) int function(GDtlsConnection* conn, int shutdownRead, int shutdownWrite, GCancellable* cancellable, GError** err) shutdown;
+	/** */
+	extern(C) void function(GDtlsConnection* conn, int shutdownRead, int shutdownWrite, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) shutdownAsync;
+	/** */
+	extern(C) int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) shutdownFinish;
+}
+
+struct GDtlsServerConnection;
+
+/**
+ * vtable for a #GDtlsServerConnection implementation.
+ *
+ * Since: 2.48
+ */
+struct GDtlsServerConnectionInterface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface gIface;
 }
 
 struct GEmblem;
@@ -6020,6 +5895,67 @@ struct GInitableIface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GInitable* initable, GCancellable* cancellable, GError** err) init;
+}
+
+/**
+ * Structure used for scatter/gather data input when receiving multiple
+ * messages or packets in one go. You generally pass in an array of empty
+ * #GInputVectors and the operation will use all the buffers as if they
+ * were one buffer, and will set @bytes_received to the total number of bytes
+ * received across all #GInputVectors.
+ *
+ * This structure closely mirrors `struct mmsghdr` and `struct msghdr` from
+ * the POSIX sockets API (see `man 2 recvmmsg`).
+ *
+ * If @address is non-%NULL then it is set to the source address the message
+ * was received from, and the caller must free it afterwards.
+ *
+ * If @control_messages is non-%NULL then it is set to an array of control
+ * messages received with the message (if any), and the caller must free it
+ * afterwards. @num_control_messages is set to the number of elements in
+ * this array, which may be zero.
+ *
+ * Flags relevant to this message will be returned in @flags. For example,
+ * `MSG_EOR` or `MSG_TRUNC`.
+ *
+ * Since: 2.48
+ */
+struct GInputMessage
+{
+	/**
+	 * return location
+	 * for a #GSocketAddress, or %NULL
+	 */
+	GSocketAddress** address;
+	/**
+	 * pointer to an
+	 * array of input vectors
+	 */
+	GInputVector* vectors;
+	/**
+	 * the number of input vectors pointed to by @vectors
+	 */
+	uint numVectors;
+	/**
+	 * will be set to the number of bytes that have been
+	 * received
+	 */
+	size_t bytesReceived;
+	/**
+	 * collection of #GSocketMsgFlags for the received message,
+	 * outputted by the call
+	 */
+	int flags;
+	/**
+	 * return location for a
+	 * caller-allocated array of #GSocketControlMessages, or %NULL
+	 */
+	GSocketControlMessage*** controlMessages;
+	/**
+	 * return location for the number of
+	 * elements in @control_messages
+	 */
+	uint* numControlMessages;
 }
 
 struct GInputStream
@@ -7645,6 +7581,13 @@ struct GSocketConnectableIface
 	 * Return: a new #GSocketAddressEnumerator.
 	 */
 	extern(C) GSocketAddressEnumerator* function(GSocketConnectable* connectable) proxyEnumerate;
+	/**
+	 *
+	 * Params:
+	 *     connectable = a #GSocketConnectable
+	 * Return: the formatted string
+	 */
+	extern(C) char* function(GSocketConnectable* connectable) toString;
 }
 
 struct GSocketConnection
@@ -7892,6 +7835,12 @@ struct GTlsBackendInterface
 	 *     unreffed when done.
 	 */
 	extern(C) GTlsDatabase* function(GTlsBackend* backend) getDefaultDatabase;
+	/** */
+	extern(C) int function(GTlsBackend* backend) supportsDtls;
+	/** */
+	extern(C) GType function() getDtlsClientConnectionType;
+	/** */
+	extern(C) GType function() getDtlsServerConnectionType;
 }
 
 struct GTlsCertificate
@@ -9079,6 +9028,22 @@ public alias extern(C) char** function(GDBusConnection* connection, const(char)*
  * Since: 2.26
  */
 public alias extern(C) GDBusInterfaceInfo** function(GDBusConnection* connection, const(char)* sender, const(char)* objectPath, const(char)* node, void* userData) GDBusSubtreeIntrospectFunc;
+
+/**
+ * This is the function type of the callback used for the #GSource
+ * returned by g_datagram_based_create_source().
+ *
+ * Params:
+ *     datagramBased = the #GDatagramBased
+ *     condition = the current condition at the source fired
+ *     userData = data passed in by the user
+ *
+ * Return: %G_SOURCE_REMOVE if the source should be removed,
+ *     %G_SOURCE_CONTINUE otherwise
+ *
+ * Since: 2.48
+ */
+public alias extern(C) int function(GDatagramBased* datagramBased, GIOCondition condition, void* userData) GDatagramBasedSourceFunc;
 
 /**
  * During invocation, g_desktop_app_info_launch_uris_as_manager() may

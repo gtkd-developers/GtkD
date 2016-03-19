@@ -73,7 +73,8 @@ final class GtkStruct
 
 	GtkWrapper wrapper;
 	GtkPackage pack;
-	GtkStruct parentStruct;
+
+	private GtkStruct parentStruct;
 
 	this(GtkWrapper wrapper, GtkPackage pack)
 	{
@@ -213,6 +214,14 @@ final class GtkStruct
 					type = GtkStructType.Class;
 			}
 		}
+	}
+
+	GtkStruct getParent()
+	{
+		if ( !parentStruct )
+			parentStruct = pack.getStruct(parent);
+
+		return parentStruct;
 	}
 
 	string[] getStructDeclaration()

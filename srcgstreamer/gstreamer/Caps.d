@@ -47,7 +47,7 @@ public  import gstreamerc.gstreamertypes;
  * handle or produce at runtime.
  * 
  * A #GstCaps can be constructed with the following code fragment:
- * |[
+ * |[<!-- language="C" -->
  * GstCaps *caps = gst_caps_new_simple ("video/x-raw",
  * "format", G_TYPE_STRING, "I420",
  * "framerate", GST_TYPE_FRACTION, 25, 1,
@@ -294,6 +294,10 @@ public class Caps
 	 * Modifies the given @caps into a representation with only fixed
 	 * values. First the caps will be truncated and then the first structure will be
 	 * fixated with gst_structure_fixate().
+	 *
+	 * This function takes ownership of @caps and will call gst_caps_make_writable()
+	 * on it so you must not use @caps afterwards unless you keep an additional
+	 * reference to it with gst_caps_ref().
 	 *
 	 * Return: the fixated caps
 	 */
@@ -673,7 +677,9 @@ public class Caps
 	 * @caps, but contains no lists.  Each list is expanded into separate
 	 * @GstStructures.
 	 *
-	 * This function takes ownership of @caps.
+	 * This function takes ownership of @caps and will call gst_caps_make_writable()
+	 * on it so you must not use @caps afterwards unless you keep an additional
+	 * reference to it with gst_caps_ref().
 	 *
 	 * Return: the normalized #GstCaps
 	 */
@@ -748,6 +754,10 @@ public class Caps
 	 * identical are merged.  Component structures that have values that can be
 	 * merged are also merged.
 	 *
+	 * This function takes ownership of @caps and will call gst_caps_make_writable()
+	 * on it if necessary, so you must not use @caps afterwards unless you keep an
+	 * additional reference to it with gst_caps_ref().
+	 *
 	 * This method does not preserve the original order of @caps.
 	 *
 	 * Return: The simplified caps.
@@ -813,7 +823,7 @@ public class Caps
 	 * can be converted back to a #GstCaps by gst_caps_from_string().
 	 *
 	 * For debugging purposes its easier to do something like this:
-	 * |[
+	 * |[<!-- language="C" -->
 	 * GST_LOG ("caps are %" GST_PTR_FORMAT, caps);
 	 * ]|
 	 * This prints the caps in human readable form.
@@ -834,6 +844,10 @@ public class Caps
 	/**
 	 * Discard all but the first structure from @caps. Useful when
 	 * fixating.
+	 *
+	 * This function takes ownership of @caps and will call gst_caps_make_writable()
+	 * on it if necessary, so you must not use @caps afterwards unless you keep an
+	 * additional reference to it with gst_caps_ref().
 	 *
 	 * Return: truncated caps
 	 */

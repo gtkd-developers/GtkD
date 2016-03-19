@@ -74,6 +74,18 @@ public  import gtkc.gtktypes;
  * </child>
  * </object>
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * menuitem
+ * ├── <child>
+ * ╰── [arrow.right]
+ * ]|
+ * 
+ * GtkMenuItem has a single CSS node with name menuitem. If the menuitem
+ * has a submenu, it gets another CSS node with name arrow, which has
+ * the .left or .right style class.
  */
 public class MenuItem : Bin, ActionableIF, ActivatableIF
 {
@@ -250,8 +262,8 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 *
 	 * See gtk_menu_item_set_accel_path() for details.
 	 *
-	 * Return: the accelerator path corresponding to this menu
-	 *     item’s functionality, or %NULL if not set
+	 * Return: the accelerator path corresponding to
+	 *     this menu item’s functionality, or %NULL if not set
 	 *
 	 * Since: 2.14
 	 */

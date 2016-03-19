@@ -175,7 +175,7 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     gicon = a #GIcon representing the icon, or %NULL
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Since: 2.20
 	 */
@@ -191,7 +191,7 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     iconName = an icon name, or %NULL
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Since: 2.14
 	 */
@@ -209,7 +209,7 @@ public class Tooltip : ObjectG
 	 *
 	 * Params:
 	 *     stockId = a stock id, or %NULL
-	 *     size = a stock icon size
+	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Since: 2.12
 	 */

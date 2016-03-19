@@ -243,7 +243,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: icon size this source matches.
+	 * Return: icon size (#GtkIconSize) this source matches.
 	 */
 	public GtkIconSize getSize()
 	{
@@ -382,7 +382,7 @@ public class IconSource
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
 	 * Params:
-	 *     size = icon size this source applies to
+	 *     size = icon size (#GtkIconSize) this source applies to
 	 */
 	public void setSize(GtkIconSize size)
 	{

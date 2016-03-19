@@ -51,6 +51,11 @@ public  import gtkc.gtktypes;
  * 
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled().
  * 
+ * # CSS nodes
+ * 
+ * GtkToggleButton has a single CSS node with name button. To differentiate
+ * it from a plain #GtkButton, it gets the .toggle style class.
+ * 
  * ## Creating two #GtkToggleButton widgets.
  * 
  * |[<!-- language="C" -->

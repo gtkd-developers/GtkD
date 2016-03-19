@@ -114,6 +114,11 @@ public  import gtkc.gtktypes;
  * - valign = end
  * 
  * ![](right-end.png)
+ * 
+ * # CSS nodes
+ * 
+ * GtkMenuButton has a single CSS node with name button. To differentiate
+ * it from a plain #GtkButton, it gets the .popup style class.
  */
 public class MenuButton : ToggleButton
 {

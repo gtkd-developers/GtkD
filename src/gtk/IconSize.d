@@ -42,7 +42,7 @@ public struct IconSize
 	 * Params:
 	 *     name = the name to look up.
 	 *
-	 * Return: the icon size
+	 * Return: the icon size (#GtkIconSize)
 	 */
 	public static GtkIconSize fromName(string name)
 	{
@@ -76,7 +76,7 @@ public struct IconSize
 	 * the usual size.
 	 *
 	 * Params:
-	 *     size = an icon size
+	 *     size = an icon size (#GtkIconSize)
 	 *     width = location to store icon width
 	 *     height = location to store icon height
 	 *
@@ -104,7 +104,7 @@ public struct IconSize
 	 * Params:
 	 *     settings = a #GtkSettings object, used to determine
 	 *         which set of user preferences to used.
-	 *     size = an icon size
+	 *     size = an icon size (#GtkIconSize)
 	 *     width = location to store icon width
 	 *     height = location to store icon height
 	 *
@@ -128,7 +128,7 @@ public struct IconSize
 	 *     width = the icon width
 	 *     height = the icon height
 	 *
-	 * Return: integer value representing the size
+	 * Return: integer value representing the size (#GtkIconSize)
 	 */
 	public static GtkIconSize register(string name, int width, int height)
 	{
@@ -144,7 +144,7 @@ public struct IconSize
 	 *
 	 * Params:
 	 *     alias_ = an alias for @target
-	 *     target = an existing icon size
+	 *     target = an existing icon size (#GtkIconSize)
 	 */
 	public static void registerAlias(string alias_, GtkIconSize target)
 	{

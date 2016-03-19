@@ -99,6 +99,20 @@ public  import gtkc.gtktypes;
  * </child>
  * </object>
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * expander
+ * ├── title
+ * │   ├── arrow
+ * │   ╰── <label widget>
+ * ╰── <child>
+ * ]|
+ * 
+ * GtkExpander has three CSS nodes, the main node with the name expander,
+ * a subnode with name title and node below it with name arrow. Neither of
+ * them is using any style classes.
  */
 public class Expander : Bin
 {
@@ -263,6 +277,8 @@ public class Expander : Bin
 	/**
 	 * Gets the value set by gtk_expander_set_spacing().
 	 *
+	 * Deprecated: Use margins on the child instead.
+	 *
 	 * Return: spacing between the expander and child
 	 *
 	 * Since: 2.4
@@ -376,6 +392,8 @@ public class Expander : Bin
 	/**
 	 * Sets the spacing field of @expander, which is the number of
 	 * pixels to place between expander and the child.
+	 *
+	 * Deprecated: Use margins on the child instead.
 	 *
 	 * Params:
 	 *     spacing = distance between the expander and child in pixels

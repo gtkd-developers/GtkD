@@ -1628,10 +1628,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Draws a highlight around a widget. This will attach
-		 * handlers to #GtkWidget::draw, so the highlight
-		 * will continue to be displayed until gtk_drag_unhighlight()
-		 * is called.
+		 * Highlights a widget as a currently hovered drop target.
+		 * To end the highlight, call gtk_drag_unhighlight().
+		 * GTK+ calls this automatically if %GTK_DEST_DEFAULT_HIGHLIGHT is set.
 		 */
 		public void dragHighlight()
 		{
@@ -1983,6 +1982,28 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
+		 * Retrieves the widget’s allocated size.
+		 *
+		 * This function returns the last values passed to
+		 * gtk_widget_size_allocate_with_baseline(). The value differs from
+		 * the size returned in gtk_widget_get_allocation() in that functions
+		 * like gtk_widget_set_halign() can adjust the allocation, but not
+		 * the value returned by this function.
+		 *
+		 * If a widget is not visible, its allocated size is 0.
+		 *
+		 * Params:
+		 *     allocation = a pointer to a #GtkAllocation to copy to
+		 *     baseline = a pointer to an integer to copy to
+		 *
+		 * Since: 3.20
+		 */
+		public void getAllocatedSize(out GtkAllocation allocation, out int baseline)
+		{
+			gtk_widget_get_allocated_size(gtkWidget, &allocation, &baseline);
+		}
+
+		/**
 		 * Returns the width that has currently been allocated to @widget.
 		 * This function is intended to be used when implementing handlers
 		 * for the #GtkWidget::draw function.
@@ -2307,6 +2328,20 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
+		 * Returns whether the widget should grab focus when it is clicked with the mouse.
+		 * See gtk_widget_set_focus_on_click().
+		 *
+		 * Return: %TRUE if the widget should grab focus when it is clicked with
+		 *     the mouse.
+		 *
+		 * Since: 3.20
+		 */
+		public bool getFocusOnClick()
+		{
+			return gtk_widget_get_focus_on_click(gtkWidget) != 0;
+		}
+
+		/**
 		 * Gets the font map that has been set with gtk_widget_set_font_map().
 		 *
 		 * Return: A #PangoFontMap, or %NULL
@@ -2368,7 +2403,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Unrealized widgets do not have a frame clock.
 		 *
-		 * Return: a #GdkFrameClock (or #NULL if widget is unrealized)
+		 * Return: a #GdkFrameClock,
+		 *     or #NULL if widget is unrealized
 		 *
 		 * Since: 3.8
 		 */
@@ -3091,6 +3127,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * that the effective %GTK_STATE_FLAG_INSENSITIVE state will be
 		 * returned, that is, also based on parent insensitivity, even if
 		 * @widget itself is sensitive.
+		 *
+		 * Also note that if you are looking for a way to obtain the
+		 * #GtkStateFlags to pass to a #GtkStyleContext method, you
+		 * should look at gtk_style_context_get_state().
 		 *
 		 * Return: The state flags for widget
 		 *
@@ -4100,9 +4140,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * This API is mostly meant as a quick way for applications to
 		 * change a widget appearance. If you are developing a widgets
 		 * library and intend this change to be themeable, it is better
-		 * done by setting meaningful CSS classes and regions in your
-		 * widget/container implementation through gtk_style_context_add_class()
-		 * and gtk_style_context_add_region().
+		 * done by setting meaningful CSS classes in your
+		 * widget/container implementation through gtk_style_context_add_class().
 		 *
 		 * This way, your widget library can install a #GtkCssProvider
 		 * with the %GTK_STYLE_PROVIDER_PRIORITY_FALLBACK priority in order
@@ -4236,6 +4275,21 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			
 			path = Str.toString(outpath);
 			pathReversed = Str.toString(outpathReversed);
+		}
+
+		/**
+		 * This function is only for use in widget implementations.
+		 *
+		 * Flags the widget for a rerun of the GtkWidgetClass::size_allocate
+		 * function. Use this function instead of gtk_widget_queue_resize()
+		 * when the @widget's size request didn't change but it wants to
+		 * reposition its contents.
+		 *
+		 * An example user of this function is gtk_widget_set_halign().
+		 */
+		public void queueAllocate()
+		{
+			gtk_widget_queue_allocate(gtkWidget);
 		}
 
 		/**
@@ -4471,8 +4525,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Params:
 		 *     stockId = a stock ID
-		 *     size = a stock size. A size of (GtkIconSize)-1 means
-		 *         render at the size of the source and don’t scale (if there are
+		 *     size = a stock size (#GtkIconSize). A size of `(GtkIconSize)-1`
+		 *         means render at the size of the source and don’t scale (if there are
 		 *         multiple source sizes, GTK+ picks one of the available sizes).
 		 *     detail = render detail to pass to theme engine
 		 *
@@ -4506,8 +4560,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Params:
 		 *     stockId = a stock ID
-		 *     size = a stock size. A size of (GtkIconSize)-1 means
-		 *         render at the size of the source and don’t scale (if there are
+		 *     size = a stock size (#GtkIconSize). A size of `(GtkIconSize)-1`
+		 *         means render at the size of the source and don’t scale (if there are
 		 *         multiple source sizes, GTK+ picks one of the available sizes).
 		 *
 		 * Return: a new pixbuf, or %NULL if the
@@ -4919,6 +4973,22 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public void setEvents(int events)
 		{
 			gtk_widget_set_events(gtkWidget, events);
+		}
+
+		/**
+		 * Sets whether the widget should grab focus when it is clicked with the mouse.
+		 * Making mouse clicks not grab focus is useful in places like toolbars where
+		 * you don’t want the keyboard focus removed from the main area of the
+		 * application.
+		 *
+		 * Params:
+		 *     focusOnClick = whether the widget should grab focus when clicked with the mouse
+		 *
+		 * Since: 3.20
+		 */
+		public void setFocusOnClick(bool focusOnClick)
+		{
+			gtk_widget_set_focus_on_click(gtkWidget, focusOnClick);
 		}
 
 		/**
@@ -6886,7 +6956,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * made based solely on the cursor position and the type of the data, the
 		 * handler may inspect the dragged data by calling gtk_drag_get_data() and
 		 * defer the gdk_drag_status() call to the #GtkWidget::drag-data-received
-		 * handler. Note that you cannot not pass #GTK_DEST_DEFAULT_DROP,
+		 * handler. Note that you must pass #GTK_DEST_DEFAULT_DROP,
 		 * #GTK_DEST_DEFAULT_MOTION or #GTK_DEST_DEFAULT_ALL to gtk_drag_dest_set()
 		 * when using the drag-motion signal that way.
 		 *

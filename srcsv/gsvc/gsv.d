@@ -42,6 +42,7 @@ shared static this()
 	Linker.link(gtk_source_buffer_can_undo, "gtk_source_buffer_can_undo", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_change_case, "gtk_source_buffer_change_case", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_create_source_mark, "gtk_source_buffer_create_source_mark", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_create_source_tag, "gtk_source_buffer_create_source_tag", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_end_not_undoable_action, "gtk_source_buffer_end_not_undoable_action", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_ensure_highlight, "gtk_source_buffer_ensure_highlight", LIBRARY.GSV);
 	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, "gtk_source_buffer_forward_iter_to_source_mark", LIBRARY.GSV);
@@ -452,6 +453,11 @@ shared static this()
 	Linker.link(gtk_source_style_scheme_manager_prepend_search_path, "gtk_source_style_scheme_manager_prepend_search_path", LIBRARY.GSV);
 	Linker.link(gtk_source_style_scheme_manager_set_search_path, "gtk_source_style_scheme_manager_set_search_path", LIBRARY.GSV);
 
+	// gsv.Tag
+
+	Linker.link(gtk_source_tag_get_type, "gtk_source_tag_get_type", LIBRARY.GSV);
+	Linker.link(gtk_source_tag_new, "gtk_source_tag_new", LIBRARY.GSV);
+
 	// gsv.SourceUndoManager
 
 	Linker.link(gtk_source_undo_manager_get_type, "gtk_source_undo_manager_get_type", LIBRARY.GSV);
@@ -525,6 +531,7 @@ __gshared extern(C)
 	int function(GtkSourceBuffer* buffer) c_gtk_source_buffer_can_undo;
 	void function(GtkSourceBuffer* buffer, GtkSourceChangeCaseType caseType, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_change_case;
 	GtkSourceMark* function(GtkSourceBuffer* buffer, const(char)* name, const(char)* category, GtkTextIter* where) c_gtk_source_buffer_create_source_mark;
+	GtkTextTag* function(GtkSourceBuffer* buffer, const(char)* tagName, const(char)* firstPropertyName, ... ) c_gtk_source_buffer_create_source_tag;
 	void function(GtkSourceBuffer* buffer) c_gtk_source_buffer_end_not_undoable_action;
 	void function(GtkSourceBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_source_buffer_ensure_highlight;
 	int function(GtkSourceBuffer* buffer, GtkTextIter* iter, const(char)* category) c_gtk_source_buffer_forward_iter_to_source_mark;
@@ -935,6 +942,11 @@ __gshared extern(C)
 	void function(GtkSourceStyleSchemeManager* manager, const(char)* path) c_gtk_source_style_scheme_manager_prepend_search_path;
 	void function(GtkSourceStyleSchemeManager* manager, char** path) c_gtk_source_style_scheme_manager_set_search_path;
 
+	// gsv.Tag
+
+	GType function() c_gtk_source_tag_get_type;
+	GtkTextTag* function(const(char)* name) c_gtk_source_tag_new;
+
 	// gsv.SourceUndoManager
 
 	GType function() c_gtk_source_undo_manager_get_type;
@@ -1006,6 +1018,7 @@ alias c_gtk_source_buffer_can_redo gtk_source_buffer_can_redo;
 alias c_gtk_source_buffer_can_undo gtk_source_buffer_can_undo;
 alias c_gtk_source_buffer_change_case gtk_source_buffer_change_case;
 alias c_gtk_source_buffer_create_source_mark gtk_source_buffer_create_source_mark;
+alias c_gtk_source_buffer_create_source_tag gtk_source_buffer_create_source_tag;
 alias c_gtk_source_buffer_end_not_undoable_action gtk_source_buffer_end_not_undoable_action;
 alias c_gtk_source_buffer_ensure_highlight gtk_source_buffer_ensure_highlight;
 alias c_gtk_source_buffer_forward_iter_to_source_mark gtk_source_buffer_forward_iter_to_source_mark;
@@ -1415,6 +1428,11 @@ alias c_gtk_source_style_scheme_manager_get_scheme_ids gtk_source_style_scheme_m
 alias c_gtk_source_style_scheme_manager_get_search_path gtk_source_style_scheme_manager_get_search_path;
 alias c_gtk_source_style_scheme_manager_prepend_search_path gtk_source_style_scheme_manager_prepend_search_path;
 alias c_gtk_source_style_scheme_manager_set_search_path gtk_source_style_scheme_manager_set_search_path;
+
+// gsv.Tag
+
+alias c_gtk_source_tag_get_type gtk_source_tag_get_type;
+alias c_gtk_source_tag_new gtk_source_tag_new;
 
 // gsv.SourceUndoManager
 

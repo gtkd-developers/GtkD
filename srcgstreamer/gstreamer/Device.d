@@ -185,7 +185,7 @@ public class Device : ObjectGst
 	 * Check if @device matches all of the given classes
 	 *
 	 * Params:
-	 *     classes = a "/" separate list of device classes to match, only match if
+	 *     classes = a "/"-separated list of device classes to match, only match if
 	 *         all classes are matched
 	 *
 	 * Return: %TRUE if @device matches.
@@ -201,8 +201,8 @@ public class Device : ObjectGst
 	 * Check if @factory matches all of the given classes
 	 *
 	 * Params:
-	 *     classes = a %NULL terminated array of classes to match, only match if all
-	 *         classes are matched
+	 *     classes = a %NULL terminated array of classes
+	 *         to match, only match if all classes are matched
 	 *
 	 * Return: %TRUE if @device matches.
 	 *

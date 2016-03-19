@@ -318,6 +318,7 @@ shared static this()
 	Linker.link(gst_clock_set_timeout, "gst_clock_set_timeout", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_single_shot_id_reinit, "gst_clock_single_shot_id_reinit", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_unadjust_unlocked, "gst_clock_unadjust_unlocked", LIBRARY.GSTREAMER);
+	Linker.link(gst_clock_unadjust_with_calibration, "gst_clock_unadjust_with_calibration", LIBRARY.GSTREAMER);
 	Linker.link(gst_clock_wait_for_sync, "gst_clock_wait_for_sync", LIBRARY.GSTREAMER);
 
 	// gstreamer.Context
@@ -476,6 +477,9 @@ shared static this()
 	Linker.link(gst_element_get_clock, "gst_element_get_clock", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_compatible_pad, "gst_element_get_compatible_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_compatible_pad_template, "gst_element_get_compatible_pad_template", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_context, "gst_element_get_context", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_context_unlocked, "gst_element_get_context_unlocked", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_get_contexts, "gst_element_get_contexts", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_factory, "gst_element_get_factory", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_request_pad, "gst_element_get_request_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_get_start_time, "gst_element_get_start_time", LIBRARY.GSTREAMER);
@@ -523,6 +527,7 @@ shared static this()
 	Linker.link(gst_element_class_add_metadata, "gst_element_class_add_metadata", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_add_pad_template, "gst_element_class_add_pad_template", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_add_static_metadata, "gst_element_class_add_static_metadata", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_class_add_static_pad_template, "gst_element_class_add_static_pad_template", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_get_metadata, "gst_element_class_get_metadata", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_get_pad_template, "gst_element_class_get_pad_template", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_class_get_pad_template_list, "gst_element_class_get_pad_template_list", LIBRARY.GSTREAMER);
@@ -881,6 +886,7 @@ shared static this()
 	Linker.link(gst_pad_set_chain_function_full, "gst_pad_set_chain_function_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_chain_list_function_full, "gst_pad_set_chain_list_function_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_element_private, "gst_pad_set_element_private", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_set_event_full_function_full, "gst_pad_set_event_full_function_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_event_function_full, "gst_pad_set_event_function_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_getrange_function_full, "gst_pad_set_getrange_function_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_set_iterate_internal_links_function_full, "gst_pad_set_iterate_internal_links_function_full", LIBRARY.GSTREAMER);
@@ -1178,11 +1184,16 @@ shared static this()
 	Linker.link(gst_segment_init, "gst_segment_init", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_is_equal, "gst_segment_is_equal", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_offset_running_time, "gst_segment_offset_running_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_position_from_running_time, "gst_segment_position_from_running_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_position_from_running_time_full, "gst_segment_position_from_running_time_full", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_position_from_stream_time, "gst_segment_position_from_stream_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_position_from_stream_time_full, "gst_segment_position_from_stream_time_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_set_running_time, "gst_segment_set_running_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_position, "gst_segment_to_position", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_running_time, "gst_segment_to_running_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_running_time_full, "gst_segment_to_running_time_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_segment_to_stream_time, "gst_segment_to_stream_time", LIBRARY.GSTREAMER);
+	Linker.link(gst_segment_to_stream_time_full, "gst_segment_to_stream_time_full", LIBRARY.GSTREAMER);
 
 	// gstreamer.StaticCaps
 
@@ -1411,6 +1422,19 @@ shared static this()
 	Linker.link(gst_toc_setter_get_toc, "gst_toc_setter_get_toc", LIBRARY.GSTREAMER);
 	Linker.link(gst_toc_setter_reset, "gst_toc_setter_reset", LIBRARY.GSTREAMER);
 	Linker.link(gst_toc_setter_set_toc, "gst_toc_setter_set_toc", LIBRARY.GSTREAMER);
+
+	// gstreamer.Tracer
+
+	Linker.link(gst_tracer_get_type, "gst_tracer_get_type", LIBRARY.GSTREAMER);
+
+	// gstreamer.TracerFactory
+
+	Linker.link(gst_tracer_factory_get_type, "gst_tracer_factory_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_tracer_factory_get_list, "gst_tracer_factory_get_list", LIBRARY.GSTREAMER);
+
+	// gstreamer.TracerRecord
+
+	Linker.link(gst_tracer_record_get_type, "gst_tracer_record_get_type", LIBRARY.GSTREAMER);
 
 	// gstreamer.TypeFind
 
@@ -1943,6 +1967,7 @@ __gshared extern(C)
 	void function(GstClock* clock, GstClockTime timeout) c_gst_clock_set_timeout;
 	int function(GstClock* clock, GstClockID id, GstClockTime time) c_gst_clock_single_shot_id_reinit;
 	GstClockTime function(GstClock* clock, GstClockTime external) c_gst_clock_unadjust_unlocked;
+	GstClockTime function(GstClock* clock, GstClockTime externalTarget, GstClockTime cinternal, GstClockTime cexternal, GstClockTime cnum, GstClockTime cdenom) c_gst_clock_unadjust_with_calibration;
 	int function(GstClock* clock, GstClockTime timeout) c_gst_clock_wait_for_sync;
 
 	// gstreamer.Context
@@ -2101,6 +2126,9 @@ __gshared extern(C)
 	GstClock* function(GstElement* element) c_gst_element_get_clock;
 	GstPad* function(GstElement* element, GstPad* pad, GstCaps* caps) c_gst_element_get_compatible_pad;
 	GstPadTemplate* function(GstElement* element, GstPadTemplate* compattempl) c_gst_element_get_compatible_pad_template;
+	GstContext* function(GstElement* element, const(char)* contextType) c_gst_element_get_context;
+	GstContext* function(GstElement* element, const(char)* contextType) c_gst_element_get_context_unlocked;
+	GList* function(GstElement* element) c_gst_element_get_contexts;
 	GstElementFactory* function(GstElement* element) c_gst_element_get_factory;
 	GstPad* function(GstElement* element, const(char)* name) c_gst_element_get_request_pad;
 	GstClockTime function(GstElement* element) c_gst_element_get_start_time;
@@ -2148,6 +2176,7 @@ __gshared extern(C)
 	void function(GstElementClass* klass, const(char)* key, const(char)* value) c_gst_element_class_add_metadata;
 	void function(GstElementClass* klass, GstPadTemplate* templ) c_gst_element_class_add_pad_template;
 	void function(GstElementClass* klass, const(char)* key, const(char)* value) c_gst_element_class_add_static_metadata;
+	void function(GstElementClass* klass, GstStaticPadTemplate* staticTempl) c_gst_element_class_add_static_pad_template;
 	const(char)* function(GstElementClass* klass, const(char)* key) c_gst_element_class_get_metadata;
 	GstPadTemplate* function(GstElementClass* elementClass, const(char)* name) c_gst_element_class_get_pad_template;
 	GList* function(GstElementClass* elementClass) c_gst_element_class_get_pad_template_list;
@@ -2506,6 +2535,7 @@ __gshared extern(C)
 	void function(GstPad* pad, GstPadChainFunction chain, void* userData, GDestroyNotify notify) c_gst_pad_set_chain_function_full;
 	void function(GstPad* pad, GstPadChainListFunction chainlist, void* userData, GDestroyNotify notify) c_gst_pad_set_chain_list_function_full;
 	void function(GstPad* pad, void* priv) c_gst_pad_set_element_private;
+	void function(GstPad* pad, GstPadEventFullFunction event, void* userData, GDestroyNotify notify) c_gst_pad_set_event_full_function_full;
 	void function(GstPad* pad, GstPadEventFunction event, void* userData, GDestroyNotify notify) c_gst_pad_set_event_function_full;
 	void function(GstPad* pad, GstPadGetRangeFunction get, void* userData, GDestroyNotify notify) c_gst_pad_set_getrange_function_full;
 	void function(GstPad* pad, GstPadIterIntLinkFunction iterintlink, void* userData, GDestroyNotify notify) c_gst_pad_set_iterate_internal_links_function_full;
@@ -2803,11 +2833,16 @@ __gshared extern(C)
 	void function(GstSegment* segment, GstFormat format) c_gst_segment_init;
 	int function(GstSegment* s0, GstSegment* s1) c_gst_segment_is_equal;
 	int function(GstSegment* segment, GstFormat format, long offset) c_gst_segment_offset_running_time;
+	ulong function(GstSegment* segment, GstFormat format, ulong runningTime) c_gst_segment_position_from_running_time;
+	int function(GstSegment* segment, GstFormat format, ulong runningTime, ulong* position) c_gst_segment_position_from_running_time_full;
+	ulong function(GstSegment* segment, GstFormat format, ulong streamTime) c_gst_segment_position_from_stream_time;
+	int function(GstSegment* segment, GstFormat format, ulong streamTime, ulong* position) c_gst_segment_position_from_stream_time_full;
 	int function(GstSegment* segment, GstFormat format, ulong runningTime) c_gst_segment_set_running_time;
 	ulong function(GstSegment* segment, GstFormat format, ulong runningTime) c_gst_segment_to_position;
 	ulong function(GstSegment* segment, GstFormat format, ulong position) c_gst_segment_to_running_time;
 	int function(GstSegment* segment, GstFormat format, ulong position, ulong* runningTime) c_gst_segment_to_running_time_full;
 	ulong function(GstSegment* segment, GstFormat format, ulong position) c_gst_segment_to_stream_time;
+	int function(GstSegment* segment, GstFormat format, ulong position, ulong* streamTime) c_gst_segment_to_stream_time_full;
 
 	// gstreamer.StaticCaps
 
@@ -3036,6 +3071,19 @@ __gshared extern(C)
 	GstToc* function(GstTocSetter* setter) c_gst_toc_setter_get_toc;
 	void function(GstTocSetter* setter) c_gst_toc_setter_reset;
 	void function(GstTocSetter* setter, GstToc* toc) c_gst_toc_setter_set_toc;
+
+	// gstreamer.Tracer
+
+	GType function() c_gst_tracer_get_type;
+
+	// gstreamer.TracerFactory
+
+	GType function() c_gst_tracer_factory_get_type;
+	GList* function() c_gst_tracer_factory_get_list;
+
+	// gstreamer.TracerRecord
+
+	GType function() c_gst_tracer_record_get_type;
 
 	// gstreamer.TypeFind
 
@@ -3566,6 +3614,7 @@ alias c_gst_clock_set_synced gst_clock_set_synced;
 alias c_gst_clock_set_timeout gst_clock_set_timeout;
 alias c_gst_clock_single_shot_id_reinit gst_clock_single_shot_id_reinit;
 alias c_gst_clock_unadjust_unlocked gst_clock_unadjust_unlocked;
+alias c_gst_clock_unadjust_with_calibration gst_clock_unadjust_with_calibration;
 alias c_gst_clock_wait_for_sync gst_clock_wait_for_sync;
 
 // gstreamer.Context
@@ -3724,6 +3773,9 @@ alias c_gst_element_get_bus gst_element_get_bus;
 alias c_gst_element_get_clock gst_element_get_clock;
 alias c_gst_element_get_compatible_pad gst_element_get_compatible_pad;
 alias c_gst_element_get_compatible_pad_template gst_element_get_compatible_pad_template;
+alias c_gst_element_get_context gst_element_get_context;
+alias c_gst_element_get_context_unlocked gst_element_get_context_unlocked;
+alias c_gst_element_get_contexts gst_element_get_contexts;
 alias c_gst_element_get_factory gst_element_get_factory;
 alias c_gst_element_get_request_pad gst_element_get_request_pad;
 alias c_gst_element_get_start_time gst_element_get_start_time;
@@ -3771,6 +3823,7 @@ alias c_gst_element_unlink_pads gst_element_unlink_pads;
 alias c_gst_element_class_add_metadata gst_element_class_add_metadata;
 alias c_gst_element_class_add_pad_template gst_element_class_add_pad_template;
 alias c_gst_element_class_add_static_metadata gst_element_class_add_static_metadata;
+alias c_gst_element_class_add_static_pad_template gst_element_class_add_static_pad_template;
 alias c_gst_element_class_get_metadata gst_element_class_get_metadata;
 alias c_gst_element_class_get_pad_template gst_element_class_get_pad_template;
 alias c_gst_element_class_get_pad_template_list gst_element_class_get_pad_template_list;
@@ -4129,6 +4182,7 @@ alias c_gst_pad_set_active gst_pad_set_active;
 alias c_gst_pad_set_chain_function_full gst_pad_set_chain_function_full;
 alias c_gst_pad_set_chain_list_function_full gst_pad_set_chain_list_function_full;
 alias c_gst_pad_set_element_private gst_pad_set_element_private;
+alias c_gst_pad_set_event_full_function_full gst_pad_set_event_full_function_full;
 alias c_gst_pad_set_event_function_full gst_pad_set_event_function_full;
 alias c_gst_pad_set_getrange_function_full gst_pad_set_getrange_function_full;
 alias c_gst_pad_set_iterate_internal_links_function_full gst_pad_set_iterate_internal_links_function_full;
@@ -4426,11 +4480,16 @@ alias c_gst_segment_free gst_segment_free;
 alias c_gst_segment_init gst_segment_init;
 alias c_gst_segment_is_equal gst_segment_is_equal;
 alias c_gst_segment_offset_running_time gst_segment_offset_running_time;
+alias c_gst_segment_position_from_running_time gst_segment_position_from_running_time;
+alias c_gst_segment_position_from_running_time_full gst_segment_position_from_running_time_full;
+alias c_gst_segment_position_from_stream_time gst_segment_position_from_stream_time;
+alias c_gst_segment_position_from_stream_time_full gst_segment_position_from_stream_time_full;
 alias c_gst_segment_set_running_time gst_segment_set_running_time;
 alias c_gst_segment_to_position gst_segment_to_position;
 alias c_gst_segment_to_running_time gst_segment_to_running_time;
 alias c_gst_segment_to_running_time_full gst_segment_to_running_time_full;
 alias c_gst_segment_to_stream_time gst_segment_to_stream_time;
+alias c_gst_segment_to_stream_time_full gst_segment_to_stream_time_full;
 
 // gstreamer.StaticCaps
 
@@ -4659,6 +4718,19 @@ alias c_gst_toc_setter_get_type gst_toc_setter_get_type;
 alias c_gst_toc_setter_get_toc gst_toc_setter_get_toc;
 alias c_gst_toc_setter_reset gst_toc_setter_reset;
 alias c_gst_toc_setter_set_toc gst_toc_setter_set_toc;
+
+// gstreamer.Tracer
+
+alias c_gst_tracer_get_type gst_tracer_get_type;
+
+// gstreamer.TracerFactory
+
+alias c_gst_tracer_factory_get_type gst_tracer_factory_get_type;
+alias c_gst_tracer_factory_get_list gst_tracer_factory_get_list;
+
+// gstreamer.TracerRecord
+
+alias c_gst_tracer_record_get_type gst_tracer_record_get_type;
 
 // gstreamer.TypeFind
 

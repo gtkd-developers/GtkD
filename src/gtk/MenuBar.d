@@ -39,6 +39,10 @@ public  import gtkc.gtktypes;
  * The #GtkMenuBar is a subclass of #GtkMenuShell which contains one or
  * more #GtkMenuItems. The result is a standard menu bar which can hold
  * many menu items.
+ * 
+ * # CSS nodes
+ * 
+ * GtkMenuBar has a single CSS node with name menubar.
  */
 public class MenuBar : MenuShell
 {

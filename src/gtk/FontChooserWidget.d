@@ -48,6 +48,10 @@ public  import gtkc.gtktypes;
  * 
  * To change the text which is shown in the preview area, use
  * gtk_font_chooser_set_preview_text().
+ * 
+ * # CSS nodes
+ * 
+ * GtkFontChooserWidget has a single CSS node with name fontchooser.
  */
 public class FontChooserWidget : Box, FontChooserIF
 {

@@ -141,6 +141,19 @@ public class WidgetClass
 	}
 
 	/**
+	 * Gets the name used by this class for matching in CSS code. See
+	 * gtk_widget_class_set_css_name() for details.
+	 *
+	 * Return: the CSS name of the given class
+	 *
+	 * Since: 3.20
+	 */
+	public string getCssName()
+	{
+		return Str.toString(gtk_widget_class_get_css_name(gtkWidgetClass));
+	}
+
+	/**
 	 * Installs a style property on a widget class. The parser for the
 	 * style property is determined by the value type of @pspec.
 	 *
@@ -254,6 +267,22 @@ public class WidgetClass
 	public void setConnectFunc(GtkBuilderConnectFunc connectFunc, void* connectData, GDestroyNotify connectDataDestroy)
 	{
 		gtk_widget_class_set_connect_func(gtkWidgetClass, connectFunc, connectData, connectDataDestroy);
+	}
+
+	/**
+	 * Sets the name to be used for CSS matching of widgets.
+	 *
+	 * If this function is not called for a given class, the name
+	 * of the parent class is used.
+	 *
+	 * Params:
+	 *     name = name to use
+	 *
+	 * Since: 3.20
+	 */
+	public void setCssName(string name)
+	{
+		gtk_widget_class_set_css_name(gtkWidgetClass, Str.toStringz(name));
 	}
 
 	/**

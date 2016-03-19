@@ -425,6 +425,9 @@ public class SourceView : TextView
 	 * Set if and how the spaces should be visualized. Specifying @flags as 0 will
 	 * disable display of spaces.
 	 *
+	 * For a finer-grained method, there is also the GtkSourceTag's
+	 * #GtkSourceTag:draw-spaces property.
+	 *
 	 * Params:
 	 *     flags = #GtkSourceDrawSpacesFlags specifing how white spaces should
 	 *         be displayed

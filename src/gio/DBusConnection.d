@@ -1079,8 +1079,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * each application is a client. So this method will always return
 	 * %NULL for message bus clients.
 	 *
-	 * Return: a #GCredentials or %NULL if not available.
-	 *     Do not free this object, it is owned by @connection.
+	 * Return: a #GCredentials or %NULL if not
+	 *     available. Do not free this object, it is owned by @connection.
 	 *
 	 * Since: 2.26
 	 */

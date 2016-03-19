@@ -65,6 +65,8 @@ public struct Testing
 	 * The window will quit any running gtk_main()-loop when destroyed, and it
 	 * will automatically be destroyed upon test function teardown.
 	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
+	 *
 	 * Params:
 	 *     windowTitle = Title of the window to be displayed.
 	 *     dialogText = Text inside the window to be displayed.
@@ -209,6 +211,8 @@ public struct Testing
 	 * of the adjustment belonging to @widget, and is not a percentage
 	 * as passed in to gtk_test_slider_set_perc().
 	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
+	 *
 	 * Params:
 	 *     widget = valid widget pointer.
 	 *
@@ -228,6 +232,8 @@ public struct Testing
 	 * a value between the lower and upper limits, according to the
 	 * @percentage argument.
 	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
+	 *
 	 * Params:
 	 *     widget = valid widget pointer.
 	 *     percentage = value between 0 and 100.
@@ -243,6 +249,8 @@ public struct Testing
 	 * This function will generate a @button click in the upwards or downwards
 	 * spin button arrow areas, usually leading to an increase or decrease of
 	 * spin button’s value.
+	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
 	 *
 	 * Params:
 	 *     spinner = valid GtkSpinButton widget.
@@ -262,6 +270,8 @@ public struct Testing
 	 * Retrive the text string of @widget if it is a GtkLabel,
 	 * GtkEditable (entry and text widgets) or GtkTextView.
 	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
+	 *
 	 * Params:
 	 *     widget = valid widget pointer.
 	 *
@@ -280,6 +290,8 @@ public struct Testing
 	/**
 	 * Set the text string of @widget to @string if it is a GtkLabel,
 	 * GtkEditable (entry and text widgets) or GtkTextView.
+	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
 	 *
 	 * Params:
 	 *     widget = valid widget pointer.
@@ -302,6 +314,8 @@ public struct Testing
 	 * Certain caveats should be considered when using this function, in
 	 * particular because the mouse pointer is warped to the button click
 	 * location, see gdk_test_simulate_button() for details.
+	 *
+	 * Deprecated: This testing infrastructure is phased out in favor of reftests.
 	 *
 	 * Params:
 	 *     widget = Widget to generate a button click on.

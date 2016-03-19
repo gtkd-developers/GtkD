@@ -158,6 +158,9 @@ public class Range : Widget, OrientableIF
 	 *
 	 * See gtk_range_set_min_slider_size().
 	 *
+	 * Deprecated: Use the min-height/min-width CSS properties on the slider
+	 * node.
+	 *
 	 * Return: The minimum size of the range’s slider.
 	 *
 	 * Since: 2.20
@@ -385,6 +388,9 @@ public class Range : Widget, OrientableIF
 	 * Sets the minimum size of the range’s slider.
 	 *
 	 * This function is useful mainly for #GtkRange subclasses.
+	 *
+	 * Deprecated: Use the min-height/min-width CSS properties on the slider
+	 * node.
 	 *
 	 * Params:
 	 *     minSize = The slider’s minimum size

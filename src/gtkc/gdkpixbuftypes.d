@@ -30,16 +30,6 @@ public  import gtkc.gdktypes;
 public  import gtkc.atktypes;
 private import std.stdio;
 
-public alias void* GdkPixbufAnimationIterAutoptr;
-
-public alias void* GdkPixbufAnimationAutoptr;
-
-public alias void* GdkPixbufLoaderAutoptr;
-
-public alias void* GdkPixbufSimpleAnimAutoptr;
-
-public alias void* GdkPixbufAutoptr;
-
 /**
  * This enumeration defines the color spaces that are supported by
  * the gdk-pixbuf library.  Currently only RGB is supported.
@@ -159,6 +149,10 @@ public enum GdkPixbufError
 	 * Generic failure code, something went wrong.
 	 */
 	FAILED = 5,
+	/**
+	 * Only part of the animation was loaded.
+	 */
+	INCOMPLETE_ANIMATION = 6,
 }
 alias GdkPixbufError PixbufError;
 

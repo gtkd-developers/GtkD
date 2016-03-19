@@ -394,7 +394,7 @@ public class CapsFeatures
 	 * Converts @features to a human-readable string representation.
 	 *
 	 * For debugging purposes its easier to do something like this:
-	 * |[
+	 * |[<!-- language="C" -->
 	 * GST_LOG ("features is %" GST_PTR_FORMAT, features);
 	 * ]|
 	 * This prints the features in human readable form.

@@ -111,7 +111,9 @@ public class Screen : ObjectG
 	}
 
 	/**
-	 * Returns the height of the default screen in pixels.
+	 * Gets the height of the default screen in pixels. The returned
+	 * size is in ”application pixels”, not in ”device pixels” (see
+	 * gdk_screen_get_monitor_scale_factor()).
 	 *
 	 * Return: the height of the default screen in pixels.
 	 */
@@ -133,7 +135,9 @@ public class Screen : ObjectG
 	}
 
 	/**
-	 * Returns the width of the default screen in pixels.
+	 * Gets the width of the default screen in pixels. The returned
+	 * size is in ”application pixels”, not in ”device pixels” (see
+	 * gdk_screen_get_monitor_scale_factor()).
 	 *
 	 * Return: the width of the default screen in pixels.
 	 */
@@ -227,7 +231,9 @@ public class Screen : ObjectG
 	}
 
 	/**
-	 * Gets the height of @screen in pixels
+	 * Gets the height of @screen in pixels. The returned size is in
+	 * ”application pixels”, not in ”device pixels” (see
+	 * gdk_screen_get_monitor_scale_factor()).
 	 *
 	 * Return: the height of @screen in pixels.
 	 *
@@ -291,7 +297,9 @@ public class Screen : ObjectG
 
 	/**
 	 * Retrieves the #GdkRectangle representing the size and position of
-	 * the individual monitor within the entire screen area.
+	 * the individual monitor within the entire screen area. The returned
+	 * geometry is in ”application pixels”, not in ”device pixels” (see
+	 * gdk_screen_get_monitor_scale_factor()).
 	 *
 	 * Monitor numbers start at 0. To obtain the number of monitors of
 	 * @screen, use gdk_screen_get_n_monitors().
@@ -348,7 +356,7 @@ public class Screen : ObjectG
 	}
 
 	/**
-	 * Returns the internal scale factor that maps from monitor coordiantes
+	 * Returns the internal scale factor that maps from monitor coordinates
 	 * to the actual device pixels. On traditional systems this is 1, but
 	 * on very high density outputs this can be a higher value (often 2).
 	 *
@@ -385,7 +393,9 @@ public class Screen : ObjectG
 
 	/**
 	 * Retrieves the #GdkRectangle representing the size and position of
-	 * the “work area” on a monitor within the entire screen area.
+	 * the “work area” on a monitor within the entire screen area. The returned
+	 * geometry is in ”application pixels”, not in ”device pixels” (see
+	 * gdk_screen_get_monitor_scale_factor()).
 	 *
 	 * The work area should be considered when positioning menus and
 	 * similar popups, to avoid placing them below panels, docks or other
@@ -587,7 +597,9 @@ public class Screen : ObjectG
 	}
 
 	/**
-	 * Gets the width of @screen in pixels
+	 * Gets the width of @screen in pixels. The returned size is in
+	 * ”application pixels”, not in ”device pixels” (see
+	 * gdk_screen_get_monitor_scale_factor()).
 	 *
 	 * Return: the width of @screen in pixels.
 	 *

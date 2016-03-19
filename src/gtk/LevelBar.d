@@ -43,9 +43,14 @@ public  import gtkc.gtktypes;
  * 
  * Use gtk_level_bar_set_value() to set the current value, and
  * gtk_level_bar_add_offset_value() to set the value offsets at which
- * the bar will be considered in a different state. GTK will add two offsets
- * by default on the level bar: #GTK_LEVEL_BAR_OFFSET_LOW and
- * #GTK_LEVEL_BAR_OFFSET_HIGH, with values 0.25 and 0.75 respectively.
+ * the bar will be considered in a different state. GTK will add a few
+ * offsets by default on the level bar: #GTK_LEVEL_BAR_OFFSET_LOW,
+ * #GTK_LEVEL_BAR_OFFSET_HIGH and #GTK_LEVEL_BAR_OFFSET_FULL, with
+ * values 0.25, 0.75 and 1.0 respectively.
+ * 
+ * Note that it is your responsibility to update preexisting offsets
+ * when changing the minimum or maximum value. GTK+ will simply clamp
+ * them to the new range.
  * 
  * ## Adding a custom offset on the bar
  * 
@@ -60,26 +65,21 @@ public  import gtkc.gtktypes;
  * widget = gtk_level_bar_new ();
  * bar = GTK_LEVEL_BAR (widget);
  * 
- * /<!---->* This changes the value of the default low offset
- * *<!---->/
+ * // This changes the value of the default low offset
  * 
  * gtk_level_bar_add_offset_value (bar,
  * GTK_LEVEL_BAR_OFFSET_LOW,
  * 0.10);
  * 
- * /<!---->* This adds a new offset to the bar; the application will
- * be able to change its color by using the following selector,
- * either by adding it to its CSS file or using
- * gtk_css_provider_load_from_data() and
- * gtk_style_context_add_provider()
- * 
- * * .level-bar.fill-block.level-my-offset {
- * *   background-color: green;
- * *   border-style: solid;
- * *   border-color: black;
- * *   border-style: 1px;
- * * }
- * *<!---->/
+ * // This adds a new offset to the bar; the application will
+ * // be able to change its color CSS like this:
+ * //
+ * // levelbar block.my-offset {
+ * //   background-color: magenta;
+ * //   border-style: solid;
+ * //   border-color: black;
+ * //   border-style: 1px;
+ * // }
  * 
  * gtk_level_bar_add_offset_value (bar, "my-offset", 0.60);
  * 
@@ -93,12 +93,43 @@ public  import gtkc.gtktypes;
  * the admissible interval, i.e. a value of 15 with a specified interval between
  * 10 and 20 is equivalent to a value of 0.5 with an interval between 0 and 1.
  * When #GTK_LEVEL_BAR_MODE_DISCRETE is used, the bar level is rendered
- * as a finite and number of separated blocks instead of a single one. The number
+ * as a finite number of separated blocks instead of a single one. The number
  * of blocks that will be rendered is equal to the number of units specified by
  * the admissible interval.
+ * 
  * For instance, to build a bar rendered with five blocks, it’s sufficient to
  * set the minimum value to 0 and the maximum value to 5 after changing the indicator
  * mode to discrete.
+ * 
+ * GtkLevelBar was introduced in GTK+ 3.6.
+ * 
+ * # GtkLevelBar as GtkBuildable
+ * 
+ * The GtkLevelBar implementation of the GtkBuildable interface supports a
+ * custom <offsets> element, which can contain any number of <offset> elements,
+ * each of which must have name and value attributes.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * levelbar[.discrete]
+ * ╰── trough
+ * ├── block.filled.level-name
+ * ┊
+ * ├── block.empty
+ * ┊
+ * ]|
+ * 
+ * GtkLevelBar has a main CSS node with name levelbar and one of the style
+ * classes .discrete or .continuous and a subnode with name trough. Below the
+ * trough node are a number of nodes with name block and style class .filled
+ * or .empty. In continuous mode, there is exactly one node of each, in discrete
+ * mode, the number of filled and unfilled nodes corresponds to blocks that are
+ * drawn. The block.filled nodes also get a style class .level-name corresponding
+ * to the level for the current value.
+ * 
+ * In horizontal orientation, the nodes are always arranged from left to right,
+ * regardless of text direction.
  */
 public class LevelBar : Widget, OrientableIF
 {
@@ -317,6 +348,9 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Sets the value of the #GtkLevelBar:max-value property.
 	 *
+	 * You probably want to update preexisting level offsets after calling
+	 * this function.
+	 *
 	 * Params:
 	 *     value = a positive value
 	 *
@@ -329,6 +363,9 @@ public class LevelBar : Widget, OrientableIF
 
 	/**
 	 * Sets the value of the #GtkLevelBar:min-value property.
+	 *
+	 * You probably want to update preexisting level offsets after calling
+	 * this function.
 	 *
 	 * Params:
 	 *     value = a positive value

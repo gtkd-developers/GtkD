@@ -27,6 +27,7 @@ module gtk.PlacesSidebar;
 private import gdk.DragContext;
 private import gio.File;
 private import gio.FileIF;
+private import gio.MountOperation;
 private import gio.Volume;
 private import gio.VolumeIF;
 private import glib.ConstructionException;
@@ -65,6 +66,17 @@ public  import gtkc.gtktypes;
  * user selects in the sidebar a location to open.  The application should also
  * call gtk_places_sidebar_set_location() when it changes the currently-viewed
  * location.
+ * 
+ * # CSS nodes
+ * 
+ * GtkPlacesSidebar uses a single CSS node with name placesidebar and style
+ * class .sidebar.
+ * 
+ * Among the children of the places sidebar, the following style classes can
+ * be used:
+ * - .sidebar-new-bookmark-row for the 'Add new bookmark' row
+ * - .sidebar-placeholder-row for a row that is a placeholder
+ * - .has-open-popup when a popup is open for a row
  */
 public class PlacesSidebar : ScrolledWindow
 {
@@ -175,8 +187,8 @@ public class PlacesSidebar : ScrolledWindow
 	 * function to get the location that is being referred to during the callbacks
 	 * for your menu items.
 	 *
-	 * Return: a GFile with the selected location, or #NULL if nothing is visually
-	 *     selected.
+	 * Return: a GFile with the selected location, or
+	 *     %NULL if nothing is visually selected.
 	 *
 	 * Since: 3.10
 	 */
@@ -201,8 +213,8 @@ public class PlacesSidebar : ScrolledWindow
 	 *     n = index of the bookmark to query
 	 *
 	 * Return: The bookmark specified by the index @n, or
-	 *     #NULL if no such index exist.  Note that the indices start at 0, even though
-	 *     the file chooser starts them with the keyboard shortcut “Alt-1”.
+	 *     %NULL if no such index exist.  Note that the indices start at 0, even though
+	 *     the file chooser starts them with the keyboard shortcut "Alt-1".
 	 *
 	 * Since: 3.10
 	 */
@@ -642,6 +654,41 @@ public class PlacesSidebar : ScrolledWindow
 		}
 	}
 
+	void delegate(MountOperation, PlacesSidebar)[] onMountListeners;
+	/**
+	 * The places sidebar emits this signal when it starts a new operation
+	 * because the user clicked on some location that needs mounting.
+	 * In this way the application using the #GtkPlacesSidebar can track the
+	 * progress of the operation and, for example, show a notification.
+	 *
+	 * Params:
+	 *     mountOperation = the #GMountOperation that is going to start.
+	 *
+	 * Since: 3.20
+	 */
+	void addOnMount(void delegate(MountOperation, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "mount" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"mount",
+				cast(GCallback)&callBackMount,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["mount"] = 1;
+		}
+		onMountListeners ~= dlg;
+	}
+	extern(C) static void callBackMount(GtkPlacesSidebar* placessidebarStruct, GMountOperation* mountOperation, PlacesSidebar _placessidebar)
+	{
+		foreach ( void delegate(MountOperation, PlacesSidebar) dlg; _placessidebar.onMountListeners )
+		{
+			dlg(ObjectG.getDObject!(MountOperation)(mountOperation), _placessidebar);
+		}
+	}
+
 	void delegate(FileIF, GtkPlacesOpenFlags, PlacesSidebar)[] onOpenLocationListeners;
 	/**
 	 * The places sidebar emits this signal when the user selects a location
@@ -838,17 +885,23 @@ public class PlacesSidebar : ScrolledWindow
 		}
 	}
 
-	void delegate(PlacesSidebar)[] onShowOtherLocationsListeners;
+	void delegate(GtkPlacesOpenFlags, PlacesSidebar)[] onShowOtherLocationsListeners;
 	/**
 	 * The places sidebar emits this signal when it needs the calling
 	 * application to present a way to show other locations e.g. drives
 	 * and network access points.
 	 * For example, the application may bring up a page showing persistent
 	 * volumes and discovered network addresses.
+	 * Since 3.20 the signal added the @open_flags parameter in order to be able
+	 * to specify whether the user choose to open the other locations in a different
+	 * tab or window. In this way it behaves like the open-location signal.
+	 *
+	 * Params:
+	 *     openFlags = a single value from #GtkPlacesOpenFlags specifying how it should be opened.
 	 *
 	 * Since: 3.18
 	 */
-	void addOnShowOtherLocations(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnShowOtherLocations(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "show-other-locations" !in connectedSignals )
 		{
@@ -863,11 +916,46 @@ public class PlacesSidebar : ScrolledWindow
 		}
 		onShowOtherLocationsListeners ~= dlg;
 	}
-	extern(C) static void callBackShowOtherLocations(GtkPlacesSidebar* placessidebarStruct, PlacesSidebar _placessidebar)
+	extern(C) static void callBackShowOtherLocations(GtkPlacesSidebar* placessidebarStruct, GtkPlacesOpenFlags openFlags, PlacesSidebar _placessidebar)
 	{
-		foreach ( void delegate(PlacesSidebar) dlg; _placessidebar.onShowOtherLocationsListeners )
+		foreach ( void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg; _placessidebar.onShowOtherLocationsListeners )
 		{
-			dlg(_placessidebar);
+			dlg(openFlags, _placessidebar);
+		}
+	}
+
+	void delegate(MountOperation, PlacesSidebar)[] onUnmountListeners;
+	/**
+	 * The places sidebar emits this signal when it starts a new operation
+	 * because the user for example ejected some drive or unmounted a mount.
+	 * In this way the application using the #GtkPlacesSidebar can track the
+	 * progress of the operation and, for example, show a notification.
+	 *
+	 * Params:
+	 *     mountOperation = the #GMountOperation that is going to start.
+	 *
+	 * Since: 3.20
+	 */
+	void addOnUnmount(void delegate(MountOperation, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "unmount" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"unmount",
+				cast(GCallback)&callBackUnmount,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["unmount"] = 1;
+		}
+		onUnmountListeners ~= dlg;
+	}
+	extern(C) static void callBackUnmount(GtkPlacesSidebar* placessidebarStruct, GMountOperation* mountOperation, PlacesSidebar _placessidebar)
+	{
+		foreach ( void delegate(MountOperation, PlacesSidebar) dlg; _placessidebar.onUnmountListeners )
+		{
+			dlg(ObjectG.getDObject!(MountOperation)(mountOperation), _placessidebar);
 		}
 	}
 }

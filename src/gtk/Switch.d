@@ -44,6 +44,16 @@ public  import gtkc.gtktypes;
  * 
  * GtkSwitch can also handle situations where the underlying state changes with
  * a delay. See #GtkSwitch::state-set for details.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * switch
+ * ╰── slider
+ * ]|
+ * 
+ * GtkSwitch has two css nodes, the main node with the name switch and a subnode
+ * named slider. Neither of them is using any style classes.
  */
 public class Switch : Widget, ActionableIF, ActivatableIF
 {
@@ -203,7 +213,7 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	/**
 	 * The ::state-set signal on GtkSwitch is emitted to change the underlying
 	 * state. It is emitted when the user changes the switch position. The
-	 * default handler keeps the state in sync with the #GtkState:active
+	 * default handler keeps the state in sync with the #GtkSwitch:active
 	 * property.
 	 *
 	 * To implement delayed state change, applications can connect to this signal,

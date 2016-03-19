@@ -178,7 +178,7 @@ public class FileChooserButton : Box, FileChooserIF
 	 *
 	 * Since: 2.10
 	 */
-	public bool getFocusOnClick()
+	public override bool getFocusOnClick()
 	{
 		return gtk_file_chooser_button_get_focus_on_click(gtkFileChooserButton) != 0;
 	}
@@ -219,7 +219,7 @@ public class FileChooserButton : Box, FileChooserIF
 	 *
 	 * Since: 2.10
 	 */
-	public void setFocusOnClick(bool focusOnClick)
+	public override void setFocusOnClick(bool focusOnClick)
 	{
 		gtk_file_chooser_button_set_focus_on_click(gtkFileChooserButton, focusOnClick);
 	}

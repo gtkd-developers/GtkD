@@ -49,6 +49,29 @@ private import pango.PgTabArray;
  * [text widget conceptual overview][TextWidget]
  * which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * textview.view
+ * ├── border.top
+ * ├── border.left
+ * ├── text
+ * │   ╰── [selection]
+ * ├── border.right
+ * ├── border.bottom
+ * ╰── [window.popup]
+ * ]|
+ * 
+ * GtkTextView has a main css node with name textview and style class .view,
+ * and subnodes for each of the border windows, and the main text area,
+ * with names border and text, respectively. The border nodes each get
+ * one of the style classes .left, .right, .top or .bottom.
+ * 
+ * A node representing the selection will appear below the text node.
+ * 
+ * If a context menu is opened, the window node will appear as a subnode
+ * of the main node.
  */
 public class TextView : Container, ScrollableIF
 {
@@ -510,14 +533,18 @@ public class TextView : Container, ScrollableIF
 	 *     iter = a #GtkTextIter
 	 *     x = x position, in buffer coordinates
 	 *     y = y position, in buffer coordinates
+	 *
+	 * Return: %TRUE if the position is over text
 	 */
-	public void getIterAtLocation(out TextIter iter, int x, int y)
+	public bool getIterAtLocation(out TextIter iter, int x, int y)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
 		
-		gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y);
+		auto p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
 		
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
+		
+		return p;
 	}
 
 	/**
@@ -541,15 +568,19 @@ public class TextView : Container, ScrollableIF
 	 *     x = x position, in buffer coordinates
 	 *     y = y position, in buffer coordinates
 	 *
+	 * Return: %TRUE if the position is over text
+	 *
 	 * Since: 2.6
 	 */
-	public void getIterAtPosition(out TextIter iter, out int trailing, int x, int y)
+	public bool getIterAtPosition(out TextIter iter, out int trailing, int x, int y)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
 		
-		gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y);
+		auto p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
 		
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
+		
+		return p;
 	}
 
 	/**
@@ -696,8 +727,8 @@ public class TextView : Container, ScrollableIF
 	 * “standard” (8-space) tabs are used. Free the return value
 	 * with pango_tab_array_free().
 	 *
-	 * Return: copy of default tab array, or %NULL if “standard”
-	 *     tabs are used; must be freed with pango_tab_array_free().
+	 * Return: copy of default tab array, or %NULL if
+	 *     “standard" tabs are used; must be freed with pango_tab_array_free().
 	 */
 	public PgTabArray getTabs()
 	{
@@ -888,6 +919,22 @@ public class TextView : Container, ScrollableIF
 	public bool placeCursorOnscreen()
 	{
 		return gtk_text_view_place_cursor_onscreen(gtkTextView) != 0;
+	}
+
+	/**
+	 * Ensures that the cursor is shown (i.e. not in an 'off' blink
+	 * interval) and resets the time that it will stay blinking (or
+	 * visible, in case blinking is disabled).
+	 *
+	 * This function should be called in response to user input
+	 * (e.g. from derived classes that override the textview's
+	 * #GtkWidget::key-press-event handler).
+	 *
+	 * Since: 3.20
+	 */
+	public void resetCursorBlink()
+	{
+		gtk_text_view_reset_cursor_blink(gtkTextView);
 	}
 
 	/**

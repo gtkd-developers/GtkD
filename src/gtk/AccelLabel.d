@@ -39,13 +39,13 @@ public  import gtkc.gtktypes;
  * accelerator key on the right of the label text, e.g. “Ctl+S”.
  * It is commonly used in menus to show the keyboard short-cuts for commands.
  * 
- * The accelerator key to display is not set explicitly.
- * Instead, the #GtkAccelLabel displays the accelerators which have been added to
- * a particular widget. This widget is set by calling
- * gtk_accel_label_set_accel_widget().
+ * The accelerator key to display is typically not set explicitly (although it
+ * can be, with gtk_accel_label_set_accel()). Instead, the #GtkAccelLabel displays
+ * the accelerators which have been added to a particular widget. This widget is
+ * set by calling gtk_accel_label_set_accel_widget().
  * 
- * For example, a #GtkMenuItem widget may have an accelerator added to emit the
- * “activate” signal when the “Ctl+S” key combination is pressed.
+ * For example, a #GtkMenuItem widget may have an accelerator added to emit
+ * the “activate” signal when the “Ctl+S” key combination is pressed.
  * A #GtkAccelLabel is created and added to the #GtkMenuItem, and
  * gtk_accel_label_set_accel_widget() is called with the #GtkMenuItem as the
  * second argument. The #GtkAccelLabel will now display “Ctl+S” after its label.
@@ -83,6 +83,16 @@ public  import gtkc.gtktypes;
  * gtk_widget_add_accelerator (save_item, "activate", accel_group,
  * GDK_KEY_s, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * label
+ * ╰── accelerator
+ * ]|
+ * 
+ * Like #GtkLabel, GtkAccelLabel has a main CSS node with the name label.
+ * It adds a subnode with name accelerator.
  */
 public class AccelLabel : Label
 {

@@ -991,10 +991,10 @@ public class Value
 	}
 
 	/**
-	 * Clears the current value in @value and "unsets" the type,
-	 * this releases all resources associated with this GValue.
-	 * An unset value is the same as an uninitialized (zero-filled)
-	 * #GValue structure.
+	 * Clears the current value in @value (if any) and "unsets" the type,
+	 * this releases all resources associated with this GValue. An unset
+	 * value is the same as an uninitialized (zero-filled) #GValue
+	 * structure.
 	 */
 	public void unset()
 	{

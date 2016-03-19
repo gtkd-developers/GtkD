@@ -642,9 +642,9 @@ __gshared extern(C)
 
 	void* function(GType paramType, const(char)* name, const(char)* nick, const(char)* blurb, GParamFlags flags) c_g_param_spec_internal;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_blurb;
-	GValue* function(GParamSpec* param) c_g_param_spec_get_default_value;
+	GValue* function(GParamSpec* pspec) c_g_param_spec_get_default_value;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_name;
-	GQuark function(GParamSpec* param) c_g_param_spec_get_name_quark;
+	GQuark function(GParamSpec* pspec) c_g_param_spec_get_name_quark;
 	const(char)* function(GParamSpec* pspec) c_g_param_spec_get_nick;
 	void* function(GParamSpec* pspec, GQuark quark) c_g_param_spec_get_qdata;
 	GParamSpec* function(GParamSpec* pspec) c_g_param_spec_get_redirect_target;

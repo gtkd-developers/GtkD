@@ -39,6 +39,7 @@ public  import gsvc.gsvtypes;
 private import gtk.TextBuffer;
 private import gtk.TextIter;
 private import gtk.TextMark;
+private import gtk.TextTag;
 private import gtk.TextTagTable;
 public  import gtkc.gdktypes;
 
@@ -638,7 +639,9 @@ public class SourceBuffer : TextBuffer
 	 * track.  If the number of user actions exceeds the limit set by this
 	 * function, older actions will be discarded.
 	 *
-	 * If @max_undo_levels is -1, no limit is set.
+	 * If @max_undo_levels is -1, the undo/redo is unlimited.
+	 *
+	 * If @max_undo_levels is 0, the undo/redo is disabled.
 	 *
 	 * Params:
 	 *     maxUndoLevels = the desired maximum number of undo levels.
@@ -704,13 +707,18 @@ public class SourceBuffer : TextBuffer
 
 	void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer)[] onBracketMatchedListeners;
 	/**
-	 * Sets @iter to a valid iterator pointing to the matching bracket
-	 * if @state is #GTK_SOURCE_BRACKET_MATCH_FOUND. Otherwise @iter is
+	 * @iter is set to a valid iterator pointing to the matching bracket
+	 * if @state is %GTK_SOURCE_BRACKET_MATCH_FOUND. Otherwise @iter is
 	 * meaningless.
 	 *
+	 * The signal is emitted only when the @state changes, typically when
+	 * the cursor moves.
+	 *
+	 * A use-case for this signal is to show messages in a #GtkStatusbar.
+	 *
 	 * Params:
-	 *     iter = iterator to initialize.
-	 *     state = state of bracket matching
+	 *     iter = if found, the location of the matching bracket.
+	 *     state = state of bracket matching.
 	 *
 	 * Since: 2.12
 	 */

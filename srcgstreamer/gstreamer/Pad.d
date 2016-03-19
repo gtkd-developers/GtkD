@@ -303,6 +303,13 @@ public class Pad : ObjectGst
 	 * Be notified of different states of pads. The provided callback is called for
 	 * every state that matches @mask.
 	 *
+	 * Probes are called in groups: First GST_PAD_PROBE_TYPE_BLOCK probes are
+	 * called, then others, then finally GST_PAD_PROBE_TYPE_IDLE. The only
+	 * exception here are GST_PAD_PROBE_TYPE_IDLE probes that are called
+	 * immediately if the pad is already idle while calling gst_pad_add_probe().
+	 * In each of the groups, probes are called in the order in which they were
+	 * added.
+	 *
 	 * Params:
 	 *     mask = the probe mask
 	 *     callback = #GstPadProbeCallback that will be called with notifications of
@@ -1493,6 +1500,21 @@ public class Pad : ObjectGst
 	public void setElementPrivate(void* priv)
 	{
 		gst_pad_set_element_private(gstPad, priv);
+	}
+
+	/**
+	 * Sets the given event handler for the pad.
+	 *
+	 * Params:
+	 *     event = the #GstPadEventFullFunction to set.
+	 *     userData = user_data passed to @notify
+	 *     notify = notify called when @event will not be used anymore.
+	 *
+	 * Since: 1.8
+	 */
+	public void setEventFullFunctionFull(GstPadEventFullFunction event, void* userData, GDestroyNotify notify)
+	{
+		gst_pad_set_event_full_function_full(gstPad, event, userData, notify);
 	}
 
 	/**

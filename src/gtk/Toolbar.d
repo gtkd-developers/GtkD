@@ -54,6 +54,10 @@ public  import gtkc.gtktypes;
  * 
  * Creating a context menu for the toolbar can be done by connecting to
  * the #GtkToolbar::popup-context-menu signal.
+ * 
+ * # CSS nodes
+ * 
+ * GtkToolbar has a single CSS node with name toolbar.
  */
 public class Toolbar : Container, OrientableIF, ToolShellIF
 {

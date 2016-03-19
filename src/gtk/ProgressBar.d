@@ -57,6 +57,23 @@ public  import gtkc.gtktypes;
  * of the #GtkProgressBar. Functions are provided to control the orientation
  * of the bar, optional text can be displayed along with the bar, and the
  * step size used in activity mode can be set.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * progressbar[.osd]
+ * ╰── trough
+ * ├── [text]
+ * ╰── progress[.pulse]
+ * ]|
+ * 
+ * GtkProgressBar has a main CSS node with name progressbar and subnodes with
+ * names text, trough and progress. The text subnode is only present if text
+ * is shown. The progress subnode has the style class .pulse when in activity
+ * mode. It gets the style classes .left, .right, .top or .bottom added when
+ * the progress 'touches' the corresponding end of the GtkProgressBar.
+ * The .osd class on the progressbar node is for use in overlays like the one
+ * epiphany has for page loading progress.
  */
 public class ProgressBar : Widget, OrientableIF
 {

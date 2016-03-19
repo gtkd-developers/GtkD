@@ -87,6 +87,17 @@ public  import gtkc.gtktypes;
  * </item>
  * </section>
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * GtkPopover has a single css node called popover. It always gets the
+ * .background style class and it gets the .menu style class if it is
+ * menu-like (e.g. #GtkPopoverMenu or created using gtk_popover_new_from_model().
+ * 
+ * Particular uses of GtkPopover, such as touch selection popups
+ * or magnifiers in #GtkEntry or #GtkTextView get style classes
+ * like .touch-selection or .magnifier to differentiate from
+ * plain popovers.
  */
 public class Popover : Bin
 {
@@ -224,10 +235,24 @@ public class Popover : Bin
 	}
 
 	/**
+	 * Returns the constraint for placing this popover.
+	 * See gtk_popover_set_constrain_to().
+	 *
+	 * Return: the constraint for placing this popover.
+	 *
+	 * Since: 3.20
+	 */
+	public GtkPopoverConstraint getConstrainTo()
+	{
+		return gtk_popover_get_constrain_to(gtkPopover);
+	}
+
+	/**
 	 * Gets the widget that should be set as the default while
 	 * the popover is shown.
 	 *
-	 * Return: the default widget, or %NULL if there is none
+	 * Return: the default widget,
+	 *     or %NULL if there is none
 	 *
 	 * Since: 3.18
 	 */
@@ -312,6 +337,22 @@ public class Popover : Bin
 	public bool getTransitionsEnabled()
 	{
 		return gtk_popover_get_transitions_enabled(gtkPopover) != 0;
+	}
+
+	/**
+	 * Sets a constraint for positioning this popover.
+	 *
+	 * Note that not all platforms support placing popovers freely,
+	 * and may already impose constraints.
+	 *
+	 * Params:
+	 *     constraint = the new constraint
+	 *
+	 * Since: 3.20
+	 */
+	public void setConstrainTo(GtkPopoverConstraint constraint)
+	{
+		gtk_popover_set_constrain_to(gtkPopover, constraint);
 	}
 
 	/**

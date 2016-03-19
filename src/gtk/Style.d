@@ -311,8 +311,8 @@ public class Style : ObjectG
 	 *     source = the #GtkIconSource specifying the icon to render
 	 *     direction = a text direction
 	 *     state = a state
-	 *     size = the size to render the icon at. A size of
-	 *         (GtkIconSize)-1 means render at the size of the source and
+	 *     size = the size to render the icon at (#GtkIconSize). A size of
+	 *         `(GtkIconSize)-1` means render at the size of the source and
 	 *         don’t scale.
 	 *     widget = the widget
 	 *     detail = a style detail

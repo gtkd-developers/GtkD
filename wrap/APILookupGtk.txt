@@ -5526,6 +5526,7 @@ move: paint_vline Style
 move: render_activity StyleContext
 move: render_arrow StyleContext
 move: render_background StyleContext
+move: render_background_get_clip StyleContext
 move: render_check StyleContext
 move: render_expander StyleContext
 move: render_extension StyleContext

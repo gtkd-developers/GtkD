@@ -107,7 +107,7 @@ public struct Base64
 		
 		auto p = g_base64_decode(Str.toStringz(text), &outLen);
 		
-		return p[0 .. outLen];
+		return cast(char[])p[0 .. outLen];
 	}
 
 	/**

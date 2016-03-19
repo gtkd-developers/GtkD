@@ -96,9 +96,11 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	 * #GtkSourceGutterRendererText.
 	 *
 	 * Params:
-	 *     text = the text to measure
-	 *     width = The width of the text in pixels
-	 *     height = The height of the text in pixels
+	 *     text = the text to measure.
+	 *     width = location to store the width of the text in pixels,
+	 *         or %NULL.
+	 *     height = location to store the height of the text in
+	 *         pixels, or %NULL.
 	 */
 	public void measure(string text, out int width, out int height)
 	{
@@ -110,9 +112,11 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	 * #GtkSourceGutterRendererText.
 	 *
 	 * Params:
-	 *     markup = the pango markup to measure
-	 *     width = The width of the text in pixels
-	 *     height = The height of the text in pixels
+	 *     markup = the pango markup to measure.
+	 *     width = location to store the width of the text in pixels,
+	 *         or %NULL.
+	 *     height = location to store the height of the text in
+	 *         pixels, or %NULL.
 	 */
 	public void measureMarkup(string markup, out int width, out int height)
 	{

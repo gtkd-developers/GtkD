@@ -28,6 +28,7 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.PadTemplate;
+private import gstreamer.StaticPadTemplate;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
@@ -104,6 +105,22 @@ public class ElementClass
 	public void addStaticMetadata(string key, string value)
 	{
 		gst_element_class_add_static_metadata(gstElementClass, Str.toStringz(key), Str.toStringz(value));
+	}
+
+	/**
+	 * Adds a pad template to an element class based on the static pad template
+	 * @templ. This is mainly used in the _class_init functions of element
+	 * implementations. If a pad template with the same name already exists,
+	 * the old one is replaced by the new one.
+	 *
+	 * Params:
+	 *     staticTempl = #GstStaticPadTemplate to add as pad template to the element class.
+	 *
+	 * Since: 1.8
+	 */
+	public void addStaticPadTemplate(StaticPadTemplate staticTempl)
+	{
+		gst_element_class_add_static_pad_template(gstElementClass, (staticTempl is null) ? null : staticTempl.getStaticPadTemplateStruct());
 	}
 
 	/**

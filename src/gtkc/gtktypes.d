@@ -759,6 +759,7 @@ public enum GtkDebugFlag
 	INTERACTIVE = 131072,
 	TOUCHSCREEN = 262144,
 	ACTIONS = 524288,
+	RESIZE = 1048576,
 }
 alias GtkDebugFlag DebugFlag;
 
@@ -1180,7 +1181,8 @@ public enum GtkIconLookupFlags
 	USE_BUILTIN = 4,
 	/**
 	 * Try to shorten icon name at '-'
-	 * characters before looking at inherited themes. For more general
+	 * characters before looking at inherited themes. This flag is only
+	 * supported in functions that take a single icon name. For more general
 	 * fallback, see gtk_icon_theme_choose_icon(). Since 2.12.
 	 */
 	GENERIC_FALLBACK = 8,
@@ -2024,6 +2026,27 @@ public enum GtkPolicyType
 	EXTERNAL = 3,
 }
 alias GtkPolicyType PolicyType;
+
+/**
+ * Describes constraints to positioning of popovers. More values
+ * may be added to this enumeration in the future.
+ *
+ * Since: 3.20
+ */
+public enum GtkPopoverConstraint
+{
+	/**
+	 * Don't constrain the popover position
+	 * beyond what is imposed by the implementation
+	 */
+	NONE = 0,
+	/**
+	 * Constrain the popover to the boundaries
+	 * of the window that it is attached to
+	 */
+	WINDOW = 1,
+}
+alias GtkPopoverConstraint PopoverConstraint;
 
 /**
  * Describes which edge of a widget a certain feature is positioned at, e.g. the
@@ -2973,6 +2996,51 @@ public enum GtkShadowType
 alias GtkShadowType ShadowType;
 
 /**
+ * GtkShortcutType specifies the kind of shortcut that is being described.
+ * More values may be added to this enumeration over time.
+ *
+ * Since: 3.20
+ */
+public enum GtkShortcutType
+{
+	/**
+	 * The shortcut is a keyboard accelerator. The #GtkShortcutsShortcut:accelerator
+	 * property will be used.
+	 */
+	ACCELERATOR = 0,
+	/**
+	 * The shortcut is a pinch gesture. GTK+ provides and icon and subtitle.
+	 */
+	GESTURE_PINCH = 1,
+	/**
+	 * The shortcut is a stretch gesture. GTK+ provides and icon and subtitle.
+	 */
+	GESTURE_STRETCH = 2,
+	/**
+	 * The shortcut is a clockwise rotation gesture. GTK+ provides and icon and subtitle.
+	 */
+	GESTURE_ROTATE_CLOCKWISE = 3,
+	/**
+	 * The shortcut is a counterclockwise rotation gesture. GTK+ provides and icon and subtitle.
+	 */
+	GESTURE_ROTATE_COUNTERCLOCKWISE = 4,
+	/**
+	 * The shortcut is a two-finger swipe gesture. GTK+ provides and icon and subtitle.
+	 */
+	GESTURE_TWO_FINGER_SWIPE_LEFT = 5,
+	/**
+	 * The shortcut is a two-finger swipe gesture. GTK+ provides and icon and subtitle.
+	 */
+	GESTURE_TWO_FINGER_SWIPE_RIGHT = 6,
+	/**
+	 * The shortcut is a gesture. The #GtkShortcutsShortcut:icon property will be
+	 * used.
+	 */
+	GESTURE = 7,
+}
+alias GtkShortcutType ShortcutType;
+
+/**
  * The mode of the size group determines the directions in which the size
  * group affects the requested sizes of its component widgets.
  */
@@ -3242,6 +3310,10 @@ public enum GtkStateFlags
 	 * Widget is checked. Since 3.14
 	 */
 	CHECKED = 2048,
+	/**
+	 * Widget is highlighted as a drop target for DND. Since 3.20
+	 */
+	DROP_ACTIVE = 4096,
 }
 alias GtkStateFlags StateFlags;
 
@@ -3290,6 +3362,26 @@ public enum GtkStateType
 	FOCUSED = 6,
 }
 alias GtkStateType StateType;
+
+/**
+ * Flags that modify the behavior of gtk_style_context_to_string().
+ * New values may be added to this enumeration.
+ */
+public enum GtkStyleContextPrintFlags
+{
+	NONE = 0,
+	/**
+	 * Print the entire tree of
+	 * CSS nodes starting at the style context's node
+	 */
+	RECURSE = 1,
+	/**
+	 * Show the values of the
+	 * CSS properties for each node
+	 */
+	SHOW_STYLE = 2,
+}
+alias GtkStyleContextPrintFlags StyleContextPrintFlags;
 
 /**
  * The #GtkTargetFlags enumeration is used to specify
@@ -3420,13 +3512,21 @@ alias GtkTextSearchFlags TextSearchFlags;
 public enum GtkTextViewLayer
 {
 	/**
-	 * The layer rendered below the text (but above the background).
+	 * Old deprecated layer, use %GTK_TEXT_VIEW_LAYER_BELOW_TEXT instead
 	 */
 	BELOW = 0,
 	/**
-	 * The layer rendered above the text.
+	 * Old deprecated layer, use %GTK_TEXT_VIEW_LAYER_ABOVE_TEXT instead
 	 */
 	ABOVE = 1,
+	/**
+	 * The layer rendered below the text (but above the background).  Since: 3.20
+	 */
+	BELOW_TEXT = 2,
+	/**
+	 * The layer rendered above the text.  Since: 3.20
+	 */
+	ABOVE_TEXT = 3,
 }
 alias GtkTextViewLayer TextViewLayer;
 
@@ -6057,6 +6157,13 @@ struct GtkFileChooserDialogClass
 
 struct GtkFileChooserDialogPrivate;
 
+struct GtkFileChooserNative;
+
+struct GtkFileChooserNativeClass
+{
+	GtkNativeDialogClass parentClass;
+}
+
 struct GtkFileChooserWidget
 {
 	GtkBox parentInstance;
@@ -7604,6 +7711,30 @@ struct GtkMountOperationClass
 
 struct GtkMountOperationPrivate;
 
+struct GtkNativeDialog
+{
+	GObject parentInstance;
+}
+
+struct GtkNativeDialogClass
+{
+	GObjectClass parentClass;
+	/** */
+	extern(C) void function(GtkNativeDialog* self, int responseId) response;
+	/** */
+	extern(C) void function(GtkNativeDialog* self) show;
+	/** */
+	extern(C) void function(GtkNativeDialog* self) hide;
+	/** */
+	extern(C) void function() GtkReserved1;
+	/** */
+	extern(C) void function() GtkReserved2;
+	/** */
+	extern(C) void function() GtkReserved3;
+	/** */
+	extern(C) void function() GtkReserved4;
+}
+
 struct GtkNotebook
 {
 	GtkContainer container;
@@ -8936,6 +9067,32 @@ struct GtkSettingsValue
 	GValue value;
 }
 
+struct GtkShortcutsGroup;
+
+struct GtkShortcutsGroupClass;
+
+struct GtkShortcutsSection;
+
+struct GtkShortcutsSectionClass;
+
+struct GtkShortcutsShortcut;
+
+struct GtkShortcutsShortcutClass;
+
+struct GtkShortcutsWindow
+{
+	GtkWindow window;
+}
+
+struct GtkShortcutsWindowClass
+{
+	GtkWindowClass parentClass;
+	/** */
+	extern(C) void function(GtkShortcutsWindow* self) close;
+	/** */
+	extern(C) void function(GtkShortcutsWindow* self) search;
+}
+
 struct GtkSizeGroup
 {
 	GObject parentInstance;
@@ -9295,8 +9452,8 @@ struct GtkStyleClass
 	 *     source = the #GtkIconSource specifying the icon to render
 	 *     direction = a text direction
 	 *     state = a state
-	 *     size = the size to render the icon at. A size of
-	 *         (GtkIconSize)-1 means render at the size of the source and
+	 *     size = the size to render the icon at (#GtkIconSize). A size of
+	 *         `(GtkIconSize)-1` means render at the size of the source and
 	 *         don’t scale.
 	 *     widget = the widget
 	 *     detail = a style detail
@@ -11314,8 +11471,8 @@ public alias extern(C) void function(GtkBuilder* builder, GObject* object, const
  *     day = the day of @month for which details are needed.
  *     userData = the data passed with gtk_calendar_set_detail_func().
  *
- * Return: Newly allocated string with Pango markup with details
- *     for the specified day, or %NULL.
+ * Return: Newly allocated string with Pango markup
+ *     with details for the specified day or %NULL.
  *
  * Since: 2.14
  */
@@ -11838,8 +11995,8 @@ public alias extern(C) int function(GtkTextBuffer* registerBuffer, GtkTextBuffer
  *     length = Return location for the length of the serialized data
  *     userData = user data that was specified when registering the format
  *
- * Return: a newly-allocated array of guint8 which contains the serialized
- *     data, or %NULL if an error occurred
+ * Return: a newly-allocated array of guint8 which contains
+ *     the serialized data, or %NULL if an error occurred
  */
 public alias extern(C) ubyte* function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* start, GtkTextIter* end, size_t* length, void* userData) GtkTextBufferSerializeFunc;
 

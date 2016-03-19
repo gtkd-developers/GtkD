@@ -50,6 +50,10 @@ noExternal: true
 struct: NavigationInterface
 noExternal: true
 
+struct: VideoAffineTransformationMeta
+noCode: true
+noExternal: true
+
 struct: VideoAlignment
 noCode: true
 noExternal: true
@@ -248,6 +252,7 @@ noEnum: VideoTileMode
 noEnum: VideoTileType
 noEnum: VideoTransferFunction
 
+noCallback: VideoAffineTransformationGetMatrix
 noCallback: VideoConvertSampleCallback
 noCallback: VideoFormatPack
 noCallback: VideoFormatUnpack

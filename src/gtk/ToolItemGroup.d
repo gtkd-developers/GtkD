@@ -40,6 +40,10 @@ public  import gtkc.gtktypes;
  * A #GtkToolItemGroup is used together with #GtkToolPalette to add
  * #GtkToolItems to a palette like container with different
  * categories and drag and drop support.
+ * 
+ * # CSS nodes
+ * 
+ * GtkToolItemGroup has a single CSS node named toolitemgroup.
  */
 public class ToolItemGroup : Container, ToolShellIF
 {

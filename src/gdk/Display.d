@@ -29,6 +29,7 @@ private import gdk.Device;
 private import gdk.DeviceManager;
 private import gdk.Event;
 private import gdk.Screen;
+private import gdk.Seat;
 private import gdk.Window;
 private import glib.ListG;
 private import glib.Str;
@@ -294,7 +295,28 @@ public class Display : ObjectG
 	}
 
 	/**
+	 * Returns the default #GdkSeat for this display.
+	 *
+	 * Return: the default seat.
+	 *
+	 * Since: 3.20
+	 */
+	public Seat getDefaultSeat()
+	{
+		auto p = gdk_display_get_default_seat(gdkDisplay);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+	}
+
+	/**
 	 * Returns the #GdkDeviceManager associated to @display.
+	 *
+	 * Deprecated: Use gdk_display_get_default_seat() and #GdkSeat operations.
 	 *
 	 * Return: A #GdkDeviceManager, or
 	 *     %NULL. This memory is owned by GDK and must not be freed
@@ -404,6 +426,8 @@ public class Display : ObjectG
 	/**
 	 * Returns a screen object for one of the screens of the display.
 	 *
+	 * Deprecated: There is only one screen; use gdk_display_get_default_screen() to get it.
+	 *
 	 * Params:
 	 *     screenNum = the screen number
 	 *
@@ -508,6 +532,26 @@ public class Display : ObjectG
 	public ListG listDevices()
 	{
 		auto p = gdk_display_list_devices(gdkDisplay);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new ListG(cast(GList*) p);
+	}
+
+	/**
+	 * Returns the list of seats known to @display.
+	 *
+	 * Return: the
+	 *     list of seats known to the #GdkDisplay
+	 *
+	 * Since: 3.20
+	 */
+	public ListG listSeats()
+	{
+		auto p = gdk_display_list_seats(gdkDisplay);
 		
 		if(p is null)
 		{
@@ -884,6 +928,72 @@ public class Display : ObjectG
 		foreach ( void delegate(Display) dlg; _display.onOpenedListeners )
 		{
 			dlg(_display);
+		}
+	}
+
+	void delegate(Seat, Display)[] onSeatAddedListeners;
+	/**
+	 * The ::seat-added signal is emitted whenever a new seat is made
+	 * known to the windowing system.
+	 *
+	 * Params:
+	 *     seat = the seat that was just added
+	 *
+	 * Since: 3.20
+	 */
+	void addOnSeatAdded(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "seat-added" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"seat-added",
+				cast(GCallback)&callBackSeatAdded,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["seat-added"] = 1;
+		}
+		onSeatAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackSeatAdded(GdkDisplay* displayStruct, GdkSeat* seat, Display _display)
+	{
+		foreach ( void delegate(Seat, Display) dlg; _display.onSeatAddedListeners )
+		{
+			dlg(ObjectG.getDObject!(Seat)(seat), _display);
+		}
+	}
+
+	void delegate(Seat, Display)[] onSeatRemovedListeners;
+	/**
+	 * The ::seat-removed signal is emitted whenever a seat is removed
+	 * by the windowing system.
+	 *
+	 * Params:
+	 *     seat = the seat that was just removed
+	 *
+	 * Since: 3.20
+	 */
+	void addOnSeatRemoved(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "seat-removed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"seat-removed",
+				cast(GCallback)&callBackSeatRemoved,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["seat-removed"] = 1;
+		}
+		onSeatRemovedListeners ~= dlg;
+	}
+	extern(C) static void callBackSeatRemoved(GdkDisplay* displayStruct, GdkSeat* seat, Display _display)
+	{
+		foreach ( void delegate(Seat, Display) dlg; _display.onSeatRemovedListeners )
+		{
+			dlg(ObjectG.getDObject!(Seat)(seat), _display);
 		}
 	}
 }

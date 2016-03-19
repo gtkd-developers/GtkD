@@ -192,6 +192,8 @@ public class DeviceManager : ObjectG
 	 * You should use this function seldomly, only in code that isn’t triggered by a #GdkEvent
 	 * and there aren’t other means to get a meaningful #GdkDevice to operate on.
 	 *
+	 * Deprecated: Use gdk_seat_get_pointer() instead.
+	 *
 	 * Return: The client pointer. This memory is
 	 *     owned by GDK and must not be freed or unreferenced.
 	 *
@@ -233,6 +235,9 @@ public class DeviceManager : ObjectG
 	/**
 	 * Returns the list of devices of type @type currently attached to
 	 * @device_manager.
+	 *
+	 * Deprecated: , use gdk_seat_get_pointer(), gdk_seat_get_keyboard()
+	 * and gdk_seat_get_slaves() instead.
 	 *
 	 * Params:
 	 *     type = device type to get.

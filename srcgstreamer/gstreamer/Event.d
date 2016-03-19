@@ -63,7 +63,7 @@ public  import gstreamerc.gstreamertypes;
  * construct and use seek events.
  * To do that gst_event_new_seek() is used to create a seek event. It takes
  * the needed parameters to specify seeking time and mode.
- * |[
+ * |[<!-- language="C" -->
  * GstEvent *event;
  * gboolean result;
  * ...
@@ -742,7 +742,10 @@ public class Event
 	 * stream is split into (potentially) multiple new streams, e.g. in a demuxer,
 	 * but not for every single element in the pipeline.
 	 * gst_pad_create_stream_id() or gst_pad_create_stream_id_printf() can be
-	 * used to create a stream-id.
+	 * used to create a stream-id.  There are no particular semantics for the
+	 * stream-id, though it should be deterministic (to support stream matching)
+	 * and it might be used to order streams (besides any information conveyed by
+	 * stream flags).
 	 *
 	 * Params:
 	 *     streamId = Identifier for this stream

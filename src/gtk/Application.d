@@ -69,7 +69,7 @@ public  import gtkc.gtktypes;
  * ## Automatic resources ## {#automatic-resources}
  * 
  * #GtkApplication will automatically load menus from the #GtkBuilder
- * file located at "gtk/menus.ui", relative to the application's
+ * resource located at "gtk/menus.ui", relative to the application's
  * resource base path (see g_application_set_resource_base_path()).  The
  * menu with the ID "app-menu" is taken as the application's app menu
  * and the menu with the ID "menubar" is taken as the application's
@@ -77,9 +77,12 @@ public  import gtkc.gtktypes;
  * and accessed via gtk_application_get_menu_by_id() which allows for
  * dynamic population of a part of the menu structure.
  * 
- * If the files "gtk/menus-appmenu.ui" or "gtk/menus-traditional.ui" are
- * present then these files will be used in preference, depending on the
- * value of gtk_application_prefers_app_menu().
+ * If the resources "gtk/menus-appmenu.ui" or "gtk/menus-traditional.ui" are
+ * present then these files will be used in preference, depending on the value
+ * of gtk_application_prefers_app_menu(). If the resource "gtk/menus-common.ui"
+ * is present it will be loaded as well. This is useful for storing items that
+ * are referenced from both "gtk/menus-appmenu.ui" and
+ * "gtk/menus-traditional.ui".
  * 
  * It is also possible to provide the menus manually using
  * gtk_application_set_app_menu() and gtk_application_set_menubar().
@@ -89,6 +92,13 @@ public  import gtkc.gtktypes;
  * path.  This allows your application to easily store its icons as
  * resources.  See gtk_icon_theme_add_resource_path() for more
  * information.
+ * 
+ * If there is a resource located at "gtk/help-overlay.ui" which
+ * defines a #GtkShortcutsWindow with ID "help_overlay" then GtkApplication
+ * associates an instance of this shortcuts window with each
+ * #GtkApplicationWindow and sets up keyboard accelerators (Control-F1
+ * and Control-?) to open it. To create an menu item that displays the
+ * shortcuts window associate the item with the action win.show-help-overlay.
  * 
  * ## A simple application ## {#gtkapplication}
  * 

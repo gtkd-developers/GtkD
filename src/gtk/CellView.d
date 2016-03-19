@@ -58,6 +58,10 @@ public  import gtkc.gtktypes;
  * listed top-to-bottom and thus all share the same width but may have separate
  * individual heights (left-to-right menus should be allocated vertically since
  * they all share the same height but may have variable widths).
+ * 
+ * # CSS nodes
+ * 
+ * GtkCellView has a single CSS node with name cellview.
  */
 public class CellView : Widget, CellLayoutIF, OrientableIF
 {

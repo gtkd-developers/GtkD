@@ -644,6 +644,15 @@ shared static this()
 	Linker.link(g_data_output_stream_put_uint64, "g_data_output_stream_put_uint64", LIBRARY.GIO);
 	Linker.link(g_data_output_stream_set_byte_order, "g_data_output_stream_set_byte_order", LIBRARY.GIO);
 
+	// gio.DatagramBased
+
+	Linker.link(g_datagram_based_get_type, "g_datagram_based_get_type", LIBRARY.GIO);
+	Linker.link(g_datagram_based_condition_check, "g_datagram_based_condition_check", LIBRARY.GIO);
+	Linker.link(g_datagram_based_condition_wait, "g_datagram_based_condition_wait", LIBRARY.GIO);
+	Linker.link(g_datagram_based_create_source, "g_datagram_based_create_source", LIBRARY.GIO);
+	Linker.link(g_datagram_based_receive_messages, "g_datagram_based_receive_messages", LIBRARY.GIO);
+	Linker.link(g_datagram_based_send_messages, "g_datagram_based_send_messages", LIBRARY.GIO);
+
 	// gio.DesktopAppInfo
 
 	Linker.link(g_desktop_app_info_get_type, "g_desktop_app_info_get_type", LIBRARY.GIO);
@@ -704,6 +713,47 @@ shared static this()
 	Linker.link(g_drive_start_finish, "g_drive_start_finish", LIBRARY.GIO);
 	Linker.link(g_drive_stop, "g_drive_stop", LIBRARY.GIO);
 	Linker.link(g_drive_stop_finish, "g_drive_stop_finish", LIBRARY.GIO);
+
+	// gio.DtlsClientConnection
+
+	Linker.link(g_dtls_client_connection_get_type, "g_dtls_client_connection_get_type", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_new, "g_dtls_client_connection_new", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_get_accepted_cas, "g_dtls_client_connection_get_accepted_cas", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_get_server_identity, "g_dtls_client_connection_get_server_identity", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_get_validation_flags, "g_dtls_client_connection_get_validation_flags", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_set_server_identity, "g_dtls_client_connection_set_server_identity", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_set_validation_flags, "g_dtls_client_connection_set_validation_flags", LIBRARY.GIO);
+
+	// gio.DtlsConnection
+
+	Linker.link(g_dtls_connection_get_type, "g_dtls_connection_get_type", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_close, "g_dtls_connection_close", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_close_async, "g_dtls_connection_close_async", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_close_finish, "g_dtls_connection_close_finish", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_emit_accept_certificate, "g_dtls_connection_emit_accept_certificate", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_certificate, "g_dtls_connection_get_certificate", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_database, "g_dtls_connection_get_database", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_interaction, "g_dtls_connection_get_interaction", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_peer_certificate, "g_dtls_connection_get_peer_certificate", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_peer_certificate_errors, "g_dtls_connection_get_peer_certificate_errors", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_rehandshake_mode, "g_dtls_connection_get_rehandshake_mode", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_require_close_notify, "g_dtls_connection_get_require_close_notify", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_handshake, "g_dtls_connection_handshake", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_handshake_async, "g_dtls_connection_handshake_async", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_handshake_finish, "g_dtls_connection_handshake_finish", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_set_certificate, "g_dtls_connection_set_certificate", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_set_database, "g_dtls_connection_set_database", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_set_interaction, "g_dtls_connection_set_interaction", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_set_rehandshake_mode, "g_dtls_connection_set_rehandshake_mode", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_set_require_close_notify, "g_dtls_connection_set_require_close_notify", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_shutdown, "g_dtls_connection_shutdown", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_shutdown_async, "g_dtls_connection_shutdown_async", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_shutdown_finish, "g_dtls_connection_shutdown_finish", LIBRARY.GIO);
+
+	// gio.DtlsServerConnection
+
+	Linker.link(g_dtls_server_connection_get_type, "g_dtls_server_connection_get_type", LIBRARY.GIO);
+	Linker.link(g_dtls_server_connection_new, "g_dtls_server_connection_new", LIBRARY.GIO);
 
 	// gio.Emblem
 
@@ -1723,6 +1773,7 @@ shared static this()
 	Linker.link(g_socket_receive, "g_socket_receive", LIBRARY.GIO);
 	Linker.link(g_socket_receive_from, "g_socket_receive_from", LIBRARY.GIO);
 	Linker.link(g_socket_receive_message, "g_socket_receive_message", LIBRARY.GIO);
+	Linker.link(g_socket_receive_messages, "g_socket_receive_messages", LIBRARY.GIO);
 	Linker.link(g_socket_receive_with_blocking, "g_socket_receive_with_blocking", LIBRARY.GIO);
 	Linker.link(g_socket_send, "g_socket_send", LIBRARY.GIO);
 	Linker.link(g_socket_send_message, "g_socket_send_message", LIBRARY.GIO);
@@ -1797,6 +1848,7 @@ shared static this()
 	Linker.link(g_socket_connectable_get_type, "g_socket_connectable_get_type", LIBRARY.GIO);
 	Linker.link(g_socket_connectable_enumerate, "g_socket_connectable_enumerate", LIBRARY.GIO);
 	Linker.link(g_socket_connectable_proxy_enumerate, "g_socket_connectable_proxy_enumerate", LIBRARY.GIO);
+	Linker.link(g_socket_connectable_to_string, "g_socket_connectable_to_string", LIBRARY.GIO);
 
 	// gio.SocketConnection
 
@@ -1995,8 +2047,11 @@ shared static this()
 	Linker.link(g_tls_backend_get_certificate_type, "g_tls_backend_get_certificate_type", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_client_connection_type, "g_tls_backend_get_client_connection_type", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_default_database, "g_tls_backend_get_default_database", LIBRARY.GIO);
+	Linker.link(g_tls_backend_get_dtls_client_connection_type, "g_tls_backend_get_dtls_client_connection_type", LIBRARY.GIO);
+	Linker.link(g_tls_backend_get_dtls_server_connection_type, "g_tls_backend_get_dtls_server_connection_type", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_file_database_type, "g_tls_backend_get_file_database_type", LIBRARY.GIO);
 	Linker.link(g_tls_backend_get_server_connection_type, "g_tls_backend_get_server_connection_type", LIBRARY.GIO);
+	Linker.link(g_tls_backend_supports_dtls, "g_tls_backend_supports_dtls", LIBRARY.GIO);
 	Linker.link(g_tls_backend_supports_tls, "g_tls_backend_supports_tls", LIBRARY.GIO);
 
 	// gio.TlsCertificate
@@ -2957,6 +3012,15 @@ __gshared extern(C)
 	int function(GDataOutputStream* stream, ulong data, GCancellable* cancellable, GError** err) c_g_data_output_stream_put_uint64;
 	void function(GDataOutputStream* stream, GDataStreamByteOrder order) c_g_data_output_stream_set_byte_order;
 
+	// gio.DatagramBased
+
+	GType function() c_g_datagram_based_get_type;
+	GIOCondition function(GDatagramBased* datagramBased, GIOCondition condition) c_g_datagram_based_condition_check;
+	int function(GDatagramBased* datagramBased, GIOCondition condition, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_condition_wait;
+	GSource* function(GDatagramBased* datagramBased, GIOCondition condition, GCancellable* cancellable) c_g_datagram_based_create_source;
+	int function(GDatagramBased* datagramBased, GInputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_receive_messages;
+	int function(GDatagramBased* datagramBased, GOutputMessage* messages, uint numMessages, int flags, long timeout, GCancellable* cancellable, GError** err) c_g_datagram_based_send_messages;
+
 	// gio.DesktopAppInfo
 
 	GType function() c_g_desktop_app_info_get_type;
@@ -3017,6 +3081,47 @@ __gshared extern(C)
 	int function(GDrive* drive, GAsyncResult* result, GError** err) c_g_drive_start_finish;
 	void function(GDrive* drive, GMountUnmountFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_stop;
 	int function(GDrive* drive, GAsyncResult* result, GError** err) c_g_drive_stop_finish;
+
+	// gio.DtlsClientConnection
+
+	GType function() c_g_dtls_client_connection_get_type;
+	GDatagramBased* function(GDatagramBased* baseSocket, GSocketConnectable* serverIdentity, GError** err) c_g_dtls_client_connection_new;
+	GList* function(GDtlsClientConnection* conn) c_g_dtls_client_connection_get_accepted_cas;
+	GSocketConnectable* function(GDtlsClientConnection* conn) c_g_dtls_client_connection_get_server_identity;
+	GTlsCertificateFlags function(GDtlsClientConnection* conn) c_g_dtls_client_connection_get_validation_flags;
+	void function(GDtlsClientConnection* conn, GSocketConnectable* identity) c_g_dtls_client_connection_set_server_identity;
+	void function(GDtlsClientConnection* conn, GTlsCertificateFlags flags) c_g_dtls_client_connection_set_validation_flags;
+
+	// gio.DtlsConnection
+
+	GType function() c_g_dtls_connection_get_type;
+	int function(GDtlsConnection* conn, GCancellable* cancellable, GError** err) c_g_dtls_connection_close;
+	void function(GDtlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dtls_connection_close_async;
+	int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) c_g_dtls_connection_close_finish;
+	int function(GDtlsConnection* conn, GTlsCertificate* peerCert, GTlsCertificateFlags errors) c_g_dtls_connection_emit_accept_certificate;
+	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_certificate;
+	GTlsDatabase* function(GDtlsConnection* conn) c_g_dtls_connection_get_database;
+	GTlsInteraction* function(GDtlsConnection* conn) c_g_dtls_connection_get_interaction;
+	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_peer_certificate;
+	GTlsCertificateFlags function(GDtlsConnection* conn) c_g_dtls_connection_get_peer_certificate_errors;
+	GTlsRehandshakeMode function(GDtlsConnection* conn) c_g_dtls_connection_get_rehandshake_mode;
+	int function(GDtlsConnection* conn) c_g_dtls_connection_get_require_close_notify;
+	int function(GDtlsConnection* conn, GCancellable* cancellable, GError** err) c_g_dtls_connection_handshake;
+	void function(GDtlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dtls_connection_handshake_async;
+	int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) c_g_dtls_connection_handshake_finish;
+	void function(GDtlsConnection* conn, GTlsCertificate* certificate) c_g_dtls_connection_set_certificate;
+	void function(GDtlsConnection* conn, GTlsDatabase* database) c_g_dtls_connection_set_database;
+	void function(GDtlsConnection* conn, GTlsInteraction* interaction) c_g_dtls_connection_set_interaction;
+	void function(GDtlsConnection* conn, GTlsRehandshakeMode mode) c_g_dtls_connection_set_rehandshake_mode;
+	void function(GDtlsConnection* conn, int requireCloseNotify) c_g_dtls_connection_set_require_close_notify;
+	int function(GDtlsConnection* conn, int shutdownRead, int shutdownWrite, GCancellable* cancellable, GError** err) c_g_dtls_connection_shutdown;
+	void function(GDtlsConnection* conn, int shutdownRead, int shutdownWrite, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dtls_connection_shutdown_async;
+	int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) c_g_dtls_connection_shutdown_finish;
+
+	// gio.DtlsServerConnection
+
+	GType function() c_g_dtls_server_connection_get_type;
+	GDatagramBased* function(GDatagramBased* baseSocket, GTlsCertificate* certificate, GError** err) c_g_dtls_server_connection_new;
 
 	// gio.Emblem
 
@@ -4036,6 +4141,7 @@ __gshared extern(C)
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_receive;
 	ptrdiff_t function(GSocket* socket, GSocketAddress** address, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_receive_from;
 	ptrdiff_t function(GSocket* socket, GSocketAddress** address, GInputVector* vectors, int numVectors, GSocketControlMessage*** messages, int* numMessages, int* flags, GCancellable* cancellable, GError** err) c_g_socket_receive_message;
+	int function(GSocket* socket, GInputMessage* messages, uint numMessages, int flags, GCancellable* cancellable, GError** err) c_g_socket_receive_messages;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, int blocking, GCancellable* cancellable, GError** err) c_g_socket_receive_with_blocking;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_send;
 	ptrdiff_t function(GSocket* socket, GSocketAddress* address, GOutputVector* vectors, int numVectors, GSocketControlMessage** messages, int numMessages, int flags, GCancellable* cancellable, GError** err) c_g_socket_send_message;
@@ -4110,6 +4216,7 @@ __gshared extern(C)
 	GType function() c_g_socket_connectable_get_type;
 	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_enumerate;
 	GSocketAddressEnumerator* function(GSocketConnectable* connectable) c_g_socket_connectable_proxy_enumerate;
+	char* function(GSocketConnectable* connectable) c_g_socket_connectable_to_string;
 
 	// gio.SocketConnection
 
@@ -4308,8 +4415,11 @@ __gshared extern(C)
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_certificate_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_client_connection_type;
 	GTlsDatabase* function(GTlsBackend* backend) c_g_tls_backend_get_default_database;
+	GType function(GTlsBackend* backend) c_g_tls_backend_get_dtls_client_connection_type;
+	GType function(GTlsBackend* backend) c_g_tls_backend_get_dtls_server_connection_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_file_database_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_server_connection_type;
+	int function(GTlsBackend* backend) c_g_tls_backend_supports_dtls;
 	int function(GTlsBackend* backend) c_g_tls_backend_supports_tls;
 
 	// gio.TlsCertificate
@@ -5268,6 +5378,15 @@ alias c_g_data_output_stream_put_uint32 g_data_output_stream_put_uint32;
 alias c_g_data_output_stream_put_uint64 g_data_output_stream_put_uint64;
 alias c_g_data_output_stream_set_byte_order g_data_output_stream_set_byte_order;
 
+// gio.DatagramBased
+
+alias c_g_datagram_based_get_type g_datagram_based_get_type;
+alias c_g_datagram_based_condition_check g_datagram_based_condition_check;
+alias c_g_datagram_based_condition_wait g_datagram_based_condition_wait;
+alias c_g_datagram_based_create_source g_datagram_based_create_source;
+alias c_g_datagram_based_receive_messages g_datagram_based_receive_messages;
+alias c_g_datagram_based_send_messages g_datagram_based_send_messages;
+
 // gio.DesktopAppInfo
 
 alias c_g_desktop_app_info_get_type g_desktop_app_info_get_type;
@@ -5328,6 +5447,47 @@ alias c_g_drive_start g_drive_start;
 alias c_g_drive_start_finish g_drive_start_finish;
 alias c_g_drive_stop g_drive_stop;
 alias c_g_drive_stop_finish g_drive_stop_finish;
+
+// gio.DtlsClientConnection
+
+alias c_g_dtls_client_connection_get_type g_dtls_client_connection_get_type;
+alias c_g_dtls_client_connection_new g_dtls_client_connection_new;
+alias c_g_dtls_client_connection_get_accepted_cas g_dtls_client_connection_get_accepted_cas;
+alias c_g_dtls_client_connection_get_server_identity g_dtls_client_connection_get_server_identity;
+alias c_g_dtls_client_connection_get_validation_flags g_dtls_client_connection_get_validation_flags;
+alias c_g_dtls_client_connection_set_server_identity g_dtls_client_connection_set_server_identity;
+alias c_g_dtls_client_connection_set_validation_flags g_dtls_client_connection_set_validation_flags;
+
+// gio.DtlsConnection
+
+alias c_g_dtls_connection_get_type g_dtls_connection_get_type;
+alias c_g_dtls_connection_close g_dtls_connection_close;
+alias c_g_dtls_connection_close_async g_dtls_connection_close_async;
+alias c_g_dtls_connection_close_finish g_dtls_connection_close_finish;
+alias c_g_dtls_connection_emit_accept_certificate g_dtls_connection_emit_accept_certificate;
+alias c_g_dtls_connection_get_certificate g_dtls_connection_get_certificate;
+alias c_g_dtls_connection_get_database g_dtls_connection_get_database;
+alias c_g_dtls_connection_get_interaction g_dtls_connection_get_interaction;
+alias c_g_dtls_connection_get_peer_certificate g_dtls_connection_get_peer_certificate;
+alias c_g_dtls_connection_get_peer_certificate_errors g_dtls_connection_get_peer_certificate_errors;
+alias c_g_dtls_connection_get_rehandshake_mode g_dtls_connection_get_rehandshake_mode;
+alias c_g_dtls_connection_get_require_close_notify g_dtls_connection_get_require_close_notify;
+alias c_g_dtls_connection_handshake g_dtls_connection_handshake;
+alias c_g_dtls_connection_handshake_async g_dtls_connection_handshake_async;
+alias c_g_dtls_connection_handshake_finish g_dtls_connection_handshake_finish;
+alias c_g_dtls_connection_set_certificate g_dtls_connection_set_certificate;
+alias c_g_dtls_connection_set_database g_dtls_connection_set_database;
+alias c_g_dtls_connection_set_interaction g_dtls_connection_set_interaction;
+alias c_g_dtls_connection_set_rehandshake_mode g_dtls_connection_set_rehandshake_mode;
+alias c_g_dtls_connection_set_require_close_notify g_dtls_connection_set_require_close_notify;
+alias c_g_dtls_connection_shutdown g_dtls_connection_shutdown;
+alias c_g_dtls_connection_shutdown_async g_dtls_connection_shutdown_async;
+alias c_g_dtls_connection_shutdown_finish g_dtls_connection_shutdown_finish;
+
+// gio.DtlsServerConnection
+
+alias c_g_dtls_server_connection_get_type g_dtls_server_connection_get_type;
+alias c_g_dtls_server_connection_new g_dtls_server_connection_new;
 
 // gio.Emblem
 
@@ -6347,6 +6507,7 @@ alias c_g_socket_listen g_socket_listen;
 alias c_g_socket_receive g_socket_receive;
 alias c_g_socket_receive_from g_socket_receive_from;
 alias c_g_socket_receive_message g_socket_receive_message;
+alias c_g_socket_receive_messages g_socket_receive_messages;
 alias c_g_socket_receive_with_blocking g_socket_receive_with_blocking;
 alias c_g_socket_send g_socket_send;
 alias c_g_socket_send_message g_socket_send_message;
@@ -6421,6 +6582,7 @@ alias c_g_socket_client_set_tls_validation_flags g_socket_client_set_tls_validat
 alias c_g_socket_connectable_get_type g_socket_connectable_get_type;
 alias c_g_socket_connectable_enumerate g_socket_connectable_enumerate;
 alias c_g_socket_connectable_proxy_enumerate g_socket_connectable_proxy_enumerate;
+alias c_g_socket_connectable_to_string g_socket_connectable_to_string;
 
 // gio.SocketConnection
 
@@ -6619,8 +6781,11 @@ alias c_g_tls_backend_get_default g_tls_backend_get_default;
 alias c_g_tls_backend_get_certificate_type g_tls_backend_get_certificate_type;
 alias c_g_tls_backend_get_client_connection_type g_tls_backend_get_client_connection_type;
 alias c_g_tls_backend_get_default_database g_tls_backend_get_default_database;
+alias c_g_tls_backend_get_dtls_client_connection_type g_tls_backend_get_dtls_client_connection_type;
+alias c_g_tls_backend_get_dtls_server_connection_type g_tls_backend_get_dtls_server_connection_type;
 alias c_g_tls_backend_get_file_database_type g_tls_backend_get_file_database_type;
 alias c_g_tls_backend_get_server_connection_type g_tls_backend_get_server_connection_type;
+alias c_g_tls_backend_supports_dtls g_tls_backend_supports_dtls;
 alias c_g_tls_backend_supports_tls g_tls_backend_supports_tls;
 
 // gio.TlsCertificate

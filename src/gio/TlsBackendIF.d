@@ -84,6 +84,12 @@ public interface TlsBackendIF{
 	 */
 	public TlsDatabase getDefaultDatabase();
 
+	/** */
+	public GType getDtlsClientConnectionType();
+
+	/** */
+	public GType getDtlsServerConnectionType();
+
 	/**
 	 * Gets the #GType of @backend's #GTlsFileDatabase implementation.
 	 *
@@ -102,6 +108,9 @@ public interface TlsBackendIF{
 	 * Since: 2.28
 	 */
 	public GType getServerConnectionType();
+
+	/** */
+	public bool supportsDtls();
 
 	/**
 	 * Checks if TLS is supported; if this returns %FALSE for the default

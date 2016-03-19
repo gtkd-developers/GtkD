@@ -60,6 +60,16 @@ public  import gtkc.gtktypes;
  * opposed to a flat list where the mapping to icons is obvious),
  * #GtkIconView will only display the first level of the tree and
  * ignore the tree’s branches.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * iconview.view
+ * ╰── [rubberband]
+ * ]|
+ * 
+ * GtkIconView has a single CSS node with name iconview and style class .view.
+ * For rubberband selection, a subnode with name rubberband is used.
  */
 public class IconView : Container, CellLayoutIF, ScrollableIF
 {
@@ -552,8 +562,8 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     x = The x position to be identified
 	 *     y = The y position to be identified
 	 *
-	 * Return: The #GtkTreePath corresponding to the icon or %NULL
-	 *     if no icon exists at that position.
+	 * Return: The #GtkTreePath corresponding
+	 *     to the icon or %NULL if no icon exists at that position.
 	 *
 	 * Since: 2.6
 	 */

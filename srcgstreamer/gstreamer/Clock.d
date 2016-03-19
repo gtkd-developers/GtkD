@@ -355,6 +355,8 @@ public class Clock : ObjectGst
 	 * current calibration parameters, but doesn't ensure a monotonically
 	 * increasing result as gst_clock_adjust_unlocked() does.
 	 *
+	 * Note: The @clock parameter is unused and can be NULL
+	 *
 	 * Params:
 	 *     internalTarget = a clock time
 	 *     cinternal = a reference internal time
@@ -680,6 +682,31 @@ public class Clock : ObjectGst
 	public GstClockTime unadjustUnlocked(GstClockTime external)
 	{
 		return gst_clock_unadjust_unlocked(gstClock, external);
+	}
+
+	/**
+	 * Converts the given @external_target clock time to the internal time,
+	 * using the passed calibration parameters. This function performs the
+	 * same calculation as gst_clock_unadjust_unlocked() when called using the
+	 * current calibration parameters.
+	 *
+	 * Note: The @clock parameter is unused and can be NULL
+	 *
+	 * Params:
+	 *     externalTarget = a clock time
+	 *     cinternal = a reference internal time
+	 *     cexternal = a reference external time
+	 *     cnum = the numerator of the rate of the clock relative to its
+	 *         internal time
+	 *     cdenom = the denominator of the rate of the clock
+	 *
+	 * Return: the converted time of the clock.
+	 *
+	 * Since: 1.8
+	 */
+	public GstClockTime unadjustWithCalibration(GstClockTime externalTarget, GstClockTime cinternal, GstClockTime cexternal, GstClockTime cnum, GstClockTime cdenom)
+	{
+		return gst_clock_unadjust_with_calibration(gstClock, externalTarget, cinternal, cexternal, cnum, cdenom);
 	}
 
 	/**

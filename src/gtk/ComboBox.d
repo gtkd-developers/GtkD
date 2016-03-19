@@ -67,6 +67,19 @@ public  import gtkc.gtktypes;
  * can be a bit overwhelming. In this case, #GtkComboBoxText offers a
  * simple alternative. Both GtkComboBox and #GtkComboBoxText can contain
  * an entry.
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * combobox
+ * ├── button.combo
+ * │    ╰── arrow
+ * ╰── window.popup
+ * ]|
+ * 
+ * GtkComboBox has a single CSS node with name combobox. It adds the
+ * .combo style class to the button that it contains.
+ * The button also contains another node with name arrow.
  */
 public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 {
@@ -322,7 +335,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 2.6
 	 */
-	public bool getFocusOnClick()
+	public override bool getFocusOnClick()
 	{
 		return gtk_combo_box_get_focus_on_click(gtkComboBox) != 0;
 	}
@@ -626,7 +639,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 2.6
 	 */
-	public void setFocusOnClick(bool focusOnClick)
+	public override void setFocusOnClick(bool focusOnClick)
 	{
 		gtk_combo_box_set_focus_on_click(gtkComboBox, focusOnClick);
 	}

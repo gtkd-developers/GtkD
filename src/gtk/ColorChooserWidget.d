@@ -51,6 +51,10 @@ public  import gtkc.gtktypes;
  * 
  * The #GtkColorChooserWidget is used in the #GtkColorChooserDialog
  * to provide a dialog for selecting colors.
+ * 
+ * # CSS names
+ * 
+ * GtkColorChooserWidget has a single CSS node with name colorchooser.
  */
 public class ColorChooserWidget : Box, ColorChooserIF
 {

@@ -306,6 +306,104 @@ public class Segment
 	}
 
 	/**
+	 * Convert @running_time into a position in the segment so that
+	 * gst_segment_to_running_time() with that position returns @running_time.
+	 *
+	 * Params:
+	 *     format = the format of the segment.
+	 *     runningTime = the running_time in the segment
+	 *
+	 * Return: the position in the segment for @running_time. This function returns
+	 *     -1 when @running_time is -1 or when it is not inside @segment.
+	 *
+	 * Since: 1.8
+	 */
+	public ulong positionFromRunningTime(GstFormat format, ulong runningTime)
+	{
+		return gst_segment_position_from_running_time(gstSegment, format, runningTime);
+	}
+
+	/**
+	 * Translate @running_time to the segment position using the currently configured
+	 * segment. Compared to gst_segment_position_from_running_time() this function can
+	 * return negative segment position.
+	 *
+	 * This function is typically used by elements that need to synchronize buffers
+	 * against the clock or each other.
+	 *
+	 * @running_time can be any value and the result of this function for values
+	 * outside of the segment is extrapolated.
+	 *
+	 * When 1 is returned, @running_time resulted in a positive position returned
+	 * in @position.
+	 *
+	 * When this function returns -1, the returned @position should be negated
+	 * to get the real negative segment position.
+	 *
+	 * Params:
+	 *     format = the format of the segment.
+	 *     runningTime = the running-time
+	 *     position = the resulting position in the segment
+	 *
+	 * Return: a 1 or -1 on success, 0 on failure.
+	 *
+	 * Since: 1.8
+	 */
+	public int positionFromRunningTimeFull(GstFormat format, ulong runningTime, ulong* position)
+	{
+		return gst_segment_position_from_running_time_full(gstSegment, format, runningTime, position);
+	}
+
+	/**
+	 * Convert @stream_time into a position in the segment so that
+	 * gst_segment_to_stream_time() with that position returns @stream_time.
+	 *
+	 * Params:
+	 *     format = the format of the segment.
+	 *     streamTime = the stream_time in the segment
+	 *
+	 * Return: the position in the segment for @stream_time. This function returns
+	 *     -1 when @stream_time is -1 or when it is not inside @segment.
+	 *
+	 * Since: 1.8
+	 */
+	public ulong positionFromStreamTime(GstFormat format, ulong streamTime)
+	{
+		return gst_segment_position_from_stream_time(gstSegment, format, streamTime);
+	}
+
+	/**
+	 * Translate @stream_time to the segment position using the currently configured
+	 * segment. Compared to gst_segment_position_from_stream_time() this function can
+	 * return negative segment position.
+	 *
+	 * This function is typically used by elements that need to synchronize buffers
+	 * against the clock or each other.
+	 *
+	 * @stream_time can be any value and the result of this function for values outside
+	 * of the segment is extrapolated.
+	 *
+	 * When 1 is returned, @stream_time resulted in a positive position returned
+	 * in @position.
+	 *
+	 * When this function returns -1, the returned @position should be negated
+	 * to get the real negative segment position.
+	 *
+	 * Params:
+	 *     format = the format of the segment.
+	 *     streamTime = the stream-time
+	 *     position = the resulting position in the segment
+	 *
+	 * Return: a 1 or -1 on success, 0 on failure.
+	 *
+	 * Since: 1.8
+	 */
+	public int positionFromStreamTimeFull(GstFormat format, ulong streamTime, ulong* position)
+	{
+		return gst_segment_position_from_stream_time_full(gstSegment, format, streamTime, position);
+	}
+
+	/**
 	 * Adjust the start/stop and base values of @segment such that the next valid
 	 * buffer will be one with @running_time.
 	 *
@@ -331,6 +429,8 @@ public class Segment
 	 *
 	 * Return: the position in the segment for @running_time. This function returns
 	 *     -1 when @running_time is -1 or when it is not inside @segment.
+	 *
+	 *     Deprecated. Use gst_segment_position_from_running_time() instead.
 	 */
 	public ulong toPosition(GstFormat format, ulong runningTime)
 	{
@@ -409,9 +509,42 @@ public class Segment
 	 *
 	 * Return: the position in stream_time or -1 when an invalid position
 	 *     was given.
+	 *
+	 * Since: 1.8
 	 */
 	public ulong toStreamTime(GstFormat format, ulong position)
 	{
 		return gst_segment_to_stream_time(gstSegment, format, position);
+	}
+
+	/**
+	 * Translate @position to the total stream time using the currently configured
+	 * segment. Compared to gst_segment_to_stream_time() this function can return
+	 * negative stream-time.
+	 *
+	 * This function is typically used by elements that need to synchronize buffers
+	 * against the clock or eachother.
+	 *
+	 * @position can be any value and the result of this function for values outside
+	 * of the segment is extrapolated.
+	 *
+	 * When 1 is returned, @position resulted in a positive stream-time returned
+	 * in @stream_time.
+	 *
+	 * When this function returns -1, the returned @stream_time should be negated
+	 * to get the real negative stream time.
+	 *
+	 * Params:
+	 *     format = the format of the segment.
+	 *     position = the position in the segment
+	 *     streamTime = result stream-time
+	 *
+	 * Return: a 1 or -1 on success, 0 on failure.
+	 *
+	 * Since: 1.8
+	 */
+	public int toStreamTimeFull(GstFormat format, ulong position, ulong* streamTime)
+	{
+		return gst_segment_to_stream_time_full(gstSegment, format, position, streamTime);
 	}
 }

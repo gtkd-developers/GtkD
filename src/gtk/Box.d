@@ -78,6 +78,14 @@ public  import gtkc.gtktypes;
  * 
  * Note that a single-row or single-column #GtkGrid provides exactly
  * the same functionality as #GtkBox.
+ * 
+ * # CSS nodes
+ * 
+ * GtkBox uses a single CSS node with name box.
+ * 
+ * In horizontal orientation, the nodes of the children are always arranged
+ * from left to right. So :first-child will always select the leftmost child,
+ * regardless of text direction.
  */
 public class Box : Container, OrientableIF
 {
@@ -162,6 +170,7 @@ public class Box : Container, OrientableIF
 	 * Retrieves the center widget of the box.
 	 *
 	 * Return: the center widget
+	 *     or %NULL in case no center widget is set.
 	 *
 	 * Since: 3.12
 	 */

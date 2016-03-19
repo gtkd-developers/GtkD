@@ -56,6 +56,10 @@ public  import gtkc.gtktypes;
  * that widget is used as the icon. Otherwise, if #GtkToolButton:stock-id is
  * non-%NULL, the icon is determined by the stock item. Otherwise,
  * the button does not have a icon.
+ * 
+ * # CSS nodes
+ * 
+ * GtkToolButton has a single CSS node with name toolbutton.
  */
 public class ToolButton : ToolItem, ActionableIF
 {

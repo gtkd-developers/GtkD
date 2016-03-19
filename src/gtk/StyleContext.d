@@ -63,7 +63,7 @@ private import pango.PgLayout;
  * 
  * For GTK+ widgets, any #GtkStyleContext returned by
  * gtk_widget_get_style_context() will already have a #GtkWidgetPath, a
- * #GdkScreen and RTL/LTR information set. The style context will be also
+ * #GdkScreen and RTL/LTR information set. The style context will also be
  * updated automatically if any of these settings change on the widget.
  * 
  * If you are using the theming layer standalone, you will need to set a
@@ -72,13 +72,16 @@ private import pango.PgLayout;
  * as updating the context yourself using gtk_style_context_invalidate()
  * whenever any of the conditions change, such as a change in the
  * #GtkSettings:gtk-theme-name setting or a hierarchy change in the rendered
- * widget.
+ * widget. See the “Foreign drawing“ example in gtk3-demo.
  * 
  * # Style Classes # {#gtkstylecontext-classes}
  * 
- * Widgets can add style classes to their context, which can be used
- * to associate different styles by class
- * (see [Selectors][gtkcssprovider-selectors]).
+ * Widgets can add style classes to their context, which can be used to associate
+ * different styles by class. The documentation for individual widgets lists
+ * which style classes it uses itself, and which style classes may be added by
+ * applications to affect their appearance.
+ * 
+ * GTK+ defines macros for a number of style classes.
  * 
  * # Style Regions
  * 
@@ -86,19 +89,7 @@ private import pango.PgLayout;
  * deprecated and will be removed in a future GTK+ update. Please use style
  * classes instead.
  * 
- * The regions used by GTK+ widgets are:
- * 
- * ## row
- * Used by #GtkTreeView. Can be used with the flags: `even`, `odd`.
- * 
- * ## column
- * Used by #GtkTreeView. Can be used with the flags: `first`, `last`, `sorted`.
- * 
- * ## column-header
- * Used by #GtkTreeView.
- * 
- * ## tab
- * Used by #GtkNotebook. Can be used with the flags: `even`, `odd`, `first`, `last`.
+ * GTK+ defines macros for a number of style regions.
  * 
  * # Custom styling in UI libraries and applications
  * 
@@ -246,17 +237,17 @@ public class StyleContext : ObjectG
 	 * gtk_style_context_get() or any of the gtk_render_*()
 	 * functions will make use of this new class for styling.
 	 *
-	 * In the CSS file format, a #GtkEntry defining an “entry”
+	 * In the CSS file format, a #GtkEntry defining a “search”
 	 * class, would be matched by:
 	 *
 	 * |[
-	 * GtkEntry.entry { ... }
+	 * entry.search { ... }
 	 * ]|
 	 *
-	 * While any widget defining an “entry” class would be
+	 * While any widget defining a “search” class would be
 	 * matched by:
 	 * |[
-	 * .entry { ... }
+	 * .search { ... }
 	 * ]|
 	 *
 	 * Params:
@@ -385,7 +376,9 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Gets the border for a given state as a #GtkBorder.
-	 * See %GTK_STYLE_PROPERTY_BORDER_WIDTH.
+	 *
+	 * See gtk_style_context_get_property() and
+	 * #GTK_STYLE_PROPERTY_BORDER_WIDTH for details.
 	 *
 	 * Params:
 	 *     state = state to retrieve the border for
@@ -405,7 +398,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Gets the border color for a given state.
 	 *
-	 * Deprecated: Use gtk_render_border() instead.
+	 * Deprecated: Use gtk_render_frame() instead.
 	 *
 	 * Params:
 	 *     state = state to retrieve the color for
@@ -424,6 +417,9 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Gets the foreground color for a given state.
+	 *
+	 * See gtk_style_context_get_property() and
+	 * #GTK_STYLE_PROPERTY_COLOR for details.
 	 *
 	 * Params:
 	 *     state = state to retrieve the color for
@@ -519,7 +515,8 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Gets the margin for a given state as a #GtkBorder.
-	 * See %GTK_STYLE_PROPERTY_MARGIN.
+	 * See gtk_style_property_get() and #GTK_STYLE_PROPERTY_MARGIN
+	 * for details.
 	 *
 	 * Params:
 	 *     state = state to retrieve the border for
@@ -538,7 +535,8 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Gets the padding for a given state as a #GtkBorder.
-	 * See %GTK_STYLE_PROPERTY_PADDING.
+	 * See gtk_style_context_get() and #GTK_STYLE_PROPERTY_PADDING
+	 * for details.
 	 *
 	 * Params:
 	 *     state = state to retrieve the padding for
@@ -596,6 +594,15 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Gets a style property from @context for the given state.
+	 *
+	 * Note that not all CSS properties that are supported by GTK+ can be
+	 * retrieved in this way, since they may not be representable as #GValue.
+	 * GTK+ defines macros for a number of properties that can be used
+	 * with this function.
+	 *
+	 * Note that passing a state other than the current state of @context
+	 * is not recommended unless the style context has been saved with
+	 * gtk_style_context_save().
 	 *
 	 * When @value is no longer needed, g_value_unset() must be called
 	 * to free any allocated memory.
@@ -662,7 +669,8 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     property = style property name
 	 *
-	 * Return: %NULL or the section where value was defined
+	 * Return: %NULL or the section where a value
+	 *     for @property was defined
 	 */
 	public CssSection getSection(string property)
 	{
@@ -673,11 +681,16 @@ public class StyleContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p, true);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
 	}
 
 	/**
-	 * Returns the state used when rendering.
+	 * Returns the state used for style matching.
+	 *
+	 * This method should only be used to retrieve the #GtkStateFlags
+	 * to pass to #GtkStyleContext methods, like gtk_style_context_get_padding().
+	 * If you need to retrieve the current state of a #GtkWidget, use
+	 * gtk_widget_get_state_flags().
 	 *
 	 * Return: the state flags
 	 *
@@ -720,6 +733,8 @@ public class StyleContext : ObjectG
 	/**
 	 * Retrieves several style property values from @context for a given state.
 	 *
+	 * See gtk_style_context_get_property() for details.
+	 *
 	 * Params:
 	 *     state = state to retrieve the property values for
 	 *     args = va_list of property name/return location pairs, followed by %NULL
@@ -733,7 +748,7 @@ public class StyleContext : ObjectG
 
 	/**
 	 * Returns %TRUE if @context currently has defined the
-	 * given class name
+	 * given class name.
 	 *
 	 * Params:
 	 *     className = a class name
@@ -1168,7 +1183,7 @@ public class StyleContext : ObjectG
 	}
 
 	/**
-	 * Sets the scale to use when getting image assets for the style .
+	 * Sets the scale to use when getting image assets for the style.
 	 *
 	 * Params:
 	 *     scale = scale
@@ -1201,8 +1216,7 @@ public class StyleContext : ObjectG
 	}
 
 	/**
-	 * Sets the state to be used when rendering with any
-	 * of the gtk_render_*() functions.
+	 * Sets the state to be used for style matching.
 	 *
 	 * Params:
 	 *     flags = state to represent
@@ -1237,6 +1251,33 @@ public class StyleContext : ObjectG
 	public bool stateIsRunning(GtkStateType state, out double progress)
 	{
 		return gtk_style_context_state_is_running(gtkStyleContext, state, &progress) != 0;
+	}
+
+	/**
+	 * Converts the style context into a string representation.
+	 *
+	 * The string representation always includes information about
+	 * the name, state, id, visibility and style classes of the CSS
+	 * node that is backing @context. Depending on the flags, more
+	 * information may be included.
+	 *
+	 * This function is intended for testing and debugging of the
+	 * CSS implementation in GTK+. There are no guarantees about
+	 * the format of the returned string, it may change.
+	 *
+	 * Params:
+	 *     flags = Flags that determine what to print
+	 *
+	 * Return: a newly allocated string representing @context
+	 *
+	 * Since: 3.20
+	 */
+	public string toString(GtkStyleContextPrintFlags flags)
+	{
+		auto retStr = gtk_style_context_to_string(gtkStyleContext, flags);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	int[string] connectedSignals;
@@ -1329,6 +1370,26 @@ public class StyleContext : ObjectG
 	public static void renderBackground(StyleContext context, Context cr, double x, double y, double width, double height)
 	{
 		gtk_render_background((context is null) ? null : context.getStyleContextStruct(), (cr is null) ? null : cr.getContextStruct(), x, y, width, height);
+	}
+
+	/**
+	 * Returns the area that will be affected (i.e. drawn to) when
+	 * calling gtk_render_background() for the given @context and
+	 * rectangle.
+	 *
+	 * Params:
+	 *     context = a #GtkStyleContext
+	 *     x = X origin of the rectangle
+	 *     y = Y origin of the rectangle
+	 *     width = rectangle width
+	 *     height = rectangle height
+	 *     outClip = return location for the clip
+	 *
+	 * Since: 3.20
+	 */
+	public static void renderBackgroundGetClip(StyleContext context, double x, double y, double width, double height, out GdkRectangle outClip)
+	{
+		gtk_render_background_get_clip((context is null) ? null : context.getStyleContextStruct(), x, y, width, height, &outClip);
 	}
 
 	/**
@@ -1536,8 +1597,9 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     context = a #GtkStyleContext
 	 *     source = the #GtkIconSource specifying the icon to render
-	 *     size = the size to render the icon at. A size of (GtkIconSize) -1
-	 *         means render at the size of the source and don’t scale.
+	 *     size = the size (#GtkIconSize) to render the icon at.
+	 *         A size of `(GtkIconSize) -1` means render at the size of the source
+	 *         and don’t scale.
 	 *
 	 * Return: a newly-created #GdkPixbuf containing the rendered icon
 	 *

@@ -166,7 +166,8 @@ public class TextTagTable : ObjectG, BuildableIF
 	 * Params:
 	 *     name = name of a tag
 	 *
-	 * Return: The tag, or %NULL if none by that name is in the table.
+	 * Return: The tag, or %NULL if none by that
+	 *     name is in the table.
 	 */
 	public TextTag lookup(string name)
 	{

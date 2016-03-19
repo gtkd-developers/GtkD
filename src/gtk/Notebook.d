@@ -76,6 +76,47 @@ public  import gtkc.gtktypes;
  * </child>
  * </object>
  * ]|
+ * 
+ * # CSS nodes
+ * 
+ * |[<!-- language="plain" -->
+ * notebook
+ * ├── header.top
+ * │   ├── [<action widget>]
+ * │   ├── tabs
+ * │   │   ├── [arrow]
+ * │   │   ├── tab
+ * │   │   │   ╰── <tab label>
+ * ┊   ┊   ┊
+ * │   │   ├── tab[.reorderable-page]
+ * │   │   │   ╰── <tab label>
+ * │   │   ╰── [arrow]
+ * │   ╰── [<action widget>]
+ * │
+ * ╰── stack
+ * ├── <child>
+ * ┊
+ * ╰── <child>
+ * ]|
+ * 
+ * GtkNotebook has a main CSS node with name notebook, a subnode
+ * with name header and below that a subnode with name tabs which
+ * contains one subnode per tab with name tab.
+ * 
+ * If action widgets are present, their CSS nodes are placed next
+ * to the tabs node. If the notebook is scrollable, CSS nodes with
+ * name arrow are placed as first and last child of the tabs node.
+ * 
+ * The main node gets the .frame style class when the notebook
+ * has a border (see gtk_notebook_set_show_border()).
+ * 
+ * The header node gets one of the style class .top, .bottom,
+ * .left or .right, depending on where the tabs are placed. For
+ * reorderable pages, the tab node gets the .reorderable-page class.
+ * 
+ * A tab node gets the .dnd style class while it is moved with drag-and-drop.
+ * 
+ * The nodes are always arranged from left-to-right, regarldess of text direction.
  */
 public class Notebook : Container
 {
@@ -214,8 +255,8 @@ public class Notebook : Container
 	 * Params:
 	 *     packType = pack type of the action widget to receive
 	 *
-	 * Return: The action widget with the given @pack_type
-	 *     or %NULL when this action widget has not been set
+	 * Return: The action widget with the given
+	 *     @pack_type or %NULL when this action widget has not been set
 	 *
 	 * Since: 2.20
 	 */
@@ -246,8 +287,7 @@ public class Notebook : Container
 	/**
 	 * Gets the current group name for @notebook.
 	 *
-	 * Return: the group name,
-	 *     or %NULL if none is set.
+	 * Return: the group name, or %NULL if none is set
 	 *
 	 * Since: 2.24
 	 */
@@ -263,8 +303,8 @@ public class Notebook : Container
 	 *     child = a widget contained in a page of @notebook
 	 *
 	 * Return: the menu label, or %NULL if the
-	 *     notebook page does not have a menu label other than the
-	 *     default (the tab label).
+	 *     notebook page does not have a menu label other than the default (the tab
+	 *     label).
 	 */
 	public Widget getMenuLabel(Widget child)
 	{
@@ -285,10 +325,10 @@ public class Notebook : Container
 	 * Params:
 	 *     child = the child widget of a page of the notebook.
 	 *
-	 * Return: the text of the tab label, or %NULL if the
-	 *     widget does not have a menu label other than the default
-	 *     menu label, or the menu label widget is not a #GtkLabel.
-	 *     The string is owned by the widget and must not be freed.
+	 * Return: the text of the tab label, or %NULL if the widget does
+	 *     not have a menu label other than the default menu label, or the menu label
+	 *     widget is not a #GtkLabel. The string is owned by the widget and must not be
+	 *     freed.
 	 */
 	public string getMenuLabelText(Widget child)
 	{
@@ -314,8 +354,8 @@ public class Notebook : Container
 	 *     pageNum = the index of a page in the notebook, or -1
 	 *         to get the last page
 	 *
-	 * Return: the child widget, or %NULL
-	 *     if @page_num is out of bounds
+	 * Return: the child widget, or %NULL if @page_num
+	 *     is out of bounds
 	 */
 	public Widget getNthPage(int pageNum)
 	{
@@ -420,9 +460,9 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a widget contained in a page of @notebook
 	 *
-	 * Return: the text of the tab label, or %NULL if the
-	 *     tab label widget is not a #GtkLabel. The string is owned
-	 *     by the widget and must not be freed.
+	 * Return: the text of the tab label, or %NULL if the tab label
+	 *     widget is not a #GtkLabel. The string is owned by the widget and must not be
+	 *     freed.
 	 */
 	public string getTabLabelText(Widget child)
 	{

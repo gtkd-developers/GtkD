@@ -197,8 +197,8 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     key = The text to complete for
 	 *
-	 * Return: The common prefix all rows starting with @key
-	 *     or %NULL if no row matches @key.
+	 * Return: The common prefix all rows starting with
+	 *     @key or %NULL if no row matches @key.
 	 *
 	 * Since: 3.4
 	 */

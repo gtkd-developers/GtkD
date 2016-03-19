@@ -46,6 +46,10 @@ public  import gtkc.gtktypes;
  * setting.
  * 
  * The GtkStack widget was added in GTK+ 3.10.
+ * 
+ * # CSS nodes
+ * 
+ * GtkStack has a single CSS node named stack.
  */
 public class Stack : Container
 {
@@ -191,8 +195,10 @@ public class Stack : Container
 	}
 
 	/**
-	 * Return: %TRUE If the #GtkStack is set up to interpolate between
-	 *     visible-child sizes, %FALSE otherwise.
+	 * Returns wether the #GtkStack is set up to interpolate between
+	 * the sizes of children on page switch.
+	 *
+	 * Return: %TRUE if child sizes are interpolated
 	 *
 	 * Since: 3.18
 	 */
@@ -324,10 +330,10 @@ public class Stack : Container
 
 	/**
 	 * Sets whether or not @stack will interpolate its size when
-	 * changing the visible child. If the interpolate-size property
-	 * is set to %TRUE, @stack will interpolate its size between
-	 * the current one and the one it'll take after changing the visible-child,
-	 * according to the set transition-duration.
+	 * changing the visible child. If the #GtkStack:interpolate-size
+	 * property is set to %TRUE, @stack will interpolate its size between
+	 * the current one and the one it'll take after changing the
+	 * visible child, according to the set transition duration.
 	 *
 	 * Params:
 	 *     interpolateSize = the new value

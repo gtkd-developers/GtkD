@@ -34,6 +34,7 @@ private import gobject.ParamSpec;
 private import gobject.Type;
 private import gobject.Value;
 private import gtk.Application;
+private import gtk.Widget;
 private import gtkc.glib;
 private import gtkc.gobject;
 private import gtkc.gtk;
@@ -797,6 +798,37 @@ public void connectSignalsFull(GtkBuilderConnectFunc func, void* userData)
 public void exposeObject(string name, ObjectG object)
 {
 	gtk_builder_expose_object(gtkBuilder, Str.toStringz(name), (object is null) ? null : object.getObjectGStruct());
+}
+
+/**
+ * Main private entry point for building composite container
+ * components from template XML.
+ *
+ * This is exported purely to let gtk-builder-tool validate
+ * templates, applications have no need to call this function.
+ *
+ * Params:
+ *     widget = the widget that is being extended
+ *     templateType = the type that the template is for
+ *     buffer = the string to parse
+ *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
+ *
+ * Return: A positive value on success, 0 if an error occurred
+ *
+ * Throws: GException on failure.
+ */
+public uint extendWithTemplate(Widget widget, GType templateType, string buffer, size_t length)
+{
+	GError* err = null;
+	
+	auto p = gtk_builder_extend_with_template(gtkBuilder, (widget is null) ? null : widget.getWidgetStruct(), templateType, Str.toStringz(buffer), length, &err);
+	
+	if (err !is null)
+	{
+		throw new GException( new ErrorG(err) );
+	}
+	
+	return p;
 }
 
 /**

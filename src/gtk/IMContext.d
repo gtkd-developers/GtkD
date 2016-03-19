@@ -66,7 +66,7 @@ private import pango.PgAttributeList;
  * these four functions:
  * 
  * |[<!-- language="C" -->
- * void im_module_init(#GTypeModule *module);
+ * void im_module_init(GTypeModule *module);
  * ]|
  * This function should register the #GType of the #GtkIMContext subclass which
  * implements the input method by means of g_type_module_register_type(). Note
@@ -79,7 +79,7 @@ private import pango.PgAttributeList;
  * Here goes any cleanup code your input method might require on module unload.
  * 
  * |[<!-- language="C" -->
- * void im_module_list(const #GtkIMContextInfo ***contexts, int *n_contexts)
+ * void im_module_list(const GtkIMContextInfo ***contexts, int *n_contexts)
  * {
  * *contexts = info_list;
  * *n_contexts = G_N_ELEMENTS (info_list);
@@ -91,7 +91,7 @@ private import pango.PgAttributeList;
  * provided input method.
  * 
  * |[<!-- language="C" -->
- * #GtkIMContext * im_module_create(const #gchar *context_id);
+ * GtkIMContext * im_module_create(const gchar *context_id);
  * ]|
  * This function should return a pointer to a newly created instance of the
  * #GtkIMContext subclass identified by @context_id. The context ID is the same

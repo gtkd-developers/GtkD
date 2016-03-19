@@ -92,9 +92,9 @@ public class ControlSource : ObjectGst
 	 *
 	 * Return: %FALSE if the value couldn't be returned, %TRUE otherwise.
 	 */
-	public bool getValue(GstClockTime timestamp, double* value)
+	public bool getValue(GstClockTime timestamp, out double value)
 	{
-		return gst_control_source_get_value(gstControlSource, timestamp, value) != 0;
+		return gst_control_source_get_value(gstControlSource, timestamp, &value) != 0;
 	}
 
 	/**

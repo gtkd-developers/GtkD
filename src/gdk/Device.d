@@ -27,6 +27,7 @@ module gdk.Device;
 private import gdk.Cursor;
 private import gdk.Display;
 private import gdk.Screen;
+private import gdk.Seat;
 private import gdk.Window;
 private import glib.ListG;
 private import glib.Str;
@@ -435,6 +436,26 @@ public class Device : ObjectG
 	}
 
 	/**
+	 * Returns the #GdkSeat the device belongs to.
+	 *
+	 * Return: A #GdkSeat. This memory is owned by GTK+ and
+	 *     must not be freed.
+	 *
+	 * Since: 3.20
+	 */
+	public Seat getSeat()
+	{
+		auto p = gdk_device_get_seat(gdkDevice);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+	}
+
+	/**
 	 * Determines the type of the device.
 	 *
 	 * Return: a #GdkInputSource
@@ -586,6 +607,8 @@ public class Device : ObjectG
 	 * cleaned up when the grab ends, you should handle the #GdkEventGrabBroken
 	 * events that are emitted when the grab ends unvoluntarily.
 	 *
+	 * Deprecated: Use gdk_seat_grab() instead.
+	 *
 	 * Params:
 	 *     window = the #GdkWindow which will own the grab (the grab window)
 	 *     grabOwnership = specifies the grab ownership.
@@ -702,6 +725,8 @@ public class Device : ObjectG
 
 	/**
 	 * Release any grab on @device.
+	 *
+	 * Deprecated: Use gdk_seat_ungrab() instead.
 	 *
 	 * Params:
 	 *     time = a timestap (e.g. %GDK_CURRENT_TIME).

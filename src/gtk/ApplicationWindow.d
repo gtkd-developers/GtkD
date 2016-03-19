@@ -31,6 +31,7 @@ private import gio.ActionMapT;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Application;
+private import gtk.ShortcutsWindow;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtkc.gtk;
@@ -209,6 +210,26 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	}
 
 	/**
+	 * Gets the #GtkShortcutsWindow that has been set up with
+	 * a prior call to gtk_application_window_set_help_overlay().
+	 *
+	 * Return: the help overlay associated with @window, or %NULL
+	 *
+	 * Since: 3.20
+	 */
+	public ShortcutsWindow getHelpOverlay()
+	{
+		auto p = gtk_application_window_get_help_overlay(gtkApplicationWindow);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ShortcutsWindow)(cast(GtkShortcutsWindow*) p);
+	}
+
+	/**
 	 * Returns the unique ID of the window. If the window has not yet been added to
 	 * a #GtkApplication, returns `0`.
 	 *
@@ -233,6 +254,21 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	public bool getShowMenubar()
 	{
 		return gtk_application_window_get_show_menubar(gtkApplicationWindow) != 0;
+	}
+
+	/**
+	 * Associates a shortcuts window with the application window, and
+	 * sets up an action with the name win.show-help-overlay to present
+	 * it.
+	 *
+	 * Params:
+	 *     helpOverlay = a #GtkShortcutsWindow
+	 *
+	 * Since: 3.20
+	 */
+	public void setHelpOverlay(ShortcutsWindow helpOverlay)
+	{
+		gtk_application_window_set_help_overlay(gtkApplicationWindow, (helpOverlay is null) ? null : helpOverlay.getShortcutsWindowStruct());
 	}
 
 	/**

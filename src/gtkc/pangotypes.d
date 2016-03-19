@@ -884,6 +884,122 @@ public enum PangoScript
 	 * Takri. Since: 1.32
 	 */
 	TAKRI = 87,
+	/**
+	 * Bassa. Since: 1.40
+	 */
+	BASSA_VAH = 88,
+	/**
+	 * Caucasian Albanian. Since: 1.40
+	 */
+	CAUCASIAN_ALBANIAN = 89,
+	/**
+	 * Duployan. Since: 1.40
+	 */
+	DUPLOYAN = 90,
+	/**
+	 * Elbasan. Since: 1.40
+	 */
+	ELBASAN = 91,
+	/**
+	 * Grantha. Since: 1.40
+	 */
+	GRANTHA = 92,
+	/**
+	 * Kjohki. Since: 1.40
+	 */
+	KHOJKI = 93,
+	/**
+	 * Khudawadi, Sindhi. Since: 1.40
+	 */
+	KHUDAWADI = 94,
+	/**
+	 * Linear A. Since: 1.40
+	 */
+	LINEAR_A = 95,
+	/**
+	 * Mahajani. Since: 1.40
+	 */
+	MAHAJANI = 96,
+	/**
+	 * Manichaean. Since: 1.40
+	 */
+	MANICHAEAN = 97,
+	/**
+	 * Mende Kikakui. Since: 1.40
+	 */
+	MENDE_KIKAKUI = 98,
+	/**
+	 * Modi. Since: 1.40
+	 */
+	MODI = 99,
+	/**
+	 * Mro. Since: 1.40
+	 */
+	MRO = 100,
+	/**
+	 * Nabataean. Since: 1.40
+	 */
+	NABATAEAN = 101,
+	/**
+	 * Old North Arabian. Since: 1.40
+	 */
+	OLD_NORTH_ARABIAN = 102,
+	/**
+	 * Old Permic. Since: 1.40
+	 */
+	OLD_PERMIC = 103,
+	/**
+	 * Pahawh Hmong. Since: 1.40
+	 */
+	PAHAWH_HMONG = 104,
+	/**
+	 * Palmyrene. Since: 1.40
+	 */
+	PALMYRENE = 105,
+	/**
+	 * Pau Cin Hau. Since: 1.40
+	 */
+	PAU_CIN_HAU = 106,
+	/**
+	 * Psalter Pahlavi. Since: 1.40
+	 */
+	PSALTER_PAHLAVI = 107,
+	/**
+	 * Siddham. Since: 1.40
+	 */
+	SIDDHAM = 108,
+	/**
+	 * Tirhuta. Since: 1.40
+	 */
+	TIRHUTA = 109,
+	/**
+	 * Warang Citi. Since: 1.40
+	 */
+	WARANG_CITI = 110,
+	/**
+	 * Ahom. Since: 1.40
+	 */
+	AHOM = 111,
+	/**
+	 * Anatolian Hieroglyphs. Since: 1.40
+	 */
+	ANATOLIAN_HIEROGLYPHS = 112,
+	/**
+	 * Hatran. Since: 1.40
+	 */
+	HATRAN = 113,
+	/**
+	 * Multani. Since: 1.40
+	 */
+	MULTANI = 114,
+	/**
+	 * Old Hungarian. Since: 1.40
+	 */
+	OLD_HUNGARIAN = 115,
+	/**
+	 * Signwriting. Since: 1.40
+	 */
+	SIGNWRITING = 116,
 }
 
 /**

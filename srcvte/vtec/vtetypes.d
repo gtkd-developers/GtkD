@@ -175,7 +175,7 @@ struct VtePtyClass;
 struct VteTerminal
 {
 	GtkWidget widget;
-	VteTerminalPrivate* pvt;
+	void**[1] UnusedPadding;
 }
 
 /**
@@ -245,8 +245,6 @@ struct VteTerminalClass
 }
 
 struct VteTerminalClassPrivate;
-
-struct VteTerminalPrivate;
 
 /**
  * Specifies the type of a selection function used to check whether

@@ -172,23 +172,18 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with handlers that
-	 * take a flags type as an argument and return a boolean.  If you have
-	 * such a signal, you will probably also need to use an accumulator,
-	 * such as g_signal_accumulator_true_handled().
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `gboolean (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter
+	 * denotes a flags type.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = a #GValue which can store the returned #gboolean
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding instance and arg1
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalBOOLEANFLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -218,22 +213,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with handlers that
-	 * take a #GObject and a pointer and produce a string.  It is highly
-	 * unlikely that your signal handler fits this description.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `gchar* (*callback) (gpointer instance, GObject *arg1, gpointer arg2, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = a #GValue, which can store the returned string
+	 *     nParamValues = 3
+	 *     paramValues = a #GValue array holding instance, arg1 and arg2
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalSTRINGOBJECTPOINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -263,21 +253,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * boolean argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gboolean arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gboolean parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDBOOLEAN(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -307,21 +293,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * argument which is any boxed pointer type.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, GBoxed *arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #GBoxed* parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDBOXED(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -351,21 +333,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * character argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gchar arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gchar parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDCHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -395,21 +373,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with one
-	 * double-precision floating point argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gdouble arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gdouble parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDDOUBLE(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -439,21 +413,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * argument with an enumerated type.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter denotes an enumeration type..
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the enumeration parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDENUM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -483,21 +453,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * argument with a flags types.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gint arg1, gpointer user_data)` where the #gint parameter denotes a flags type.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the flags parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDFLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -527,21 +493,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with one
-	 * single-precision floating point argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gfloat arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gfloat parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDFLOAT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -571,21 +533,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * integer argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gint arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gint parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDINT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -615,21 +573,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with with a single
-	 * long integer argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, glong arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #glong parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDLONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -659,21 +613,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * #GObject argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, GObject *arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #GObject* parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDOBJECT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -703,21 +653,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * argument of type #GParamSpec.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, GParamSpec *arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #GParamSpec* parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDPARAM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -747,25 +693,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single raw
-	 * pointer argument type.
-	 *
-	 * If it is possible, it is better to use one of the more specific
-	 * functions such as g_cclosure_marshal_VOID__OBJECT() or
-	 * g_cclosure_marshal_VOID__OBJECT().
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gpointer arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gpointer parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDPOINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -795,21 +733,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single string
-	 * argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, const gchar *arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gchar* parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDSTRING(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -839,21 +773,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * unsigned character argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, guchar arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #guchar parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDUCHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -883,21 +813,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with with a single
-	 * unsigned integer argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, guint arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #guint parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDUINT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -905,21 +831,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a unsigned int
-	 * and a pointer as arguments.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, guint arg1, gpointer arg2, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 3
+	 *     paramValues = a #GValue array holding instance, arg1 and arg2
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDUINTPOINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -971,21 +893,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * unsigned long integer argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gulong arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #gulong parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDULONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -1015,21 +933,19 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with a single
-	 * #GVariant argument.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, GVariant *arg1, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 2
+	 *     paramValues = a #GValue array holding the instance and the #GVariant* parameter
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
+	 *
+	 * Since: 2.26
 	 */
 	public static void marshalVOIDVARIANT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
@@ -1059,20 +975,17 @@ public class CClosure
 	}
 
 	/**
-	 * A #GClosureMarshal function for use with signals with no arguments.
+	 * A marshaller for a #GCClosure with a callback of type
+	 * `void (*callback) (gpointer instance, gpointer user_data)`.
 	 *
 	 * Params:
-	 *     closure = A #GClosure.
-	 *     returnValue = A #GValue to store the return value. May be %NULL
-	 *         if the callback of closure doesn't return a value.
-	 *     nParamValues = The length of the @param_values array.
-	 *     paramValues = An array of #GValues holding the arguments
-	 *         on which to invoke the callback of closure.
-	 *     invocationHint = The invocation hint given as the last argument to
-	 *         g_closure_invoke().
-	 *     marshalData = Additional data specified when registering the
-	 *         marshaller, see g_closure_set_marshal() and
-	 *         g_closure_set_meta_marshal()
+	 *     closure = the #GClosure to which the marshaller belongs
+	 *     returnValue = ignored
+	 *     nParamValues = 1
+	 *     paramValues = a #GValue array holding only the instance
+	 *     invocationHint = the invocation hint given as the last argument
+	 *         to g_closure_invoke()
+	 *     marshalData = additional data specified when registering the marshaller
 	 */
 	public static void marshalVOIDVOID(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{

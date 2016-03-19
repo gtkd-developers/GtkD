@@ -358,14 +358,20 @@ public struct Str
 	 *
 	 * Params:
 	 *     nptr = the string to convert to a numeric value.
-	 *     endptr = if non-%NULL, it returns the character after
-	 *         the last character used in the conversion.
+	 *     endptr = if non-%NULL, it returns the
+	 *         character after the last character used in the conversion.
 	 *
 	 * Return: the #gdouble value.
 	 */
-	public static double asciiStrtod(string nptr, string[] endptr)
+	public static double asciiStrtod(string nptr, out string endptr)
 	{
-		return g_ascii_strtod(Str.toStringz(nptr), Str.toStringzArray(endptr));
+		char* outendptr = null;
+		
+		auto p = g_ascii_strtod(Str.toStringz(nptr), &outendptr);
+		
+		endptr = Str.toString(outendptr);
+		
+		return p;
 	}
 
 	/**
@@ -389,17 +395,23 @@ public struct Str
 	 *
 	 * Params:
 	 *     nptr = the string to convert to a numeric value.
-	 *     endptr = if non-%NULL, it returns the character after
-	 *         the last character used in the conversion.
+	 *     endptr = if non-%NULL, it returns the
+	 *         character after the last character used in the conversion.
 	 *     base = to be used for the conversion, 2..36 or 0
 	 *
 	 * Return: the #gint64 value or zero on error.
 	 *
 	 * Since: 2.12
 	 */
-	public static long asciiStrtoll(string nptr, string[] endptr, uint base)
+	public static long asciiStrtoll(string nptr, out string endptr, uint base)
 	{
-		return g_ascii_strtoll(Str.toStringz(nptr), Str.toStringzArray(endptr), base);
+		char* outendptr = null;
+		
+		auto p = g_ascii_strtoll(Str.toStringz(nptr), &outendptr, base);
+		
+		endptr = Str.toString(outendptr);
+		
+		return p;
 	}
 
 	/**
@@ -423,17 +435,23 @@ public struct Str
 	 *
 	 * Params:
 	 *     nptr = the string to convert to a numeric value.
-	 *     endptr = if non-%NULL, it returns the character after
-	 *         the last character used in the conversion.
+	 *     endptr = if non-%NULL, it returns the
+	 *         character after the last character used in the conversion.
 	 *     base = to be used for the conversion, 2..36 or 0
 	 *
 	 * Return: the #guint64 value or zero on error.
 	 *
 	 * Since: 2.2
 	 */
-	public static ulong asciiStrtoull(string nptr, string[] endptr, uint base)
+	public static ulong asciiStrtoull(string nptr, out string endptr, uint base)
 	{
-		return g_ascii_strtoull(Str.toStringz(nptr), Str.toStringzArray(endptr), base);
+		char* outendptr = null;
+		
+		auto p = g_ascii_strtoull(Str.toStringz(nptr), &outendptr, base);
+		
+		endptr = Str.toString(outendptr);
+		
+		return p;
 	}
 
 	/**
@@ -1350,14 +1368,20 @@ public struct Str
 	 *
 	 * Params:
 	 *     nptr = the string to convert to a numeric value.
-	 *     endptr = if non-%NULL, it returns the character after
-	 *         the last character used in the conversion.
+	 *     endptr = if non-%NULL, it returns the
+	 *         character after the last character used in the conversion.
 	 *
 	 * Return: the #gdouble value.
 	 */
-	public static double strtod(string nptr, string[] endptr)
+	public static double strtod(string nptr, out string endptr)
 	{
-		return g_strtod(Str.toStringz(nptr), Str.toStringzArray(endptr));
+		char* outendptr = null;
+		
+		auto p = g_strtod(Str.toStringz(nptr), &outendptr);
+		
+		endptr = Str.toString(outendptr);
+		
+		return p;
 	}
 
 	/**

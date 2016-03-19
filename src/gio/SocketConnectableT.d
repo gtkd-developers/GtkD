@@ -25,6 +25,7 @@
 module gio.SocketConnectableT;
 
 public  import gio.SocketAddressEnumerator;
+public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
@@ -140,5 +141,26 @@ public template SocketConnectableT(TStruct)
 		}
 		
 		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
+	}
+
+	/**
+	 * Format a #GSocketConnectable as a string. This is a human-readable format for
+	 * use in debugging output, and is not a stable serialization format. It is not
+	 * suitable for use in user interfaces as it exposes too much information for a
+	 * user.
+	 *
+	 * If the #GSocketConnectable implementation does not support string formatting,
+	 * the implementation’s type name will be returned as a fallback.
+	 *
+	 * Return: the formatted string
+	 *
+	 * Since: 2.48
+	 */
+	public override string toString()
+	{
+		auto retStr = g_socket_connectable_to_string(getSocketConnectableStruct());
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }
