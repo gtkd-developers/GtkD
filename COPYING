@@ -16,7 +16,7 @@ GtkD library, nor do you have to identify GtkD's license in your application as 
 LGPL. However, applications must still identify their use of GtkD. The following example statement 
 can be included in the application or it's documentation to satisfy this requirement:
 
-[application] is based in part on works of the GtkD project (http://www.dsource.org/projects/gtkd).
+[application] is based in part on works of the GtkD project (http://gtkd.org).
 
 The above exceptions are temporary and are subject to change at any time.
 
