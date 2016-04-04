@@ -43,7 +43,6 @@ Optionaly these options are available:
  * [shared-]gda    = build gda.
  * [shared-]gstreamer = build gstreamer.
  * shared          = build gtkd and gtkd-sourceview as shared libraries.
-                     This currently only works with LDC.
  * install and uninstall options are also available for the options
    mentioned above.
 
