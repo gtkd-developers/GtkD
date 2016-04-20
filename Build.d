@@ -25,7 +25,7 @@ int main(string[] args)
 	
 	foreach ( arg; args )
 	{
-		if ( !["gtkd", "gtkdgl", "sv", "gstreamer", "vte", "all"].canFind(arg) )
+		if ( !["gtkd", "gtkdgl", "sv", "gstreamer", "vte", "peas", "all"].canFind(arg) )
 		{
 			writefln("Unknown option: %s", arg);
 			return 1;
@@ -56,6 +56,9 @@ int main(string[] args)
 				break;
 			case "vte":
 				build("srcvte", "vted");
+				break;
+			case "peas":
+				build("srcpeas", "peasd");
 				break;
 			default:
 				assert(false);
