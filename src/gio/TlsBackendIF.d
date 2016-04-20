@@ -33,7 +33,7 @@ public  import gtkc.giotypes;
 
 
 /**
- * TLS (Transport Layer Security, aka SSL) backend
+ * TLS (Transport Layer Security, aka SSL) and DTLS backend.
  *
  * Since: 2.28
  */
@@ -84,10 +84,24 @@ public interface TlsBackendIF{
 	 */
 	public TlsDatabase getDefaultDatabase();
 
-	/** */
+	/**
+	 * Gets the #GType of @backend’s #GDtlsClientConnection implementation.
+	 *
+	 * Return: the #GType of @backend’s #GDtlsClientConnection
+	 *     implementation.
+	 *
+	 * Since: 2.48
+	 */
 	public GType getDtlsClientConnectionType();
 
-	/** */
+	/**
+	 * Gets the #GType of @backend’s #GDtlsServerConnection implementation.
+	 *
+	 * Return: the #GType of @backend’s #GDtlsServerConnection
+	 *     implementation.
+	 *
+	 * Since: 2.48
+	 */
 	public GType getDtlsServerConnectionType();
 
 	/**
@@ -109,7 +123,14 @@ public interface TlsBackendIF{
 	 */
 	public GType getServerConnectionType();
 
-	/** */
+	/**
+	 * Checks if DTLS is supported. DTLS support may not be available even if TLS
+	 * support is available, and vice-versa.
+	 *
+	 * Return: whether DTLS is supported
+	 *
+	 * Since: 2.48
+	 */
 	public bool supportsDtls();
 
 	/**

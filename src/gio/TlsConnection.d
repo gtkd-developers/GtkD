@@ -44,6 +44,8 @@ public  import gtkc.giotypes;
  * a #GIOStream and provides TLS encryption on top of it. Its
  * subclasses, #GTlsClientConnection and #GTlsServerConnection,
  * implement client-side and server-side TLS, respectively.
+ * 
+ * For DTLS (Datagram TLS) support, see #GDtlsConnection.
  *
  * Since: 2.28
  */
@@ -459,7 +461,8 @@ public class TlsConnection : IOStream
 	 * on @conn, this will send a close notification regardless of the
 	 * setting of this property. If you explicitly want to do an unclean
 	 * close, you can close @conn's #GTlsConnection:base-io-stream rather
-	 * than closing @conn itself.
+	 * than closing @conn itself, but note that this may only be done when no other
+	 * operations are pending on @conn or the base I/O stream.
 	 *
 	 * Params:
 	 *     requireCloseNotify = whether or not to require close notification

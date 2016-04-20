@@ -43,12 +43,12 @@ public struct Unicode
 	 *     str = a UCS-4 encoded string
 	 *     len = the maximum length (number of characters) of @str to use.
 	 *         If @len < 0, then the string is nul-terminated.
-	 *     itemsRead = location to store number of bytes read,
-	 *         or %NULL. If an error occurs then the index of the invalid input
-	 *         is stored here.
-	 *     itemsWritten = location to store number of #gunichar2
-	 *         written, or %NULL. The value stored here does not include the
-	 *         trailing 0.
+	 *     itemsRead = location to store number of
+	 *         bytes read, or %NULL. If an error occurs then the index of the invalid
+	 *         input is stored here.
+	 *     itemsWritten = location to store number
+	 *         of #gunichar2  written, or %NULL. The value stored here does not include
+	 *         the trailing 0.
 	 *
 	 * Return: a pointer to a newly allocated UTF-16 string.
 	 *     This value must be freed with g_free(). If an error occurs,
@@ -56,11 +56,11 @@ public struct Unicode
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static wchar* ucs4ToUtf16(dchar* str, glong len, glong* itemsRead, glong* itemsWritten)
+	public static wchar* ucs4ToUtf16(dchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
 		
-		auto p = g_ucs4_to_utf16(str, len, itemsRead, itemsWritten, &err);
+		auto p = g_ucs4_to_utf16(str, len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -78,10 +78,10 @@ public struct Unicode
 	 *     str = a UCS-4 encoded string
 	 *     len = the maximum length (number of characters) of @str to use.
 	 *         If @len < 0, then the string is nul-terminated.
-	 *     itemsRead = location to store number of characters
-	 *         read, or %NULL.
-	 *     itemsWritten = location to store number of bytes
-	 *         written or %NULL. The value here stored does not include the
+	 *     itemsRead = location to store number of
+	 *         characters read, or %NULL.
+	 *     itemsWritten = location to store number
+	 *         of bytes written or %NULL. The value here stored does not include the
 	 *         trailing 0 byte.
 	 *
 	 * Return: a pointer to a newly allocated UTF-8 string.
@@ -91,11 +91,11 @@ public struct Unicode
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string ucs4ToUtf8(dchar* str, glong len, glong* itemsRead, glong* itemsWritten)
+	public static string ucs4ToUtf8(dchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
 		
-		auto retStr = g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, &err);
+		auto retStr = g_ucs4_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -595,15 +595,15 @@ public struct Unicode
 	 *
 	 * Params:
 	 *     c = a Unicode character code
-	 *     outbuf = output buffer, must have at least 6 bytes of space.
-	 *         If %NULL, the length will be computed and returned
-	 *         and nothing will be written to @outbuf.
+	 *     outbuf = output buffer, must have at
+	 *         least 6 bytes of space. If %NULL, the length will be computed and
+	 *         returned and nothing will be written to @outbuf.
 	 *
 	 * Return: number of bytes written
 	 */
-	public static int unicharToUtf8(dchar c, string outbuf)
+	public static int unicharToUtf8(dchar c, out char[] outbuf)
 	{
-		return g_unichar_to_utf8(c, Str.toStringz(outbuf));
+		return g_unichar_to_utf8(c, outbuf.ptr);
 	}
 
 	/**
@@ -785,13 +785,13 @@ public struct Unicode
 	 *     str = a UTF-16 encoded string
 	 *     len = the maximum length (number of #gunichar2) of @str to use.
 	 *         If @len < 0, then the string is nul-terminated.
-	 *     itemsRead = location to store number of words read,
-	 *         or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *         returned in case @str contains a trailing partial character. If
+	 *     itemsRead = location to store number of
+	 *         words read, or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will
+	 *         be returned in case @str contains a trailing partial character. If
 	 *         an error occurs then the index of the invalid input is stored here.
-	 *     itemsWritten = location to store number of characters
-	 *         written, or %NULL. The value stored here does not include the trailing
-	 *         0 character.
+	 *     itemsWritten = location to store number
+	 *         of characters written, or %NULL. The value stored here does not include
+	 *         the trailing 0 character.
 	 *
 	 * Return: a pointer to a newly allocated UCS-4 string.
 	 *     This value must be freed with g_free(). If an error occurs,
@@ -799,11 +799,11 @@ public struct Unicode
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static dchar* utf16ToUcs4(wchar* str, glong len, glong* itemsRead, glong* itemsWritten)
+	public static dchar* utf16ToUcs4(wchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
 		
-		auto p = g_utf16_to_ucs4(str, len, itemsRead, itemsWritten, &err);
+		auto p = g_utf16_to_ucs4(str, len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -832,12 +832,13 @@ public struct Unicode
 	 *     str = a UTF-16 encoded string
 	 *     len = the maximum length (number of #gunichar2) of @str to use.
 	 *         If @len < 0, then the string is nul-terminated.
-	 *     itemsRead = location to store number of words read,
-	 *         or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *         returned in case @str contains a trailing partial character. If
+	 *     itemsRead = location to store number of
+	 *         words read, or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will
+	 *         be returned in case @str contains a trailing partial character. If
 	 *         an error occurs then the index of the invalid input is stored here.
-	 *     itemsWritten = location to store number of bytes written,
-	 *         or %NULL. The value stored here does not include the trailing 0 byte.
+	 *     itemsWritten = location to store number
+	 *         of bytes written, or %NULL. The value stored here does not include the
+	 *         trailing 0 byte.
 	 *
 	 * Return: a pointer to a newly allocated UTF-8 string.
 	 *     This value must be freed with g_free(). If an error occurs,
@@ -845,11 +846,11 @@ public struct Unicode
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string utf16ToUtf8(wchar* str, glong len, glong* itemsRead, glong* itemsWritten)
+	public static string utf16ToUtf8(wchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
 		
-		auto retStr = g_utf16_to_utf8(str, len, itemsRead, itemsWritten, &err);
+		auto retStr = g_utf16_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -1352,14 +1353,15 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     len = the maximum length of @str to use, in bytes. If @len < 0,
 	 *         then the string is nul-terminated.
-	 *     itemsRead = location to store number of bytes read, or %NULL.
+	 *     itemsRead = location to store number of
+	 *         bytes read, or %NULL.
 	 *         If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
 	 *         returned in case @str contains a trailing partial
 	 *         character. If an error occurs then the index of the
 	 *         invalid input is stored here.
-	 *     itemsWritten = location to store number of characters
-	 *         written or %NULL. The value here stored does not include the
-	 *         trailing 0 character.
+	 *     itemsWritten = location to store number
+	 *         of characters written or %NULL. The value here stored does not include
+	 *         the trailing 0 character.
 	 *
 	 * Return: a pointer to a newly allocated UCS-4 string.
 	 *     This value must be freed with g_free(). If an error occurs,
@@ -1367,11 +1369,11 @@ public struct Unicode
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static dchar* utf8ToUcs4(string str, glong len, glong* itemsRead, glong* itemsWritten)
+	public static dchar* utf8ToUcs4(string str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
 		
-		auto p = g_utf8_to_ucs4(Str.toStringz(str), len, itemsRead, itemsWritten, &err);
+		auto p = g_utf8_to_ucs4(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{
@@ -1392,15 +1394,15 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     len = the maximum length of @str to use, in bytes. If @len < 0,
 	 *         then the string is nul-terminated.
-	 *     itemsWritten = location to store the number of
-	 *         characters in the result, or %NULL.
+	 *     itemsWritten = location to store the
+	 *         number of characters in the result, or %NULL.
 	 *
 	 * Return: a pointer to a newly allocated UCS-4 string.
 	 *     This value must be freed with g_free().
 	 */
-	public static dchar* utf8ToUcs4Fast(string str, glong len, glong* itemsWritten)
+	public static dchar* utf8ToUcs4Fast(string str, glong len, out glong itemsWritten)
 	{
-		return g_utf8_to_ucs4_fast(Str.toStringz(str), len, itemsWritten);
+		return g_utf8_to_ucs4_fast(Str.toStringz(str), len, &itemsWritten);
 	}
 
 	/**
@@ -1411,13 +1413,13 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     len = the maximum length (number of bytes) of @str to use.
 	 *         If @len < 0, then the string is nul-terminated.
-	 *     itemsRead = location to store number of bytes read,
-	 *         or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
-	 *         returned in case @str contains a trailing partial character. If
+	 *     itemsRead = location to store number of
+	 *         bytes read, or %NULL. If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will
+	 *         be returned in case @str contains a trailing partial character. If
 	 *         an error occurs then the index of the invalid input is stored here.
-	 *     itemsWritten = location to store number of #gunichar2
-	 *         written, or %NULL. The value stored here does not include the
-	 *         trailing 0.
+	 *     itemsWritten = location to store number
+	 *         of #gunichar2 written, or %NULL. The value stored here does not include
+	 *         the trailing 0.
 	 *
 	 * Return: a pointer to a newly allocated UTF-16 string.
 	 *     This value must be freed with g_free(). If an error occurs,
@@ -1425,11 +1427,11 @@ public struct Unicode
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static wchar* utf8ToUtf16(string str, glong len, glong* itemsRead, glong* itemsWritten)
+	public static wchar* utf8ToUtf16(string str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
 		
-		auto p = g_utf8_to_utf16(Str.toStringz(str), len, itemsRead, itemsWritten, &err);
+		auto p = g_utf8_to_utf16(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
 		
 		if (err !is null)
 		{

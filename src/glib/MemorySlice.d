@@ -68,7 +68,8 @@ public struct MemorySlice
 	 * Params:
 	 *     blockSize = the number of bytes to allocate
 	 *
-	 * Return: a pointer to the allocated memory block
+	 * Return: a pointer to the allocated memory block, which will be %NULL if and
+	 *     only if @mem_size is 0
 	 *
 	 * Since: 2.10
 	 */
@@ -86,7 +87,8 @@ public struct MemorySlice
 	 * Params:
 	 *     blockSize = the number of bytes to allocate
 	 *
-	 * Return: a pointer to the allocated block
+	 * Return: a pointer to the allocated block, which will be %NULL if and only
+	 *     if @mem_size is 0
 	 *
 	 * Since: 2.10
 	 */
@@ -99,11 +101,14 @@ public struct MemorySlice
 	 * Allocates a block of memory from the slice allocator
 	 * and copies @block_size bytes into it from @mem_block.
 	 *
+	 * @mem_block must be non-%NULL if @block_size is non-zero.
+	 *
 	 * Params:
 	 *     blockSize = the number of bytes to allocate
 	 *     memBlock = the memory to copy
 	 *
-	 * Return: a pointer to the allocated memory block
+	 * Return: a pointer to the allocated memory block, which will be %NULL if and
+	 *     only if @mem_size is 0
 	 *
 	 * Since: 2.14
 	 */
@@ -120,6 +125,8 @@ public struct MemorySlice
 	 * specified upon allocation. Note that the exact release behaviour
 	 * can be changed with the [`G_DEBUG=gc-friendly`][G_DEBUG] environment
 	 * variable, also see [`G_SLICE`][G_SLICE] for related debugging options.
+	 *
+	 * If @mem_block is %NULL, this function does nothing.
 	 *
 	 * Params:
 	 *     blockSize = the size of the block
@@ -142,6 +149,8 @@ public struct MemorySlice
 	 * Note that the exact release behaviour can be changed with the
 	 * [`G_DEBUG=gc-friendly`][G_DEBUG] environment variable, also see
 	 * [`G_SLICE`][G_SLICE] for related debugging options.
+	 *
+	 * If @mem_chain is %NULL, this function does nothing.
 	 *
 	 * Params:
 	 *     blockSize = the size of the blocks

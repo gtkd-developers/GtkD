@@ -235,9 +235,11 @@ public class Closure
 	 * g_object_watch_closure() for an example of marshal guards.
 	 *
 	 * Params:
-	 *     preMarshalData = data to pass to @pre_marshal_notify
+	 *     preMarshalData = data to pass
+	 *         to @pre_marshal_notify
 	 *     preMarshalNotify = a function to call before the closure callback
-	 *     postMarshalData = data to pass to @post_marshal_notify
+	 *     postMarshalData = data to pass
+	 *         to @post_marshal_notify
 	 *     postMarshalNotify = a function to call after the closure callback
 	 */
 	public void addMarshalGuards(void* preMarshalData, GClosureNotify preMarshalNotify, void* postMarshalData, GClosureNotify postMarshalNotify)
@@ -278,15 +280,19 @@ public class Closure
 	 *         invoke the callback of @closure
 	 *     invocationHint = a context-dependent invocation hint
 	 */
-	public void invoke(Value returnValue, Value[] paramValues, void* invocationHint)
+	public void invoke(out Value returnValue, Value[] paramValues, void* invocationHint)
 	{
+		GValue* outreturnValue = gMalloc!GValue();
+		
 		GValue[] paramValuesArray = new GValue[paramValues.length];
 		for ( int i = 0; i < paramValues.length; i++ )
 		{
 			paramValuesArray[i] = *(paramValues[i].getValueStruct());
 		}
 		
-		g_closure_invoke(gClosure, (returnValue is null) ? null : returnValue.getValueStruct(), cast(uint)paramValues.length, paramValuesArray.ptr, invocationHint);
+		g_closure_invoke(gClosure, outreturnValue, cast(uint)paramValues.length, paramValuesArray.ptr, invocationHint);
+		
+		returnValue = ObjectG.getDObject!(Value)(outreturnValue, true);
 	}
 
 	/**
@@ -370,7 +376,8 @@ public class Closure
 	 * @marshal_data argument.
 	 *
 	 * Params:
-	 *     marshalData = context-dependent data to pass to @meta_marshal
+	 *     marshalData = context-dependent data to pass
+	 *         to @meta_marshal
 	 *     metaMarshal = a #GClosureMarshal function
 	 */
 	public void setMetaMarshal(void* marshalData, GClosureMarshal metaMarshal)

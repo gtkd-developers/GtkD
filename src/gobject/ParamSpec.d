@@ -99,9 +99,16 @@ public class ParamSpec
 	 *
 	 * Return: a newly allocated #GParamSpec instance
 	 */
-	public static void* internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
+	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
-		return g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
+		auto p = g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
 	/**

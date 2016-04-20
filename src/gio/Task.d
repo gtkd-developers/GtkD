@@ -200,11 +200,11 @@ public  import gtkc.giotypes;
  * 
  * // baking_data_free() will drop its ref on the cake, so we have to
  * // take another here to give to the caller.
- * g_task_return_pointer (result, g_object_ref (cake), g_object_unref);
+ * g_task_return_pointer (task, g_object_ref (cake), g_object_unref);
  * g_object_unref (task);
  * }
  * 
- * static void
+ * static gboolean
  * decorator_ready (gpointer user_data)
  * {
  * GTask *task = user_data;
@@ -213,6 +213,8 @@ public  import gtkc.giotypes;
  * cake_decorate_async (bd->cake, bd->frosting, bd->message,
  * g_task_get_cancellable (task),
  * decorated_cb, task);
+ * 
+ * return G_SOURCE_REMOVE;
  * }
  * 
  * static void
@@ -249,8 +251,7 @@ public  import gtkc.giotypes;
  * source = cake_decorator_wait_source_new (cake);
  * // Attach @source to @task's GMainContext and have it call
  * // decorator_ready() when it is ready.
- * g_task_attach_source (task, source,
- * G_CALLBACK (decorator_ready));
+ * g_task_attach_source (task, source, decorator_ready);
  * g_source_unref (source);
  * }
  * }

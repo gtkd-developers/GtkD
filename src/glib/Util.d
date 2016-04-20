@@ -700,8 +700,8 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * This is the directory
 	 * specified in the `XDG_RUNTIME_DIR` environment variable.
-	 * In the case that this variable is not set, GLib will issue a warning
-	 * message to stderr and return the value of g_get_user_cache_dir().
+	 * In the case that this variable is not set, we return the value of
+	 * g_get_user_cache_dir(), after verifying that it exists.
 	 *
 	 * On Windows this is the folder to use for local (as opposed to
 	 * roaming) application data. See documentation for

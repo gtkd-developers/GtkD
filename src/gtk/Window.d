@@ -1366,7 +1366,7 @@ public class Window : Bin
 	 * gtk_widget_show_all (vbox);
 	 *
 	 * gtk_window_set_geometry_hints (GTK_WINDOW (window),
-	 * window,
+	 * NULL,
 	 * &size_hints,
 	 * GDK_HINT_MIN_SIZE |
 	 * GDK_HINT_BASE_SIZE |
@@ -1815,7 +1815,7 @@ public class Window : Bin
 	 *
 	 * Params:
 	 *     geometryWidget = widget the geometry hints used to be applied to
-	 *         or %NULL. Since 3.18 this argument is ignored and GTK behaves as if %NULL was
+	 *         or %NULL. Since 3.20 this argument is ignored and GTK behaves as if %NULL was
 	 *         set.
 	 *     geometry = struct containing geometry information or %NULL
 	 *     geomMask = mask indicating which struct fields should be paid attention to

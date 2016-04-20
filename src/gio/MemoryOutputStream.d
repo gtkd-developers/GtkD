@@ -181,7 +181,8 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 * Note that the returned pointer may become invalid on the next
 	 * write or truncate operation on the stream.
 	 *
-	 * Return: pointer to the stream's data
+	 * Return: pointer to the stream's data, or %NULL if the data
+	 *     has been stolen
 	 */
 	public void* getData()
 	{
@@ -253,7 +254,8 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 *
 	 * @ostream must be closed before calling this function.
 	 *
-	 * Return: the stream's data
+	 * Return: the stream's data, or %NULL if it has previously
+	 *     been stolen
 	 *
 	 * Since: 2.26
 	 */

@@ -79,7 +79,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -273,7 +273,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -311,7 +311,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -389,7 +389,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -410,7 +410,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -440,7 +440,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -463,7 +463,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -486,7 +486,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -511,7 +511,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -532,7 +532,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -553,7 +553,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -580,7 +580,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -601,7 +601,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -625,7 +625,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -645,7 +645,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -666,7 +666,7 @@ public class StringG
 			return null;
 		}
 		
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) p);
 	}
 
 	/**
@@ -690,7 +690,7 @@ public class StringG
 	 *
 	 * Params:
 	 *     init = the initial text to copy into the string, or %NULL to
-	 *         start with an empty string.
+	 *         start with an empty string
 	 *
 	 * Return: the new #GString
 	 */

@@ -49,12 +49,15 @@ public  import gtkc.gtktypes;
  * gtk_style_context_add_provider_for_screen().
  * 
  * In addition, certain files will be read when GTK+ is initialized. First, the
- * file $XDG_CONFIG_HOME/gtk-3.0/gtk.css` is loaded if it exists. Then, GTK+ tries
- * to load `$HOME/.themes/theme-name/gtk-3.0/gtk.css`, falling back to
+ * file $XDG_CONFIG_HOME/gtk-3.0/gtk.css` is loaded if it exists. Then, GTK+
+ * loads the first existing file among
+ * `XDG_DATA_HOME/themes/theme-name/gtk-VERSION/gtk.css`,
+ * `$HOME/.themes/theme-name/gtk-VERSION/gtk.css`,
+ * `$XDG_DATA_DIRS/themes/theme-name/gtk-VERSION/gtk.css` and
  * `DATADIR/share/themes/THEME/gtk-VERSION/gtk.css`, where THEME is the name of
  * the current theme (see the #GtkSettings:gtk-theme-name setting), DATADIR
- * is the prefix configured when GTK+ was compiled, unless overridden by the
- * `GTK_DATA_PREFIX` environment variable, and VERSION is the GTK+ version number.
+ * is the prefix configured when GTK+ was compiled (unless overridden by the
+ * `GTK_DATA_PREFIX` environment variable), and VERSION is the GTK+ version number.
  * If no file is found for the current version, GTK+ tries older versions all the
  * way back to 3.0.
  * 
@@ -176,7 +179,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
-	 *     %NULL and a loading error occured. To track errors while loading
+	 *     %NULL and a loading error occurred. To track errors while loading
 	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
 	 *
 	 * Throws: GException on failure.
@@ -204,7 +207,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
-	 *     %NULL and a loading error occured. To track errors while loading
+	 *     %NULL and a loading error occurred. To track errors while loading
 	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
 	 *
 	 * Throws: GException on failure.
@@ -232,7 +235,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
-	 *     %NULL and a loading error occured. To track errors while loading
+	 *     %NULL and a loading error occurred. To track errors while loading
 	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
 	 *
 	 * Throws: GException on failure.
@@ -293,7 +296,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 
 	void delegate(CssSection, ErrorG, CssProvider)[] onParsingErrorListeners;
 	/**
-	 * Signals that a parsing error occured. the @path, @line and @position
+	 * Signals that a parsing error occurred. the @path, @line and @position
 	 * describe the actual location of the error as accurately as possible.
 	 *
 	 * Parsing errors are never fatal, so the parsing will resume after

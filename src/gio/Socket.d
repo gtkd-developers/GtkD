@@ -1246,14 +1246,14 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t receiveMessage(out SocketAddress address, GInputVector[] vectors, out SocketControlMessage[] messages, int* flags, Cancellable cancellable)
+	public ptrdiff_t receiveMessage(out SocketAddress address, GInputVector[] vectors, out SocketControlMessage[] messages, ref int flags, Cancellable cancellable)
 	{
 		GSocketAddress* outaddress = null;
 		GSocketControlMessage** outmessages = null;
 		int numMessages;
 		GError* err = null;
 		
-		auto p = g_socket_receive_message(gSocket, &outaddress, vectors.ptr, cast(int)vectors.length, &outmessages, &numMessages, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_receive_message(gSocket, &outaddress, vectors.ptr, cast(int)vectors.length, &outmessages, &numMessages, &flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{

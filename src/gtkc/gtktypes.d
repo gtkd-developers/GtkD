@@ -760,6 +760,7 @@ public enum GtkDebugFlag
 	TOUCHSCREEN = 262144,
 	ACTIONS = 524288,
 	RESIZE = 1048576,
+	LAYOUT = 2097152,
 }
 alias GtkDebugFlag DebugFlag;
 
@@ -2153,7 +2154,7 @@ alias GtkPrintOperationAction PrintOperationAction;
 public enum GtkPrintOperationResult
 {
 	/**
-	 * An error has occured.
+	 * An error has occurred.
 	 */
 	ERROR = 0,
 	/**
@@ -10701,7 +10702,7 @@ struct GtkTreeModelIface
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the new #GtkTreeIter-struct to be set to the child
 	 *     parent = the #GtkTreeIter-struct, or %NULL
-	 * Return: %TRUE, if @child has been set to the first child
+	 * Return: %TRUE, if @iter has been set to the first child
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* parent) iterChildren;
 	/**

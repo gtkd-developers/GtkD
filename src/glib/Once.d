@@ -94,7 +94,8 @@ public class Once
 	 * ]|
 	 *
 	 * Params:
-	 *     location = location of a static initializable variable containing 0
+	 *     location = location of a static initializable variable
+	 *         containing 0
 	 *
 	 * Return: %TRUE if the initialization section should be entered,
 	 *     %FALSE and blocks otherwise
@@ -114,7 +115,8 @@ public class Once
 	 * initialization variable.
 	 *
 	 * Params:
-	 *     location = location of a static initializable variable containing 0
+	 *     location = location of a static initializable variable
+	 *         containing 0
 	 *     result = new non-0 value for *@value_location
 	 *
 	 * Since: 2.14

@@ -139,8 +139,8 @@ public class Regex
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options for the regular expression, or 0
 	 *
-	 * Return: a #GRegex structure. Call g_regex_unref() when you
-	 *     are done with it
+	 * Return: a #GRegex structure or %NULL if an error occured. Call
+	 *     g_regex_unref() when you are done with it
 	 *
 	 * Since: 2.14
 	 *
@@ -410,7 +410,7 @@ public class Regex
 	 * Params:
 	 *     str = the string to scan for matches
 	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
-	 *     startPosition = starting index of the string to match
+	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
@@ -492,7 +492,7 @@ public class Regex
 	 * Params:
 	 *     str = the string to scan for matches
 	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
-	 *     startPosition = starting index of the string to match
+	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
@@ -570,7 +570,7 @@ public class Regex
 	 * Params:
 	 *     str = the string to perform matches against
 	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
-	 *     startPosition = starting index of the string to match
+	 *     startPosition = starting index of the string to match, in bytes
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
 	 *
@@ -645,7 +645,7 @@ public class Regex
 	 * Params:
 	 *     str = string to perform matches against
 	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
-	 *     startPosition = starting index of the string to match
+	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = options for the match
 	 *     eval = a function to call for each match
 	 *     userData = user data to pass to the function
@@ -684,7 +684,7 @@ public class Regex
 	 * Params:
 	 *     str = the string to perform matches against
 	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
-	 *     startPosition = starting index of the string to match
+	 *     startPosition = starting index of the string to match, in bytes
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
 	 *
@@ -771,7 +771,7 @@ public class Regex
 	 * Params:
 	 *     str = the string to split with the pattern
 	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
-	 *     startPosition = starting index of the string to match
+	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match time option flags
 	 *     maxTokens = the maximum number of tokens to split @string into.
 	 *         If this is less than 1, the string is split completely

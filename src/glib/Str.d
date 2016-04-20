@@ -681,6 +681,8 @@ public struct Str
 	 *     fromLocale = the source locale, if known
 	 *
 	 * Return: a string in plain ASCII
+	 *
+	 * Since: 2.40
 	 */
 	public static string toAscii(string str, string fromLocale)
 	{

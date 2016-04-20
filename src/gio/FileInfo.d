@@ -129,8 +129,8 @@ public class FileInfo : ObjectG
 	}
 
 	/**
-	 * Copies all of the [GFileAttribute][gio-GFileAttribute]
-	 * from @src_info to @dest_info.
+	 * First clears all of the [GFileAttribute][gio-GFileAttribute] of @dest_info,
+	 * and then copies all of the file attributes from @src_info to @dest_info.
 	 *
 	 * Params:
 	 *     destInfo = destination to copy attributes to.
@@ -211,7 +211,8 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key
 	 *     type = return location for the attribute type, or %NULL
-	 *     valuePp = return location for the attribute value, or %NULL
+	 *     valuePp = return location for the
+	 *         attribute value, or %NULL; the attribute value will not be %NULL
 	 *     status = return location for the attribute status, or %NULL
 	 *
 	 * Return: %TRUE if @info has an attribute named @attribute,
@@ -595,7 +596,8 @@ public class FileInfo : ObjectG
 	 * Lists the file info structure's attributes.
 	 *
 	 * Params:
-	 *     nameSpace = a file attribute key's namespace.
+	 *     nameSpace = a file attribute key's namespace, or %NULL to list
+	 *         all attributes.
 	 *
 	 * Return: a
 	 *     null-terminated array of strings of all of the possible attribute

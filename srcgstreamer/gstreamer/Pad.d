@@ -544,7 +544,8 @@ public class Pad : ObjectGst
 	 * Gets the capabilities currently configured on @pad with the last
 	 * #GST_EVENT_CAPS event.
 	 *
-	 * Return: the current caps of the pad with incremented ref-count.
+	 * Return: the current caps of the pad with
+	 *     incremented ref-count or %NULL when pad has no caps. Unref after usage.
 	 */
 	public Caps getCurrentCaps()
 	{
@@ -1008,9 +1009,9 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     filter = a #GstCaps filter, or %NULL.
 	 *
-	 * Return: the caps of the peer pad with incremented ref-count. When there is
-	 *     no peer pad, this function returns @filter or, when @filter is %NULL, ANY
-	 *     caps.
+	 * Return: the caps of the peer pad with incremented
+	 *     ref-count. When there is no peer pad, this function returns @filter or,
+	 *     when @filter is %NULL, ANY caps.
 	 */
 	public Caps peerQueryCaps(Caps filter)
 	{

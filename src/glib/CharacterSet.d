@@ -336,18 +336,18 @@ public struct CharacterSet
 	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 *         stored will the byte offset after the last valid
 	 *         input sequence.
-	 *     bytesWritten = the number of bytes stored in the output buffer (not
-	 *         including the terminating nul).
+	 *     bytesWritten = the number of bytes stored in the output
+	 *         buffer (not including the terminating nul).
 	 *
 	 * Return: The converted string, or %NULL on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string filenameToUtf8(string opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten)
+	public static string filenameToUtf8(string opsysstring, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
 		
-		auto retStr = g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, &err);
+		auto retStr = g_filename_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -465,19 +465,19 @@ public struct CharacterSet
 	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 *         stored will the byte offset after the last valid
 	 *         input sequence.
-	 *     bytesWritten = the number of bytes stored in the output buffer (not
-	 *         including the terminating nul).
+	 *     bytesWritten = the number of bytes stored in the output
+	 *         buffer (not including the terminating nul).
 	 *
 	 * Return: A newly-allocated buffer containing the converted string,
 	 *     or %NULL on an error, and error will be set.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string localeFromUtf8(string utf8string, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten)
+	public static string localeFromUtf8(string utf8string, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
 		
-		auto retStr = g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, &err);
+		auto retStr = g_locale_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{
@@ -508,19 +508,19 @@ public struct CharacterSet
 	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
 	 *         stored will the byte offset after the last valid
 	 *         input sequence.
-	 *     bytesWritten = the number of bytes stored in the output buffer (not
-	 *         including the terminating nul).
+	 *     bytesWritten = the number of bytes stored in the output
+	 *         buffer (not including the terminating nul).
 	 *
 	 * Return: A newly-allocated buffer containing the converted string,
 	 *     or %NULL on an error, and error will be set.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string localeToUtf8(string opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten)
+	public static string localeToUtf8(string opsysstring, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
 		
-		auto retStr = g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, &err);
+		auto retStr = g_locale_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
 		
 		if (err !is null)
 		{

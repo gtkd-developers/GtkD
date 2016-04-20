@@ -196,7 +196,7 @@ public class ErrorG
 	 * that could include printf() escape sequences.
 	 *
 	 * Params:
-	 *     err = a return location for a #GError, or %NULL
+	 *     err = a return location for a #GError
 	 *     domain = error domain
 	 *     code = error code
 	 *     message = error message

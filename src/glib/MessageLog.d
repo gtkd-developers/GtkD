@@ -58,7 +58,8 @@ public struct MessageLog
 	 * the rest.
 	 *
 	 * Params:
-	 *     logDomain = the log domain of the message
+	 *     logDomain = the log domain of the message, or %NULL for the
+	 *         default "" application domain
 	 *     logLevel = the level of the message
 	 *     message = the message
 	 *     unusedData = data passed from g_log() which is unused
@@ -216,7 +217,8 @@ public struct MessageLog
 	 * manually.
 	 *
 	 * Params:
-	 *     logDomain = the log domain
+	 *     logDomain = the log domain, or %NULL for the default ""
+	 *         application domain
 	 *     logLevel = the log level
 	 *     format = the message format. See the printf() documentation
 	 *     args = the parameters to insert into the format string

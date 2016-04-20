@@ -35,8 +35,8 @@ public  import gtkc.giotypes;
 
 
 /**
- * DTLS server-side connection. This is the server-side implementation
- * of a #GDtlsConnection.
+ * #GDtlsServerConnection is the server-side subclass of #GDtlsConnection,
+ * representing a server-side DTLS connection.
  *
  * Since: 2.48
  */

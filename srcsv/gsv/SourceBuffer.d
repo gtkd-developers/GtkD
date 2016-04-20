@@ -474,7 +474,7 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.10
 	 */
-	public bool iterBackwardToContextClassToggle(ref TextIter iter, string contextClass)
+	public bool iterBackwardToContextClassToggle(TextIter iter, string contextClass)
 	{
 		return gtk_source_buffer_iter_backward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass)) != 0;
 	}
@@ -496,7 +496,7 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.10
 	 */
-	public bool iterForwardToContextClassToggle(ref TextIter iter, string contextClass)
+	public bool iterForwardToContextClassToggle(TextIter iter, string contextClass)
 	{
 		return gtk_source_buffer_iter_forward_to_context_class_toggle(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(contextClass)) != 0;
 	}

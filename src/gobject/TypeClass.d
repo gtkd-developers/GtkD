@@ -60,59 +60,6 @@ public class TypeClass
 	}
 
 
-	/** */
-	public void* getPrivate(GType privateType)
-	{
-		return g_type_class_get_private(gTypeClass, privateType);
-	}
-
-	/**
-	 * This is a convenience function often needed in class initializers.
-	 * It returns the class structure of the immediate parent type of the
-	 * class passed in.  Since derived classes hold a reference count on
-	 * their parent classes as long as they are instantiated, the returned
-	 * class will always exist.
-	 *
-	 * This function is essentially equivalent to:
-	 * g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)))
-	 *
-	 * Return: the parent class
-	 *     of @g_class
-	 */
-	public TypeClass peekParent()
-	{
-		auto p = g_type_class_peek_parent(gTypeClass);
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
-	}
-
-	/**
-	 * Decrements the reference count of the class structure being passed in.
-	 * Once the last reference count of a class has been released, classes
-	 * may be finalized by the type system, so further dereferencing of a
-	 * class pointer after g_type_class_unref() are invalid.
-	 */
-	public void unref()
-	{
-		g_type_class_unref(gTypeClass);
-	}
-
-	/**
-	 * A variant of g_type_class_unref() for use in #GTypeClassCacheFunc
-	 * implementations. It unreferences a class without consulting the chain
-	 * of #GTypeClassCacheFuncs, avoiding the recursion which would occur
-	 * otherwise.
-	 */
-	public void unrefUncached()
-	{
-		g_type_class_unref_uncached(gTypeClass);
-	}
-
 	/**
 	 * Registers a private structure for an instantiatable type.
 	 *
@@ -178,20 +125,13 @@ public class TypeClass
 	 * ]|
 	 *
 	 * Params:
-	 *     gClass = class structure for an instantiatable type
 	 *     privateSize = size of private structure
 	 *
 	 * Since: 2.4
 	 */
-	public static void addPrivate(void* gClass, size_t privateSize)
+	public void addPrivate(size_t privateSize)
 	{
-		g_type_class_add_private(gClass, privateSize);
-	}
-
-	/** */
-	public static void adjustPrivateOffset(void* gClass, int* privateSizeOrOffset)
-	{
-		g_type_class_adjust_private_offset(gClass, privateSizeOrOffset);
+		g_type_class_add_private(gTypeClass, privateSize);
 	}
 
 	/**
@@ -204,16 +144,72 @@ public class TypeClass
 	 * You can only call this function after you have registered a private
 	 * data area for @g_class using g_type_class_add_private().
 	 *
-	 * Params:
-	 *     gClass = a #GTypeClass
-	 *
 	 * Return: the offset, in bytes
 	 *
 	 * Since: 2.38
 	 */
-	public static int getInstancePrivateOffset(void* gClass)
+	public int getInstancePrivateOffset()
 	{
-		return g_type_class_get_instance_private_offset(gClass);
+		return g_type_class_get_instance_private_offset(gTypeClass);
+	}
+
+	/** */
+	public void* getPrivate(GType privateType)
+	{
+		return g_type_class_get_private(gTypeClass, privateType);
+	}
+
+	/**
+	 * This is a convenience function often needed in class initializers.
+	 * It returns the class structure of the immediate parent type of the
+	 * class passed in.  Since derived classes hold a reference count on
+	 * their parent classes as long as they are instantiated, the returned
+	 * class will always exist.
+	 *
+	 * This function is essentially equivalent to:
+	 * g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)))
+	 *
+	 * Return: the parent class
+	 *     of @g_class
+	 */
+	public TypeClass peekParent()
+	{
+		auto p = g_type_class_peek_parent(gTypeClass);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
+	}
+
+	/**
+	 * Decrements the reference count of the class structure being passed in.
+	 * Once the last reference count of a class has been released, classes
+	 * may be finalized by the type system, so further dereferencing of a
+	 * class pointer after g_type_class_unref() are invalid.
+	 */
+	public void unref()
+	{
+		g_type_class_unref(gTypeClass);
+	}
+
+	/**
+	 * A variant of g_type_class_unref() for use in #GTypeClassCacheFunc
+	 * implementations. It unreferences a class without consulting the chain
+	 * of #GTypeClassCacheFuncs, avoiding the recursion which would occur
+	 * otherwise.
+	 */
+	public void unrefUncached()
+	{
+		g_type_class_unref_uncached(gTypeClass);
+	}
+
+	/** */
+	public static void adjustPrivateOffset(void* gClass, int* privateSizeOrOffset)
+	{
+		g_type_class_adjust_private_offset(gClass, privateSizeOrOffset);
 	}
 
 	/**

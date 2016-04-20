@@ -31,6 +31,8 @@ public  import gtkc.glibtypes;
 /**
  * Each piece of memory that is pushed onto the stack
  * is cast to a GTrashStack*.
+ * 
+ * Deprecated: #GTrashStack is deprecated without replacement
  */
 public struct TrashStack
 {
@@ -40,6 +42,8 @@ public struct TrashStack
 	 *
 	 * Note that execution of this function is of O(N) complexity
 	 * where N denotes the number of items on the stack.
+	 *
+	 * Deprecated: #GTrashStack is deprecated without replacement
 	 *
 	 * Params:
 	 *     stackP = a #GTrashStack
@@ -55,6 +59,8 @@ public struct TrashStack
 	 * Returns the element at the top of a #GTrashStack
 	 * which may be %NULL.
 	 *
+	 * Deprecated: #GTrashStack is deprecated without replacement
+	 *
 	 * Params:
 	 *     stackP = a #GTrashStack
 	 *
@@ -68,6 +74,8 @@ public struct TrashStack
 	/**
 	 * Pops a piece of memory off a #GTrashStack.
 	 *
+	 * Deprecated: #GTrashStack is deprecated without replacement
+	 *
 	 * Params:
 	 *     stackP = a #GTrashStack
 	 *
@@ -80,6 +88,8 @@ public struct TrashStack
 
 	/**
 	 * Pushes a piece of memory onto a #GTrashStack.
+	 *
+	 * Deprecated: #GTrashStack is deprecated without replacement
 	 *
 	 * Params:
 	 *     stackP = a #GTrashStack

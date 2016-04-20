@@ -33,7 +33,7 @@ public  import gtkc.giotypes;
 
 
 /**
- * TLS (Transport Layer Security, aka SSL) backend
+ * TLS (Transport Layer Security, aka SSL) and DTLS backend.
  *
  * Since: 2.28
  */
@@ -111,13 +111,27 @@ public template TlsBackendT(TStruct)
 		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p, true);
 	}
 
-	/** */
+	/**
+	 * Gets the #GType of @backend’s #GDtlsClientConnection implementation.
+	 *
+	 * Return: the #GType of @backend’s #GDtlsClientConnection
+	 *     implementation.
+	 *
+	 * Since: 2.48
+	 */
 	public GType getDtlsClientConnectionType()
 	{
 		return g_tls_backend_get_dtls_client_connection_type(getTlsBackendStruct());
 	}
 
-	/** */
+	/**
+	 * Gets the #GType of @backend’s #GDtlsServerConnection implementation.
+	 *
+	 * Return: the #GType of @backend’s #GDtlsServerConnection
+	 *     implementation.
+	 *
+	 * Since: 2.48
+	 */
 	public GType getDtlsServerConnectionType()
 	{
 		return g_tls_backend_get_dtls_server_connection_type(getTlsBackendStruct());
@@ -148,7 +162,14 @@ public template TlsBackendT(TStruct)
 		return g_tls_backend_get_server_connection_type(getTlsBackendStruct());
 	}
 
-	/** */
+	/**
+	 * Checks if DTLS is supported. DTLS support may not be available even if TLS
+	 * support is available, and vice-versa.
+	 *
+	 * Return: whether DTLS is supported
+	 *
+	 * Since: 2.48
+	 */
 	public bool supportsDtls()
 	{
 		return g_tls_backend_supports_dtls(getTlsBackendStruct()) != 0;

@@ -992,7 +992,8 @@ public enum GLogLevelFlags
 	 */
 	LEVEL_ERROR = 4,
 	/**
-	 * log level for critical messages, see g_critical().
+	 * log level for critical warning messages, see
+	 * g_critical().
 	 * This level is also used for messages produced by g_return_if_fail()
 	 * and g_return_val_if_fail().
 	 */
@@ -4469,6 +4470,8 @@ struct GTokenValue
 /**
  * Each piece of memory that is pushed onto the stack
  * is cast to a GTrashStack*.
+ *
+ * Deprecated: #GTrashStack is deprecated without replacement
  */
 struct GTrashStack
 {

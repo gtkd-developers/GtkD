@@ -173,7 +173,9 @@ public class Sequence
 	}
 
 	/**
-	 * Returns the length of @seq
+	 * Returns the length of @seq. Note that this method is O(h) where `h' is the
+	 * height of the tree. It is thus more efficient to use g_sequence_is_empty()
+	 * when comparing the length to zero.
 	 *
 	 * Return: the length of @seq
 	 *

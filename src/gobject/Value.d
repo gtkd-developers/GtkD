@@ -30,6 +30,7 @@ private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
+private import gobject.TypeInstance;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 
@@ -509,9 +510,9 @@ public class Value
 	 *
 	 * Since: 2.42
 	 */
-	public void initFromInstance(void* instanc)
+	public void initFromInstance(TypeInstance instanc)
 	{
-		g_value_init_from_instance(gValue, instanc);
+		g_value_init_from_instance(gValue, (instanc is null) ? null : instanc.getTypeInstanceStruct());
 	}
 
 	/**

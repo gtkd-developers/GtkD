@@ -45,7 +45,8 @@ public struct Memory
 	 * pointer casts.
 	 *
 	 * Params:
-	 *     pp = a pointer to a variable, struct member etc. holding a pointer
+	 *     pp = a pointer to a variable, struct member etc. holding a
+	 *         pointer
 	 *     destroy = a function to which a gpointer can be passed, to destroy *@pp
 	 *
 	 * Since: 2.34

@@ -44,6 +44,9 @@ public  import gtkc.giotypes;
  * To copy the content of an input stream to an output stream without
  * manually handling the reads and writes, use g_output_stream_splice().
  * 
+ * See the documentation for #GIOStream for details of thread safety of
+ * streaming APIs.
+ * 
  * All of these functions have async variants too.
  */
 public class OutputStream : ObjectG

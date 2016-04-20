@@ -113,16 +113,16 @@ public class HashTableIter
 	 * @key and @value are not set, and the iterator becomes invalid.
 	 *
 	 * Params:
-	 *     key = a location to store the key, or %NULL
-	 *     value = a location to store the value, or %NULL
+	 *     key = a location to store the key
+	 *     value = a location to store the value
 	 *
 	 * Return: %FALSE if the end of the #GHashTable has been reached.
 	 *
 	 * Since: 2.16
 	 */
-	public bool next(void** key, void** value)
+	public bool next(out void* key, out void* value)
 	{
-		return g_hash_table_iter_next(gHashTableIter, key, value) != 0;
+		return g_hash_table_iter_next(gHashTableIter, &key, &value) != 0;
 	}
 
 	/**

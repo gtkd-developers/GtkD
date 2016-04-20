@@ -145,9 +145,9 @@ public class WeakRef
 	 *
 	 * Since: 2.32
 	 */
-	public void init(void* object)
+	public void init(ObjectG object)
 	{
-		g_weak_ref_init(gWeakRef, object);
+		g_weak_ref_init(gWeakRef, (object is null) ? null : object.getObjectGStruct());
 	}
 
 	/**
@@ -162,8 +162,8 @@ public class WeakRef
 	 *
 	 * Since: 2.32
 	 */
-	public void set(void* object)
+	public void set(ObjectG object)
 	{
-		g_weak_ref_set(gWeakRef, object);
+		g_weak_ref_set(gWeakRef, (object is null) ? null : object.getObjectGStruct());
 	}
 }

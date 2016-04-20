@@ -83,9 +83,15 @@ public template ScrollableT(TStruct)
 	 *
 	 * Since: 3.16
 	 */
-	public bool getBorder(Border border)
+	public bool getBorder(out Border border)
 	{
-		return gtk_scrollable_get_border(getScrollableStruct(), (border is null) ? null : border.getBorderStruct()) != 0;
+		GtkBorder* outborder = gMalloc!GtkBorder();
+		
+		auto p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
+		
+		border = ObjectG.getDObject!(Border)(outborder, true);
+		
+		return p;
 	}
 
 	/**

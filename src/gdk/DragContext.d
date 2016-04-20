@@ -244,6 +244,8 @@ public class DragContext : ObjectG
 	 *     actions = the actions supported by the drag source
 	 *
 	 * Return: #TRUE if the drag and drop operation is managed.
+	 *
+	 * Since: 3.20
 	 */
 	public bool manageDnd(Window ipcWindow, GdkDragAction actions)
 	{

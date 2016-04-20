@@ -117,26 +117,25 @@ shared static this()
 	// gobject.ObjectG
 
 	Linker.link(g_initially_unowned_get_type, "g_initially_unowned_get_type", LIBRARY.GOBJECT);
+	Linker.link(g_object_new, "g_object_new", LIBRARY.GOBJECT);
 	Linker.link(g_object_new_valist, "g_object_new_valist", LIBRARY.GOBJECT);
 	Linker.link(g_object_newv, "g_object_newv", LIBRARY.GOBJECT);
 	Linker.link(g_object_compat_control, "g_object_compat_control", LIBRARY.GOBJECT);
-	Linker.link(g_object_connect, "g_object_connect", LIBRARY.GOBJECT);
-	Linker.link(g_object_disconnect, "g_object_disconnect", LIBRARY.GOBJECT);
-	Linker.link(g_object_get, "g_object_get", LIBRARY.GOBJECT);
 	Linker.link(g_object_interface_find_property, "g_object_interface_find_property", LIBRARY.GOBJECT);
 	Linker.link(g_object_interface_install_property, "g_object_interface_install_property", LIBRARY.GOBJECT);
 	Linker.link(g_object_interface_list_properties, "g_object_interface_list_properties", LIBRARY.GOBJECT);
-	Linker.link(g_object_new, "g_object_new", LIBRARY.GOBJECT);
-	Linker.link(g_object_set, "g_object_set", LIBRARY.GOBJECT);
 	Linker.link(g_object_add_toggle_ref, "g_object_add_toggle_ref", LIBRARY.GOBJECT);
 	Linker.link(g_object_add_weak_pointer, "g_object_add_weak_pointer", LIBRARY.GOBJECT);
 	Linker.link(g_object_bind_property, "g_object_bind_property", LIBRARY.GOBJECT);
 	Linker.link(g_object_bind_property_full, "g_object_bind_property_full", LIBRARY.GOBJECT);
 	Linker.link(g_object_bind_property_with_closures, "g_object_bind_property_with_closures", LIBRARY.GOBJECT);
+	Linker.link(g_object_connect, "g_object_connect", LIBRARY.GOBJECT);
+	Linker.link(g_object_disconnect, "g_object_disconnect", LIBRARY.GOBJECT);
 	Linker.link(g_object_dup_data, "g_object_dup_data", LIBRARY.GOBJECT);
 	Linker.link(g_object_dup_qdata, "g_object_dup_qdata", LIBRARY.GOBJECT);
 	Linker.link(g_object_force_floating, "g_object_force_floating", LIBRARY.GOBJECT);
 	Linker.link(g_object_freeze_notify, "g_object_freeze_notify", LIBRARY.GOBJECT);
+	Linker.link(g_object_get, "g_object_get", LIBRARY.GOBJECT);
 	Linker.link(g_object_get_data, "g_object_get_data", LIBRARY.GOBJECT);
 	Linker.link(g_object_get_property, "g_object_get_property", LIBRARY.GOBJECT);
 	Linker.link(g_object_get_qdata, "g_object_get_qdata", LIBRARY.GOBJECT);
@@ -151,6 +150,7 @@ shared static this()
 	Linker.link(g_object_replace_data, "g_object_replace_data", LIBRARY.GOBJECT);
 	Linker.link(g_object_replace_qdata, "g_object_replace_qdata", LIBRARY.GOBJECT);
 	Linker.link(g_object_run_dispose, "g_object_run_dispose", LIBRARY.GOBJECT);
+	Linker.link(g_object_set, "g_object_set", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_data, "g_object_set_data", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_data_full, "g_object_set_data_full", LIBRARY.GOBJECT);
 	Linker.link(g_object_set_property, "g_object_set_property", LIBRARY.GOBJECT);
@@ -209,13 +209,13 @@ shared static this()
 
 	// gobject.TypeClass
 
+	Linker.link(g_type_class_add_private, "g_type_class_add_private", LIBRARY.GOBJECT);
+	Linker.link(g_type_class_get_instance_private_offset, "g_type_class_get_instance_private_offset", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_get_private, "g_type_class_get_private", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_peek_parent, "g_type_class_peek_parent", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_unref, "g_type_class_unref", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_unref_uncached, "g_type_class_unref_uncached", LIBRARY.GOBJECT);
-	Linker.link(g_type_class_add_private, "g_type_class_add_private", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_adjust_private_offset, "g_type_class_adjust_private_offset", LIBRARY.GOBJECT);
-	Linker.link(g_type_class_get_instance_private_offset, "g_type_class_get_instance_private_offset", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_peek, "g_type_class_peek", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_peek_static, "g_type_class_peek_static", LIBRARY.GOBJECT);
 	Linker.link(g_type_class_ref, "g_type_class_ref", LIBRARY.GOBJECT);
@@ -581,26 +581,25 @@ __gshared extern(C)
 	// gobject.ObjectG
 
 	GType function() c_g_initially_unowned_get_type;
+	void* function(GType objectType, const(char)* firstPropertyName, ... ) c_g_object_new;
 	GObject* function(GType objectType, const(char)* firstPropertyName, void* varArgs) c_g_object_new_valist;
 	void* function(GType objectType, uint nParameters, GParameter* parameters) c_g_object_newv;
 	size_t function(size_t what, void* data) c_g_object_compat_control;
-	void* function(void* object, const(char)* signalSpec, ... ) c_g_object_connect;
-	void function(void* object, const(char)* signalSpec, ... ) c_g_object_disconnect;
-	void function(void* object, const(char)* firstPropertyName, ... ) c_g_object_get;
 	GParamSpec* function(void* gIface, const(char)* propertyName) c_g_object_interface_find_property;
 	void function(void* gIface, GParamSpec* pspec) c_g_object_interface_install_property;
 	GParamSpec** function(void* gIface, uint* nPropertiesP) c_g_object_interface_list_properties;
-	void* function(GType objectType, const(char)* firstPropertyName, ... ) c_g_object_new;
-	void function(void* object, const(char)* firstPropertyName, ... ) c_g_object_set;
 	void function(GObject* object, GToggleNotify notify, void* data) c_g_object_add_toggle_ref;
 	void function(GObject* object, void** weakPointerLocation) c_g_object_add_weak_pointer;
 	GBinding* function(void* source, const(char)* sourceProperty, void* target, const(char)* targetProperty, GBindingFlags flags) c_g_object_bind_property;
 	GBinding* function(void* source, const(char)* sourceProperty, void* target, const(char)* targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify notify) c_g_object_bind_property_full;
 	GBinding* function(void* source, const(char)* sourceProperty, void* target, const(char)* targetProperty, GBindingFlags flags, GClosure* transformTo, GClosure* transformFrom) c_g_object_bind_property_with_closures;
+	void* function(void* object, const(char)* signalSpec, ... ) c_g_object_connect;
+	void function(void* object, const(char)* signalSpec, ... ) c_g_object_disconnect;
 	void* function(GObject* object, const(char)* key, GDuplicateFunc dupFunc, void* userData) c_g_object_dup_data;
 	void* function(GObject* object, GQuark quark, GDuplicateFunc dupFunc, void* userData) c_g_object_dup_qdata;
 	void function(GObject* object) c_g_object_force_floating;
 	void function(GObject* object) c_g_object_freeze_notify;
+	void function(void* object, const(char)* firstPropertyName, ... ) c_g_object_get;
 	void* function(GObject* object, const(char)* key) c_g_object_get_data;
 	void function(GObject* object, const(char)* propertyName, GValue* value) c_g_object_get_property;
 	void* function(GObject* object, GQuark quark) c_g_object_get_qdata;
@@ -615,6 +614,7 @@ __gshared extern(C)
 	int function(GObject* object, const(char)* key, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy) c_g_object_replace_data;
 	int function(GObject* object, GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy) c_g_object_replace_qdata;
 	void function(GObject* object) c_g_object_run_dispose;
+	void function(void* object, const(char)* firstPropertyName, ... ) c_g_object_set;
 	void function(GObject* object, const(char)* key, void* data) c_g_object_set_data;
 	void function(GObject* object, const(char)* key, void* data, GDestroyNotify destroy) c_g_object_set_data_full;
 	void function(GObject* object, const(char)* propertyName, GValue* value) c_g_object_set_property;
@@ -673,13 +673,13 @@ __gshared extern(C)
 
 	// gobject.TypeClass
 
+	void function(void* gClass, size_t privateSize) c_g_type_class_add_private;
+	int function(void* gClass) c_g_type_class_get_instance_private_offset;
 	void* function(GTypeClass* klass, GType privateType) c_g_type_class_get_private;
 	void* function(void* gClass) c_g_type_class_peek_parent;
 	void function(void* gClass) c_g_type_class_unref;
 	void function(void* gClass) c_g_type_class_unref_uncached;
-	void function(void* gClass, size_t privateSize) c_g_type_class_add_private;
 	void function(void* gClass, int* privateSizeOrOffset) c_g_type_class_adjust_private_offset;
-	int function(void* gClass) c_g_type_class_get_instance_private_offset;
 	void* function(GType type) c_g_type_class_peek;
 	void* function(GType type) c_g_type_class_peek_static;
 	void* function(GType type) c_g_type_class_ref;
@@ -1043,26 +1043,25 @@ alias c_g_source_set_dummy_callback g_source_set_dummy_callback;
 // gobject.ObjectG
 
 alias c_g_initially_unowned_get_type g_initially_unowned_get_type;
+alias c_g_object_new g_object_new;
 alias c_g_object_new_valist g_object_new_valist;
 alias c_g_object_newv g_object_newv;
 alias c_g_object_compat_control g_object_compat_control;
-alias c_g_object_connect g_object_connect;
-alias c_g_object_disconnect g_object_disconnect;
-alias c_g_object_get g_object_get;
 alias c_g_object_interface_find_property g_object_interface_find_property;
 alias c_g_object_interface_install_property g_object_interface_install_property;
 alias c_g_object_interface_list_properties g_object_interface_list_properties;
-alias c_g_object_new g_object_new;
-alias c_g_object_set g_object_set;
 alias c_g_object_add_toggle_ref g_object_add_toggle_ref;
 alias c_g_object_add_weak_pointer g_object_add_weak_pointer;
 alias c_g_object_bind_property g_object_bind_property;
 alias c_g_object_bind_property_full g_object_bind_property_full;
 alias c_g_object_bind_property_with_closures g_object_bind_property_with_closures;
+alias c_g_object_connect g_object_connect;
+alias c_g_object_disconnect g_object_disconnect;
 alias c_g_object_dup_data g_object_dup_data;
 alias c_g_object_dup_qdata g_object_dup_qdata;
 alias c_g_object_force_floating g_object_force_floating;
 alias c_g_object_freeze_notify g_object_freeze_notify;
+alias c_g_object_get g_object_get;
 alias c_g_object_get_data g_object_get_data;
 alias c_g_object_get_property g_object_get_property;
 alias c_g_object_get_qdata g_object_get_qdata;
@@ -1077,6 +1076,7 @@ alias c_g_object_remove_weak_pointer g_object_remove_weak_pointer;
 alias c_g_object_replace_data g_object_replace_data;
 alias c_g_object_replace_qdata g_object_replace_qdata;
 alias c_g_object_run_dispose g_object_run_dispose;
+alias c_g_object_set g_object_set;
 alias c_g_object_set_data g_object_set_data;
 alias c_g_object_set_data_full g_object_set_data_full;
 alias c_g_object_set_property g_object_set_property;
@@ -1135,13 +1135,13 @@ alias c_g_param_spec_pool_new g_param_spec_pool_new;
 
 // gobject.TypeClass
 
+alias c_g_type_class_add_private g_type_class_add_private;
+alias c_g_type_class_get_instance_private_offset g_type_class_get_instance_private_offset;
 alias c_g_type_class_get_private g_type_class_get_private;
 alias c_g_type_class_peek_parent g_type_class_peek_parent;
 alias c_g_type_class_unref g_type_class_unref;
 alias c_g_type_class_unref_uncached g_type_class_unref_uncached;
-alias c_g_type_class_add_private g_type_class_add_private;
 alias c_g_type_class_adjust_private_offset g_type_class_adjust_private_offset;
-alias c_g_type_class_get_instance_private_offset g_type_class_get_instance_private_offset;
 alias c_g_type_class_peek g_type_class_peek;
 alias c_g_type_class_peek_static g_type_class_peek_static;
 alias c_g_type_class_ref g_type_class_ref;

@@ -57,7 +57,7 @@ public  import gtkc.giotypes;
  * In all cases, the implementing class is responsible for storing the
  * name of the action, the parameter type, the enabled state, the
  * optional state type and the state and emitting the appropriate
- * signals when these change.  The implementor responsible for filtering
+ * signals when these change.  The implementor is responsible for filtering
  * calls to g_action_activate() and g_action_change_state() for type
  * safety and for the state being enabled.
  * 

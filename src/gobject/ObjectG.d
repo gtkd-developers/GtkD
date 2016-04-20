@@ -32,6 +32,7 @@ private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Signals;
+private import gobject.TypeInterface;
 private import gobject.Value;
 private import gtkc.Loader;
 private import gtkc.gobject;
@@ -359,8 +360,8 @@ public class ObjectG
 	 * g_type_default_interface_peek().
 	 *
 	 * Params:
-	 *     gIface = any interface vtable for the interface, or the default
-	 *         vtable for the interface
+	 *     gIface = any interface vtable for the
+	 *         interface, or the default vtable for the interface
 	 *     propertyName = name of a property to lookup.
 	 *
 	 * Return: the #GParamSpec for the property of the
@@ -369,9 +370,9 @@ public class ObjectG
 	 *
 	 * Since: 2.4
 	 */
-	public static ParamSpec interfaceFindProperty(void* gIface, string propertyName)
+	public static ParamSpec interfaceFindProperty(TypeInterface gIface, string propertyName)
 	{
-		auto p = g_object_interface_find_property(gIface, Str.toStringz(propertyName));
+		auto p = g_object_interface_find_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), Str.toStringz(propertyName));
 		
 		if(p is null)
 		{
@@ -398,15 +399,16 @@ public class ObjectG
 	 * been called for any object types implementing this interface.
 	 *
 	 * Params:
-	 *     gIface = any interface vtable for the interface, or the default
+	 *     gIface = any interface vtable for the
+	 *         interface, or the default
 	 *         vtable for the interface.
 	 *     pspec = the #GParamSpec for the new property
 	 *
 	 * Since: 2.4
 	 */
-	public static void interfaceInstallProperty(void* gIface, ParamSpec pspec)
+	public static void interfaceInstallProperty(TypeInterface gIface, ParamSpec pspec)
 	{
-		g_object_interface_install_property(gIface, (pspec is null) ? null : pspec.getParamSpecStruct());
+		g_object_interface_install_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 
 	/**
@@ -416,8 +418,8 @@ public class ObjectG
 	 * already been loaded, g_type_default_interface_peek().
 	 *
 	 * Params:
-	 *     gIface = any interface vtable for the interface, or the default
-	 *         vtable for the interface
+	 *     gIface = any interface vtable for the
+	 *         interface, or the default vtable for the interface
 	 *
 	 * Return: a
 	 *     pointer to an array of pointers to #GParamSpec
@@ -427,11 +429,11 @@ public class ObjectG
 	 *
 	 * Since: 2.4
 	 */
-	public static ParamSpec[] interfaceListProperties(void* gIface)
+	public static ParamSpec[] interfaceListProperties(TypeInterface gIface)
 	{
 		uint nPropertiesP;
 		
-		auto p = g_object_interface_list_properties(gIface, &nPropertiesP);
+		auto p = g_object_interface_list_properties((gIface is null) ? null : gIface.getTypeInterfaceStruct(), &nPropertiesP);
 		
 		if(p is null)
 		{
@@ -502,7 +504,8 @@ public class ObjectG
 	 * thread. Use #GWeakRef if thread-safety is required.
 	 *
 	 * Params:
-	 *     weakPointerLocation = The memory address of a pointer.
+	 *     weakPointerLocation = The memory address
+	 *         of a pointer.
 	 */
 	public void addWeakPointer(ref void* weakPointerLocation)
 	{
@@ -960,7 +963,8 @@ public class ObjectG
 	 * to match the one used with g_object_add_weak_pointer().
 	 *
 	 * Params:
-	 *     weakPointerLocation = The memory address of a pointer.
+	 *     weakPointerLocation = The memory address
+	 *         of a pointer.
 	 */
 	public void removeWeakPointer(ref void* weakPointerLocation)
 	{

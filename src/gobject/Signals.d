@@ -27,6 +27,7 @@ module gobject.Signals;
 private import glib.Str;
 private import gobject.Closure;
 private import gobject.ObjectG;
+private import gobject.TypeInstance;
 private import gobject.Value;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
@@ -208,14 +209,15 @@ public struct Signals
 	 *     instanc = the instance to connect to.
 	 *     detailedSignal = a string of the form "signal-name::detail".
 	 *     cHandler = the #GCallback to connect.
-	 *     gobject = the object to pass as data to @c_handler.
+	 *     gobject = the object to pass as data
+	 *         to @c_handler.
 	 *     connectFlags = a combination of #GConnectFlags.
 	 *
 	 * Return: the handler id.
 	 */
-	public static gulong connectObject(void* instanc, string detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags)
+	public static gulong connectObject(TypeInstance instanc, string detailedSignal, GCallback cHandler, ObjectG gobject, GConnectFlags connectFlags)
 	{
-		return g_signal_connect_object(instanc, Str.toStringz(detailedSignal), cHandler, gobject, connectFlags);
+		return g_signal_connect_object((instanc is null) ? null : instanc.getTypeInstanceStruct(), Str.toStringz(detailedSignal), cHandler, (gobject is null) ? null : gobject.getObjectGStruct(), connectFlags);
 	}
 
 	/**
@@ -225,16 +227,17 @@ public struct Signals
 	 * if no handlers are connected, in contrast to g_signal_emitv().
 	 *
 	 * Params:
-	 *     instanc = the instance the signal is being emitted on.
+	 *     instanc = the instance the signal is being
+	 *         emitted on.
 	 *     signalId = the signal id
 	 *     detail = the detail
 	 *     varArgs = a list of parameters to be passed to the signal, followed by a
 	 *         location for the return value. If the return type of the signal
 	 *         is #G_TYPE_NONE, the return value location can be omitted.
 	 */
-	public static void emitValist(void* instanc, uint signalId, GQuark detail, void* varArgs)
+	public static void emitValist(TypeInstance instanc, uint signalId, GQuark detail, void* varArgs)
 	{
-		g_signal_emit_valist(instanc, signalId, detail, varArgs);
+		g_signal_emit_valist((instanc is null) ? null : instanc.getTypeInstanceStruct(), signalId, detail, varArgs);
 	}
 
 	/**

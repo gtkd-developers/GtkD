@@ -126,6 +126,7 @@ public class InetAddress : ObjectG
 	 *     family = the address family of @bytes
 	 *
 	 * Return: a new #GInetAddress corresponding to @family and @bytes.
+	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
 	 *
@@ -151,6 +152,7 @@ public class InetAddress : ObjectG
 	 *
 	 * Return: a new #GInetAddress corresponding to @string, or %NULL if
 	 *     @string could not be parsed.
+	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
 	 *

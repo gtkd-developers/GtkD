@@ -45,6 +45,14 @@ public  import gtkc.giotypes;
  * clients can keep caches up to date by only listening to D-Bus
  * signals.
  * 
+ * The recommended path to export an object manager at is the path form of the
+ * well-known name of a D-Bus service, or below. For example, if a D-Bus service
+ * is available at the well-known name `net.example.ExampleService1`, the object
+ * manager should typically be exported at `/net/example/ExampleService1`, or
+ * below (to allow for multiple object managers in a service).
+ * 
+ * It is not supported to export an object manager at the root path, `/`.
+ * 
  * See #GDBusObjectManagerClient for the client-side code that is
  * intended to be used with #GDBusObjectManagerServer or any D-Bus
  * object implementing the org.freedesktop.DBus.ObjectManager
@@ -99,12 +107,13 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 *
 	 * The returned server isn't yet exported on any connection. To do so,
 	 * use g_dbus_object_manager_server_set_connection(). Normally you
-	 * want to export all of your objects before doing so to avoid <ulink
-	 * url="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-objectmanager">InterfacesAdded</ulink>
+	 * want to export all of your objects before doing so to avoid
+	 * [InterfacesAdded](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-objectmanager)
 	 * signals being emitted.
 	 *
 	 * Params:
-	 *     objectPath = The object path to export the manager object at.
+	 *     objectPath = The object path to export the manager object at, which should
+	 *         not be `/`.
 	 *
 	 * Return: A #GDBusObjectManagerServer object. Free with g_object_unref().
 	 *

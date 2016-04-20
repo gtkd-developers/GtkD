@@ -72,13 +72,31 @@ public  import gtkc.gtktypes;
  * 
  * |[<!-- language="plain" -->
  * combobox
- * ├── button.combo
- * │    ╰── arrow
+ * ├── box.linked
+ * │   ╰── button.combo
+ * │       ╰── box
+ * │           ├── cellview
+ * │           ╰── arrow
  * ╰── window.popup
  * ]|
  * 
- * GtkComboBox has a single CSS node with name combobox. It adds the
- * .combo style class to the button that it contains.
+ * A normal combobox contains a box with the .linked class, a button
+ * with the .combo class and inside those buttons, there are a cellview and
+ * an arrow.
+ * 
+ * |[<!-- language="plain" -->
+ * combobox
+ * ├── box.linked
+ * │   ├── entry.combo
+ * │   ╰── button.combo
+ * │       ╰── box
+ * │           ╰── arrow
+ * ╰── window.popup
+ * ]|
+ * 
+ * A GtkComboBox with an entry has a single CSS node with name combobox. It
+ * contains a bx with the .linked class and that box contains an entry and a
+ * button, both with the .combo class added.
  * The button also contains another node with name arrow.
  */
 public class ComboBox : Bin, CellEditableIF, CellLayoutIF

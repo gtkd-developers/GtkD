@@ -187,7 +187,7 @@ public class TextTag : ObjectG
 	 * Params:
 	 *     object = the object the event was fired from (typically a #GtkTextView)
 	 *     event = the event which triggered the signal
-	 *     iter = a #GtkTextIter pointing at the location the event occured
+	 *     iter = a #GtkTextIter pointing at the location the event occurred
 	 *
 	 * Return: %TRUE to stop other handlers from being invoked for the
 	 *     event. %FALSE to propagate the event further.

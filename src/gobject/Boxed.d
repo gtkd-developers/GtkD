@@ -40,7 +40,8 @@ public struct Boxed
 	 *     boxedType = The type of @src_boxed.
 	 *     srcBoxed = The boxed structure to be copied.
 	 *
-	 * Return: The newly created copy of the boxed structure.
+	 * Return: The newly created copy of the boxed
+	 *     structure.
 	 */
 	public static void* copy(GType boxedType, void* srcBoxed)
 	{

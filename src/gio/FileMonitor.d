@@ -98,7 +98,20 @@ public class FileMonitor : ObjectG
 		return g_file_monitor_cancel(gFileMonitor) != 0;
 	}
 
-	/** */
+	/**
+	 * Emits the #GFileMonitor::changed signal if a change
+	 * has taken place. Should be called from file monitor
+	 * implementations only.
+	 *
+	 * Implementations are responsible to call this method from the
+	 * [thread-default main context][g-main-context-push-thread-default] of the
+	 * thread that the monitor was created in.
+	 *
+	 * Params:
+	 *     child = a #GFile.
+	 *     otherFile = a #GFile.
+	 *     eventType = a set of #GFileMonitorEvent flags.
+	 */
 	public void emitEvent(FileIF child, FileIF otherFile, GFileMonitorEvent eventType)
 	{
 		g_file_monitor_emit_event(gFileMonitor, (child is null) ? null : child.getFileStruct(), (otherFile is null) ? null : otherFile.getFileStruct(), eventType);

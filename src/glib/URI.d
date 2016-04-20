@@ -41,7 +41,8 @@ public struct URI
 	 *
 	 * Params:
 	 *     uri = a uri describing a filename (escaped, encoded in ASCII).
-	 *     hostname = Location to store hostname for the URI, or %NULL.
+	 *     hostname = Location to store hostname for the
+	 *         URI.
 	 *         If there is no hostname in the URI, %NULL will be
 	 *         stored in this location.
 	 *

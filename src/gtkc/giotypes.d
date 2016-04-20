@@ -93,7 +93,7 @@ public enum GApplicationFlags
 	 * launching process to the primary instance. Set this flag if your
 	 * application is expected to behave differently depending on certain
 	 * environment variables. For instance, an editor might be expected
-	 * to use the <envar>GIT_COMMITTER_NAME</envar> environment variable
+	 * to use the `GIT_COMMITTER_NAME` environment variable
 	 * when editing a git commit message. The environment is available
 	 * to the #GApplication::command-line signal handler, via
 	 * g_application_command_line_getenv().
@@ -108,6 +108,12 @@ public enum GApplicationFlags
 	 * Since: 2.30.
 	 */
 	NON_UNIQUE = 32,
+	/**
+	 * Allow users to override the
+	 * application ID from the command line with `--gapplication-app-id`.
+	 * Since: 2.48
+	 */
+	CAN_OVERRIDE_APP_ID = 64,
 }
 alias GApplicationFlags ApplicationFlags;
 
@@ -2661,7 +2667,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 * Return: a %NULL-terminated array of the names of the
-	 *     actions in the groupb
+	 *     actions in the group
 	 */
 	extern(C) char** function(GActionGroup* actionGroup) listActions;
 	/**
@@ -3332,7 +3338,8 @@ struct GConverterIface
 	 *     inbuf = the buffer
 	 *         containing the data to convert.
 	 *     inbufSize = the number of bytes in @inbuf
-	 *     outbuf = a buffer to write converted data in.
+	 *     outbuf = a buffer to write
+	 *         converted data in.
 	 *     outbufSize = the number of bytes in @outbuf, must be at least one
 	 *     flags = a #GConverterFlags controlling the conversion details
 	 *     bytesRead = will be set to the number of bytes read from @inbuf on success
@@ -4388,17 +4395,53 @@ struct GDtlsConnectionInterface
 	GTypeInterface gIface;
 	/** */
 	extern(C) int function(GDtlsConnection* connection, GTlsCertificate* peerCert, GTlsCertificateFlags errors) acceptCertificate;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GDtlsConnection
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: success or failure
+	 *
+	 * Throws: GException on failure.
+	 */
 	extern(C) int function(GDtlsConnection* conn, GCancellable* cancellable, GError** err) handshake;
 	/** */
 	extern(C) void function(GDtlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) handshakeAsync;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GDtlsConnection
+	 *     result = a #GAsyncResult.
+	 * Return: %TRUE on success, %FALSE on failure, in which
+	 *     case @error will be set.
+	 *
+	 * Throws: GException on failure.
+	 */
 	extern(C) int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) handshakeFinish;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GDtlsConnection
+	 *     shutdownRead = %TRUE to stop reception of incoming datagrams
+	 *     shutdownWrite = %TRUE to stop sending outgoing datagrams
+	 *     cancellable = a #GCancellable, or %NULL
+	 * Return: %TRUE on success, %FALSE otherwise
+	 *
+	 * Throws: GException on failure.
+	 */
 	extern(C) int function(GDtlsConnection* conn, int shutdownRead, int shutdownWrite, GCancellable* cancellable, GError** err) shutdown;
 	/** */
 	extern(C) void function(GDtlsConnection* conn, int shutdownRead, int shutdownWrite, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) shutdownAsync;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     conn = a #GDtlsConnection
+	 *     result = a #GAsyncResult
+	 * Return: %TRUE on success, %FALSE on failure, in which
+	 *     case @error will be set
+	 *
+	 * Throws: GException on failure.
+	 */
 	extern(C) int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) shutdownFinish;
 }
 
@@ -7835,7 +7878,12 @@ struct GTlsBackendInterface
 	 *     unreffed when done.
 	 */
 	extern(C) GTlsDatabase* function(GTlsBackend* backend) getDefaultDatabase;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     backend = the #GTlsBackend
+	 * Return: whether DTLS is supported
+	 */
 	extern(C) int function(GTlsBackend* backend) supportsDtls;
 	/** */
 	extern(C) GType function() getDtlsClientConnectionType;

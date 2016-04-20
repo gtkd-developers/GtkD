@@ -308,7 +308,7 @@ public interface ActionGroupIF{
 	 * it is no longer required.
 	 *
 	 * Return: a %NULL-terminated array of the names of the
-	 *     actions in the groupb
+	 *     actions in the group
 	 *
 	 * Since: 2.28
 	 */

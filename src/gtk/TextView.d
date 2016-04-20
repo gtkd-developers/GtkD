@@ -446,7 +446,7 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
-	 * Find out whether the cursor is being displayed.
+	 * Find out whether the cursor should be displayed.
 	 *
 	 * Return: whether the insertion mark is visible
 	 */
@@ -1083,9 +1083,12 @@ public class TextView : Container, ScrollableIF
 	}
 
 	/**
-	 * Toggles whether the insertion point is displayed. A buffer with no editable
-	 * text probably shouldn’t have a visible cursor, so you may want to turn
-	 * the cursor off.
+	 * Toggles whether the insertion point should be displayed. A buffer with
+	 * no editable text probably shouldn’t have a visible cursor, so you may
+	 * want to turn the cursor off.
+	 *
+	 * Note that this property may be overridden by the
+	 * #GtkSettings:gtk-keynave-use-caret settings.
 	 *
 	 * Params:
 	 *     setting = whether to show the insertion cursor
@@ -1822,7 +1825,8 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * The ::toggle-cursor-visible signal is a
 	 * [keybinding signal][GtkBindingSignal]
-	 * which gets emitted to toggle the visibility of the cursor.
+	 * which gets emitted to toggle the #GtkTextView:cursor-visible
+	 * property.
 	 *
 	 * The default binding for this signal is F7.
 	 */

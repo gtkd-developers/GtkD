@@ -29,26 +29,6 @@ public import gtkc.gobjecttypes;
 
 enum GST_CLOCK_TIME_NONE = 18446744073709551615UL;
 
-public alias void* GstAllocationParamsAutoptr;
-
-public alias void* GstAllocatorAutoptr;
-
-public alias void* GstAtomicQueueAutoptr;
-
-public alias void* GstBinAutoptr;
-
-public alias void* GstBufferListAutoptr;
-
-public alias void* GstBufferPoolAutoptr;
-
-public alias void* GstBufferAutoptr;
-
-public alias void* GstBusAutoptr;
-
-public alias void* GstCapsFeaturesAutoptr;
-
-public alias void* GstCapsAutoptr;
-
 /**
  * A datatype to hold the handle to an outstanding sync or async clock callback.
  */
@@ -64,89 +44,7 @@ public alias ulong GstClockTime;
  */
 public alias long GstClockTimeDiff;
 
-public alias void* GstClockAutoptr;
-
-public alias void* GstContextAutoptr;
-
-public alias void* GstControlBindingAutoptr;
-
-public alias void* GstControlSourceAutoptr;
-
-public alias void* GstDateTimeAutoptr;
-
-public alias void* GstDeviceMonitorAutoptr;
-
-public alias void* GstDeviceProviderFactoryAutoptr;
-
-public alias void* GstDeviceProviderAutoptr;
-
-public alias void* GstDeviceAutoptr;
-
 public alias ulong GstElementFactoryListType;
-
-public alias void* GstElementFactoryAutoptr;
-
-public alias void* GstElementAutoptr;
-
-public alias void* GstEventAutoptr;
-
-public alias void* GstGhostPadAutoptr;
-
-public alias void* GstIteratorAutoptr;
-
-public alias void* GstMemoryAutoptr;
-
-public alias void* GstMessageAutoptr;
-
-public alias void* GstObjectAutoptr;
-
-public alias void* GstPadTemplateAutoptr;
-
-public alias void* GstPadAutoptr;
-
-public alias void* GstParseContextAutoptr;
-
-public alias void* GstPipelineAutoptr;
-
-public alias void* GstPluginFeatureAutoptr;
-
-public alias void* GstPluginAutoptr;
-
-public alias void* GstProxyPadAutoptr;
-
-public alias void* GstQueryAutoptr;
-
-public alias void* GstRegistryAutoptr;
-
-public alias void* GstSampleAutoptr;
-
-public alias void* GstSegmentAutoptr;
-
-public alias void* GstStructureAutoptr;
-
-public alias void* GstSystemClockAutoptr;
-
-public alias void* GstTagListAutoptr;
-
-public alias void* GstTaskPoolAutoptr;
-
-public alias void* GstTaskAutoptr;
-
-public alias void* GstTocEntryAutoptr;
-
-public alias void* GstTocAutoptr;
-
-public alias void* GstTracerFactoryAutoptr;
-
-public alias void* GstTracerRecordAutoptr;
-
-public alias void* GstTracerAutoptr;
-
-public alias void* GstTypeFindFactoryAutoptr;
-
-public alias void* GstUriAutoptr;
-
-public alias void* GstValueArrayAutoptr;
 
 /**
  * Flags for allocators.

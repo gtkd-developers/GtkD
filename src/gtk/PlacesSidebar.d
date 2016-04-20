@@ -885,23 +885,21 @@ public class PlacesSidebar : ScrolledWindow
 		}
 	}
 
-	void delegate(GtkPlacesOpenFlags, PlacesSidebar)[] onShowOtherLocationsListeners;
+	void delegate(PlacesSidebar)[] onShowOtherLocationsListeners;
 	/**
 	 * The places sidebar emits this signal when it needs the calling
 	 * application to present a way to show other locations e.g. drives
 	 * and network access points.
 	 * For example, the application may bring up a page showing persistent
 	 * volumes and discovered network addresses.
-	 * Since 3.20 the signal added the @open_flags parameter in order to be able
-	 * to specify whether the user choose to open the other locations in a different
-	 * tab or window. In this way it behaves like the open-location signal.
 	 *
-	 * Params:
-	 *     openFlags = a single value from #GtkPlacesOpenFlags specifying how it should be opened.
+	 * Deprecated: use the #GtkPlacesSidebar::show-other-locations-with-flags
+	 * which includes the open flags in order to allow the user to specify to open
+	 * in a new tab or window, in a similar way than #GtkPlacesSidebar::open-location
 	 *
 	 * Since: 3.18
 	 */
-	void addOnShowOtherLocations(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void addOnShowOtherLocations(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "show-other-locations" !in connectedSignals )
 		{
@@ -916,9 +914,45 @@ public class PlacesSidebar : ScrolledWindow
 		}
 		onShowOtherLocationsListeners ~= dlg;
 	}
-	extern(C) static void callBackShowOtherLocations(GtkPlacesSidebar* placessidebarStruct, GtkPlacesOpenFlags openFlags, PlacesSidebar _placessidebar)
+	extern(C) static void callBackShowOtherLocations(GtkPlacesSidebar* placessidebarStruct, PlacesSidebar _placessidebar)
 	{
-		foreach ( void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg; _placessidebar.onShowOtherLocationsListeners )
+		foreach ( void delegate(PlacesSidebar) dlg; _placessidebar.onShowOtherLocationsListeners )
+		{
+			dlg(_placessidebar);
+		}
+	}
+
+	void delegate(GtkPlacesOpenFlags, PlacesSidebar)[] onShowOtherLocationsWithFlagsListeners;
+	/**
+	 * The places sidebar emits this signal when it needs the calling
+	 * application to present a way to show other locations e.g. drives
+	 * and network access points.
+	 * For example, the application may bring up a page showing persistent
+	 * volumes and discovered network addresses.
+	 *
+	 * Params:
+	 *     openFlags = a single value from #GtkPlacesOpenFlags specifying how it should be opened.
+	 *
+	 * Since: 3.20
+	 */
+	void addOnShowOtherLocationsWithFlags(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "show-other-locations-with-flags" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"show-other-locations-with-flags",
+				cast(GCallback)&callBackShowOtherLocationsWithFlags,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["show-other-locations-with-flags"] = 1;
+		}
+		onShowOtherLocationsWithFlagsListeners ~= dlg;
+	}
+	extern(C) static void callBackShowOtherLocationsWithFlags(GtkPlacesSidebar* placessidebarStruct, GtkPlacesOpenFlags openFlags, PlacesSidebar _placessidebar)
+	{
+		foreach ( void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg; _placessidebar.onShowOtherLocationsWithFlagsListeners )
 		{
 			dlg(openFlags, _placessidebar);
 		}

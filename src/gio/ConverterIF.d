@@ -137,7 +137,8 @@ public interface ConverterIF{
 	 *     inbuf = the buffer
 	 *         containing the data to convert.
 	 *     inbufSize = the number of bytes in @inbuf
-	 *     outbuf = a buffer to write converted data in.
+	 *     outbuf = a buffer to write
+	 *         converted data in.
 	 *     outbufSize = the number of bytes in @outbuf, must be at least one
 	 *     flags = a #GConverterFlags controlling the conversion details
 	 *     bytesRead = will be set to the number of bytes read from @inbuf on success
@@ -149,7 +150,7 @@ public interface ConverterIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public GConverterResult convert(ubyte[] inbuf, void* outbuf, size_t outbufSize, GConverterFlags flags, out size_t bytesRead, out size_t bytesWritten);
+	public GConverterResult convert(ubyte[] inbuf, ubyte[] outbuf, GConverterFlags flags, out size_t bytesRead, out size_t bytesWritten);
 
 	/**
 	 * Resets all internal state in the converter, making it behave

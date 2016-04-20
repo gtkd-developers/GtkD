@@ -82,7 +82,7 @@ public interface ScrollableIF{
 	 *
 	 * Since: 3.16
 	 */
-	public bool getBorder(Border border);
+	public bool getBorder(out Border border);
 
 	/**
 	 * Retrieves the #GtkAdjustment used for horizontal scrolling.

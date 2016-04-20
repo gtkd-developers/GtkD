@@ -489,7 +489,7 @@ public template TreeModelT(TStruct)
 	 *     iter = the new #GtkTreeIter-struct to be set to the child
 	 *     parent = the #GtkTreeIter-struct, or %NULL
 	 *
-	 * Return: %TRUE, if @child has been set to the first child
+	 * Return: %TRUE, if @iter has been set to the first child
 	 */
 	public bool iterChildren(out TreeIter iter, TreeIter parent)
 	{

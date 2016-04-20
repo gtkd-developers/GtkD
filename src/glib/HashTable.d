@@ -211,10 +211,10 @@ public class HashTable
 	 * To iterate over the entries in a #GHashTable more efficiently, use a
 	 * #GHashTableIter.
 	 *
-	 * Return: a #GList containing all the keys inside the hash
-	 *     table. The content of the list is owned by the hash table and
-	 *     should not be modified or freed. Use g_list_free() when done
-	 *     using the list.
+	 * Return: a #GList containing all the keys
+	 *     inside the hash table. The content of the list is owned by the
+	 *     hash table and should not be modified or freed. Use g_list_free()
+	 *     when done using the list.
 	 *
 	 * Since: 2.14
 	 */
@@ -271,10 +271,10 @@ public class HashTable
 	 * To iterate over the entries in a #GHashTable more efficiently, use a
 	 * #GHashTableIter.
 	 *
-	 * Return: a #GList containing all the values inside the hash
-	 *     table. The content of the list is owned by the hash table and
-	 *     should not be modified or freed. Use g_list_free() when done
-	 *     using the list.
+	 * Return: a #GList containing all the values
+	 *     inside the hash table. The content of the list is owned by the
+	 *     hash table and should not be modified or freed. Use g_list_free()
+	 *     when done using the list.
 	 *
 	 * Since: 2.14
 	 */
@@ -339,14 +339,15 @@ public class HashTable
 	 *
 	 * Params:
 	 *     lookupKey = the key to look up
-	 *     origKey = return location for the original key, or %NULL
-	 *     value = return location for the value associated with the key, or %NULL
+	 *     origKey = return location for the original key
+	 *     value = return location for the value associated
+	 *         with the key
 	 *
 	 * Return: %TRUE if the key was found in the #GHashTable
 	 */
-	public bool lookupExtended(void* lookupKey, void** origKey, void** value)
+	public bool lookupExtended(void* lookupKey, out void* origKey, out void* value)
 	{
-		return g_hash_table_lookup_extended(gHashTable, lookupKey, origKey, value) != 0;
+		return g_hash_table_lookup_extended(gHashTable, lookupKey, &origKey, &value) != 0;
 	}
 
 	/**

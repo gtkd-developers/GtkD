@@ -36,7 +36,12 @@ private import gtkc.gio;
 public  import gtkc.giotypes;
 
 
-/** */
+/**
+ * #GDtlsClientConnection is the client-side subclass of
+ * #GDtlsConnection, representing a client-side DTLS connection.
+ *
+ * Since: 2.48
+ */
 public interface DtlsClientConnectionIF{
 	/** Get the main Gtk struct */
 	public GDtlsClientConnection* getDtlsClientConnectionStruct();
@@ -45,18 +50,65 @@ public interface DtlsClientConnectionIF{
 	protected void* getStruct();
 
 
-	/** */
+	/**
+	 * Gets the list of distinguished names of the Certificate Authorities
+	 * that the server will accept certificates from. This will be set
+	 * during the TLS handshake if the server requests a certificate.
+	 * Otherwise, it will be %NULL.
+	 *
+	 * Each item in the list is a #GByteArray which contains the complete
+	 * subject DN of the certificate authority.
+	 *
+	 * Return: the list of
+	 *     CA DNs. You should unref each element with g_byte_array_unref() and then
+	 *     the free the list with g_list_free().
+	 *
+	 * Since: 2.48
+	 */
 	public ListG getAcceptedCas();
 
-	/** */
+	/**
+	 * Gets @conn's expected server identity
+	 *
+	 * Return: a #GSocketConnectable describing the
+	 *     expected server identity, or %NULL if the expected identity is not
+	 *     known.
+	 *
+	 * Since: 2.48
+	 */
 	public SocketConnectableIF getServerIdentity();
 
-	/** */
+	/**
+	 * Gets @conn's validation flags
+	 *
+	 * Return: the validation flags
+	 *
+	 * Since: 2.48
+	 */
 	public GTlsCertificateFlags getValidationFlags();
 
-	/** */
+	/**
+	 * Sets @conn's expected server identity, which is used both to tell
+	 * servers on virtual hosts which certificate to present, and also
+	 * to let @conn know what name to look for in the certificate when
+	 * performing %G_TLS_CERTIFICATE_BAD_IDENTITY validation, if enabled.
+	 *
+	 * Params:
+	 *     identity = a #GSocketConnectable describing the expected server identity
+	 *
+	 * Since: 2.48
+	 */
 	public void setServerIdentity(SocketConnectableIF identity);
 
-	/** */
+	/**
+	 * Sets @conn's validation flags, to override the default set of
+	 * checks performed when validating a server certificate. By default,
+	 * %G_TLS_CERTIFICATE_VALIDATE_ALL is used.
+	 *
+	 * Params:
+	 *     flags = the #GTlsCertificateFlags to use
+	 *
+	 * Since: 2.48
+	 */
 	public void setValidationFlags(GTlsCertificateFlags flags);
 }

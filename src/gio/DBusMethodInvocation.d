@@ -346,6 +346,11 @@ public class DBusMethodInvocation : ObjectG
 	 *
 	 * This method will free @invocation, you cannot use it afterwards.
 	 *
+	 * Since 2.48, if the method call requested for a reply not to be sent
+	 * then this call will sink @parameters and free @invocation, but
+	 * otherwise do nothing (as per the recommendations of the D-Bus
+	 * specification).
+	 *
 	 * Params:
 	 *     parameters = A #GVariant tuple with out parameters for the method or %NULL if not passing any parameters.
 	 *

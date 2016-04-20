@@ -38,7 +38,7 @@ public  import gtkc.gdktypes;
 
 /**
  * The #GdkSeat object represents a collection of input devices
- * that belong to an user.
+ * that belong to a user.
  */
 public class Seat : ObjectG
 {
@@ -94,8 +94,8 @@ public class Seat : ObjectG
 	/**
 	 * Returns the #GdkDisplay this seat belongs to.
 	 *
-	 * Return: a #GdkDisplay. This memory is owned by GTK+ and
-	 *     must not be freed.
+	 * Return: a #GdkDisplay. This object is owned by GTK+
+	 *     and must not be freed.
 	 */
 	public Display getDisplay()
 	{
@@ -113,8 +113,7 @@ public class Seat : ObjectG
 	 * Returns the master device that routes keyboard events.
 	 *
 	 * Return: a master #GdkDevice with keyboard
-	 *     capabilities. This object is owned by GTK+ and must not be
-	 *     freed.
+	 *     capabilities. This object is owned by GTK+ and must not be freed.
 	 *
 	 * Since: 3.20
 	 */
@@ -134,8 +133,7 @@ public class Seat : ObjectG
 	 * Returns the master device that routes pointer events.
 	 *
 	 * Return: a master #GdkDevice with pointer
-	 *     capabilities. This object is owned by GTK+ and must not be
-	 *     freed.
+	 *     capabilities. This object is owned by GTK+ and must not be freed.
 	 *
 	 * Since: 3.20
 	 */
@@ -157,8 +155,8 @@ public class Seat : ObjectG
 	 * Params:
 	 *     capabilities = capabilities to get devices for
 	 *
-	 * Return: A list of #GdkDevices. The list
-	 *     must be freed with g_list_free(), the elements are owned
+	 * Return: A list of #GdkDevices.
+	 *     The list must be freed with g_list_free(), the elements are owned
 	 *     by GDK and must not be freed.
 	 *
 	 * Since: 3.20
@@ -194,8 +192,8 @@ public class Seat : ObjectG
 	 * Note that if the event mask of a #GdkWindow has selected both button press
 	 * and button release events, or touch begin and touch end, then a press event
 	 * will cause an automatic grab until the button is released, equivalent to a
-	 * grab on the window with @owner_events set to %TRUE. This performed as most
-	 * applications expect to receive presses and releases in pairs.
+	 * grab on the window with @owner_events set to %TRUE. This is done because most
+	 * applications expect to receive paired press and release events.
 	 *
 	 * If you set up anything at the time you take the grab that needs to be
 	 * cleaned up when the grab ends, you should handle the #GdkEventGrabBroken
@@ -216,8 +214,9 @@ public class Seat : ObjectG
 	 *         elsewhere.
 	 *     event = the event that is triggering the grab, or %NULL if none
 	 *         is available.
-	 *     prepareFunc = function to prepare the window to be
-	 *         grabbed, it can be %NULL if @window is visible before this call.
+	 *     prepareFunc = function to
+	 *         prepare the window to be grabbed, it can be %NULL if @window is
+	 *         visible before this call.
 	 *     prepareFuncData = user data to pass to @prepare_func
 	 *
 	 * Return: %GDK_GRAB_SUCCESS if the grab was successful.

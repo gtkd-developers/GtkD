@@ -422,6 +422,17 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * consumed, they will no longer be visible to the default handling
 	 * (which treats them as filenames to be opened).
 	 *
+	 * It is important to use the proper GVariant format when retrieving
+	 * the options with g_variant_dict_lookup():
+	 * - for %G_OPTION_ARG_NONE, use b
+	 * - for %G_OPTION_ARG_STRING, use &s
+	 * - for %G_OPTION_ARG_INT, use i
+	 * - for %G_OPTION_ARG_INT64, use x
+	 * - for %G_OPTION_ARG_DOUBLE, use d
+	 * - for %G_OPTION_ARG_FILENAME, use ^ay
+	 * - for %G_OPTION_ARG_STRING_ARRAY, use &as
+	 * - for %G_OPTION_ARG_FILENAME_ARRAY, use ^aay
+	 *
 	 * Params:
 	 *     entries = a
 	 *         %NULL-terminated list of #GOptionEntrys
@@ -859,6 +870,9 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * This function sets the prgname (g_set_prgname()), if not already set,
 	 * to the basename of argv[0].
 	 *
+	 * Much like g_main_loop_run(), this function will acquire the main context
+	 * for the duration that the application is running.
+	 *
 	 * Since 2.40, applications that are not explicitly flagged as services
 	 * or launchers (ie: neither %G_APPLICATION_IS_SERVICE or
 	 * %G_APPLICATION_IS_LAUNCHER are given as flags) will check (from the
@@ -1048,7 +1062,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * Changing the resource base path once the application is running is
 	 * not recommended.  The point at which the resource path is consulted
-	 * for forming paths for various purposes is unspecified.
+	 * for forming paths for various purposes is unspecified.  When writing
+	 * a sub-class of #GApplication you should either set the
+	 * #GApplication:resource-base-path property at construction time, or call
+	 * this function during the instance initialization. Alternatively, you
+	 * can call this function in the #GApplicationClass.startup virtual function,
+	 * before chaining up to the parent implementation.
 	 *
 	 * Params:
 	 *     resourcePath = the resource path to use
