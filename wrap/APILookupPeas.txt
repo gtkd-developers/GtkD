@@ -1,0 +1,70 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: peas
+file: /usr/share/gir-1.0/Peas-1.0.gir
+file: /usr/share/gir-1.0/PeasGtk-1.0.gir
+
+addAliases: start
+	public import gtkc.gtktypes;
+addAliases: end
+
+addStructs: start
+	struct GIArgument;
+addStructs: end
+
+struct: Engine
+noCode: new
+noCode: new_with_nonglobal_loaders
+import: glib.ConstructionException
+code: start
+	/**
+	 * Return a new instance of Engine.
+	 * If no default Engine has been instantiated yet,
+	 * the first call of this function will set the default
+	 * engine as the new instance of Engine.
+	 *
+	 * Params:
+	 *     global = Weather to return a global plugin loader
+	 *
+	 * Return: a new instance of Engine.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(bool global = true)
+	{
+		PeasEngine* p;
+
+		if (global)
+			p = peas_engine_new();
+		else
+			p = peas_engine_new_with_nonglobal_loaders();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(p, true);
+	}
+code: end
+

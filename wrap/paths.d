@@ -52,6 +52,7 @@ enum LIBRARY
 	GSTREAMER,
 	GSTINTERFACES,
 	VTE,
+	PEAS,
 }
 
 version (Windows)
@@ -78,6 +79,7 @@ version (Windows)
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.dll",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dll",
 		LIBRARY.VTE:           "libvte-2.91.dll",
+		LIBRARY.PEAS:          "libpeas-1.0.dll",
 	];
 }
 else version(darwin)
@@ -103,7 +105,8 @@ else version(darwin)
 		LIBRARY.GSV1:          "libgtksourceview-3.0.dylib",
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.dylib",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dylib",
-		LIBRARY.VTE:           "libvte-2.91.dylib"
+		LIBRARY.VTE:           "libvte-2.91.dylib",
+		LIBRARY.PEAS:          "libpeas-1.0.dylib",
 	];
 }
 else
@@ -130,5 +133,6 @@ else
 		LIBRARY.GSTREAMER:     "libgstreamer-1.0.so.0",
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0",
 		LIBRARY.VTE:           "libvte-2.91.so.0",
+		LIBRARY.PEAS:          "libpeas-1.0.so.0",
 	];
 }

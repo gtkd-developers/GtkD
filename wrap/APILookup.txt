@@ -161,3 +161,7 @@ lookup: APILookupGstInterfaces.txt
 srcDir: srcvte
 bindDir: vtec
 lookup: APILookupVte.txt
+
+srcDir: srcpeas
+bindDir: peasc
+lookup: APILookupPeas.txt
