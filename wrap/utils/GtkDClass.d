@@ -58,6 +58,7 @@ private import utils.IndentedStringBuilder;
 private import utils.convparms;
 private import utils.funct;
 
+private import std.ascii: isLower;
 private import std.path;
 private import std.stdio;
 private import std.array;
@@ -279,7 +280,7 @@ public class GtkDClass
 
 		string[][string] phobos2ImportConvs;
 		phobos2ImportConvs["std.stdio"] = ["std.stdio"];
-		phobos2ImportConvs["std.c.stdio"] = ["std.c.stdio"];
+		phobos2ImportConvs["std.c.stdio"] = ["core.stdc.stdio"];
 		phobos2ImportConvs["std.string"] = ["std.string"];
 		phobos2ImportConvs["std.conv"] = ["std.conv"];
 		
@@ -1103,7 +1104,7 @@ public class GtkDClass
 		{
 			if ( count == 0 )
 			{
-				signalGtkD ~= std.ascii.toUpper(c);
+				signalGtkD ~= toUpper(c);
 			}
 			else
 			{
@@ -1111,7 +1112,7 @@ public class GtkDClass
 				{
 					if ( pc=='-' || pc=='_' )
 					{
-						signalGtkD ~= std.ascii.toUpper(c);
+						signalGtkD ~= toUpper(c);
 					}
 					else
 					{
@@ -3000,9 +3001,9 @@ string removeUnderscore(string gToken)
 		c = gToken[pos];
 		if ( pc == '_' )
 		{
-			c = to!char(std.ascii.toUpper(c));
+			c = to!char(toUpper(c));
 		}
-		else if ( c == '_' && std.ascii.isLower(pc) )
+		else if ( c == '_' && isLower(pc) )
 		{
 			pc = c;
 			c = '\0';

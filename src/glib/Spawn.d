@@ -83,7 +83,7 @@ version(Tango) {
 	version = druntime;
 } else version(D_Version2) {
 	private import core.thread;
-	private import std.c.stdio;
+	private import core.stdc.stdio;
 	private import std.string;
 	private import core.stdc.string;
 

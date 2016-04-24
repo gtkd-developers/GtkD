@@ -71,9 +71,11 @@ Paths:
 
 */
 
+private import std.path;
+
 string joinRootDirFile(string root, string dir, string file)
 {
-	return std.path.buildPath(std.path.buildPath(root,dir),file);
+	return buildPath(std.path.buildPath(root,dir),file);
 }
 
 //Moved here because of dsss:
