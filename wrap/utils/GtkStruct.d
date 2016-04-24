@@ -19,7 +19,7 @@
 
 module utils.GtkStruct;
 
-import std.algorithm: sort, uniq, endsWith;
+import std.algorithm: among, sort, uniq, startsWith, endsWith, canFind;
 import std.array : replace;
 import std.conv;
 import std.file : write;
@@ -498,9 +498,9 @@ final class GtkStruct
 		buff ~= indenter.format("}");
 
 		if ( isInterface() )
-			std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"T.d"), buff);
+			write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"T.d"), buff);
 		else
-			std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
+			write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
 	}
 
 	void writeInterface()
@@ -562,7 +562,7 @@ final class GtkStruct
 			buff ~= indenter.format("}");
 		}
 
-		std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"IF.d"), buff);
+		write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~"IF.d"), buff);
 	}
 
 	void writeDStruct()
@@ -604,7 +604,7 @@ final class GtkStruct
 		if ( !noNamespace )
 			buff ~= indenter.format("}");
 
-		std.file.write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
+		write(buildPath(wrapper.outputRoot, pack.srcDir, pack.name, name ~".d"), buff);
 	}
 
 	/**

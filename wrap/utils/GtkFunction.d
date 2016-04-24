@@ -19,10 +19,11 @@
 
 module utils.GtkFunction;
 
-import std.algorithm: among, startsWith;
+import std.algorithm: among, startsWith, endsWith;
 import std.conv;
 import std.range;
 import std.string : chomp, splitLines, strip, removechars;
+import std.uni: toUpper, toLower;
 
 import utils.GtkEnum;
 import utils.GtkStruct;
@@ -942,7 +943,7 @@ final class GtkFunction
 		{
 			if ( count == 0 )
 			{
-				signalName ~= std.ascii.toUpper(c);
+				signalName ~= toUpper(c);
 			}
 			else
 			{
