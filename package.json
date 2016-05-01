@@ -20,7 +20,8 @@
         "gtk-d:sv": "~>3.3.0",
         "gtk-d:vte": "~>3.3.0",
         "gtk-d:gtkd": "~>3.3.0",
-        "gtk-d:gstreamer": "~>3.3.0"
+        "gtk-d:gstreamer": "~>3.3.0",
+        "gtk-d:peas": "~>3.3.0"
     },
 
     "subPackages" : [
@@ -66,6 +67,15 @@
             "sourcePaths": ["srcvte"],
             "libs-posix": ["dl"],
             "importPaths": ["srcvte"],
+            "dependencies": {"gtk-d:gtkd":"~>3.3.0"}
+        },
+        {
+            "name": "peas",
+            "targetType": "library",
+            "targetName": "peasd-3",
+            "sourcePaths": ["srcpeas"],
+            "libs-posix": ["dl"],
+            "importPaths": ["srcpeas"],
             "dependencies": {"gtk-d:gtkd":"~>3.3.0"}
         }
     ]
