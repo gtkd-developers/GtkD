@@ -573,6 +573,11 @@ code: start
 				++i;
 			}
 		}
+
+		// Set idleID to 0 if all delegates are removed
+        if (idleListeners.length == 0)
+			idleID = 0;
+
 		return runAgain;
 	}
 code: end
@@ -1388,6 +1393,11 @@ code: start
 				++i;
 			}
 		}
+
+		// Set timeoutID to 0 if all delegates are removed
+        if (timeoutListeners.length == 0)
+			timeoutID = 0;
+
 		return runAgain;
 	}
 code: end

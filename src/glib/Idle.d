@@ -146,6 +146,11 @@ public class Idle
 				++i;
 			}
 		}
+		
+		// Set idleID to 0 if all delegates are removed
+		if (idleListeners.length == 0)
+			idleID = 0;
+		
 		return runAgain;
 	}
 

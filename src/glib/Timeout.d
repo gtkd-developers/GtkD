@@ -196,6 +196,11 @@ public class Timeout
 				++i;
 			}
 		}
+		
+		// Set timeoutID to 0 if all delegates are removed
+		if (timeoutListeners.length == 0)
+			timeoutID = 0;
+		
 		return runAgain;
 	}
 
