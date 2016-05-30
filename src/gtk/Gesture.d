@@ -252,6 +252,10 @@ public class Gesture : EventController
 	/**
 	 * Returns the last event that was processed for @sequence.
 	 *
+	 * Note that the returned pointer is only valid as long as the @sequence
+	 * is still interpreted by the @gesture. If in doubt, you should make
+	 * a copy of the event.
+	 *
 	 * Params:
 	 *     sequence = a #GdkEventSequence
 	 *

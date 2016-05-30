@@ -472,6 +472,9 @@ public interface TreeModelIF{
 	 * @child will remain a valid node after this function has been
 	 * called.
 	 *
+	 * @iter will be initialized before the lookup is performed, so @child
+	 * and @iter cannot point to the same memory location.
+	 *
 	 * Params:
 	 *     iter = the new #GtkTreeIter-struct to set to the parent
 	 *     child = the #GtkTreeIter-struct

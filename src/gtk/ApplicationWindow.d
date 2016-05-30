@@ -39,7 +39,7 @@ public  import gtkc.gtktypes;
 
 
 /**
- * GtkApplicationWindow is a #GtkWindow subclass that offers some
+ * #GtkApplicationWindow is a #GtkWindow subclass that offers some
  * extra functionality for better integration with #GtkApplication
  * features.  Notably, it can handle both the application menu as well
  * as the menubar. See gtk_application_set_app_menu() and
@@ -53,9 +53,9 @@ public  import gtkc.gtktypes;
  * prefix.  Actions must be addressed with the prefixed name when
  * referring to them from a #GMenuModel.
  * 
- * Note that widgets that are placed inside a GtkApplicationWindow
+ * Note that widgets that are placed inside a #GtkApplicationWindow
  * can also activate these actions, if they implement the
- * GtkActionable interface.
+ * #GtkActionable interface.
  * 
  * As with #GtkApplication, the GDK lock will be acquired when
  * processing actions arriving from other processes and should therefore

@@ -62,13 +62,14 @@ private import pango.PgLayout;
  * # CSS nodes
  * 
  * |[<!-- language="plain" -->
- * scale[.fine-tune]
+ * scale[.fine-tune][.marks-before][.marks-after]
  * ├── marks.top
  * │   ├── mark
  * │   ┊    ├── [label]
  * │   ┊    ╰── indicator
  * ┊   ┊
  * │   ╰── mark
+ * ├── [value]
  * ├── contents
  * │   ╰── trough
  * │       ├── slider
@@ -103,6 +104,12 @@ private import pango.PgLayout;
  * has a subnode named label. When the mark is either above or left of the
  * scale, the label subnode is the first when present. Otherwise, the indicator
  * subnode is the first.
+ * 
+ * The main CSS node gets the 'marks-before' and/or 'marks-after' style classes
+ * added depending on what marks are present.
+ * 
+ * If the scale is displaying the value (see #GtkScale:draw-value), there is
+ * subnode with name value.
  */
 public class Scale : Range
 {

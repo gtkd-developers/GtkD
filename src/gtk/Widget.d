@@ -4286,6 +4286,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * reposition its contents.
 		 *
 		 * An example user of this function is gtk_widget_set_halign().
+		 *
+		 * Since: 3.20
 		 */
 		public void queueAllocate()
 		{

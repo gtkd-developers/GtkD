@@ -329,7 +329,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     state = pointer to the modifier state to map
 	 *
-	 * Return: %TRUE if no virtual modifiers were mapped to the
+	 * Return: %FALSE if two virtual modifiers were mapped to the
 	 *     same non-virtual modifier. Note that %FALSE is also returned
 	 *     if a virtual modifier is mapped to a non-virtual modifier that
 	 *     was already set in @state.
