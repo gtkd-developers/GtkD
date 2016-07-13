@@ -296,7 +296,7 @@ public class TreeIter
 	/**
 	 * setUserData and getUserData provide simple boxing
 	 * around the userData field in the TreeIter struct.
-	 * Throws: TreeIterError for unsuported types or a type mismatch.
+	 * Throws: TreeIterError for unsupported types or a type mismatch.
 	 * Example:
 	 * ---
 	 * Treeiter iter = new TreeIter();
@@ -336,9 +336,9 @@ public class TreeIter
 		}
 		else
 		{
-			pragma(msg, "IterData Type not Suported");
+			pragma(msg, "IterData Type not Supported");
 			
-			throw new TreeIterError("getUserData", "IterData Type not Suported");
+			throw new TreeIterError("getUserData", "IterData Type not Supported");
 		}
 		
 		gtkTreeIter.userData = itData;
@@ -417,9 +417,9 @@ public class TreeIter
 		}
 		else
 		{
-			pragma(msg, "IterData Type not Suported");
+			pragma(msg, "IterData Type not Supported");
 			
-			throw new TreeIterError("getUserData", "IterData Type not Suported");
+			throw new TreeIterError("getUserData", "IterData Type not Supported");
 		}
 	}
 
