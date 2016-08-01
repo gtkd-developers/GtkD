@@ -49,22 +49,6 @@ ifeq ("$(OS)","Linux")
     LDFLAGS+=$(LINKERFLAG)-ldl
 endif
 
-ifndef MODEL
-    ifeq ("$(ARCH)", "x86_64")
-        MODEL=64
-    else
-        MODEL=32
-    endif
-endif
-
-ifeq ($(MODEL), 64) 
-   DCFLAGS+=-m64
-   LDFLAGS+=-m64
-else
-   DCFLAGS+=-m32
-   LDFLAGS+=-m32
-endif
-
 AR=ar
 RANLIB=ranlib
 
@@ -213,7 +197,6 @@ test: $(BINNAME_DEMO)
 # Create a versioned symlink so the demo is able to load it.
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
-$(BINNAME_DEMO): DCFLAGS=-m$(MODEL)
 $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),,$(if $(wildcard $(LIBNAME_GTKD)),,$(MAKE) $(LIBNAME_GTKD)))
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
