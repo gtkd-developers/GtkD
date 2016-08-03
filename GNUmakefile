@@ -1,10 +1,15 @@
 SHELL=/bin/sh
-prefix=/usr/local
-libdir=lib
-datadir=$(prefix)/share
+prefix?=/usr/local
 
 OS=$(shell uname || uname -s)
 ARCH=$(shell uname -m || arch)
+
+datadir?=$(prefix)/share
+ifeq (, $(shell which dpkg-architecture))
+	libdir?=lib/
+else
+	libdir?=lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+endif
 
 ifndef DC
     ifneq ($(strip $(shell which dmd 2>/dev/null)),)
@@ -47,22 +52,6 @@ endif
 
 ifeq ("$(OS)","Linux")
     LDFLAGS+=$(LINKERFLAG)-ldl
-endif
-
-ifndef MODEL
-    ifeq ("$(ARCH)", "x86_64")
-        MODEL=64
-    else
-        MODEL=32
-    endif
-endif
-
-ifeq ($(MODEL), 64) 
-   DCFLAGS+=-m64
-   LDFLAGS+=-m64
-else
-   DCFLAGS+=-m32
-   LDFLAGS+=-m32
 endif
 
 AR=ar
@@ -213,7 +202,6 @@ test: $(BINNAME_DEMO)
 # Create a versioned symlink so the demo is able to load it.
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
-$(BINNAME_DEMO): DCFLAGS=-m$(MODEL)
 $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),,$(if $(wildcard $(LIBNAME_GTKD)),,$(MAKE) $(LIBNAME_GTKD)))
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
@@ -247,7 +235,7 @@ gtkd-$(MAJOR).pc:
 	echo Name: GtkD > $@
 	echo Description: A D binding and OO wrapper for GTK+. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
-	echo Libs: $(LINKERFLAG)-L$(prefix)/lib/ $(LINKERFLAG)-lgtkd-$(MAJOR) $(LINKERFLAG)-ldl >> $@
+	echo Libs: $(LINKERFLAG)-L$(prefix)/$(libdir)/ $(LINKERFLAG)-lgtkd-$(MAJOR) $(LINKERFLAG)-ldl >> $@
 	echo Cflags: -I$(prefix)/include/d/gtkd-$(MAJOR)/ >> $@
 
 gtkdgl-$(MAJOR).pc:
@@ -337,25 +325,25 @@ install-shared-peas: $(SONAME_PEASD) install-shared-gtkd
 
 install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
-	install -d $(DESTDIR)$(datadir)/pkgconfig
+	install -d $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
 	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 
 install-headers-gtkdsv: gtkdsv-$(MAJOR).pc install-headers-gtkd
 	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 
 install-headers-vte: vted-$(MAJOR).pc install-headers-gtkd
 	(cd srcvte; echo $(SOURCES_VTED) | sed -e s,srcvte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 
 install-headers-peas: peasd-$(MAJOR).pc install-headers-gtkd
 	(cd srcpeas; echo $(SOURCES_PEASD) | sed -e s,srcpeas/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
@@ -363,7 +351,7 @@ install-headers-peas: peasd-$(MAJOR).pc install-headers-gtkd
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer
 	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gtkd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION)
@@ -371,7 +359,7 @@ uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdgl-$(MAJOR).pc
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gtkdgl-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION)
@@ -379,7 +367,7 @@ uninstall-gtkdgl:
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdsv-$(MAJOR).pc
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gtkdsv-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION)
@@ -387,7 +375,7 @@ uninstall-gtkdsv:
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gstreamerd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gstreamerd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
@@ -395,7 +383,7 @@ uninstall-gstreamer:
 
 uninstall-vte:
 	$(foreach dir,$(shell ls srcvte), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/vted-$(MAJOR).pc
+	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/vted-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_VTED)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED).$(SO_VERSION)
