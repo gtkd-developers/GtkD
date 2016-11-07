@@ -329,6 +329,10 @@ public class Popover : Bin
 	/**
 	 * Returns whether show/hide transitions are enabled on this popover.
 	 *
+	 * Deprecated: You can show or hide the popover without transitions
+	 * using gtk_widget_show() and gtk_widget_hide() while gtk_popover_popup()
+	 * and gtk_popover_popdown() will use transitions.
+	 *
 	 * Return: #TRUE if the show and hide transitions of the given
 	 *     popover are enabled, #FALSE otherwise.
 	 *
@@ -337,6 +341,30 @@ public class Popover : Bin
 	public bool getTransitionsEnabled()
 	{
 		return gtk_popover_get_transitions_enabled(gtkPopover) != 0;
+	}
+
+	/**
+	 * Pops @popover down.This is different than a gtk_widget_hide() call
+	 * in that it shows the popover with a transition. If you want to hide
+	 * the popover without a transition, use gtk_widget_hide().
+	 *
+	 * Since: 3.22
+	 */
+	public void popdown()
+	{
+		gtk_popover_popdown(gtkPopover);
+	}
+
+	/**
+	 * Pops @popover up. This is different than a gtk_widget_show() call
+	 * in that it shows the popover with a transition. If you want to show
+	 * the popover without a transition, use gtk_widget_show().
+	 *
+	 * Since: 3.22
+	 */
+	public void popup()
+	{
+		gtk_popover_popup(gtkPopover);
 	}
 
 	/**
@@ -441,6 +469,10 @@ public class Popover : Bin
 
 	/**
 	 * Sets whether show/hide transitions are enabled on this popover
+	 *
+	 * Deprecated: You can show or hide the popover without transitions
+	 * using gtk_widget_show() and gtk_widget_hide() while gtk_popover_popup()
+	 * and gtk_popover_popdown() will use transitions.
 	 *
 	 * Params:
 	 *     transitionsEnabled = Whether transitions are enabled

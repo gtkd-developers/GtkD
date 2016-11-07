@@ -289,6 +289,9 @@ code: start
 	}
 code: end
 
+struct: Monitor
+class: MonitorG
+
 struct: Pango
 namespace:
 

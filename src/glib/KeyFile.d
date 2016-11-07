@@ -24,6 +24,7 @@
 
 module glib.KeyFile;
 
+private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -704,6 +705,34 @@ public class KeyFile
 		GError* err = null;
 		
 		auto p = g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Loads a key file from the data in @bytes into an empty #GKeyFile structure.
+	 * If the object cannot be created then %error is set to a #GKeyFileError.
+	 *
+	 * Params:
+	 *     bytes = a #GBytes
+	 *     flags = flags from #GKeyFileFlags
+	 *
+	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
+	 *
+	 * Since: 2.50
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool loadFromBytes(Bytes bytes, GKeyFileFlags flags)
+	{
+		GError* err = null;
+		
+		auto p = g_key_file_load_from_bytes(gKeyFile, (bytes is null) ? null : bytes.getBytesStruct(), flags, &err) != 0;
 		
 		if (err !is null)
 		{

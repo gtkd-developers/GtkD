@@ -28,8 +28,16 @@ addAliases: start
 addAliases: end
 
 struct: Terminal
+import: vte.Regex : RegexVte = Regex
 in: event_check_gregex_simple n_regexes
 in: event_check_gregex_simple matches
+in: event_check_regex_simple n_regexes
+in: event_check_regex_simple matches
+structWrap: Regex RegexVte
+
+struct: Regex
+#TODO:
+noCode: new_for_search
 
 move: get_user_shell Terminal
 

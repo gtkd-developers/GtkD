@@ -142,6 +142,27 @@ public enum VtePtyFlags
 alias VtePtyFlags PtyFlags;
 
 /**
+ * An enum type for regex errors. In addition to the values listed above,
+ * any PCRE2 error values may occur.
+ *
+ * Since: 0.46
+ */
+public enum VteRegexError
+{
+	/**
+	 * The PCRE2 library was built without
+	 * Unicode support which is required for VTE
+	 */
+	INCOMPATIBLE = 2147483646,
+	/**
+	 * Regexes are not supported because VTE was
+	 * built without PCRE2 support
+	 */
+	NOT_SUPPORTED = 2147483647,
+}
+alias VteRegexError RegexError;
+
+/**
  * A flag type to determine how terminal contents should be written
  * to an output stream.
  */
@@ -171,6 +192,8 @@ struct VteCharAttributes
 struct VtePty;
 
 struct VtePtyClass;
+
+struct VteRegex;
 
 struct VteTerminal
 {

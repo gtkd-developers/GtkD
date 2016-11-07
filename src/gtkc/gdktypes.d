@@ -37,9 +37,119 @@ public import gtkc.gdkpixbuftypes;
 public alias void* GdkXEvent;
 
 /**
+ * Positioning hints for aligning a window relative to a rectangle.
+ *
+ * These hints determine how the window should be positioned in the case that
+ * the window would fall off-screen if placed in its ideal position.
+ *
+ * For example, %GDK_ANCHOR_FLIP_X will replace %GDK_GRAVITY_NORTH_WEST with
+ * %GDK_GRAVITY_NORTH_EAST and vice versa if the window extends beyond the left
+ * or right edges of the monitor.
+ *
+ * If %GDK_ANCHOR_SLIDE_X is set, the window can be shifted horizontally to fit
+ * on-screen. If %GDK_ANCHOR_RESIZE_X is set, the window can be shrunken
+ * horizontally to fit.
+ *
+ * In general, when multiple flags are set, flipping should take precedence over
+ * sliding, which should take precedence over resizing.
+ *
+ * Since: 3.22
+ */
+public enum GdkAnchorHints
+{
+	/**
+	 * allow flipping anchors horizontally
+	 */
+	FLIP_X = 1,
+	/**
+	 * allow flipping anchors vertically
+	 */
+	FLIP_Y = 2,
+	/**
+	 * allow sliding window horizontally
+	 */
+	SLIDE_X = 4,
+	/**
+	 * allow sliding window vertically
+	 */
+	SLIDE_Y = 8,
+	/**
+	 * allow resizing window horizontally
+	 */
+	RESIZE_X = 16,
+	/**
+	 * allow resizing window vertically
+	 */
+	RESIZE_Y = 32,
+	/**
+	 * allow flipping anchors on both axes
+	 */
+	FLIP = 3,
+	/**
+	 * allow sliding window on both axes
+	 */
+	SLIDE = 12,
+	/**
+	 * allow resizing window on both axes
+	 */
+	RESIZE = 48,
+}
+alias GdkAnchorHints AnchorHints;
+
+/**
+ * Flags describing the current capabilities of a device/tool.
+ *
+ * Since: 3.22
+ */
+public enum GdkAxisFlags
+{
+	/**
+	 * X axis is present
+	 */
+	X = 2,
+	/**
+	 * Y axis is present
+	 */
+	Y = 4,
+	/**
+	 * Pressure axis is present
+	 */
+	PRESSURE = 8,
+	/**
+	 * X tilt axis is present
+	 */
+	XTILT = 16,
+	/**
+	 * Y tilt axis is present
+	 */
+	YTILT = 32,
+	/**
+	 * Wheel axis is present
+	 */
+	WHEEL = 64,
+	/**
+	 * Distance axis is present
+	 */
+	DISTANCE = 128,
+	/**
+	 * Z-axis rotation is present
+	 */
+	ROTATION = 256,
+	/**
+	 * Slider axis is present
+	 */
+	SLIDER = 512,
+}
+alias GdkAxisFlags AxisFlags;
+
+/**
  * An enumeration describing the way in which a device
  * axis (valuator) maps onto the predefined valuator
  * types that GTK+ understands.
+ *
+ * Note that the X and Y axes are not really needed; pointer devices
+ * report their location via the x/y members of events regardless. Whether
+ * X and Y are present as axes depends on the GDK backend.
  */
 public enum GdkAxisUse
 {
@@ -72,9 +182,21 @@ public enum GdkAxisUse
 	 */
 	WHEEL = 6,
 	/**
+	 * the axis is used for pen/tablet distance information. (Since: 3.22)
+	 */
+	DISTANCE = 7,
+	/**
+	 * the axis is used for pen rotation information. (Since: 3.22)
+	 */
+	ROTATION = 8,
+	/**
+	 * the axis is used for pen slider information. (Since: 3.22)
+	 */
+	SLIDER = 9,
+	/**
 	 * a constant equal to the numerically highest axis value.
 	 */
-	LAST = 7,
+	LAST = 10,
 }
 alias GdkAxisUse AxisUse;
 
@@ -483,6 +605,69 @@ public enum GdkCursorType
 alias GdkCursorType CursorType;
 
 /**
+ * A pad feature.
+ */
+public enum GdkDevicePadFeature
+{
+	/**
+	 * a button
+	 */
+	BUTTON = 0,
+	/**
+	 * a ring-shaped interactive area
+	 */
+	RING = 1,
+	/**
+	 * a straight interactive area
+	 */
+	STRIP = 2,
+}
+alias GdkDevicePadFeature DevicePadFeature;
+
+/**
+ * Indicates the specific type of tool being used being a tablet. Such as an
+ * airbrush, pencil, etc.
+ *
+ * Since: 3.22
+ */
+public enum GdkDeviceToolType
+{
+	/**
+	 * Tool is of an unknown type.
+	 */
+	UNKNOWN = 0,
+	/**
+	 * Tool is a standard tablet stylus.
+	 */
+	PEN = 1,
+	/**
+	 * Tool is standard tablet eraser.
+	 */
+	ERASER = 2,
+	/**
+	 * Tool is a brush stylus.
+	 */
+	BRUSH = 3,
+	/**
+	 * Tool is a pencil stylus.
+	 */
+	PENCIL = 4,
+	/**
+	 * Tool is an airbrush stylus.
+	 */
+	AIRBRUSH = 5,
+	/**
+	 * Tool is a mouse.
+	 */
+	MOUSE = 6,
+	/**
+	 * Tool is a lens cursor.
+	 */
+	LENS = 7,
+}
+alias GdkDeviceToolType DeviceToolType;
+
+/**
  * Indicates the device type. See [above][GdkDeviceManager.description]
  * for more information about the meaning of these device types.
  */
@@ -733,6 +918,10 @@ public enum GdkEventMask
 	 */
 	TOUCHPAD_GESTURE_MASK = 16777216,
 	/**
+	 * receive tablet pad events. Since 3.22
+	 */
+	TABLET_PAD_MASK = 33554432,
+	/**
 	 * the combination of all the above event masks.
 	 */
 	ALL_EVENTS_MASK = 16777214,
@@ -946,9 +1135,34 @@ public enum GdkEventType
 	 */
 	TOUCHPAD_PINCH = 42,
 	/**
+	 * A tablet pad button press event. This event type
+	 * was added in 3.22.
+	 */
+	PAD_BUTTON_PRESS = 43,
+	/**
+	 * A tablet pad button release event. This event type
+	 * was added in 3.22.
+	 */
+	PAD_BUTTON_RELEASE = 44,
+	/**
+	 * A tablet pad axis event from a "ring". This event type was
+	 * added in 3.22.
+	 */
+	PAD_RING = 45,
+	/**
+	 * A tablet pad axis event from a "strip". This event type was
+	 * added in 3.22.
+	 */
+	PAD_STRIP = 46,
+	/**
+	 * A tablet pad group mode change. This event type was
+	 * added in 3.22.
+	 */
+	PAD_GROUP_MODE = 47,
+	/**
 	 * marks the end of the GdkEventType enumeration. Added in 2.18
 	 */
-	EVENT_LAST = 43,
+	EVENT_LAST = 48,
 }
 alias GdkEventType EventType;
 
@@ -1107,7 +1321,7 @@ public enum GdkGrabStatus
 	 */
 	FROZEN = 4,
 	/**
-	 * the grab failed for some other reason.
+	 * the grab failed for some other reason. Since 3.16
 	 */
 	FAILED = 5,
 }
@@ -1227,6 +1441,17 @@ public enum GdkInputSource
 	 * as a touchpad. This device type has been added in 3.4.
 	 */
 	TOUCHPAD = 6,
+	/**
+	 * the device is a trackpoint. This device type has been
+	 * added in 3.22
+	 */
+	TRACKPOINT = 7,
+	/**
+	 * the device is a "pad", a collection of buttons,
+	 * rings and strips found in drawing tablets. This device type has been
+	 * added in 3.22.
+	 */
+	TABLET_PAD = 8,
 }
 alias GdkInputSource InputSource;
 
@@ -1643,6 +1868,41 @@ public enum GdkStatus
 	ERROR_MEM = -4,
 }
 alias GdkStatus Status;
+
+/**
+ * This enumeration describes how the red, green and blue components
+ * of physical pixels on an output device are laid out.
+ *
+ * Since: 3.22
+ */
+public enum GdkSubpixelLayout
+{
+	/**
+	 * The layout is not known
+	 */
+	UNKNOWN = 0,
+	/**
+	 * Not organized in this way
+	 */
+	NONE = 1,
+	/**
+	 * The layout is horizontal, the order is RGB
+	 */
+	HORIZONTAL_RGB = 2,
+	/**
+	 * The layout is horizontal, the order is BGR
+	 */
+	HORIZONTAL_BGR = 3,
+	/**
+	 * The layout is vertical, the order is RGB
+	 */
+	VERTICAL_RGB = 4,
+	/**
+	 * The layout is vertical, the order is BGR
+	 */
+	VERTICAL_BGR = 5,
+}
+alias GdkSubpixelLayout SubpixelLayout;
 
 /**
  * Specifies the current state of a touchpad gesture. All gestures are
@@ -2181,11 +2441,21 @@ struct GdkDevice;
 
 struct GdkDeviceManager;
 
+struct GdkDevicePad;
+
+struct GdkDevicePadInterface;
+
+struct GdkDeviceTool;
+
 struct GdkDisplay;
 
 struct GdkDisplayManager;
 
 struct GdkDragContext;
+
+struct GdkDrawingContext;
+
+struct GdkDrawingContextClass;
 
 struct GdkEvent
 {
@@ -2271,8 +2541,26 @@ struct GdkEvent
 		 * a #GdkEventGrabBroken
 		 */
 		GdkEventGrabBroken grabBroken;
+		/**
+		 * a #GdkEventTouchpadSwipe
+		 */
 		GdkEventTouchpadSwipe touchpadSwipe;
+		/**
+		 * a #GdkEventTouchpadPinch
+		 */
 		GdkEventTouchpadPinch touchpadPinch;
+		/**
+		 * a #GdkEventPadButton
+		 */
+		GdkEventPadButton padButton;
+		/**
+		 * a #GdkEventPadAxis
+		 */
+		GdkEventPadAxis padAxis;
+		/**
+		 * a #GdkEventPadGroupMode
+		 */
+		GdkEventPadGroupMode padGroupMode;
 	}
 }
 
@@ -2805,6 +3093,125 @@ struct GdkEventOwnerChange
 	 * over
 	 */
 	uint selectionTime;
+}
+
+/**
+ * Generated during %GDK_SOURCE_TABLET_PAD interaction with tactile sensors.
+ *
+ * Since: 3.22
+ */
+struct GdkEventPadAxis
+{
+	/**
+	 * the type of the event (%GDK_PAD_RING or %GDK_PAD_STRIP).
+	 */
+	GdkEventType type;
+	/**
+	 * the window which received the event.
+	 */
+	GdkWindow* window;
+	/**
+	 * %TRUE if the event was sent explicitly.
+	 */
+	byte sendEvent;
+	/**
+	 * the time of the event in milliseconds.
+	 */
+	uint time;
+	/**
+	 * the pad group the ring/strip belongs to. A %GDK_SOURCE_TABLET_PAD
+	 * device may have one or more groups containing a set of buttons/rings/strips
+	 * each.
+	 */
+	uint group;
+	/**
+	 * number of strip/ring that was interacted. This number is 0-indexed.
+	 */
+	uint index;
+	/**
+	 * The current mode of @group. Different groups in a %GDK_SOURCE_TABLET_PAD
+	 * device may have different current modes.
+	 */
+	uint mode;
+	/**
+	 * The current value for the given axis.
+	 */
+	double value;
+}
+
+/**
+ * Generated during %GDK_SOURCE_TABLET_PAD button presses and releases.
+ *
+ * Since: 3.22
+ */
+struct GdkEventPadButton
+{
+	/**
+	 * the type of the event (%GDK_PAD_BUTTON_PRESS or %GDK_PAD_BUTTON_RELEASE).
+	 */
+	GdkEventType type;
+	/**
+	 * the window which received the event.
+	 */
+	GdkWindow* window;
+	/**
+	 * %TRUE if the event was sent explicitly.
+	 */
+	byte sendEvent;
+	/**
+	 * the time of the event in milliseconds.
+	 */
+	uint time;
+	/**
+	 * the pad group the button belongs to. A %GDK_SOURCE_TABLET_PAD device
+	 * may have one or more groups containing a set of buttons/rings/strips each.
+	 */
+	uint group;
+	/**
+	 * The pad button that was pressed.
+	 */
+	uint button;
+	/**
+	 * The current mode of @group. Different groups in a %GDK_SOURCE_TABLET_PAD
+	 * device may have different current modes.
+	 */
+	uint mode;
+}
+
+/**
+ * Generated during %GDK_SOURCE_TABLET_PAD mode switches in a group.
+ *
+ * Since: 3.22
+ */
+struct GdkEventPadGroupMode
+{
+	/**
+	 * the type of the event (%GDK_PAD_GROUP_MODE).
+	 */
+	GdkEventType type;
+	/**
+	 * the window which received the event.
+	 */
+	GdkWindow* window;
+	/**
+	 * %TRUE if the event was sent explicitly.
+	 */
+	byte sendEvent;
+	/**
+	 * the time of the event in milliseconds.
+	 */
+	uint time;
+	/**
+	 * the pad group that is switching mode. A %GDK_SOURCE_TABLET_PAD
+	 * device may have one or more groups containing a set of buttons/rings/strips
+	 * each.
+	 */
+	uint group;
+	/**
+	 * The new mode of @group. Different groups in a %GDK_SOURCE_TABLET_PAD
+	 * device may have different current modes.
+	 */
+	uint mode;
 }
 
 /**
@@ -3443,6 +3850,10 @@ struct GdkKeymapKey
 	 */
 	int level;
 }
+
+struct GdkMonitor;
+
+struct GdkMonitorClass;
 
 /**
  * Defines the x and y coordinates of a point.

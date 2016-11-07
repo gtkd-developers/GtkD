@@ -85,7 +85,8 @@ public class MappedFile
 	 * to the #GFileError value #G_FILE_ERROR_INVAL.
 	 *
 	 * Params:
-	 *     filename = The path of the file to load, in the GLib filename encoding
+	 *     filename = The path of the file to load, in the GLib
+	 *         filename encoding
 	 *     writable = whether the mapping should be writable
 	 *
 	 * Return: a newly allocated #GMappedFile which must be unref'd

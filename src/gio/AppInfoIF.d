@@ -27,6 +27,8 @@ module gio.AppInfoIF;
 private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import gio.AppLaunchContext;
+private import gio.AsyncResultIF;
+private import gio.Cancellable;
 private import gio.FileIF;
 private import gio.Icon;
 private import gio.IconIF;
@@ -212,13 +214,44 @@ public interface AppInfoIF{
 	 *
 	 * Params:
 	 *     uri = the uri to show
-	 *     launchContext = an optional #GAppLaunchContext.
+	 *     launchContext = an optional #GAppLaunchContext
 	 *
 	 * Return: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
 	public static bool launchDefaultForUri(string uri, AppLaunchContext launchContext);
+
+	/**
+	 * Async version of g_app_info_launch_default_for_uri().
+	 *
+	 * This version is useful if you are interested in receiving
+	 * error information in the case where the application is
+	 * sandboxed and the portal may present an application chooser
+	 * dialog to the user.
+	 *
+	 * Params:
+	 *     uri = the uri to show
+	 *     callback = a #GASyncReadyCallback to call when the request is done
+	 *     userData = data to pass to @callback
+	 *
+	 * Since: 2.50
+	 */
+	public static void launchDefaultForUriAsync(string uri, AppLaunchContext launchContext, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+
+	/**
+	 * Finishes an asynchronous launch-default-for-uri operation.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Return: %TRUE if the launch was successful, %FALSE if @error is set
+	 *
+	 * Since: 2.50
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static bool launchDefaultForUriFinish(AsyncResultIF result);
 
 	/**
 	 * Removes all changes to the type associations done by
@@ -452,7 +485,8 @@ public interface AppInfoIF{
 	 * Sets the application as the default handler for the given file extension.
 	 *
 	 * Params:
-	 *     extension = a string containing the file extension (without the dot).
+	 *     extension = a string containing the file extension
+	 *         (without the dot).
 	 *
 	 * Return: %TRUE on success, %FALSE on error.
 	 *

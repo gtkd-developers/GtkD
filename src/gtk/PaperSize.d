@@ -30,6 +30,7 @@ private import glib.GException;
 private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
+private import glib.Variant;
 private import gobject.ObjectG;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
@@ -137,6 +138,31 @@ public class PaperSize
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
+		}
+		
+		this(cast(GtkPaperSize*) p);
+	}
+
+	/**
+	 * Deserialize a paper size from an a{sv} variant in
+	 * the format produced by gtk_paper_size_to_gvariant().
+	 *
+	 * Params:
+	 *     variant = an a{sv} #GVariant
+	 *
+	 * Return: a new #GtkPaperSize object
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Variant variant)
+	{
+		auto p = gtk_paper_size_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 		
 		this(cast(GtkPaperSize*) p);
@@ -450,6 +476,25 @@ public class PaperSize
 	public void setSize(double width, double height, GtkUnit unit)
 	{
 		gtk_paper_size_set_size(gtkPaperSize, width, height, unit);
+	}
+
+	/**
+	 * Serialize a paper size to an a{sv} variant.
+	 *
+	 * Return: a new, floating, #GVariant
+	 *
+	 * Since: 3.22
+	 */
+	public Variant toGvariant()
+	{
+		auto p = gtk_paper_size_to_gvariant(gtkPaperSize);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Variant(cast(GVariant*) p);
 	}
 
 	/**

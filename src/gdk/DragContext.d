@@ -326,6 +326,9 @@ public class DragContext : ObjectG
 	 * the drag and drop operation. See gdk_drag_context_manage_dnd()
 	 * for more information.
 	 *
+	 * Params:
+	 *     reason = The reason the context was cancelled
+	 *
 	 * Since: 3.20
 	 */
 	void addOnCancel(void delegate(GdkDragCancelReason, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -343,11 +346,11 @@ public class DragContext : ObjectG
 		}
 		onCancelListeners ~= dlg;
 	}
-	extern(C) static void callBackCancel(GdkDragContext* dragcontextStruct, GdkDragCancelReason object, DragContext _dragcontext)
+	extern(C) static void callBackCancel(GdkDragContext* dragcontextStruct, GdkDragCancelReason reason, DragContext _dragcontext)
 	{
 		foreach ( void delegate(GdkDragCancelReason, DragContext) dlg; _dragcontext.onCancelListeners )
 		{
-			dlg(object, _dragcontext);
+			dlg(reason, _dragcontext);
 		}
 	}
 

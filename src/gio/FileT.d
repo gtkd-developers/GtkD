@@ -1094,9 +1094,9 @@ public template FileT(TStruct)
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: string containing the #GFile's base name, or
-	 *     %NULL if given #GFile is invalid. The returned string should be
-	 *     freed with g_free() when no longer needed.
+	 * Return: string containing the #GFile's
+	 *     base name, or %NULL if given #GFile is invalid. The returned string
+	 *     should be freed with g_free() when no longer needed.
 	 */
 	public string getBasename()
 	{
@@ -1228,8 +1228,8 @@ public template FileT(TStruct)
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: string containing the #GFile's path, or %NULL
-	 *     if no such path exists. The returned string should be freed
+	 * Return: string containing the #GFile's path,
+	 *     or %NULL if no such path exists. The returned string should be freed
 	 *     with g_free() when no longer needed.
 	 */
 	public string getPath()
@@ -1248,8 +1248,8 @@ public template FileT(TStruct)
 	 * Params:
 	 *     descendant = input #GFile
 	 *
-	 * Return: string with the relative path from @descendant
-	 *     to @parent, or %NULL if @descendant doesn't have @parent as
+	 * Return: string with the relative path from
+	 *     @descendant to @parent, or %NULL if @descendant doesn't have @parent as
 	 *     prefix. The returned string should be freed with g_free() when
 	 *     no longer needed.
 	 */
@@ -1704,7 +1704,8 @@ public template FileT(TStruct)
 	 * was cancelled, the error %G_IO_ERROR_CANCELLED will be returned.
 	 *
 	 * Params:
-	 *     symlinkValue = a string with the path for the target of the new symlink
+	 *     symlinkValue = a string with the path for the target
+	 *         of the new symlink
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *

@@ -44,6 +44,7 @@ private import gstreamer.Pad;
 private import gstreamer.PadTemplate;
 private import gstreamer.Plugin;
 private import gstreamer.Query;
+private import gstreamer.Structure;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
@@ -332,6 +333,62 @@ public class Element : ObjectGst
 	public bool addPad(Pad pad)
 	{
 		return gst_element_add_pad(gstElement, (pad is null) ? null : pad.getPadStruct()) != 0;
+	}
+
+	/**
+	 *
+	 * Params:
+	 *     propertyName = name of property to watch for changes, or
+	 *         NULL to watch all properties
+	 *     includeValue = whether to include the new property value in the message
+	 * Return: a watch id, which can be used in connection with
+	 *     gst_element_remove_property_notify_watch() to remove the watch again.
+	 *
+	 * Since: 1.10
+	 */
+	public gulong addPropertyDeepNotifyWatch(string propertyName, bool includeValue)
+	{
+		return gst_element_add_property_deep_notify_watch(gstElement, Str.toStringz(propertyName), includeValue);
+	}
+
+	/**
+	 *
+	 * Params:
+	 *     propertyName = name of property to watch for changes, or
+	 *         NULL to watch all properties
+	 *     includeValue = whether to include the new property value in the message
+	 * Return: a watch id, which can be used in connection with
+	 *     gst_element_remove_property_notify_watch() to remove the watch again.
+	 *
+	 * Since: 1.10
+	 */
+	public gulong addPropertyNotifyWatch(string propertyName, bool includeValue)
+	{
+		return gst_element_add_property_notify_watch(gstElement, Str.toStringz(propertyName), includeValue);
+	}
+
+	/**
+	 * Calls @func from another thread and passes @user_data to it. This is to be
+	 * used for cases when a state change has to be performed from a streaming
+	 * thread, directly via gst_element_set_state() or indirectly e.g. via SEEK
+	 * events.
+	 *
+	 * Calling those functions directly from the streaming thread will cause
+	 * deadlocks in many situations, as they might involve waiting for the
+	 * streaming thread to shut down from this very streaming thread.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     func = Function to call asynchronously from another thread
+	 *     userData = Data to pass to @func
+	 *     destroyNotify = GDestroyNotify for @user_data
+	 *
+	 * Since: 1.10
+	 */
+	public void callAsync(GstElementCallAsyncFunc func, void* userData, GDestroyNotify destroyNotify)
+	{
+		gst_element_call_async(gstElement, func, userData, destroyNotify);
 	}
 
 	/**
@@ -935,6 +992,34 @@ public class Element : ObjectGst
 	}
 
 	/**
+	 * Post an error, warning or info message on the bus from inside an element.
+	 *
+	 * @type must be of #GST_MESSAGE_ERROR, #GST_MESSAGE_WARNING or
+	 * #GST_MESSAGE_INFO.
+	 *
+	 * Params:
+	 *     type = the #GstMessageType
+	 *     domain = the GStreamer GError domain this message belongs to
+	 *     code = the GError code belonging to the domain
+	 *     text = an allocated text string to be used
+	 *         as a replacement for the default message connected to code,
+	 *         or %NULL
+	 *     dbg = an allocated debug message to be
+	 *         used as a replacement for the default debugging information,
+	 *         or %NULL
+	 *     file = the source code file where the error was generated
+	 *     funct = the source code function where the error was generated
+	 *     line = the source code line where the error was generated
+	 *     structure = optional details structure
+	 *
+	 * Since: 1.10
+	 */
+	public void messageFullWithDetails(GstMessageType type, GQuark domain, int code, string text, string dbg, string file, string funct, int line, Structure structure)
+	{
+		gst_element_message_full_with_details(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(dbg), Str.toStringz(file), Str.toStringz(funct), line, (structure is null) ? null : structure.getStructureStruct());
+	}
+
+	/**
 	 * Use this function to signal that the element does not expect any more pads
 	 * to show up in the current pipeline. This function should be called whenever
 	 * pads have been added by the element itself. Elements with #GST_PAD_SOMETIMES
@@ -1118,6 +1203,12 @@ public class Element : ObjectGst
 	public bool removePad(Pad pad)
 	{
 		return gst_element_remove_pad(gstElement, (pad is null) ? null : pad.getPadStruct()) != 0;
+	}
+
+	/** */
+	public void removePropertyNotifyWatch(gulong watchId)
+	{
+		gst_element_remove_property_notify_watch(gstElement, watchId);
 	}
 
 	/**

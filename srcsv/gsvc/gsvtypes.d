@@ -152,7 +152,9 @@ public enum GtkSourceDrawSpacesFlags
 	 */
 	TAB = 2,
 	/**
-	 * whether the line breaks should be drawn.
+	 * whether the line breaks should be drawn. If
+	 * the #GtkSourceBuffer:implicit-trailing-newline property is %TRUE, a line
+	 * break is also drawn at the end of the buffer.
 	 */
 	NEWLINE = 4,
 	/**
@@ -902,6 +904,24 @@ struct GtkSourcePrintCompositorClass
 }
 
 struct GtkSourcePrintCompositorPrivate;
+
+struct GtkSourceRegion
+{
+	GObject parentInstance;
+}
+
+struct GtkSourceRegionClass
+{
+	GObjectClass parentClass;
+	void*[8] padding;
+}
+
+struct GtkSourceRegionIter
+{
+	void* dummy1;
+	uint dummy2;
+	void* dummy3;
+}
 
 struct GtkSourceSearchContext
 {

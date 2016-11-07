@@ -68,6 +68,7 @@ shared static this()
 	Linker.link(gst_bin_get_by_interface, "gst_bin_get_by_interface", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_get_by_name, "gst_bin_get_by_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_get_by_name_recurse_up, "gst_bin_get_by_name_recurse_up", LIBRARY.GSTREAMER);
+	Linker.link(gst_bin_get_suppressed_flags, "gst_bin_get_suppressed_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_iterate_all_by_interface, "gst_bin_iterate_all_by_interface", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_iterate_elements, "gst_bin_iterate_elements", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_iterate_recurse, "gst_bin_iterate_recurse", LIBRARY.GSTREAMER);
@@ -77,6 +78,7 @@ shared static this()
 	Linker.link(gst_bin_recalculate_latency, "gst_bin_recalculate_latency", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_remove, "gst_bin_remove", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_remove_many, "gst_bin_remove_many", LIBRARY.GSTREAMER);
+	Linker.link(gst_bin_set_suppressed_flags, "gst_bin_set_suppressed_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_bin_sync_children_states, "gst_bin_sync_children_states", LIBRARY.GSTREAMER);
 
 	// gstreamer.Bitmask
@@ -105,12 +107,14 @@ shared static this()
 	Linker.link(gst_buffer_find_memory, "gst_buffer_find_memory", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_foreach_meta, "gst_buffer_foreach_meta", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_all_memory, "gst_buffer_get_all_memory", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_get_flags, "gst_buffer_get_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_memory, "gst_buffer_get_memory", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_memory_range, "gst_buffer_get_memory_range", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_meta, "gst_buffer_get_meta", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_size, "gst_buffer_get_size", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_sizes, "gst_buffer_get_sizes", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_sizes_range, "gst_buffer_get_sizes_range", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_has_flags, "gst_buffer_has_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_insert_memory, "gst_buffer_insert_memory", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_is_all_memory_writable, "gst_buffer_is_all_memory_writable", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_is_memory_range_writable, "gst_buffer_is_memory_range_writable", LIBRARY.GSTREAMER);
@@ -131,8 +135,10 @@ shared static this()
 	Linker.link(gst_buffer_replace_memory_range, "gst_buffer_replace_memory_range", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_resize, "gst_buffer_resize", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_resize_range, "gst_buffer_resize_range", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_set_flags, "gst_buffer_set_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_set_size, "gst_buffer_set_size", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_unmap, "gst_buffer_unmap", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_unset_flags, "gst_buffer_unset_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_get_max_memory, "gst_buffer_get_max_memory", LIBRARY.GSTREAMER);
 
 	// gstreamer.BufferList
@@ -469,6 +475,9 @@ shared static this()
 	Linker.link(gst_element_state_get_name, "gst_element_state_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_abort_state, "gst_element_abort_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_add_pad, "gst_element_add_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_add_property_deep_notify_watch, "gst_element_add_property_deep_notify_watch", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_add_property_notify_watch, "gst_element_add_property_notify_watch", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_call_async, "gst_element_call_async", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_change_state, "gst_element_change_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_continue_state, "gst_element_continue_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_create_all_pads, "gst_element_create_all_pads", LIBRARY.GSTREAMER);
@@ -497,6 +506,7 @@ shared static this()
 	Linker.link(gst_element_link_pads_full, "gst_element_link_pads_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_lost_state, "gst_element_lost_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_message_full, "gst_element_message_full", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_message_full_with_details, "gst_element_message_full_with_details", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_no_more_pads, "gst_element_no_more_pads", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_post_message, "gst_element_post_message", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_provide_clock, "gst_element_provide_clock", LIBRARY.GSTREAMER);
@@ -506,6 +516,7 @@ shared static this()
 	Linker.link(gst_element_query_position, "gst_element_query_position", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_release_request_pad, "gst_element_release_request_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_remove_pad, "gst_element_remove_pad", LIBRARY.GSTREAMER);
+	Linker.link(gst_element_remove_property_notify_watch, "gst_element_remove_property_notify_watch", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_request_pad, "gst_element_request_pad", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_seek, "gst_element_seek", LIBRARY.GSTREAMER);
 	Linker.link(gst_element_seek_simple, "gst_element_seek_simple", LIBRARY.GSTREAMER);
@@ -574,8 +585,11 @@ shared static this()
 	Linker.link(gst_event_new_seek, "gst_event_new_seek", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_segment, "gst_event_new_segment", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_segment_done, "gst_event_new_segment_done", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_new_select_streams, "gst_event_new_select_streams", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_sink_message, "gst_event_new_sink_message", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_step, "gst_event_new_step", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_new_stream_collection, "gst_event_new_stream_collection", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_new_stream_group_done, "gst_event_new_stream_group_done", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_stream_start, "gst_event_new_stream_start", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_tag, "gst_event_new_tag", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_new_toc, "gst_event_new_toc", LIBRARY.GSTREAMER);
@@ -596,9 +610,13 @@ shared static this()
 	Linker.link(gst_event_parse_seek, "gst_event_parse_seek", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_segment, "gst_event_parse_segment", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_segment_done, "gst_event_parse_segment_done", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_parse_select_streams, "gst_event_parse_select_streams", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_sink_message, "gst_event_parse_sink_message", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_step, "gst_event_parse_step", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_parse_stream, "gst_event_parse_stream", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_parse_stream_collection, "gst_event_parse_stream_collection", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_stream_flags, "gst_event_parse_stream_flags", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_parse_stream_group_done, "gst_event_parse_stream_group_done", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_stream_start, "gst_event_parse_stream_start", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_tag, "gst_event_parse_tag", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_parse_toc, "gst_event_parse_toc", LIBRARY.GSTREAMER);
@@ -606,6 +624,7 @@ shared static this()
 	Linker.link(gst_event_set_group_id, "gst_event_set_group_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_set_running_time_offset, "gst_event_set_running_time_offset", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_set_seqnum, "gst_event_set_seqnum", LIBRARY.GSTREAMER);
+	Linker.link(gst_event_set_stream, "gst_event_set_stream", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_set_stream_flags, "gst_event_set_stream_flags", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_writable_structure, "gst_event_writable_structure", LIBRARY.GSTREAMER);
 	Linker.link(gst_event_type_get_flags, "gst_event_type_get_flags", LIBRARY.GSTREAMER);
@@ -693,13 +712,17 @@ shared static this()
 	Linker.link(gst_message_new_element, "gst_message_new_element", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_eos, "gst_message_new_eos", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_error, "gst_message_new_error", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_error_with_details, "gst_message_new_error_with_details", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_have_context, "gst_message_new_have_context", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_info, "gst_message_new_info", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_info_with_details, "gst_message_new_info_with_details", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_latency, "gst_message_new_latency", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_need_context, "gst_message_new_need_context", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_new_clock, "gst_message_new_new_clock", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_progress, "gst_message_new_progress", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_property_notify, "gst_message_new_property_notify", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_qos, "gst_message_new_qos", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_redirect, "gst_message_new_redirect", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_request_state, "gst_message_new_request_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_reset_time, "gst_message_new_reset_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_segment_done, "gst_message_new_segment_done", LIBRARY.GSTREAMER);
@@ -708,12 +731,17 @@ shared static this()
 	Linker.link(gst_message_new_state_dirty, "gst_message_new_state_dirty", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_step_done, "gst_message_new_step_done", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_step_start, "gst_message_new_step_start", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_stream_collection, "gst_message_new_stream_collection", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_stream_start, "gst_message_new_stream_start", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_stream_status, "gst_message_new_stream_status", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_streams_selected, "gst_message_new_streams_selected", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_structure_change, "gst_message_new_structure_change", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_tag, "gst_message_new_tag", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_toc, "gst_message_new_toc", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_new_warning, "gst_message_new_warning", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_new_warning_with_details, "gst_message_new_warning_with_details", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_add_redirect_entry, "gst_message_add_redirect_entry", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_get_num_redirect_entries, "gst_message_get_num_redirect_entries", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_get_seqnum, "gst_message_get_seqnum", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_get_stream_status_object, "gst_message_get_stream_status_object", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_get_structure, "gst_message_get_structure", LIBRARY.GSTREAMER);
@@ -727,14 +755,18 @@ shared static this()
 	Linker.link(gst_message_parse_device_added, "gst_message_parse_device_added", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_device_removed, "gst_message_parse_device_removed", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_error, "gst_message_parse_error", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_error_details, "gst_message_parse_error_details", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_group_id, "gst_message_parse_group_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_have_context, "gst_message_parse_have_context", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_info, "gst_message_parse_info", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_info_details, "gst_message_parse_info_details", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_new_clock, "gst_message_parse_new_clock", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_progress, "gst_message_parse_progress", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_property_notify, "gst_message_parse_property_notify", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_qos, "gst_message_parse_qos", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_qos_stats, "gst_message_parse_qos_stats", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_qos_values, "gst_message_parse_qos_values", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_redirect_entry, "gst_message_parse_redirect_entry", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_request_state, "gst_message_parse_request_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_reset_time, "gst_message_parse_reset_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_segment_done, "gst_message_parse_segment_done", LIBRARY.GSTREAMER);
@@ -742,17 +774,23 @@ shared static this()
 	Linker.link(gst_message_parse_state_changed, "gst_message_parse_state_changed", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_step_done, "gst_message_parse_step_done", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_step_start, "gst_message_parse_step_start", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_stream_collection, "gst_message_parse_stream_collection", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_stream_status, "gst_message_parse_stream_status", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_streams_selected, "gst_message_parse_streams_selected", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_structure_change, "gst_message_parse_structure_change", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_tag, "gst_message_parse_tag", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_toc, "gst_message_parse_toc", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_parse_warning, "gst_message_parse_warning", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_parse_warning_details, "gst_message_parse_warning_details", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_set_buffering_stats, "gst_message_set_buffering_stats", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_set_group_id, "gst_message_set_group_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_set_qos_stats, "gst_message_set_qos_stats", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_set_qos_values, "gst_message_set_qos_values", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_set_seqnum, "gst_message_set_seqnum", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_set_stream_status_object, "gst_message_set_stream_status_object", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_streams_selected_add, "gst_message_streams_selected_add", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_streams_selected_get_size, "gst_message_streams_selected_get_size", LIBRARY.GSTREAMER);
+	Linker.link(gst_message_streams_selected_get_stream, "gst_message_streams_selected_get_stream", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_type_get_name, "gst_message_type_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_message_type_to_quark, "gst_message_type_to_quark", LIBRARY.GSTREAMER);
 
@@ -846,6 +884,7 @@ shared static this()
 	Linker.link(gst_pad_get_peer, "gst_pad_get_peer", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_range, "gst_pad_get_range", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_sticky_event, "gst_pad_get_sticky_event", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_get_stream, "gst_pad_get_stream", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_stream_id, "gst_pad_get_stream_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_has_current_caps, "gst_pad_has_current_caps", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_is_active, "gst_pad_is_active", LIBRARY.GSTREAMER);
@@ -856,6 +895,8 @@ shared static this()
 	Linker.link(gst_pad_iterate_internal_links_default, "gst_pad_iterate_internal_links_default", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_link, "gst_pad_link", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_link_full, "gst_pad_link_full", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_link_maybe_ghosting, "gst_pad_link_maybe_ghosting", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_link_maybe_ghosting_full, "gst_pad_link_maybe_ghosting_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_mark_reconfigure, "gst_pad_mark_reconfigure", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_needs_reconfigure, "gst_pad_needs_reconfigure", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_pause_task, "gst_pad_pause_task", LIBRARY.GSTREAMER);
@@ -1204,6 +1245,29 @@ shared static this()
 
 	Linker.link(gst_static_pad_template_get, "gst_static_pad_template_get", LIBRARY.GSTREAMER);
 	Linker.link(gst_static_pad_template_get_caps, "gst_static_pad_template_get_caps", LIBRARY.GSTREAMER);
+
+	// gstreamer.Stream
+
+	Linker.link(gst_stream_get_type, "gst_stream_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_new, "gst_stream_new", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_get_caps, "gst_stream_get_caps", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_get_stream_flags, "gst_stream_get_stream_flags", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_get_stream_id, "gst_stream_get_stream_id", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_get_stream_type, "gst_stream_get_stream_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_get_tags, "gst_stream_get_tags", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_set_caps, "gst_stream_set_caps", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_set_stream_flags, "gst_stream_set_stream_flags", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_set_stream_type, "gst_stream_set_stream_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_set_tags, "gst_stream_set_tags", LIBRARY.GSTREAMER);
+
+	// gstreamer.StreamCollection
+
+	Linker.link(gst_stream_collection_get_type, "gst_stream_collection_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_collection_new, "gst_stream_collection_new", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_collection_add_stream, "gst_stream_collection_add_stream", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_collection_get_size, "gst_stream_collection_get_size", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_collection_get_stream, "gst_stream_collection_get_stream", LIBRARY.GSTREAMER);
+	Linker.link(gst_stream_collection_get_upstream_id, "gst_stream_collection_get_upstream_id", LIBRARY.GSTREAMER);
 
 	// gstreamer.Structure
 
@@ -1717,6 +1781,7 @@ __gshared extern(C)
 	GstElement* function(GstBin* bin, GType iface) c_gst_bin_get_by_interface;
 	GstElement* function(GstBin* bin, const(char)* name) c_gst_bin_get_by_name;
 	GstElement* function(GstBin* bin, const(char)* name) c_gst_bin_get_by_name_recurse_up;
+	GstElementFlags function(GstBin* bin) c_gst_bin_get_suppressed_flags;
 	GstIterator* function(GstBin* bin, GType iface) c_gst_bin_iterate_all_by_interface;
 	GstIterator* function(GstBin* bin) c_gst_bin_iterate_elements;
 	GstIterator* function(GstBin* bin) c_gst_bin_iterate_recurse;
@@ -1726,6 +1791,7 @@ __gshared extern(C)
 	int function(GstBin* bin) c_gst_bin_recalculate_latency;
 	int function(GstBin* bin, GstElement* element) c_gst_bin_remove;
 	void function(GstBin* bin, GstElement* element1, ... ) c_gst_bin_remove_many;
+	void function(GstBin* bin, GstElementFlags flags) c_gst_bin_set_suppressed_flags;
 	int function(GstBin* bin) c_gst_bin_sync_children_states;
 
 	// gstreamer.Bitmask
@@ -1754,12 +1820,14 @@ __gshared extern(C)
 	int function(GstBuffer* buffer, size_t offset, size_t size, uint* idx, uint* length, size_t* skip) c_gst_buffer_find_memory;
 	int function(GstBuffer* buffer, GstBufferForeachMetaFunc func, void* userData) c_gst_buffer_foreach_meta;
 	GstMemory* function(GstBuffer* buffer) c_gst_buffer_get_all_memory;
+	GstBufferFlags function(GstBuffer* buffer) c_gst_buffer_get_flags;
 	GstMemory* function(GstBuffer* buffer, uint idx) c_gst_buffer_get_memory;
 	GstMemory* function(GstBuffer* buffer, uint idx, int length) c_gst_buffer_get_memory_range;
 	GstMeta* function(GstBuffer* buffer, GType api) c_gst_buffer_get_meta;
 	size_t function(GstBuffer* buffer) c_gst_buffer_get_size;
 	size_t function(GstBuffer* buffer, size_t* offset, size_t* maxsize) c_gst_buffer_get_sizes;
 	size_t function(GstBuffer* buffer, uint idx, int length, size_t* offset, size_t* maxsize) c_gst_buffer_get_sizes_range;
+	int function(GstBuffer* buffer, GstBufferFlags flags) c_gst_buffer_has_flags;
 	void function(GstBuffer* buffer, int idx, GstMemory* mem) c_gst_buffer_insert_memory;
 	int function(GstBuffer* buffer) c_gst_buffer_is_all_memory_writable;
 	int function(GstBuffer* buffer, uint idx, int length) c_gst_buffer_is_memory_range_writable;
@@ -1780,8 +1848,10 @@ __gshared extern(C)
 	void function(GstBuffer* buffer, uint idx, int length, GstMemory* mem) c_gst_buffer_replace_memory_range;
 	void function(GstBuffer* buffer, ptrdiff_t offset, ptrdiff_t size) c_gst_buffer_resize;
 	int function(GstBuffer* buffer, uint idx, int length, ptrdiff_t offset, ptrdiff_t size) c_gst_buffer_resize_range;
+	int function(GstBuffer* buffer, GstBufferFlags flags) c_gst_buffer_set_flags;
 	void function(GstBuffer* buffer, ptrdiff_t size) c_gst_buffer_set_size;
 	void function(GstBuffer* buffer, GstMapInfo* info) c_gst_buffer_unmap;
+	int function(GstBuffer* buffer, GstBufferFlags flags) c_gst_buffer_unset_flags;
 	uint function() c_gst_buffer_get_max_memory;
 
 	// gstreamer.BufferList
@@ -2118,6 +2188,9 @@ __gshared extern(C)
 	const(char)* function(GstState state) c_gst_element_state_get_name;
 	void function(GstElement* element) c_gst_element_abort_state;
 	int function(GstElement* element, GstPad* pad) c_gst_element_add_pad;
+	gulong function(GstElement* element, const(char)* propertyName, int includeValue) c_gst_element_add_property_deep_notify_watch;
+	gulong function(GstElement* element, const(char)* propertyName, int includeValue) c_gst_element_add_property_notify_watch;
+	void function(GstElement* element, GstElementCallAsyncFunc func, void* userData, GDestroyNotify destroyNotify) c_gst_element_call_async;
 	GstStateChangeReturn function(GstElement* element, GstStateChange transition) c_gst_element_change_state;
 	GstStateChangeReturn function(GstElement* element, GstStateChangeReturn ret) c_gst_element_continue_state;
 	void function(GstElement* element) c_gst_element_create_all_pads;
@@ -2146,6 +2219,7 @@ __gshared extern(C)
 	int function(GstElement* src, const(char)* srcpadname, GstElement* dest, const(char)* destpadname, GstPadLinkCheck flags) c_gst_element_link_pads_full;
 	void function(GstElement* element) c_gst_element_lost_state;
 	void function(GstElement* element, GstMessageType type, GQuark domain, int code, char* text, char* dbg, const(char)* file, const(char)* funct, int line) c_gst_element_message_full;
+	void function(GstElement* element, GstMessageType type, GQuark domain, int code, char* text, char* dbg, const(char)* file, const(char)* funct, int line, GstStructure* structure) c_gst_element_message_full_with_details;
 	void function(GstElement* element) c_gst_element_no_more_pads;
 	int function(GstElement* element, GstMessage* message) c_gst_element_post_message;
 	GstClock* function(GstElement* element) c_gst_element_provide_clock;
@@ -2155,6 +2229,7 @@ __gshared extern(C)
 	int function(GstElement* element, GstFormat format, long* cur) c_gst_element_query_position;
 	void function(GstElement* element, GstPad* pad) c_gst_element_release_request_pad;
 	int function(GstElement* element, GstPad* pad) c_gst_element_remove_pad;
+	void function(GstElement* element, gulong watchId) c_gst_element_remove_property_notify_watch;
 	GstPad* function(GstElement* element, GstPadTemplate* templ, const(char)* name, GstCaps* caps) c_gst_element_request_pad;
 	int function(GstElement* element, double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop) c_gst_element_seek;
 	int function(GstElement* element, GstFormat format, GstSeekFlags seekFlags, long seekPos) c_gst_element_seek_simple;
@@ -2223,8 +2298,11 @@ __gshared extern(C)
 	GstEvent* function(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop) c_gst_event_new_seek;
 	GstEvent* function(GstSegment* segment) c_gst_event_new_segment;
 	GstEvent* function(GstFormat format, long position) c_gst_event_new_segment_done;
+	GstEvent* function(GList* streams) c_gst_event_new_select_streams;
 	GstEvent* function(const(char)* name, GstMessage* msg) c_gst_event_new_sink_message;
 	GstEvent* function(GstFormat format, ulong amount, double rate, int flush, int intermediate) c_gst_event_new_step;
+	GstEvent* function(GstStreamCollection* collection) c_gst_event_new_stream_collection;
+	GstEvent* function(uint groupId) c_gst_event_new_stream_group_done;
 	GstEvent* function(const(char)* streamId) c_gst_event_new_stream_start;
 	GstEvent* function(GstTagList* taglist) c_gst_event_new_tag;
 	GstEvent* function(GstToc* toc, int updated) c_gst_event_new_toc;
@@ -2245,9 +2323,13 @@ __gshared extern(C)
 	void function(GstEvent* event, double* rate, GstFormat* format, GstSeekFlags* flags, GstSeekType* startType, long* start, GstSeekType* stopType, long* stop) c_gst_event_parse_seek;
 	void function(GstEvent* event, GstSegment** segment) c_gst_event_parse_segment;
 	void function(GstEvent* event, GstFormat* format, long* position) c_gst_event_parse_segment_done;
+	void function(GstEvent* event, GList** streams) c_gst_event_parse_select_streams;
 	void function(GstEvent* event, GstMessage** msg) c_gst_event_parse_sink_message;
 	void function(GstEvent* event, GstFormat* format, ulong* amount, double* rate, int* flush, int* intermediate) c_gst_event_parse_step;
+	void function(GstEvent* event, GstStream** stream) c_gst_event_parse_stream;
+	void function(GstEvent* event, GstStreamCollection** collection) c_gst_event_parse_stream_collection;
 	void function(GstEvent* event, GstStreamFlags* flags) c_gst_event_parse_stream_flags;
+	void function(GstEvent* event, uint* groupId) c_gst_event_parse_stream_group_done;
 	void function(GstEvent* event, char** streamId) c_gst_event_parse_stream_start;
 	void function(GstEvent* event, GstTagList** taglist) c_gst_event_parse_tag;
 	void function(GstEvent* event, GstToc** toc, int* updated) c_gst_event_parse_toc;
@@ -2255,6 +2337,7 @@ __gshared extern(C)
 	void function(GstEvent* event, uint groupId) c_gst_event_set_group_id;
 	void function(GstEvent* event, long offset) c_gst_event_set_running_time_offset;
 	void function(GstEvent* event, uint seqnum) c_gst_event_set_seqnum;
+	void function(GstEvent* event, GstStream* stream) c_gst_event_set_stream;
 	void function(GstEvent* event, GstStreamFlags flags) c_gst_event_set_stream_flags;
 	GstStructure* function(GstEvent* event) c_gst_event_writable_structure;
 	GstEventTypeFlags function(GstEventType type) c_gst_event_type_get_flags;
@@ -2342,13 +2425,17 @@ __gshared extern(C)
 	GstMessage* function(GstObject* src, GstStructure* structure) c_gst_message_new_element;
 	GstMessage* function(GstObject* src) c_gst_message_new_eos;
 	GstMessage* function(GstObject* src, GError* error, const(char)* dbg) c_gst_message_new_error;
+	GstMessage* function(GstObject* src, GError* error, const(char)* dbg, GstStructure* details) c_gst_message_new_error_with_details;
 	GstMessage* function(GstObject* src, GstContext* context) c_gst_message_new_have_context;
 	GstMessage* function(GstObject* src, GError* error, const(char)* dbg) c_gst_message_new_info;
+	GstMessage* function(GstObject* src, GError* error, const(char)* dbg, GstStructure* details) c_gst_message_new_info_with_details;
 	GstMessage* function(GstObject* src) c_gst_message_new_latency;
 	GstMessage* function(GstObject* src, const(char)* contextType) c_gst_message_new_need_context;
 	GstMessage* function(GstObject* src, GstClock* clock) c_gst_message_new_new_clock;
 	GstMessage* function(GstObject* src, GstProgressType type, const(char)* code, const(char)* text) c_gst_message_new_progress;
+	GstMessage* function(GstObject* src, const(char)* propertyName, GValue* val) c_gst_message_new_property_notify;
 	GstMessage* function(GstObject* src, int live, ulong runningTime, ulong streamTime, ulong timestamp, ulong duration) c_gst_message_new_qos;
+	GstMessage* function(GstObject* src, const(char)* location, GstTagList* tagList, GstStructure* entryStruct) c_gst_message_new_redirect;
 	GstMessage* function(GstObject* src, GstState state) c_gst_message_new_request_state;
 	GstMessage* function(GstObject* src, GstClockTime runningTime) c_gst_message_new_reset_time;
 	GstMessage* function(GstObject* src, GstFormat format, long position) c_gst_message_new_segment_done;
@@ -2357,12 +2444,17 @@ __gshared extern(C)
 	GstMessage* function(GstObject* src) c_gst_message_new_state_dirty;
 	GstMessage* function(GstObject* src, GstFormat format, ulong amount, double rate, int flush, int intermediate, ulong duration, int eos) c_gst_message_new_step_done;
 	GstMessage* function(GstObject* src, int active, GstFormat format, ulong amount, double rate, int flush, int intermediate) c_gst_message_new_step_start;
+	GstMessage* function(GstObject* src, GstStreamCollection* collection) c_gst_message_new_stream_collection;
 	GstMessage* function(GstObject* src) c_gst_message_new_stream_start;
 	GstMessage* function(GstObject* src, GstStreamStatusType type, GstElement* owner) c_gst_message_new_stream_status;
+	GstMessage* function(GstObject* src, GstStreamCollection* collection) c_gst_message_new_streams_selected;
 	GstMessage* function(GstObject* src, GstStructureChangeType type, GstElement* owner, int busy) c_gst_message_new_structure_change;
 	GstMessage* function(GstObject* src, GstTagList* tagList) c_gst_message_new_tag;
 	GstMessage* function(GstObject* src, GstToc* toc, int updated) c_gst_message_new_toc;
 	GstMessage* function(GstObject* src, GError* error, const(char)* dbg) c_gst_message_new_warning;
+	GstMessage* function(GstObject* src, GError* error, const(char)* dbg, GstStructure* details) c_gst_message_new_warning_with_details;
+	void function(GstMessage* message, const(char)* location, GstTagList* tagList, GstStructure* entryStruct) c_gst_message_add_redirect_entry;
+	size_t function(GstMessage* message) c_gst_message_get_num_redirect_entries;
 	uint function(GstMessage* message) c_gst_message_get_seqnum;
 	GValue* function(GstMessage* message) c_gst_message_get_stream_status_object;
 	GstStructure* function(GstMessage* message) c_gst_message_get_structure;
@@ -2376,14 +2468,18 @@ __gshared extern(C)
 	void function(GstMessage* message, GstDevice** device) c_gst_message_parse_device_added;
 	void function(GstMessage* message, GstDevice** device) c_gst_message_parse_device_removed;
 	void function(GstMessage* message, GError** gerror, char** dbg) c_gst_message_parse_error;
+	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_error_details;
 	int function(GstMessage* message, uint* groupId) c_gst_message_parse_group_id;
 	void function(GstMessage* message, GstContext** context) c_gst_message_parse_have_context;
 	void function(GstMessage* message, GError** gerror, char** dbg) c_gst_message_parse_info;
+	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_info_details;
 	void function(GstMessage* message, GstClock** clock) c_gst_message_parse_new_clock;
 	void function(GstMessage* message, GstProgressType* type, char** code, char** text) c_gst_message_parse_progress;
+	void function(GstMessage* message, GstObject** object, char** propertyName, GValue** propertyValue) c_gst_message_parse_property_notify;
 	void function(GstMessage* message, int* live, ulong* runningTime, ulong* streamTime, ulong* timestamp, ulong* duration) c_gst_message_parse_qos;
 	void function(GstMessage* message, GstFormat* format, ulong* processed, ulong* dropped) c_gst_message_parse_qos_stats;
 	void function(GstMessage* message, long* jitter, double* proportion, int* quality) c_gst_message_parse_qos_values;
+	void function(GstMessage* message, size_t entryIndex, char** location, GstTagList** tagList, GstStructure** entryStruct) c_gst_message_parse_redirect_entry;
 	void function(GstMessage* message, GstState* state) c_gst_message_parse_request_state;
 	void function(GstMessage* message, GstClockTime* runningTime) c_gst_message_parse_reset_time;
 	void function(GstMessage* message, GstFormat* format, long* position) c_gst_message_parse_segment_done;
@@ -2391,17 +2487,23 @@ __gshared extern(C)
 	void function(GstMessage* message, GstState* oldstate, GstState* newstate, GstState* pending) c_gst_message_parse_state_changed;
 	void function(GstMessage* message, GstFormat* format, ulong* amount, double* rate, int* flush, int* intermediate, ulong* duration, int* eos) c_gst_message_parse_step_done;
 	void function(GstMessage* message, int* active, GstFormat* format, ulong* amount, double* rate, int* flush, int* intermediate) c_gst_message_parse_step_start;
+	void function(GstMessage* message, GstStreamCollection** collection) c_gst_message_parse_stream_collection;
 	void function(GstMessage* message, GstStreamStatusType* type, GstElement** owner) c_gst_message_parse_stream_status;
+	void function(GstMessage* message, GstStreamCollection** collection) c_gst_message_parse_streams_selected;
 	void function(GstMessage* message, GstStructureChangeType* type, GstElement** owner, int* busy) c_gst_message_parse_structure_change;
 	void function(GstMessage* message, GstTagList** tagList) c_gst_message_parse_tag;
 	void function(GstMessage* message, GstToc** toc, int* updated) c_gst_message_parse_toc;
 	void function(GstMessage* message, GError** gerror, char** dbg) c_gst_message_parse_warning;
+	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_warning_details;
 	void function(GstMessage* message, GstBufferingMode mode, int avgIn, int avgOut, long bufferingLeft) c_gst_message_set_buffering_stats;
 	void function(GstMessage* message, uint groupId) c_gst_message_set_group_id;
 	void function(GstMessage* message, GstFormat format, ulong processed, ulong dropped) c_gst_message_set_qos_stats;
 	void function(GstMessage* message, long jitter, double proportion, int quality) c_gst_message_set_qos_values;
 	void function(GstMessage* message, uint seqnum) c_gst_message_set_seqnum;
 	void function(GstMessage* message, GValue* object) c_gst_message_set_stream_status_object;
+	void function(GstMessage* message, GstStream* stream) c_gst_message_streams_selected_add;
+	uint function(GstMessage* message) c_gst_message_streams_selected_get_size;
+	GstStream* function(GstMessage* message, uint idx) c_gst_message_streams_selected_get_stream;
 	const(char)* function(GstMessageType type) c_gst_message_type_get_name;
 	GQuark function(GstMessageType type) c_gst_message_type_to_quark;
 
@@ -2495,6 +2597,7 @@ __gshared extern(C)
 	GstPad* function(GstPad* pad) c_gst_pad_get_peer;
 	GstFlowReturn function(GstPad* pad, ulong offset, uint size, GstBuffer** buffer) c_gst_pad_get_range;
 	GstEvent* function(GstPad* pad, GstEventType eventType, uint idx) c_gst_pad_get_sticky_event;
+	GstStream* function(GstPad* pad) c_gst_pad_get_stream;
 	char* function(GstPad* pad) c_gst_pad_get_stream_id;
 	int function(GstPad* pad) c_gst_pad_has_current_caps;
 	int function(GstPad* pad) c_gst_pad_is_active;
@@ -2505,6 +2608,8 @@ __gshared extern(C)
 	GstIterator* function(GstPad* pad, GstObject* parent) c_gst_pad_iterate_internal_links_default;
 	GstPadLinkReturn function(GstPad* srcpad, GstPad* sinkpad) c_gst_pad_link;
 	GstPadLinkReturn function(GstPad* srcpad, GstPad* sinkpad, GstPadLinkCheck flags) c_gst_pad_link_full;
+	int function(GstPad* src, GstPad* sink) c_gst_pad_link_maybe_ghosting;
+	int function(GstPad* src, GstPad* sink, GstPadLinkCheck flags) c_gst_pad_link_maybe_ghosting_full;
 	void function(GstPad* pad) c_gst_pad_mark_reconfigure;
 	int function(GstPad* pad) c_gst_pad_needs_reconfigure;
 	int function(GstPad* pad) c_gst_pad_pause_task;
@@ -2853,6 +2958,29 @@ __gshared extern(C)
 
 	GstPadTemplate* function(GstStaticPadTemplate* padTemplate) c_gst_static_pad_template_get;
 	GstCaps* function(GstStaticPadTemplate* templ) c_gst_static_pad_template_get_caps;
+
+	// gstreamer.Stream
+
+	GType function() c_gst_stream_get_type;
+	GstStream* function(const(char)* streamId, GstCaps* caps, GstStreamType type, GstStreamFlags flags) c_gst_stream_new;
+	GstCaps* function(GstStream* stream) c_gst_stream_get_caps;
+	GstStreamFlags function(GstStream* stream) c_gst_stream_get_stream_flags;
+	const(char)* function(GstStream* stream) c_gst_stream_get_stream_id;
+	GstStreamType function(GstStream* stream) c_gst_stream_get_stream_type;
+	GstTagList* function(GstStream* stream) c_gst_stream_get_tags;
+	void function(GstStream* stream, GstCaps* caps) c_gst_stream_set_caps;
+	void function(GstStream* stream, GstStreamFlags flags) c_gst_stream_set_stream_flags;
+	void function(GstStream* stream, GstStreamType streamType) c_gst_stream_set_stream_type;
+	void function(GstStream* stream, GstTagList* tags) c_gst_stream_set_tags;
+
+	// gstreamer.StreamCollection
+
+	GType function() c_gst_stream_collection_get_type;
+	GstStreamCollection* function(const(char)* upstreamId) c_gst_stream_collection_new;
+	int function(GstStreamCollection* collection, GstStream* stream) c_gst_stream_collection_add_stream;
+	uint function(GstStreamCollection* collection) c_gst_stream_collection_get_size;
+	GstStream* function(GstStreamCollection* collection, uint index) c_gst_stream_collection_get_stream;
+	const(char)* function(GstStreamCollection* collection) c_gst_stream_collection_get_upstream_id;
 
 	// gstreamer.Structure
 
@@ -3364,6 +3492,7 @@ alias c_gst_bin_find_unlinked_pad gst_bin_find_unlinked_pad;
 alias c_gst_bin_get_by_interface gst_bin_get_by_interface;
 alias c_gst_bin_get_by_name gst_bin_get_by_name;
 alias c_gst_bin_get_by_name_recurse_up gst_bin_get_by_name_recurse_up;
+alias c_gst_bin_get_suppressed_flags gst_bin_get_suppressed_flags;
 alias c_gst_bin_iterate_all_by_interface gst_bin_iterate_all_by_interface;
 alias c_gst_bin_iterate_elements gst_bin_iterate_elements;
 alias c_gst_bin_iterate_recurse gst_bin_iterate_recurse;
@@ -3373,6 +3502,7 @@ alias c_gst_bin_iterate_sources gst_bin_iterate_sources;
 alias c_gst_bin_recalculate_latency gst_bin_recalculate_latency;
 alias c_gst_bin_remove gst_bin_remove;
 alias c_gst_bin_remove_many gst_bin_remove_many;
+alias c_gst_bin_set_suppressed_flags gst_bin_set_suppressed_flags;
 alias c_gst_bin_sync_children_states gst_bin_sync_children_states;
 
 // gstreamer.Bitmask
@@ -3401,12 +3531,14 @@ alias c_gst_buffer_fill gst_buffer_fill;
 alias c_gst_buffer_find_memory gst_buffer_find_memory;
 alias c_gst_buffer_foreach_meta gst_buffer_foreach_meta;
 alias c_gst_buffer_get_all_memory gst_buffer_get_all_memory;
+alias c_gst_buffer_get_flags gst_buffer_get_flags;
 alias c_gst_buffer_get_memory gst_buffer_get_memory;
 alias c_gst_buffer_get_memory_range gst_buffer_get_memory_range;
 alias c_gst_buffer_get_meta gst_buffer_get_meta;
 alias c_gst_buffer_get_size gst_buffer_get_size;
 alias c_gst_buffer_get_sizes gst_buffer_get_sizes;
 alias c_gst_buffer_get_sizes_range gst_buffer_get_sizes_range;
+alias c_gst_buffer_has_flags gst_buffer_has_flags;
 alias c_gst_buffer_insert_memory gst_buffer_insert_memory;
 alias c_gst_buffer_is_all_memory_writable gst_buffer_is_all_memory_writable;
 alias c_gst_buffer_is_memory_range_writable gst_buffer_is_memory_range_writable;
@@ -3427,8 +3559,10 @@ alias c_gst_buffer_replace_memory gst_buffer_replace_memory;
 alias c_gst_buffer_replace_memory_range gst_buffer_replace_memory_range;
 alias c_gst_buffer_resize gst_buffer_resize;
 alias c_gst_buffer_resize_range gst_buffer_resize_range;
+alias c_gst_buffer_set_flags gst_buffer_set_flags;
 alias c_gst_buffer_set_size gst_buffer_set_size;
 alias c_gst_buffer_unmap gst_buffer_unmap;
+alias c_gst_buffer_unset_flags gst_buffer_unset_flags;
 alias c_gst_buffer_get_max_memory gst_buffer_get_max_memory;
 
 // gstreamer.BufferList
@@ -3765,6 +3899,9 @@ alias c_gst_element_state_change_return_get_name gst_element_state_change_return
 alias c_gst_element_state_get_name gst_element_state_get_name;
 alias c_gst_element_abort_state gst_element_abort_state;
 alias c_gst_element_add_pad gst_element_add_pad;
+alias c_gst_element_add_property_deep_notify_watch gst_element_add_property_deep_notify_watch;
+alias c_gst_element_add_property_notify_watch gst_element_add_property_notify_watch;
+alias c_gst_element_call_async gst_element_call_async;
 alias c_gst_element_change_state gst_element_change_state;
 alias c_gst_element_continue_state gst_element_continue_state;
 alias c_gst_element_create_all_pads gst_element_create_all_pads;
@@ -3793,6 +3930,7 @@ alias c_gst_element_link_pads_filtered gst_element_link_pads_filtered;
 alias c_gst_element_link_pads_full gst_element_link_pads_full;
 alias c_gst_element_lost_state gst_element_lost_state;
 alias c_gst_element_message_full gst_element_message_full;
+alias c_gst_element_message_full_with_details gst_element_message_full_with_details;
 alias c_gst_element_no_more_pads gst_element_no_more_pads;
 alias c_gst_element_post_message gst_element_post_message;
 alias c_gst_element_provide_clock gst_element_provide_clock;
@@ -3802,6 +3940,7 @@ alias c_gst_element_query_duration gst_element_query_duration;
 alias c_gst_element_query_position gst_element_query_position;
 alias c_gst_element_release_request_pad gst_element_release_request_pad;
 alias c_gst_element_remove_pad gst_element_remove_pad;
+alias c_gst_element_remove_property_notify_watch gst_element_remove_property_notify_watch;
 alias c_gst_element_request_pad gst_element_request_pad;
 alias c_gst_element_seek gst_element_seek;
 alias c_gst_element_seek_simple gst_element_seek_simple;
@@ -3870,8 +4009,11 @@ alias c_gst_event_new_reconfigure gst_event_new_reconfigure;
 alias c_gst_event_new_seek gst_event_new_seek;
 alias c_gst_event_new_segment gst_event_new_segment;
 alias c_gst_event_new_segment_done gst_event_new_segment_done;
+alias c_gst_event_new_select_streams gst_event_new_select_streams;
 alias c_gst_event_new_sink_message gst_event_new_sink_message;
 alias c_gst_event_new_step gst_event_new_step;
+alias c_gst_event_new_stream_collection gst_event_new_stream_collection;
+alias c_gst_event_new_stream_group_done gst_event_new_stream_group_done;
 alias c_gst_event_new_stream_start gst_event_new_stream_start;
 alias c_gst_event_new_tag gst_event_new_tag;
 alias c_gst_event_new_toc gst_event_new_toc;
@@ -3892,9 +4034,13 @@ alias c_gst_event_parse_qos gst_event_parse_qos;
 alias c_gst_event_parse_seek gst_event_parse_seek;
 alias c_gst_event_parse_segment gst_event_parse_segment;
 alias c_gst_event_parse_segment_done gst_event_parse_segment_done;
+alias c_gst_event_parse_select_streams gst_event_parse_select_streams;
 alias c_gst_event_parse_sink_message gst_event_parse_sink_message;
 alias c_gst_event_parse_step gst_event_parse_step;
+alias c_gst_event_parse_stream gst_event_parse_stream;
+alias c_gst_event_parse_stream_collection gst_event_parse_stream_collection;
 alias c_gst_event_parse_stream_flags gst_event_parse_stream_flags;
+alias c_gst_event_parse_stream_group_done gst_event_parse_stream_group_done;
 alias c_gst_event_parse_stream_start gst_event_parse_stream_start;
 alias c_gst_event_parse_tag gst_event_parse_tag;
 alias c_gst_event_parse_toc gst_event_parse_toc;
@@ -3902,6 +4048,7 @@ alias c_gst_event_parse_toc_select gst_event_parse_toc_select;
 alias c_gst_event_set_group_id gst_event_set_group_id;
 alias c_gst_event_set_running_time_offset gst_event_set_running_time_offset;
 alias c_gst_event_set_seqnum gst_event_set_seqnum;
+alias c_gst_event_set_stream gst_event_set_stream;
 alias c_gst_event_set_stream_flags gst_event_set_stream_flags;
 alias c_gst_event_writable_structure gst_event_writable_structure;
 alias c_gst_event_type_get_flags gst_event_type_get_flags;
@@ -3989,13 +4136,17 @@ alias c_gst_message_new_duration_changed gst_message_new_duration_changed;
 alias c_gst_message_new_element gst_message_new_element;
 alias c_gst_message_new_eos gst_message_new_eos;
 alias c_gst_message_new_error gst_message_new_error;
+alias c_gst_message_new_error_with_details gst_message_new_error_with_details;
 alias c_gst_message_new_have_context gst_message_new_have_context;
 alias c_gst_message_new_info gst_message_new_info;
+alias c_gst_message_new_info_with_details gst_message_new_info_with_details;
 alias c_gst_message_new_latency gst_message_new_latency;
 alias c_gst_message_new_need_context gst_message_new_need_context;
 alias c_gst_message_new_new_clock gst_message_new_new_clock;
 alias c_gst_message_new_progress gst_message_new_progress;
+alias c_gst_message_new_property_notify gst_message_new_property_notify;
 alias c_gst_message_new_qos gst_message_new_qos;
+alias c_gst_message_new_redirect gst_message_new_redirect;
 alias c_gst_message_new_request_state gst_message_new_request_state;
 alias c_gst_message_new_reset_time gst_message_new_reset_time;
 alias c_gst_message_new_segment_done gst_message_new_segment_done;
@@ -4004,12 +4155,17 @@ alias c_gst_message_new_state_changed gst_message_new_state_changed;
 alias c_gst_message_new_state_dirty gst_message_new_state_dirty;
 alias c_gst_message_new_step_done gst_message_new_step_done;
 alias c_gst_message_new_step_start gst_message_new_step_start;
+alias c_gst_message_new_stream_collection gst_message_new_stream_collection;
 alias c_gst_message_new_stream_start gst_message_new_stream_start;
 alias c_gst_message_new_stream_status gst_message_new_stream_status;
+alias c_gst_message_new_streams_selected gst_message_new_streams_selected;
 alias c_gst_message_new_structure_change gst_message_new_structure_change;
 alias c_gst_message_new_tag gst_message_new_tag;
 alias c_gst_message_new_toc gst_message_new_toc;
 alias c_gst_message_new_warning gst_message_new_warning;
+alias c_gst_message_new_warning_with_details gst_message_new_warning_with_details;
+alias c_gst_message_add_redirect_entry gst_message_add_redirect_entry;
+alias c_gst_message_get_num_redirect_entries gst_message_get_num_redirect_entries;
 alias c_gst_message_get_seqnum gst_message_get_seqnum;
 alias c_gst_message_get_stream_status_object gst_message_get_stream_status_object;
 alias c_gst_message_get_structure gst_message_get_structure;
@@ -4023,14 +4179,18 @@ alias c_gst_message_parse_context_type gst_message_parse_context_type;
 alias c_gst_message_parse_device_added gst_message_parse_device_added;
 alias c_gst_message_parse_device_removed gst_message_parse_device_removed;
 alias c_gst_message_parse_error gst_message_parse_error;
+alias c_gst_message_parse_error_details gst_message_parse_error_details;
 alias c_gst_message_parse_group_id gst_message_parse_group_id;
 alias c_gst_message_parse_have_context gst_message_parse_have_context;
 alias c_gst_message_parse_info gst_message_parse_info;
+alias c_gst_message_parse_info_details gst_message_parse_info_details;
 alias c_gst_message_parse_new_clock gst_message_parse_new_clock;
 alias c_gst_message_parse_progress gst_message_parse_progress;
+alias c_gst_message_parse_property_notify gst_message_parse_property_notify;
 alias c_gst_message_parse_qos gst_message_parse_qos;
 alias c_gst_message_parse_qos_stats gst_message_parse_qos_stats;
 alias c_gst_message_parse_qos_values gst_message_parse_qos_values;
+alias c_gst_message_parse_redirect_entry gst_message_parse_redirect_entry;
 alias c_gst_message_parse_request_state gst_message_parse_request_state;
 alias c_gst_message_parse_reset_time gst_message_parse_reset_time;
 alias c_gst_message_parse_segment_done gst_message_parse_segment_done;
@@ -4038,17 +4198,23 @@ alias c_gst_message_parse_segment_start gst_message_parse_segment_start;
 alias c_gst_message_parse_state_changed gst_message_parse_state_changed;
 alias c_gst_message_parse_step_done gst_message_parse_step_done;
 alias c_gst_message_parse_step_start gst_message_parse_step_start;
+alias c_gst_message_parse_stream_collection gst_message_parse_stream_collection;
 alias c_gst_message_parse_stream_status gst_message_parse_stream_status;
+alias c_gst_message_parse_streams_selected gst_message_parse_streams_selected;
 alias c_gst_message_parse_structure_change gst_message_parse_structure_change;
 alias c_gst_message_parse_tag gst_message_parse_tag;
 alias c_gst_message_parse_toc gst_message_parse_toc;
 alias c_gst_message_parse_warning gst_message_parse_warning;
+alias c_gst_message_parse_warning_details gst_message_parse_warning_details;
 alias c_gst_message_set_buffering_stats gst_message_set_buffering_stats;
 alias c_gst_message_set_group_id gst_message_set_group_id;
 alias c_gst_message_set_qos_stats gst_message_set_qos_stats;
 alias c_gst_message_set_qos_values gst_message_set_qos_values;
 alias c_gst_message_set_seqnum gst_message_set_seqnum;
 alias c_gst_message_set_stream_status_object gst_message_set_stream_status_object;
+alias c_gst_message_streams_selected_add gst_message_streams_selected_add;
+alias c_gst_message_streams_selected_get_size gst_message_streams_selected_get_size;
+alias c_gst_message_streams_selected_get_stream gst_message_streams_selected_get_stream;
 alias c_gst_message_type_get_name gst_message_type_get_name;
 alias c_gst_message_type_to_quark gst_message_type_to_quark;
 
@@ -4142,6 +4308,7 @@ alias c_gst_pad_get_parent_element gst_pad_get_parent_element;
 alias c_gst_pad_get_peer gst_pad_get_peer;
 alias c_gst_pad_get_range gst_pad_get_range;
 alias c_gst_pad_get_sticky_event gst_pad_get_sticky_event;
+alias c_gst_pad_get_stream gst_pad_get_stream;
 alias c_gst_pad_get_stream_id gst_pad_get_stream_id;
 alias c_gst_pad_has_current_caps gst_pad_has_current_caps;
 alias c_gst_pad_is_active gst_pad_is_active;
@@ -4152,6 +4319,8 @@ alias c_gst_pad_iterate_internal_links gst_pad_iterate_internal_links;
 alias c_gst_pad_iterate_internal_links_default gst_pad_iterate_internal_links_default;
 alias c_gst_pad_link gst_pad_link;
 alias c_gst_pad_link_full gst_pad_link_full;
+alias c_gst_pad_link_maybe_ghosting gst_pad_link_maybe_ghosting;
+alias c_gst_pad_link_maybe_ghosting_full gst_pad_link_maybe_ghosting_full;
 alias c_gst_pad_mark_reconfigure gst_pad_mark_reconfigure;
 alias c_gst_pad_needs_reconfigure gst_pad_needs_reconfigure;
 alias c_gst_pad_pause_task gst_pad_pause_task;
@@ -4500,6 +4669,29 @@ alias c_gst_static_caps_get gst_static_caps_get;
 
 alias c_gst_static_pad_template_get gst_static_pad_template_get;
 alias c_gst_static_pad_template_get_caps gst_static_pad_template_get_caps;
+
+// gstreamer.Stream
+
+alias c_gst_stream_get_type gst_stream_get_type;
+alias c_gst_stream_new gst_stream_new;
+alias c_gst_stream_get_caps gst_stream_get_caps;
+alias c_gst_stream_get_stream_flags gst_stream_get_stream_flags;
+alias c_gst_stream_get_stream_id gst_stream_get_stream_id;
+alias c_gst_stream_get_stream_type gst_stream_get_stream_type;
+alias c_gst_stream_get_tags gst_stream_get_tags;
+alias c_gst_stream_set_caps gst_stream_set_caps;
+alias c_gst_stream_set_stream_flags gst_stream_set_stream_flags;
+alias c_gst_stream_set_stream_type gst_stream_set_stream_type;
+alias c_gst_stream_set_tags gst_stream_set_tags;
+
+// gstreamer.StreamCollection
+
+alias c_gst_stream_collection_get_type gst_stream_collection_get_type;
+alias c_gst_stream_collection_new gst_stream_collection_new;
+alias c_gst_stream_collection_add_stream gst_stream_collection_add_stream;
+alias c_gst_stream_collection_get_size gst_stream_collection_get_size;
+alias c_gst_stream_collection_get_stream gst_stream_collection_get_stream;
+alias c_gst_stream_collection_get_upstream_id gst_stream_collection_get_upstream_id;
 
 // gstreamer.Structure
 

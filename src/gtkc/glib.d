@@ -462,6 +462,7 @@ shared static this()
 	Linker.link(g_key_file_get_value, "g_key_file_get_value", LIBRARY.GLIB);
 	Linker.link(g_key_file_has_group, "g_key_file_has_group", LIBRARY.GLIB);
 	Linker.link(g_key_file_has_key, "g_key_file_has_key", LIBRARY.GLIB);
+	Linker.link(g_key_file_load_from_bytes, "g_key_file_load_from_bytes", LIBRARY.GLIB);
 	Linker.link(g_key_file_load_from_data, "g_key_file_load_from_data", LIBRARY.GLIB);
 	Linker.link(g_key_file_load_from_data_dirs, "g_key_file_load_from_data_dirs", LIBRARY.GLIB);
 	Linker.link(g_key_file_load_from_dirs, "g_key_file_load_from_dirs", LIBRARY.GLIB);
@@ -1735,12 +1736,6 @@ shared static this()
 	// glib.Version
 
 	Linker.link(glib_check_version, "glib_check_version", LIBRARY.GLIB);
-
-	version(Win64)
-	{
-		Linker.link(g_module_name, "g_module_name_uft8", LIBRARY.GLIB, LIBRARY.GMODULE);
-		Linker.link(g_module_open, "g_module_open_utf8", LIBRARY.GLIB, LIBRARY.GMODULE);
-	}
 }
 
 __gshared extern(C)
@@ -1818,8 +1813,8 @@ __gshared extern(C)
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* group, GError** err) c_g_bookmark_file_has_group;
 	int function(GBookmarkFile* bookmark, const(char)* uri) c_g_bookmark_file_has_item;
 	int function(GBookmarkFile* bookmark, const(char)* data, size_t length, GError** err) c_g_bookmark_file_load_from_data;
-	int function(GBookmarkFile* bookmark, const(char)* file, char** fullPath, GError** err) c_g_bookmark_file_load_from_data_dirs;
-	int function(GBookmarkFile* bookmark, const(char)* filename, GError** err) c_g_bookmark_file_load_from_file;
+	int function(GBookmarkFile* bookmark, char* file, char** fullPath, GError** err) c_g_bookmark_file_load_from_data_dirs;
+	int function(GBookmarkFile* bookmark, char* filename, GError** err) c_g_bookmark_file_load_from_file;
 	int function(GBookmarkFile* bookmark, const(char)* oldUri, const(char)* newUri, GError** err) c_g_bookmark_file_move_item;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, GError** err) c_g_bookmark_file_remove_application;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* group, GError** err) c_g_bookmark_file_remove_group;
@@ -1835,7 +1830,7 @@ __gshared extern(C)
 	void function(GBookmarkFile* bookmark, const(char)* uri, const(char)* title) c_g_bookmark_file_set_title;
 	void function(GBookmarkFile* bookmark, const(char)* uri, uint visited) c_g_bookmark_file_set_visited;
 	char* function(GBookmarkFile* bookmark, size_t* length, GError** err) c_g_bookmark_file_to_data;
-	int function(GBookmarkFile* bookmark, const(char)* filename, GError** err) c_g_bookmark_file_to_file;
+	int function(GBookmarkFile* bookmark, char* filename, GError** err) c_g_bookmark_file_to_file;
 	GQuark function() c_g_bookmark_file_error_quark;
 	GBookmarkFile* function() c_g_bookmark_file_new;
 
@@ -2001,7 +1996,7 @@ __gshared extern(C)
 	// glib.Directory
 
 	void function(GDir* dir) c_g_dir_close;
-	const(char)* function(GDir* dir) c_g_dir_read_name;
+	char* function(GDir* dir) c_g_dir_read_name;
 	void function(GDir* dir) c_g_dir_rewind;
 	char* function(char* tmpl, GError** err) c_g_dir_make_tmp;
 	GDir* function(const(char)* path, uint flags, GError** err) c_g_dir_open;
@@ -2114,7 +2109,7 @@ __gshared extern(C)
 
 	// glib.IOChannel
 
-	GIOChannel* function(const(char)* filename, const(char)* mode, GError** err) c_g_io_channel_new_file;
+	GIOChannel* function(char* filename, const(char)* mode, GError** err) c_g_io_channel_new_file;
 	GIOChannel* function(int fd) c_g_io_channel_unix_new;
 	void function(GIOChannel* channel) c_g_io_channel_close;
 	GIOStatus function(GIOChannel* channel, GError** err) c_g_io_channel_flush;
@@ -2176,6 +2171,7 @@ __gshared extern(C)
 	char* function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, GError** err) c_g_key_file_get_value;
 	int function(GKeyFile* keyFile, const(char)* groupName) c_g_key_file_has_group;
 	int function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, GError** err) c_g_key_file_has_key;
+	int function(GKeyFile* keyFile, GBytes* bytes, GKeyFileFlags flags, GError** err) c_g_key_file_load_from_bytes;
 	int function(GKeyFile* keyFile, const(char)* data, size_t length, GKeyFileFlags flags, GError** err) c_g_key_file_load_from_data;
 	int function(GKeyFile* keyFile, char* file, char** fullPath, GKeyFileFlags flags, GError** err) c_g_key_file_load_from_data_dirs;
 	int function(GKeyFile* keyFile, char* file, char** searchDirs, char** fullPath, GKeyFileFlags flags, GError** err) c_g_key_file_load_from_dirs;
@@ -2284,7 +2280,7 @@ __gshared extern(C)
 
 	// glib.MappedFile
 
-	GMappedFile* function(const(char)* filename, int writable, GError** err) c_g_mapped_file_new;
+	GMappedFile* function(char* filename, int writable, GError** err) c_g_mapped_file_new;
 	GMappedFile* function(int fd, int writable, GError** err) c_g_mapped_file_new_from_fd;
 	void function(GMappedFile* file) c_g_mapped_file_free;
 	GBytes* function(GMappedFile* file) c_g_mapped_file_get_bytes;
@@ -3059,15 +3055,15 @@ __gshared extern(C)
 
 	// glib.Spawn
 
-	int function(const(char)* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** err) c_g_spawn_async;
-	int function(const(char)* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int* standardInput, int* standardOutput, int* standardError, GError** err) c_g_spawn_async_with_pipes;
+	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** err) c_g_spawn_async;
+	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int* standardInput, int* standardOutput, int* standardError, GError** err) c_g_spawn_async_with_pipes;
 	int function(int exitStatus, GError** err) c_g_spawn_check_exit_status;
 	void function(GPid pid) c_g_spawn_close_pid;
 	int function(const(char)* commandLine, GError** err) c_g_spawn_command_line_async;
 	int function(const(char)* commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_command_line_sync;
 	GQuark function() c_g_spawn_error_quark;
 	GQuark function() c_g_spawn_exit_error_quark;
-	int function(const(char)* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_sync;
+	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_sync;
 
 	// glib.Str
 
@@ -3151,42 +3147,42 @@ __gshared extern(C)
 	char* function(char** args) c_g_build_filenamev;
 	char* function(const(char)* separator, char** args) c_g_build_pathv;
 	void function(GVoidFunc func) c_g_atexit;
-	const(char)* function(const(char)* fileName) c_g_basename;
+	char* function(char* fileName) c_g_basename;
 	int function(gulong mask, int nthBit) c_g_bit_nth_lsf;
 	int function(gulong mask, int nthBit) c_g_bit_nth_msf;
 	uint function(gulong number) c_g_bit_storage;
-	char* function(const(char)* separator, const(char)* firstElement, ... ) c_g_build_path;
+	char* function(char* separator, char* firstElement, ... ) c_g_build_path;
 	const(char)* function(char** envp, const(char)* variable) c_g_environ_getenv;
 	char** function(char** envp, const(char)* variable, const(char)* value, int overwrite) c_g_environ_setenv;
 	char** function(char** envp, const(char)* variable) c_g_environ_unsetenv;
-	char* function(const(char)* program) c_g_find_program_in_path;
+	char* function(char* program) c_g_find_program_in_path;
 	char* function(ulong size) c_g_format_size;
 	char* function(long size) c_g_format_size_for_display;
 	char* function(ulong size, GFormatSizeFlags flags) c_g_format_size_full;
 	const(char)* function() c_g_get_application_name;
 	char** function() c_g_get_environ;
 	char* function() c_g_get_current_dir;
-	const(char)* function() c_g_get_home_dir;
+	char* function() c_g_get_home_dir;
 	const(char)* function() c_g_get_host_name;
 	const(char)* function() c_g_get_prgname;
-	const(char)* function() c_g_get_real_name;
+	char* function() c_g_get_real_name;
 	char** function() c_g_get_system_config_dirs;
 	char** function() c_g_get_system_data_dirs;
-	const(char)* function() c_g_get_tmp_dir;
-	const(char)* function() c_g_get_user_cache_dir;
-	const(char)* function() c_g_get_user_config_dir;
-	const(char)* function() c_g_get_user_data_dir;
-	const(char)* function() c_g_get_user_name;
-	const(char)* function() c_g_get_user_runtime_dir;
-	const(char)* function(GUserDirectory directory) c_g_get_user_special_dir;
+	char* function() c_g_get_tmp_dir;
+	char* function() c_g_get_user_cache_dir;
+	char* function() c_g_get_user_config_dir;
+	char* function() c_g_get_user_data_dir;
+	char* function() c_g_get_user_name;
+	char* function() c_g_get_user_runtime_dir;
+	char* function(GUserDirectory directory) c_g_get_user_special_dir;
 	const(char)* function(const(char)* variable) c_g_getenv;
 	char** function() c_g_listenv;
 	void function(void** nullifyLocation) c_g_nullify_pointer;
 	uint function(const(char)* str, GDebugKey* keys, uint nkeys) c_g_parse_debug_string;
-	char* function(const(char)* fileName) c_g_path_get_basename;
-	char* function(const(char)* fileName) c_g_path_get_dirname;
-	int function(const(char)* fileName) c_g_path_is_absolute;
-	const(char)* function(const(char)* fileName) c_g_path_skip_root;
+	char* function(char* fileName) c_g_path_get_basename;
+	char* function(char* fileName) c_g_path_get_dirname;
+	int function(char* fileName) c_g_path_is_absolute;
+	char* function(char* fileName) c_g_path_skip_root;
 	void function(void* pbase, int totalElems, size_t size, GCompareDataFunc compareFunc, void* userData) c_g_qsort_with_data;
 	void function() c_g_reload_user_special_dirs_cache;
 	void function(const(char)* applicationName) c_g_set_application_name;
@@ -3221,10 +3217,10 @@ __gshared extern(C)
 	GQuark function() c_g_convert_error_quark;
 	char* function(const(char)* str, ptrdiff_t len, const(char)* toCodeset, const(char)* fromCodeset, const(char)* fallback, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert_with_fallback;
 	char* function(const(char)* str, ptrdiff_t len, GIConv converter, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert_with_iconv;
-	char* function(const(char)* filename) c_g_filename_display_basename;
-	char* function(const(char)* filename) c_g_filename_display_name;
+	char* function(char* filename) c_g_filename_display_basename;
+	char* function(char* filename) c_g_filename_display_name;
 	char* function(const(char)* utf8string, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_filename_from_utf8;
-	char* function(const(char)* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_filename_to_utf8;
+	char* function(char* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_filename_to_utf8;
 	int function(char** charset) c_g_get_charset;
 	char* function() c_g_get_codeset;
 	int function(char*** charsets) c_g_get_filename_charsets;
@@ -3262,23 +3258,23 @@ __gshared extern(C)
 
 	// glib.FileUtils
 
-	int function(const(char)* filename, int mode) c_g_access;
-	int function(const(char)* path) c_g_chdir;
+	int function(char* filename, int mode) c_g_access;
+	int function(char* path) c_g_chdir;
 	int function(int fd, GError** err) c_g_close;
 	GFileError function(int errNo) c_g_file_error_from_errno;
 	GQuark function() c_g_file_error_quark;
 	int function(char* filename, char** contents, size_t* length, GError** err) c_g_file_get_contents;
 	int function(char* tmpl, char** nameUsed, GError** err) c_g_file_open_tmp;
-	char* function(const(char)* filename, GError** err) c_g_file_read_link;
+	char* function(char* filename, GError** err) c_g_file_read_link;
 	int function(char* filename, char* contents, ptrdiff_t length, GError** err) c_g_file_set_contents;
-	int function(const(char)* filename, GFileTest test) c_g_file_test;
-	int function(const(char)* pathname, int mode) c_g_mkdir_with_parents;
+	int function(char* filename, GFileTest test) c_g_file_test;
+	int function(char* pathname, int mode) c_g_mkdir_with_parents;
 	char* function(char* tmpl) c_g_mkdtemp;
 	char* function(char* tmpl, int mode) c_g_mkdtemp_full;
 	int function(char* tmpl) c_g_mkstemp;
 	int function(char* tmpl, int flags, int mode) c_g_mkstemp_full;
-	int function(const(char)* filename) c_g_rmdir;
-	int function(const(char)* filename) c_g_unlink;
+	int function(char* filename) c_g_rmdir;
+	int function(char* filename) c_g_unlink;
 
 	// glib.Hostname
 
@@ -3439,7 +3435,7 @@ __gshared extern(C)
 	// glib.URI
 
 	char* function(const(char)* uri, char** hostname, GError** err) c_g_filename_from_uri;
-	char* function(const(char)* filename, const(char)* hostname, GError** err) c_g_filename_to_uri;
+	char* function(char* filename, const(char)* hostname, GError** err) c_g_filename_to_uri;
 	char* function(const(char)* unescaped, const(char)* reservedCharsAllowed, int allowUtf8) c_g_uri_escape_string;
 	char** function(const(char)* uriList) c_g_uri_list_extract_uris;
 	char* function(const(char)* uri) c_g_uri_parse_scheme;
@@ -3882,6 +3878,7 @@ alias c_g_key_file_get_uint64 g_key_file_get_uint64;
 alias c_g_key_file_get_value g_key_file_get_value;
 alias c_g_key_file_has_group g_key_file_has_group;
 alias c_g_key_file_has_key g_key_file_has_key;
+alias c_g_key_file_load_from_bytes g_key_file_load_from_bytes;
 alias c_g_key_file_load_from_data g_key_file_load_from_data;
 alias c_g_key_file_load_from_data_dirs g_key_file_load_from_data_dirs;
 alias c_g_key_file_load_from_dirs g_key_file_load_from_dirs;

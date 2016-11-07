@@ -186,6 +186,13 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Returns if invisible widgets are ignored when calculating the size.
 	 *
+	 * Deprecated: Measuring the size of hidden widgets has not worked
+	 * reliably for a long time. In most cases, they will report a size
+	 * of 0 nowadays, and thus, their size will not affect the other
+	 * size group members. In effect, size groups will always operate
+	 * as if this property was %TRUE. Use a #GtkStack instead to hide
+	 * widgets while still having their size taken into account.
+	 *
 	 * Return: %TRUE if invisible widgets are ignored.
 	 *
 	 * Since: 2.8
@@ -239,6 +246,13 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Sets whether unmapped widgets should be ignored when
 	 * calculating the size.
+	 *
+	 * Deprecated: Measuring the size of hidden widgets has not worked
+	 * reliably for a long time. In most cases, they will report a size
+	 * of 0 nowadays, and thus, their size will not affect the other
+	 * size group members. In effect, size groups will always operate
+	 * as if this property was %TRUE. Use a #GtkStack instead to hide
+	 * widgets while still having their size taken into account.
 	 *
 	 * Params:
 	 *     ignoreHidden = whether unmapped widgets should be ignored

@@ -868,7 +868,7 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     stockId = an icon name
 	 *
-	 * Return: The looked  up %GtkIconSet, or %NULL
+	 * Return: The looked up %GtkIconSet, or %NULL
 	 */
 	public IconSet lookupIconSet(string stockId)
 	{
@@ -1283,7 +1283,17 @@ public class StyleContext : ObjectG
 	int[string] connectedSignals;
 
 	void delegate(StyleContext)[] onChangedListeners;
-	/** */
+	/**
+	 * The ::changed signal is emitted when there is a change in the
+	 * #GtkStyleContext.
+	 *
+	 * For a #GtkStyleContext returned by gtk_widget_get_style_context(), the
+	 * #GtkWidget::style-updated signal/vfunc might be more convenient to use.
+	 *
+	 * This signal is useful when using the theming layer standalone.
+	 *
+	 * Since: 3.0
+	 */
 	void addOnChanged(void delegate(StyleContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( "changed" !in connectedSignals )

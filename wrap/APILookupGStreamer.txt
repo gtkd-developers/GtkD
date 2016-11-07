@@ -454,6 +454,15 @@ noCode: new_async_start
 noCode: new_reset_time
 noCode: new_device_added
 noCode: new_device_removed
+
+#TODO:
+noCode: new_error_with_details
+noCode: new_info_with_details
+noCode: new_warning_with_details
+noCode: new_stream_collection
+noCode: new_streams_selected
+
+
 code: start
 	/**
 	* Get the type of the message.

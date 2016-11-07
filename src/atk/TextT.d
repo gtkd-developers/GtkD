@@ -157,9 +157,9 @@ public template TextT(TStruct)
 	 *     height = Pointer for the height of the bounding box
 	 *     coords = specify whether coordinates are relative to the screen or widget window
 	 */
-	public void getCharacterExtents(int offset, int* x, int* y, int* width, int* height, AtkCoordType coords)
+	public void getCharacterExtents(int offset, out int x, out int y, out int width, out int height, AtkCoordType coords)
 	{
-		atk_text_get_character_extents(getTextStruct(), offset, x, y, width, height, coords);
+		atk_text_get_character_extents(getTextStruct(), offset, &x, &y, &width, &height, coords);
 	}
 
 	/**
@@ -220,9 +220,9 @@ public template TextT(TStruct)
 	 *
 	 * Since: 1.3
 	 */
-	public void getRangeExtents(int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect)
+	public void getRangeExtents(int startOffset, int endOffset, AtkCoordType coordType, out AtkTextRectangle rect)
 	{
-		atk_text_get_range_extents(getTextStruct(), startOffset, endOffset, coordType, rect);
+		atk_text_get_range_extents(getTextStruct(), startOffset, endOffset, coordType, &rect);
 	}
 
 	/**

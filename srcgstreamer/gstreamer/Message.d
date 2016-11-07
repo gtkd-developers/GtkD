@@ -34,6 +34,8 @@ private import gstreamer.Context;
 private import gstreamer.Device;
 private import gstreamer.Element;
 private import gstreamer.ObjectGst;
+private import gstreamer.Stream;
+private import gstreamer.StreamCollection;
 private import gstreamer.Structure;
 private import gstreamer.TagList;
 private import gstreamer.Toc;
@@ -710,7 +712,7 @@ public class Message
 	 * to perform actions triggered by a state change.
 	 *
 	 * @code contains a well defined string describing the action.
-	 * @test should contain a user visible string detailing the current action.
+	 * @text should contain a user visible string detailing the current action.
 	 *
 	 * Params:
 	 *     src = The object originating the message.
@@ -729,6 +731,30 @@ public class Message
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_progress");
+		}
+		
+		this(cast(GstMessage*) p);
+	}
+
+	/**
+	 *
+	 * Params:
+	 *     src = The #GstObject whose property changed (may or may not be a #GstElement)
+	 *     propertyName = name of the property that changed
+	 *     val = new property value, or %NULL
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ObjectGst src, string propertyName, Value val)
+	{
+		auto p = gst_message_new_property_notify((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(propertyName), (val is null) ? null : val.getValueStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_property_notify");
 		}
 		
 		this(cast(GstMessage*) p);
@@ -770,6 +796,57 @@ public class Message
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_qos");
+		}
+		
+		this(cast(GstMessage*) p);
+	}
+
+	/**
+	 * Creates a new redirect message and adds a new entry to it. Redirect messages
+	 * are posted when an element detects that the actual data has to be retrieved
+	 * from a different location. This is useful if such a redirection cannot be
+	 * handled inside a source element, for example when HTTP 302/303 redirects
+	 * return a non-HTTP URL.
+	 *
+	 * The redirect message can hold multiple entries. The first one is added
+	 * when the redirect message is created, with the given location, tag_list,
+	 * entry_struct arguments. Use gst_message_add_redirect_entry() to add more
+	 * entries.
+	 *
+	 * Each entry has a location, a tag list, and a structure. All of these are
+	 * optional. The tag list and structure are useful for additional metadata,
+	 * such as bitrate statistics for the given location.
+	 *
+	 * By default, message recipients should treat entries in the order they are
+	 * stored. The recipient should therefore try entry #0 first, and if this
+	 * entry is not acceptable or working, try entry #1 etc. Senders must make
+	 * sure that they add entries in this order. However, recipients are free to
+	 * ignore the order and pick an entry that is "best" for them. One example
+	 * would be a recipient that scans the entries for the one with the highest
+	 * bitrate tag.
+	 *
+	 * The specified location string is copied. However, ownership over the tag
+	 * list and structure are transferred to the message.
+	 *
+	 * Params:
+	 *     src = The #GstObject whose property changed (may or may not be a #GstElement)
+	 *     location = location string for the new entry
+	 *     tagList = tag list for the new entry
+	 *     entryStruct = structure for the new entry
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ObjectGst src, string location, TagList tagList, Structure entryStruct)
+	{
+		auto p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_redirect");
 		}
 		
 		this(cast(GstMessage*) p);
@@ -1042,6 +1119,34 @@ public class Message
 	}
 
 	/**
+	 * Creates and appends a new entry.
+	 *
+	 * The specified location string is copied. However, ownership over the tag
+	 * list and structure are transferred to the message.
+	 *
+	 * Params:
+	 *     location = location string for the new entry
+	 *     tagList = tag list for the new entry
+	 *     entryStruct = structure for the new entry
+	 *
+	 * Since: 1.10
+	 */
+	public void addRedirectEntry(string location, TagList tagList, Structure entryStruct)
+	{
+		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct());
+	}
+
+	/**
+	 * Return: the number of entries stored in the message
+	 *
+	 * Since: 1.10
+	 */
+	public size_t getNumRedirectEntries()
+	{
+		return gst_message_get_num_redirect_entries(gstMessage);
+	}
+
+	/**
 	 * Retrieve the sequence number of a message.
 	 *
 	 * Messages have ever-incrementing sequence numbers, which may also be set
@@ -1305,6 +1410,24 @@ public class Message
 	}
 
 	/**
+	 * Returns the optional details structure, may be NULL if none.
+	 * The returned structure must not be freed.
+	 *
+	 * Params:
+	 *     structure = A pointer to the returned details
+	 *
+	 * Since: 1.10
+	 */
+	public void parseErrorDetails(out Structure structure)
+	{
+		GstStructure* outstructure = null;
+		
+		gst_message_parse_error_details(gstMessage, &outstructure);
+		
+		structure = ObjectG.getDObject!(Structure)(outstructure);
+	}
+
+	/**
 	 * Extract the group from the STREAM_START message.
 	 *
 	 * Params:
@@ -1365,6 +1488,24 @@ public class Message
 	}
 
 	/**
+	 * Returns the optional details structure, may be NULL if none
+	 * The returned structure must not be freed.
+	 *
+	 * Params:
+	 *     structure = A pointer to the returned details structure
+	 *
+	 * Since: 1.10
+	 */
+	public void parseInfoDetails(out Structure structure)
+	{
+		GstStructure* outstructure = null;
+		
+		gst_message_parse_info_details(gstMessage, &outstructure);
+		
+		structure = ObjectG.getDObject!(Structure)(outstructure);
+	}
+
+	/**
 	 * Extracts the new clock from the GstMessage.
 	 * The clock object returned remains valid until the message is freed.
 	 *
@@ -1400,6 +1541,35 @@ public class Message
 		
 		code = Str.toString(outcode);
 		text = Str.toString(outtext);
+	}
+
+	/**
+	 * Parses a property-notify message. These will be posted on the bus only
+	 * when set up with gst_element_add_property_notify_watch() or
+	 * gst_element_add_property_deep_notify_watch().
+	 *
+	 * Params:
+	 *     object = location where to store a
+	 *         pointer to the object whose property got changed, or %NULL
+	 *     propertyName = return location for the name of the
+	 *         property that got changed, or %NULL
+	 *     propertyValue = return location for the new value of
+	 *         the property that got changed, or %NULL. This will only be set if the
+	 *         property notify watch was told to include the value when it was set up
+	 *
+	 * Since: 1.10
+	 */
+	public void parsePropertyNotify(out ObjectGst object, out string propertyName, out Value propertyValue)
+	{
+		GstObject* outobject = null;
+		char* outpropertyName = null;
+		GValue* outpropertyValue = null;
+		
+		gst_message_parse_property_notify(gstMessage, &outobject, &outpropertyName, &outpropertyValue);
+		
+		object = ObjectG.getDObject!(ObjectGst)(outobject);
+		propertyName = Str.toString(outpropertyName);
+		propertyValue = ObjectG.getDObject!(Value)(outpropertyValue);
 	}
 
 	/**
@@ -1472,6 +1642,35 @@ public class Message
 	public void parseQosValues(out long jitter, out double proportion, out int quality)
 	{
 		gst_message_parse_qos_values(gstMessage, &jitter, &proportion, &quality);
+	}
+
+	/**
+	 * Parses the location and/or structure from the entry with the given index.
+	 * The index must be between 0 and gst_message_get_num_redirect_entries() - 1.
+	 * Returned pointers are valid for as long as this message exists.
+	 *
+	 * Params:
+	 *     entryIndex = index of the entry to parse
+	 *     location = return location for
+	 *         the pointer to the entry's location string, or %NULL
+	 *     tagList = return location for
+	 *         the pointer to the entry's tag list, or %NULL
+	 *     entryStruct = return location
+	 *         for the pointer to the entry's structure, or %NULL
+	 *
+	 * Since: 1.10
+	 */
+	public void parseRedirectEntry(size_t entryIndex, out string location, out TagList tagList, out Structure entryStruct)
+	{
+		char* outlocation = null;
+		GstTagList* outtagList = null;
+		GstStructure* outentryStruct = null;
+		
+		gst_message_parse_redirect_entry(gstMessage, entryIndex, &outlocation, &outtagList, &outentryStruct);
+		
+		location = Str.toString(outlocation);
+		tagList = ObjectG.getDObject!(TagList)(outtagList);
+		entryStruct = ObjectG.getDObject!(Structure)(outentryStruct);
 	}
 
 	/**
@@ -1617,6 +1816,24 @@ public class Message
 	}
 
 	/**
+	 * Parses a stream-collection message.
+	 *
+	 * Params:
+	 *     collection = A location where to store a
+	 *         pointer to the #GstStreamCollection, or %NULL
+	 *
+	 * Since: 1.10
+	 */
+	public void parseStreamCollection(out StreamCollection collection)
+	{
+		GstStreamCollection* outcollection = null;
+		
+		gst_message_parse_stream_collection(gstMessage, &outcollection);
+		
+		collection = ObjectG.getDObject!(StreamCollection)(outcollection);
+	}
+
+	/**
 	 * Extracts the stream status type and owner the GstMessage. The returned
 	 * owner remains valid for as long as the reference to @message is valid and
 	 * should thus not be unreffed.
@@ -1634,6 +1851,24 @@ public class Message
 		gst_message_parse_stream_status(gstMessage, &type, &outowner);
 		
 		owner = ObjectG.getDObject!(Element)(outowner);
+	}
+
+	/**
+	 * Parses a streams-selected message.
+	 *
+	 * Params:
+	 *     collection = A location where to store a
+	 *         pointer to the #GstStreamCollection, or %NULL
+	 *
+	 * Since: 1.10
+	 */
+	public void parseStreamsSelected(out StreamCollection collection)
+	{
+		GstStreamCollection* outcollection = null;
+		
+		gst_message_parse_streams_selected(gstMessage, &outcollection);
+		
+		collection = ObjectG.getDObject!(StreamCollection)(outcollection);
 	}
 
 	/**
@@ -1740,6 +1975,24 @@ public class Message
 	}
 
 	/**
+	 * Returns the optional details structure, may be NULL if none
+	 * The returned structure must not be freed.
+	 *
+	 * Params:
+	 *     structure = A pointer to the returned details structure
+	 *
+	 * Since: 1.10
+	 */
+	public void parseWarningDetails(out Structure structure)
+	{
+		GstStructure* outstructure = null;
+		
+		gst_message_parse_warning_details(gstMessage, &outstructure);
+		
+		structure = ObjectG.getDObject!(Structure)(outstructure);
+	}
+
+	/**
 	 * Configures the buffering stats values in @message.
 	 *
 	 * Params:
@@ -1841,6 +2094,53 @@ public class Message
 	public void setStreamStatusObject(Value object)
 	{
 		gst_message_set_stream_status_object(gstMessage, (object is null) ? null : object.getValueStruct());
+	}
+
+	/**
+	 * Adds the @stream to the @message.
+	 *
+	 * Params:
+	 *     stream = a #GstStream to add to @message
+	 *
+	 * Since: 1.10
+	 */
+	public void streamsSelectedAdd(Stream stream)
+	{
+		gst_message_streams_selected_add(gstMessage, (stream is null) ? null : stream.getStreamStruct());
+	}
+
+	/**
+	 * Returns the number of streams contained in the @message.
+	 *
+	 * Return: The number of streams contained within.
+	 *
+	 * Since: 1.10
+	 */
+	public uint streamsSelectedGetSize()
+	{
+		return gst_message_streams_selected_get_size(gstMessage);
+	}
+
+	/**
+	 * Retrieves the #GstStream with index @index from the @message.
+	 *
+	 * Params:
+	 *     idx = Index of the stream to retrieve
+	 *
+	 * Return: A #GstStream
+	 *
+	 * Since: 1.10
+	 */
+	public Stream streamsSelectedGetStream(uint idx)
+	{
+		auto p = gst_message_streams_selected_get_stream(gstMessage, idx);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Stream)(cast(GstStream*) p, true);
 	}
 
 	/**

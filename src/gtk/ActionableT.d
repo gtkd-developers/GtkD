@@ -68,7 +68,7 @@ public template ActionableT(TStruct)
 	}
 
 	/**
-	 * Gets the current target value of @actionabe.
+	 * Gets the current target value of @actionable.
 	 *
 	 * See gtk_actionable_set_action_target_value() for more information.
 	 *

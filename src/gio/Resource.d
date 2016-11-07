@@ -124,6 +124,34 @@ private import gtkc.paths;
  * during runtime you need to be very careful with keeping around pointers to data from a resource, as this goes away
  * when the library is unloaded. However, in practice this is not generally a problem, since most resource accesses
  * is for your own resources, and resource data is often used once, during parsing, and then released.
+ * 
+ * When debugging a program or testing a change to an installed version, it is often useful to be able to
+ * replace resources in the program or library, without recompiling, for debugging or quick hacking and testing
+ * purposes.
+ * 
+ * Since GLib 2.50, it is possible to use the `G_RESOURCE_OVERLAYS` environment variable to selectively overlay
+ * resources with replacements from the filesystem.  It is a colon-separated list of substitutions to perform
+ * during resource lookups.
+ * 
+ * A substitution has the form
+ * 
+ * |[
+ * /org/gtk/libgtk=/home/desrt/gtk-overlay
+ * ]|
+ * 
+ * The part before the `=` is the resource subpath for which the overlay applies.  The part after is a
+ * filesystem path which contains files and subdirectories as you would like to be loaded as resources with the
+ * equivalent names.
+ * 
+ * In the example above, if an application tried to load a resource with the resource path
+ * `/org/gtk/libgtk/ui/gtkdialog.ui` then GResource would check the filesystem path
+ * `/home/desrt/gtk-overlay/ui/gtkdialog.ui`.  If a file was found there, it would be used instead.  This is an
+ * overlay, not an outright replacement, which means that if a file is not found at that path, the built-in
+ * version will be used instead.  Whiteouts are not currently supported.
+ * 
+ * Substitutions must start with a slash, and must not contain a trailing slash before the '='.  The path after
+ * the slash should ideally be absolute, but this is not strictly required.  It is possible to overlay the
+ * location of a single resource with an individual file.
  *
  * Since: 2.32
  */

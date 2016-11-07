@@ -181,6 +181,10 @@ public class SourceSearchSettings : ObjectG
 	 * If enabled, the #GtkSourceSearchSettings:search-text property contains the
 	 * pattern of the regular expression.
 	 *
+	 * #GtkSourceSearchContext uses #GRegex when regex search is enabled. See the
+	 * [Regular expression syntax](https://developer.gnome.org/glib/stable/glib-regex-syntax.html)
+	 * page in the GLib reference manual.
+	 *
 	 * Params:
 	 *     regexEnabled = the setting.
 	 *

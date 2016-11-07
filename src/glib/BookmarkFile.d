@@ -640,8 +640,8 @@ public class BookmarkFile
 	 *
 	 * Params:
 	 *     file = a relative path to a filename to open and parse
-	 *     fullPath = return location for a string containing the full path
-	 *         of the file, or %NULL
+	 *     fullPath = return location for a string
+	 *         containing the full path of the file, or %NULL
 	 *
 	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
@@ -672,7 +672,8 @@ public class BookmarkFile
 	 * or #GBookmarkFileError.
 	 *
 	 * Params:
-	 *     filename = the path of a filename to load, in the GLib file name encoding
+	 *     filename = the path of a filename to load, in the
+	 *         GLib file name encoding
 	 *
 	 * Return: %TRUE if a desktop bookmark file could be loaded
 	 *

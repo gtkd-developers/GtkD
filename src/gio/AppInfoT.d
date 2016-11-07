@@ -27,6 +27,8 @@ module gio.AppInfoT;
 public  import gio.AppInfo;
 public  import gio.AppInfoIF;
 public  import gio.AppLaunchContext;
+public  import gio.AsyncResultIF;
+public  import gio.Cancellable;
 public  import gio.FileIF;
 public  import gio.Icon;
 public  import gio.IconIF;
@@ -290,7 +292,7 @@ public template AppInfoT(TStruct)
 	 *
 	 * Params:
 	 *     uri = the uri to show
-	 *     launchContext = an optional #GAppLaunchContext.
+	 *     launchContext = an optional #GAppLaunchContext
 	 *
 	 * Return: %TRUE on success, %FALSE on error.
 	 *
@@ -301,6 +303,52 @@ public template AppInfoT(TStruct)
 		GError* err = null;
 		
 		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Async version of g_app_info_launch_default_for_uri().
+	 *
+	 * This version is useful if you are interested in receiving
+	 * error information in the case where the application is
+	 * sandboxed and the portal may present an application chooser
+	 * dialog to the user.
+	 *
+	 * Params:
+	 *     uri = the uri to show
+	 *     callback = a #GASyncReadyCallback to call when the request is done
+	 *     userData = data to pass to @callback
+	 *
+	 * Since: 2.50
+	 */
+	public static void launchDefaultForUriAsync(string uri, AppLaunchContext launchContext, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_app_info_launch_default_for_uri_async(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Finishes an asynchronous launch-default-for-uri operation.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Return: %TRUE if the launch was successful, %FALSE if @error is set
+	 *
+	 * Since: 2.50
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static bool launchDefaultForUriFinish(AsyncResultIF result)
+	{
+		GError* err = null;
+		
+		auto p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 		
 		if (err !is null)
 		{
@@ -646,7 +694,8 @@ public template AppInfoT(TStruct)
 	 * Sets the application as the default handler for the given file extension.
 	 *
 	 * Params:
-	 *     extension = a string containing the file extension (without the dot).
+	 *     extension = a string containing the file extension
+	 *         (without the dot).
 	 *
 	 * Return: %TRUE on success, %FALSE on error.
 	 *

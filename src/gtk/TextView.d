@@ -682,6 +682,8 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * Gets the default number of pixels to put above paragraphs.
+	 * Adding this function with gtk_text_view_get_pixels_below_lines()
+	 * is equal to the line space between each paragraph.
 	 *
 	 * Return: default number of pixels above paragraphs
 	 */
@@ -692,6 +694,9 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * Gets the value set by gtk_text_view_set_pixels_below_lines().
+	 *
+	 * The line space is the sum of the value returned by this function and the
+	 * value returned by gtk_text_view_get_pixels_above_lines().
 	 *
 	 * Return: default number of blank pixels below paragraphs
 	 */
@@ -1613,7 +1618,7 @@ public class TextView : Container, ScrollableIF
 	 * There are no default bindings for this signal.
 	 *
 	 * Params:
-	 *     step = the granularity of the move, as a #GtkMovementStep
+	 *     step = the granularity of the movement, as a #GtkScrollStep
 	 *     count = the number of @step units to move
 	 */
 	void addOnMoveViewport(void delegate(GtkScrollStep, int, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

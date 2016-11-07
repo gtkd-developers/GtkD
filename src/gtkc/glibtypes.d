@@ -283,7 +283,7 @@ public enum GChecksumType
 	 */
 	SHA256 = 2,
 	/**
-	 * Use the SHA-512 hashing algorithm
+	 * Use the SHA-512 hashing algorithm (Since: 2.36)
 	 */
 	SHA512 = 3,
 }
@@ -1022,6 +1022,29 @@ public enum GLogLevelFlags
 alias GLogLevelFlags LogLevelFlags;
 
 /**
+ * Return values from #GLogWriterFuncs to indicate whether the given log entry
+ * was successfully handled by the writer, or whether there was an error in
+ * handling it (and hence a fallback writer should be used).
+ *
+ * If a #GLogWriterFunc ignores a log entry, it should return
+ * %G_LOG_WRITER_HANDLED.
+ *
+ * Since: 2.50
+ */
+public enum GLogWriterOutput
+{
+	/**
+	 * Log writer has handled the log entry.
+	 */
+	HANDLED = 1,
+	/**
+	 * Log writer could not handle the log entry.
+	 */
+	UNHANDLED = 0,
+}
+alias GLogWriterOutput LogWriterOutput;
+
+/**
  * A mixed enumerated type and flags field. You must specify one type
  * (string, strdup, boolean, tristate).  Additionally, you may  optionally
  * bitwise OR the type with the flag %G_MARKUP_COLLECT_OPTIONAL.
@@ -1559,7 +1582,7 @@ public enum GRegexError
 	NOTHING_TO_REPEAT = 109,
 	/**
 	 * Unrecognized character after "(?",
-	 * "(?&lt;" or "(?P". Since 2.16
+	 * "(?<" or "(?P". Since 2.16
 	 */
 	UNRECOGNIZED_CHARACTER = 112,
 	/**
@@ -2587,6 +2610,18 @@ public enum GUnicodeBreakType
 	 * Regional Indicator (RI). Since: 2.36
 	 */
 	REGIONAL_INDICATOR = 39,
+	/**
+	 * Emoji Base (EB). Since: 2.50
+	 */
+	EMOJI_BASE = 40,
+	/**
+	 * Emoji Modifier (EM). Since: 2.50
+	 */
+	EMOJI_MODIFIER = 41,
+	/**
+	 * Zero Width Joiner (ZWJ). Since: 2.50
+	 */
+	ZERO_WIDTH_JOINER = 42,
 }
 alias GUnicodeBreakType UnicodeBreakType;
 
@@ -3137,13 +3172,37 @@ public enum GUnicodeScript
 	 * Signwriting. Since: 2.48
 	 */
 	SIGNWRITING = 131,
+	/**
+	 * Adlam. Since: 2.50
+	 */
+	ADLAM = 132,
+	/**
+	 * Bhaiksuki. Since: 2.50
+	 */
+	BHAIKSUKI = 133,
+	/**
+	 * Marchen. Since: 2.50
+	 */
+	MARCHEN = 134,
+	/**
+	 * Newa. Since: 2.50
+	 */
+	NEWA = 135,
+	/**
+	 * Osage. Since: 2.50
+	 */
+	OSAGE = 136,
+	/**
+	 * Tangut. Since: 2.50
+	 */
+	TANGUT = 137,
 }
 alias GUnicodeScript UnicodeScript;
 
 /**
  * These are the possible character classifications from the
  * Unicode specification.
- * See <ulink url="http://www.unicode.org/Public/UNIDATA/UnicodeData.html">http://www.unicode.org/Public/UNIDATA/UnicodeData.html</ulink>.
+ * See <ulink url="http://www.unicode.org/reports/tr44/#General_Category_Values">Unicode Character Database</unlink>.
  */
 public enum GUnicodeType
 {
@@ -3835,6 +3894,33 @@ struct GList
 	GList* prev;
 }
 
+/**
+ * Structure representing a single field in a structured log entry. See
+ * g_log_structured() for details.
+ *
+ * Log fields may contain arbitrary values, including binary with embedded nul
+ * bytes. If the field contains a string, the string must be UTF-8 encoded and
+ * have a trailing nul byte. Otherwise, @length must be set to a non-negative
+ * value.
+ *
+ * Since: 2.50
+ */
+struct GLogField
+{
+	/**
+	 * field name (UTF-8 string)
+	 */
+	const(char)* key;
+	/**
+	 * field value (arbitrary bytes)
+	 */
+	void* value;
+	/**
+	 * length of @value, in bytes, or -1 if it is nul-terminated
+	 */
+	ptrdiff_t length;
+}
+
 struct GMainContext;
 
 struct GMainLoop;
@@ -4489,12 +4575,34 @@ struct GVariant;
 
 struct GVariantBuilder
 {
-	size_t[16] x;
+	union U
+	{
+		struct S
+		{
+			size_t partialMagic;
+			GVariantType* type;
+			size_t[14] y;
+		}
+		S s;
+		size_t[16] x;
+	}
+	U u;
 }
 
 struct GVariantDict
 {
-	size_t[16] x;
+	union U
+	{
+		struct S
+		{
+			GVariant* asv;
+			size_t partialMagic;
+			size_t[14] y;
+		}
+		S s;
+		size_t[16] x;
+	}
+	U u;
 }
 
 struct GVariantIter
@@ -4798,6 +4906,9 @@ public alias extern(C) int function(GIOChannel* source, GIOCondition condition, 
  * code do not need modifying to add a new-line character to the message if the
  * log handler is changed.
  *
+ * This is not used if structured logging is enabled; see
+ * [Using Structured Logging][using-structured-logging].
+ *
  * Params:
  *     logDomain = the log domain of the message
  *     logLevel = the log level of the message (including the
@@ -4806,6 +4917,32 @@ public alias extern(C) int function(GIOChannel* source, GIOCondition condition, 
  *     userData = user data, set in g_log_set_handler()
  */
 public alias extern(C) void function(const(char)* logDomain, GLogLevelFlags logLevel, const(char)* message, void* userData) GLogFunc;
+
+/**
+ * Writer function for log entries. A log entry is a collection of one or more
+ * #GLogFields, using the standard [field names from journal
+ * specification](https://www.freedesktop.org/software/systemd/man/systemd.journal-fields.html).
+ * See g_log_structured() for more information.
+ *
+ * Writer functions must ignore fields which they do not recognise, unless they
+ * can write arbitrary binary output, as field values may be arbitrary binary.
+ *
+ * @log_level is guaranteed to be included in @fields as the `PRIORITY` field,
+ * but is provided separately for convenience of deciding whether or where to
+ * output the log entry.
+ *
+ * Params:
+ *     logLevel = log level of the message
+ *     fields = fields forming the message
+ *     nFields = number of @fields
+ *     userData = user data passed to g_log_set_writer_func()
+ *
+ * Return: %G_LOG_WRITER_HANDLED if the log entry was handled successfully;
+ *     %G_LOG_WRITER_UNHANDLED otherwise
+ *
+ * Since: 2.50
+ */
+public alias extern(C) GLogWriterOutput function(GLogLevelFlags logLevel, GLogField* fields, size_t nFields, void* userData) GLogWriterFunc;
 
 /**
  * Specifies the type of function passed to g_node_children_foreach().

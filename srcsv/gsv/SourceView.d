@@ -103,9 +103,14 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Creates a new #GtkSourceView. An empty default #GtkSourceBuffer will be
-	 * created for you and can be retrieved with gtk_text_view_get_buffer(). If you
-	 * want to specify your own buffer, consider gtk_source_view_new_with_buffer().
+	 * Creates a new #GtkSourceView.
+	 *
+	 * By default, an empty #GtkSourceBuffer will be lazily created and can be
+	 * retrieved with gtk_text_view_get_buffer().
+	 *
+	 * If you want to specify your own buffer, either override the
+	 * #GtkTextViewClass create_buffer factory method, or use
+	 * gtk_source_view_new_with_buffer().
 	 *
 	 * Return: a new #GtkSourceView.
 	 *

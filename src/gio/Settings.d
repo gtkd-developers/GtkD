@@ -26,6 +26,7 @@ module gio.Settings;
 
 private import gio.Action;
 private import gio.ActionIF;
+private import gio.SettingsBackend;
 private import gio.SettingsSchema;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -426,9 +427,9 @@ public class Settings : ObjectG
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(SettingsSchema schema, GSettingsBackend* backend, string path)
+	public this(SettingsSchema schema, SettingsBackend backend, string path)
 	{
-		auto p = g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), backend, Str.toStringz(path));
+		auto p = g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
 		
 		if(p is null)
 		{
@@ -458,9 +459,9 @@ public class Settings : ObjectG
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string schemaId, GSettingsBackend* backend)
+	public this(string schemaId, SettingsBackend backend)
 	{
-		auto p = g_settings_new_with_backend(Str.toStringz(schemaId), backend);
+		auto p = g_settings_new_with_backend(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct());
 		
 		if(p is null)
 		{
@@ -488,9 +489,9 @@ public class Settings : ObjectG
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string schemaId, GSettingsBackend* backend, string path)
+	public this(string schemaId, SettingsBackend backend, string path)
 	{
-		auto p = g_settings_new_with_backend_and_path(Str.toStringz(schemaId), backend, Str.toStringz(path));
+		auto p = g_settings_new_with_backend_and_path(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
 		
 		if(p is null)
 		{
@@ -959,6 +960,26 @@ public class Settings : ObjectG
 	}
 
 	/**
+	 * Gets the value that is stored at @key in @settings.
+	 *
+	 * A convenience variant of g_settings_get() for 64-bit integers.
+	 *
+	 * It is a programmer error to give a @key that isn't specified as
+	 * having a int64 type in the schema for @settings.
+	 *
+	 * Params:
+	 *     key = the key to get the value for
+	 *
+	 * Return: a 64-bit integer
+	 *
+	 * Since: 2.50
+	 */
+	public long getInt64(string key)
+	{
+		return g_settings_get_int64(gSettings, Str.toStringz(key));
+	}
+
+	/**
 	 * Gets the value that is stored at @key in @settings, subject to
 	 * application-level validation/mapping.
 	 *
@@ -1087,6 +1108,27 @@ public class Settings : ObjectG
 	public uint getUint(string key)
 	{
 		return g_settings_get_uint(gSettings, Str.toStringz(key));
+	}
+
+	/**
+	 * Gets the value that is stored at @key in @settings.
+	 *
+	 * A convenience variant of g_settings_get() for 64-bit unsigned
+	 * integers.
+	 *
+	 * It is a programmer error to give a @key that isn't specified as
+	 * having a uint64 type in the schema for @settings.
+	 *
+	 * Params:
+	 *     key = the key to get the value for
+	 *
+	 * Return: a 64-bit unsigned integer
+	 *
+	 * Since: 2.50
+	 */
+	public ulong getUint64(string key)
+	{
+		return g_settings_get_uint64(gSettings, Str.toStringz(key));
 	}
 
 	/**
@@ -1382,6 +1424,28 @@ public class Settings : ObjectG
 	/**
 	 * Sets @key in @settings to @value.
 	 *
+	 * A convenience variant of g_settings_set() for 64-bit integers.
+	 *
+	 * It is a programmer error to give a @key that isn't specified as
+	 * having a int64 type in the schema for @settings.
+	 *
+	 * Params:
+	 *     key = the name of the key to set
+	 *     value = the value to set it to
+	 *
+	 * Return: %TRUE if setting the key succeeded,
+	 *     %FALSE if the key was not writable
+	 *
+	 * Since: 2.50
+	 */
+	public bool setInt64(string key, long value)
+	{
+		return g_settings_set_int64(gSettings, Str.toStringz(key), value) != 0;
+	}
+
+	/**
+	 * Sets @key in @settings to @value.
+	 *
 	 * A convenience variant of g_settings_set() for strings.
 	 *
 	 * It is a programmer error to give a @key that isn't specified as
@@ -1445,6 +1509,29 @@ public class Settings : ObjectG
 	public bool setUint(string key, uint value)
 	{
 		return g_settings_set_uint(gSettings, Str.toStringz(key), value) != 0;
+	}
+
+	/**
+	 * Sets @key in @settings to @value.
+	 *
+	 * A convenience variant of g_settings_set() for 64-bit unsigned
+	 * integers.
+	 *
+	 * It is a programmer error to give a @key that isn't specified as
+	 * having a uint64 type in the schema for @settings.
+	 *
+	 * Params:
+	 *     key = the name of the key to set
+	 *     value = the value to set it to
+	 *
+	 * Return: %TRUE if setting the key succeeded,
+	 *     %FALSE if the key was not writable
+	 *
+	 * Since: 2.50
+	 */
+	public bool setUint64(string key, ulong value)
+	{
+		return g_settings_set_uint64(gSettings, Str.toStringz(key), value) != 0;
 	}
 
 	/**
@@ -1534,6 +1621,9 @@ public class Settings : ObjectG
 	 * This signal supports detailed connections.  You can connect to the
 	 * detailed signal "changed::x" in order to only receive callbacks
 	 * when key "x" changes.
+	 *
+	 * Note that @settings only emits this signal if you have read @key at
+	 * least once while a signal handler was already connected for @key.
 	 *
 	 * Params:
 	 *     key = the name of the key that changed

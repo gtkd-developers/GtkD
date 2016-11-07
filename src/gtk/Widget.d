@@ -3161,7 +3161,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Returns the style context associated to @widget.
+		 * Returns the style context associated to @widget. The returned object is
+		 * guaranteed to be the same for the lifetime of @widget.
 		 *
 		 * Return: a #GtkStyleContext. This memory is owned by @widget and
 		 *     must not be freed.
@@ -4636,6 +4637,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * To cause the redraw to be done immediately, follow that call
 		 * with a call to gdk_window_process_updates().
 		 *
+		 * Deprecated: Application and widget code should not handle
+		 * expose events directly; invalidation should use the #GtkWidget
+		 * API, and drawing should only happen inside #GtkWidget::draw
+		 * implementations
+		 *
 		 * Params:
 		 *     event = a expose #GdkEvent
 		 *
@@ -4920,10 +4926,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Widgets are double buffered by default; you can use this function
 		 * to turn off the buffering. “Double buffered” simply means that
-		 * gdk_window_begin_paint_region() and gdk_window_end_paint() are called
+		 * gdk_window_begin_draw_frame() and gdk_window_end_draw_frame() are called
 		 * automatically around expose events sent to the
-		 * widget. gdk_window_begin_paint_region() diverts all drawing to a widget's
-		 * window to an offscreen buffer, and gdk_window_end_paint() draws the
+		 * widget. gdk_window_begin_draw_frame() diverts all drawing to a widget's
+		 * window to an offscreen buffer, and gdk_window_end_draw_frame() draws the
 		 * buffer to the screen. The result is that users see the window
 		 * update in one smooth step, and don’t see individual graphics
 		 * primitives being rendered.
@@ -4935,7 +4941,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Note: if you turn off double-buffering, you have to handle
 		 * expose events, since even the clearing to the background color or
 		 * pixmap will not happen automatically (as it is done in
-		 * gdk_window_begin_paint_region()).
+		 * gdk_window_begin_draw_frame()).
 		 *
 		 * In 3.10 GTK and GDK have been restructured for translucent drawing. Since
 		 * then expose events for double-buffered widgets are culled into a single
@@ -8597,7 +8603,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         been emitted, relative to @widget's left side
 		 *     y = the y coordinate of the cursor position where the request has
 		 *         been emitted, relative to @widget's top
-		 *     keyboardMode = %TRUE if the tooltip was trigged using the keyboard
+		 *     keyboardMode = %TRUE if the tooltip was triggered using the keyboard
 		 *     tooltip = a #GtkTooltip
 		 *
 		 * Return: %TRUE if @tooltip should be shown right now, %FALSE otherwise.
@@ -9256,9 +9262,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		void delegate(Widget)[] onStyleUpdatedListeners;
 		/**
-		 * The ::style-updated signal is emitted when the #GtkStyleContext
-		 * of a widget is changed. Note that style-modifying functions like
-		 * gtk_widget_override_color() also cause this signal to be emitted.
+		 * The ::style-updated signal is a convenience signal that is emitted when the
+		 * #GtkStyleContext::changed signal is emitted on the @widget's associated
+		 * #GtkStyleContext as returned by gtk_widget_get_style_context().
+		 *
+		 * Note that style-modifying functions like gtk_widget_override_color() also
+		 * cause this signal to be emitted.
 		 *
 		 * Since: 3.0
 		 */

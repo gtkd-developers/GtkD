@@ -86,7 +86,7 @@ public class Device : ObjectGst
 	}
 
 	/**
-	 * Creates the element with all of the required paramaters set to use
+	 * Creates the element with all of the required parameters set to use
 	 * this device.
 	 *
 	 * Params:

@@ -26,6 +26,7 @@ module gdk.Seat;
 
 private import gdk.Cursor;
 private import gdk.Device;
+private import gdk.DeviceTool;
 private import gdk.Display;
 private import gdk.Event;
 private import gdk.Window;
@@ -303,6 +304,76 @@ public class Seat : ObjectG
 		foreach ( void delegate(Device, Seat) dlg; _seat.onDeviceRemovedListeners )
 		{
 			dlg(ObjectG.getDObject!(Device)(device), _seat);
+		}
+	}
+
+	void delegate(DeviceTool, Seat)[] onToolAddedListeners;
+	/**
+	 * The ::tool-added signal is emitted whenever a new tool
+	 * is made known to the seat. The tool may later be assigned
+	 * to a device (i.e. on proximity with a tablet). The device
+	 * will emit the #GdkDevice::tool-changed signal accordingly.
+	 *
+	 * A same tool may be used by several devices.
+	 *
+	 * Params:
+	 *     tool = the new #GdkDeviceTool known to the seat
+	 *
+	 * Since: 3.22
+	 */
+	void addOnToolAdded(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "tool-added" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"tool-added",
+				cast(GCallback)&callBackToolAdded,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["tool-added"] = 1;
+		}
+		onToolAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackToolAdded(GdkSeat* seatStruct, GdkDeviceTool* tool, Seat _seat)
+	{
+		foreach ( void delegate(DeviceTool, Seat) dlg; _seat.onToolAddedListeners )
+		{
+			dlg(ObjectG.getDObject!(DeviceTool)(tool), _seat);
+		}
+	}
+
+	void delegate(DeviceTool, Seat)[] onToolRemovedListeners;
+	/**
+	 * This signal is emitted whenever a tool is no longer known
+	 * to this @seat.
+	 *
+	 * Params:
+	 *     tool = the just removed #GdkDeviceTool
+	 *
+	 * Since: 3.22
+	 */
+	void addOnToolRemoved(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "tool-removed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"tool-removed",
+				cast(GCallback)&callBackToolRemoved,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["tool-removed"] = 1;
+		}
+		onToolRemovedListeners ~= dlg;
+	}
+	extern(C) static void callBackToolRemoved(GdkSeat* seatStruct, GdkDeviceTool* tool, Seat _seat)
+	{
+		foreach ( void delegate(DeviceTool, Seat) dlg; _seat.onToolRemovedListeners )
+		{
+			dlg(ObjectG.getDObject!(DeviceTool)(tool), _seat);
 		}
 	}
 }

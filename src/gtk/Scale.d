@@ -338,6 +338,11 @@ public class Scale : Range
 	 * Also causes the value of the adjustment to be rounded off to this
 	 * number of digits, so the retrieved value matches the value the user saw.
 	 *
+	 * Note that rounding to a small number of digits can interfere with
+	 * the smooth autoscrolling that is built into #GtkScale. As an alternative,
+	 * you can use the #GtkScale::format-value signal to format the displayed
+	 * value yourself.
+	 *
 	 * Params:
 	 *     digits = the number of decimal places to display,
 	 *         e.g. use 1 to display 1.0, 2 to display 1.00, etc

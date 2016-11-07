@@ -293,7 +293,7 @@ public class Query
 	/**
 	 * Constructs a new query object for querying the allocation properties.
 	 *
-	 * Free-function: gst_query_unref
+	 * Free-function: gst_query_unref()
 	 *
 	 * Params:
 	 *     caps = the negotiated caps
@@ -319,7 +319,7 @@ public class Query
 	 * Constructs a new query object for querying the buffering status of
 	 * a stream.
 	 *
-	 * Free-function: gst_query_unref
+	 * Free-function: gst_query_unref()
 	 *
 	 * Params:
 	 *     format = the default #GstFormat for the new query
@@ -360,7 +360,7 @@ public class Query
 	 * @filter should be returned from the CAPS query. Specifying a filter might
 	 * greatly reduce the amount of processing an element needs to do.
 	 *
-	 * Free-function: gst_query_unref
+	 * Free-function: gst_query_unref()
 	 *
 	 * Params:
 	 *     filter = a filter
@@ -384,7 +384,7 @@ public class Query
 	/**
 	 * Constructs a new query object for querying the pipeline-local context.
 	 *
-	 * Free-function: gst_query_unref
+	 * Free-function: gst_query_unref()
 	 *
 	 * Params:
 	 *     contextType = Context type to query
@@ -412,7 +412,7 @@ public class Query
 	 * when done with it. A convert query is used to ask for a conversion between
 	 * one format and another.
 	 *
-	 * Free-function: gst_query_unref
+	 * Free-function: gst_query_unref()
 	 *
 	 * Params:
 	 *     srcFormat = the source #GstFormat for the new query
@@ -439,7 +439,7 @@ public class Query
 	 * Constructs a new custom query object. Use gst_query_unref()
 	 * when done with it.
 	 *
-	 * Free-function: gst_query_unref
+	 * Free-function: gst_query_unref()
 	 *
 	 * Params:
 	 *     type = the query type
@@ -490,7 +490,7 @@ public class Query
 	 *
 	 * Params:
 	 *     pool = the #GstBufferPool
-	 *     size = the size
+	 *     size = the buffer size
 	 *     minBuffers = the min buffers
 	 *     maxBuffers = the max buffers
 	 */
@@ -694,6 +694,9 @@ public class Query
 	 * Parse an allocation query, writing the requested caps in @caps and
 	 * whether a pool is needed in @need_pool, if the respective parameters
 	 * are non-%NULL.
+	 *
+	 * Pool details can be retrieved using gst_query_get_n_allocation_pools() and
+	 * gst_query_parse_nth_allocation_pool().
 	 *
 	 * Params:
 	 *     caps = The #GstCaps
@@ -940,7 +943,7 @@ public class Query
 	 * Params:
 	 *     index = index to parse
 	 *     pool = the #GstBufferPool
-	 *     size = the size
+	 *     size = the buffer size
 	 *     minBuffers = the min buffers
 	 *     maxBuffers = the max buffers
 	 */

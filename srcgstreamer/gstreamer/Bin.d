@@ -391,6 +391,20 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	/**
+	 * Return the suppressed flags of the bin.
+	 *
+	 * MT safe.
+	 *
+	 * Return: the bin's suppressed #GstElementFlags.
+	 *
+	 * Since: 1.10
+	 */
+	public GstElementFlags getSuppressedFlags()
+	{
+		return gst_bin_get_suppressed_flags(gstBin);
+	}
+
+	/**
 	 * Looks for all elements inside the bin that implements the given
 	 * interface. You can safely cast all returned elements to the given interface.
 	 * The function recurses inside child bins. The iterator will yield a series
@@ -567,6 +581,24 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	/**
+	 * Suppress the given flags on the bin. #GstElementFlags of a
+	 * child element are propagated when it is added to the bin.
+	 * When suppressed flags are set, those specified flags will
+	 * not be propagated to the bin.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     flags = the #GstElementFlags to suppress
+	 *
+	 * Since: 1.10
+	 */
+	public void setSuppressedFlags(GstElementFlags flags)
+	{
+		gst_bin_set_suppressed_flags(gstBin, flags);
+	}
+
+	/**
 	 * Synchronizes the state of every child of @bin with the state
 	 * of @bin. See also gst_element_sync_state_with_parent().
 	 *
@@ -581,6 +613,72 @@ public class Bin : Element, ChildProxyIF
 	}
 
 	int[string] connectedSignals;
+
+	void delegate(Bin, Element, Bin)[] onDeepElementAddedListeners;
+	/**
+	 * Will be emitted after the element was added to sub_bin.
+	 *
+	 * Params:
+	 *     subBin = the #GstBin the element was added to
+	 *     element = the #GstElement that was added to @sub_bin
+	 *
+	 * Since: 1.10
+	 */
+	void addOnDeepElementAdded(void delegate(Bin, Element, Bin) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "deep-element-added" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"deep-element-added",
+				cast(GCallback)&callBackDeepElementAdded,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["deep-element-added"] = 1;
+		}
+		onDeepElementAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackDeepElementAdded(GstBin* binStruct, GstBin* subBin, GstElement* element, Bin _bin)
+	{
+		foreach ( void delegate(Bin, Element, Bin) dlg; _bin.onDeepElementAddedListeners )
+		{
+			dlg(ObjectG.getDObject!(Bin)(subBin), ObjectG.getDObject!(Element)(element), _bin);
+		}
+	}
+
+	void delegate(Bin, Element, Bin)[] onDeepElementRemovedListeners;
+	/**
+	 * Will be emitted after the element was removed from sub_bin.
+	 *
+	 * Params:
+	 *     subBin = the #GstBin the element was removed from
+	 *     element = the #GstElement that was removed from @sub_bin
+	 *
+	 * Since: 1.10
+	 */
+	void addOnDeepElementRemoved(void delegate(Bin, Element, Bin) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "deep-element-removed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"deep-element-removed",
+				cast(GCallback)&callBackDeepElementRemoved,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["deep-element-removed"] = 1;
+		}
+		onDeepElementRemovedListeners ~= dlg;
+	}
+	extern(C) static void callBackDeepElementRemoved(GstBin* binStruct, GstBin* subBin, GstElement* element, Bin _bin)
+	{
+		foreach ( void delegate(Bin, Element, Bin) dlg; _bin.onDeepElementRemovedListeners )
+		{
+			dlg(ObjectG.getDObject!(Bin)(subBin), ObjectG.getDObject!(Element)(element), _bin);
+		}
+	}
 
 	bool delegate(Bin)[] onDoLatencyListeners;
 	/**

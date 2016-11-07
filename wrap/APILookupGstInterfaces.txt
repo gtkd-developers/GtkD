@@ -20,6 +20,10 @@
 ### Definitions for wrapping Gtk+ ###########
 #############################################
 
+alias: 90R _90R
+alias: 180 _180
+alias: 90L _90L
+
 # must start with wrap
 wrap: gstinterfaces
 file: /usr/share/gir-1.0/GstVideo-1.0.gir
@@ -100,6 +104,10 @@ struct: VideoDecoderClass
 noExternal: true
 
 struct: VideoDecoderPrivate
+noExternal: true
+
+struct: VideoDirection
+noCode: true
 noExternal: true
 
 struct: VideoDither
@@ -210,6 +218,14 @@ struct: VideoSinkClass
 noExternal: true
 
 struct: VideoSinkPrivate
+noExternal: true
+
+struct: VideoTimeCode
+noCode: true
+noExternal: true
+
+struct: VideoTimeCodeMeta
+noCode: true
 noExternal: true
 
 noEnum: ColorBalanceType

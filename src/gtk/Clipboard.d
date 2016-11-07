@@ -287,6 +287,18 @@ public class Clipboard : ObjectG
 	}
 
 	/**
+	 * Gets the selection that this clipboard is for.
+	 *
+	 * Return: the selection
+	 *
+	 * Since: 3.22
+	 */
+	public GdkAtom getSelection()
+	{
+		return gtk_clipboard_get_selection(gtkClipboard);
+	}
+
+	/**
 	 * Requests the contents of clipboard as the given target.
 	 * When the results of the result are later received the supplied callback
 	 * will be called.

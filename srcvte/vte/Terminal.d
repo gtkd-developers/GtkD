@@ -46,6 +46,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 private import pango.PgFontDescription;
 private import vte.Pty;
+private import vte.Regex : RegexVte = Regex;
 private import vtec.vte;
 public  import vtec.vtetypes;
 
@@ -131,10 +132,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Checks each regex in @regexes if the text in and around the position of
-	 * the event matches the regular expressions.  If a match exists, the matched
-	 * text is stored in @matches at the position of the regex in @regexes; otherwise
-	 * %NULL is stored there.
+	 * This function does nothing.
+	 *
+	 * Deprecated: Use vte_terminal_event_check_regex_simple() instead.
 	 *
 	 * Params:
 	 *     event = a #GdkEvent
@@ -143,7 +143,9 @@ public class Terminal : Widget, ScrollableIF
 	 *     matchFlags = the #GRegexMatchFlags to use when matching the regexes
 	 *     matches = a location to store the matches
 	 *
-	 * Return: %TRUE iff any of the regexes produced a match
+	 * Return: %FALSE
+	 *
+	 * Since: 0.44
 	 */
 	public bool eventCheckGregexSimple(Event event, Regex[] regexes, GRegexMatchFlags matchFlags, string[] matches)
 	{
@@ -154,6 +156,34 @@ public class Terminal : Widget, ScrollableIF
 		}
 		
 		return vte_terminal_event_check_gregex_simple(vteTerminal, (event is null) ? null : event.getEventStruct(), regexesArray.ptr, cast(size_t)matches.length, matchFlags, Str.toStringzArray(matches)) != 0;
+	}
+
+	/**
+	 * Checks each regex in @regexes if the text in and around the position of
+	 * the event matches the regular expressions.  If a match exists, the matched
+	 * text is stored in @matches at the position of the regex in @regexes; otherwise
+	 * %NULL is stored there.
+	 *
+	 * Params:
+	 *     event = a #GdkEvent
+	 *     regexes = an array of #VteRegex
+	 *     nRegexes = number of items in @regexes
+	 *     matchFlags = PCRE2 match flags, or 0
+	 *     matches = a location to store the matches
+	 *
+	 * Return: %TRUE iff any of the regexes produced a match
+	 *
+	 * Since: 0.46
+	 */
+	public bool eventCheckRegexSimple(Event event, RegexVte[] regexes, uint matchFlags, string[] matches)
+	{
+		VteRegex*[] regexesArray = new VteRegex*[regexes.length];
+		for ( int i = 0; i < regexes.length; i++ )
+		{
+			regexesArray[i] = regexes[i].getRegexStruct();
+		}
+		
+		return vte_terminal_event_check_regex_simple(vteTerminal, (event is null) ? null : event.getEventStruct(), regexesArray.ptr, cast(size_t)matches.length, matchFlags, Str.toStringzArray(matches)) != 0;
 	}
 
 	/**
@@ -190,9 +220,9 @@ public class Terminal : Widget, ScrollableIF
 	 *     data = data to send to the child
 	 *     length = length of @data
 	 */
-	public void feedChildBinary(ubyte* data, size_t length)
+	public void feedChildBinary(ubyte[] data)
 	{
-		vte_terminal_feed_child_binary(vteTerminal, data, length);
+		vte_terminal_feed_child_binary(vteTerminal, data.ptr, cast(size_t)data.length);
 	}
 
 	/**
@@ -554,16 +584,36 @@ public class Terminal : Widget, ScrollableIF
 	 * user moves the mouse cursor over a section of displayed text which matches
 	 * this expression, the text will be highlighted.
 	 *
+	 * Deprecated: Use vte_terminal_match_add_regex() or vte_terminal_match_add_regex_full() instead.
+	 *
 	 * Params:
 	 *     gregex = a #GRegex
 	 *     gflags = the #GRegexMatchFlags to use when matching the regex
 	 *
 	 * Return: an integer associated with this expression, or -1 if @gregex could not be
-	 *     transformed into a #VteRegex or @flags were incompatible
+	 *     transformed into a #VteRegex or @gflags were incompatible
 	 */
 	public int matchAddGregex(Regex gregex, GRegexMatchFlags gflags)
 	{
 		return vte_terminal_match_add_gregex(vteTerminal, (gregex is null) ? null : gregex.getRegexStruct(), gflags);
+	}
+
+	/**
+	 * Adds the regular expression @regex to the list of matching expressions.  When the
+	 * user moves the mouse cursor over a section of displayed text which matches
+	 * this expression, the text will be highlighted.
+	 *
+	 * Params:
+	 *     regex = a #VteRegex
+	 *     flags = PCRE2 match flags, or 0
+	 *
+	 * Return: an integer associated with this expression
+	 *
+	 * Since: 0.46
+	 */
+	public int matchAddRegex(RegexVte regex, uint flags)
+	{
+		return vte_terminal_match_add_regex(vteTerminal, (regex is null) ? null : regex.getRegexStruct(), flags);
 	}
 
 	/**
@@ -756,7 +806,7 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Searches the next string matching the search regex set with
-	 * vte_terminal_search_set_gregex().
+	 * vte_terminal_search_set_regex().
 	 *
 	 * Return: %TRUE if a match was found
 	 */
@@ -767,7 +817,7 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Searches the previous string matching the search regex set with
-	 * vte_terminal_search_set_gregex().
+	 * vte_terminal_search_set_regex().
 	 *
 	 * Return: %TRUE if a match was found
 	 */
@@ -777,7 +827,11 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the search #GRegex regex set in @terminal, or %NULL
+	 *
+	 *
+	 * Deprecated: use vte_terminal_search_get_regex() instead.
+	 *
+	 * Return: %NULL
 	 */
 	public Regex searchGetGregex()
 	{
@@ -792,6 +846,23 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Return: the search #VteRegex regex set in @terminal, or %NULL
+	 *
+	 * Since: 0.46
+	 */
+	public RegexVte searchGetRegex()
+	{
+		auto p = vte_terminal_search_get_regex(vteTerminal);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(RegexVte)(cast(VteRegex*) p);
+	}
+
+	/**
 	 * Return: whether searching will wrap around
 	 */
 	public bool searchGetWrapAround()
@@ -802,6 +873,8 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Sets the #GRegex regex to search for. Unsets the search regex when passed %NULL.
 	 *
+	 * Deprecated: use vte_terminal_search_set_regex() instead.
+	 *
 	 * Params:
 	 *     gregex = a #GRegex, or %NULL
 	 *     gflags = flags from #GRegexMatchFlags
@@ -809,6 +882,20 @@ public class Terminal : Widget, ScrollableIF
 	public void searchSetGregex(Regex gregex, GRegexMatchFlags gflags)
 	{
 		vte_terminal_search_set_gregex(vteTerminal, (gregex is null) ? null : gregex.getRegexStruct(), gflags);
+	}
+
+	/**
+	 * Sets the regex to search for. Unsets the search regex when passed %NULL.
+	 *
+	 * Params:
+	 *     regex = a #VteRegex, or %NULL
+	 *     flags = PCRE2 match flags, or 0
+	 *
+	 * Since: 0.46
+	 */
+	public void searchSetRegex(RegexVte regex, uint flags)
+	{
+		vte_terminal_search_set_regex(vteTerminal, (regex is null) ? null : regex.getRegexStruct(), flags);
 	}
 
 	/**

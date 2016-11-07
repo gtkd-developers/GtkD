@@ -37,10 +37,36 @@ public  import gtkc.glibtypes;
 
 
 /**
- * #GVariant is a variant datatype; it stores a value along with
- * information about the type of that value.  The range of possible
- * values is determined by the type.  The type system used by #GVariant
- * is #GVariantType.
+ * #GVariant is a variant datatype; it can contain one or more values
+ * along with information about the type of the values.
+ * 
+ * A #GVariant may contain simple types, like an integer, or a boolean value;
+ * or complex types, like an array of two strings, or a dictionary of key
+ * value pairs. A #GVariant is also immutable: once it's been created neither
+ * its type nor its content can be modified further.
+ * 
+ * GVariant is useful whenever data needs to be serialized, for example when
+ * sending method parameters in DBus, or when saving settings using GSettings.
+ * 
+ * When creating a new #GVariant, you pass the data you want to store in it
+ * along with a string representing the type of data you wish to pass to it.
+ * 
+ * For instance, if you want to create a #GVariant holding an integer value you
+ * can use:
+ * 
+ * |[<!-- language="C" -->
+ * GVariant *v = g_variant_new ('u', 40);
+ * ]|
+ * 
+ * The string 'u' in the first argument tells #GVariant that the data passed to
+ * the constructor (40) is going to be an unsigned integer.
+ * 
+ * More advanced examples of #GVariant in use can be found in documentation for
+ * [GVariant format strings][gvariant-format-strings-pointers].
+ * 
+ * The range of possible values is determined by the type.
+ * 
+ * The type system used by #GVariant is #GVariantType.
  * 
  * #GVariant instances always have a type and a value (which are given
  * at construction time).  The type and value of a #GVariant instance
@@ -1349,6 +1375,9 @@ public class Variant
 	 * If the array contains a nul terminator character somewhere other than
 	 * the last byte then the returned string is the string, up to the first
 	 * such nul character.
+	 *
+	 * g_variant_get_fixed_array() should be used instead if the array contains
+	 * arbitrary data that could not be nul-terminated or could contain nul bytes.
 	 *
 	 * It is an error to call this function with a @value that is not an
 	 * array of bytes.

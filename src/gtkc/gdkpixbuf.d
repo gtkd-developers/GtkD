@@ -62,6 +62,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_composite_color_simple, "gdk_pixbuf_composite_color_simple", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_copy, "gdk_pixbuf_copy", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_copy_area, "gdk_pixbuf_copy_area", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_copy_options, "gdk_pixbuf_copy_options", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_fill, "gdk_pixbuf_fill", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_flip, "gdk_pixbuf_flip", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_bits_per_sample, "gdk_pixbuf_get_bits_per_sample", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -80,6 +81,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_read_pixel_bytes, "gdk_pixbuf_read_pixel_bytes", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_read_pixels, "gdk_pixbuf_read_pixels", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_ref, "gdk_pixbuf_ref", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_remove_option, "gdk_pixbuf_remove_option", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_rotate_simple, "gdk_pixbuf_rotate_simple", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_saturate_and_pixelate, "gdk_pixbuf_saturate_and_pixelate", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_save, "gdk_pixbuf_save", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -89,9 +91,12 @@ shared static this()
 	Linker.link(gdk_pixbuf_save_to_callbackv, "gdk_pixbuf_save_to_callbackv", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_save_to_stream, "gdk_pixbuf_save_to_stream", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_save_to_stream_async, "gdk_pixbuf_save_to_stream_async", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_save_to_streamv, "gdk_pixbuf_save_to_streamv", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_save_to_streamv_async, "gdk_pixbuf_save_to_streamv_async", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_savev, "gdk_pixbuf_savev", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_scale, "gdk_pixbuf_scale", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_scale_simple, "gdk_pixbuf_scale_simple", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_set_option, "gdk_pixbuf_set_option", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_unref, "gdk_pixbuf_unref", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 
 	// gdkpixbuf.PixbufAnimation
@@ -129,6 +134,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_format_get_mime_types, "gdk_pixbuf_format_get_mime_types", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_get_name, "gdk_pixbuf_format_get_name", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_is_disabled, "gdk_pixbuf_format_is_disabled", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pixbuf_format_is_save_option_supported, "gdk_pixbuf_format_is_save_option_supported", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_is_scalable, "gdk_pixbuf_format_is_scalable", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_is_writable, "gdk_pixbuf_format_is_writable", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pixbuf_format_set_disabled, "gdk_pixbuf_format_set_disabled", LIBRARY.GDKPIXBUF, LIBRARY.GDKPIXBUF);
@@ -201,6 +207,7 @@ __gshared extern(C)
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2) c_gdk_pixbuf_composite_color_simple;
 	GdkPixbuf* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_copy;
 	void function(GdkPixbuf* srcPixbuf, int srcX, int srcY, int width, int height, GdkPixbuf* destPixbuf, int destX, int destY) c_gdk_pixbuf_copy_area;
+	int function(GdkPixbuf* srcPixbuf, GdkPixbuf* destPixbuf) c_gdk_pixbuf_copy_options;
 	void function(GdkPixbuf* pixbuf, uint pixel) c_gdk_pixbuf_fill;
 	GdkPixbuf* function(GdkPixbuf* src, int horizontal) c_gdk_pixbuf_flip;
 	int function(GdkPixbuf* pixbuf) c_gdk_pixbuf_get_bits_per_sample;
@@ -219,6 +226,7 @@ __gshared extern(C)
 	GBytes* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_read_pixel_bytes;
 	ubyte* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_read_pixels;
 	GdkPixbuf* function(GdkPixbuf* pixbuf) c_gdk_pixbuf_ref;
+	int function(GdkPixbuf* pixbuf, const(char)* key) c_gdk_pixbuf_remove_option;
 	GdkPixbuf* function(GdkPixbuf* src, GdkPixbufRotation angle) c_gdk_pixbuf_rotate_simple;
 	void function(GdkPixbuf* src, GdkPixbuf* dest, float saturation, int pixelate) c_gdk_pixbuf_saturate_and_pixelate;
 	int function(GdkPixbuf* pixbuf, const(char)* filename, const(char)* type, GError** error, ... ) c_gdk_pixbuf_save;
@@ -228,9 +236,12 @@ __gshared extern(C)
 	int function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, void* userData, const(char)* type, char** optionKeys, char** optionValues, GError** err) c_gdk_pixbuf_save_to_callbackv;
 	int function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, GCancellable* cancellable, GError** error, ... ) c_gdk_pixbuf_save_to_stream;
 	void function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData, ... ) c_gdk_pixbuf_save_to_stream_async;
+	int function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, char** optionKeys, char** optionValues, GCancellable* cancellable, GError** err) c_gdk_pixbuf_save_to_streamv;
+	void function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, char** optionKeys, char** optionValues, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_save_to_streamv_async;
 	int function(GdkPixbuf* pixbuf, const(char)* filename, const(char)* type, char** optionKeys, char** optionValues, GError** err) c_gdk_pixbuf_savev;
 	void function(GdkPixbuf* src, GdkPixbuf* dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType) c_gdk_pixbuf_scale;
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType) c_gdk_pixbuf_scale_simple;
+	int function(GdkPixbuf* pixbuf, const(char)* key, const(char)* value) c_gdk_pixbuf_set_option;
 	void function(GdkPixbuf* pixbuf) c_gdk_pixbuf_unref;
 
 	// gdkpixbuf.PixbufAnimation
@@ -268,6 +279,7 @@ __gshared extern(C)
 	char** function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_mime_types;
 	char* function(GdkPixbufFormat* format) c_gdk_pixbuf_format_get_name;
 	int function(GdkPixbufFormat* format) c_gdk_pixbuf_format_is_disabled;
+	int function(GdkPixbufFormat* format, const(char)* optionKey) c_gdk_pixbuf_format_is_save_option_supported;
 	int function(GdkPixbufFormat* format) c_gdk_pixbuf_format_is_scalable;
 	int function(GdkPixbufFormat* format) c_gdk_pixbuf_format_is_writable;
 	void function(GdkPixbufFormat* format, int disabled) c_gdk_pixbuf_format_set_disabled;
@@ -338,6 +350,7 @@ alias c_gdk_pixbuf_composite_color gdk_pixbuf_composite_color;
 alias c_gdk_pixbuf_composite_color_simple gdk_pixbuf_composite_color_simple;
 alias c_gdk_pixbuf_copy gdk_pixbuf_copy;
 alias c_gdk_pixbuf_copy_area gdk_pixbuf_copy_area;
+alias c_gdk_pixbuf_copy_options gdk_pixbuf_copy_options;
 alias c_gdk_pixbuf_fill gdk_pixbuf_fill;
 alias c_gdk_pixbuf_flip gdk_pixbuf_flip;
 alias c_gdk_pixbuf_get_bits_per_sample gdk_pixbuf_get_bits_per_sample;
@@ -356,6 +369,7 @@ alias c_gdk_pixbuf_new_subpixbuf gdk_pixbuf_new_subpixbuf;
 alias c_gdk_pixbuf_read_pixel_bytes gdk_pixbuf_read_pixel_bytes;
 alias c_gdk_pixbuf_read_pixels gdk_pixbuf_read_pixels;
 alias c_gdk_pixbuf_ref gdk_pixbuf_ref;
+alias c_gdk_pixbuf_remove_option gdk_pixbuf_remove_option;
 alias c_gdk_pixbuf_rotate_simple gdk_pixbuf_rotate_simple;
 alias c_gdk_pixbuf_saturate_and_pixelate gdk_pixbuf_saturate_and_pixelate;
 alias c_gdk_pixbuf_save gdk_pixbuf_save;
@@ -365,9 +379,12 @@ alias c_gdk_pixbuf_save_to_callback gdk_pixbuf_save_to_callback;
 alias c_gdk_pixbuf_save_to_callbackv gdk_pixbuf_save_to_callbackv;
 alias c_gdk_pixbuf_save_to_stream gdk_pixbuf_save_to_stream;
 alias c_gdk_pixbuf_save_to_stream_async gdk_pixbuf_save_to_stream_async;
+alias c_gdk_pixbuf_save_to_streamv gdk_pixbuf_save_to_streamv;
+alias c_gdk_pixbuf_save_to_streamv_async gdk_pixbuf_save_to_streamv_async;
 alias c_gdk_pixbuf_savev gdk_pixbuf_savev;
 alias c_gdk_pixbuf_scale gdk_pixbuf_scale;
 alias c_gdk_pixbuf_scale_simple gdk_pixbuf_scale_simple;
+alias c_gdk_pixbuf_set_option gdk_pixbuf_set_option;
 alias c_gdk_pixbuf_unref gdk_pixbuf_unref;
 
 // gdkpixbuf.PixbufAnimation
@@ -405,6 +422,7 @@ alias c_gdk_pixbuf_format_get_license gdk_pixbuf_format_get_license;
 alias c_gdk_pixbuf_format_get_mime_types gdk_pixbuf_format_get_mime_types;
 alias c_gdk_pixbuf_format_get_name gdk_pixbuf_format_get_name;
 alias c_gdk_pixbuf_format_is_disabled gdk_pixbuf_format_is_disabled;
+alias c_gdk_pixbuf_format_is_save_option_supported gdk_pixbuf_format_is_save_option_supported;
 alias c_gdk_pixbuf_format_is_scalable gdk_pixbuf_format_is_scalable;
 alias c_gdk_pixbuf_format_is_writable gdk_pixbuf_format_is_writable;
 alias c_gdk_pixbuf_format_set_disabled gdk_pixbuf_format_set_disabled;

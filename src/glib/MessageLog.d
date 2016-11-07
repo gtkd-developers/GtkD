@@ -57,6 +57,9 @@ public struct MessageLog
 	 * %G_LOG_LEVEL_WARNING and %G_LOG_LEVEL_MESSAGE. stdout is used for
 	 * the rest.
 	 *
+	 * This has no effect if structured logging is enabled; see
+	 * [Using Structured Logging][using-structured-logging].
+	 *
 	 * Params:
 	 *     logDomain = the log domain of the message, or %NULL for the
 	 *         default "" application domain
@@ -71,6 +74,9 @@ public struct MessageLog
 
 	/**
 	 * Removes the log handler.
+	 *
+	 * This has no effect if structured logging is enabled; see
+	 * [Using Structured Logging][using-structured-logging].
 	 *
 	 * Params:
 	 *     logDomain = the log domain
@@ -92,6 +98,14 @@ public struct MessageLog
 	 * the `G_DEBUG` environment variable (see
 	 * [Running GLib Applications](glib-running.html)).
 	 *
+	 * Libraries should not call this function, as it affects all messages logged
+	 * by a process, including those from other libraries.
+	 *
+	 * Structured log messages (using g_log_structured() and
+	 * g_log_structured_array()) are fatal only if the default log writer is used;
+	 * otherwise it is up to the writer function to determine which log messages
+	 * are fatal. See [Using Structured Logging][using-structured-logging].
+	 *
 	 * Params:
 	 *     fatalMask = the mask containing bits set for each level
 	 *         of error which is to be fatal
@@ -109,6 +123,9 @@ public struct MessageLog
 	 * and log level combination. By default, GLib uses
 	 * g_log_default_handler() as default log handler.
 	 *
+	 * This has no effect if structured logging is enabled; see
+	 * [Using Structured Logging][using-structured-logging].
+	 *
 	 * Params:
 	 *     logFunc = the log handler function
 	 *     userData = data passed to the log handler
@@ -125,6 +142,12 @@ public struct MessageLog
 	/**
 	 * Sets the log levels which are fatal in the given domain.
 	 * %G_LOG_LEVEL_ERROR is always fatal.
+	 *
+	 * This has no effect on structured log messages (using g_log_structured() or
+	 * g_log_structured_array()). To change the fatal behaviour for specific log
+	 * messages, programs must install a custom log writer function using
+	 * g_log_set_writer_func(). See
+	 * [Using Structured Logging][using-structured-logging].
 	 *
 	 * Params:
 	 *     logDomain = the log domain
@@ -146,6 +169,9 @@ public struct MessageLog
 	 * Note that since the #G_LOG_LEVEL_ERROR log level is always fatal, if
 	 * you want to set a handler for this log level you must combine it with
 	 * #G_LOG_FLAG_FATAL.
+	 *
+	 * This has no effect if structured logging is enabled; see
+	 * [Using Structured Logging][using-structured-logging].
 	 *
 	 * Here is an example for adding a log handler for all warning messages
 	 * in the default domain:
@@ -186,6 +212,9 @@ public struct MessageLog
 	/**
 	 * Like g_log_sets_handler(), but takes a destroy notify for the @user_data.
 	 *
+	 * This has no effect if structured logging is enabled; see
+	 * [Using Structured Logging][using-structured-logging].
+	 *
 	 * Params:
 	 *     logDomain = the log domain, or %NULL for the default ""
 	 *         application domain
@@ -215,6 +244,9 @@ public struct MessageLog
 	 * If g_log_default_handler() is used as the log handler function, a new-line
 	 * character will automatically be appended to @..., and need not be entered
 	 * manually.
+	 *
+	 * If [structured logging is enabled][using-structured-logging] this will
+	 * output via the structured log writer function (see g_log_set_writer_func()).
 	 *
 	 * Params:
 	 *     logDomain = the log domain, or %NULL for the default ""

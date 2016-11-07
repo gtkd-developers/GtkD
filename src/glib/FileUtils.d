@@ -50,7 +50,8 @@ public struct FileUtils
 	 * See your C library manual for more details about access().
 	 *
 	 * Params:
-	 *     filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 *     filename = a pathname in the GLib file name encoding
+	 *         (UTF-8 on Windows)
 	 *     mode = as in access()
 	 *
 	 * Return: zero if the pathname refers to an existing file system
@@ -71,7 +72,8 @@ public struct FileUtils
 	 * See your C library manual for more details about chdir().
 	 *
 	 * Params:
-	 *     path = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 *     path = a pathname in the GLib file name encoding
+	 *         (UTF-8 on Windows)
 	 *
 	 * Return: 0 on success, -1 if an error occurred.
 	 *
@@ -236,8 +238,8 @@ public struct FileUtils
 	 * Params:
 	 *     filename = the symbolic link
 	 *
-	 * Return: A newly-allocated string with the contents of the symbolic link,
-	 *     or %NULL if an error occurred.
+	 * Return: A newly-allocated string with the contents of
+	 *     the symbolic link, or %NULL if an error occurred.
 	 *
 	 * Since: 2.4
 	 *
@@ -355,7 +357,8 @@ public struct FileUtils
 	 * extensions and those listed in the `PATHEXT` environment variable.
 	 *
 	 * Params:
-	 *     filename = a filename to test in the GLib file name encoding
+	 *     filename = a filename to test in the
+	 *         GLib file name encoding
 	 *     test = bitfield of #GFileTest flags
 	 *
 	 * Return: whether a test was %TRUE
@@ -399,8 +402,8 @@ public struct FileUtils
 	 * Params:
 	 *     tmpl = template directory name
 	 *
-	 * Return: A pointer to @tmpl, which has been modified
-	 *     to hold the directory name.  In case of errors, %NULL is
+	 * Return: A pointer to @tmpl, which has been
+	 *     modified to hold the directory name.  In case of errors, %NULL is
 	 *     returned and %errno will be set.
 	 *
 	 * Since: 2.30
@@ -430,8 +433,8 @@ public struct FileUtils
 	 *     tmpl = template directory name
 	 *     mode = permissions to create the temporary directory with
 	 *
-	 * Return: A pointer to @tmpl, which has been modified
-	 *     to hold the directory name. In case of errors, %NULL is
+	 * Return: A pointer to @tmpl, which has been
+	 *     modified to hold the directory name. In case of errors, %NULL is
 	 *     returned, and %errno will be set.
 	 *
 	 * Since: 2.30
@@ -509,7 +512,8 @@ public struct FileUtils
 	 * on your system.
 	 *
 	 * Params:
-	 *     filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 *     filename = a pathname in the GLib file name encoding
+	 *         (UTF-8 on Windows)
 	 *
 	 * Return: 0 if the directory was successfully removed, -1 if an error
 	 *     occurred
@@ -532,7 +536,8 @@ public struct FileUtils
 	 * are open to some process, or mapped into memory.
 	 *
 	 * Params:
-	 *     filename = a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 *     filename = a pathname in the GLib file name encoding
+	 *         (UTF-8 on Windows)
 	 *
 	 * Return: 0 if the name was successfully deleted, -1 if an error
 	 *     occurred

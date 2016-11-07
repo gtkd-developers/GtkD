@@ -58,6 +58,17 @@ public  import gtkc.gtktypes;
  * widgets that don’t implement #GtkScrollable natively, so you can
  * ignore the presence of the viewport.
  * 
+ * If gtk_container_add() has added a #GtkViewport for you, you can remove
+ * both your added child widget from the #GtkViewport and the #GtkViewport
+ * from the GtkScrolledWindow with either of the calls
+ * |[<!-- language="C" -->
+ * gtk_container_remove (GTK_CONTAINER (scrolled_window),
+ * child_widget);
+ * // or
+ * gtk_container_remove (GTK_CONTAINER (scrolled_window),
+ * gtk_bin_get_child (GTK_BIN (scrolled_window)));
+ * ]|
+ * 
  * The position of the scrollbars is controlled by the scroll adjustments.
  * See #GtkAdjustment for the fields in an adjustment — for
  * #GtkScrollbar, used by GtkScrolledWindow, the “value” field
@@ -292,6 +303,30 @@ public class ScrolledWindow : Bin
 	}
 
 	/**
+	 * Returns the maximum content height set.
+	 *
+	 * Return: the maximum content height, or -1
+	 *
+	 * Since: 3.22
+	 */
+	public int getMaxContentHeight()
+	{
+		return gtk_scrolled_window_get_max_content_height(gtkScrolledWindow);
+	}
+
+	/**
+	 * Returns the maximum content width set.
+	 *
+	 * Return: the maximum content width, or -1
+	 *
+	 * Since: 3.22
+	 */
+	public int getMaxContentWidth()
+	{
+		return gtk_scrolled_window_get_max_content_width(gtkScrolledWindow);
+	}
+
+	/**
 	 * Gets the minimal content height of @scrolled_window, or -1 if not set.
 	 *
 	 * Return: the minimal content height
@@ -354,6 +389,32 @@ public class ScrolledWindow : Bin
 	public void getPolicy(out GtkPolicyType hscrollbarPolicy, out GtkPolicyType vscrollbarPolicy)
 	{
 		gtk_scrolled_window_get_policy(gtkScrolledWindow, &hscrollbarPolicy, &vscrollbarPolicy);
+	}
+
+	/**
+	 * Reports whether the natural height of the child will be calculated and propagated
+	 * through the scrolled windows requested natural height.
+	 *
+	 * Return: whether natural height propagation is enabled.
+	 *
+	 * Since: 3.22
+	 */
+	public bool getPropagateNaturalHeight()
+	{
+		return gtk_scrolled_window_get_propagate_natural_height(gtkScrolledWindow) != 0;
+	}
+
+	/**
+	 * Reports whether the natural width of the child will be calculated and propagated
+	 * through the scrolled windows requested natural width.
+	 *
+	 * Return: whether natural width propagation is enabled.
+	 *
+	 * Since: 3.22
+	 */
+	public bool getPropagateNaturalWidth()
+	{
+		return gtk_scrolled_window_get_propagate_natural_width(gtkScrolledWindow) != 0;
 	}
 
 	/**
@@ -454,9 +515,48 @@ public class ScrolledWindow : Bin
 	}
 
 	/**
+	 * Sets the maximum height that @scrolled_window should keep visible. The
+	 * @scrolled_window will grow up to this height before it starts scrolling
+	 * the content.
+	 *
+	 * It is a programming error to set the maximum content height to a value
+	 * smaller than #GtkScrolledWindow:min-content-height.
+	 *
+	 * Params:
+	 *     height = the maximum content height
+	 *
+	 * Since: 3.22
+	 */
+	public void setMaxContentHeight(int height)
+	{
+		gtk_scrolled_window_set_max_content_height(gtkScrolledWindow, height);
+	}
+
+	/**
+	 * Sets the maximum width that @scrolled_window should keep visible. The
+	 * @scrolled_window will grow up to this width before it starts scrolling
+	 * the content.
+	 *
+	 * It is a programming error to set the maximum content width to a value
+	 * smaller than #GtkScrolledWindow:min-content-width.
+	 *
+	 * Params:
+	 *     width = the maximum content width
+	 *
+	 * Since: 3.22
+	 */
+	public void setMaxContentWidth(int width)
+	{
+		gtk_scrolled_window_set_max_content_width(gtkScrolledWindow, width);
+	}
+
+	/**
 	 * Sets the minimum height that @scrolled_window should keep visible.
 	 * Note that this can and (usually will) be smaller than the minimum
 	 * size of the content.
+	 *
+	 * It is a programming error to set the minimum content height to a
+	 * value greater than #GtkScrolledWindow:max-content-height.
 	 *
 	 * Params:
 	 *     height = the minimal content height
@@ -472,6 +572,9 @@ public class ScrolledWindow : Bin
 	 * Sets the minimum width that @scrolled_window should keep visible.
 	 * Note that this can and (usually will) be smaller than the minimum
 	 * size of the content.
+	 *
+	 * It is a programming error to set the minimum content width to a
+	 * value greater than #GtkScrolledWindow:max-content-width.
 	 *
 	 * Params:
 	 *     width = the minimal content width
@@ -533,6 +636,34 @@ public class ScrolledWindow : Bin
 	public void setPolicy(GtkPolicyType hscrollbarPolicy, GtkPolicyType vscrollbarPolicy)
 	{
 		gtk_scrolled_window_set_policy(gtkScrolledWindow, hscrollbarPolicy, vscrollbarPolicy);
+	}
+
+	/**
+	 * Sets whether the natural height of the child should be calculated and propagated
+	 * through the scrolled windows requested natural height.
+	 *
+	 * Params:
+	 *     propagate = whether to propagate natural height
+	 *
+	 * Since: 3.22
+	 */
+	public void setPropagateNaturalHeight(bool propagate)
+	{
+		gtk_scrolled_window_set_propagate_natural_height(gtkScrolledWindow, propagate);
+	}
+
+	/**
+	 * Sets whether the natural width of the child should be calculated and propagated
+	 * through the scrolled windows requested natural width.
+	 *
+	 * Params:
+	 *     propagate = whether to propagate natural width
+	 *
+	 * Since: 3.22
+	 */
+	public void setPropagateNaturalWidth(bool propagate)
+	{
+		gtk_scrolled_window_set_propagate_natural_width(gtkScrolledWindow, propagate);
 	}
 
 	/**

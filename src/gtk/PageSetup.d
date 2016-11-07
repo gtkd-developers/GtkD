@@ -29,6 +29,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.KeyFile;
 private import glib.Str;
+private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.PaperSize;
 private import gtkc.gtk;
@@ -169,6 +170,31 @@ public class PageSetup : ObjectG
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
+		}
+		
+		this(cast(GtkPageSetup*) p, true);
+	}
+
+	/**
+	 * Desrialize a page setup from an a{sv} variant in
+	 * the format produced by gtk_page_setup_to_gvariant().
+	 *
+	 * Params:
+	 *     variant = an a{sv} #GVariant
+	 *
+	 * Return: a new #GtkPageSetup object
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Variant variant)
+	{
+		auto p = gtk_page_setup_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 		
 		this(cast(GtkPageSetup*) p, true);
@@ -574,6 +600,25 @@ public class PageSetup : ObjectG
 		}
 		
 		return p;
+	}
+
+	/**
+	 * Serialize page setup to an a{sv} variant.
+	 *
+	 * Return: a new, floating, #GVariant
+	 *
+	 * Since: 3.22
+	 */
+	public Variant toGvariant()
+	{
+		auto p = gtk_page_setup_to_gvariant(gtkPageSetup);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Variant(cast(GVariant*) p);
 	}
 
 	/**

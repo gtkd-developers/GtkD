@@ -207,10 +207,10 @@ public class TextBuffer : ObjectG
 			}
 			else
 			{
-				stderr.writefln("TextBuffer.CreateTag: Unsuported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
+				stderr.writefln("TextBuffer.CreateTag: Unsupported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
 				
 				//TODO: throw segfaults, druntime bug?
-				throw new Exception("TextBuffer.CreateTag: Unsuported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
+				throw new Exception("TextBuffer.CreateTag: Unsupported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
 			}
 		}
 		

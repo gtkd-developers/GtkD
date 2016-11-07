@@ -296,7 +296,8 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * situations such as the #GDesktopAppInfo returned from
 	 * g_desktop_app_info_new_from_keyfile(), this function will return %NULL.
 	 *
-	 * Return: The full path to the file for @info, or %NULL if not known.
+	 * Return: The full path to the file for @info,
+	 *     or %NULL if not known.
 	 *
 	 * Since: 2.24
 	 */

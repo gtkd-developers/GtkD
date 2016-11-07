@@ -108,7 +108,7 @@ public interface ComponentIF{
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 */
-	public void getExtents(int* x, int* y, int* width, int* height, AtkCoordType coordType);
+	public void getExtents(out int x, out int y, out int width, out int height, AtkCoordType coordType);
 
 	/**
 	 * Gets the layer of the component.
@@ -139,7 +139,7 @@ public interface ComponentIF{
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 */
-	public void getPosition(int* x, int* y, AtkCoordType coordType);
+	public void getPosition(out int x, out int y, AtkCoordType coordType);
 
 	/**
 	 * Gets the size of the @component in terms of width and height.
@@ -150,7 +150,7 @@ public interface ComponentIF{
 	 *     width = address of #gint to put width of @component
 	 *     height = address of #gint to put height of @component
 	 */
-	public void getSize(int* width, int* height);
+	public void getSize(out int width, out int height);
 
 	/**
 	 * Grabs focus for this @component.

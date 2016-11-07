@@ -263,7 +263,7 @@ public class FileEnumerator : ObjectG
 	 * requires allocation of a temporary #GError.
 	 *
 	 * In contrast, with this function, a %FALSE return from
-	 * gs_file_enumerator_iterate() *always* means
+	 * g_file_enumerator_iterate() *always* means
 	 * "error".  End of iteration is signaled by @out_info or @out_child being %NULL.
 	 *
 	 * Another crucial difference is that the references for @out_info and

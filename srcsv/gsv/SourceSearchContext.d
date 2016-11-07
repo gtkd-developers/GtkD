@@ -112,6 +112,8 @@ public class SourceSearchContext : ObjectG
 	 * functions instead, to not block the user interface. However, if you are sure
 	 * that the @buffer is small, this function is more convenient to use.
 	 *
+	 * Deprecated: Use gtk_source_search_context_backward2() instead.
+	 *
 	 * Params:
 	 *     iter = start of search.
 	 *     matchStart = return location for start of match, or %NULL.
@@ -135,8 +137,53 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
-	 * Asynchronous backward search. See the #GAsyncResult documentation to know
-	 * how to use this function.
+	 * Synchronous backward search. It is recommended to use the asynchronous
+	 * functions instead, to not block the user interface. However, if you are sure
+	 * that the @buffer is small, this function is more convenient to use.
+	 *
+	 * The difference with gtk_source_search_context_backward() is that the
+	 * @has_wrapped_around out parameter has been added for convenience.
+	 *
+	 * If the #GtkSourceSearchSettings:wrap-around property is %FALSE, this function
+	 * doesn't try to wrap around.
+	 *
+	 * The @has_wrapped_around out parameter is set independently of whether a match
+	 * is found. So if this function returns %FALSE, @has_wrapped_around will have
+	 * the same value as the #GtkSourceSearchSettings:wrap-around property.
+	 *
+	 * Params:
+	 *     iter = start of search.
+	 *     matchStart = return location for start of match, or %NULL.
+	 *     matchEnd = return location for end of match, or %NULL.
+	 *     hasWrappedAround = return location to know whether the
+	 *         search has wrapped around, or %NULL.
+	 *
+	 * Return: whether a match was found.
+	 *
+	 * Since: 3.22
+	 */
+	public bool backward2(TextIter iter, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
+	{
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		int outhasWrappedAround;
+		
+		auto p = gtk_source_search_context_backward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
+		
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
+		hasWrappedAround = (outhasWrappedAround == 1);
+		
+		return p;
+	}
+
+	/**
+	 * The asynchronous version of gtk_source_search_context_backward2().
+	 *
+	 * See the documentation of gtk_source_search_context_backward2() for more
+	 * details.
+	 *
+	 * See the #GAsyncResult documentation to know how to use this function.
 	 *
 	 * If the operation is cancelled, the @callback will only be called if
 	 * @cancellable was not %NULL. gtk_source_search_context_backward_async() takes
@@ -158,6 +205,8 @@ public class SourceSearchContext : ObjectG
 	/**
 	 * Finishes a backward search started with
 	 * gtk_source_search_context_backward_async().
+	 *
+	 * Deprecated: Use gtk_source_search_context_backward_finish2() instead.
 	 *
 	 * Params:
 	 *     result = a #GAsyncResult.
@@ -190,9 +239,52 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
+	 * Finishes a backward search started with
+	 * gtk_source_search_context_backward_async().
+	 *
+	 * See the documentation of gtk_source_search_context_backward2() for more
+	 * details.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult.
+	 *     matchStart = return location for start of match, or %NULL.
+	 *     matchEnd = return location for end of match, or %NULL.
+	 *     hasWrappedAround = return location to know whether the
+	 *         search has wrapped around, or %NULL.
+	 *
+	 * Return: whether a match was found.
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool backwardFinish2(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
+	{
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		int outhasWrappedAround;
+		GError* err = null;
+		
+		auto p = gtk_source_search_context_backward_finish2(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
+		hasWrappedAround = (outhasWrappedAround == 1);
+		
+		return p;
+	}
+
+	/**
 	 * Synchronous forward search. It is recommended to use the asynchronous
 	 * functions instead, to not block the user interface. However, if you are sure
 	 * that the @buffer is small, this function is more convenient to use.
+	 *
+	 * Deprecated: Use gtk_source_search_context_forward2() instead.
 	 *
 	 * Params:
 	 *     iter = start of search.
@@ -217,8 +309,53 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
-	 * Asynchronous forward search. See the #GAsyncResult documentation to know
-	 * how to use this function.
+	 * Synchronous forward search. It is recommended to use the asynchronous
+	 * functions instead, to not block the user interface. However, if you are sure
+	 * that the @buffer is small, this function is more convenient to use.
+	 *
+	 * The difference with gtk_source_search_context_forward() is that the
+	 * @has_wrapped_around out parameter has been added for convenience.
+	 *
+	 * If the #GtkSourceSearchSettings:wrap-around property is %FALSE, this function
+	 * doesn't try to wrap around.
+	 *
+	 * The @has_wrapped_around out parameter is set independently of whether a match
+	 * is found. So if this function returns %FALSE, @has_wrapped_around will have
+	 * the same value as the #GtkSourceSearchSettings:wrap-around property.
+	 *
+	 * Params:
+	 *     iter = start of search.
+	 *     matchStart = return location for start of match, or %NULL.
+	 *     matchEnd = return location for end of match, or %NULL.
+	 *     hasWrappedAround = return location to know whether the
+	 *         search has wrapped around, or %NULL.
+	 *
+	 * Return: whether a match was found.
+	 *
+	 * Since: 3.22
+	 */
+	public bool forward2(TextIter iter, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
+	{
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		int outhasWrappedAround;
+		
+		auto p = gtk_source_search_context_forward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
+		
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
+		hasWrappedAround = (outhasWrappedAround == 1);
+		
+		return p;
+	}
+
+	/**
+	 * The asynchronous version of gtk_source_search_context_forward2().
+	 *
+	 * See the documentation of gtk_source_search_context_forward2() for more
+	 * details.
+	 *
+	 * See the #GAsyncResult documentation to know how to use this function.
 	 *
 	 * If the operation is cancelled, the @callback will only be called if
 	 * @cancellable was not %NULL. gtk_source_search_context_forward_async() takes
@@ -240,6 +377,8 @@ public class SourceSearchContext : ObjectG
 	/**
 	 * Finishes a forward search started with
 	 * gtk_source_search_context_forward_async().
+	 *
+	 * Deprecated: Use gtk_source_search_context_forward_finish2() instead.
 	 *
 	 * Params:
 	 *     result = a #GAsyncResult.
@@ -267,6 +406,47 @@ public class SourceSearchContext : ObjectG
 		
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
+		
+		return p;
+	}
+
+	/**
+	 * Finishes a forward search started with
+	 * gtk_source_search_context_forward_async().
+	 *
+	 * See the documentation of gtk_source_search_context_forward2() for more
+	 * details.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult.
+	 *     matchStart = return location for start of match, or %NULL.
+	 *     matchEnd = return location for end of match, or %NULL.
+	 *     hasWrappedAround = return location to know whether the
+	 *         search has wrapped around, or %NULL.
+	 *
+	 * Return: whether a match was found.
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool forwardFinish2(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
+	{
+		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		int outhasWrappedAround;
+		GError* err = null;
+		
+		auto p = gtk_source_search_context_forward_finish2(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
+		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
+		hasWrappedAround = (outhasWrappedAround == 1);
 		
 		return p;
 	}
@@ -398,6 +578,8 @@ public class SourceSearchContext : ObjectG
 	 * calling g_regex_check_replacement(). The @replace text can contain
 	 * backreferences; read the g_regex_replace() documentation for more details.
 	 *
+	 * Deprecated: Use gtk_source_search_context_replace2() instead.
+	 *
 	 * Params:
 	 *     matchStart = the start of the match to replace.
 	 *     matchEnd = the end of the match to replace.
@@ -415,6 +597,43 @@ public class SourceSearchContext : ObjectG
 		GError* err = null;
 		
 		auto p = gtk_source_search_context_replace(gtkSourceSearchContext, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), Str.toStringz(replace), replaceLength, &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Replaces a search match by another text. If @match_start and @match_end
+	 * doesn't correspond to a search match, %FALSE is returned.
+	 *
+	 * Unlike with gtk_source_search_context_replace(), the @match_start and
+	 * @match_end iters are revalidated to point to the replacement text boundaries.
+	 *
+	 * For a regular expression replacement, you can check if @replace is valid by
+	 * calling g_regex_check_replacement(). The @replace text can contain
+	 * backreferences; read the g_regex_replace() documentation for more details.
+	 *
+	 * Params:
+	 *     matchStart = the start of the match to replace.
+	 *     matchEnd = the end of the match to replace.
+	 *     replace = the replacement text.
+	 *     replaceLength = the length of @replace in bytes, or -1.
+	 *
+	 * Return: whether the match has been replaced.
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool replace2(TextIter matchStart, TextIter matchEnd, string replace, int replaceLength)
+	{
+		GError* err = null;
+		
+		auto p = gtk_source_search_context_replace2(gtkSourceSearchContext, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), Str.toStringz(replace), replaceLength, &err) != 0;
 		
 		if (err !is null)
 		{
@@ -476,7 +695,7 @@ public class SourceSearchContext : ObjectG
 	 * gtk_source_search_context_set_highlight().
 	 *
 	 * Params:
-	 *     matchStyle = a #GtkSourceStyle.
+	 *     matchStyle = a #GtkSourceStyle, or %NULL.
 	 *
 	 * Since: 3.16
 	 */

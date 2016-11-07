@@ -173,6 +173,8 @@ public class FileChooserButton : Box, FileChooserIF
 	 * Returns whether the button grabs focus when it is clicked with the mouse.
 	 * See gtk_file_chooser_button_set_focus_on_click().
 	 *
+	 * Deprecated: Use gtk_widget_get_focus_on_click() instead
+	 *
 	 * Return: %TRUE if the button grabs focus when it is clicked with
 	 *     the mouse.
 	 *
@@ -213,6 +215,8 @@ public class FileChooserButton : Box, FileChooserIF
 	 * Making mouse clicks not grab focus is useful in places like toolbars where
 	 * you don’t want the keyboard focus removed from the main area of the
 	 * application.
+	 *
+	 * Deprecated: Use gtk_widget_set_focus_on_click() instead
 	 *
 	 * Params:
 	 *     focusOnClick = whether the button grabs focus when clicked with the mouse

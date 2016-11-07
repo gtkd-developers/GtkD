@@ -176,7 +176,7 @@ public class ValueArray
 	 * Deprecated: Use #GArray and g_array_insert_val() instead.
 	 *
 	 * Params:
-	 *     index = insertion position, must be <= value_array-&gt;n_values
+	 *     index = insertion position, must be <= value_array->;n_values
 	 *     value = #GValue to copy into #GValueArray, or %NULL
 	 *
 	 * Return: the #GValueArray passed in as @value_array

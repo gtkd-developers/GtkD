@@ -989,7 +989,7 @@ public struct Str
 
 	/**
 	 * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\v', '\'
-	 * and '&quot;' in the string @source by inserting a '\' before
+	 * and '"' in the string @source by inserting a '\' before
 	 * them. Additionally all characters in the range 0x01-0x1F (everything
 	 * below SPACE) and in the range 0x7F-0xFF (all non-ASCII chars) are
 	 * replaced with a '\' followed by their octal representation.
@@ -1030,6 +1030,10 @@ public struct Str
 	 * Joins a number of strings together to form one long string, with the
 	 * optional @separator inserted between each of them. The returned string
 	 * should be freed with g_free().
+	 *
+	 * If @str_array has no items, the return value will be an
+	 * empty string. If @str_array contains a single item, @separator will not
+	 * appear in the resulting string.
 	 *
 	 * Params:
 	 *     separator = a string to insert between each of the

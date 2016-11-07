@@ -879,23 +879,21 @@ public class Window : Bin
 	 * This means that the meaning of the returned value varies with
 	 * window gravity. See gtk_window_move() for more details.
 	 *
+	 * The reliability of this function depends on the windowing system
+	 * currently in use. Some windowing systems, such as Wayland, do not
+	 * support a global coordinate system, and thus the position of the
+	 * window will always be (0, 0). Others, like X11, do not have a reliable
+	 * way to obtain the geometry of the decorations of a window if they are
+	 * provided by the window manager. Additionally, on X11, window manager
+	 * have been known to mismanage window gravity, which result in windows
+	 * moving even if you use the coordinates of the current position as
+	 * returned by this function.
+	 *
 	 * If you haven’t changed the window gravity, its gravity will be
 	 * #GDK_GRAVITY_NORTH_WEST. This means that gtk_window_get_position()
 	 * gets the position of the top-left corner of the window manager
 	 * frame for the window. gtk_window_move() sets the position of this
 	 * same top-left corner.
-	 *
-	 * gtk_window_get_position() is not 100% reliable because the X Window System
-	 * does not specify a way to obtain the geometry of the
-	 * decorations placed on a window by the window manager.
-	 * Thus GTK+ is using a “best guess” that works with most
-	 * window managers.
-	 *
-	 * Moreover, nearly all window managers are historically broken with
-	 * respect to their handling of window gravity. So moving a window to
-	 * its current position as returned by gtk_window_get_position() tends
-	 * to result in moving the window slightly. Window managers are
-	 * slowly getting better over time.
 	 *
 	 * If a window has gravity #GDK_GRAVITY_STATIC the window manager
 	 * frame is not relevant, and thus gtk_window_get_position() will
@@ -903,13 +901,15 @@ public class Window : Bin
 	 * gravity to do things like place a window in a corner of the screen,
 	 * because static gravity ignores the window manager decorations.
 	 *
-	 * If you are saving and restoring your application’s window
-	 * positions, you should know that it’s impossible for applications to
-	 * do this without getting it somewhat wrong because applications do
-	 * not have sufficient knowledge of window manager state. The Correct
-	 * Mechanism is to support the session management protocol (see the
-	 * “GnomeClient” object in the GNOME libraries for example) and allow
-	 * the window manager to save your window sizes and positions.
+	 * Ideally, this function should return appropriate values if the
+	 * window has client side decorations, assuming that the windowing
+	 * system supports global coordinates.
+	 *
+	 * In practice, saving the window position should not be left to
+	 * applications, as they lack enough knowledge of the windowing
+	 * system and the window manager state to effectively do so. The
+	 * appropriate way to implement saving the window position is to
+	 * use a platform-specific protocol, wherever that is available.
 	 *
 	 * Params:
 	 *     rootX = return location for X coordinate of
@@ -983,58 +983,78 @@ public class Window : Bin
 	}
 
 	/**
-	 * Obtains the current size of @window. If @window is not onscreen,
-	 * it returns the size GTK+ will suggest to the
-	 * [window manager][gtk-X11-arch]
-	 * for the initial window
-	 * size (but this is not reliably the same as the size the window
-	 * manager will actually select). The size obtained by
-	 * gtk_window_get_size() is the last size received in a
-	 * #GdkEventConfigure, that is, GTK+ uses its locally-stored size,
-	 * rather than querying the X server for the size. As a result, if you
-	 * call gtk_window_resize() then immediately call
-	 * gtk_window_get_size(), the size won’t have taken effect yet. After
-	 * the window manager processes the resize request, GTK+ receives
-	 * notification that the size has changed via a configure event, and
-	 * the size of the window gets updated.
+	 * Obtains the current size of @window.
 	 *
-	 * Note 1: Nearly any use of this function creates a race condition,
-	 * because the size of the window may change between the time that you
-	 * get the size and the time that you perform some action assuming
-	 * that size is the current size. To avoid race conditions, connect to
-	 * “configure-event” on the window and adjust your size-dependent
-	 * state to match the size delivered in the #GdkEventConfigure.
+	 * If @window is not visible on screen, this function return the size GTK+
+	 * will suggest to the [window manager][gtk-X11-arch] for the initial window
+	 * size (but this is not reliably the same as the size the window manager
+	 * will actually select). See: gtk_window_set_default_size().
 	 *
-	 * Note 2: The returned size does not include the
-	 * size of the window manager decorations (aka the window frame or
-	 * border). Those are not drawn by GTK+ and GTK+ has no reliable
-	 * method of determining their size.
+	 * Depending on the windowing system and the window manager constraints,
+	 * the size returned by this function may not match the size set using
+	 * gtk_window_resize(); additionally, since gtk_window_resize() may be
+	 * implemented as an asynchronous operation, GTK+ cannot guarantee in any
+	 * way that this code:
 	 *
-	 * Note 3: If you are getting a window size in order to position
-	 * the window onscreen, there may be a better way. The preferred
-	 * way is to simply set the window’s semantic type with
-	 * gtk_window_set_type_hint(), which allows the window manager to
-	 * e.g. center dialogs. Also, if you set the transient parent of
-	 * dialogs with gtk_window_set_transient_for() window managers
-	 * will often center the dialog over its parent window. It's
-	 * much preferred to let the window manager handle these
-	 * things rather than doing it yourself, because all apps will
-	 * behave consistently and according to user prefs if the window
-	 * manager handles it. Also, the window manager can take the size
-	 * of the window decorations/border into account, while your
-	 * application cannot.
+	 * |[<!-- language="C" -->
+	 * // width and height are set elsewhere
+	 * gtk_window_resize (window, width, height);
 	 *
-	 * Note 4: When using client side decorations, GTK+ will do its best to
-	 * adjust the returned values to match the logical size of the window
-	 * excluding the widgets added for client side decorations, but there
-	 * is no garantee that the result will be totally accurate because
-	 * these widgets depend on the theme and may not be realized or
-	 * visible at the time gtk_window_get_size() is invoked.
+	 * int new_width, new_height;
+	 * gtk_window_get_size (window, &new_width, &new_height);
+	 * ]|
 	 *
-	 * In any case, if you insist on application-specified window
-	 * positioning, there’s still a better way than
-	 * doing it yourself - gtk_window_set_position() will frequently
-	 * handle the details for you.
+	 * will result in `new_width` and `new_height` matching `width` and
+	 * `height`, respectively.
+	 *
+	 * This function will return the logical size of the #GtkWindow,
+	 * excluding the widgets used in client side decorations; there is,
+	 * however, no guarantee that the result will be completely accurate
+	 * because client side decoration may include widgets that depend on
+	 * the user preferences and that may not be visibile at the time you
+	 * call this function.
+	 *
+	 * The dimensions returned by this function are suitable for being
+	 * stored across sessions; use gtk_window_set_default_size() to
+	 * restore them when before showing the window.
+	 *
+	 * To avoid potential race conditions, you should only call this
+	 * function in response to a size change notification, for instance
+	 * inside a handler for the #GtkWidget::size-allocate signal, or
+	 * inside a handler for the #GtkWidget::configure-event signal:
+	 *
+	 * |[<!-- language="C" -->
+	 * static void
+	 * on_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+	 * {
+	 * int new_width, new_height;
+	 *
+	 * gtk_window_get_size (GTK_WINDOW (widget), &new_width, &new_height);
+	 *
+	 * ...
+	 * }
+	 * ]|
+	 *
+	 * Note that, if you connect to the #GtkWidget::size-allocate signal,
+	 * you should not use the dimensions of the #GtkAllocation passed to
+	 * the signal handler, as the allocation may contain client side
+	 * decorations added by GTK+, depending on the windowing system in
+	 * use.
+	 *
+	 * If you are getting a window size in order to position the window
+	 * on the screen, you should, instead, simply set the window’s semantic
+	 * type with gtk_window_set_type_hint(), which allows the window manager
+	 * to e.g. center dialogs. Also, if you set the transient parent of
+	 * dialogs with gtk_window_set_transient_for() window managers will
+	 * often center the dialog over its parent window. It's much preferred
+	 * to let the window manager handle these cases rather than doing it
+	 * yourself, because all apps will behave consistently and according to
+	 * user or system preferences, if the window manager handles it. Also,
+	 * the window manager can take into account the size of the window
+	 * decorations and border that it may add, and of which GTK+ has no
+	 * knowledge. Additionally, positioning windows in global screen coordinates
+	 * may not be allowed by the windowing system. For more information,
+	 * see: gtk_window_set_position().
 	 *
 	 * Params:
 	 *     width = return location for width, or %NULL
@@ -1906,7 +1926,8 @@ public class Window : Bin
 	 * Sets up the icon representing a #GtkWindow. This icon is used when
 	 * the window is minimized (also known as iconified).  Some window
 	 * managers or desktop environments may also place it in the window
-	 * frame, or display it in other contexts.
+	 * frame, or display it in other contexts. On others, the icon is not
+	 * used at all, so your mileage may vary.
 	 *
 	 * The icon should be provided in whatever size it was naturally
 	 * drawn; that is, don’t scale the image before passing it to
@@ -1964,7 +1985,8 @@ public class Window : Bin
 	 * Sets up the icon representing a #GtkWindow. The icon is used when
 	 * the window is minimized (also known as iconified).  Some window
 	 * managers or desktop environments may also place it in the window
-	 * frame, or display it in other contexts.
+	 * frame, or display it in other contexts. On others, the icon is not
+	 * used at all, so your mileage may vary.
 	 *
 	 * gtk_window_set_icon_list() allows you to pass in the same icon in
 	 * several hand-drawn sizes. The list should contain the natural sizes
@@ -1995,8 +2017,9 @@ public class Window : Bin
 	}
 
 	/**
-	 * Sets the icon for the window from a named themed icon. See
-	 * the docs for #GtkIconTheme for more details.
+	 * Sets the icon for the window from a named themed icon.
+	 * See the docs for #GtkIconTheme for more details.
+	 * On some platforms, the window icon is not used at all.
 	 *
 	 * Note that this has nothing to do with the WM_ICON_NAME
 	 * property which is mentioned in the ICCCM.

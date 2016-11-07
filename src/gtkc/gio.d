@@ -83,6 +83,8 @@ shared static this()
 	Linker.link(g_app_info_get_fallback_for_type, "g_app_info_get_fallback_for_type", LIBRARY.GIO);
 	Linker.link(g_app_info_get_recommended_for_type, "g_app_info_get_recommended_for_type", LIBRARY.GIO);
 	Linker.link(g_app_info_launch_default_for_uri, "g_app_info_launch_default_for_uri", LIBRARY.GIO);
+	Linker.link(g_app_info_launch_default_for_uri_async, "g_app_info_launch_default_for_uri_async", LIBRARY.GIO);
+	Linker.link(g_app_info_launch_default_for_uri_finish, "g_app_info_launch_default_for_uri_finish", LIBRARY.GIO);
 	Linker.link(g_app_info_reset_type_associations, "g_app_info_reset_type_associations", LIBRARY.GIO);
 	Linker.link(g_app_info_add_supports_type, "g_app_info_add_supports_type", LIBRARY.GIO);
 	Linker.link(g_app_info_can_delete, "g_app_info_can_delete", LIBRARY.GIO);
@@ -707,6 +709,7 @@ shared static this()
 	Linker.link(g_drive_has_volumes, "g_drive_has_volumes", LIBRARY.GIO);
 	Linker.link(g_drive_is_media_check_automatic, "g_drive_is_media_check_automatic", LIBRARY.GIO);
 	Linker.link(g_drive_is_media_removable, "g_drive_is_media_removable", LIBRARY.GIO);
+	Linker.link(g_drive_is_removable, "g_drive_is_removable", LIBRARY.GIO);
 	Linker.link(g_drive_poll_for_media, "g_drive_poll_for_media", LIBRARY.GIO);
 	Linker.link(g_drive_poll_for_media_finish, "g_drive_poll_for_media_finish", LIBRARY.GIO);
 	Linker.link(g_drive_start, "g_drive_start", LIBRARY.GIO);
@@ -1609,11 +1612,13 @@ shared static this()
 	Linker.link(g_settings_get_flags, "g_settings_get_flags", LIBRARY.GIO);
 	Linker.link(g_settings_get_has_unapplied, "g_settings_get_has_unapplied", LIBRARY.GIO);
 	Linker.link(g_settings_get_int, "g_settings_get_int", LIBRARY.GIO);
+	Linker.link(g_settings_get_int64, "g_settings_get_int64", LIBRARY.GIO);
 	Linker.link(g_settings_get_mapped, "g_settings_get_mapped", LIBRARY.GIO);
 	Linker.link(g_settings_get_range, "g_settings_get_range", LIBRARY.GIO);
 	Linker.link(g_settings_get_string, "g_settings_get_string", LIBRARY.GIO);
 	Linker.link(g_settings_get_strv, "g_settings_get_strv", LIBRARY.GIO);
 	Linker.link(g_settings_get_uint, "g_settings_get_uint", LIBRARY.GIO);
+	Linker.link(g_settings_get_uint64, "g_settings_get_uint64", LIBRARY.GIO);
 	Linker.link(g_settings_get_user_value, "g_settings_get_user_value", LIBRARY.GIO);
 	Linker.link(g_settings_get_value, "g_settings_get_value", LIBRARY.GIO);
 	Linker.link(g_settings_is_writable, "g_settings_is_writable", LIBRARY.GIO);
@@ -1628,10 +1633,24 @@ shared static this()
 	Linker.link(g_settings_set_enum, "g_settings_set_enum", LIBRARY.GIO);
 	Linker.link(g_settings_set_flags, "g_settings_set_flags", LIBRARY.GIO);
 	Linker.link(g_settings_set_int, "g_settings_set_int", LIBRARY.GIO);
+	Linker.link(g_settings_set_int64, "g_settings_set_int64", LIBRARY.GIO);
 	Linker.link(g_settings_set_string, "g_settings_set_string", LIBRARY.GIO);
 	Linker.link(g_settings_set_strv, "g_settings_set_strv", LIBRARY.GIO);
 	Linker.link(g_settings_set_uint, "g_settings_set_uint", LIBRARY.GIO);
+	Linker.link(g_settings_set_uint64, "g_settings_set_uint64", LIBRARY.GIO);
 	Linker.link(g_settings_set_value, "g_settings_set_value", LIBRARY.GIO);
+
+	// gio.SettingsBackend
+
+	Linker.link(g_settings_backend_get_type, "g_settings_backend_get_type", LIBRARY.GIO);
+	Linker.link(g_settings_backend_flatten_tree, "g_settings_backend_flatten_tree", LIBRARY.GIO);
+	Linker.link(g_settings_backend_get_default, "g_settings_backend_get_default", LIBRARY.GIO);
+	Linker.link(g_settings_backend_changed, "g_settings_backend_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_changed_tree, "g_settings_backend_changed_tree", LIBRARY.GIO);
+	Linker.link(g_settings_backend_keys_changed, "g_settings_backend_keys_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_path_changed, "g_settings_backend_path_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_path_writable_changed, "g_settings_backend_path_writable_changed", LIBRARY.GIO);
+	Linker.link(g_settings_backend_writable_changed, "g_settings_backend_writable_changed", LIBRARY.GIO);
 
 	// gio.SettingsSchema
 
@@ -2275,6 +2294,8 @@ shared static this()
 	Linker.link(g_vfs_get_supported_uri_schemes, "g_vfs_get_supported_uri_schemes", LIBRARY.GIO);
 	Linker.link(g_vfs_is_active, "g_vfs_is_active", LIBRARY.GIO);
 	Linker.link(g_vfs_parse_name, "g_vfs_parse_name", LIBRARY.GIO);
+	Linker.link(g_vfs_register_uri_scheme, "g_vfs_register_uri_scheme", LIBRARY.GIO);
+	Linker.link(g_vfs_unregister_uri_scheme, "g_vfs_unregister_uri_scheme", LIBRARY.GIO);
 
 	// gio.Volume
 
@@ -2451,6 +2472,8 @@ __gshared extern(C)
 	GList* function(const(char)* contentType) c_g_app_info_get_fallback_for_type;
 	GList* function(const(char)* contentType) c_g_app_info_get_recommended_for_type;
 	int function(const(char)* uri, GAppLaunchContext* launchContext, GError** err) c_g_app_info_launch_default_for_uri;
+	void function(const(char)* uri, GAppLaunchContext* launchContext, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_app_info_launch_default_for_uri_async;
+	int function(GAsyncResult* result, GError** err) c_g_app_info_launch_default_for_uri_finish;
 	void function(const(char)* contentType) c_g_app_info_reset_type_associations;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_add_supports_type;
 	int function(GAppInfo* appinfo) c_g_app_info_can_delete;
@@ -2458,10 +2481,10 @@ __gshared extern(C)
 	int function(GAppInfo* appinfo) c_g_app_info_delete;
 	GAppInfo* function(GAppInfo* appinfo) c_g_app_info_dup;
 	int function(GAppInfo* appinfo1, GAppInfo* appinfo2) c_g_app_info_equal;
-	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_commandline;
+	char* function(GAppInfo* appinfo) c_g_app_info_get_commandline;
 	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_description;
 	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_display_name;
-	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_executable;
+	char* function(GAppInfo* appinfo) c_g_app_info_get_executable;
 	GIcon* function(GAppInfo* appinfo) c_g_app_info_get_icon;
 	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_id;
 	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_name;
@@ -2469,7 +2492,7 @@ __gshared extern(C)
 	int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** err) c_g_app_info_launch;
 	int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** err) c_g_app_info_launch_uris;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_remove_supports_type;
-	int function(GAppInfo* appinfo, const(char)* extension, GError** err) c_g_app_info_set_as_default_for_extension;
+	int function(GAppInfo* appinfo, char* extension, GError** err) c_g_app_info_set_as_default_for_extension;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_set_as_default_for_type;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_set_as_last_used_for_type;
 	int function(GAppInfo* appinfo) c_g_app_info_should_show;
@@ -2535,7 +2558,7 @@ __gshared extern(C)
 	GType function() c_g_application_command_line_get_type;
 	GFile* function(GApplicationCommandLine* cmdline, const(char)* arg) c_g_application_command_line_create_file_for_arg;
 	char** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
-	const(char)* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
+	char* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
 	char** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
 	int function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_exit_status;
 	int function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_is_remote;
@@ -3025,7 +3048,7 @@ __gshared extern(C)
 
 	GType function() c_g_desktop_app_info_get_type;
 	GDesktopAppInfo* function(const(char)* desktopId) c_g_desktop_app_info_new;
-	GDesktopAppInfo* function(const(char)* filename) c_g_desktop_app_info_new_from_filename;
+	GDesktopAppInfo* function(char* filename) c_g_desktop_app_info_new_from_filename;
 	GDesktopAppInfo* function(GKeyFile* keyFile) c_g_desktop_app_info_new_from_keyfile;
 	GList* function(const(char)* iface) c_g_desktop_app_info_get_implementations;
 	char*** function(const(char)* searchString) c_g_desktop_app_info_search;
@@ -3033,7 +3056,7 @@ __gshared extern(C)
 	char* function(GDesktopAppInfo* info, const(char)* actionName) c_g_desktop_app_info_get_action_name;
 	int function(GDesktopAppInfo* info, const(char)* key) c_g_desktop_app_info_get_boolean;
 	const(char)* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_categories;
-	const(char)* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_filename;
+	char* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_filename;
 	const(char)* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_generic_name;
 	int function(GDesktopAppInfo* info) c_g_desktop_app_info_get_is_hidden;
 	char** function(GDesktopAppInfo* info) c_g_desktop_app_info_get_keywords;
@@ -3075,6 +3098,7 @@ __gshared extern(C)
 	int function(GDrive* drive) c_g_drive_has_volumes;
 	int function(GDrive* drive) c_g_drive_is_media_check_automatic;
 	int function(GDrive* drive) c_g_drive_is_media_removable;
+	int function(GDrive* drive) c_g_drive_is_removable;
 	void function(GDrive* drive, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_poll_for_media;
 	int function(GDrive* drive, GAsyncResult* result, GError** err) c_g_drive_poll_for_media_finish;
 	void function(GDrive* drive, GDriveStartFlags flags, GMountOperation* mountOperation, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_drive_start;
@@ -3144,8 +3168,8 @@ __gshared extern(C)
 
 	GType function() c_g_file_get_type;
 	GFile* function(const(char)* arg) c_g_file_new_for_commandline_arg;
-	GFile* function(const(char)* arg, const(char)* cwd) c_g_file_new_for_commandline_arg_and_cwd;
-	GFile* function(const(char)* path) c_g_file_new_for_path;
+	GFile* function(const(char)* arg, char* cwd) c_g_file_new_for_commandline_arg_and_cwd;
+	GFile* function(char* path) c_g_file_new_for_path;
 	GFile* function(const(char)* uri) c_g_file_new_for_uri;
 	GFile* function(char* tmpl, GFileIOStream** iostream, GError** err) c_g_file_new_tmp;
 	GFile* function(const(char)* parseName) c_g_file_parse_name;
@@ -3178,7 +3202,7 @@ __gshared extern(C)
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_find_enclosing_mount_async;
 	GMount* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_find_enclosing_mount_finish;
 	char* function(GFile* file) c_g_file_get_basename;
-	GFile* function(GFile* file, const(char)* name) c_g_file_get_child;
+	GFile* function(GFile* file, char* name) c_g_file_get_child;
 	GFile* function(GFile* file, const(char)* displayName, GError** err) c_g_file_get_child_for_display_name;
 	GFile* function(GFile* file) c_g_file_get_parent;
 	char* function(GFile* file) c_g_file_get_parse_name;
@@ -3200,7 +3224,7 @@ __gshared extern(C)
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_make_directory_async;
 	int function(GFile* file, GAsyncResult* result, GError** err) c_g_file_make_directory_finish;
 	int function(GFile* file, GCancellable* cancellable, GError** err) c_g_file_make_directory_with_parents;
-	int function(GFile* file, const(char)* symlinkValue, GCancellable* cancellable, GError** err) c_g_file_make_symbolic_link;
+	int function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** err) c_g_file_make_symbolic_link;
 	int function(GFile* file, GFileMeasureFlags flags, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** err) c_g_file_measure_disk_usage;
 	void function(GFile* file, GFileMeasureFlags flags, int ioPriority, GCancellable* cancellable, GFileMeasureProgressCallback progressCallback, void* progressData, GAsyncReadyCallback callback, void* userData) c_g_file_measure_disk_usage_async;
 	int function(GFile* file, GAsyncResult* result, ulong* diskUsage, ulong* numDirs, ulong* numFiles, GError** err) c_g_file_measure_disk_usage_finish;
@@ -3241,7 +3265,7 @@ __gshared extern(C)
 	GFileIOStream* function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, GCancellable* cancellable, GError** err) c_g_file_replace_readwrite;
 	void function(GFile* file, const(char)* etag, int makeBackup, GFileCreateFlags flags, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_replace_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_replace_readwrite_finish;
-	GFile* function(GFile* file, const(char)* relativePath) c_g_file_resolve_relative_path;
+	GFile* function(GFile* file, char* relativePath) c_g_file_resolve_relative_path;
 	int function(GFile* file, const(char)* attribute, GFileAttributeType type, void* valueP, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) c_g_file_set_attribute;
 	int function(GFile* file, const(char)* attribute, const(char)* value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) c_g_file_set_attribute_byte_string;
 	int function(GFile* file, const(char)* attribute, int value, GFileQueryInfoFlags flags, GCancellable* cancellable, GError** err) c_g_file_set_attribute_int32;
@@ -3357,7 +3381,7 @@ __gshared extern(C)
 	int function(GFileInfo* info) c_g_file_info_get_is_hidden;
 	int function(GFileInfo* info) c_g_file_info_get_is_symlink;
 	void function(GFileInfo* info, GTimeVal* result) c_g_file_info_get_modification_time;
-	const(char)* function(GFileInfo* info) c_g_file_info_get_name;
+	char* function(GFileInfo* info) c_g_file_info_get_name;
 	long function(GFileInfo* info) c_g_file_info_get_size;
 	int function(GFileInfo* info) c_g_file_info_get_sort_order;
 	GIcon* function(GFileInfo* info) c_g_file_info_get_symbolic_icon;
@@ -3386,7 +3410,7 @@ __gshared extern(C)
 	void function(GFileInfo* info, int isHidden) c_g_file_info_set_is_hidden;
 	void function(GFileInfo* info, int isSymlink) c_g_file_info_set_is_symlink;
 	void function(GFileInfo* info, GTimeVal* mtime) c_g_file_info_set_modification_time;
-	void function(GFileInfo* info, const(char)* name) c_g_file_info_set_name;
+	void function(GFileInfo* info, char* name) c_g_file_info_set_name;
 	void function(GFileInfo* info, long size) c_g_file_info_set_size;
 	void function(GFileInfo* info, int sortOrder) c_g_file_info_set_sort_order;
 	void function(GFileInfo* info, GIcon* icon) c_g_file_info_set_symbolic_icon;
@@ -3458,14 +3482,14 @@ __gshared extern(C)
 	// gio.IOModule
 
 	GType function() c_g_io_module_get_type;
-	GIOModule* function(const(char)* filename) c_g_io_module_new;
+	GIOModule* function(char* filename) c_g_io_module_new;
 	char** function() c_g_io_module_query;
 	void function(GIOModule* modul) c_g_io_module_load;
 	void function(GIOModule* modul) c_g_io_module_unload;
-	GList* function(const(char)* dirname) c_g_io_modules_load_all_in_directory;
-	GList* function(const(char)* dirname, GIOModuleScope* scop) c_g_io_modules_load_all_in_directory_with_scope;
-	void function(const(char)* dirname) c_g_io_modules_scan_all_in_directory;
-	void function(const(char)* dirname, GIOModuleScope* scop) c_g_io_modules_scan_all_in_directory_with_scope;
+	GList* function(char* dirname) c_g_io_modules_load_all_in_directory;
+	GList* function(char* dirname, GIOModuleScope* scop) c_g_io_modules_load_all_in_directory_with_scope;
+	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
+	void function(char* dirname, GIOModuleScope* scop) c_g_io_modules_scan_all_in_directory_with_scope;
 
 	// gio.IOModuleScope
 
@@ -3977,11 +4001,13 @@ __gshared extern(C)
 	uint function(GSettings* settings, const(char)* key) c_g_settings_get_flags;
 	int function(GSettings* settings) c_g_settings_get_has_unapplied;
 	int function(GSettings* settings, const(char)* key) c_g_settings_get_int;
+	long function(GSettings* settings, const(char)* key) c_g_settings_get_int64;
 	void* function(GSettings* settings, const(char)* key, GSettingsGetMapping mapping, void* userData) c_g_settings_get_mapped;
 	GVariant* function(GSettings* settings, const(char)* key) c_g_settings_get_range;
 	char* function(GSettings* settings, const(char)* key) c_g_settings_get_string;
 	char** function(GSettings* settings, const(char)* key) c_g_settings_get_strv;
 	uint function(GSettings* settings, const(char)* key) c_g_settings_get_uint;
+	ulong function(GSettings* settings, const(char)* key) c_g_settings_get_uint64;
 	GVariant* function(GSettings* settings, const(char)* key) c_g_settings_get_user_value;
 	GVariant* function(GSettings* settings, const(char)* key) c_g_settings_get_value;
 	int function(GSettings* settings, const(char)* name) c_g_settings_is_writable;
@@ -3996,10 +4022,24 @@ __gshared extern(C)
 	int function(GSettings* settings, const(char)* key, int value) c_g_settings_set_enum;
 	int function(GSettings* settings, const(char)* key, uint value) c_g_settings_set_flags;
 	int function(GSettings* settings, const(char)* key, int value) c_g_settings_set_int;
+	int function(GSettings* settings, const(char)* key, long value) c_g_settings_set_int64;
 	int function(GSettings* settings, const(char)* key, const(char)* value) c_g_settings_set_string;
 	int function(GSettings* settings, const(char)* key, char** value) c_g_settings_set_strv;
 	int function(GSettings* settings, const(char)* key, uint value) c_g_settings_set_uint;
+	int function(GSettings* settings, const(char)* key, ulong value) c_g_settings_set_uint64;
 	int function(GSettings* settings, const(char)* key, GVariant* value) c_g_settings_set_value;
+
+	// gio.SettingsBackend
+
+	GType function() c_g_settings_backend_get_type;
+	void function(GTree* tree, char** path, char*** keys, GVariant*** values) c_g_settings_backend_flatten_tree;
+	GSettingsBackend* function() c_g_settings_backend_get_default;
+	void function(GSettingsBackend* backend, const(char)* key, void* originTag) c_g_settings_backend_changed;
+	void function(GSettingsBackend* backend, GTree* tree, void* originTag) c_g_settings_backend_changed_tree;
+	void function(GSettingsBackend* backend, const(char)* path, char** items, void* originTag) c_g_settings_backend_keys_changed;
+	void function(GSettingsBackend* backend, const(char)* path, void* originTag) c_g_settings_backend_path_changed;
+	void function(GSettingsBackend* backend, const(char)* path) c_g_settings_backend_path_writable_changed;
+	void function(GSettingsBackend* backend, const(char)* key) c_g_settings_backend_writable_changed;
 
 	// gio.SettingsSchema
 
@@ -4029,7 +4069,7 @@ __gshared extern(C)
 	// gio.SettingsSchemaSource
 
 	GType function() c_g_settings_schema_source_get_type;
-	GSettingsSchemaSource* function(const(char)* directory, GSettingsSchemaSource* parent, int trusted, GError** err) c_g_settings_schema_source_new_from_directory;
+	GSettingsSchemaSource* function(char* directory, GSettingsSchemaSource* parent, int trusted, GError** err) c_g_settings_schema_source_new_from_directory;
 	void function(GSettingsSchemaSource* source, int recursive, char*** nonRelocatable, char*** relocatable) c_g_settings_schema_source_list_schemas;
 	GSettingsSchema* function(GSettingsSchemaSource* source, const(char)* schemaId, int recursive) c_g_settings_schema_source_lookup;
 	GSettingsSchemaSource* function(GSettingsSchemaSource* source) c_g_settings_schema_source_ref;
@@ -4319,12 +4359,12 @@ __gshared extern(C)
 	GSubprocessLauncher* function(GSubprocessFlags flags) c_g_subprocess_launcher_new;
 	const(char)* function(GSubprocessLauncher* self, const(char)* variable) c_g_subprocess_launcher_getenv;
 	void function(GSubprocessLauncher* self, GSpawnChildSetupFunc childSetup, void* userData, GDestroyNotify destroyNotify) c_g_subprocess_launcher_set_child_setup;
-	void function(GSubprocessLauncher* self, const(char)* cwd) c_g_subprocess_launcher_set_cwd;
+	void function(GSubprocessLauncher* self, char* cwd) c_g_subprocess_launcher_set_cwd;
 	void function(GSubprocessLauncher* self, char** env) c_g_subprocess_launcher_set_environ;
 	void function(GSubprocessLauncher* self, GSubprocessFlags flags) c_g_subprocess_launcher_set_flags;
-	void function(GSubprocessLauncher* self, const(char)* path) c_g_subprocess_launcher_set_stderr_file_path;
+	void function(GSubprocessLauncher* self, char* path) c_g_subprocess_launcher_set_stderr_file_path;
 	void function(GSubprocessLauncher* self, const(char)* path) c_g_subprocess_launcher_set_stdin_file_path;
-	void function(GSubprocessLauncher* self, const(char)* path) c_g_subprocess_launcher_set_stdout_file_path;
+	void function(GSubprocessLauncher* self, char* path) c_g_subprocess_launcher_set_stdout_file_path;
 	void function(GSubprocessLauncher* self, const(char)* variable, const(char)* value, int overwrite) c_g_subprocess_launcher_setenv;
 	GSubprocess* function(GSubprocessLauncher* self, GError** error, const(char)* argv0, ... ) c_g_subprocess_launcher_spawn;
 	GSubprocess* function(GSubprocessLauncher* self, char** argv, GError** err) c_g_subprocess_launcher_spawnv;
@@ -4425,10 +4465,10 @@ __gshared extern(C)
 	// gio.TlsCertificate
 
 	GType function() c_g_tls_certificate_get_type;
-	GTlsCertificate* function(const(char)* file, GError** err) c_g_tls_certificate_new_from_file;
-	GTlsCertificate* function(const(char)* certFile, const(char)* keyFile, GError** err) c_g_tls_certificate_new_from_files;
+	GTlsCertificate* function(char* file, GError** err) c_g_tls_certificate_new_from_file;
+	GTlsCertificate* function(char* certFile, char* keyFile, GError** err) c_g_tls_certificate_new_from_files;
 	GTlsCertificate* function(const(char)* data, ptrdiff_t length, GError** err) c_g_tls_certificate_new_from_pem;
-	GList* function(const(char)* file, GError** err) c_g_tls_certificate_list_new_from_file;
+	GList* function(char* file, GError** err) c_g_tls_certificate_list_new_from_file;
 	GTlsCertificate* function(GTlsCertificate* cert) c_g_tls_certificate_get_issuer;
 	int function(GTlsCertificate* certOne, GTlsCertificate* certTwo) c_g_tls_certificate_is_same;
 	GTlsCertificateFlags function(GTlsCertificate* cert, GSocketConnectable* identity, GTlsCertificate* trustedCa) c_g_tls_certificate_verify;
@@ -4488,7 +4528,7 @@ __gshared extern(C)
 	// gio.TlsFileDatabase
 
 	GType function() c_g_tls_file_database_get_type;
-	GTlsDatabase* function(const(char)* anchors, GError** err) c_g_tls_file_database_new;
+	GTlsDatabase* function(char* anchors, GError** err) c_g_tls_file_database_new;
 
 	// gio.TlsInteraction
 
@@ -4571,13 +4611,13 @@ __gshared extern(C)
 
 	// gio.UnixMountEntry
 
-	int function(const(char)* mountPath) c_g_unix_is_mount_path_system_internal;
+	int function(char* mountPath) c_g_unix_is_mount_path_system_internal;
 	GUnixMountEntry* function(const(char)* mountPath, ulong* timeRead) c_g_unix_mount_at;
 	int function(GUnixMountEntry* mount1, GUnixMountEntry* mount2) c_g_unix_mount_compare;
 	void function(GUnixMountEntry* mountEntry) c_g_unix_mount_free;
-	const(char)* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_device_path;
+	char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_device_path;
 	const(char)* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_fs_type;
-	const(char)* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_mount_path;
+	char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_mount_path;
 	int function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_can_eject;
 	GIcon* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_icon;
 	char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_guess_name;
@@ -4601,9 +4641,9 @@ __gshared extern(C)
 
 	int function(GUnixMountPoint* mount1, GUnixMountPoint* mount2) c_g_unix_mount_point_compare;
 	void function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_free;
-	const(char)* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_device_path;
+	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_device_path;
 	const(char)* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_fs_type;
-	const(char)* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_mount_path;
+	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_mount_path;
 	const(char)* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_options;
 	int function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_can_eject;
 	GIcon* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_guess_icon;
@@ -4643,6 +4683,8 @@ __gshared extern(C)
 	char** function(GVfs* vfs) c_g_vfs_get_supported_uri_schemes;
 	int function(GVfs* vfs) c_g_vfs_is_active;
 	GFile* function(GVfs* vfs, const(char)* parseName) c_g_vfs_parse_name;
+	int function(GVfs* vfs, const(char)* scheme, GVfsFileLookupFunc uriFunc, void* uriData, GDestroyNotify uriDestroy, GVfsFileLookupFunc parseNameFunc, void* parseNameData, GDestroyNotify parseNameDestroy) c_g_vfs_register_uri_scheme;
+	int function(GVfs* vfs, const(char)* scheme) c_g_vfs_unregister_uri_scheme;
 
 	// gio.Volume
 
@@ -4817,6 +4859,8 @@ alias c_g_app_info_get_default_for_uri_scheme g_app_info_get_default_for_uri_sch
 alias c_g_app_info_get_fallback_for_type g_app_info_get_fallback_for_type;
 alias c_g_app_info_get_recommended_for_type g_app_info_get_recommended_for_type;
 alias c_g_app_info_launch_default_for_uri g_app_info_launch_default_for_uri;
+alias c_g_app_info_launch_default_for_uri_async g_app_info_launch_default_for_uri_async;
+alias c_g_app_info_launch_default_for_uri_finish g_app_info_launch_default_for_uri_finish;
 alias c_g_app_info_reset_type_associations g_app_info_reset_type_associations;
 alias c_g_app_info_add_supports_type g_app_info_add_supports_type;
 alias c_g_app_info_can_delete g_app_info_can_delete;
@@ -5441,6 +5485,7 @@ alias c_g_drive_has_media g_drive_has_media;
 alias c_g_drive_has_volumes g_drive_has_volumes;
 alias c_g_drive_is_media_check_automatic g_drive_is_media_check_automatic;
 alias c_g_drive_is_media_removable g_drive_is_media_removable;
+alias c_g_drive_is_removable g_drive_is_removable;
 alias c_g_drive_poll_for_media g_drive_poll_for_media;
 alias c_g_drive_poll_for_media_finish g_drive_poll_for_media_finish;
 alias c_g_drive_start g_drive_start;
@@ -6343,11 +6388,13 @@ alias c_g_settings_get_enum g_settings_get_enum;
 alias c_g_settings_get_flags g_settings_get_flags;
 alias c_g_settings_get_has_unapplied g_settings_get_has_unapplied;
 alias c_g_settings_get_int g_settings_get_int;
+alias c_g_settings_get_int64 g_settings_get_int64;
 alias c_g_settings_get_mapped g_settings_get_mapped;
 alias c_g_settings_get_range g_settings_get_range;
 alias c_g_settings_get_string g_settings_get_string;
 alias c_g_settings_get_strv g_settings_get_strv;
 alias c_g_settings_get_uint g_settings_get_uint;
+alias c_g_settings_get_uint64 g_settings_get_uint64;
 alias c_g_settings_get_user_value g_settings_get_user_value;
 alias c_g_settings_get_value g_settings_get_value;
 alias c_g_settings_is_writable g_settings_is_writable;
@@ -6362,10 +6409,24 @@ alias c_g_settings_set_double g_settings_set_double;
 alias c_g_settings_set_enum g_settings_set_enum;
 alias c_g_settings_set_flags g_settings_set_flags;
 alias c_g_settings_set_int g_settings_set_int;
+alias c_g_settings_set_int64 g_settings_set_int64;
 alias c_g_settings_set_string g_settings_set_string;
 alias c_g_settings_set_strv g_settings_set_strv;
 alias c_g_settings_set_uint g_settings_set_uint;
+alias c_g_settings_set_uint64 g_settings_set_uint64;
 alias c_g_settings_set_value g_settings_set_value;
+
+// gio.SettingsBackend
+
+alias c_g_settings_backend_get_type g_settings_backend_get_type;
+alias c_g_settings_backend_flatten_tree g_settings_backend_flatten_tree;
+alias c_g_settings_backend_get_default g_settings_backend_get_default;
+alias c_g_settings_backend_changed g_settings_backend_changed;
+alias c_g_settings_backend_changed_tree g_settings_backend_changed_tree;
+alias c_g_settings_backend_keys_changed g_settings_backend_keys_changed;
+alias c_g_settings_backend_path_changed g_settings_backend_path_changed;
+alias c_g_settings_backend_path_writable_changed g_settings_backend_path_writable_changed;
+alias c_g_settings_backend_writable_changed g_settings_backend_writable_changed;
 
 // gio.SettingsSchema
 
@@ -7009,6 +7070,8 @@ alias c_g_vfs_get_file_for_uri g_vfs_get_file_for_uri;
 alias c_g_vfs_get_supported_uri_schemes g_vfs_get_supported_uri_schemes;
 alias c_g_vfs_is_active g_vfs_is_active;
 alias c_g_vfs_parse_name g_vfs_parse_name;
+alias c_g_vfs_register_uri_scheme g_vfs_register_uri_scheme;
+alias c_g_vfs_unregister_uri_scheme g_vfs_unregister_uri_scheme;
 
 // gio.Volume
 

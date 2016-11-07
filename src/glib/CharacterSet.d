@@ -229,7 +229,8 @@ public struct CharacterSet
 	 * whole path, as it allows translation.
 	 *
 	 * Params:
-	 *     filename = an absolute pathname in the GLib file name encoding
+	 *     filename = an absolute pathname in the
+	 *         GLib file name encoding
 	 *
 	 * Return: a newly allocated string containing
 	 *     a rendition of the basename of the filename in valid UTF-8
@@ -262,7 +263,8 @@ public struct CharacterSet
 	 * translation of filenames.
 	 *
 	 * Params:
-	 *     filename = a pathname hopefully in the GLib file name encoding
+	 *     filename = a pathname hopefully in the
+	 *         GLib file name encoding
 	 *
 	 * Return: a newly allocated string containing
 	 *     a rendition of the filename in valid UTF-8
@@ -419,7 +421,7 @@ public struct CharacterSet
 	 * and said environment variables have no effect.
 	 *
 	 * `G_FILENAME_ENCODING` may be set to a comma-separated list of
-	 * character set names. The special token "&commat;locale" is taken
+	 * character set names. The special token "\@locale" is taken
 	 * to  mean the character set for the [current locale][setlocale].
 	 * If `G_FILENAME_ENCODING` is not set, but `G_BROKEN_FILENAMES` is,
 	 * the character set of the current locale is taken as the filename

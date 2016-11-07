@@ -74,9 +74,9 @@ public struct URI
 	 * component following Section 3.3. of RFC 2396.
 	 *
 	 * Params:
-	 *     filename = an absolute filename specified in the GLib file name encoding,
-	 *         which is the on-disk file name bytes on Unix, and UTF-8 on
-	 *         Windows
+	 *     filename = an absolute filename specified in the GLib file
+	 *         name encoding, which is the on-disk file name bytes on Unix, and UTF-8
+	 *         on Windows
 	 *     hostname = A UTF-8 encoded hostname, or %NULL for none.
 	 *
 	 * Return: a newly-allocated string holding the resulting

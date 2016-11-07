@@ -826,6 +826,10 @@ public enum GstEventType
 	 */
 	SEGMENT = 17934,
 	/**
+	 * A new #GstStreamCollection is available (Since 1.10)
+	 */
+	STREAM_COLLECTION = 19230,
+	/**
 	 * A new set of metadata tags has been found in the stream.
 	 */
 	TAG = 20510,
@@ -841,8 +845,15 @@ public enum GstEventType
 	 */
 	SINK_MESSAGE = 25630,
 	/**
+	 * Indicates that there is no more data for
+	 * the stream group ID in the message. Sent before EOS
+	 * in some instances and should be handled mostly the same. (Since 1.10)
+	 */
+	STREAM_GROUP_DONE = 26894,
+	/**
 	 * End-Of-Stream. No more data is to be expected to follow
-	 * without a SEGMENT event.
+	 * without either a STREAM_START event, or a FLUSH_STOP and a SEGMENT
+	 * event.
 	 */
 	EOS = 28174,
 	/**
@@ -898,6 +909,10 @@ public enum GstEventType
 	 * entry's UID.
 	 */
 	TOC_SELECT = 64001,
+	/**
+	 * A request to select one or more streams (Since 1.10)
+	 */
+	SELECT_STREAMS = 66561,
 	/**
 	 * Upstream custom event
 	 */
@@ -1424,6 +1439,27 @@ public enum GstMessageType : uint
 	 */
 	DEVICE_REMOVED = 2147483650,
 	/**
+	 * Message indicating a #GObject property has
+	 * changed (Since 1.10)
+	 */
+	PROPERTY_NOTIFY = 2147483651,
+	/**
+	 * Message indicating a new #GstStreamCollection
+	 * is available (Since 1.10)
+	 */
+	STREAM_COLLECTION = 2147483652,
+	/**
+	 * Message indicating the active selection of
+	 * #GstStreams has changed (Since 1.10)
+	 */
+	STREAMS_SELECTED = 2147483653,
+	/**
+	 * Message indicating to request the application to
+	 * try to play the given URL(s). Useful if for example a HTTP 302/303
+	 * response is received with a non-HTTP URL inside. (Since 1.10)
+	 */
+	REDIRECT = 2147483654,
+	/**
 	 * mask for all of the above messages.
 	 */
 	ANY = 4294967295,
@@ -1474,6 +1510,12 @@ public enum GstMiniObjectFlags
 	 */
 	LOCK_READONLY = 2,
 	/**
+	 * the object is expected to stay alive
+	 * even after gst_deinit() has been called and so should be ignored by leak
+	 * detection tools. (Since 1.10)
+	 */
+	MAY_BE_LEAKED = 4,
+	/**
 	 * first flag that can be used by subclasses.
 	 */
 	LAST = 16,
@@ -1485,6 +1527,12 @@ alias GstMiniObjectFlags MiniObjectFlags;
  */
 public enum GstObjectFlags
 {
+	/**
+	 * the object is expected to stay alive even
+	 * after gst_deinit() has been called and so should be ignored by leak
+	 * detection tools. (Since 1.10)
+	 */
+	MAY_BE_LEAKED = 1,
 	/**
 	 * subclasses can add additional flags starting from this flag
 	 */
@@ -1770,7 +1818,7 @@ public enum GstPadProbeType
 	 */
 	INVALID = 0,
 	/**
-	 * probe idle pads and block
+	 * probe idle pads and block while the callback is called
 	 */
 	IDLE = 1,
 	/**
@@ -1931,6 +1979,12 @@ public enum GstParseFlags
 	 * just return the element.
 	 */
 	NO_SINGLE_ELEMENT_BINS = 2,
+	/**
+	 * If more than one toplevel element is described
+	 * by the pipeline description string, put them in a #GstBin instead of a
+	 * #GstPipeline. (Since 1.10)
+	 */
+	PLACE_IN_BIN = 4,
 }
 alias GstParseFlags ParseFlags;
 
@@ -2857,6 +2911,35 @@ public enum GstStreamStatusType
 alias GstStreamStatusType StreamStatusType;
 
 /**
+ * #GstStreamType describes a high level classification set for
+ * flows of data in #GstStream objects.
+ */
+public enum GstStreamType
+{
+	/**
+	 * The stream is of unknown (unclassified) type.
+	 */
+	UNKNOWN = 1,
+	/**
+	 * The stream is of audio data
+	 */
+	AUDIO = 2,
+	/**
+	 * The stream carries video data
+	 */
+	VIDEO = 4,
+	/**
+	 * The stream is a muxed container type
+	 */
+	CONTAINER = 8,
+	/**
+	 * The stream contains subtitle / subpicture data.
+	 */
+	TEXT = 16,
+}
+alias GstStreamType StreamType;
+
+/**
  * The type of a %GST_MESSAGE_STRUCTURE_CHANGE.
  */
 public enum GstStructureChangeType
@@ -3402,6 +3485,12 @@ struct GstBin
  * The @handle_message method can be overridden to implement custom
  * message handling.  @handle_message takes ownership of the message, just like
  * #gst_element_post_message.
+ *
+ * The @element_added_deep vfunc will be called when a new element has been
+ * added to any bin inside this bin, so it will also be called if a new child
+ * was added to a sub-bin of this bin. #GstBin implementations that override
+ * this message should chain up to the parent class implementation so the
+ * element-added-deep signal is emitted on all parents.
  */
 struct GstBinClass
 {
@@ -3422,7 +3511,11 @@ struct GstBinClass
 	extern(C) void function(GstBin* bin, GstMessage* message) handleMessage;
 	/** */
 	extern(C) int function(GstBin* bin) doLatency;
-	void*[4] GstReserved;
+	/** */
+	extern(C) void function(GstBin* bin, GstBin* subBin, GstElement* child) deepElementAdded;
+	/** */
+	extern(C) void function(GstBin* bin, GstBin* subBin, GstElement* child) deepElementRemoved;
+	void*[2] GstReserved;
 }
 
 struct GstBinPrivate;
@@ -5090,6 +5183,55 @@ struct GstStaticPadTemplate
 	GstStaticCaps staticCaps;
 }
 
+struct GstStream
+{
+	GstObject object;
+	/**
+	 * The Stream Identifier for this #GstStream
+	 */
+	const(char)* streamId;
+	GstStreamPrivate* priv;
+	void*[4] GstReserved;
+}
+
+/**
+ * GstStream class structure
+ */
+struct GstStreamClass
+{
+	/**
+	 * the parent class structure
+	 */
+	GstObjectClass parentClass;
+	void*[4] GstReserved;
+}
+
+struct GstStreamCollection
+{
+	GstObject object;
+	char* upstreamId;
+	GstStreamCollectionPrivate* priv;
+	void*[4] GstReserved;
+}
+
+/**
+ * GstStreamCollection class structure
+ */
+struct GstStreamCollectionClass
+{
+	/**
+	 * the parent class structure
+	 */
+	GstObjectClass parentClass;
+	/** */
+	extern(C) void function(GstStreamCollection* collection, GstStream* stream, GParamSpec* pspec) streamNotify;
+	void*[4] GstReserved;
+}
+
+struct GstStreamCollectionPrivate;
+
+struct GstStreamPrivate;
+
 struct GstStructure
 {
 	/**
@@ -5525,6 +5667,9 @@ public alias extern(C) int function(GstControlSource* self, GstClockTime timesta
 
 /** */
 public alias extern(C) void function() GstDebugFuncPtr;
+
+/** */
+public alias extern(C) void function(GstElement* element, void* userData) GstElementCallAsyncFunc;
 
 /**
  * This function will be called when creating a copy of @it and should

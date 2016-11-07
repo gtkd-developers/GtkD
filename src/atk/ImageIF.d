@@ -78,7 +78,7 @@ public interface ImageIF{
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 */
-	public void getImagePosition(int* x, int* y, AtkCoordType coordType);
+	public void getImagePosition(out int x, out int y, AtkCoordType coordType);
 
 	/**
 	 * Get the width and height in pixels for the specified image.
@@ -89,7 +89,7 @@ public interface ImageIF{
 	 *     width = filled with the image width, or -1 if the value cannot be obtained.
 	 *     height = filled with the image height, or -1 if the value cannot be obtained.
 	 */
-	public void getImageSize(int* width, int* height);
+	public void getImageSize(out int width, out int height);
 
 	/**
 	 * Sets the textual description for this image.

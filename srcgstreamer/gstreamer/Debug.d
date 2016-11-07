@@ -242,7 +242,8 @@ public struct Debug
 	 * Removes all registered instances of the given logging functions.
 	 *
 	 * Params:
-	 *     func = the log function to remove
+	 *     func = the log function to remove, or %NULL to
+	 *         remove the default log function
 	 *
 	 * Return: How many instances of the function were removed
 	 */

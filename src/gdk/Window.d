@@ -32,6 +32,7 @@ private import gdk.Color;
 private import gdk.Cursor;
 private import gdk.Device;
 private import gdk.Display;
+private import gdk.DrawingContext;
 private import gdk.Event;
 private import gdk.FrameClock;
 private import gdk.GLContext;
@@ -237,6 +238,56 @@ public class Window : ObjectG
 	}
 
 	/**
+	 * Indicates that you are beginning the process of redrawing @region
+	 * on @window, and provides you with a #GdkDrawingContext.
+	 *
+	 * If @window is a top level #GdkWindow, backed by a native window
+	 * implementation, a backing store (offscreen buffer) large enough to
+	 * contain @region will be created. The backing store will be initialized
+	 * with the background color or background surface for @window. Then, all
+	 * drawing operations performed on @window will be diverted to the
+	 * backing store. When you call gdk_window_end_frame(), the contents of
+	 * the backing store will be copied to @window, making it visible
+	 * on screen. Only the part of @window contained in @region will be
+	 * modified; that is, drawing operations are clipped to @region.
+	 *
+	 * The net result of all this is to remove flicker, because the user
+	 * sees the finished product appear all at once when you call
+	 * gdk_window_end_draw_frame(). If you draw to @window directly without
+	 * calling gdk_window_begin_draw_frame(), the user may see flicker
+	 * as individual drawing operations are performed in sequence.
+	 *
+	 * When using GTK+, the widget system automatically places calls to
+	 * gdk_window_begin_draw_frame() and gdk_window_end_draw_frame() around
+	 * emissions of the `GtkWidget::draw` signal. That is, if you’re
+	 * drawing the contents of the widget yourself, you can assume that the
+	 * widget has a cleared background, is already set as the clip region,
+	 * and already has a backing store. Therefore in most cases, application
+	 * code in GTK does not need to call gdk_window_begin_draw_frame()
+	 * explicitly.
+	 *
+	 * Params:
+	 *     region = a Cairo region
+	 *
+	 * Return: a #GdkDrawingContext context that should be
+	 *     used to draw the contents of the window; the returned context is owned
+	 *     by GDK.
+	 *
+	 * Since: 3.22
+	 */
+	public DrawingContext beginDrawFrame(Region region)
+	{
+		auto p = gdk_window_begin_draw_frame(gdkWindow, (region is null) ? null : region.getRegionStruct());
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) p);
+	}
+
+	/**
 	 * Begins a window move operation (for a toplevel window).
 	 *
 	 * This function assumes that the drag is controlled by the
@@ -279,6 +330,8 @@ public class Window : ObjectG
 	 * A convenience wrapper around gdk_window_begin_paint_region() which
 	 * creates a rectangular region for you. See
 	 * gdk_window_begin_paint_region() for details.
+	 *
+	 * Deprecated: Use gdk_window_begin_draw_frame() instead
 	 *
 	 * Params:
 	 *     rectangle = rectangle you intend to draw to
@@ -327,6 +380,8 @@ public class Window : ObjectG
 	 * the topmost backing store in the stack. One matching call to
 	 * gdk_window_end_paint() is required for each call to
 	 * gdk_window_begin_paint_region().
+	 *
+	 * Deprecated: Use gdk_window_begin_draw_frame() instead
 	 *
 	 * Params:
 	 *     region = region you intend to draw to
@@ -497,6 +552,25 @@ public class Window : ObjectG
 	 * Initially the surface contents are all 0 (transparent if contents
 	 * have transparency, black otherwise.)
 	 *
+	 * The @width and @height of the new surface are not affected by
+	 * the scaling factor of the @window, or by the @scale argument; they
+	 * are the size of the surface in device pixels. If you wish to create
+	 * an image surface capable of holding the contents of @window you can
+	 * use:
+	 *
+	 * |[<!-- language="C" -->
+	 * int scale = gdk_window_get_scale_factor (window);
+	 * int width = gdk_window_get_width (window) * scale;
+	 * int height = gdk_window_get_height (window) * scale;
+	 *
+	 * // format is set elsewhere
+	 * cairo_surface_t *surface =
+	 * gdk_window_create_similar_image_surface (window,
+	 * format,
+	 * width, height,
+	 * scale);
+	 * ]|
+	 *
 	 * Params:
 	 *     format = the format for the new surface
 	 *     width = width of the new surface
@@ -604,6 +678,25 @@ public class Window : ObjectG
 	public void enableSynchronizedConfigure()
 	{
 		gdk_window_enable_synchronized_configure(gdkWindow);
+	}
+
+	/**
+	 * Indicates that the drawing of the contents of @window started with
+	 * gdk_window_begin_frame() has been completed.
+	 *
+	 * This function will take care of destroying the #GdkDrawingContext.
+	 *
+	 * It is an error to call this function without a matching
+	 * gdk_window_begin_frame() first.
+	 *
+	 * Params:
+	 *     context = the #GdkDrawingContext created by gdk_window_begin_draw_frame()
+	 *
+	 * Since: 3.22
+	 */
+	public void endDrawFrame(DrawingContext context)
+	{
+		gdk_window_end_draw_frame(gdkWindow, (context is null) ? null : context.getDrawingContextStruct());
 	}
 
 	/**
@@ -756,6 +849,8 @@ public class Window : ObjectG
 	 * Gets the pattern used to clear the background on @window. If @window
 	 * does not have its own background and reuses the parent's, %NULL is
 	 * returned and you’ll have to query it yourself.
+	 *
+	 * Deprecated: Don't use this function
 	 *
 	 * Return: The pattern to use for the
 	 *     background or %NULL to use the parent’s background.
@@ -2130,9 +2225,7 @@ public class Window : ObjectG
 	 * gtk_style_context_set_background() — if you're implementing a
 	 * custom widget.
 	 *
-	 * See also gdk_window_set_background_pattern().
-	 *
-	 * Deprecated: Use gdk_window_set_background_rgba() instead.
+	 * Deprecated: Don't use this function
 	 *
 	 * Params:
 	 *     color = a #GdkColor
@@ -2151,6 +2244,8 @@ public class Window : ObjectG
 	 * The windowing system will normally fill a window with its background
 	 * when the window is obscured then exposed.
 	 *
+	 * Deprecated: Don't use this function
+	 *
 	 * Params:
 	 *     pattern = a pattern to use, or %NULL
 	 */
@@ -2163,6 +2258,8 @@ public class Window : ObjectG
 	 * Sets the background color of @window.
 	 *
 	 * See also gdk_window_set_background_pattern().
+	 *
+	 * Deprecated: Don't use this function
 	 *
 	 * Params:
 	 *     rgba = a #GdkRGBA color
@@ -2485,6 +2582,8 @@ public class Window : ObjectG
 	 * image quality since the window manager may only need to scale the
 	 * icon by a small amount or not at all.
 	 *
+	 * Note that some platforms don't support window icons.
+	 *
 	 * Params:
 	 *     pixbufs = A list of pixbufs, of different sizes.
 	 */
@@ -2504,6 +2603,8 @@ public class Window : ObjectG
 	 *
 	 * Using %NULL for @name unsets the icon title; further calls to
 	 * gdk_window_set_title() will again update the icon title as well.
+	 *
+	 * Note that some platforms don't support window icons.
 	 *
 	 * Params:
 	 *     name = name of window while iconified (minimized)
@@ -3181,6 +3282,53 @@ public class Window : ObjectG
 		foreach ( void delegate(double, double, void*, void*, Window) dlg; _window.onFromEmbedderListeners )
 		{
 			dlg(embedderX, embedderY, offscreenX, offscreenY, _window);
+		}
+	}
+
+	void delegate(void*, void*, bool, bool, Window)[] onMovedToRectListeners;
+	/**
+	 * Emitted when the position of @window is finalized after being moved to a
+	 * destination rectangle.
+	 *
+	 * @window might be flipped over the destination rectangle in order to keep
+	 * it on-screen, in which case @flipped_x and @flipped_y will be set to %TRUE
+	 * accordingly.
+	 *
+	 * @flipped_rect is the ideal position of @window after any possible
+	 * flipping, but before any possible sliding. @final_rect is @flipped_rect,
+	 * but possibly translated in the case that flipping is still ineffective in
+	 * keeping @window on-screen.
+	 *
+	 * Params:
+	 *     flippedRect = the position of @window after any possible
+	 *         flipping or %NULL if the backend can't obtain it
+	 *     finalRect = the final position of @window or %NULL if the
+	 *         backend can't obtain it
+	 *     flippedX = %TRUE if the anchors were flipped horizontally
+	 *     flippedY = %TRUE if the anchors were flipped vertically
+	 *
+	 * Since: 3.22
+	 */
+	void addOnMovedToRect(void delegate(void*, void*, bool, bool, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "moved-to-rect" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"moved-to-rect",
+				cast(GCallback)&callBackMovedToRect,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["moved-to-rect"] = 1;
+		}
+		onMovedToRectListeners ~= dlg;
+	}
+	extern(C) static void callBackMovedToRect(GdkWindow* windowStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY, Window _window)
+	{
+		foreach ( void delegate(void*, void*, bool, bool, Window) dlg; _window.onMovedToRectListeners )
+		{
+			dlg(flippedRect, finalRect, flippedX, flippedY, _window);
 		}
 	}
 

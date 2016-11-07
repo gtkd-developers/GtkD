@@ -81,8 +81,8 @@ public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 	/**
 	 *
 	 * Params:
-	 *     name = The name for the provider
-	 *     icon = A specific icon for the provider
+	 *     name = The name for the provider, or %NULL.
+	 *     icon = A specific icon for the provider, or %NULL.
 	 * Return: a new #GtkSourceCompletionWords provider
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.

@@ -371,16 +371,42 @@ shared static this()
 	Linker.link(gtk_source_print_compositor_set_top_margin, "gtk_source_print_compositor_set_top_margin", LIBRARY.GSV);
 	Linker.link(gtk_source_print_compositor_set_wrap_mode, "gtk_source_print_compositor_set_wrap_mode", LIBRARY.GSV);
 
+	// gsv.Region
+
+	Linker.link(gtk_source_region_get_type, "gtk_source_region_get_type", LIBRARY.GSV);
+	Linker.link(gtk_source_region_new, "gtk_source_region_new", LIBRARY.GSV);
+	Linker.link(gtk_source_region_add_region, "gtk_source_region_add_region", LIBRARY.GSV);
+	Linker.link(gtk_source_region_add_subregion, "gtk_source_region_add_subregion", LIBRARY.GSV);
+	Linker.link(gtk_source_region_get_bounds, "gtk_source_region_get_bounds", LIBRARY.GSV);
+	Linker.link(gtk_source_region_get_buffer, "gtk_source_region_get_buffer", LIBRARY.GSV);
+	Linker.link(gtk_source_region_get_start_region_iter, "gtk_source_region_get_start_region_iter", LIBRARY.GSV);
+	Linker.link(gtk_source_region_intersect_region, "gtk_source_region_intersect_region", LIBRARY.GSV);
+	Linker.link(gtk_source_region_intersect_subregion, "gtk_source_region_intersect_subregion", LIBRARY.GSV);
+	Linker.link(gtk_source_region_is_empty, "gtk_source_region_is_empty", LIBRARY.GSV);
+	Linker.link(gtk_source_region_subtract_region, "gtk_source_region_subtract_region", LIBRARY.GSV);
+	Linker.link(gtk_source_region_subtract_subregion, "gtk_source_region_subtract_subregion", LIBRARY.GSV);
+	Linker.link(gtk_source_region_to_string, "gtk_source_region_to_string", LIBRARY.GSV);
+
+	// gsv.RegionIter
+
+	Linker.link(gtk_source_region_iter_get_subregion, "gtk_source_region_iter_get_subregion", LIBRARY.GSV);
+	Linker.link(gtk_source_region_iter_is_end, "gtk_source_region_iter_is_end", LIBRARY.GSV);
+	Linker.link(gtk_source_region_iter_next, "gtk_source_region_iter_next", LIBRARY.GSV);
+
 	// gsv.SourceSearchContext
 
 	Linker.link(gtk_source_search_context_get_type, "gtk_source_search_context_get_type", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_new, "gtk_source_search_context_new", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_backward, "gtk_source_search_context_backward", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_backward2, "gtk_source_search_context_backward2", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_backward_async, "gtk_source_search_context_backward_async", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_backward_finish, "gtk_source_search_context_backward_finish", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_backward_finish2, "gtk_source_search_context_backward_finish2", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_forward, "gtk_source_search_context_forward", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_forward2, "gtk_source_search_context_forward2", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_forward_async, "gtk_source_search_context_forward_async", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_forward_finish, "gtk_source_search_context_forward_finish", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_forward_finish2, "gtk_source_search_context_forward_finish2", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_get_buffer, "gtk_source_search_context_get_buffer", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_get_highlight, "gtk_source_search_context_get_highlight", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_get_match_style, "gtk_source_search_context_get_match_style", LIBRARY.GSV);
@@ -389,6 +415,7 @@ shared static this()
 	Linker.link(gtk_source_search_context_get_regex_error, "gtk_source_search_context_get_regex_error", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_get_settings, "gtk_source_search_context_get_settings", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_replace, "gtk_source_search_context_replace", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_replace2, "gtk_source_search_context_replace2", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_replace_all, "gtk_source_search_context_replace_all", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_set_highlight, "gtk_source_search_context_set_highlight", LIBRARY.GSV);
 	Linker.link(gtk_source_search_context_set_match_style, "gtk_source_search_context_set_match_style", LIBRARY.GSV);
@@ -412,6 +439,7 @@ shared static this()
 	// gsv.SourceStyle
 
 	Linker.link(gtk_source_style_get_type, "gtk_source_style_get_type", LIBRARY.GSV);
+	Linker.link(gtk_source_style_apply, "gtk_source_style_apply", LIBRARY.GSV);
 	Linker.link(gtk_source_style_copy, "gtk_source_style_copy", LIBRARY.GSV);
 
 	// gsv.SourceStyleScheme
@@ -860,16 +888,42 @@ __gshared extern(C)
 	void function(GtkSourcePrintCompositor* compositor, double margin, GtkUnit unit) c_gtk_source_print_compositor_set_top_margin;
 	void function(GtkSourcePrintCompositor* compositor, GtkWrapMode wrapMode) c_gtk_source_print_compositor_set_wrap_mode;
 
+	// gsv.Region
+
+	GType function() c_gtk_source_region_get_type;
+	GtkSourceRegion* function(GtkTextBuffer* buffer) c_gtk_source_region_new;
+	void function(GtkSourceRegion* region, GtkSourceRegion* regionToAdd) c_gtk_source_region_add_region;
+	void function(GtkSourceRegion* region, GtkTextIter* Start, GtkTextIter* End) c_gtk_source_region_add_subregion;
+	int function(GtkSourceRegion* region, GtkTextIter* start, GtkTextIter* end) c_gtk_source_region_get_bounds;
+	GtkTextBuffer* function(GtkSourceRegion* region) c_gtk_source_region_get_buffer;
+	void function(GtkSourceRegion* region, GtkSourceRegionIter* iter) c_gtk_source_region_get_start_region_iter;
+	GtkSourceRegion* function(GtkSourceRegion* region1, GtkSourceRegion* region2) c_gtk_source_region_intersect_region;
+	GtkSourceRegion* function(GtkSourceRegion* region, GtkTextIter* Start, GtkTextIter* End) c_gtk_source_region_intersect_subregion;
+	int function(GtkSourceRegion* region) c_gtk_source_region_is_empty;
+	void function(GtkSourceRegion* region, GtkSourceRegion* regionToSubtract) c_gtk_source_region_subtract_region;
+	void function(GtkSourceRegion* region, GtkTextIter* Start, GtkTextIter* End) c_gtk_source_region_subtract_subregion;
+	char* function(GtkSourceRegion* region) c_gtk_source_region_to_string;
+
+	// gsv.RegionIter
+
+	int function(GtkSourceRegionIter* iter, GtkTextIter* start, GtkTextIter* end) c_gtk_source_region_iter_get_subregion;
+	int function(GtkSourceRegionIter* iter) c_gtk_source_region_iter_is_end;
+	int function(GtkSourceRegionIter* iter) c_gtk_source_region_iter_next;
+
 	// gsv.SourceSearchContext
 
 	GType function() c_gtk_source_search_context_get_type;
 	GtkSourceSearchContext* function(GtkSourceBuffer* buffer, GtkSourceSearchSettings* settings) c_gtk_source_search_context_new;
 	int function(GtkSourceSearchContext* search, GtkTextIter* iter, GtkTextIter* matchStart, GtkTextIter* matchEnd) c_gtk_source_search_context_backward;
+	int function(GtkSourceSearchContext* search, GtkTextIter* iter, GtkTextIter* matchStart, GtkTextIter* matchEnd, int* hasWrappedAround) c_gtk_source_search_context_backward2;
 	void function(GtkSourceSearchContext* search, GtkTextIter* iter, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gtk_source_search_context_backward_async;
 	int function(GtkSourceSearchContext* search, GAsyncResult* result, GtkTextIter* matchStart, GtkTextIter* matchEnd, GError** err) c_gtk_source_search_context_backward_finish;
+	int function(GtkSourceSearchContext* search, GAsyncResult* result, GtkTextIter* matchStart, GtkTextIter* matchEnd, int* hasWrappedAround, GError** err) c_gtk_source_search_context_backward_finish2;
 	int function(GtkSourceSearchContext* search, GtkTextIter* iter, GtkTextIter* matchStart, GtkTextIter* matchEnd) c_gtk_source_search_context_forward;
+	int function(GtkSourceSearchContext* search, GtkTextIter* iter, GtkTextIter* matchStart, GtkTextIter* matchEnd, int* hasWrappedAround) c_gtk_source_search_context_forward2;
 	void function(GtkSourceSearchContext* search, GtkTextIter* iter, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gtk_source_search_context_forward_async;
 	int function(GtkSourceSearchContext* search, GAsyncResult* result, GtkTextIter* matchStart, GtkTextIter* matchEnd, GError** err) c_gtk_source_search_context_forward_finish;
+	int function(GtkSourceSearchContext* search, GAsyncResult* result, GtkTextIter* matchStart, GtkTextIter* matchEnd, int* hasWrappedAround, GError** err) c_gtk_source_search_context_forward_finish2;
 	GtkSourceBuffer* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_buffer;
 	int function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_highlight;
 	GtkSourceStyle* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_match_style;
@@ -878,6 +932,7 @@ __gshared extern(C)
 	GError* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_regex_error;
 	GtkSourceSearchSettings* function(GtkSourceSearchContext* search) c_gtk_source_search_context_get_settings;
 	int function(GtkSourceSearchContext* search, GtkTextIter* matchStart, GtkTextIter* matchEnd, const(char)* replace, int replaceLength, GError** err) c_gtk_source_search_context_replace;
+	int function(GtkSourceSearchContext* search, GtkTextIter* matchStart, GtkTextIter* matchEnd, const(char)* replace, int replaceLength, GError** err) c_gtk_source_search_context_replace2;
 	uint function(GtkSourceSearchContext* search, const(char)* replace, int replaceLength, GError** err) c_gtk_source_search_context_replace_all;
 	void function(GtkSourceSearchContext* search, int highlight) c_gtk_source_search_context_set_highlight;
 	void function(GtkSourceSearchContext* search, GtkSourceStyle* matchStyle) c_gtk_source_search_context_set_match_style;
@@ -901,6 +956,7 @@ __gshared extern(C)
 	// gsv.SourceStyle
 
 	GType function() c_gtk_source_style_get_type;
+	void function(GtkSourceStyle* style, GtkTextTag* tag) c_gtk_source_style_apply;
 	GtkSourceStyle* function(GtkSourceStyle* style) c_gtk_source_style_copy;
 
 	// gsv.SourceStyleScheme
@@ -1347,16 +1403,42 @@ alias c_gtk_source_print_compositor_set_tab_width gtk_source_print_compositor_se
 alias c_gtk_source_print_compositor_set_top_margin gtk_source_print_compositor_set_top_margin;
 alias c_gtk_source_print_compositor_set_wrap_mode gtk_source_print_compositor_set_wrap_mode;
 
+// gsv.Region
+
+alias c_gtk_source_region_get_type gtk_source_region_get_type;
+alias c_gtk_source_region_new gtk_source_region_new;
+alias c_gtk_source_region_add_region gtk_source_region_add_region;
+alias c_gtk_source_region_add_subregion gtk_source_region_add_subregion;
+alias c_gtk_source_region_get_bounds gtk_source_region_get_bounds;
+alias c_gtk_source_region_get_buffer gtk_source_region_get_buffer;
+alias c_gtk_source_region_get_start_region_iter gtk_source_region_get_start_region_iter;
+alias c_gtk_source_region_intersect_region gtk_source_region_intersect_region;
+alias c_gtk_source_region_intersect_subregion gtk_source_region_intersect_subregion;
+alias c_gtk_source_region_is_empty gtk_source_region_is_empty;
+alias c_gtk_source_region_subtract_region gtk_source_region_subtract_region;
+alias c_gtk_source_region_subtract_subregion gtk_source_region_subtract_subregion;
+alias c_gtk_source_region_to_string gtk_source_region_to_string;
+
+// gsv.RegionIter
+
+alias c_gtk_source_region_iter_get_subregion gtk_source_region_iter_get_subregion;
+alias c_gtk_source_region_iter_is_end gtk_source_region_iter_is_end;
+alias c_gtk_source_region_iter_next gtk_source_region_iter_next;
+
 // gsv.SourceSearchContext
 
 alias c_gtk_source_search_context_get_type gtk_source_search_context_get_type;
 alias c_gtk_source_search_context_new gtk_source_search_context_new;
 alias c_gtk_source_search_context_backward gtk_source_search_context_backward;
+alias c_gtk_source_search_context_backward2 gtk_source_search_context_backward2;
 alias c_gtk_source_search_context_backward_async gtk_source_search_context_backward_async;
 alias c_gtk_source_search_context_backward_finish gtk_source_search_context_backward_finish;
+alias c_gtk_source_search_context_backward_finish2 gtk_source_search_context_backward_finish2;
 alias c_gtk_source_search_context_forward gtk_source_search_context_forward;
+alias c_gtk_source_search_context_forward2 gtk_source_search_context_forward2;
 alias c_gtk_source_search_context_forward_async gtk_source_search_context_forward_async;
 alias c_gtk_source_search_context_forward_finish gtk_source_search_context_forward_finish;
+alias c_gtk_source_search_context_forward_finish2 gtk_source_search_context_forward_finish2;
 alias c_gtk_source_search_context_get_buffer gtk_source_search_context_get_buffer;
 alias c_gtk_source_search_context_get_highlight gtk_source_search_context_get_highlight;
 alias c_gtk_source_search_context_get_match_style gtk_source_search_context_get_match_style;
@@ -1365,6 +1447,7 @@ alias c_gtk_source_search_context_get_occurrences_count gtk_source_search_contex
 alias c_gtk_source_search_context_get_regex_error gtk_source_search_context_get_regex_error;
 alias c_gtk_source_search_context_get_settings gtk_source_search_context_get_settings;
 alias c_gtk_source_search_context_replace gtk_source_search_context_replace;
+alias c_gtk_source_search_context_replace2 gtk_source_search_context_replace2;
 alias c_gtk_source_search_context_replace_all gtk_source_search_context_replace_all;
 alias c_gtk_source_search_context_set_highlight gtk_source_search_context_set_highlight;
 alias c_gtk_source_search_context_set_match_style gtk_source_search_context_set_match_style;
@@ -1388,6 +1471,7 @@ alias c_gtk_source_search_settings_set_wrap_around gtk_source_search_settings_se
 // gsv.SourceStyle
 
 alias c_gtk_source_style_get_type gtk_source_style_get_type;
+alias c_gtk_source_style_apply gtk_source_style_apply;
 alias c_gtk_source_style_copy gtk_source_style_copy;
 
 // gsv.SourceStyleScheme

@@ -219,11 +219,14 @@ public class Poll
 
 	/**
 	 * Read a byte from the control socket of the controllable @set.
-	 * This function is mostly useful for timer #GstPoll objects created with
+	 *
+	 * This function only works for timer #GstPoll objects created with
 	 * gst_poll_new_timer().
 	 *
-	 * Return: %TRUE on success. %FALSE when @set is not controllable or when there
-	 *     was no byte to read.
+	 * Return: %TRUE on success. %FALSE when when there was no byte to read or
+	 *     reading the byte failed. If there was no byte to read, and only then, errno
+	 *     will contain EWOULDBLOCK or EAGAIN. For all other values of errno this always signals a
+	 *     critical error.
 	 */
 	public bool readControl()
 	{
@@ -248,6 +251,9 @@ public class Poll
 	 * used after adding or removing descriptors to @set.
 	 *
 	 * If @set is not controllable, then this call will have no effect.
+	 *
+	 * This function only works for non-timer #GstPoll objects created with
+	 * gst_poll_new().
 	 */
 	public void restart()
 	{
@@ -258,6 +264,9 @@ public class Poll
 	 * When @controllable is %TRUE, this function ensures that future calls to
 	 * gst_poll_wait() will be affected by gst_poll_restart() and
 	 * gst_poll_set_flushing().
+	 *
+	 * This function only works for non-timer #GstPoll objects created with
+	 * gst_poll_new().
 	 *
 	 * Params:
 	 *     controllable = new controllable state.
@@ -274,6 +283,9 @@ public class Poll
 	 * to gst_poll_wait() will return -1, with errno set to EBUSY.
 	 *
 	 * Unsetting the flushing state will restore normal operation of @set.
+	 *
+	 * This function only works for non-timer #GstPoll objects created with
+	 * gst_poll_new().
 	 *
 	 * Params:
 	 *     flushing = new flushing state.
@@ -317,8 +329,12 @@ public class Poll
 	 * gst_poll_read_control() have been performed, calls to gst_poll_wait() will
 	 * block again until their timeout expired.
 	 *
-	 * Return: %TRUE on success. %FALSE when @set is not controllable or when the
-	 *     byte could not be written.
+	 * This function only works for timer #GstPoll objects created with
+	 * gst_poll_new_timer().
+	 *
+	 * Return: %TRUE on success. %FALSE when when the byte could not be written.
+	 *     errno contains the detailed error code but will never be EAGAIN, EINTR or
+	 *     EWOULDBLOCK. %FALSE always signals a critical error.
 	 */
 	public bool writeControl()
 	{

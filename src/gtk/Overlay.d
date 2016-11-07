@@ -163,6 +163,8 @@ public class Overlay : Bin
 	 *     position = the new index for @child in the list of overlay children
 	 *         of @overlay, starting from 0. If negative, indicates the end of
 	 *         the list
+	 *
+	 * Since: 3.18
 	 */
 	public void reorderOverlay(Widget child, int position)
 	{

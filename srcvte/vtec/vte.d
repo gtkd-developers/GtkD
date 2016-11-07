@@ -43,6 +43,15 @@ shared static this()
 	Linker.link(vte_pty_set_size, "vte_pty_set_size", LIBRARY.VTE);
 	Linker.link(vte_pty_set_utf8, "vte_pty_set_utf8", LIBRARY.VTE);
 
+	// vte.Regex
+
+	Linker.link(vte_regex_get_type, "vte_regex_get_type", LIBRARY.VTE);
+	Linker.link(vte_regex_new_for_match, "vte_regex_new_for_match", LIBRARY.VTE);
+	Linker.link(vte_regex_new_for_search, "vte_regex_new_for_search", LIBRARY.VTE);
+	Linker.link(vte_regex_jit, "vte_regex_jit", LIBRARY.VTE);
+	Linker.link(vte_regex_ref, "vte_regex_ref", LIBRARY.VTE);
+	Linker.link(vte_regex_unref, "vte_regex_unref", LIBRARY.VTE);
+
 	// vte.Terminal
 
 	Linker.link(vte_terminal_get_type, "vte_terminal_get_type", LIBRARY.VTE);
@@ -50,6 +59,7 @@ shared static this()
 	Linker.link(vte_terminal_copy_clipboard, "vte_terminal_copy_clipboard", LIBRARY.VTE);
 	Linker.link(vte_terminal_copy_primary, "vte_terminal_copy_primary", LIBRARY.VTE);
 	Linker.link(vte_terminal_event_check_gregex_simple, "vte_terminal_event_check_gregex_simple", LIBRARY.VTE);
+	Linker.link(vte_terminal_event_check_regex_simple, "vte_terminal_event_check_regex_simple", LIBRARY.VTE);
 	Linker.link(vte_terminal_feed, "vte_terminal_feed", LIBRARY.VTE);
 	Linker.link(vte_terminal_feed_child, "vte_terminal_feed_child", LIBRARY.VTE);
 	Linker.link(vte_terminal_feed_child_binary, "vte_terminal_feed_child_binary", LIBRARY.VTE);
@@ -81,6 +91,7 @@ shared static this()
 	Linker.link(vte_terminal_get_window_title, "vte_terminal_get_window_title", LIBRARY.VTE);
 	Linker.link(vte_terminal_get_word_char_exceptions, "vte_terminal_get_word_char_exceptions", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_add_gregex, "vte_terminal_match_add_gregex", LIBRARY.VTE);
+	Linker.link(vte_terminal_match_add_regex, "vte_terminal_match_add_regex", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_check, "vte_terminal_match_check", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_check_event, "vte_terminal_match_check_event", LIBRARY.VTE);
 	Linker.link(vte_terminal_match_remove, "vte_terminal_match_remove", LIBRARY.VTE);
@@ -95,8 +106,10 @@ shared static this()
 	Linker.link(vte_terminal_search_find_next, "vte_terminal_search_find_next", LIBRARY.VTE);
 	Linker.link(vte_terminal_search_find_previous, "vte_terminal_search_find_previous", LIBRARY.VTE);
 	Linker.link(vte_terminal_search_get_gregex, "vte_terminal_search_get_gregex", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_get_regex, "vte_terminal_search_get_regex", LIBRARY.VTE);
 	Linker.link(vte_terminal_search_get_wrap_around, "vte_terminal_search_get_wrap_around", LIBRARY.VTE);
 	Linker.link(vte_terminal_search_set_gregex, "vte_terminal_search_set_gregex", LIBRARY.VTE);
+	Linker.link(vte_terminal_search_set_regex, "vte_terminal_search_set_regex", LIBRARY.VTE);
 	Linker.link(vte_terminal_search_set_wrap_around, "vte_terminal_search_set_wrap_around", LIBRARY.VTE);
 	Linker.link(vte_terminal_select_all, "vte_terminal_select_all", LIBRARY.VTE);
 	Linker.link(vte_terminal_set_allow_bold, "vte_terminal_set_allow_bold", LIBRARY.VTE);
@@ -157,6 +170,15 @@ __gshared extern(C)
 	int function(VtePty* pty, int rows, int columns, GError** err) c_vte_pty_set_size;
 	int function(VtePty* pty, int utf8, GError** err) c_vte_pty_set_utf8;
 
+	// vte.Regex
+
+	GType function() c_vte_regex_get_type;
+	VteRegex* function(const(char)* pattern, ptrdiff_t patternLength, uint flags, GError** err) c_vte_regex_new_for_match;
+	VteRegex* function(const(char)* pattern, ptrdiff_t patternLength, uint flags, GError** err) c_vte_regex_new_for_search;
+	int function(VteRegex* regex, uint flags, GError** err) c_vte_regex_jit;
+	VteRegex* function(VteRegex* regex) c_vte_regex_ref;
+	VteRegex* function(VteRegex* regex) c_vte_regex_unref;
+
 	// vte.Terminal
 
 	GType function() c_vte_terminal_get_type;
@@ -164,6 +186,7 @@ __gshared extern(C)
 	void function(VteTerminal* terminal) c_vte_terminal_copy_clipboard;
 	void function(VteTerminal* terminal) c_vte_terminal_copy_primary;
 	int function(VteTerminal* terminal, GdkEvent* event, GRegex** regexes, size_t nRegexes, GRegexMatchFlags matchFlags, char** matches) c_vte_terminal_event_check_gregex_simple;
+	int function(VteTerminal* terminal, GdkEvent* event, VteRegex** regexes, size_t nRegexes, uint matchFlags, char** matches) c_vte_terminal_event_check_regex_simple;
 	void function(VteTerminal* terminal, char* data, ptrdiff_t length) c_vte_terminal_feed;
 	void function(VteTerminal* terminal, const(char)* text, ptrdiff_t length) c_vte_terminal_feed_child;
 	void function(VteTerminal* terminal, ubyte* data, size_t length) c_vte_terminal_feed_child_binary;
@@ -195,6 +218,7 @@ __gshared extern(C)
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_window_title;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_word_char_exceptions;
 	int function(VteTerminal* terminal, GRegex* gregex, GRegexMatchFlags gflags) c_vte_terminal_match_add_gregex;
+	int function(VteTerminal* terminal, VteRegex* regex, uint flags) c_vte_terminal_match_add_regex;
 	char* function(VteTerminal* terminal, glong column, glong row, int* tag) c_vte_terminal_match_check;
 	char* function(VteTerminal* terminal, GdkEvent* event, int* tag) c_vte_terminal_match_check_event;
 	void function(VteTerminal* terminal, int tag) c_vte_terminal_match_remove;
@@ -209,8 +233,10 @@ __gshared extern(C)
 	int function(VteTerminal* terminal) c_vte_terminal_search_find_next;
 	int function(VteTerminal* terminal) c_vte_terminal_search_find_previous;
 	GRegex* function(VteTerminal* terminal) c_vte_terminal_search_get_gregex;
+	VteRegex* function(VteTerminal* terminal) c_vte_terminal_search_get_regex;
 	int function(VteTerminal* terminal) c_vte_terminal_search_get_wrap_around;
 	void function(VteTerminal* terminal, GRegex* gregex, GRegexMatchFlags gflags) c_vte_terminal_search_set_gregex;
+	void function(VteTerminal* terminal, VteRegex* regex, uint flags) c_vte_terminal_search_set_regex;
 	void function(VteTerminal* terminal, int wrapAround) c_vte_terminal_search_set_wrap_around;
 	void function(VteTerminal* terminal) c_vte_terminal_select_all;
 	void function(VteTerminal* terminal, int allowBold) c_vte_terminal_set_allow_bold;
@@ -269,6 +295,15 @@ alias c_vte_pty_get_size vte_pty_get_size;
 alias c_vte_pty_set_size vte_pty_set_size;
 alias c_vte_pty_set_utf8 vte_pty_set_utf8;
 
+// vte.Regex
+
+alias c_vte_regex_get_type vte_regex_get_type;
+alias c_vte_regex_new_for_match vte_regex_new_for_match;
+alias c_vte_regex_new_for_search vte_regex_new_for_search;
+alias c_vte_regex_jit vte_regex_jit;
+alias c_vte_regex_ref vte_regex_ref;
+alias c_vte_regex_unref vte_regex_unref;
+
 // vte.Terminal
 
 alias c_vte_terminal_get_type vte_terminal_get_type;
@@ -276,6 +311,7 @@ alias c_vte_terminal_new vte_terminal_new;
 alias c_vte_terminal_copy_clipboard vte_terminal_copy_clipboard;
 alias c_vte_terminal_copy_primary vte_terminal_copy_primary;
 alias c_vte_terminal_event_check_gregex_simple vte_terminal_event_check_gregex_simple;
+alias c_vte_terminal_event_check_regex_simple vte_terminal_event_check_regex_simple;
 alias c_vte_terminal_feed vte_terminal_feed;
 alias c_vte_terminal_feed_child vte_terminal_feed_child;
 alias c_vte_terminal_feed_child_binary vte_terminal_feed_child_binary;
@@ -307,6 +343,7 @@ alias c_vte_terminal_get_text_range vte_terminal_get_text_range;
 alias c_vte_terminal_get_window_title vte_terminal_get_window_title;
 alias c_vte_terminal_get_word_char_exceptions vte_terminal_get_word_char_exceptions;
 alias c_vte_terminal_match_add_gregex vte_terminal_match_add_gregex;
+alias c_vte_terminal_match_add_regex vte_terminal_match_add_regex;
 alias c_vte_terminal_match_check vte_terminal_match_check;
 alias c_vte_terminal_match_check_event vte_terminal_match_check_event;
 alias c_vte_terminal_match_remove vte_terminal_match_remove;
@@ -321,8 +358,10 @@ alias c_vte_terminal_reset vte_terminal_reset;
 alias c_vte_terminal_search_find_next vte_terminal_search_find_next;
 alias c_vte_terminal_search_find_previous vte_terminal_search_find_previous;
 alias c_vte_terminal_search_get_gregex vte_terminal_search_get_gregex;
+alias c_vte_terminal_search_get_regex vte_terminal_search_get_regex;
 alias c_vte_terminal_search_get_wrap_around vte_terminal_search_get_wrap_around;
 alias c_vte_terminal_search_set_gregex vte_terminal_search_set_gregex;
+alias c_vte_terminal_search_set_regex vte_terminal_search_set_regex;
 alias c_vte_terminal_search_set_wrap_around vte_terminal_search_set_wrap_around;
 alias c_vte_terminal_select_all vte_terminal_select_all;
 alias c_vte_terminal_set_allow_bold vte_terminal_set_allow_bold;

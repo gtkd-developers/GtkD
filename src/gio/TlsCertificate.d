@@ -144,9 +144,10 @@ public class TlsCertificate : ObjectG
 	 * g_tls_certificate_new_from_pem().
 	 *
 	 * Params:
-	 *     certFile = file containing one or more PEM-encoded certificates to
-	 *         import
-	 *     keyFile = file containing a PEM-encoded private key to import
+	 *     certFile = file containing one or more PEM-encoded
+	 *         certificates to import
+	 *     keyFile = file containing a PEM-encoded private key
+	 *         to import
 	 *
 	 * Return: the new certificate, or %NULL on error
 	 *

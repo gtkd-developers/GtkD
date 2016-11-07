@@ -1627,6 +1627,10 @@ public enum GtkLicense
 	 * The GNU Lesser General Public License, version 3.0 only. Since 3.12.
 	 */
 	LGPL_3_0_ONLY = 12,
+	/**
+	 * The GNU Affero General Public License, version 3.0 or later. Since: 3.22.
+	 */
+	AGPL_3_0 = 13,
 }
 alias GtkLicense License;
 
@@ -1834,6 +1838,26 @@ public enum GtkPackType
 	END = 1,
 }
 alias GtkPackType PackType;
+
+/**
+ * The type of a pad action.
+ */
+public enum GtkPadActionType
+{
+	/**
+	 * Action is triggered by a pad button
+	 */
+	BUTTON = 0,
+	/**
+	 * Action is triggered by a pad ring
+	 */
+	RING = 1,
+	/**
+	 * Action is triggered by a pad strip
+	 */
+	STRIP = 2,
+}
+alias GtkPadActionType PadActionType;
 
 /**
  * See also gtk_print_settings_set_orientation().
@@ -3010,27 +3034,27 @@ public enum GtkShortcutType
 	 */
 	ACCELERATOR = 0,
 	/**
-	 * The shortcut is a pinch gesture. GTK+ provides and icon and subtitle.
+	 * The shortcut is a pinch gesture. GTK+ provides an icon and subtitle.
 	 */
 	GESTURE_PINCH = 1,
 	/**
-	 * The shortcut is a stretch gesture. GTK+ provides and icon and subtitle.
+	 * The shortcut is a stretch gesture. GTK+ provides an icon and subtitle.
 	 */
 	GESTURE_STRETCH = 2,
 	/**
-	 * The shortcut is a clockwise rotation gesture. GTK+ provides and icon and subtitle.
+	 * The shortcut is a clockwise rotation gesture. GTK+ provides an icon and subtitle.
 	 */
 	GESTURE_ROTATE_CLOCKWISE = 3,
 	/**
-	 * The shortcut is a counterclockwise rotation gesture. GTK+ provides and icon and subtitle.
+	 * The shortcut is a counterclockwise rotation gesture. GTK+ provides an icon and subtitle.
 	 */
 	GESTURE_ROTATE_COUNTERCLOCKWISE = 4,
 	/**
-	 * The shortcut is a two-finger swipe gesture. GTK+ provides and icon and subtitle.
+	 * The shortcut is a two-finger swipe gesture. GTK+ provides an icon and subtitle.
 	 */
 	GESTURE_TWO_FINGER_SWIPE_LEFT = 5,
 	/**
-	 * The shortcut is a two-finger swipe gesture. GTK+ provides and icon and subtitle.
+	 * The shortcut is a two-finger swipe gesture. GTK+ provides an icon and subtitle.
 	 */
 	GESTURE_TWO_FINGER_SWIPE_RIGHT = 6,
 	/**
@@ -7890,6 +7914,39 @@ struct GtkOverlayClass
 struct GtkOverlayPrivate;
 
 /**
+ * Struct defining a pad action entry.
+ */
+struct GtkPadActionEntry
+{
+	/**
+	 * the type of pad feature that will trigger this action entry.
+	 */
+	GtkPadActionType type;
+	/**
+	 * the 0-indexed button/ring/strip number that will trigger this action
+	 * entry.
+	 */
+	int index;
+	/**
+	 * the mode that will trigger this action entry, or -1 for all modes.
+	 */
+	int mode;
+	/**
+	 * Human readable description of this action entry, this string should
+	 * be deemed user-visible.
+	 */
+	char* label;
+	/**
+	 * action name that will be activated in the #GActionGroup.
+	 */
+	char* actionName;
+}
+
+struct GtkPadController;
+
+struct GtkPadControllerClass;
+
+/**
  * See also gtk_print_settings_set_page_ranges().
  */
 struct GtkPageRange
@@ -8331,13 +8388,13 @@ struct GtkRangeClass
 	/** */
 	extern(C) int function(GtkRange* range, GtkScrollType scroll, double newValue) changeValue;
 	/** */
+	extern(C) void function(GtkRange* range, GtkOrientation orientation, int* minimum, int* natural) getRangeSizeRequest;
+	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
 	extern(C) void function() GtkReserved2;
 	/** */
 	extern(C) void function() GtkReserved3;
-	/** */
-	extern(C) void function() GtkReserved4;
 }
 
 struct GtkRangePrivate;
@@ -9068,6 +9125,10 @@ struct GtkSettingsValue
 	GValue value;
 }
 
+struct GtkShortcutLabel;
+
+struct GtkShortcutLabelClass;
+
 struct GtkShortcutsGroup;
 
 struct GtkShortcutsGroupClass;
@@ -9221,6 +9282,16 @@ struct GtkSpinnerPrivate;
 struct GtkStack
 {
 	GtkContainer parentInstance;
+}
+
+struct GtkStackAccessible
+{
+	GtkContainerAccessible parent;
+}
+
+struct GtkStackAccessibleClass
+{
+	GtkContainerAccessibleClass parentClass;
 }
 
 struct GtkStackClass
@@ -12041,7 +12112,7 @@ public alias extern(C) char* function(const(char)* path, void* funcData) GtkTran
  * straight mapping between the cell and the model.  This is useful for
  * customizing the cell renderer.  For example, a function might get an
  * integer from the @tree_model, and render it to the “text” attribute of
- * “cell” by converting it to its written equivilent.  This is set by
+ * “cell” by converting it to its written equivalent.  This is set by
  * calling gtk_tree_view_column_set_cell_data_func()
  *
  * Params:

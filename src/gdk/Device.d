@@ -25,6 +25,7 @@
 module gdk.Device;
 
 private import gdk.Cursor;
+private import gdk.DeviceTool;
 private import gdk.Display;
 private import gdk.Screen;
 private import gdk.Seat;
@@ -153,6 +154,16 @@ public class Device : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+	}
+
+	/**
+	 * Returns the axes currently available on the device.
+	 *
+	 * Since: 3.22
+	 */
+	public GdkAxisFlags getAxes()
+	{
+		return gdk_device_get_axes(gdkDevice);
 	}
 
 	/**
@@ -795,6 +806,39 @@ public class Device : ObjectG
 		foreach ( void delegate(Device) dlg; _device.onChangedListeners )
 		{
 			dlg(_device);
+		}
+	}
+
+	void delegate(DeviceTool, Device)[] onToolChangedListeners;
+	/**
+	 * The ::tool-changed signal is emitted on pen/eraser
+	 * #GdkDevices whenever tools enter or leave proximity.
+	 *
+	 * Params:
+	 *     tool = The new current tool
+	 *
+	 * Since: 3.22
+	 */
+	void addOnToolChanged(void delegate(DeviceTool, Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( "tool-changed" !in connectedSignals )
+		{
+			Signals.connectData(
+				this,
+				"tool-changed",
+				cast(GCallback)&callBackToolChanged,
+				cast(void*)this,
+				null,
+				connectFlags);
+			connectedSignals["tool-changed"] = 1;
+		}
+		onToolChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackToolChanged(GdkDevice* deviceStruct, GdkDeviceTool* tool, Device _device)
+	{
+		foreach ( void delegate(DeviceTool, Device) dlg; _device.onToolChangedListeners )
+		{
+			dlg(ObjectG.getDObject!(DeviceTool)(tool), _device);
 		}
 	}
 }

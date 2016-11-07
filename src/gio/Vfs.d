@@ -199,4 +199,67 @@ public class Vfs : ObjectG
 		
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
+
+	/**
+	 * Registers @uri_func and @parse_name_func as the #GFile URI and parse name
+	 * lookup functions for URIs with a scheme matching @scheme.
+	 * Note that @scheme is registered only within the running application, as
+	 * opposed to desktop-wide as it happens with GVfs backends.
+	 *
+	 * When a #GFile is requested with an URI containing @scheme (e.g. through
+	 * g_file_new_for_uri()), @uri_func will be called to allow a custom
+	 * constructor. The implementation of @uri_func should not be blocking, and
+	 * must not call g_vfs_register_uri_scheme() or g_vfs_unregister_uri_scheme().
+	 *
+	 * When g_file_parse_name() is called with a parse name obtained from such file,
+	 * @parse_name_func will be called to allow the #GFile to be created again. In
+	 * that case, it's responsibility of @parse_name_func to make sure the parse
+	 * name matches what the custom #GFile implementation returned when
+	 * g_file_get_parse_name() was previously called. The implementation of
+	 * @parse_name_func should not be blocking, and must not call
+	 * g_vfs_register_uri_scheme() or g_vfs_unregister_uri_scheme().
+	 *
+	 * It's an error to call this function twice with the same scheme. To unregister
+	 * a custom URI scheme, use g_vfs_unregister_uri_scheme().
+	 *
+	 * Params:
+	 *     scheme = an URI scheme, e.g. "http"
+	 *     uriFunc = a #GVfsFileLookupFunc
+	 *     uriData = custom data passed to be passed to @uri_func, or %NULL
+	 *     uriDestroy = function to be called when unregistering the
+	 *         URI scheme, or when @vfs is disposed, to free the resources used
+	 *         by the URI lookup function
+	 *     parseNameFunc = a #GVfsFileLookupFunc
+	 *     parseNameData = custom data passed to be passed to
+	 *         @parse_name_func, or %NULL
+	 *     parseNameDestroy = function to be called when unregistering the
+	 *         URI scheme, or when @vfs is disposed, to free the resources used
+	 *         by the parse name lookup function
+	 *
+	 * Return: %TRUE if @scheme was successfully registered, or %FALSE if a handler
+	 *     for @scheme already exists.
+	 *
+	 * Since: 2.50
+	 */
+	public bool registerUriScheme(string scheme, GVfsFileLookupFunc uriFunc, void* uriData, GDestroyNotify uriDestroy, GVfsFileLookupFunc parseNameFunc, void* parseNameData, GDestroyNotify parseNameDestroy)
+	{
+		return g_vfs_register_uri_scheme(gVfs, Str.toStringz(scheme), uriFunc, uriData, uriDestroy, parseNameFunc, parseNameData, parseNameDestroy) != 0;
+	}
+
+	/**
+	 * Unregisters the URI handler for @scheme previously registered with
+	 * g_vfs_register_uri_scheme().
+	 *
+	 * Params:
+	 *     scheme = an URI scheme, e.g. "http"
+	 *
+	 * Return: %TRUE if @scheme was successfully unregistered, or %FALSE if a
+	 *     handler for @scheme does not exist.
+	 *
+	 * Since: 2.50
+	 */
+	public bool unregisterUriScheme(string scheme)
+	{
+		return g_vfs_unregister_uri_scheme(gVfs, Str.toStringz(scheme)) != 0;
+	}
 }

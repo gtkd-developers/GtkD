@@ -38,6 +38,7 @@ private import gstreamer.ObjectGst;
 private import gstreamer.PadTemplate;
 private import gstreamer.Query;
 private import gstreamer.StaticPadTemplate;
+private import gstreamer.Stream;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
@@ -758,6 +759,30 @@ public class Pad : ObjectGst
 	}
 
 	/**
+	 * Returns the current #GstStream for the @pad, or %NULL if none has been
+	 * set yet, i.e. the pad has not received a stream-start event yet.
+	 *
+	 * This is a convenience wrapper around gst_pad_get_sticky_event() and
+	 * gst_event_parse_stream().
+	 *
+	 * Return: the current #GstStream for @pad, or %NULL.
+	 *     unref the returned stream when no longer needed.
+	 *
+	 * Since: 1.10
+	 */
+	public Stream getStream()
+	{
+		auto p = gst_pad_get_stream(gstPad);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Stream)(cast(GstStream*) p, true);
+	}
+
+	/**
 	 * Returns the current stream-id for the @pad, or %NULL if none has been
 	 * set yet, i.e. the pad has not received a stream-start event yet.
 	 *
@@ -930,6 +955,53 @@ public class Pad : ObjectGst
 	public GstPadLinkReturn linkFull(Pad sinkpad, GstPadLinkCheck flags)
 	{
 		return gst_pad_link_full(gstPad, (sinkpad is null) ? null : sinkpad.getPadStruct(), flags);
+	}
+
+	/**
+	 * Links @src to @sink, creating any #GstGhostPad's in between as necessary.
+	 *
+	 * This is a convenience function to save having to create and add intermediate
+	 * #GstGhostPad's as required for linking across #GstBin boundaries.
+	 *
+	 * If @src or @sink pads don't have parent elements or do not share a common
+	 * ancestor, the link will fail.
+	 *
+	 * Params:
+	 *     sink = a #GstPad
+	 *
+	 * Return: whether the link succeeded.
+	 *
+	 * Since: 1.10
+	 */
+	public bool linkMaybeGhosting(Pad sink)
+	{
+		return gst_pad_link_maybe_ghosting(gstPad, (sink is null) ? null : sink.getPadStruct()) != 0;
+	}
+
+	/**
+	 * Links @src to @sink, creating any #GstGhostPad's in between as necessary.
+	 *
+	 * This is a convenience function to save having to create and add intermediate
+	 * #GstGhostPad's as required for linking across #GstBin boundaries.
+	 *
+	 * If @src or @sink pads don't have parent elements or do not share a common
+	 * ancestor, the link will fail.
+	 *
+	 * Calling gst_pad_link_maybe_ghosting_full() with
+	 * @flags == %GST_PAD_LINK_CHECK_DEFAULT is the recommended way of linking
+	 * pads with safety checks applied.
+	 *
+	 * Params:
+	 *     sink = a #GstPad
+	 *     flags = some #GstPadLinkCheck flags
+	 *
+	 * Return: whether the link succeeded.
+	 *
+	 * Since: 1.10
+	 */
+	public bool linkMaybeGhostingFull(Pad sink, GstPadLinkCheck flags)
+	{
+		return gst_pad_link_maybe_ghosting_full(gstPad, (sink is null) ? null : sink.getPadStruct(), flags) != 0;
 	}
 
 	/**

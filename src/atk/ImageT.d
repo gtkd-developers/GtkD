@@ -85,9 +85,9 @@ public template ImageT(TStruct)
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 */
-	public void getImagePosition(int* x, int* y, AtkCoordType coordType)
+	public void getImagePosition(out int x, out int y, AtkCoordType coordType)
 	{
-		atk_image_get_image_position(getImageStruct(), x, y, coordType);
+		atk_image_get_image_position(getImageStruct(), &x, &y, coordType);
 	}
 
 	/**
@@ -99,9 +99,9 @@ public template ImageT(TStruct)
 	 *     width = filled with the image width, or -1 if the value cannot be obtained.
 	 *     height = filled with the image height, or -1 if the value cannot be obtained.
 	 */
-	public void getImageSize(int* width, int* height)
+	public void getImageSize(out int width, out int height)
 	{
-		atk_image_get_image_size(getImageStruct(), width, height);
+		atk_image_get_image_size(getImageStruct(), &width, &height);
 	}
 
 	/**

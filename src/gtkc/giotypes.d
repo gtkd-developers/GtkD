@@ -276,23 +276,23 @@ public enum GCredentialsType
 	 */
 	INVALID = 0,
 	/**
-	 * The native credentials type is a <type>struct ucred</type>.
+	 * The native credentials type is a struct ucred.
 	 */
 	LINUX_UCRED = 1,
 	/**
-	 * The native credentials type is a <type>struct cmsgcred</type>.
+	 * The native credentials type is a struct cmsgcred.
 	 */
 	FREEBSD_CMSGCRED = 2,
 	/**
-	 * The native credentials type is a <type>struct sockpeercred</type>. Added in 2.30.
+	 * The native credentials type is a struct sockpeercred. Added in 2.30.
 	 */
 	OPENBSD_SOCKPEERCRED = 3,
 	/**
-	 * The native credentials type is a <type>ucred_t</type>. Added in 2.40.
+	 * The native credentials type is a ucred_t. Added in 2.40.
 	 */
 	SOLARIS_UCRED = 4,
 	/**
-	 * The native credentials type is a <type>struct unpcbid</type>.
+	 * The native credentials type is a struct unpcbid.
 	 */
 	NETBSD_UNPCBID = 5,
 }
@@ -2865,13 +2865,7 @@ struct GAppInfoIface
 	 *     application @appinfo, or %NULL if none.
 	 */
 	extern(C) const(char)* function(GAppInfo* appinfo) getDescription;
-	/**
-	 *
-	 * Params:
-	 *     appinfo = a #GAppInfo
-	 * Return: a string containing the @appinfo's application
-	 *     binaries name
-	 */
+	/** */
 	extern(C) const(char)* function(GAppInfo* appinfo) getExecutable;
 	/**
 	 *
@@ -2938,12 +2932,13 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 *     extension = a string containing the file extension (without the dot).
+	 *     extension = a string containing the file extension
+	 *         (without the dot).
 	 * Return: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
-	extern(C) int function(GAppInfo* appinfo, const(char)* extension, GError** err) setAsDefaultForExtension;
+	extern(C) int function(GAppInfo* appinfo, char* extension, GError** err) setAsDefaultForExtension;
 	/**
 	 *
 	 * Params:
@@ -2986,13 +2981,7 @@ struct GAppInfoIface
 	 * Return: %TRUE if @appinfo has been deleted
 	 */
 	extern(C) int function(GAppInfo* appinfo) doDelete;
-	/**
-	 *
-	 * Params:
-	 *     appinfo = a #GAppInfo
-	 * Return: a string containing the @appinfo's commandline,
-	 *     or %NULL if this information is not available
-	 */
+	/** */
 	extern(C) const(char)* function(GAppInfo* appinfo) getCommandline;
 	/**
 	 *
@@ -4363,6 +4352,13 @@ struct GDriveIface
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GIcon* function(GDrive* drive) getSymbolicIcon;
+	/**
+	 *
+	 * Params:
+	 *     drive = a #GDrive.
+	 * Return: %TRUE if @drive and/or its media is considered removable, %FALSE otherwise.
+	 */
+	extern(C) int function(GDrive* drive) isRemovable;
 }
 
 struct GDtlsClientConnection;
@@ -4727,23 +4723,9 @@ struct GFileIface
 	 *     when no longer needed.
 	 */
 	extern(C) char* function(GFile* file) getUriScheme;
-	/**
-	 *
-	 * Params:
-	 *     file = input #GFile
-	 * Return: string containing the #GFile's base name, or
-	 *     %NULL if given #GFile is invalid. The returned string should be
-	 *     freed with g_free() when no longer needed.
-	 */
+	/** */
 	extern(C) char* function(GFile* file) getBasename;
-	/**
-	 *
-	 * Params:
-	 *     file = input #GFile
-	 * Return: string containing the #GFile's path, or %NULL
-	 *     if no such path exists. The returned string should be freed
-	 *     with g_free() when no longer needed.
-	 */
+	/** */
 	extern(C) char* function(GFile* file) getPath;
 	/**
 	 *
@@ -4781,16 +4763,7 @@ struct GFileIface
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GFile* prefix, GFile* file) prefixMatches;
-	/**
-	 *
-	 * Params:
-	 *     parent = input #GFile
-	 *     descendant = input #GFile
-	 * Return: string with the relative path from @descendant
-	 *     to @parent, or %NULL if @descendant doesn't have @parent as
-	 *     prefix. The returned string should be freed with g_free() when
-	 *     no longer needed.
-	 */
+	/** */
 	extern(C) char* function(GFile* parent, GFile* descendant) getRelativePath;
 	/**
 	 *
@@ -4801,7 +4774,7 @@ struct GFileIface
 	 *     %NULL if @relative_path is %NULL or if @file is invalid.
 	 *     Free the returned object with g_object_unref().
 	 */
-	extern(C) GFile* function(GFile* file, const(char)* relativePath) resolveRelativePath;
+	extern(C) GFile* function(GFile* file, char* relativePath) resolveRelativePath;
 	/**
 	 *
 	 * Params:
@@ -5206,14 +5179,15 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = a #GFile with the name of the symlink to create
-	 *     symlinkValue = a string with the path for the target of the new symlink
+	 *     symlinkValue = a string with the path for the target
+	 *         of the new symlink
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 * Return: %TRUE on the creation of a new symlink, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	extern(C) int function(GFile* file, const(char)* symlinkValue, GCancellable* cancellable, GError** err) makeSymbolicLink;
+	extern(C) int function(GFile* file, char* symlinkValue, GCancellable* cancellable, GError** err) makeSymbolicLink;
 	/** */
 	extern(C) void function() MakeSymbolicLinkAsync;
 	/** */
@@ -7373,33 +7347,42 @@ struct GSettings
 	GSettingsPrivate* priv;
 }
 
+struct GSettingsBackend
+{
+	GObject parentInstance;
+	GSettingsBackendPrivate* priv;
+}
+
 /**
- * The #GSettingsBackend interface defines a generic interface for
- * non-strictly-typed data that is stored in a hierarchy. To implement
- * an alternative storage backend for #GSettings, you need to implement
- * the #GSettingsBackend interface and then make it implement the
- * extension point #G_SETTINGS_BACKEND_EXTENSION_POINT_NAME.
- *
- * The interface defines methods for reading and writing values, a
- * method for determining if writing of certain values will fail
- * (lockdown) and a change notification mechanism.
- *
- * The semantics of the interface are very precisely defined and
- * implementations must carefully adhere to the expectations of
- * callers that are documented on each of the interface methods.
- *
- * Some of the GSettingsBackend functions accept or return a #GTree.
- * These trees always have strings as keys and #GVariant as values.
- * g_settings_backend_create_tree() is a convenience function to create
- * suitable trees.
- *
- * The GSettingsBackend API is exported to allow third-party
- * implementations, but does not carry the same stability guarantees
- * as the public GIO API. For this reason, you have to define the
- * C preprocessor symbol %G_SETTINGS_ENABLE_BACKEND before including
- * `gio/gsettingsbackend.h`.
+ * Class structure for #GSettingsBackend.
  */
-struct GSettingsBackend;
+struct GSettingsBackendClass
+{
+	GObjectClass parentClass;
+	/** */
+	extern(C) GVariant* function(GSettingsBackend* backend, const(char)* key, GVariantType* expectedType, int defaultValue) read;
+	/** */
+	extern(C) int function(GSettingsBackend* backend, const(char)* key) getWritable;
+	/** */
+	extern(C) int function(GSettingsBackend* backend, const(char)* key, GVariant* value, void* originTag) write;
+	/** */
+	extern(C) int function(GSettingsBackend* backend, GTree* tree, void* originTag) writeTree;
+	/** */
+	extern(C) void function(GSettingsBackend* backend, const(char)* key, void* originTag) reset;
+	/** */
+	extern(C) void function(GSettingsBackend* backend, const(char)* name) subscribe;
+	/** */
+	extern(C) void function(GSettingsBackend* backend, const(char)* name) unsubscribe;
+	/** */
+	extern(C) void function(GSettingsBackend* backend) sync;
+	/** */
+	extern(C) GPermission* function(GSettingsBackend* backend, const(char)* path) getPermission;
+	/** */
+	extern(C) GVariant* function(GSettingsBackend* backend, const(char)* key, GVariantType* expectedType) readUserValue;
+	void*[23] padding;
+}
+
+struct GSettingsBackendPrivate;
 
 struct GSettingsClass
 {
@@ -8975,7 +8958,7 @@ public alias extern(C) GDBusMessage* function(GDBusConnection* connection, GDBus
  *     userData = User data.
  *
  * Return: A #GType to use for the remote object. The returned type
- *     must be a #GDBusProxy<!-- -->- or #GDBusObjectProxy<!-- -->-derived
+ *     must be a #GDBusProxy or #GDBusObjectProxy -derived
  *     type.
  *
  * Since: 2.30
@@ -9319,3 +9302,23 @@ public alias extern(C) int function(GSocket* socket, GIOCondition condition, voi
  * Since: 2.36
  */
 public alias extern(C) void function(GTask* task, void* sourceObject, void* taskData, GCancellable* cancellable) GTaskThreadFunc;
+
+/**
+ * This function type is used by g_vfs_register_uri_scheme() to make it
+ * possible for a client to associate an URI scheme to a different #GFile
+ * implementation.
+ *
+ * The client should return a reference to the new file that has been
+ * created for @uri, or %NULL to continue with the default implementation.
+ *
+ * Params:
+ *     vfs = a #GVfs
+ *     identifier = the identifier to lookup a #GFile for. This can either
+ *         be an URI or a parse name as returned by g_file_get_parse_name()
+ *     userData = user data passed to the function
+ *
+ * Return: a #GFile for @identifier.
+ *
+ * Since: 2.50
+ */
+public alias extern(C) GFile* function(GVfs* vfs, const(char)* identifier, void* userData) GVfsFileLookupFunc;

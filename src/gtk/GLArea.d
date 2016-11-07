@@ -316,6 +316,19 @@ public class GLArea : Widget
 	}
 
 	/**
+	 * Retrieves the value set by gtk_gl_area_set_use_es().
+	 *
+	 * Return: %TRUE if the #GtkGLArea should create an OpenGL ES context
+	 *     and %FALSE otherwise
+	 *
+	 * Since: 3.22
+	 */
+	public bool getUseEs()
+	{
+		return gtk_gl_area_get_use_es(gtkGLArea) != 0;
+	}
+
+	/**
 	 * Ensures that the #GdkGLContext used by @area is associated with
 	 * the #GtkGLArea.
 	 *
@@ -445,6 +458,22 @@ public class GLArea : Widget
 	public void setRequiredVersion(int major, int minor)
 	{
 		gtk_gl_area_set_required_version(gtkGLArea, major, minor);
+	}
+
+	/**
+	 * Sets whether the @area should create an OpenGL or an OpenGL ES context.
+	 *
+	 * You should check the capabilities of the #GdkGLContext before drawing
+	 * with either API.
+	 *
+	 * Params:
+	 *     useEs = whether to use OpenGL or OpenGL ES
+	 *
+	 * Since: 3.22
+	 */
+	public void setUseEs(bool useEs)
+	{
+		gtk_gl_area_set_use_es(gtkGLArea, useEs);
 	}
 
 	int[string] connectedSignals;

@@ -25,12 +25,15 @@
 module gstreamer.Event;
 
 private import glib.ConstructionException;
+private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.Buffer;
 private import gstreamer.Caps;
 private import gstreamer.Message;
 private import gstreamer.Segment;
+private import gstreamer.Stream;
+private import gstreamer.StreamCollection;
 private import gstreamer.Structure;
 private import gstreamer.TagList;
 private import gstreamer.Toc;
@@ -660,6 +663,38 @@ public class Event
 	}
 
 	/**
+	 * Allocate a new select-streams event.
+	 *
+	 * The select-streams event requests the specified @streams to be activated.
+	 *
+	 * The list of @streams corresponds to the "Stream ID" of each stream to be
+	 * activated. Those ID can be obtained via the #GstStream objects present
+	 * in #GST_EVENT_STREAM_START, #GST_EVENT_STREAM_COLLECTION or
+	 * #GST_MESSSAGE_STREAM_COLLECTION.
+	 *
+	 * Params:
+	 *     streams = the list of streams to
+	 *         activate
+	 *
+	 * Return: a new select-streams event.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ListG streams)
+	{
+		auto p = gst_event_new_select_streams((streams is null) ? null : streams.getListGStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_select_streams");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
 	 * Create a new sink-message event. The purpose of the sink-message event is
 	 * to instruct a sink to post the message contained in the event synchronized
 	 * with the stream.
@@ -719,6 +754,69 @@ public class Event
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_step");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new STREAM_COLLECTION event. The stream collection event can only
+	 * travel downstream synchronized with the buffer flow.
+	 *
+	 * Source elements, demuxers and other elements that manage collections
+	 * of streams and post #GstStreamCollection messages on the bus also send
+	 * this event downstream on each pad involved in the collection, so that
+	 * activation of a new collection can be tracked through the downstream
+	 * data flow.
+	 *
+	 * Params:
+	 *     collection = Active collection for this data flow
+	 *
+	 * Return: the new STREAM_COLLECTION event.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(StreamCollection collection)
+	{
+		auto p = gst_event_new_stream_collection((collection is null) ? null : collection.getStreamCollectionStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_stream_collection");
+		}
+		
+		this(cast(GstEvent*) p);
+	}
+
+	/**
+	 * Create a new Stream Group Done event. The stream-group-done event can
+	 * only travel downstream synchronized with the buffer flow. Elements
+	 * that receive the event on a pad should handle it mostly like EOS,
+	 * and emit any data or pending buffers that would depend on more data
+	 * arriving and unblock, since there won't be any more data.
+	 *
+	 * This event is followed by EOS at some point in the future, and is
+	 * generally used when switching pads - to unblock downstream so that
+	 * new pads can be exposed before sending EOS on the existing pads.
+	 *
+	 * Params:
+	 *     groupId = the group id of the stream group which is ending
+	 *
+	 * Return: the new stream-group-done event.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(uint groupId)
+	{
+		auto p = gst_event_new_stream_group_done(groupId);
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_stream_group_done");
 		}
 		
 		this(cast(GstEvent*) p);
@@ -1090,6 +1188,23 @@ public class Event
 	}
 
 	/**
+	 * Parse the SELECT_STREAMS event and retrieve the contained streams.
+	 *
+	 * Params:
+	 *     streams = the streams
+	 *
+	 * Since: 1.10
+	 */
+	public void parseSelectStreams(out ListG streams)
+	{
+		GList* outstreams = null;
+		
+		gst_event_parse_select_streams(gstEvent, &outstreams);
+		
+		streams = new ListG(outstreams);
+	}
+
+	/**
 	 * Parse the sink-message event. Unref @msg after usage.
 	 *
 	 * Params:
@@ -1126,10 +1241,58 @@ public class Event
 		intermediate = (outintermediate == 1);
 	}
 
+	/**
+	 * Parse a stream-start @event and extract the #GstStream from it.
+	 *
+	 * Params:
+	 *     stream = adress of variable to store the stream
+	 *
+	 * Since: 1.10
+	 */
+	public void parseStream(out Stream stream)
+	{
+		GstStream* outstream = null;
+		
+		gst_event_parse_stream(gstEvent, &outstream);
+		
+		stream = ObjectG.getDObject!(Stream)(outstream);
+	}
+
+	/**
+	 * Retrieve new #GstStreamCollection from STREAM_COLLECTION event @event.
+	 *
+	 * Params:
+	 *     collection = pointer to store the collection
+	 *
+	 * Since: 1.10
+	 */
+	public void parseStreamCollection(out StreamCollection collection)
+	{
+		GstStreamCollection* outcollection = null;
+		
+		gst_event_parse_stream_collection(gstEvent, &outcollection);
+		
+		collection = ObjectG.getDObject!(StreamCollection)(outcollection);
+	}
+
 	/** */
 	public void parseStreamFlags(out GstStreamFlags flags)
 	{
 		gst_event_parse_stream_flags(gstEvent, &flags);
+	}
+
+	/**
+	 * Parse a stream-group-done @event and store the result in the given
+	 * @group_id location.
+	 *
+	 * Params:
+	 *     groupId = address of variable to store the group id into
+	 *
+	 * Since: 1.10
+	 */
+	public void parseStreamGroupDone(out uint groupId)
+	{
+		gst_event_parse_stream_group_done(gstEvent, &groupId);
 	}
 
 	/**
@@ -1251,6 +1414,19 @@ public class Event
 	public void setSeqnum(uint seqnum)
 	{
 		gst_event_set_seqnum(gstEvent, seqnum);
+	}
+
+	/**
+	 * Set the @stream on the stream-start @event
+	 *
+	 * Params:
+	 *     stream = the stream object to set
+	 *
+	 * Since: 1.10
+	 */
+	public void setStream(Stream stream)
+	{
+		gst_event_set_stream(gstEvent, (stream is null) ? null : stream.getStreamStruct());
 	}
 
 	/** */

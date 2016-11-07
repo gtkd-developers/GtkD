@@ -403,6 +403,19 @@ public template DriveT(TStruct)
 	}
 
 	/**
+	 * Checks if the #GDrive and/or its media is considered removable by the user.
+	 * See g_drive_is_media_removable().
+	 *
+	 * Return: %TRUE if @drive and/or its media is considered removable, %FALSE otherwise.
+	 *
+	 * Since: 2.50
+	 */
+	public bool isRemovable()
+	{
+		return g_drive_is_removable(getDriveStruct()) != 0;
+	}
+
+	/**
 	 * Asynchronously polls @drive to see if media has been inserted or removed.
 	 *
 	 * When the operation is finished, @callback will be called.

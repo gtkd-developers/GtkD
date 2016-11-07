@@ -27,6 +27,7 @@ module gsv.SourceStyle;
 private import gobject.ObjectG;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
+private import gtk.TextTag;
 
 
 /** */
@@ -67,6 +68,25 @@ public class SourceStyle : ObjectG
 	public static GType getType()
 	{
 		return gtk_source_style_get_type();
+	}
+
+	/**
+	 * This function modifies the #GtkTextTag properties that are related to the
+	 * #GtkSourceStyle properties. Other #GtkTextTag properties are left untouched.
+	 *
+	 * If @style is non-%NULL, applies @style to @tag.
+	 *
+	 * If @style is %NULL, the related *-set properties of #GtkTextTag are set to
+	 * %FALSE.
+	 *
+	 * Params:
+	 *     tag = a #GtkTextTag to apply styles to.
+	 *
+	 * Since: 3.22
+	 */
+	public void apply(TextTag tag)
+	{
+		gtk_source_style_apply(gtkSourceStyle, (tag is null) ? null : tag.getTextTagStruct());
 	}
 
 	/**

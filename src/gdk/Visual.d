@@ -205,6 +205,11 @@ public class Visual : ObjectG
 	/**
 	 * Returns the number of significant bits per red, green and blue value.
 	 *
+	 * Not all GDK backend provide a meaningful value for this function.
+	 *
+	 * Deprecated: Use gdk_visual_get_red_pixel_details() and its variants to
+	 * learn about the pixel layout of TrueColor and DirectColor visuals
+	 *
 	 * Return: The number of significant bits per color value for @visual.
 	 *
 	 * Since: 2.22
@@ -236,6 +241,12 @@ public class Visual : ObjectG
 	/**
 	 * Returns the byte order of this visual.
 	 *
+	 * The information returned by this function is only relevant
+	 * when working with XImages, and not all backends return
+	 * meaningful information for this.
+	 *
+	 * Deprecated: This information is not useful
+	 *
 	 * Return: A #GdkByteOrder stating the byte order of @visual.
 	 *
 	 * Since: 2.22
@@ -247,6 +258,11 @@ public class Visual : ObjectG
 
 	/**
 	 * Returns the size of a colormap for this visual.
+	 *
+	 * You have to use platform-specific APIs to manipulate colormaps.
+	 *
+	 * Deprecated: This information is not useful, since GDK does not
+	 * provide APIs to operate on colormaps.
 	 *
 	 * Return: The size of a colormap that is suitable for @visual.
 	 *

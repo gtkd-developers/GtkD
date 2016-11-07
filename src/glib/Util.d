@@ -277,7 +277,8 @@ public struct Util
 	 * Params:
 	 *     program = a program name in the GLib file name encoding
 	 *
-	 * Return: a newly-allocated string with the absolute path, or %NULL
+	 * Return: a newly-allocated string with the absolute path,
+	 *     or %NULL
 	 */
 	public static string findProgramInPath(string program)
 	{
@@ -532,8 +533,8 @@ public struct Util
 	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
 	 * This information will not roam and is available to anyone using the computer.
 	 *
-	 * Return: a %NULL-terminated array of strings owned by GLib that must
-	 *     not be modified or freed.
+	 * Return: a %NULL-terminated array of strings owned by GLib that must not be
+	 *     modified or freed.
 	 *
 	 * Since: 2.6
 	 */
@@ -573,8 +574,8 @@ public struct Util
 	 * Note that on Windows the returned list can vary depending on where
 	 * this function is called.
 	 *
-	 * Return: a %NULL-terminated array of strings owned by GLib that must
-	 *     not be modified or freed.
+	 * Return: a %NULL-terminated array of strings owned by GLib that must not be
+	 *     modified or freed.
 	 *
 	 * Since: 2.6
 	 */
@@ -708,7 +709,8 @@ public struct Util
 	 * CSIDL_LOCAL_APPDATA.  Note that on Windows it thus is the same as
 	 * what g_get_user_config_dir() returns.
 	 *
-	 * Return: a string owned by GLib that must not be modified or freed.
+	 * Return: a string owned by GLib that must not be
+	 *     modified or freed.
 	 *
 	 * Since: 2.28
 	 */
@@ -732,8 +734,8 @@ public struct Util
 	 * Params:
 	 *     directory = the logical id of special directory
 	 *
-	 * Return: the path to the specified special directory, or %NULL
-	 *     if the logical id was not found. The returned string is owned by
+	 * Return: the path to the specified special directory, or
+	 *     %NULL if the logical id was not found. The returned string is owned by
 	 *     GLib and should not be modified or freed.
 	 *
 	 * Since: 2.14
@@ -912,7 +914,8 @@ public struct Util
 	 * Params:
 	 *     fileName = a file name
 	 *
-	 * Return: a pointer into @file_name after the root component
+	 * Return: a pointer into @file_name after the
+	 *     root component
 	 */
 	public static string pathSkipRoot(string fileName)
 	{

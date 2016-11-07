@@ -26,6 +26,7 @@ module gtk.FileFilter;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
@@ -143,6 +144,31 @@ public class FileFilter : ObjectG, BuildableIF
 		}
 		
 		this(cast(GtkFileFilter*) p);
+	}
+
+	/**
+	 * Deserialize a file filter from an a{sv} variant in
+	 * the format produced by gtk_file_filter_to_gvariant().
+	 *
+	 * Params:
+	 *     variant = an a{sv} #GVariant
+	 *
+	 * Return: a new #GtkFileFilter object
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Variant variant)
+	{
+		auto p = gtk_file_filter_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_gvariant");
+		}
+		
+		this(cast(GtkFileFilter*) p, true);
 	}
 
 	/**
@@ -272,5 +298,24 @@ public class FileFilter : ObjectG, BuildableIF
 	public void setName(string name)
 	{
 		gtk_file_filter_set_name(gtkFileFilter, Str.toStringz(name));
+	}
+
+	/**
+	 * Serialize a file filter to an a{sv} variant.
+	 *
+	 * Return: a new, floating, #GVariant
+	 *
+	 * Since: 3.22
+	 */
+	public Variant toGvariant()
+	{
+		auto p = gtk_file_filter_to_gvariant(gtkFileFilter);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return new Variant(cast(GVariant*) p);
 	}
 }

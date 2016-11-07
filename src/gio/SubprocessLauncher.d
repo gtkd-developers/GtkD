@@ -260,9 +260,6 @@ public class SubprocessLauncher : ObjectG
 	 *
 	 * This feature is only available on UNIX.
 	 *
-	 * Params:
-	 *     path = a filename or %NULL
-	 *
 	 * Since: 2.40
 	 */
 	public void setStdinFilePath(string path)

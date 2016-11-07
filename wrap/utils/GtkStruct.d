@@ -722,7 +722,7 @@ final class GtkStruct
 					if ( dType.type == GtkStructType.Interface || dType.lookupInterface )
 						imports ~= dType.pack.name ~"."~ dType.name ~"IF";
 				}
-				else if ( type.name == "utf8" || type.cType.among("guchar**") )
+				else if ( type.name.among("utf8", "filename") || type.cType.among("guchar**") )
 					imports ~= "glib.Str";
 			}
 
@@ -761,7 +761,7 @@ final class GtkStruct
 						imports ~= dType.pack.name ~"."~ dType.name;
 					}
 				}
-				else if ( type.name == "utf8" || type.cType.among("guchar**") )
+				else if ( type.name.among("utf8", "filename") || type.cType.among("guchar**") )
 					imports ~= "glib.Str";
 			}
 

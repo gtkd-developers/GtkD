@@ -54,7 +54,7 @@ public  import gtkc.glibtypes;
  * Note that, unless you set the #G_REGEX_RAW flag, all the strings passed
  * to these functions must be encoded in UTF-8. The lengths and the positions
  * inside the strings are in bytes and not in characters, so, for instance,
- * "\xc3\xa0" (i.e. "&agrave;") is two bytes long but it is treated as a
+ * "\xc3\xa0" (i.e. "à") is two bytes long but it is treated as a
  * single character. If you set #G_REGEX_RAW the strings can be non-valid
  * UTF-8 strings and a byte is treated as a character, so "\xc3\xa0" is two
  * bytes and two characters long.
@@ -180,6 +180,10 @@ public class Regex
 
 	/**
 	 * Returns the compile options that @regex was created with.
+	 *
+	 * Depending on the version of PCRE that is used, this may or may not
+	 * include flags set by option expressions such as `(?i)` found at the
+	 * top-level within the compiled pattern.
 	 *
 	 * Return: flags from #GRegexCompileFlags
 	 *

@@ -191,6 +191,23 @@ public class PixbufFormat
 	}
 
 	/**
+	 * Returns %TRUE if the save option specified by @option_key is supported when
+	 * saving a pixbuf using the module implementing @format.
+	 * See gdk_pixbuf_save() for more information about option keys.
+	 *
+	 * Params:
+	 *     optionKey = the name of an option
+	 *
+	 * Return: %TRUE if the specified option is supported
+	 *
+	 * Since: 2.36
+	 */
+	public bool isSaveOptionSupported(string optionKey)
+	{
+		return gdk_pixbuf_format_is_save_option_supported(gdkPixbufFormat, Str.toStringz(optionKey)) != 0;
+	}
+
+	/**
 	 * Returns whether this image format is scalable. If a file is in a
 	 * scalable format, it is preferable to load it at the desired size,
 	 * rather than loading it at the default size and scaling the

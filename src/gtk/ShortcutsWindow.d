@@ -71,7 +71,7 @@ public  import gtkc.gtktypes;
  * This example shows a #GtkShortcutsWindow with two sections, "Editor Shortcuts"
  * and "Terminal Shortcuts".
  * 
- * The .ui file for this example can be found [here](https://git.gnome.org/browse/gtk+/tree/demos/gtk-demo/shortcuts-clocks.ui).
+ * The .ui file for this example can be found [here](https://git.gnome.org/browse/gtk+/tree/demos/gtk-demo/shortcuts-builder.ui).
  */
 public class ShortcutsWindow : Window
 {
