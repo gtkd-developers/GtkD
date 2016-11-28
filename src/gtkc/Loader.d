@@ -377,7 +377,16 @@ else
 
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
-		void* handle = dlopen(cast(char*)toStringz(libraryName), flag);
+		// TEMP https://github.com/BlackEdder/ggplotd/issues/32
+		//dlopen(libatk-1.0.dylib, 2): image not found
+		// PATH
+		auto libraryName2=`/Users/timothee/homebrew/lib/`~libraryName;
+		void* handle = dlopen(cast(char*)toStringz(libraryName2), flag);
+		if(!handle){
+			import std.string;
+			string temp=dlerror().fromStringz.idup;
+			assert(0, temp);
+		}
 
 		// clear the error buffer
 		dlerror();
