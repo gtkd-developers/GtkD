@@ -32,7 +32,7 @@ public  import gstreamerc.gstreamertypes;
 /**
  * The #GstControlSource is a base class for control value sources that could
  * be used to get timestamp-value pairs. A control source essentially is a
- * function over time, returning float values between 0.0 and 1.0.
+ * function over time.
  * 
  * A #GstControlSource is used by first getting an instance of a specific
  * control-source, creating a binding for the control-source to the target property

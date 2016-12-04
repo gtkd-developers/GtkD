@@ -193,6 +193,7 @@ code: start
 				obj.isGcRoot = false;
 			}
 
+			obj.unref();
 			obj.gObject = null;
 		}
 

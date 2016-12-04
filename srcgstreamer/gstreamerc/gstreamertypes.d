@@ -75,6 +75,12 @@ public enum GstBinFlags
 	 */
 	NO_RESYNC = 16384,
 	/**
+	 * Indicates whether the bin can handle elements
+	 * that add/remove source pads at any point in time without
+	 * first posting a no-more-pads signal (Since 1.10)
+	 */
+	STREAMS_AWARE = 32768,
+	/**
 	 * the last enum in the series of flags for bins.
 	 * Derived classes can use this as first value in a list of flags.
 	 */
@@ -2913,6 +2919,10 @@ alias GstStreamStatusType StreamStatusType;
 /**
  * #GstStreamType describes a high level classification set for
  * flows of data in #GstStream objects.
+ *
+ * Note that this is a flag, and therefore users should not assume it
+ * will be a single value. Do not use the equality operator for checking
+ * whether a stream is of a certain type.
  */
 public enum GstStreamType
 {
@@ -3825,7 +3835,16 @@ struct GstControlBinding
 	GParamSpec* pspec;
 	GstObject* object;
 	bool disabled;
-	void*[4] GstReserved;
+	union ABI
+	{
+		struct Abi
+		{
+			GstControlBindingPrivate* priv;
+		}
+		Abi abi;
+		void*[4] GstReserved;
+	}
+	ABI abi;
 }
 
 /**
@@ -3881,6 +3900,8 @@ struct GstControlBindingClass
 	extern(C) int function(GstControlBinding* binding, GstClockTime timestamp, GstClockTime interval, uint nValues, GValue* values) getGValueArray;
 	void*[4] GstReserved;
 }
+
+struct GstControlBindingPrivate;
 
 struct GstControlSource
 {

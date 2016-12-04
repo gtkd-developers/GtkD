@@ -113,6 +113,7 @@ public class ObjectG
 				obj.isGcRoot = false;
 			}
 			
+			obj.unref();
 			obj.gObject = null;
 		}
 		

@@ -433,7 +433,7 @@ public class ObjectGst : ObjectG
 	}
 
 	/**
-	 * Check if the @object has an active controlled properties.
+	 * Check if the @object has active controlled properties.
 	 *
 	 * Return: %TRUE if the object has active controlled properties
 	 */
