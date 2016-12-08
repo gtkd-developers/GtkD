@@ -61,15 +61,8 @@ public class Regex
 		this.ownedRef = ownedRef;
 	}
 
-
 	/** */
-	public static GType getType()
-	{
-		return vte_regex_get_type();
-	}
-
-	/** */
-	public this(string pattern, ptrdiff_t patternLength, uint flags)
+	public static Regex newMatch(string pattern, ptrdiff_t patternLength, uint flags)
 	{
 		GError* err = null;
 		
@@ -85,7 +78,36 @@ public class Regex
 			throw new ConstructionException("null returned by new_for_match");
 		}
 		
-		this(cast(VteRegex*) p);
+		return new Regex(cast(VteRegex*) p);
+	}
+	
+	/** */
+	public static Regex newSearch(string pattern, ptrdiff_t patternLength, uint flags)
+	{
+		GError* err = null;
+		
+		auto p = vte_regex_new_for_search(Str.toStringz(pattern), patternLength, flags, &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_for_search");
+		}
+		
+		return new Regex(cast(VteRegex*) p);
+	}
+
+	/**
+	 */
+
+	/** */
+	public static GType getType()
+	{
+		return vte_regex_get_type();
 	}
 
 	/** */
