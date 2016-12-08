@@ -142,35 +142,7 @@ public class Message
 	public static Message newNewClock(ObjectGst src, Clock clock)
 	{
 		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
-		auto p = gst_message_new_new_clock((src i/**
-		 * Create a new error message. The message will copy @error and
-		 * @debug. This message is posted by element when a fatal event
-		 * occurred. The pipeline will probably (partially) stop. The application
-		 * receiving this message should stop the pipeline.
-		 *
-		 * Params:
-		 *     src = The object originating the message.
-		 *     error = The GError for this message.
-		 *     dbg = A debugging string.
-		 *     details = (allow-none): A GstStructure with details
-		 *
-		 * Return: the new error message.
-		 *
-		 * Since: 1.10
-		 *
-		 * Throws: ConstructionException GTK+ fails to create the object.
-		 */
-		public this(ObjectGst src, ErrorG error, string dbg, Structure details)
-		{
-			auto p = gst_message_new_error_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
-			
-			if(p is null)
-			{
-				throw new ConstructionException("null returned by new_error_with_details");
-			}
-			
-			this(cast(GstMessage*) p);
-		}s null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+		auto p = gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
 		
 		if(p is null)
 		{
@@ -519,7 +491,7 @@ public class Message
 			throw new ConstructionException("null returned by new_error_with_details");
 		}
 		
-		return new Message(cast(GstMessage*)p), true);
+		return new Message(cast(GstMessage*)p, true);
 	}
 	
 	/**
@@ -547,7 +519,7 @@ public class Message
 			throw new ConstructionException("null returned by new_info_with_details");
 		}
 		
-		return new Message(cast(GstMessage*)p), true);
+		return new Message(cast(GstMessage*)p, true);
 	}
 	
 	/**
@@ -575,7 +547,7 @@ public class Message
 			throw new ConstructionException("null returned by new_warning_with_details");
 		}
 		
-		return new Message(cast(GstMessage*)p), true);
+		return new Message(cast(GstMessage*)p, true);
 	}
 	
 	/**
@@ -601,7 +573,7 @@ public class Message
 			throw new ConstructionException("null returned by new_stream_collection");
 		}
 		
-		return new Message(cast(GstMessage*)p), true);
+		return new Message(cast(GstMessage*)p, true);
 	}
 	
 	/**
@@ -635,7 +607,7 @@ public class Message
 			throw new ConstructionException("null returned by new_streams_selected");
 		}
 		
-		return new Message(cast(GstMessage*)p), true);
+		return new Message(cast(GstMessage*)p, true);
 	}
 
 	/**

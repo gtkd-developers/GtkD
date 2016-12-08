@@ -3494,4 +3494,10 @@ public class Window : ObjectG
 	{
 		gdk_offscreen_window_set_embedder((window is null) ? null : window.getWindowStruct(), (embedder is null) ? null : embedder.getWindowStruct());
 	}
+
+	/** */
+	public static void synthesizeWindowState(Window window, GdkWindowState unsetFlags, GdkWindowState setFlags)
+	{
+		gdk_synthesize_window_state((window is null) ? null : window.getWindowStruct(), unsetFlags, setFlags);
+	}
 }

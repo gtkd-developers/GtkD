@@ -5557,3 +5557,5 @@ move: get_minor_version Version
 move: cairo_should_draw_window Widget
 move: cairo_transform_to_window Widget
 move: distribute_natural_allocation Widget
+
+move: show_uri_on_window Window

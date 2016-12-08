@@ -675,4 +675,5 @@ move: type_remove_class_cache_func Type remove_class_cache_func
 move: type_remove_interface_check Type remove_interface_check
 move: type_set_qdata Type set_qdata
 move: type_test_flags Type test_flags
+move: type_get_instance_count Type get_instance_count
 #move: type_value_table_peek Type value_table_peek

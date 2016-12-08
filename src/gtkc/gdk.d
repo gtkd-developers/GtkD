@@ -635,6 +635,7 @@ shared static this()
 	Linker.link(gdk_offscreen_window_get_embedder, "gdk_offscreen_window_get_embedder", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_offscreen_window_get_surface, "gdk_offscreen_window_get_surface", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_offscreen_window_set_embedder, "gdk_offscreen_window_set_embedder", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_synthesize_window_state, "gdk_synthesize_window_state", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.X11
 
@@ -665,6 +666,7 @@ shared static this()
 	Linker.link(gdk_cairo_set_source_rgba, "gdk_cairo_set_source_rgba", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_set_source_window, "gdk_cairo_set_source_window", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_cairo_surface_create_from_pixbuf, "gdk_cairo_surface_create_from_pixbuf", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_cairo_get_drawing_context, "gdk_cairo_get_drawing_context", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.Pango
 
@@ -672,6 +674,7 @@ shared static this()
 	Linker.link(gdk_pango_context_get_for_screen, "gdk_pango_context_get_for_screen", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pango_layout_get_clip_region, "gdk_pango_layout_get_clip_region", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 	Linker.link(gdk_pango_layout_line_get_clip_region, "gdk_pango_layout_line_get_clip_region", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
+	Linker.link(gdk_pango_context_get_for_display, "gdk_pango_context_get_for_display", LIBRARY.GDK, LIBRARY.GDKPIXBUF);
 
 	// gdk.Pixbuf
 
@@ -1339,6 +1342,7 @@ __gshared extern(C)
 	GdkWindow* function(GdkWindow* window) c_gdk_offscreen_window_get_embedder;
 	cairo_surface_t* function(GdkWindow* window) c_gdk_offscreen_window_get_surface;
 	void function(GdkWindow* window, GdkWindow* embedder) c_gdk_offscreen_window_set_embedder;
+	void function(GdkWindow* window, GdkWindowState unsetFlags, GdkWindowState setFlags) c_gdk_synthesize_window_state;
 
 	// gdk.X11
 
@@ -1369,6 +1373,7 @@ __gshared extern(C)
 	void function(cairo_t* cr, GdkRGBA* rgba) c_gdk_cairo_set_source_rgba;
 	void function(cairo_t* cr, GdkWindow* window, double x, double y) c_gdk_cairo_set_source_window;
 	cairo_surface_t* function(GdkPixbuf* pixbuf, int scale, GdkWindow* forWindow) c_gdk_cairo_surface_create_from_pixbuf;
+	GdkDrawingContext* function(cairo_t* cr) c_gdk_cairo_get_drawing_context;
 
 	// gdk.Pango
 
@@ -1376,6 +1381,7 @@ __gshared extern(C)
 	PangoContext* function(GdkScreen* screen) c_gdk_pango_context_get_for_screen;
 	cairo_region_t* function(PangoLayout* layout, int xOrigin, int yOrigin, int* indexRanges, int nRanges) c_gdk_pango_layout_get_clip_region;
 	cairo_region_t* function(PangoLayoutLine* line, int xOrigin, int yOrigin, int* indexRanges, int nRanges) c_gdk_pango_layout_line_get_clip_region;
+	PangoContext* function(GdkDisplay* display) c_gdk_pango_context_get_for_display;
 
 	// gdk.Pixbuf
 
@@ -2041,6 +2047,7 @@ alias c_gdk_get_default_root_window gdk_get_default_root_window;
 alias c_gdk_offscreen_window_get_embedder gdk_offscreen_window_get_embedder;
 alias c_gdk_offscreen_window_get_surface gdk_offscreen_window_get_surface;
 alias c_gdk_offscreen_window_set_embedder gdk_offscreen_window_set_embedder;
+alias c_gdk_synthesize_window_state gdk_synthesize_window_state;
 
 // gdk.X11
 
@@ -2071,6 +2078,7 @@ alias c_gdk_cairo_set_source_pixbuf gdk_cairo_set_source_pixbuf;
 alias c_gdk_cairo_set_source_rgba gdk_cairo_set_source_rgba;
 alias c_gdk_cairo_set_source_window gdk_cairo_set_source_window;
 alias c_gdk_cairo_surface_create_from_pixbuf gdk_cairo_surface_create_from_pixbuf;
+alias c_gdk_cairo_get_drawing_context gdk_cairo_get_drawing_context;
 
 // gdk.Pango
 
@@ -2078,6 +2086,7 @@ alias c_gdk_pango_context_get gdk_pango_context_get;
 alias c_gdk_pango_context_get_for_screen gdk_pango_context_get_for_screen;
 alias c_gdk_pango_layout_get_clip_region gdk_pango_layout_get_clip_region;
 alias c_gdk_pango_layout_line_get_clip_region gdk_pango_layout_line_get_clip_region;
+alias c_gdk_pango_context_get_for_display gdk_pango_context_get_for_display;
 
 // gdk.Pixbuf
 

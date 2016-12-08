@@ -533,6 +533,7 @@ move: cairo_set_source_pixbuf Cairo set_source_pixbuf
 move: cairo_set_source_rgba Cairo set_source_rgba
 move: cairo_set_source_window Cairo set_source_window
 move: cairo_surface_create_from_pixbuf Cairo surface_create_from_pixbuf
+move: cairo_get_drawing_context Cairo get_drawing_context
 
 move: disable_multidevice DeviceManager
 
@@ -594,6 +595,7 @@ move: pango_context_get Pango context_get
 move: pango_context_get_for_screen Pango context_get_for_screen
 move: pango_layout_get_clip_region Pango layout_get_clip_region
 move: pango_layout_line_get_clip_region Pango layout_line_get_clip_region
+move: pango_context_get_for_display Pango context_get_for_display
 
 move: pixbuf_get_from_surface Pixbuf get_from_surface
 move: pixbuf_get_from_window Pixbuf get_from_window
@@ -633,3 +635,4 @@ move: get_default_root_window Window
 move: offscreen_window_get_embedder Window
 move: offscreen_window_get_surface Window
 move: offscreen_window_set_embedder Window
+move: synthesize_window_state Window

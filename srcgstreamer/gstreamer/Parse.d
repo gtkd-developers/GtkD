@@ -142,6 +142,40 @@ public struct Parse
 	 *
 	 * Params:
 	 *     pipelineDescription = the command line describing the pipeline
+	 *
+	 * Return: a new element on success, %NULL on failure. If
+	 *     more than one toplevel element is specified by the @pipeline_description,
+	 *     all elements are put into a #GstPipeline, which than is returned.
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Element launch(string pipelineDescription)
+	{
+		GError* err = null;
+		
+		auto p = gst_parse_launch(Str.toStringz(pipelineDescription), &err);
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
+	}
+
+	/**
+	 * Create a new pipeline based on command line syntax.
+	 * Please note that you might get a return value that is not %NULL even though
+	 * the @error is set. In this case there was a recoverable parsing error and you
+	 * can try to play the pipeline.
+	 *
+	 * Params:
+	 *     pipelineDescription = the command line describing the pipeline
 	 *     context = a parse context allocated with
 	 *         gst_parse_context_new(), or %NULL
 	 *     flags = parsing options, or #GST_PARSE_FLAG_NONE

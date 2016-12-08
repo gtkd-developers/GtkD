@@ -2621,4 +2621,34 @@ public class Window : Bin
 			dlg(ObjectG.getDObject!(Widget)(object), _window);
 		}
 	}
+
+	/**
+	 * A convenience function for launching the default application
+	 * to show the uri. Like gtk_show_uri(), but takes a window
+	 * as transient parent instead of a screen.
+	 *
+	 * Params:
+	 *     parent = parent window
+	 *     uri = the uri to show
+	 *     timestamp = a timestamp to prevent focus stealing
+	 *
+	 * Return: %TRUE on success, %FALSE on error
+	 *
+	 * Since: 3.22
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static bool showUriOnWindow(Window parent, string uri, uint timestamp)
+	{
+		GError* err = null;
+		
+		auto p = gtk_show_uri_on_window((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(uri), timestamp, &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
 }

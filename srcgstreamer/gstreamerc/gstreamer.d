@@ -1659,6 +1659,7 @@ shared static this()
 	Linker.link(gst_parse_bin_from_description, "gst_parse_bin_from_description", LIBRARY.GSTREAMER);
 	Linker.link(gst_parse_bin_from_description_full, "gst_parse_bin_from_description_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_parse_error_quark, "gst_parse_error_quark", LIBRARY.GSTREAMER);
+	Linker.link(gst_parse_launch, "gst_parse_launch", LIBRARY.GSTREAMER);
 	Linker.link(gst_parse_launch_full, "gst_parse_launch_full", LIBRARY.GSTREAMER);
 	Linker.link(gst_parse_launchv, "gst_parse_launchv", LIBRARY.GSTREAMER);
 	Linker.link(gst_parse_launchv_full, "gst_parse_launchv_full", LIBRARY.GSTREAMER);
@@ -3372,6 +3373,7 @@ __gshared extern(C)
 	GstElement* function(const(char)* binDescription, int ghostUnlinkedPads, GError** err) c_gst_parse_bin_from_description;
 	GstElement* function(const(char)* binDescription, int ghostUnlinkedPads, GstParseContext* context, GstParseFlags flags, GError** err) c_gst_parse_bin_from_description_full;
 	GQuark function() c_gst_parse_error_quark;
+	GstElement* function(const(char)* pipelineDescription, GError** err) c_gst_parse_launch;
 	GstElement* function(const(char)* pipelineDescription, GstParseContext* context, GstParseFlags flags, GError** err) c_gst_parse_launch_full;
 	GstElement* function(char** argv, GError** err) c_gst_parse_launchv;
 	GstElement* function(char** argv, GstParseContext* context, GstParseFlags flags, GError** err) c_gst_parse_launchv_full;
@@ -5083,6 +5085,7 @@ alias c_gst_version_string gst_version_string;
 alias c_gst_parse_bin_from_description gst_parse_bin_from_description;
 alias c_gst_parse_bin_from_description_full gst_parse_bin_from_description_full;
 alias c_gst_parse_error_quark gst_parse_error_quark;
+alias c_gst_parse_launch gst_parse_launch;
 alias c_gst_parse_launch_full gst_parse_launch_full;
 alias c_gst_parse_launchv gst_parse_launchv;
 alias c_gst_parse_launchv_full gst_parse_launchv_full;

@@ -630,6 +630,10 @@ move: resources_open_stream Resource
 move: resources_register Resource _register
 move: resources_unregister Resource _unregister
 
+move: keyfile_settings_backend_new SettingsBackend
+move: memory_settings_backend_new SettingsBackend
+move: null_settings_backend_new SettingsBackend
+
 move: simple_async_report_error_in_idle SimpleAsyncResult
 move: simple_async_report_gerror_in_idle SimpleAsyncResult
 move: simple_async_report_take_gerror_in_idle SimpleAsyncResult

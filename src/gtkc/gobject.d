@@ -467,6 +467,7 @@ shared static this()
 	Linker.link(g_type_remove_interface_check, "g_type_remove_interface_check", LIBRARY.GOBJECT);
 	Linker.link(g_type_set_qdata, "g_type_set_qdata", LIBRARY.GOBJECT);
 	Linker.link(g_type_test_flags, "g_type_test_flags", LIBRARY.GOBJECT);
+	Linker.link(g_type_get_instance_count, "g_type_get_instance_count", LIBRARY.GOBJECT);
 
 	// gobject.Boxed
 
@@ -931,6 +932,7 @@ __gshared extern(C)
 	void function(void* checkData, GTypeInterfaceCheckFunc checkFunc) c_g_type_remove_interface_check;
 	void function(GType type, GQuark quark, void* data) c_g_type_set_qdata;
 	int function(GType type, uint flags) c_g_type_test_flags;
+	int function(GType type) c_g_type_get_instance_count;
 
 	// gobject.Boxed
 
@@ -1393,6 +1395,7 @@ alias c_g_type_remove_class_cache_func g_type_remove_class_cache_func;
 alias c_g_type_remove_interface_check g_type_remove_interface_check;
 alias c_g_type_set_qdata g_type_set_qdata;
 alias c_g_type_test_flags g_type_test_flags;
+alias c_g_type_get_instance_count g_type_get_instance_count;
 
 // gobject.Boxed
 
