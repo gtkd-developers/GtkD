@@ -454,8 +454,6 @@ noCode: new_async_start
 noCode: new_reset_time
 noCode: new_device_added
 noCode: new_device_removed
-
-#TODO:
 noCode: new_error_with_details
 noCode: new_info_with_details
 noCode: new_warning_with_details
@@ -519,7 +517,35 @@ code: start
 	public static Message newNewClock(ObjectGst src, Clock clock)
 	{
 		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
-		auto p = gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
+		auto p = gst_message_new_new_clock((src i/**
+	 * Create a new error message. The message will copy @error and
+	 * @debug. This message is posted by element when a fatal event
+	 * occurred. The pipeline will probably (partially) stop. The application
+	 * receiving this message should stop the pipeline.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new error message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_error_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_error_with_details");
+		}
+		
+		this(cast(GstMessage*) p);
+	}s null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct());
 
 		if(p is null)
 		{
@@ -839,6 +865,152 @@ code: start
 		}
 		
 		return new Message(cast(GstMessage*)p); //, true);
+	}
+
+	/**
+	 * Create a new error message. The message will copy @error and
+	 * @debug. This message is posted by element when a fatal event
+	 * occurred. The pipeline will probably (partially) stop. The application
+	 * receiving this message should stop the pipeline.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new error message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newErrorWithDetails(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_error_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_error_with_details");
+		}
+		
+		return new Message(cast(GstMessage*)p), true);
+	}
+
+	/**
+	 * Create a new info message. The message will make copies of @error and
+	 * @debug.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new warning message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newInfoWithDetails(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_info_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_info_with_details");
+		}
+		
+		return new Message(cast(GstMessage*)p), true);
+	}
+
+	/**
+	 * Create a new warning message. The message will make copies of @error and
+	 * @debug.
+	 *
+	 * Params:
+	 *     src = The object originating the message.
+	 *     error = The GError for this message.
+	 *     dbg = A debugging string.
+	 *     details = (allow-none): A GstStructure with details
+	 *
+	 * Return: the new warning message.
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newWarningWithDetails(ObjectGst src, ErrorG error, string dbg, Structure details)
+	{
+		auto p = gst_message_new_warning_with_details((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg), (details is null) ? null : details.getStructureStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_warning_with_details");
+		}
+		
+		return new Message(cast(GstMessage*)p), true);
+	}
+
+	/**
+	 * Creates a new stream-collection message. The message is used to announce new
+	 * #GstStreamCollection
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     collection = The #GstStreamCollection
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newStreamCollection(ObjectGst src, StreamCollection collection)
+	{
+		auto p = gst_message_new_stream_collection((src is null) ? null : src.getObjectGstStruct(), (collection is null) ? null : collection.getStreamCollectionStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_stream_collection");
+		}
+		
+		return new Message(cast(GstMessage*)p), true);
+	}
+
+	/**
+	 * Creates a new steams-selected message. The message is used to announce
+	 * that an array of streams has been selected. This is generally in response
+	 * to a #GST_EVENT_SELECT_STREAMS event, or when an element (such as decodebin3)
+	 * makes an initial selection of streams.
+	 *
+	 * The message also contains the #GstStreamCollection to which the various streams
+	 * belong to.
+	 *
+	 * Users of gst_message_new_streams_selected() can add the selected streams with
+	 * gst_message_streams_selected_add().
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     collection = The #GstStreamCollection
+	 *
+	 * Return: a newly allocated #GstMessage
+	 *
+	 * Since: 1.10
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public static Message newStreamsSelected(ObjectGst src, StreamCollection collection)
+	{
+		auto p = gst_message_new_streams_selected((src is null) ? null : src.getObjectGstStruct(), (collection is null) ? null : collection.getStreamCollectionStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_streams_selected");
+		}
+		
+		return new Message(cast(GstMessage*)p), true);
 	}
 code: end
 
