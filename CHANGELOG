@@ -1,6 +1,13 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.4.0
+--------------
+-Update to GTK 3.22
+-Properly finalize GTK objects. #165
+-Reset the ID for glib.Timeout. #154
+-Add libPeas Binding. #152
+
 Release: 3.3.0
 --------------
 -Update to GTK 3.20.
