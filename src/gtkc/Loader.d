@@ -377,7 +377,7 @@ else
 
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
-		void* handle = dlopen(cast(char*)toStringz(libraryName), flag);
+		void* handle = dlopen(cast(char*)toStringz(libraryName), flag | RTLD.GLOBAL);
 
 		// clear the error buffer
 		dlerror();
