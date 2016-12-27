@@ -7,6 +7,8 @@ Release: 3.4.0
 -Properly finalize GTK objects. #165
 -Reset the ID for glib.Timeout. #154
 -Add libPeas Binding. #152
+-Load libraries in the Global namespace to avoid Sourceview errors.
+-Check the "GTK_BASEPATH" and "HOMEBREW_ROOT" environment variables on OSX.
 
 Release: 3.3.0
 --------------

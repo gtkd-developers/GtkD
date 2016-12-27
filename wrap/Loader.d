@@ -375,9 +375,30 @@ else
 		GLOBAL   = 0x00100   // Make object available to whole program
 	}
 
+	version(OSX)
+	{
+		string basePath()
+		{
+			import std.process;
+
+			static string path;
+
+			if (path !is null)
+				return path;
+
+			path = environment.get("GTK_BASEPATH", environment.get("HOMEBREW_ROOT", ""));
+
+			return path;
+		}
+	}
+	else
+	{
+		enum basePath = "";
+	}
+
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
-		void* handle = dlopen(cast(char*)toStringz(libraryName), flag | RTLD.GLOBAL);
+		void* handle = dlopen(basePath~cast(char*)toStringz(libraryName), flag | RTLD.GLOBAL);
 
 		// clear the error buffer
 		dlerror();

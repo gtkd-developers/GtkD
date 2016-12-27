@@ -48,6 +48,14 @@ Optionaly these options are available:
 
 Or you can use one of the build options also available for Windows.
 
+OSX:
+----
+The build options are the same as for Linux.
+
+If on OSX GtkD is unable to find the GTK libraries.
+Some environment variables can be set to override the search path.
+"GTK_BASEPATH" and "HOMEBREW_ROOT". GTK_BASEPATH takes precedence over HOMEBREW_ROOT.
+
 Windows:
 --------
 To build on Windows you can use the build script in combination with rdmd.
