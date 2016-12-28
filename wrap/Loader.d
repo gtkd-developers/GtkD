@@ -120,7 +120,7 @@ public struct Linker
 			handle = pLoadLibrary(importLibs[LIBRARY.GSV1]);
 
 		if ( handle is null )
-			throw new Exception("Library load failed: " ~ library);
+			throw new Exception("Library load failed ("~ library ~"): "~ getErrorMessage());
 
 		loadedLibraries[library] = handle;
 	}
@@ -247,7 +247,21 @@ version(Windows)
 		void* GetProcAddress(void*, char*);
 		void FreeLibrary(void*);
 
+		uint GetLastError();
+		uint FormatMessageA(uint, void*, uint, uint, char*, uint, void* /* va_list */);
+
 		int SetDllDirectoryA(const(char)* path);
+
+		enum MessageFormat
+		{
+			FromSystem    = 0x00001000,
+			ArgumentArray = 0x00002000
+		}
+
+		enum Lang
+		{
+			Neutral = 0x00
+		}
 
 		enum MachineType : ushort
 		{
@@ -287,6 +301,21 @@ version(Windows)
 	}
 
 	private alias FreeLibrary pUnloadLibrary;
+
+	private string getErrorMessage()
+	{
+		char[] buffer = new char[2048];
+
+		FormatMessageA( MessageFormat.FromSystem | MessageFormat.ArgumentArray,
+		               null,
+		               GetLastError(),
+		               Lang.Neutral,
+		               buffer.ptr,
+		               buffer.length,
+		               null);
+
+		return buffer.ptr.fromStringz.idup;
+	}
 
 	private void setDllPath()
 	{
@@ -398,7 +427,7 @@ else
 
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
-		void* handle = dlopen(basePath~cast(char*)toStringz(libraryName), flag | RTLD.GLOBAL);
+		void* handle = dlopen(cast(char*)toStringz(basePath~libraryName), flag | RTLD.GLOBAL);
 
 		// clear the error buffer
 		dlerror();
@@ -419,5 +448,10 @@ else
 	private int pUnloadLibrary(void* libraryHandle)
 	{
 		return dlclose(libraryHandle);
+	}
+
+	private string getErrorMessage()
+	{
+		return dlerror().fromStringz.idup;
 	}
 }
