@@ -473,7 +473,8 @@ final class GtkStruct
 				*/
 
 				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
-				buff ~= indenter.format(func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
+				buff ~= indenter.format("protected " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
+				buff ~= "\n";
 
 				buff ~= indenter.format(func.getAddListenerDeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
@@ -901,7 +902,8 @@ final class GtkStruct
 		signal.name = signal.name ~ "-generic-event";
 
 		buff ~= signal.getDelegateWrapperDeclaration();
-		buff ~= signal.getDelegateWrapperName() ~ "[] on" ~ signal.getSignalName() ~"Listeners;";
+		buff ~= "protected " ~ signal.getDelegateWrapperName() ~ "[] on" ~ signal.getSignalName() ~"Listeners;";
+		buff ~= "\n";
 		
 		//buff ~= func.getDelegateDecleration() ~"[] on"~ signal.getSignalName() ~"Listeners;";
 

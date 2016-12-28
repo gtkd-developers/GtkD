@@ -986,7 +986,7 @@ final class GtkFunction
 	{
 		assert(type == GtkFunctionType.Signal);
 
-		string buff = "private struct " ~ getDelegateWrapperName();
+		string buff = "protected struct " ~ getDelegateWrapperName();
 		buff ~= " {";
 		if ( strct.type == GtkStructType.Interface ) {
 			buff ~= strct.name ~ "IF " ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ";";
@@ -1100,6 +1100,7 @@ final class GtkFunction
 		*/
 		buff ~= "return handlerId;";
 		buff ~= "}";
+		buff ~= "\n";
 
 		return buff;
 	}
@@ -1210,6 +1211,7 @@ final class GtkFunction
 
 	*/
 		buff ~= "}";
+		buff ~= "\n";
 		return buff;
 	}
 	
