@@ -1023,12 +1023,12 @@ final class GtkFunction
 		return buff;
 	}
 
-	string[] getAddListenerdeclaration()
+	string[] getAddListenerDeclaration()
 	{
 		string[] buff;
 
 		writeDocs(buff);
-		buff ~= "void addOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)";
+		buff ~= "ulong addOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)";
 
 		return buff;
 	}
@@ -1088,22 +1088,56 @@ final class GtkFunction
 		buff ~= "connectFlags);";
 		//buff ~= "connectedSignals[\""~ name ~"\"] = 1;";
 		//buff ~= "}";
-		buff ~= "if (handlerId > 0) {";
+		buff ~= "if (handlerId > 0)";
 		buff ~= getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1].handlerId = handlerId;";
-		buff ~= "} else {";
-		//buff ~= "/* remove listener here if fails */";
-		buff ~= "}";
+		buff ~= "else";
+		buff ~= "removeOn" ~ getSignalName ~ "(dlg);";
 		/*
 		if ( strct.type == GtkStructType.Interface )
 			buff ~= "_on"~ getSignalName() ~"Listeners ~= dlg;";
 		else
 			buff ~= "on"~ getSignalName() ~"Listeners ~= dlg;";
 		*/
-
+		buff ~= "return handlerId;";
 		buff ~= "}";
 
 		return buff;
 	}
+
+	string[] getRemoveListenerDeclaration() {
+		string[] buff;
+		// Should we document?
+		//writeDocs(buff);
+		buff ~= "void removeOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg)";
+		return buff;
+	}
+
+	string[] getRemoveListenerBody()
+	{
+		string[] buff;
+		string realName = name;
+		
+		if ( name.endsWith("-generic-event") )
+			realName = name[0..$-14];
+
+		buff ~= "{";
+		buff ~= "foreach(index, wrapper; " ~ getDelegateWrapperArrayName() ~ ")";
+		buff ~= "{";
+		buff ~= "if (wrapper.dlg == dlg)";
+		buff ~= "{";
+		buff ~= "if (wrapper.handlerId > 0)";
+		buff ~= "{";
+		buff ~= "Signals.handlerDisconnect(this, wrapper.handlerId);";
+		buff ~= "}";
+		buff ~= getDelegateWrapperArrayName() ~ "[index] = " ~ getDelegateWrapperName ~ "(null, null, 0, cast(ConnectFlags) 0);";
+		buff ~= "import std.algorithm;";
+		buff ~= getDelegateWrapperArrayName() ~ " = std.algorithm.remove(" ~ getDelegateWrapperArrayName() ~ ", index);";
+		buff ~= "break;";
+		buff ~= "}";
+		buff ~= "}";
+		buff ~= "}";
+		return buff;
+	}	
 
 	string[] getSignalCallback()
 	{

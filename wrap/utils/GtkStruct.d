@@ -475,9 +475,11 @@ final class GtkStruct
 				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
 				buff ~= indenter.format(func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 
-				buff ~= indenter.format(func.getAddListenerdeclaration());
+				buff ~= indenter.format(func.getAddListenerDeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
 				buff ~= indenter.format(func.getSignalCallback());
+				buff ~= indenter.format(func.getRemoveListenerDeclaration());
+				buff ~= indenter.format(func.getRemoveListenerBody());
 
 				foreach ( param; func.params )
 				{
@@ -547,10 +549,13 @@ final class GtkStruct
 				if ( func.type == GtkFunctionType.Signal )
 				{
 					//buff ~= indenter.format("@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners();");
-					string[] dec = func.getAddListenerdeclaration();
-					dec[$-1] ~= ";";
+					//string[] dec = func.getAddListenerDeclaration();
+					//dec[$-1] ~= ";";
 
-					buff ~= indenter.format(dec);
+					buff ~= indenter.format(func.getAddListenerDeclaration() ~ ";");
+					buff ~= "\n";
+
+					buff ~= indenter.format(func.getRemoveListenerDeclaration() ~ ";");
 					buff ~= "\n";
 				}
 				else
@@ -892,7 +897,7 @@ final class GtkStruct
 			}
 		}
 
-		string[] declaration = signal.getAddListenerdeclaration();
+		string[] declaration = signal.getAddListenerDeclaration();
 		signal.name = signal.name ~ "-generic-event";
 
 		buff ~= signal.getDelegateWrapperDeclaration();
@@ -903,6 +908,8 @@ final class GtkStruct
 		buff ~= declaration;
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();
+		buff ~= signal.getRemoveListenerDeclaration();
+		buff ~= signal.getRemoveListenerBody();
 		
 		return buff;
 	}
