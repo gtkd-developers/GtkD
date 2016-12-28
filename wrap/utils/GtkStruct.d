@@ -445,30 +445,35 @@ final class GtkStruct
 			if ( func.type == GtkFunctionType.Signal )
 			{
 				buff ~= "\n";
-
+				/*
 				if ( firstSignal )
 				{
 					buff ~= indenter.format("int[string] connectedSignals;");
 					buff ~= "\n";
 					firstSignal = false;
 				}
-
+				*/
+				/*
 				if ( isInterface() )
 				{
 					string[] prop;
 
-					prop ~= func.getDelegateDecleration() ~"[] _on"~ func.getSignalName() ~"Listeners;";
+					prop ~= func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;";
 					prop ~= "@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners()";
 					prop ~= "{";
 					prop ~= "return _on"~ func.getSignalName() ~"Listeners;";
 					prop ~= "}";
-
 					buff ~= indenter.format(prop);
+
 				}
 				else
 				{
-					buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
+					//buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
 				}
+				*/
+
+				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
+				buff ~= indenter.format(func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 
 				buff ~= indenter.format(func.getAddListenerdeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
@@ -541,7 +546,7 @@ final class GtkStruct
 
 				if ( func.type == GtkFunctionType.Signal )
 				{
-					buff ~= indenter.format("@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners();");
+					//buff ~= indenter.format("@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners();");
 					string[] dec = func.getAddListenerdeclaration();
 					dec[$-1] ~= ";";
 
@@ -889,8 +894,12 @@ final class GtkStruct
 
 		string[] declaration = signal.getAddListenerdeclaration();
 		signal.name = signal.name ~ "-generic-event";
+
+		buff ~= signal.getDelegateWrapperDeclaration();
+		buff ~= signal.getDelegateWrapperName() ~ "[] on" ~ signal.getSignalName() ~"Listeners;";
 		
-		buff ~= func.getDelegateDecleration() ~"[] on"~ signal.getSignalName() ~"Listeners;";
+		//buff ~= func.getDelegateDecleration() ~"[] on"~ signal.getSignalName() ~"Listeners;";
+
 		buff ~= declaration;
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();

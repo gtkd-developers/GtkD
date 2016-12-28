@@ -967,6 +967,39 @@ final class GtkFunction
 		return signalName;
 	}
 
+	string getDelegateWrapperName()
+	{
+		return "On" ~ getSignalName() ~ "DelegateWrapper";
+	}
+
+	string getDelegateWrapperArrayName() {
+		string buff;
+//		if ( strct.type == GtkStructType.Interface )
+//			buff ~= "_on";
+//		else
+		    buff ~= "on";		
+		buff ~= getSignalName() ~ "Listeners";
+		return buff; 
+	}
+	
+	string getDelegateWrapperDeclaration()
+	{
+		assert(type == GtkFunctionType.Signal);
+
+		string buff = "private struct " ~ getDelegateWrapperName();
+		buff ~= " {";
+		if ( strct.type == GtkStructType.Interface ) {
+			buff ~= strct.name ~ "IF " ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ";";
+		} else {
+			buff ~= strct.name ~ " " ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ";";
+		}
+		buff ~= getDelegateDecleration() ~ " dlg;";
+		buff ~= "ulong handlerId;";
+		buff ~= "ConnectFlags flags;";
+		buff ~= "}";
+		return buff;
+	}
+
 	string getDelegateDecleration()
 	{
 		assert(type == GtkFunctionType.Signal);
@@ -1009,8 +1042,9 @@ final class GtkFunction
 			realName = name[0..$-14];
 
 		buff ~= "{";
-		buff ~= "if ( \""~ name ~"\" !in connectedSignals )";
-		buff ~= "{";
+		// GBN - Not using connectedSignals anymore
+		//buff ~= "if ( \""~ name ~"\" !in connectedSignals )";
+		//buff ~= "{";
 
 		if ( strct.name != "StatusIcon")
 		{
@@ -1035,25 +1069,36 @@ final class GtkFunction
 			}
 		}
 
-		buff ~= "Signals.connectData(";
+		buff ~= getDelegateWrapperArrayName ~ " ~= " ~ getDelegateWrapperName ~ "(this, dlg, 0, connectFlags);";
+		//buff ~= 
+		buff ~= "ulong handlerId = Signals.connectData(";
 		buff ~= "this,";
 		buff ~= "\""~ realName ~"\",";
 		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
 
+		/* GBN, pass delegate not object
 		if ( strct.type == GtkStructType.Interface )
 			buff ~= "cast(void*)cast("~ strct.name ~"IF)this,";
 		else
 			buff ~= "cast(void*)this,";
+		*/
+		buff ~= "&" ~ getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1],";
 
 		buff ~= "null,";
 		buff ~= "connectFlags);";
-		buff ~= "connectedSignals[\""~ name ~"\"] = 1;";
+		//buff ~= "connectedSignals[\""~ name ~"\"] = 1;";
+		//buff ~= "}";
+		buff ~= "if (handlerId > 0) {";
+		buff ~= getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1].handlerId = handlerId;";
+		buff ~= "} else {";
+		//buff ~= "/* remove listener here if fails */";
 		buff ~= "}";
-
+		/*
 		if ( strct.type == GtkStructType.Interface )
 			buff ~= "_on"~ getSignalName() ~"Listeners ~= dlg;";
 		else
 			buff ~= "on"~ getSignalName() ~"Listeners ~= dlg;";
+		*/
 
 		buff ~= "}";
 
@@ -1073,7 +1118,28 @@ final class GtkFunction
 			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
 
 		buff ~= "{";
+		buff ~= getDelegateWrapperName() ~ " wrapper = *cast(" ~ getDelegateWrapperName() ~ "*)ptr_wrapper;";
 
+		if ( type == "bool" )
+		{
+			buff ~= "return wrapper.dlg(" ~ getCallbackVars() ~ ");";
+		} 
+		else if (type == "void") 
+		{
+			buff ~= "wrapper.dlg("~ getCallbackVars() ~");";
+		} 
+		else if (dType) 
+		{
+			buff ~= "auto r = wrapper.dlg(" ~ getCallbackVars() ~ ");";
+			buff ~= "return r."~ dType.getHandleFunc() ~"();";
+		} 
+		else 
+		{
+			//Old code just called event listener[0] here 	
+			buff ~= "return wrapper.dlg(" ~ getCallbackVars() ~");";
+		}
+
+		/*
 		if ( type == "bool" )
 		{
 			buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
@@ -1108,11 +1174,11 @@ final class GtkFunction
 			buff ~= "return _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners[0]("~ getCallbackVars() ~");";
 		}
 
+	*/
 		buff ~= "}";
-
 		return buff;
 	}
-
+	
 	void writeDocs(ref string[] buff)
 	{
 		if ( (doc || returnType.doc) && wrapper.includeComments )
@@ -1447,10 +1513,14 @@ final class GtkFunction
 				buff ~= stringToGtkD(", "~ param.type.name ~" "~ param.name, wrapper.aliasses, localAliases());
 		}
 
+		/*
 		if ( strct.type == GtkStructType.Interface )
 			buff ~= ", "~ strct.name ~"IF _"~ strct.name.toLower();
 		else
 			buff ~= ", "~ strct.name ~" _"~ strct.name.toLower();
+		*/
+
+		buff ~= ", void* ptr_wrapper";
 
 		return buff;
 	}
@@ -1485,8 +1555,8 @@ final class GtkFunction
 
 		if ( !buff.empty )
 			buff ~= ", ";
-		buff ~= "_"~ strct.name.toLower();
-
+		//buff ~= "_"~ strct.name.toLower();
+		buff ~= "wrapper." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases());
 		return buff;
 	}
 }
