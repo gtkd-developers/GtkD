@@ -453,32 +453,35 @@ final class GtkStruct
 					firstSignal = false;
 				}
 				*/
-				/*
+
 				if ( isInterface() )
 				{
 					string[] prop;
 
-					prop ~= func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;";
-					prop ~= "@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners()";
+					prop ~= "public " ~ func.getDelegateWrapperName() ~ "[] _on" ~ func.getSignalName() ~"Listeners;";
+					prop ~= "public @property "~ func.getDelegateWrapperName() ~"[] on"~ func.getSignalName() ~"Listeners()";
 					prop ~= "{";
 					prop ~= "return _on"~ func.getSignalName() ~"Listeners;";
+					prop ~= "}";
+					prop ~= "public @property void on"~ func.getSignalName() ~"Listeners(" ~ func.getDelegateWrapperName() ~ "[] value)";
+					prop ~= "{";
+					prop ~= "_on"~ func.getSignalName() ~"Listeners = value;";
 					prop ~= "}";
 					buff ~= indenter.format(prop);
 
 				}
 				else
 				{
+					buff ~= indenter.format(func.getDelegateWrapperDeclaration());
+					buff ~= indenter.format("public " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 					//buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
 				}
-				*/
 
-				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
-				buff ~= indenter.format("protected " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 				buff ~= "\n";
-
 				buff ~= indenter.format(func.getAddListenerDeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
 				buff ~= indenter.format(func.getSignalCallback());
+				buff ~= indenter.format(func.getSignalDestroyCallback());
 				buff ~= indenter.format(func.getRemoveListenerDeclaration());
 				buff ~= indenter.format(func.getRemoveListenerBody());
 
@@ -549,7 +552,13 @@ final class GtkStruct
 
 				if ( func.type == GtkFunctionType.Signal )
 				{
-					//buff ~= indenter.format("@property "~ func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners();");
+					buff ~= func.getDelegateWrapperDeclaration();
+					buff ~= "\n";
+					buff ~= "public @property "~ func.getDelegateWrapperName() ~"[] on"~ func.getSignalName() ~"Listeners();";
+					buff ~= "\n";
+					buff ~= "public @property void on"~ func.getSignalName() ~"Listeners(" ~ func.getDelegateWrapperName() ~ "[] value);";
+					buff ~= "\n";
+					
 					//string[] dec = func.getAddListenerDeclaration();
 					//dec[$-1] ~= ";";
 
@@ -792,8 +801,10 @@ final class GtkStruct
 
 			if ( func.type == GtkFunctionType.Signal )
 			{
+				imports ~= "std.algorithm";
 				imports ~= "gobject.Signals";
 				imports ~= "gtkc.gdktypes";
+
 			}
 
 			if ( func.type == GtkFunctionType.Constructor )
@@ -910,6 +921,7 @@ final class GtkStruct
 		buff ~= declaration;
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();
+		buff ~= signal.getSignalDestroyCallback();
 		buff ~= signal.getRemoveListenerDeclaration();
 		buff ~= signal.getRemoveListenerBody();
 		
