@@ -454,6 +454,7 @@ final class GtkStruct
 				}
 				*/
 
+				/*
 				if ( isInterface() )
 				{
 					string[] prop;
@@ -476,14 +477,25 @@ final class GtkStruct
 					buff ~= indenter.format("public " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 					//buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
 				}
+				*/
+
+				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
+				buff ~= indenter.format("protected " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 
 				buff ~= "\n";
 				buff ~= indenter.format(func.getAddListenerDeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
+				buff ~= "\n";
 				buff ~= indenter.format(func.getSignalCallback());
+				buff ~= "\n";
 				buff ~= indenter.format(func.getSignalDestroyCallback());
+				buff ~= "\n";
 				buff ~= indenter.format(func.getRemoveListenerDeclaration());
 				buff ~= indenter.format(func.getRemoveListenerBody());
+				buff ~= "\n";
+				buff ~= indenter.format(func.getInternalRemoveListenerDeclaration());
+				buff ~= indenter.format(func.getInternalRemoveListenerBody());
+				buff ~= "\n";
 
 				foreach ( param; func.params )
 				{
@@ -552,13 +564,14 @@ final class GtkStruct
 
 				if ( func.type == GtkFunctionType.Signal )
 				{
+					/*
 					buff ~= func.getDelegateWrapperDeclaration();
 					buff ~= "\n";
 					buff ~= "public @property "~ func.getDelegateWrapperName() ~"[] on"~ func.getSignalName() ~"Listeners();";
 					buff ~= "\n";
 					buff ~= "public @property void on"~ func.getSignalName() ~"Listeners(" ~ func.getDelegateWrapperName() ~ "[] value);";
 					buff ~= "\n";
-					
+					*/
 					//string[] dec = func.getAddListenerDeclaration();
 					//dec[$-1] ~= ";";
 
@@ -566,6 +579,9 @@ final class GtkStruct
 					buff ~= "\n";
 
 					buff ~= indenter.format(func.getRemoveListenerDeclaration() ~ ";");
+					buff ~= "\n";
+
+					buff ~= indenter.format(func.getInternalRemoveListenerDeclaration() ~ ";");
 					buff ~= "\n";
 				}
 				else
@@ -924,6 +940,8 @@ final class GtkStruct
 		buff ~= signal.getSignalDestroyCallback();
 		buff ~= signal.getRemoveListenerDeclaration();
 		buff ~= signal.getRemoveListenerBody();
+		buff ~= signal.getInternalRemoveListenerDeclaration();
+		buff ~= signal.getInternalRemoveListenerBody();
 		
 		return buff;
 	}

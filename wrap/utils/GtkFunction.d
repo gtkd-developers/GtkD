@@ -974,9 +974,9 @@ final class GtkFunction
 
 	string getDelegateWrapperArrayName() {
 		string buff;
-		if ( strct.type == GtkStructType.Interface )
-			buff ~= "_on";
-		else
+		//if ( strct.type == GtkStructType.Interface )
+		//	buff ~= "_on";
+		//else
 		    buff ~= "on";		
 		buff ~= getSignalName() ~ "Listeners";
 		return buff; 
@@ -1091,7 +1091,7 @@ final class GtkFunction
 		buff ~= "if (handlerId > 0)";
 		buff ~= getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1].handlerId = handlerId;";
 		buff ~= "else";
-		buff ~= "removeOn" ~ getSignalName ~ "(dlg);";
+		buff ~= "internalRemoveOn" ~ getSignalName ~ "(dlg);";
 		/*
 		if ( strct.type == GtkStructType.Interface )
 			buff ~= "_on"~ getSignalName() ~"Listeners ~= dlg;";
@@ -1131,7 +1131,38 @@ final class GtkFunction
 		buff ~= "}";
 		buff ~= "}";
 		return buff;
-	}	
+	}
+
+	string[] getInternalRemoveListenerDeclaration() {
+		string[] buff;
+		buff ~= "/**";
+		buff ~= " * This is for internal signal cleanup and should never be called directly.";
+		buff ~= " */";
+		buff ~= "void internalRemoveOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg)";
+		return buff;
+	}
+
+	string[] getInternalRemoveListenerBody()
+	{
+		string[] buff;
+		string realName = name;
+		
+		if ( name.endsWith("-generic-event") )
+			realName = name[0..$-14];
+		buff ~= "{";
+		buff ~= "foreach(index, wrapper; " ~ getDelegateWrapperArrayName() ~ ")";
+		buff ~= "{";
+		buff ~= "if (wrapper.dlg == dlg)";
+		buff ~= "{";
+		buff ~= getDelegateWrapperArrayName() ~ "[index] = " ~ getDelegateWrapperName ~ "(null, null, 0, cast(ConnectFlags) 0);";
+		buff ~= getDelegateWrapperArrayName() ~ " = std.algorithm.remove(" ~ getDelegateWrapperArrayName() ~ ", index);";
+		buff ~= "break;";
+		buff ~="}";
+		buff ~="}";
+		buff ~="}";
+		buff ~="\n";
+		return buff;
+	}
 
 	string[] getSignalCallback()
 	{
@@ -1214,26 +1245,14 @@ final class GtkFunction
 		//string aliasThis = "source." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases());
 
 		// Do not use getDelegateWrapperArrayName here because it returns '_' variant for interface, we need property
-		string arrayName = "on" ~ getSignalName() ~ "Listeners";
 
 		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(void* pWrapper, void* closure)";
 		buff ~= "{";
 		buff ~= getDelegateWrapperName() ~ " source = *cast(" ~ getDelegateWrapperName() ~ "*)pWrapper;";
-		buff ~= getDelegateWrapperName() ~ "[] " ~ arrayName ~ " = source." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ "." ~ arrayName ~ ";";
-		buff ~= "foreach(index, wrapper; " ~ arrayName ~ ")";
-		buff ~= "{";
-		buff ~= "if (wrapper == source)";
-		buff ~= "{";
-		buff ~= arrayName ~ "[index] = " ~ getDelegateWrapperName ~ "(null, null, 0, cast(ConnectFlags) 0);";
-		buff ~= "source." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ "." ~ arrayName ~ " = std.algorithm.remove(" ~ arrayName ~ ", index);";
-		buff ~= "break;";
-		buff ~="}";
-		buff ~="}";
-		buff ~="}";
-		buff ~="\n";
+		buff ~= "source." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ".internalRemoveOn" ~ getSignalName() ~ "(source.dlg);";
+		buff ~= "}";
 		return buff;
 	}
-	
 	
 	void writeDocs(ref string[] buff)
 	{
