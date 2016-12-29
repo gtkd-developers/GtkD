@@ -45,7 +45,23 @@ implements: AppInfo
 
 struct: Application
 code: start
-int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineListeners;
+
+	protected class ScopedOnCommandLineDelegateWrapper
+	{
+		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
+		ulong handlerId;
+		ConnectFlags flags;
+
+		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ulong handlerId, ConnectFlags flags) 
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	
+	protected ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
+
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -58,25 +74,56 @@ int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineLi
 	 * Return: An integer that is set as the exit status for the calling
 	 *     process. See g_application_command_line_set_exit_status().
 	 */
-	void addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	ulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "command-line-scoped" !in connectedSignals )
+		scopedOnCommandLineListeners ~= new ScopedOnCommandLineDelegateWrapper(dlg, 0, connectFlags);
+		ulong handlerId = Signals.connectData(
+			this,
+			"command-line",
+			cast(GCallback)&callBackScopedCommandLine,
+			&scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1],
+			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
+			connectFlags);
+		if (handlerId > 0)
+			scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId = handlerId;
+		else
+			internalRemoveOnCommandLine(scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1]);
+		return handlerId;
+	}
+
+	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, void* pWrapper)
+	{
+		ScopedOnCommandLineDelegateWrapper wrapper = *cast(ScopedOnCommandLineDelegateWrapper*)pWrapper;
+		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
+	}
+	
+
+	extern(C) static void callBackScopedCommandLineDestroy(void* pWrapper, void* closure)
+	{
+		ScopedOnCommandLineDelegateWrapper source = *cast(ScopedOnCommandLineDelegateWrapper*)pWrapper;
+		source.outer.internalRemoveOnCommandLine(source);
+	}
+
+	void removeOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		foreach(index, wrapper; scopedOnCommandLineListeners)
+		if (wrapper.dlg == dlg && wrapper.flags == connectFlags && wrapper.handlerId > 0)
+			Signals.handlerDisconnect(this, wrapper.handlerId);
+	}
+
+	protected void internalRemoveOnCommandLine(ScopedOnCommandLineDelegateWrapper source)
+	{
+		foreach(index, wrapper; scopedOnCommandLineListeners)
 		{
-			Signals.connectData(
-				this,
-				"command-line",
-				cast(GCallback)&callBackScopedCommandLine,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["command-line-scoped"] = 1;
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags)
+			{
+				scopedOnCommandLineListeners[index] = null;
+				scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
+				break;
+			}
 		}
-		scopedOnCommandLineListeners ~= dlg;
 	}
-	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
-	{
-		return _application.onCommandLineListeners[0](scoped!ApplicationCommandLine(commandLine), _application);
-	}
+
 code: end
 
 struct: BufferedInputStream
