@@ -445,39 +445,6 @@ final class GtkStruct
 			if ( func.type == GtkFunctionType.Signal )
 			{
 				buff ~= "\n";
-				/*
-				if ( firstSignal )
-				{
-					buff ~= indenter.format("int[string] connectedSignals;");
-					buff ~= "\n";
-					firstSignal = false;
-				}
-				*/
-
-				/*
-				if ( isInterface() )
-				{
-					string[] prop;
-
-					prop ~= "public " ~ func.getDelegateWrapperName() ~ "[] _on" ~ func.getSignalName() ~"Listeners;";
-					prop ~= "public @property "~ func.getDelegateWrapperName() ~"[] on"~ func.getSignalName() ~"Listeners()";
-					prop ~= "{";
-					prop ~= "return _on"~ func.getSignalName() ~"Listeners;";
-					prop ~= "}";
-					prop ~= "public @property void on"~ func.getSignalName() ~"Listeners(" ~ func.getDelegateWrapperName() ~ "[] value)";
-					prop ~= "{";
-					prop ~= "_on"~ func.getSignalName() ~"Listeners = value;";
-					prop ~= "}";
-					buff ~= indenter.format(prop);
-
-				}
-				else
-				{
-					buff ~= indenter.format(func.getDelegateWrapperDeclaration());
-					buff ~= indenter.format("public " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
-					//buff ~= indenter.format(func.getDelegateDecleration() ~"[] on"~ func.getSignalName() ~"Listeners;");
-				}
-				*/
 
 				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
 				buff ~= indenter.format("protected " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
@@ -564,24 +531,10 @@ final class GtkStruct
 
 				if ( func.type == GtkFunctionType.Signal )
 				{
-					/*
-					buff ~= func.getDelegateWrapperDeclaration();
-					buff ~= "\n";
-					buff ~= "public @property "~ func.getDelegateWrapperName() ~"[] on"~ func.getSignalName() ~"Listeners();";
-					buff ~= "\n";
-					buff ~= "public @property void on"~ func.getSignalName() ~"Listeners(" ~ func.getDelegateWrapperName() ~ "[] value);";
-					buff ~= "\n";
-					*/
-					//string[] dec = func.getAddListenerDeclaration();
-					//dec[$-1] ~= ";";
-
 					buff ~= indenter.format(func.getAddListenerDeclaration() ~ ";");
 					buff ~= "\n";
 
 					buff ~= indenter.format(func.getRemoveListenerDeclaration() ~ ";");
-					buff ~= "\n";
-
-					buff ~= indenter.format(func.getInternalRemoveListenerDeclaration() ~ ";");
 					buff ~= "\n";
 				}
 				else
@@ -932,8 +885,6 @@ final class GtkStruct
 		buff ~= "protected " ~ signal.getDelegateWrapperName() ~ "[] on" ~ signal.getSignalName() ~"Listeners;";
 		buff ~= "\n";
 		
-		//buff ~= func.getDelegateDecleration() ~"[] on"~ signal.getSignalName() ~"Listeners;";
-
 		buff ~= declaration;
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();

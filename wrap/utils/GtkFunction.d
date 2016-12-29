@@ -973,29 +973,26 @@ final class GtkFunction
 	}
 
 	string getDelegateWrapperArrayName() {
-		string buff;
-		//if ( strct.type == GtkStructType.Interface )
-		//	buff ~= "_on";
-		//else
-		    buff ~= "on";		
-		buff ~= getSignalName() ~ "Listeners";
-		return buff; 
+		return "on" ~ getSignalName() ~ "Listeners";
 	}
 	
 	string getDelegateWrapperDeclaration()
 	{
 		assert(type == GtkFunctionType.Signal);
 
-		string buff = "public struct " ~ getDelegateWrapperName();
-		buff ~= " {";
-		if ( strct.type == GtkStructType.Interface ) {
-			buff ~= strct.name ~ "IF " ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ";";
-		} else {
-			buff ~= strct.name ~ " " ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ";";
-		}
+		string buff = "protected class " ~ getDelegateWrapperName();
+		buff ~= "\n";
+		buff ~= "{";
 		buff ~= getDelegateDecleration() ~ " dlg;";
 		buff ~= "ulong handlerId;";
 		buff ~= "ConnectFlags flags;";
+		buff ~= "\n";
+		buff ~= "this(" ~ getDelegateDecleration() ~ " dlg, ulong handlerId, ConnectFlags flags)";
+		buff ~= " {";
+		buff ~= "this.dlg = dlg;";
+		buff ~= "this.handlerId = handlerId;";
+		buff ~= "this.flags = flags;";
+		buff ~= "}";
 		buff ~= "}";
 		return buff;
 	}
@@ -1042,9 +1039,6 @@ final class GtkFunction
 			realName = name[0..$-14];
 
 		buff ~= "{";
-		// GBN - Not using connectedSignals anymore
-		//buff ~= "if ( \""~ name ~"\" !in connectedSignals )";
-		//buff ~= "{";
 
 		if ( strct.name != "StatusIcon")
 		{
@@ -1069,35 +1063,21 @@ final class GtkFunction
 			}
 		}
 
-		buff ~= getDelegateWrapperArrayName ~ " ~= " ~ getDelegateWrapperName ~ "(this, dlg, 0, connectFlags);";
-		//buff ~= 
+		buff ~= getDelegateWrapperArrayName ~ " ~= new " ~ getDelegateWrapperName ~ "(dlg, 0, connectFlags);";
 		buff ~= "ulong handlerId = Signals.connectData(";
 		buff ~= "this,";
 		buff ~= "\""~ realName ~"\",";
 		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
 
-		/* GBN, pass delegate not object
-		if ( strct.type == GtkStructType.Interface )
-			buff ~= "cast(void*)cast("~ strct.name ~"IF)this,";
-		else
-			buff ~= "cast(void*)this,";
-		*/
-		buff ~= "&" ~ getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1],";
+		string wrapper = getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1]";
+		buff ~= "&" ~ wrapper ~ ",";
 
 		buff ~= "cast(GClosureNotify)&callBack" ~ getSignalName() ~ "Destroy,";
 		buff ~= "connectFlags);";
-		//buff ~= "connectedSignals[\""~ name ~"\"] = 1;";
-		//buff ~= "}";
 		buff ~= "if (handlerId > 0)";
-		buff ~= getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1].handlerId = handlerId;";
+		buff ~= wrapper ~ ".handlerId = handlerId;";
 		buff ~= "else";
-		buff ~= "internalRemoveOn" ~ getSignalName ~ "(dlg);";
-		/*
-		if ( strct.type == GtkStructType.Interface )
-			buff ~= "_on"~ getSignalName() ~"Listeners ~= dlg;";
-		else
-			buff ~= "on"~ getSignalName() ~"Listeners ~= dlg;";
-		*/
+		buff ~= "internalRemoveOn" ~ getSignalName ~ "(" ~ wrapper ~ ");";
 		buff ~= "return handlerId;";
 		buff ~= "}";
 		buff ~= "\n";
@@ -1109,7 +1089,7 @@ final class GtkFunction
 		string[] buff;
 		// Should we document?
 		//writeDocs(buff);
-		buff ~= "void removeOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg)";
+		buff ~= "void removeOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)";
 		return buff;
 	}
 
@@ -1123,22 +1103,15 @@ final class GtkFunction
 
 		buff ~= "{";
 		buff ~= "foreach(index, wrapper; " ~ getDelegateWrapperArrayName() ~ ")";
-		buff ~= "{";
-		buff ~= "if (wrapper.dlg == dlg && wrapper.handlerId > 0)";
-		buff ~= "{";
+		buff ~= "if (wrapper.dlg == dlg && wrapper.flags == connectFlags && wrapper.handlerId > 0)";
 		buff ~= "Signals.handlerDisconnect(this, wrapper.handlerId);";
-		buff ~= "}";
-		buff ~= "}";
 		buff ~= "}";
 		return buff;
 	}
 
 	string[] getInternalRemoveListenerDeclaration() {
 		string[] buff;
-		buff ~= "/**";
-		buff ~= " * This is for internal signal cleanup and should never be called directly.";
-		buff ~= " */";
-		buff ~= "void internalRemoveOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg)";
+		buff ~= "protected void internalRemoveOn"~ getSignalName() ~"("~ getDelegateWrapperName() ~" source)";
 		return buff;
 	}
 
@@ -1152,9 +1125,9 @@ final class GtkFunction
 		buff ~= "{";
 		buff ~= "foreach(index, wrapper; " ~ getDelegateWrapperArrayName() ~ ")";
 		buff ~= "{";
-		buff ~= "if (wrapper.dlg == dlg)";
+		buff ~= "if (wrapper.dlg == source.dlg && wrapper.flags == source.flags)";
 		buff ~= "{";
-		buff ~= getDelegateWrapperArrayName() ~ "[index] = " ~ getDelegateWrapperName ~ "(null, null, 0, cast(ConnectFlags) 0);";
+		buff ~= getDelegateWrapperArrayName() ~ "[index] = null;";
 		buff ~= getDelegateWrapperArrayName() ~ " = std.algorithm.remove(" ~ getDelegateWrapperArrayName() ~ ", index);";
 		buff ~= "break;";
 		buff ~="}";
@@ -1198,42 +1171,6 @@ final class GtkFunction
 			buff ~= "return wrapper.dlg(" ~ getCallbackVars() ~");";
 		}
 
-		/*
-		if ( type == "bool" )
-		{
-			buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
-			buff ~= "{";
-			buff ~= "if ( dlg("~ getCallbackVars() ~") )";
-			buff ~= "{";
-			buff ~= "return 1;";
-			buff ~= "}";
-			buff ~= "}";
-			buff ~= "";
-			buff ~= "return 0;";
-		}
-		else if ( type == "void" )
-		{
-			buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
-			buff ~= "{";
-			buff ~= "dlg("~ getCallbackVars() ~");";
-			buff ~= "}";
-		}
-		else if ( dType )
-		{
-			buff ~= "foreach ( "~ getDelegateDecleration() ~" dlg; _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners )";
-			buff ~= "{";
-			buff ~= "if ( auto r = dlg("~ getCallbackVars() ~") )";
-			buff ~= "return r."~ dType.getHandleFunc() ~"();";
-			buff ~= "}";
-			buff ~= "";
-			buff ~= "return null;";
-		}
-		else
-		{
-			buff ~= "return _"~ strct.name.toLower() ~".on"~ getSignalName() ~"Listeners[0]("~ getCallbackVars() ~");";
-		}
-
-	*/
 		buff ~= "}";
 		buff ~= "\n";
 		return buff;
@@ -1242,14 +1179,10 @@ final class GtkFunction
 	string[] getSignalDestroyCallback()
 	{
 		string[] buff;
-		//string aliasThis = "source." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases());
-
-		// Do not use getDelegateWrapperArrayName here because it returns '_' variant for interface, we need property
-
 		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(void* pWrapper, void* closure)";
 		buff ~= "{";
 		buff ~= getDelegateWrapperName() ~ " source = *cast(" ~ getDelegateWrapperName() ~ "*)pWrapper;";
-		buff ~= "source." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases()) ~ ".internalRemoveOn" ~ getSignalName() ~ "(source.dlg);";
+		buff ~= "source.outer.internalRemoveOn" ~ getSignalName() ~ "(source);";
 		buff ~= "}";
 		return buff;
 	}
@@ -1588,15 +1521,7 @@ final class GtkFunction
 				buff ~= stringToGtkD(", "~ param.type.name ~" "~ param.name, wrapper.aliasses, localAliases());
 		}
 
-		/*
-		if ( strct.type == GtkStructType.Interface )
-			buff ~= ", "~ strct.name ~"IF _"~ strct.name.toLower();
-		else
-			buff ~= ", "~ strct.name ~" _"~ strct.name.toLower();
-		*/
-
 		buff ~= ", void* pWrapper";
-
 		return buff;
 	}
 
@@ -1630,8 +1555,7 @@ final class GtkFunction
 
 		if ( !buff.empty )
 			buff ~= ", ";
-		//buff ~= "_"~ strct.name.toLower();
-		buff ~= "wrapper." ~ tokenToGtkD(strct.name.toLower(), wrapper.aliasses, localAliases());
+		buff ~= "wrapper.outer";
 		return buff;
 	}
 }
