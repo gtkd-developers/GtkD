@@ -1024,7 +1024,7 @@ final class GtkFunction
 		string[] buff;
 
 		writeDocs(buff);
-		buff ~= "ulong addOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)";
+		buff ~= "gulong addOn"~ getSignalName() ~"("~ getDelegateDecleration() ~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)";
 
 		return buff;
 	}
@@ -1062,22 +1062,17 @@ final class GtkFunction
 			}
 		}
 
+		string wrapper = getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1]";
+
 		buff ~= getDelegateWrapperArrayName ~ " ~= new " ~ getDelegateWrapperName ~ "(dlg, 0, connectFlags);";
-		buff ~= "ulong handlerId = Signals.connectData(";
+		buff ~= wrapper ~ ".handlerId = Signals.connectData(";
 		buff ~= "this,";
 		buff ~= "\""~ realName ~"\",";
 		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
-
-		string wrapper = getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1]";
 		buff ~= "cast(void*)" ~ wrapper ~ ",";
-
 		buff ~= "cast(GClosureNotify)&callBack" ~ getSignalName() ~ "Destroy,";
 		buff ~= "connectFlags);";
-		buff ~= "if (handlerId > 0)";
-		buff ~= "{";
-		buff ~= wrapper ~ ".handlerId = handlerId;";
-		buff ~= "}";
-		buff ~= "return handlerId;";
+		buff ~= "return " ~ wrapper ~ ".handlerId;";
 		buff ~= "}";
 		buff ~= "\n";
 
@@ -1126,7 +1121,7 @@ final class GtkFunction
 		buff ~= "{";
 		buff ~= "foreach(index, wrapper; " ~ getDelegateWrapperArrayName() ~ ")";
 		buff ~= "{";
-		buff ~= "if (wrapper.dlg == source.dlg && wrapper.flags == source.flags)";
+		buff ~= "if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)";
 		buff ~= "{";
 		buff ~= getDelegateWrapperArrayName() ~ "[index] = null;";
 		buff ~= getDelegateWrapperArrayName() ~ " = std.algorithm.remove(" ~ getDelegateWrapperArrayName() ~ ", index);";
@@ -1151,7 +1146,7 @@ final class GtkFunction
 			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
 
 		buff ~= "{";
-		buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
+		//buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
 
 		if ( type == "bool" )
 		{
@@ -1180,9 +1175,9 @@ final class GtkFunction
 	string[] getSignalDestroyCallback()
 	{
 		string[] buff;
-		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(void* pWrapper, GClosure* closure)";
+		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(" ~ getDelegateWrapperName() ~ " wrapper, GClosure* closure)";
 		buff ~= "{";
-		buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
+		//buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
 		buff ~= "wrapper.outer.internalRemoveOn" ~ getSignalName() ~ "(wrapper);";
 		buff ~= "}";
 		return buff;
@@ -1522,7 +1517,7 @@ final class GtkFunction
 				buff ~= stringToGtkD(", "~ param.type.name ~" "~ param.name, wrapper.aliasses, localAliases());
 		}
 
-		buff ~= ", void* pWrapper";
+		buff ~= "," ~ getDelegateWrapperName() ~ " wrapper";
 		return buff;
 	}
 
