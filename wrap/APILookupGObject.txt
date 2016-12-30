@@ -334,20 +334,16 @@ code: start
 	 * is called to reinstate the previous value.
 	 *
 	 * This signal is typically used to obtain change notification for a
-	 * single property, by specifying the property name as a detail in the
-	 * g_signal_connect() call, like this:
-	 * |[<!-- language="C" -->
-	 * g_signal_connect (text_view->buffer, "notify::paste-target-list",
-	 * G_CALLBACK (gtk_text_view_target_list_notify),
-	 * text_view)
-	 * ]|
+	 * single property.
+	 *
 	 * It is important to note that you must use
-	 * [canonical][canonical-parameter-name] parameter names as
-	 * detail strings for the notify signal.
+	 * canonical parameter names for the property.
 	 *
 	 * Params:
-	 *     pspec = the #GParamSpec of the property which changed.
-	 */
+	 *     dlg          = The callback.
+	 *     property     = Set this if you only want to receive the signal for a specific property.
+	 *     connectFlags = The behavior of the signal's connection.
+	 */	
 	gulong addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		string signalName;
