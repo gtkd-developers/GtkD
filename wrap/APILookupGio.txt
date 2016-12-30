@@ -81,7 +81,7 @@ code: start
 			this,
 			"command-line",
 			cast(GCallback)&callBackScopedCommandLine,
-			&scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1],
+			cast(void*)scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1],
 			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
 			connectFlags);
 		if (handlerId > 0)
@@ -93,14 +93,14 @@ code: start
 
 	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, void* pWrapper)
 	{
-		ScopedOnCommandLineDelegateWrapper wrapper = *cast(ScopedOnCommandLineDelegateWrapper*)pWrapper;
+		ScopedOnCommandLineDelegateWrapper wrapper = cast(ScopedOnCommandLineDelegateWrapper)pWrapper;
 		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
 	}
 	
 
 	extern(C) static void callBackScopedCommandLineDestroy(void* pWrapper, void* closure)
 	{
-		ScopedOnCommandLineDelegateWrapper source = *cast(ScopedOnCommandLineDelegateWrapper*)pWrapper;
+		ScopedOnCommandLineDelegateWrapper source = cast(ScopedOnCommandLineDelegateWrapper)pWrapper;
 		source.outer.internalRemoveOnCommandLine(source);
 	}
 
