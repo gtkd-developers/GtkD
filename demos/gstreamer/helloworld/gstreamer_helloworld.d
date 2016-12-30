@@ -46,12 +46,10 @@ public:
 		switch( msg.type )
 		{
 			case GstMessageType.UNKNOWN:
-				version(Tango) Trace.formatln("Unknown message type.");
-				else writefln("Unknown message type.");
+				writefln("Unknown message type.");
 			break;
 			case GstMessageType.EOS:
-				version(Tango) Trace.formatln("End-of-stream.");
-				else writefln("End-of-stream.");
+				writefln("End-of-stream.");
 				Main.quit();
 			break;
 
@@ -106,16 +104,8 @@ public:
 		pipeline.getBus().addWatch( &busCall );
 
 		// put all elements in a bin
-
-		//shouldbe, but doesn't work yet:
-		//pipeline.addMany( source, parser, decoder, conv, sink );
-		//TODO, add variable number of arguments (...) support to GtkWrapper
-		pipeline.add( source );
-		pipeline.add( parser );
-		pipeline.add( decoder );
-		pipeline.add( conv );
-		pipeline.add( sink );
-
+		pipeline.addMany( source, parser, decoder, conv, sink );
+		
 		// link together - note that we cannot link the parser and
 		// decoder yet, because the parser uses dynamic pads. For that,
 		// we set a pad-added signal handler.

@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.4.1
+--------------
+-Properly remove toggle references when an object is destroyed. #169
+
 Release: 3.4.0
 --------------
 -Update to GTK 3.22
