@@ -1070,7 +1070,7 @@ final class GtkFunction
 		buff ~= "cast(GCallback)&callBack"~ getSignalName() ~",";
 
 		string wrapper = getDelegateWrapperArrayName() ~ "[" ~ getDelegateWrapperArrayName() ~ ".length - 1]";
-		buff ~= "&" ~ wrapper ~ ",";
+		buff ~= "cast(void*)" ~ wrapper ~ ",";
 
 		buff ~= "cast(GClosureNotify)&callBack" ~ getSignalName() ~ "Destroy,";
 		buff ~= "connectFlags);";
@@ -1150,7 +1150,7 @@ final class GtkFunction
 			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
 
 		buff ~= "{";
-		buff ~= getDelegateWrapperName() ~ " wrapper = *cast(" ~ getDelegateWrapperName() ~ "*)pWrapper;";
+		buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
 
 		if ( type == "bool" )
 		{
@@ -1181,7 +1181,7 @@ final class GtkFunction
 		string[] buff;
 		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(void* pWrapper, GClosure* closure)";
 		buff ~= "{";
-		buff ~= getDelegateWrapperName() ~ " wrapper = *cast(" ~ getDelegateWrapperName() ~ "*)pWrapper;";
+		buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
 		buff ~= "wrapper.outer.internalRemoveOn" ~ getSignalName() ~ "(wrapper);";
 		buff ~= "}";
 		return buff;
