@@ -976,17 +976,16 @@ final class GtkFunction
 		return "on" ~ getSignalName() ~ "Listeners";
 	}
 	
-	string getDelegateWrapperDeclaration()
+	string[] getDelegateWrapperDeclaration()
 	{
 		assert(type == GtkFunctionType.Signal);
 
-		string buff = "protected class " ~ getDelegateWrapperName();
-		buff ~= "\n";
+		string[] buff;
+		buff ~= "protected class " ~ getDelegateWrapperName();
 		buff ~= "{";
 		buff ~= getDelegateDecleration() ~ " dlg;";
 		buff ~= "ulong handlerId;";
 		buff ~= "ConnectFlags flags;";
-		buff ~= "\n";
 		buff ~= "this(" ~ getDelegateDecleration() ~ " dlg, ulong handlerId, ConnectFlags flags)";
 		buff ~= " {";
 		buff ~= "this.dlg = dlg;";
@@ -1085,6 +1084,7 @@ final class GtkFunction
 		return buff;
 	}
 
+	/*
 	string[] getRemoveListenerDeclaration() {
 		string[] buff;
 		// Should we document?
@@ -1108,6 +1108,7 @@ final class GtkFunction
 		buff ~= "}";
 		return buff;
 	}
+	*/
 
 	string[] getInternalRemoveListenerDeclaration() {
 		string[] buff;

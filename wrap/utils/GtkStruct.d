@@ -452,17 +452,16 @@ final class GtkStruct
 				buff ~= "\n";
 				buff ~= indenter.format(func.getAddListenerDeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
-				buff ~= "\n";
 				buff ~= indenter.format(func.getSignalCallback());
-				buff ~= "\n";
 				buff ~= indenter.format(func.getSignalDestroyCallback());
 				buff ~= "\n";
+				/*
 				buff ~= indenter.format(func.getRemoveListenerDeclaration());
 				buff ~= indenter.format(func.getRemoveListenerBody());
 				buff ~= "\n";
+				*/
 				buff ~= indenter.format(func.getInternalRemoveListenerDeclaration());
 				buff ~= indenter.format(func.getInternalRemoveListenerBody());
-				buff ~= "\n";
 
 				foreach ( param; func.params )
 				{
@@ -533,9 +532,10 @@ final class GtkStruct
 				{
 					buff ~= indenter.format(func.getAddListenerDeclaration() ~ ";");
 					buff ~= "\n";
-
+					/*
 					buff ~= indenter.format(func.getRemoveListenerDeclaration() ~ ";");
 					buff ~= "\n";
+					*/
 				}
 				else
 				{
@@ -889,8 +889,10 @@ final class GtkStruct
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();
 		buff ~= signal.getSignalDestroyCallback();
+		/*
 		buff ~= signal.getRemoveListenerDeclaration();
 		buff ~= signal.getRemoveListenerBody();
+		*/
 		buff ~= signal.getInternalRemoveListenerDeclaration();
 		buff ~= signal.getInternalRemoveListenerBody();
 		
