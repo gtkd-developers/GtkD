@@ -9,6 +9,7 @@ Release: 3.4.0
 -Add libPeas Binding. #152
 -Load libraries in the Global namespace to avoid Sourceview errors.
 -Check the "GTK_BASEPATH" and "HOMEBREW_ROOT" environment variables on OSX.
+-Print a more informative error message when we fail to load a library.
 
 Release: 3.3.0
 --------------

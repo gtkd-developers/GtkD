@@ -113,7 +113,7 @@ public class ObjectG
 				obj.isGcRoot = false;
 			}
 			
-			obj.unref();
+			obj.removeToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)obj);
 			obj.gObject = null;
 		}
 		
