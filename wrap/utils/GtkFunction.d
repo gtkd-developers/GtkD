@@ -1075,9 +1075,9 @@ final class GtkFunction
 		buff ~= "cast(GClosureNotify)&callBack" ~ getSignalName() ~ "Destroy,";
 		buff ~= "connectFlags);";
 		buff ~= "if (handlerId > 0)";
+		buff ~= "{";
 		buff ~= wrapper ~ ".handlerId = handlerId;";
-		buff ~= "else";
-		buff ~= "internalRemoveOn" ~ getSignalName ~ "(" ~ wrapper ~ ");";
+		buff ~= "}";
 		buff ~= "return handlerId;";
 		buff ~= "}";
 		buff ~= "\n";
@@ -1179,10 +1179,10 @@ final class GtkFunction
 	string[] getSignalDestroyCallback()
 	{
 		string[] buff;
-		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(void* pWrapper, void* closure)";
+		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(void* pWrapper, GClosure* closure)";
 		buff ~= "{";
-		buff ~= getDelegateWrapperName() ~ " source = *cast(" ~ getDelegateWrapperName() ~ "*)pWrapper;";
-		buff ~= "source.outer.internalRemoveOn" ~ getSignalName() ~ "(source);";
+		buff ~= getDelegateWrapperName() ~ " wrapper = *cast(" ~ getDelegateWrapperName() ~ "*)pWrapper;";
+		buff ~= "wrapper.outer.internalRemoveOn" ~ getSignalName() ~ "(wrapper);";
 		buff ~= "}";
 		return buff;
 	}
