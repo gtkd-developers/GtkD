@@ -305,14 +305,15 @@ version(Windows)
 	private string getErrorMessage()
 	{
 		char[] buffer = new char[2048];
+		buffer[0] = '\0';
 
 		FormatMessageA( MessageFormat.FromSystem | MessageFormat.ArgumentArray,
 		               null,
 		               GetLastError(),
 		               Lang.Neutral,
 		               buffer.ptr,
-		               buffer.length,
-		               null);
+					   cast(uint)buffer.length,
+					   cast(void*)["\0".ptr].ptr);
 
 		return buffer.ptr.fromStringz.idup;
 	}
