@@ -136,6 +136,7 @@ import: core.memory
 import: gobject.Signals
 import: gtkc.Loader
 import: gtkc.paths
+import: std.algorithm
 merge: InitiallyUnowned
 noSignal: notify
 move: clear_object Object

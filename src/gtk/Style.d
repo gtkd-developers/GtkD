@@ -93,7 +93,7 @@ public class Style : ObjectG
 		super(cast(GObject*)gtkStyle, ownedRef);
 	}
 
-	deprecated:
+	//deprecated:
 
 	/**
 	 */

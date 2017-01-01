@@ -980,6 +980,7 @@ import: gobject.Signals
 import: gtk.TreeIter
 import: gtk.TreeModelIF
 import: gtkc.gdktypes
+import: std.algorithm
 override: remove_all
 noCode: new
 noCode: new_with_entry
@@ -3176,7 +3177,8 @@ code: end
 
 struct: Style
 code: start
-	deprecated:
+	//TODO:
+	//deprecated:
 code: end
 
 struct: StyleProperties

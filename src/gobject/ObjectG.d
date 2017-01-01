@@ -38,6 +38,7 @@ private import gtkc.Loader;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 private import gtkc.paths;
+private import std.algorithm;
 
 
 /**
