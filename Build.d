@@ -78,10 +78,32 @@ void build(string dir, string lib)
 	}
 	else
 	{
-		std.file.write("build.rf", format("-c %s -Isrc -of%s.obj %s", dcflags, lib, dFiles(dir)));
-		executeShell("dmd @build.rf");
-		executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
-		std.file.remove(lib ~".obj");
+		if (lib == "gtkd")
+		{
+			string files = dFiles(dir);
+			
+			int pivot = indexOf(files, ' ', files.length / 2);
+
+			string files2 = files[pivot .. $];
+			files = files [0 .. pivot];
+
+			std.file.write("build.rf", format("-c %s -Isrc -ofgtkd1.obj %s", dcflags, files));
+			executeShell("dmd @build.rf");
+			std.file.write("build.rf", format("-c %s -Isrc -ofgtkd2.obj %s", dcflags, files2));
+			executeShell("dmd @build.rf");
+
+			executeShell(format("dmd -lib %s -of%s.lib gtkd1.obj gtkd2.obj", ldflags, lib));
+
+			std.file.remove("gtkd1.obj");
+			std.file.remove("gtkd2.obj");
+		}
+		else
+		{
+			std.file.write("build.rf", format("-c %s -Isrc -of%s.obj %s", dcflags, lib, dFiles(dir)));
+			executeShell("dmd @build.rf");
+			executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
+			std.file.remove(lib ~".obj");
+		}
 	}
 	
 	std.file.remove("build.rf");
