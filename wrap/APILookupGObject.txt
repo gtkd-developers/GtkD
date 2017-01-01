@@ -315,9 +315,9 @@ code: start
 	protected class OnNotifyDelegateWrapper
 	{
 		void delegate(ParamSpec, ObjectG) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(void delegate(ParamSpec, ObjectG) dlg, ulong handlerId, ConnectFlags flags)
+		this(void delegate(ParamSpec, ObjectG) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;

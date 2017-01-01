@@ -1077,9 +1077,9 @@ code: start
 	protected class OnChangedDelegateWrapper
 	{
 		void delegate(ComboBoxText) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(void delegate(ComboBoxText) dlg, ulong handlerId, ConnectFlags flags)
+		this(void delegate(ComboBoxText) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;
@@ -1137,9 +1137,9 @@ code: start
 	protected class OnFormatEntryTextDelegateWrapper
 	{
 		string delegate(string, ComboBoxText) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(string delegate(string, ComboBoxText) dlg, ulong handlerId, ConnectFlags flags)
+		this(string delegate(string, ComboBoxText) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;
@@ -1229,9 +1229,9 @@ code: start
 	protected class OnMoveActiveDelegateWrapper
 	{
 		void delegate(GtkScrollType, ComboBoxText) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(void delegate(GtkScrollType, ComboBoxText) dlg, ulong handlerId, ConnectFlags flags)
+		this(void delegate(GtkScrollType, ComboBoxText) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;
@@ -1289,9 +1289,9 @@ code: start
 	protected class OnPopdownDelegateWrapper
 	{
 		bool delegate(ComboBoxText) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(bool delegate(ComboBoxText) dlg, ulong handlerId, ConnectFlags flags)
+		this(bool delegate(ComboBoxText) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;
@@ -1349,9 +1349,9 @@ code: start
 	protected class OnPopupDelegateWrapper
 	{
 		void delegate(ComboBoxText) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(void delegate(ComboBoxText) dlg, ulong handlerId, ConnectFlags flags)
+		this(void delegate(ComboBoxText) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;
@@ -5353,9 +5353,9 @@ code: start
 	protected class ScopedOnDrawDelegateWrapper
 	{
 		bool delegate(Scoped!Context, Widget) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(bool delegate(Scoped!Context, Widget) dlg, ulong handlerId, ConnectFlags flags)
+		this(bool delegate(Scoped!Context, Widget) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;
@@ -5430,9 +5430,9 @@ code: start
 	protected class OnDrawDelegateWrapper
 	{
 		bool delegate(Context, Widget) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(bool delegate(Context, Widget) dlg, ulong handlerId, ConnectFlags flags)
+		this(bool delegate(Context, Widget) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;

@@ -48,9 +48,9 @@ code: start
 	protected class ScopedOnCommandLineDelegateWrapper
 	{
 		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
-		ulong handlerId;
+		gulong handlerId;
 		ConnectFlags flags;
-		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ulong handlerId, ConnectFlags flags)
+		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg, gulong handlerId, ConnectFlags flags)
 		{
 			this.dlg = dlg;
 			this.handlerId = handlerId;

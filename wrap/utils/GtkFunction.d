@@ -984,9 +984,9 @@ final class GtkFunction
 		buff ~= "protected class " ~ getDelegateWrapperName();
 		buff ~= "{";
 		buff ~= getDelegateDecleration() ~ " dlg;";
-		buff ~= "ulong handlerId;";
+		buff ~= "gulong handlerId;";
 		buff ~= "ConnectFlags flags;";
-		buff ~= "this(" ~ getDelegateDecleration() ~ " dlg, ulong handlerId, ConnectFlags flags)";
+		buff ~= "this(" ~ getDelegateDecleration() ~ " dlg, gulong handlerId, ConnectFlags flags)";
 		buff ~= " {";
 		buff ~= "this.dlg = dlg;";
 		buff ~= "this.handlerId = handlerId;";
