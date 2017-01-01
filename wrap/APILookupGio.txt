@@ -45,7 +45,21 @@ implements: AppInfo
 
 struct: Application
 code: start
-int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineListeners;
+	protected class ScopedOnCommandLineDelegateWrapper
+	{
+		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+
+	protected ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
+
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -58,24 +72,40 @@ int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineLi
 	 * Return: An integer that is set as the exit status for the calling
 	 *     process. See g_application_command_line_set_exit_status().
 	 */
-	void addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "command-line-scoped" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"command-line",
-				cast(GCallback)&callBackScopedCommandLine,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["command-line-scoped"] = 1;
-		}
-		scopedOnCommandLineListeners ~= dlg;
+		scopedOnCommandLineListeners ~= new ScopedOnCommandLineDelegateWrapper(dlg, 0, connectFlags);
+		onCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"command-line",
+			cast(GCallback)&callBackScopedCommandLine,
+			cast(void*)scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1],
+			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
+			connectFlags);
+		return scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
+	
+	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
 	{
-		return _application.onCommandLineListeners[0](scoped!ApplicationCommandLine(commandLine), _application);
+		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
+	}
+	
+	extern(C) static void callBackScopedCommandLineDestroy(OnCommandLineDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCommandLine(wrapper);
+	}
+
+	protected void internalRemoveOnCommandLine(ScopedOnCommandLineDelegateWrapper source)
+	{
+		foreach(index, wrapper; scopedOnCommandLineListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				scopedOnCommandLineListeners[index] = null;
+				scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
+				break;
+			}
+		}
 	}
 code: end
 
