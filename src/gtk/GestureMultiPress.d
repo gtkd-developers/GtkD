@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -150,9 +151,20 @@ public class GestureMultiPress : GestureSingle
 		gtk_gesture_multi_press_set_area(gtkGestureMultiPress, rect);
 	}
 
-	int[string] connectedSignals;
+	protected class OnPressedDelegateWrapper
+	{
+		void delegate(int, double, double, GestureMultiPress) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, double, double, GestureMultiPress) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPressedDelegateWrapper[] onPressedListeners;
 
-	void delegate(int, double, double, GestureMultiPress)[] onPressedListeners;
 	/**
 	 * This signal is emitted whenever a button or touch press happens.
 	 *
@@ -163,30 +175,57 @@ public class GestureMultiPress : GestureSingle
 	 *
 	 * Since: 3.14
 	 */
-	void addOnPressed(void delegate(int, double, double, GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPressed(void delegate(int, double, double, GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "pressed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"pressed",
-				cast(GCallback)&callBackPressed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["pressed"] = 1;
-		}
-		onPressedListeners ~= dlg;
+		onPressedListeners ~= new OnPressedDelegateWrapper(dlg, 0, connectFlags);
+		onPressedListeners[onPressedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"pressed",
+			cast(GCallback)&callBackPressed,
+			cast(void*)onPressedListeners[onPressedListeners.length - 1],
+			cast(GClosureNotify)&callBackPressedDestroy,
+			connectFlags);
+		return onPressedListeners[onPressedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPressed(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y, GestureMultiPress _gesturemultipress)
+	
+	extern(C) static void callBackPressed(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y,OnPressedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, double, double, GestureMultiPress) dlg; _gesturemultipress.onPressedListeners )
-		{
-			dlg(nPress, x, y, _gesturemultipress);
-		}
+		wrapper.dlg(nPress, x, y, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPressed(wrapper);
 	}
 
-	void delegate(int, double, double, GestureMultiPress)[] onReleasedListeners;
+	protected void internalRemoveOnPressed(OnPressedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPressedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPressedListeners[index] = null;
+				onPressedListeners = std.algorithm.remove(onPressedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnReleasedDelegateWrapper
+	{
+		void delegate(int, double, double, GestureMultiPress) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, double, double, GestureMultiPress) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnReleasedDelegateWrapper[] onReleasedListeners;
+
 	/**
 	 * This signal is emitted when a button or touch is released. @n_press
 	 * will report the number of press that is paired to this event, note
@@ -200,56 +239,97 @@ public class GestureMultiPress : GestureSingle
 	 *
 	 * Since: 3.14
 	 */
-	void addOnReleased(void delegate(int, double, double, GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnReleased(void delegate(int, double, double, GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "released" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"released",
-				cast(GCallback)&callBackReleased,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["released"] = 1;
-		}
-		onReleasedListeners ~= dlg;
+		onReleasedListeners ~= new OnReleasedDelegateWrapper(dlg, 0, connectFlags);
+		onReleasedListeners[onReleasedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"released",
+			cast(GCallback)&callBackReleased,
+			cast(void*)onReleasedListeners[onReleasedListeners.length - 1],
+			cast(GClosureNotify)&callBackReleasedDestroy,
+			connectFlags);
+		return onReleasedListeners[onReleasedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackReleased(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y, GestureMultiPress _gesturemultipress)
+	
+	extern(C) static void callBackReleased(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y,OnReleasedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, double, double, GestureMultiPress) dlg; _gesturemultipress.onReleasedListeners )
-		{
-			dlg(nPress, x, y, _gesturemultipress);
-		}
+		wrapper.dlg(nPress, x, y, wrapper.outer);
+	}
+	
+	extern(C) static void callBackReleasedDestroy(OnReleasedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnReleased(wrapper);
 	}
 
-	void delegate(GestureMultiPress)[] onStoppedListeners;
+	protected void internalRemoveOnReleased(OnReleasedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onReleasedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onReleasedListeners[index] = null;
+				onReleasedListeners = std.algorithm.remove(onReleasedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnStoppedDelegateWrapper
+	{
+		void delegate(GestureMultiPress) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GestureMultiPress) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnStoppedDelegateWrapper[] onStoppedListeners;
+
 	/**
 	 * This signal is emitted whenever any time/distance threshold has
 	 * been exceeded.
 	 *
 	 * Since: 3.14
 	 */
-	void addOnStopped(void delegate(GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnStopped(void delegate(GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "stopped" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"stopped",
-				cast(GCallback)&callBackStopped,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["stopped"] = 1;
-		}
-		onStoppedListeners ~= dlg;
+		onStoppedListeners ~= new OnStoppedDelegateWrapper(dlg, 0, connectFlags);
+		onStoppedListeners[onStoppedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"stopped",
+			cast(GCallback)&callBackStopped,
+			cast(void*)onStoppedListeners[onStoppedListeners.length - 1],
+			cast(GClosureNotify)&callBackStoppedDestroy,
+			connectFlags);
+		return onStoppedListeners[onStoppedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackStopped(GtkGestureMultiPress* gesturemultipressStruct, GestureMultiPress _gesturemultipress)
+	
+	extern(C) static void callBackStopped(GtkGestureMultiPress* gesturemultipressStruct,OnStoppedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GestureMultiPress) dlg; _gesturemultipress.onStoppedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackStoppedDestroy(OnStoppedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnStopped(wrapper);
+	}
+
+	protected void internalRemoveOnStopped(OnStoppedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onStoppedListeners)
 		{
-			dlg(_gesturemultipress);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onStoppedListeners[index] = null;
+				onStoppedListeners = std.algorithm.remove(onStoppedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

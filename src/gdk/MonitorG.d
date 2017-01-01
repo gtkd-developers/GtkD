@@ -30,6 +30,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -243,30 +244,55 @@ public class MonitorG : ObjectG
 		return gdk_monitor_is_primary(gdkMonitor) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnInvalidateDelegateWrapper
+	{
+		void delegate(MonitorG) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MonitorG) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnInvalidateDelegateWrapper[] onInvalidateListeners;
 
-	void delegate(MonitorG)[] onInvalidateListeners;
 	/** */
-	void addOnInvalidate(void delegate(MonitorG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnInvalidate(void delegate(MonitorG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "invalidate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"invalidate",
-				cast(GCallback)&callBackInvalidate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["invalidate"] = 1;
-		}
-		onInvalidateListeners ~= dlg;
+		onInvalidateListeners ~= new OnInvalidateDelegateWrapper(dlg, 0, connectFlags);
+		onInvalidateListeners[onInvalidateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"invalidate",
+			cast(GCallback)&callBackInvalidate,
+			cast(void*)onInvalidateListeners[onInvalidateListeners.length - 1],
+			cast(GClosureNotify)&callBackInvalidateDestroy,
+			connectFlags);
+		return onInvalidateListeners[onInvalidateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackInvalidate(GdkMonitor* monitorgStruct, MonitorG _monitorg)
+	
+	extern(C) static void callBackInvalidate(GdkMonitor* monitorgStruct,OnInvalidateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MonitorG) dlg; _monitorg.onInvalidateListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackInvalidateDestroy(OnInvalidateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnInvalidate(wrapper);
+	}
+
+	protected void internalRemoveOnInvalidate(OnInvalidateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onInvalidateListeners)
 		{
-			dlg(_monitorg);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onInvalidateListeners[index] = null;
+				onInvalidateListeners = std.algorithm.remove(onInvalidateListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

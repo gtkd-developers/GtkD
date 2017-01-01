@@ -33,6 +33,7 @@ private import gtk.TextIter;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -177,9 +178,20 @@ public class TextTag : ObjectG
 		gtk_text_tag_set_priority(gtkTextTag, priority);
 	}
 
-	int[string] connectedSignals;
+	protected class OnDelegateWrapper
+	{
+		bool delegate(ObjectG, Event, TextIter, TextTag) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDelegateWrapper[] onListeners;
 
-	bool delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
 	 * buffer marked with this tag.
@@ -192,31 +204,40 @@ public class TextTag : ObjectG
 	 * Return: %TRUE to stop other handlers from being invoked for the
 	 *     event. %FALSE to propagate the event further.
 	 */
-	void addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"event",
-				cast(GCallback)&callBack,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["event"] = 1;
-		}
-		onListeners ~= dlg;
+		onListeners ~= new OnDelegateWrapper(dlg, 0, connectFlags);
+		onListeners[onListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"event",
+			cast(GCallback)&callBack,
+			cast(void*)onListeners[onListeners.length - 1],
+			cast(GClosureNotify)&callBackDestroy,
+			connectFlags);
+		return onListeners[onListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBack(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag _texttag)
+	
+	extern(C) static int callBack(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter,OnDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(ObjectG, Event, TextIter, TextTag) dlg; _texttag.onListeners )
+		return wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), ObjectG.getDObject!(Event)(event), ObjectG.getDObject!(TextIter)(iter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOn(wrapper);
+	}
+
+	protected void internalRemoveOn(OnDelegateWrapper source)
+	{
+		foreach(index, wrapper; onListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(ObjectG)(object), ObjectG.getDObject!(Event)(event), ObjectG.getDObject!(TextIter)(iter), _texttag) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onListeners[index] = null;
+				onListeners = std.algorithm.remove(onListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

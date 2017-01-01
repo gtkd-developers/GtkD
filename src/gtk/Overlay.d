@@ -32,6 +32,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -186,9 +187,20 @@ public class Overlay : Bin
 		gtk_overlay_set_overlay_pass_through(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct(), passThrough);
 	}
 
-	int[string] connectedSignals;
+	protected class OnGetChildPositionDelegateWrapper
+	{
+		bool delegate(Widget, GdkRectangle*, Overlay) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Widget, GdkRectangle*, Overlay) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGetChildPositionDelegateWrapper[] onGetChildPositionListeners;
 
-	bool delegate(Widget, GdkRectangle*, Overlay)[] onGetChildPositionListeners;
 	/**
 	 * The ::get-child-position signal is emitted to determine
 	 * the position and size of any overlay child widgets. A
@@ -211,31 +223,40 @@ public class Overlay : Bin
 	 *
 	 * Return: %TRUE if the @allocation has been filled
 	 */
-	void addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "get-child-position" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"get-child-position",
-				cast(GCallback)&callBackGetChildPosition,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["get-child-position"] = 1;
-		}
-		onGetChildPositionListeners ~= dlg;
+		onGetChildPositionListeners ~= new OnGetChildPositionDelegateWrapper(dlg, 0, connectFlags);
+		onGetChildPositionListeners[onGetChildPositionListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"get-child-position",
+			cast(GCallback)&callBackGetChildPosition,
+			cast(void*)onGetChildPositionListeners[onGetChildPositionListeners.length - 1],
+			cast(GClosureNotify)&callBackGetChildPositionDestroy,
+			connectFlags);
+		return onGetChildPositionListeners[onGetChildPositionListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackGetChildPosition(GtkOverlay* overlayStruct, GtkWidget* widget, GdkRectangle* allocation, Overlay _overlay)
+	
+	extern(C) static int callBackGetChildPosition(GtkOverlay* overlayStruct, GtkWidget* widget, GdkRectangle* allocation,OnGetChildPositionDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Widget, GdkRectangle*, Overlay) dlg; _overlay.onGetChildPositionListeners )
+		return wrapper.dlg(ObjectG.getDObject!(Widget)(widget), allocation, wrapper.outer);
+	}
+	
+	extern(C) static void callBackGetChildPositionDestroy(OnGetChildPositionDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGetChildPosition(wrapper);
+	}
+
+	protected void internalRemoveOnGetChildPosition(OnGetChildPositionDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGetChildPositionListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(Widget)(widget), allocation, _overlay) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onGetChildPositionListeners[index] = null;
+				onGetChildPositionListeners = std.algorithm.remove(onGetChildPositionListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

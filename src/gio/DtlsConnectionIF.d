@@ -36,6 +36,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -469,7 +470,6 @@ public interface DtlsConnectionIF{
 	 * Throws: GException on failure.
 	 */
 	public bool shutdownFinish(AsyncResultIF result);
-	@property bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF)[] onAcceptCertificateListeners();
 	/**
 	 * Emitted during the TLS handshake after the peer certificate has
 	 * been received. You can examine @peer_cert's certification path by
@@ -516,6 +516,7 @@ public interface DtlsConnectionIF{
 	 *
 	 * Since: 2.48
 	 */
-	void addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

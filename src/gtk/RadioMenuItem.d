@@ -34,6 +34,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -299,30 +300,55 @@ public class RadioMenuItem : CheckMenuItem
 		gtk_radio_menu_item_set_group(gtkRadioMenuItem, (group is null) ? null : group.getListSGStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnGroupChangedDelegateWrapper
+	{
+		void delegate(RadioMenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(RadioMenuItem) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGroupChangedDelegateWrapper[] onGroupChangedListeners;
 
-	void delegate(RadioMenuItem)[] onGroupChangedListeners;
 	/** */
-	void addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "group-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"group-changed",
-				cast(GCallback)&callBackGroupChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["group-changed"] = 1;
-		}
-		onGroupChangedListeners ~= dlg;
+		onGroupChangedListeners ~= new OnGroupChangedDelegateWrapper(dlg, 0, connectFlags);
+		onGroupChangedListeners[onGroupChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"group-changed",
+			cast(GCallback)&callBackGroupChanged,
+			cast(void*)onGroupChangedListeners[onGroupChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackGroupChangedDestroy,
+			connectFlags);
+		return onGroupChangedListeners[onGroupChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, RadioMenuItem _radiomenuitem)
+	
+	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct,OnGroupChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(RadioMenuItem) dlg; _radiomenuitem.onGroupChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackGroupChangedDestroy(OnGroupChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGroupChanged(wrapper);
+	}
+
+	protected void internalRemoveOnGroupChanged(OnGroupChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGroupChangedListeners)
 		{
-			dlg(_radiomenuitem);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onGroupChangedListeners[index] = null;
+				onGroupChangedListeners = std.algorithm.remove(onGroupChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

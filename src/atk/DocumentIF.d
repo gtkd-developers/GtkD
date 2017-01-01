@@ -29,6 +29,7 @@ private import gobject.Signals;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -140,7 +141,6 @@ public interface DocumentIF{
 	 * Since: 1.12
 	 */
 	public bool setAttributeValue(string attributeName, string attributeValue);
-	@property void delegate(DocumentIF)[] onLoadCompleteListeners();
 	/**
 	 * The 'load-complete' signal is emitted when a pending load of
 	 * a static document has completed.  This signal is to be
@@ -152,9 +152,9 @@ public interface DocumentIF{
 	 * (Dynamic document contents should be exposed via other
 	 * signals.)
 	 */
-	void addOnLoadComplete(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnLoadComplete(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DocumentIF)[] onLoadStoppedListeners();
 	/**
 	 * The 'load-stopped' signal is emitted when a pending load of
 	 * document contents is cancelled, paused, or otherwise
@@ -163,9 +163,9 @@ public interface DocumentIF{
 	 * while blocking on a file or network read) unless a
 	 * user-significant timeout has occurred.
 	 */
-	void addOnLoadStopped(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnLoadStopped(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, DocumentIF)[] onPageChangedListeners();
 	/**
 	 * The 'page-changed' signal is emitted when the current page of
 	 * a document changes, e.g. pressing page up/down in a document
@@ -177,9 +177,9 @@ public interface DocumentIF{
 	 *
 	 * Since: 2.12
 	 */
-	void addOnPageChanged(void delegate(int, DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnPageChanged(void delegate(int, DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DocumentIF)[] onReloadListeners();
 	/**
 	 * The 'reload' signal is emitted when the contents of a
 	 * document is refreshed from its source.  Once 'reload' has
@@ -187,6 +187,7 @@ public interface DocumentIF{
 	 * signal should follow, which clients may await before
 	 * interrogating ATK for the latest document content.
 	 */
-	void addOnReload(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnReload(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

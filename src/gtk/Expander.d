@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -434,30 +435,55 @@ public class Expander : Bin
 		gtk_expander_set_use_underline(gtkExpander, useUnderline);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(Expander) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Expander) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(Expander)[] onActivateListeners;
 	/** */
-	void addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GtkExpander* expanderStruct, Expander _expander)
+	
+	extern(C) static void callBackActivate(GtkExpander* expanderStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Expander) dlg; _expander.onActivateListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
+	}
+
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
 		{
-			dlg(_expander);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

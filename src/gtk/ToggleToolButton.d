@@ -33,6 +33,7 @@ private import gtk.ToolItem;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -174,32 +175,57 @@ public class ToggleToolButton : ToolButton
 		gtk_toggle_tool_button_set_active(gtkToggleToolButton, isActive);
 	}
 
-	int[string] connectedSignals;
+	protected class OnToggledDelegateWrapper
+	{
+		void delegate(ToggleToolButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ToggleToolButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggledDelegateWrapper[] onToggledListeners;
 
-	void delegate(ToggleToolButton)[] onToggledListeners;
 	/**
 	 * Emitted whenever the toggle tool button changes state.
 	 */
-	void addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggled",
-				cast(GCallback)&callBackToggled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggled"] = 1;
-		}
-		onToggledListeners ~= dlg;
+		onToggledListeners ~= new OnToggledDelegateWrapper(dlg, 0, connectFlags);
+		onToggledListeners[onToggledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggled",
+			cast(GCallback)&callBackToggled,
+			cast(void*)onToggledListeners[onToggledListeners.length - 1],
+			cast(GClosureNotify)&callBackToggledDestroy,
+			connectFlags);
+		return onToggledListeners[onToggledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggled(GtkToggleToolButton* toggletoolbuttonStruct, ToggleToolButton _toggletoolbutton)
+	
+	extern(C) static void callBackToggled(GtkToggleToolButton* toggletoolbuttonStruct,OnToggledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ToggleToolButton) dlg; _toggletoolbutton.onToggledListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggled(wrapper);
+	}
+
+	protected void internalRemoveOnToggled(OnToggledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggledListeners)
 		{
-			dlg(_toggletoolbutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggledListeners[index] = null;
+				onToggledListeners = std.algorithm.remove(onToggledListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

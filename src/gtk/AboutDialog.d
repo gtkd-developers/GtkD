@@ -35,6 +35,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -585,9 +586,20 @@ public class AboutDialog : Dialog
 		gtk_about_dialog_set_wrap_license(gtkAboutDialog, wrapLicense);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateLinkDelegateWrapper
+	{
+		bool delegate(string, AboutDialog) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(string, AboutDialog) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateLinkDelegateWrapper[] onActivateLinkListeners;
 
-	bool delegate(string, AboutDialog)[] onActivateLinkListeners;
 	/**
 	 * The signal which gets emitted to activate a URI.
 	 * Applications may connect to it to override the default behaviour,
@@ -600,31 +612,40 @@ public class AboutDialog : Dialog
 	 *
 	 * Since: 2.24
 	 */
-	void addOnActivateLink(bool delegate(string, AboutDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivateLink(bool delegate(string, AboutDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate-link" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate-link",
-				cast(GCallback)&callBackActivateLink,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate-link"] = 1;
-		}
-		onActivateLinkListeners ~= dlg;
+		onActivateLinkListeners ~= new OnActivateLinkDelegateWrapper(dlg, 0, connectFlags);
+		onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate-link",
+			cast(GCallback)&callBackActivateLink,
+			cast(void*)onActivateLinkListeners[onActivateLinkListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateLinkDestroy,
+			connectFlags);
+		return onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackActivateLink(GtkAboutDialog* aboutdialogStruct, char* uri, AboutDialog _aboutdialog)
+	
+	extern(C) static int callBackActivateLink(GtkAboutDialog* aboutdialogStruct, char* uri,OnActivateLinkDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(string, AboutDialog) dlg; _aboutdialog.onActivateLinkListeners )
+		return wrapper.dlg(Str.toString(uri), wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivateLink(wrapper);
+	}
+
+	protected void internalRemoveOnActivateLink(OnActivateLinkDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateLinkListeners)
 		{
-			if ( dlg(Str.toString(uri), _aboutdialog) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onActivateLinkListeners[index] = null;
+				onActivateLinkListeners = std.algorithm.remove(onActivateLinkListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

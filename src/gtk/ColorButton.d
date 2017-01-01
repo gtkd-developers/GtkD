@@ -37,6 +37,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -256,9 +257,20 @@ public class ColorButton : Button, ColorChooserIF
 		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
 	}
 
-	int[string] connectedSignals;
+	protected class OnColorSetDelegateWrapper
+	{
+		void delegate(ColorButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ColorButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnColorSetDelegateWrapper[] onColorSetListeners;
 
-	void delegate(ColorButton)[] onColorSetListeners;
 	/**
 	 * The ::color-set signal is emitted when the user selects a color.
 	 * When handling this signal, use gtk_color_button_get_rgba() to
@@ -270,26 +282,40 @@ public class ColorButton : Button, ColorChooserIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "color-set" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"color-set",
-				cast(GCallback)&callBackColorSet,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["color-set"] = 1;
-		}
-		onColorSetListeners ~= dlg;
+		onColorSetListeners ~= new OnColorSetDelegateWrapper(dlg, 0, connectFlags);
+		onColorSetListeners[onColorSetListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"color-set",
+			cast(GCallback)&callBackColorSet,
+			cast(void*)onColorSetListeners[onColorSetListeners.length - 1],
+			cast(GClosureNotify)&callBackColorSetDestroy,
+			connectFlags);
+		return onColorSetListeners[onColorSetListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackColorSet(GtkColorButton* colorbuttonStruct, ColorButton _colorbutton)
+	
+	extern(C) static void callBackColorSet(GtkColorButton* colorbuttonStruct,OnColorSetDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ColorButton) dlg; _colorbutton.onColorSetListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackColorSetDestroy(OnColorSetDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnColorSet(wrapper);
+	}
+
+	protected void internalRemoveOnColorSet(OnColorSetDelegateWrapper source)
+	{
+		foreach(index, wrapper; onColorSetListeners)
 		{
-			dlg(_colorbutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onColorSetListeners[index] = null;
+				onColorSetListeners = std.algorithm.remove(onColorSetListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

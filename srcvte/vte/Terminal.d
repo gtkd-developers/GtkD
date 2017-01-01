@@ -45,6 +45,7 @@ private import gtk.Widget;
 private import gtk.Window;
 public  import gtkc.gdktypes;
 private import pango.PgFontDescription;
+private import std.algorithm;
 private import vte.Pty;
 private import vte.Regex : RegexVte = Regex;
 private import vtec.vte;
@@ -1443,37 +1444,75 @@ public class Terminal : Widget, ScrollableIF
 		return p;
 	}
 
-	int[string] connectedSignals;
+	protected class OnBellDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBellDelegateWrapper[] onBellListeners;
 
-	void delegate(Terminal)[] onBellListeners;
 	/**
 	 * This signal is emitted when the a child sends a bell request to the
 	 * terminal.
 	 */
-	void addOnBell(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBell(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "bell" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"bell",
-				cast(GCallback)&callBackBell,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["bell"] = 1;
-		}
-		onBellListeners ~= dlg;
+		onBellListeners ~= new OnBellDelegateWrapper(dlg, 0, connectFlags);
+		onBellListeners[onBellListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"bell",
+			cast(GCallback)&callBackBell,
+			cast(void*)onBellListeners[onBellListeners.length - 1],
+			cast(GClosureNotify)&callBackBellDestroy,
+			connectFlags);
+		return onBellListeners[onBellListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBell(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackBell(VteTerminal* terminalStruct,OnBellDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onBellListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackBellDestroy(OnBellDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBell(wrapper);
 	}
 
-	void delegate(uint, uint, Terminal)[] onCharSizeChangedListeners;
+	protected void internalRemoveOnBell(OnBellDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBellListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBellListeners[index] = null;
+				onBellListeners = std.algorithm.remove(onBellListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCharSizeChangedDelegateWrapper
+	{
+		void delegate(uint, uint, Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(uint, uint, Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCharSizeChangedDelegateWrapper[] onCharSizeChangedListeners;
+
 	/**
 	 * Emitted whenever selection of a new font causes the values of the
 	 * %char_width or %char_height fields to change.
@@ -1482,30 +1521,57 @@ public class Terminal : Widget, ScrollableIF
 	 *     width = the new character cell width
 	 *     height = the new character cell height
 	 */
-	void addOnCharSizeChanged(void delegate(uint, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCharSizeChanged(void delegate(uint, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "char-size-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"char-size-changed",
-				cast(GCallback)&callBackCharSizeChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["char-size-changed"] = 1;
-		}
-		onCharSizeChangedListeners ~= dlg;
+		onCharSizeChangedListeners ~= new OnCharSizeChangedDelegateWrapper(dlg, 0, connectFlags);
+		onCharSizeChangedListeners[onCharSizeChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"char-size-changed",
+			cast(GCallback)&callBackCharSizeChanged,
+			cast(void*)onCharSizeChangedListeners[onCharSizeChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackCharSizeChangedDestroy,
+			connectFlags);
+		return onCharSizeChangedListeners[onCharSizeChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCharSizeChanged(VteTerminal* terminalStruct, uint width, uint height, Terminal _terminal)
+	
+	extern(C) static void callBackCharSizeChanged(VteTerminal* terminalStruct, uint width, uint height,OnCharSizeChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(uint, uint, Terminal) dlg; _terminal.onCharSizeChangedListeners )
-		{
-			dlg(width, height, _terminal);
-		}
+		wrapper.dlg(width, height, wrapper.outer);
+	}
+	
+	extern(C) static void callBackCharSizeChangedDestroy(OnCharSizeChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCharSizeChanged(wrapper);
 	}
 
-	void delegate(int, Terminal)[] onChildExitedListeners;
+	protected void internalRemoveOnCharSizeChanged(OnCharSizeChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCharSizeChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCharSizeChangedListeners[index] = null;
+				onCharSizeChangedListeners = std.algorithm.remove(onCharSizeChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnChildExitedDelegateWrapper
+	{
+		void delegate(int, Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChildExitedDelegateWrapper[] onChildExitedListeners;
+
 	/**
 	 * This signal is emitted when the terminal detects that a child
 	 * watched using vte_terminal_watch_child() has exited.
@@ -1513,30 +1579,57 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 *     status = the child's exit status
 	 */
-	void addOnChildExited(void delegate(int, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChildExited(void delegate(int, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "child-exited" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"child-exited",
-				cast(GCallback)&callBackChildExited,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["child-exited"] = 1;
-		}
-		onChildExitedListeners ~= dlg;
+		onChildExitedListeners ~= new OnChildExitedDelegateWrapper(dlg, 0, connectFlags);
+		onChildExitedListeners[onChildExitedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"child-exited",
+			cast(GCallback)&callBackChildExited,
+			cast(void*)onChildExitedListeners[onChildExitedListeners.length - 1],
+			cast(GClosureNotify)&callBackChildExitedDestroy,
+			connectFlags);
+		return onChildExitedListeners[onChildExitedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChildExited(VteTerminal* terminalStruct, int status, Terminal _terminal)
+	
+	extern(C) static void callBackChildExited(VteTerminal* terminalStruct, int status,OnChildExitedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, Terminal) dlg; _terminal.onChildExitedListeners )
-		{
-			dlg(status, _terminal);
-		}
+		wrapper.dlg(status, wrapper.outer);
+	}
+	
+	extern(C) static void callBackChildExitedDestroy(OnChildExitedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChildExited(wrapper);
 	}
 
-	void delegate(string, uint, Terminal)[] onCommitListeners;
+	protected void internalRemoveOnChildExited(OnChildExitedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChildExitedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChildExitedListeners[index] = null;
+				onChildExitedListeners = std.algorithm.remove(onChildExitedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCommitDelegateWrapper
+	{
+		void delegate(string, uint, Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, uint, Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCommitDelegateWrapper[] onCommitListeners;
+
 	/**
 	 * Emitted whenever the terminal receives input from the user and
 	 * prepares to send it to the child process.  The signal is emitted even
@@ -1546,414 +1639,819 @@ public class Terminal : Widget, ScrollableIF
 	 *     text = a string of text
 	 *     size = the length of that string of text
 	 */
-	void addOnCommit(void delegate(string, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCommit(void delegate(string, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "commit" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"commit",
-				cast(GCallback)&callBackCommit,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["commit"] = 1;
-		}
-		onCommitListeners ~= dlg;
+		onCommitListeners ~= new OnCommitDelegateWrapper(dlg, 0, connectFlags);
+		onCommitListeners[onCommitListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"commit",
+			cast(GCallback)&callBackCommit,
+			cast(void*)onCommitListeners[onCommitListeners.length - 1],
+			cast(GClosureNotify)&callBackCommitDestroy,
+			connectFlags);
+		return onCommitListeners[onCommitListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCommit(VteTerminal* terminalStruct, char* text, uint size, Terminal _terminal)
+	
+	extern(C) static void callBackCommit(VteTerminal* terminalStruct, char* text, uint size,OnCommitDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, uint, Terminal) dlg; _terminal.onCommitListeners )
-		{
-			dlg(Str.toString(text), size, _terminal);
-		}
+		wrapper.dlg(Str.toString(text), size, wrapper.outer);
+	}
+	
+	extern(C) static void callBackCommitDestroy(OnCommitDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCommit(wrapper);
 	}
 
-	void delegate(Terminal)[] onContentsChangedListeners;
+	protected void internalRemoveOnCommit(OnCommitDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCommitListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCommitListeners[index] = null;
+				onCommitListeners = std.algorithm.remove(onCommitListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnContentsChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnContentsChangedDelegateWrapper[] onContentsChangedListeners;
+
 	/**
 	 * Emitted whenever the visible appearance of the terminal has changed.
 	 * Used primarily by #VteTerminalAccessible.
 	 */
-	void addOnContentsChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnContentsChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "contents-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"contents-changed",
-				cast(GCallback)&callBackContentsChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["contents-changed"] = 1;
-		}
-		onContentsChangedListeners ~= dlg;
+		onContentsChangedListeners ~= new OnContentsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onContentsChangedListeners[onContentsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"contents-changed",
+			cast(GCallback)&callBackContentsChanged,
+			cast(void*)onContentsChangedListeners[onContentsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackContentsChangedDestroy,
+			connectFlags);
+		return onContentsChangedListeners[onContentsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackContentsChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackContentsChanged(VteTerminal* terminalStruct,OnContentsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onContentsChangedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackContentsChangedDestroy(OnContentsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnContentsChanged(wrapper);
 	}
 
-	void delegate(Terminal)[] onCopyClipboardListeners;
+	protected void internalRemoveOnContentsChanged(OnContentsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onContentsChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onContentsChangedListeners[index] = null;
+				onContentsChangedListeners = std.algorithm.remove(onContentsChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCopyClipboardDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
+
 	/**
 	 * Emitted whenever vte_terminal_copy_clipboard() is called.
 	 */
-	void addOnCopyClipboard(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCopyClipboard(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "copy-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"copy-clipboard",
-				cast(GCallback)&callBackCopyClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["copy-clipboard"] = 1;
-		}
-		onCopyClipboardListeners ~= dlg;
+		onCopyClipboardListeners ~= new OnCopyClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"copy-clipboard",
+			cast(GCallback)&callBackCopyClipboard,
+			cast(void*)onCopyClipboardListeners[onCopyClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackCopyClipboardDestroy,
+			connectFlags);
+		return onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCopyClipboard(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackCopyClipboard(VteTerminal* terminalStruct,OnCopyClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onCopyClipboardListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCopyClipboard(wrapper);
 	}
 
-	void delegate(Terminal)[] onCurrentDirectoryUriChangedListeners;
+	protected void internalRemoveOnCopyClipboard(OnCopyClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCopyClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCopyClipboardListeners[index] = null;
+				onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCurrentDirectoryUriChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCurrentDirectoryUriChangedDelegateWrapper[] onCurrentDirectoryUriChangedListeners;
+
 	/**
 	 * Emitted when the current directory URI is modified.
 	 */
-	void addOnCurrentDirectoryUriChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCurrentDirectoryUriChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "current-directory-uri-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"current-directory-uri-changed",
-				cast(GCallback)&callBackCurrentDirectoryUriChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["current-directory-uri-changed"] = 1;
-		}
-		onCurrentDirectoryUriChangedListeners ~= dlg;
+		onCurrentDirectoryUriChangedListeners ~= new OnCurrentDirectoryUriChangedDelegateWrapper(dlg, 0, connectFlags);
+		onCurrentDirectoryUriChangedListeners[onCurrentDirectoryUriChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"current-directory-uri-changed",
+			cast(GCallback)&callBackCurrentDirectoryUriChanged,
+			cast(void*)onCurrentDirectoryUriChangedListeners[onCurrentDirectoryUriChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackCurrentDirectoryUriChangedDestroy,
+			connectFlags);
+		return onCurrentDirectoryUriChangedListeners[onCurrentDirectoryUriChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCurrentDirectoryUriChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackCurrentDirectoryUriChanged(VteTerminal* terminalStruct,OnCurrentDirectoryUriChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onCurrentDirectoryUriChangedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCurrentDirectoryUriChangedDestroy(OnCurrentDirectoryUriChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCurrentDirectoryUriChanged(wrapper);
 	}
 
-	void delegate(Terminal)[] onCurrentFileUriChangedListeners;
+	protected void internalRemoveOnCurrentDirectoryUriChanged(OnCurrentDirectoryUriChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCurrentDirectoryUriChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCurrentDirectoryUriChangedListeners[index] = null;
+				onCurrentDirectoryUriChangedListeners = std.algorithm.remove(onCurrentDirectoryUriChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCurrentFileUriChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCurrentFileUriChangedDelegateWrapper[] onCurrentFileUriChangedListeners;
+
 	/**
 	 * Emitted when the current file URI is modified.
 	 */
-	void addOnCurrentFileUriChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCurrentFileUriChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "current-file-uri-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"current-file-uri-changed",
-				cast(GCallback)&callBackCurrentFileUriChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["current-file-uri-changed"] = 1;
-		}
-		onCurrentFileUriChangedListeners ~= dlg;
+		onCurrentFileUriChangedListeners ~= new OnCurrentFileUriChangedDelegateWrapper(dlg, 0, connectFlags);
+		onCurrentFileUriChangedListeners[onCurrentFileUriChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"current-file-uri-changed",
+			cast(GCallback)&callBackCurrentFileUriChanged,
+			cast(void*)onCurrentFileUriChangedListeners[onCurrentFileUriChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackCurrentFileUriChangedDestroy,
+			connectFlags);
+		return onCurrentFileUriChangedListeners[onCurrentFileUriChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCurrentFileUriChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackCurrentFileUriChanged(VteTerminal* terminalStruct,OnCurrentFileUriChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onCurrentFileUriChangedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCurrentFileUriChangedDestroy(OnCurrentFileUriChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCurrentFileUriChanged(wrapper);
 	}
 
-	void delegate(Terminal)[] onCursorMovedListeners;
+	protected void internalRemoveOnCurrentFileUriChanged(OnCurrentFileUriChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCurrentFileUriChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCurrentFileUriChangedListeners[index] = null;
+				onCurrentFileUriChangedListeners = std.algorithm.remove(onCurrentFileUriChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCursorMovedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCursorMovedDelegateWrapper[] onCursorMovedListeners;
+
 	/**
 	 * Emitted whenever the cursor moves to a new character cell.  Used
 	 * primarily by #VteTerminalAccessible.
 	 */
-	void addOnCursorMoved(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCursorMoved(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cursor-moved" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cursor-moved",
-				cast(GCallback)&callBackCursorMoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cursor-moved"] = 1;
-		}
-		onCursorMovedListeners ~= dlg;
+		onCursorMovedListeners ~= new OnCursorMovedDelegateWrapper(dlg, 0, connectFlags);
+		onCursorMovedListeners[onCursorMovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cursor-moved",
+			cast(GCallback)&callBackCursorMoved,
+			cast(void*)onCursorMovedListeners[onCursorMovedListeners.length - 1],
+			cast(GClosureNotify)&callBackCursorMovedDestroy,
+			connectFlags);
+		return onCursorMovedListeners[onCursorMovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCursorMoved(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackCursorMoved(VteTerminal* terminalStruct,OnCursorMovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onCursorMovedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCursorMovedDestroy(OnCursorMovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCursorMoved(wrapper);
 	}
 
-	void delegate(Terminal)[] onDecreaseFontSizeListeners;
+	protected void internalRemoveOnCursorMoved(OnCursorMovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCursorMovedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCursorMovedListeners[index] = null;
+				onCursorMovedListeners = std.algorithm.remove(onCursorMovedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDecreaseFontSizeDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDecreaseFontSizeDelegateWrapper[] onDecreaseFontSizeListeners;
+
 	/**
 	 * Emitted when the user hits the '-' key while holding the Control key.
 	 */
-	void addOnDecreaseFontSize(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDecreaseFontSize(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "decrease-font-size" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"decrease-font-size",
-				cast(GCallback)&callBackDecreaseFontSize,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["decrease-font-size"] = 1;
-		}
-		onDecreaseFontSizeListeners ~= dlg;
+		onDecreaseFontSizeListeners ~= new OnDecreaseFontSizeDelegateWrapper(dlg, 0, connectFlags);
+		onDecreaseFontSizeListeners[onDecreaseFontSizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"decrease-font-size",
+			cast(GCallback)&callBackDecreaseFontSize,
+			cast(void*)onDecreaseFontSizeListeners[onDecreaseFontSizeListeners.length - 1],
+			cast(GClosureNotify)&callBackDecreaseFontSizeDestroy,
+			connectFlags);
+		return onDecreaseFontSizeListeners[onDecreaseFontSizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDecreaseFontSize(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackDecreaseFontSize(VteTerminal* terminalStruct,OnDecreaseFontSizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onDecreaseFontSizeListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDecreaseFontSizeDestroy(OnDecreaseFontSizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDecreaseFontSize(wrapper);
 	}
 
-	void delegate(Terminal)[] onDeiconifyWindowListeners;
+	protected void internalRemoveOnDecreaseFontSize(OnDecreaseFontSizeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDecreaseFontSizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDecreaseFontSizeListeners[index] = null;
+				onDecreaseFontSizeListeners = std.algorithm.remove(onDecreaseFontSizeListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDeiconifyWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDeiconifyWindowDelegateWrapper[] onDeiconifyWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnDeiconifyWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDeiconifyWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "deiconify-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"deiconify-window",
-				cast(GCallback)&callBackDeiconifyWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["deiconify-window"] = 1;
-		}
-		onDeiconifyWindowListeners ~= dlg;
+		onDeiconifyWindowListeners ~= new OnDeiconifyWindowDelegateWrapper(dlg, 0, connectFlags);
+		onDeiconifyWindowListeners[onDeiconifyWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"deiconify-window",
+			cast(GCallback)&callBackDeiconifyWindow,
+			cast(void*)onDeiconifyWindowListeners[onDeiconifyWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackDeiconifyWindowDestroy,
+			connectFlags);
+		return onDeiconifyWindowListeners[onDeiconifyWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDeiconifyWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackDeiconifyWindow(VteTerminal* terminalStruct,OnDeiconifyWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onDeiconifyWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDeiconifyWindowDestroy(OnDeiconifyWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDeiconifyWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onEncodingChangedListeners;
+	protected void internalRemoveOnDeiconifyWindow(OnDeiconifyWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDeiconifyWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDeiconifyWindowListeners[index] = null;
+				onDeiconifyWindowListeners = std.algorithm.remove(onDeiconifyWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnEncodingChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEncodingChangedDelegateWrapper[] onEncodingChangedListeners;
+
 	/**
 	 * Emitted whenever the terminal's current encoding has changed, either
 	 * as a result of receiving a control sequence which toggled between the
 	 * local and UTF-8 encodings, or at the parent application's request.
 	 */
-	void addOnEncodingChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEncodingChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "encoding-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"encoding-changed",
-				cast(GCallback)&callBackEncodingChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["encoding-changed"] = 1;
-		}
-		onEncodingChangedListeners ~= dlg;
+		onEncodingChangedListeners ~= new OnEncodingChangedDelegateWrapper(dlg, 0, connectFlags);
+		onEncodingChangedListeners[onEncodingChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"encoding-changed",
+			cast(GCallback)&callBackEncodingChanged,
+			cast(void*)onEncodingChangedListeners[onEncodingChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackEncodingChangedDestroy,
+			connectFlags);
+		return onEncodingChangedListeners[onEncodingChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEncodingChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackEncodingChanged(VteTerminal* terminalStruct,OnEncodingChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onEncodingChangedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEncodingChangedDestroy(OnEncodingChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEncodingChanged(wrapper);
 	}
 
-	void delegate(Terminal)[] onEofListeners;
+	protected void internalRemoveOnEncodingChanged(OnEncodingChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEncodingChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEncodingChangedListeners[index] = null;
+				onEncodingChangedListeners = std.algorithm.remove(onEncodingChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnEofDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEofDelegateWrapper[] onEofListeners;
+
 	/**
 	 * Emitted when the terminal receives an end-of-file from a child which
 	 * is running in the terminal.  This signal is frequently (but not
 	 * always) emitted with a #VteTerminal::child-exited signal.
 	 */
-	void addOnEof(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEof(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "eof" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"eof",
-				cast(GCallback)&callBackEof,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["eof"] = 1;
-		}
-		onEofListeners ~= dlg;
+		onEofListeners ~= new OnEofDelegateWrapper(dlg, 0, connectFlags);
+		onEofListeners[onEofListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"eof",
+			cast(GCallback)&callBackEof,
+			cast(void*)onEofListeners[onEofListeners.length - 1],
+			cast(GClosureNotify)&callBackEofDestroy,
+			connectFlags);
+		return onEofListeners[onEofListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEof(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackEof(VteTerminal* terminalStruct,OnEofDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onEofListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEofDestroy(OnEofDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEof(wrapper);
 	}
 
-	void delegate(Terminal)[] onIconTitleChangedListeners;
+	protected void internalRemoveOnEof(OnEofDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEofListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEofListeners[index] = null;
+				onEofListeners = std.algorithm.remove(onEofListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnIconTitleChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIconTitleChangedDelegateWrapper[] onIconTitleChangedListeners;
+
 	/**
 	 * Emitted when the terminal's %icon_title field is modified.
 	 */
-	void addOnIconTitleChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconTitleChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "icon-title-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"icon-title-changed",
-				cast(GCallback)&callBackIconTitleChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["icon-title-changed"] = 1;
-		}
-		onIconTitleChangedListeners ~= dlg;
+		onIconTitleChangedListeners ~= new OnIconTitleChangedDelegateWrapper(dlg, 0, connectFlags);
+		onIconTitleChangedListeners[onIconTitleChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"icon-title-changed",
+			cast(GCallback)&callBackIconTitleChanged,
+			cast(void*)onIconTitleChangedListeners[onIconTitleChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackIconTitleChangedDestroy,
+			connectFlags);
+		return onIconTitleChangedListeners[onIconTitleChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIconTitleChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackIconTitleChanged(VteTerminal* terminalStruct,OnIconTitleChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onIconTitleChangedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackIconTitleChangedDestroy(OnIconTitleChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIconTitleChanged(wrapper);
 	}
 
-	void delegate(Terminal)[] onIconifyWindowListeners;
+	protected void internalRemoveOnIconTitleChanged(OnIconTitleChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIconTitleChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIconTitleChangedListeners[index] = null;
+				onIconTitleChangedListeners = std.algorithm.remove(onIconTitleChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnIconifyWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIconifyWindowDelegateWrapper[] onIconifyWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnIconifyWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconifyWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "iconify-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"iconify-window",
-				cast(GCallback)&callBackIconifyWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["iconify-window"] = 1;
-		}
-		onIconifyWindowListeners ~= dlg;
+		onIconifyWindowListeners ~= new OnIconifyWindowDelegateWrapper(dlg, 0, connectFlags);
+		onIconifyWindowListeners[onIconifyWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"iconify-window",
+			cast(GCallback)&callBackIconifyWindow,
+			cast(void*)onIconifyWindowListeners[onIconifyWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackIconifyWindowDestroy,
+			connectFlags);
+		return onIconifyWindowListeners[onIconifyWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIconifyWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackIconifyWindow(VteTerminal* terminalStruct,OnIconifyWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onIconifyWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackIconifyWindowDestroy(OnIconifyWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIconifyWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onIncreaseFontSizeListeners;
+	protected void internalRemoveOnIconifyWindow(OnIconifyWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIconifyWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIconifyWindowListeners[index] = null;
+				onIconifyWindowListeners = std.algorithm.remove(onIconifyWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnIncreaseFontSizeDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIncreaseFontSizeDelegateWrapper[] onIncreaseFontSizeListeners;
+
 	/**
 	 * Emitted when the user hits the '+' key while holding the Control key.
 	 */
-	void addOnIncreaseFontSize(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIncreaseFontSize(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "increase-font-size" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"increase-font-size",
-				cast(GCallback)&callBackIncreaseFontSize,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["increase-font-size"] = 1;
-		}
-		onIncreaseFontSizeListeners ~= dlg;
+		onIncreaseFontSizeListeners ~= new OnIncreaseFontSizeDelegateWrapper(dlg, 0, connectFlags);
+		onIncreaseFontSizeListeners[onIncreaseFontSizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"increase-font-size",
+			cast(GCallback)&callBackIncreaseFontSize,
+			cast(void*)onIncreaseFontSizeListeners[onIncreaseFontSizeListeners.length - 1],
+			cast(GClosureNotify)&callBackIncreaseFontSizeDestroy,
+			connectFlags);
+		return onIncreaseFontSizeListeners[onIncreaseFontSizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIncreaseFontSize(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackIncreaseFontSize(VteTerminal* terminalStruct,OnIncreaseFontSizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onIncreaseFontSizeListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackIncreaseFontSizeDestroy(OnIncreaseFontSizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIncreaseFontSize(wrapper);
 	}
 
-	void delegate(Terminal)[] onLowerWindowListeners;
+	protected void internalRemoveOnIncreaseFontSize(OnIncreaseFontSizeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIncreaseFontSizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIncreaseFontSizeListeners[index] = null;
+				onIncreaseFontSizeListeners = std.algorithm.remove(onIncreaseFontSizeListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnLowerWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnLowerWindowDelegateWrapper[] onLowerWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnLowerWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnLowerWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "lower-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"lower-window",
-				cast(GCallback)&callBackLowerWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["lower-window"] = 1;
-		}
-		onLowerWindowListeners ~= dlg;
+		onLowerWindowListeners ~= new OnLowerWindowDelegateWrapper(dlg, 0, connectFlags);
+		onLowerWindowListeners[onLowerWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"lower-window",
+			cast(GCallback)&callBackLowerWindow,
+			cast(void*)onLowerWindowListeners[onLowerWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackLowerWindowDestroy,
+			connectFlags);
+		return onLowerWindowListeners[onLowerWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackLowerWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackLowerWindow(VteTerminal* terminalStruct,OnLowerWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onLowerWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackLowerWindowDestroy(OnLowerWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnLowerWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onMaximizeWindowListeners;
+	protected void internalRemoveOnLowerWindow(OnLowerWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onLowerWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onLowerWindowListeners[index] = null;
+				onLowerWindowListeners = std.algorithm.remove(onLowerWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMaximizeWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMaximizeWindowDelegateWrapper[] onMaximizeWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnMaximizeWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMaximizeWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "maximize-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"maximize-window",
-				cast(GCallback)&callBackMaximizeWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["maximize-window"] = 1;
-		}
-		onMaximizeWindowListeners ~= dlg;
+		onMaximizeWindowListeners ~= new OnMaximizeWindowDelegateWrapper(dlg, 0, connectFlags);
+		onMaximizeWindowListeners[onMaximizeWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"maximize-window",
+			cast(GCallback)&callBackMaximizeWindow,
+			cast(void*)onMaximizeWindowListeners[onMaximizeWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackMaximizeWindowDestroy,
+			connectFlags);
+		return onMaximizeWindowListeners[onMaximizeWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMaximizeWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackMaximizeWindow(VteTerminal* terminalStruct,OnMaximizeWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onMaximizeWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackMaximizeWindowDestroy(OnMaximizeWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMaximizeWindow(wrapper);
 	}
 
-	void delegate(uint, uint, Terminal)[] onMoveWindowListeners;
+	protected void internalRemoveOnMaximizeWindow(OnMaximizeWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMaximizeWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMaximizeWindowListeners[index] = null;
+				onMaximizeWindowListeners = std.algorithm.remove(onMaximizeWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveWindowDelegateWrapper
+	{
+		void delegate(uint, uint, Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(uint, uint, Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveWindowDelegateWrapper[] onMoveWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 *
@@ -1961,111 +2459,219 @@ public class Terminal : Widget, ScrollableIF
 	 *     x = the terminal's desired location, X coordinate
 	 *     y = the terminal's desired location, Y coordinate
 	 */
-	void addOnMoveWindow(void delegate(uint, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveWindow(void delegate(uint, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-window",
-				cast(GCallback)&callBackMoveWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-window"] = 1;
-		}
-		onMoveWindowListeners ~= dlg;
+		onMoveWindowListeners ~= new OnMoveWindowDelegateWrapper(dlg, 0, connectFlags);
+		onMoveWindowListeners[onMoveWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-window",
+			cast(GCallback)&callBackMoveWindow,
+			cast(void*)onMoveWindowListeners[onMoveWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveWindowDestroy,
+			connectFlags);
+		return onMoveWindowListeners[onMoveWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveWindow(VteTerminal* terminalStruct, uint x, uint y, Terminal _terminal)
+	
+	extern(C) static void callBackMoveWindow(VteTerminal* terminalStruct, uint x, uint y,OnMoveWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(uint, uint, Terminal) dlg; _terminal.onMoveWindowListeners )
-		{
-			dlg(x, y, _terminal);
-		}
+		wrapper.dlg(x, y, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveWindowDestroy(OnMoveWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onPasteClipboardListeners;
+	protected void internalRemoveOnMoveWindow(OnMoveWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveWindowListeners[index] = null;
+				onMoveWindowListeners = std.algorithm.remove(onMoveWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPasteClipboardDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPasteClipboardDelegateWrapper[] onPasteClipboardListeners;
+
 	/**
 	 * Emitted whenever vte_terminal_paste_clipboard() is called.
 	 */
-	void addOnPasteClipboard(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPasteClipboard(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "paste-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"paste-clipboard",
-				cast(GCallback)&callBackPasteClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["paste-clipboard"] = 1;
-		}
-		onPasteClipboardListeners ~= dlg;
+		onPasteClipboardListeners ~= new OnPasteClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onPasteClipboardListeners[onPasteClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"paste-clipboard",
+			cast(GCallback)&callBackPasteClipboard,
+			cast(void*)onPasteClipboardListeners[onPasteClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackPasteClipboardDestroy,
+			connectFlags);
+		return onPasteClipboardListeners[onPasteClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPasteClipboard(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackPasteClipboard(VteTerminal* terminalStruct,OnPasteClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onPasteClipboardListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPasteClipboardDestroy(OnPasteClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPasteClipboard(wrapper);
 	}
 
-	void delegate(Terminal)[] onRaiseWindowListeners;
+	protected void internalRemoveOnPasteClipboard(OnPasteClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPasteClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPasteClipboardListeners[index] = null;
+				onPasteClipboardListeners = std.algorithm.remove(onPasteClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRaiseWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRaiseWindowDelegateWrapper[] onRaiseWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnRaiseWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRaiseWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "raise-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"raise-window",
-				cast(GCallback)&callBackRaiseWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["raise-window"] = 1;
-		}
-		onRaiseWindowListeners ~= dlg;
+		onRaiseWindowListeners ~= new OnRaiseWindowDelegateWrapper(dlg, 0, connectFlags);
+		onRaiseWindowListeners[onRaiseWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"raise-window",
+			cast(GCallback)&callBackRaiseWindow,
+			cast(void*)onRaiseWindowListeners[onRaiseWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackRaiseWindowDestroy,
+			connectFlags);
+		return onRaiseWindowListeners[onRaiseWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRaiseWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackRaiseWindow(VteTerminal* terminalStruct,OnRaiseWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onRaiseWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRaiseWindowDestroy(OnRaiseWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRaiseWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onRefreshWindowListeners;
+	protected void internalRemoveOnRaiseWindow(OnRaiseWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRaiseWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRaiseWindowListeners[index] = null;
+				onRaiseWindowListeners = std.algorithm.remove(onRaiseWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRefreshWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRefreshWindowDelegateWrapper[] onRefreshWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnRefreshWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRefreshWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "refresh-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"refresh-window",
-				cast(GCallback)&callBackRefreshWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["refresh-window"] = 1;
-		}
-		onRefreshWindowListeners ~= dlg;
+		onRefreshWindowListeners ~= new OnRefreshWindowDelegateWrapper(dlg, 0, connectFlags);
+		onRefreshWindowListeners[onRefreshWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"refresh-window",
+			cast(GCallback)&callBackRefreshWindow,
+			cast(void*)onRefreshWindowListeners[onRefreshWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackRefreshWindowDestroy,
+			connectFlags);
+		return onRefreshWindowListeners[onRefreshWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRefreshWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackRefreshWindow(VteTerminal* terminalStruct,OnRefreshWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onRefreshWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRefreshWindowDestroy(OnRefreshWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRefreshWindow(wrapper);
 	}
 
-	void delegate(uint, uint, Terminal)[] onResizeWindowListeners;
+	protected void internalRemoveOnRefreshWindow(OnRefreshWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRefreshWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRefreshWindowListeners[index] = null;
+				onRefreshWindowListeners = std.algorithm.remove(onRefreshWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnResizeWindowDelegateWrapper
+	{
+		void delegate(uint, uint, Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(uint, uint, Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnResizeWindowDelegateWrapper[] onResizeWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 *
@@ -2073,171 +2679,333 @@ public class Terminal : Widget, ScrollableIF
 	 *     width = the desired number of columns
 	 *     height = the desired number of rows
 	 */
-	void addOnResizeWindow(void delegate(uint, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnResizeWindow(void delegate(uint, uint, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "resize-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"resize-window",
-				cast(GCallback)&callBackResizeWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["resize-window"] = 1;
-		}
-		onResizeWindowListeners ~= dlg;
+		onResizeWindowListeners ~= new OnResizeWindowDelegateWrapper(dlg, 0, connectFlags);
+		onResizeWindowListeners[onResizeWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"resize-window",
+			cast(GCallback)&callBackResizeWindow,
+			cast(void*)onResizeWindowListeners[onResizeWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackResizeWindowDestroy,
+			connectFlags);
+		return onResizeWindowListeners[onResizeWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackResizeWindow(VteTerminal* terminalStruct, uint width, uint height, Terminal _terminal)
+	
+	extern(C) static void callBackResizeWindow(VteTerminal* terminalStruct, uint width, uint height,OnResizeWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(uint, uint, Terminal) dlg; _terminal.onResizeWindowListeners )
-		{
-			dlg(width, height, _terminal);
-		}
+		wrapper.dlg(width, height, wrapper.outer);
+	}
+	
+	extern(C) static void callBackResizeWindowDestroy(OnResizeWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnResizeWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onRestoreWindowListeners;
+	protected void internalRemoveOnResizeWindow(OnResizeWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onResizeWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onResizeWindowListeners[index] = null;
+				onResizeWindowListeners = std.algorithm.remove(onResizeWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRestoreWindowDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRestoreWindowDelegateWrapper[] onRestoreWindowListeners;
+
 	/**
 	 * Emitted at the child application's request.
 	 */
-	void addOnRestoreWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRestoreWindow(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "restore-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"restore-window",
-				cast(GCallback)&callBackRestoreWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["restore-window"] = 1;
-		}
-		onRestoreWindowListeners ~= dlg;
+		onRestoreWindowListeners ~= new OnRestoreWindowDelegateWrapper(dlg, 0, connectFlags);
+		onRestoreWindowListeners[onRestoreWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"restore-window",
+			cast(GCallback)&callBackRestoreWindow,
+			cast(void*)onRestoreWindowListeners[onRestoreWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackRestoreWindowDestroy,
+			connectFlags);
+		return onRestoreWindowListeners[onRestoreWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRestoreWindow(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackRestoreWindow(VteTerminal* terminalStruct,OnRestoreWindowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onRestoreWindowListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRestoreWindowDestroy(OnRestoreWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRestoreWindow(wrapper);
 	}
 
-	void delegate(Terminal)[] onSelectionChangedListeners;
+	protected void internalRemoveOnRestoreWindow(OnRestoreWindowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRestoreWindowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRestoreWindowListeners[index] = null;
+				onRestoreWindowListeners = std.algorithm.remove(onRestoreWindowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectionChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
+
 	/**
 	 * Emitted whenever the contents of terminal's selection changes.
 	 */
-	void addOnSelectionChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectionChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "selection-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"selection-changed",
-				cast(GCallback)&callBackSelectionChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["selection-changed"] = 1;
-		}
-		onSelectionChangedListeners ~= dlg;
+		onSelectionChangedListeners ~= new OnSelectionChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"selection-changed",
+			cast(GCallback)&callBackSelectionChanged,
+			cast(void*)onSelectionChangedListeners[onSelectionChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectionChangedDestroy,
+			connectFlags);
+		return onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectionChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackSelectionChanged(VteTerminal* terminalStruct,OnSelectionChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onSelectionChangedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectionChanged(wrapper);
 	}
 
-	void delegate(Terminal)[] onTextDeletedListeners;
+	protected void internalRemoveOnSelectionChanged(OnSelectionChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectionChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectionChangedListeners[index] = null;
+				onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnTextDeletedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnTextDeletedDelegateWrapper[] onTextDeletedListeners;
+
 	/**
 	 * An internal signal used for communication between the terminal and
 	 * its accessibility peer. May not be emitted under certain
 	 * circumstances.
 	 */
-	void addOnTextDeleted(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnTextDeleted(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "text-deleted" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"text-deleted",
-				cast(GCallback)&callBackTextDeleted,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["text-deleted"] = 1;
-		}
-		onTextDeletedListeners ~= dlg;
+		onTextDeletedListeners ~= new OnTextDeletedDelegateWrapper(dlg, 0, connectFlags);
+		onTextDeletedListeners[onTextDeletedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"text-deleted",
+			cast(GCallback)&callBackTextDeleted,
+			cast(void*)onTextDeletedListeners[onTextDeletedListeners.length - 1],
+			cast(GClosureNotify)&callBackTextDeletedDestroy,
+			connectFlags);
+		return onTextDeletedListeners[onTextDeletedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackTextDeleted(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackTextDeleted(VteTerminal* terminalStruct,OnTextDeletedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onTextDeletedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackTextDeletedDestroy(OnTextDeletedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnTextDeleted(wrapper);
 	}
 
-	void delegate(Terminal)[] onTextInsertedListeners;
+	protected void internalRemoveOnTextDeleted(OnTextDeletedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onTextDeletedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onTextDeletedListeners[index] = null;
+				onTextDeletedListeners = std.algorithm.remove(onTextDeletedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnTextInsertedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnTextInsertedDelegateWrapper[] onTextInsertedListeners;
+
 	/**
 	 * An internal signal used for communication between the terminal and
 	 * its accessibility peer. May not be emitted under certain
 	 * circumstances.
 	 */
-	void addOnTextInserted(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnTextInserted(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "text-inserted" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"text-inserted",
-				cast(GCallback)&callBackTextInserted,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["text-inserted"] = 1;
-		}
-		onTextInsertedListeners ~= dlg;
+		onTextInsertedListeners ~= new OnTextInsertedDelegateWrapper(dlg, 0, connectFlags);
+		onTextInsertedListeners[onTextInsertedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"text-inserted",
+			cast(GCallback)&callBackTextInserted,
+			cast(void*)onTextInsertedListeners[onTextInsertedListeners.length - 1],
+			cast(GClosureNotify)&callBackTextInsertedDestroy,
+			connectFlags);
+		return onTextInsertedListeners[onTextInsertedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackTextInserted(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackTextInserted(VteTerminal* terminalStruct,OnTextInsertedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onTextInsertedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackTextInsertedDestroy(OnTextInsertedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnTextInserted(wrapper);
 	}
 
-	void delegate(Terminal)[] onTextModifiedListeners;
+	protected void internalRemoveOnTextInserted(OnTextInsertedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onTextInsertedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onTextInsertedListeners[index] = null;
+				onTextInsertedListeners = std.algorithm.remove(onTextInsertedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnTextModifiedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnTextModifiedDelegateWrapper[] onTextModifiedListeners;
+
 	/**
 	 * An internal signal used for communication between the terminal and
 	 * its accessibility peer. May not be emitted under certain
 	 * circumstances.
 	 */
-	void addOnTextModified(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnTextModified(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "text-modified" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"text-modified",
-				cast(GCallback)&callBackTextModified,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["text-modified"] = 1;
-		}
-		onTextModifiedListeners ~= dlg;
+		onTextModifiedListeners ~= new OnTextModifiedDelegateWrapper(dlg, 0, connectFlags);
+		onTextModifiedListeners[onTextModifiedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"text-modified",
+			cast(GCallback)&callBackTextModified,
+			cast(void*)onTextModifiedListeners[onTextModifiedListeners.length - 1],
+			cast(GClosureNotify)&callBackTextModifiedDestroy,
+			connectFlags);
+		return onTextModifiedListeners[onTextModifiedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackTextModified(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackTextModified(VteTerminal* terminalStruct,OnTextModifiedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onTextModifiedListeners )
-		{
-			dlg(_terminal);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackTextModifiedDestroy(OnTextModifiedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnTextModified(wrapper);
 	}
 
-	void delegate(int, Terminal)[] onTextScrolledListeners;
+	protected void internalRemoveOnTextModified(OnTextModifiedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onTextModifiedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onTextModifiedListeners[index] = null;
+				onTextModifiedListeners = std.algorithm.remove(onTextModifiedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnTextScrolledDelegateWrapper
+	{
+		void delegate(int, Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnTextScrolledDelegateWrapper[] onTextScrolledListeners;
+
 	/**
 	 * An internal signal used for communication between the terminal and
 	 * its accessibility peer. May not be emitted under certain
@@ -2246,55 +3014,96 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 *     delta = the number of lines scrolled
 	 */
-	void addOnTextScrolled(void delegate(int, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnTextScrolled(void delegate(int, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "text-scrolled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"text-scrolled",
-				cast(GCallback)&callBackTextScrolled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["text-scrolled"] = 1;
-		}
-		onTextScrolledListeners ~= dlg;
+		onTextScrolledListeners ~= new OnTextScrolledDelegateWrapper(dlg, 0, connectFlags);
+		onTextScrolledListeners[onTextScrolledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"text-scrolled",
+			cast(GCallback)&callBackTextScrolled,
+			cast(void*)onTextScrolledListeners[onTextScrolledListeners.length - 1],
+			cast(GClosureNotify)&callBackTextScrolledDestroy,
+			connectFlags);
+		return onTextScrolledListeners[onTextScrolledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackTextScrolled(VteTerminal* terminalStruct, int delta, Terminal _terminal)
+	
+	extern(C) static void callBackTextScrolled(VteTerminal* terminalStruct, int delta,OnTextScrolledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, Terminal) dlg; _terminal.onTextScrolledListeners )
-		{
-			dlg(delta, _terminal);
-		}
+		wrapper.dlg(delta, wrapper.outer);
+	}
+	
+	extern(C) static void callBackTextScrolledDestroy(OnTextScrolledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnTextScrolled(wrapper);
 	}
 
-	void delegate(Terminal)[] onWindowTitleChangedListeners;
+	protected void internalRemoveOnTextScrolled(OnTextScrolledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onTextScrolledListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onTextScrolledListeners[index] = null;
+				onTextScrolledListeners = std.algorithm.remove(onTextScrolledListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnWindowTitleChangedDelegateWrapper
+	{
+		void delegate(Terminal) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Terminal) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnWindowTitleChangedDelegateWrapper[] onWindowTitleChangedListeners;
+
 	/**
 	 * Emitted when the terminal's %window_title field is modified.
 	 */
-	void addOnWindowTitleChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnWindowTitleChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "window-title-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"window-title-changed",
-				cast(GCallback)&callBackWindowTitleChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["window-title-changed"] = 1;
-		}
-		onWindowTitleChangedListeners ~= dlg;
+		onWindowTitleChangedListeners ~= new OnWindowTitleChangedDelegateWrapper(dlg, 0, connectFlags);
+		onWindowTitleChangedListeners[onWindowTitleChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"window-title-changed",
+			cast(GCallback)&callBackWindowTitleChanged,
+			cast(void*)onWindowTitleChangedListeners[onWindowTitleChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackWindowTitleChangedDestroy,
+			connectFlags);
+		return onWindowTitleChangedListeners[onWindowTitleChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackWindowTitleChanged(VteTerminal* terminalStruct, Terminal _terminal)
+	
+	extern(C) static void callBackWindowTitleChanged(VteTerminal* terminalStruct,OnWindowTitleChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Terminal) dlg; _terminal.onWindowTitleChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackWindowTitleChangedDestroy(OnWindowTitleChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnWindowTitleChanged(wrapper);
+	}
+
+	protected void internalRemoveOnWindowTitleChanged(OnWindowTitleChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onWindowTitleChangedListeners)
 		{
-			dlg(_terminal);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onWindowTitleChangedListeners[index] = null;
+				onWindowTitleChangedListeners = std.algorithm.remove(onWindowTitleChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 
 	/**
 	 * Gets the user's shell, or %NULL. In the latter case, the

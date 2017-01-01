@@ -28,6 +28,7 @@ public  import gobject.Signals;
 public  import gsvc.gsv;
 public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /** */
@@ -130,71 +131,115 @@ public template SourceUndoManagerT(TStruct)
 		gtk_source_undo_manager_undo(getSourceUndoManagerStruct());
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(SourceUndoManagerIF)[] _onCanRedoChangedListeners;
-	@property void delegate(SourceUndoManagerIF)[] onCanRedoChangedListeners()
+	protected class OnCanRedoChangedDelegateWrapper
 	{
-		return _onCanRedoChangedListeners;
+		void delegate(SourceUndoManagerIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceUndoManagerIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnCanRedoChangedDelegateWrapper[] onCanRedoChangedListeners;
+
 	/**
 	 * Emitted when the ability to redo has changed.
 	 *
 	 * Since: 2.10
 	 */
-	void addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "can-redo-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"can-redo-changed",
-				cast(GCallback)&callBackCanRedoChanged,
-				cast(void*)cast(SourceUndoManagerIF)this,
-				null,
-				connectFlags);
-			connectedSignals["can-redo-changed"] = 1;
-		}
-		_onCanRedoChangedListeners ~= dlg;
+		onCanRedoChangedListeners ~= new OnCanRedoChangedDelegateWrapper(dlg, 0, connectFlags);
+		onCanRedoChangedListeners[onCanRedoChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"can-redo-changed",
+			cast(GCallback)&callBackCanRedoChanged,
+			cast(void*)onCanRedoChangedListeners[onCanRedoChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackCanRedoChangedDestroy,
+			connectFlags);
+		return onCanRedoChangedListeners[onCanRedoChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCanRedoChanged(GtkSourceUndoManager* sourceundomanagerStruct, SourceUndoManagerIF _sourceundomanager)
+	
+	extern(C) static void callBackCanRedoChanged(GtkSourceUndoManager* sourceundomanagerStruct,OnCanRedoChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceUndoManagerIF) dlg; _sourceundomanager.onCanRedoChangedListeners )
-		{
-			dlg(_sourceundomanager);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCanRedoChangedDestroy(OnCanRedoChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCanRedoChanged(wrapper);
 	}
 
-	void delegate(SourceUndoManagerIF)[] _onCanUndoChangedListeners;
-	@property void delegate(SourceUndoManagerIF)[] onCanUndoChangedListeners()
+	protected void internalRemoveOnCanRedoChanged(OnCanRedoChangedDelegateWrapper source)
 	{
-		return _onCanUndoChangedListeners;
+		foreach(index, wrapper; onCanRedoChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCanRedoChangedListeners[index] = null;
+				onCanRedoChangedListeners = std.algorithm.remove(onCanRedoChangedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnCanUndoChangedDelegateWrapper
+	{
+		void delegate(SourceUndoManagerIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceUndoManagerIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCanUndoChangedDelegateWrapper[] onCanUndoChangedListeners;
+
 	/**
 	 * Emitted when the ability to undo has changed.
 	 *
 	 * Since: 2.10
 	 */
-	void addOnCanUndoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCanUndoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "can-undo-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"can-undo-changed",
-				cast(GCallback)&callBackCanUndoChanged,
-				cast(void*)cast(SourceUndoManagerIF)this,
-				null,
-				connectFlags);
-			connectedSignals["can-undo-changed"] = 1;
-		}
-		_onCanUndoChangedListeners ~= dlg;
+		onCanUndoChangedListeners ~= new OnCanUndoChangedDelegateWrapper(dlg, 0, connectFlags);
+		onCanUndoChangedListeners[onCanUndoChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"can-undo-changed",
+			cast(GCallback)&callBackCanUndoChanged,
+			cast(void*)onCanUndoChangedListeners[onCanUndoChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackCanUndoChangedDestroy,
+			connectFlags);
+		return onCanUndoChangedListeners[onCanUndoChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCanUndoChanged(GtkSourceUndoManager* sourceundomanagerStruct, SourceUndoManagerIF _sourceundomanager)
+	
+	extern(C) static void callBackCanUndoChanged(GtkSourceUndoManager* sourceundomanagerStruct,OnCanUndoChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceUndoManagerIF) dlg; _sourceundomanager.onCanUndoChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCanUndoChangedDestroy(OnCanUndoChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCanUndoChanged(wrapper);
+	}
+
+	protected void internalRemoveOnCanUndoChanged(OnCanUndoChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCanUndoChangedListeners)
 		{
-			dlg(_sourceundomanager);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCanUndoChangedListeners[index] = null;
+				onCanUndoChangedListeners = std.algorithm.remove(onCanUndoChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

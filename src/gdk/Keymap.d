@@ -30,6 +30,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -408,69 +409,134 @@ public class Keymap : ObjectG
 		return gdk_keymap_translate_keyboard_state(gdkKeymap, hardwareKeycode, state, group, &keyval, &effectiveGroup, &level, &consumedModifiers) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnDirectionChangedDelegateWrapper
+	{
+		void delegate(Keymap) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Keymap) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDirectionChangedDelegateWrapper[] onDirectionChangedListeners;
 
-	void delegate(Keymap)[] onDirectionChangedListeners;
 	/**
 	 * The ::direction-changed signal gets emitted when the direction of
 	 * the keymap changes.
 	 *
 	 * Since: 2.0
 	 */
-	void addOnDirectionChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDirectionChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "direction-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"direction-changed",
-				cast(GCallback)&callBackDirectionChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["direction-changed"] = 1;
-		}
-		onDirectionChangedListeners ~= dlg;
+		onDirectionChangedListeners ~= new OnDirectionChangedDelegateWrapper(dlg, 0, connectFlags);
+		onDirectionChangedListeners[onDirectionChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"direction-changed",
+			cast(GCallback)&callBackDirectionChanged,
+			cast(void*)onDirectionChangedListeners[onDirectionChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackDirectionChangedDestroy,
+			connectFlags);
+		return onDirectionChangedListeners[onDirectionChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap _keymap)
+	
+	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct,OnDirectionChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Keymap) dlg; _keymap.onDirectionChangedListeners )
-		{
-			dlg(_keymap);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDirectionChangedDestroy(OnDirectionChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDirectionChanged(wrapper);
 	}
 
-	void delegate(Keymap)[] onKeysChangedListeners;
+	protected void internalRemoveOnDirectionChanged(OnDirectionChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDirectionChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDirectionChangedListeners[index] = null;
+				onDirectionChangedListeners = std.algorithm.remove(onDirectionChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnKeysChangedDelegateWrapper
+	{
+		void delegate(Keymap) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Keymap) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnKeysChangedDelegateWrapper[] onKeysChangedListeners;
+
 	/**
 	 * The ::keys-changed signal is emitted when the mapping represented by
 	 * @keymap changes.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnKeysChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnKeysChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "keys-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"keys-changed",
-				cast(GCallback)&callBackKeysChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["keys-changed"] = 1;
-		}
-		onKeysChangedListeners ~= dlg;
+		onKeysChangedListeners ~= new OnKeysChangedDelegateWrapper(dlg, 0, connectFlags);
+		onKeysChangedListeners[onKeysChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"keys-changed",
+			cast(GCallback)&callBackKeysChanged,
+			cast(void*)onKeysChangedListeners[onKeysChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackKeysChangedDestroy,
+			connectFlags);
+		return onKeysChangedListeners[onKeysChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap _keymap)
+	
+	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct,OnKeysChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Keymap) dlg; _keymap.onKeysChangedListeners )
-		{
-			dlg(_keymap);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackKeysChangedDestroy(OnKeysChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnKeysChanged(wrapper);
 	}
 
-	void delegate(Keymap)[] onStateChangedListeners;
+	protected void internalRemoveOnKeysChanged(OnKeysChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onKeysChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onKeysChangedListeners[index] = null;
+				onKeysChangedListeners = std.algorithm.remove(onKeysChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnStateChangedDelegateWrapper
+	{
+		void delegate(Keymap) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Keymap) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnStateChangedDelegateWrapper[] onStateChangedListeners;
+
 	/**
 	 * The ::state-changed signal is emitted when the state of the
 	 * keyboard changes, e.g when Caps Lock is turned on or off.
@@ -478,28 +544,42 @@ public class Keymap : ObjectG
 	 *
 	 * Since: 2.16
 	 */
-	void addOnStateChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnStateChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "state-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"state-changed",
-				cast(GCallback)&callBackStateChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["state-changed"] = 1;
-		}
-		onStateChangedListeners ~= dlg;
+		onStateChangedListeners ~= new OnStateChangedDelegateWrapper(dlg, 0, connectFlags);
+		onStateChangedListeners[onStateChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"state-changed",
+			cast(GCallback)&callBackStateChanged,
+			cast(void*)onStateChangedListeners[onStateChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackStateChangedDestroy,
+			connectFlags);
+		return onStateChangedListeners[onStateChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, Keymap _keymap)
+	
+	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct,OnStateChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Keymap) dlg; _keymap.onStateChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackStateChangedDestroy(OnStateChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnStateChanged(wrapper);
+	}
+
+	protected void internalRemoveOnStateChanged(OnStateChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onStateChangedListeners)
 		{
-			dlg(_keymap);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onStateChangedListeners[index] = null;
+				onStateChangedListeners = std.algorithm.remove(onStateChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 
 	/**
 	 * Obtains the upper- and lower-case versions of the keyval @symbol.

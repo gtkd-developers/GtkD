@@ -28,6 +28,7 @@ private import gobject.Signals;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /** */
@@ -104,20 +105,20 @@ public interface SourceUndoManagerIF{
 	 * Since: 2.10
 	 */
 	public void undo();
-	@property void delegate(SourceUndoManagerIF)[] onCanRedoChangedListeners();
 	/**
 	 * Emitted when the ability to redo has changed.
 	 *
 	 * Since: 2.10
 	 */
-	void addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(SourceUndoManagerIF)[] onCanUndoChangedListeners();
 	/**
 	 * Emitted when the ability to undo has changed.
 	 *
 	 * Since: 2.10
 	 */
-	void addOnCanUndoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnCanUndoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

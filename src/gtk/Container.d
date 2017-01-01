@@ -37,6 +37,7 @@ private import gtk.WidgetPath;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -819,105 +820,211 @@ public class Container : Widget
 		gtk_container_unset_focus_chain(gtkContainer);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAddDelegateWrapper
+	{
+		void delegate(Widget, Container) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, Container) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAddDelegateWrapper[] onAddListeners;
 
-	void delegate(Widget, Container)[] onAddListeners;
 	/** */
-	void addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "add" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"add",
-				cast(GCallback)&callBackAdd,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["add"] = 1;
-		}
-		onAddListeners ~= dlg;
+		onAddListeners ~= new OnAddDelegateWrapper(dlg, 0, connectFlags);
+		onAddListeners[onAddListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"add",
+			cast(GCallback)&callBackAdd,
+			cast(void*)onAddListeners[onAddListeners.length - 1],
+			cast(GClosureNotify)&callBackAddDestroy,
+			connectFlags);
+		return onAddListeners[onAddListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* object, Container _container)
+	
+	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* object,OnAddDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, Container) dlg; _container.onAddListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(object), _container);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
 	}
-
-	void delegate(Container)[] onCheckResizeListeners;
-	/** */
-	void addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	
+	extern(C) static void callBackAddDestroy(OnAddDelegateWrapper wrapper, GClosure* closure)
 	{
-		if ( "check-resize" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"check-resize",
-				cast(GCallback)&callBackCheckResize,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["check-resize"] = 1;
-		}
-		onCheckResizeListeners ~= dlg;
-	}
-	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, Container _container)
-	{
-		foreach ( void delegate(Container) dlg; _container.onCheckResizeListeners )
-		{
-			dlg(_container);
-		}
+		wrapper.outer.internalRemoveOnAdd(wrapper);
 	}
 
-	void delegate(Widget, Container)[] onRemoveListeners;
-	/** */
-	void addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected void internalRemoveOnAdd(OnAddDelegateWrapper source)
 	{
-		if ( "remove" !in connectedSignals )
+		foreach(index, wrapper; onAddListeners)
 		{
-			Signals.connectData(
-				this,
-				"remove",
-				cast(GCallback)&callBackRemove,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["remove"] = 1;
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAddListeners[index] = null;
+				onAddListeners = std.algorithm.remove(onAddListeners, index);
+				break;
+			}
 		}
-		onRemoveListeners ~= dlg;
 	}
-	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* object, Container _container)
+	
+
+	protected class OnCheckResizeDelegateWrapper
 	{
-		foreach ( void delegate(Widget, Container) dlg; _container.onRemoveListeners )
+		void delegate(Container) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Container) dlg, gulong handlerId, ConnectFlags flags)
 		{
-			dlg(ObjectG.getDObject!(Widget)(object), _container);
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
 		}
+	}
+	protected OnCheckResizeDelegateWrapper[] onCheckResizeListeners;
+
+	/** */
+	gulong addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onCheckResizeListeners ~= new OnCheckResizeDelegateWrapper(dlg, 0, connectFlags);
+		onCheckResizeListeners[onCheckResizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"check-resize",
+			cast(GCallback)&callBackCheckResize,
+			cast(void*)onCheckResizeListeners[onCheckResizeListeners.length - 1],
+			cast(GClosureNotify)&callBackCheckResizeDestroy,
+			connectFlags);
+		return onCheckResizeListeners[onCheckResizeListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static void callBackCheckResize(GtkContainer* containerStruct,OnCheckResizeDelegateWrapper wrapper)
+	{
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCheckResizeDestroy(OnCheckResizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCheckResize(wrapper);
 	}
 
-	void delegate(Widget, Container)[] onSetFocusChildListeners;
+	protected void internalRemoveOnCheckResize(OnCheckResizeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCheckResizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCheckResizeListeners[index] = null;
+				onCheckResizeListeners = std.algorithm.remove(onCheckResizeListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRemoveDelegateWrapper
+	{
+		void delegate(Widget, Container) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, Container) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRemoveDelegateWrapper[] onRemoveListeners;
+
 	/** */
-	void addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "set-focus-child" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"set-focus-child",
-				cast(GCallback)&callBackSetFocusChild,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["set-focus-child"] = 1;
-		}
-		onSetFocusChildListeners ~= dlg;
+		onRemoveListeners ~= new OnRemoveDelegateWrapper(dlg, 0, connectFlags);
+		onRemoveListeners[onRemoveListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"remove",
+			cast(GCallback)&callBackRemove,
+			cast(void*)onRemoveListeners[onRemoveListeners.length - 1],
+			cast(GClosureNotify)&callBackRemoveDestroy,
+			connectFlags);
+		return onRemoveListeners[onRemoveListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* object, Container _container)
+	
+	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* object,OnRemoveDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, Container) dlg; _container.onSetFocusChildListeners )
+		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRemoveDestroy(OnRemoveDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRemove(wrapper);
+	}
+
+	protected void internalRemoveOnRemove(OnRemoveDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRemoveListeners)
 		{
-			dlg(ObjectG.getDObject!(Widget)(object), _container);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRemoveListeners[index] = null;
+				onRemoveListeners = std.algorithm.remove(onRemoveListeners, index);
+				break;
+			}
 		}
 	}
+	
+
+	protected class OnSetFocusChildDelegateWrapper
+	{
+		void delegate(Widget, Container) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, Container) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSetFocusChildDelegateWrapper[] onSetFocusChildListeners;
+
+	/** */
+	gulong addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onSetFocusChildListeners ~= new OnSetFocusChildDelegateWrapper(dlg, 0, connectFlags);
+		onSetFocusChildListeners[onSetFocusChildListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"set-focus-child",
+			cast(GCallback)&callBackSetFocusChild,
+			cast(void*)onSetFocusChildListeners[onSetFocusChildListeners.length - 1],
+			cast(GClosureNotify)&callBackSetFocusChildDestroy,
+			connectFlags);
+		return onSetFocusChildListeners[onSetFocusChildListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* object,OnSetFocusChildDelegateWrapper wrapper)
+	{
+		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
+	}
+	
+	extern(C) static void callBackSetFocusChildDestroy(OnSetFocusChildDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSetFocusChild(wrapper);
+	}
+
+	protected void internalRemoveOnSetFocusChild(OnSetFocusChildDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSetFocusChildListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSetFocusChildListeners[index] = null;
+				onSetFocusChildListeners = std.algorithm.remove(onSetFocusChildListeners, index);
+				break;
+			}
+		}
+	}
+	
 }

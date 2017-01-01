@@ -231,9 +231,21 @@ public class ObjectG
 		return obj.doref();
 	}
 	
-	int[string] connectedSignals;
 	
-	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
+	protected class OnNotifyDelegateWrapper
+	{
+		void delegate(ParamSpec, ObjectG) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ParamSpec, ObjectG) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnNotifyDelegateWrapper[] onNotifyListeners;
+	
 	/**
 	 * The notify signal is emitted on an object when one of its
 	 * properties has been changed. Note that getting this signal
@@ -252,7 +264,7 @@ public class ObjectG
 	 *     property     = Set this if you only want to receive the signal for a specific property.
 	 *     connectFlags = The behavior of the signal's connection.
 	 */
-	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		string signalName;
 		
@@ -261,24 +273,37 @@ public class ObjectG
 		else
 			signalName = "notify::"~ property;
 		
-		if ( !(signalName in connectedSignals) )
-		{
-			Signals.connectData(
-				this,
-				signalName,
-				cast(GCallback)&callBackNotify,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals[signalName] = 1;
-		}
-		onNotifyListeners ~= dlg;
+		onNotifyListeners ~= new OnNotifyDelegateWrapper(dlg, 0, connectFlags);
+		onNotifyListeners[onNotifyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			signalName,
+			cast(GCallback)&callBackNotify,
+			cast(void*)onNotifyListeners[onNotifyListeners.length - 1],
+			cast(GClosureNotify)&callBackNotifyDestroy,
+			connectFlags);
+		return onNotifyListeners[onNotifyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* pspec, ObjectG _objectG)
+	
+	extern(C) static void callBackNotify(GObject* objectgStruct, GParamSpec* pspec,OnNotifyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ParamSpec, ObjectG) dlg ; _objectG.onNotifyListeners )
+		wrapper.dlg(ObjectG.getDObject!(ParamSpec)(pspec), wrapper.outer);
+	}
+	
+	extern(C) static void callBackNotifyDestroy(OnNotifyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnNotify(wrapper);
+	}
+	
+	protected void internalRemoveOnNotify(OnNotifyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onNotifyListeners)
 		{
-			dlg(ObjectG.getDObject!(ParamSpec)(pspec), _objectG);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onNotifyListeners[index] = null;
+				onNotifyListeners = std.algorithm.remove(onNotifyListeners, index);
+				break;
+			}
 		}
 	}
 

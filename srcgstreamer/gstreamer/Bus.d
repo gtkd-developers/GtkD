@@ -33,6 +33,7 @@ private import gstreamer.ObjectGst;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -624,9 +625,20 @@ public class Bus : ObjectGst
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
-	int[string] connectedSignals;
+	protected class OnMessageDelegateWrapper
+	{
+		void delegate(Message, Bus) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Message, Bus) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMessageDelegateWrapper[] onMessageListeners;
 
-	void delegate(Message, Bus)[] onMessageListeners;
 	/**
 	 * A message has been posted on the bus. This signal is emitted from a
 	 * GSource added to the mainloop. this signal will only be emitted when
@@ -635,30 +647,57 @@ public class Bus : ObjectGst
 	 * Params:
 	 *     message = the message that has been posted asynchronously
 	 */
-	void addOnMessage(void delegate(Message, Bus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMessage(void delegate(Message, Bus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "message" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"message",
-				cast(GCallback)&callBackMessage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["message"] = 1;
-		}
-		onMessageListeners ~= dlg;
+		onMessageListeners ~= new OnMessageDelegateWrapper(dlg, 0, connectFlags);
+		onMessageListeners[onMessageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"message",
+			cast(GCallback)&callBackMessage,
+			cast(void*)onMessageListeners[onMessageListeners.length - 1],
+			cast(GClosureNotify)&callBackMessageDestroy,
+			connectFlags);
+		return onMessageListeners[onMessageListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message, Bus _bus)
+	
+	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message,OnMessageDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Message, Bus) dlg; _bus.onMessageListeners )
-		{
-			dlg(ObjectG.getDObject!(Message)(message), _bus);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Message)(message), wrapper.outer);
+	}
+	
+	extern(C) static void callBackMessageDestroy(OnMessageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMessage(wrapper);
 	}
 
-	void delegate(Message, Bus)[] onSyncMessageListeners;
+	protected void internalRemoveOnMessage(OnMessageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMessageListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMessageListeners[index] = null;
+				onMessageListeners = std.algorithm.remove(onMessageListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSyncMessageDelegateWrapper
+	{
+		void delegate(Message, Bus) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Message, Bus) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSyncMessageDelegateWrapper[] onSyncMessageListeners;
+
 	/**
 	 * A message has been posted on the bus. This signal is emitted from the
 	 * thread that posted the message so one has to be careful with locking.
@@ -669,26 +708,40 @@ public class Bus : ObjectGst
 	 * Params:
 	 *     message = the message that has been posted synchronously
 	 */
-	void addOnSyncMessage(void delegate(Message, Bus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSyncMessage(void delegate(Message, Bus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "sync-message" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"sync-message",
-				cast(GCallback)&callBackSyncMessage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["sync-message"] = 1;
-		}
-		onSyncMessageListeners ~= dlg;
+		onSyncMessageListeners ~= new OnSyncMessageDelegateWrapper(dlg, 0, connectFlags);
+		onSyncMessageListeners[onSyncMessageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"sync-message",
+			cast(GCallback)&callBackSyncMessage,
+			cast(void*)onSyncMessageListeners[onSyncMessageListeners.length - 1],
+			cast(GClosureNotify)&callBackSyncMessageDestroy,
+			connectFlags);
+		return onSyncMessageListeners[onSyncMessageListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message, Bus _bus)
+	
+	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message,OnSyncMessageDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Message, Bus) dlg; _bus.onSyncMessageListeners )
+		wrapper.dlg(ObjectG.getDObject!(Message)(message), wrapper.outer);
+	}
+	
+	extern(C) static void callBackSyncMessageDestroy(OnSyncMessageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSyncMessage(wrapper);
+	}
+
+	protected void internalRemoveOnSyncMessage(OnSyncMessageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSyncMessageListeners)
 		{
-			dlg(ObjectG.getDObject!(Message)(message), _bus);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSyncMessageListeners[index] = null;
+				onSyncMessageListeners = std.algorithm.remove(onSyncMessageListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

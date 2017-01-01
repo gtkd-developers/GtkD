@@ -39,6 +39,7 @@ private import peas.Engine;
 private import peas.PluginInfo;
 private import peasc.peas;
 public  import peasc.peastypes;
+private import std.algorithm;
 
 
 /**
@@ -161,9 +162,20 @@ public class PluginManagerView : TreeView
 		peas_gtk_plugin_manager_view_set_show_builtin(peasGtkPluginManagerView, showBuiltin);
 	}
 
-	int[string] connectedSignals;
+	protected class OnPopulatePopupDelegateWrapper
+	{
+		void delegate(Menu, PluginManagerView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Menu, PluginManagerView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
-	void delegate(Menu, PluginManagerView)[] onPopulatePopupListeners;
 	/**
 	 * The ::populate-popup signal is emitted before showing the context
 	 * menu of the view. If you need to add items to the context menu,
@@ -172,26 +184,40 @@ public class PluginManagerView : TreeView
 	 * Params:
 	 *     menu = A #GtkMenu.
 	 */
-	void addOnPopulatePopup(void delegate(Menu, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopulatePopup(void delegate(Menu, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "populate-popup" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"populate-popup",
-				cast(GCallback)&callBackPopulatePopup,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["populate-popup"] = 1;
-		}
-		onPopulatePopupListeners ~= dlg;
+		onPopulatePopupListeners ~= new OnPopulatePopupDelegateWrapper(dlg, 0, connectFlags);
+		onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"populate-popup",
+			cast(GCallback)&callBackPopulatePopup,
+			cast(void*)onPopulatePopupListeners[onPopulatePopupListeners.length - 1],
+			cast(GClosureNotify)&callBackPopulatePopupDestroy,
+			connectFlags);
+		return onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPopulatePopup(PeasGtkPluginManagerView* pluginmanagerviewStruct, GtkMenu* menu, PluginManagerView _pluginmanagerview)
+	
+	extern(C) static void callBackPopulatePopup(PeasGtkPluginManagerView* pluginmanagerviewStruct, GtkMenu* menu,OnPopulatePopupDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Menu, PluginManagerView) dlg; _pluginmanagerview.onPopulatePopupListeners )
+		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopulatePopup(wrapper);
+	}
+
+	protected void internalRemoveOnPopulatePopup(OnPopulatePopupDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopulatePopupListeners)
 		{
-			dlg(ObjectG.getDObject!(Menu)(menu), _pluginmanagerview);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopulatePopupListeners[index] = null;
+				onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

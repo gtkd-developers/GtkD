@@ -36,6 +36,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -602,59 +603,124 @@ public class ListBox : Container
 		gtk_list_box_unselect_row(gtkListBox, (row is null) ? null : row.getListBoxRowStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateCursorRowDelegateWrapper
+	{
+		void delegate(ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateCursorRowDelegateWrapper[] onActivateCursorRowListeners;
 
-	void delegate(ListBox)[] onActivateCursorRowListeners;
 	/** */
-	void addOnActivateCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivateCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate-cursor-row" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate-cursor-row",
-				cast(GCallback)&callBackActivateCursorRow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate-cursor-row"] = 1;
-		}
-		onActivateCursorRowListeners ~= dlg;
+		onActivateCursorRowListeners ~= new OnActivateCursorRowDelegateWrapper(dlg, 0, connectFlags);
+		onActivateCursorRowListeners[onActivateCursorRowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate-cursor-row",
+			cast(GCallback)&callBackActivateCursorRow,
+			cast(void*)onActivateCursorRowListeners[onActivateCursorRowListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateCursorRowDestroy,
+			connectFlags);
+		return onActivateCursorRowListeners[onActivateCursorRowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivateCursorRow(GtkListBox* listboxStruct, ListBox _listbox)
+	
+	extern(C) static void callBackActivateCursorRow(GtkListBox* listboxStruct,OnActivateCursorRowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBox) dlg; _listbox.onActivateCursorRowListeners )
-		{
-			dlg(_listbox);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateCursorRowDestroy(OnActivateCursorRowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivateCursorRow(wrapper);
 	}
 
-	void delegate(GtkMovementStep, int, ListBox)[] onMoveCursorListeners;
+	protected void internalRemoveOnActivateCursorRow(OnActivateCursorRowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateCursorRowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateCursorRowListeners[index] = null;
+				onActivateCursorRowListeners = std.algorithm.remove(onActivateCursorRowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveCursorDelegateWrapper
+	{
+		void delegate(GtkMovementStep, int, ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkMovementStep, int, ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
+
 	/** */
-	void addOnMoveCursor(void delegate(GtkMovementStep, int, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-cursor",
-				cast(GCallback)&callBackMoveCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-cursor"] = 1;
-		}
-		onMoveCursorListeners ~= dlg;
+		onMoveCursorListeners ~= new OnMoveCursorDelegateWrapper(dlg, 0, connectFlags);
+		onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-cursor",
+			cast(GCallback)&callBackMoveCursor,
+			cast(void*)onMoveCursorListeners[onMoveCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveCursorDestroy,
+			connectFlags);
+		return onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveCursor(GtkListBox* listboxStruct, GtkMovementStep object, int p0, ListBox _listbox)
+	
+	extern(C) static void callBackMoveCursor(GtkListBox* listboxStruct, GtkMovementStep object, int p0,OnMoveCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkMovementStep, int, ListBox) dlg; _listbox.onMoveCursorListeners )
-		{
-			dlg(object, p0, _listbox);
-		}
+		wrapper.dlg(object, p0, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveCursor(wrapper);
 	}
 
-	void delegate(ListBoxRow, ListBox)[] onRowActivatedListeners;
+	protected void internalRemoveOnMoveCursor(OnMoveCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveCursorListeners[index] = null;
+				onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRowActivatedDelegateWrapper
+	{
+		void delegate(ListBoxRow, ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBoxRow, ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRowActivatedDelegateWrapper[] onRowActivatedListeners;
+
 	/**
 	 * The ::row-activated signal is emitted when a row has been activated by the user.
 	 *
@@ -663,30 +729,57 @@ public class ListBox : Container
 	 *
 	 * Since: 3.10
 	 */
-	void addOnRowActivated(void delegate(ListBoxRow, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowActivated(void delegate(ListBoxRow, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "row-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"row-activated",
-				cast(GCallback)&callBackRowActivated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["row-activated"] = 1;
-		}
-		onRowActivatedListeners ~= dlg;
+		onRowActivatedListeners ~= new OnRowActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onRowActivatedListeners[onRowActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"row-activated",
+			cast(GCallback)&callBackRowActivated,
+			cast(void*)onRowActivatedListeners[onRowActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackRowActivatedDestroy,
+			connectFlags);
+		return onRowActivatedListeners[onRowActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowActivated(GtkListBox* listboxStruct, GtkListBoxRow* row, ListBox _listbox)
+	
+	extern(C) static void callBackRowActivated(GtkListBox* listboxStruct, GtkListBoxRow* row,OnRowActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBoxRow, ListBox) dlg; _listbox.onRowActivatedListeners )
-		{
-			dlg(ObjectG.getDObject!(ListBoxRow)(row), _listbox);
-		}
+		wrapper.dlg(ObjectG.getDObject!(ListBoxRow)(row), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowActivatedDestroy(OnRowActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowActivated(wrapper);
 	}
 
-	void delegate(ListBoxRow, ListBox)[] onRowSelectedListeners;
+	protected void internalRemoveOnRowActivated(OnRowActivatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRowActivatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowActivatedListeners[index] = null;
+				onRowActivatedListeners = std.algorithm.remove(onRowActivatedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRowSelectedDelegateWrapper
+	{
+		void delegate(ListBoxRow, ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBoxRow, ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRowSelectedDelegateWrapper[] onRowSelectedListeners;
+
 	/**
 	 * The ::row-selected signal is emitted when a new row is selected, or
 	 * (with a %NULL @row) when the selection is cleared.
@@ -700,30 +793,57 @@ public class ListBox : Container
 	 *
 	 * Since: 3.10
 	 */
-	void addOnRowSelected(void delegate(ListBoxRow, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowSelected(void delegate(ListBoxRow, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "row-selected" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"row-selected",
-				cast(GCallback)&callBackRowSelected,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["row-selected"] = 1;
-		}
-		onRowSelectedListeners ~= dlg;
+		onRowSelectedListeners ~= new OnRowSelectedDelegateWrapper(dlg, 0, connectFlags);
+		onRowSelectedListeners[onRowSelectedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"row-selected",
+			cast(GCallback)&callBackRowSelected,
+			cast(void*)onRowSelectedListeners[onRowSelectedListeners.length - 1],
+			cast(GClosureNotify)&callBackRowSelectedDestroy,
+			connectFlags);
+		return onRowSelectedListeners[onRowSelectedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowSelected(GtkListBox* listboxStruct, GtkListBoxRow* row, ListBox _listbox)
+	
+	extern(C) static void callBackRowSelected(GtkListBox* listboxStruct, GtkListBoxRow* row,OnRowSelectedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBoxRow, ListBox) dlg; _listbox.onRowSelectedListeners )
-		{
-			dlg(ObjectG.getDObject!(ListBoxRow)(row), _listbox);
-		}
+		wrapper.dlg(ObjectG.getDObject!(ListBoxRow)(row), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowSelectedDestroy(OnRowSelectedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowSelected(wrapper);
 	}
 
-	void delegate(ListBox)[] onSelectAllListeners;
+	protected void internalRemoveOnRowSelected(OnRowSelectedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRowSelectedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowSelectedListeners[index] = null;
+				onRowSelectedListeners = std.algorithm.remove(onRowSelectedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectAllDelegateWrapper
+	{
+		void delegate(ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectAllDelegateWrapper[] onSelectAllListeners;
+
 	/**
 	 * The ::select-all signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted to select all children of the box, if the selection
@@ -733,85 +853,166 @@ public class ListBox : Container
 	 *
 	 * Since: 3.14
 	 */
-	void addOnSelectAll(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectAll(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "select-all" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"select-all",
-				cast(GCallback)&callBackSelectAll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["select-all"] = 1;
-		}
-		onSelectAllListeners ~= dlg;
+		onSelectAllListeners ~= new OnSelectAllDelegateWrapper(dlg, 0, connectFlags);
+		onSelectAllListeners[onSelectAllListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"select-all",
+			cast(GCallback)&callBackSelectAll,
+			cast(void*)onSelectAllListeners[onSelectAllListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectAllDestroy,
+			connectFlags);
+		return onSelectAllListeners[onSelectAllListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectAll(GtkListBox* listboxStruct, ListBox _listbox)
+	
+	extern(C) static void callBackSelectAll(GtkListBox* listboxStruct,OnSelectAllDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBox) dlg; _listbox.onSelectAllListeners )
-		{
-			dlg(_listbox);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectAll(wrapper);
 	}
 
-	void delegate(ListBox)[] onSelectedRowsChangedListeners;
+	protected void internalRemoveOnSelectAll(OnSelectAllDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectAllListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectAllListeners[index] = null;
+				onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectedRowsChangedDelegateWrapper
+	{
+		void delegate(ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectedRowsChangedDelegateWrapper[] onSelectedRowsChangedListeners;
+
 	/**
 	 * The ::selected-rows-changed signal is emitted when the
 	 * set of selected rows changes.
 	 *
 	 * Since: 3.14
 	 */
-	void addOnSelectedRowsChanged(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectedRowsChanged(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "selected-rows-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"selected-rows-changed",
-				cast(GCallback)&callBackSelectedRowsChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["selected-rows-changed"] = 1;
-		}
-		onSelectedRowsChangedListeners ~= dlg;
+		onSelectedRowsChangedListeners ~= new OnSelectedRowsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSelectedRowsChangedListeners[onSelectedRowsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"selected-rows-changed",
+			cast(GCallback)&callBackSelectedRowsChanged,
+			cast(void*)onSelectedRowsChangedListeners[onSelectedRowsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectedRowsChangedDestroy,
+			connectFlags);
+		return onSelectedRowsChangedListeners[onSelectedRowsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectedRowsChanged(GtkListBox* listboxStruct, ListBox _listbox)
+	
+	extern(C) static void callBackSelectedRowsChanged(GtkListBox* listboxStruct,OnSelectedRowsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBox) dlg; _listbox.onSelectedRowsChangedListeners )
-		{
-			dlg(_listbox);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectedRowsChangedDestroy(OnSelectedRowsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectedRowsChanged(wrapper);
 	}
 
-	void delegate(ListBox)[] onToggleCursorRowListeners;
+	protected void internalRemoveOnSelectedRowsChanged(OnSelectedRowsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectedRowsChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectedRowsChangedListeners[index] = null;
+				onSelectedRowsChangedListeners = std.algorithm.remove(onSelectedRowsChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleCursorRowDelegateWrapper
+	{
+		void delegate(ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleCursorRowDelegateWrapper[] onToggleCursorRowListeners;
+
 	/** */
-	void addOnToggleCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-cursor-row" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-cursor-row",
-				cast(GCallback)&callBackToggleCursorRow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-cursor-row"] = 1;
-		}
-		onToggleCursorRowListeners ~= dlg;
+		onToggleCursorRowListeners ~= new OnToggleCursorRowDelegateWrapper(dlg, 0, connectFlags);
+		onToggleCursorRowListeners[onToggleCursorRowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-cursor-row",
+			cast(GCallback)&callBackToggleCursorRow,
+			cast(void*)onToggleCursorRowListeners[onToggleCursorRowListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleCursorRowDestroy,
+			connectFlags);
+		return onToggleCursorRowListeners[onToggleCursorRowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggleCursorRow(GtkListBox* listboxStruct, ListBox _listbox)
+	
+	extern(C) static void callBackToggleCursorRow(GtkListBox* listboxStruct,OnToggleCursorRowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBox) dlg; _listbox.onToggleCursorRowListeners )
-		{
-			dlg(_listbox);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleCursorRowDestroy(OnToggleCursorRowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleCursorRow(wrapper);
 	}
 
-	void delegate(ListBox)[] onUnselectAllListeners;
+	protected void internalRemoveOnToggleCursorRow(OnToggleCursorRowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleCursorRowListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleCursorRowListeners[index] = null;
+				onToggleCursorRowListeners = std.algorithm.remove(onToggleCursorRowListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnUnselectAllDelegateWrapper
+	{
+		void delegate(ListBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ListBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
+
 	/**
 	 * The ::unselect-all signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted to unselect all children of the box, if the selection
@@ -821,26 +1022,40 @@ public class ListBox : Container
 	 *
 	 * Since: 3.14
 	 */
-	void addOnUnselectAll(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnUnselectAll(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "unselect-all" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"unselect-all",
-				cast(GCallback)&callBackUnselectAll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["unselect-all"] = 1;
-		}
-		onUnselectAllListeners ~= dlg;
+		onUnselectAllListeners ~= new OnUnselectAllDelegateWrapper(dlg, 0, connectFlags);
+		onUnselectAllListeners[onUnselectAllListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"unselect-all",
+			cast(GCallback)&callBackUnselectAll,
+			cast(void*)onUnselectAllListeners[onUnselectAllListeners.length - 1],
+			cast(GClosureNotify)&callBackUnselectAllDestroy,
+			connectFlags);
+		return onUnselectAllListeners[onUnselectAllListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackUnselectAll(GtkListBox* listboxStruct, ListBox _listbox)
+	
+	extern(C) static void callBackUnselectAll(GtkListBox* listboxStruct,OnUnselectAllDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ListBox) dlg; _listbox.onUnselectAllListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnUnselectAll(wrapper);
+	}
+
+	protected void internalRemoveOnUnselectAll(OnUnselectAllDelegateWrapper source)
+	{
+		foreach(index, wrapper; onUnselectAllListeners)
 		{
-			dlg(_listbox);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onUnselectAllListeners[index] = null;
+				onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

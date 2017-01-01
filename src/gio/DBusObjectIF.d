@@ -33,6 +33,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -82,7 +83,6 @@ public interface DBusObjectIF{
 	 * Since: 2.30
 	 */
 	public string getObjectPath();
-	@property void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceAddedListeners();
 	/**
 	 * Emitted when @interface is added to @object.
 	 *
@@ -91,9 +91,9 @@ public interface DBusObjectIF{
 	 *
 	 * Since: 2.30
 	 */
-	void addOnInterfaceAdded(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnInterfaceAdded(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DBusInterfaceIF, DBusObjectIF)[] onInterfaceRemovedListeners();
 	/**
 	 * Emitted when @interface is removed from @object.
 	 *
@@ -102,6 +102,7 @@ public interface DBusObjectIF{
 	 *
 	 * Since: 2.30
 	 */
-	void addOnInterfaceRemoved(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnInterfaceRemoved(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

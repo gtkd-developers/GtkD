@@ -35,6 +35,7 @@ public  import gtk.TreePath;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
+public  import std.algorithm;
 
 
 /**
@@ -784,13 +785,20 @@ public template TreeModelT(TStruct)
 		gtk_tree_model_unref_node(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowChangedListeners;
-	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners()
+	protected class OnRowChangedDelegateWrapper
 	{
-		return _onRowChangedListeners;
+		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnRowChangedDelegateWrapper[] onRowChangedListeners;
+
 	/**
 	 * This signal is emitted when a row in the model has changed.
 	 *
@@ -798,34 +806,57 @@ public template TreeModelT(TStruct)
 	 *     path = a #GtkTreePath-struct identifying the changed row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the changed row
 	 */
-	void addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "row-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"row-changed",
-				cast(GCallback)&callBackRowChanged,
-				cast(void*)cast(TreeModelIF)this,
-				null,
-				connectFlags);
-			connectedSignals["row-changed"] = 1;
-		}
-		_onRowChangedListeners ~= dlg;
+		onRowChangedListeners ~= new OnRowChangedDelegateWrapper(dlg, 0, connectFlags);
+		onRowChangedListeners[onRowChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"row-changed",
+			cast(GCallback)&callBackRowChanged,
+			cast(void*)onRowChangedListeners[onRowChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackRowChangedDestroy,
+			connectFlags);
+		return onRowChangedListeners[onRowChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowChanged(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF _treemodel)
+	
+	extern(C) static void callBackRowChanged(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter,OnRowChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg; _treemodel.onRowChangedListeners )
-		{
-			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), _treemodel);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowChangedDestroy(OnRowChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowChanged(wrapper);
 	}
 
-	void delegate(TreePath, TreeModelIF)[] _onRowDeletedListeners;
-	@property void delegate(TreePath, TreeModelIF)[] onRowDeletedListeners()
+	protected void internalRemoveOnRowChanged(OnRowChangedDelegateWrapper source)
 	{
-		return _onRowDeletedListeners;
+		foreach(index, wrapper; onRowChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowChangedListeners[index] = null;
+				onRowChangedListeners = std.algorithm.remove(onRowChangedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRowDeletedDelegateWrapper
+	{
+		void delegate(TreePath, TreeModelIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreePath, TreeModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRowDeletedDelegateWrapper[] onRowDeletedListeners;
+
 	/**
 	 * This signal is emitted when a row has been deleted.
 	 *
@@ -839,34 +870,57 @@ public template TreeModelT(TStruct)
 	 * Params:
 	 *     path = a #GtkTreePath-struct identifying the row
 	 */
-	void addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "row-deleted" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"row-deleted",
-				cast(GCallback)&callBackRowDeleted,
-				cast(void*)cast(TreeModelIF)this,
-				null,
-				connectFlags);
-			connectedSignals["row-deleted"] = 1;
-		}
-		_onRowDeletedListeners ~= dlg;
+		onRowDeletedListeners ~= new OnRowDeletedDelegateWrapper(dlg, 0, connectFlags);
+		onRowDeletedListeners[onRowDeletedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"row-deleted",
+			cast(GCallback)&callBackRowDeleted,
+			cast(void*)onRowDeletedListeners[onRowDeletedListeners.length - 1],
+			cast(GClosureNotify)&callBackRowDeletedDestroy,
+			connectFlags);
+		return onRowDeletedListeners[onRowDeletedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowDeleted(GtkTreeModel* treemodelStruct, GtkTreePath* path, TreeModelIF _treemodel)
+	
+	extern(C) static void callBackRowDeleted(GtkTreeModel* treemodelStruct, GtkTreePath* path,OnRowDeletedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreePath, TreeModelIF) dlg; _treemodel.onRowDeletedListeners )
-		{
-			dlg(ObjectG.getDObject!(TreePath)(path), _treemodel);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowDeletedDestroy(OnRowDeletedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowDeleted(wrapper);
 	}
 
-	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowHasChildToggledListeners;
-	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners()
+	protected void internalRemoveOnRowDeleted(OnRowDeletedDelegateWrapper source)
 	{
-		return _onRowHasChildToggledListeners;
+		foreach(index, wrapper; onRowDeletedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowDeletedListeners[index] = null;
+				onRowDeletedListeners = std.algorithm.remove(onRowDeletedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRowHasChildToggledDelegateWrapper
+	{
+		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRowHasChildToggledDelegateWrapper[] onRowHasChildToggledListeners;
+
 	/**
 	 * This signal is emitted when a row has gotten the first child
 	 * row or lost its last child row.
@@ -875,34 +929,57 @@ public template TreeModelT(TStruct)
 	 *     path = a #GtkTreePath-struct identifying the row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the row
 	 */
-	void addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "row-has-child-toggled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"row-has-child-toggled",
-				cast(GCallback)&callBackRowHasChildToggled,
-				cast(void*)cast(TreeModelIF)this,
-				null,
-				connectFlags);
-			connectedSignals["row-has-child-toggled"] = 1;
-		}
-		_onRowHasChildToggledListeners ~= dlg;
+		onRowHasChildToggledListeners ~= new OnRowHasChildToggledDelegateWrapper(dlg, 0, connectFlags);
+		onRowHasChildToggledListeners[onRowHasChildToggledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"row-has-child-toggled",
+			cast(GCallback)&callBackRowHasChildToggled,
+			cast(void*)onRowHasChildToggledListeners[onRowHasChildToggledListeners.length - 1],
+			cast(GClosureNotify)&callBackRowHasChildToggledDestroy,
+			connectFlags);
+		return onRowHasChildToggledListeners[onRowHasChildToggledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF _treemodel)
+	
+	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter,OnRowHasChildToggledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg; _treemodel.onRowHasChildToggledListeners )
-		{
-			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), _treemodel);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowHasChildToggledDestroy(OnRowHasChildToggledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowHasChildToggled(wrapper);
 	}
 
-	void delegate(TreePath, TreeIter, TreeModelIF)[] _onRowInsertedListeners;
-	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowInsertedListeners()
+	protected void internalRemoveOnRowHasChildToggled(OnRowHasChildToggledDelegateWrapper source)
 	{
-		return _onRowInsertedListeners;
+		foreach(index, wrapper; onRowHasChildToggledListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowHasChildToggledListeners[index] = null;
+				onRowHasChildToggledListeners = std.algorithm.remove(onRowHasChildToggledListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRowInsertedDelegateWrapper
+	{
+		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRowInsertedDelegateWrapper[] onRowInsertedListeners;
+
 	/**
 	 * This signal is emitted when a new row has been inserted in
 	 * the model.
@@ -915,34 +992,57 @@ public template TreeModelT(TStruct)
 	 *     path = a #GtkTreePath-struct identifying the new row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the new row
 	 */
-	void addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "row-inserted" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"row-inserted",
-				cast(GCallback)&callBackRowInserted,
-				cast(void*)cast(TreeModelIF)this,
-				null,
-				connectFlags);
-			connectedSignals["row-inserted"] = 1;
-		}
-		_onRowInsertedListeners ~= dlg;
+		onRowInsertedListeners ~= new OnRowInsertedDelegateWrapper(dlg, 0, connectFlags);
+		onRowInsertedListeners[onRowInsertedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"row-inserted",
+			cast(GCallback)&callBackRowInserted,
+			cast(void*)onRowInsertedListeners[onRowInsertedListeners.length - 1],
+			cast(GClosureNotify)&callBackRowInsertedDestroy,
+			connectFlags);
+		return onRowInsertedListeners[onRowInsertedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowInserted(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModelIF _treemodel)
+	
+	extern(C) static void callBackRowInserted(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter,OnRowInsertedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreePath, TreeIter, TreeModelIF) dlg; _treemodel.onRowInsertedListeners )
-		{
-			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), _treemodel);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowInsertedDestroy(OnRowInsertedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowInserted(wrapper);
 	}
 
-	void delegate(TreePath, TreeIter, void*, TreeModelIF)[] _onRowsReorderedListeners;
-	@property void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners()
+	protected void internalRemoveOnRowInserted(OnRowInsertedDelegateWrapper source)
 	{
-		return _onRowsReorderedListeners;
+		foreach(index, wrapper; onRowInsertedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowInsertedListeners[index] = null;
+				onRowInsertedListeners = std.algorithm.remove(onRowInsertedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRowsReorderedDelegateWrapper
+	{
+		void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRowsReorderedDelegateWrapper[] onRowsReorderedListeners;
+
 	/**
 	 * This signal is emitted when the children of a node in the
 	 * #GtkTreeModel have been reordered.
@@ -960,26 +1060,40 @@ public template TreeModelT(TStruct)
 	 *         of each child to its old position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`
 	 */
-	void addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "rows-reordered" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"rows-reordered",
-				cast(GCallback)&callBackRowsReordered,
-				cast(void*)cast(TreeModelIF)this,
-				null,
-				connectFlags);
-			connectedSignals["rows-reordered"] = 1;
-		}
-		_onRowsReorderedListeners ~= dlg;
+		onRowsReorderedListeners ~= new OnRowsReorderedDelegateWrapper(dlg, 0, connectFlags);
+		onRowsReorderedListeners[onRowsReorderedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"rows-reordered",
+			cast(GCallback)&callBackRowsReordered,
+			cast(void*)onRowsReorderedListeners[onRowsReorderedListeners.length - 1],
+			cast(GClosureNotify)&callBackRowsReorderedDestroy,
+			connectFlags);
+		return onRowsReorderedListeners[onRowsReorderedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, void* newOrder, TreeModelIF _treemodel)
+	
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, void* newOrder,OnRowsReorderedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg; _treemodel.onRowsReorderedListeners )
+		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), newOrder, wrapper.outer);
+	}
+	
+	extern(C) static void callBackRowsReorderedDestroy(OnRowsReorderedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRowsReordered(wrapper);
+	}
+
+	protected void internalRemoveOnRowsReordered(OnRowsReorderedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRowsReorderedListeners)
 		{
-			dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), newOrder, _treemodel);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRowsReorderedListeners[index] = null;
+				onRowsReorderedListeners = std.algorithm.remove(onRowsReorderedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -35,6 +35,7 @@ private import gtk.TreePath;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -627,7 +628,6 @@ public interface TreeModelIF{
 	 *     iter = the #GtkTreeIter-struct
 	 */
 	public void unrefNode(TreeIter iter);
-	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowChangedListeners();
 	/**
 	 * This signal is emitted when a row in the model has changed.
 	 *
@@ -635,9 +635,9 @@ public interface TreeModelIF{
 	 *     path = a #GtkTreePath-struct identifying the changed row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the changed row
 	 */
-	void addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TreePath, TreeModelIF)[] onRowDeletedListeners();
 	/**
 	 * This signal is emitted when a row has been deleted.
 	 *
@@ -651,9 +651,9 @@ public interface TreeModelIF{
 	 * Params:
 	 *     path = a #GtkTreePath-struct identifying the row
 	 */
-	void addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowHasChildToggledListeners();
 	/**
 	 * This signal is emitted when a row has gotten the first child
 	 * row or lost its last child row.
@@ -662,9 +662,9 @@ public interface TreeModelIF{
 	 *     path = a #GtkTreePath-struct identifying the row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the row
 	 */
-	void addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TreePath, TreeIter, TreeModelIF)[] onRowInsertedListeners();
 	/**
 	 * This signal is emitted when a new row has been inserted in
 	 * the model.
@@ -677,9 +677,9 @@ public interface TreeModelIF{
 	 *     path = a #GtkTreePath-struct identifying the new row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the new row
 	 */
-	void addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TreePath, TreeIter, void*, TreeModelIF)[] onRowsReorderedListeners();
 	/**
 	 * This signal is emitted when the children of a node in the
 	 * #GtkTreeModel have been reordered.
@@ -697,6 +697,7 @@ public interface TreeModelIF{
 	 *         of each child to its old position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`
 	 */
-	void addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

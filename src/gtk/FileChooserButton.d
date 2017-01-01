@@ -36,6 +36,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -254,9 +255,20 @@ public class FileChooserButton : Box, FileChooserIF
 		gtk_file_chooser_button_set_width_chars(gtkFileChooserButton, nChars);
 	}
 
-	int[string] connectedSignals;
+	protected class OnFileSetDelegateWrapper
+	{
+		void delegate(FileChooserButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FileChooserButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFileSetDelegateWrapper[] onFileSetListeners;
 
-	void delegate(FileChooserButton)[] onFileSetListeners;
 	/**
 	 * The ::file-set signal is emitted when the user selects a file.
 	 *
@@ -265,26 +277,40 @@ public class FileChooserButton : Box, FileChooserIF
 	 *
 	 * Since: 2.12
 	 */
-	void addOnFileSet(void delegate(FileChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFileSet(void delegate(FileChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "file-set" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"file-set",
-				cast(GCallback)&callBackFileSet,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["file-set"] = 1;
-		}
-		onFileSetListeners ~= dlg;
+		onFileSetListeners ~= new OnFileSetDelegateWrapper(dlg, 0, connectFlags);
+		onFileSetListeners[onFileSetListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"file-set",
+			cast(GCallback)&callBackFileSet,
+			cast(void*)onFileSetListeners[onFileSetListeners.length - 1],
+			cast(GClosureNotify)&callBackFileSetDestroy,
+			connectFlags);
+		return onFileSetListeners[onFileSetListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, FileChooserButton _filechooserbutton)
+	
+	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct,OnFileSetDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FileChooserButton) dlg; _filechooserbutton.onFileSetListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackFileSetDestroy(OnFileSetDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFileSet(wrapper);
+	}
+
+	protected void internalRemoveOnFileSet(OnFileSetDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFileSetListeners)
 		{
-			dlg(_filechooserbutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFileSetListeners[index] = null;
+				onFileSetListeners = std.algorithm.remove(onFileSetListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -34,6 +34,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -216,32 +217,57 @@ public class Plug : Window
 		return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
 	}
 
-	int[string] connectedSignals;
+	protected class OnEmbeddedDelegateWrapper
+	{
+		void delegate(Plug) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Plug) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEmbeddedDelegateWrapper[] onEmbeddedListeners;
 
-	void delegate(Plug)[] onEmbeddedListeners;
 	/**
 	 * Gets emitted when the plug becomes embedded in a socket.
 	 */
-	void addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "embedded" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"embedded",
-				cast(GCallback)&callBackEmbedded,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["embedded"] = 1;
-		}
-		onEmbeddedListeners ~= dlg;
+		onEmbeddedListeners ~= new OnEmbeddedDelegateWrapper(dlg, 0, connectFlags);
+		onEmbeddedListeners[onEmbeddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"embedded",
+			cast(GCallback)&callBackEmbedded,
+			cast(void*)onEmbeddedListeners[onEmbeddedListeners.length - 1],
+			cast(GClosureNotify)&callBackEmbeddedDestroy,
+			connectFlags);
+		return onEmbeddedListeners[onEmbeddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug _plug)
+	
+	extern(C) static void callBackEmbedded(GtkPlug* plugStruct,OnEmbeddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Plug) dlg; _plug.onEmbeddedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEmbeddedDestroy(OnEmbeddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEmbedded(wrapper);
+	}
+
+	protected void internalRemoveOnEmbedded(OnEmbeddedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEmbeddedListeners)
 		{
-			dlg(_plug);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEmbeddedListeners[index] = null;
+				onEmbeddedListeners = std.algorithm.remove(onEmbeddedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

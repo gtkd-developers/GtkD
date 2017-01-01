@@ -46,6 +46,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -1225,9 +1226,20 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		gtk_icon_view_unset_model_drag_source(gtkIconView);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateCursorItemDelegateWrapper
+	{
+		bool delegate(IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateCursorItemDelegateWrapper[] onActivateCursorItemListeners;
 
-	bool delegate(IconView)[] onActivateCursorItemListeners;
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user activates the currently
@@ -1239,35 +1251,57 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *
 	 * The default bindings for this signal are Space, Return and Enter.
 	 */
-	void addOnActivateCursorItem(bool delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivateCursorItem(bool delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate-cursor-item" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate-cursor-item",
-				cast(GCallback)&callBackActivateCursorItem,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate-cursor-item"] = 1;
-		}
-		onActivateCursorItemListeners ~= dlg;
+		onActivateCursorItemListeners ~= new OnActivateCursorItemDelegateWrapper(dlg, 0, connectFlags);
+		onActivateCursorItemListeners[onActivateCursorItemListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate-cursor-item",
+			cast(GCallback)&callBackActivateCursorItem,
+			cast(void*)onActivateCursorItemListeners[onActivateCursorItemListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateCursorItemDestroy,
+			connectFlags);
+		return onActivateCursorItemListeners[onActivateCursorItemListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView _iconview)
+	
+	extern(C) static int callBackActivateCursorItem(GtkIconView* iconviewStruct,OnActivateCursorItemDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(IconView) dlg; _iconview.onActivateCursorItemListeners )
-		{
-			if ( dlg(_iconview) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateCursorItemDestroy(OnActivateCursorItemDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivateCursorItem(wrapper);
 	}
 
-	void delegate(TreePath, IconView)[] onItemActivatedListeners;
+	protected void internalRemoveOnActivateCursorItem(OnActivateCursorItemDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateCursorItemListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateCursorItemListeners[index] = null;
+				onActivateCursorItemListeners = std.algorithm.remove(onActivateCursorItemListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnItemActivatedDelegateWrapper
+	{
+		void delegate(TreePath, IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreePath, IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnItemActivatedDelegateWrapper[] onItemActivatedListeners;
+
 	/**
 	 * The ::item-activated signal is emitted when the method
 	 * gtk_icon_view_item_activated() is called, when the user double
@@ -1280,30 +1314,57 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     path = the #GtkTreePath for the activated item
 	 */
-	void addOnItemActivated(void delegate(TreePath, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnItemActivated(void delegate(TreePath, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "item-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"item-activated",
-				cast(GCallback)&callBackItemActivated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["item-activated"] = 1;
-		}
-		onItemActivatedListeners ~= dlg;
+		onItemActivatedListeners ~= new OnItemActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onItemActivatedListeners[onItemActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"item-activated",
+			cast(GCallback)&callBackItemActivated,
+			cast(void*)onItemActivatedListeners[onItemActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackItemActivatedDestroy,
+			connectFlags);
+		return onItemActivatedListeners[onItemActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, IconView _iconview)
+	
+	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path,OnItemActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreePath, IconView) dlg; _iconview.onItemActivatedListeners )
-		{
-			dlg(ObjectG.getDObject!(TreePath)(path), _iconview);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackItemActivatedDestroy(OnItemActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnItemActivated(wrapper);
 	}
 
-	bool delegate(GtkMovementStep, int, IconView)[] onMoveCursorListeners;
+	protected void internalRemoveOnItemActivated(OnItemActivatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onItemActivatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onItemActivatedListeners[index] = null;
+				onItemActivatedListeners = std.algorithm.remove(onItemActivatedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveCursorDelegateWrapper
+	{
+		bool delegate(GtkMovementStep, int, IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GtkMovementStep, int, IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
+
 	/**
 	 * The ::move-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1324,35 +1385,57 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     step = the granularity of the move, as a #GtkMovementStep
 	 *     count = the number of @step units to move
 	 */
-	void addOnMoveCursor(bool delegate(GtkMovementStep, int, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-cursor",
-				cast(GCallback)&callBackMoveCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-cursor"] = 1;
-		}
-		onMoveCursorListeners ~= dlg;
+		onMoveCursorListeners ~= new OnMoveCursorDelegateWrapper(dlg, 0, connectFlags);
+		onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-cursor",
+			cast(GCallback)&callBackMoveCursor,
+			cast(void*)onMoveCursorListeners[onMoveCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveCursorDestroy,
+			connectFlags);
+		return onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, int count, IconView _iconview)
+	
+	extern(C) static int callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, int count,OnMoveCursorDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GtkMovementStep, int, IconView) dlg; _iconview.onMoveCursorListeners )
-		{
-			if ( dlg(step, count, _iconview) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(step, count, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveCursor(wrapper);
 	}
 
-	void delegate(IconView)[] onSelectAllListeners;
+	protected void internalRemoveOnMoveCursor(OnMoveCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveCursorListeners[index] = null;
+				onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectAllDelegateWrapper
+	{
+		void delegate(IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectAllDelegateWrapper[] onSelectAllListeners;
+
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user selects all items.
@@ -1363,30 +1446,57 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *
 	 * The default binding for this signal is Ctrl-a.
 	 */
-	void addOnSelectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "select-all" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"select-all",
-				cast(GCallback)&callBackSelectAll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["select-all"] = 1;
-		}
-		onSelectAllListeners ~= dlg;
+		onSelectAllListeners ~= new OnSelectAllDelegateWrapper(dlg, 0, connectFlags);
+		onSelectAllListeners[onSelectAllListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"select-all",
+			cast(GCallback)&callBackSelectAll,
+			cast(void*)onSelectAllListeners[onSelectAllListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectAllDestroy,
+			connectFlags);
+		return onSelectAllListeners[onSelectAllListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView _iconview)
+	
+	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct,OnSelectAllDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(IconView) dlg; _iconview.onSelectAllListeners )
-		{
-			dlg(_iconview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectAll(wrapper);
 	}
 
-	void delegate(IconView)[] onSelectCursorItemListeners;
+	protected void internalRemoveOnSelectAll(OnSelectAllDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectAllListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectAllListeners[index] = null;
+				onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectCursorItemDelegateWrapper
+	{
+		void delegate(IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectCursorItemDelegateWrapper[] onSelectCursorItemListeners;
+
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user selects the item that is currently
@@ -1398,58 +1508,112 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *
 	 * There is no default binding for this signal.
 	 */
-	void addOnSelectCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "select-cursor-item" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"select-cursor-item",
-				cast(GCallback)&callBackSelectCursorItem,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["select-cursor-item"] = 1;
-		}
-		onSelectCursorItemListeners ~= dlg;
+		onSelectCursorItemListeners ~= new OnSelectCursorItemDelegateWrapper(dlg, 0, connectFlags);
+		onSelectCursorItemListeners[onSelectCursorItemListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"select-cursor-item",
+			cast(GCallback)&callBackSelectCursorItem,
+			cast(void*)onSelectCursorItemListeners[onSelectCursorItemListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectCursorItemDestroy,
+			connectFlags);
+		return onSelectCursorItemListeners[onSelectCursorItemListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView _iconview)
+	
+	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct,OnSelectCursorItemDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(IconView) dlg; _iconview.onSelectCursorItemListeners )
-		{
-			dlg(_iconview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectCursorItemDestroy(OnSelectCursorItemDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectCursorItem(wrapper);
 	}
 
-	void delegate(IconView)[] onSelectionChangedListeners;
+	protected void internalRemoveOnSelectCursorItem(OnSelectCursorItemDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectCursorItemListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectCursorItemListeners[index] = null;
+				onSelectCursorItemListeners = std.algorithm.remove(onSelectCursorItemListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectionChangedDelegateWrapper
+	{
+		void delegate(IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
+
 	/**
 	 * The ::selection-changed signal is emitted when the selection
 	 * (i.e. the set of selected items) changes.
 	 */
-	void addOnSelectionChanged(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectionChanged(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "selection-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"selection-changed",
-				cast(GCallback)&callBackSelectionChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["selection-changed"] = 1;
-		}
-		onSelectionChangedListeners ~= dlg;
+		onSelectionChangedListeners ~= new OnSelectionChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"selection-changed",
+			cast(GCallback)&callBackSelectionChanged,
+			cast(void*)onSelectionChangedListeners[onSelectionChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectionChangedDestroy,
+			connectFlags);
+		return onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView _iconview)
+	
+	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct,OnSelectionChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(IconView) dlg; _iconview.onSelectionChangedListeners )
-		{
-			dlg(_iconview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectionChanged(wrapper);
 	}
 
-	void delegate(IconView)[] onToggleCursorItemListeners;
+	protected void internalRemoveOnSelectionChanged(OnSelectionChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectionChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectionChangedListeners[index] = null;
+				onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleCursorItemDelegateWrapper
+	{
+		void delegate(IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleCursorItemDelegateWrapper[] onToggleCursorItemListeners;
+
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user toggles whether the currently
@@ -1462,30 +1626,57 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *
 	 * There is no default binding for this signal is Ctrl-Space.
 	 */
-	void addOnToggleCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-cursor-item" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-cursor-item",
-				cast(GCallback)&callBackToggleCursorItem,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-cursor-item"] = 1;
-		}
-		onToggleCursorItemListeners ~= dlg;
+		onToggleCursorItemListeners ~= new OnToggleCursorItemDelegateWrapper(dlg, 0, connectFlags);
+		onToggleCursorItemListeners[onToggleCursorItemListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-cursor-item",
+			cast(GCallback)&callBackToggleCursorItem,
+			cast(void*)onToggleCursorItemListeners[onToggleCursorItemListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleCursorItemDestroy,
+			connectFlags);
+		return onToggleCursorItemListeners[onToggleCursorItemListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView _iconview)
+	
+	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct,OnToggleCursorItemDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(IconView) dlg; _iconview.onToggleCursorItemListeners )
-		{
-			dlg(_iconview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleCursorItemDestroy(OnToggleCursorItemDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleCursorItem(wrapper);
 	}
 
-	void delegate(IconView)[] onUnselectAllListeners;
+	protected void internalRemoveOnToggleCursorItem(OnToggleCursorItemDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleCursorItemListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleCursorItemListeners[index] = null;
+				onToggleCursorItemListeners = std.algorithm.remove(onToggleCursorItemListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnUnselectAllDelegateWrapper
+	{
+		void delegate(IconView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(IconView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
+
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user unselects all items.
@@ -1496,26 +1687,40 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *
 	 * The default binding for this signal is Ctrl-Shift-a.
 	 */
-	void addOnUnselectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnUnselectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "unselect-all" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"unselect-all",
-				cast(GCallback)&callBackUnselectAll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["unselect-all"] = 1;
-		}
-		onUnselectAllListeners ~= dlg;
+		onUnselectAllListeners ~= new OnUnselectAllDelegateWrapper(dlg, 0, connectFlags);
+		onUnselectAllListeners[onUnselectAllListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"unselect-all",
+			cast(GCallback)&callBackUnselectAll,
+			cast(void*)onUnselectAllListeners[onUnselectAllListeners.length - 1],
+			cast(GClosureNotify)&callBackUnselectAllDestroy,
+			connectFlags);
+		return onUnselectAllListeners[onUnselectAllListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView _iconview)
+	
+	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct,OnUnselectAllDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(IconView) dlg; _iconview.onUnselectAllListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnUnselectAll(wrapper);
+	}
+
+	protected void internalRemoveOnUnselectAll(OnUnselectAllDelegateWrapper source)
+	{
+		foreach(index, wrapper; onUnselectAllListeners)
 		{
-			dlg(_iconview);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onUnselectAllListeners[index] = null;
+				onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

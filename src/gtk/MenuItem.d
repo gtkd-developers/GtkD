@@ -39,6 +39,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -482,161 +483,321 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		gtk_menu_item_toggle_size_request(gtkMenuItem, &requisition);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(MenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MenuItem) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(MenuItem)[] onActivateListeners;
 	/**
 	 * Emitted when the item is activated.
 	 */
-	void addOnActivate(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem _menuitem)
+	
+	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MenuItem) dlg; _menuitem.onActivateListeners )
-		{
-			dlg(_menuitem);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	void delegate(MenuItem)[] onActivateItemListeners;
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnActivateItemDelegateWrapper
+	{
+		void delegate(MenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MenuItem) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateItemDelegateWrapper[] onActivateItemListeners;
+
 	/**
 	 * Emitted when the item is activated, but also if the menu item has a
 	 * submenu. For normal applications, the relevant signal is
 	 * #GtkMenuItem::activate.
 	 */
-	void addOnActivateItem(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivateItem(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate-item" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate-item",
-				cast(GCallback)&callBackActivateItem,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate-item"] = 1;
-		}
-		onActivateItemListeners ~= dlg;
+		onActivateItemListeners ~= new OnActivateItemDelegateWrapper(dlg, 0, connectFlags);
+		onActivateItemListeners[onActivateItemListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate-item",
+			cast(GCallback)&callBackActivateItem,
+			cast(void*)onActivateItemListeners[onActivateItemListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateItemDestroy,
+			connectFlags);
+		return onActivateItemListeners[onActivateItemListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem _menuitem)
+	
+	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct,OnActivateItemDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MenuItem) dlg; _menuitem.onActivateItemListeners )
-		{
-			dlg(_menuitem);
-		}
+		wrapper.dlg(wrapper.outer);
 	}
-
-	void delegate(MenuItem)[] onDeselectListeners;
-	/** */
-	void addOnDeselect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	
+	extern(C) static void callBackActivateItemDestroy(OnActivateItemDelegateWrapper wrapper, GClosure* closure)
 	{
-		if ( "deselect" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"deselect",
-				cast(GCallback)&callBackDeselect,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["deselect"] = 1;
-		}
-		onDeselectListeners ~= dlg;
-	}
-	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct, MenuItem _menuitem)
-	{
-		foreach ( void delegate(MenuItem) dlg; _menuitem.onDeselectListeners )
-		{
-			dlg(_menuitem);
-		}
+		wrapper.outer.internalRemoveOnActivateItem(wrapper);
 	}
 
-	void delegate(MenuItem)[] onSelectListeners;
-	/** */
-	void addOnSelect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected void internalRemoveOnActivateItem(OnActivateItemDelegateWrapper source)
 	{
-		if ( "select" !in connectedSignals )
+		foreach(index, wrapper; onActivateItemListeners)
 		{
-			Signals.connectData(
-				this,
-				"select",
-				cast(GCallback)&callBackSelect,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["select"] = 1;
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateItemListeners[index] = null;
+				onActivateItemListeners = std.algorithm.remove(onActivateItemListeners, index);
+				break;
+			}
 		}
-		onSelectListeners ~= dlg;
 	}
-	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct, MenuItem _menuitem)
+	
+
+	protected class OnDeselectDelegateWrapper
 	{
-		foreach ( void delegate(MenuItem) dlg; _menuitem.onSelectListeners )
+		void delegate(MenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MenuItem) dlg, gulong handlerId, ConnectFlags flags)
 		{
-			dlg(_menuitem);
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
 		}
+	}
+	protected OnDeselectDelegateWrapper[] onDeselectListeners;
+
+	/** */
+	gulong addOnDeselect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onDeselectListeners ~= new OnDeselectDelegateWrapper(dlg, 0, connectFlags);
+		onDeselectListeners[onDeselectListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"deselect",
+			cast(GCallback)&callBackDeselect,
+			cast(void*)onDeselectListeners[onDeselectListeners.length - 1],
+			cast(GClosureNotify)&callBackDeselectDestroy,
+			connectFlags);
+		return onDeselectListeners[onDeselectListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct,OnDeselectDelegateWrapper wrapper)
+	{
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDeselectDestroy(OnDeselectDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDeselect(wrapper);
 	}
 
-	void delegate(int, MenuItem)[] onToggleSizeAllocateListeners;
-	/** */
-	void addOnToggleSizeAllocate(void delegate(int, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected void internalRemoveOnDeselect(OnDeselectDelegateWrapper source)
 	{
-		if ( "toggle-size-allocate" !in connectedSignals )
+		foreach(index, wrapper; onDeselectListeners)
 		{
-			Signals.connectData(
-				this,
-				"toggle-size-allocate",
-				cast(GCallback)&callBackToggleSizeAllocate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-size-allocate"] = 1;
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDeselectListeners[index] = null;
+				onDeselectListeners = std.algorithm.remove(onDeselectListeners, index);
+				break;
+			}
 		}
-		onToggleSizeAllocateListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, int object, MenuItem _menuitem)
+	
+
+	protected class OnSelectDelegateWrapper
 	{
-		foreach ( void delegate(int, MenuItem) dlg; _menuitem.onToggleSizeAllocateListeners )
+		void delegate(MenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MenuItem) dlg, gulong handlerId, ConnectFlags flags)
 		{
-			dlg(object, _menuitem);
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
 		}
+	}
+	protected OnSelectDelegateWrapper[] onSelectListeners;
+
+	/** */
+	gulong addOnSelect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onSelectListeners ~= new OnSelectDelegateWrapper(dlg, 0, connectFlags);
+		onSelectListeners[onSelectListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"select",
+			cast(GCallback)&callBackSelect,
+			cast(void*)onSelectListeners[onSelectListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectDestroy,
+			connectFlags);
+		return onSelectListeners[onSelectListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct,OnSelectDelegateWrapper wrapper)
+	{
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectDestroy(OnSelectDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelect(wrapper);
 	}
 
-	void delegate(void*, MenuItem)[] onToggleSizeRequestListeners;
+	protected void internalRemoveOnSelect(OnSelectDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectListeners[index] = null;
+				onSelectListeners = std.algorithm.remove(onSelectListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleSizeAllocateDelegateWrapper
+	{
+		void delegate(int, MenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, MenuItem) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleSizeAllocateDelegateWrapper[] onToggleSizeAllocateListeners;
+
 	/** */
-	void addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleSizeAllocate(void delegate(int, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-size-request" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-size-request",
-				cast(GCallback)&callBackToggleSizeRequest,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-size-request"] = 1;
-		}
-		onToggleSizeRequestListeners ~= dlg;
+		onToggleSizeAllocateListeners ~= new OnToggleSizeAllocateDelegateWrapper(dlg, 0, connectFlags);
+		onToggleSizeAllocateListeners[onToggleSizeAllocateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-size-allocate",
+			cast(GCallback)&callBackToggleSizeAllocate,
+			cast(void*)onToggleSizeAllocateListeners[onToggleSizeAllocateListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleSizeAllocateDestroy,
+			connectFlags);
+		return onToggleSizeAllocateListeners[onToggleSizeAllocateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, void* object, MenuItem _menuitem)
+	
+	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, int object,OnToggleSizeAllocateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(void*, MenuItem) dlg; _menuitem.onToggleSizeRequestListeners )
+		wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleSizeAllocateDestroy(OnToggleSizeAllocateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleSizeAllocate(wrapper);
+	}
+
+	protected void internalRemoveOnToggleSizeAllocate(OnToggleSizeAllocateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleSizeAllocateListeners)
 		{
-			dlg(object, _menuitem);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleSizeAllocateListeners[index] = null;
+				onToggleSizeAllocateListeners = std.algorithm.remove(onToggleSizeAllocateListeners, index);
+				break;
+			}
 		}
 	}
+	
+
+	protected class OnToggleSizeRequestDelegateWrapper
+	{
+		void delegate(void*, MenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(void*, MenuItem) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleSizeRequestDelegateWrapper[] onToggleSizeRequestListeners;
+
+	/** */
+	gulong addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onToggleSizeRequestListeners ~= new OnToggleSizeRequestDelegateWrapper(dlg, 0, connectFlags);
+		onToggleSizeRequestListeners[onToggleSizeRequestListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-size-request",
+			cast(GCallback)&callBackToggleSizeRequest,
+			cast(void*)onToggleSizeRequestListeners[onToggleSizeRequestListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleSizeRequestDestroy,
+			connectFlags);
+		return onToggleSizeRequestListeners[onToggleSizeRequestListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, void* object,OnToggleSizeRequestDelegateWrapper wrapper)
+	{
+		wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleSizeRequestDestroy(OnToggleSizeRequestDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleSizeRequest(wrapper);
+	}
+
+	protected void internalRemoveOnToggleSizeRequest(OnToggleSizeRequestDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleSizeRequestListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleSizeRequestListeners[index] = null;
+				onToggleSizeRequestListeners = std.algorithm.remove(onToggleSizeRequestListeners, index);
+				break;
+			}
+		}
+	}
+	
 }

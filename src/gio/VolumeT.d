@@ -43,6 +43,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
+public  import std.algorithm;
 
 
 /**
@@ -468,69 +469,113 @@ public template VolumeT(TStruct)
 		return g_volume_should_automount(getVolumeStruct()) != 0;
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(VolumeIF)[] _onChangedListeners;
-	@property void delegate(VolumeIF)[] onChangedListeners()
+	protected class OnChangedDelegateWrapper
 	{
-		return _onChangedListeners;
+		void delegate(VolumeIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(VolumeIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
+
 	/**
 	 * Emitted when the volume has been changed.
 	 */
-	void addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)cast(VolumeIF)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		_onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GVolume* volumeStruct, VolumeIF _volume)
+	
+	extern(C) static void callBackChanged(GVolume* volumeStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(VolumeIF) dlg; _volume.onChangedListeners )
-		{
-			dlg(_volume);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
 	}
 
-	void delegate(VolumeIF)[] _onRemovedListeners;
-	@property void delegate(VolumeIF)[] onRemovedListeners()
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
 	{
-		return _onRemovedListeners;
+		foreach(index, wrapper; onChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRemovedDelegateWrapper
+	{
+		void delegate(VolumeIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(VolumeIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRemovedDelegateWrapper[] onRemovedListeners;
+
 	/**
 	 * This signal is emitted when the #GVolume have been removed. If
 	 * the recipient is holding references to the object they should
 	 * release them so the object can be finalized.
 	 */
-	void addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"removed",
-				cast(GCallback)&callBackRemoved,
-				cast(void*)cast(VolumeIF)this,
-				null,
-				connectFlags);
-			connectedSignals["removed"] = 1;
-		}
-		_onRemovedListeners ~= dlg;
+		onRemovedListeners ~= new OnRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onRemovedListeners[onRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"removed",
+			cast(GCallback)&callBackRemoved,
+			cast(void*)onRemovedListeners[onRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackRemovedDestroy,
+			connectFlags);
+		return onRemovedListeners[onRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRemoved(GVolume* volumeStruct, VolumeIF _volume)
+	
+	extern(C) static void callBackRemoved(GVolume* volumeStruct,OnRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(VolumeIF) dlg; _volume.onRemovedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRemoved(wrapper);
+	}
+
+	protected void internalRemoveOnRemoved(OnRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRemovedListeners)
 		{
-			dlg(_volume);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRemovedListeners[index] = null;
+				onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

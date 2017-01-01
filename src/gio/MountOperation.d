@@ -32,6 +32,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -248,9 +249,20 @@ public class MountOperation : ObjectG
 		g_mount_operation_set_username(gMountOperation, Str.toStringz(username));
 	}
 
-	int[string] connectedSignals;
+	protected class OnAbortedDelegateWrapper
+	{
+		void delegate(MountOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MountOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAbortedDelegateWrapper[] onAbortedListeners;
 
-	void delegate(MountOperation)[] onAbortedListeners;
 	/**
 	 * Emitted by the backend when e.g. a device becomes unavailable
 	 * while a mount operation is in progress.
@@ -260,30 +272,57 @@ public class MountOperation : ObjectG
 	 *
 	 * Since: 2.20
 	 */
-	void addOnAborted(void delegate(MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAborted(void delegate(MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "aborted" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"aborted",
-				cast(GCallback)&callBackAborted,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["aborted"] = 1;
-		}
-		onAbortedListeners ~= dlg;
+		onAbortedListeners ~= new OnAbortedDelegateWrapper(dlg, 0, connectFlags);
+		onAbortedListeners[onAbortedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"aborted",
+			cast(GCallback)&callBackAborted,
+			cast(void*)onAbortedListeners[onAbortedListeners.length - 1],
+			cast(GClosureNotify)&callBackAbortedDestroy,
+			connectFlags);
+		return onAbortedListeners[onAbortedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAborted(GMountOperation* mountoperationStruct, MountOperation _mountoperation)
+	
+	extern(C) static void callBackAborted(GMountOperation* mountoperationStruct,OnAbortedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MountOperation) dlg; _mountoperation.onAbortedListeners )
-		{
-			dlg(_mountoperation);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackAbortedDestroy(OnAbortedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAborted(wrapper);
 	}
 
-	void delegate(string, string, string, GAskPasswordFlags, MountOperation)[] onAskPasswordListeners;
+	protected void internalRemoveOnAborted(OnAbortedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAbortedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAbortedListeners[index] = null;
+				onAbortedListeners = std.algorithm.remove(onAbortedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnAskPasswordDelegateWrapper
+	{
+		void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAskPasswordDelegateWrapper[] onAskPasswordListeners;
+
 	/**
 	 * Emitted when a mount operation asks the user for a password.
 	 *
@@ -297,30 +336,57 @@ public class MountOperation : ObjectG
 	 *     defaultDomain = string containing the default domain.
 	 *     flags = a set of #GAskPasswordFlags.
 	 */
-	void addOnAskPassword(void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAskPassword(void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "ask-password" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"ask-password",
-				cast(GCallback)&callBackAskPassword,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["ask-password"] = 1;
-		}
-		onAskPasswordListeners ~= dlg;
+		onAskPasswordListeners ~= new OnAskPasswordDelegateWrapper(dlg, 0, connectFlags);
+		onAskPasswordListeners[onAskPasswordListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"ask-password",
+			cast(GCallback)&callBackAskPassword,
+			cast(void*)onAskPasswordListeners[onAskPasswordListeners.length - 1],
+			cast(GClosureNotify)&callBackAskPasswordDestroy,
+			connectFlags);
+		return onAskPasswordListeners[onAskPasswordListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAskPassword(GMountOperation* mountoperationStruct, char* message, char* defaultUser, char* defaultDomain, GAskPasswordFlags flags, MountOperation _mountoperation)
+	
+	extern(C) static void callBackAskPassword(GMountOperation* mountoperationStruct, char* message, char* defaultUser, char* defaultDomain, GAskPasswordFlags flags,OnAskPasswordDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg; _mountoperation.onAskPasswordListeners )
-		{
-			dlg(Str.toString(message), Str.toString(defaultUser), Str.toString(defaultDomain), flags, _mountoperation);
-		}
+		wrapper.dlg(Str.toString(message), Str.toString(defaultUser), Str.toString(defaultDomain), flags, wrapper.outer);
+	}
+	
+	extern(C) static void callBackAskPasswordDestroy(OnAskPasswordDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAskPassword(wrapper);
 	}
 
-	void delegate(string, string[], MountOperation)[] onAskQuestionListeners;
+	protected void internalRemoveOnAskPassword(OnAskPasswordDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAskPasswordListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAskPasswordListeners[index] = null;
+				onAskPasswordListeners = std.algorithm.remove(onAskPasswordListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnAskQuestionDelegateWrapper
+	{
+		void delegate(string, string[], MountOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, string[], MountOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAskQuestionDelegateWrapper[] onAskQuestionListeners;
+
 	/**
 	 * Emitted when asking the user a question and gives a list of
 	 * choices for the user to choose from.
@@ -333,60 +399,114 @@ public class MountOperation : ObjectG
 	 *     message = string containing a message to display to the user.
 	 *     choices = an array of strings for each possible choice.
 	 */
-	void addOnAskQuestion(void delegate(string, string[], MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAskQuestion(void delegate(string, string[], MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "ask-question" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"ask-question",
-				cast(GCallback)&callBackAskQuestion,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["ask-question"] = 1;
-		}
-		onAskQuestionListeners ~= dlg;
+		onAskQuestionListeners ~= new OnAskQuestionDelegateWrapper(dlg, 0, connectFlags);
+		onAskQuestionListeners[onAskQuestionListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"ask-question",
+			cast(GCallback)&callBackAskQuestion,
+			cast(void*)onAskQuestionListeners[onAskQuestionListeners.length - 1],
+			cast(GClosureNotify)&callBackAskQuestionDestroy,
+			connectFlags);
+		return onAskQuestionListeners[onAskQuestionListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAskQuestion(GMountOperation* mountoperationStruct, char* message, char** choices, MountOperation _mountoperation)
+	
+	extern(C) static void callBackAskQuestion(GMountOperation* mountoperationStruct, char* message, char** choices,OnAskQuestionDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, string[], MountOperation) dlg; _mountoperation.onAskQuestionListeners )
-		{
-			dlg(Str.toString(message), Str.toStringArray(choices), _mountoperation);
-		}
+		wrapper.dlg(Str.toString(message), Str.toStringArray(choices), wrapper.outer);
+	}
+	
+	extern(C) static void callBackAskQuestionDestroy(OnAskQuestionDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAskQuestion(wrapper);
 	}
 
-	void delegate(GMountOperationResult, MountOperation)[] onReplyListeners;
+	protected void internalRemoveOnAskQuestion(OnAskQuestionDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAskQuestionListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAskQuestionListeners[index] = null;
+				onAskQuestionListeners = std.algorithm.remove(onAskQuestionListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnReplyDelegateWrapper
+	{
+		void delegate(GMountOperationResult, MountOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GMountOperationResult, MountOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnReplyDelegateWrapper[] onReplyListeners;
+
 	/**
 	 * Emitted when the user has replied to the mount operation.
 	 *
 	 * Params:
 	 *     result = a #GMountOperationResult indicating how the request was handled
 	 */
-	void addOnReply(void delegate(GMountOperationResult, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnReply(void delegate(GMountOperationResult, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "reply" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"reply",
-				cast(GCallback)&callBackReply,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["reply"] = 1;
-		}
-		onReplyListeners ~= dlg;
+		onReplyListeners ~= new OnReplyDelegateWrapper(dlg, 0, connectFlags);
+		onReplyListeners[onReplyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"reply",
+			cast(GCallback)&callBackReply,
+			cast(void*)onReplyListeners[onReplyListeners.length - 1],
+			cast(GClosureNotify)&callBackReplyDestroy,
+			connectFlags);
+		return onReplyListeners[onReplyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackReply(GMountOperation* mountoperationStruct, GMountOperationResult result, MountOperation _mountoperation)
+	
+	extern(C) static void callBackReply(GMountOperation* mountoperationStruct, GMountOperationResult result,OnReplyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GMountOperationResult, MountOperation) dlg; _mountoperation.onReplyListeners )
-		{
-			dlg(result, _mountoperation);
-		}
+		wrapper.dlg(result, wrapper.outer);
+	}
+	
+	extern(C) static void callBackReplyDestroy(OnReplyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnReply(wrapper);
 	}
 
-	void delegate(string, ArrayG, string[], MountOperation)[] onShowProcessesListeners;
+	protected void internalRemoveOnReply(OnReplyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onReplyListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onReplyListeners[index] = null;
+				onReplyListeners = std.algorithm.remove(onReplyListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnShowProcessesDelegateWrapper
+	{
+		void delegate(string, ArrayG, string[], MountOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, ArrayG, string[], MountOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnShowProcessesDelegateWrapper[] onShowProcessesListeners;
+
 	/**
 	 * Emitted when one or more processes are blocking an operation
 	 * e.g. unmounting/ejecting a #GMount or stopping a #GDrive.
@@ -409,30 +529,57 @@ public class MountOperation : ObjectG
 	 *
 	 * Since: 2.22
 	 */
-	void addOnShowProcesses(void delegate(string, ArrayG, string[], MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnShowProcesses(void delegate(string, ArrayG, string[], MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "show-processes" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"show-processes",
-				cast(GCallback)&callBackShowProcesses,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["show-processes"] = 1;
-		}
-		onShowProcessesListeners ~= dlg;
+		onShowProcessesListeners ~= new OnShowProcessesDelegateWrapper(dlg, 0, connectFlags);
+		onShowProcessesListeners[onShowProcessesListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"show-processes",
+			cast(GCallback)&callBackShowProcesses,
+			cast(void*)onShowProcessesListeners[onShowProcessesListeners.length - 1],
+			cast(GClosureNotify)&callBackShowProcessesDestroy,
+			connectFlags);
+		return onShowProcessesListeners[onShowProcessesListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackShowProcesses(GMountOperation* mountoperationStruct, char* message, GArray* processes, char** choices, MountOperation _mountoperation)
+	
+	extern(C) static void callBackShowProcesses(GMountOperation* mountoperationStruct, char* message, GArray* processes, char** choices,OnShowProcessesDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, ArrayG, string[], MountOperation) dlg; _mountoperation.onShowProcessesListeners )
-		{
-			dlg(Str.toString(message), new ArrayG(processes), Str.toStringArray(choices), _mountoperation);
-		}
+		wrapper.dlg(Str.toString(message), new ArrayG(processes), Str.toStringArray(choices), wrapper.outer);
+	}
+	
+	extern(C) static void callBackShowProcessesDestroy(OnShowProcessesDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnShowProcesses(wrapper);
 	}
 
-	void delegate(string, long, long, MountOperation)[] onShowUnmountProgressListeners;
+	protected void internalRemoveOnShowProcesses(OnShowProcessesDelegateWrapper source)
+	{
+		foreach(index, wrapper; onShowProcessesListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onShowProcessesListeners[index] = null;
+				onShowProcessesListeners = std.algorithm.remove(onShowProcessesListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnShowUnmountProgressDelegateWrapper
+	{
+		void delegate(string, long, long, MountOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, long, long, MountOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnShowUnmountProgressDelegateWrapper[] onShowUnmountProgressListeners;
+
 	/**
 	 * Emitted when an unmount operation has been busy for more than some time
 	 * (typically 1.5 seconds).
@@ -461,26 +608,40 @@ public class MountOperation : ObjectG
 	 *
 	 * Since: 2.34
 	 */
-	void addOnShowUnmountProgress(void delegate(string, long, long, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnShowUnmountProgress(void delegate(string, long, long, MountOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "show-unmount-progress" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"show-unmount-progress",
-				cast(GCallback)&callBackShowUnmountProgress,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["show-unmount-progress"] = 1;
-		}
-		onShowUnmountProgressListeners ~= dlg;
+		onShowUnmountProgressListeners ~= new OnShowUnmountProgressDelegateWrapper(dlg, 0, connectFlags);
+		onShowUnmountProgressListeners[onShowUnmountProgressListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"show-unmount-progress",
+			cast(GCallback)&callBackShowUnmountProgress,
+			cast(void*)onShowUnmountProgressListeners[onShowUnmountProgressListeners.length - 1],
+			cast(GClosureNotify)&callBackShowUnmountProgressDestroy,
+			connectFlags);
+		return onShowUnmountProgressListeners[onShowUnmountProgressListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackShowUnmountProgress(GMountOperation* mountoperationStruct, char* message, long timeLeft, long bytesLeft, MountOperation _mountoperation)
+	
+	extern(C) static void callBackShowUnmountProgress(GMountOperation* mountoperationStruct, char* message, long timeLeft, long bytesLeft,OnShowUnmountProgressDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, long, long, MountOperation) dlg; _mountoperation.onShowUnmountProgressListeners )
+		wrapper.dlg(Str.toString(message), timeLeft, bytesLeft, wrapper.outer);
+	}
+	
+	extern(C) static void callBackShowUnmountProgressDestroy(OnShowUnmountProgressDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnShowUnmountProgress(wrapper);
+	}
+
+	protected void internalRemoveOnShowUnmountProgress(OnShowUnmountProgressDelegateWrapper source)
+	{
+		foreach(index, wrapper; onShowUnmountProgressListeners)
 		{
-			dlg(Str.toString(message), timeLeft, bytesLeft, _mountoperation);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onShowUnmountProgressListeners[index] = null;
+				onShowUnmountProgressListeners = std.algorithm.remove(onShowUnmountProgressListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -32,6 +32,7 @@ private import gtk.CellRenderer;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -179,9 +180,20 @@ public class CellRendererToggle : CellRenderer
 		gtk_cell_renderer_toggle_set_radio(gtkCellRendererToggle, radio);
 	}
 
-	int[string] connectedSignals;
+	protected class OnToggledDelegateWrapper
+	{
+		void delegate(string, CellRendererToggle) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, CellRendererToggle) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggledDelegateWrapper[] onToggledListeners;
 
-	void delegate(string, CellRendererToggle)[] onToggledListeners;
 	/**
 	 * The ::toggled signal is emitted when the cell is toggled.
 	 *
@@ -193,26 +205,40 @@ public class CellRendererToggle : CellRenderer
 	 *     path = string representation of #GtkTreePath describing the
 	 *         event location
 	 */
-	void addOnToggled(void delegate(string, CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggled(void delegate(string, CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggled",
-				cast(GCallback)&callBackToggled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggled"] = 1;
-		}
-		onToggledListeners ~= dlg;
+		onToggledListeners ~= new OnToggledDelegateWrapper(dlg, 0, connectFlags);
+		onToggledListeners[onToggledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggled",
+			cast(GCallback)&callBackToggled,
+			cast(void*)onToggledListeners[onToggledListeners.length - 1],
+			cast(GClosureNotify)&callBackToggledDestroy,
+			connectFlags);
+		return onToggledListeners[onToggledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggled(GtkCellRendererToggle* cellrenderertoggleStruct, char* path, CellRendererToggle _cellrenderertoggle)
+	
+	extern(C) static void callBackToggled(GtkCellRendererToggle* cellrenderertoggleStruct, char* path,OnToggledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, CellRendererToggle) dlg; _cellrenderertoggle.onToggledListeners )
+		wrapper.dlg(Str.toString(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggled(wrapper);
+	}
+
+	protected void internalRemoveOnToggled(OnToggledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggledListeners)
 		{
-			dlg(Str.toString(path), _cellrenderertoggle);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggledListeners[index] = null;
+				onToggledListeners = std.algorithm.remove(onToggledListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

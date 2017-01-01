@@ -45,6 +45,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -202,7 +203,21 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	// add the ActionMap capabilities
 	mixin ActionMapT!(GApplication);
 
-	int delegate(Scoped!ApplicationCommandLine, Application)[] scopedOnCommandLineListeners;
+	protected class ScopedOnCommandLineDelegateWrapper
+	{
+		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	
+	protected ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
+	
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -215,24 +230,40 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Return: An integer that is set as the exit status for the calling
 	 *     process. See g_application_command_line_set_exit_status().
 	 */
-	void addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "command-line-scoped" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"command-line",
-				cast(GCallback)&callBackScopedCommandLine,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["command-line-scoped"] = 1;
-		}
-		scopedOnCommandLineListeners ~= dlg;
+		scopedOnCommandLineListeners ~= new ScopedOnCommandLineDelegateWrapper(dlg, 0, connectFlags);
+		onCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"command-line",
+			cast(GCallback)&callBackScopedCommandLine,
+			cast(void*)scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1],
+			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
+			connectFlags);
+		return scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
+	
+	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
 	{
-		return _application.onCommandLineListeners[0](scoped!ApplicationCommandLine(commandLine), _application);
+		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
+	}
+	
+	extern(C) static void callBackScopedCommandLineDestroy(OnCommandLineDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCommandLine(wrapper);
+	}
+	
+	protected void internalRemoveOnCommandLine(ScopedOnCommandLineDelegateWrapper source)
+	{
+		foreach(index, wrapper; scopedOnCommandLineListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				scopedOnCommandLineListeners[index] = null;
+				scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
+				break;
+			}
+		}
 	}
 
 	/**
@@ -1136,37 +1167,75 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		g_application_withdraw_notification(gApplication, Str.toStringz(id));
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(Application)[] onActivateListeners;
 	/**
 	 * The ::activate signal is emitted on the primary instance when an
 	 * activation occurs. See g_application_activate().
 	 */
-	void addOnActivate(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GApplication* applicationStruct, Application _application)
+	
+	extern(C) static void callBackActivate(GApplication* applicationStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Application) dlg; _application.onActivateListeners )
-		{
-			dlg(_application);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	int delegate(ApplicationCommandLine, Application)[] onCommandLineListeners;
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCommandLineDelegateWrapper
+	{
+		int delegate(ApplicationCommandLine, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(int delegate(ApplicationCommandLine, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCommandLineDelegateWrapper[] onCommandLineListeners;
+
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -1179,27 +1248,57 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Return: An integer that is set as the exit status for the calling
 	 *     process. See g_application_command_line_set_exit_status().
 	 */
-	void addOnCommandLine(int delegate(ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCommandLine(int delegate(ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "command-line" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"command-line",
-				cast(GCallback)&callBackCommandLine,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["command-line"] = 1;
-		}
-		onCommandLineListeners ~= dlg;
+		onCommandLineListeners ~= new OnCommandLineDelegateWrapper(dlg, 0, connectFlags);
+		onCommandLineListeners[onCommandLineListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"command-line",
+			cast(GCallback)&callBackCommandLine,
+			cast(void*)onCommandLineListeners[onCommandLineListeners.length - 1],
+			cast(GClosureNotify)&callBackCommandLineDestroy,
+			connectFlags);
+		return onCommandLineListeners[onCommandLineListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, Application _application)
+	
+	extern(C) static int callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine,OnCommandLineDelegateWrapper wrapper)
 	{
-		return _application.onCommandLineListeners[0](ObjectG.getDObject!(ApplicationCommandLine)(commandLine), _application);
+		return wrapper.dlg(ObjectG.getDObject!(ApplicationCommandLine)(commandLine), wrapper.outer);
+	}
+	
+	extern(C) static void callBackCommandLineDestroy(OnCommandLineDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCommandLine(wrapper);
 	}
 
-	int delegate(VariantDict, Application)[] onHandleLocalOptionsListeners;
+	protected void internalRemoveOnCommandLine(OnCommandLineDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCommandLineListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCommandLineListeners[index] = null;
+				onCommandLineListeners = std.algorithm.remove(onCommandLineListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnHandleLocalOptionsDelegateWrapper
+	{
+		int delegate(VariantDict, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(int delegate(VariantDict, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnHandleLocalOptionsDelegateWrapper[] onHandleLocalOptionsListeners;
+
 	/**
 	 * The ::handle-local-options signal is emitted on the local instance
 	 * after the parsing of the commandline options has occurred.
@@ -1253,27 +1352,57 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * Since: 2.40
 	 */
-	void addOnHandleLocalOptions(int delegate(VariantDict, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnHandleLocalOptions(int delegate(VariantDict, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "handle-local-options" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"handle-local-options",
-				cast(GCallback)&callBackHandleLocalOptions,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["handle-local-options"] = 1;
-		}
-		onHandleLocalOptionsListeners ~= dlg;
+		onHandleLocalOptionsListeners ~= new OnHandleLocalOptionsDelegateWrapper(dlg, 0, connectFlags);
+		onHandleLocalOptionsListeners[onHandleLocalOptionsListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"handle-local-options",
+			cast(GCallback)&callBackHandleLocalOptions,
+			cast(void*)onHandleLocalOptionsListeners[onHandleLocalOptionsListeners.length - 1],
+			cast(GClosureNotify)&callBackHandleLocalOptionsDestroy,
+			connectFlags);
+		return onHandleLocalOptionsListeners[onHandleLocalOptionsListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackHandleLocalOptions(GApplication* applicationStruct, GVariantDict* options, Application _application)
+	
+	extern(C) static int callBackHandleLocalOptions(GApplication* applicationStruct, GVariantDict* options,OnHandleLocalOptionsDelegateWrapper wrapper)
 	{
-		return _application.onHandleLocalOptionsListeners[0](new VariantDict(options), _application);
+		return wrapper.dlg(new VariantDict(options), wrapper.outer);
+	}
+	
+	extern(C) static void callBackHandleLocalOptionsDestroy(OnHandleLocalOptionsDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnHandleLocalOptions(wrapper);
 	}
 
-	void delegate(void*, int, string, Application)[] onOpenListeners;
+	protected void internalRemoveOnHandleLocalOptions(OnHandleLocalOptionsDelegateWrapper source)
+	{
+		foreach(index, wrapper; onHandleLocalOptionsListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onHandleLocalOptionsListeners[index] = null;
+				onHandleLocalOptionsListeners = std.algorithm.remove(onHandleLocalOptionsListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnOpenDelegateWrapper
+	{
+		void delegate(void*, int, string, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(void*, int, string, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnOpenDelegateWrapper[] onOpenListeners;
+
 	/**
 	 * The ::open signal is emitted on the primary instance when there are
 	 * files to open. See g_application_open() for more information.
@@ -1283,82 +1412,150 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *     nFiles = the length of @files
 	 *     hint = a hint provided by the calling instance
 	 */
-	void addOnOpen(void delegate(void*, int, string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnOpen(void delegate(void*, int, string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "open" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"open",
-				cast(GCallback)&callBackOpen,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["open"] = 1;
-		}
-		onOpenListeners ~= dlg;
+		onOpenListeners ~= new OnOpenDelegateWrapper(dlg, 0, connectFlags);
+		onOpenListeners[onOpenListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"open",
+			cast(GCallback)&callBackOpen,
+			cast(void*)onOpenListeners[onOpenListeners.length - 1],
+			cast(GClosureNotify)&callBackOpenDestroy,
+			connectFlags);
+		return onOpenListeners[onOpenListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackOpen(GApplication* applicationStruct, void* files, int nFiles, char* hint, Application _application)
+	
+	extern(C) static void callBackOpen(GApplication* applicationStruct, void* files, int nFiles, char* hint,OnOpenDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(void*, int, string, Application) dlg; _application.onOpenListeners )
-		{
-			dlg(files, nFiles, Str.toString(hint), _application);
-		}
+		wrapper.dlg(files, nFiles, Str.toString(hint), wrapper.outer);
+	}
+	
+	extern(C) static void callBackOpenDestroy(OnOpenDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnOpen(wrapper);
 	}
 
-	void delegate(Application)[] onShutdownListeners;
+	protected void internalRemoveOnOpen(OnOpenDelegateWrapper source)
+	{
+		foreach(index, wrapper; onOpenListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onOpenListeners[index] = null;
+				onOpenListeners = std.algorithm.remove(onOpenListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnShutdownDelegateWrapper
+	{
+		void delegate(Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnShutdownDelegateWrapper[] onShutdownListeners;
+
 	/**
 	 * The ::shutdown signal is emitted only on the registered primary instance
 	 * immediately after the main loop terminates.
 	 */
-	void addOnShutdown(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnShutdown(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "shutdown" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"shutdown",
-				cast(GCallback)&callBackShutdown,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["shutdown"] = 1;
-		}
-		onShutdownListeners ~= dlg;
+		onShutdownListeners ~= new OnShutdownDelegateWrapper(dlg, 0, connectFlags);
+		onShutdownListeners[onShutdownListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"shutdown",
+			cast(GCallback)&callBackShutdown,
+			cast(void*)onShutdownListeners[onShutdownListeners.length - 1],
+			cast(GClosureNotify)&callBackShutdownDestroy,
+			connectFlags);
+		return onShutdownListeners[onShutdownListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackShutdown(GApplication* applicationStruct, Application _application)
+	
+	extern(C) static void callBackShutdown(GApplication* applicationStruct,OnShutdownDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Application) dlg; _application.onShutdownListeners )
-		{
-			dlg(_application);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackShutdownDestroy(OnShutdownDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnShutdown(wrapper);
 	}
 
-	void delegate(Application)[] onStartupListeners;
+	protected void internalRemoveOnShutdown(OnShutdownDelegateWrapper source)
+	{
+		foreach(index, wrapper; onShutdownListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onShutdownListeners[index] = null;
+				onShutdownListeners = std.algorithm.remove(onShutdownListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnStartupDelegateWrapper
+	{
+		void delegate(Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnStartupDelegateWrapper[] onStartupListeners;
+
 	/**
 	 * The ::startup signal is emitted on the primary instance immediately
 	 * after registration. See g_application_register().
 	 */
-	void addOnStartup(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnStartup(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "startup" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"startup",
-				cast(GCallback)&callBackStartup,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["startup"] = 1;
-		}
-		onStartupListeners ~= dlg;
+		onStartupListeners ~= new OnStartupDelegateWrapper(dlg, 0, connectFlags);
+		onStartupListeners[onStartupListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"startup",
+			cast(GCallback)&callBackStartup,
+			cast(void*)onStartupListeners[onStartupListeners.length - 1],
+			cast(GClosureNotify)&callBackStartupDestroy,
+			connectFlags);
+		return onStartupListeners[onStartupListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackStartup(GApplication* applicationStruct, Application _application)
+	
+	extern(C) static void callBackStartup(GApplication* applicationStruct,OnStartupDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Application) dlg; _application.onStartupListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackStartupDestroy(OnStartupDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnStartup(wrapper);
+	}
+
+	protected void internalRemoveOnStartup(OnStartupDelegateWrapper source)
+	{
+		foreach(index, wrapper; onStartupListeners)
 		{
-			dlg(_application);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onStartupListeners[index] = null;
+				onStartupListeners = std.algorithm.remove(onStartupListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

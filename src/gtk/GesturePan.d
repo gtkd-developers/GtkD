@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -140,9 +141,20 @@ public class GesturePan : GestureDrag
 		gtk_gesture_pan_set_orientation(gtkGesturePan, orientation);
 	}
 
-	int[string] connectedSignals;
+	protected class OnPanDelegateWrapper
+	{
+		void delegate(GtkPanDirection, double, GesturePan) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkPanDirection, double, GesturePan) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPanDelegateWrapper[] onPanListeners;
 
-	void delegate(GtkPanDirection, double, GesturePan)[] onPanListeners;
 	/**
 	 * This signal is emitted once a panning gesture along the
 	 * expected axis is detected.
@@ -153,26 +165,40 @@ public class GesturePan : GestureDrag
 	 *
 	 * Since: 3.14
 	 */
-	void addOnPan(void delegate(GtkPanDirection, double, GesturePan) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPan(void delegate(GtkPanDirection, double, GesturePan) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "pan" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"pan",
-				cast(GCallback)&callBackPan,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["pan"] = 1;
-		}
-		onPanListeners ~= dlg;
+		onPanListeners ~= new OnPanDelegateWrapper(dlg, 0, connectFlags);
+		onPanListeners[onPanListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"pan",
+			cast(GCallback)&callBackPan,
+			cast(void*)onPanListeners[onPanListeners.length - 1],
+			cast(GClosureNotify)&callBackPanDestroy,
+			connectFlags);
+		return onPanListeners[onPanListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPan(GtkGesturePan* gesturepanStruct, GtkPanDirection direction, double offset, GesturePan _gesturepan)
+	
+	extern(C) static void callBackPan(GtkGesturePan* gesturepanStruct, GtkPanDirection direction, double offset,OnPanDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkPanDirection, double, GesturePan) dlg; _gesturepan.onPanListeners )
+		wrapper.dlg(direction, offset, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPanDestroy(OnPanDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPan(wrapper);
+	}
+
+	protected void internalRemoveOnPan(OnPanDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPanListeners)
 		{
-			dlg(direction, offset, _gesturepan);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPanListeners[index] = null;
+				onPanListeners = std.algorithm.remove(onPanListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

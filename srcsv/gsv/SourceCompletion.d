@@ -39,6 +39,7 @@ private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextIter;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /** */
@@ -285,9 +286,20 @@ public class SourceCompletion : ObjectG, BuildableIF
 		gtk_source_completion_unblock_interactive(gtkSourceCompletion);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateProposalDelegateWrapper
+	{
+		void delegate(SourceCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateProposalDelegateWrapper[] onActivateProposalListeners;
 
-	void delegate(SourceCompletion)[] onActivateProposalListeners;
 	/**
 	 * The #GtkSourceCompletion::activate-proposal signal is a
 	 * keybinding signal which gets emitted when the user initiates
@@ -297,58 +309,112 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * g_signal_emit_by_name() if they need to control the proposal
 	 * activation programmatically.
 	 */
-	void addOnActivateProposal(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivateProposal(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate-proposal" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate-proposal",
-				cast(GCallback)&callBackActivateProposal,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate-proposal"] = 1;
-		}
-		onActivateProposalListeners ~= dlg;
+		onActivateProposalListeners ~= new OnActivateProposalDelegateWrapper(dlg, 0, connectFlags);
+		onActivateProposalListeners[onActivateProposalListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate-proposal",
+			cast(GCallback)&callBackActivateProposal,
+			cast(void*)onActivateProposalListeners[onActivateProposalListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateProposalDestroy,
+			connectFlags);
+		return onActivateProposalListeners[onActivateProposalListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivateProposal(GtkSourceCompletion* sourcecompletionStruct, SourceCompletion _sourcecompletion)
+	
+	extern(C) static void callBackActivateProposal(GtkSourceCompletion* sourcecompletionStruct,OnActivateProposalDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceCompletion) dlg; _sourcecompletion.onActivateProposalListeners )
-		{
-			dlg(_sourcecompletion);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateProposalDestroy(OnActivateProposalDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivateProposal(wrapper);
 	}
 
-	void delegate(SourceCompletion)[] onHideListeners;
+	protected void internalRemoveOnActivateProposal(OnActivateProposalDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateProposalListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateProposalListeners[index] = null;
+				onActivateProposalListeners = std.algorithm.remove(onActivateProposalListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnHideDelegateWrapper
+	{
+		void delegate(SourceCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnHideDelegateWrapper[] onHideListeners;
+
 	/**
 	 * Emitted when the completion window is hidden. The default handler
 	 * will actually hide the window.
 	 */
-	void addOnHide(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnHide(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "hide" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"hide",
-				cast(GCallback)&callBackHide,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["hide"] = 1;
-		}
-		onHideListeners ~= dlg;
+		onHideListeners ~= new OnHideDelegateWrapper(dlg, 0, connectFlags);
+		onHideListeners[onHideListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"hide",
+			cast(GCallback)&callBackHide,
+			cast(void*)onHideListeners[onHideListeners.length - 1],
+			cast(GClosureNotify)&callBackHideDestroy,
+			connectFlags);
+		return onHideListeners[onHideListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackHide(GtkSourceCompletion* sourcecompletionStruct, SourceCompletion _sourcecompletion)
+	
+	extern(C) static void callBackHide(GtkSourceCompletion* sourcecompletionStruct,OnHideDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceCompletion) dlg; _sourcecompletion.onHideListeners )
-		{
-			dlg(_sourcecompletion);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackHideDestroy(OnHideDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnHide(wrapper);
 	}
 
-	void delegate(GtkScrollStep, int, SourceCompletion)[] onMoveCursorListeners;
+	protected void internalRemoveOnHide(OnHideDelegateWrapper source)
+	{
+		foreach(index, wrapper; onHideListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onHideListeners[index] = null;
+				onHideListeners = std.algorithm.remove(onHideListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveCursorDelegateWrapper
+	{
+		void delegate(GtkScrollStep, int, SourceCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkScrollStep, int, SourceCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
+
 	/**
 	 * The #GtkSourceCompletion::move-cursor signal is a keybinding
 	 * signal which gets emitted when the user initiates a cursor
@@ -371,30 +437,57 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 *     step = The #GtkScrollStep by which to move the cursor
 	 *     num = The amount of steps to move the cursor
 	 */
-	void addOnMoveCursor(void delegate(GtkScrollStep, int, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(void delegate(GtkScrollStep, int, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-cursor",
-				cast(GCallback)&callBackMoveCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-cursor"] = 1;
-		}
-		onMoveCursorListeners ~= dlg;
+		onMoveCursorListeners ~= new OnMoveCursorDelegateWrapper(dlg, 0, connectFlags);
+		onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-cursor",
+			cast(GCallback)&callBackMoveCursor,
+			cast(void*)onMoveCursorListeners[onMoveCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveCursorDestroy,
+			connectFlags);
+		return onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveCursor(GtkSourceCompletion* sourcecompletionStruct, GtkScrollStep step, int num, SourceCompletion _sourcecompletion)
+	
+	extern(C) static void callBackMoveCursor(GtkSourceCompletion* sourcecompletionStruct, GtkScrollStep step, int num,OnMoveCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkScrollStep, int, SourceCompletion) dlg; _sourcecompletion.onMoveCursorListeners )
-		{
-			dlg(step, num, _sourcecompletion);
-		}
+		wrapper.dlg(step, num, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveCursor(wrapper);
 	}
 
-	void delegate(GtkScrollStep, int, SourceCompletion)[] onMovePageListeners;
+	protected void internalRemoveOnMoveCursor(OnMoveCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveCursorListeners[index] = null;
+				onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMovePageDelegateWrapper
+	{
+		void delegate(GtkScrollStep, int, SourceCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkScrollStep, int, SourceCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMovePageDelegateWrapper[] onMovePageListeners;
+
 	/**
 	 * The #GtkSourceCompletion::move-page signal is a keybinding
 	 * signal which gets emitted when the user initiates a page
@@ -420,30 +513,57 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 *     step = The #GtkScrollStep by which to move the page
 	 *     num = The amount of steps to move the page
 	 */
-	void addOnMovePage(void delegate(GtkScrollStep, int, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMovePage(void delegate(GtkScrollStep, int, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-page" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-page",
-				cast(GCallback)&callBackMovePage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-page"] = 1;
-		}
-		onMovePageListeners ~= dlg;
+		onMovePageListeners ~= new OnMovePageDelegateWrapper(dlg, 0, connectFlags);
+		onMovePageListeners[onMovePageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-page",
+			cast(GCallback)&callBackMovePage,
+			cast(void*)onMovePageListeners[onMovePageListeners.length - 1],
+			cast(GClosureNotify)&callBackMovePageDestroy,
+			connectFlags);
+		return onMovePageListeners[onMovePageListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMovePage(GtkSourceCompletion* sourcecompletionStruct, GtkScrollStep step, int num, SourceCompletion _sourcecompletion)
+	
+	extern(C) static void callBackMovePage(GtkSourceCompletion* sourcecompletionStruct, GtkScrollStep step, int num,OnMovePageDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkScrollStep, int, SourceCompletion) dlg; _sourcecompletion.onMovePageListeners )
-		{
-			dlg(step, num, _sourcecompletion);
-		}
+		wrapper.dlg(step, num, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMovePageDestroy(OnMovePageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMovePage(wrapper);
 	}
 
-	void delegate(SourceCompletionContext, SourceCompletion)[] onPopulateContextListeners;
+	protected void internalRemoveOnMovePage(OnMovePageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMovePageListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMovePageListeners[index] = null;
+				onMovePageListeners = std.algorithm.remove(onMovePageListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPopulateContextDelegateWrapper
+	{
+		void delegate(SourceCompletionContext, SourceCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceCompletionContext, SourceCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopulateContextDelegateWrapper[] onPopulateContextListeners;
+
 	/**
 	 * Emitted just before starting to populate the completion with providers.
 	 * You can use this signal to add additional attributes in the context.
@@ -451,54 +571,95 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * Params:
 	 *     context = The #GtkSourceCompletionContext for the current completion
 	 */
-	void addOnPopulateContext(void delegate(SourceCompletionContext, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopulateContext(void delegate(SourceCompletionContext, SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "populate-context" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"populate-context",
-				cast(GCallback)&callBackPopulateContext,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["populate-context"] = 1;
-		}
-		onPopulateContextListeners ~= dlg;
+		onPopulateContextListeners ~= new OnPopulateContextDelegateWrapper(dlg, 0, connectFlags);
+		onPopulateContextListeners[onPopulateContextListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"populate-context",
+			cast(GCallback)&callBackPopulateContext,
+			cast(void*)onPopulateContextListeners[onPopulateContextListeners.length - 1],
+			cast(GClosureNotify)&callBackPopulateContextDestroy,
+			connectFlags);
+		return onPopulateContextListeners[onPopulateContextListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPopulateContext(GtkSourceCompletion* sourcecompletionStruct, GtkSourceCompletionContext* context, SourceCompletion _sourcecompletion)
+	
+	extern(C) static void callBackPopulateContext(GtkSourceCompletion* sourcecompletionStruct, GtkSourceCompletionContext* context,OnPopulateContextDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceCompletionContext, SourceCompletion) dlg; _sourcecompletion.onPopulateContextListeners )
-		{
-			dlg(ObjectG.getDObject!(SourceCompletionContext)(context), _sourcecompletion);
-		}
+		wrapper.dlg(ObjectG.getDObject!(SourceCompletionContext)(context), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopulateContextDestroy(OnPopulateContextDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopulateContext(wrapper);
 	}
 
-	void delegate(SourceCompletion)[] onShowListeners;
+	protected void internalRemoveOnPopulateContext(OnPopulateContextDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopulateContextListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopulateContextListeners[index] = null;
+				onPopulateContextListeners = std.algorithm.remove(onPopulateContextListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnShowDelegateWrapper
+	{
+		void delegate(SourceCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnShowDelegateWrapper[] onShowListeners;
+
 	/**
 	 * Emitted when the completion window is shown. The default handler
 	 * will actually show the window.
 	 */
-	void addOnShow(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnShow(void delegate(SourceCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "show" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"show",
-				cast(GCallback)&callBackShow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["show"] = 1;
-		}
-		onShowListeners ~= dlg;
+		onShowListeners ~= new OnShowDelegateWrapper(dlg, 0, connectFlags);
+		onShowListeners[onShowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"show",
+			cast(GCallback)&callBackShow,
+			cast(void*)onShowListeners[onShowListeners.length - 1],
+			cast(GClosureNotify)&callBackShowDestroy,
+			connectFlags);
+		return onShowListeners[onShowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackShow(GtkSourceCompletion* sourcecompletionStruct, SourceCompletion _sourcecompletion)
+	
+	extern(C) static void callBackShow(GtkSourceCompletion* sourcecompletionStruct,OnShowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceCompletion) dlg; _sourcecompletion.onShowListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackShowDestroy(OnShowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnShow(wrapper);
+	}
+
+	protected void internalRemoveOnShow(OnShowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onShowListeners)
 		{
-			dlg(_sourcecompletion);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onShowListeners[index] = null;
+				onShowListeners = std.algorithm.remove(onShowListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

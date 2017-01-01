@@ -37,6 +37,7 @@ private import gobject.Signals;
 private import gtkc.gdkpixbuf;
 public  import gtkc.gdkpixbuftypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -337,39 +338,77 @@ public class PixbufLoader : ObjectG
 		return p;
 	}
 
-	int[string] connectedSignals;
+	protected class OnAreaPreparedDelegateWrapper
+	{
+		void delegate(PixbufLoader) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PixbufLoader) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAreaPreparedDelegateWrapper[] onAreaPreparedListeners;
 
-	void delegate(PixbufLoader)[] onAreaPreparedListeners;
 	/**
 	 * This signal is emitted when the pixbuf loader has allocated the
 	 * pixbuf in the desired size.  After this signal is emitted,
 	 * applications can call gdk_pixbuf_loader_get_pixbuf() to fetch
 	 * the partially-loaded pixbuf.
 	 */
-	void addOnAreaPrepared(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAreaPrepared(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "area-prepared" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"area-prepared",
-				cast(GCallback)&callBackAreaPrepared,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["area-prepared"] = 1;
-		}
-		onAreaPreparedListeners ~= dlg;
+		onAreaPreparedListeners ~= new OnAreaPreparedDelegateWrapper(dlg, 0, connectFlags);
+		onAreaPreparedListeners[onAreaPreparedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"area-prepared",
+			cast(GCallback)&callBackAreaPrepared,
+			cast(void*)onAreaPreparedListeners[onAreaPreparedListeners.length - 1],
+			cast(GClosureNotify)&callBackAreaPreparedDestroy,
+			connectFlags);
+		return onAreaPreparedListeners[onAreaPreparedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* pixbufloaderStruct, PixbufLoader _pixbufloader)
+	
+	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* pixbufloaderStruct,OnAreaPreparedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PixbufLoader) dlg; _pixbufloader.onAreaPreparedListeners )
-		{
-			dlg(_pixbufloader);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackAreaPreparedDestroy(OnAreaPreparedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAreaPrepared(wrapper);
 	}
 
-	void delegate(int, int, int, int, PixbufLoader)[] onAreaUpdatedListeners;
+	protected void internalRemoveOnAreaPrepared(OnAreaPreparedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAreaPreparedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAreaPreparedListeners[index] = null;
+				onAreaPreparedListeners = std.algorithm.remove(onAreaPreparedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnAreaUpdatedDelegateWrapper
+	{
+		void delegate(int, int, int, int, PixbufLoader) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, int, int, int, PixbufLoader) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAreaUpdatedDelegateWrapper[] onAreaUpdatedListeners;
+
 	/**
 	 * This signal is emitted when a significant area of the image being
 	 * loaded has been updated.  Normally it means that a complete
@@ -383,60 +422,114 @@ public class PixbufLoader : ObjectG
 	 *     width = Width of updated area.
 	 *     height = Height of updated area.
 	 */
-	void addOnAreaUpdated(void delegate(int, int, int, int, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAreaUpdated(void delegate(int, int, int, int, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "area-updated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"area-updated",
-				cast(GCallback)&callBackAreaUpdated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["area-updated"] = 1;
-		}
-		onAreaUpdatedListeners ~= dlg;
+		onAreaUpdatedListeners ~= new OnAreaUpdatedDelegateWrapper(dlg, 0, connectFlags);
+		onAreaUpdatedListeners[onAreaUpdatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"area-updated",
+			cast(GCallback)&callBackAreaUpdated,
+			cast(void*)onAreaUpdatedListeners[onAreaUpdatedListeners.length - 1],
+			cast(GClosureNotify)&callBackAreaUpdatedDestroy,
+			connectFlags);
+		return onAreaUpdatedListeners[onAreaUpdatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* pixbufloaderStruct, int x, int y, int width, int height, PixbufLoader _pixbufloader)
+	
+	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* pixbufloaderStruct, int x, int y, int width, int height,OnAreaUpdatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, int, int, int, PixbufLoader) dlg; _pixbufloader.onAreaUpdatedListeners )
-		{
-			dlg(x, y, width, height, _pixbufloader);
-		}
+		wrapper.dlg(x, y, width, height, wrapper.outer);
+	}
+	
+	extern(C) static void callBackAreaUpdatedDestroy(OnAreaUpdatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAreaUpdated(wrapper);
 	}
 
-	void delegate(PixbufLoader)[] onClosedListeners;
+	protected void internalRemoveOnAreaUpdated(OnAreaUpdatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAreaUpdatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAreaUpdatedListeners[index] = null;
+				onAreaUpdatedListeners = std.algorithm.remove(onAreaUpdatedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnClosedDelegateWrapper
+	{
+		void delegate(PixbufLoader) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PixbufLoader) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnClosedDelegateWrapper[] onClosedListeners;
+
 	/**
 	 * This signal is emitted when gdk_pixbuf_loader_close() is called.
 	 * It can be used by different parts of an application to receive
 	 * notification when an image loader is closed by the code that
 	 * drives it.
 	 */
-	void addOnClosed(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClosed(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "closed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"closed",
-				cast(GCallback)&callBackClosed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["closed"] = 1;
-		}
-		onClosedListeners ~= dlg;
+		onClosedListeners ~= new OnClosedDelegateWrapper(dlg, 0, connectFlags);
+		onClosedListeners[onClosedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"closed",
+			cast(GCallback)&callBackClosed,
+			cast(void*)onClosedListeners[onClosedListeners.length - 1],
+			cast(GClosureNotify)&callBackClosedDestroy,
+			connectFlags);
+		return onClosedListeners[onClosedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClosed(GdkPixbufLoader* pixbufloaderStruct, PixbufLoader _pixbufloader)
+	
+	extern(C) static void callBackClosed(GdkPixbufLoader* pixbufloaderStruct,OnClosedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PixbufLoader) dlg; _pixbufloader.onClosedListeners )
-		{
-			dlg(_pixbufloader);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClosed(wrapper);
 	}
 
-	void delegate(int, int, PixbufLoader)[] onSizePreparedListeners;
+	protected void internalRemoveOnClosed(OnClosedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onClosedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onClosedListeners[index] = null;
+				onClosedListeners = std.algorithm.remove(onClosedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSizePreparedDelegateWrapper
+	{
+		void delegate(int, int, PixbufLoader) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, int, PixbufLoader) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSizePreparedDelegateWrapper[] onSizePreparedListeners;
+
 	/**
 	 * This signal is emitted when the pixbuf loader has been fed the
 	 * initial amount of data that is required to figure out the size
@@ -448,26 +541,40 @@ public class PixbufLoader : ObjectG
 	 *     width = the original width of the image
 	 *     height = the original height of the image
 	 */
-	void addOnSizePrepared(void delegate(int, int, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSizePrepared(void delegate(int, int, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "size-prepared" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"size-prepared",
-				cast(GCallback)&callBackSizePrepared,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["size-prepared"] = 1;
-		}
-		onSizePreparedListeners ~= dlg;
+		onSizePreparedListeners ~= new OnSizePreparedDelegateWrapper(dlg, 0, connectFlags);
+		onSizePreparedListeners[onSizePreparedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"size-prepared",
+			cast(GCallback)&callBackSizePrepared,
+			cast(void*)onSizePreparedListeners[onSizePreparedListeners.length - 1],
+			cast(GClosureNotify)&callBackSizePreparedDestroy,
+			connectFlags);
+		return onSizePreparedListeners[onSizePreparedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSizePrepared(GdkPixbufLoader* pixbufloaderStruct, int width, int height, PixbufLoader _pixbufloader)
+	
+	extern(C) static void callBackSizePrepared(GdkPixbufLoader* pixbufloaderStruct, int width, int height,OnSizePreparedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, int, PixbufLoader) dlg; _pixbufloader.onSizePreparedListeners )
+		wrapper.dlg(width, height, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSizePreparedDestroy(OnSizePreparedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSizePrepared(wrapper);
+	}
+
+	protected void internalRemoveOnSizePrepared(OnSizePreparedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSizePreparedListeners)
 		{
-			dlg(width, height, _pixbufloader);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSizePreparedListeners[index] = null;
+				onSizePreparedListeners = std.algorithm.remove(onSizePreparedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

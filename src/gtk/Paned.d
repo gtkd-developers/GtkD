@@ -35,6 +35,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -337,9 +338,20 @@ public class Paned : Container, OrientableIF
 		gtk_paned_set_wide_handle(gtkPaned, wide);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAcceptPositionDelegateWrapper
+	{
+		bool delegate(Paned) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Paned) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAcceptPositionDelegateWrapper[] onAcceptPositionListeners;
 
-	bool delegate(Paned)[] onAcceptPositionListeners;
 	/**
 	 * The ::accept-position signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -350,35 +362,57 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Since: 2.0
 	 */
-	void addOnAcceptPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAcceptPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "accept-position" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"accept-position",
-				cast(GCallback)&callBackAcceptPosition,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["accept-position"] = 1;
-		}
-		onAcceptPositionListeners ~= dlg;
+		onAcceptPositionListeners ~= new OnAcceptPositionDelegateWrapper(dlg, 0, connectFlags);
+		onAcceptPositionListeners[onAcceptPositionListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"accept-position",
+			cast(GCallback)&callBackAcceptPosition,
+			cast(void*)onAcceptPositionListeners[onAcceptPositionListeners.length - 1],
+			cast(GClosureNotify)&callBackAcceptPositionDestroy,
+			connectFlags);
+		return onAcceptPositionListeners[onAcceptPositionListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackAcceptPosition(GtkPaned* panedStruct, Paned _paned)
+	
+	extern(C) static int callBackAcceptPosition(GtkPaned* panedStruct,OnAcceptPositionDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Paned) dlg; _paned.onAcceptPositionListeners )
-		{
-			if ( dlg(_paned) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackAcceptPositionDestroy(OnAcceptPositionDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAcceptPosition(wrapper);
 	}
 
-	bool delegate(Paned)[] onCancelPositionListeners;
+	protected void internalRemoveOnAcceptPosition(OnAcceptPositionDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAcceptPositionListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAcceptPositionListeners[index] = null;
+				onAcceptPositionListeners = std.algorithm.remove(onAcceptPositionListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCancelPositionDelegateWrapper
+	{
+		bool delegate(Paned) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Paned) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCancelPositionDelegateWrapper[] onCancelPositionListeners;
+
 	/**
 	 * The ::cancel-position signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -390,35 +424,57 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Since: 2.0
 	 */
-	void addOnCancelPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCancelPosition(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cancel-position" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cancel-position",
-				cast(GCallback)&callBackCancelPosition,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cancel-position"] = 1;
-		}
-		onCancelPositionListeners ~= dlg;
+		onCancelPositionListeners ~= new OnCancelPositionDelegateWrapper(dlg, 0, connectFlags);
+		onCancelPositionListeners[onCancelPositionListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cancel-position",
+			cast(GCallback)&callBackCancelPosition,
+			cast(void*)onCancelPositionListeners[onCancelPositionListeners.length - 1],
+			cast(GClosureNotify)&callBackCancelPositionDestroy,
+			connectFlags);
+		return onCancelPositionListeners[onCancelPositionListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackCancelPosition(GtkPaned* panedStruct, Paned _paned)
+	
+	extern(C) static int callBackCancelPosition(GtkPaned* panedStruct,OnCancelPositionDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Paned) dlg; _paned.onCancelPositionListeners )
-		{
-			if ( dlg(_paned) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCancelPositionDestroy(OnCancelPositionDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCancelPosition(wrapper);
 	}
 
-	bool delegate(bool, Paned)[] onCycleChildFocusListeners;
+	protected void internalRemoveOnCancelPosition(OnCancelPositionDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCancelPositionListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCancelPositionListeners[index] = null;
+				onCancelPositionListeners = std.algorithm.remove(onCancelPositionListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCycleChildFocusDelegateWrapper
+	{
+		bool delegate(bool, Paned) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(bool, Paned) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCycleChildFocusDelegateWrapper[] onCycleChildFocusListeners;
+
 	/**
 	 * The ::cycle-child-focus signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -431,35 +487,57 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Since: 2.0
 	 */
-	void addOnCycleChildFocus(bool delegate(bool, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCycleChildFocus(bool delegate(bool, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cycle-child-focus" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cycle-child-focus",
-				cast(GCallback)&callBackCycleChildFocus,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cycle-child-focus"] = 1;
-		}
-		onCycleChildFocusListeners ~= dlg;
+		onCycleChildFocusListeners ~= new OnCycleChildFocusDelegateWrapper(dlg, 0, connectFlags);
+		onCycleChildFocusListeners[onCycleChildFocusListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cycle-child-focus",
+			cast(GCallback)&callBackCycleChildFocus,
+			cast(void*)onCycleChildFocusListeners[onCycleChildFocusListeners.length - 1],
+			cast(GClosureNotify)&callBackCycleChildFocusDestroy,
+			connectFlags);
+		return onCycleChildFocusListeners[onCycleChildFocusListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackCycleChildFocus(GtkPaned* panedStruct, bool reversed, Paned _paned)
+	
+	extern(C) static int callBackCycleChildFocus(GtkPaned* panedStruct, bool reversed,OnCycleChildFocusDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(bool, Paned) dlg; _paned.onCycleChildFocusListeners )
-		{
-			if ( dlg(reversed, _paned) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(reversed, wrapper.outer);
+	}
+	
+	extern(C) static void callBackCycleChildFocusDestroy(OnCycleChildFocusDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCycleChildFocus(wrapper);
 	}
 
-	bool delegate(bool, Paned)[] onCycleHandleFocusListeners;
+	protected void internalRemoveOnCycleChildFocus(OnCycleChildFocusDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCycleChildFocusListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCycleChildFocusListeners[index] = null;
+				onCycleChildFocusListeners = std.algorithm.remove(onCycleChildFocusListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCycleHandleFocusDelegateWrapper
+	{
+		bool delegate(bool, Paned) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(bool, Paned) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCycleHandleFocusDelegateWrapper[] onCycleHandleFocusListeners;
+
 	/**
 	 * The ::cycle-handle-focus signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -473,35 +551,57 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Since: 2.0
 	 */
-	void addOnCycleHandleFocus(bool delegate(bool, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCycleHandleFocus(bool delegate(bool, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cycle-handle-focus" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cycle-handle-focus",
-				cast(GCallback)&callBackCycleHandleFocus,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cycle-handle-focus"] = 1;
-		}
-		onCycleHandleFocusListeners ~= dlg;
+		onCycleHandleFocusListeners ~= new OnCycleHandleFocusDelegateWrapper(dlg, 0, connectFlags);
+		onCycleHandleFocusListeners[onCycleHandleFocusListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cycle-handle-focus",
+			cast(GCallback)&callBackCycleHandleFocus,
+			cast(void*)onCycleHandleFocusListeners[onCycleHandleFocusListeners.length - 1],
+			cast(GClosureNotify)&callBackCycleHandleFocusDestroy,
+			connectFlags);
+		return onCycleHandleFocusListeners[onCycleHandleFocusListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackCycleHandleFocus(GtkPaned* panedStruct, bool reversed, Paned _paned)
+	
+	extern(C) static int callBackCycleHandleFocus(GtkPaned* panedStruct, bool reversed,OnCycleHandleFocusDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(bool, Paned) dlg; _paned.onCycleHandleFocusListeners )
-		{
-			if ( dlg(reversed, _paned) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(reversed, wrapper.outer);
+	}
+	
+	extern(C) static void callBackCycleHandleFocusDestroy(OnCycleHandleFocusDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCycleHandleFocus(wrapper);
 	}
 
-	bool delegate(GtkScrollType, Paned)[] onMoveHandleListeners;
+	protected void internalRemoveOnCycleHandleFocus(OnCycleHandleFocusDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCycleHandleFocusListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCycleHandleFocusListeners[index] = null;
+				onCycleHandleFocusListeners = std.algorithm.remove(onCycleHandleFocusListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveHandleDelegateWrapper
+	{
+		bool delegate(GtkScrollType, Paned) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GtkScrollType, Paned) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveHandleDelegateWrapper[] onMoveHandleListeners;
+
 	/**
 	 * The ::move-handle signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -513,35 +613,57 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Since: 2.0
 	 */
-	void addOnMoveHandle(bool delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveHandle(bool delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-handle" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-handle",
-				cast(GCallback)&callBackMoveHandle,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-handle"] = 1;
-		}
-		onMoveHandleListeners ~= dlg;
+		onMoveHandleListeners ~= new OnMoveHandleDelegateWrapper(dlg, 0, connectFlags);
+		onMoveHandleListeners[onMoveHandleListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-handle",
+			cast(GCallback)&callBackMoveHandle,
+			cast(void*)onMoveHandleListeners[onMoveHandleListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveHandleDestroy,
+			connectFlags);
+		return onMoveHandleListeners[onMoveHandleListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackMoveHandle(GtkPaned* panedStruct, GtkScrollType scrollType, Paned _paned)
+	
+	extern(C) static int callBackMoveHandle(GtkPaned* panedStruct, GtkScrollType scrollType,OnMoveHandleDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GtkScrollType, Paned) dlg; _paned.onMoveHandleListeners )
-		{
-			if ( dlg(scrollType, _paned) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(scrollType, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveHandleDestroy(OnMoveHandleDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveHandle(wrapper);
 	}
 
-	bool delegate(Paned)[] onToggleHandleFocusListeners;
+	protected void internalRemoveOnMoveHandle(OnMoveHandleDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveHandleListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveHandleListeners[index] = null;
+				onMoveHandleListeners = std.algorithm.remove(onMoveHandleListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleHandleFocusDelegateWrapper
+	{
+		bool delegate(Paned) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Paned) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleHandleFocusDelegateWrapper[] onToggleHandleFocusListeners;
+
 	/**
 	 * The ::toggle-handle-focus is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -552,31 +674,40 @@ public class Paned : Container, OrientableIF
 	 *
 	 * Since: 2.0
 	 */
-	void addOnToggleHandleFocus(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleHandleFocus(bool delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-handle-focus" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-handle-focus",
-				cast(GCallback)&callBackToggleHandleFocus,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-handle-focus"] = 1;
-		}
-		onToggleHandleFocusListeners ~= dlg;
+		onToggleHandleFocusListeners ~= new OnToggleHandleFocusDelegateWrapper(dlg, 0, connectFlags);
+		onToggleHandleFocusListeners[onToggleHandleFocusListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-handle-focus",
+			cast(GCallback)&callBackToggleHandleFocus,
+			cast(void*)onToggleHandleFocusListeners[onToggleHandleFocusListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleHandleFocusDestroy,
+			connectFlags);
+		return onToggleHandleFocusListeners[onToggleHandleFocusListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackToggleHandleFocus(GtkPaned* panedStruct, Paned _paned)
+	
+	extern(C) static int callBackToggleHandleFocus(GtkPaned* panedStruct,OnToggleHandleFocusDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Paned) dlg; _paned.onToggleHandleFocusListeners )
+		return wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleHandleFocusDestroy(OnToggleHandleFocusDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleHandleFocus(wrapper);
+	}
+
+	protected void internalRemoveOnToggleHandleFocus(OnToggleHandleFocusDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleHandleFocusListeners)
 		{
-			if ( dlg(_paned) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onToggleHandleFocusListeners[index] = null;
+				onToggleHandleFocusListeners = std.algorithm.remove(onToggleHandleFocusListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

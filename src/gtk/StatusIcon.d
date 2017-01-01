@@ -38,6 +38,7 @@ private import gtk.Tooltip;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -790,9 +791,20 @@ public class StatusIcon : ObjectG
 		gtk_status_icon_set_visible(gtkStatusIcon, visible);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(StatusIcon)[] onActivateListeners;
 	/**
 	 * Gets emitted when the user activates the status icon.
 	 * If and how status icons can activated is platform-dependent.
@@ -802,30 +814,57 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	void addOnActivate(void delegate(StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GtkStatusIcon* statusiconStruct, StatusIcon _statusicon)
+	
+	extern(C) static void callBackActivate(GtkStatusIcon* statusiconStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(StatusIcon) dlg; _statusicon.onActivateListeners )
-		{
-			dlg(_statusicon);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	bool delegate(GdkEventButton*, StatusIcon)[] onButtonPressListeners;
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnButtonPressDelegateWrapper
+	{
+		bool delegate(GdkEventButton*, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GdkEventButton*, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnButtonPressDelegateWrapper[] onButtonPressListeners;
+
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
@@ -842,35 +881,57 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.14
 	 */
-	void addOnButtonPress(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnButtonPress(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "button-press-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"button-press-event",
-				cast(GCallback)&callBackButtonPress,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["button-press-event"] = 1;
-		}
-		onButtonPressListeners ~= dlg;
+		onButtonPressListeners ~= new OnButtonPressDelegateWrapper(dlg, 0, connectFlags);
+		onButtonPressListeners[onButtonPressListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"button-press-event",
+			cast(GCallback)&callBackButtonPress,
+			cast(void*)onButtonPressListeners[onButtonPressListeners.length - 1],
+			cast(GClosureNotify)&callBackButtonPressDestroy,
+			connectFlags);
+		return onButtonPressListeners[onButtonPressListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackButtonPress(GtkStatusIcon* statusiconStruct, GdkEventButton* event, StatusIcon _statusicon)
+	
+	extern(C) static int callBackButtonPress(GtkStatusIcon* statusiconStruct, GdkEventButton* event,OnButtonPressDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GdkEventButton*, StatusIcon) dlg; _statusicon.onButtonPressListeners )
-		{
-			if ( dlg(event, _statusicon) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(event, wrapper.outer);
+	}
+	
+	extern(C) static void callBackButtonPressDestroy(OnButtonPressDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnButtonPress(wrapper);
 	}
 
-	bool delegate(Event, StatusIcon)[] onButtonPressEventGenericListeners;
+	protected void internalRemoveOnButtonPress(OnButtonPressDelegateWrapper source)
+	{
+		foreach(index, wrapper; onButtonPressListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onButtonPressListeners[index] = null;
+				onButtonPressListeners = std.algorithm.remove(onButtonPressListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnButtonPressEventGenericDelegateWrapper
+	{
+		bool delegate(Event, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Event, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnButtonPressEventGenericDelegateWrapper[] onButtonPressEventGenericListeners;
+	
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
@@ -887,35 +948,56 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.14
 	 */
-	void addOnButtonPress(bool delegate(Event, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnButtonPress(bool delegate(Event, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "button-press-event-generic-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"button-press-event",
-				cast(GCallback)&callBackButtonPressEventGeneric,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["button-press-event-generic-event"] = 1;
-		}
-		onButtonPressEventGenericListeners ~= dlg;
+		onButtonPressEventGenericListeners ~= new OnButtonPressEventGenericDelegateWrapper(dlg, 0, connectFlags);
+		onButtonPressEventGenericListeners[onButtonPressEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"button-press-event",
+			cast(GCallback)&callBackButtonPressEventGeneric,
+			cast(void*)onButtonPressEventGenericListeners[onButtonPressEventGenericListeners.length - 1],
+			cast(GClosureNotify)&callBackButtonPressEventGenericDestroy,
+			connectFlags);
+		return onButtonPressEventGenericListeners[onButtonPressEventGenericListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackButtonPressEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event, StatusIcon _statusicon)
+	
+	extern(C) static int callBackButtonPressEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event,OnButtonPressEventGenericDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Event, StatusIcon) dlg; _statusicon.onButtonPressEventGenericListeners )
+		return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
+	}
+	
+	extern(C) static void callBackButtonPressEventGenericDestroy(OnButtonPressEventGenericDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnButtonPressEventGeneric(wrapper);
+	}
+	protected void internalRemoveOnButtonPressEventGeneric(OnButtonPressEventGenericDelegateWrapper source)
+	{
+		foreach(index, wrapper; onButtonPressEventGenericListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(Event)(event), _statusicon) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onButtonPressEventGenericListeners[index] = null;
+				onButtonPressEventGenericListeners = std.algorithm.remove(onButtonPressEventGenericListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 
-	bool delegate(GdkEventButton*, StatusIcon)[] onButtonReleaseListeners;
+	protected class OnButtonReleaseDelegateWrapper
+	{
+		bool delegate(GdkEventButton*, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GdkEventButton*, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnButtonReleaseDelegateWrapper[] onButtonReleaseListeners;
+
 	/**
 	 * The ::button-release-event signal will be emitted when a button
 	 * (typically from a mouse) is released.
@@ -932,35 +1014,57 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.14
 	 */
-	void addOnButtonRelease(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnButtonRelease(bool delegate(GdkEventButton*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "button-release-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"button-release-event",
-				cast(GCallback)&callBackButtonRelease,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["button-release-event"] = 1;
-		}
-		onButtonReleaseListeners ~= dlg;
+		onButtonReleaseListeners ~= new OnButtonReleaseDelegateWrapper(dlg, 0, connectFlags);
+		onButtonReleaseListeners[onButtonReleaseListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"button-release-event",
+			cast(GCallback)&callBackButtonRelease,
+			cast(void*)onButtonReleaseListeners[onButtonReleaseListeners.length - 1],
+			cast(GClosureNotify)&callBackButtonReleaseDestroy,
+			connectFlags);
+		return onButtonReleaseListeners[onButtonReleaseListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackButtonRelease(GtkStatusIcon* statusiconStruct, GdkEventButton* event, StatusIcon _statusicon)
+	
+	extern(C) static int callBackButtonRelease(GtkStatusIcon* statusiconStruct, GdkEventButton* event,OnButtonReleaseDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GdkEventButton*, StatusIcon) dlg; _statusicon.onButtonReleaseListeners )
-		{
-			if ( dlg(event, _statusicon) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(event, wrapper.outer);
+	}
+	
+	extern(C) static void callBackButtonReleaseDestroy(OnButtonReleaseDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnButtonRelease(wrapper);
 	}
 
-	bool delegate(Event, StatusIcon)[] onButtonReleaseEventGenericListeners;
+	protected void internalRemoveOnButtonRelease(OnButtonReleaseDelegateWrapper source)
+	{
+		foreach(index, wrapper; onButtonReleaseListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onButtonReleaseListeners[index] = null;
+				onButtonReleaseListeners = std.algorithm.remove(onButtonReleaseListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnButtonReleaseEventGenericDelegateWrapper
+	{
+		bool delegate(Event, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Event, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnButtonReleaseEventGenericDelegateWrapper[] onButtonReleaseEventGenericListeners;
+	
 	/**
 	 * The ::button-release-event signal will be emitted when a button
 	 * (typically from a mouse) is released.
@@ -977,35 +1081,56 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.14
 	 */
-	void addOnButtonRelease(bool delegate(Event, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnButtonRelease(bool delegate(Event, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "button-release-event-generic-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"button-release-event",
-				cast(GCallback)&callBackButtonReleaseEventGeneric,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["button-release-event-generic-event"] = 1;
-		}
-		onButtonReleaseEventGenericListeners ~= dlg;
+		onButtonReleaseEventGenericListeners ~= new OnButtonReleaseEventGenericDelegateWrapper(dlg, 0, connectFlags);
+		onButtonReleaseEventGenericListeners[onButtonReleaseEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"button-release-event",
+			cast(GCallback)&callBackButtonReleaseEventGeneric,
+			cast(void*)onButtonReleaseEventGenericListeners[onButtonReleaseEventGenericListeners.length - 1],
+			cast(GClosureNotify)&callBackButtonReleaseEventGenericDestroy,
+			connectFlags);
+		return onButtonReleaseEventGenericListeners[onButtonReleaseEventGenericListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackButtonReleaseEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event, StatusIcon _statusicon)
+	
+	extern(C) static int callBackButtonReleaseEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event,OnButtonReleaseEventGenericDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Event, StatusIcon) dlg; _statusicon.onButtonReleaseEventGenericListeners )
+		return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
+	}
+	
+	extern(C) static void callBackButtonReleaseEventGenericDestroy(OnButtonReleaseEventGenericDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnButtonReleaseEventGeneric(wrapper);
+	}
+	protected void internalRemoveOnButtonReleaseEventGeneric(OnButtonReleaseEventGenericDelegateWrapper source)
+	{
+		foreach(index, wrapper; onButtonReleaseEventGenericListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(Event)(event), _statusicon) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onButtonReleaseEventGenericListeners[index] = null;
+				onButtonReleaseEventGenericListeners = std.algorithm.remove(onButtonReleaseEventGenericListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 
-	void delegate(uint, uint, StatusIcon)[] onPopupMenuListeners;
+	protected class OnPopupMenuDelegateWrapper
+	{
+		void delegate(uint, uint, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(uint, uint, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopupMenuDelegateWrapper[] onPopupMenuListeners;
+
 	/**
 	 * Gets emitted when the user brings up the context menu
 	 * of the status icon. Whether status icons can have context
@@ -1025,30 +1150,57 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	void addOnPopupMenu(void delegate(uint, uint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopupMenu(void delegate(uint, uint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "popup-menu" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"popup-menu",
-				cast(GCallback)&callBackPopupMenu,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["popup-menu"] = 1;
-		}
-		onPopupMenuListeners ~= dlg;
+		onPopupMenuListeners ~= new OnPopupMenuDelegateWrapper(dlg, 0, connectFlags);
+		onPopupMenuListeners[onPopupMenuListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"popup-menu",
+			cast(GCallback)&callBackPopupMenu,
+			cast(void*)onPopupMenuListeners[onPopupMenuListeners.length - 1],
+			cast(GClosureNotify)&callBackPopupMenuDestroy,
+			connectFlags);
+		return onPopupMenuListeners[onPopupMenuListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPopupMenu(GtkStatusIcon* statusiconStruct, uint button, uint activateTime, StatusIcon _statusicon)
+	
+	extern(C) static void callBackPopupMenu(GtkStatusIcon* statusiconStruct, uint button, uint activateTime,OnPopupMenuDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(uint, uint, StatusIcon) dlg; _statusicon.onPopupMenuListeners )
-		{
-			dlg(button, activateTime, _statusicon);
-		}
+		wrapper.dlg(button, activateTime, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopupMenuDestroy(OnPopupMenuDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopupMenu(wrapper);
 	}
 
-	bool delegate(int, int, bool, Tooltip, StatusIcon)[] onQueryTooltipListeners;
+	protected void internalRemoveOnPopupMenu(OnPopupMenuDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopupMenuListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopupMenuListeners[index] = null;
+				onPopupMenuListeners = std.algorithm.remove(onPopupMenuListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnQueryTooltipDelegateWrapper
+	{
+		bool delegate(int, int, bool, Tooltip, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(int, int, bool, Tooltip, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnQueryTooltipDelegateWrapper[] onQueryTooltipListeners;
+
 	/**
 	 * Emitted when the hover timeout has expired with the
 	 * cursor hovering above @status_icon; or emitted when @status_icon got
@@ -1078,35 +1230,57 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.16
 	 */
-	void addOnQueryTooltip(bool delegate(int, int, bool, Tooltip, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnQueryTooltip(bool delegate(int, int, bool, Tooltip, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "query-tooltip" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"query-tooltip",
-				cast(GCallback)&callBackQueryTooltip,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["query-tooltip"] = 1;
-		}
-		onQueryTooltipListeners ~= dlg;
+		onQueryTooltipListeners ~= new OnQueryTooltipDelegateWrapper(dlg, 0, connectFlags);
+		onQueryTooltipListeners[onQueryTooltipListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"query-tooltip",
+			cast(GCallback)&callBackQueryTooltip,
+			cast(void*)onQueryTooltipListeners[onQueryTooltipListeners.length - 1],
+			cast(GClosureNotify)&callBackQueryTooltipDestroy,
+			connectFlags);
+		return onQueryTooltipListeners[onQueryTooltipListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackQueryTooltip(GtkStatusIcon* statusiconStruct, int x, int y, bool keyboardMode, GtkTooltip* tooltip, StatusIcon _statusicon)
+	
+	extern(C) static int callBackQueryTooltip(GtkStatusIcon* statusiconStruct, int x, int y, bool keyboardMode, GtkTooltip* tooltip,OnQueryTooltipDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(int, int, bool, Tooltip, StatusIcon) dlg; _statusicon.onQueryTooltipListeners )
-		{
-			if ( dlg(x, y, keyboardMode, ObjectG.getDObject!(Tooltip)(tooltip), _statusicon) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(x, y, keyboardMode, ObjectG.getDObject!(Tooltip)(tooltip), wrapper.outer);
+	}
+	
+	extern(C) static void callBackQueryTooltipDestroy(OnQueryTooltipDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnQueryTooltip(wrapper);
 	}
 
-	bool delegate(GdkEventScroll*, StatusIcon)[] onScrollListeners;
+	protected void internalRemoveOnQueryTooltip(OnQueryTooltipDelegateWrapper source)
+	{
+		foreach(index, wrapper; onQueryTooltipListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onQueryTooltipListeners[index] = null;
+				onQueryTooltipListeners = std.algorithm.remove(onQueryTooltipListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnScrollDelegateWrapper
+	{
+		bool delegate(GdkEventScroll*, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GdkEventScroll*, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnScrollDelegateWrapper[] onScrollListeners;
+
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
 	 * range is pressed. Wheel mice are usually configured to generate
@@ -1123,35 +1297,57 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.16
 	 */
-	void addOnScroll(bool delegate(GdkEventScroll*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnScroll(bool delegate(GdkEventScroll*, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "scroll-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"scroll-event",
-				cast(GCallback)&callBackScroll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["scroll-event"] = 1;
-		}
-		onScrollListeners ~= dlg;
+		onScrollListeners ~= new OnScrollDelegateWrapper(dlg, 0, connectFlags);
+		onScrollListeners[onScrollListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"scroll-event",
+			cast(GCallback)&callBackScroll,
+			cast(void*)onScrollListeners[onScrollListeners.length - 1],
+			cast(GClosureNotify)&callBackScrollDestroy,
+			connectFlags);
+		return onScrollListeners[onScrollListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackScroll(GtkStatusIcon* statusiconStruct, GdkEventScroll* event, StatusIcon _statusicon)
+	
+	extern(C) static int callBackScroll(GtkStatusIcon* statusiconStruct, GdkEventScroll* event,OnScrollDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GdkEventScroll*, StatusIcon) dlg; _statusicon.onScrollListeners )
-		{
-			if ( dlg(event, _statusicon) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(event, wrapper.outer);
+	}
+	
+	extern(C) static void callBackScrollDestroy(OnScrollDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnScroll(wrapper);
 	}
 
-	bool delegate(Event, StatusIcon)[] onScrollEventGenericListeners;
+	protected void internalRemoveOnScroll(OnScrollDelegateWrapper source)
+	{
+		foreach(index, wrapper; onScrollListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onScrollListeners[index] = null;
+				onScrollListeners = std.algorithm.remove(onScrollListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnScrollEventGenericDelegateWrapper
+	{
+		bool delegate(Event, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(Event, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnScrollEventGenericDelegateWrapper[] onScrollEventGenericListeners;
+	
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
 	 * range is pressed. Wheel mice are usually configured to generate
@@ -1168,35 +1364,56 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.16
 	 */
-	void addOnScroll(bool delegate(Event, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnScroll(bool delegate(Event, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "scroll-event-generic-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"scroll-event",
-				cast(GCallback)&callBackScrollEventGeneric,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["scroll-event-generic-event"] = 1;
-		}
-		onScrollEventGenericListeners ~= dlg;
+		onScrollEventGenericListeners ~= new OnScrollEventGenericDelegateWrapper(dlg, 0, connectFlags);
+		onScrollEventGenericListeners[onScrollEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"scroll-event",
+			cast(GCallback)&callBackScrollEventGeneric,
+			cast(void*)onScrollEventGenericListeners[onScrollEventGenericListeners.length - 1],
+			cast(GClosureNotify)&callBackScrollEventGenericDestroy,
+			connectFlags);
+		return onScrollEventGenericListeners[onScrollEventGenericListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackScrollEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event, StatusIcon _statusicon)
+	
+	extern(C) static int callBackScrollEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event,OnScrollEventGenericDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(Event, StatusIcon) dlg; _statusicon.onScrollEventGenericListeners )
+		return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
+	}
+	
+	extern(C) static void callBackScrollEventGenericDestroy(OnScrollEventGenericDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnScrollEventGeneric(wrapper);
+	}
+	protected void internalRemoveOnScrollEventGeneric(OnScrollEventGenericDelegateWrapper source)
+	{
+		foreach(index, wrapper; onScrollEventGenericListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(Event)(event), _statusicon) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onScrollEventGenericListeners[index] = null;
+				onScrollEventGenericListeners = std.algorithm.remove(onScrollEventGenericListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 
-	bool delegate(int, StatusIcon)[] onSizeChangedListeners;
+	protected class OnSizeChangedDelegateWrapper
+	{
+		bool delegate(int, StatusIcon) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(int, StatusIcon) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSizeChangedDelegateWrapper[] onSizeChangedListeners;
+
 	/**
 	 * Gets emitted when the size available for the image
 	 * changes, e.g. because the notification area got resized.
@@ -1209,31 +1426,40 @@ public class StatusIcon : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	void addOnSizeChanged(bool delegate(int, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSizeChanged(bool delegate(int, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "size-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"size-changed",
-				cast(GCallback)&callBackSizeChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["size-changed"] = 1;
-		}
-		onSizeChangedListeners ~= dlg;
+		onSizeChangedListeners ~= new OnSizeChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSizeChangedListeners[onSizeChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"size-changed",
+			cast(GCallback)&callBackSizeChanged,
+			cast(void*)onSizeChangedListeners[onSizeChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSizeChangedDestroy,
+			connectFlags);
+		return onSizeChangedListeners[onSizeChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackSizeChanged(GtkStatusIcon* statusiconStruct, int size, StatusIcon _statusicon)
+	
+	extern(C) static int callBackSizeChanged(GtkStatusIcon* statusiconStruct, int size,OnSizeChangedDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(int, StatusIcon) dlg; _statusicon.onSizeChangedListeners )
+		return wrapper.dlg(size, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSizeChangedDestroy(OnSizeChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSizeChanged(wrapper);
+	}
+
+	protected void internalRemoveOnSizeChanged(OnSizeChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSizeChangedListeners)
 		{
-			if ( dlg(size, _statusicon) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onSizeChangedListeners[index] = null;
+				onSizeChangedListeners = std.algorithm.remove(onSizeChangedListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

@@ -36,6 +36,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
+public  import std.algorithm;
 
 
 /**
@@ -619,13 +620,20 @@ public template DtlsConnectionT(TStruct)
 		return p;
 	}
 
-	int[string] connectedSignals;
-
-	bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF)[] _onAcceptCertificateListeners;
-	@property bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF)[] onAcceptCertificateListeners()
+	protected class OnAcceptCertificateDelegateWrapper
 	{
-		return _onAcceptCertificateListeners;
+		bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnAcceptCertificateDelegateWrapper[] onAcceptCertificateListeners;
+
 	/**
 	 * Emitted during the TLS handshake after the peer certificate has
 	 * been received. You can examine @peer_cert's certification path by
@@ -672,31 +680,40 @@ public template DtlsConnectionT(TStruct)
 	 *
 	 * Since: 2.48
 	 */
-	void addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "accept-certificate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"accept-certificate",
-				cast(GCallback)&callBackAcceptCertificate,
-				cast(void*)cast(DtlsConnectionIF)this,
-				null,
-				connectFlags);
-			connectedSignals["accept-certificate"] = 1;
-		}
-		_onAcceptCertificateListeners ~= dlg;
+		onAcceptCertificateListeners ~= new OnAcceptCertificateDelegateWrapper(dlg, 0, connectFlags);
+		onAcceptCertificateListeners[onAcceptCertificateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"accept-certificate",
+			cast(GCallback)&callBackAcceptCertificate,
+			cast(void*)onAcceptCertificateListeners[onAcceptCertificateListeners.length - 1],
+			cast(GClosureNotify)&callBackAcceptCertificateDestroy,
+			connectFlags);
+		return onAcceptCertificateListeners[onAcceptCertificateListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackAcceptCertificate(GDtlsConnection* dtlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, DtlsConnectionIF _dtlsconnection)
+	
+	extern(C) static int callBackAcceptCertificate(GDtlsConnection* dtlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors,OnAcceptCertificateDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg; _dtlsconnection.onAcceptCertificateListeners )
+		return wrapper.dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, wrapper.outer);
+	}
+	
+	extern(C) static void callBackAcceptCertificateDestroy(OnAcceptCertificateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAcceptCertificate(wrapper);
+	}
+
+	protected void internalRemoveOnAcceptCertificate(OnAcceptCertificateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAcceptCertificateListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, _dtlsconnection) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onAcceptCertificateListeners[index] = null;
+				onAcceptCertificateListeners = std.algorithm.remove(onAcceptCertificateListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

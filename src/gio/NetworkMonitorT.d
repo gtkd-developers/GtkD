@@ -36,6 +36,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
+public  import std.algorithm;
 
 
 /**
@@ -222,13 +223,20 @@ public template NetworkMonitorT(TStruct)
 		return g_network_monitor_get_network_metered(getNetworkMonitorStruct()) != 0;
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(bool, NetworkMonitorIF)[] _onNetworkChangedListeners;
-	@property void delegate(bool, NetworkMonitorIF)[] onNetworkChangedListeners()
+	protected class OnNetworkChangedDelegateWrapper
 	{
-		return _onNetworkChangedListeners;
+		void delegate(bool, NetworkMonitorIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(bool, NetworkMonitorIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnNetworkChangedDelegateWrapper[] onNetworkChangedListeners;
+
 	/**
 	 * Emitted when the network configuration changes. If @available is
 	 * %TRUE, then some hosts may be reachable that were not reachable
@@ -241,26 +249,40 @@ public template NetworkMonitorT(TStruct)
 	 *
 	 * Since: 2.32
 	 */
-	void addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "network-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"network-changed",
-				cast(GCallback)&callBackNetworkChanged,
-				cast(void*)cast(NetworkMonitorIF)this,
-				null,
-				connectFlags);
-			connectedSignals["network-changed"] = 1;
-		}
-		_onNetworkChangedListeners ~= dlg;
+		onNetworkChangedListeners ~= new OnNetworkChangedDelegateWrapper(dlg, 0, connectFlags);
+		onNetworkChangedListeners[onNetworkChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"network-changed",
+			cast(GCallback)&callBackNetworkChanged,
+			cast(void*)onNetworkChangedListeners[onNetworkChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackNetworkChangedDestroy,
+			connectFlags);
+		return onNetworkChangedListeners[onNetworkChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackNetworkChanged(GNetworkMonitor* networkmonitorStruct, bool available, NetworkMonitorIF _networkmonitor)
+	
+	extern(C) static void callBackNetworkChanged(GNetworkMonitor* networkmonitorStruct, bool available,OnNetworkChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(bool, NetworkMonitorIF) dlg; _networkmonitor.onNetworkChangedListeners )
+		wrapper.dlg(available, wrapper.outer);
+	}
+	
+	extern(C) static void callBackNetworkChangedDestroy(OnNetworkChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnNetworkChanged(wrapper);
+	}
+
+	protected void internalRemoveOnNetworkChanged(OnNetworkChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onNetworkChangedListeners)
 		{
-			dlg(available, _networkmonitor);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onNetworkChangedListeners[index] = null;
+				onNetworkChangedListeners = std.algorithm.remove(onNetworkChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

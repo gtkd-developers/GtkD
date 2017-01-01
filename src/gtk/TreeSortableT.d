@@ -28,6 +28,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
+public  import std.algorithm;
 
 
 /**
@@ -139,38 +140,59 @@ public template TreeSortableT(TStruct)
 		gtk_tree_sortable_sort_column_changed(getTreeSortableStruct());
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(TreeSortableIF)[] _onSortColumnChangedListeners;
-	@property void delegate(TreeSortableIF)[] onSortColumnChangedListeners()
+	protected class OnSortColumnChangedDelegateWrapper
 	{
-		return _onSortColumnChangedListeners;
+		void delegate(TreeSortableIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreeSortableIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnSortColumnChangedDelegateWrapper[] onSortColumnChangedListeners;
+
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column
 	 * or sort order of @sortable is changed. The signal is emitted before
 	 * the contents of @sortable are resorted.
 	 */
-	void addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "sort-column-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"sort-column-changed",
-				cast(GCallback)&callBackSortColumnChanged,
-				cast(void*)cast(TreeSortableIF)this,
-				null,
-				connectFlags);
-			connectedSignals["sort-column-changed"] = 1;
-		}
-		_onSortColumnChangedListeners ~= dlg;
+		onSortColumnChangedListeners ~= new OnSortColumnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSortColumnChangedListeners[onSortColumnChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"sort-column-changed",
+			cast(GCallback)&callBackSortColumnChanged,
+			cast(void*)onSortColumnChangedListeners[onSortColumnChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSortColumnChangedDestroy,
+			connectFlags);
+		return onSortColumnChangedListeners[onSortColumnChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, TreeSortableIF _treesortable)
+	
+	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct,OnSortColumnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreeSortableIF) dlg; _treesortable.onSortColumnChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSortColumnChangedDestroy(OnSortColumnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSortColumnChanged(wrapper);
+	}
+
+	protected void internalRemoveOnSortColumnChanged(OnSortColumnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSortColumnChangedListeners)
 		{
-			dlg(_treesortable);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSortColumnChangedListeners[index] = null;
+				onSortColumnChangedListeners = std.algorithm.remove(onSortColumnChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -48,6 +48,7 @@ public  import gtkc.gtktypes;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import pango.PgTabArray;
+private import std.algorithm;
 
 
 /**
@@ -939,10 +940,9 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Converts from a position in the entry contents (returned
-	 * by gtk_entry_get_text()) to a position in the
-	 * entry’s #PangoLayout (returned by gtk_entry_get_layout(),
-	 * with text retrieved via pango_layout_get_text()).
+	 * Converts from a position in the entry’s #PangoLayout (returned by
+	 * gtk_entry_get_layout()) to a position in the entry contents
+	 * (returned by gtk_entry_get_text()).
 	 *
 	 * Params:
 	 *     layoutIndex = byte index into the entry layout text
@@ -1499,9 +1499,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	}
 
 	/**
-	 * Converts from a position in the entry’s #PangoLayout (returned by
-	 * gtk_entry_get_layout()) to a position in the entry contents
-	 * (returned by gtk_entry_get_text()).
+	 * Converts from a position in the entry contents (returned
+	 * by gtk_entry_get_text()) to a position in the
+	 * entry’s #PangoLayout (returned by gtk_entry_get_layout(),
+	 * with text retrieved via pango_layout_get_text()).
 	 *
 	 * Params:
 	 *     textIndex = byte index into the entry contents
@@ -1525,9 +1526,20 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		gtk_entry_unset_invisible_char(gtkEntry);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(Entry)[] onActivateListeners;
 	/**
 	 * The ::activate signal is emitted when the user hits
 	 * the Enter key.
@@ -1539,30 +1551,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * The default bindings for this signal are all forms of the Enter key.
 	 */
-	void addOnActivate(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GtkEntry* entryStruct, Entry _entry)
+	
+	extern(C) static void callBackActivate(GtkEntry* entryStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Entry) dlg; _entry.onActivateListeners )
-		{
-			dlg(_entry);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	void delegate(Entry)[] onBackspaceListeners;
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnBackspaceDelegateWrapper
+	{
+		void delegate(Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBackspaceDelegateWrapper[] onBackspaceListeners;
+
 	/**
 	 * The ::backspace signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1571,30 +1610,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * The default bindings for this signal are
 	 * Backspace and Shift-Backspace.
 	 */
-	void addOnBackspace(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBackspace(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "backspace" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"backspace",
-				cast(GCallback)&callBackBackspace,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["backspace"] = 1;
-		}
-		onBackspaceListeners ~= dlg;
+		onBackspaceListeners ~= new OnBackspaceDelegateWrapper(dlg, 0, connectFlags);
+		onBackspaceListeners[onBackspaceListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"backspace",
+			cast(GCallback)&callBackBackspace,
+			cast(void*)onBackspaceListeners[onBackspaceListeners.length - 1],
+			cast(GClosureNotify)&callBackBackspaceDestroy,
+			connectFlags);
+		return onBackspaceListeners[onBackspaceListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBackspace(GtkEntry* entryStruct, Entry _entry)
+	
+	extern(C) static void callBackBackspace(GtkEntry* entryStruct,OnBackspaceDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Entry) dlg; _entry.onBackspaceListeners )
-		{
-			dlg(_entry);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackBackspaceDestroy(OnBackspaceDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBackspace(wrapper);
 	}
 
-	void delegate(Entry)[] onCopyClipboardListeners;
+	protected void internalRemoveOnBackspace(OnBackspaceDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBackspaceListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBackspaceListeners[index] = null;
+				onBackspaceListeners = std.algorithm.remove(onBackspaceListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCopyClipboardDelegateWrapper
+	{
+		void delegate(Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
+
 	/**
 	 * The ::copy-clipboard signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1603,30 +1669,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * The default bindings for this signal are
 	 * Ctrl-c and Ctrl-Insert.
 	 */
-	void addOnCopyClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCopyClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "copy-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"copy-clipboard",
-				cast(GCallback)&callBackCopyClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["copy-clipboard"] = 1;
-		}
-		onCopyClipboardListeners ~= dlg;
+		onCopyClipboardListeners ~= new OnCopyClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"copy-clipboard",
+			cast(GCallback)&callBackCopyClipboard,
+			cast(void*)onCopyClipboardListeners[onCopyClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackCopyClipboardDestroy,
+			connectFlags);
+		return onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct, Entry _entry)
+	
+	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct,OnCopyClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Entry) dlg; _entry.onCopyClipboardListeners )
-		{
-			dlg(_entry);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCopyClipboard(wrapper);
 	}
 
-	void delegate(Entry)[] onCutClipboardListeners;
+	protected void internalRemoveOnCopyClipboard(OnCopyClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCopyClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCopyClipboardListeners[index] = null;
+				onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCutClipboardDelegateWrapper
+	{
+		void delegate(Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCutClipboardDelegateWrapper[] onCutClipboardListeners;
+
 	/**
 	 * The ::cut-clipboard signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1635,30 +1728,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * The default bindings for this signal are
 	 * Ctrl-x and Shift-Delete.
 	 */
-	void addOnCutClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCutClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cut-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cut-clipboard",
-				cast(GCallback)&callBackCutClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cut-clipboard"] = 1;
-		}
-		onCutClipboardListeners ~= dlg;
+		onCutClipboardListeners ~= new OnCutClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onCutClipboardListeners[onCutClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cut-clipboard",
+			cast(GCallback)&callBackCutClipboard,
+			cast(void*)onCutClipboardListeners[onCutClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackCutClipboardDestroy,
+			connectFlags);
+		return onCutClipboardListeners[onCutClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct, Entry _entry)
+	
+	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct,OnCutClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Entry) dlg; _entry.onCutClipboardListeners )
-		{
-			dlg(_entry);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCutClipboardDestroy(OnCutClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCutClipboard(wrapper);
 	}
 
-	void delegate(GtkDeleteType, int, Entry)[] onDeleteFromCursorListeners;
+	protected void internalRemoveOnCutClipboard(OnCutClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCutClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCutClipboardListeners[index] = null;
+				onCutClipboardListeners = std.algorithm.remove(onCutClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDeleteFromCursorDelegateWrapper
+	{
+		void delegate(GtkDeleteType, int, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkDeleteType, int, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDeleteFromCursorDelegateWrapper[] onDeleteFromCursorListeners;
+
 	/**
 	 * The ::delete-from-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1676,30 +1796,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     type = the granularity of the deletion, as a #GtkDeleteType
 	 *     count = the number of @type units to delete
 	 */
-	void addOnDeleteFromCursor(void delegate(GtkDeleteType, int, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDeleteFromCursor(void delegate(GtkDeleteType, int, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "delete-from-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"delete-from-cursor",
-				cast(GCallback)&callBackDeleteFromCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["delete-from-cursor"] = 1;
-		}
-		onDeleteFromCursorListeners ~= dlg;
+		onDeleteFromCursorListeners ~= new OnDeleteFromCursorDelegateWrapper(dlg, 0, connectFlags);
+		onDeleteFromCursorListeners[onDeleteFromCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"delete-from-cursor",
+			cast(GCallback)&callBackDeleteFromCursor,
+			cast(void*)onDeleteFromCursorListeners[onDeleteFromCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackDeleteFromCursorDestroy,
+			connectFlags);
+		return onDeleteFromCursorListeners[onDeleteFromCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType type, int count, Entry _entry)
+	
+	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType type, int count,OnDeleteFromCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkDeleteType, int, Entry) dlg; _entry.onDeleteFromCursorListeners )
-		{
-			dlg(type, count, _entry);
-		}
+		wrapper.dlg(type, count, wrapper.outer);
+	}
+	
+	extern(C) static void callBackDeleteFromCursorDestroy(OnDeleteFromCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDeleteFromCursor(wrapper);
 	}
 
-	void delegate(GtkEntryIconPosition, GdkEventButton*, Entry)[] onIconPressListeners;
+	protected void internalRemoveOnDeleteFromCursor(OnDeleteFromCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDeleteFromCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDeleteFromCursorListeners[index] = null;
+				onDeleteFromCursorListeners = std.algorithm.remove(onDeleteFromCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnIconPressDelegateWrapper
+	{
+		void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIconPressDelegateWrapper[] onIconPressListeners;
+
 	/**
 	 * The ::icon-press signal is emitted when an activatable icon
 	 * is clicked.
@@ -1710,30 +1857,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Since: 2.16
 	 */
-	void addOnIconPress(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconPress(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "icon-press" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"icon-press",
-				cast(GCallback)&callBackIconPress,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["icon-press"] = 1;
-		}
-		onIconPressListeners ~= dlg;
+		onIconPressListeners ~= new OnIconPressDelegateWrapper(dlg, 0, connectFlags);
+		onIconPressListeners[onIconPressListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"icon-press",
+			cast(GCallback)&callBackIconPress,
+			cast(void*)onIconPressListeners[onIconPressListeners.length - 1],
+			cast(GClosureNotify)&callBackIconPressDestroy,
+			connectFlags);
+		return onIconPressListeners[onIconPressListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIconPress(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEventButton* event, Entry _entry)
+	
+	extern(C) static void callBackIconPress(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEventButton* event,OnIconPressDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg; _entry.onIconPressListeners )
-		{
-			dlg(iconPos, event, _entry);
-		}
+		wrapper.dlg(iconPos, event, wrapper.outer);
+	}
+	
+	extern(C) static void callBackIconPressDestroy(OnIconPressDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIconPress(wrapper);
 	}
 
-	void delegate(GtkEntryIconPosition, Event, Entry)[] onIconPressGenericListeners;
+	protected void internalRemoveOnIconPress(OnIconPressDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIconPressListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIconPressListeners[index] = null;
+				onIconPressListeners = std.algorithm.remove(onIconPressListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnIconPressGenericDelegateWrapper
+	{
+		void delegate(GtkEntryIconPosition, Event, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkEntryIconPosition, Event, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIconPressGenericDelegateWrapper[] onIconPressGenericListeners;
+	
 	/**
 	 * The ::icon-press signal is emitted when an activatable icon
 	 * is clicked.
@@ -1744,30 +1918,56 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Since: 2.16
 	 */
-	void addOnIconPress(void delegate(GtkEntryIconPosition, Event, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconPress(void delegate(GtkEntryIconPosition, Event, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "icon-press-generic-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"icon-press",
-				cast(GCallback)&callBackIconPressGeneric,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["icon-press-generic-event"] = 1;
-		}
-		onIconPressGenericListeners ~= dlg;
+		onIconPressGenericListeners ~= new OnIconPressGenericDelegateWrapper(dlg, 0, connectFlags);
+		onIconPressGenericListeners[onIconPressGenericListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"icon-press",
+			cast(GCallback)&callBackIconPressGeneric,
+			cast(void*)onIconPressGenericListeners[onIconPressGenericListeners.length - 1],
+			cast(GClosureNotify)&callBackIconPressGenericDestroy,
+			connectFlags);
+		return onIconPressGenericListeners[onIconPressGenericListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIconPressGeneric(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, Entry _entry)
+	
+	extern(C) static void callBackIconPressGeneric(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event,OnIconPressGenericDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkEntryIconPosition, Event, Entry) dlg; _entry.onIconPressGenericListeners )
+		wrapper.dlg(iconPos, ObjectG.getDObject!(Event)(event), wrapper.outer);
+	}
+	
+	extern(C) static void callBackIconPressGenericDestroy(OnIconPressGenericDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIconPressGeneric(wrapper);
+	}
+	protected void internalRemoveOnIconPressGeneric(OnIconPressGenericDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIconPressGenericListeners)
 		{
-			dlg(iconPos, ObjectG.getDObject!(Event)(event), _entry);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIconPressGenericListeners[index] = null;
+				onIconPressGenericListeners = std.algorithm.remove(onIconPressGenericListeners, index);
+				break;
+			}
 		}
 	}
+	
 
-	void delegate(GtkEntryIconPosition, GdkEventButton*, Entry)[] onIconReleaseListeners;
+	protected class OnIconReleaseDelegateWrapper
+	{
+		void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIconReleaseDelegateWrapper[] onIconReleaseListeners;
+
 	/**
 	 * The ::icon-release signal is emitted on the button release from a
 	 * mouse click over an activatable icon.
@@ -1778,30 +1978,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Since: 2.16
 	 */
-	void addOnIconRelease(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconRelease(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "icon-release" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"icon-release",
-				cast(GCallback)&callBackIconRelease,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["icon-release"] = 1;
-		}
-		onIconReleaseListeners ~= dlg;
+		onIconReleaseListeners ~= new OnIconReleaseDelegateWrapper(dlg, 0, connectFlags);
+		onIconReleaseListeners[onIconReleaseListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"icon-release",
+			cast(GCallback)&callBackIconRelease,
+			cast(void*)onIconReleaseListeners[onIconReleaseListeners.length - 1],
+			cast(GClosureNotify)&callBackIconReleaseDestroy,
+			connectFlags);
+		return onIconReleaseListeners[onIconReleaseListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIconRelease(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEventButton* event, Entry _entry)
+	
+	extern(C) static void callBackIconRelease(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEventButton* event,OnIconReleaseDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg; _entry.onIconReleaseListeners )
-		{
-			dlg(iconPos, event, _entry);
-		}
+		wrapper.dlg(iconPos, event, wrapper.outer);
+	}
+	
+	extern(C) static void callBackIconReleaseDestroy(OnIconReleaseDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIconRelease(wrapper);
 	}
 
-	void delegate(GtkEntryIconPosition, Event, Entry)[] onIconReleaseGenericListeners;
+	protected void internalRemoveOnIconRelease(OnIconReleaseDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIconReleaseListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIconReleaseListeners[index] = null;
+				onIconReleaseListeners = std.algorithm.remove(onIconReleaseListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnIconReleaseGenericDelegateWrapper
+	{
+		void delegate(GtkEntryIconPosition, Event, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkEntryIconPosition, Event, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIconReleaseGenericDelegateWrapper[] onIconReleaseGenericListeners;
+	
 	/**
 	 * The ::icon-release signal is emitted on the button release from a
 	 * mouse click over an activatable icon.
@@ -1812,30 +2039,56 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Since: 2.16
 	 */
-	void addOnIconRelease(void delegate(GtkEntryIconPosition, Event, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIconRelease(void delegate(GtkEntryIconPosition, Event, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "icon-release-generic-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"icon-release",
-				cast(GCallback)&callBackIconReleaseGeneric,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["icon-release-generic-event"] = 1;
-		}
-		onIconReleaseGenericListeners ~= dlg;
+		onIconReleaseGenericListeners ~= new OnIconReleaseGenericDelegateWrapper(dlg, 0, connectFlags);
+		onIconReleaseGenericListeners[onIconReleaseGenericListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"icon-release",
+			cast(GCallback)&callBackIconReleaseGeneric,
+			cast(void*)onIconReleaseGenericListeners[onIconReleaseGenericListeners.length - 1],
+			cast(GClosureNotify)&callBackIconReleaseGenericDestroy,
+			connectFlags);
+		return onIconReleaseGenericListeners[onIconReleaseGenericListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackIconReleaseGeneric(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, Entry _entry)
+	
+	extern(C) static void callBackIconReleaseGeneric(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event,OnIconReleaseGenericDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkEntryIconPosition, Event, Entry) dlg; _entry.onIconReleaseGenericListeners )
+		wrapper.dlg(iconPos, ObjectG.getDObject!(Event)(event), wrapper.outer);
+	}
+	
+	extern(C) static void callBackIconReleaseGenericDestroy(OnIconReleaseGenericDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIconReleaseGeneric(wrapper);
+	}
+	protected void internalRemoveOnIconReleaseGeneric(OnIconReleaseGenericDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIconReleaseGenericListeners)
 		{
-			dlg(iconPos, ObjectG.getDObject!(Event)(event), _entry);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onIconReleaseGenericListeners[index] = null;
+				onIconReleaseGenericListeners = std.algorithm.remove(onIconReleaseGenericListeners, index);
+				break;
+			}
 		}
 	}
+	
 
-	void delegate(string, Entry)[] onInsertAtCursorListeners;
+	protected class OnInsertAtCursorDelegateWrapper
+	{
+		void delegate(string, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnInsertAtCursorDelegateWrapper[] onInsertAtCursorListeners;
+
 	/**
 	 * The ::insert-at-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1847,30 +2100,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     str = the string to insert
 	 */
-	void addOnInsertAtCursor(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnInsertAtCursor(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "insert-at-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"insert-at-cursor",
-				cast(GCallback)&callBackInsertAtCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["insert-at-cursor"] = 1;
-		}
-		onInsertAtCursorListeners ~= dlg;
+		onInsertAtCursorListeners ~= new OnInsertAtCursorDelegateWrapper(dlg, 0, connectFlags);
+		onInsertAtCursorListeners[onInsertAtCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"insert-at-cursor",
+			cast(GCallback)&callBackInsertAtCursor,
+			cast(void*)onInsertAtCursorListeners[onInsertAtCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackInsertAtCursorDestroy,
+			connectFlags);
+		return onInsertAtCursorListeners[onInsertAtCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, char* str, Entry _entry)
+	
+	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, char* str,OnInsertAtCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, Entry) dlg; _entry.onInsertAtCursorListeners )
-		{
-			dlg(Str.toString(str), _entry);
-		}
+		wrapper.dlg(Str.toString(str), wrapper.outer);
+	}
+	
+	extern(C) static void callBackInsertAtCursorDestroy(OnInsertAtCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnInsertAtCursor(wrapper);
 	}
 
-	void delegate(GtkMovementStep, int, bool, Entry)[] onMoveCursorListeners;
+	protected void internalRemoveOnInsertAtCursor(OnInsertAtCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onInsertAtCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onInsertAtCursorListeners[index] = null;
+				onInsertAtCursorListeners = std.algorithm.remove(onInsertAtCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveCursorDelegateWrapper
+	{
+		void delegate(GtkMovementStep, int, bool, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkMovementStep, int, bool, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
+
 	/**
 	 * The ::move-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1895,30 +2175,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     count = the number of @step units to move
 	 *     extendSelection = %TRUE if the move should extend the selection
 	 */
-	void addOnMoveCursor(void delegate(GtkMovementStep, int, bool, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, bool, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-cursor",
-				cast(GCallback)&callBackMoveCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-cursor"] = 1;
-		}
-		onMoveCursorListeners ~= dlg;
+		onMoveCursorListeners ~= new OnMoveCursorDelegateWrapper(dlg, 0, connectFlags);
+		onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-cursor",
+			cast(GCallback)&callBackMoveCursor,
+			cast(void*)onMoveCursorListeners[onMoveCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveCursorDestroy,
+			connectFlags);
+		return onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep step, int count, bool extendSelection, Entry _entry)
+	
+	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep step, int count, bool extendSelection,OnMoveCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkMovementStep, int, bool, Entry) dlg; _entry.onMoveCursorListeners )
-		{
-			dlg(step, count, extendSelection, _entry);
-		}
+		wrapper.dlg(step, count, extendSelection, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveCursor(wrapper);
 	}
 
-	void delegate(Entry)[] onPasteClipboardListeners;
+	protected void internalRemoveOnMoveCursor(OnMoveCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveCursorListeners[index] = null;
+				onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPasteClipboardDelegateWrapper
+	{
+		void delegate(Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPasteClipboardDelegateWrapper[] onPasteClipboardListeners;
+
 	/**
 	 * The ::paste-clipboard signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1928,30 +2235,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * The default bindings for this signal are
 	 * Ctrl-v and Shift-Insert.
 	 */
-	void addOnPasteClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPasteClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "paste-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"paste-clipboard",
-				cast(GCallback)&callBackPasteClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["paste-clipboard"] = 1;
-		}
-		onPasteClipboardListeners ~= dlg;
+		onPasteClipboardListeners ~= new OnPasteClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onPasteClipboardListeners[onPasteClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"paste-clipboard",
+			cast(GCallback)&callBackPasteClipboard,
+			cast(void*)onPasteClipboardListeners[onPasteClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackPasteClipboardDestroy,
+			connectFlags);
+		return onPasteClipboardListeners[onPasteClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct, Entry _entry)
+	
+	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct,OnPasteClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Entry) dlg; _entry.onPasteClipboardListeners )
-		{
-			dlg(_entry);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPasteClipboardDestroy(OnPasteClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPasteClipboard(wrapper);
 	}
 
-	void delegate(Widget, Entry)[] onPopulatePopupListeners;
+	protected void internalRemoveOnPasteClipboard(OnPasteClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPasteClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPasteClipboardListeners[index] = null;
+				onPasteClipboardListeners = std.algorithm.remove(onPasteClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPopulatePopupDelegateWrapper
+	{
+		void delegate(Widget, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
+
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
 	 * context menu of the entry.
@@ -1967,32 +2301,59 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * type of @widget.
 	 *
 	 * Params:
-	 *     popup = the container that is being populated
+	 *     widget = the container that is being populated
 	 */
-	void addOnPopulatePopup(void delegate(Widget, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopulatePopup(void delegate(Widget, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "populate-popup" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"populate-popup",
-				cast(GCallback)&callBackPopulatePopup,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["populate-popup"] = 1;
-		}
-		onPopulatePopupListeners ~= dlg;
+		onPopulatePopupListeners ~= new OnPopulatePopupDelegateWrapper(dlg, 0, connectFlags);
+		onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"populate-popup",
+			cast(GCallback)&callBackPopulatePopup,
+			cast(void*)onPopulatePopupListeners[onPopulatePopupListeners.length - 1],
+			cast(GClosureNotify)&callBackPopulatePopupDestroy,
+			connectFlags);
+		return onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkWidget* popup, Entry _entry)
+	
+	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkWidget* widget,OnPopulatePopupDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, Entry) dlg; _entry.onPopulatePopupListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(popup), _entry);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopulatePopup(wrapper);
 	}
 
-	void delegate(string, Entry)[] onPreeditChangedListeners;
+	protected void internalRemoveOnPopulatePopup(OnPopulatePopupDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopulatePopupListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopulatePopupListeners[index] = null;
+				onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPreeditChangedDelegateWrapper
+	{
+		void delegate(string, Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPreeditChangedDelegateWrapper[] onPreeditChangedListeners;
+
 	/**
 	 * If an input method is used, the typed text will not immediately
 	 * be committed to the buffer. So if you are interested in the text,
@@ -2003,30 +2364,57 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * Since: 2.20
 	 */
-	void addOnPreeditChanged(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPreeditChanged(void delegate(string, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "preedit-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"preedit-changed",
-				cast(GCallback)&callBackPreeditChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["preedit-changed"] = 1;
-		}
-		onPreeditChangedListeners ~= dlg;
+		onPreeditChangedListeners ~= new OnPreeditChangedDelegateWrapper(dlg, 0, connectFlags);
+		onPreeditChangedListeners[onPreeditChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"preedit-changed",
+			cast(GCallback)&callBackPreeditChanged,
+			cast(void*)onPreeditChangedListeners[onPreeditChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackPreeditChangedDestroy,
+			connectFlags);
+		return onPreeditChangedListeners[onPreeditChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPreeditChanged(GtkEntry* entryStruct, char* preedit, Entry _entry)
+	
+	extern(C) static void callBackPreeditChanged(GtkEntry* entryStruct, char* preedit,OnPreeditChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, Entry) dlg; _entry.onPreeditChangedListeners )
-		{
-			dlg(Str.toString(preedit), _entry);
-		}
+		wrapper.dlg(Str.toString(preedit), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPreeditChangedDestroy(OnPreeditChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPreeditChanged(wrapper);
 	}
 
-	void delegate(Entry)[] onToggleOverwriteListeners;
+	protected void internalRemoveOnPreeditChanged(OnPreeditChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPreeditChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPreeditChangedListeners[index] = null;
+				onPreeditChangedListeners = std.algorithm.remove(onPreeditChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleOverwriteDelegateWrapper
+	{
+		void delegate(Entry) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Entry) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleOverwriteDelegateWrapper[] onToggleOverwriteListeners;
+
 	/**
 	 * The ::toggle-overwrite signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -2034,26 +2422,40 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *
 	 * The default bindings for this signal is Insert.
 	 */
-	void addOnToggleOverwrite(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleOverwrite(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-overwrite" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-overwrite",
-				cast(GCallback)&callBackToggleOverwrite,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-overwrite"] = 1;
-		}
-		onToggleOverwriteListeners ~= dlg;
+		onToggleOverwriteListeners ~= new OnToggleOverwriteDelegateWrapper(dlg, 0, connectFlags);
+		onToggleOverwriteListeners[onToggleOverwriteListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-overwrite",
+			cast(GCallback)&callBackToggleOverwrite,
+			cast(void*)onToggleOverwriteListeners[onToggleOverwriteListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleOverwriteDestroy,
+			connectFlags);
+		return onToggleOverwriteListeners[onToggleOverwriteListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct, Entry _entry)
+	
+	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct,OnToggleOverwriteDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Entry) dlg; _entry.onToggleOverwriteListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleOverwriteDestroy(OnToggleOverwriteDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleOverwrite(wrapper);
+	}
+
+	protected void internalRemoveOnToggleOverwrite(OnToggleOverwriteDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleOverwriteListeners)
 		{
-			dlg(_entry);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleOverwriteListeners[index] = null;
+				onToggleOverwriteListeners = std.algorithm.remove(onToggleOverwriteListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

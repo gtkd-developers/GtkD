@@ -42,6 +42,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -447,7 +448,14 @@ public class Menu : MenuShell
 		return Str.toString(gtk_menu_get_title(gtkMenu));
 	}
 
-	/** */
+	/**
+	 * Places @menu on the given monitor.
+	 *
+	 * Params:
+	 *     monitor = the monitor to place the menu on
+	 *
+	 * Since: 3.22
+	 */
 	public void placeOnMonitor(MonitorG monitor)
 	{
 		gtk_menu_place_on_monitor(gtkMenu, (monitor is null) ? null : monitor.getMonitorGStruct());
@@ -813,34 +821,72 @@ public class Menu : MenuShell
 		gtk_menu_set_title(gtkMenu, Str.toStringz(title));
 	}
 
-	int[string] connectedSignals;
+	protected class OnMoveScrollDelegateWrapper
+	{
+		void delegate(GtkScrollType, Menu) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkScrollType, Menu) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveScrollDelegateWrapper[] onMoveScrollListeners;
 
-	void delegate(GtkScrollType, Menu)[] onMoveScrollListeners;
 	/** */
-	void addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-scroll" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-scroll",
-				cast(GCallback)&callBackMoveScroll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-scroll"] = 1;
-		}
-		onMoveScrollListeners ~= dlg;
+		onMoveScrollListeners ~= new OnMoveScrollDelegateWrapper(dlg, 0, connectFlags);
+		onMoveScrollListeners[onMoveScrollListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-scroll",
+			cast(GCallback)&callBackMoveScroll,
+			cast(void*)onMoveScrollListeners[onMoveScrollListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveScrollDestroy,
+			connectFlags);
+		return onMoveScrollListeners[onMoveScrollListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType scrollType, Menu _menu)
+	
+	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType scrollType,OnMoveScrollDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkScrollType, Menu) dlg; _menu.onMoveScrollListeners )
-		{
-			dlg(scrollType, _menu);
-		}
+		wrapper.dlg(scrollType, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveScrollDestroy(OnMoveScrollDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveScroll(wrapper);
 	}
 
-	void delegate(void*, void*, bool, bool, Menu)[] onPoppedUpListeners;
+	protected void internalRemoveOnMoveScroll(OnMoveScrollDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveScrollListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveScrollListeners[index] = null;
+				onMoveScrollListeners = std.algorithm.remove(onMoveScrollListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPoppedUpDelegateWrapper
+	{
+		void delegate(void*, void*, bool, bool, Menu) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(void*, void*, bool, bool, Menu) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPoppedUpDelegateWrapper[] onPoppedUpListeners;
+
 	/**
 	 * Emitted when the position of @menu is finalized after being popped up
 	 * using gtk_menu_popup_at_rect (), gtk_menu_popup_at_widget (), or
@@ -875,26 +921,40 @@ public class Menu : MenuShell
 	 *
 	 * Since: 3.22
 	 */
-	void addOnPoppedUp(void delegate(void*, void*, bool, bool, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPoppedUp(void delegate(void*, void*, bool, bool, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "popped-up" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"popped-up",
-				cast(GCallback)&callBackPoppedUp,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["popped-up"] = 1;
-		}
-		onPoppedUpListeners ~= dlg;
+		onPoppedUpListeners ~= new OnPoppedUpDelegateWrapper(dlg, 0, connectFlags);
+		onPoppedUpListeners[onPoppedUpListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"popped-up",
+			cast(GCallback)&callBackPoppedUp,
+			cast(void*)onPoppedUpListeners[onPoppedUpListeners.length - 1],
+			cast(GClosureNotify)&callBackPoppedUpDestroy,
+			connectFlags);
+		return onPoppedUpListeners[onPoppedUpListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPoppedUp(GtkMenu* menuStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY, Menu _menu)
+	
+	extern(C) static void callBackPoppedUp(GtkMenu* menuStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY,OnPoppedUpDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(void*, void*, bool, bool, Menu) dlg; _menu.onPoppedUpListeners )
+		wrapper.dlg(flippedRect, finalRect, flippedX, flippedY, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPoppedUpDestroy(OnPoppedUpDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPoppedUp(wrapper);
+	}
+
+	protected void internalRemoveOnPoppedUp(OnPoppedUpDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPoppedUpListeners)
 		{
-			dlg(flippedRect, finalRect, flippedX, flippedY, _menu);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPoppedUpListeners[index] = null;
+				onPoppedUpListeners = std.algorithm.remove(onPoppedUpListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -35,6 +35,7 @@ public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgLayout;
+private import std.algorithm;
 
 
 /**
@@ -391,9 +392,20 @@ public class Scale : Range
 		gtk_scale_set_value_pos(gtkScale, pos);
 	}
 
-	int[string] connectedSignals;
+	protected class OnFormatValueDelegateWrapper
+	{
+		string delegate(double, Scale) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(string delegate(double, Scale) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFormatValueDelegateWrapper[] onFormatValueListeners;
 
-	string delegate(double, Scale)[] onFormatValueListeners;
 	/**
 	 * Signal which allows you to change how the scale value is displayed.
 	 * Connect a signal handler which returns an allocated string representing
@@ -416,23 +428,40 @@ public class Scale : Range
 	 *
 	 * Return: allocated string representing @value
 	 */
-	void addOnFormatValue(string delegate(double, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFormatValue(string delegate(double, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "format-value" !in connectedSignals )
+		onFormatValueListeners ~= new OnFormatValueDelegateWrapper(dlg, 0, connectFlags);
+		onFormatValueListeners[onFormatValueListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"format-value",
+			cast(GCallback)&callBackFormatValue,
+			cast(void*)onFormatValueListeners[onFormatValueListeners.length - 1],
+			cast(GClosureNotify)&callBackFormatValueDestroy,
+			connectFlags);
+		return onFormatValueListeners[onFormatValueListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static string callBackFormatValue(GtkScale* scaleStruct, double value,OnFormatValueDelegateWrapper wrapper)
+	{
+		return wrapper.dlg(value, wrapper.outer);
+	}
+	
+	extern(C) static void callBackFormatValueDestroy(OnFormatValueDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFormatValue(wrapper);
+	}
+
+	protected void internalRemoveOnFormatValue(OnFormatValueDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFormatValueListeners)
 		{
-			Signals.connectData(
-				this,
-				"format-value",
-				cast(GCallback)&callBackFormatValue,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["format-value"] = 1;
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFormatValueListeners[index] = null;
+				onFormatValueListeners = std.algorithm.remove(onFormatValueListeners, index);
+				break;
+			}
 		}
-		onFormatValueListeners ~= dlg;
 	}
-	extern(C) static string callBackFormatValue(GtkScale* scaleStruct, double value, Scale _scale)
-	{
-		return _scale.onFormatValueListeners[0](value, _scale);
-	}
+	
 }

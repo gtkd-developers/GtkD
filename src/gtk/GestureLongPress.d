@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -107,39 +108,77 @@ public class GestureLongPress : GestureSingle
 		this(cast(GtkGestureLongPress*) p, true);
 	}
 
-	int[string] connectedSignals;
+	protected class OnCancelledDelegateWrapper
+	{
+		void delegate(GestureLongPress) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GestureLongPress) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCancelledDelegateWrapper[] onCancelledListeners;
 
-	void delegate(GestureLongPress)[] onCancelledListeners;
 	/**
 	 * This signal is emitted whenever a press moved too far, or was released
 	 * before #GtkGestureLongPress::pressed happened.
 	 *
 	 * Since: 3.14
 	 */
-	void addOnCancelled(void delegate(GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCancelled(void delegate(GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cancelled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cancelled",
-				cast(GCallback)&callBackCancelled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cancelled"] = 1;
-		}
-		onCancelledListeners ~= dlg;
+		onCancelledListeners ~= new OnCancelledDelegateWrapper(dlg, 0, connectFlags);
+		onCancelledListeners[onCancelledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cancelled",
+			cast(GCallback)&callBackCancelled,
+			cast(void*)onCancelledListeners[onCancelledListeners.length - 1],
+			cast(GClosureNotify)&callBackCancelledDestroy,
+			connectFlags);
+		return onCancelledListeners[onCancelledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCancelled(GtkGestureLongPress* gesturelongpressStruct, GestureLongPress _gesturelongpress)
+	
+	extern(C) static void callBackCancelled(GtkGestureLongPress* gesturelongpressStruct,OnCancelledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GestureLongPress) dlg; _gesturelongpress.onCancelledListeners )
-		{
-			dlg(_gesturelongpress);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCancelled(wrapper);
 	}
 
-	void delegate(double, double, GestureLongPress)[] onPressedListeners;
+	protected void internalRemoveOnCancelled(OnCancelledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCancelledListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCancelledListeners[index] = null;
+				onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPressedDelegateWrapper
+	{
+		void delegate(double, double, GestureLongPress) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(double, double, GestureLongPress) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPressedDelegateWrapper[] onPressedListeners;
+
 	/**
 	 * This signal is emitted whenever a press goes unmoved/unreleased longer than
 	 * what the GTK+ defaults tell.
@@ -150,26 +189,40 @@ public class GestureLongPress : GestureSingle
 	 *
 	 * Since: 3.14
 	 */
-	void addOnPressed(void delegate(double, double, GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPressed(void delegate(double, double, GestureLongPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "pressed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"pressed",
-				cast(GCallback)&callBackPressed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["pressed"] = 1;
-		}
-		onPressedListeners ~= dlg;
+		onPressedListeners ~= new OnPressedDelegateWrapper(dlg, 0, connectFlags);
+		onPressedListeners[onPressedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"pressed",
+			cast(GCallback)&callBackPressed,
+			cast(void*)onPressedListeners[onPressedListeners.length - 1],
+			cast(GClosureNotify)&callBackPressedDestroy,
+			connectFlags);
+		return onPressedListeners[onPressedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPressed(GtkGestureLongPress* gesturelongpressStruct, double x, double y, GestureLongPress _gesturelongpress)
+	
+	extern(C) static void callBackPressed(GtkGestureLongPress* gesturelongpressStruct, double x, double y,OnPressedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(double, double, GestureLongPress) dlg; _gesturelongpress.onPressedListeners )
+		wrapper.dlg(x, y, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPressed(wrapper);
+	}
+
+	protected void internalRemoveOnPressed(OnPressedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPressedListeners)
 		{
-			dlg(x, y, _gesturelongpress);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPressedListeners[index] = null;
+				onPressedListeners = std.algorithm.remove(onPressedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

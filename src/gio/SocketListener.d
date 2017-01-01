@@ -37,6 +37,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -497,9 +498,20 @@ public class SocketListener : ObjectG
 		g_socket_listener_set_backlog(gSocketListener, listenBacklog);
 	}
 
-	int[string] connectedSignals;
+	protected class OnDelegateWrapper
+	{
+		void delegate(GSocketListenerEvent, Socket, SocketListener) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDelegateWrapper[] onListeners;
 
-	void delegate(GSocketListenerEvent, Socket, SocketListener)[] onListeners;
 	/**
 	 * Emitted when @listener's activity on @socket changes state.
 	 * Note that when @listener is used to listen on both IPv4 and
@@ -512,26 +524,40 @@ public class SocketListener : ObjectG
 	 *
 	 * Since: 2.46
 	 */
-	void addOn(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOn(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"event",
-				cast(GCallback)&callBack,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["event"] = 1;
-		}
-		onListeners ~= dlg;
+		onListeners ~= new OnDelegateWrapper(dlg, 0, connectFlags);
+		onListeners[onListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"event",
+			cast(GCallback)&callBack,
+			cast(void*)onListeners[onListeners.length - 1],
+			cast(GClosureNotify)&callBackDestroy,
+			connectFlags);
+		return onListeners[onListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBack(GSocketListener* socketlistenerStruct, GSocketListenerEvent event, GSocket* socket, SocketListener _socketlistener)
+	
+	extern(C) static void callBack(GSocketListener* socketlistenerStruct, GSocketListenerEvent event, GSocket* socket,OnDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GSocketListenerEvent, Socket, SocketListener) dlg; _socketlistener.onListeners )
+		wrapper.dlg(event, ObjectG.getDObject!(Socket)(socket), wrapper.outer);
+	}
+	
+	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOn(wrapper);
+	}
+
+	protected void internalRemoveOn(OnDelegateWrapper source)
+	{
+		foreach(index, wrapper; onListeners)
 		{
-			dlg(event, ObjectG.getDObject!(Socket)(socket), _socketlistener);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onListeners[index] = null;
+				onListeners = std.algorithm.remove(onListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

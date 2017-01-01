@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -202,9 +203,20 @@ public class LinkButton : Button
 		gtk_link_button_set_visited(gtkLinkButton, visited);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateLinkDelegateWrapper
+	{
+		bool delegate(LinkButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(LinkButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateLinkDelegateWrapper[] onActivateLinkListeners;
 
-	bool delegate(LinkButton)[] onActivateLinkListeners;
 	/**
 	 * The ::activate-link signal is emitted each time the #GtkLinkButton
 	 * has been clicked.
@@ -216,31 +228,40 @@ public class LinkButton : Button
 	 * signal and stop the propagation of the signal by returning %TRUE from
 	 * your handler.
 	 */
-	void addOnActivateLink(bool delegate(LinkButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivateLink(bool delegate(LinkButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate-link" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate-link",
-				cast(GCallback)&callBackActivateLink,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate-link"] = 1;
-		}
-		onActivateLinkListeners ~= dlg;
+		onActivateLinkListeners ~= new OnActivateLinkDelegateWrapper(dlg, 0, connectFlags);
+		onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate-link",
+			cast(GCallback)&callBackActivateLink,
+			cast(void*)onActivateLinkListeners[onActivateLinkListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateLinkDestroy,
+			connectFlags);
+		return onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackActivateLink(GtkLinkButton* linkbuttonStruct, LinkButton _linkbutton)
+	
+	extern(C) static int callBackActivateLink(GtkLinkButton* linkbuttonStruct,OnActivateLinkDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(LinkButton) dlg; _linkbutton.onActivateLinkListeners )
+		return wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivateLink(wrapper);
+	}
+
+	protected void internalRemoveOnActivateLink(OnActivateLinkDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateLinkListeners)
 		{
-			if ( dlg(_linkbutton) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onActivateLinkListeners[index] = null;
+				onActivateLinkListeners = std.algorithm.remove(onActivateLinkListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

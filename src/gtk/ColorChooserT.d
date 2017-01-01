@@ -30,6 +30,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
+public  import std.algorithm;
 
 
 /**
@@ -144,13 +145,20 @@ public template ColorChooserT(TStruct)
 		gtk_color_chooser_set_use_alpha(getColorChooserStruct(), useAlpha);
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(RGBA, ColorChooserIF)[] _onColorActivatedListeners;
-	@property void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners()
+	protected class OnColorActivatedDelegateWrapper
 	{
-		return _onColorActivatedListeners;
+		void delegate(RGBA, ColorChooserIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(RGBA, ColorChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnColorActivatedDelegateWrapper[] onColorActivatedListeners;
+
 	/**
 	 * Emitted when a color is activated from the color chooser.
 	 * This usually happens when the user clicks a color swatch,
@@ -162,26 +170,40 @@ public template ColorChooserT(TStruct)
 	 *
 	 * Since: 3.4
 	 */
-	void addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "color-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"color-activated",
-				cast(GCallback)&callBackColorActivated,
-				cast(void*)cast(ColorChooserIF)this,
-				null,
-				connectFlags);
-			connectedSignals["color-activated"] = 1;
-		}
-		_onColorActivatedListeners ~= dlg;
+		onColorActivatedListeners ~= new OnColorActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onColorActivatedListeners[onColorActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"color-activated",
+			cast(GCallback)&callBackColorActivated,
+			cast(void*)onColorActivatedListeners[onColorActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackColorActivatedDestroy,
+			connectFlags);
+		return onColorActivatedListeners[onColorActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackColorActivated(GtkColorChooser* colorchooserStruct, GdkRGBA* color, ColorChooserIF _colorchooser)
+	
+	extern(C) static void callBackColorActivated(GtkColorChooser* colorchooserStruct, GdkRGBA* color,OnColorActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(RGBA, ColorChooserIF) dlg; _colorchooser.onColorActivatedListeners )
+		wrapper.dlg(ObjectG.getDObject!(RGBA)(color), wrapper.outer);
+	}
+	
+	extern(C) static void callBackColorActivatedDestroy(OnColorActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnColorActivated(wrapper);
+	}
+
+	protected void internalRemoveOnColorActivated(OnColorActivatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onColorActivatedListeners)
 		{
-			dlg(ObjectG.getDObject!(RGBA)(color), _colorchooser);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onColorActivatedListeners[index] = null;
+				onColorActivatedListeners = std.algorithm.remove(onColorActivatedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

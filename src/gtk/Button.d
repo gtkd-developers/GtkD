@@ -39,6 +39,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -607,178 +608,338 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		gtk_button_set_use_underline(gtkButton, useUnderline);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(Button) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(Button)[] onActivateListeners;
 	/**
 	 * The ::activate signal on GtkButton is an action signal and
 	 * emitting it causes the button to animate press then release.
 	 * Applications should never connect to this signal, but use the
 	 * #GtkButton::clicked signal.
 	 */
-	void addOnActivate(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GtkButton* buttonStruct, Button _button)
+	
+	extern(C) static void callBackActivate(GtkButton* buttonStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Button) dlg; _button.onActivateListeners )
-		{
-			dlg(_button);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	void delegate(Button)[] onClickedListeners;
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnClickedDelegateWrapper
+	{
+		void delegate(Button) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnClickedDelegateWrapper[] onClickedListeners;
+
 	/**
 	 * Emitted when the button has been activated (pressed and released).
 	 */
-	void addOnClicked(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClicked(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "clicked" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"clicked",
-				cast(GCallback)&callBackClicked,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["clicked"] = 1;
-		}
-		onClickedListeners ~= dlg;
+		onClickedListeners ~= new OnClickedDelegateWrapper(dlg, 0, connectFlags);
+		onClickedListeners[onClickedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"clicked",
+			cast(GCallback)&callBackClicked,
+			cast(void*)onClickedListeners[onClickedListeners.length - 1],
+			cast(GClosureNotify)&callBackClickedDestroy,
+			connectFlags);
+		return onClickedListeners[onClickedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button _button)
+	
+	extern(C) static void callBackClicked(GtkButton* buttonStruct,OnClickedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Button) dlg; _button.onClickedListeners )
-		{
-			dlg(_button);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClicked(wrapper);
 	}
 
-	void delegate(Button)[] onEnterListeners;
+	protected void internalRemoveOnClicked(OnClickedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onClickedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onClickedListeners[index] = null;
+				onClickedListeners = std.algorithm.remove(onClickedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnEnterDelegateWrapper
+	{
+		void delegate(Button) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEnterDelegateWrapper[] onEnterListeners;
+
 	/**
 	 * Emitted when the pointer enters the button.
 	 *
 	 * Deprecated: Use the #GtkWidget::enter-notify-event signal.
 	 */
-	void addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "enter" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"enter",
-				cast(GCallback)&callBackEnter,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["enter"] = 1;
-		}
-		onEnterListeners ~= dlg;
+		onEnterListeners ~= new OnEnterDelegateWrapper(dlg, 0, connectFlags);
+		onEnterListeners[onEnterListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"enter",
+			cast(GCallback)&callBackEnter,
+			cast(void*)onEnterListeners[onEnterListeners.length - 1],
+			cast(GClosureNotify)&callBackEnterDestroy,
+			connectFlags);
+		return onEnterListeners[onEnterListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button _button)
+	
+	extern(C) static void callBackEnter(GtkButton* buttonStruct,OnEnterDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Button) dlg; _button.onEnterListeners )
-		{
-			dlg(_button);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEnterDestroy(OnEnterDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEnter(wrapper);
 	}
 
-	void delegate(Button)[] onLeaveListeners;
+	protected void internalRemoveOnEnter(OnEnterDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEnterListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEnterListeners[index] = null;
+				onEnterListeners = std.algorithm.remove(onEnterListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnLeaveDelegateWrapper
+	{
+		void delegate(Button) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnLeaveDelegateWrapper[] onLeaveListeners;
+
 	/**
 	 * Emitted when the pointer leaves the button.
 	 *
 	 * Deprecated: Use the #GtkWidget::leave-notify-event signal.
 	 */
-	void addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "leave" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"leave",
-				cast(GCallback)&callBackLeave,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["leave"] = 1;
-		}
-		onLeaveListeners ~= dlg;
+		onLeaveListeners ~= new OnLeaveDelegateWrapper(dlg, 0, connectFlags);
+		onLeaveListeners[onLeaveListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"leave",
+			cast(GCallback)&callBackLeave,
+			cast(void*)onLeaveListeners[onLeaveListeners.length - 1],
+			cast(GClosureNotify)&callBackLeaveDestroy,
+			connectFlags);
+		return onLeaveListeners[onLeaveListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button _button)
+	
+	extern(C) static void callBackLeave(GtkButton* buttonStruct,OnLeaveDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Button) dlg; _button.onLeaveListeners )
-		{
-			dlg(_button);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackLeaveDestroy(OnLeaveDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnLeave(wrapper);
 	}
 
-	void delegate(Button)[] onPressedListeners;
+	protected void internalRemoveOnLeave(OnLeaveDelegateWrapper source)
+	{
+		foreach(index, wrapper; onLeaveListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onLeaveListeners[index] = null;
+				onLeaveListeners = std.algorithm.remove(onLeaveListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPressedDelegateWrapper
+	{
+		void delegate(Button) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPressedDelegateWrapper[] onPressedListeners;
+
 	/**
 	 * Emitted when the button is pressed.
 	 *
 	 * Deprecated: Use the #GtkWidget::button-press-event signal.
 	 */
-	void addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "pressed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"pressed",
-				cast(GCallback)&callBackPressed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["pressed"] = 1;
-		}
-		onPressedListeners ~= dlg;
+		onPressedListeners ~= new OnPressedDelegateWrapper(dlg, 0, connectFlags);
+		onPressedListeners[onPressedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"pressed",
+			cast(GCallback)&callBackPressed,
+			cast(void*)onPressedListeners[onPressedListeners.length - 1],
+			cast(GClosureNotify)&callBackPressedDestroy,
+			connectFlags);
+		return onPressedListeners[onPressedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button _button)
+	
+	extern(C) static void callBackPressed(GtkButton* buttonStruct,OnPressedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Button) dlg; _button.onPressedListeners )
-		{
-			dlg(_button);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPressed(wrapper);
 	}
 
-	void delegate(Button)[] onReleasedListeners;
+	protected void internalRemoveOnPressed(OnPressedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPressedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPressedListeners[index] = null;
+				onPressedListeners = std.algorithm.remove(onPressedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnReleasedDelegateWrapper
+	{
+		void delegate(Button) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnReleasedDelegateWrapper[] onReleasedListeners;
+
 	/**
 	 * Emitted when the button is released.
 	 *
 	 * Deprecated: Use the #GtkWidget::button-release-event signal.
 	 */
-	void addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "released" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"released",
-				cast(GCallback)&callBackReleased,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["released"] = 1;
-		}
-		onReleasedListeners ~= dlg;
+		onReleasedListeners ~= new OnReleasedDelegateWrapper(dlg, 0, connectFlags);
+		onReleasedListeners[onReleasedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"released",
+			cast(GCallback)&callBackReleased,
+			cast(void*)onReleasedListeners[onReleasedListeners.length - 1],
+			cast(GClosureNotify)&callBackReleasedDestroy,
+			connectFlags);
+		return onReleasedListeners[onReleasedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button _button)
+	
+	extern(C) static void callBackReleased(GtkButton* buttonStruct,OnReleasedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Button) dlg; _button.onReleasedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackReleasedDestroy(OnReleasedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnReleased(wrapper);
+	}
+
+	protected void internalRemoveOnReleased(OnReleasedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onReleasedListeners)
 		{
-			dlg(_button);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onReleasedListeners[index] = null;
+				onReleasedListeners = std.algorithm.remove(onReleasedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -29,6 +29,7 @@ private import gtk.Box;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -82,35 +83,55 @@ public class ShortcutsSection : Box
 		return gtk_shortcuts_section_get_type();
 	}
 
-	int[string] connectedSignals;
-
-	bool delegate(int, ShortcutsSection)[] onChangeCurrentPageListeners;
-	/** */
-	void addOnChangeCurrentPage(bool delegate(int, ShortcutsSection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected class OnChangeCurrentPageDelegateWrapper
 	{
-		if ( "change-current-page" !in connectedSignals )
+		bool delegate(int, ShortcutsSection) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(int, ShortcutsSection) dlg, gulong handlerId, ConnectFlags flags)
 		{
-			Signals.connectData(
-				this,
-				"change-current-page",
-				cast(GCallback)&callBackChangeCurrentPage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["change-current-page"] = 1;
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
 		}
-		onChangeCurrentPageListeners ~= dlg;
 	}
-	extern(C) static int callBackChangeCurrentPage(GtkShortcutsSection* shortcutssectionStruct, int object, ShortcutsSection _shortcutssection)
+	protected OnChangeCurrentPageDelegateWrapper[] onChangeCurrentPageListeners;
+
+	/** */
+	gulong addOnChangeCurrentPage(bool delegate(int, ShortcutsSection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		foreach ( bool delegate(int, ShortcutsSection) dlg; _shortcutssection.onChangeCurrentPageListeners )
+		onChangeCurrentPageListeners ~= new OnChangeCurrentPageDelegateWrapper(dlg, 0, connectFlags);
+		onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"change-current-page",
+			cast(GCallback)&callBackChangeCurrentPage,
+			cast(void*)onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1],
+			cast(GClosureNotify)&callBackChangeCurrentPageDestroy,
+			connectFlags);
+		return onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static int callBackChangeCurrentPage(GtkShortcutsSection* shortcutssectionStruct, int object,OnChangeCurrentPageDelegateWrapper wrapper)
+	{
+		return wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangeCurrentPageDestroy(OnChangeCurrentPageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChangeCurrentPage(wrapper);
+	}
+
+	protected void internalRemoveOnChangeCurrentPage(OnChangeCurrentPageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangeCurrentPageListeners)
 		{
-			if ( dlg(object, _shortcutssection) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onChangeCurrentPageListeners[index] = null;
+				onChangeCurrentPageListeners = std.algorithm.remove(onChangeCurrentPageListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

@@ -35,6 +35,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -231,9 +232,20 @@ public class MenuToolButton : ToolButton
 		gtk_menu_tool_button_set_menu(gtkMenuToolButton, (menu is null) ? null : menu.getWidgetStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnShowMenuDelegateWrapper
+	{
+		void delegate(MenuToolButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MenuToolButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnShowMenuDelegateWrapper[] onShowMenuListeners;
 
-	void delegate(MenuToolButton)[] onShowMenuListeners;
 	/**
 	 * The ::show-menu signal is emitted before the menu is shown.
 	 *
@@ -244,26 +256,40 @@ public class MenuToolButton : ToolButton
 	 * you must set an empty menu on the #GtkMenuToolButton beforehand,
 	 * since the arrow is made insensitive if the menu is not set.
 	 */
-	void addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "show-menu" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"show-menu",
-				cast(GCallback)&callBackShowMenu,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["show-menu"] = 1;
-		}
-		onShowMenuListeners ~= dlg;
+		onShowMenuListeners ~= new OnShowMenuDelegateWrapper(dlg, 0, connectFlags);
+		onShowMenuListeners[onShowMenuListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"show-menu",
+			cast(GCallback)&callBackShowMenu,
+			cast(void*)onShowMenuListeners[onShowMenuListeners.length - 1],
+			cast(GClosureNotify)&callBackShowMenuDestroy,
+			connectFlags);
+		return onShowMenuListeners[onShowMenuListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, MenuToolButton _menutoolbutton)
+	
+	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct,OnShowMenuDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MenuToolButton) dlg; _menutoolbutton.onShowMenuListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackShowMenuDestroy(OnShowMenuDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnShowMenu(wrapper);
+	}
+
+	protected void internalRemoveOnShowMenu(OnShowMenuDelegateWrapper source)
+	{
+		foreach(index, wrapper; onShowMenuListeners)
 		{
-			dlg(_menutoolbutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onShowMenuListeners[index] = null;
+				onShowMenuListeners = std.algorithm.remove(onShowMenuListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

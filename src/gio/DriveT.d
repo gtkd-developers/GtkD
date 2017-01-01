@@ -38,6 +38,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
+public  import std.algorithm;
 
 
 /**
@@ -555,136 +556,226 @@ public template DriveT(TStruct)
 		return p;
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(DriveIF)[] _onChangedListeners;
-	@property void delegate(DriveIF)[] onChangedListeners()
+	protected class OnChangedDelegateWrapper
 	{
-		return _onChangedListeners;
+		void delegate(DriveIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(DriveIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
+
 	/**
 	 * Emitted when the drive's state has changed.
 	 */
-	void addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)cast(DriveIF)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		_onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GDrive* driveStruct, DriveIF _drive)
+	
+	extern(C) static void callBackChanged(GDrive* driveStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(DriveIF) dlg; _drive.onChangedListeners )
-		{
-			dlg(_drive);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
 	}
 
-	void delegate(DriveIF)[] _onDisconnectedListeners;
-	@property void delegate(DriveIF)[] onDisconnectedListeners()
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
 	{
-		return _onDisconnectedListeners;
+		foreach(index, wrapper; onChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnDisconnectedDelegateWrapper
+	{
+		void delegate(DriveIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(DriveIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDisconnectedDelegateWrapper[] onDisconnectedListeners;
+
 	/**
 	 * This signal is emitted when the #GDrive have been
 	 * disconnected. If the recipient is holding references to the
 	 * object they should release them so the object can be
 	 * finalized.
 	 */
-	void addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "disconnected" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"disconnected",
-				cast(GCallback)&callBackDisconnected,
-				cast(void*)cast(DriveIF)this,
-				null,
-				connectFlags);
-			connectedSignals["disconnected"] = 1;
-		}
-		_onDisconnectedListeners ~= dlg;
+		onDisconnectedListeners ~= new OnDisconnectedDelegateWrapper(dlg, 0, connectFlags);
+		onDisconnectedListeners[onDisconnectedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"disconnected",
+			cast(GCallback)&callBackDisconnected,
+			cast(void*)onDisconnectedListeners[onDisconnectedListeners.length - 1],
+			cast(GClosureNotify)&callBackDisconnectedDestroy,
+			connectFlags);
+		return onDisconnectedListeners[onDisconnectedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDisconnected(GDrive* driveStruct, DriveIF _drive)
+	
+	extern(C) static void callBackDisconnected(GDrive* driveStruct,OnDisconnectedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(DriveIF) dlg; _drive.onDisconnectedListeners )
-		{
-			dlg(_drive);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDisconnectedDestroy(OnDisconnectedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDisconnected(wrapper);
 	}
 
-	void delegate(DriveIF)[] _onEjectButtonListeners;
-	@property void delegate(DriveIF)[] onEjectButtonListeners()
+	protected void internalRemoveOnDisconnected(OnDisconnectedDelegateWrapper source)
 	{
-		return _onEjectButtonListeners;
+		foreach(index, wrapper; onDisconnectedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDisconnectedListeners[index] = null;
+				onDisconnectedListeners = std.algorithm.remove(onDisconnectedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnEjectButtonDelegateWrapper
+	{
+		void delegate(DriveIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(DriveIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEjectButtonDelegateWrapper[] onEjectButtonListeners;
+
 	/**
 	 * Emitted when the physical eject button (if any) of a drive has
 	 * been pressed.
 	 */
-	void addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "eject-button" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"eject-button",
-				cast(GCallback)&callBackEjectButton,
-				cast(void*)cast(DriveIF)this,
-				null,
-				connectFlags);
-			connectedSignals["eject-button"] = 1;
-		}
-		_onEjectButtonListeners ~= dlg;
+		onEjectButtonListeners ~= new OnEjectButtonDelegateWrapper(dlg, 0, connectFlags);
+		onEjectButtonListeners[onEjectButtonListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"eject-button",
+			cast(GCallback)&callBackEjectButton,
+			cast(void*)onEjectButtonListeners[onEjectButtonListeners.length - 1],
+			cast(GClosureNotify)&callBackEjectButtonDestroy,
+			connectFlags);
+		return onEjectButtonListeners[onEjectButtonListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEjectButton(GDrive* driveStruct, DriveIF _drive)
+	
+	extern(C) static void callBackEjectButton(GDrive* driveStruct,OnEjectButtonDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(DriveIF) dlg; _drive.onEjectButtonListeners )
-		{
-			dlg(_drive);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEjectButtonDestroy(OnEjectButtonDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEjectButton(wrapper);
 	}
 
-	void delegate(DriveIF)[] _onStopButtonListeners;
-	@property void delegate(DriveIF)[] onStopButtonListeners()
+	protected void internalRemoveOnEjectButton(OnEjectButtonDelegateWrapper source)
 	{
-		return _onStopButtonListeners;
+		foreach(index, wrapper; onEjectButtonListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEjectButtonListeners[index] = null;
+				onEjectButtonListeners = std.algorithm.remove(onEjectButtonListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnStopButtonDelegateWrapper
+	{
+		void delegate(DriveIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(DriveIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnStopButtonDelegateWrapper[] onStopButtonListeners;
+
 	/**
 	 * Emitted when the physical stop button (if any) of a drive has
 	 * been pressed.
 	 *
 	 * Since: 2.22
 	 */
-	void addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "stop-button" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"stop-button",
-				cast(GCallback)&callBackStopButton,
-				cast(void*)cast(DriveIF)this,
-				null,
-				connectFlags);
-			connectedSignals["stop-button"] = 1;
-		}
-		_onStopButtonListeners ~= dlg;
+		onStopButtonListeners ~= new OnStopButtonDelegateWrapper(dlg, 0, connectFlags);
+		onStopButtonListeners[onStopButtonListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"stop-button",
+			cast(GCallback)&callBackStopButton,
+			cast(void*)onStopButtonListeners[onStopButtonListeners.length - 1],
+			cast(GClosureNotify)&callBackStopButtonDestroy,
+			connectFlags);
+		return onStopButtonListeners[onStopButtonListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackStopButton(GDrive* driveStruct, DriveIF _drive)
+	
+	extern(C) static void callBackStopButton(GDrive* driveStruct,OnStopButtonDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(DriveIF) dlg; _drive.onStopButtonListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackStopButtonDestroy(OnStopButtonDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnStopButton(wrapper);
+	}
+
+	protected void internalRemoveOnStopButton(OnStopButtonDelegateWrapper source)
+	{
+		foreach(index, wrapper; onStopButtonListeners)
 		{
-			dlg(_drive);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onStopButtonListeners[index] = null;
+				onStopButtonListeners = std.algorithm.remove(onStopButtonListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

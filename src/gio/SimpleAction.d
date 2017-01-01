@@ -35,6 +35,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -201,9 +202,20 @@ public class SimpleAction : ObjectG, ActionIF
 		g_simple_action_set_state_hint(gSimpleAction, (stateHint is null) ? null : stateHint.getVariantStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(Variant, SimpleAction) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Variant, SimpleAction) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(Variant, SimpleAction)[] onActivateListeners;
 	/**
 	 * Indicates that the action was just activated.
 	 *
@@ -223,30 +235,57 @@ public class SimpleAction : ObjectG, ActionIF
 	 *
 	 * Since: 2.28
 	 */
-	void addOnActivate(void delegate(Variant, SimpleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(Variant, SimpleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GSimpleAction* simpleactionStruct, GVariant* parameter, SimpleAction _simpleaction)
+	
+	extern(C) static void callBackActivate(GSimpleAction* simpleactionStruct, GVariant* parameter,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Variant, SimpleAction) dlg; _simpleaction.onActivateListeners )
-		{
-			dlg(new Variant(parameter), _simpleaction);
-		}
+		wrapper.dlg(new Variant(parameter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	void delegate(Variant, SimpleAction)[] onChangeStateListeners;
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnChangeStateDelegateWrapper
+	{
+		void delegate(Variant, SimpleAction) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Variant, SimpleAction) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangeStateDelegateWrapper[] onChangeStateListeners;
+
 	/**
 	 * Indicates that the action just received a request to change its
 	 * state.
@@ -285,26 +324,40 @@ public class SimpleAction : ObjectG, ActionIF
 	 *
 	 * Since: 2.30
 	 */
-	void addOnChangeState(void delegate(Variant, SimpleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChangeState(void delegate(Variant, SimpleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "change-state" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"change-state",
-				cast(GCallback)&callBackChangeState,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["change-state"] = 1;
-		}
-		onChangeStateListeners ~= dlg;
+		onChangeStateListeners ~= new OnChangeStateDelegateWrapper(dlg, 0, connectFlags);
+		onChangeStateListeners[onChangeStateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"change-state",
+			cast(GCallback)&callBackChangeState,
+			cast(void*)onChangeStateListeners[onChangeStateListeners.length - 1],
+			cast(GClosureNotify)&callBackChangeStateDestroy,
+			connectFlags);
+		return onChangeStateListeners[onChangeStateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChangeState(GSimpleAction* simpleactionStruct, GVariant* value, SimpleAction _simpleaction)
+	
+	extern(C) static void callBackChangeState(GSimpleAction* simpleactionStruct, GVariant* value,OnChangeStateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Variant, SimpleAction) dlg; _simpleaction.onChangeStateListeners )
+		wrapper.dlg(new Variant(value), wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangeStateDestroy(OnChangeStateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChangeState(wrapper);
+	}
+
+	protected void internalRemoveOnChangeState(OnChangeStateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangeStateListeners)
 		{
-			dlg(new Variant(value), _simpleaction);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangeStateListeners[index] = null;
+				onChangeStateListeners = std.algorithm.remove(onChangeStateListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

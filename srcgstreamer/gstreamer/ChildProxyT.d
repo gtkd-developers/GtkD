@@ -32,6 +32,7 @@ public  import gobject.Value;
 public  import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /**
@@ -226,13 +227,20 @@ public template ChildProxyT(TStruct)
 		gst_child_proxy_set_valist(getChildProxyStruct(), Str.toStringz(firstPropertyName), varArgs);
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(ObjectG, string, ChildProxyIF)[] _onChildAddedListeners;
-	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildAddedListeners()
+	protected class OnChildAddedDelegateWrapper
 	{
-		return _onChildAddedListeners;
+		void delegate(ObjectG, string, ChildProxyIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ObjectG, string, ChildProxyIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnChildAddedDelegateWrapper[] onChildAddedListeners;
+
 	/**
 	 * Will be emitted after the @object was added to the @child_proxy.
 	 *
@@ -240,34 +248,57 @@ public template ChildProxyT(TStruct)
 	 *     object = the #GObject that was added
 	 *     name = the name of the new child
 	 */
-	void addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "child-added" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"child-added",
-				cast(GCallback)&callBackChildAdded,
-				cast(void*)cast(ChildProxyIF)this,
-				null,
-				connectFlags);
-			connectedSignals["child-added"] = 1;
-		}
-		_onChildAddedListeners ~= dlg;
+		onChildAddedListeners ~= new OnChildAddedDelegateWrapper(dlg, 0, connectFlags);
+		onChildAddedListeners[onChildAddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"child-added",
+			cast(GCallback)&callBackChildAdded,
+			cast(void*)onChildAddedListeners[onChildAddedListeners.length - 1],
+			cast(GClosureNotify)&callBackChildAddedDestroy,
+			connectFlags);
+		return onChildAddedListeners[onChildAddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChildAdded(GstChildProxy* childproxyStruct, GObject* object, char* name, ChildProxyIF _childproxy)
+	
+	extern(C) static void callBackChildAdded(GstChildProxy* childproxyStruct, GObject* object, char* name,OnChildAddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ObjectG, string, ChildProxyIF) dlg; _childproxy.onChildAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(ObjectG)(object), Str.toString(name), _childproxy);
-		}
+		wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), Str.toString(name), wrapper.outer);
+	}
+	
+	extern(C) static void callBackChildAddedDestroy(OnChildAddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChildAdded(wrapper);
 	}
 
-	void delegate(ObjectG, string, ChildProxyIF)[] _onChildRemovedListeners;
-	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildRemovedListeners()
+	protected void internalRemoveOnChildAdded(OnChildAddedDelegateWrapper source)
 	{
-		return _onChildRemovedListeners;
+		foreach(index, wrapper; onChildAddedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChildAddedListeners[index] = null;
+				onChildAddedListeners = std.algorithm.remove(onChildAddedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnChildRemovedDelegateWrapper
+	{
+		void delegate(ObjectG, string, ChildProxyIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ObjectG, string, ChildProxyIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChildRemovedDelegateWrapper[] onChildRemovedListeners;
+
 	/**
 	 * Will be emitted after the @object was removed from the @child_proxy.
 	 *
@@ -275,26 +306,40 @@ public template ChildProxyT(TStruct)
 	 *     object = the #GObject that was removed
 	 *     name = the name of the old child
 	 */
-	void addOnChildRemoved(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChildRemoved(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "child-removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"child-removed",
-				cast(GCallback)&callBackChildRemoved,
-				cast(void*)cast(ChildProxyIF)this,
-				null,
-				connectFlags);
-			connectedSignals["child-removed"] = 1;
-		}
-		_onChildRemovedListeners ~= dlg;
+		onChildRemovedListeners ~= new OnChildRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onChildRemovedListeners[onChildRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"child-removed",
+			cast(GCallback)&callBackChildRemoved,
+			cast(void*)onChildRemovedListeners[onChildRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackChildRemovedDestroy,
+			connectFlags);
+		return onChildRemovedListeners[onChildRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChildRemoved(GstChildProxy* childproxyStruct, GObject* object, char* name, ChildProxyIF _childproxy)
+	
+	extern(C) static void callBackChildRemoved(GstChildProxy* childproxyStruct, GObject* object, char* name,OnChildRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ObjectG, string, ChildProxyIF) dlg; _childproxy.onChildRemovedListeners )
+		wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), Str.toString(name), wrapper.outer);
+	}
+	
+	extern(C) static void callBackChildRemovedDestroy(OnChildRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChildRemoved(wrapper);
+	}
+
+	protected void internalRemoveOnChildRemoved(OnChildRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChildRemovedListeners)
 		{
-			dlg(ObjectG.getDObject!(ObjectG)(object), Str.toString(name), _childproxy);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChildRemovedListeners[index] = null;
+				onChildRemovedListeners = std.algorithm.remove(onChildRemovedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

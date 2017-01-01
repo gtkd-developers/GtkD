@@ -43,6 +43,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
+public  import std.algorithm;
 
 
 /**
@@ -651,104 +652,171 @@ public template MountT(TStruct)
 		g_mount_unshadow(getMountStruct());
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(MountIF)[] _onChangedListeners;
-	@property void delegate(MountIF)[] onChangedListeners()
+	protected class OnChangedDelegateWrapper
 	{
-		return _onChangedListeners;
+		void delegate(MountIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MountIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
+
 	/**
 	 * Emitted when the mount has been changed.
 	 */
-	void addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)cast(MountIF)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		_onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GMount* mountStruct, MountIF _mount)
+	
+	extern(C) static void callBackChanged(GMount* mountStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MountIF) dlg; _mount.onChangedListeners )
-		{
-			dlg(_mount);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
 	}
 
-	void delegate(MountIF)[] _onPreUnmountListeners;
-	@property void delegate(MountIF)[] onPreUnmountListeners()
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
 	{
-		return _onPreUnmountListeners;
+		foreach(index, wrapper; onChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnPreUnmountDelegateWrapper
+	{
+		void delegate(MountIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MountIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPreUnmountDelegateWrapper[] onPreUnmountListeners;
+
 	/**
 	 * This signal is emitted when the #GMount is about to be
 	 * unmounted.
 	 *
 	 * Since: 2.22
 	 */
-	void addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "pre-unmount" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"pre-unmount",
-				cast(GCallback)&callBackPreUnmount,
-				cast(void*)cast(MountIF)this,
-				null,
-				connectFlags);
-			connectedSignals["pre-unmount"] = 1;
-		}
-		_onPreUnmountListeners ~= dlg;
+		onPreUnmountListeners ~= new OnPreUnmountDelegateWrapper(dlg, 0, connectFlags);
+		onPreUnmountListeners[onPreUnmountListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"pre-unmount",
+			cast(GCallback)&callBackPreUnmount,
+			cast(void*)onPreUnmountListeners[onPreUnmountListeners.length - 1],
+			cast(GClosureNotify)&callBackPreUnmountDestroy,
+			connectFlags);
+		return onPreUnmountListeners[onPreUnmountListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPreUnmount(GMount* mountStruct, MountIF _mount)
+	
+	extern(C) static void callBackPreUnmount(GMount* mountStruct,OnPreUnmountDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MountIF) dlg; _mount.onPreUnmountListeners )
-		{
-			dlg(_mount);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPreUnmountDestroy(OnPreUnmountDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPreUnmount(wrapper);
 	}
 
-	void delegate(MountIF)[] _onUnmountedListeners;
-	@property void delegate(MountIF)[] onUnmountedListeners()
+	protected void internalRemoveOnPreUnmount(OnPreUnmountDelegateWrapper source)
 	{
-		return _onUnmountedListeners;
+		foreach(index, wrapper; onPreUnmountListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPreUnmountListeners[index] = null;
+				onPreUnmountListeners = std.algorithm.remove(onPreUnmountListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnUnmountedDelegateWrapper
+	{
+		void delegate(MountIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MountIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnUnmountedDelegateWrapper[] onUnmountedListeners;
+
 	/**
 	 * This signal is emitted when the #GMount have been
 	 * unmounted. If the recipient is holding references to the
 	 * object they should release them so the object can be
 	 * finalized.
 	 */
-	void addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "unmounted" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"unmounted",
-				cast(GCallback)&callBackUnmounted,
-				cast(void*)cast(MountIF)this,
-				null,
-				connectFlags);
-			connectedSignals["unmounted"] = 1;
-		}
-		_onUnmountedListeners ~= dlg;
+		onUnmountedListeners ~= new OnUnmountedDelegateWrapper(dlg, 0, connectFlags);
+		onUnmountedListeners[onUnmountedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"unmounted",
+			cast(GCallback)&callBackUnmounted,
+			cast(void*)onUnmountedListeners[onUnmountedListeners.length - 1],
+			cast(GClosureNotify)&callBackUnmountedDestroy,
+			connectFlags);
+		return onUnmountedListeners[onUnmountedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackUnmounted(GMount* mountStruct, MountIF _mount)
+	
+	extern(C) static void callBackUnmounted(GMount* mountStruct,OnUnmountedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MountIF) dlg; _mount.onUnmountedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackUnmountedDestroy(OnUnmountedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnUnmounted(wrapper);
+	}
+
+	protected void internalRemoveOnUnmounted(OnUnmountedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onUnmountedListeners)
 		{
-			dlg(_mount);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onUnmountedListeners[index] = null;
+				onUnmountedListeners = std.algorithm.remove(onUnmountedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

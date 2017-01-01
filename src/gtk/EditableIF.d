@@ -29,6 +29,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -217,7 +218,6 @@ public interface EditableIF{
 	 *     position = the position of the cursor
 	 */
 	public void setPosition(int position);
-	@property void delegate(EditableIF)[] onChangedListeners();
 	/**
 	 * The ::changed signal is emitted at the end of a single
 	 * user-visible operation on the contents of the #GtkEditable.
@@ -228,9 +228,9 @@ public interface EditableIF{
 	 * the new content, and may cause multiple ::notify::text signals
 	 * to be emitted).
 	 */
-	void addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, EditableIF)[] onDeleteTextListeners();
 	/**
 	 * This signal is emitted when text is deleted from
 	 * the widget by the user. The default handler for
@@ -246,9 +246,9 @@ public interface EditableIF{
 	 *     startPos = the starting position
 	 *     endPos = the end position
 	 */
-	void addOnDeleteText(void delegate(int, int, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnDeleteText(void delegate(int, int, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(string, int, void*, EditableIF)[] onInsertTextListeners();
 	/**
 	 * This signal is emitted when text is inserted into
 	 * the widget by the user. The default handler for
@@ -267,6 +267,7 @@ public interface EditableIF{
 	 *         parameter.  After the signal emission is finished, it
 	 *         should point after the newly inserted text.
 	 */
-	void addOnInsertText(void delegate(string, int, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnInsertText(void delegate(string, int, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

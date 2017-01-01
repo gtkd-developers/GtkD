@@ -33,6 +33,7 @@ private import peas.Engine;
 private import peas.PluginInfo;
 private import peasc.peas;
 public  import peasc.peastypes;
+private import std.algorithm;
 
 
 /**
@@ -165,9 +166,20 @@ public class ExtensionSet : ObjectG
 		return peas_extension_set_get_extension(peasExtensionSet, (info is null) ? null : info.getPluginInfoStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnExtensionAddedDelegateWrapper
+	{
+		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnExtensionAddedDelegateWrapper[] onExtensionAddedListeners;
 
-	void delegate(PluginInfo, ObjectG, ExtensionSet)[] onExtensionAddedListeners;
 	/**
 	 * The extension-added signal is emitted when a new extension has been
 	 * added to the #PeasExtensionSet. It happens when a new plugin implementing
@@ -182,30 +194,57 @@ public class ExtensionSet : ObjectG
 	 *     info = A #PeasPluginInfo.
 	 *     exten = A #PeasExtension.
 	 */
-	void addOnExtensionAdded(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnExtensionAdded(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "extension-added" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"extension-added",
-				cast(GCallback)&callBackExtensionAdded,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["extension-added"] = 1;
-		}
-		onExtensionAddedListeners ~= dlg;
+		onExtensionAddedListeners ~= new OnExtensionAddedDelegateWrapper(dlg, 0, connectFlags);
+		onExtensionAddedListeners[onExtensionAddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"extension-added",
+			cast(GCallback)&callBackExtensionAdded,
+			cast(void*)onExtensionAddedListeners[onExtensionAddedListeners.length - 1],
+			cast(GClosureNotify)&callBackExtensionAddedDestroy,
+			connectFlags);
+		return onExtensionAddedListeners[onExtensionAddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackExtensionAdded(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten, ExtensionSet _extensionset)
+	
+	extern(C) static void callBackExtensionAdded(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten,OnExtensionAddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PluginInfo, ObjectG, ExtensionSet) dlg; _extensionset.onExtensionAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), _extensionset);
-		}
+		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), wrapper.outer);
+	}
+	
+	extern(C) static void callBackExtensionAddedDestroy(OnExtensionAddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnExtensionAdded(wrapper);
 	}
 
-	void delegate(PluginInfo, ObjectG, ExtensionSet)[] onExtensionRemovedListeners;
+	protected void internalRemoveOnExtensionAdded(OnExtensionAddedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onExtensionAddedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onExtensionAddedListeners[index] = null;
+				onExtensionAddedListeners = std.algorithm.remove(onExtensionAddedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnExtensionRemovedDelegateWrapper
+	{
+		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnExtensionRemovedDelegateWrapper[] onExtensionRemovedListeners;
+
 	/**
 	 * The extension-removed signal is emitted when a new extension is about to be
 	 * removed from the #PeasExtensionSet. It happens when a plugin implementing
@@ -221,26 +260,40 @@ public class ExtensionSet : ObjectG
 	 *     info = A #PeasPluginInfo.
 	 *     exten = A #PeasExtension.
 	 */
-	void addOnExtensionRemoved(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnExtensionRemoved(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "extension-removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"extension-removed",
-				cast(GCallback)&callBackExtensionRemoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["extension-removed"] = 1;
-		}
-		onExtensionRemovedListeners ~= dlg;
+		onExtensionRemovedListeners ~= new OnExtensionRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onExtensionRemovedListeners[onExtensionRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"extension-removed",
+			cast(GCallback)&callBackExtensionRemoved,
+			cast(void*)onExtensionRemovedListeners[onExtensionRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackExtensionRemovedDestroy,
+			connectFlags);
+		return onExtensionRemovedListeners[onExtensionRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackExtensionRemoved(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten, ExtensionSet _extensionset)
+	
+	extern(C) static void callBackExtensionRemoved(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten,OnExtensionRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PluginInfo, ObjectG, ExtensionSet) dlg; _extensionset.onExtensionRemovedListeners )
+		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), wrapper.outer);
+	}
+	
+	extern(C) static void callBackExtensionRemovedDestroy(OnExtensionRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnExtensionRemoved(wrapper);
+	}
+
+	protected void internalRemoveOnExtensionRemoved(OnExtensionRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onExtensionRemovedListeners)
 		{
-			dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), _extensionset);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onExtensionRemovedListeners[index] = null;
+				onExtensionRemovedListeners = std.algorithm.remove(onExtensionRemovedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

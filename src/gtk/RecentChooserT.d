@@ -36,6 +36,7 @@ public  import gtk.RecentInfo;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
+public  import std.algorithm;
 
 
 /**
@@ -547,13 +548,20 @@ public template RecentChooserT(TStruct)
 		gtk_recent_chooser_unselect_uri(getRecentChooserStruct(), Str.toStringz(uri));
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(RecentChooserIF)[] _onItemActivatedListeners;
-	@property void delegate(RecentChooserIF)[] onItemActivatedListeners()
+	protected class OnItemActivatedDelegateWrapper
 	{
-		return _onItemActivatedListeners;
+		void delegate(RecentChooserIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(RecentChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnItemActivatedDelegateWrapper[] onItemActivatedListeners;
+
 	/**
 	 * This signal is emitted when the user "activates" a recent item
 	 * in the recent chooser.  This can happen by double-clicking on an item
@@ -562,34 +570,57 @@ public template RecentChooserT(TStruct)
 	 *
 	 * Since: 2.10
 	 */
-	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "item-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"item-activated",
-				cast(GCallback)&callBackItemActivated,
-				cast(void*)cast(RecentChooserIF)this,
-				null,
-				connectFlags);
-			connectedSignals["item-activated"] = 1;
-		}
-		_onItemActivatedListeners ~= dlg;
+		onItemActivatedListeners ~= new OnItemActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onItemActivatedListeners[onItemActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"item-activated",
+			cast(GCallback)&callBackItemActivated,
+			cast(void*)onItemActivatedListeners[onItemActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackItemActivatedDestroy,
+			connectFlags);
+		return onItemActivatedListeners[onItemActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackItemActivated(GtkRecentChooser* recentchooserStruct, RecentChooserIF _recentchooser)
+	
+	extern(C) static void callBackItemActivated(GtkRecentChooser* recentchooserStruct,OnItemActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(RecentChooserIF) dlg; _recentchooser.onItemActivatedListeners )
-		{
-			dlg(_recentchooser);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackItemActivatedDestroy(OnItemActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnItemActivated(wrapper);
 	}
 
-	void delegate(RecentChooserIF)[] _onSelectionChangedListeners;
-	@property void delegate(RecentChooserIF)[] onSelectionChangedListeners()
+	protected void internalRemoveOnItemActivated(OnItemActivatedDelegateWrapper source)
 	{
-		return _onSelectionChangedListeners;
+		foreach(index, wrapper; onItemActivatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onItemActivatedListeners[index] = null;
+				onItemActivatedListeners = std.algorithm.remove(onItemActivatedListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnSelectionChangedDelegateWrapper
+	{
+		void delegate(RecentChooserIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(RecentChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
+
 	/**
 	 * This signal is emitted when there is a change in the set of
 	 * selected recently used resources.  This can happen when a user
@@ -598,26 +629,40 @@ public template RecentChooserT(TStruct)
 	 *
 	 * Since: 2.10
 	 */
-	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "selection-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"selection-changed",
-				cast(GCallback)&callBackSelectionChanged,
-				cast(void*)cast(RecentChooserIF)this,
-				null,
-				connectFlags);
-			connectedSignals["selection-changed"] = 1;
-		}
-		_onSelectionChangedListeners ~= dlg;
+		onSelectionChangedListeners ~= new OnSelectionChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"selection-changed",
+			cast(GCallback)&callBackSelectionChanged,
+			cast(void*)onSelectionChangedListeners[onSelectionChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectionChangedDestroy,
+			connectFlags);
+		return onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectionChanged(GtkRecentChooser* recentchooserStruct, RecentChooserIF _recentchooser)
+	
+	extern(C) static void callBackSelectionChanged(GtkRecentChooser* recentchooserStruct,OnSelectionChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(RecentChooserIF) dlg; _recentchooser.onSelectionChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectionChanged(wrapper);
+	}
+
+	protected void internalRemoveOnSelectionChanged(OnSelectionChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectionChangedListeners)
 		{
-			dlg(_recentchooser);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectionChangedListeners[index] = null;
+				onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -33,6 +33,7 @@ public  import gobject.Value;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /**
@@ -380,13 +381,20 @@ public template ValueT(TStruct)
 		atk_value_set_value(getValueStruct(), newValue);
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(double, string, ValueIF)[] _onValueChangedListeners;
-	@property void delegate(double, string, ValueIF)[] onValueChangedListeners()
+	protected class OnValueChangedDelegateWrapper
 	{
-		return _onValueChangedListeners;
+		void delegate(double, string, ValueIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(double, string, ValueIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnValueChangedDelegateWrapper[] onValueChangedListeners;
+
 	/**
 	 * The 'value-changed' signal is emitted when the current value
 	 * that represent the object changes. @value is the numerical
@@ -408,26 +416,40 @@ public template ValueT(TStruct)
 	 *
 	 * Since: 2.12
 	 */
-	void addOnValueChanged(void delegate(double, string, ValueIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnValueChanged(void delegate(double, string, ValueIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "value-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"value-changed",
-				cast(GCallback)&callBackValueChanged,
-				cast(void*)cast(ValueIF)this,
-				null,
-				connectFlags);
-			connectedSignals["value-changed"] = 1;
-		}
-		_onValueChangedListeners ~= dlg;
+		onValueChangedListeners ~= new OnValueChangedDelegateWrapper(dlg, 0, connectFlags);
+		onValueChangedListeners[onValueChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"value-changed",
+			cast(GCallback)&callBackValueChanged,
+			cast(void*)onValueChangedListeners[onValueChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackValueChangedDestroy,
+			connectFlags);
+		return onValueChangedListeners[onValueChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackValueChanged(AtkValue* valueStruct, double value, char* text, ValueIF _value)
+	
+	extern(C) static void callBackValueChanged(AtkValue* valueStruct, double value, char* text,OnValueChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(double, string, ValueIF) dlg; _value.onValueChangedListeners )
+		wrapper.dlg(value, Str.toString(text), wrapper.outer);
+	}
+	
+	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnValueChanged(wrapper);
+	}
+
+	protected void internalRemoveOnValueChanged(OnValueChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onValueChangedListeners)
 		{
-			dlg(value, Str.toString(text), _value);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onValueChangedListeners[index] = null;
+				onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

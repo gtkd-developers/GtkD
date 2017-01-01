@@ -32,6 +32,7 @@ private import gobject.Value;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -168,7 +169,6 @@ public interface ChildProxyIF{
 	 *     varArgs = value for the first property, followed optionally by more name/value pairs, followed by %NULL
 	 */
 	public void childSetValist(string firstPropertyName, void* varArgs);
-	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildAddedListeners();
 	/**
 	 * Will be emitted after the @object was added to the @child_proxy.
 	 *
@@ -176,9 +176,9 @@ public interface ChildProxyIF{
 	 *     object = the #GObject that was added
 	 *     name = the name of the new child
 	 */
-	void addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(ObjectG, string, ChildProxyIF)[] onChildRemovedListeners();
 	/**
 	 * Will be emitted after the @object was removed from the @child_proxy.
 	 *
@@ -186,6 +186,7 @@ public interface ChildProxyIF{
 	 *     object = the #GObject that was removed
 	 *     name = the name of the old child
 	 */
-	void addOnChildRemoved(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChildRemoved(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

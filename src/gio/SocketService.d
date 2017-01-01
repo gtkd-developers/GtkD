@@ -32,6 +32,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -185,9 +186,20 @@ public class SocketService : SocketListener
 		g_socket_service_stop(gSocketService);
 	}
 
-	int[string] connectedSignals;
+	protected class OnIncomingDelegateWrapper
+	{
+		bool delegate(SocketConnection, ObjectG, SocketService) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(SocketConnection, ObjectG, SocketService) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnIncomingDelegateWrapper[] onIncomingListeners;
 
-	bool delegate(SocketConnection, ObjectG, SocketService)[] onIncomingListeners;
 	/**
 	 * The ::incoming signal is emitted when a new incoming connection
 	 * to @service needs to be handled. The handler must initiate the
@@ -206,31 +218,40 @@ public class SocketService : SocketListener
 	 *
 	 * Since: 2.22
 	 */
-	void addOnIncoming(bool delegate(SocketConnection, ObjectG, SocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnIncoming(bool delegate(SocketConnection, ObjectG, SocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "incoming" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"incoming",
-				cast(GCallback)&callBackIncoming,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["incoming"] = 1;
-		}
-		onIncomingListeners ~= dlg;
+		onIncomingListeners ~= new OnIncomingDelegateWrapper(dlg, 0, connectFlags);
+		onIncomingListeners[onIncomingListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"incoming",
+			cast(GCallback)&callBackIncoming,
+			cast(void*)onIncomingListeners[onIncomingListeners.length - 1],
+			cast(GClosureNotify)&callBackIncomingDestroy,
+			connectFlags);
+		return onIncomingListeners[onIncomingListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackIncoming(GSocketService* socketserviceStruct, GSocketConnection* connection, GObject* sourceObject, SocketService _socketservice)
+	
+	extern(C) static int callBackIncoming(GSocketService* socketserviceStruct, GSocketConnection* connection, GObject* sourceObject,OnIncomingDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(SocketConnection, ObjectG, SocketService) dlg; _socketservice.onIncomingListeners )
+		return wrapper.dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), wrapper.outer);
+	}
+	
+	extern(C) static void callBackIncomingDestroy(OnIncomingDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnIncoming(wrapper);
+	}
+
+	protected void internalRemoveOnIncoming(OnIncomingDelegateWrapper source)
+	{
+		foreach(index, wrapper; onIncomingListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), _socketservice) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onIncomingListeners[index] = null;
+				onIncomingListeners = std.algorithm.remove(onIncomingListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

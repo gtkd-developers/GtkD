@@ -38,6 +38,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -394,35 +395,35 @@ public interface DriveIF{
 	 * Throws: GException on failure.
 	 */
 	public bool stopFinish(AsyncResultIF result);
-	@property void delegate(DriveIF)[] onChangedListeners();
 	/**
 	 * Emitted when the drive's state has changed.
 	 */
-	void addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DriveIF)[] onDisconnectedListeners();
 	/**
 	 * This signal is emitted when the #GDrive have been
 	 * disconnected. If the recipient is holding references to the
 	 * object they should release them so the object can be
 	 * finalized.
 	 */
-	void addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DriveIF)[] onEjectButtonListeners();
 	/**
 	 * Emitted when the physical eject button (if any) of a drive has
 	 * been pressed.
 	 */
-	void addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DriveIF)[] onStopButtonListeners();
 	/**
 	 * Emitted when the physical stop button (if any) of a drive has
 	 * been pressed.
 	 *
 	 * Since: 2.22
 	 */
-	void addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

@@ -39,6 +39,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -319,9 +320,20 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 		g_dbus_interface_skeleton_unexport_from_connection(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnGAuthorizeMethodDelegateWrapper
+	{
+		bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGAuthorizeMethodDelegateWrapper[] onGAuthorizeMethodListeners;
 
-	bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton)[] onGAuthorizeMethodListeners;
 	/**
 	 * Emitted when a method is invoked by a remote caller and used to
 	 * determine if the method call is authorized.
@@ -364,31 +376,40 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 *
 	 * Since: 2.30
 	 */
-	void addOnGAuthorizeMethod(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGAuthorizeMethod(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "g-authorize-method" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"g-authorize-method",
-				cast(GCallback)&callBackGAuthorizeMethod,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["g-authorize-method"] = 1;
-		}
-		onGAuthorizeMethodListeners ~= dlg;
+		onGAuthorizeMethodListeners ~= new OnGAuthorizeMethodDelegateWrapper(dlg, 0, connectFlags);
+		onGAuthorizeMethodListeners[onGAuthorizeMethodListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"g-authorize-method",
+			cast(GCallback)&callBackGAuthorizeMethod,
+			cast(void*)onGAuthorizeMethodListeners[onGAuthorizeMethodListeners.length - 1],
+			cast(GClosureNotify)&callBackGAuthorizeMethodDestroy,
+			connectFlags);
+		return onGAuthorizeMethodListeners[onGAuthorizeMethodListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackGAuthorizeMethod(GDBusInterfaceSkeleton* dbusinterfaceskeletonStruct, GDBusMethodInvocation* invocation, DBusInterfaceSkeleton _dbusinterfaceskeleton)
+	
+	extern(C) static int callBackGAuthorizeMethod(GDBusInterfaceSkeleton* dbusinterfaceskeletonStruct, GDBusMethodInvocation* invocation,OnGAuthorizeMethodDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg; _dbusinterfaceskeleton.onGAuthorizeMethodListeners )
+		return wrapper.dlg(ObjectG.getDObject!(DBusMethodInvocation)(invocation), wrapper.outer);
+	}
+	
+	extern(C) static void callBackGAuthorizeMethodDestroy(OnGAuthorizeMethodDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGAuthorizeMethod(wrapper);
+	}
+
+	protected void internalRemoveOnGAuthorizeMethod(OnGAuthorizeMethodDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGAuthorizeMethodListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(DBusMethodInvocation)(invocation), _dbusinterfaceskeleton) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onGAuthorizeMethodListeners[index] = null;
+				onGAuthorizeMethodListeners = std.algorithm.remove(onGAuthorizeMethodListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

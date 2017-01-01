@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -128,9 +129,20 @@ public class GestureSwipe : GestureSingle
 		return gtk_gesture_swipe_get_velocity(gtkGestureSwipe, &velocityX, &velocityY) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnSwipeDelegateWrapper
+	{
+		void delegate(double, double, GestureSwipe) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(double, double, GestureSwipe) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSwipeDelegateWrapper[] onSwipeListeners;
 
-	void delegate(double, double, GestureSwipe)[] onSwipeListeners;
 	/**
 	 * This signal is emitted when the recognized gesture is finished, velocity
 	 * and direction are a product of previously recorded events.
@@ -141,26 +153,40 @@ public class GestureSwipe : GestureSingle
 	 *
 	 * Since: 3.14
 	 */
-	void addOnSwipe(void delegate(double, double, GestureSwipe) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSwipe(void delegate(double, double, GestureSwipe) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "swipe" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"swipe",
-				cast(GCallback)&callBackSwipe,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["swipe"] = 1;
-		}
-		onSwipeListeners ~= dlg;
+		onSwipeListeners ~= new OnSwipeDelegateWrapper(dlg, 0, connectFlags);
+		onSwipeListeners[onSwipeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"swipe",
+			cast(GCallback)&callBackSwipe,
+			cast(void*)onSwipeListeners[onSwipeListeners.length - 1],
+			cast(GClosureNotify)&callBackSwipeDestroy,
+			connectFlags);
+		return onSwipeListeners[onSwipeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSwipe(GtkGestureSwipe* gestureswipeStruct, double velocityX, double velocityY, GestureSwipe _gestureswipe)
+	
+	extern(C) static void callBackSwipe(GtkGestureSwipe* gestureswipeStruct, double velocityX, double velocityY,OnSwipeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(double, double, GestureSwipe) dlg; _gestureswipe.onSwipeListeners )
+		wrapper.dlg(velocityX, velocityY, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSwipeDestroy(OnSwipeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSwipe(wrapper);
+	}
+
+	protected void internalRemoveOnSwipe(OnSwipeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSwipeListeners)
 		{
-			dlg(velocityX, velocityY, _gestureswipe);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSwipeListeners[index] = null;
+				onSwipeListeners = std.algorithm.remove(onSwipeListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

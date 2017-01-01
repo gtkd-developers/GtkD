@@ -34,6 +34,7 @@ private import gtk.TreeIter;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -116,9 +117,20 @@ public class CellRendererCombo : CellRendererText
 		this(cast(GtkCellRendererCombo*) p);
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(string, TreeIter, CellRendererCombo) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, TreeIter, CellRendererCombo) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
 
-	void delegate(string, TreeIter, CellRendererCombo)[] onChangedListeners;
 	/**
 	 * This signal is emitted each time after the user selected an item in
 	 * the combo box, either by using the mouse or the arrow keys.  Contrary
@@ -140,26 +152,40 @@ public class CellRendererCombo : CellRendererText
 	 *
 	 * Since: 2.14
 	 */
-	void addOnChanged(void delegate(string, TreeIter, CellRendererCombo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(string, TreeIter, CellRendererCombo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GtkCellRendererCombo* cellrenderercomboStruct, char* pathString, GtkTreeIter* newIter, CellRendererCombo _cellrenderercombo)
+	
+	extern(C) static void callBackChanged(GtkCellRendererCombo* cellrenderercomboStruct, char* pathString, GtkTreeIter* newIter,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, TreeIter, CellRendererCombo) dlg; _cellrenderercombo.onChangedListeners )
+		wrapper.dlg(Str.toString(pathString), ObjectG.getDObject!(TreeIter)(newIter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
+	}
+
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
 		{
-			dlg(Str.toString(pathString), ObjectG.getDObject!(TreeIter)(newIter), _cellrenderercombo);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

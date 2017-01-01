@@ -38,6 +38,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -980,9 +981,20 @@ public class Display : ObjectG
 		gdk_display_warp_pointer(gdkDisplay, (screen is null) ? null : screen.getScreenStruct(), x, y);
 	}
 
-	int[string] connectedSignals;
+	protected class OnClosedDelegateWrapper
+	{
+		void delegate(bool, Display) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(bool, Display) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnClosedDelegateWrapper[] onClosedListeners;
 
-	void delegate(bool, Display)[] onClosedListeners;
 	/**
 	 * The ::closed signal is emitted when the connection to the windowing
 	 * system for @display is closed.
@@ -992,30 +1004,57 @@ public class Display : ObjectG
 	 *
 	 * Since: 2.2
 	 */
-	void addOnClosed(void delegate(bool, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClosed(void delegate(bool, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "closed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"closed",
-				cast(GCallback)&callBackClosed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["closed"] = 1;
-		}
-		onClosedListeners ~= dlg;
+		onClosedListeners ~= new OnClosedDelegateWrapper(dlg, 0, connectFlags);
+		onClosedListeners[onClosedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"closed",
+			cast(GCallback)&callBackClosed,
+			cast(void*)onClosedListeners[onClosedListeners.length - 1],
+			cast(GClosureNotify)&callBackClosedDestroy,
+			connectFlags);
+		return onClosedListeners[onClosedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClosed(GdkDisplay* displayStruct, bool isError, Display _display)
+	
+	extern(C) static void callBackClosed(GdkDisplay* displayStruct, bool isError,OnClosedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(bool, Display) dlg; _display.onClosedListeners )
-		{
-			dlg(isError, _display);
-		}
+		wrapper.dlg(isError, wrapper.outer);
+	}
+	
+	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClosed(wrapper);
 	}
 
-	void delegate(MonitorG, Display)[] onMonitorAddedListeners;
+	protected void internalRemoveOnClosed(OnClosedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onClosedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onClosedListeners[index] = null;
+				onClosedListeners = std.algorithm.remove(onClosedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMonitorAddedDelegateWrapper
+	{
+		void delegate(MonitorG, Display) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MonitorG, Display) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMonitorAddedDelegateWrapper[] onMonitorAddedListeners;
+
 	/**
 	 * The ::monitor-added signal is emitted whenever a monitor is
 	 * added.
@@ -1025,30 +1064,57 @@ public class Display : ObjectG
 	 *
 	 * Since: 3.22
 	 */
-	void addOnMonitorAdded(void delegate(MonitorG, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMonitorAdded(void delegate(MonitorG, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "monitor-added" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"monitor-added",
-				cast(GCallback)&callBackMonitorAdded,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["monitor-added"] = 1;
-		}
-		onMonitorAddedListeners ~= dlg;
+		onMonitorAddedListeners ~= new OnMonitorAddedDelegateWrapper(dlg, 0, connectFlags);
+		onMonitorAddedListeners[onMonitorAddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"monitor-added",
+			cast(GCallback)&callBackMonitorAdded,
+			cast(void*)onMonitorAddedListeners[onMonitorAddedListeners.length - 1],
+			cast(GClosureNotify)&callBackMonitorAddedDestroy,
+			connectFlags);
+		return onMonitorAddedListeners[onMonitorAddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMonitorAdded(GdkDisplay* displayStruct, GdkMonitor* monitor, Display _display)
+	
+	extern(C) static void callBackMonitorAdded(GdkDisplay* displayStruct, GdkMonitor* monitor,OnMonitorAddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MonitorG, Display) dlg; _display.onMonitorAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(MonitorG)(monitor), _display);
-		}
+		wrapper.dlg(ObjectG.getDObject!(MonitorG)(monitor), wrapper.outer);
+	}
+	
+	extern(C) static void callBackMonitorAddedDestroy(OnMonitorAddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMonitorAdded(wrapper);
 	}
 
-	void delegate(MonitorG, Display)[] onMonitorRemovedListeners;
+	protected void internalRemoveOnMonitorAdded(OnMonitorAddedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMonitorAddedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMonitorAddedListeners[index] = null;
+				onMonitorAddedListeners = std.algorithm.remove(onMonitorAddedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMonitorRemovedDelegateWrapper
+	{
+		void delegate(MonitorG, Display) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(MonitorG, Display) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMonitorRemovedDelegateWrapper[] onMonitorRemovedListeners;
+
 	/**
 	 * The ::monitor-removed signal is emitted whenever a monitor is
 	 * removed.
@@ -1058,58 +1124,112 @@ public class Display : ObjectG
 	 *
 	 * Since: 3.22
 	 */
-	void addOnMonitorRemoved(void delegate(MonitorG, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMonitorRemoved(void delegate(MonitorG, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "monitor-removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"monitor-removed",
-				cast(GCallback)&callBackMonitorRemoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["monitor-removed"] = 1;
-		}
-		onMonitorRemovedListeners ~= dlg;
+		onMonitorRemovedListeners ~= new OnMonitorRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onMonitorRemovedListeners[onMonitorRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"monitor-removed",
+			cast(GCallback)&callBackMonitorRemoved,
+			cast(void*)onMonitorRemovedListeners[onMonitorRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackMonitorRemovedDestroy,
+			connectFlags);
+		return onMonitorRemovedListeners[onMonitorRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMonitorRemoved(GdkDisplay* displayStruct, GdkMonitor* monitor, Display _display)
+	
+	extern(C) static void callBackMonitorRemoved(GdkDisplay* displayStruct, GdkMonitor* monitor,OnMonitorRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(MonitorG, Display) dlg; _display.onMonitorRemovedListeners )
-		{
-			dlg(ObjectG.getDObject!(MonitorG)(monitor), _display);
-		}
+		wrapper.dlg(ObjectG.getDObject!(MonitorG)(monitor), wrapper.outer);
+	}
+	
+	extern(C) static void callBackMonitorRemovedDestroy(OnMonitorRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMonitorRemoved(wrapper);
 	}
 
-	void delegate(Display)[] onOpenedListeners;
+	protected void internalRemoveOnMonitorRemoved(OnMonitorRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMonitorRemovedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMonitorRemovedListeners[index] = null;
+				onMonitorRemovedListeners = std.algorithm.remove(onMonitorRemovedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnOpenedDelegateWrapper
+	{
+		void delegate(Display) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Display) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnOpenedDelegateWrapper[] onOpenedListeners;
+
 	/**
 	 * The ::opened signal is emitted when the connection to the windowing
 	 * system for @display is opened.
 	 */
-	void addOnOpened(void delegate(Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnOpened(void delegate(Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "opened" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"opened",
-				cast(GCallback)&callBackOpened,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["opened"] = 1;
-		}
-		onOpenedListeners ~= dlg;
+		onOpenedListeners ~= new OnOpenedDelegateWrapper(dlg, 0, connectFlags);
+		onOpenedListeners[onOpenedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"opened",
+			cast(GCallback)&callBackOpened,
+			cast(void*)onOpenedListeners[onOpenedListeners.length - 1],
+			cast(GClosureNotify)&callBackOpenedDestroy,
+			connectFlags);
+		return onOpenedListeners[onOpenedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackOpened(GdkDisplay* displayStruct, Display _display)
+	
+	extern(C) static void callBackOpened(GdkDisplay* displayStruct,OnOpenedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Display) dlg; _display.onOpenedListeners )
-		{
-			dlg(_display);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackOpenedDestroy(OnOpenedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnOpened(wrapper);
 	}
 
-	void delegate(Seat, Display)[] onSeatAddedListeners;
+	protected void internalRemoveOnOpened(OnOpenedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onOpenedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onOpenedListeners[index] = null;
+				onOpenedListeners = std.algorithm.remove(onOpenedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSeatAddedDelegateWrapper
+	{
+		void delegate(Seat, Display) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Seat, Display) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSeatAddedDelegateWrapper[] onSeatAddedListeners;
+
 	/**
 	 * The ::seat-added signal is emitted whenever a new seat is made
 	 * known to the windowing system.
@@ -1119,30 +1239,57 @@ public class Display : ObjectG
 	 *
 	 * Since: 3.20
 	 */
-	void addOnSeatAdded(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSeatAdded(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "seat-added" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"seat-added",
-				cast(GCallback)&callBackSeatAdded,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["seat-added"] = 1;
-		}
-		onSeatAddedListeners ~= dlg;
+		onSeatAddedListeners ~= new OnSeatAddedDelegateWrapper(dlg, 0, connectFlags);
+		onSeatAddedListeners[onSeatAddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"seat-added",
+			cast(GCallback)&callBackSeatAdded,
+			cast(void*)onSeatAddedListeners[onSeatAddedListeners.length - 1],
+			cast(GClosureNotify)&callBackSeatAddedDestroy,
+			connectFlags);
+		return onSeatAddedListeners[onSeatAddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSeatAdded(GdkDisplay* displayStruct, GdkSeat* seat, Display _display)
+	
+	extern(C) static void callBackSeatAdded(GdkDisplay* displayStruct, GdkSeat* seat,OnSeatAddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Seat, Display) dlg; _display.onSeatAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(Seat)(seat), _display);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Seat)(seat), wrapper.outer);
+	}
+	
+	extern(C) static void callBackSeatAddedDestroy(OnSeatAddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSeatAdded(wrapper);
 	}
 
-	void delegate(Seat, Display)[] onSeatRemovedListeners;
+	protected void internalRemoveOnSeatAdded(OnSeatAddedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSeatAddedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSeatAddedListeners[index] = null;
+				onSeatAddedListeners = std.algorithm.remove(onSeatAddedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSeatRemovedDelegateWrapper
+	{
+		void delegate(Seat, Display) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Seat, Display) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSeatRemovedDelegateWrapper[] onSeatRemovedListeners;
+
 	/**
 	 * The ::seat-removed signal is emitted whenever a seat is removed
 	 * by the windowing system.
@@ -1152,26 +1299,40 @@ public class Display : ObjectG
 	 *
 	 * Since: 3.20
 	 */
-	void addOnSeatRemoved(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSeatRemoved(void delegate(Seat, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "seat-removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"seat-removed",
-				cast(GCallback)&callBackSeatRemoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["seat-removed"] = 1;
-		}
-		onSeatRemovedListeners ~= dlg;
+		onSeatRemovedListeners ~= new OnSeatRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onSeatRemovedListeners[onSeatRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"seat-removed",
+			cast(GCallback)&callBackSeatRemoved,
+			cast(void*)onSeatRemovedListeners[onSeatRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackSeatRemovedDestroy,
+			connectFlags);
+		return onSeatRemovedListeners[onSeatRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSeatRemoved(GdkDisplay* displayStruct, GdkSeat* seat, Display _display)
+	
+	extern(C) static void callBackSeatRemoved(GdkDisplay* displayStruct, GdkSeat* seat,OnSeatRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Seat, Display) dlg; _display.onSeatRemovedListeners )
+		wrapper.dlg(ObjectG.getDObject!(Seat)(seat), wrapper.outer);
+	}
+	
+	extern(C) static void callBackSeatRemovedDestroy(OnSeatRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSeatRemoved(wrapper);
+	}
+
+	protected void internalRemoveOnSeatRemoved(OnSeatRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSeatRemovedListeners)
 		{
-			dlg(ObjectG.getDObject!(Seat)(seat), _display);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSeatRemovedListeners[index] = null;
+				onSeatRemovedListeners = std.algorithm.remove(onSeatRemovedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

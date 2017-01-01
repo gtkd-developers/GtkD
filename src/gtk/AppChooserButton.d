@@ -36,6 +36,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -254,9 +255,20 @@ public class AppChooserButton : ComboBox, AppChooserIF
 		gtk_app_chooser_button_set_show_dialog_item(gtkAppChooserButton, setting);
 	}
 
-	int[string] connectedSignals;
+	protected class OnCustomItemActivatedDelegateWrapper
+	{
+		void delegate(string, AppChooserButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, AppChooserButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCustomItemActivatedDelegateWrapper[] onCustomItemActivatedListeners;
 
-	void delegate(string, AppChooserButton)[] onCustomItemActivatedListeners;
 	/**
 	 * Emitted when a custom item, previously added with
 	 * gtk_app_chooser_button_append_custom_item(), is activated from the
@@ -265,26 +277,40 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 * Params:
 	 *     itemName = the name of the activated item
 	 */
-	void addOnCustomItemActivated(void delegate(string, AppChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCustomItemActivated(void delegate(string, AppChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "custom-item-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"custom-item-activated",
-				cast(GCallback)&callBackCustomItemActivated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["custom-item-activated"] = 1;
-		}
-		onCustomItemActivatedListeners ~= dlg;
+		onCustomItemActivatedListeners ~= new OnCustomItemActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onCustomItemActivatedListeners[onCustomItemActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"custom-item-activated",
+			cast(GCallback)&callBackCustomItemActivated,
+			cast(void*)onCustomItemActivatedListeners[onCustomItemActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackCustomItemActivatedDestroy,
+			connectFlags);
+		return onCustomItemActivatedListeners[onCustomItemActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCustomItemActivated(GtkAppChooserButton* appchooserbuttonStruct, char* itemName, AppChooserButton _appchooserbutton)
+	
+	extern(C) static void callBackCustomItemActivated(GtkAppChooserButton* appchooserbuttonStruct, char* itemName,OnCustomItemActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, AppChooserButton) dlg; _appchooserbutton.onCustomItemActivatedListeners )
+		wrapper.dlg(Str.toString(itemName), wrapper.outer);
+	}
+	
+	extern(C) static void callBackCustomItemActivatedDestroy(OnCustomItemActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCustomItemActivated(wrapper);
+	}
+
+	protected void internalRemoveOnCustomItemActivated(OnCustomItemActivatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCustomItemActivatedListeners)
 		{
-			dlg(Str.toString(itemName), _appchooserbutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCustomItemActivatedListeners[index] = null;
+				onCustomItemActivatedListeners = std.algorithm.remove(onCustomItemActivatedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

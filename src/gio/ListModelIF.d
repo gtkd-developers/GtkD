@@ -29,6 +29,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -177,7 +178,6 @@ public interface ListModelIF{
 	 * Since: 2.44
 	 */
 	public void itemsChanged(uint position, uint removed, uint added);
-	@property void delegate(uint, uint, uint, ListModelIF)[] onItemsChangedListeners();
 	/**
 	 * This signal is emitted whenever items were added or removed to
 	 * @list. At @position, @removed items were removed and @added items
@@ -190,6 +190,7 @@ public interface ListModelIF{
 	 *
 	 * Since: 2.44
 	 */
-	void addOnItemsChanged(void delegate(uint, uint, uint, ListModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnItemsChanged(void delegate(uint, uint, uint, ListModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }
