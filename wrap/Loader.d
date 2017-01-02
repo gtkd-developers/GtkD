@@ -241,51 +241,13 @@ public struct Linker
 
 version(Windows)
 {
+	import core.sys.windows.winbase : LoadLibraryA, GetProcAddress, FreeLibrary, GetLastError, FormatMessageA,
+				FORMAT_MESSAGE_FROM_SYSTEM, FORMAT_MESSAGE_ARGUMENT_ARRAY;
+	import core.sys.windows.winnt : LANG_NEUTRAL, IMAGE_FILE_MACHINE_AMD64, IMAGE_FILE_MACHINE_I386;
+
 	extern(Windows)
 	{
-		void* LoadLibraryA(char*);
-		void* GetProcAddress(void*, char*);
-		void FreeLibrary(void*);
-
-		uint GetLastError();
-		uint FormatMessageA(uint, void*, uint, uint, char*, uint, void* /* va_list */);
-
 		int SetDllDirectoryA(const(char)* path);
-
-		enum MessageFormat
-		{
-			FromSystem    = 0x00001000,
-			ArgumentArray = 0x00002000
-		}
-
-		enum Lang
-		{
-			Neutral = 0x00
-		}
-
-		enum MachineType : ushort
-		{
-			UNKNOWN = 0x0,
-			AM33 = 0x1d3,
-			AMD64 = 0x8664,
-			ARM = 0x1c0,
-			EBC = 0xebc,
-			I386 = 0x14c,
-			IA64 = 0x200,
-			M32R = 0x9041,
-			MIPS16 = 0x266,
-			MIPSFPU = 0x366,
-			MIPSFPU16 = 0x466,
-			POWERPC = 0x1f0,
-			POWERPCFP = 0x1f1,
-			R4000 = 0x166,
-			SH3 = 0x1a2,
-			SH3DSP = 0x1a3,
-			SH4 = 0x1a6,
-			SH5 = 0x1a8,
-			THUMB = 0x1c2,
-			WCEMIPSV2 = 0x169,
-		}
 	}
 
 	private void* pLoadLibrary(string libraryName)
@@ -307,13 +269,13 @@ version(Windows)
 		char[] buffer = new char[2048];
 		buffer[0] = '\0';
 
-		FormatMessageA( MessageFormat.FromSystem | MessageFormat.ArgumentArray,
+		FormatMessageA( FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ARGUMENT_ARRAY,
 		               null,
 		               GetLastError(),
-		               Lang.Neutral,
+		               LANG_NEUTRAL,
 		               buffer.ptr,
 					   cast(uint)buffer.length,
-					   cast(void*)["\0".ptr].ptr);
+					   cast(char**)["\0".ptr].ptr);
 
 		return buffer.ptr.fromStringz.idup;
 	}
@@ -370,16 +332,16 @@ version(Windows)
 		if( peHead != 0x00004550)
 			return false;
 
-		MachineType type = dll.rawRead(new MachineType[1])[0];
+		ushort type = dll.rawRead(new ushort[1])[0];
 
 		version(Win32)
 		{
-			if ( type == MachineType.I386 )
+			if ( type == IMAGE_FILE_MACHINE_I386 )
 				return true;
 		}
 		else version(Win64)
 		{
-			if ( type == MachineType.AMD64 )
+			if ( type == IMAGE_FILE_MACHINE_AMD64 )
 				return true;
 		}
 
