@@ -389,12 +389,14 @@ version(Windows)
 else
 {
 	import core.sys.posix.dlfcn : dlopen, dlerror, dlsym, dlclose, RTLD_NOW, RTLD_GLOBAL;
+	import std.path : buildPath;
+
+	private string lastError;
 
 	version(OSX)
 	{
 		string basePath()
 		{
-			import std.path;
 			import std.process;
 
 			static string path;
@@ -419,13 +421,10 @@ else
 
 	private void* pLoadLibrary(string libraryName, int flag = RTLD_NOW)
 	{
-		import std.path;
 		void* handle = dlopen(cast(char*)toStringz(basePath.buildPath(libraryName)), flag | RTLD_GLOBAL);
+
 		if(!handle){
-			import std.string;
-			string temp=dlerror().fromStringz.idup;
-			import std.exception;
-			enforce(0, temp);
+			lastError = dlerror().fromStringz.idup;
 		}
 
 		// clear the error buffer
@@ -451,6 +450,7 @@ else
 
 	private string getErrorMessage()
 	{
-		return dlerror().fromStringz.idup;
+		scope(exit) lastError = null;
+		return lastError;
 	}
 }
