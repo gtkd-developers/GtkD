@@ -420,6 +420,7 @@ else
 			if(!path){
 				path=environment.get("HOMEBREW_ROOT");
 				if(path){
+					import std.path;
 					path=path.buildPath("lib");
 				}
 			}
@@ -433,6 +434,7 @@ else
 
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
+		import std.path;
 		void* handle = dlopen(cast(char*)toStringz(basePath.buildPath(libraryName)), flag | RTLD.GLOBAL);
 		if(!handle){
 			import std.string;
