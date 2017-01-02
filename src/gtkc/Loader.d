@@ -439,7 +439,8 @@ else
 		if(!handle){
 			import std.string;
 			string temp=dlerror().fromStringz.idup;
-			assert(0, temp);
+			import std.exception;
+			enforce(0, temp);
 		}
 
 		// clear the error buffer
