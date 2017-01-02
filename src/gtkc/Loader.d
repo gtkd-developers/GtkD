@@ -416,8 +416,14 @@ else
 			if (path !is null)
 				return path;
 
-			path = environment.get("GTK_BASEPATH", environment.get("HOMEBREW_ROOT", ""));
-
+			path = environment.get("GTK_BASEPATH");
+			if(!path){
+				path=environment.get("HOMEBREW_ROOT");
+				if(path){
+					import std.path;
+					path=path.buildPath("lib");
+				}
+			}
 			return path;
 		}
 	}
@@ -428,7 +434,14 @@ else
 
 	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
 	{
-		void* handle = dlopen(cast(char*)toStringz(basePath~libraryName), flag | RTLD.GLOBAL);
+		import std.path;
+		void* handle = dlopen(cast(char*)toStringz(basePath.buildPath(libraryName)), flag | RTLD.GLOBAL);
+		if(!handle){
+			import std.string;
+			string temp=dlerror().fromStringz.idup;
+			import std.exception;
+			enforce(0, temp);
+		}
 
 		// clear the error buffer
 		dlerror();
