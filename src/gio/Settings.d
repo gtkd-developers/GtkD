@@ -36,6 +36,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -1557,9 +1558,20 @@ public class Settings : ObjectG
 		return g_settings_set_value(gSettings, Str.toStringz(key), (value is null) ? null : value.getVariantStruct()) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangeDelegateWrapper
+	{
+		bool delegate(void*, int, Settings) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(void*, int, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangeDelegateWrapper[] onChangeListeners;
 
-	bool delegate(void*, int, Settings)[] onChangeListeners;
 	/**
 	 * The "change-event" signal is emitted once per change event that
 	 * affects this settings object.  You should connect to this signal
@@ -1584,35 +1596,57 @@ public class Settings : ObjectG
 	 * Return: %TRUE to stop other handlers from being invoked for the
 	 *     event. FALSE to propagate the event further.
 	 */
-	void addOnChange(bool delegate(void*, int, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChange(bool delegate(void*, int, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "change-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"change-event",
-				cast(GCallback)&callBackChange,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["change-event"] = 1;
-		}
-		onChangeListeners ~= dlg;
+		onChangeListeners ~= new OnChangeDelegateWrapper(dlg, 0, connectFlags);
+		onChangeListeners[onChangeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"change-event",
+			cast(GCallback)&callBackChange,
+			cast(void*)onChangeListeners[onChangeListeners.length - 1],
+			cast(GClosureNotify)&callBackChangeDestroy,
+			connectFlags);
+		return onChangeListeners[onChangeListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackChange(GSettings* settingsStruct, void* keys, int nKeys, Settings _settings)
+	
+	extern(C) static int callBackChange(GSettings* settingsStruct, void* keys, int nKeys,OnChangeDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(void*, int, Settings) dlg; _settings.onChangeListeners )
-		{
-			if ( dlg(keys, nKeys, _settings) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(keys, nKeys, wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangeDestroy(OnChangeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChange(wrapper);
 	}
 
-	void delegate(string, Settings)[] onChangedListeners;
+	protected void internalRemoveOnChange(OnChangeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangeListeners[index] = null;
+				onChangeListeners = std.algorithm.remove(onChangeListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(string, Settings) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
+
 	/**
 	 * The "changed" signal is emitted when a key has potentially changed.
 	 * You should call one of the g_settings_get() calls to check the new
@@ -1628,30 +1662,57 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the name of the key that changed
 	 */
-	void addOnChanged(void delegate(string, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(string, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GSettings* settingsStruct, char* key, Settings _settings)
+	
+	extern(C) static void callBackChanged(GSettings* settingsStruct, char* key,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, Settings) dlg; _settings.onChangedListeners )
-		{
-			dlg(Str.toString(key), _settings);
-		}
+		wrapper.dlg(Str.toString(key), wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
 	}
 
-	bool delegate(uint, Settings)[] onWritableChangeListeners;
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnWritableChangeDelegateWrapper
+	{
+		bool delegate(uint, Settings) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(uint, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnWritableChangeDelegateWrapper[] onWritableChangeListeners;
+
 	/**
 	 * The "writable-change-event" signal is emitted once per writability
 	 * change event that affects this settings object.  You should connect
@@ -1678,35 +1739,57 @@ public class Settings : ObjectG
 	 * Return: %TRUE to stop other handlers from being invoked for the
 	 *     event. FALSE to propagate the event further.
 	 */
-	void addOnWritableChange(bool delegate(uint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnWritableChange(bool delegate(uint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "writable-change-event" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"writable-change-event",
-				cast(GCallback)&callBackWritableChange,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["writable-change-event"] = 1;
-		}
-		onWritableChangeListeners ~= dlg;
+		onWritableChangeListeners ~= new OnWritableChangeDelegateWrapper(dlg, 0, connectFlags);
+		onWritableChangeListeners[onWritableChangeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"writable-change-event",
+			cast(GCallback)&callBackWritableChange,
+			cast(void*)onWritableChangeListeners[onWritableChangeListeners.length - 1],
+			cast(GClosureNotify)&callBackWritableChangeDestroy,
+			connectFlags);
+		return onWritableChangeListeners[onWritableChangeListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackWritableChange(GSettings* settingsStruct, uint key, Settings _settings)
+	
+	extern(C) static int callBackWritableChange(GSettings* settingsStruct, uint key,OnWritableChangeDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(uint, Settings) dlg; _settings.onWritableChangeListeners )
-		{
-			if ( dlg(key, _settings) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(key, wrapper.outer);
+	}
+	
+	extern(C) static void callBackWritableChangeDestroy(OnWritableChangeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnWritableChange(wrapper);
 	}
 
-	void delegate(string, Settings)[] onWritableChangedListeners;
+	protected void internalRemoveOnWritableChange(OnWritableChangeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onWritableChangeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onWritableChangeListeners[index] = null;
+				onWritableChangeListeners = std.algorithm.remove(onWritableChangeListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnWritableChangedDelegateWrapper
+	{
+		void delegate(string, Settings) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnWritableChangedDelegateWrapper[] onWritableChangedListeners;
+
 	/**
 	 * The "writable-changed" signal is emitted when the writability of a
 	 * key has potentially changed.  You should call
@@ -1719,26 +1802,40 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key
 	 */
-	void addOnWritableChanged(void delegate(string, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnWritableChanged(void delegate(string, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "writable-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"writable-changed",
-				cast(GCallback)&callBackWritableChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["writable-changed"] = 1;
-		}
-		onWritableChangedListeners ~= dlg;
+		onWritableChangedListeners ~= new OnWritableChangedDelegateWrapper(dlg, 0, connectFlags);
+		onWritableChangedListeners[onWritableChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"writable-changed",
+			cast(GCallback)&callBackWritableChanged,
+			cast(void*)onWritableChangedListeners[onWritableChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackWritableChangedDestroy,
+			connectFlags);
+		return onWritableChangedListeners[onWritableChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, char* key, Settings _settings)
+	
+	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, char* key,OnWritableChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, Settings) dlg; _settings.onWritableChangedListeners )
+		wrapper.dlg(Str.toString(key), wrapper.outer);
+	}
+	
+	extern(C) static void callBackWritableChangedDestroy(OnWritableChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnWritableChanged(wrapper);
+	}
+
+	protected void internalRemoveOnWritableChanged(OnWritableChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onWritableChangedListeners)
 		{
-			dlg(Str.toString(key), _settings);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onWritableChangedListeners[index] = null;
+				onWritableChangedListeners = std.algorithm.remove(onWritableChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

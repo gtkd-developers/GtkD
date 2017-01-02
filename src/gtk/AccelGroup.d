@@ -34,6 +34,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -319,9 +320,20 @@ public class AccelGroup : ObjectG
 		gtk_accel_group_unlock(gtkAccelGroup);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAccelActivateDelegateWrapper
+	{
+		bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAccelActivateDelegateWrapper[] onAccelActivateListeners;
 
-	bool delegate(ObjectG, uint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
 	/**
 	 * The accel-activate signal is an implementation detail of
 	 * #GtkAccelGroup and not meant to be used by applications.
@@ -333,35 +345,57 @@ public class AccelGroup : ObjectG
 	 *
 	 * Return: %TRUE if the accelerator was activated
 	 */
-	void addOnAccelActivate(bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAccelActivate(bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "accel-activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"accel-activate",
-				cast(GCallback)&callBackAccelActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["accel-activate"] = 1;
-		}
-		onAccelActivateListeners ~= dlg;
+		onAccelActivateListeners ~= new OnAccelActivateDelegateWrapper(dlg, 0, connectFlags);
+		onAccelActivateListeners[onAccelActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"accel-activate",
+			cast(GCallback)&callBackAccelActivate,
+			cast(void*)onAccelActivateListeners[onAccelActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackAccelActivateDestroy,
+			connectFlags);
+		return onAccelActivateListeners[onAccelActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackAccelActivate(GtkAccelGroup* accelgroupStruct, GObject* acceleratable, uint keyval, GdkModifierType modifier, AccelGroup _accelgroup)
+	
+	extern(C) static int callBackAccelActivate(GtkAccelGroup* accelgroupStruct, GObject* acceleratable, uint keyval, GdkModifierType modifier,OnAccelActivateDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg; _accelgroup.onAccelActivateListeners )
-		{
-			if ( dlg(ObjectG.getDObject!(ObjectG)(acceleratable), keyval, modifier, _accelgroup) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(ObjectG.getDObject!(ObjectG)(acceleratable), keyval, modifier, wrapper.outer);
+	}
+	
+	extern(C) static void callBackAccelActivateDestroy(OnAccelActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAccelActivate(wrapper);
 	}
 
-	void delegate(uint, GdkModifierType, Closure, AccelGroup)[] onAccelChangedListeners;
+	protected void internalRemoveOnAccelActivate(OnAccelActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAccelActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAccelActivateListeners[index] = null;
+				onAccelActivateListeners = std.algorithm.remove(onAccelActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnAccelChangedDelegateWrapper
+	{
+		void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAccelChangedDelegateWrapper[] onAccelChangedListeners;
+
 	/**
 	 * The accel-changed signal is emitted when an entry
 	 * is added to or removed from the accel group.
@@ -375,28 +409,42 @@ public class AccelGroup : ObjectG
 	 *     modifier = the modifier combination of the accelerator
 	 *     accelClosure = the #GClosure of the accelerator
 	 */
-	void addOnAccelChanged(void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAccelChanged(void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "accel-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"accel-changed",
-				cast(GCallback)&callBackAccelChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["accel-changed"] = 1;
-		}
-		onAccelChangedListeners ~= dlg;
+		onAccelChangedListeners ~= new OnAccelChangedDelegateWrapper(dlg, 0, connectFlags);
+		onAccelChangedListeners[onAccelChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"accel-changed",
+			cast(GCallback)&callBackAccelChanged,
+			cast(void*)onAccelChangedListeners[onAccelChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackAccelChangedDestroy,
+			connectFlags);
+		return onAccelChangedListeners[onAccelChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAccelChanged(GtkAccelGroup* accelgroupStruct, uint keyval, GdkModifierType modifier, GClosure* accelClosure, AccelGroup _accelgroup)
+	
+	extern(C) static void callBackAccelChanged(GtkAccelGroup* accelgroupStruct, uint keyval, GdkModifierType modifier, GClosure* accelClosure,OnAccelChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg; _accelgroup.onAccelChangedListeners )
+		wrapper.dlg(keyval, modifier, ObjectG.getDObject!(Closure)(accelClosure), wrapper.outer);
+	}
+	
+	extern(C) static void callBackAccelChangedDestroy(OnAccelChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAccelChanged(wrapper);
+	}
+
+	protected void internalRemoveOnAccelChanged(OnAccelChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAccelChangedListeners)
 		{
-			dlg(keyval, modifier, ObjectG.getDObject!(Closure)(accelClosure), _accelgroup);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAccelChangedListeners[index] = null;
+				onAccelChangedListeners = std.algorithm.remove(onAccelChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 
 	/**
 	 * Finds the first accelerator in any #GtkAccelGroup attached

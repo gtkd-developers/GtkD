@@ -33,6 +33,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -383,9 +384,20 @@ public class Cancellable : ObjectG
 		return new Source(cast(GSource*) p, true);
 	}
 
-	int[string] connectedSignals;
+	protected class OnCancelledDelegateWrapper
+	{
+		void delegate(Cancellable) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Cancellable) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCancelledDelegateWrapper[] onCancelledListeners;
 
-	void delegate(Cancellable)[] onCancelledListeners;
 	/**
 	 * Emitted when the operation has been cancelled.
 	 *
@@ -439,26 +451,40 @@ public class Cancellable : ObjectG
 	 * the user cancelled from, which may be the main thread. So, the
 	 * cancellable signal should not do something that can block.
 	 */
-	void addOnCancelled(void delegate(Cancellable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCancelled(void delegate(Cancellable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cancelled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cancelled",
-				cast(GCallback)&callBackCancelled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cancelled"] = 1;
-		}
-		onCancelledListeners ~= dlg;
+		onCancelledListeners ~= new OnCancelledDelegateWrapper(dlg, 0, connectFlags);
+		onCancelledListeners[onCancelledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cancelled",
+			cast(GCallback)&callBackCancelled,
+			cast(void*)onCancelledListeners[onCancelledListeners.length - 1],
+			cast(GClosureNotify)&callBackCancelledDestroy,
+			connectFlags);
+		return onCancelledListeners[onCancelledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCancelled(GCancellable* cancellableStruct, Cancellable _cancellable)
+	
+	extern(C) static void callBackCancelled(GCancellable* cancellableStruct,OnCancelledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Cancellable) dlg; _cancellable.onCancelledListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCancelled(wrapper);
+	}
+
+	protected void internalRemoveOnCancelled(OnCancelledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCancelledListeners)
 		{
-			dlg(_cancellable);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCancelledListeners[index] = null;
+				onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

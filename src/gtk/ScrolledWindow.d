@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -704,9 +705,20 @@ public class ScrolledWindow : Bin
 		gtk_scrolled_window_unset_placement(gtkScrolledWindow);
 	}
 
-	int[string] connectedSignals;
+	protected class OnEdgeOvershotDelegateWrapper
+	{
+		void delegate(GtkPositionType, ScrolledWindow) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkPositionType, ScrolledWindow) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEdgeOvershotDelegateWrapper[] onEdgeOvershotListeners;
 
-	void delegate(GtkPositionType, ScrolledWindow)[] onEdgeOvershotListeners;
 	/**
 	 * The ::edge-overshot signal is emitted whenever user initiated scrolling
 	 * makes the scrolledwindow firmly surpass (ie. with some edge resistance)
@@ -723,30 +735,57 @@ public class ScrolledWindow : Bin
 	 *
 	 * Since: 3.16
 	 */
-	void addOnEdgeOvershot(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEdgeOvershot(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "edge-overshot" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"edge-overshot",
-				cast(GCallback)&callBackEdgeOvershot,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["edge-overshot"] = 1;
-		}
-		onEdgeOvershotListeners ~= dlg;
+		onEdgeOvershotListeners ~= new OnEdgeOvershotDelegateWrapper(dlg, 0, connectFlags);
+		onEdgeOvershotListeners[onEdgeOvershotListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"edge-overshot",
+			cast(GCallback)&callBackEdgeOvershot,
+			cast(void*)onEdgeOvershotListeners[onEdgeOvershotListeners.length - 1],
+			cast(GClosureNotify)&callBackEdgeOvershotDestroy,
+			connectFlags);
+		return onEdgeOvershotListeners[onEdgeOvershotListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEdgeOvershot(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos, ScrolledWindow _scrolledwindow)
+	
+	extern(C) static void callBackEdgeOvershot(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos,OnEdgeOvershotDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkPositionType, ScrolledWindow) dlg; _scrolledwindow.onEdgeOvershotListeners )
-		{
-			dlg(pos, _scrolledwindow);
-		}
+		wrapper.dlg(pos, wrapper.outer);
+	}
+	
+	extern(C) static void callBackEdgeOvershotDestroy(OnEdgeOvershotDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEdgeOvershot(wrapper);
 	}
 
-	void delegate(GtkPositionType, ScrolledWindow)[] onEdgeReachedListeners;
+	protected void internalRemoveOnEdgeOvershot(OnEdgeOvershotDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEdgeOvershotListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEdgeOvershotListeners[index] = null;
+				onEdgeOvershotListeners = std.algorithm.remove(onEdgeOvershotListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnEdgeReachedDelegateWrapper
+	{
+		void delegate(GtkPositionType, ScrolledWindow) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkPositionType, ScrolledWindow) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEdgeReachedDelegateWrapper[] onEdgeReachedListeners;
+
 	/**
 	 * The ::edge-reached signal is emitted whenever user-initiated scrolling
 	 * makes the scrolledwindow exactly reaches the lower or upper limits
@@ -763,30 +802,57 @@ public class ScrolledWindow : Bin
 	 *
 	 * Since: 3.16
 	 */
-	void addOnEdgeReached(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEdgeReached(void delegate(GtkPositionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "edge-reached" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"edge-reached",
-				cast(GCallback)&callBackEdgeReached,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["edge-reached"] = 1;
-		}
-		onEdgeReachedListeners ~= dlg;
+		onEdgeReachedListeners ~= new OnEdgeReachedDelegateWrapper(dlg, 0, connectFlags);
+		onEdgeReachedListeners[onEdgeReachedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"edge-reached",
+			cast(GCallback)&callBackEdgeReached,
+			cast(void*)onEdgeReachedListeners[onEdgeReachedListeners.length - 1],
+			cast(GClosureNotify)&callBackEdgeReachedDestroy,
+			connectFlags);
+		return onEdgeReachedListeners[onEdgeReachedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEdgeReached(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos, ScrolledWindow _scrolledwindow)
+	
+	extern(C) static void callBackEdgeReached(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos,OnEdgeReachedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkPositionType, ScrolledWindow) dlg; _scrolledwindow.onEdgeReachedListeners )
-		{
-			dlg(pos, _scrolledwindow);
-		}
+		wrapper.dlg(pos, wrapper.outer);
+	}
+	
+	extern(C) static void callBackEdgeReachedDestroy(OnEdgeReachedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEdgeReached(wrapper);
 	}
 
-	void delegate(GtkDirectionType, ScrolledWindow)[] onMoveFocusOutListeners;
+	protected void internalRemoveOnEdgeReached(OnEdgeReachedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEdgeReachedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEdgeReachedListeners[index] = null;
+				onEdgeReachedListeners = std.algorithm.remove(onEdgeReachedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveFocusOutDelegateWrapper
+	{
+		void delegate(GtkDirectionType, ScrolledWindow) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkDirectionType, ScrolledWindow) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveFocusOutDelegateWrapper[] onMoveFocusOutListeners;
+
 	/**
 	 * The ::move-focus-out signal is a
 	 * [keybinding signal][GtkBindingSignal] which gets
@@ -800,30 +866,57 @@ public class ScrolledWindow : Bin
 	 *     directionType = either %GTK_DIR_TAB_FORWARD or
 	 *         %GTK_DIR_TAB_BACKWARD
 	 */
-	void addOnMoveFocusOut(void delegate(GtkDirectionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveFocusOut(void delegate(GtkDirectionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-focus-out" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-focus-out",
-				cast(GCallback)&callBackMoveFocusOut,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-focus-out"] = 1;
-		}
-		onMoveFocusOutListeners ~= dlg;
+		onMoveFocusOutListeners ~= new OnMoveFocusOutDelegateWrapper(dlg, 0, connectFlags);
+		onMoveFocusOutListeners[onMoveFocusOutListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-focus-out",
+			cast(GCallback)&callBackMoveFocusOut,
+			cast(void*)onMoveFocusOutListeners[onMoveFocusOutListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveFocusOutDestroy,
+			connectFlags);
+		return onMoveFocusOutListeners[onMoveFocusOutListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType directionType, ScrolledWindow _scrolledwindow)
+	
+	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType directionType,OnMoveFocusOutDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkDirectionType, ScrolledWindow) dlg; _scrolledwindow.onMoveFocusOutListeners )
-		{
-			dlg(directionType, _scrolledwindow);
-		}
+		wrapper.dlg(directionType, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveFocusOutDestroy(OnMoveFocusOutDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveFocusOut(wrapper);
 	}
 
-	bool delegate(GtkScrollType, bool, ScrolledWindow)[] onScrollChildListeners;
+	protected void internalRemoveOnMoveFocusOut(OnMoveFocusOutDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveFocusOutListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveFocusOutListeners[index] = null;
+				onMoveFocusOutListeners = std.algorithm.remove(onMoveFocusOutListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnScrollChildDelegateWrapper
+	{
+		bool delegate(GtkScrollType, bool, ScrolledWindow) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GtkScrollType, bool, ScrolledWindow) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnScrollChildDelegateWrapper[] onScrollChildListeners;
+
 	/**
 	 * The ::scroll-child signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -836,31 +929,40 @@ public class ScrolledWindow : Bin
 	 *     horizontal = whether the keybinding scrolls the child
 	 *         horizontally or not
 	 */
-	void addOnScrollChild(bool delegate(GtkScrollType, bool, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnScrollChild(bool delegate(GtkScrollType, bool, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "scroll-child" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"scroll-child",
-				cast(GCallback)&callBackScrollChild,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["scroll-child"] = 1;
-		}
-		onScrollChildListeners ~= dlg;
+		onScrollChildListeners ~= new OnScrollChildDelegateWrapper(dlg, 0, connectFlags);
+		onScrollChildListeners[onScrollChildListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"scroll-child",
+			cast(GCallback)&callBackScrollChild,
+			cast(void*)onScrollChildListeners[onScrollChildListeners.length - 1],
+			cast(GClosureNotify)&callBackScrollChildDestroy,
+			connectFlags);
+		return onScrollChildListeners[onScrollChildListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType scroll, bool horizontal, ScrolledWindow _scrolledwindow)
+	
+	extern(C) static int callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType scroll, bool horizontal,OnScrollChildDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GtkScrollType, bool, ScrolledWindow) dlg; _scrolledwindow.onScrollChildListeners )
+		return wrapper.dlg(scroll, horizontal, wrapper.outer);
+	}
+	
+	extern(C) static void callBackScrollChildDestroy(OnScrollChildDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnScrollChild(wrapper);
+	}
+
+	protected void internalRemoveOnScrollChild(OnScrollChildDelegateWrapper source)
+	{
+		foreach(index, wrapper; onScrollChildListeners)
 		{
-			if ( dlg(scroll, horizontal, _scrolledwindow) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onScrollChildListeners[index] = null;
+				onScrollChildListeners = std.algorithm.remove(onScrollChildListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

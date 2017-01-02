@@ -33,6 +33,7 @@ private import gobject.Value;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -314,7 +315,6 @@ public interface ValueIF{
 	 * Since: 2.12
 	 */
 	public void setValue(double newValue);
-	@property void delegate(double, string, ValueIF)[] onValueChangedListeners();
 	/**
 	 * The 'value-changed' signal is emitted when the current value
 	 * that represent the object changes. @value is the numerical
@@ -336,6 +336,7 @@ public interface ValueIF{
 	 *
 	 * Since: 2.12
 	 */
-	void addOnValueChanged(void delegate(double, string, ValueIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnValueChanged(void delegate(double, string, ValueIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

@@ -78,6 +78,9 @@ public class Visual : ObjectG
 	 * Get the visual with the most available colors for the default
 	 * GDK screen. The return value should not be freed.
 	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
+	 *
 	 * Return: best visual
 	 */
 	public static Visual getBest()
@@ -97,6 +100,9 @@ public class Visual : ObjectG
 	 * means “largest,” i.e. 32 preferred over 24 preferred over 8 bits
 	 * per pixel.
 	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
+	 *
 	 * Return: best available depth
 	 */
 	public static int getBestDepth()
@@ -106,6 +112,9 @@ public class Visual : ObjectG
 
 	/**
 	 * Return the best available visual type for the default GDK screen.
+	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
 	 * Return: best visual type
 	 */
@@ -117,6 +126,9 @@ public class Visual : ObjectG
 	/**
 	 * Combines gdk_visual_get_best_with_depth() and
 	 * gdk_visual_get_best_with_type().
+	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
 	 * Params:
 	 *     depth = a bit depth
@@ -143,6 +155,9 @@ public class Visual : ObjectG
 	 * over grayscale or fixed-colormap visuals. The return value should
 	 * not be freed. %NULL may be returned if no visual supports @depth.
 	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
+	 *
 	 * Params:
 	 *     depth = a bit depth
 	 *
@@ -166,6 +181,9 @@ public class Visual : ObjectG
 	 * should not be freed. %NULL may be returned if no visual has type
 	 * @visual_type.
 	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
+	 *
 	 * Params:
 	 *     visualType = a visual type
 	 *
@@ -187,6 +205,8 @@ public class Visual : ObjectG
 	 * Get the system’s default visual for the default GDK screen.
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
+	 *
+	 * Deprecated: Use gdk_screen_get_system_visual (gdk_screen_get_default ()).
 	 *
 	 * Return: system visual
 	 */
@@ -363,6 +383,8 @@ public class Visual : ObjectG
 	 *
 	 * Call g_list_free() on the return value when you’re finished with it.
 	 *
+	 * Deprecated: Use gdk_screen_list_visuals (gdk_screen_get_default ()).
+	 *
 	 * Return: a list of visuals; the list must be freed, but not its contents
 	 */
 	public static ListG listVisuals()
@@ -384,6 +406,9 @@ public class Visual : ObjectG
 	 * visual, removing duplicates.
 	 *
 	 * The array returned by this function should not be freed.
+	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
 	 * Params:
 	 *     depths = return
@@ -407,6 +432,9 @@ public class Visual : ObjectG
 	 * visual, removing duplicates.
 	 *
 	 * The array returned by this function should not be freed.
+	 *
+	 * Deprecated: Visual selection should be done using
+	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
 	 * Params:
 	 *     visualTypes = return

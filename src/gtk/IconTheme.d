@@ -40,6 +40,7 @@ private import gtk.IconInfo;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -871,34 +872,59 @@ public class IconTheme : ObjectG
 		gtk_icon_theme_set_search_path(gtkIconTheme, Str.toStringzArray(path), cast(int)path.length);
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(IconTheme) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(IconTheme) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
 
-	void delegate(IconTheme)[] onChangedListeners;
 	/**
 	 * Emitted when the current icon theme is switched or GTK+ detects
 	 * that a change has occurred in the contents of the current
 	 * icon theme.
 	 */
-	void addOnChanged(void delegate(IconTheme) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(IconTheme) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GtkIconTheme* iconthemeStruct, IconTheme _icontheme)
+	
+	extern(C) static void callBackChanged(GtkIconTheme* iconthemeStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(IconTheme) dlg; _icontheme.onChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
+	}
+
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
 		{
-			dlg(_icontheme);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

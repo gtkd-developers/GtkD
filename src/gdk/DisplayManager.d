@@ -31,6 +31,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -217,9 +218,20 @@ public class DisplayManager : ObjectG
 		gdk_display_manager_set_default_display(gdkDisplayManager, (display is null) ? null : display.getDisplayStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnDisplayOpenedDelegateWrapper
+	{
+		void delegate(Display, DisplayManager) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Display, DisplayManager) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDisplayOpenedDelegateWrapper[] onDisplayOpenedListeners;
 
-	void delegate(Display, DisplayManager)[] onDisplayOpenedListeners;
 	/**
 	 * The ::display-opened signal is emitted when a display is opened.
 	 *
@@ -228,26 +240,40 @@ public class DisplayManager : ObjectG
 	 *
 	 * Since: 2.2
 	 */
-	void addOnDisplayOpened(void delegate(Display, DisplayManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDisplayOpened(void delegate(Display, DisplayManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "display-opened" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"display-opened",
-				cast(GCallback)&callBackDisplayOpened,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["display-opened"] = 1;
-		}
-		onDisplayOpenedListeners ~= dlg;
+		onDisplayOpenedListeners ~= new OnDisplayOpenedDelegateWrapper(dlg, 0, connectFlags);
+		onDisplayOpenedListeners[onDisplayOpenedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"display-opened",
+			cast(GCallback)&callBackDisplayOpened,
+			cast(void*)onDisplayOpenedListeners[onDisplayOpenedListeners.length - 1],
+			cast(GClosureNotify)&callBackDisplayOpenedDestroy,
+			connectFlags);
+		return onDisplayOpenedListeners[onDisplayOpenedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displaymanagerStruct, GdkDisplay* display, DisplayManager _displaymanager)
+	
+	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displaymanagerStruct, GdkDisplay* display,OnDisplayOpenedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Display, DisplayManager) dlg; _displaymanager.onDisplayOpenedListeners )
+		wrapper.dlg(ObjectG.getDObject!(Display)(display), wrapper.outer);
+	}
+	
+	extern(C) static void callBackDisplayOpenedDestroy(OnDisplayOpenedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDisplayOpened(wrapper);
+	}
+
+	protected void internalRemoveOnDisplayOpened(OnDisplayOpenedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDisplayOpenedListeners)
 		{
-			dlg(ObjectG.getDObject!(Display)(display), _displaymanager);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDisplayOpenedListeners[index] = null;
+				onDisplayOpenedListeners = std.algorithm.remove(onDisplayOpenedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -29,6 +29,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
+public  import std.algorithm;
 
 
 /**
@@ -208,13 +209,20 @@ public template ListModelT(TStruct)
 		g_list_model_items_changed(getListModelStruct(), position, removed, added);
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(uint, uint, uint, ListModelIF)[] _onItemsChangedListeners;
-	@property void delegate(uint, uint, uint, ListModelIF)[] onItemsChangedListeners()
+	protected class OnItemsChangedDelegateWrapper
 	{
-		return _onItemsChangedListeners;
+		void delegate(uint, uint, uint, ListModelIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(uint, uint, uint, ListModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
+
 	/**
 	 * This signal is emitted whenever items were added or removed to
 	 * @list. At @position, @removed items were removed and @added items
@@ -227,26 +235,40 @@ public template ListModelT(TStruct)
 	 *
 	 * Since: 2.44
 	 */
-	void addOnItemsChanged(void delegate(uint, uint, uint, ListModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnItemsChanged(void delegate(uint, uint, uint, ListModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "items-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"items-changed",
-				cast(GCallback)&callBackItemsChanged,
-				cast(void*)cast(ListModelIF)this,
-				null,
-				connectFlags);
-			connectedSignals["items-changed"] = 1;
-		}
-		_onItemsChangedListeners ~= dlg;
+		onItemsChangedListeners ~= new OnItemsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onItemsChangedListeners[onItemsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"items-changed",
+			cast(GCallback)&callBackItemsChanged,
+			cast(void*)onItemsChangedListeners[onItemsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackItemsChangedDestroy,
+			connectFlags);
+		return onItemsChangedListeners[onItemsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackItemsChanged(GListModel* listmodelStruct, uint position, uint removed, uint added, ListModelIF _listmodel)
+	
+	extern(C) static void callBackItemsChanged(GListModel* listmodelStruct, uint position, uint removed, uint added,OnItemsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(uint, uint, uint, ListModelIF) dlg; _listmodel.onItemsChangedListeners )
+		wrapper.dlg(position, removed, added, wrapper.outer);
+	}
+	
+	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnItemsChanged(wrapper);
+	}
+
+	protected void internalRemoveOnItemsChanged(OnItemsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onItemsChangedListeners)
 		{
-			dlg(position, removed, added, _listmodel);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onItemsChangedListeners[index] = null;
+				onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

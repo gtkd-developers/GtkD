@@ -41,6 +41,7 @@ private import gtk.TreeModelIF;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -773,9 +774,20 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		gtk_combo_box_set_wrap_width(gtkComboBox, width);
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(ComboBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ComboBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
 
-	void delegate(ComboBox)[] onChangedListeners;
 	/**
 	 * The changed signal is emitted when the active
 	 * item is changed. The can be due to the user selecting
@@ -786,30 +798,57 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnChanged(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GtkComboBox* comboboxStruct, ComboBox _combobox)
+	
+	extern(C) static void callBackChanged(GtkComboBox* comboboxStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ComboBox) dlg; _combobox.onChangedListeners )
-		{
-			dlg(_combobox);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
 	}
 
-	string delegate(string, ComboBox)[] onFormatEntryTextListeners;
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnFormatEntryTextDelegateWrapper
+	{
+		string delegate(string, ComboBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(string delegate(string, ComboBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFormatEntryTextDelegateWrapper[] onFormatEntryTextListeners;
+
 	/**
 	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
 	 *
@@ -852,27 +891,57 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 3.4
 	 */
-	void addOnFormatEntryText(string delegate(string, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFormatEntryText(string delegate(string, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "format-entry-text" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"format-entry-text",
-				cast(GCallback)&callBackFormatEntryText,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["format-entry-text"] = 1;
-		}
-		onFormatEntryTextListeners ~= dlg;
+		onFormatEntryTextListeners ~= new OnFormatEntryTextDelegateWrapper(dlg, 0, connectFlags);
+		onFormatEntryTextListeners[onFormatEntryTextListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"format-entry-text",
+			cast(GCallback)&callBackFormatEntryText,
+			cast(void*)onFormatEntryTextListeners[onFormatEntryTextListeners.length - 1],
+			cast(GClosureNotify)&callBackFormatEntryTextDestroy,
+			connectFlags);
+		return onFormatEntryTextListeners[onFormatEntryTextListeners.length - 1].handlerId;
 	}
-	extern(C) static string callBackFormatEntryText(GtkComboBox* comboboxStruct, char* path, ComboBox _combobox)
+	
+	extern(C) static string callBackFormatEntryText(GtkComboBox* comboboxStruct, char* path,OnFormatEntryTextDelegateWrapper wrapper)
 	{
-		return _combobox.onFormatEntryTextListeners[0](Str.toString(path), _combobox);
+		return wrapper.dlg(Str.toString(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackFormatEntryTextDestroy(OnFormatEntryTextDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFormatEntryText(wrapper);
 	}
 
-	void delegate(GtkScrollType, ComboBox)[] onMoveActiveListeners;
+	protected void internalRemoveOnFormatEntryText(OnFormatEntryTextDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFormatEntryTextListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFormatEntryTextListeners[index] = null;
+				onFormatEntryTextListeners = std.algorithm.remove(onFormatEntryTextListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveActiveDelegateWrapper
+	{
+		void delegate(GtkScrollType, ComboBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkScrollType, ComboBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveActiveDelegateWrapper[] onMoveActiveListeners;
+
 	/**
 	 * The ::move-active signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -883,30 +952,57 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 2.12
 	 */
-	void addOnMoveActive(void delegate(GtkScrollType, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveActive(void delegate(GtkScrollType, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-active" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-active",
-				cast(GCallback)&callBackMoveActive,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-active"] = 1;
-		}
-		onMoveActiveListeners ~= dlg;
+		onMoveActiveListeners ~= new OnMoveActiveDelegateWrapper(dlg, 0, connectFlags);
+		onMoveActiveListeners[onMoveActiveListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-active",
+			cast(GCallback)&callBackMoveActive,
+			cast(void*)onMoveActiveListeners[onMoveActiveListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveActiveDestroy,
+			connectFlags);
+		return onMoveActiveListeners[onMoveActiveListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveActive(GtkComboBox* comboboxStruct, GtkScrollType scrollType, ComboBox _combobox)
+	
+	extern(C) static void callBackMoveActive(GtkComboBox* comboboxStruct, GtkScrollType scrollType,OnMoveActiveDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkScrollType, ComboBox) dlg; _combobox.onMoveActiveListeners )
-		{
-			dlg(scrollType, _combobox);
-		}
+		wrapper.dlg(scrollType, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveActiveDestroy(OnMoveActiveDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveActive(wrapper);
 	}
 
-	bool delegate(ComboBox)[] onPopdownListeners;
+	protected void internalRemoveOnMoveActive(OnMoveActiveDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveActiveListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveActiveListeners[index] = null;
+				onMoveActiveListeners = std.algorithm.remove(onMoveActiveListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPopdownDelegateWrapper
+	{
+		bool delegate(ComboBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(ComboBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopdownDelegateWrapper[] onPopdownListeners;
+
 	/**
 	 * The ::popdown signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -916,35 +1012,57 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 2.12
 	 */
-	void addOnPopdown(bool delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopdown(bool delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "popdown" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"popdown",
-				cast(GCallback)&callBackPopdown,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["popdown"] = 1;
-		}
-		onPopdownListeners ~= dlg;
+		onPopdownListeners ~= new OnPopdownDelegateWrapper(dlg, 0, connectFlags);
+		onPopdownListeners[onPopdownListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"popdown",
+			cast(GCallback)&callBackPopdown,
+			cast(void*)onPopdownListeners[onPopdownListeners.length - 1],
+			cast(GClosureNotify)&callBackPopdownDestroy,
+			connectFlags);
+		return onPopdownListeners[onPopdownListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackPopdown(GtkComboBox* comboboxStruct, ComboBox _combobox)
+	
+	extern(C) static int callBackPopdown(GtkComboBox* comboboxStruct,OnPopdownDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(ComboBox) dlg; _combobox.onPopdownListeners )
-		{
-			if ( dlg(_combobox) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopdownDestroy(OnPopdownDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopdown(wrapper);
 	}
 
-	void delegate(ComboBox)[] onPopupListeners;
+	protected void internalRemoveOnPopdown(OnPopdownDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopdownListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopdownListeners[index] = null;
+				onPopdownListeners = std.algorithm.remove(onPopdownListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPopupDelegateWrapper
+	{
+		void delegate(ComboBox) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ComboBox) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopupDelegateWrapper[] onPopupListeners;
+
 	/**
 	 * The ::popup signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -954,26 +1072,40 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Since: 2.12
 	 */
-	void addOnPopup(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopup(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "popup" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"popup",
-				cast(GCallback)&callBackPopup,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["popup"] = 1;
-		}
-		onPopupListeners ~= dlg;
+		onPopupListeners ~= new OnPopupDelegateWrapper(dlg, 0, connectFlags);
+		onPopupListeners[onPopupListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"popup",
+			cast(GCallback)&callBackPopup,
+			cast(void*)onPopupListeners[onPopupListeners.length - 1],
+			cast(GClosureNotify)&callBackPopupDestroy,
+			connectFlags);
+		return onPopupListeners[onPopupListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPopup(GtkComboBox* comboboxStruct, ComboBox _combobox)
+	
+	extern(C) static void callBackPopup(GtkComboBox* comboboxStruct,OnPopupDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ComboBox) dlg; _combobox.onPopupListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopupDestroy(OnPopupDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopup(wrapper);
+	}
+
+	protected void internalRemoveOnPopup(OnPopupDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopupListeners)
 		{
-			dlg(_combobox);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopupListeners[index] = null;
+				onPopupListeners = std.algorithm.remove(onPopupListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

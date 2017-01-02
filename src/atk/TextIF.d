@@ -29,6 +29,7 @@ private import gobject.Signals;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -404,15 +405,14 @@ public interface TextIF{
 	 * Return: %TRUE if success, %FALSE otherwise
 	 */
 	public bool setSelection(int selectionNum, int startOffset, int endOffset);
-	@property void delegate(TextIF)[] onTextAttributesChangedListeners();
 	/**
 	 * The "text-attributes-changed" signal is emitted when the text
 	 * attributes of the text of an object which implements AtkText
 	 * changes.
 	 */
-	void addOnTextAttributesChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnTextAttributesChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, TextIF)[] onTextCaretMovedListeners();
 	/**
 	 * The "text-caret-moved" signal is emitted when the caret
 	 * position of the text of an object which implements AtkText
@@ -421,9 +421,9 @@ public interface TextIF{
 	 * Params:
 	 *     arg1 = The new position of the text caret.
 	 */
-	void addOnTextCaretMoved(void delegate(int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnTextCaretMoved(void delegate(int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, TextIF)[] onTextChangedListeners();
 	/**
 	 * The "text-changed" signal is emitted when the text of the
 	 * object which implements the AtkText interface changes, This
@@ -438,9 +438,9 @@ public interface TextIF{
 	 *     arg1 = The position (character offset) of the insertion or deletion.
 	 *     arg2 = The length (in characters) of text inserted or deleted.
 	 */
-	void addOnTextChanged(void delegate(int, int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnTextChanged(void delegate(int, int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, string, TextIF)[] onTextInsertListeners();
 	/**
 	 * The "text-insert" signal is emitted when a new text is
 	 * inserted. If the signal was not triggered by the user
@@ -452,9 +452,9 @@ public interface TextIF{
 	 *     arg2 = The length (in characters) of text inserted.
 	 *     arg3 = The new text inserted
 	 */
-	void addOnTextInsert(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnTextInsert(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, string, TextIF)[] onTextRemoveListeners();
 	/**
 	 * The "text-remove" signal is emitted when a new text is
 	 * removed. If the signal was not triggered by the user
@@ -466,14 +466,15 @@ public interface TextIF{
 	 *     arg2 = The length (in characters) of text removed.
 	 *     arg3 = The old text removed
 	 */
-	void addOnTextRemove(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnTextRemove(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TextIF)[] onTextSelectionChangedListeners();
 	/**
 	 * The "text-selection-changed" signal is emitted when the
 	 * selected text of an object which implements AtkText changes.
 	 */
-	void addOnTextSelectionChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnTextSelectionChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 
 	/**

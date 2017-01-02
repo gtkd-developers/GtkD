@@ -34,6 +34,7 @@ private import pango.PgFontDescription;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;
 private import pango.PgFontMap;
+private import std.algorithm;
 
 
 /**
@@ -244,7 +245,6 @@ public interface FontChooserIF{
 	 * Since: 3.2
 	 */
 	public void setShowPreviewEntry(bool showPreviewEntry);
-	@property void delegate(string, FontChooserIF)[] onFontActivatedListeners();
 	/**
 	 * Emitted when a font is activated.
 	 * This usually happens when the user double clicks an item,
@@ -254,6 +254,7 @@ public interface FontChooserIF{
 	 * Params:
 	 *     fontname = the font name
 	 */
-	void addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

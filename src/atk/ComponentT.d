@@ -30,6 +30,7 @@ public  import gobject.Signals;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /**
@@ -277,13 +278,20 @@ public template ComponentT(TStruct)
 		return atk_component_set_size(getComponentStruct(), width, height) != 0;
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(AtkRectangle*, ComponentIF)[] _onBoundsChangedListeners;
-	@property void delegate(AtkRectangle*, ComponentIF)[] onBoundsChangedListeners()
+	protected class OnBoundsChangedDelegateWrapper
 	{
-		return _onBoundsChangedListeners;
+		void delegate(AtkRectangle*, ComponentIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(AtkRectangle*, ComponentIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnBoundsChangedDelegateWrapper[] onBoundsChangedListeners;
+
 	/**
 	 * The 'bounds-changed" signal is emitted when the bposition or
 	 * size of the component changes.
@@ -291,26 +299,40 @@ public template ComponentT(TStruct)
 	 * Params:
 	 *     arg1 = The AtkRectangle giving the new position and size.
 	 */
-	void addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "bounds-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"bounds-changed",
-				cast(GCallback)&callBackBoundsChanged,
-				cast(void*)cast(ComponentIF)this,
-				null,
-				connectFlags);
-			connectedSignals["bounds-changed"] = 1;
-		}
-		_onBoundsChangedListeners ~= dlg;
+		onBoundsChangedListeners ~= new OnBoundsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onBoundsChangedListeners[onBoundsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"bounds-changed",
+			cast(GCallback)&callBackBoundsChanged,
+			cast(void*)onBoundsChangedListeners[onBoundsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackBoundsChangedDestroy,
+			connectFlags);
+		return onBoundsChangedListeners[onBoundsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1, ComponentIF _component)
+	
+	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1,OnBoundsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(AtkRectangle*, ComponentIF) dlg; _component.onBoundsChangedListeners )
+		wrapper.dlg(arg1, wrapper.outer);
+	}
+	
+	extern(C) static void callBackBoundsChangedDestroy(OnBoundsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBoundsChanged(wrapper);
+	}
+
+	protected void internalRemoveOnBoundsChanged(OnBoundsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBoundsChangedListeners)
 		{
-			dlg(arg1, _component);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBoundsChangedListeners[index] = null;
+				onBoundsChangedListeners = std.algorithm.remove(onBoundsChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

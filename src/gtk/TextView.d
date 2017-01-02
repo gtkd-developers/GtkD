@@ -42,6 +42,7 @@ public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgTabArray;
+private import std.algorithm;
 
 
 /**
@@ -1338,9 +1339,20 @@ public class TextView : Container, ScrollableIF
 		gtk_text_view_window_to_buffer_coords(gtkTextView, win, windowX, windowY, &bufferX, &bufferY);
 	}
 
-	int[string] connectedSignals;
+	protected class OnBackspaceDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBackspaceDelegateWrapper[] onBackspaceListeners;
 
-	void delegate(TextView)[] onBackspaceListeners;
 	/**
 	 * The ::backspace signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1349,30 +1361,57 @@ public class TextView : Container, ScrollableIF
 	 * The default bindings for this signal are
 	 * Backspace and Shift-Backspace.
 	 */
-	void addOnBackspace(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBackspace(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "backspace" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"backspace",
-				cast(GCallback)&callBackBackspace,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["backspace"] = 1;
-		}
-		onBackspaceListeners ~= dlg;
+		onBackspaceListeners ~= new OnBackspaceDelegateWrapper(dlg, 0, connectFlags);
+		onBackspaceListeners[onBackspaceListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"backspace",
+			cast(GCallback)&callBackBackspace,
+			cast(void*)onBackspaceListeners[onBackspaceListeners.length - 1],
+			cast(GClosureNotify)&callBackBackspaceDestroy,
+			connectFlags);
+		return onBackspaceListeners[onBackspaceListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBackspace(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackBackspace(GtkTextView* textviewStruct,OnBackspaceDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onBackspaceListeners )
-		{
-			dlg(_textview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackBackspaceDestroy(OnBackspaceDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBackspace(wrapper);
 	}
 
-	void delegate(TextView)[] onCopyClipboardListeners;
+	protected void internalRemoveOnBackspace(OnBackspaceDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBackspaceListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBackspaceListeners[index] = null;
+				onBackspaceListeners = std.algorithm.remove(onBackspaceListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCopyClipboardDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
+
 	/**
 	 * The ::copy-clipboard signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1381,30 +1420,57 @@ public class TextView : Container, ScrollableIF
 	 * The default bindings for this signal are
 	 * Ctrl-c and Ctrl-Insert.
 	 */
-	void addOnCopyClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCopyClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "copy-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"copy-clipboard",
-				cast(GCallback)&callBackCopyClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["copy-clipboard"] = 1;
-		}
-		onCopyClipboardListeners ~= dlg;
+		onCopyClipboardListeners ~= new OnCopyClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"copy-clipboard",
+			cast(GCallback)&callBackCopyClipboard,
+			cast(void*)onCopyClipboardListeners[onCopyClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackCopyClipboardDestroy,
+			connectFlags);
+		return onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCopyClipboard(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackCopyClipboard(GtkTextView* textviewStruct,OnCopyClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onCopyClipboardListeners )
-		{
-			dlg(_textview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCopyClipboard(wrapper);
 	}
 
-	void delegate(TextView)[] onCutClipboardListeners;
+	protected void internalRemoveOnCopyClipboard(OnCopyClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCopyClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCopyClipboardListeners[index] = null;
+				onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCutClipboardDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCutClipboardDelegateWrapper[] onCutClipboardListeners;
+
 	/**
 	 * The ::cut-clipboard signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1413,30 +1479,57 @@ public class TextView : Container, ScrollableIF
 	 * The default bindings for this signal are
 	 * Ctrl-x and Shift-Delete.
 	 */
-	void addOnCutClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCutClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cut-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cut-clipboard",
-				cast(GCallback)&callBackCutClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cut-clipboard"] = 1;
-		}
-		onCutClipboardListeners ~= dlg;
+		onCutClipboardListeners ~= new OnCutClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onCutClipboardListeners[onCutClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cut-clipboard",
+			cast(GCallback)&callBackCutClipboard,
+			cast(void*)onCutClipboardListeners[onCutClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackCutClipboardDestroy,
+			connectFlags);
+		return onCutClipboardListeners[onCutClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCutClipboard(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackCutClipboard(GtkTextView* textviewStruct,OnCutClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onCutClipboardListeners )
-		{
-			dlg(_textview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCutClipboardDestroy(OnCutClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCutClipboard(wrapper);
 	}
 
-	void delegate(GtkDeleteType, int, TextView)[] onDeleteFromCursorListeners;
+	protected void internalRemoveOnCutClipboard(OnCutClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCutClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCutClipboardListeners[index] = null;
+				onCutClipboardListeners = std.algorithm.remove(onCutClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDeleteFromCursorDelegateWrapper
+	{
+		void delegate(GtkDeleteType, int, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkDeleteType, int, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDeleteFromCursorDelegateWrapper[] onDeleteFromCursorListeners;
+
 	/**
 	 * The ::delete-from-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1455,30 +1548,57 @@ public class TextView : Container, ScrollableIF
 	 *     type = the granularity of the deletion, as a #GtkDeleteType
 	 *     count = the number of @type units to delete
 	 */
-	void addOnDeleteFromCursor(void delegate(GtkDeleteType, int, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDeleteFromCursor(void delegate(GtkDeleteType, int, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "delete-from-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"delete-from-cursor",
-				cast(GCallback)&callBackDeleteFromCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["delete-from-cursor"] = 1;
-		}
-		onDeleteFromCursorListeners ~= dlg;
+		onDeleteFromCursorListeners ~= new OnDeleteFromCursorDelegateWrapper(dlg, 0, connectFlags);
+		onDeleteFromCursorListeners[onDeleteFromCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"delete-from-cursor",
+			cast(GCallback)&callBackDeleteFromCursor,
+			cast(void*)onDeleteFromCursorListeners[onDeleteFromCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackDeleteFromCursorDestroy,
+			connectFlags);
+		return onDeleteFromCursorListeners[onDeleteFromCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkTextView* textviewStruct, GtkDeleteType type, int count, TextView _textview)
+	
+	extern(C) static void callBackDeleteFromCursor(GtkTextView* textviewStruct, GtkDeleteType type, int count,OnDeleteFromCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkDeleteType, int, TextView) dlg; _textview.onDeleteFromCursorListeners )
-		{
-			dlg(type, count, _textview);
-		}
+		wrapper.dlg(type, count, wrapper.outer);
+	}
+	
+	extern(C) static void callBackDeleteFromCursorDestroy(OnDeleteFromCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDeleteFromCursor(wrapper);
 	}
 
-	bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView)[] onExtendSelectionListeners;
+	protected void internalRemoveOnDeleteFromCursor(OnDeleteFromCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDeleteFromCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDeleteFromCursorListeners[index] = null;
+				onDeleteFromCursorListeners = std.algorithm.remove(onDeleteFromCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnExtendSelectionDelegateWrapper
+	{
+		bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnExtendSelectionDelegateWrapper[] onExtendSelectionListeners;
+
 	/**
 	 * The ::extend-selection signal is emitted when the selection needs to be
 	 * extended at @location.
@@ -1494,35 +1614,57 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Since: 3.16
 	 */
-	void addOnExtendSelection(bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnExtendSelection(bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "extend-selection" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"extend-selection",
-				cast(GCallback)&callBackExtendSelection,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["extend-selection"] = 1;
-		}
-		onExtendSelectionListeners ~= dlg;
+		onExtendSelectionListeners ~= new OnExtendSelectionDelegateWrapper(dlg, 0, connectFlags);
+		onExtendSelectionListeners[onExtendSelectionListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"extend-selection",
+			cast(GCallback)&callBackExtendSelection,
+			cast(void*)onExtendSelectionListeners[onExtendSelectionListeners.length - 1],
+			cast(GClosureNotify)&callBackExtendSelectionDestroy,
+			connectFlags);
+		return onExtendSelectionListeners[onExtendSelectionListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackExtendSelection(GtkTextView* textviewStruct, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end, TextView _textview)
+	
+	extern(C) static int callBackExtendSelection(GtkTextView* textviewStruct, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end,OnExtendSelectionDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg; _textview.onExtendSelectionListeners )
-		{
-			if ( dlg(granularity, ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), _textview) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(granularity, ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
+	}
+	
+	extern(C) static void callBackExtendSelectionDestroy(OnExtendSelectionDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnExtendSelection(wrapper);
 	}
 
-	void delegate(string, TextView)[] onInsertAtCursorListeners;
+	protected void internalRemoveOnExtendSelection(OnExtendSelectionDelegateWrapper source)
+	{
+		foreach(index, wrapper; onExtendSelectionListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onExtendSelectionListeners[index] = null;
+				onExtendSelectionListeners = std.algorithm.remove(onExtendSelectionListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnInsertAtCursorDelegateWrapper
+	{
+		void delegate(string, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnInsertAtCursorDelegateWrapper[] onInsertAtCursorListeners;
+
 	/**
 	 * The ::insert-at-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1534,30 +1676,57 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     str = the string to insert
 	 */
-	void addOnInsertAtCursor(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnInsertAtCursor(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "insert-at-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"insert-at-cursor",
-				cast(GCallback)&callBackInsertAtCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["insert-at-cursor"] = 1;
-		}
-		onInsertAtCursorListeners ~= dlg;
+		onInsertAtCursorListeners ~= new OnInsertAtCursorDelegateWrapper(dlg, 0, connectFlags);
+		onInsertAtCursorListeners[onInsertAtCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"insert-at-cursor",
+			cast(GCallback)&callBackInsertAtCursor,
+			cast(void*)onInsertAtCursorListeners[onInsertAtCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackInsertAtCursorDestroy,
+			connectFlags);
+		return onInsertAtCursorListeners[onInsertAtCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackInsertAtCursor(GtkTextView* textviewStruct, char* str, TextView _textview)
+	
+	extern(C) static void callBackInsertAtCursor(GtkTextView* textviewStruct, char* str,OnInsertAtCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, TextView) dlg; _textview.onInsertAtCursorListeners )
-		{
-			dlg(Str.toString(str), _textview);
-		}
+		wrapper.dlg(Str.toString(str), wrapper.outer);
+	}
+	
+	extern(C) static void callBackInsertAtCursorDestroy(OnInsertAtCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnInsertAtCursor(wrapper);
 	}
 
-	void delegate(GtkMovementStep, int, bool, TextView)[] onMoveCursorListeners;
+	protected void internalRemoveOnInsertAtCursor(OnInsertAtCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onInsertAtCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onInsertAtCursorListeners[index] = null;
+				onInsertAtCursorListeners = std.algorithm.remove(onInsertAtCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveCursorDelegateWrapper
+	{
+		void delegate(GtkMovementStep, int, bool, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkMovementStep, int, bool, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
+
 	/**
 	 * The ::move-cursor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1584,30 +1753,57 @@ public class TextView : Container, ScrollableIF
 	 *     count = the number of @step units to move
 	 *     extendSelection = %TRUE if the move should extend the selection
 	 */
-	void addOnMoveCursor(void delegate(GtkMovementStep, int, bool, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, bool, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-cursor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-cursor",
-				cast(GCallback)&callBackMoveCursor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-cursor"] = 1;
-		}
-		onMoveCursorListeners ~= dlg;
+		onMoveCursorListeners ~= new OnMoveCursorDelegateWrapper(dlg, 0, connectFlags);
+		onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-cursor",
+			cast(GCallback)&callBackMoveCursor,
+			cast(void*)onMoveCursorListeners[onMoveCursorListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveCursorDestroy,
+			connectFlags);
+		return onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveCursor(GtkTextView* textviewStruct, GtkMovementStep step, int count, bool extendSelection, TextView _textview)
+	
+	extern(C) static void callBackMoveCursor(GtkTextView* textviewStruct, GtkMovementStep step, int count, bool extendSelection,OnMoveCursorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkMovementStep, int, bool, TextView) dlg; _textview.onMoveCursorListeners )
-		{
-			dlg(step, count, extendSelection, _textview);
-		}
+		wrapper.dlg(step, count, extendSelection, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveCursor(wrapper);
 	}
 
-	void delegate(GtkScrollStep, int, TextView)[] onMoveViewportListeners;
+	protected void internalRemoveOnMoveCursor(OnMoveCursorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveCursorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveCursorListeners[index] = null;
+				onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveViewportDelegateWrapper
+	{
+		void delegate(GtkScrollStep, int, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkScrollStep, int, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveViewportDelegateWrapper[] onMoveViewportListeners;
+
 	/**
 	 * The ::move-viewport signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1621,30 +1817,57 @@ public class TextView : Container, ScrollableIF
 	 *     step = the granularity of the movement, as a #GtkScrollStep
 	 *     count = the number of @step units to move
 	 */
-	void addOnMoveViewport(void delegate(GtkScrollStep, int, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveViewport(void delegate(GtkScrollStep, int, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-viewport" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-viewport",
-				cast(GCallback)&callBackMoveViewport,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-viewport"] = 1;
-		}
-		onMoveViewportListeners ~= dlg;
+		onMoveViewportListeners ~= new OnMoveViewportDelegateWrapper(dlg, 0, connectFlags);
+		onMoveViewportListeners[onMoveViewportListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-viewport",
+			cast(GCallback)&callBackMoveViewport,
+			cast(void*)onMoveViewportListeners[onMoveViewportListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveViewportDestroy,
+			connectFlags);
+		return onMoveViewportListeners[onMoveViewportListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveViewport(GtkTextView* textviewStruct, GtkScrollStep step, int count, TextView _textview)
+	
+	extern(C) static void callBackMoveViewport(GtkTextView* textviewStruct, GtkScrollStep step, int count,OnMoveViewportDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkScrollStep, int, TextView) dlg; _textview.onMoveViewportListeners )
-		{
-			dlg(step, count, _textview);
-		}
+		wrapper.dlg(step, count, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveViewportDestroy(OnMoveViewportDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveViewport(wrapper);
 	}
 
-	void delegate(TextView)[] onPasteClipboardListeners;
+	protected void internalRemoveOnMoveViewport(OnMoveViewportDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveViewportListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveViewportListeners[index] = null;
+				onMoveViewportListeners = std.algorithm.remove(onMoveViewportListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPasteClipboardDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPasteClipboardDelegateWrapper[] onPasteClipboardListeners;
+
 	/**
 	 * The ::paste-clipboard signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1654,30 +1877,57 @@ public class TextView : Container, ScrollableIF
 	 * The default bindings for this signal are
 	 * Ctrl-v and Shift-Insert.
 	 */
-	void addOnPasteClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPasteClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "paste-clipboard" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"paste-clipboard",
-				cast(GCallback)&callBackPasteClipboard,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["paste-clipboard"] = 1;
-		}
-		onPasteClipboardListeners ~= dlg;
+		onPasteClipboardListeners ~= new OnPasteClipboardDelegateWrapper(dlg, 0, connectFlags);
+		onPasteClipboardListeners[onPasteClipboardListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"paste-clipboard",
+			cast(GCallback)&callBackPasteClipboard,
+			cast(void*)onPasteClipboardListeners[onPasteClipboardListeners.length - 1],
+			cast(GClosureNotify)&callBackPasteClipboardDestroy,
+			connectFlags);
+		return onPasteClipboardListeners[onPasteClipboardListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPasteClipboard(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackPasteClipboard(GtkTextView* textviewStruct,OnPasteClipboardDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onPasteClipboardListeners )
-		{
-			dlg(_textview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPasteClipboardDestroy(OnPasteClipboardDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPasteClipboard(wrapper);
 	}
 
-	void delegate(Widget, TextView)[] onPopulatePopupListeners;
+	protected void internalRemoveOnPasteClipboard(OnPasteClipboardDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPasteClipboardListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPasteClipboardListeners[index] = null;
+				onPasteClipboardListeners = std.algorithm.remove(onPasteClipboardListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPopulatePopupDelegateWrapper
+	{
+		void delegate(Widget, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
+
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
 	 * context menu of the text view.
@@ -1697,30 +1947,57 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     popup = the container that is being populated
 	 */
-	void addOnPopulatePopup(void delegate(Widget, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPopulatePopup(void delegate(Widget, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "populate-popup" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"populate-popup",
-				cast(GCallback)&callBackPopulatePopup,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["populate-popup"] = 1;
-		}
-		onPopulatePopupListeners ~= dlg;
+		onPopulatePopupListeners ~= new OnPopulatePopupDelegateWrapper(dlg, 0, connectFlags);
+		onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"populate-popup",
+			cast(GCallback)&callBackPopulatePopup,
+			cast(void*)onPopulatePopupListeners[onPopulatePopupListeners.length - 1],
+			cast(GClosureNotify)&callBackPopulatePopupDestroy,
+			connectFlags);
+		return onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPopulatePopup(GtkTextView* textviewStruct, GtkWidget* popup, TextView _textview)
+	
+	extern(C) static void callBackPopulatePopup(GtkTextView* textviewStruct, GtkWidget* popup,OnPopulatePopupDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, TextView) dlg; _textview.onPopulatePopupListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(popup), _textview);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(popup), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPopulatePopup(wrapper);
 	}
 
-	void delegate(string, TextView)[] onPreeditChangedListeners;
+	protected void internalRemoveOnPopulatePopup(OnPopulatePopupDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPopulatePopupListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPopulatePopupListeners[index] = null;
+				onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPreeditChangedDelegateWrapper
+	{
+		void delegate(string, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPreeditChangedDelegateWrapper[] onPreeditChangedListeners;
+
 	/**
 	 * If an input method is used, the typed text will not immediately
 	 * be committed to the buffer. So if you are interested in the text,
@@ -1734,30 +2011,57 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * Since: 2.20
 	 */
-	void addOnPreeditChanged(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPreeditChanged(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "preedit-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"preedit-changed",
-				cast(GCallback)&callBackPreeditChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["preedit-changed"] = 1;
-		}
-		onPreeditChangedListeners ~= dlg;
+		onPreeditChangedListeners ~= new OnPreeditChangedDelegateWrapper(dlg, 0, connectFlags);
+		onPreeditChangedListeners[onPreeditChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"preedit-changed",
+			cast(GCallback)&callBackPreeditChanged,
+			cast(void*)onPreeditChangedListeners[onPreeditChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackPreeditChangedDestroy,
+			connectFlags);
+		return onPreeditChangedListeners[onPreeditChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPreeditChanged(GtkTextView* textviewStruct, char* preedit, TextView _textview)
+	
+	extern(C) static void callBackPreeditChanged(GtkTextView* textviewStruct, char* preedit,OnPreeditChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, TextView) dlg; _textview.onPreeditChangedListeners )
-		{
-			dlg(Str.toString(preedit), _textview);
-		}
+		wrapper.dlg(Str.toString(preedit), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPreeditChangedDestroy(OnPreeditChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPreeditChanged(wrapper);
 	}
 
-	void delegate(bool, TextView)[] onSelectAllListeners;
+	protected void internalRemoveOnPreeditChanged(OnPreeditChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPreeditChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPreeditChangedListeners[index] = null;
+				onPreeditChangedListeners = std.algorithm.remove(onPreeditChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSelectAllDelegateWrapper
+	{
+		void delegate(bool, TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(bool, TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectAllDelegateWrapper[] onSelectAllListeners;
+
 	/**
 	 * The ::select-all signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1770,30 +2074,57 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     select = %TRUE to select, %FALSE to unselect
 	 */
-	void addOnSelectAll(void delegate(bool, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectAll(void delegate(bool, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "select-all" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"select-all",
-				cast(GCallback)&callBackSelectAll,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["select-all"] = 1;
-		}
-		onSelectAllListeners ~= dlg;
+		onSelectAllListeners ~= new OnSelectAllDelegateWrapper(dlg, 0, connectFlags);
+		onSelectAllListeners[onSelectAllListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"select-all",
+			cast(GCallback)&callBackSelectAll,
+			cast(void*)onSelectAllListeners[onSelectAllListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectAllDestroy,
+			connectFlags);
+		return onSelectAllListeners[onSelectAllListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectAll(GtkTextView* textviewStruct, bool select, TextView _textview)
+	
+	extern(C) static void callBackSelectAll(GtkTextView* textviewStruct, bool select,OnSelectAllDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(bool, TextView) dlg; _textview.onSelectAllListeners )
-		{
-			dlg(select, _textview);
-		}
+		wrapper.dlg(select, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectAll(wrapper);
 	}
 
-	void delegate(TextView)[] onSetAnchorListeners;
+	protected void internalRemoveOnSelectAll(OnSelectAllDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectAllListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectAllListeners[index] = null;
+				onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSetAnchorDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSetAnchorDelegateWrapper[] onSetAnchorListeners;
+
 	/**
 	 * The ::set-anchor signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1803,30 +2134,57 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * This signal has no default bindings.
 	 */
-	void addOnSetAnchor(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSetAnchor(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "set-anchor" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"set-anchor",
-				cast(GCallback)&callBackSetAnchor,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["set-anchor"] = 1;
-		}
-		onSetAnchorListeners ~= dlg;
+		onSetAnchorListeners ~= new OnSetAnchorDelegateWrapper(dlg, 0, connectFlags);
+		onSetAnchorListeners[onSetAnchorListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"set-anchor",
+			cast(GCallback)&callBackSetAnchor,
+			cast(void*)onSetAnchorListeners[onSetAnchorListeners.length - 1],
+			cast(GClosureNotify)&callBackSetAnchorDestroy,
+			connectFlags);
+		return onSetAnchorListeners[onSetAnchorListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSetAnchor(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackSetAnchor(GtkTextView* textviewStruct,OnSetAnchorDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onSetAnchorListeners )
-		{
-			dlg(_textview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSetAnchorDestroy(OnSetAnchorDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSetAnchor(wrapper);
 	}
 
-	void delegate(TextView)[] onToggleCursorVisibleListeners;
+	protected void internalRemoveOnSetAnchor(OnSetAnchorDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSetAnchorListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSetAnchorListeners[index] = null;
+				onSetAnchorListeners = std.algorithm.remove(onSetAnchorListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleCursorVisibleDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleCursorVisibleDelegateWrapper[] onToggleCursorVisibleListeners;
+
 	/**
 	 * The ::toggle-cursor-visible signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1835,30 +2193,57 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * The default binding for this signal is F7.
 	 */
-	void addOnToggleCursorVisible(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleCursorVisible(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-cursor-visible" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-cursor-visible",
-				cast(GCallback)&callBackToggleCursorVisible,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-cursor-visible"] = 1;
-		}
-		onToggleCursorVisibleListeners ~= dlg;
+		onToggleCursorVisibleListeners ~= new OnToggleCursorVisibleDelegateWrapper(dlg, 0, connectFlags);
+		onToggleCursorVisibleListeners[onToggleCursorVisibleListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-cursor-visible",
+			cast(GCallback)&callBackToggleCursorVisible,
+			cast(void*)onToggleCursorVisibleListeners[onToggleCursorVisibleListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleCursorVisibleDestroy,
+			connectFlags);
+		return onToggleCursorVisibleListeners[onToggleCursorVisibleListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggleCursorVisible(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackToggleCursorVisible(GtkTextView* textviewStruct,OnToggleCursorVisibleDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onToggleCursorVisibleListeners )
-		{
-			dlg(_textview);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleCursorVisibleDestroy(OnToggleCursorVisibleDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleCursorVisible(wrapper);
 	}
 
-	void delegate(TextView)[] onToggleOverwriteListeners;
+	protected void internalRemoveOnToggleCursorVisible(OnToggleCursorVisibleDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleCursorVisibleListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleCursorVisibleListeners[index] = null;
+				onToggleCursorVisibleListeners = std.algorithm.remove(onToggleCursorVisibleListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnToggleOverwriteDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextView) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggleOverwriteDelegateWrapper[] onToggleOverwriteListeners;
+
 	/**
 	 * The ::toggle-overwrite signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1866,26 +2251,40 @@ public class TextView : Container, ScrollableIF
 	 *
 	 * The default bindings for this signal is Insert.
 	 */
-	void addOnToggleOverwrite(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggleOverwrite(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggle-overwrite" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggle-overwrite",
-				cast(GCallback)&callBackToggleOverwrite,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggle-overwrite"] = 1;
-		}
-		onToggleOverwriteListeners ~= dlg;
+		onToggleOverwriteListeners ~= new OnToggleOverwriteDelegateWrapper(dlg, 0, connectFlags);
+		onToggleOverwriteListeners[onToggleOverwriteListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggle-overwrite",
+			cast(GCallback)&callBackToggleOverwrite,
+			cast(void*)onToggleOverwriteListeners[onToggleOverwriteListeners.length - 1],
+			cast(GClosureNotify)&callBackToggleOverwriteDestroy,
+			connectFlags);
+		return onToggleOverwriteListeners[onToggleOverwriteListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkTextView* textviewStruct, TextView _textview)
+	
+	extern(C) static void callBackToggleOverwrite(GtkTextView* textviewStruct,OnToggleOverwriteDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextView) dlg; _textview.onToggleOverwriteListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggleOverwriteDestroy(OnToggleOverwriteDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggleOverwrite(wrapper);
+	}
+
+	protected void internalRemoveOnToggleOverwrite(OnToggleOverwriteDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggleOverwriteListeners)
 		{
-			dlg(_textview);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggleOverwriteListeners[index] = null;
+				onToggleOverwriteListeners = std.algorithm.remove(onToggleOverwriteListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

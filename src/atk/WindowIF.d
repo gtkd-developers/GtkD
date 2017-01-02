@@ -28,6 +28,7 @@ private import gobject.Signals;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -42,85 +43,85 @@ public interface WindowIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
-	@property void delegate(WindowIF)[] onActivateListeners();
 	/**
 	 * The signal #AtkWindow::activate is emitted when a window
 	 * becomes the active window of the application or session.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnActivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnActivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onCreateListeners();
 	/**
 	 * The signal #AtkWindow::create is emitted when a new window
 	 * is created.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnCreate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnCreate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onDeactivateListeners();
 	/**
 	 * The signal #AtkWindow::deactivate is emitted when a window is
 	 * no longer the active window of the application or session.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnDeactivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnDeactivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onDestroyListeners();
 	/**
 	 * The signal #AtkWindow::destroy is emitted when a window is
 	 * destroyed.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnDestroy(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnDestroy(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onMaximizeListeners();
 	/**
 	 * The signal #AtkWindow::maximize is emitted when a window
 	 * is maximized.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnMaximize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnMaximize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onMinimizeListeners();
 	/**
 	 * The signal #AtkWindow::minimize is emitted when a window
 	 * is minimized.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnMinimize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnMinimize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onMoveListeners();
 	/**
 	 * The signal #AtkWindow::move is emitted when a window
 	 * is moved.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnMove(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnMove(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onResizeListeners();
 	/**
 	 * The signal #AtkWindow::resize is emitted when a window
 	 * is resized.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnResize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnResize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(WindowIF)[] onRestoreListeners();
 	/**
 	 * The signal #AtkWindow::restore is emitted when a window
 	 * is restored.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnRestore(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRestore(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

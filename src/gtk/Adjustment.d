@@ -30,6 +30,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -369,60 +370,112 @@ public class Adjustment : ObjectG
 		gtk_adjustment_value_changed(gtkAdjustment);
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(Adjustment) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Adjustment) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
 
-	void delegate(Adjustment)[] onChangedListeners;
 	/**
 	 * Emitted when one or more of the #GtkAdjustment properties have been
 	 * changed, other than the #GtkAdjustment:value property.
 	 */
-	void addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment _adjustment)
+	
+	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Adjustment) dlg; _adjustment.onChangedListeners )
-		{
-			dlg(_adjustment);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
 	}
 
-	void delegate(Adjustment)[] onValueChangedListeners;
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnValueChangedDelegateWrapper
+	{
+		void delegate(Adjustment) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Adjustment) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnValueChangedDelegateWrapper[] onValueChangedListeners;
+
 	/**
 	 * Emitted when the #GtkAdjustment:value property has been changed.
 	 */
-	void addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "value-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"value-changed",
-				cast(GCallback)&callBackValueChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["value-changed"] = 1;
-		}
-		onValueChangedListeners ~= dlg;
+		onValueChangedListeners ~= new OnValueChangedDelegateWrapper(dlg, 0, connectFlags);
+		onValueChangedListeners[onValueChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"value-changed",
+			cast(GCallback)&callBackValueChanged,
+			cast(void*)onValueChangedListeners[onValueChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackValueChangedDestroy,
+			connectFlags);
+		return onValueChangedListeners[onValueChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment _adjustment)
+	
+	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct,OnValueChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Adjustment) dlg; _adjustment.onValueChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnValueChanged(wrapper);
+	}
+
+	protected void internalRemoveOnValueChanged(OnValueChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onValueChangedListeners)
 		{
-			dlg(_adjustment);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onValueChangedListeners[index] = null;
+				onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

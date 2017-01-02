@@ -28,6 +28,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -119,12 +120,12 @@ public interface TreeSortableIF{
 	 * Emits a #GtkTreeSortable::sort-column-changed signal on @sortable.
 	 */
 	public void sortColumnChanged();
-	@property void delegate(TreeSortableIF)[] onSortColumnChangedListeners();
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column
 	 * or sort order of @sortable is changed. The signal is emitted before
 	 * the contents of @sortable are resorted.
 	 */
-	void addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

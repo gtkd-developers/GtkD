@@ -31,6 +31,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -356,7 +357,6 @@ public interface ActionGroupIF{
 	 * Since: 2.32
 	 */
 	public bool queryAction(string actionName, out bool enabled, out VariantType parameterType, out VariantType stateType, out Variant stateHint, out Variant state);
-	@property void delegate(string, ActionGroupIF)[] onActionAddedListeners();
 	/**
 	 * Signals that a new action was just added to the group.
 	 * This signal is emitted after the action has been added
@@ -367,9 +367,9 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	void addOnActionAdded(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnActionAdded(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(string, bool, ActionGroupIF)[] onActionEnabledChangedListeners();
 	/**
 	 * Signals that the enabled status of the named action has changed.
 	 *
@@ -379,9 +379,9 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	void addOnActionEnabledChanged(void delegate(string, bool, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnActionEnabledChanged(void delegate(string, bool, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(string, ActionGroupIF)[] onActionRemovedListeners();
 	/**
 	 * Signals that an action is just about to be removed from the group.
 	 * This signal is emitted before the action is removed, so the action
@@ -392,9 +392,9 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	void addOnActionRemoved(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnActionRemoved(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(string, Variant, ActionGroupIF)[] onActionStateChangedListeners();
 	/**
 	 * Signals that the state of the named action has changed.
 	 *
@@ -404,6 +404,7 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	void addOnActionStateChanged(void delegate(string, Variant, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnActionStateChanged(void delegate(string, Variant, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

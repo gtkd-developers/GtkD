@@ -32,6 +32,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -118,9 +119,20 @@ public class ThreadedSocketService : SocketService
 		this(cast(GThreadedSocketService*) p, true);
 	}
 
-	int[string] connectedSignals;
+	protected class OnRunDelegateWrapper
+	{
+		bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRunDelegateWrapper[] onRunListeners;
 
-	bool delegate(SocketConnection, ObjectG, ThreadedSocketService)[] onRunListeners;
 	/**
 	 * The ::run signal is emitted in a worker thread in response to an
 	 * incoming connection. This thread is dedicated to handling
@@ -133,31 +145,40 @@ public class ThreadedSocketService : SocketService
 	 *
 	 * Return: %TRUE to stop further signal handlers from being called
 	 */
-	void addOnRun(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRun(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "run" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"run",
-				cast(GCallback)&callBackRun,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["run"] = 1;
-		}
-		onRunListeners ~= dlg;
+		onRunListeners ~= new OnRunDelegateWrapper(dlg, 0, connectFlags);
+		onRunListeners[onRunListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"run",
+			cast(GCallback)&callBackRun,
+			cast(void*)onRunListeners[onRunListeners.length - 1],
+			cast(GClosureNotify)&callBackRunDestroy,
+			connectFlags);
+		return onRunListeners[onRunListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackRun(GThreadedSocketService* threadedsocketserviceStruct, GSocketConnection* connection, GObject* sourceObject, ThreadedSocketService _threadedsocketservice)
+	
+	extern(C) static int callBackRun(GThreadedSocketService* threadedsocketserviceStruct, GSocketConnection* connection, GObject* sourceObject,OnRunDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg; _threadedsocketservice.onRunListeners )
+		return wrapper.dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRunDestroy(OnRunDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRun(wrapper);
+	}
+
+	protected void internalRemoveOnRun(OnRunDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRunListeners)
 		{
-			if ( dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), _threadedsocketservice) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onRunListeners[index] = null;
+				onRunListeners = std.algorithm.remove(onRunListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 }

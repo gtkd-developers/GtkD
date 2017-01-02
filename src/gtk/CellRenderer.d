@@ -36,6 +36,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -502,9 +503,20 @@ public class CellRenderer : ObjectG
 		gtk_cell_renderer_stop_editing(gtkCellRenderer, canceled);
 	}
 
-	int[string] connectedSignals;
+	protected class OnEditingCanceledDelegateWrapper
+	{
+		void delegate(CellRenderer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellRenderer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEditingCanceledDelegateWrapper[] onEditingCanceledListeners;
 
-	void delegate(CellRenderer)[] onEditingCanceledListeners;
 	/**
 	 * This signal gets emitted when the user cancels the process of editing a
 	 * cell.  For example, an editable cell renderer could be written to cancel
@@ -514,30 +526,57 @@ public class CellRenderer : ObjectG
 	 *
 	 * Since: 2.4
 	 */
-	void addOnEditingCanceled(void delegate(CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEditingCanceled(void delegate(CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "editing-canceled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"editing-canceled",
-				cast(GCallback)&callBackEditingCanceled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["editing-canceled"] = 1;
-		}
-		onEditingCanceledListeners ~= dlg;
+		onEditingCanceledListeners ~= new OnEditingCanceledDelegateWrapper(dlg, 0, connectFlags);
+		onEditingCanceledListeners[onEditingCanceledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"editing-canceled",
+			cast(GCallback)&callBackEditingCanceled,
+			cast(void*)onEditingCanceledListeners[onEditingCanceledListeners.length - 1],
+			cast(GClosureNotify)&callBackEditingCanceledDestroy,
+			connectFlags);
+		return onEditingCanceledListeners[onEditingCanceledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEditingCanceled(GtkCellRenderer* cellrendererStruct, CellRenderer _cellrenderer)
+	
+	extern(C) static void callBackEditingCanceled(GtkCellRenderer* cellrendererStruct,OnEditingCanceledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellRenderer) dlg; _cellrenderer.onEditingCanceledListeners )
-		{
-			dlg(_cellrenderer);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEditingCanceledDestroy(OnEditingCanceledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEditingCanceled(wrapper);
 	}
 
-	void delegate(CellEditableIF, string, CellRenderer)[] onEditingStartedListeners;
+	protected void internalRemoveOnEditingCanceled(OnEditingCanceledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEditingCanceledListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEditingCanceledListeners[index] = null;
+				onEditingCanceledListeners = std.algorithm.remove(onEditingCanceledListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnEditingStartedDelegateWrapper
+	{
+		void delegate(CellEditableIF, string, CellRenderer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellEditableIF, string, CellRenderer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEditingStartedDelegateWrapper[] onEditingStartedListeners;
+
 	/**
 	 * This signal gets emitted when a cell starts to be edited.
 	 * The intended use of this signal is to do special setup
@@ -572,26 +611,40 @@ public class CellRenderer : ObjectG
 	 *
 	 * Since: 2.6
 	 */
-	void addOnEditingStarted(void delegate(CellEditableIF, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEditingStarted(void delegate(CellEditableIF, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "editing-started" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"editing-started",
-				cast(GCallback)&callBackEditingStarted,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["editing-started"] = 1;
-		}
-		onEditingStartedListeners ~= dlg;
+		onEditingStartedListeners ~= new OnEditingStartedDelegateWrapper(dlg, 0, connectFlags);
+		onEditingStartedListeners[onEditingStartedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"editing-started",
+			cast(GCallback)&callBackEditingStarted,
+			cast(void*)onEditingStartedListeners[onEditingStartedListeners.length - 1],
+			cast(GClosureNotify)&callBackEditingStartedDestroy,
+			connectFlags);
+		return onEditingStartedListeners[onEditingStartedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path, CellRenderer _cellrenderer)
+	
+	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path,OnEditingStartedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellEditableIF, string, CellRenderer) dlg; _cellrenderer.onEditingStartedListeners )
+		wrapper.dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackEditingStartedDestroy(OnEditingStartedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEditingStarted(wrapper);
+	}
+
+	protected void internalRemoveOnEditingStarted(OnEditingStartedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEditingStartedListeners)
 		{
-			dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), _cellrenderer);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEditingStartedListeners[index] = null;
+				onEditingStartedListeners = std.algorithm.remove(onEditingStartedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -1651,6 +1651,9 @@ shared static this()
 	Linker.link(g_settings_backend_path_changed, "g_settings_backend_path_changed", LIBRARY.GIO);
 	Linker.link(g_settings_backend_path_writable_changed, "g_settings_backend_path_writable_changed", LIBRARY.GIO);
 	Linker.link(g_settings_backend_writable_changed, "g_settings_backend_writable_changed", LIBRARY.GIO);
+	Linker.link(g_keyfile_settings_backend_new, "g_keyfile_settings_backend_new", LIBRARY.GIO);
+	Linker.link(g_memory_settings_backend_new, "g_memory_settings_backend_new", LIBRARY.GIO);
+	Linker.link(g_null_settings_backend_new, "g_null_settings_backend_new", LIBRARY.GIO);
 
 	// gio.SettingsSchema
 
@@ -4040,6 +4043,9 @@ __gshared extern(C)
 	void function(GSettingsBackend* backend, const(char)* path, void* originTag) c_g_settings_backend_path_changed;
 	void function(GSettingsBackend* backend, const(char)* path) c_g_settings_backend_path_writable_changed;
 	void function(GSettingsBackend* backend, const(char)* key) c_g_settings_backend_writable_changed;
+	GSettingsBackend* function(const(char)* filename, const(char)* rootPath, const(char)* rootGroup) c_g_keyfile_settings_backend_new;
+	GSettingsBackend* function() c_g_memory_settings_backend_new;
+	GSettingsBackend* function() c_g_null_settings_backend_new;
 
 	// gio.SettingsSchema
 
@@ -6427,6 +6433,9 @@ alias c_g_settings_backend_keys_changed g_settings_backend_keys_changed;
 alias c_g_settings_backend_path_changed g_settings_backend_path_changed;
 alias c_g_settings_backend_path_writable_changed g_settings_backend_path_writable_changed;
 alias c_g_settings_backend_writable_changed g_settings_backend_writable_changed;
+alias c_g_keyfile_settings_backend_new g_keyfile_settings_backend_new;
+alias c_g_memory_settings_backend_new g_memory_settings_backend_new;
+alias c_g_null_settings_backend_new g_null_settings_backend_new;
 
 // gio.SettingsSchema
 

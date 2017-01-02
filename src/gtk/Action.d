@@ -42,6 +42,7 @@ private import gtk.ToolItem;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -898,9 +899,20 @@ public class Action : ObjectG, BuildableIF
 		gtk_action_unblock_activate(gtkAction);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActivateDelegateWrapper
+	{
+		void delegate(Action) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Action) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
 
-	void delegate(Action)[] onActivateListeners;
 	/**
 	 * The "activate" signal is emitted when the action is activated.
 	 *
@@ -908,26 +920,40 @@ public class Action : ObjectG, BuildableIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(GtkAction* actionStruct, Action _action)
+	
+	extern(C) static void callBackActivate(GtkAction* actionStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Action) dlg; _action.onActivateListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
+	}
+
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActivateListeners)
 		{
-			dlg(_action);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

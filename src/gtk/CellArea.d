@@ -46,6 +46,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -1210,9 +1211,20 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		gtk_cell_area_stop_editing(gtkCellArea, canceled);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAddEditableDelegateWrapper
+	{
+		void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAddEditableDelegateWrapper[] onAddEditableListeners;
 
-	void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea)[] onAddEditableListeners;
 	/**
 	 * Indicates that editing has started on @renderer and that @editable
 	 * should be added to the owning cell-layouting widget at @cell_area.
@@ -1226,30 +1238,57 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.0
 	 */
-	void addOnAddEditable(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAddEditable(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "add-editable" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"add-editable",
-				cast(GCallback)&callBackAddEditable,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["add-editable"] = 1;
-		}
-		onAddEditableListeners ~= dlg;
+		onAddEditableListeners ~= new OnAddEditableDelegateWrapper(dlg, 0, connectFlags);
+		onAddEditableListeners[onAddEditableListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"add-editable",
+			cast(GCallback)&callBackAddEditable,
+			cast(void*)onAddEditableListeners[onAddEditableListeners.length - 1],
+			cast(GClosureNotify)&callBackAddEditableDestroy,
+			connectFlags);
+		return onAddEditableListeners[onAddEditableListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, char* path, CellArea _cellarea)
+	
+	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, char* path,OnAddEditableDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg; _cellarea.onAddEditableListeners )
-		{
-			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), cellArea, Str.toString(path), _cellarea);
-		}
+		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), cellArea, Str.toString(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackAddEditableDestroy(OnAddEditableDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAddEditable(wrapper);
 	}
 
-	void delegate(TreeModelIF, TreeIter, bool, bool, CellArea)[] onApplyAttributesListeners;
+	protected void internalRemoveOnAddEditable(OnAddEditableDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAddEditableListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAddEditableListeners[index] = null;
+				onAddEditableListeners = std.algorithm.remove(onAddEditableListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnApplyAttributesDelegateWrapper
+	{
+		void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnApplyAttributesDelegateWrapper[] onApplyAttributesListeners;
+
 	/**
 	 * This signal is emitted whenever applying attributes to @area from @model
 	 *
@@ -1261,30 +1300,57 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.0
 	 */
-	void addOnApplyAttributes(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnApplyAttributes(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "apply-attributes" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"apply-attributes",
-				cast(GCallback)&callBackApplyAttributes,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["apply-attributes"] = 1;
-		}
-		onApplyAttributesListeners ~= dlg;
+		onApplyAttributesListeners ~= new OnApplyAttributesDelegateWrapper(dlg, 0, connectFlags);
+		onApplyAttributesListeners[onApplyAttributesListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"apply-attributes",
+			cast(GCallback)&callBackApplyAttributes,
+			cast(void*)onApplyAttributesListeners[onApplyAttributesListeners.length - 1],
+			cast(GClosureNotify)&callBackApplyAttributesDestroy,
+			connectFlags);
+		return onApplyAttributesListeners[onApplyAttributesListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackApplyAttributes(GtkCellArea* cellareaStruct, GtkTreeModel* model, GtkTreeIter* iter, bool isExpander, bool isExpanded, CellArea _cellarea)
+	
+	extern(C) static void callBackApplyAttributes(GtkCellArea* cellareaStruct, GtkTreeModel* model, GtkTreeIter* iter, bool isExpander, bool isExpanded,OnApplyAttributesDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg; _cellarea.onApplyAttributesListeners )
-		{
-			dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, _cellarea);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, wrapper.outer);
+	}
+	
+	extern(C) static void callBackApplyAttributesDestroy(OnApplyAttributesDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnApplyAttributes(wrapper);
 	}
 
-	void delegate(CellRenderer, string, CellArea)[] onFocusChangedListeners;
+	protected void internalRemoveOnApplyAttributes(OnApplyAttributesDelegateWrapper source)
+	{
+		foreach(index, wrapper; onApplyAttributesListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onApplyAttributesListeners[index] = null;
+				onApplyAttributesListeners = std.algorithm.remove(onApplyAttributesListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnFocusChangedDelegateWrapper
+	{
+		void delegate(CellRenderer, string, CellArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellRenderer, string, CellArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFocusChangedDelegateWrapper[] onFocusChangedListeners;
+
 	/**
 	 * Indicates that focus changed on this @area. This signal
 	 * is emitted either as a result of focus handling or event
@@ -1301,30 +1367,57 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.0
 	 */
-	void addOnFocusChanged(void delegate(CellRenderer, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFocusChanged(void delegate(CellRenderer, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "focus-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"focus-changed",
-				cast(GCallback)&callBackFocusChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["focus-changed"] = 1;
-		}
-		onFocusChangedListeners ~= dlg;
+		onFocusChangedListeners ~= new OnFocusChangedDelegateWrapper(dlg, 0, connectFlags);
+		onFocusChangedListeners[onFocusChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"focus-changed",
+			cast(GCallback)&callBackFocusChanged,
+			cast(void*)onFocusChangedListeners[onFocusChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackFocusChangedDestroy,
+			connectFlags);
+		return onFocusChangedListeners[onFocusChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackFocusChanged(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, char* path, CellArea _cellarea)
+	
+	extern(C) static void callBackFocusChanged(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, char* path,OnFocusChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellRenderer, string, CellArea) dlg; _cellarea.onFocusChangedListeners )
-		{
-			dlg(ObjectG.getDObject!(CellRenderer)(renderer), Str.toString(path), _cellarea);
-		}
+		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), Str.toString(path), wrapper.outer);
+	}
+	
+	extern(C) static void callBackFocusChangedDestroy(OnFocusChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFocusChanged(wrapper);
 	}
 
-	void delegate(CellRenderer, CellEditableIF, CellArea)[] onRemoveEditableListeners;
+	protected void internalRemoveOnFocusChanged(OnFocusChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFocusChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFocusChangedListeners[index] = null;
+				onFocusChangedListeners = std.algorithm.remove(onFocusChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRemoveEditableDelegateWrapper
+	{
+		void delegate(CellRenderer, CellEditableIF, CellArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellRenderer, CellEditableIF, CellArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRemoveEditableDelegateWrapper[] onRemoveEditableListeners;
+
 	/**
 	 * Indicates that editing finished on @renderer and that @editable
 	 * should be removed from the owning cell-layouting widget.
@@ -1335,26 +1428,40 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.0
 	 */
-	void addOnRemoveEditable(void delegate(CellRenderer, CellEditableIF, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRemoveEditable(void delegate(CellRenderer, CellEditableIF, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "remove-editable" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"remove-editable",
-				cast(GCallback)&callBackRemoveEditable,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["remove-editable"] = 1;
-		}
-		onRemoveEditableListeners ~= dlg;
+		onRemoveEditableListeners ~= new OnRemoveEditableDelegateWrapper(dlg, 0, connectFlags);
+		onRemoveEditableListeners[onRemoveEditableListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"remove-editable",
+			cast(GCallback)&callBackRemoveEditable,
+			cast(void*)onRemoveEditableListeners[onRemoveEditableListeners.length - 1],
+			cast(GClosureNotify)&callBackRemoveEditableDestroy,
+			connectFlags);
+		return onRemoveEditableListeners[onRemoveEditableListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRemoveEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, CellArea _cellarea)
+	
+	extern(C) static void callBackRemoveEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable,OnRemoveEditableDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellRenderer, CellEditableIF, CellArea) dlg; _cellarea.onRemoveEditableListeners )
+		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRemoveEditableDestroy(OnRemoveEditableDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRemoveEditable(wrapper);
+	}
+
+	protected void internalRemoveOnRemoveEditable(OnRemoveEditableDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRemoveEditableListeners)
 		{
-			dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), _cellarea);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRemoveEditableListeners[index] = null;
+				onRemoveEditableListeners = std.algorithm.remove(onRemoveEditableListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -29,6 +29,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -62,7 +63,6 @@ public interface CellEditableIF{
 	 *     event = A #GdkEvent, or %NULL
 	 */
 	public void startEditing(Event event);
-	@property void delegate(CellEditableIF)[] onEditingDoneListeners();
 	/**
 	 * This signal is a sign for the cell renderer to update its
 	 * value from the @cell_editable.
@@ -74,9 +74,9 @@ public interface CellEditableIF{
 	 * gtk_cell_editable_editing_done() is a convenience method
 	 * for emitting #GtkCellEditable::editing-done.
 	 */
-	void addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(CellEditableIF)[] onRemoveWidgetListeners();
 	/**
 	 * This signal is meant to indicate that the cell is finished
 	 * editing, and the widget may now be destroyed.
@@ -90,6 +90,7 @@ public interface CellEditableIF{
 	 * gtk_cell_editable_remove_widget() is a convenience method
 	 * for emitting #GtkCellEditable::remove-widget.
 	 */
-	void addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

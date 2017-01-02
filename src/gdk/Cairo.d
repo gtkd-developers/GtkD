@@ -28,9 +28,11 @@ private import cairo.Context;
 private import cairo.Region;
 private import cairo.Surface;
 private import gdk.Color;
+private import gdk.DrawingContext;
 private import gdk.RGBA;
 private import gdk.Window;
 private import gdkpixbuf.Pixbuf;
+private import gobject.ObjectG;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
 
@@ -274,4 +276,27 @@ public Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindo
 	}
 	
 	return new Surface(cast(cairo_surface_t*) p);
+}
+
+/**
+ * Retrieves the #GdkDrawingContext that created the Cairo
+ * context @cr.
+ *
+ * Params:
+ *     cr = a Cairo context
+ *
+ * Return: a #GdkDrawingContext, if any is set
+ *
+ * Since: 3.22
+ */
+public DrawingContext getDrawingContext(Context cr)
+{
+	auto p = gdk_cairo_get_drawing_context((cr is null) ? null : cr.getContextStruct());
+	
+	if(p is null)
+	{
+		return null;
+	}
+	
+	return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) p);
 }

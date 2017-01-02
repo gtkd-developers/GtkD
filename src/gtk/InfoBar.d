@@ -36,6 +36,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -401,9 +402,20 @@ public class InfoBar : Box
 		gtk_info_bar_set_show_close_button(gtkInfoBar, setting);
 	}
 
-	int[string] connectedSignals;
+	protected class OnCloseDelegateWrapper
+	{
+		void delegate(InfoBar) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(InfoBar) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCloseDelegateWrapper[] onCloseListeners;
 
-	void delegate(InfoBar)[] onCloseListeners;
 	/**
 	 * The ::close signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -414,30 +426,57 @@ public class InfoBar : Box
 	 *
 	 * Since: 2.18
 	 */
-	void addOnClose(void delegate(InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClose(void delegate(InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "close" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"close",
-				cast(GCallback)&callBackClose,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["close"] = 1;
-		}
-		onCloseListeners ~= dlg;
+		onCloseListeners ~= new OnCloseDelegateWrapper(dlg, 0, connectFlags);
+		onCloseListeners[onCloseListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"close",
+			cast(GCallback)&callBackClose,
+			cast(void*)onCloseListeners[onCloseListeners.length - 1],
+			cast(GClosureNotify)&callBackCloseDestroy,
+			connectFlags);
+		return onCloseListeners[onCloseListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClose(GtkInfoBar* infobarStruct, InfoBar _infobar)
+	
+	extern(C) static void callBackClose(GtkInfoBar* infobarStruct,OnCloseDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(InfoBar) dlg; _infobar.onCloseListeners )
-		{
-			dlg(_infobar);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClose(wrapper);
 	}
 
-	void delegate(int, InfoBar)[] onResponseListeners;
+	protected void internalRemoveOnClose(OnCloseDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCloseListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCloseListeners[index] = null;
+				onCloseListeners = std.algorithm.remove(onCloseListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnResponseDelegateWrapper
+	{
+		void delegate(int, InfoBar) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, InfoBar) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnResponseDelegateWrapper[] onResponseListeners;
+
 	/**
 	 * Emitted when an action widget is clicked or the application programmer
 	 * calls gtk_dialog_response(). The @response_id depends on which action
@@ -448,26 +487,40 @@ public class InfoBar : Box
 	 *
 	 * Since: 2.18
 	 */
-	void addOnResponse(void delegate(int, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnResponse(void delegate(int, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "response" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"response",
-				cast(GCallback)&callBackResponse,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["response"] = 1;
-		}
-		onResponseListeners ~= dlg;
+		onResponseListeners ~= new OnResponseDelegateWrapper(dlg, 0, connectFlags);
+		onResponseListeners[onResponseListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"response",
+			cast(GCallback)&callBackResponse,
+			cast(void*)onResponseListeners[onResponseListeners.length - 1],
+			cast(GClosureNotify)&callBackResponseDestroy,
+			connectFlags);
+		return onResponseListeners[onResponseListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId, InfoBar _infobar)
+	
+	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId,OnResponseDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, InfoBar) dlg; _infobar.onResponseListeners )
+		wrapper.dlg(responseId, wrapper.outer);
+	}
+	
+	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnResponse(wrapper);
+	}
+
+	protected void internalRemoveOnResponse(OnResponseDelegateWrapper source)
+	{
+		foreach(index, wrapper; onResponseListeners)
 		{
-			dlg(responseId, _infobar);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onResponseListeners[index] = null;
+				onResponseListeners = std.algorithm.remove(onResponseListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

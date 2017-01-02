@@ -43,6 +43,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -455,28 +456,28 @@ public interface MountIF{
 	 * Since: 2.20
 	 */
 	public void unshadow();
-	@property void delegate(MountIF)[] onChangedListeners();
 	/**
 	 * Emitted when the mount has been changed.
 	 */
-	void addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(MountIF)[] onPreUnmountListeners();
 	/**
 	 * This signal is emitted when the #GMount is about to be
 	 * unmounted.
 	 *
 	 * Since: 2.22
 	 */
-	void addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(MountIF)[] onUnmountedListeners();
 	/**
 	 * This signal is emitted when the #GMount have been
 	 * unmounted. If the recipient is holding references to the
 	 * object they should release them so the object can be
 	 * finalized.
 	 */
-	void addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

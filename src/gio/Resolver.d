@@ -36,6 +36,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -583,33 +584,58 @@ public class Resolver : ObjectG
 		g_resolver_set_default(gResolver);
 	}
 
-	int[string] connectedSignals;
+	protected class OnReloadDelegateWrapper
+	{
+		void delegate(Resolver) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Resolver) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnReloadDelegateWrapper[] onReloadListeners;
 
-	void delegate(Resolver)[] onReloadListeners;
 	/**
 	 * Emitted when the resolver notices that the system resolver
 	 * configuration has changed.
 	 */
-	void addOnReload(void delegate(Resolver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnReload(void delegate(Resolver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "reload" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"reload",
-				cast(GCallback)&callBackReload,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["reload"] = 1;
-		}
-		onReloadListeners ~= dlg;
+		onReloadListeners ~= new OnReloadDelegateWrapper(dlg, 0, connectFlags);
+		onReloadListeners[onReloadListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"reload",
+			cast(GCallback)&callBackReload,
+			cast(void*)onReloadListeners[onReloadListeners.length - 1],
+			cast(GClosureNotify)&callBackReloadDestroy,
+			connectFlags);
+		return onReloadListeners[onReloadListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackReload(GResolver* resolverStruct, Resolver _resolver)
+	
+	extern(C) static void callBackReload(GResolver* resolverStruct,OnReloadDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Resolver) dlg; _resolver.onReloadListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnReload(wrapper);
+	}
+
+	protected void internalRemoveOnReload(OnReloadDelegateWrapper source)
+	{
+		foreach(index, wrapper; onReloadListeners)
 		{
-			dlg(_resolver);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onReloadListeners[index] = null;
+				onReloadListeners = std.algorithm.remove(onReloadListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

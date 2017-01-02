@@ -30,6 +30,7 @@ private import gobject.Signals;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -226,7 +227,6 @@ public interface ComponentIF{
 	 * Return: %TRUE or %FALSE whether the size was set or not
 	 */
 	public bool setSize(int width, int height);
-	@property void delegate(AtkRectangle*, ComponentIF)[] onBoundsChangedListeners();
 	/**
 	 * The 'bounds-changed" signal is emitted when the bposition or
 	 * size of the component changes.
@@ -234,6 +234,7 @@ public interface ComponentIF{
 	 * Params:
 	 *     arg1 = The AtkRectangle giving the new position and size.
 	 */
-	void addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

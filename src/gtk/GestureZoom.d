@@ -32,6 +32,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -118,9 +119,20 @@ public class GestureZoom : Gesture
 		return gtk_gesture_zoom_get_scale_delta(gtkGestureZoom);
 	}
 
-	int[string] connectedSignals;
+	protected class OnScaleChangedDelegateWrapper
+	{
+		void delegate(double, GestureZoom) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(double, GestureZoom) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnScaleChangedDelegateWrapper[] onScaleChangedListeners;
 
-	void delegate(double, GestureZoom)[] onScaleChangedListeners;
 	/**
 	 * This signal is emitted whenever the distance between both tracked
 	 * sequences changes.
@@ -130,26 +142,40 @@ public class GestureZoom : Gesture
 	 *
 	 * Since: 3.14
 	 */
-	void addOnScaleChanged(void delegate(double, GestureZoom) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnScaleChanged(void delegate(double, GestureZoom) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "scale-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"scale-changed",
-				cast(GCallback)&callBackScaleChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["scale-changed"] = 1;
-		}
-		onScaleChangedListeners ~= dlg;
+		onScaleChangedListeners ~= new OnScaleChangedDelegateWrapper(dlg, 0, connectFlags);
+		onScaleChangedListeners[onScaleChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"scale-changed",
+			cast(GCallback)&callBackScaleChanged,
+			cast(void*)onScaleChangedListeners[onScaleChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackScaleChangedDestroy,
+			connectFlags);
+		return onScaleChangedListeners[onScaleChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackScaleChanged(GtkGestureZoom* gesturezoomStruct, double scale, GestureZoom _gesturezoom)
+	
+	extern(C) static void callBackScaleChanged(GtkGestureZoom* gesturezoomStruct, double scale,OnScaleChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(double, GestureZoom) dlg; _gesturezoom.onScaleChangedListeners )
+		wrapper.dlg(scale, wrapper.outer);
+	}
+	
+	extern(C) static void callBackScaleChangedDestroy(OnScaleChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnScaleChanged(wrapper);
+	}
+
+	protected void internalRemoveOnScaleChanged(OnScaleChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onScaleChangedListeners)
 		{
-			dlg(scale, _gesturezoom);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onScaleChangedListeners[index] = null;
+				onScaleChangedListeners = std.algorithm.remove(onScaleChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

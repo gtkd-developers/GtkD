@@ -40,6 +40,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -552,9 +553,20 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		gtk_entry_completion_set_text_column(gtkEntryCompletion, column);
 	}
 
-	int[string] connectedSignals;
+	protected class OnActionActivatedDelegateWrapper
+	{
+		void delegate(int, EntryCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, EntryCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnActionActivatedDelegateWrapper[] onActionActivatedListeners;
 
-	void delegate(int, EntryCompletion)[] onActionActivatedListeners;
 	/**
 	 * Gets emitted when an action is activated.
 	 *
@@ -563,30 +575,57 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnActionActivated(void delegate(int, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActionActivated(void delegate(int, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "action-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"action-activated",
-				cast(GCallback)&callBackActionActivated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["action-activated"] = 1;
-		}
-		onActionActivatedListeners ~= dlg;
+		onActionActivatedListeners ~= new OnActionActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onActionActivatedListeners[onActionActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"action-activated",
+			cast(GCallback)&callBackActionActivated,
+			cast(void*)onActionActivatedListeners[onActionActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackActionActivatedDestroy,
+			connectFlags);
+		return onActionActivatedListeners[onActionActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActionActivated(GtkEntryCompletion* entrycompletionStruct, int index, EntryCompletion _entrycompletion)
+	
+	extern(C) static void callBackActionActivated(GtkEntryCompletion* entrycompletionStruct, int index,OnActionActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, EntryCompletion) dlg; _entrycompletion.onActionActivatedListeners )
-		{
-			dlg(index, _entrycompletion);
-		}
+		wrapper.dlg(index, wrapper.outer);
+	}
+	
+	extern(C) static void callBackActionActivatedDestroy(OnActionActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActionActivated(wrapper);
 	}
 
-	bool delegate(TreeModelIF, TreeIter, EntryCompletion)[] onCursorOnMatchListeners;
+	protected void internalRemoveOnActionActivated(OnActionActivatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onActionActivatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActionActivatedListeners[index] = null;
+				onActionActivatedListeners = std.algorithm.remove(onActionActivatedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCursorOnMatchDelegateWrapper
+	{
+		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCursorOnMatchDelegateWrapper[] onCursorOnMatchListeners;
+
 	/**
 	 * Gets emitted when a match from the cursor is on a match
 	 * of the list. The default behaviour is to replace the contents
@@ -604,35 +643,57 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 2.12
 	 */
-	void addOnCursorOnMatch(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCursorOnMatch(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cursor-on-match" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cursor-on-match",
-				cast(GCallback)&callBackCursorOnMatch,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cursor-on-match"] = 1;
-		}
-		onCursorOnMatchListeners ~= dlg;
+		onCursorOnMatchListeners ~= new OnCursorOnMatchDelegateWrapper(dlg, 0, connectFlags);
+		onCursorOnMatchListeners[onCursorOnMatchListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cursor-on-match",
+			cast(GCallback)&callBackCursorOnMatch,
+			cast(void*)onCursorOnMatchListeners[onCursorOnMatchListeners.length - 1],
+			cast(GClosureNotify)&callBackCursorOnMatchDestroy,
+			connectFlags);
+		return onCursorOnMatchListeners[onCursorOnMatchListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackCursorOnMatch(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion _entrycompletion)
+	
+	extern(C) static int callBackCursorOnMatch(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter,OnCursorOnMatchDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg; _entrycompletion.onCursorOnMatchListeners )
-		{
-			if ( dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), _entrycompletion) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackCursorOnMatchDestroy(OnCursorOnMatchDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCursorOnMatch(wrapper);
 	}
 
-	bool delegate(string, EntryCompletion)[] onInsertPrefixListeners;
+	protected void internalRemoveOnCursorOnMatch(OnCursorOnMatchDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCursorOnMatchListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCursorOnMatchListeners[index] = null;
+				onCursorOnMatchListeners = std.algorithm.remove(onCursorOnMatchListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnInsertPrefixDelegateWrapper
+	{
+		bool delegate(string, EntryCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(string, EntryCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnInsertPrefixDelegateWrapper[] onInsertPrefixListeners;
+
 	/**
 	 * Gets emitted when the inline autocompletion is triggered.
 	 * The default behaviour is to make the entry display the
@@ -650,35 +711,57 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 2.6
 	 */
-	void addOnInsertPrefix(bool delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnInsertPrefix(bool delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "insert-prefix" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"insert-prefix",
-				cast(GCallback)&callBackInsertPrefix,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["insert-prefix"] = 1;
-		}
-		onInsertPrefixListeners ~= dlg;
+		onInsertPrefixListeners ~= new OnInsertPrefixDelegateWrapper(dlg, 0, connectFlags);
+		onInsertPrefixListeners[onInsertPrefixListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"insert-prefix",
+			cast(GCallback)&callBackInsertPrefix,
+			cast(void*)onInsertPrefixListeners[onInsertPrefixListeners.length - 1],
+			cast(GClosureNotify)&callBackInsertPrefixDestroy,
+			connectFlags);
+		return onInsertPrefixListeners[onInsertPrefixListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackInsertPrefix(GtkEntryCompletion* entrycompletionStruct, char* prefix, EntryCompletion _entrycompletion)
+	
+	extern(C) static int callBackInsertPrefix(GtkEntryCompletion* entrycompletionStruct, char* prefix,OnInsertPrefixDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(string, EntryCompletion) dlg; _entrycompletion.onInsertPrefixListeners )
-		{
-			if ( dlg(Str.toString(prefix), _entrycompletion) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(Str.toString(prefix), wrapper.outer);
+	}
+	
+	extern(C) static void callBackInsertPrefixDestroy(OnInsertPrefixDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnInsertPrefix(wrapper);
 	}
 
-	bool delegate(TreeModelIF, TreeIter, EntryCompletion)[] onMatchSelectedListeners;
+	protected void internalRemoveOnInsertPrefix(OnInsertPrefixDelegateWrapper source)
+	{
+		foreach(index, wrapper; onInsertPrefixListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onInsertPrefixListeners[index] = null;
+				onInsertPrefixListeners = std.algorithm.remove(onInsertPrefixListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMatchSelectedDelegateWrapper
+	{
+		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMatchSelectedDelegateWrapper[] onMatchSelectedListeners;
+
 	/**
 	 * Gets emitted when a match from the list is selected.
 	 * The default behaviour is to replace the contents of the
@@ -696,35 +779,57 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnMatchSelected(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMatchSelected(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "match-selected" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"match-selected",
-				cast(GCallback)&callBackMatchSelected,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["match-selected"] = 1;
-		}
-		onMatchSelectedListeners ~= dlg;
+		onMatchSelectedListeners ~= new OnMatchSelectedDelegateWrapper(dlg, 0, connectFlags);
+		onMatchSelectedListeners[onMatchSelectedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"match-selected",
+			cast(GCallback)&callBackMatchSelected,
+			cast(void*)onMatchSelectedListeners[onMatchSelectedListeners.length - 1],
+			cast(GClosureNotify)&callBackMatchSelectedDestroy,
+			connectFlags);
+		return onMatchSelectedListeners[onMatchSelectedListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackMatchSelected(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion _entrycompletion)
+	
+	extern(C) static int callBackMatchSelected(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter,OnMatchSelectedDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg; _entrycompletion.onMatchSelectedListeners )
-		{
-			if ( dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), _entrycompletion) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+	}
+	
+	extern(C) static void callBackMatchSelectedDestroy(OnMatchSelectedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMatchSelected(wrapper);
 	}
 
-	void delegate(EntryCompletion)[] onNoMatchesListeners;
+	protected void internalRemoveOnMatchSelected(OnMatchSelectedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMatchSelectedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMatchSelectedListeners[index] = null;
+				onMatchSelectedListeners = std.algorithm.remove(onMatchSelectedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnNoMatchesDelegateWrapper
+	{
+		void delegate(EntryCompletion) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(EntryCompletion) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnNoMatchesDelegateWrapper[] onNoMatchesListeners;
+
 	/**
 	 * Gets emitted when the filter model has zero
 	 * number of rows in completion_complete method.
@@ -733,26 +838,40 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.14
 	 */
-	void addOnNoMatches(void delegate(EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnNoMatches(void delegate(EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "no-matches" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"no-matches",
-				cast(GCallback)&callBackNoMatches,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["no-matches"] = 1;
-		}
-		onNoMatchesListeners ~= dlg;
+		onNoMatchesListeners ~= new OnNoMatchesDelegateWrapper(dlg, 0, connectFlags);
+		onNoMatchesListeners[onNoMatchesListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"no-matches",
+			cast(GCallback)&callBackNoMatches,
+			cast(void*)onNoMatchesListeners[onNoMatchesListeners.length - 1],
+			cast(GClosureNotify)&callBackNoMatchesDestroy,
+			connectFlags);
+		return onNoMatchesListeners[onNoMatchesListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackNoMatches(GtkEntryCompletion* entrycompletionStruct, EntryCompletion _entrycompletion)
+	
+	extern(C) static void callBackNoMatches(GtkEntryCompletion* entrycompletionStruct,OnNoMatchesDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(EntryCompletion) dlg; _entrycompletion.onNoMatchesListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackNoMatchesDestroy(OnNoMatchesDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnNoMatches(wrapper);
+	}
+
+	protected void internalRemoveOnNoMatches(OnNoMatchesDelegateWrapper source)
+	{
+		foreach(index, wrapper; onNoMatchesListeners)
 		{
-			dlg(_entrycompletion);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onNoMatchesListeners[index] = null;
+				onNoMatchesListeners = std.algorithm.remove(onNoMatchesListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -1,6 +1,20 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.4.1
+--------------
+-Properly remove toggle references when an object is destroyed. #169
+
+Release: 3.4.0
+--------------
+-Update to GTK 3.22
+-Properly finalize GTK objects. #165
+-Reset the ID for glib.Timeout. #154
+-Add libPeas Binding. #152
+-Load libraries in the Global namespace to avoid Sourceview errors.
+-Check the "GTK_BASEPATH" and "HOMEBREW_ROOT" environment variables on OSX.
+-Print a more informative error message when we fail to load a library.
+
 Release: 3.3.0
 --------------
 -Update to GTK 3.20.

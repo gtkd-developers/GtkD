@@ -308,4 +308,115 @@ public class SettingsBackend : ObjectG
 	{
 		g_settings_backend_writable_changed(gSettingsBackend, Str.toStringz(key));
 	}
+
+	/**
+	 * Creates a keyfile-backed #GSettingsBackend.
+	 *
+	 * The filename of the keyfile to use is given by @filename.
+	 *
+	 * All settings read to or written from the backend must fall under the
+	 * path given in @root_path (which must start and end with a slash and
+	 * not contain two consecutive slashes).  @root_path may be "/".
+	 *
+	 * If @root_group is non-%NULL then it specifies the name of the keyfile
+	 * group used for keys that are written directly below @root_path.  For
+	 * example, if @root_path is "/apps/example/" and @root_group is
+	 * "toplevel", then settings the key "/apps/example/enabled" to a value
+	 * of %TRUE will cause the following to appear in the keyfile:
+	 *
+	 * |[
+	 * [toplevel]
+	 * enabled=true
+	 * ]|
+	 *
+	 * If @root_group is %NULL then it is not permitted to store keys
+	 * directly below the @root_path.
+	 *
+	 * For keys not stored directly below @root_path (ie: in a sub-path),
+	 * the name of the subpath (with the final slash stripped) is used as
+	 * the name of the keyfile group.  To continue the example, if
+	 * "/apps/example/profiles/default/font-size" were set to
+	 * 12 then the following would appear in the keyfile:
+	 *
+	 * |[
+	 * [profiles/default]
+	 * font-size=12
+	 * ]|
+	 *
+	 * The backend will refuse writes (and return writability as being
+	 * %FALSE) for keys outside of @root_path and, in the event that
+	 * @root_group is %NULL, also for keys directly under @root_path.
+	 * Writes will also be refused if the backend detects that it has the
+	 * inability to rewrite the keyfile (ie: the containing directory is not
+	 * writable).
+	 *
+	 * There is no checking done for your key namespace clashing with the
+	 * syntax of the key file format.  For example, if you have '[' or ']'
+	 * characters in your path names or '=' in your key names you may be in
+	 * trouble.
+	 *
+	 * Params:
+	 *     filename = the filename of the keyfile
+	 *     rootPath = the path under which all settings keys appear
+	 *     rootGroup = the group name corresponding to
+	 *         @root_path, or %NULL
+	 *
+	 * Return: a keyfile-backed #GSettingsBackend
+	 */
+	public static SettingsBackend keyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
+	{
+		auto p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+	}
+
+	/**
+	 * Creates a memory-backed #GSettingsBackend.
+	 *
+	 * This backend allows changes to settings, but does not write them
+	 * to any backing storage, so the next time you run your application,
+	 * the memory backend will start out with the default values again.
+	 *
+	 * Return: a newly created #GSettingsBackend
+	 *
+	 * Since: 2.28
+	 */
+	public static SettingsBackend memorySettingsBackendNew()
+	{
+		auto p = g_memory_settings_backend_new();
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+	}
+
+	/**
+	 * Creates a readonly #GSettingsBackend.
+	 *
+	 * This backend does not allow changes to settings, so all settings
+	 * will always have their default values.
+	 *
+	 * Return: a newly created #GSettingsBackend
+	 *
+	 * Since: 2.28
+	 */
+	public static SettingsBackend nullSettingsBackendNew()
+	{
+		auto p = g_null_settings_backend_new();
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+	}
 }

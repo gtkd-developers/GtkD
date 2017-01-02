@@ -32,6 +32,7 @@ private import gtk.CellRenderer;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -123,9 +124,20 @@ public class CellRendererText : CellRenderer
 		gtk_cell_renderer_text_set_fixed_height_from_font(gtkCellRendererText, numberOfRows);
 	}
 
-	int[string] connectedSignals;
+	protected class OnEditedDelegateWrapper
+	{
+		void delegate(string, string, CellRendererText) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, string, CellRendererText) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEditedDelegateWrapper[] onEditedListeners;
 
-	void delegate(string, string, CellRendererText)[] onEditedListeners;
 	/**
 	 * This signal is emitted after @renderer has been edited.
 	 *
@@ -136,26 +148,40 @@ public class CellRendererText : CellRenderer
 	 *     path = the path identifying the edited cell
 	 *     newText = the new text
 	 */
-	void addOnEdited(void delegate(string, string, CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEdited(void delegate(string, string, CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "edited" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"edited",
-				cast(GCallback)&callBackEdited,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["edited"] = 1;
-		}
-		onEditedListeners ~= dlg;
+		onEditedListeners ~= new OnEditedDelegateWrapper(dlg, 0, connectFlags);
+		onEditedListeners[onEditedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"edited",
+			cast(GCallback)&callBackEdited,
+			cast(void*)onEditedListeners[onEditedListeners.length - 1],
+			cast(GClosureNotify)&callBackEditedDestroy,
+			connectFlags);
+		return onEditedListeners[onEditedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEdited(GtkCellRendererText* cellrenderertextStruct, char* path, char* newText, CellRendererText _cellrenderertext)
+	
+	extern(C) static void callBackEdited(GtkCellRendererText* cellrenderertextStruct, char* path, char* newText,OnEditedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, string, CellRendererText) dlg; _cellrenderertext.onEditedListeners )
+		wrapper.dlg(Str.toString(path), Str.toString(newText), wrapper.outer);
+	}
+	
+	extern(C) static void callBackEditedDestroy(OnEditedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEdited(wrapper);
+	}
+
+	protected void internalRemoveOnEdited(OnEditedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEditedListeners)
 		{
-			dlg(Str.toString(path), Str.toString(newText), _cellrenderertext);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEditedListeners[index] = null;
+				onEditedListeners = std.algorithm.remove(onEditedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

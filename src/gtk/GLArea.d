@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -476,9 +477,20 @@ public class GLArea : Widget
 		gtk_gl_area_set_use_es(gtkGLArea, useEs);
 	}
 
-	int[string] connectedSignals;
+	protected class OnCreateContextDelegateWrapper
+	{
+		GLContext delegate(GLArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(GLContext delegate(GLArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCreateContextDelegateWrapper[] onCreateContextListeners;
 
-	GLContext delegate(GLArea)[] onCreateContextListeners;
 	/**
 	 * The ::create-context signal is emitted when the widget is being
 	 * realized, and allows you to override how the GL context is
@@ -495,33 +507,58 @@ public class GLArea : Widget
 	 *
 	 * Since: 3.16
 	 */
-	void addOnCreateContext(GLContext delegate(GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCreateContext(GLContext delegate(GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "create-context" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"create-context",
-				cast(GCallback)&callBackCreateContext,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["create-context"] = 1;
-		}
-		onCreateContextListeners ~= dlg;
+		onCreateContextListeners ~= new OnCreateContextDelegateWrapper(dlg, 0, connectFlags);
+		onCreateContextListeners[onCreateContextListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"create-context",
+			cast(GCallback)&callBackCreateContext,
+			cast(void*)onCreateContextListeners[onCreateContextListeners.length - 1],
+			cast(GClosureNotify)&callBackCreateContextDestroy,
+			connectFlags);
+		return onCreateContextListeners[onCreateContextListeners.length - 1].handlerId;
 	}
-	extern(C) static GdkGLContext* callBackCreateContext(GtkGLArea* glareaStruct, GLArea _glarea)
+	
+	extern(C) static GdkGLContext* callBackCreateContext(GtkGLArea* glareaStruct,OnCreateContextDelegateWrapper wrapper)
 	{
-		foreach ( GLContext delegate(GLArea) dlg; _glarea.onCreateContextListeners )
-		{
-			if ( auto r = dlg(_glarea) )
-				return r.getGLContextStruct();
-		}
-		
-		return null;
+		auto r = wrapper.dlg(wrapper.outer);
+		return r.getGLContextStruct();
+	}
+	
+	extern(C) static void callBackCreateContextDestroy(OnCreateContextDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCreateContext(wrapper);
 	}
 
-	bool delegate(GLContext, GLArea)[] onRenderListeners;
+	protected void internalRemoveOnCreateContext(OnCreateContextDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCreateContextListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCreateContextListeners[index] = null;
+				onCreateContextListeners = std.algorithm.remove(onCreateContextListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRenderDelegateWrapper
+	{
+		bool delegate(GLContext, GLArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GLContext, GLArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRenderDelegateWrapper[] onRenderListeners;
+
 	/**
 	 * The ::render signal is emitted every time the contents
 	 * of the #GtkGLArea should be redrawn.
@@ -537,35 +574,57 @@ public class GLArea : Widget
 	 *
 	 * Since: 3.16
 	 */
-	void addOnRender(bool delegate(GLContext, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRender(bool delegate(GLContext, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "render" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"render",
-				cast(GCallback)&callBackRender,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["render"] = 1;
-		}
-		onRenderListeners ~= dlg;
+		onRenderListeners ~= new OnRenderDelegateWrapper(dlg, 0, connectFlags);
+		onRenderListeners[onRenderListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"render",
+			cast(GCallback)&callBackRender,
+			cast(void*)onRenderListeners[onRenderListeners.length - 1],
+			cast(GClosureNotify)&callBackRenderDestroy,
+			connectFlags);
+		return onRenderListeners[onRenderListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackRender(GtkGLArea* glareaStruct, GdkGLContext* context, GLArea _glarea)
+	
+	extern(C) static int callBackRender(GtkGLArea* glareaStruct, GdkGLContext* context,OnRenderDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(GLContext, GLArea) dlg; _glarea.onRenderListeners )
-		{
-			if ( dlg(ObjectG.getDObject!(GLContext)(context), _glarea) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(ObjectG.getDObject!(GLContext)(context), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRenderDestroy(OnRenderDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRender(wrapper);
 	}
 
-	void delegate(int, int, GLArea)[] onResizeListeners;
+	protected void internalRemoveOnRender(OnRenderDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRenderListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRenderListeners[index] = null;
+				onRenderListeners = std.algorithm.remove(onRenderListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnResizeDelegateWrapper
+	{
+		void delegate(int, int, GLArea) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, int, GLArea) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnResizeDelegateWrapper[] onResizeListeners;
+
 	/**
 	 * The ::resize signal is emitted once when the widget is realized, and
 	 * then each time the widget is changed while realized. This is useful
@@ -583,26 +642,40 @@ public class GLArea : Widget
 	 *
 	 * Since: 3.16
 	 */
-	void addOnResize(void delegate(int, int, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnResize(void delegate(int, int, GLArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "resize" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"resize",
-				cast(GCallback)&callBackResize,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["resize"] = 1;
-		}
-		onResizeListeners ~= dlg;
+		onResizeListeners ~= new OnResizeDelegateWrapper(dlg, 0, connectFlags);
+		onResizeListeners[onResizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"resize",
+			cast(GCallback)&callBackResize,
+			cast(void*)onResizeListeners[onResizeListeners.length - 1],
+			cast(GClosureNotify)&callBackResizeDestroy,
+			connectFlags);
+		return onResizeListeners[onResizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackResize(GtkGLArea* glareaStruct, int width, int height, GLArea _glarea)
+	
+	extern(C) static void callBackResize(GtkGLArea* glareaStruct, int width, int height,OnResizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, int, GLArea) dlg; _glarea.onResizeListeners )
+		wrapper.dlg(width, height, wrapper.outer);
+	}
+	
+	extern(C) static void callBackResizeDestroy(OnResizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnResize(wrapper);
+	}
+
+	protected void internalRemoveOnResize(OnResizeDelegateWrapper source)
+	{
+		foreach(index, wrapper; onResizeListeners)
 		{
-			dlg(width, height, _glarea);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onResizeListeners[index] = null;
+				onResizeListeners = std.algorithm.remove(onResizeListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

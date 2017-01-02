@@ -48,6 +48,7 @@ private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgFontDescription;
 private import pango.PgLayout;
+private import std.algorithm;
 
 
 /**
@@ -1280,9 +1281,20 @@ public class StyleContext : ObjectG
 		return Str.toString(retStr);
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(StyleContext) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(StyleContext) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
 
-	void delegate(StyleContext)[] onChangedListeners;
 	/**
 	 * The ::changed signal is emitted when there is a change in the
 	 * #GtkStyleContext.
@@ -1294,28 +1306,42 @@ public class StyleContext : ObjectG
 	 *
 	 * Since: 3.0
 	 */
-	void addOnChanged(void delegate(StyleContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(StyleContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct, StyleContext _stylecontext)
+	
+	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(StyleContext) dlg; _stylecontext.onChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
+	}
+
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
 		{
-			dlg(_stylecontext);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 
 	/**
 	 * Renders an activity indicator (such as in #GtkSpinner).

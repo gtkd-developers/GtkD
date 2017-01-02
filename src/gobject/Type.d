@@ -814,4 +814,23 @@ public struct Type
 	{
 		return g_type_test_flags(type, flags) != 0;
 	}
+
+	/**
+	 * Returns the number of instances allocated of the particular type;
+	 * this is only available if GLib is built with debugging support and
+	 * the instance_count debug flag is set (by setting the GOBJECT_DEBUG
+	 * variable to include instance-count).
+	 *
+	 * Params:
+	 *     type = a #GType
+	 *
+	 * Return: the number of instances allocated of the given type;
+	 *     if instance counts are not available, returns 0.
+	 *
+	 * Since: 2.44
+	 */
+	public static int getInstanceCount(GType type)
+	{
+		return g_type_get_instance_count(type);
+	}
 }

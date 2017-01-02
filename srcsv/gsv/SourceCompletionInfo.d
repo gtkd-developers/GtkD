@@ -36,6 +36,7 @@ private import gtk.TextView;
 private import gtk.Widget;
 private import gtk.Window;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /** */
@@ -145,9 +146,20 @@ public class SourceCompletionInfo : Window
 		gtk_source_completion_info_set_widget(gtkSourceCompletionInfo, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnBeforeShowDelegateWrapper
+	{
+		void delegate(SourceCompletionInfo) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceCompletionInfo) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBeforeShowDelegateWrapper[] onBeforeShowListeners;
 
-	void delegate(SourceCompletionInfo)[] onBeforeShowListeners;
 	/**
 	 * This signal is emitted before any "show" management. You can connect
 	 * to this signal if you want to change some properties or position
@@ -155,26 +167,40 @@ public class SourceCompletionInfo : Window
 	 *
 	 * Deprecated: This signal should not be used.
 	 */
-	void addOnBeforeShow(void delegate(SourceCompletionInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBeforeShow(void delegate(SourceCompletionInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "before-show" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"before-show",
-				cast(GCallback)&callBackBeforeShow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["before-show"] = 1;
-		}
-		onBeforeShowListeners ~= dlg;
+		onBeforeShowListeners ~= new OnBeforeShowDelegateWrapper(dlg, 0, connectFlags);
+		onBeforeShowListeners[onBeforeShowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"before-show",
+			cast(GCallback)&callBackBeforeShow,
+			cast(void*)onBeforeShowListeners[onBeforeShowListeners.length - 1],
+			cast(GClosureNotify)&callBackBeforeShowDestroy,
+			connectFlags);
+		return onBeforeShowListeners[onBeforeShowListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, SourceCompletionInfo _sourcecompletioninfo)
+	
+	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct,OnBeforeShowDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceCompletionInfo) dlg; _sourcecompletioninfo.onBeforeShowListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackBeforeShowDestroy(OnBeforeShowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBeforeShow(wrapper);
+	}
+
+	protected void internalRemoveOnBeforeShow(OnBeforeShowDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBeforeShowListeners)
 		{
-			dlg(_sourcecompletioninfo);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBeforeShowListeners[index] = null;
+				onBeforeShowListeners = std.algorithm.remove(onBeforeShowListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

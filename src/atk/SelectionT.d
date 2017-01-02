@@ -30,6 +30,7 @@ public  import gobject.Signals;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /**
@@ -164,37 +165,58 @@ public template SelectionT(TStruct)
 		return atk_selection_select_all_selection(getSelectionStruct()) != 0;
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(SelectionIF)[] _onSelectionChangedListeners;
-	@property void delegate(SelectionIF)[] onSelectionChangedListeners()
+	protected class OnSelectionChangedDelegateWrapper
 	{
-		return _onSelectionChangedListeners;
+		void delegate(SelectionIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SelectionIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
+
 	/**
 	 * The "selection-changed" signal is emitted by an object which
 	 * implements AtkSelection interface when the selection changes.
 	 */
-	void addOnSelectionChanged(void delegate(SelectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSelectionChanged(void delegate(SelectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "selection-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"selection-changed",
-				cast(GCallback)&callBackSelectionChanged,
-				cast(void*)cast(SelectionIF)this,
-				null,
-				connectFlags);
-			connectedSignals["selection-changed"] = 1;
-		}
-		_onSelectionChangedListeners ~= dlg;
+		onSelectionChangedListeners ~= new OnSelectionChangedDelegateWrapper(dlg, 0, connectFlags);
+		onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"selection-changed",
+			cast(GCallback)&callBackSelectionChanged,
+			cast(void*)onSelectionChangedListeners[onSelectionChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectionChangedDestroy,
+			connectFlags);
+		return onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSelectionChanged(AtkSelection* selectionStruct, SelectionIF _selection)
+	
+	extern(C) static void callBackSelectionChanged(AtkSelection* selectionStruct,OnSelectionChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SelectionIF) dlg; _selection.onSelectionChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectionChanged(wrapper);
+	}
+
+	protected void internalRemoveOnSelectionChanged(OnSelectionChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectionChangedListeners)
 		{
-			dlg(_selection);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectionChangedListeners[index] = null;
+				onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

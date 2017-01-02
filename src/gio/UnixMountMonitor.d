@@ -30,6 +30,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -147,59 +148,111 @@ public class UnixMountMonitor : ObjectG
 		g_unix_mount_monitor_set_rate_limit(gUnixMountMonitor, limitMsec);
 	}
 
-	int[string] connectedSignals;
+	protected class OnMountpointsChangedDelegateWrapper
+	{
+		void delegate(UnixMountMonitor) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(UnixMountMonitor) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMountpointsChangedDelegateWrapper[] onMountpointsChangedListeners;
 
-	void delegate(UnixMountMonitor)[] onMountpointsChangedListeners;
 	/**
 	 * Emitted when the unix mount points have changed.
 	 */
-	void addOnMountpointsChanged(void delegate(UnixMountMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMountpointsChanged(void delegate(UnixMountMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "mountpoints-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"mountpoints-changed",
-				cast(GCallback)&callBackMountpointsChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["mountpoints-changed"] = 1;
-		}
-		onMountpointsChangedListeners ~= dlg;
+		onMountpointsChangedListeners ~= new OnMountpointsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onMountpointsChangedListeners[onMountpointsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"mountpoints-changed",
+			cast(GCallback)&callBackMountpointsChanged,
+			cast(void*)onMountpointsChangedListeners[onMountpointsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackMountpointsChangedDestroy,
+			connectFlags);
+		return onMountpointsChangedListeners[onMountpointsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* unixmountmonitorStruct, UnixMountMonitor _unixmountmonitor)
+	
+	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* unixmountmonitorStruct,OnMountpointsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(UnixMountMonitor) dlg; _unixmountmonitor.onMountpointsChangedListeners )
-		{
-			dlg(_unixmountmonitor);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackMountpointsChangedDestroy(OnMountpointsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMountpointsChanged(wrapper);
 	}
 
-	void delegate(UnixMountMonitor)[] onMountsChangedListeners;
+	protected void internalRemoveOnMountpointsChanged(OnMountpointsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMountpointsChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMountpointsChangedListeners[index] = null;
+				onMountpointsChangedListeners = std.algorithm.remove(onMountpointsChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMountsChangedDelegateWrapper
+	{
+		void delegate(UnixMountMonitor) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(UnixMountMonitor) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMountsChangedDelegateWrapper[] onMountsChangedListeners;
+
 	/**
 	 * Emitted when the unix mounts have changed.
 	 */
-	void addOnMountsChanged(void delegate(UnixMountMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMountsChanged(void delegate(UnixMountMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "mounts-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"mounts-changed",
-				cast(GCallback)&callBackMountsChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["mounts-changed"] = 1;
-		}
-		onMountsChangedListeners ~= dlg;
+		onMountsChangedListeners ~= new OnMountsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onMountsChangedListeners[onMountsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"mounts-changed",
+			cast(GCallback)&callBackMountsChanged,
+			cast(void*)onMountsChangedListeners[onMountsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackMountsChangedDestroy,
+			connectFlags);
+		return onMountsChangedListeners[onMountsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMountsChanged(GUnixMountMonitor* unixmountmonitorStruct, UnixMountMonitor _unixmountmonitor)
+	
+	extern(C) static void callBackMountsChanged(GUnixMountMonitor* unixmountmonitorStruct,OnMountsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(UnixMountMonitor) dlg; _unixmountmonitor.onMountsChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackMountsChangedDestroy(OnMountsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMountsChanged(wrapper);
+	}
+
+	protected void internalRemoveOnMountsChanged(OnMountsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMountsChangedListeners)
 		{
-			dlg(_unixmountmonitor);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMountsChangedListeners[index] = null;
+				onMountsChangedListeners = std.algorithm.remove(onMountsChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

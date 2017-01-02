@@ -41,6 +41,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -719,9 +720,20 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		gtk_print_operation_set_use_full_page(gtkPrintOperation, fullPage);
 	}
 
-	int[string] connectedSignals;
+	protected class OnBeginPrintDelegateWrapper
+	{
+		void delegate(PrintContext, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintContext, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBeginPrintDelegateWrapper[] onBeginPrintListeners;
 
-	void delegate(PrintContext, PrintOperation)[] onBeginPrintListeners;
 	/**
 	 * Emitted after the user has finished changing print settings
 	 * in the dialog, before the actual rendering starts.
@@ -735,30 +747,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnBeginPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBeginPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "begin-print" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"begin-print",
-				cast(GCallback)&callBackBeginPrint,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["begin-print"] = 1;
-		}
-		onBeginPrintListeners ~= dlg;
+		onBeginPrintListeners ~= new OnBeginPrintDelegateWrapper(dlg, 0, connectFlags);
+		onBeginPrintListeners[onBeginPrintListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"begin-print",
+			cast(GCallback)&callBackBeginPrint,
+			cast(void*)onBeginPrintListeners[onBeginPrintListeners.length - 1],
+			cast(GClosureNotify)&callBackBeginPrintDestroy,
+			connectFlags);
+		return onBeginPrintListeners[onBeginPrintListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBeginPrint(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, PrintOperation _printoperation)
+	
+	extern(C) static void callBackBeginPrint(GtkPrintOperation* printoperationStruct, GtkPrintContext* context,OnBeginPrintDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintContext, PrintOperation) dlg; _printoperation.onBeginPrintListeners )
-		{
-			dlg(ObjectG.getDObject!(PrintContext)(context), _printoperation);
-		}
+		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
+	}
+	
+	extern(C) static void callBackBeginPrintDestroy(OnBeginPrintDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBeginPrint(wrapper);
 	}
 
-	ObjectG delegate(PrintOperation)[] onCreateCustomWidgetListeners;
+	protected void internalRemoveOnBeginPrint(OnBeginPrintDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBeginPrintListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBeginPrintListeners[index] = null;
+				onBeginPrintListeners = std.algorithm.remove(onBeginPrintListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCreateCustomWidgetDelegateWrapper
+	{
+		ObjectG delegate(PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(ObjectG delegate(PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCreateCustomWidgetDelegateWrapper[] onCreateCustomWidgetListeners;
+
 	/**
 	 * Emitted when displaying the print dialog. If you return a
 	 * widget in a handler for this signal it will be added to a custom
@@ -776,33 +815,58 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnCreateCustomWidget(ObjectG delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCreateCustomWidget(ObjectG delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "create-custom-widget" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"create-custom-widget",
-				cast(GCallback)&callBackCreateCustomWidget,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["create-custom-widget"] = 1;
-		}
-		onCreateCustomWidgetListeners ~= dlg;
+		onCreateCustomWidgetListeners ~= new OnCreateCustomWidgetDelegateWrapper(dlg, 0, connectFlags);
+		onCreateCustomWidgetListeners[onCreateCustomWidgetListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"create-custom-widget",
+			cast(GCallback)&callBackCreateCustomWidget,
+			cast(void*)onCreateCustomWidgetListeners[onCreateCustomWidgetListeners.length - 1],
+			cast(GClosureNotify)&callBackCreateCustomWidgetDestroy,
+			connectFlags);
+		return onCreateCustomWidgetListeners[onCreateCustomWidgetListeners.length - 1].handlerId;
 	}
-	extern(C) static GObject* callBackCreateCustomWidget(GtkPrintOperation* printoperationStruct, PrintOperation _printoperation)
+	
+	extern(C) static GObject* callBackCreateCustomWidget(GtkPrintOperation* printoperationStruct,OnCreateCustomWidgetDelegateWrapper wrapper)
 	{
-		foreach ( ObjectG delegate(PrintOperation) dlg; _printoperation.onCreateCustomWidgetListeners )
-		{
-			if ( auto r = dlg(_printoperation) )
-				return r.getObjectGStruct();
-		}
-		
-		return null;
+		auto r = wrapper.dlg(wrapper.outer);
+		return r.getObjectGStruct();
+	}
+	
+	extern(C) static void callBackCreateCustomWidgetDestroy(OnCreateCustomWidgetDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCreateCustomWidget(wrapper);
 	}
 
-	void delegate(Widget, PrintOperation)[] onCustomWidgetApplyListeners;
+	protected void internalRemoveOnCreateCustomWidget(OnCreateCustomWidgetDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCreateCustomWidgetListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCreateCustomWidgetListeners[index] = null;
+				onCreateCustomWidgetListeners = std.algorithm.remove(onCreateCustomWidgetListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnCustomWidgetApplyDelegateWrapper
+	{
+		void delegate(Widget, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCustomWidgetApplyDelegateWrapper[] onCustomWidgetApplyListeners;
+
 	/**
 	 * Emitted right before #GtkPrintOperation::begin-print if you added
 	 * a custom widget in the #GtkPrintOperation::create-custom-widget handler.
@@ -815,30 +879,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnCustomWidgetApply(void delegate(Widget, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCustomWidgetApply(void delegate(Widget, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "custom-widget-apply" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"custom-widget-apply",
-				cast(GCallback)&callBackCustomWidgetApply,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["custom-widget-apply"] = 1;
-		}
-		onCustomWidgetApplyListeners ~= dlg;
+		onCustomWidgetApplyListeners ~= new OnCustomWidgetApplyDelegateWrapper(dlg, 0, connectFlags);
+		onCustomWidgetApplyListeners[onCustomWidgetApplyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"custom-widget-apply",
+			cast(GCallback)&callBackCustomWidgetApply,
+			cast(void*)onCustomWidgetApplyListeners[onCustomWidgetApplyListeners.length - 1],
+			cast(GClosureNotify)&callBackCustomWidgetApplyDestroy,
+			connectFlags);
+		return onCustomWidgetApplyListeners[onCustomWidgetApplyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* printoperationStruct, GtkWidget* widget, PrintOperation _printoperation)
+	
+	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* printoperationStruct, GtkWidget* widget,OnCustomWidgetApplyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, PrintOperation) dlg; _printoperation.onCustomWidgetApplyListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(widget), _printoperation);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
+	}
+	
+	extern(C) static void callBackCustomWidgetApplyDestroy(OnCustomWidgetApplyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCustomWidgetApply(wrapper);
 	}
 
-	void delegate(GtkPrintOperationResult, PrintOperation)[] onDoneListeners;
+	protected void internalRemoveOnCustomWidgetApply(OnCustomWidgetApplyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCustomWidgetApplyListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCustomWidgetApplyListeners[index] = null;
+				onCustomWidgetApplyListeners = std.algorithm.remove(onCustomWidgetApplyListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDoneDelegateWrapper
+	{
+		void delegate(GtkPrintOperationResult, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkPrintOperationResult, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDoneDelegateWrapper[] onDoneListeners;
+
 	/**
 	 * Emitted when the print operation run has finished doing
 	 * everything required for printing.
@@ -856,30 +947,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnDone(void delegate(GtkPrintOperationResult, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDone(void delegate(GtkPrintOperationResult, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "done" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"done",
-				cast(GCallback)&callBackDone,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["done"] = 1;
-		}
-		onDoneListeners ~= dlg;
+		onDoneListeners ~= new OnDoneDelegateWrapper(dlg, 0, connectFlags);
+		onDoneListeners[onDoneListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"done",
+			cast(GCallback)&callBackDone,
+			cast(void*)onDoneListeners[onDoneListeners.length - 1],
+			cast(GClosureNotify)&callBackDoneDestroy,
+			connectFlags);
+		return onDoneListeners[onDoneListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDone(GtkPrintOperation* printoperationStruct, GtkPrintOperationResult result, PrintOperation _printoperation)
+	
+	extern(C) static void callBackDone(GtkPrintOperation* printoperationStruct, GtkPrintOperationResult result,OnDoneDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkPrintOperationResult, PrintOperation) dlg; _printoperation.onDoneListeners )
-		{
-			dlg(result, _printoperation);
-		}
+		wrapper.dlg(result, wrapper.outer);
+	}
+	
+	extern(C) static void callBackDoneDestroy(OnDoneDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDone(wrapper);
 	}
 
-	void delegate(PrintContext, int, PrintOperation)[] onDrawPageListeners;
+	protected void internalRemoveOnDone(OnDoneDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDoneListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDoneListeners[index] = null;
+				onDoneListeners = std.algorithm.remove(onDoneListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDrawPageDelegateWrapper
+	{
+		void delegate(PrintContext, int, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintContext, int, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDrawPageDelegateWrapper[] onDrawPageListeners;
+
 	/**
 	 * Emitted for every page that is printed. The signal handler
 	 * must render the @page_nr's page onto the cairo context obtained
@@ -936,30 +1054,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnDrawPage(void delegate(PrintContext, int, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDrawPage(void delegate(PrintContext, int, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "draw-page" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"draw-page",
-				cast(GCallback)&callBackDrawPage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["draw-page"] = 1;
-		}
-		onDrawPageListeners ~= dlg;
+		onDrawPageListeners ~= new OnDrawPageDelegateWrapper(dlg, 0, connectFlags);
+		onDrawPageListeners[onDrawPageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"draw-page",
+			cast(GCallback)&callBackDrawPage,
+			cast(void*)onDrawPageListeners[onDrawPageListeners.length - 1],
+			cast(GClosureNotify)&callBackDrawPageDestroy,
+			connectFlags);
+		return onDrawPageListeners[onDrawPageListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDrawPage(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, int pageNr, PrintOperation _printoperation)
+	
+	extern(C) static void callBackDrawPage(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, int pageNr,OnDrawPageDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintContext, int, PrintOperation) dlg; _printoperation.onDrawPageListeners )
-		{
-			dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, _printoperation);
-		}
+		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, wrapper.outer);
+	}
+	
+	extern(C) static void callBackDrawPageDestroy(OnDrawPageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDrawPage(wrapper);
 	}
 
-	void delegate(PrintContext, PrintOperation)[] onEndPrintListeners;
+	protected void internalRemoveOnDrawPage(OnDrawPageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDrawPageListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDrawPageListeners[index] = null;
+				onDrawPageListeners = std.algorithm.remove(onDrawPageListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnEndPrintDelegateWrapper
+	{
+		void delegate(PrintContext, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintContext, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnEndPrintDelegateWrapper[] onEndPrintListeners;
+
 	/**
 	 * Emitted after all pages have been rendered.
 	 * A handler for this signal can clean up any resources that have
@@ -970,30 +1115,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnEndPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEndPrint(void delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "end-print" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"end-print",
-				cast(GCallback)&callBackEndPrint,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["end-print"] = 1;
-		}
-		onEndPrintListeners ~= dlg;
+		onEndPrintListeners ~= new OnEndPrintDelegateWrapper(dlg, 0, connectFlags);
+		onEndPrintListeners[onEndPrintListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"end-print",
+			cast(GCallback)&callBackEndPrint,
+			cast(void*)onEndPrintListeners[onEndPrintListeners.length - 1],
+			cast(GClosureNotify)&callBackEndPrintDestroy,
+			connectFlags);
+		return onEndPrintListeners[onEndPrintListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEndPrint(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, PrintOperation _printoperation)
+	
+	extern(C) static void callBackEndPrint(GtkPrintOperation* printoperationStruct, GtkPrintContext* context,OnEndPrintDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintContext, PrintOperation) dlg; _printoperation.onEndPrintListeners )
-		{
-			dlg(ObjectG.getDObject!(PrintContext)(context), _printoperation);
-		}
+		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
+	}
+	
+	extern(C) static void callBackEndPrintDestroy(OnEndPrintDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEndPrint(wrapper);
 	}
 
-	bool delegate(PrintContext, PrintOperation)[] onPaginateListeners;
+	protected void internalRemoveOnEndPrint(OnEndPrintDelegateWrapper source)
+	{
+		foreach(index, wrapper; onEndPrintListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEndPrintListeners[index] = null;
+				onEndPrintListeners = std.algorithm.remove(onEndPrintListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPaginateDelegateWrapper
+	{
+		bool delegate(PrintContext, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(PrintContext, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPaginateDelegateWrapper[] onPaginateListeners;
+
 	/**
 	 * Emitted after the #GtkPrintOperation::begin-print signal, but before
 	 * the actual rendering starts. It keeps getting emitted until a connected
@@ -1016,35 +1188,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnPaginate(bool delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPaginate(bool delegate(PrintContext, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "paginate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"paginate",
-				cast(GCallback)&callBackPaginate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["paginate"] = 1;
-		}
-		onPaginateListeners ~= dlg;
+		onPaginateListeners ~= new OnPaginateDelegateWrapper(dlg, 0, connectFlags);
+		onPaginateListeners[onPaginateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"paginate",
+			cast(GCallback)&callBackPaginate,
+			cast(void*)onPaginateListeners[onPaginateListeners.length - 1],
+			cast(GClosureNotify)&callBackPaginateDestroy,
+			connectFlags);
+		return onPaginateListeners[onPaginateListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackPaginate(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, PrintOperation _printoperation)
+	
+	extern(C) static int callBackPaginate(GtkPrintOperation* printoperationStruct, GtkPrintContext* context,OnPaginateDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(PrintContext, PrintOperation) dlg; _printoperation.onPaginateListeners )
-		{
-			if ( dlg(ObjectG.getDObject!(PrintContext)(context), _printoperation) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPaginateDestroy(OnPaginateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPaginate(wrapper);
 	}
 
-	bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation)[] onPreviewListeners;
+	protected void internalRemoveOnPaginate(OnPaginateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPaginateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPaginateListeners[index] = null;
+				onPaginateListeners = std.algorithm.remove(onPaginateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPreviewDelegateWrapper
+	{
+		bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPreviewDelegateWrapper[] onPreviewListeners;
+
 	/**
 	 * Gets emitted when a preview is requested from the native dialog.
 	 *
@@ -1072,35 +1266,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnPreview(bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPreview(bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "preview" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"preview",
-				cast(GCallback)&callBackPreview,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["preview"] = 1;
-		}
-		onPreviewListeners ~= dlg;
+		onPreviewListeners ~= new OnPreviewDelegateWrapper(dlg, 0, connectFlags);
+		onPreviewListeners[onPreviewListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"preview",
+			cast(GCallback)&callBackPreview,
+			cast(void*)onPreviewListeners[onPreviewListeners.length - 1],
+			cast(GClosureNotify)&callBackPreviewDestroy,
+			connectFlags);
+		return onPreviewListeners[onPreviewListeners.length - 1].handlerId;
 	}
-	extern(C) static int callBackPreview(GtkPrintOperation* printoperationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, PrintOperation _printoperation)
+	
+	extern(C) static int callBackPreview(GtkPrintOperation* printoperationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent,OnPreviewDelegateWrapper wrapper)
 	{
-		foreach ( bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg; _printoperation.onPreviewListeners )
-		{
-			if ( dlg(ObjectG.getDObject!(PrintOperationPreview, PrintOperationPreviewIF)(preview), ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(Window)(parent), _printoperation) )
-			{
-				return 1;
-			}
-		}
-		
-		return 0;
+		return wrapper.dlg(ObjectG.getDObject!(PrintOperationPreview, PrintOperationPreviewIF)(preview), ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(Window)(parent), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPreviewDestroy(OnPreviewDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPreview(wrapper);
 	}
 
-	void delegate(PrintContext, int, PageSetup, PrintOperation)[] onRequestPageSetupListeners;
+	protected void internalRemoveOnPreview(OnPreviewDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPreviewListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPreviewListeners[index] = null;
+				onPreviewListeners = std.algorithm.remove(onPreviewListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRequestPageSetupDelegateWrapper
+	{
+		void delegate(PrintContext, int, PageSetup, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintContext, int, PageSetup, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRequestPageSetupDelegateWrapper[] onRequestPageSetupListeners;
+
 	/**
 	 * Emitted once for every page that is printed, to give
 	 * the application a chance to modify the page setup. Any changes
@@ -1113,30 +1329,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnRequestPageSetup(void delegate(PrintContext, int, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRequestPageSetup(void delegate(PrintContext, int, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "request-page-setup" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"request-page-setup",
-				cast(GCallback)&callBackRequestPageSetup,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["request-page-setup"] = 1;
-		}
-		onRequestPageSetupListeners ~= dlg;
+		onRequestPageSetupListeners ~= new OnRequestPageSetupDelegateWrapper(dlg, 0, connectFlags);
+		onRequestPageSetupListeners[onRequestPageSetupListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"request-page-setup",
+			cast(GCallback)&callBackRequestPageSetup,
+			cast(void*)onRequestPageSetupListeners[onRequestPageSetupListeners.length - 1],
+			cast(GClosureNotify)&callBackRequestPageSetupDestroy,
+			connectFlags);
+		return onRequestPageSetupListeners[onRequestPageSetupListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, int pageNr, GtkPageSetup* setup, PrintOperation _printoperation)
+	
+	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, int pageNr, GtkPageSetup* setup,OnRequestPageSetupDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintContext, int, PageSetup, PrintOperation) dlg; _printoperation.onRequestPageSetupListeners )
-		{
-			dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, ObjectG.getDObject!(PageSetup)(setup), _printoperation);
-		}
+		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, ObjectG.getDObject!(PageSetup)(setup), wrapper.outer);
+	}
+	
+	extern(C) static void callBackRequestPageSetupDestroy(OnRequestPageSetupDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRequestPageSetup(wrapper);
 	}
 
-	void delegate(PrintOperation)[] onStatusChangedListeners;
+	protected void internalRemoveOnRequestPageSetup(OnRequestPageSetupDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRequestPageSetupListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRequestPageSetupListeners[index] = null;
+				onRequestPageSetupListeners = std.algorithm.remove(onRequestPageSetupListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnStatusChangedDelegateWrapper
+	{
+		void delegate(PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnStatusChangedDelegateWrapper[] onStatusChangedListeners;
+
 	/**
 	 * Emitted at between the various phases of the print operation.
 	 * See #GtkPrintStatus for the phases that are being discriminated.
@@ -1145,30 +1388,57 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.10
 	 */
-	void addOnStatusChanged(void delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnStatusChanged(void delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "status-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"status-changed",
-				cast(GCallback)&callBackStatusChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["status-changed"] = 1;
-		}
-		onStatusChangedListeners ~= dlg;
+		onStatusChangedListeners ~= new OnStatusChangedDelegateWrapper(dlg, 0, connectFlags);
+		onStatusChangedListeners[onStatusChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"status-changed",
+			cast(GCallback)&callBackStatusChanged,
+			cast(void*)onStatusChangedListeners[onStatusChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackStatusChangedDestroy,
+			connectFlags);
+		return onStatusChangedListeners[onStatusChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackStatusChanged(GtkPrintOperation* printoperationStruct, PrintOperation _printoperation)
+	
+	extern(C) static void callBackStatusChanged(GtkPrintOperation* printoperationStruct,OnStatusChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintOperation) dlg; _printoperation.onStatusChangedListeners )
-		{
-			dlg(_printoperation);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackStatusChangedDestroy(OnStatusChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnStatusChanged(wrapper);
 	}
 
-	void delegate(Widget, PageSetup, PrintSettings, PrintOperation)[] onUpdateCustomWidgetListeners;
+	protected void internalRemoveOnStatusChanged(OnStatusChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onStatusChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onStatusChangedListeners[index] = null;
+				onStatusChangedListeners = std.algorithm.remove(onStatusChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnUpdateCustomWidgetDelegateWrapper
+	{
+		void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnUpdateCustomWidgetDelegateWrapper[] onUpdateCustomWidgetListeners;
+
 	/**
 	 * Emitted after change of selected printer. The actual page setup and
 	 * print settings are passed to the custom widget, which can actualize
@@ -1181,28 +1451,42 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *
 	 * Since: 2.18
 	 */
-	void addOnUpdateCustomWidget(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnUpdateCustomWidget(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "update-custom-widget" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"update-custom-widget",
-				cast(GCallback)&callBackUpdateCustomWidget,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["update-custom-widget"] = 1;
-		}
-		onUpdateCustomWidgetListeners ~= dlg;
+		onUpdateCustomWidgetListeners ~= new OnUpdateCustomWidgetDelegateWrapper(dlg, 0, connectFlags);
+		onUpdateCustomWidgetListeners[onUpdateCustomWidgetListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"update-custom-widget",
+			cast(GCallback)&callBackUpdateCustomWidget,
+			cast(void*)onUpdateCustomWidgetListeners[onUpdateCustomWidgetListeners.length - 1],
+			cast(GClosureNotify)&callBackUpdateCustomWidgetDestroy,
+			connectFlags);
+		return onUpdateCustomWidgetListeners[onUpdateCustomWidgetListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* printoperationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings, PrintOperation _printoperation)
+	
+	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* printoperationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings,OnUpdateCustomWidgetDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg; _printoperation.onUpdateCustomWidgetListeners )
+		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), ObjectG.getDObject!(PageSetup)(setup), ObjectG.getDObject!(PrintSettings)(settings), wrapper.outer);
+	}
+	
+	extern(C) static void callBackUpdateCustomWidgetDestroy(OnUpdateCustomWidgetDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnUpdateCustomWidget(wrapper);
+	}
+
+	protected void internalRemoveOnUpdateCustomWidget(OnUpdateCustomWidgetDelegateWrapper source)
+	{
+		foreach(index, wrapper; onUpdateCustomWidgetListeners)
 		{
-			dlg(ObjectG.getDObject!(Widget)(widget), ObjectG.getDObject!(PageSetup)(setup), ObjectG.getDObject!(PrintSettings)(settings), _printoperation);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onUpdateCustomWidgetListeners[index] = null;
+				onUpdateCustomWidgetListeners = std.algorithm.remove(onUpdateCustomWidgetListeners, index);
+				break;
+			}
 		}
 	}
+	
 
 	/**
 	 * Runs a page setup dialog, letting the user modify the values from

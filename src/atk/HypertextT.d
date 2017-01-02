@@ -30,6 +30,7 @@ public  import gobject.Signals;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /**
@@ -98,13 +99,20 @@ public template HypertextT(TStruct)
 		return atk_hypertext_get_n_links(getHypertextStruct());
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(int, HypertextIF)[] _onLinkSelectedListeners;
-	@property void delegate(int, HypertextIF)[] onLinkSelectedListeners()
+	protected class OnLinkSelectedDelegateWrapper
 	{
-		return _onLinkSelectedListeners;
+		void delegate(int, HypertextIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, HypertextIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnLinkSelectedDelegateWrapper[] onLinkSelectedListeners;
+
 	/**
 	 * The "link-selected" signal is emitted by an AtkHyperText
 	 * object when one of the hyperlinks associated with the object
@@ -113,26 +121,40 @@ public template HypertextT(TStruct)
 	 * Params:
 	 *     arg1 = the index of the hyperlink which is selected
 	 */
-	void addOnLinkSelected(void delegate(int, HypertextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnLinkSelected(void delegate(int, HypertextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "link-selected" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"link-selected",
-				cast(GCallback)&callBackLinkSelected,
-				cast(void*)cast(HypertextIF)this,
-				null,
-				connectFlags);
-			connectedSignals["link-selected"] = 1;
-		}
-		_onLinkSelectedListeners ~= dlg;
+		onLinkSelectedListeners ~= new OnLinkSelectedDelegateWrapper(dlg, 0, connectFlags);
+		onLinkSelectedListeners[onLinkSelectedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"link-selected",
+			cast(GCallback)&callBackLinkSelected,
+			cast(void*)onLinkSelectedListeners[onLinkSelectedListeners.length - 1],
+			cast(GClosureNotify)&callBackLinkSelectedDestroy,
+			connectFlags);
+		return onLinkSelectedListeners[onLinkSelectedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackLinkSelected(AtkHypertext* hypertextStruct, int arg1, HypertextIF _hypertext)
+	
+	extern(C) static void callBackLinkSelected(AtkHypertext* hypertextStruct, int arg1,OnLinkSelectedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, HypertextIF) dlg; _hypertext.onLinkSelectedListeners )
+		wrapper.dlg(arg1, wrapper.outer);
+	}
+	
+	extern(C) static void callBackLinkSelectedDestroy(OnLinkSelectedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnLinkSelected(wrapper);
+	}
+
+	protected void internalRemoveOnLinkSelected(OnLinkSelectedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onLinkSelectedListeners)
 		{
-			dlg(arg1, _hypertext);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onLinkSelectedListeners[index] = null;
+				onLinkSelectedListeners = std.algorithm.remove(onLinkSelectedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

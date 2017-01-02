@@ -42,6 +42,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -742,30 +743,55 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		gtk_tree_view_column_set_widget(gtkTreeViewColumn, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnClickedDelegateWrapper
+	{
+		void delegate(TreeViewColumn) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TreeViewColumn) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnClickedDelegateWrapper[] onClickedListeners;
 
-	void delegate(TreeViewColumn)[] onClickedListeners;
 	/** */
-	void addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "clicked" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"clicked",
-				cast(GCallback)&callBackClicked,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["clicked"] = 1;
-		}
-		onClickedListeners ~= dlg;
+		onClickedListeners ~= new OnClickedDelegateWrapper(dlg, 0, connectFlags);
+		onClickedListeners[onClickedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"clicked",
+			cast(GCallback)&callBackClicked,
+			cast(void*)onClickedListeners[onClickedListeners.length - 1],
+			cast(GClosureNotify)&callBackClickedDestroy,
+			connectFlags);
+		return onClickedListeners[onClickedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn _treeviewcolumn)
+	
+	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct,OnClickedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TreeViewColumn) dlg; _treeviewcolumn.onClickedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClicked(wrapper);
+	}
+
+	protected void internalRemoveOnClicked(OnClickedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onClickedListeners)
 		{
-			dlg(_treeviewcolumn);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onClickedListeners[index] = null;
+				onClickedListeners = std.algorithm.remove(onClickedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

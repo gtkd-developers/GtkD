@@ -5083,6 +5083,7 @@ shared static this()
 	Linker.link(gtk_window_unfullscreen, "gtk_window_unfullscreen", LIBRARY.GTK);
 	Linker.link(gtk_window_unmaximize, "gtk_window_unmaximize", LIBRARY.GTK);
 	Linker.link(gtk_window_unstick, "gtk_window_unstick", LIBRARY.GTK);
+	Linker.link(gtk_show_uri_on_window, "gtk_show_uri_on_window", LIBRARY.GTK);
 
 	// gtk.WindowAccessible
 
@@ -10237,6 +10238,7 @@ __gshared extern(C)
 	void function(GtkWindow* window) c_gtk_window_unfullscreen;
 	void function(GtkWindow* window) c_gtk_window_unmaximize;
 	void function(GtkWindow* window) c_gtk_window_unstick;
+	int function(GtkWindow* parent, const(char)* uri, uint timestamp, GError** err) c_gtk_show_uri_on_window;
 
 	// gtk.WindowAccessible
 
@@ -15389,6 +15391,7 @@ alias c_gtk_window_stick gtk_window_stick;
 alias c_gtk_window_unfullscreen gtk_window_unfullscreen;
 alias c_gtk_window_unmaximize gtk_window_unmaximize;
 alias c_gtk_window_unstick gtk_window_unstick;
+alias c_gtk_show_uri_on_window gtk_show_uri_on_window;
 
 // gtk.WindowAccessible
 

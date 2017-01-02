@@ -50,6 +50,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -1707,9 +1708,20 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		return g_dbus_connection_unregister_subtree(gDBusConnection, registrationId) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnClosedDelegateWrapper
+	{
+		void delegate(bool, ErrorG, DBusConnection) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(bool, ErrorG, DBusConnection) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnClosedDelegateWrapper[] onClosedListeners;
 
-	void delegate(bool, ErrorG, DBusConnection)[] onClosedListeners;
 	/**
 	 * Emitted when the connection is closed.
 	 *
@@ -1735,28 +1747,42 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * Since: 2.26
 	 */
-	void addOnClosed(void delegate(bool, ErrorG, DBusConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClosed(void delegate(bool, ErrorG, DBusConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "closed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"closed",
-				cast(GCallback)&callBackClosed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["closed"] = 1;
-		}
-		onClosedListeners ~= dlg;
+		onClosedListeners ~= new OnClosedDelegateWrapper(dlg, 0, connectFlags);
+		onClosedListeners[onClosedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"closed",
+			cast(GCallback)&callBackClosed,
+			cast(void*)onClosedListeners[onClosedListeners.length - 1],
+			cast(GClosureNotify)&callBackClosedDestroy,
+			connectFlags);
+		return onClosedListeners[onClosedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClosed(GDBusConnection* dbusconnectionStruct, bool remotePeerVanished, GError* error, DBusConnection _dbusconnection)
+	
+	extern(C) static void callBackClosed(GDBusConnection* dbusconnectionStruct, bool remotePeerVanished, GError* error,OnClosedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(bool, ErrorG, DBusConnection) dlg; _dbusconnection.onClosedListeners )
+		wrapper.dlg(remotePeerVanished, new ErrorG(error), wrapper.outer);
+	}
+	
+	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClosed(wrapper);
+	}
+
+	protected void internalRemoveOnClosed(OnClosedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onClosedListeners)
 		{
-			dlg(remotePeerVanished, new ErrorG(error), _dbusconnection);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onClosedListeners[index] = null;
+				onClosedListeners = std.algorithm.remove(onClosedListeners, index);
+				break;
+			}
 		}
 	}
+	
 
 	/**
 	 * Asynchronously connects to the message bus specified by @bus_type.

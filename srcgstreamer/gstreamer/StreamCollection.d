@@ -34,6 +34,7 @@ private import gstreamer.Stream;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -182,30 +183,55 @@ public class StreamCollection : ObjectGst
 		return Str.toString(gst_stream_collection_get_upstream_id(gstStreamCollection));
 	}
 
-	int[string] connectedSignals;
+	protected class OnStreamNotifyDelegateWrapper
+	{
+		void delegate(Stream, ParamSpec, StreamCollection) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Stream, ParamSpec, StreamCollection) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnStreamNotifyDelegateWrapper[] onStreamNotifyListeners;
 
-	void delegate(Stream, ParamSpec, StreamCollection)[] onStreamNotifyListeners;
 	/** */
-	void addOnStreamNotify(void delegate(Stream, ParamSpec, StreamCollection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnStreamNotify(void delegate(Stream, ParamSpec, StreamCollection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "stream-notify" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"stream-notify",
-				cast(GCallback)&callBackStreamNotify,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["stream-notify"] = 1;
-		}
-		onStreamNotifyListeners ~= dlg;
+		onStreamNotifyListeners ~= new OnStreamNotifyDelegateWrapper(dlg, 0, connectFlags);
+		onStreamNotifyListeners[onStreamNotifyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"stream-notify",
+			cast(GCallback)&callBackStreamNotify,
+			cast(void*)onStreamNotifyListeners[onStreamNotifyListeners.length - 1],
+			cast(GClosureNotify)&callBackStreamNotifyDestroy,
+			connectFlags);
+		return onStreamNotifyListeners[onStreamNotifyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackStreamNotify(GstStreamCollection* streamcollectionStruct, GstStream* object, GParamSpec* p0, StreamCollection _streamcollection)
+	
+	extern(C) static void callBackStreamNotify(GstStreamCollection* streamcollectionStruct, GstStream* object, GParamSpec* p0,OnStreamNotifyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Stream, ParamSpec, StreamCollection) dlg; _streamcollection.onStreamNotifyListeners )
+		wrapper.dlg(ObjectG.getDObject!(Stream)(object), ObjectG.getDObject!(ParamSpec)(p0), wrapper.outer);
+	}
+	
+	extern(C) static void callBackStreamNotifyDestroy(OnStreamNotifyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnStreamNotify(wrapper);
+	}
+
+	protected void internalRemoveOnStreamNotify(OnStreamNotifyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onStreamNotifyListeners)
 		{
-			dlg(ObjectG.getDObject!(Stream)(object), ObjectG.getDObject!(ParamSpec)(p0), _streamcollection);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onStreamNotifyListeners[index] = null;
+				onStreamNotifyListeners = std.algorithm.remove(onStreamNotifyListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

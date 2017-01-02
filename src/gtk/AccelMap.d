@@ -31,6 +31,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -372,9 +373,20 @@ public class AccelMap : ObjectG
 		gtk_accel_map_unlock_path(Str.toStringz(accelPath));
 	}
 
-	int[string] connectedSignals;
+	protected class OnChangedDelegateWrapper
+	{
+		void delegate(string, uint, GdkModifierType, AccelMap) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, uint, GdkModifierType, AccelMap) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnChangedDelegateWrapper[] onChangedListeners;
 
-	void delegate(string, uint, GdkModifierType, AccelMap)[] onChangedListeners;
 	/**
 	 * Notifies of a change in the global accelerator map.
 	 * The path is also used as the detail for the signal,
@@ -388,26 +400,40 @@ public class AccelMap : ObjectG
 	 *
 	 * Since: 2.4
 	 */
-	void addOnChanged(void delegate(string, uint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChanged(void delegate(string, uint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"changed",
-				cast(GCallback)&callBackChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["changed"] = 1;
-		}
-		onChangedListeners ~= dlg;
+		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
+		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"changed",
+			cast(GCallback)&callBackChanged,
+			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackChangedDestroy,
+			connectFlags);
+		return onChangedListeners[onChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackChanged(GtkAccelMap* accelmapStruct, char* accelPath, uint accelKey, GdkModifierType accelMods, AccelMap _accelmap)
+	
+	extern(C) static void callBackChanged(GtkAccelMap* accelmapStruct, char* accelPath, uint accelKey, GdkModifierType accelMods,OnChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, uint, GdkModifierType, AccelMap) dlg; _accelmap.onChangedListeners )
+		wrapper.dlg(Str.toString(accelPath), accelKey, accelMods, wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChanged(wrapper);
+	}
+
+	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangedListeners)
 		{
-			dlg(Str.toString(accelPath), accelKey, accelMods, _accelmap);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onChangedListeners[index] = null;
+				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

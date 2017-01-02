@@ -41,6 +41,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -724,9 +725,20 @@ public class Application : GioApplication
 		gtk_application_uninhibit(gtkApplication, cookie);
 	}
 
-	int[string] connectedSignals;
+	protected class OnWindowAddedDelegateWrapper
+	{
+		void delegate(Window, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Window, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnWindowAddedDelegateWrapper[] onWindowAddedListeners;
 
-	void delegate(Window, Application)[] onWindowAddedListeners;
 	/**
 	 * Emitted when a #GtkWindow is added to @application through
 	 * gtk_application_add_window().
@@ -736,30 +748,57 @@ public class Application : GioApplication
 	 *
 	 * Since: 3.2
 	 */
-	void addOnWindowAdded(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnWindowAdded(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "window-added" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"window-added",
-				cast(GCallback)&callBackWindowAdded,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["window-added"] = 1;
-		}
-		onWindowAddedListeners ~= dlg;
+		onWindowAddedListeners ~= new OnWindowAddedDelegateWrapper(dlg, 0, connectFlags);
+		onWindowAddedListeners[onWindowAddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"window-added",
+			cast(GCallback)&callBackWindowAdded,
+			cast(void*)onWindowAddedListeners[onWindowAddedListeners.length - 1],
+			cast(GClosureNotify)&callBackWindowAddedDestroy,
+			connectFlags);
+		return onWindowAddedListeners[onWindowAddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackWindowAdded(GtkApplication* applicationStruct, GtkWindow* window, Application _application)
+	
+	extern(C) static void callBackWindowAdded(GtkApplication* applicationStruct, GtkWindow* window,OnWindowAddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Window, Application) dlg; _application.onWindowAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(Window)(window), _application);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Window)(window), wrapper.outer);
+	}
+	
+	extern(C) static void callBackWindowAddedDestroy(OnWindowAddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnWindowAdded(wrapper);
 	}
 
-	void delegate(Window, Application)[] onWindowRemovedListeners;
+	protected void internalRemoveOnWindowAdded(OnWindowAddedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onWindowAddedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onWindowAddedListeners[index] = null;
+				onWindowAddedListeners = std.algorithm.remove(onWindowAddedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnWindowRemovedDelegateWrapper
+	{
+		void delegate(Window, Application) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Window, Application) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnWindowRemovedDelegateWrapper[] onWindowRemovedListeners;
+
 	/**
 	 * Emitted when a #GtkWindow is removed from @application,
 	 * either as a side-effect of being destroyed or explicitly
@@ -770,26 +809,40 @@ public class Application : GioApplication
 	 *
 	 * Since: 3.2
 	 */
-	void addOnWindowRemoved(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnWindowRemoved(void delegate(Window, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "window-removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"window-removed",
-				cast(GCallback)&callBackWindowRemoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["window-removed"] = 1;
-		}
-		onWindowRemovedListeners ~= dlg;
+		onWindowRemovedListeners ~= new OnWindowRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onWindowRemovedListeners[onWindowRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"window-removed",
+			cast(GCallback)&callBackWindowRemoved,
+			cast(void*)onWindowRemovedListeners[onWindowRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackWindowRemovedDestroy,
+			connectFlags);
+		return onWindowRemovedListeners[onWindowRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackWindowRemoved(GtkApplication* applicationStruct, GtkWindow* window, Application _application)
+	
+	extern(C) static void callBackWindowRemoved(GtkApplication* applicationStruct, GtkWindow* window,OnWindowRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Window, Application) dlg; _application.onWindowRemovedListeners )
+		wrapper.dlg(ObjectG.getDObject!(Window)(window), wrapper.outer);
+	}
+	
+	extern(C) static void callBackWindowRemovedDestroy(OnWindowRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnWindowRemoved(wrapper);
+	}
+
+	protected void internalRemoveOnWindowRemoved(OnWindowRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onWindowRemovedListeners)
 		{
-			dlg(ObjectG.getDObject!(Window)(window), _application);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onWindowRemovedListeners[index] = null;
+				onWindowRemovedListeners = std.algorithm.remove(onWindowRemovedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

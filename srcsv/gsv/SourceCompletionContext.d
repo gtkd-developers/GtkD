@@ -33,6 +33,7 @@ private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /** */
@@ -123,34 +124,59 @@ public class SourceCompletionContext : ObjectG
 		return p;
 	}
 
-	int[string] connectedSignals;
+	protected class OnCancelledDelegateWrapper
+	{
+		void delegate(SourceCompletionContext) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceCompletionContext) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCancelledDelegateWrapper[] onCancelledListeners;
 
-	void delegate(SourceCompletionContext)[] onCancelledListeners;
 	/**
 	 * Emitted when the current population of proposals has been cancelled.
 	 * Providers adding proposals asynchronously should connect to this signal
 	 * to know when to cancel running proposal queries.
 	 */
-	void addOnCancelled(void delegate(SourceCompletionContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCancelled(void delegate(SourceCompletionContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "cancelled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"cancelled",
-				cast(GCallback)&callBackCancelled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["cancelled"] = 1;
-		}
-		onCancelledListeners ~= dlg;
+		onCancelledListeners ~= new OnCancelledDelegateWrapper(dlg, 0, connectFlags);
+		onCancelledListeners[onCancelledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"cancelled",
+			cast(GCallback)&callBackCancelled,
+			cast(void*)onCancelledListeners[onCancelledListeners.length - 1],
+			cast(GClosureNotify)&callBackCancelledDestroy,
+			connectFlags);
+		return onCancelledListeners[onCancelledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCancelled(GtkSourceCompletionContext* sourcecompletioncontextStruct, SourceCompletionContext _sourcecompletioncontext)
+	
+	extern(C) static void callBackCancelled(GtkSourceCompletionContext* sourcecompletioncontextStruct,OnCancelledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceCompletionContext) dlg; _sourcecompletioncontext.onCancelledListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCancelled(wrapper);
+	}
+
+	protected void internalRemoveOnCancelled(OnCancelledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onCancelledListeners)
 		{
-			dlg(_sourcecompletioncontext);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCancelledListeners[index] = null;
+				onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

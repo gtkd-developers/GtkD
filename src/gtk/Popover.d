@@ -34,6 +34,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -484,30 +485,55 @@ public class Popover : Bin
 		gtk_popover_set_transitions_enabled(gtkPopover, transitionsEnabled);
 	}
 
-	int[string] connectedSignals;
+	protected class OnClosedDelegateWrapper
+	{
+		void delegate(Popover) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Popover) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnClosedDelegateWrapper[] onClosedListeners;
 
-	void delegate(Popover)[] onClosedListeners;
 	/** */
-	void addOnClosed(void delegate(Popover) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnClosed(void delegate(Popover) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "closed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"closed",
-				cast(GCallback)&callBackClosed,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["closed"] = 1;
-		}
-		onClosedListeners ~= dlg;
+		onClosedListeners ~= new OnClosedDelegateWrapper(dlg, 0, connectFlags);
+		onClosedListeners[onClosedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"closed",
+			cast(GCallback)&callBackClosed,
+			cast(void*)onClosedListeners[onClosedListeners.length - 1],
+			cast(GClosureNotify)&callBackClosedDestroy,
+			connectFlags);
+		return onClosedListeners[onClosedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackClosed(GtkPopover* popoverStruct, Popover _popover)
+	
+	extern(C) static void callBackClosed(GtkPopover* popoverStruct,OnClosedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Popover) dlg; _popover.onClosedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnClosed(wrapper);
+	}
+
+	protected void internalRemoveOnClosed(OnClosedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onClosedListeners)
 		{
-			dlg(_popover);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onClosedListeners[index] = null;
+				onClosedListeners = std.algorithm.remove(onClosedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

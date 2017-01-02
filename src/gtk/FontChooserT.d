@@ -34,6 +34,7 @@ public  import pango.PgFontDescription;
 public  import pango.PgFontFace;
 public  import pango.PgFontFamily;
 public  import pango.PgFontMap;
+public  import std.algorithm;
 
 
 /**
@@ -322,13 +323,20 @@ public template FontChooserT(TStruct)
 		gtk_font_chooser_set_show_preview_entry(getFontChooserStruct(), showPreviewEntry);
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(string, FontChooserIF)[] _onFontActivatedListeners;
-	@property void delegate(string, FontChooserIF)[] onFontActivatedListeners()
+	protected class OnFontActivatedDelegateWrapper
 	{
-		return _onFontActivatedListeners;
+		void delegate(string, FontChooserIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, FontChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnFontActivatedDelegateWrapper[] onFontActivatedListeners;
+
 	/**
 	 * Emitted when a font is activated.
 	 * This usually happens when the user double clicks an item,
@@ -338,26 +346,40 @@ public template FontChooserT(TStruct)
 	 * Params:
 	 *     fontname = the font name
 	 */
-	void addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "font-activated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"font-activated",
-				cast(GCallback)&callBackFontActivated,
-				cast(void*)cast(FontChooserIF)this,
-				null,
-				connectFlags);
-			connectedSignals["font-activated"] = 1;
-		}
-		_onFontActivatedListeners ~= dlg;
+		onFontActivatedListeners ~= new OnFontActivatedDelegateWrapper(dlg, 0, connectFlags);
+		onFontActivatedListeners[onFontActivatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"font-activated",
+			cast(GCallback)&callBackFontActivated,
+			cast(void*)onFontActivatedListeners[onFontActivatedListeners.length - 1],
+			cast(GClosureNotify)&callBackFontActivatedDestroy,
+			connectFlags);
+		return onFontActivatedListeners[onFontActivatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, char* fontname, FontChooserIF _fontchooser)
+	
+	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, char* fontname,OnFontActivatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, FontChooserIF) dlg; _fontchooser.onFontActivatedListeners )
+		wrapper.dlg(Str.toString(fontname), wrapper.outer);
+	}
+	
+	extern(C) static void callBackFontActivatedDestroy(OnFontActivatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFontActivated(wrapper);
+	}
+
+	protected void internalRemoveOnFontActivated(OnFontActivatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFontActivatedListeners)
 		{
-			dlg(Str.toString(fontname), _fontchooser);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFontActivatedListeners[index] = null;
+				onFontActivatedListeners = std.algorithm.remove(onFontActivatedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

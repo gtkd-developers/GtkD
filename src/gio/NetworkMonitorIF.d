@@ -36,6 +36,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -174,7 +175,6 @@ public interface NetworkMonitorIF{
 	 * Since: 2.46
 	 */
 	public bool getNetworkMetered();
-	@property void delegate(bool, NetworkMonitorIF)[] onNetworkChangedListeners();
 	/**
 	 * Emitted when the network configuration changes. If @available is
 	 * %TRUE, then some hosts may be reachable that were not reachable
@@ -187,6 +187,7 @@ public interface NetworkMonitorIF{
 	 *
 	 * Since: 2.32
 	 */
-	void addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

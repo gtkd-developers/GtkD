@@ -34,6 +34,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -898,39 +899,72 @@ public class Notebook : Container
 		gtk_notebook_set_tab_reorderable(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), reorderable);
 	}
 
-	int[string] connectedSignals;
-
-	bool delegate(int, Notebook)[] onChangeCurrentPageListeners;
-	/** */
-	void addOnChangeCurrentPage(bool delegate(int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected class OnChangeCurrentPageDelegateWrapper
 	{
-		if ( "change-current-page" !in connectedSignals )
+		bool delegate(int, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(int, Notebook) dlg, gulong handlerId, ConnectFlags flags)
 		{
-			Signals.connectData(
-				this,
-				"change-current-page",
-				cast(GCallback)&callBackChangeCurrentPage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["change-current-page"] = 1;
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
 		}
-		onChangeCurrentPageListeners ~= dlg;
 	}
-	extern(C) static int callBackChangeCurrentPage(GtkNotebook* notebookStruct, int object, Notebook _notebook)
+	protected OnChangeCurrentPageDelegateWrapper[] onChangeCurrentPageListeners;
+
+	/** */
+	gulong addOnChangeCurrentPage(bool delegate(int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		foreach ( bool delegate(int, Notebook) dlg; _notebook.onChangeCurrentPageListeners )
+		onChangeCurrentPageListeners ~= new OnChangeCurrentPageDelegateWrapper(dlg, 0, connectFlags);
+		onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"change-current-page",
+			cast(GCallback)&callBackChangeCurrentPage,
+			cast(void*)onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1],
+			cast(GClosureNotify)&callBackChangeCurrentPageDestroy,
+			connectFlags);
+		return onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static int callBackChangeCurrentPage(GtkNotebook* notebookStruct, int object,OnChangeCurrentPageDelegateWrapper wrapper)
+	{
+		return wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackChangeCurrentPageDestroy(OnChangeCurrentPageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnChangeCurrentPage(wrapper);
+	}
+
+	protected void internalRemoveOnChangeCurrentPage(OnChangeCurrentPageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onChangeCurrentPageListeners)
 		{
-			if ( dlg(object, _notebook) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onChangeCurrentPageListeners[index] = null;
+				onChangeCurrentPageListeners = std.algorithm.remove(onChangeCurrentPageListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 
-	Notebook delegate(Widget, int, int, Notebook)[] onCreateWindowListeners;
+	protected class OnCreateWindowDelegateWrapper
+	{
+		Notebook delegate(Widget, int, int, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(Notebook delegate(Widget, int, int, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCreateWindowDelegateWrapper[] onCreateWindowListeners;
+
 	/**
 	 * The ::create-window signal is emitted when a detachable
 	 * tab is dropped on the root window.
@@ -951,88 +985,162 @@ public class Notebook : Container
 	 *
 	 * Since: 2.12
 	 */
-	void addOnCreateWindow(Notebook delegate(Widget, int, int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCreateWindow(Notebook delegate(Widget, int, int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "create-window" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"create-window",
-				cast(GCallback)&callBackCreateWindow,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["create-window"] = 1;
-		}
-		onCreateWindowListeners ~= dlg;
+		onCreateWindowListeners ~= new OnCreateWindowDelegateWrapper(dlg, 0, connectFlags);
+		onCreateWindowListeners[onCreateWindowListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"create-window",
+			cast(GCallback)&callBackCreateWindow,
+			cast(void*)onCreateWindowListeners[onCreateWindowListeners.length - 1],
+			cast(GClosureNotify)&callBackCreateWindowDestroy,
+			connectFlags);
+		return onCreateWindowListeners[onCreateWindowListeners.length - 1].handlerId;
 	}
-	extern(C) static GtkNotebook* callBackCreateWindow(GtkNotebook* notebookStruct, GtkWidget* page, int x, int y, Notebook _notebook)
+	
+	extern(C) static GtkNotebook* callBackCreateWindow(GtkNotebook* notebookStruct, GtkWidget* page, int x, int y,OnCreateWindowDelegateWrapper wrapper)
 	{
-		foreach ( Notebook delegate(Widget, int, int, Notebook) dlg; _notebook.onCreateWindowListeners )
-		{
-			if ( auto r = dlg(ObjectG.getDObject!(Widget)(page), x, y, _notebook) )
-				return r.getNotebookStruct();
-		}
-		
-		return null;
+		auto r = wrapper.dlg(ObjectG.getDObject!(Widget)(page), x, y, wrapper.outer);
+		return r.getNotebookStruct();
+	}
+	
+	extern(C) static void callBackCreateWindowDestroy(OnCreateWindowDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCreateWindow(wrapper);
 	}
 
-	bool delegate(GtkNotebookTab, Notebook)[] onFocusTabListeners;
-	/** */
-	void addOnFocusTab(bool delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected void internalRemoveOnCreateWindow(OnCreateWindowDelegateWrapper source)
 	{
-		if ( "focus-tab" !in connectedSignals )
+		foreach(index, wrapper; onCreateWindowListeners)
 		{
-			Signals.connectData(
-				this,
-				"focus-tab",
-				cast(GCallback)&callBackFocusTab,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["focus-tab"] = 1;
-		}
-		onFocusTabListeners ~= dlg;
-	}
-	extern(C) static int callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab object, Notebook _notebook)
-	{
-		foreach ( bool delegate(GtkNotebookTab, Notebook) dlg; _notebook.onFocusTabListeners )
-		{
-			if ( dlg(object, _notebook) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onCreateWindowListeners[index] = null;
+				onCreateWindowListeners = std.algorithm.remove(onCreateWindowListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
 	}
+	
 
-	void delegate(GtkDirectionType, Notebook)[] onMoveFocusOutListeners;
+	protected class OnFocusTabDelegateWrapper
+	{
+		bool delegate(GtkNotebookTab, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GtkNotebookTab, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFocusTabDelegateWrapper[] onFocusTabListeners;
+
 	/** */
-	void addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFocusTab(bool delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move-focus-out" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move-focus-out",
-				cast(GCallback)&callBackMoveFocusOut,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["move-focus-out"] = 1;
-		}
-		onMoveFocusOutListeners ~= dlg;
+		onFocusTabListeners ~= new OnFocusTabDelegateWrapper(dlg, 0, connectFlags);
+		onFocusTabListeners[onFocusTabListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"focus-tab",
+			cast(GCallback)&callBackFocusTab,
+			cast(void*)onFocusTabListeners[onFocusTabListeners.length - 1],
+			cast(GClosureNotify)&callBackFocusTabDestroy,
+			connectFlags);
+		return onFocusTabListeners[onFocusTabListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMoveFocusOut(GtkNotebook* notebookStruct, GtkDirectionType object, Notebook _notebook)
+	
+	extern(C) static int callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab object,OnFocusTabDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(GtkDirectionType, Notebook) dlg; _notebook.onMoveFocusOutListeners )
-		{
-			dlg(object, _notebook);
-		}
+		return wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackFocusTabDestroy(OnFocusTabDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFocusTab(wrapper);
 	}
 
-	void delegate(Widget, uint, Notebook)[] onPageAddedListeners;
+	protected void internalRemoveOnFocusTab(OnFocusTabDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFocusTabListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFocusTabListeners[index] = null;
+				onFocusTabListeners = std.algorithm.remove(onFocusTabListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnMoveFocusOutDelegateWrapper
+	{
+		void delegate(GtkDirectionType, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(GtkDirectionType, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveFocusOutDelegateWrapper[] onMoveFocusOutListeners;
+
+	/** */
+	gulong addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onMoveFocusOutListeners ~= new OnMoveFocusOutDelegateWrapper(dlg, 0, connectFlags);
+		onMoveFocusOutListeners[onMoveFocusOutListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move-focus-out",
+			cast(GCallback)&callBackMoveFocusOut,
+			cast(void*)onMoveFocusOutListeners[onMoveFocusOutListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveFocusOutDestroy,
+			connectFlags);
+		return onMoveFocusOutListeners[onMoveFocusOutListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static void callBackMoveFocusOut(GtkNotebook* notebookStruct, GtkDirectionType object,OnMoveFocusOutDelegateWrapper wrapper)
+	{
+		wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveFocusOutDestroy(OnMoveFocusOutDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMoveFocusOut(wrapper);
+	}
+
+	protected void internalRemoveOnMoveFocusOut(OnMoveFocusOutDelegateWrapper source)
+	{
+		foreach(index, wrapper; onMoveFocusOutListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveFocusOutListeners[index] = null;
+				onMoveFocusOutListeners = std.algorithm.remove(onMoveFocusOutListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPageAddedDelegateWrapper
+	{
+		void delegate(Widget, uint, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, uint, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPageAddedDelegateWrapper[] onPageAddedListeners;
+
 	/**
 	 * the ::page-added signal is emitted in the notebook
 	 * right after a page is added to the notebook.
@@ -1043,30 +1151,57 @@ public class Notebook : Container
 	 *
 	 * Since: 2.10
 	 */
-	void addOnPageAdded(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPageAdded(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "page-added" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"page-added",
-				cast(GCallback)&callBackPageAdded,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["page-added"] = 1;
-		}
-		onPageAddedListeners ~= dlg;
+		onPageAddedListeners ~= new OnPageAddedDelegateWrapper(dlg, 0, connectFlags);
+		onPageAddedListeners[onPageAddedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"page-added",
+			cast(GCallback)&callBackPageAdded,
+			cast(void*)onPageAddedListeners[onPageAddedListeners.length - 1],
+			cast(GClosureNotify)&callBackPageAddedDestroy,
+			connectFlags);
+		return onPageAddedListeners[onPageAddedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPageAdded(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum, Notebook _notebook)
+	
+	extern(C) static void callBackPageAdded(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum,OnPageAddedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, uint, Notebook) dlg; _notebook.onPageAddedListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(child), pageNum, _notebook);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(child), pageNum, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPageAddedDestroy(OnPageAddedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPageAdded(wrapper);
 	}
 
-	void delegate(Widget, uint, Notebook)[] onPageRemovedListeners;
+	protected void internalRemoveOnPageAdded(OnPageAddedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPageAddedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPageAddedListeners[index] = null;
+				onPageAddedListeners = std.algorithm.remove(onPageAddedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPageRemovedDelegateWrapper
+	{
+		void delegate(Widget, uint, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, uint, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPageRemovedDelegateWrapper[] onPageRemovedListeners;
+
 	/**
 	 * the ::page-removed signal is emitted in the notebook
 	 * right after a page is removed from the notebook.
@@ -1077,30 +1212,57 @@ public class Notebook : Container
 	 *
 	 * Since: 2.10
 	 */
-	void addOnPageRemoved(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPageRemoved(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "page-removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"page-removed",
-				cast(GCallback)&callBackPageRemoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["page-removed"] = 1;
-		}
-		onPageRemovedListeners ~= dlg;
+		onPageRemovedListeners ~= new OnPageRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onPageRemovedListeners[onPageRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"page-removed",
+			cast(GCallback)&callBackPageRemoved,
+			cast(void*)onPageRemovedListeners[onPageRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackPageRemovedDestroy,
+			connectFlags);
+		return onPageRemovedListeners[onPageRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPageRemoved(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum, Notebook _notebook)
+	
+	extern(C) static void callBackPageRemoved(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum,OnPageRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, uint, Notebook) dlg; _notebook.onPageRemovedListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(child), pageNum, _notebook);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(child), pageNum, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPageRemovedDestroy(OnPageRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPageRemoved(wrapper);
 	}
 
-	void delegate(Widget, uint, Notebook)[] onPageReorderedListeners;
+	protected void internalRemoveOnPageRemoved(OnPageRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPageRemovedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPageRemovedListeners[index] = null;
+				onPageRemovedListeners = std.algorithm.remove(onPageRemovedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPageReorderedDelegateWrapper
+	{
+		void delegate(Widget, uint, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, uint, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPageReorderedDelegateWrapper[] onPageReorderedListeners;
+
 	/**
 	 * the ::page-reordered signal is emitted in the notebook
 	 * right after a page has been reordered.
@@ -1111,90 +1273,161 @@ public class Notebook : Container
 	 *
 	 * Since: 2.10
 	 */
-	void addOnPageReordered(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPageReordered(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "page-reordered" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"page-reordered",
-				cast(GCallback)&callBackPageReordered,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["page-reordered"] = 1;
-		}
-		onPageReorderedListeners ~= dlg;
+		onPageReorderedListeners ~= new OnPageReorderedDelegateWrapper(dlg, 0, connectFlags);
+		onPageReorderedListeners[onPageReorderedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"page-reordered",
+			cast(GCallback)&callBackPageReordered,
+			cast(void*)onPageReorderedListeners[onPageReorderedListeners.length - 1],
+			cast(GClosureNotify)&callBackPageReorderedDestroy,
+			connectFlags);
+		return onPageReorderedListeners[onPageReorderedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPageReordered(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum, Notebook _notebook)
+	
+	extern(C) static void callBackPageReordered(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum,OnPageReorderedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, uint, Notebook) dlg; _notebook.onPageReorderedListeners )
-		{
-			dlg(ObjectG.getDObject!(Widget)(child), pageNum, _notebook);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Widget)(child), pageNum, wrapper.outer);
+	}
+	
+	extern(C) static void callBackPageReorderedDestroy(OnPageReorderedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPageReordered(wrapper);
 	}
 
-	bool delegate(GtkDirectionType, bool, Notebook)[] onReorderTabListeners;
-	/** */
-	void addOnReorderTab(bool delegate(GtkDirectionType, bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected void internalRemoveOnPageReordered(OnPageReorderedDelegateWrapper source)
 	{
-		if ( "reorder-tab" !in connectedSignals )
+		foreach(index, wrapper; onPageReorderedListeners)
 		{
-			Signals.connectData(
-				this,
-				"reorder-tab",
-				cast(GCallback)&callBackReorderTab,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["reorder-tab"] = 1;
-		}
-		onReorderTabListeners ~= dlg;
-	}
-	extern(C) static int callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType object, bool p0, Notebook _notebook)
-	{
-		foreach ( bool delegate(GtkDirectionType, bool, Notebook) dlg; _notebook.onReorderTabListeners )
-		{
-			if ( dlg(object, p0, _notebook) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onPageReorderedListeners[index] = null;
+				onPageReorderedListeners = std.algorithm.remove(onPageReorderedListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
+	}
+	
+
+	protected class OnReorderTabDelegateWrapper
+	{
+		bool delegate(GtkDirectionType, bool, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(GtkDirectionType, bool, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnReorderTabDelegateWrapper[] onReorderTabListeners;
+
+	/** */
+	gulong addOnReorderTab(bool delegate(GtkDirectionType, bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onReorderTabListeners ~= new OnReorderTabDelegateWrapper(dlg, 0, connectFlags);
+		onReorderTabListeners[onReorderTabListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"reorder-tab",
+			cast(GCallback)&callBackReorderTab,
+			cast(void*)onReorderTabListeners[onReorderTabListeners.length - 1],
+			cast(GClosureNotify)&callBackReorderTabDestroy,
+			connectFlags);
+		return onReorderTabListeners[onReorderTabListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static int callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType object, bool p0,OnReorderTabDelegateWrapper wrapper)
+	{
+		return wrapper.dlg(object, p0, wrapper.outer);
+	}
+	
+	extern(C) static void callBackReorderTabDestroy(OnReorderTabDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnReorderTab(wrapper);
 	}
 
-	bool delegate(bool, Notebook)[] onSelectPageListeners;
-	/** */
-	void addOnSelectPage(bool delegate(bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	protected void internalRemoveOnReorderTab(OnReorderTabDelegateWrapper source)
 	{
-		if ( "select-page" !in connectedSignals )
+		foreach(index, wrapper; onReorderTabListeners)
 		{
-			Signals.connectData(
-				this,
-				"select-page",
-				cast(GCallback)&callBackSelectPage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["select-page"] = 1;
-		}
-		onSelectPageListeners ~= dlg;
-	}
-	extern(C) static int callBackSelectPage(GtkNotebook* notebookStruct, bool object, Notebook _notebook)
-	{
-		foreach ( bool delegate(bool, Notebook) dlg; _notebook.onSelectPageListeners )
-		{
-			if ( dlg(object, _notebook) )
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
 			{
-				return 1;
+				onReorderTabListeners[index] = null;
+				onReorderTabListeners = std.algorithm.remove(onReorderTabListeners, index);
+				break;
 			}
 		}
-		
-		return 0;
+	}
+	
+
+	protected class OnSelectPageDelegateWrapper
+	{
+		bool delegate(bool, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(bool delegate(bool, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSelectPageDelegateWrapper[] onSelectPageListeners;
+
+	/** */
+	gulong addOnSelectPage(bool delegate(bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		onSelectPageListeners ~= new OnSelectPageDelegateWrapper(dlg, 0, connectFlags);
+		onSelectPageListeners[onSelectPageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"select-page",
+			cast(GCallback)&callBackSelectPage,
+			cast(void*)onSelectPageListeners[onSelectPageListeners.length - 1],
+			cast(GClosureNotify)&callBackSelectPageDestroy,
+			connectFlags);
+		return onSelectPageListeners[onSelectPageListeners.length - 1].handlerId;
+	}
+	
+	extern(C) static int callBackSelectPage(GtkNotebook* notebookStruct, bool object,OnSelectPageDelegateWrapper wrapper)
+	{
+		return wrapper.dlg(object, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSelectPageDestroy(OnSelectPageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSelectPage(wrapper);
 	}
 
-	void delegate(Widget, uint, Notebook)[] onSwitchPageListeners;
+	protected void internalRemoveOnSelectPage(OnSelectPageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSelectPageListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSelectPageListeners[index] = null;
+				onSelectPageListeners = std.algorithm.remove(onSelectPageListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSwitchPageDelegateWrapper
+	{
+		void delegate(Widget, uint, Notebook) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Widget, uint, Notebook) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSwitchPageDelegateWrapper[] onSwitchPageListeners;
+
 	/**
 	 * Emitted when the user or a function changes the current page.
 	 *
@@ -1202,26 +1435,40 @@ public class Notebook : Container
 	 *     page = the new current page
 	 *     pageNum = the index of the page
 	 */
-	void addOnSwitchPage(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSwitchPage(void delegate(Widget, uint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "switch-page" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"switch-page",
-				cast(GCallback)&callBackSwitchPage,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["switch-page"] = 1;
-		}
-		onSwitchPageListeners ~= dlg;
+		onSwitchPageListeners ~= new OnSwitchPageDelegateWrapper(dlg, 0, connectFlags);
+		onSwitchPageListeners[onSwitchPageListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"switch-page",
+			cast(GCallback)&callBackSwitchPage,
+			cast(void*)onSwitchPageListeners[onSwitchPageListeners.length - 1],
+			cast(GClosureNotify)&callBackSwitchPageDestroy,
+			connectFlags);
+		return onSwitchPageListeners[onSwitchPageListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkWidget* page, uint pageNum, Notebook _notebook)
+	
+	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkWidget* page, uint pageNum,OnSwitchPageDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Widget, uint, Notebook) dlg; _notebook.onSwitchPageListeners )
+		wrapper.dlg(ObjectG.getDObject!(Widget)(page), pageNum, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSwitchPageDestroy(OnSwitchPageDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSwitchPage(wrapper);
+	}
+
+	protected void internalRemoveOnSwitchPage(OnSwitchPageDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSwitchPageListeners)
 		{
-			dlg(ObjectG.getDObject!(Widget)(page), pageNum, _notebook);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSwitchPageListeners[index] = null;
+				onSwitchPageListeners = std.algorithm.remove(onSwitchPageListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

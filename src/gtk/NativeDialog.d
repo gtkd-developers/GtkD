@@ -31,6 +31,7 @@ private import gtk.Window;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -285,9 +286,20 @@ public class NativeDialog : ObjectG
 		gtk_native_dialog_show(gtkNativeDialog);
 	}
 
-	int[string] connectedSignals;
+	protected class OnResponseDelegateWrapper
+	{
+		void delegate(int, NativeDialog) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, NativeDialog) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnResponseDelegateWrapper[] onResponseListeners;
 
-	void delegate(int, NativeDialog)[] onResponseListeners;
 	/**
 	 * Emitted when the user responds to the dialog.
 	 *
@@ -301,26 +313,40 @@ public class NativeDialog : ObjectG
 	 *
 	 * Since: 3.20
 	 */
-	void addOnResponse(void delegate(int, NativeDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnResponse(void delegate(int, NativeDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "response" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"response",
-				cast(GCallback)&callBackResponse,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["response"] = 1;
-		}
-		onResponseListeners ~= dlg;
+		onResponseListeners ~= new OnResponseDelegateWrapper(dlg, 0, connectFlags);
+		onResponseListeners[onResponseListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"response",
+			cast(GCallback)&callBackResponse,
+			cast(void*)onResponseListeners[onResponseListeners.length - 1],
+			cast(GClosureNotify)&callBackResponseDestroy,
+			connectFlags);
+		return onResponseListeners[onResponseListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackResponse(GtkNativeDialog* nativedialogStruct, int responseId, NativeDialog _nativedialog)
+	
+	extern(C) static void callBackResponse(GtkNativeDialog* nativedialogStruct, int responseId,OnResponseDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, NativeDialog) dlg; _nativedialog.onResponseListeners )
+		wrapper.dlg(responseId, wrapper.outer);
+	}
+	
+	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnResponse(wrapper);
+	}
+
+	protected void internalRemoveOnResponse(OnResponseDelegateWrapper source)
+	{
+		foreach(index, wrapper; onResponseListeners)
 		{
-			dlg(responseId, _nativedialog);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onResponseListeners[index] = null;
+				onResponseListeners = std.algorithm.remove(onResponseListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

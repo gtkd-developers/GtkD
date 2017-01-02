@@ -45,6 +45,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -857,9 +858,20 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		g_dbus_proxy_set_interface_info(gDBusProxy, (info is null) ? null : info.getDBusInterfaceInfoStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnGPropertiesChangedDelegateWrapper
+	{
+		void delegate(Variant, string[], DBusProxy) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Variant, string[], DBusProxy) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGPropertiesChangedDelegateWrapper[] onGPropertiesChangedListeners;
 
-	void delegate(Variant, string[], DBusProxy)[] onGPropertiesChangedListeners;
 	/**
 	 * Emitted when one or more D-Bus properties on @proxy changes. The
 	 * local cache has already been updated when this signal fires. Note
@@ -880,30 +892,57 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *
 	 * Since: 2.26
 	 */
-	void addOnGPropertiesChanged(void delegate(Variant, string[], DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGPropertiesChanged(void delegate(Variant, string[], DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "g-properties-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"g-properties-changed",
-				cast(GCallback)&callBackGPropertiesChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["g-properties-changed"] = 1;
-		}
-		onGPropertiesChangedListeners ~= dlg;
+		onGPropertiesChangedListeners ~= new OnGPropertiesChangedDelegateWrapper(dlg, 0, connectFlags);
+		onGPropertiesChangedListeners[onGPropertiesChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"g-properties-changed",
+			cast(GCallback)&callBackGPropertiesChanged,
+			cast(void*)onGPropertiesChangedListeners[onGPropertiesChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackGPropertiesChangedDestroy,
+			connectFlags);
+		return onGPropertiesChangedListeners[onGPropertiesChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackGPropertiesChanged(GDBusProxy* dbusproxyStruct, GVariant* changedProperties, char** invalidatedProperties, DBusProxy _dbusproxy)
+	
+	extern(C) static void callBackGPropertiesChanged(GDBusProxy* dbusproxyStruct, GVariant* changedProperties, char** invalidatedProperties,OnGPropertiesChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Variant, string[], DBusProxy) dlg; _dbusproxy.onGPropertiesChangedListeners )
-		{
-			dlg(new Variant(changedProperties), Str.toStringArray(invalidatedProperties), _dbusproxy);
-		}
+		wrapper.dlg(new Variant(changedProperties), Str.toStringArray(invalidatedProperties), wrapper.outer);
+	}
+	
+	extern(C) static void callBackGPropertiesChangedDestroy(OnGPropertiesChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGPropertiesChanged(wrapper);
 	}
 
-	void delegate(string, string, Variant, DBusProxy)[] onGSignalListeners;
+	protected void internalRemoveOnGPropertiesChanged(OnGPropertiesChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGPropertiesChangedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onGPropertiesChangedListeners[index] = null;
+				onGPropertiesChangedListeners = std.algorithm.remove(onGPropertiesChangedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnGSignalDelegateWrapper
+	{
+		void delegate(string, string, Variant, DBusProxy) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, string, Variant, DBusProxy) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGSignalDelegateWrapper[] onGSignalListeners;
+
 	/**
 	 * Emitted when a signal from the remote object and interface that @proxy is for, has been received.
 	 *
@@ -914,26 +953,40 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *
 	 * Since: 2.26
 	 */
-	void addOnGSignal(void delegate(string, string, Variant, DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGSignal(void delegate(string, string, Variant, DBusProxy) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "g-signal" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"g-signal",
-				cast(GCallback)&callBackGSignal,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["g-signal"] = 1;
-		}
-		onGSignalListeners ~= dlg;
+		onGSignalListeners ~= new OnGSignalDelegateWrapper(dlg, 0, connectFlags);
+		onGSignalListeners[onGSignalListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"g-signal",
+			cast(GCallback)&callBackGSignal,
+			cast(void*)onGSignalListeners[onGSignalListeners.length - 1],
+			cast(GClosureNotify)&callBackGSignalDestroy,
+			connectFlags);
+		return onGSignalListeners[onGSignalListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackGSignal(GDBusProxy* dbusproxyStruct, char* senderName, char* signalName, GVariant* parameters, DBusProxy _dbusproxy)
+	
+	extern(C) static void callBackGSignal(GDBusProxy* dbusproxyStruct, char* senderName, char* signalName, GVariant* parameters,OnGSignalDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, string, Variant, DBusProxy) dlg; _dbusproxy.onGSignalListeners )
+		wrapper.dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), wrapper.outer);
+	}
+	
+	extern(C) static void callBackGSignalDestroy(OnGSignalDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGSignal(wrapper);
+	}
+
+	protected void internalRemoveOnGSignal(OnGSignalDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGSignalListeners)
 		{
-			dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), _dbusproxy);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onGSignalListeners[index] = null;
+				onGSignalListeners = std.algorithm.remove(onGSignalListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

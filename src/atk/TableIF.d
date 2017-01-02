@@ -31,6 +31,7 @@ private import gobject.Signals;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -390,7 +391,6 @@ public interface TableIF{
 	 *         to set for @table
 	 */
 	public void setSummary(ObjectAtk accessible);
-	@property void delegate(int, int, TableIF)[] onColumnDeletedListeners();
 	/**
 	 * The "column-deleted" signal is emitted by an object which
 	 * implements the AtkTable interface when a column is deleted.
@@ -399,9 +399,9 @@ public interface TableIF{
 	 *     arg1 = The index of the first column deleted.
 	 *     arg2 = The number of columns deleted.
 	 */
-	void addOnColumnDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnColumnDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, TableIF)[] onColumnInsertedListeners();
 	/**
 	 * The "column-inserted" signal is emitted by an object which
 	 * implements the AtkTable interface when a column is inserted.
@@ -410,25 +410,25 @@ public interface TableIF{
 	 *     arg1 = The index of the column inserted.
 	 *     arg2 = The number of colums inserted.
 	 */
-	void addOnColumnInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnColumnInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TableIF)[] onColumnReorderedListeners();
 	/**
 	 * The "column-reordered" signal is emitted by an object which
 	 * implements the AtkTable interface when the columns are
 	 * reordered.
 	 */
-	void addOnColumnReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnColumnReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TableIF)[] onModelChangedListeners();
 	/**
 	 * The "model-changed" signal is emitted by an object which
 	 * implements the AtkTable interface when the model displayed by
 	 * the table changes.
 	 */
-	void addOnModelChanged(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnModelChanged(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, TableIF)[] onRowDeletedListeners();
 	/**
 	 * The "row-deleted" signal is emitted by an object which
 	 * implements the AtkTable interface when a row is deleted.
@@ -437,9 +437,9 @@ public interface TableIF{
 	 *     arg1 = The index of the first row deleted.
 	 *     arg2 = The number of rows deleted.
 	 */
-	void addOnRowDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(int, int, TableIF)[] onRowInsertedListeners();
 	/**
 	 * The "row-inserted" signal is emitted by an object which
 	 * implements the AtkTable interface when a row is inserted.
@@ -448,14 +448,15 @@ public interface TableIF{
 	 *     arg1 = The index of the first row inserted.
 	 *     arg2 = The number of rows inserted.
 	 */
-	void addOnRowInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(TableIF)[] onRowReorderedListeners();
 	/**
 	 * The "row-reordered" signal is emitted by an object which
 	 * implements the AtkTable interface when the rows are
 	 * reordered.
 	 */
-	void addOnRowReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRowReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

@@ -35,6 +35,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -102,7 +103,6 @@ public interface DBusObjectManagerIF{
 	 * Since: 2.30
 	 */
 	public ListG getObjects();
-	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceAddedListeners();
 	/**
 	 * Emitted when @interface is added to @object.
 	 *
@@ -115,9 +115,9 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	void addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF)[] onInterfaceRemovedListeners();
 	/**
 	 * Emitted when @interface has been removed from @object.
 	 *
@@ -130,9 +130,9 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	void addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectAddedListeners();
 	/**
 	 * Emitted when @object is added to @manager.
 	 *
@@ -141,9 +141,9 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	void addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(DBusObjectIF, DBusObjectManagerIF)[] onObjectRemovedListeners();
 	/**
 	 * Emitted when @object is removed from @manager.
 	 *
@@ -152,6 +152,7 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	void addOnObjectRemoved(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnObjectRemoved(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

@@ -33,6 +33,7 @@ private import gtk.CellRendererText;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -102,9 +103,20 @@ public class CellRendererAccel : CellRendererText
 		this(cast(GtkCellRendererAccel*) p);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAccelClearedDelegateWrapper
+	{
+		void delegate(string, CellRendererAccel) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, CellRendererAccel) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAccelClearedDelegateWrapper[] onAccelClearedListeners;
 
-	void delegate(string, CellRendererAccel)[] onAccelClearedListeners;
 	/**
 	 * Gets emitted when the user has removed the accelerator.
 	 *
@@ -113,30 +125,57 @@ public class CellRendererAccel : CellRendererText
 	 *
 	 * Since: 2.10
 	 */
-	void addOnAccelCleared(void delegate(string, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAccelCleared(void delegate(string, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "accel-cleared" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"accel-cleared",
-				cast(GCallback)&callBackAccelCleared,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["accel-cleared"] = 1;
-		}
-		onAccelClearedListeners ~= dlg;
+		onAccelClearedListeners ~= new OnAccelClearedDelegateWrapper(dlg, 0, connectFlags);
+		onAccelClearedListeners[onAccelClearedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"accel-cleared",
+			cast(GCallback)&callBackAccelCleared,
+			cast(void*)onAccelClearedListeners[onAccelClearedListeners.length - 1],
+			cast(GClosureNotify)&callBackAccelClearedDestroy,
+			connectFlags);
+		return onAccelClearedListeners[onAccelClearedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAccelCleared(GtkCellRendererAccel* cellrendereraccelStruct, char* pathString, CellRendererAccel _cellrendereraccel)
+	
+	extern(C) static void callBackAccelCleared(GtkCellRendererAccel* cellrendereraccelStruct, char* pathString,OnAccelClearedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, CellRendererAccel) dlg; _cellrendereraccel.onAccelClearedListeners )
-		{
-			dlg(Str.toString(pathString), _cellrendereraccel);
-		}
+		wrapper.dlg(Str.toString(pathString), wrapper.outer);
+	}
+	
+	extern(C) static void callBackAccelClearedDestroy(OnAccelClearedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAccelCleared(wrapper);
 	}
 
-	void delegate(string, uint, GdkModifierType, uint, CellRendererAccel)[] onAccelEditedListeners;
+	protected void internalRemoveOnAccelCleared(OnAccelClearedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAccelClearedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAccelClearedListeners[index] = null;
+				onAccelClearedListeners = std.algorithm.remove(onAccelClearedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnAccelEditedDelegateWrapper
+	{
+		void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAccelEditedDelegateWrapper[] onAccelEditedListeners;
+
 	/**
 	 * Gets emitted when the user has selected a new accelerator.
 	 *
@@ -148,26 +187,40 @@ public class CellRendererAccel : CellRendererText
 	 *
 	 * Since: 2.10
 	 */
-	void addOnAccelEdited(void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAccelEdited(void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "accel-edited" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"accel-edited",
-				cast(GCallback)&callBackAccelEdited,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["accel-edited"] = 1;
-		}
-		onAccelEditedListeners ~= dlg;
+		onAccelEditedListeners ~= new OnAccelEditedDelegateWrapper(dlg, 0, connectFlags);
+		onAccelEditedListeners[onAccelEditedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"accel-edited",
+			cast(GCallback)&callBackAccelEdited,
+			cast(void*)onAccelEditedListeners[onAccelEditedListeners.length - 1],
+			cast(GClosureNotify)&callBackAccelEditedDestroy,
+			connectFlags);
+		return onAccelEditedListeners[onAccelEditedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAccelEdited(GtkCellRendererAccel* cellrendereraccelStruct, char* pathString, uint accelKey, GdkModifierType accelMods, uint hardwareKeycode, CellRendererAccel _cellrendereraccel)
+	
+	extern(C) static void callBackAccelEdited(GtkCellRendererAccel* cellrendereraccelStruct, char* pathString, uint accelKey, GdkModifierType accelMods, uint hardwareKeycode,OnAccelEditedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg; _cellrendereraccel.onAccelEditedListeners )
+		wrapper.dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, wrapper.outer);
+	}
+	
+	extern(C) static void callBackAccelEditedDestroy(OnAccelEditedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAccelEdited(wrapper);
+	}
+
+	protected void internalRemoveOnAccelEdited(OnAccelEditedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAccelEditedListeners)
 		{
-			dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, _cellrendereraccel);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAccelEditedListeners[index] = null;
+				onAccelEditedListeners = std.algorithm.remove(onAccelEditedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

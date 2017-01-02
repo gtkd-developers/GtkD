@@ -35,6 +35,7 @@ private import gstreamer.ControlBinding;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -433,7 +434,7 @@ public class ObjectGst : ObjectG
 	}
 
 	/**
-	 * Check if the @object has an active controlled properties.
+	 * Check if the @object has active controlled properties.
 	 *
 	 * Return: %TRUE if the object has active controlled properties
 	 */
@@ -668,9 +669,20 @@ public class ObjectGst : ObjectG
 		gst_object_unref(gstObject);
 	}
 
-	int[string] connectedSignals;
+	protected class OnDeepNotifyDelegateWrapper
+	{
+		void delegate(ObjectGst, ParamSpec, ObjectGst) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDeepNotifyDelegateWrapper[] onDeepNotifyListeners;
 
-	void delegate(ObjectGst, ParamSpec, ObjectGst)[] onDeepNotifyListeners;
 	/**
 	 * The deep notify signal is used to be notified of property changes. It is
 	 * typically attached to the toplevel bin to receive notifications from all
@@ -680,26 +692,40 @@ public class ObjectGst : ObjectG
 	 *     propObject = the object that originated the signal
 	 *     prop = the property that changed
 	 */
-	void addOnDeepNotify(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDeepNotify(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "deep-notify" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"deep-notify",
-				cast(GCallback)&callBackDeepNotify,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["deep-notify"] = 1;
-		}
-		onDeepNotifyListeners ~= dlg;
+		onDeepNotifyListeners ~= new OnDeepNotifyDelegateWrapper(dlg, 0, connectFlags);
+		onDeepNotifyListeners[onDeepNotifyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"deep-notify",
+			cast(GCallback)&callBackDeepNotify,
+			cast(void*)onDeepNotifyListeners[onDeepNotifyListeners.length - 1],
+			cast(GClosureNotify)&callBackDeepNotifyDestroy,
+			connectFlags);
+		return onDeepNotifyListeners[onDeepNotifyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDeepNotify(GstObject* objectgstStruct, GstObject* propObject, GParamSpec* prop, ObjectGst _objectgst)
+	
+	extern(C) static void callBackDeepNotify(GstObject* objectgstStruct, GstObject* propObject, GParamSpec* prop,OnDeepNotifyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(ObjectGst, ParamSpec, ObjectGst) dlg; _objectgst.onDeepNotifyListeners )
+		wrapper.dlg(ObjectG.getDObject!(ObjectGst)(propObject), ObjectG.getDObject!(ParamSpec)(prop), wrapper.outer);
+	}
+	
+	extern(C) static void callBackDeepNotifyDestroy(OnDeepNotifyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDeepNotify(wrapper);
+	}
+
+	protected void internalRemoveOnDeepNotify(OnDeepNotifyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDeepNotifyListeners)
 		{
-			dlg(ObjectG.getDObject!(ObjectGst)(propObject), ObjectG.getDObject!(ParamSpec)(prop), _objectgst);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDeepNotifyListeners[index] = null;
+				onDeepNotifyListeners = std.algorithm.remove(onDeepNotifyListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

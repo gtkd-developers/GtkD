@@ -62,7 +62,7 @@ public  import gtkc.gtktypes;
  * 
  * |[<!-- language="plain" -->
  * progressbar[.osd]
- * ╰── trough
+ * ╰── trough[.empty][.full]
  * ├── [text]
  * ╰── progress[.pulse]
  * ]|

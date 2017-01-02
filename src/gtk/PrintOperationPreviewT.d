@@ -30,6 +30,7 @@ public  import gtk.PrintContext;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
+public  import std.algorithm;
 
 
 /** */
@@ -91,13 +92,20 @@ public template PrintOperationPreviewT(TStruct)
 		gtk_print_operation_preview_render_page(getPrintOperationPreviewStruct(), pageNr);
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] _onGotPageSizeListeners;
-	@property void delegate(PrintContext, PageSetup, PrintOperationPreviewIF)[] onGotPageSizeListeners()
+	protected class OnGotPageSizeDelegateWrapper
 	{
-		return _onGotPageSizeListeners;
+		void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnGotPageSizeDelegateWrapper[] onGotPageSizeListeners;
+
 	/**
 	 * The ::got-page-size signal is emitted once for each page
 	 * that gets rendered to the preview.
@@ -110,34 +118,57 @@ public template PrintOperationPreviewT(TStruct)
 	 *     context = the current #GtkPrintContext
 	 *     pageSetup = the #GtkPageSetup for the current page
 	 */
-	void addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "got-page-size" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"got-page-size",
-				cast(GCallback)&callBackGotPageSize,
-				cast(void*)cast(PrintOperationPreviewIF)this,
-				null,
-				connectFlags);
-			connectedSignals["got-page-size"] = 1;
-		}
-		_onGotPageSizeListeners ~= dlg;
+		onGotPageSizeListeners ~= new OnGotPageSizeDelegateWrapper(dlg, 0, connectFlags);
+		onGotPageSizeListeners[onGotPageSizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"got-page-size",
+			cast(GCallback)&callBackGotPageSize,
+			cast(void*)onGotPageSizeListeners[onGotPageSizeListeners.length - 1],
+			cast(GClosureNotify)&callBackGotPageSizeDestroy,
+			connectFlags);
+		return onGotPageSizeListeners[onGotPageSizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* context, GtkPageSetup* pageSetup, PrintOperationPreviewIF _printoperationpreview)
+	
+	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* context, GtkPageSetup* pageSetup,OnGotPageSizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg; _printoperationpreview.onGotPageSizeListeners )
-		{
-			dlg(ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(PageSetup)(pageSetup), _printoperationpreview);
-		}
+		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(PageSetup)(pageSetup), wrapper.outer);
+	}
+	
+	extern(C) static void callBackGotPageSizeDestroy(OnGotPageSizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGotPageSize(wrapper);
 	}
 
-	void delegate(PrintContext, PrintOperationPreviewIF)[] _onReadyListeners;
-	@property void delegate(PrintContext, PrintOperationPreviewIF)[] onReadyListeners()
+	protected void internalRemoveOnGotPageSize(OnGotPageSizeDelegateWrapper source)
 	{
-		return _onReadyListeners;
+		foreach(index, wrapper; onGotPageSizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onGotPageSizeListeners[index] = null;
+				onGotPageSizeListeners = std.algorithm.remove(onGotPageSizeListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnReadyDelegateWrapper
+	{
+		void delegate(PrintContext, PrintOperationPreviewIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(PrintContext, PrintOperationPreviewIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnReadyDelegateWrapper[] onReadyListeners;
+
 	/**
 	 * The ::ready signal gets emitted once per preview operation,
 	 * before the first page is rendered.
@@ -147,26 +178,40 @@ public template PrintOperationPreviewT(TStruct)
 	 * Params:
 	 *     context = the current #GtkPrintContext
 	 */
-	void addOnReady(void delegate(PrintContext, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnReady(void delegate(PrintContext, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "ready" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"ready",
-				cast(GCallback)&callBackReady,
-				cast(void*)cast(PrintOperationPreviewIF)this,
-				null,
-				connectFlags);
-			connectedSignals["ready"] = 1;
-		}
-		_onReadyListeners ~= dlg;
+		onReadyListeners ~= new OnReadyDelegateWrapper(dlg, 0, connectFlags);
+		onReadyListeners[onReadyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"ready",
+			cast(GCallback)&callBackReady,
+			cast(void*)onReadyListeners[onReadyListeners.length - 1],
+			cast(GClosureNotify)&callBackReadyDestroy,
+			connectFlags);
+		return onReadyListeners[onReadyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackReady(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* context, PrintOperationPreviewIF _printoperationpreview)
+	
+	extern(C) static void callBackReady(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* context,OnReadyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(PrintContext, PrintOperationPreviewIF) dlg; _printoperationpreview.onReadyListeners )
+		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
+	}
+	
+	extern(C) static void callBackReadyDestroy(OnReadyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnReady(wrapper);
+	}
+
+	protected void internalRemoveOnReady(OnReadyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onReadyListeners)
 		{
-			dlg(ObjectG.getDObject!(PrintContext)(context), _printoperationpreview);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onReadyListeners[index] = null;
+				onReadyListeners = std.algorithm.remove(onReadyListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

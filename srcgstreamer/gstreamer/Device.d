@@ -34,6 +34,7 @@ private import gstreamer.Structure;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -234,30 +235,55 @@ public class Device : ObjectGst
 		return gst_device_reconfigure_element(gstDevice, (element is null) ? null : element.getElementStruct()) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnRemovedDelegateWrapper
+	{
+		void delegate(Device) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Device) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRemovedDelegateWrapper[] onRemovedListeners;
 
-	void delegate(Device)[] onRemovedListeners;
 	/** */
-	void addOnRemoved(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRemoved(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "removed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"removed",
-				cast(GCallback)&callBackRemoved,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["removed"] = 1;
-		}
-		onRemovedListeners ~= dlg;
+		onRemovedListeners ~= new OnRemovedDelegateWrapper(dlg, 0, connectFlags);
+		onRemovedListeners[onRemovedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"removed",
+			cast(GCallback)&callBackRemoved,
+			cast(void*)onRemovedListeners[onRemovedListeners.length - 1],
+			cast(GClosureNotify)&callBackRemovedDestroy,
+			connectFlags);
+		return onRemovedListeners[onRemovedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRemoved(GstDevice* deviceStruct, Device _device)
+	
+	extern(C) static void callBackRemoved(GstDevice* deviceStruct,OnRemovedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Device) dlg; _device.onRemovedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRemoved(wrapper);
+	}
+
+	protected void internalRemoveOnRemoved(OnRemovedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRemovedListeners)
 		{
-			dlg(_device);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRemovedListeners[index] = null;
+				onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

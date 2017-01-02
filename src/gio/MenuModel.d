@@ -34,6 +34,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -361,9 +362,20 @@ public class MenuModel : ObjectG
 		return ObjectG.getDObject!(MenuLinkIter)(cast(GMenuLinkIter*) p, true);
 	}
 
-	int[string] connectedSignals;
+	protected class OnItemsChangedDelegateWrapper
+	{
+		void delegate(int, int, int, MenuModel) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(int, int, int, MenuModel) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
 
-	void delegate(int, int, int, MenuModel)[] onItemsChangedListeners;
 	/**
 	 * Emitted when a change has occured to the menu.
 	 *
@@ -391,26 +403,40 @@ public class MenuModel : ObjectG
 	 *     removed = the number of items removed
 	 *     added = the number of items added
 	 */
-	void addOnItemsChanged(void delegate(int, int, int, MenuModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnItemsChanged(void delegate(int, int, int, MenuModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "items-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"items-changed",
-				cast(GCallback)&callBackItemsChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["items-changed"] = 1;
-		}
-		onItemsChangedListeners ~= dlg;
+		onItemsChangedListeners ~= new OnItemsChangedDelegateWrapper(dlg, 0, connectFlags);
+		onItemsChangedListeners[onItemsChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"items-changed",
+			cast(GCallback)&callBackItemsChanged,
+			cast(void*)onItemsChangedListeners[onItemsChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackItemsChangedDestroy,
+			connectFlags);
+		return onItemsChangedListeners[onItemsChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackItemsChanged(GMenuModel* menumodelStruct, int position, int removed, int added, MenuModel _menumodel)
+	
+	extern(C) static void callBackItemsChanged(GMenuModel* menumodelStruct, int position, int removed, int added,OnItemsChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(int, int, int, MenuModel) dlg; _menumodel.onItemsChangedListeners )
+		wrapper.dlg(position, removed, added, wrapper.outer);
+	}
+	
+	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnItemsChanged(wrapper);
+	}
+
+	protected void internalRemoveOnItemsChanged(OnItemsChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onItemsChangedListeners)
 		{
-			dlg(position, removed, added, _menumodel);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onItemsChangedListeners[index] = null;
+				onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

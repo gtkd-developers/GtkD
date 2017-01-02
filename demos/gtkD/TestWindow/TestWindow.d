@@ -30,6 +30,7 @@ private import gtk.Table;
 private import stdlib = core.stdc.stdlib : exit;
 private import core.thread;
 private import std.random;
+private import std.string;
 
 import gdk.Threads;
 
@@ -126,7 +127,7 @@ private import gtk.CellRenderer;
 private import gtk.CellRendererPixbuf;
 
 /**
- * This tests the DUI widgets
+ * This tests the GtkD widgets
  */
 
 
@@ -175,7 +176,7 @@ class TestWindow : MainWindow
 										MessageType.WARNING,
 										ButtonsType.OK,
 										"GtkD : Gtk+ version missmatch\n" ~ versionCompare ~
-										"\nYou might run into problems!"
+										"\nYou might run into problems!"~
 										"\n\nPress OK to continue");
 			d.run();
 			d.destroy();
@@ -850,7 +851,7 @@ class TestWindow : MainWindow
 
 				threadsEnter();
 				button.removeAll();
-				button.setLabel(std.string.format("%s", num));
+				button.setLabel(format("%s", num));
 				threadsLeave();
 				yield();
 			}
@@ -866,7 +867,7 @@ class TestWindow : MainWindow
 		{
 			for ( int j = 0 ; j<8; j++)
 			{
-				Button button = new Button(std.string.format("%s",(j+8*i)));
+				Button button = new Button(format("%s",(j+8*i)));
 				threadTestButtons ~= button;
 				grid.attach( button,
 							i,i+1,

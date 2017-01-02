@@ -34,6 +34,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -367,9 +368,20 @@ public class RadioButton : CheckButton
 		gtk_radio_button_set_group(gtkRadioButton, (group is null) ? null : group.getListSGStruct());
 	}
 
-	int[string] connectedSignals;
+	protected class OnGroupChangedDelegateWrapper
+	{
+		void delegate(RadioButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(RadioButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGroupChangedDelegateWrapper[] onGroupChangedListeners;
 
-	void delegate(RadioButton)[] onGroupChangedListeners;
 	/**
 	 * Emitted when the group of radio buttons that a radio button belongs
 	 * to changes. This is emitted when a radio button switches from
@@ -380,26 +392,40 @@ public class RadioButton : CheckButton
 	 *
 	 * Since: 2.4
 	 */
-	void addOnGroupChanged(void delegate(RadioButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGroupChanged(void delegate(RadioButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "group-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"group-changed",
-				cast(GCallback)&callBackGroupChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["group-changed"] = 1;
-		}
-		onGroupChangedListeners ~= dlg;
+		onGroupChangedListeners ~= new OnGroupChangedDelegateWrapper(dlg, 0, connectFlags);
+		onGroupChangedListeners[onGroupChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"group-changed",
+			cast(GCallback)&callBackGroupChanged,
+			cast(void*)onGroupChangedListeners[onGroupChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackGroupChangedDestroy,
+			connectFlags);
+		return onGroupChangedListeners[onGroupChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackGroupChanged(GtkRadioButton* radiobuttonStruct, RadioButton _radiobutton)
+	
+	extern(C) static void callBackGroupChanged(GtkRadioButton* radiobuttonStruct,OnGroupChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(RadioButton) dlg; _radiobutton.onGroupChangedListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackGroupChangedDestroy(OnGroupChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGroupChanged(wrapper);
+	}
+
+	protected void internalRemoveOnGroupChanged(OnGroupChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGroupChangedListeners)
 		{
-			dlg(_radiobutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onGroupChangedListeners[index] = null;
+				onGroupChangedListeners = std.algorithm.remove(onGroupChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

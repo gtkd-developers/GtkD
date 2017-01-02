@@ -29,6 +29,7 @@ public  import gobject.Signals;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
+public  import std.algorithm;
 
 
 /**
@@ -73,13 +74,20 @@ public template CellEditableT(TStruct)
 		gtk_cell_editable_start_editing(getCellEditableStruct(), (event is null) ? null : event.getEventStruct());
 	}
 
-	int[string] connectedSignals;
-
-	void delegate(CellEditableIF)[] _onEditingDoneListeners;
-	@property void delegate(CellEditableIF)[] onEditingDoneListeners()
+	protected class OnEditingDoneDelegateWrapper
 	{
-		return _onEditingDoneListeners;
+		void delegate(CellEditableIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellEditableIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnEditingDoneDelegateWrapper[] onEditingDoneListeners;
+
 	/**
 	 * This signal is a sign for the cell renderer to update its
 	 * value from the @cell_editable.
@@ -91,34 +99,57 @@ public template CellEditableT(TStruct)
 	 * gtk_cell_editable_editing_done() is a convenience method
 	 * for emitting #GtkCellEditable::editing-done.
 	 */
-	void addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "editing-done" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"editing-done",
-				cast(GCallback)&callBackEditingDone,
-				cast(void*)cast(CellEditableIF)this,
-				null,
-				connectFlags);
-			connectedSignals["editing-done"] = 1;
-		}
-		_onEditingDoneListeners ~= dlg;
+		onEditingDoneListeners ~= new OnEditingDoneDelegateWrapper(dlg, 0, connectFlags);
+		onEditingDoneListeners[onEditingDoneListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"editing-done",
+			cast(GCallback)&callBackEditingDone,
+			cast(void*)onEditingDoneListeners[onEditingDoneListeners.length - 1],
+			cast(GClosureNotify)&callBackEditingDoneDestroy,
+			connectFlags);
+		return onEditingDoneListeners[onEditingDoneListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackEditingDone(GtkCellEditable* celleditableStruct, CellEditableIF _celleditable)
+	
+	extern(C) static void callBackEditingDone(GtkCellEditable* celleditableStruct,OnEditingDoneDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellEditableIF) dlg; _celleditable.onEditingDoneListeners )
-		{
-			dlg(_celleditable);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackEditingDoneDestroy(OnEditingDoneDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnEditingDone(wrapper);
 	}
 
-	void delegate(CellEditableIF)[] _onRemoveWidgetListeners;
-	@property void delegate(CellEditableIF)[] onRemoveWidgetListeners()
+	protected void internalRemoveOnEditingDone(OnEditingDoneDelegateWrapper source)
 	{
-		return _onRemoveWidgetListeners;
+		foreach(index, wrapper; onEditingDoneListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onEditingDoneListeners[index] = null;
+				onEditingDoneListeners = std.algorithm.remove(onEditingDoneListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRemoveWidgetDelegateWrapper
+	{
+		void delegate(CellEditableIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CellEditableIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRemoveWidgetDelegateWrapper[] onRemoveWidgetListeners;
+
 	/**
 	 * This signal is meant to indicate that the cell is finished
 	 * editing, and the widget may now be destroyed.
@@ -132,26 +163,40 @@ public template CellEditableT(TStruct)
 	 * gtk_cell_editable_remove_widget() is a convenience method
 	 * for emitting #GtkCellEditable::remove-widget.
 	 */
-	void addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "remove-widget" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"remove-widget",
-				cast(GCallback)&callBackRemoveWidget,
-				cast(void*)cast(CellEditableIF)this,
-				null,
-				connectFlags);
-			connectedSignals["remove-widget"] = 1;
-		}
-		_onRemoveWidgetListeners ~= dlg;
+		onRemoveWidgetListeners ~= new OnRemoveWidgetDelegateWrapper(dlg, 0, connectFlags);
+		onRemoveWidgetListeners[onRemoveWidgetListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"remove-widget",
+			cast(GCallback)&callBackRemoveWidget,
+			cast(void*)onRemoveWidgetListeners[onRemoveWidgetListeners.length - 1],
+			cast(GClosureNotify)&callBackRemoveWidgetDestroy,
+			connectFlags);
+		return onRemoveWidgetListeners[onRemoveWidgetListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRemoveWidget(GtkCellEditable* celleditableStruct, CellEditableIF _celleditable)
+	
+	extern(C) static void callBackRemoveWidget(GtkCellEditable* celleditableStruct,OnRemoveWidgetDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CellEditableIF) dlg; _celleditable.onRemoveWidgetListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRemoveWidgetDestroy(OnRemoveWidgetDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRemoveWidget(wrapper);
+	}
+
+	protected void internalRemoveOnRemoveWidget(OnRemoveWidgetDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRemoveWidgetListeners)
 		{
-			dlg(_celleditable);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRemoveWidgetListeners[index] = null;
+				onRemoveWidgetListeners = std.algorithm.remove(onRemoveWidgetListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

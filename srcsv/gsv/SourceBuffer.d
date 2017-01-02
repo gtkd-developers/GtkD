@@ -42,6 +42,7 @@ private import gtk.TextMark;
 private import gtk.TextTag;
 private import gtk.TextTagTable;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /** */
@@ -717,9 +718,20 @@ public class SourceBuffer : TextBuffer
 		gtk_source_buffer_undo(gtkSourceBuffer);
 	}
 
-	int[string] connectedSignals;
+	protected class OnBracketMatchedDelegateWrapper
+	{
+		void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBracketMatchedDelegateWrapper[] onBracketMatchedListeners;
 
-	void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer)[] onBracketMatchedListeners;
 	/**
 	 * @iter is set to a valid iterator pointing to the matching bracket
 	 * if @state is %GTK_SOURCE_BRACKET_MATCH_FOUND. Otherwise @iter is
@@ -736,30 +748,57 @@ public class SourceBuffer : TextBuffer
 	 *
 	 * Since: 2.12
 	 */
-	void addOnBracketMatched(void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBracketMatched(void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "bracket-matched" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"bracket-matched",
-				cast(GCallback)&callBackBracketMatched,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["bracket-matched"] = 1;
-		}
-		onBracketMatchedListeners ~= dlg;
+		onBracketMatchedListeners ~= new OnBracketMatchedDelegateWrapper(dlg, 0, connectFlags);
+		onBracketMatchedListeners[onBracketMatchedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"bracket-matched",
+			cast(GCallback)&callBackBracketMatched,
+			cast(void*)onBracketMatchedListeners[onBracketMatchedListeners.length - 1],
+			cast(GClosureNotify)&callBackBracketMatchedDestroy,
+			connectFlags);
+		return onBracketMatchedListeners[onBracketMatchedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBracketMatched(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* iter, GtkSourceBracketMatchType state, SourceBuffer _sourcebuffer)
+	
+	extern(C) static void callBackBracketMatched(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* iter, GtkSourceBracketMatchType state,OnBracketMatchedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg; _sourcebuffer.onBracketMatchedListeners )
-		{
-			dlg(ObjectG.getDObject!(TextIter)(iter), state, _sourcebuffer);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), state, wrapper.outer);
+	}
+	
+	extern(C) static void callBackBracketMatchedDestroy(OnBracketMatchedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBracketMatched(wrapper);
 	}
 
-	void delegate(TextIter, TextIter, SourceBuffer)[] onHighlightUpdatedListeners;
+	protected void internalRemoveOnBracketMatched(OnBracketMatchedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBracketMatchedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBracketMatchedListeners[index] = null;
+				onBracketMatchedListeners = std.algorithm.remove(onBracketMatchedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnHighlightUpdatedDelegateWrapper
+	{
+		void delegate(TextIter, TextIter, SourceBuffer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextIter, TextIter, SourceBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnHighlightUpdatedDelegateWrapper[] onHighlightUpdatedListeners;
+
 	/**
 	 * The ::highlight-updated signal is emitted when the syntax
 	 * highlighting is updated in a certain region of the @buffer. This
@@ -770,57 +809,111 @@ public class SourceBuffer : TextBuffer
 	 *     start = the start of the updated region
 	 *     end = the end of the updated region
 	 */
-	void addOnHighlightUpdated(void delegate(TextIter, TextIter, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnHighlightUpdated(void delegate(TextIter, TextIter, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "highlight-updated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"highlight-updated",
-				cast(GCallback)&callBackHighlightUpdated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["highlight-updated"] = 1;
-		}
-		onHighlightUpdatedListeners ~= dlg;
+		onHighlightUpdatedListeners ~= new OnHighlightUpdatedDelegateWrapper(dlg, 0, connectFlags);
+		onHighlightUpdatedListeners[onHighlightUpdatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"highlight-updated",
+			cast(GCallback)&callBackHighlightUpdated,
+			cast(void*)onHighlightUpdatedListeners[onHighlightUpdatedListeners.length - 1],
+			cast(GClosureNotify)&callBackHighlightUpdatedDestroy,
+			connectFlags);
+		return onHighlightUpdatedListeners[onHighlightUpdatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* start, GtkTextIter* end, SourceBuffer _sourcebuffer)
+	
+	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* start, GtkTextIter* end,OnHighlightUpdatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg; _sourcebuffer.onHighlightUpdatedListeners )
-		{
-			dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), _sourcebuffer);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
+	}
+	
+	extern(C) static void callBackHighlightUpdatedDestroy(OnHighlightUpdatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnHighlightUpdated(wrapper);
 	}
 
-	void delegate(SourceBuffer)[] onRedoListeners;
+	protected void internalRemoveOnHighlightUpdated(OnHighlightUpdatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onHighlightUpdatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onHighlightUpdatedListeners[index] = null;
+				onHighlightUpdatedListeners = std.algorithm.remove(onHighlightUpdatedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnRedoDelegateWrapper
+	{
+		void delegate(SourceBuffer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRedoDelegateWrapper[] onRedoListeners;
+
 	/**
 	 * The ::redo signal is emitted to redo the last undo operation.
 	 */
-	void addOnRedo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRedo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "redo" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"redo",
-				cast(GCallback)&callBackRedo,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["redo"] = 1;
-		}
-		onRedoListeners ~= dlg;
+		onRedoListeners ~= new OnRedoDelegateWrapper(dlg, 0, connectFlags);
+		onRedoListeners[onRedoListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"redo",
+			cast(GCallback)&callBackRedo,
+			cast(void*)onRedoListeners[onRedoListeners.length - 1],
+			cast(GClosureNotify)&callBackRedoDestroy,
+			connectFlags);
+		return onRedoListeners[onRedoListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer _sourcebuffer)
+	
+	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct,OnRedoDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceBuffer) dlg; _sourcebuffer.onRedoListeners )
-		{
-			dlg(_sourcebuffer);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRedoDestroy(OnRedoDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRedo(wrapper);
 	}
 
-	void delegate(TextMark, SourceBuffer)[] onSourceMarkUpdatedListeners;
+	protected void internalRemoveOnRedo(OnRedoDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRedoListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRedoListeners[index] = null;
+				onRedoListeners = std.algorithm.remove(onRedoListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnSourceMarkUpdatedDelegateWrapper
+	{
+		void delegate(TextMark, SourceBuffer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(TextMark, SourceBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSourceMarkUpdatedDelegateWrapper[] onSourceMarkUpdatedListeners;
+
 	/**
 	 * The ::source-mark-updated signal is emitted each time
 	 * a mark is added to, moved or removed from the @buffer.
@@ -828,54 +921,95 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 *     mark = the #GtkSourceMark
 	 */
-	void addOnSourceMarkUpdated(void delegate(TextMark, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSourceMarkUpdated(void delegate(TextMark, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "source-mark-updated" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"source-mark-updated",
-				cast(GCallback)&callBackSourceMarkUpdated,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["source-mark-updated"] = 1;
-		}
-		onSourceMarkUpdatedListeners ~= dlg;
+		onSourceMarkUpdatedListeners ~= new OnSourceMarkUpdatedDelegateWrapper(dlg, 0, connectFlags);
+		onSourceMarkUpdatedListeners[onSourceMarkUpdatedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"source-mark-updated",
+			cast(GCallback)&callBackSourceMarkUpdated,
+			cast(void*)onSourceMarkUpdatedListeners[onSourceMarkUpdatedListeners.length - 1],
+			cast(GClosureNotify)&callBackSourceMarkUpdatedDestroy,
+			connectFlags);
+		return onSourceMarkUpdatedListeners[onSourceMarkUpdatedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextMark* mark, SourceBuffer _sourcebuffer)
+	
+	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextMark* mark,OnSourceMarkUpdatedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(TextMark, SourceBuffer) dlg; _sourcebuffer.onSourceMarkUpdatedListeners )
-		{
-			dlg(ObjectG.getDObject!(TextMark)(mark), _sourcebuffer);
-		}
+		wrapper.dlg(ObjectG.getDObject!(TextMark)(mark), wrapper.outer);
+	}
+	
+	extern(C) static void callBackSourceMarkUpdatedDestroy(OnSourceMarkUpdatedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSourceMarkUpdated(wrapper);
 	}
 
-	void delegate(SourceBuffer)[] onUndoListeners;
+	protected void internalRemoveOnSourceMarkUpdated(OnSourceMarkUpdatedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSourceMarkUpdatedListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSourceMarkUpdatedListeners[index] = null;
+				onSourceMarkUpdatedListeners = std.algorithm.remove(onSourceMarkUpdatedListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnUndoDelegateWrapper
+	{
+		void delegate(SourceBuffer) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(SourceBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnUndoDelegateWrapper[] onUndoListeners;
+
 	/**
 	 * The ::undo signal is emitted to undo the last user action which
 	 * modified the buffer.
 	 */
-	void addOnUndo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnUndo(void delegate(SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "undo" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"undo",
-				cast(GCallback)&callBackUndo,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["undo"] = 1;
-		}
-		onUndoListeners ~= dlg;
+		onUndoListeners ~= new OnUndoDelegateWrapper(dlg, 0, connectFlags);
+		onUndoListeners[onUndoListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"undo",
+			cast(GCallback)&callBackUndo,
+			cast(void*)onUndoListeners[onUndoListeners.length - 1],
+			cast(GClosureNotify)&callBackUndoDestroy,
+			connectFlags);
+		return onUndoListeners[onUndoListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, SourceBuffer _sourcebuffer)
+	
+	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct,OnUndoDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(SourceBuffer) dlg; _sourcebuffer.onUndoListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackUndoDestroy(OnUndoDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnUndo(wrapper);
+	}
+
+	protected void internalRemoveOnUndo(OnUndoDelegateWrapper source)
+	{
+		foreach(index, wrapper; onUndoListeners)
 		{
-			dlg(_sourcebuffer);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onUndoListeners[index] = null;
+				onUndoListeners = std.algorithm.remove(onUndoListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -33,6 +33,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -230,35 +231,60 @@ public class CheckMenuItem : MenuItem
 		gtk_check_menu_item_toggled(gtkCheckMenuItem);
 	}
 
-	int[string] connectedSignals;
+	protected class OnToggledDelegateWrapper
+	{
+		void delegate(CheckMenuItem) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(CheckMenuItem) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnToggledDelegateWrapper[] onToggledListeners;
 
-	void delegate(CheckMenuItem)[] onToggledListeners;
 	/**
 	 * This signal is emitted when the state of the check box is changed.
 	 *
 	 * A signal handler can use gtk_check_menu_item_get_active()
 	 * to discover the new state.
 	 */
-	void addOnToggled(void delegate(CheckMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnToggled(void delegate(CheckMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "toggled" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"toggled",
-				cast(GCallback)&callBackToggled,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["toggled"] = 1;
-		}
-		onToggledListeners ~= dlg;
+		onToggledListeners ~= new OnToggledDelegateWrapper(dlg, 0, connectFlags);
+		onToggledListeners[onToggledListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"toggled",
+			cast(GCallback)&callBackToggled,
+			cast(void*)onToggledListeners[onToggledListeners.length - 1],
+			cast(GClosureNotify)&callBackToggledDestroy,
+			connectFlags);
+		return onToggledListeners[onToggledListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem _checkmenuitem)
+	
+	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct,OnToggledDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(CheckMenuItem) dlg; _checkmenuitem.onToggledListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnToggled(wrapper);
+	}
+
+	protected void internalRemoveOnToggled(OnToggledDelegateWrapper source)
+	{
+		foreach(index, wrapper; onToggledListeners)
 		{
-			dlg(_checkmenuitem);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onToggledListeners[index] = null;
+				onToggledListeners = std.algorithm.remove(onToggledListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

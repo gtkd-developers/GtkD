@@ -35,6 +35,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -290,9 +291,20 @@ public class FontButton : Button, FontChooserIF
 		gtk_font_button_set_use_size(gtkFontButton, useSize);
 	}
 
-	int[string] connectedSignals;
+	protected class OnFontSetDelegateWrapper
+	{
+		void delegate(FontButton) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FontButton) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFontSetDelegateWrapper[] onFontSetListeners;
 
-	void delegate(FontButton)[] onFontSetListeners;
 	/**
 	 * The ::font-set signal is emitted when the user selects a font.
 	 * When handling this signal, use gtk_font_button_get_font_name()
@@ -304,26 +316,40 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "font-set" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"font-set",
-				cast(GCallback)&callBackFontSet,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["font-set"] = 1;
-		}
-		onFontSetListeners ~= dlg;
+		onFontSetListeners ~= new OnFontSetDelegateWrapper(dlg, 0, connectFlags);
+		onFontSetListeners[onFontSetListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"font-set",
+			cast(GCallback)&callBackFontSet,
+			cast(void*)onFontSetListeners[onFontSetListeners.length - 1],
+			cast(GClosureNotify)&callBackFontSetDestroy,
+			connectFlags);
+		return onFontSetListeners[onFontSetListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackFontSet(GtkFontButton* fontbuttonStruct, FontButton _fontbutton)
+	
+	extern(C) static void callBackFontSet(GtkFontButton* fontbuttonStruct,OnFontSetDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FontButton) dlg; _fontbutton.onFontSetListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackFontSetDestroy(OnFontSetDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFontSet(wrapper);
+	}
+
+	protected void internalRemoveOnFontSet(OnFontSetDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFontSetListeners)
 		{
-			dlg(_fontbutton);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFontSetListeners[index] = null;
+				onFontSetListeners = std.algorithm.remove(onFontSetListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

@@ -28,6 +28,7 @@ public  import gobject.Signals;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
 public  import gtkc.gdktypes;
+public  import std.algorithm;
 
 
 /**
@@ -44,311 +45,516 @@ public template WindowT(TStruct)
 	}
 
 
-	int[string] connectedSignals;
-
-	void delegate(WindowIF)[] _onActivateListeners;
-	@property void delegate(WindowIF)[] onActivateListeners()
+	protected class OnActivateDelegateWrapper
 	{
-		return _onActivateListeners;
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
 	}
+	protected OnActivateDelegateWrapper[] onActivateListeners;
+
 	/**
 	 * The signal #AtkWindow::activate is emitted when a window
 	 * becomes the active window of the application or session.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnActivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"activate",
-				cast(GCallback)&callBackActivate,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["activate"] = 1;
-		}
-		_onActivateListeners ~= dlg;
+		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
+		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"activate",
+			cast(GCallback)&callBackActivate,
+			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackActivateDestroy,
+			connectFlags);
+		return onActivateListeners[onActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackActivate(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackActivate(AtkWindow* windowStruct,OnActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onActivateListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnActivate(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onCreateListeners;
-	@property void delegate(WindowIF)[] onCreateListeners()
+	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
 	{
-		return _onCreateListeners;
+		foreach(index, wrapper; onActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onActivateListeners[index] = null;
+				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnCreateDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnCreateDelegateWrapper[] onCreateListeners;
+
 	/**
 	 * The signal #AtkWindow::create is emitted when a new window
 	 * is created.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnCreate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnCreate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "create" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"create",
-				cast(GCallback)&callBackCreate,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["create"] = 1;
-		}
-		_onCreateListeners ~= dlg;
+		onCreateListeners ~= new OnCreateDelegateWrapper(dlg, 0, connectFlags);
+		onCreateListeners[onCreateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"create",
+			cast(GCallback)&callBackCreate,
+			cast(void*)onCreateListeners[onCreateListeners.length - 1],
+			cast(GClosureNotify)&callBackCreateDestroy,
+			connectFlags);
+		return onCreateListeners[onCreateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackCreate(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackCreate(AtkWindow* windowStruct,OnCreateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onCreateListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackCreateDestroy(OnCreateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnCreate(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onDeactivateListeners;
-	@property void delegate(WindowIF)[] onDeactivateListeners()
+	protected void internalRemoveOnCreate(OnCreateDelegateWrapper source)
 	{
-		return _onDeactivateListeners;
+		foreach(index, wrapper; onCreateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onCreateListeners[index] = null;
+				onCreateListeners = std.algorithm.remove(onCreateListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnDeactivateDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDeactivateDelegateWrapper[] onDeactivateListeners;
+
 	/**
 	 * The signal #AtkWindow::deactivate is emitted when a window is
 	 * no longer the active window of the application or session.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnDeactivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDeactivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "deactivate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"deactivate",
-				cast(GCallback)&callBackDeactivate,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["deactivate"] = 1;
-		}
-		_onDeactivateListeners ~= dlg;
+		onDeactivateListeners ~= new OnDeactivateDelegateWrapper(dlg, 0, connectFlags);
+		onDeactivateListeners[onDeactivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"deactivate",
+			cast(GCallback)&callBackDeactivate,
+			cast(void*)onDeactivateListeners[onDeactivateListeners.length - 1],
+			cast(GClosureNotify)&callBackDeactivateDestroy,
+			connectFlags);
+		return onDeactivateListeners[onDeactivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDeactivate(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackDeactivate(AtkWindow* windowStruct,OnDeactivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onDeactivateListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDeactivateDestroy(OnDeactivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDeactivate(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onDestroyListeners;
-	@property void delegate(WindowIF)[] onDestroyListeners()
+	protected void internalRemoveOnDeactivate(OnDeactivateDelegateWrapper source)
 	{
-		return _onDestroyListeners;
+		foreach(index, wrapper; onDeactivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDeactivateListeners[index] = null;
+				onDeactivateListeners = std.algorithm.remove(onDeactivateListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnDestroyDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDestroyDelegateWrapper[] onDestroyListeners;
+
 	/**
 	 * The signal #AtkWindow::destroy is emitted when a window is
 	 * destroyed.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnDestroy(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDestroy(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "destroy" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"destroy",
-				cast(GCallback)&callBackDestroy,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["destroy"] = 1;
-		}
-		_onDestroyListeners ~= dlg;
+		onDestroyListeners ~= new OnDestroyDelegateWrapper(dlg, 0, connectFlags);
+		onDestroyListeners[onDestroyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"destroy",
+			cast(GCallback)&callBackDestroy,
+			cast(void*)onDestroyListeners[onDestroyListeners.length - 1],
+			cast(GClosureNotify)&callBackDestroyDestroy,
+			connectFlags);
+		return onDestroyListeners[onDestroyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDestroy(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackDestroy(AtkWindow* windowStruct,OnDestroyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onDestroyListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackDestroyDestroy(OnDestroyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDestroy(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onMaximizeListeners;
-	@property void delegate(WindowIF)[] onMaximizeListeners()
+	protected void internalRemoveOnDestroy(OnDestroyDelegateWrapper source)
 	{
-		return _onMaximizeListeners;
+		foreach(index, wrapper; onDestroyListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDestroyListeners[index] = null;
+				onDestroyListeners = std.algorithm.remove(onDestroyListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnMaximizeDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMaximizeDelegateWrapper[] onMaximizeListeners;
+
 	/**
 	 * The signal #AtkWindow::maximize is emitted when a window
 	 * is maximized.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnMaximize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMaximize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "maximize" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"maximize",
-				cast(GCallback)&callBackMaximize,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["maximize"] = 1;
-		}
-		_onMaximizeListeners ~= dlg;
+		onMaximizeListeners ~= new OnMaximizeDelegateWrapper(dlg, 0, connectFlags);
+		onMaximizeListeners[onMaximizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"maximize",
+			cast(GCallback)&callBackMaximize,
+			cast(void*)onMaximizeListeners[onMaximizeListeners.length - 1],
+			cast(GClosureNotify)&callBackMaximizeDestroy,
+			connectFlags);
+		return onMaximizeListeners[onMaximizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMaximize(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackMaximize(AtkWindow* windowStruct,OnMaximizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onMaximizeListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackMaximizeDestroy(OnMaximizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMaximize(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onMinimizeListeners;
-	@property void delegate(WindowIF)[] onMinimizeListeners()
+	protected void internalRemoveOnMaximize(OnMaximizeDelegateWrapper source)
 	{
-		return _onMinimizeListeners;
+		foreach(index, wrapper; onMaximizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMaximizeListeners[index] = null;
+				onMaximizeListeners = std.algorithm.remove(onMaximizeListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnMinimizeDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMinimizeDelegateWrapper[] onMinimizeListeners;
+
 	/**
 	 * The signal #AtkWindow::minimize is emitted when a window
 	 * is minimized.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnMinimize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMinimize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "minimize" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"minimize",
-				cast(GCallback)&callBackMinimize,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["minimize"] = 1;
-		}
-		_onMinimizeListeners ~= dlg;
+		onMinimizeListeners ~= new OnMinimizeDelegateWrapper(dlg, 0, connectFlags);
+		onMinimizeListeners[onMinimizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"minimize",
+			cast(GCallback)&callBackMinimize,
+			cast(void*)onMinimizeListeners[onMinimizeListeners.length - 1],
+			cast(GClosureNotify)&callBackMinimizeDestroy,
+			connectFlags);
+		return onMinimizeListeners[onMinimizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMinimize(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackMinimize(AtkWindow* windowStruct,OnMinimizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onMinimizeListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackMinimizeDestroy(OnMinimizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMinimize(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onMoveListeners;
-	@property void delegate(WindowIF)[] onMoveListeners()
+	protected void internalRemoveOnMinimize(OnMinimizeDelegateWrapper source)
 	{
-		return _onMoveListeners;
+		foreach(index, wrapper; onMinimizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMinimizeListeners[index] = null;
+				onMinimizeListeners = std.algorithm.remove(onMinimizeListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnMoveDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnMoveDelegateWrapper[] onMoveListeners;
+
 	/**
 	 * The signal #AtkWindow::move is emitted when a window
 	 * is moved.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnMove(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMove(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "move" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"move",
-				cast(GCallback)&callBackMove,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["move"] = 1;
-		}
-		_onMoveListeners ~= dlg;
+		onMoveListeners ~= new OnMoveDelegateWrapper(dlg, 0, connectFlags);
+		onMoveListeners[onMoveListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"move",
+			cast(GCallback)&callBackMove,
+			cast(void*)onMoveListeners[onMoveListeners.length - 1],
+			cast(GClosureNotify)&callBackMoveDestroy,
+			connectFlags);
+		return onMoveListeners[onMoveListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackMove(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackMove(AtkWindow* windowStruct,OnMoveDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onMoveListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackMoveDestroy(OnMoveDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnMove(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onResizeListeners;
-	@property void delegate(WindowIF)[] onResizeListeners()
+	protected void internalRemoveOnMove(OnMoveDelegateWrapper source)
 	{
-		return _onResizeListeners;
+		foreach(index, wrapper; onMoveListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onMoveListeners[index] = null;
+				onMoveListeners = std.algorithm.remove(onMoveListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnResizeDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnResizeDelegateWrapper[] onResizeListeners;
+
 	/**
 	 * The signal #AtkWindow::resize is emitted when a window
 	 * is resized.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnResize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnResize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "resize" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"resize",
-				cast(GCallback)&callBackResize,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["resize"] = 1;
-		}
-		_onResizeListeners ~= dlg;
+		onResizeListeners ~= new OnResizeDelegateWrapper(dlg, 0, connectFlags);
+		onResizeListeners[onResizeListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"resize",
+			cast(GCallback)&callBackResize,
+			cast(void*)onResizeListeners[onResizeListeners.length - 1],
+			cast(GClosureNotify)&callBackResizeDestroy,
+			connectFlags);
+		return onResizeListeners[onResizeListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackResize(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackResize(AtkWindow* windowStruct,OnResizeDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onResizeListeners )
-		{
-			dlg(_window);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackResizeDestroy(OnResizeDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnResize(wrapper);
 	}
 
-	void delegate(WindowIF)[] _onRestoreListeners;
-	@property void delegate(WindowIF)[] onRestoreListeners()
+	protected void internalRemoveOnResize(OnResizeDelegateWrapper source)
 	{
-		return _onRestoreListeners;
+		foreach(index, wrapper; onResizeListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onResizeListeners[index] = null;
+				onResizeListeners = std.algorithm.remove(onResizeListeners, index);
+				break;
+			}
+		}
 	}
+	
+
+	protected class OnRestoreDelegateWrapper
+	{
+		void delegate(WindowIF) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(WindowIF) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnRestoreDelegateWrapper[] onRestoreListeners;
+
 	/**
 	 * The signal #AtkWindow::restore is emitted when a window
 	 * is restored.
 	 *
 	 * Since: 2.2
 	 */
-	void addOnRestore(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnRestore(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "restore" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"restore",
-				cast(GCallback)&callBackRestore,
-				cast(void*)cast(WindowIF)this,
-				null,
-				connectFlags);
-			connectedSignals["restore"] = 1;
-		}
-		_onRestoreListeners ~= dlg;
+		onRestoreListeners ~= new OnRestoreDelegateWrapper(dlg, 0, connectFlags);
+		onRestoreListeners[onRestoreListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"restore",
+			cast(GCallback)&callBackRestore,
+			cast(void*)onRestoreListeners[onRestoreListeners.length - 1],
+			cast(GClosureNotify)&callBackRestoreDestroy,
+			connectFlags);
+		return onRestoreListeners[onRestoreListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackRestore(AtkWindow* windowStruct, WindowIF _window)
+	
+	extern(C) static void callBackRestore(AtkWindow* windowStruct,OnRestoreDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(WindowIF) dlg; _window.onRestoreListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackRestoreDestroy(OnRestoreDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnRestore(wrapper);
+	}
+
+	protected void internalRemoveOnRestore(OnRestoreDelegateWrapper source)
+	{
+		foreach(index, wrapper; onRestoreListeners)
 		{
-			dlg(_window);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onRestoreListeners[index] = null;
+				onRestoreListeners = std.algorithm.remove(onRestoreListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

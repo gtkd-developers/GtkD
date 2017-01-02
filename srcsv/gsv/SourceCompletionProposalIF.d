@@ -33,6 +33,7 @@ private import gobject.Signals;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /** */
@@ -139,11 +140,11 @@ public interface SourceCompletionProposalIF{
 	 * Return: The hash value of @proposal.
 	 */
 	public uint hash();
-	@property void delegate(SourceCompletionProposalIF)[] onChangedListeners();
 	/**
 	 * Emitted when the proposal has changed. The completion popup
 	 * will react to this by updating the shown information.
 	 */
-	void addOnChanged(void delegate(SourceCompletionProposalIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChanged(void delegate(SourceCompletionProposalIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

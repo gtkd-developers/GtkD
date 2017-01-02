@@ -30,6 +30,7 @@ private import gstreamer.ObjectGst;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -732,9 +733,20 @@ public class Clock : ObjectGst
 		return gst_clock_wait_for_sync(gstClock, timeout) != 0;
 	}
 
-	int[string] connectedSignals;
+	protected class OnSyncedDelegateWrapper
+	{
+		void delegate(bool, Clock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(bool, Clock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnSyncedDelegateWrapper[] onSyncedListeners;
 
-	void delegate(bool, Clock)[] onSyncedListeners;
 	/**
 	 * Signaled on clocks with GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once
 	 * the clock is synchronized, or when it completely lost synchronization.
@@ -748,26 +760,40 @@ public class Clock : ObjectGst
 	 *
 	 * Since: 1.6
 	 */
-	void addOnSynced(void delegate(bool, Clock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnSynced(void delegate(bool, Clock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "synced" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"synced",
-				cast(GCallback)&callBackSynced,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["synced"] = 1;
-		}
-		onSyncedListeners ~= dlg;
+		onSyncedListeners ~= new OnSyncedDelegateWrapper(dlg, 0, connectFlags);
+		onSyncedListeners[onSyncedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"synced",
+			cast(GCallback)&callBackSynced,
+			cast(void*)onSyncedListeners[onSyncedListeners.length - 1],
+			cast(GClosureNotify)&callBackSyncedDestroy,
+			connectFlags);
+		return onSyncedListeners[onSyncedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced, Clock _clock)
+	
+	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced,OnSyncedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(bool, Clock) dlg; _clock.onSyncedListeners )
+		wrapper.dlg(synced, wrapper.outer);
+	}
+	
+	extern(C) static void callBackSyncedDestroy(OnSyncedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnSynced(wrapper);
+	}
+
+	protected void internalRemoveOnSynced(OnSyncedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onSyncedListeners)
 		{
-			dlg(synced, _clock);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onSyncedListeners[index] = null;
+				onSyncedListeners = std.algorithm.remove(onSyncedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

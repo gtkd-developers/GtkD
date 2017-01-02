@@ -37,6 +37,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -523,9 +524,20 @@ public class ActionGroup : ObjectG, BuildableIF
 		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(str)));
 	}
 
-	int[string] connectedSignals;
+	protected class OnConnectProxyDelegateWrapper
+	{
+		void delegate(Action, Widget, ActionGroup) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Action, Widget, ActionGroup) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnConnectProxyDelegateWrapper[] onConnectProxyListeners;
 
-	void delegate(Action, Widget, ActionGroup)[] onConnectProxyListeners;
 	/**
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
 	 * an action in the group. Note that the proxy may have been connected
@@ -545,30 +557,57 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnConnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnConnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "connect-proxy" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"connect-proxy",
-				cast(GCallback)&callBackConnectProxy,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["connect-proxy"] = 1;
-		}
-		onConnectProxyListeners ~= dlg;
+		onConnectProxyListeners ~= new OnConnectProxyDelegateWrapper(dlg, 0, connectFlags);
+		onConnectProxyListeners[onConnectProxyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"connect-proxy",
+			cast(GCallback)&callBackConnectProxy,
+			cast(void*)onConnectProxyListeners[onConnectProxyListeners.length - 1],
+			cast(GClosureNotify)&callBackConnectProxyDestroy,
+			connectFlags);
+		return onConnectProxyListeners[onConnectProxyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackConnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup _actiongroup)
+	
+	extern(C) static void callBackConnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy,OnConnectProxyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Action, Widget, ActionGroup) dlg; _actiongroup.onConnectProxyListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _actiongroup);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
+	}
+	
+	extern(C) static void callBackConnectProxyDestroy(OnConnectProxyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnConnectProxy(wrapper);
 	}
 
-	void delegate(Action, Widget, ActionGroup)[] onDisconnectProxyListeners;
+	protected void internalRemoveOnConnectProxy(OnConnectProxyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onConnectProxyListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onConnectProxyListeners[index] = null;
+				onConnectProxyListeners = std.algorithm.remove(onConnectProxyListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnDisconnectProxyDelegateWrapper
+	{
+		void delegate(Action, Widget, ActionGroup) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Action, Widget, ActionGroup) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnDisconnectProxyDelegateWrapper[] onDisconnectProxyListeners;
+
 	/**
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
 	 * from an action in the group.
@@ -583,30 +622,57 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnDisconnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnDisconnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "disconnect-proxy" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"disconnect-proxy",
-				cast(GCallback)&callBackDisconnectProxy,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["disconnect-proxy"] = 1;
-		}
-		onDisconnectProxyListeners ~= dlg;
+		onDisconnectProxyListeners ~= new OnDisconnectProxyDelegateWrapper(dlg, 0, connectFlags);
+		onDisconnectProxyListeners[onDisconnectProxyListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"disconnect-proxy",
+			cast(GCallback)&callBackDisconnectProxy,
+			cast(void*)onDisconnectProxyListeners[onDisconnectProxyListeners.length - 1],
+			cast(GClosureNotify)&callBackDisconnectProxyDestroy,
+			connectFlags);
+		return onDisconnectProxyListeners[onDisconnectProxyListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup _actiongroup)
+	
+	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy,OnDisconnectProxyDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Action, Widget, ActionGroup) dlg; _actiongroup.onDisconnectProxyListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), _actiongroup);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
+	}
+	
+	extern(C) static void callBackDisconnectProxyDestroy(OnDisconnectProxyDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnDisconnectProxy(wrapper);
 	}
 
-	void delegate(Action, ActionGroup)[] onPostActivateListeners;
+	protected void internalRemoveOnDisconnectProxy(OnDisconnectProxyDelegateWrapper source)
+	{
+		foreach(index, wrapper; onDisconnectProxyListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onDisconnectProxyListeners[index] = null;
+				onDisconnectProxyListeners = std.algorithm.remove(onDisconnectProxyListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPostActivateDelegateWrapper
+	{
+		void delegate(Action, ActionGroup) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Action, ActionGroup) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPostActivateDelegateWrapper[] onPostActivateListeners;
+
 	/**
 	 * The ::post-activate signal is emitted just after the @action in the
 	 * @action_group is activated
@@ -619,30 +685,57 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnPostActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPostActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "post-activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"post-activate",
-				cast(GCallback)&callBackPostActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["post-activate"] = 1;
-		}
-		onPostActivateListeners ~= dlg;
+		onPostActivateListeners ~= new OnPostActivateDelegateWrapper(dlg, 0, connectFlags);
+		onPostActivateListeners[onPostActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"post-activate",
+			cast(GCallback)&callBackPostActivate,
+			cast(void*)onPostActivateListeners[onPostActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackPostActivateDestroy,
+			connectFlags);
+		return onPostActivateListeners[onPostActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPostActivate(GtkActionGroup* actiongroupStruct, GtkAction* action, ActionGroup _actiongroup)
+	
+	extern(C) static void callBackPostActivate(GtkActionGroup* actiongroupStruct, GtkAction* action,OnPostActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Action, ActionGroup) dlg; _actiongroup.onPostActivateListeners )
-		{
-			dlg(ObjectG.getDObject!(Action)(action), _actiongroup);
-		}
+		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPostActivateDestroy(OnPostActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPostActivate(wrapper);
 	}
 
-	void delegate(Action, ActionGroup)[] onPreActivateListeners;
+	protected void internalRemoveOnPostActivate(OnPostActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPostActivateListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPostActivateListeners[index] = null;
+				onPostActivateListeners = std.algorithm.remove(onPostActivateListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPreActivateDelegateWrapper
+	{
+		void delegate(Action, ActionGroup) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(Action, ActionGroup) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPreActivateDelegateWrapper[] onPreActivateListeners;
+
 	/**
 	 * The ::pre-activate signal is emitted just before the @action in the
 	 * @action_group is activated
@@ -655,26 +748,40 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Since: 2.4
 	 */
-	void addOnPreActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPreActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "pre-activate" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"pre-activate",
-				cast(GCallback)&callBackPreActivate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["pre-activate"] = 1;
-		}
-		onPreActivateListeners ~= dlg;
+		onPreActivateListeners ~= new OnPreActivateDelegateWrapper(dlg, 0, connectFlags);
+		onPreActivateListeners[onPreActivateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"pre-activate",
+			cast(GCallback)&callBackPreActivate,
+			cast(void*)onPreActivateListeners[onPreActivateListeners.length - 1],
+			cast(GClosureNotify)&callBackPreActivateDestroy,
+			connectFlags);
+		return onPreActivateListeners[onPreActivateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPreActivate(GtkActionGroup* actiongroupStruct, GtkAction* action, ActionGroup _actiongroup)
+	
+	extern(C) static void callBackPreActivate(GtkActionGroup* actiongroupStruct, GtkAction* action,OnPreActivateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(Action, ActionGroup) dlg; _actiongroup.onPreActivateListeners )
+		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
+	}
+	
+	extern(C) static void callBackPreActivateDestroy(OnPreActivateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPreActivate(wrapper);
+	}
+
+	protected void internalRemoveOnPreActivate(OnPreActivateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPreActivateListeners)
 		{
-			dlg(ObjectG.getDObject!(Action)(action), _actiongroup);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPreActivateListeners[index] = null;
+				onPreActivateListeners = std.algorithm.remove(onPreActivateListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

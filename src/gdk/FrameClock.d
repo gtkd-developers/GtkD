@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import std.algorithm;
 
 
 /**
@@ -277,124 +278,243 @@ public class FrameClock : ObjectG
 		gdk_frame_clock_request_phase(gdkFrameClock, phase);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAfterPaintDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAfterPaintDelegateWrapper[] onAfterPaintListeners;
 
-	void delegate(FrameClock)[] onAfterPaintListeners;
 	/**
 	 * This signal ends processing of the frame. Applications
 	 * should generally not handle this signal.
 	 */
-	void addOnAfterPaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAfterPaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "after-paint" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"after-paint",
-				cast(GCallback)&callBackAfterPaint,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["after-paint"] = 1;
-		}
-		onAfterPaintListeners ~= dlg;
+		onAfterPaintListeners ~= new OnAfterPaintDelegateWrapper(dlg, 0, connectFlags);
+		onAfterPaintListeners[onAfterPaintListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"after-paint",
+			cast(GCallback)&callBackAfterPaint,
+			cast(void*)onAfterPaintListeners[onAfterPaintListeners.length - 1],
+			cast(GClosureNotify)&callBackAfterPaintDestroy,
+			connectFlags);
+		return onAfterPaintListeners[onAfterPaintListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAfterPaint(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackAfterPaint(GdkFrameClock* frameclockStruct,OnAfterPaintDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onAfterPaintListeners )
-		{
-			dlg(_frameclock);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackAfterPaintDestroy(OnAfterPaintDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAfterPaint(wrapper);
 	}
 
-	void delegate(FrameClock)[] onBeforePaintListeners;
+	protected void internalRemoveOnAfterPaint(OnAfterPaintDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAfterPaintListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAfterPaintListeners[index] = null;
+				onAfterPaintListeners = std.algorithm.remove(onAfterPaintListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnBeforePaintDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnBeforePaintDelegateWrapper[] onBeforePaintListeners;
+
 	/**
 	 * This signal begins processing of the frame. Applications
 	 * should generally not handle this signal.
 	 */
-	void addOnBeforePaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBeforePaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "before-paint" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"before-paint",
-				cast(GCallback)&callBackBeforePaint,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["before-paint"] = 1;
-		}
-		onBeforePaintListeners ~= dlg;
+		onBeforePaintListeners ~= new OnBeforePaintDelegateWrapper(dlg, 0, connectFlags);
+		onBeforePaintListeners[onBeforePaintListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"before-paint",
+			cast(GCallback)&callBackBeforePaint,
+			cast(void*)onBeforePaintListeners[onBeforePaintListeners.length - 1],
+			cast(GClosureNotify)&callBackBeforePaintDestroy,
+			connectFlags);
+		return onBeforePaintListeners[onBeforePaintListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackBeforePaint(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackBeforePaint(GdkFrameClock* frameclockStruct,OnBeforePaintDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onBeforePaintListeners )
-		{
-			dlg(_frameclock);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackBeforePaintDestroy(OnBeforePaintDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnBeforePaint(wrapper);
 	}
 
-	void delegate(FrameClock)[] onFlushEventsListeners;
+	protected void internalRemoveOnBeforePaint(OnBeforePaintDelegateWrapper source)
+	{
+		foreach(index, wrapper; onBeforePaintListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onBeforePaintListeners[index] = null;
+				onBeforePaintListeners = std.algorithm.remove(onBeforePaintListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnFlushEventsDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnFlushEventsDelegateWrapper[] onFlushEventsListeners;
+
 	/**
 	 * This signal is used to flush pending motion events that
 	 * are being batched up and compressed together. Applications
 	 * should not handle this signal.
 	 */
-	void addOnFlushEvents(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnFlushEvents(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "flush-events" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"flush-events",
-				cast(GCallback)&callBackFlushEvents,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["flush-events"] = 1;
-		}
-		onFlushEventsListeners ~= dlg;
+		onFlushEventsListeners ~= new OnFlushEventsDelegateWrapper(dlg, 0, connectFlags);
+		onFlushEventsListeners[onFlushEventsListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"flush-events",
+			cast(GCallback)&callBackFlushEvents,
+			cast(void*)onFlushEventsListeners[onFlushEventsListeners.length - 1],
+			cast(GClosureNotify)&callBackFlushEventsDestroy,
+			connectFlags);
+		return onFlushEventsListeners[onFlushEventsListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackFlushEvents(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackFlushEvents(GdkFrameClock* frameclockStruct,OnFlushEventsDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onFlushEventsListeners )
-		{
-			dlg(_frameclock);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackFlushEventsDestroy(OnFlushEventsDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnFlushEvents(wrapper);
 	}
 
-	void delegate(FrameClock)[] onLayoutListeners;
+	protected void internalRemoveOnFlushEvents(OnFlushEventsDelegateWrapper source)
+	{
+		foreach(index, wrapper; onFlushEventsListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onFlushEventsListeners[index] = null;
+				onFlushEventsListeners = std.algorithm.remove(onFlushEventsListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnLayoutDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnLayoutDelegateWrapper[] onLayoutListeners;
+
 	/**
 	 * This signal is emitted as the second step of toolkit and
 	 * application processing of the frame. Any work to update
 	 * sizes and positions of application elements should be
 	 * performed. GTK+ normally handles this internally.
 	 */
-	void addOnLayout(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnLayout(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "layout" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"layout",
-				cast(GCallback)&callBackLayout,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["layout"] = 1;
-		}
-		onLayoutListeners ~= dlg;
+		onLayoutListeners ~= new OnLayoutDelegateWrapper(dlg, 0, connectFlags);
+		onLayoutListeners[onLayoutListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"layout",
+			cast(GCallback)&callBackLayout,
+			cast(void*)onLayoutListeners[onLayoutListeners.length - 1],
+			cast(GClosureNotify)&callBackLayoutDestroy,
+			connectFlags);
+		return onLayoutListeners[onLayoutListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackLayout(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackLayout(GdkFrameClock* frameclockStruct,OnLayoutDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onLayoutListeners )
-		{
-			dlg(_frameclock);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackLayoutDestroy(OnLayoutDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnLayout(wrapper);
 	}
 
-	void delegate(FrameClock)[] onPaintListeners;
+	protected void internalRemoveOnLayout(OnLayoutDelegateWrapper source)
+	{
+		foreach(index, wrapper; onLayoutListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onLayoutListeners[index] = null;
+				onLayoutListeners = std.algorithm.remove(onLayoutListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnPaintDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnPaintDelegateWrapper[] onPaintListeners;
+
 	/**
 	 * This signal is emitted as the third step of toolkit and
 	 * application processing of the frame. The frame is
@@ -402,59 +522,113 @@ public class FrameClock : ObjectG
 	 * produces expose events, which are turned into GTK+
 	 * #GtkWidget::draw signals.
 	 */
-	void addOnPaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnPaint(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "paint" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"paint",
-				cast(GCallback)&callBackPaint,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["paint"] = 1;
-		}
-		onPaintListeners ~= dlg;
+		onPaintListeners ~= new OnPaintDelegateWrapper(dlg, 0, connectFlags);
+		onPaintListeners[onPaintListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"paint",
+			cast(GCallback)&callBackPaint,
+			cast(void*)onPaintListeners[onPaintListeners.length - 1],
+			cast(GClosureNotify)&callBackPaintDestroy,
+			connectFlags);
+		return onPaintListeners[onPaintListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackPaint(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackPaint(GdkFrameClock* frameclockStruct,OnPaintDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onPaintListeners )
-		{
-			dlg(_frameclock);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackPaintDestroy(OnPaintDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnPaint(wrapper);
 	}
 
-	void delegate(FrameClock)[] onResumeEventsListeners;
+	protected void internalRemoveOnPaint(OnPaintDelegateWrapper source)
+	{
+		foreach(index, wrapper; onPaintListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onPaintListeners[index] = null;
+				onPaintListeners = std.algorithm.remove(onPaintListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnResumeEventsDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnResumeEventsDelegateWrapper[] onResumeEventsListeners;
+
 	/**
 	 * This signal is emitted after processing of the frame is
 	 * finished, and is handled internally by GTK+ to resume normal
 	 * event processing. Applications should not handle this signal.
 	 */
-	void addOnResumeEvents(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnResumeEvents(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "resume-events" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"resume-events",
-				cast(GCallback)&callBackResumeEvents,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["resume-events"] = 1;
-		}
-		onResumeEventsListeners ~= dlg;
+		onResumeEventsListeners ~= new OnResumeEventsDelegateWrapper(dlg, 0, connectFlags);
+		onResumeEventsListeners[onResumeEventsListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"resume-events",
+			cast(GCallback)&callBackResumeEvents,
+			cast(void*)onResumeEventsListeners[onResumeEventsListeners.length - 1],
+			cast(GClosureNotify)&callBackResumeEventsDestroy,
+			connectFlags);
+		return onResumeEventsListeners[onResumeEventsListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackResumeEvents(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackResumeEvents(GdkFrameClock* frameclockStruct,OnResumeEventsDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onResumeEventsListeners )
-		{
-			dlg(_frameclock);
-		}
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackResumeEventsDestroy(OnResumeEventsDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnResumeEvents(wrapper);
 	}
 
-	void delegate(FrameClock)[] onUpdateListeners;
+	protected void internalRemoveOnResumeEvents(OnResumeEventsDelegateWrapper source)
+	{
+		foreach(index, wrapper; onResumeEventsListeners)
+		{
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onResumeEventsListeners[index] = null;
+				onResumeEventsListeners = std.algorithm.remove(onResumeEventsListeners, index);
+				break;
+			}
+		}
+	}
+	
+
+	protected class OnUpdateDelegateWrapper
+	{
+		void delegate(FrameClock) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FrameClock) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnUpdateDelegateWrapper[] onUpdateListeners;
+
 	/**
 	 * This signal is emitted as the first step of toolkit and
 	 * application processing of the frame. Animations should
@@ -463,26 +637,40 @@ public class FrameClock : ObjectG
 	 * use gtk_widget_add_tick_callback() as a more convenient
 	 * interface.
 	 */
-	void addOnUpdate(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnUpdate(void delegate(FrameClock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "update" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"update",
-				cast(GCallback)&callBackUpdate,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["update"] = 1;
-		}
-		onUpdateListeners ~= dlg;
+		onUpdateListeners ~= new OnUpdateDelegateWrapper(dlg, 0, connectFlags);
+		onUpdateListeners[onUpdateListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"update",
+			cast(GCallback)&callBackUpdate,
+			cast(void*)onUpdateListeners[onUpdateListeners.length - 1],
+			cast(GClosureNotify)&callBackUpdateDestroy,
+			connectFlags);
+		return onUpdateListeners[onUpdateListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackUpdate(GdkFrameClock* frameclockStruct, FrameClock _frameclock)
+	
+	extern(C) static void callBackUpdate(GdkFrameClock* frameclockStruct,OnUpdateDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FrameClock) dlg; _frameclock.onUpdateListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackUpdateDestroy(OnUpdateDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnUpdate(wrapper);
+	}
+
+	protected void internalRemoveOnUpdate(OnUpdateDelegateWrapper source)
+	{
+		foreach(index, wrapper; onUpdateListeners)
 		{
-			dlg(_frameclock);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onUpdateListeners[index] = null;
+				onUpdateListeners = std.algorithm.remove(onUpdateListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

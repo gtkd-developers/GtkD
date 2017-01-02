@@ -30,6 +30,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -117,7 +118,6 @@ public interface ColorChooserIF{
 	 * Since: 3.4
 	 */
 	public void setUseAlpha(bool useAlpha);
-	@property void delegate(RGBA, ColorChooserIF)[] onColorActivatedListeners();
 	/**
 	 * Emitted when a color is activated from the color chooser.
 	 * This usually happens when the user clicks a color swatch,
@@ -129,6 +129,7 @@ public interface ColorChooserIF{
 	 *
 	 * Since: 3.4
 	 */
-	void addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

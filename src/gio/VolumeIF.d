@@ -43,6 +43,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -335,18 +336,18 @@ public interface VolumeIF{
 	 * Return: %TRUE if the volume should be automatically mounted
 	 */
 	public bool shouldAutomount();
-	@property void delegate(VolumeIF)[] onChangedListeners();
 	/**
 	 * Emitted when the volume has been changed.
 	 */
-	void addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
-	@property void delegate(VolumeIF)[] onRemovedListeners();
 	/**
 	 * This signal is emitted when the #GVolume have been removed. If
 	 * the recipient is holding references to the object they should
 	 * release them so the object can be finalized.
 	 */
-	void addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	;
 
 }

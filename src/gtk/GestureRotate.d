@@ -32,6 +32,7 @@ private import gtk.Widget;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import std.algorithm;
 
 
 /**
@@ -117,9 +118,20 @@ public class GestureRotate : Gesture
 		return gtk_gesture_rotate_get_angle_delta(gtkGestureRotate);
 	}
 
-	int[string] connectedSignals;
+	protected class OnAngleChangedDelegateWrapper
+	{
+		void delegate(double, double, GestureRotate) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(double, double, GestureRotate) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnAngleChangedDelegateWrapper[] onAngleChangedListeners;
 
-	void delegate(double, double, GestureRotate)[] onAngleChangedListeners;
 	/**
 	 * This signal is emitted when the angle between both tracked points
 	 * changes.
@@ -130,26 +142,40 @@ public class GestureRotate : Gesture
 	 *
 	 * Since: 3.14
 	 */
-	void addOnAngleChanged(void delegate(double, double, GestureRotate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnAngleChanged(void delegate(double, double, GestureRotate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "angle-changed" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"angle-changed",
-				cast(GCallback)&callBackAngleChanged,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["angle-changed"] = 1;
-		}
-		onAngleChangedListeners ~= dlg;
+		onAngleChangedListeners ~= new OnAngleChangedDelegateWrapper(dlg, 0, connectFlags);
+		onAngleChangedListeners[onAngleChangedListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"angle-changed",
+			cast(GCallback)&callBackAngleChanged,
+			cast(void*)onAngleChangedListeners[onAngleChangedListeners.length - 1],
+			cast(GClosureNotify)&callBackAngleChangedDestroy,
+			connectFlags);
+		return onAngleChangedListeners[onAngleChangedListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackAngleChanged(GtkGestureRotate* gesturerotateStruct, double angle, double angleDelta, GestureRotate _gesturerotate)
+	
+	extern(C) static void callBackAngleChanged(GtkGestureRotate* gesturerotateStruct, double angle, double angleDelta,OnAngleChangedDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(double, double, GestureRotate) dlg; _gesturerotate.onAngleChangedListeners )
+		wrapper.dlg(angle, angleDelta, wrapper.outer);
+	}
+	
+	extern(C) static void callBackAngleChangedDestroy(OnAngleChangedDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnAngleChanged(wrapper);
+	}
+
+	protected void internalRemoveOnAngleChanged(OnAngleChangedDelegateWrapper source)
+	{
+		foreach(index, wrapper; onAngleChangedListeners)
 		{
-			dlg(angle, angleDelta, _gesturerotate);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onAngleChangedListeners[index] = null;
+				onAngleChangedListeners = std.algorithm.remove(onAngleChangedListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

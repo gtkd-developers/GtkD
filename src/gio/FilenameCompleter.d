@@ -31,6 +31,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import std.algorithm;
 
 
 /**
@@ -143,32 +144,57 @@ public class FilenameCompleter : ObjectG
 		g_filename_completer_set_dirs_only(gFilenameCompleter, dirsOnly);
 	}
 
-	int[string] connectedSignals;
+	protected class OnGotCompletionDataDelegateWrapper
+	{
+		void delegate(FilenameCompleter) dlg;
+		gulong handlerId;
+		ConnectFlags flags;
+		this(void delegate(FilenameCompleter) dlg, gulong handlerId, ConnectFlags flags)
+		{
+			this.dlg = dlg;
+			this.handlerId = handlerId;
+			this.flags = flags;
+		}
+	}
+	protected OnGotCompletionDataDelegateWrapper[] onGotCompletionDataListeners;
 
-	void delegate(FilenameCompleter)[] onGotCompletionDataListeners;
 	/**
 	 * Emitted when the file name completion information comes available.
 	 */
-	void addOnGotCompletionData(void delegate(FilenameCompleter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnGotCompletionData(void delegate(FilenameCompleter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( "got-completion-data" !in connectedSignals )
-		{
-			Signals.connectData(
-				this,
-				"got-completion-data",
-				cast(GCallback)&callBackGotCompletionData,
-				cast(void*)this,
-				null,
-				connectFlags);
-			connectedSignals["got-completion-data"] = 1;
-		}
-		onGotCompletionDataListeners ~= dlg;
+		onGotCompletionDataListeners ~= new OnGotCompletionDataDelegateWrapper(dlg, 0, connectFlags);
+		onGotCompletionDataListeners[onGotCompletionDataListeners.length - 1].handlerId = Signals.connectData(
+			this,
+			"got-completion-data",
+			cast(GCallback)&callBackGotCompletionData,
+			cast(void*)onGotCompletionDataListeners[onGotCompletionDataListeners.length - 1],
+			cast(GClosureNotify)&callBackGotCompletionDataDestroy,
+			connectFlags);
+		return onGotCompletionDataListeners[onGotCompletionDataListeners.length - 1].handlerId;
 	}
-	extern(C) static void callBackGotCompletionData(GFilenameCompleter* filenamecompleterStruct, FilenameCompleter _filenamecompleter)
+	
+	extern(C) static void callBackGotCompletionData(GFilenameCompleter* filenamecompleterStruct,OnGotCompletionDataDelegateWrapper wrapper)
 	{
-		foreach ( void delegate(FilenameCompleter) dlg; _filenamecompleter.onGotCompletionDataListeners )
+		wrapper.dlg(wrapper.outer);
+	}
+	
+	extern(C) static void callBackGotCompletionDataDestroy(OnGotCompletionDataDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.outer.internalRemoveOnGotCompletionData(wrapper);
+	}
+
+	protected void internalRemoveOnGotCompletionData(OnGotCompletionDataDelegateWrapper source)
+	{
+		foreach(index, wrapper; onGotCompletionDataListeners)
 		{
-			dlg(_filenamecompleter);
+			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
+			{
+				onGotCompletionDataListeners[index] = null;
+				onGotCompletionDataListeners = std.algorithm.remove(onGotCompletionDataListeners, index);
+				break;
+			}
 		}
 	}
+	
 }

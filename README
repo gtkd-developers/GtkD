@@ -48,6 +48,14 @@ Optionaly these options are available:
 
 Or you can use one of the build options also available for Windows.
 
+OSX:
+----
+The build options are the same as for Linux.
+
+If on OSX GtkD is unable to find the GTK libraries.
+Some environment variables can be set to override the search path.
+"GTK_BASEPATH" and "HOMEBREW_ROOT". GTK_BASEPATH takes precedence over HOMEBREW_ROOT.
+
 Windows:
 --------
 To build on Windows you can use the build script in combination with rdmd.
@@ -75,15 +83,15 @@ the -m32 or -m64 flag to rdmd.
 Wraped Versions:
 ----------------
 
-GtkD wraps Gtk+ 3.18 the versions of the associated libraries are:
-Gtk+          3.20
-Gdk           3.20
-Glib          2.48
-GObject       2.48
-Gio           2.48
-Pango         1.39
-Gdk-pixbuf    2.34
+GtkD wraps Gtk+ 3.22 the versions of the associated libraries are:
+Gtk+          3.22
+Gdk           3.22
+Glib          2.50
+GObject       2.50
+Gio           2.50
+Pango         1.40
+Gdk-pixbuf    2.36
 Cairo         1.12.2
-GtksourceView 3.20
-GStreamer     1.8
-Vte3          0.43
+GtksourceView 3.22
+GStreamer     1.10
+Vte3          0.46
