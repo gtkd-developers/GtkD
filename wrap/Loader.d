@@ -388,27 +388,13 @@ version(Windows)
 }
 else
 {
-	extern(C)
-	{
-		void* dlopen(char*, int);
-		char* dlerror();
-		void* dlsym(void*,char*);
-		int   dlclose(void*);
-	}
-
-	enum RTLD
-	{
-		LAZY     = 0x00001,  // Lazy function call binding
-		NOW      = 0x00002,  // Immediate function call binding
-		NOLOAD   = 0x00004,  // No object load
-		DEEPBIND = 0x00008,  //
-		GLOBAL   = 0x00100   // Make object available to whole program
-	}
+	import core.sys.posix.dlfcn : dlopen, dlerror, dlsym, dlclose, RTLD_NOW, RTLD_GLOBAL;
 
 	version(OSX)
 	{
 		string basePath()
 		{
+			import std.path;
 			import std.process;
 
 			static string path;
@@ -420,7 +406,6 @@ else
 			if(!path){
 				path=environment.get("HOMEBREW_ROOT");
 				if(path){
-					import std.path;
 					path=path.buildPath("lib");
 				}
 			}
@@ -432,10 +417,10 @@ else
 		enum basePath = "";
 	}
 
-	private void* pLoadLibrary(string libraryName, RTLD flag = RTLD.NOW)
+	private void* pLoadLibrary(string libraryName, int flag = RTLD_NOW)
 	{
 		import std.path;
-		void* handle = dlopen(cast(char*)toStringz(basePath.buildPath(libraryName)), flag | RTLD.GLOBAL);
+		void* handle = dlopen(cast(char*)toStringz(basePath.buildPath(libraryName)), flag | RTLD_GLOBAL);
 		if(!handle){
 			import std.string;
 			string temp=dlerror().fromStringz.idup;
