@@ -366,6 +366,16 @@ class GtkPackage
 			}
 		}
 
+		//WORKAROUND: Windows has two functions with different names in the 32 and 64 bit versions.
+		if (name == "glib")
+		{
+			buff ~= "\n\tversion(Win64)\n";
+			buff ~= "\t{\n";
+			buff ~= "\t\tLinker.link(g_module_name, \"g_module_name_uft8\", LIBRARY.GLIB, LIBRARY.GMODULE);\n";
+			buff ~= "\t\tLinker.link(g_module_open, \"g_module_open_utf8\", LIBRARY.GLIB, LIBRARY.GMODULE);\n";
+			buff ~= "\t}\n";
+		}
+
 		buff ~= "}\n\n"
 			~ "__gshared extern(C)\n"
 			~ "{\n";

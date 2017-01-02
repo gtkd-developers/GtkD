@@ -1736,6 +1736,12 @@ shared static this()
 	// glib.Version
 
 	Linker.link(glib_check_version, "glib_check_version", LIBRARY.GLIB);
+
+	version(Win64)
+	{
+		Linker.link(g_module_name, "g_module_name_uft8", LIBRARY.GLIB, LIBRARY.GMODULE);
+		Linker.link(g_module_open, "g_module_open_utf8", LIBRARY.GLIB, LIBRARY.GMODULE);
+	}
 }
 
 __gshared extern(C)
