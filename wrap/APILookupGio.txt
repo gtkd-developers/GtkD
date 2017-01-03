@@ -521,6 +521,8 @@ array: new ignore_hosts
 array: set_ignore_hosts ignore_hosts
 
 struct: Socket
+ref: receive buffer
+ref: receive_from buffer
 out: receive_message messages
 out: receive_message num_messages
 

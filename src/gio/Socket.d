@@ -1111,11 +1111,11 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t receive(string buffer, Cancellable cancellable)
+	public ptrdiff_t receive(ref char[] buffer, Cancellable cancellable)
 	{
 		GError* err = null;
 		
-		auto p = g_socket_receive(gSocket, Str.toStringz(buffer), cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_receive(gSocket, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
@@ -1149,12 +1149,12 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Throws: GException on failure.
 	 */
-	public ptrdiff_t receiveFrom(out SocketAddress address, string buffer, Cancellable cancellable)
+	public ptrdiff_t receiveFrom(out SocketAddress address, ref char[] buffer, Cancellable cancellable)
 	{
 		GSocketAddress* outaddress = null;
 		GError* err = null;
 		
-		auto p = g_socket_receive_from(gSocket, &outaddress, Str.toStringz(buffer), cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto p = g_socket_receive_from(gSocket, &outaddress, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 		
 		if (err !is null)
 		{
