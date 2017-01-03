@@ -54,7 +54,8 @@ class TestStock : ScrolledWindow
 
 		IconSize size = Button.getIconSize();
 		Button.setIconSize(IconSize.DIALOG);
-		foreach(StockID stockID; EnumMembers!StockID)
+		// WORKAROUND: https://issues.dlang.org/show_bug.cgi?id=14214
+		foreach(StockID stockID; [EnumMembers!StockID])
 		{
 			Button button = new Button(stockID, true);
 			button.setTooltipText(cast(string)stockID);
