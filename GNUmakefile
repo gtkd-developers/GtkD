@@ -202,7 +202,6 @@ test: $(BINNAME_DEMO)
 # Create a versioned symlink so the demo is able to load it.
 
 $(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
-$(BINNAME_DEMO): $(if $(findstring "dmd","$(DC)"),$(eval DCFLAGS=$(filter-out -O,$(DCFLAGS))))
 $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),,$(if $(wildcard $(LIBNAME_GTKD)),,$(MAKE) $(LIBNAME_GTKD)))
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
