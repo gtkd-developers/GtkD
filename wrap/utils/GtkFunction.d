@@ -1146,25 +1146,19 @@ final class GtkFunction
 			~" callBack"~ getSignalName() ~"("~ getCallbackParams() ~")";
 
 		buff ~= "{";
-		//buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
-
-		if ( type == "bool" )
-		{
-			buff ~= "return wrapper.dlg(" ~ getCallbackVars() ~ ");";
-		} 
-		else if (type == "void") 
+		
+		if (type == "void") 
 		{
 			buff ~= "wrapper.dlg("~ getCallbackVars() ~");";
 		} 
 		else if (dType) 
 		{
-			buff ~= "auto r = wrapper.dlg(" ~ getCallbackVars() ~ ");";
+			buff ~= "auto r = wrapper.dlg("~ getCallbackVars() ~");";
 			buff ~= "return r."~ dType.getHandleFunc() ~"();";
 		} 
 		else 
 		{
-			//Old code just called event listener[0] here 	
-			buff ~= "return wrapper.dlg(" ~ getCallbackVars() ~");";
+			buff ~= "return wrapper.dlg("~ getCallbackVars() ~");";
 		}
 
 		buff ~= "}";
@@ -1177,7 +1171,6 @@ final class GtkFunction
 		string[] buff;
 		buff ~= "extern(C) static void callBack"~ getSignalName() ~"Destroy(" ~ getDelegateWrapperName() ~ " wrapper, GClosure* closure)";
 		buff ~= "{";
-		//buff ~= getDelegateWrapperName() ~ " wrapper = cast(" ~ getDelegateWrapperName() ~ ")pWrapper;";
 		buff ~= "wrapper.outer.internalRemoveOn" ~ getSignalName() ~ "(wrapper);";
 		buff ~= "}";
 		return buff;
