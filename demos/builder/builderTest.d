@@ -9,7 +9,7 @@ import gtk.Window;
 import gobject.Type;
 
 import std.stdio;
-import std.c.process;
+import core.stdc.stdlib;
 
 
 /**

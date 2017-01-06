@@ -32,6 +32,8 @@ private import gdk.Cursor;
 
 private import gdk.Event;
 
+debug import std.stdio;
+
 /**
  * This tests the gtkD the Stock images in button
  */

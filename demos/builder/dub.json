@@ -1,0 +1,10 @@
+{
+	"name": "buildertest",
+	"description": "A Gtk Builder demo",
+	"targetType": "executable",
+	"targetName": "BuilderTest",
+	"sourceFiles": ["builderTest.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../" }
+	}
+}

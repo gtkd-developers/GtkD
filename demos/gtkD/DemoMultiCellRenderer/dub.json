@@ -1,0 +1,10 @@
+{
+	"name": "demo_multicell_renderer",
+	"description": "A Multi cell renderer demo",
+	"targetType": "executable",
+	"targetName": "DemoMultiCellRenderer",
+	"sourceFiles": ["DemoMultiCellRenderer.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+	}
+}

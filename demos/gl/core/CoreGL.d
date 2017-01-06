@@ -219,7 +219,7 @@ uint compileShader(int type, string source)
 
 float[16] getIdentityMatrix() pure
 {
-  float mat[4 * 4];
+  float[4 * 4] mat;
 
   // identity matrix
   for(int x=0;x < 4;++x)

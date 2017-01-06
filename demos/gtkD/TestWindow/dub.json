@@ -1,0 +1,14 @@
+{
+	"name": "testwindow",
+	"description": "A GtkD demo",
+	"targetType": "executable",
+	"targetName": "TestWindow",
+	"sourceFiles": ["TestEntries.d", "TestStock.d", "TestTreeView.d", 
+	                "TEditableCells.d", "TestIdle.d", "TestText.d",
+	                "TestWindow.d", "TestAspectFrame.d", "TestImage.d",
+	                "TestThemes.d", "TTextView.d", "TestDrawingArea.d",
+	                "TestScales.d", "TestTreeView1.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+	}
+}

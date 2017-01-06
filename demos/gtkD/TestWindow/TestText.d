@@ -24,6 +24,8 @@ private import gtk.ScrolledWindow;
 private import gtk.TextView;
 private import gtk.TextBuffer;
 
+debug import std.stdio;
+
 /**
  * This tests the GtkD text widget
  */

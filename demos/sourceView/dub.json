@@ -1,0 +1,10 @@
+{
+	"name": "svtest",
+	"description": "A pango demo",
+	"targetType": "executable",
+	"sourceFiles": ["SVTest.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../" },
+		"gtk-d:sv": {"path": "../../" },
+	}
+}

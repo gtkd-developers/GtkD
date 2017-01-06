@@ -1,0 +1,9 @@
+{
+	"name": "cairo_clock",
+	"description": "A Cairo demo",
+	"targetType": "executable",
+	"sourceFiles": ["main.d", "clock.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" }
+	}
+}

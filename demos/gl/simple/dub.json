@@ -1,0 +1,11 @@
+{
+	"name": "shapes",
+	"description": "A OpenGL demo",
+	"targetType": "executable",
+	"sourceFiles": ["SimpleGL.d"],
+	"libs": ["GL", "GLU"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+		"gtk-d:gtkdgl": {"path": "../../../" }
+	}
+}

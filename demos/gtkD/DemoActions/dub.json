@@ -1,0 +1,9 @@
+{
+	"name": "demo_actions",
+	"description": "A Actions demo",
+	"targetType": "executable",
+	"sourceFiles": ["DemoActions.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+	}
+}

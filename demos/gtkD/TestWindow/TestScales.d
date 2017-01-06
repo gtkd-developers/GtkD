@@ -39,6 +39,8 @@ private import gtk.HBox;
 private import gtk.HScrollbar;
 private import gtk.Range;
 
+debug import std.stdio;
+
 /**
  * This tests the gtkD scales and scrollbar widgets
  */

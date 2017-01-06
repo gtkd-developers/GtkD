@@ -1,0 +1,10 @@
+{
+	"name": "coregl",
+	"description": "A OpenGL demo",
+	"targetType": "executable",
+	"sourceFiles": ["CoreGL.d", "glcore.d"],
+	"libs": ["GL"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" }
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"name": "demo_customlist",
+	"description": "A Customlist demo",
+	"targetType": "executable",
+	"targetName": "DemoCustomList",
+	"sourceFiles": ["DemoCustomList.d", "CustomList.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+	}
+}

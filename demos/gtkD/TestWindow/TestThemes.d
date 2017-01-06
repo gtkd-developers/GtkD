@@ -28,6 +28,8 @@ private import gtk.ButtonBox;
 private import gtk.HButtonBox;
 private import gtk.Button;
 
+debug import std.stdio;
+
 class TestThemes : VBox
 {
 

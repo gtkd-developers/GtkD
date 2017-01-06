@@ -1,0 +1,10 @@
+{
+	"name": "gstreamer_helloworld",
+	"description": "A GStreamer demo",
+	"targetType": "executable",
+	"sourceFiles": ["gstreamer_helloworld.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" },
+		"gtk-d:gstreamer": {"path": "../../../" }
+	}
+}

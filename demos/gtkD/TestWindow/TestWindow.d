@@ -263,7 +263,7 @@ class TestWindow : MainWindow
 
 		MenuBar menuBar = new MenuBar();
 
-		Menu menu = menuBar.append("_File");;
+		Menu menu = menuBar.append("_File");
 
 		MenuItem item = new MenuItem(&onMenuActivate, "_New","file.new", true, accelGroup, 'n');
 		//item.addAccelerator("activate",accelGroup,'n',GdkModifierType.CONTROL_MASK,GtkAccelFlags.VISIBLE);

@@ -1,0 +1,9 @@
+{
+	"name": "pangocairo",
+	"description": "A pango demo",
+	"targetType": "executable",
+	"sourceFiles": ["pangocairo.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../" },
+	}
+}

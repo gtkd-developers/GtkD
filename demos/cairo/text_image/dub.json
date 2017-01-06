@@ -1,0 +1,9 @@
+{
+	"name": "text_image",
+	"description": "A Cairo demo",
+	"targetType": "executable",
+	"sourceFiles": ["text_image.d"],
+	"dependencies": {
+		"gtk-d:gtkd": {"path": "../../../" }
+	}
+}
