@@ -1,6 +1,13 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.5.0
+--------------
+-Add dub configurations for the demos. #177
+-Fix gio.Socket.receive. #178
+-Allow removing signal handlers and register each handler seperatly with GTK #170
+-Use the correct Homebrew path #172
+
 Release: 3.4.1
 --------------
 -Properly remove toggle references when an object is destroyed. #169
