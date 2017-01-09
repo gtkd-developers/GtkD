@@ -326,25 +326,25 @@ install-shared-peas: $(SONAME_PEASD) install-shared-gtkd
 
 install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
-	install -d $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	install -d $(DESTDIR)$(datadir)/pkgconfig
 	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
 	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gtkdsv: gtkdsv-$(MAJOR).pc install-headers-gtkd
 	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-vte: vted-$(MAJOR).pc install-headers-gtkd
 	(cd srcvte; echo $(SOURCES_VTED) | sed -e s,srcvte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
-	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-peas: peasd-$(MAJOR).pc install-headers-gtkd
 	(cd srcpeas; echo $(SOURCES_PEASD) | sed -e s,srcpeas/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
