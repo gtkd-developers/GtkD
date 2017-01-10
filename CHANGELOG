@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.5.1
+--------------
+- Set the correct path for the pkgconfig files. #181
+
 Release: 3.5.0
 --------------
 -Add dub configurations for the demos. #177
