@@ -61,7 +61,7 @@ import std.math;
 
 static void drawBox(GLfloat size, GLenum type)
 {
-	static GLfloat n[6][3] =
+	static GLfloat[3][6] n =
 	[
 		[-1.0, 0.0, 0.0],
 		[0.0, 1.0, 0.0],
@@ -70,7 +70,7 @@ static void drawBox(GLfloat size, GLenum type)
 		[0.0, 0.0, 1.0],
 		[0.0, 0.0, -1.0]
 	];
-	static GLint faces[6][4] =
+	static GLint[4][6] faces =
 	[
 		[0, 1, 2, 3],
 		[3, 2, 6, 7],
@@ -80,7 +80,7 @@ static void drawBox(GLfloat size, GLenum type)
 		[7, 4, 0, 3]
 	];
 
-	GLfloat v[8][3];
+	GLfloat[3][8] v;
 	GLint i;
 
 	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -size / 2;
@@ -274,7 +274,7 @@ static void diff3(T, U, V)(T a, U b, ref V c)
 
 static void crossprod(GLfloat[3] v1, GLfloat[3] v2, ref GLfloat[3] prod)
 {
-  GLfloat p[3];         /* in case prod == v1 or v2 */
+  GLfloat[3] p;         /* in case prod == v1 or v2 */
 
   p[0] = v1[1] * v2[2] - v2[1] * v1[2];
   p[1] = v1[2] * v2[0] - v2[2] * v1[0];
@@ -369,7 +369,7 @@ static void drawtriangle(int i, GLfloat[3][] data, int[3][] ndx, GLenum shadeTyp
 
 const T = 1.73205080756887729;
 
-static GLfloat tdata[4][3] =
+static GLfloat[3][4] tdata =
 [
 	[T, T, T],
 	[T, -T, -T],
@@ -377,7 +377,7 @@ static GLfloat tdata[4][3] =
 	[-T, -T, T]
 ];
 
-static int tndex[4][3] =
+static int[3][4] tndex =
 [
 	[0, 1, 3],
 	[2, 1, 0],
@@ -414,7 +414,7 @@ void drawTetrahedron (bool solid)
 
 /* octahedron data: The octahedron produced is centered at the
    origin and has radius 1.0 */
-static GLfloat odata[6][3] =
+static GLfloat[3][6] odata =
 [
 	[1.0, 0.0, 0.0],
 	[-1.0, 0.0, 0.0],
@@ -424,7 +424,7 @@ static GLfloat odata[6][3] =
 	[0.0, 0.0, -1.0]
 ];
 
-static int ondex[8][3] =
+static int[3][8] ondex =
 [
 	[0, 4, 2],
 	[1, 2, 4],
@@ -470,7 +470,7 @@ void drawOctahedron (bool solid)
 const X = 0.525731112119133606;
 const Z = 0.850650808352039932;
 
-static GLfloat idata[12][3] =
+static GLfloat[3][12] idata =
 [
 	[-X, 0, Z],
 	[X, 0, Z],
@@ -486,7 +486,7 @@ static GLfloat idata[12][3] =
 	[-Z, -X, 0]
 ];
 
-static int index[20][3] =
+static int[3][20] index =
 [
 	[0, 4, 1],
 	[0, 9, 4],
@@ -539,7 +539,7 @@ void drawIcosahedron (bool solid)
  * Dodecahedron
  */
 
-static GLfloat dodec[20][3];
+static GLfloat[3][20] dodec;
 
 static void initDodecahedron()
 {
@@ -636,7 +636,7 @@ void drawDodecahedron (bool solid)
 /* Rim, body, lid, and bottom data must be reflected in x and
    y; handle and spout data across the y axis only.  */
 
-static int patchdata[][16] =
+static int[16][] patchdata =
 [
 		/* rim */
 	[102, 103, 104, 105, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -667,7 +667,7 @@ static int patchdata[][16] =
 ];
 /* *INDENT-OFF* */
 
-static float cpdata[][3] =
+static float[3][] cpdata =
 [
 	[0.2, 0, 2.7], [0.2, -0.112, 2.7], [0.112, -0.2, 2.7], [0,
 	-0.2, 2.7], [1.3375, 0, 2.53125], [1.3375, -0.749, 2.53125],
@@ -712,7 +712,7 @@ static float cpdata[][3] =
 	[0.84, -1.5, 0.075]
 ];
 
-static float tex[2][2][2] =
+static float[2][2][2] tex =
 [
 	[ [0, 0],
 		[1, 0]],
@@ -725,7 +725,7 @@ static float tex[2][2][2] =
 static void teapot(GLint grid, GLdouble scale, GLenum type)
 {
 	float[3][4][4] p, q, r, s;
-	long i, j, k, l;
+	uint i, j, k, l;
 
 	glPushAttrib(GL_ENABLE_BIT | GL_EVAL_BIT);
 	glEnable(GL_AUTO_NORMAL);

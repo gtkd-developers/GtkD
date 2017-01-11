@@ -85,14 +85,6 @@ template GLCapability()
 		return true;
 	}
 	
-	/**
-	 * The widget should use this method to redraw it self at any time
-	 */
-	bool drawFrame()
-	{
-		return drawFrame(null, this);
-	}
-	
 	bool alreadyRealized;
 	
 	bool getAlreadyRealized()
