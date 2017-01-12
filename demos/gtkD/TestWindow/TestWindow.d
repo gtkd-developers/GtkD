@@ -48,7 +48,7 @@ private import TestScales;
 private import TestText;
 //private import TestTree;
 private import TestTreeView;
-private import TestTreeView1;
+//private import TestTreeView1;
 private import TestImage;
 private import TestThemes;
 private import TestAspectFrame;
@@ -236,8 +236,8 @@ class TestWindow : MainWindow
 			testSpinButton(notebook);
 
 		notebook.appendPage(new TestTreeView,"TreeView");
-		notebook.appendPage(new TestTreeView1,"TreeView 1");
-			testList(notebook);
+//		notebook.appendPage(new TestTreeView1,"TreeView 1");
+//			testList(notebook);
 
 		version(linux) {
 			// this block crashes gtk+ on win32 for some reason
