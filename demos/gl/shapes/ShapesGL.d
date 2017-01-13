@@ -87,9 +87,9 @@ static GLuint shape_current = 0;
 
 struct MaterialProp
 {
-	GLfloat ambient[4];
-	GLfloat diffuse[4];
-	GLfloat specular[4];
+	GLfloat[4] ambient;
+	GLfloat[4] diffuse;
+	GLfloat[4] specular;
 	GLfloat shininess;
 }
 
@@ -179,8 +179,8 @@ static MaterialProp mat_silver = {
 
 static MaterialProp* mat_current;
 
-static float view_quat_diff[4] = [ 0.0, 0.0, 0.0, 1.0 ];
-static float view_quat[4] = [ 0.0, 0.0, 0.0, 1.0 ];
+static float[4] view_quat_diff = [ 0.0, 0.0, 0.0, 1.0 ];
+static float[4] view_quat = [ 0.0, 0.0, 0.0, 1.0 ];
 static float view_scale = 1.0;
 
 static bool animate = false;
@@ -251,7 +251,7 @@ class ShapesGL : DrawingArea
 	
 	bool drawGL()
 	{
-		float m[4][4];
+		float[4][4] m;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -316,12 +316,12 @@ class ShapesGL : DrawingArea
 	
 	void initGL()
 	{
-		static GLfloat ambient[] = [0.0, 0.0, 0.0, 1.0];
-		static GLfloat diffuse[] = [1.0, 1.0, 1.0, 1.0];
-		static GLfloat position[] = [0.0, 3.0, 3.0, 0.0];
+		static GLfloat[] ambient = [0.0, 0.0, 0.0, 1.0];
+		static GLfloat[] diffuse = [1.0, 1.0, 1.0, 1.0];
+		static GLfloat[] position = [0.0, 3.0, 3.0, 0.0];
 		
-		static GLfloat lmodel_ambient[] = [0.2, 0.2, 0.2, 1.0];
-		static GLfloat local_view[] = [0.0];
+		static GLfloat[] lmodel_ambient = [0.2, 0.2, 0.2, 1.0];
+		static GLfloat[] local_view = [0.0];
 
 		resizeGL(null);
 

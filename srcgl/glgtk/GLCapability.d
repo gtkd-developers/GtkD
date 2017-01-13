@@ -84,13 +84,14 @@ template GLCapability()
 		addOnVisibilityNotify(&visibilityFrame);
 		return true;
 	}
-	
+
 	/**
 	 * The widget should use this method to redraw it self at any time
 	 */
 	bool drawFrame()
 	{
-		return drawFrame(null, this);
+		Scoped!Context cr;
+		return drawFrame(cr, this);
 	}
 	
 	bool alreadyRealized;
@@ -130,7 +131,7 @@ template GLCapability()
 		/*** OpenGL END ***/
 	}
 	
-	bool drawFrame(Context cr, Widget widget)
+	bool drawFrame(Scoped!Context cr, Widget widget)
 	{
 		GLContext context = getGlContext(widget);
 		GLWindow drawable = getGlWindow(widget);

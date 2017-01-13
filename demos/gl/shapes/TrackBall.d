@@ -67,7 +67,7 @@ const int RENORMCOUNT = 97;
  * first paramater.
  */
 void
-trackball(ref float q[4], float p1x, float p1y, float p2x, float p2y)
+trackball(ref float[4] q, float p1x, float p1y, float p2x, float p2y)
 {
 /*
  * Ok, simulate a track-ball.  Project the points onto the virtual
@@ -149,7 +149,7 @@ add_quats(ref float[4] q1, ref float[4] q2, ref float[4] dest)
     float[4] t1;
     float[4] t2;
     float[4] t3;
-    float tf[4];
+    float[4] tf;
 
     vcopy(q1.ptr,t1.ptr);
     vscale(t1.ptr,q2[3]);
