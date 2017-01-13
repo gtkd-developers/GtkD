@@ -93,7 +93,8 @@ code: start
 		 */
 		bool drawFrame()
 		{
-			return drawFrame(null, this);
+			Scoped!Context cr;
+			return drawFrame(cr, this);
 		}
 		
 		bool alreadyRealized;
@@ -133,7 +134,7 @@ code: start
 			/*** OpenGL END ***/
 		}
 		
-		bool drawFrame(Context cr, Widget widget)
+		bool drawFrame(Scoped!Context cr, Widget widget)
 		{
 			GLContext context = getGlContext(widget);
 			GLWindow drawable = getGlWindow(widget);
