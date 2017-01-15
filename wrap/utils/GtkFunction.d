@@ -57,7 +57,7 @@ final class GtkFunction
 	string movedTo;
 	bool virtual = false;
 	bool throws = false;
-	bool lookupOverride; /// Force marking this function with overrride.
+	bool lookupOverride; /// Force marking this function with override.
 	bool noCode; /// Don't generate any class code for this function.
 
 	GtkType returnType;
@@ -1039,7 +1039,7 @@ final class GtkFunction
 
 		buff ~= "{";
 
-		if ( strct.name != "StatusIcon")
+		if ( strct.hasFunction("add_events") )
 		{
 			switch ( realName )
 			{

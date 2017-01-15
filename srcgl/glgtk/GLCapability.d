@@ -84,7 +84,7 @@ template GLCapability()
 		addOnVisibilityNotify(&visibilityFrame);
 		return true;
 	}
-
+	
 	/**
 	 * The widget should use this method to redraw it self at any time
 	 */

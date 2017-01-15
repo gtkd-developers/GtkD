@@ -100,7 +100,7 @@ public class Matrix
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (cairo_matrix_t* cairo_matrix)
+	public this (cairo_matrix_t* cairo_matrix, , bool ownedRef = false)
 	{
 		this.cairo_matrix = cairo_matrix;
 	}

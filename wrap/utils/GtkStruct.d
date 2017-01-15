@@ -661,6 +661,20 @@ final class GtkStruct
 		return parentStruct.getAncestor();
 	}
 
+	bool hasFunction(string funct)
+	{
+		if ( funct in functions )
+			return true;
+
+		if ( parent.empty )
+			return false;
+
+		if ( !parentStruct )
+			parentStruct = pack.getStruct(parent);
+
+		return parentStruct.hasFunction(funct);
+	}
+
 	private void resolveImports()
 	{
 		if ( parentStruct && parentStruct.name != name)
