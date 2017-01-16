@@ -22,9 +22,11 @@ module utils.GtkWrapper;
 import std.algorithm;
 import std.array;
 import std.file;
+import std.getopt;
 import std.uni;
 import std.path;
 import std.stdio;
+import core.stdc.stdlib;
 
 import utils.DefReader;
 import utils.IndentedStringBuilder;
@@ -37,12 +39,45 @@ import utils.WrapError;
 
 void main(string[] args)
 {
-	GtkWrapper wrapper = new GtkWrapper("./");
+
+	bool printFree;
+	string inputDir;
+	string outputDir;
+
+	try
+	{
+		auto helpInformation = getopt(
+			args,
+			"input|i",    "Directory containing the API description (Default: ./)", &inputDir,
+			"output|o",   "Output directory for the generated binding. (Default: {input dir}/out)", &outputDir,
+			"print-free", "Print functions that don't have a parrent module", &printFree
+		);
+
+		if (helpInformation.helpWanted)
+		{
+			defaultGetoptPrinter("gir-d-generator is an utility that generates D bindings using the GObject introspection files.\nOptions:", helpInformation.options);
+			exit(0);
+		}
+	}
+	catch (GetOptException e)
+	{
+		writeln ("Unable to parse parameters: ", e.msg);
+		exit (1);
+	}
+
+	if ( inputDir.empty )
+		inputDir = "./";
+	if ( outputDir.empty )
+		outputDir = buildPath (inputDir, "../");
+
+	//Read in the GIR and API files.
+	GtkWrapper wrapper = new GtkWrapper(inputDir, outputDir);
 	wrapper.proccess("APILookup.txt");
 
-	if ( args.length > 1 && args[1].among("-f", "--print-free") )
+	if ( printFree )
 		wrapper.printFreeFunctions();
 
+	//Generate the D binding
 	foreach(pack; GtkWrapper.packages)
 	{
 		if ( pack.name == "cairo" )
@@ -69,9 +104,10 @@ class GtkWrapper
 
 	static GtkPackage[string] packages;
 
-	public this(string apiRoot)
+	public this(string apiRoot, string outputRoot)
 	{
-		this.apiRoot = apiRoot;
+		this.apiRoot    = apiRoot;
+		this.outputRoot = outputRoot;
 	}
 
 	public void proccess(string apiLookupDefinition)
