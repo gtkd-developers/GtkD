@@ -28,6 +28,7 @@ import std.stdio;
 
 import utils.DefReader;
 import utils.IndentedStringBuilder;
+import utils.GlibTypes;
 import utils.GtkPackage;
 import utils.GtkStruct;
 import utils.GtkFunction;
@@ -505,7 +506,9 @@ string tokenToGtkD(string token, string[string] aliases, bool caseConvert=true)
 
 string tokenToGtkD(string token, string[string] aliases, string[string] localAliases, bool caseConvert=true)
 {
-	if ( token in localAliases )
+	if ( token in glibTypes )
+		return glibTypes[token];
+	else if ( token in localAliases )
 		return localAliases[token];
 	else if ( token in aliases )
 		return aliases[token];
