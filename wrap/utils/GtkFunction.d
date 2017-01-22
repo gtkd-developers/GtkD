@@ -216,7 +216,7 @@ final class GtkFunction
 		return buff;
 	}
 
-	string getExternal()
+	string getLinkerExternal()
 	{
 		assert(type != GtkFunctionType.Callback);
 		assert(type != GtkFunctionType.Signal);
@@ -225,6 +225,24 @@ final class GtkFunction
 			return getExternalFunctionType() ~" glc_"~ cType ~";";
 		else
 			return getExternalFunctionType() ~" c_"~ cType ~";";
+	}
+
+	string getExternal()
+	{
+		assert(type != GtkFunctionType.Callback);
+		assert(type != GtkFunctionType.Signal);
+
+		string ext;
+		string type = stringToGtkD(returnType.cType, wrapper.aliasses, localAliases());
+
+		if ( type.startsWith("bool") )
+			ext ~= type.replaceFirst("bool", "int");
+		else
+			ext ~= type;
+
+		ext ~= " "~ cType ~"("~ getExternalParameters() ~");";
+
+		return ext;
 	}
 
 	private string getExternalFunctionType()
@@ -237,7 +255,14 @@ final class GtkFunction
 		else
 			ext ~= type;
 
-		ext ~= " function(";
+		ext ~= " function("~ getExternalParameters() ~")";
+
+		return ext;
+	}
+
+	private string getExternalParameters()
+	{
+		string ext, type;
 
 		if ( instanceParam )
 		{
@@ -266,8 +291,6 @@ final class GtkFunction
 
 		if ( throws )
 			ext ~= ", GError** err";
-
-		ext ~= ")";
 
 		return ext;
 	}

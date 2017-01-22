@@ -392,7 +392,7 @@ class GtkPackage
 				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal || funct.name.empty )
 					continue;
 
-				buff ~= "\t"~ funct.getExternal() ~"\n";
+				buff ~= "\t"~ funct.getLinkerExternal() ~"\n";
 			}
 		}
 
@@ -416,6 +416,44 @@ class GtkPackage
 					buff ~= "alias c_"~ funct.cType ~" "~ funct.cType ~";\n";
 			}
 		}
+
+		std.file.write(buildPath(wrapper.outputRoot, srcDir, bindDir, name ~".d"), buff);
+	}
+
+	void writeExternalFunctions()
+	{
+		string buff = wrapper.licence;
+
+		buff ~= "module "~ bindDir ~"."~ name ~";\n\n";
+		buff ~= "import std.stdio;\n";
+		buff ~= "import "~ bindDir ~"."~ name ~"types;\n";
+
+		if ( name == "glib" )
+			buff ~= "import gtkc.gobjecttypes;\n";
+		if ( name == "gdk" || name == "pango" )
+			buff ~= "import gtkc.cairotypes;\n";
+
+		buff ~= "}\n\n"
+			~ "__gshared extern(C)\n"
+			~ "{\n";
+
+		foreach ( strct; collectedStructs )
+		{
+			if ( strct.functions.empty || strct.noExternal )
+				continue;
+
+			buff ~= "\n\t// "~ name ~"."~ strct.name ~"\n\n";
+
+			foreach ( funct; strct.functions )
+			{
+				if ( funct.type == GtkFunctionType.Callback || funct.type == GtkFunctionType.Signal || funct.name.empty )
+					continue;
+
+				buff ~= "\t"~ funct.getExternal() ~"\n";
+			}
+		}
+
+		buff ~= "}";
 
 		std.file.write(buildPath(wrapper.outputRoot, srcDir, bindDir, name ~".d"), buff);
 	}

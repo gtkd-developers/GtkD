@@ -41,6 +41,7 @@ void main(string[] args)
 {
 
 	bool printFree;
+	bool useRuntimeLinker = true;
 	string inputDir;
 	string outputDir;
 
@@ -48,9 +49,10 @@ void main(string[] args)
 	{
 		auto helpInformation = getopt(
 			args,
-			"input|i",    "Directory containing the API description (Default: ./)", &inputDir,
-			"output|o",   "Output directory for the generated binding. (Default: {input dir}/out)", &outputDir,
-			"print-free", "Print functions that don't have a parrent module", &printFree
+			"input|i",            "Directory containing the API description (Default: ./)", &inputDir,
+			"output|o",           "Output directory for the generated binding. (Default: {input dir}/out)", &outputDir,
+			"use-runtime-linker", "Link the gtk functions with the runtime linker", &useRuntimeLinker,
+			"print-free",         "Print functions that don't have a parrent module", &printFree
 		);
 
 		if (helpInformation.helpWanted)
@@ -83,8 +85,12 @@ void main(string[] args)
 		if ( pack.name == "cairo" )
 			continue;
 
+		if ( useRuntimeLinker )
+			pack.writeLoaderTable();
+		else
+			pack.writeExternalFunctions();
+
 		pack.writeTypes();
-		pack.writeLoaderTable();
 		pack.writeClasses();
 	}
 }
