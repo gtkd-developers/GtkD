@@ -278,6 +278,19 @@ public interface TreeModelIF{
 	 */
 
 	/**
+	 * Creates a new #GtkTreeModel, with @child_model as the child_model
+	 * and @root as the virtual root.
+	 *
+	 * Params:
+	 *     root = A #GtkTreePath or %NULL.
+	 *
+	 * Return: A new #GtkTreeModel.
+	 *
+	 * Since: 2.4
+	 */
+	public TreeModelIF filterNew(TreePath root);
+
+	/**
 	 * Calls func on each node in model in a depth-first fashion.
 	 *
 	 * If @func returns %TRUE, then the tree ceases to be walked,

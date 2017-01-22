@@ -342,9 +342,19 @@ final class GtkFunction
 		GtkStruct returnDType;
 
 		if ( returnType.isArray() )
+		{
 			returnDType = strct.pack.getStruct(returnType.elementType.name);
+
+			if ( returnDType && returnType.elementType.cType.empty )
+				returnType.elementType.cType = returnDType.cType ~"*";
+		}
 		else
+		{
 			returnDType = strct.pack.getStruct(returnType.name);
+
+			if ( returnDType && returnType.cType.empty )
+				returnType.cType = returnDType.cType ~"*";
+		}
 
 		if ( instanceParam || ( !params.empty && isInstanceParam(params[0])) )
 		{
