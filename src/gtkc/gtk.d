@@ -4257,7 +4257,6 @@ shared static this()
 	Linker.link(gtk_tree_model_row_inserted, "gtk_tree_model_row_inserted", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_rows_reordered, "gtk_tree_model_rows_reordered", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_rows_reordered_with_length, "gtk_tree_model_rows_reordered_with_length", LIBRARY.GTK);
-	Linker.link(gtk_tree_model_sort_new_with_model, "gtk_tree_model_sort_new_with_model", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_unref_node, "gtk_tree_model_unref_node", LIBRARY.GTK);
 
 	// gtk.TreeModelFilter
@@ -4286,6 +4285,7 @@ shared static this()
 	Linker.link(gtk_tree_model_sort_get_model, "gtk_tree_model_sort_get_model", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_sort_iter_is_valid, "gtk_tree_model_sort_iter_is_valid", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_sort_reset_default_sort_func, "gtk_tree_model_sort_reset_default_sort_func", LIBRARY.GTK);
+	Linker.link(gtk_tree_model_sort_new_with_model, "gtk_tree_model_sort_new_with_model", LIBRARY.GTK);
 
 	// gtk.TreePath
 
@@ -9412,7 +9412,6 @@ __gshared extern(C)
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter) c_gtk_tree_model_row_inserted;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, int* newOrder) c_gtk_tree_model_rows_reordered;
 	void function(GtkTreeModel* treeModel, GtkTreePath* path, GtkTreeIter* iter, int* newOrder, int length) c_gtk_tree_model_rows_reordered_with_length;
-	GtkTreeModel* function(GtkTreeModel* childModel) c_gtk_tree_model_sort_new_with_model;
 	void function(GtkTreeModel* treeModel, GtkTreeIter* iter) c_gtk_tree_model_unref_node;
 
 	// gtk.TreeModelFilter
@@ -9441,6 +9440,7 @@ __gshared extern(C)
 	GtkTreeModel* function(GtkTreeModelSort* treeModel) c_gtk_tree_model_sort_get_model;
 	int function(GtkTreeModelSort* treeModelSort, GtkTreeIter* iter) c_gtk_tree_model_sort_iter_is_valid;
 	void function(GtkTreeModelSort* treeModelSort) c_gtk_tree_model_sort_reset_default_sort_func;
+	GtkTreeModel* function(GtkTreeModel* childModel) c_gtk_tree_model_sort_new_with_model;
 
 	// gtk.TreePath
 
@@ -14565,7 +14565,6 @@ alias c_gtk_tree_model_row_has_child_toggled gtk_tree_model_row_has_child_toggle
 alias c_gtk_tree_model_row_inserted gtk_tree_model_row_inserted;
 alias c_gtk_tree_model_rows_reordered gtk_tree_model_rows_reordered;
 alias c_gtk_tree_model_rows_reordered_with_length gtk_tree_model_rows_reordered_with_length;
-alias c_gtk_tree_model_sort_new_with_model gtk_tree_model_sort_new_with_model;
 alias c_gtk_tree_model_unref_node gtk_tree_model_unref_node;
 
 // gtk.TreeModelFilter
@@ -14594,6 +14593,7 @@ alias c_gtk_tree_model_sort_convert_path_to_child_path gtk_tree_model_sort_conve
 alias c_gtk_tree_model_sort_get_model gtk_tree_model_sort_get_model;
 alias c_gtk_tree_model_sort_iter_is_valid gtk_tree_model_sort_iter_is_valid;
 alias c_gtk_tree_model_sort_reset_default_sort_func gtk_tree_model_sort_reset_default_sort_func;
+alias c_gtk_tree_model_sort_new_with_model gtk_tree_model_sort_new_with_model;
 
 // gtk.TreePath
 

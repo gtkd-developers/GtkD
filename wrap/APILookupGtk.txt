@@ -4130,6 +4130,7 @@ code: end
 
 struct: TreeModel
 move: filter_new TreeModelFilter new
+move: sort_new_with_model TreeModelSort new_with_model
 import: gobject.Value
 noCode: get_value
 noCode: get_iter
@@ -4480,31 +4481,6 @@ public class TreeModel : ObjectG, TreeModelIF
 		}
 	}
 }
-code: end
-
-struct: TreeModelSort
-import: glib.ConstructionException
-code: start
-	/**
-	 * Creates a new TreeModel, with childModel as the child model.
-	 *
-	 * Params:
-	 *     childModel = A TreeModel.
-	 *
-	 * Throws: A ConstructionException if GTK+ fails to create the object.
-	 *
-	 */
-	public this(TreeModelIF childModel)
-	{
-		auto p = gtk_tree_model_sort_new_with_model(childModel.getTreeModelStruct());
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_model_sort_new_with_model");
-		}
-
-		this(cast(GtkTreeModelSort*) p, true);
-	}
 code: end
 
 struct:

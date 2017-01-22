@@ -29,8 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
-private import gtk.TreeModelIF;
 private import gtk.TreePath;
 public  import gtkc.gdktypes;
 private import gtkc.gtk;
@@ -593,13 +591,6 @@ public interface TreeModelIF{
 	 * Since: 3.10
 	 */
 	public void rowsReorderedWithLength(TreePath path, TreeIter iter, int[] newOrder);
-
-	/**
-	 * Creates a new #GtkTreeModel, with @child_model as the child model.
-	 *
-	 * Return: A new #GtkTreeModel.
-	 */
-	public TreeModelIF sortNewWithModel();
 
 	/**
 	 * Lets the tree unref the node.

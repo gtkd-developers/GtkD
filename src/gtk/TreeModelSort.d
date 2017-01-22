@@ -176,29 +176,6 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	// add the TreeSortable capabilities
 	mixin TreeSortableT!(GtkTreeModelSort);
 
-	/**
-	 * Creates a new TreeModel, with childModel as the child model.
-	 *
-	 * Params:
-	 *     childModel = A TreeModel.
-	 *
-	 * Throws: A ConstructionException if GTK+ fails to create the object.
-	 *
-	 */
-	public this(TreeModelIF childModel)
-	{
-		auto p = gtk_tree_model_sort_new_with_model(childModel.getTreeModelStruct());
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_model_sort_new_with_model");
-		}
-		
-		this(cast(GtkTreeModelSort*) p, true);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -349,5 +326,27 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	public void resetDefaultSortFunc()
 	{
 		gtk_tree_model_sort_reset_default_sort_func(gtkTreeModelSort);
+	}
+
+	/**
+	 * Creates a new #GtkTreeModel, with @child_model as the child model.
+	 *
+	 * Params:
+	 *     childModel = A #GtkTreeModel
+	 *
+	 * Return: A new #GtkTreeModel.
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TreeModelIF childModel)
+	{
+		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_with_model");
+		}
+		
+		this(cast(GtkTreeModelSort*) p, true);
 	}
 }

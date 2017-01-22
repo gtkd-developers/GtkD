@@ -293,7 +293,7 @@ class GtkWrapper
 						currentStruct.functions[vals[0]].strct = dest;
 						dest.functions[newFuncName] = currentStruct.functions[vals[0]];
 						dest.functions[newFuncName].name = newFuncName;
-						if ( newFuncName == "new" )
+						if ( newFuncName.startsWith("new") )
 							dest.functions[newFuncName].type = GtkFunctionType.Constructor;
 						if ( currentStruct.virtualFunctions.canFind(vals[0]) )
 							dest.virtualFunctions ~= newFuncName;

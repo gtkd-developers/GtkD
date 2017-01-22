@@ -1199,14 +1199,15 @@ final class GtkFunction
 				buff ~= " *";
 				buff ~= " * Params:";
 
-				GtkParam[] docParams;
-
 				if ( type == GtkFunctionType.Constructor && instanceParam && !instanceParam.doc.empty )
-					docParams = instanceParam ~ params;
-				else
-					docParams = params;
+				{
+					string[] lines = instanceParam.doc.splitLines();
+					buff ~= " *     "~ tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases()) ~" = "~ lines[0];
+					foreach( line; lines[1..$] )
+						buff ~= " *         "~ line.strip();
+				}
 
-				foreach ( param; docParams )
+				foreach ( param; params )
 				{
 					if ( param.doc.empty )
 						continue;

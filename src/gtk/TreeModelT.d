@@ -29,8 +29,6 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gobject.Value;
 public  import gtk.TreeIter;
-public  import gtk.TreeModel;
-public  import gtk.TreeModelIF;
 public  import gtk.TreePath;
 public  import gtkc.gdktypes;
 public  import gtkc.gtk;
@@ -725,23 +723,6 @@ public template TreeModelT(TStruct)
 	public void rowsReorderedWithLength(TreePath path, TreeIter iter, int[] newOrder)
 	{
 		gtk_tree_model_rows_reordered_with_length(getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder.ptr, cast(int)newOrder.length);
-	}
-
-	/**
-	 * Creates a new #GtkTreeModel, with @child_model as the child model.
-	 *
-	 * Return: A new #GtkTreeModel.
-	 */
-	public TreeModelIF sortNewWithModel()
-	{
-		auto p = gtk_tree_model_sort_new_with_model(getTreeModelStruct());
-		
-		if(p is null)
-		{
-			return null;
-		}
-		
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p, true);
 	}
 
 	/**
