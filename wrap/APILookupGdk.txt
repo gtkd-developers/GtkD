@@ -517,6 +517,8 @@ code: start
 	}
 code: end
 
+struct:
+
 move: property_delete Atom
 move: property_get Atom
 move: text_property_to_utf8_list_for_display Atom

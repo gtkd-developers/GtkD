@@ -287,12 +287,27 @@ class GtkWrapper
 					GtkStruct dest = pack.getStruct(vals[1]);
 					if ( dest is null )
 						dest = createClass(pack, vals[1]);
-					if ( vals[0] !in pack.collectedFunctions )
+
+					if ( currentStruct && vals[0] in currentStruct.functions )
+					{
+						currentStruct.functions[vals[0]].strct = dest;
+						dest.functions[newFuncName] = currentStruct.functions[vals[0]];
+						dest.functions[newFuncName].name = newFuncName;
+						if ( newFuncName == "new" )
+							dest.functions[newFuncName].type = GtkFunctionType.Constructor;
+						if ( currentStruct.virtualFunctions.canFind(vals[0]) )
+							dest.virtualFunctions ~= newFuncName;
+						currentStruct.functions.remove(vals[0]);
+					}
+					else if ( vals[0] in pack.collectedFunctions )
+					{
+						pack.collectedFunctions[vals[0]].strct = dest;
+						dest.functions[newFuncName] = pack.collectedFunctions[vals[0]];
+						dest.functions[newFuncName].name = newFuncName;
+						pack.collectedFunctions.remove(vals[0]);
+					}
+					else
 						throw new WrapError(defReader, "unknown function "~ vals[0]);
-					pack.collectedFunctions[vals[0]].strct = dest;
-					dest.functions[newFuncName] = pack.collectedFunctions[vals[0]];
-					dest.functions[newFuncName].name = newFuncName;
-					pack.collectedFunctions.remove(vals[0]);
 					break;
 				case "import":
 					currentStruct.imports ~= defReader.value;

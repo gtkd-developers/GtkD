@@ -1595,6 +1595,8 @@ code: start
 	}
 code: end
 
+struct:
+
 move: atomic_int_add Atomic int_add
 move: atomic_int_and Atomic int_and
 move: atomic_int_compare_and_exchange Atomic int_compare_and_exchange

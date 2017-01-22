@@ -322,6 +322,8 @@ array: init_check argv argc
 struct: GLWidget
 namespace:
 
+struct:
+
 move: widget_begin_gl GLWidget begin_gl
 move: widget_create_gl_context GLWidget create_gl_context
 move: widget_end_gl GLWidget widget_end_gl

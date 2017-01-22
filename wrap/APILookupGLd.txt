@@ -97,6 +97,8 @@ out: version_for_display minor
 struct: Window
 class: GLWindow
 
+struct:
+
 move: get_proc_address GLQuery
 move: query_extension GLQuery extension
 move: query_extension_for_display GLQuery extension_for_display

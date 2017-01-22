@@ -4129,6 +4129,7 @@ code: start
 code: end
 
 struct: TreeModel
+#move: filter_new TreeModelFilter new
 import: gobject.Value
 noCode: get_value
 noCode: get_iter
@@ -5544,6 +5545,8 @@ code: start
 		move(cast(int)x, cast(int)y);
 	}
 code: end
+
+struct:
 
 move: show_about_dialog AboutDialog
 

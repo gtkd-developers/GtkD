@@ -558,6 +558,8 @@ code: end
 # Move functions defined as global into there respective classes
 #
 
+struct:
+
 move: boxed_copy Boxed copy
 move: boxed_free Boxed free
 move: boxed_type_register_static Boxed type_register_static

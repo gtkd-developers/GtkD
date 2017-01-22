@@ -82,6 +82,8 @@ code: start
 	}
 code: end
 
+struct:
+
 move: get_user_shell Terminal
 
 move: get_features Version

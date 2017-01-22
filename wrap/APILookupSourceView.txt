@@ -191,5 +191,7 @@ code: start
 	}
 code: end
 
+struct:
+
 move: utils_escape_search_text Utils escape_search_text
 move: utils_unescape_search_text Utils unescape_search_text

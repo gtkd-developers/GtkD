@@ -1319,6 +1319,8 @@ code: start
 	}
 code: end
 
+struct:
+
 move: debug_add_log_function Debug add_log_function
 move: debug_bin_to_dot_data Debug bin_to_dot_data
 move: debug_bin_to_dot_file Debug bin_to_dot_file

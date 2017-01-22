@@ -70,6 +70,8 @@ namespace: Util
 # Move functions defined as global into there respective classes
 #
 
+struct:
+
 move: add_focus_tracker Util
 move: add_global_event_listener Util
 move: add_key_event_listener Util

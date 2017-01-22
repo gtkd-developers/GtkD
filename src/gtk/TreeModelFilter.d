@@ -408,4 +408,29 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	{
 		gtk_tree_model_filter_set_visible_func(gtkTreeModelFilter, func, data, destroy);
 	}
+
+	/**
+	 * Creates a new #GtkTreeModel, with @child_model as the child_model
+	 * and @root as the virtual root.
+	 *
+	 * Params:
+	 *     root = A #GtkTreePath or %NULL.
+	 *
+	 * Return: A new #GtkTreeModel.
+	 *
+	 * Since: 2.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TreePath root)
+	{
+		auto p = gtk_tree_model_filter_new(getTreeModelFilterStruct(), (root is null) ? null : root.getTreePathStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GtkTreeModelFilter*) p, true);
+	}
 }

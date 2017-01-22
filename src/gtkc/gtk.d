@@ -4231,7 +4231,6 @@ shared static this()
 	// gtk.TreeModel
 
 	Linker.link(gtk_tree_model_get_type, "gtk_tree_model_get_type", LIBRARY.GTK);
-	Linker.link(gtk_tree_model_filter_new, "gtk_tree_model_filter_new", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_foreach, "gtk_tree_model_foreach", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_get, "gtk_tree_model_get", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_get_column_type, "gtk_tree_model_get_column_type", LIBRARY.GTK);
@@ -4274,6 +4273,7 @@ shared static this()
 	Linker.link(gtk_tree_model_filter_set_modify_func, "gtk_tree_model_filter_set_modify_func", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_filter_set_visible_column, "gtk_tree_model_filter_set_visible_column", LIBRARY.GTK);
 	Linker.link(gtk_tree_model_filter_set_visible_func, "gtk_tree_model_filter_set_visible_func", LIBRARY.GTK);
+	Linker.link(gtk_tree_model_filter_new, "gtk_tree_model_filter_new", LIBRARY.GTK);
 
 	// gtk.TreeModelSort
 
@@ -9386,7 +9386,6 @@ __gshared extern(C)
 	// gtk.TreeModel
 
 	GType function() c_gtk_tree_model_get_type;
-	GtkTreeModel* function(GtkTreeModel* childModel, GtkTreePath* root) c_gtk_tree_model_filter_new;
 	void function(GtkTreeModel* model, GtkTreeModelForeachFunc func, void* userData) c_gtk_tree_model_foreach;
 	void function(GtkTreeModel* treeModel, GtkTreeIter* iter, ... ) c_gtk_tree_model_get;
 	GType function(GtkTreeModel* treeModel, int index) c_gtk_tree_model_get_column_type;
@@ -9429,6 +9428,7 @@ __gshared extern(C)
 	void function(GtkTreeModelFilter* filter, int nColumns, GType* types, GtkTreeModelFilterModifyFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_modify_func;
 	void function(GtkTreeModelFilter* filter, int column) c_gtk_tree_model_filter_set_visible_column;
 	void function(GtkTreeModelFilter* filter, GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy) c_gtk_tree_model_filter_set_visible_func;
+	GtkTreeModel* function(GtkTreeModel* childModel, GtkTreePath* root) c_gtk_tree_model_filter_new;
 
 	// gtk.TreeModelSort
 
@@ -14539,7 +14539,6 @@ alias c_gtk_tree_iter_free gtk_tree_iter_free;
 // gtk.TreeModel
 
 alias c_gtk_tree_model_get_type gtk_tree_model_get_type;
-alias c_gtk_tree_model_filter_new gtk_tree_model_filter_new;
 alias c_gtk_tree_model_foreach gtk_tree_model_foreach;
 alias c_gtk_tree_model_get gtk_tree_model_get;
 alias c_gtk_tree_model_get_column_type gtk_tree_model_get_column_type;
@@ -14582,6 +14581,7 @@ alias c_gtk_tree_model_filter_refilter gtk_tree_model_filter_refilter;
 alias c_gtk_tree_model_filter_set_modify_func gtk_tree_model_filter_set_modify_func;
 alias c_gtk_tree_model_filter_set_visible_column gtk_tree_model_filter_set_visible_column;
 alias c_gtk_tree_model_filter_set_visible_func gtk_tree_model_filter_set_visible_func;
+alias c_gtk_tree_model_filter_new gtk_tree_model_filter_new;
 
 // gtk.TreeModelSort
 
