@@ -142,32 +142,6 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	// add the TreeModel capabilities
 	mixin TreeModelT!(GtkTreeModelFilter);
 
-	/**
-	 * Creates a new TreeModel, with childModel as the child model
-	 * and root as the virtual _root.
-	 *
-	 * Params:
-	 *     childModel = A TreeModel.
-	 *     root = A TreePath or null.
-	 *
-	 * Throws: A ConstructionException if GTK+ fails to create the object.
-	 *
-	 * Since: 2.4
-	 */
-	public this(TreeModelIF childModel, TreePath root)
-	{
-		auto p = gtk_tree_model_filter_new(childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
-		
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_tree_model_filter_new");
-		}
-		
-		this(cast(GtkTreeModelFilter*) p, true);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -407,5 +381,31 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GDestroyNotify destroy)
 	{
 		gtk_tree_model_filter_set_visible_func(gtkTreeModelFilter, func, data, destroy);
+	}
+
+	/**
+	 * Creates a new #GtkTreeModel, with @child_model as the child_model
+	 * and @root as the virtual root.
+	 *
+	 * Params:
+	 *     childModel = A #GtkTreeModel.
+	 *     root = A #GtkTreePath or %NULL.
+	 *
+	 * Return: A new #GtkTreeModel.
+	 *
+	 * Since: 2.4
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(TreeModelIF childModel, TreePath root)
+	{
+		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+		
+		this(cast(GtkTreeModelFilter*) p, true);
 	}
 }

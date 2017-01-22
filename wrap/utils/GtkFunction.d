@@ -298,7 +298,7 @@ final class GtkFunction
 
 		size_t paramCount;
 
-		if ( instanceParam && type == GtkFunctionType.Method && (strct.isNamespace() || strct.noNamespace ) )
+		if ( instanceParam && ((type == GtkFunctionType.Method && (strct.isNamespace() || strct.noNamespace )) || type == GtkFunctionType.Constructor) )
 		{
 			dec ~= getType(instanceParam.type) ~" "~ tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 			paramCount++;
@@ -383,7 +383,7 @@ final class GtkFunction
 					dType = insType;
 			}
 
-			if ( strct.isNamespace() || strct.noNamespace )
+			if ( type == GtkFunctionType.Constructor || strct.isNamespace() || strct.noNamespace )
 			{
 				string id = tokenToGtkD(instanceParam.name, wrapper.aliasses, localAliases());
 
@@ -1194,12 +1194,19 @@ final class GtkFunction
 			foreach ( line; doc.splitLines() )
 				buff ~= " * "~ line.strip();
 
-			if ( !params.empty )
+			if ( !params.empty || (instanceParam && type == GtkFunctionType.Constructor) )
 			{
 				buff ~= " *";
 				buff ~= " * Params:";
 
-				foreach ( param; params )
+				GtkParam[] docParams;
+
+				if ( type == GtkFunctionType.Constructor && instanceParam && !instanceParam.doc.empty )
+					docParams = instanceParam ~ params;
+				else
+					docParams = params;
+
+				foreach ( param; docParams )
 				{
 					if ( param.doc.empty )
 						continue;
