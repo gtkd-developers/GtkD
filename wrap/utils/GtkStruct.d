@@ -445,23 +445,14 @@ final class GtkStruct
 			if ( func.type == GtkFunctionType.Signal )
 			{
 				buff ~= "\n";
-
 				buff ~= indenter.format(func.getDelegateWrapperDeclaration());
-				buff ~= indenter.format("protected " ~ func.getDelegateWrapperName() ~ "[] on" ~ func.getSignalName() ~"Listeners;");
 
 				buff ~= "\n";
 				buff ~= indenter.format(func.getAddListenerDeclaration());
 				buff ~= indenter.format(func.getAddListenerBody());
 				buff ~= indenter.format(func.getSignalCallback());
 				buff ~= indenter.format(func.getSignalDestroyCallback());
-				buff ~= "\n";
-				/*
-				buff ~= indenter.format(func.getRemoveListenerDeclaration());
-				buff ~= indenter.format(func.getRemoveListenerBody());
-				buff ~= "\n";
-				*/
-				buff ~= indenter.format(func.getInternalRemoveListenerDeclaration());
-				buff ~= indenter.format(func.getInternalRemoveListenerBody());
+
 
 				foreach ( param; func.params )
 				{
@@ -530,12 +521,11 @@ final class GtkStruct
 
 				if ( func.type == GtkFunctionType.Signal )
 				{
-					buff ~= indenter.format(func.getAddListenerDeclaration() ~ ";");
+					string[] dec = func.getAddListenerDeclaration();
+					dec[$-1] ~= ";";
+
 					buff ~= "\n";
-					/*
-					buff ~= indenter.format(func.getRemoveListenerDeclaration() ~ ";");
-					buff ~= "\n";
-					*/
+					buff ~= indenter.format(dec);
 				}
 				else
 				{
@@ -896,19 +886,12 @@ final class GtkStruct
 		signal.name = signal.name ~ "-generic-event";
 
 		buff ~= signal.getDelegateWrapperDeclaration();
-		buff ~= "protected " ~ signal.getDelegateWrapperName() ~ "[] on" ~ signal.getSignalName() ~"Listeners;";
+
 		buff ~= "\n";
-		
 		buff ~= declaration;
 		buff ~= signal.getAddListenerBody();
 		buff ~= signal.getSignalCallback();
 		buff ~= signal.getSignalDestroyCallback();
-		/*
-		buff ~= signal.getRemoveListenerDeclaration();
-		buff ~= signal.getRemoveListenerBody();
-		*/
-		buff ~= signal.getInternalRemoveListenerDeclaration();
-		buff ~= signal.getInternalRemoveListenerBody();
 		
 		return buff;
 	}

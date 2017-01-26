@@ -75,7 +75,7 @@ code: start
 	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		scopedOnCommandLineListeners ~= new ScopedOnCommandLineDelegateWrapper(dlg, 0, connectFlags);
-		onCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId = Signals.connectData(
+		scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId = Signals.connectData(
 			this,
 			"command-line",
 			cast(GCallback)&callBackScopedCommandLine,
@@ -90,7 +90,7 @@ code: start
 		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
 	}
 	
-	extern(C) static void callBackScopedCommandLineDestroy(OnCommandLineDelegateWrapper wrapper, GClosure* closure)
+	extern(C) static void callBackScopedCommandLineDestroy(ScopedOnCommandLineDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.outer.internalRemoveOnCommandLine(wrapper);
 	}
