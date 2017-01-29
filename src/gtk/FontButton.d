@@ -293,17 +293,29 @@ public class FontButton : Button, FontChooserIF
 
 	protected class OnFontSetDelegateWrapper
 	{
+		static OnFontSetDelegateWrapper[] listeners;
 		void delegate(FontButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FontButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FontButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFontSetDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFontSetDelegateWrapper[] onFontSetListeners;
 
 	/**
 	 * The ::font-set signal is emitted when the user selects a font.
@@ -318,38 +330,24 @@ public class FontButton : Button, FontChooserIF
 	 */
 	gulong addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFontSetListeners ~= new OnFontSetDelegateWrapper(dlg, 0, connectFlags);
-		onFontSetListeners[onFontSetListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFontSetDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"font-set",
 			cast(GCallback)&callBackFontSet,
-			cast(void*)onFontSetListeners[onFontSetListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFontSetDestroy,
 			connectFlags);
-		return onFontSetListeners[onFontSetListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackFontSet(GtkFontButton* fontbuttonStruct,OnFontSetDelegateWrapper wrapper)
+	extern(C) static void callBackFontSet(GtkFontButton* fontbuttonStruct, OnFontSetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackFontSetDestroy(OnFontSetDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFontSet(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFontSet(OnFontSetDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFontSetListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFontSetListeners[index] = null;
-				onFontSetListeners = std.algorithm.remove(onFontSetListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -456,11 +456,11 @@ public interface MountIF{
 	 * Since: 2.20
 	 */
 	public void unshadow();
+
 	/**
 	 * Emitted when the mount has been changed.
 	 */
-	gulong addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the #GMount is about to be
@@ -468,8 +468,7 @@ public interface MountIF{
 	 *
 	 * Since: 2.22
 	 */
-	gulong addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnPreUnmount(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the #GMount have been
@@ -477,7 +476,5 @@ public interface MountIF{
 	 * object they should release them so the object can be
 	 * finalized.
 	 */
-	gulong addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnUnmounted(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

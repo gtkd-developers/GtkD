@@ -140,11 +140,10 @@ public interface SourceCompletionProposalIF{
 	 * Return: The hash value of @proposal.
 	 */
 	public uint hash();
+
 	/**
 	 * Emitted when the proposal has changed. The completion popup
 	 * will react to this by updating the shown information.
 	 */
-	gulong addOnChanged(void delegate(SourceCompletionProposalIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnChanged(void delegate(SourceCompletionProposalIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

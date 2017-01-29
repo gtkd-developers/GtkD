@@ -505,17 +505,29 @@ public class CellRenderer : ObjectG
 
 	protected class OnEditingCanceledDelegateWrapper
 	{
+		static OnEditingCanceledDelegateWrapper[] listeners;
 		void delegate(CellRenderer) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(CellRenderer) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(CellRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEditingCanceledDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEditingCanceledDelegateWrapper[] onEditingCanceledListeners;
 
 	/**
 	 * This signal gets emitted when the user cancels the process of editing a
@@ -528,54 +540,52 @@ public class CellRenderer : ObjectG
 	 */
 	gulong addOnEditingCanceled(void delegate(CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEditingCanceledListeners ~= new OnEditingCanceledDelegateWrapper(dlg, 0, connectFlags);
-		onEditingCanceledListeners[onEditingCanceledListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEditingCanceledDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"editing-canceled",
 			cast(GCallback)&callBackEditingCanceled,
-			cast(void*)onEditingCanceledListeners[onEditingCanceledListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEditingCanceledDestroy,
 			connectFlags);
-		return onEditingCanceledListeners[onEditingCanceledListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEditingCanceled(GtkCellRenderer* cellrendererStruct,OnEditingCanceledDelegateWrapper wrapper)
+	extern(C) static void callBackEditingCanceled(GtkCellRenderer* cellrendererStruct, OnEditingCanceledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackEditingCanceledDestroy(OnEditingCanceledDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEditingCanceled(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEditingCanceled(OnEditingCanceledDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEditingCanceledListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEditingCanceledListeners[index] = null;
-				onEditingCanceledListeners = std.algorithm.remove(onEditingCanceledListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnEditingStartedDelegateWrapper
 	{
+		static OnEditingStartedDelegateWrapper[] listeners;
 		void delegate(CellEditableIF, string, CellRenderer) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(CellEditableIF, string, CellRenderer) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(CellEditableIF, string, CellRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEditingStartedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEditingStartedDelegateWrapper[] onEditingStartedListeners;
 
 	/**
 	 * This signal gets emitted when a cell starts to be edited.
@@ -613,38 +623,24 @@ public class CellRenderer : ObjectG
 	 */
 	gulong addOnEditingStarted(void delegate(CellEditableIF, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEditingStartedListeners ~= new OnEditingStartedDelegateWrapper(dlg, 0, connectFlags);
-		onEditingStartedListeners[onEditingStartedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEditingStartedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"editing-started",
 			cast(GCallback)&callBackEditingStarted,
-			cast(void*)onEditingStartedListeners[onEditingStartedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEditingStartedDestroy,
 			connectFlags);
-		return onEditingStartedListeners[onEditingStartedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path,OnEditingStartedDelegateWrapper wrapper)
+	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path, OnEditingStartedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), wrapper.outer);
 	}
 	
 	extern(C) static void callBackEditingStartedDestroy(OnEditingStartedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEditingStarted(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEditingStarted(OnEditingStartedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEditingStartedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEditingStartedListeners[index] = null;
-				onEditingStartedListeners = std.algorithm.remove(onEditingStartedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

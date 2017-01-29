@@ -126,17 +126,29 @@ public class CellRendererText : CellRenderer
 
 	protected class OnEditedDelegateWrapper
 	{
+		static OnEditedDelegateWrapper[] listeners;
 		void delegate(string, string, CellRendererText) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, string, CellRendererText) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, string, CellRendererText) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEditedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEditedDelegateWrapper[] onEditedListeners;
 
 	/**
 	 * This signal is emitted after @renderer has been edited.
@@ -150,38 +162,24 @@ public class CellRendererText : CellRenderer
 	 */
 	gulong addOnEdited(void delegate(string, string, CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEditedListeners ~= new OnEditedDelegateWrapper(dlg, 0, connectFlags);
-		onEditedListeners[onEditedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEditedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"edited",
 			cast(GCallback)&callBackEdited,
-			cast(void*)onEditedListeners[onEditedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEditedDestroy,
 			connectFlags);
-		return onEditedListeners[onEditedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEdited(GtkCellRendererText* cellrenderertextStruct, char* path, char* newText,OnEditedDelegateWrapper wrapper)
+	extern(C) static void callBackEdited(GtkCellRendererText* cellrenderertextStruct, char* path, char* newText, OnEditedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(path), Str.toString(newText), wrapper.outer);
 	}
 	
 	extern(C) static void callBackEditedDestroy(OnEditedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEdited(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEdited(OnEditedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEditedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEditedListeners[index] = null;
-				onEditedListeners = std.algorithm.remove(onEditedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

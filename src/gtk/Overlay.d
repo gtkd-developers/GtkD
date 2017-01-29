@@ -189,17 +189,29 @@ public class Overlay : Bin
 
 	protected class OnGetChildPositionDelegateWrapper
 	{
+		static OnGetChildPositionDelegateWrapper[] listeners;
 		bool delegate(Widget, GdkRectangle*, Overlay) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(Widget, GdkRectangle*, Overlay) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(Widget, GdkRectangle*, Overlay) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnGetChildPositionDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnGetChildPositionDelegateWrapper[] onGetChildPositionListeners;
 
 	/**
 	 * The ::get-child-position signal is emitted to determine
@@ -225,38 +237,24 @@ public class Overlay : Bin
 	 */
 	gulong addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onGetChildPositionListeners ~= new OnGetChildPositionDelegateWrapper(dlg, 0, connectFlags);
-		onGetChildPositionListeners[onGetChildPositionListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnGetChildPositionDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"get-child-position",
 			cast(GCallback)&callBackGetChildPosition,
-			cast(void*)onGetChildPositionListeners[onGetChildPositionListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackGetChildPositionDestroy,
 			connectFlags);
-		return onGetChildPositionListeners[onGetChildPositionListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackGetChildPosition(GtkOverlay* overlayStruct, GtkWidget* widget, GdkRectangle* allocation,OnGetChildPositionDelegateWrapper wrapper)
+	extern(C) static int callBackGetChildPosition(GtkOverlay* overlayStruct, GtkWidget* widget, GdkRectangle* allocation, OnGetChildPositionDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(Widget)(widget), allocation, wrapper.outer);
 	}
 	
 	extern(C) static void callBackGetChildPositionDestroy(OnGetChildPositionDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnGetChildPosition(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnGetChildPosition(OnGetChildPositionDelegateWrapper source)
-	{
-		foreach(index, wrapper; onGetChildPositionListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onGetChildPositionListeners[index] = null;
-				onGetChildPositionListeners = std.algorithm.remove(onGetChildPositionListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -168,17 +168,29 @@ public class ExtensionSet : ObjectG
 
 	protected class OnExtensionAddedDelegateWrapper
 	{
+		static OnExtensionAddedDelegateWrapper[] listeners;
 		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnExtensionAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnExtensionAddedDelegateWrapper[] onExtensionAddedListeners;
 
 	/**
 	 * The extension-added signal is emitted when a new extension has been
@@ -196,54 +208,52 @@ public class ExtensionSet : ObjectG
 	 */
 	gulong addOnExtensionAdded(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onExtensionAddedListeners ~= new OnExtensionAddedDelegateWrapper(dlg, 0, connectFlags);
-		onExtensionAddedListeners[onExtensionAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnExtensionAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"extension-added",
 			cast(GCallback)&callBackExtensionAdded,
-			cast(void*)onExtensionAddedListeners[onExtensionAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackExtensionAddedDestroy,
 			connectFlags);
-		return onExtensionAddedListeners[onExtensionAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackExtensionAdded(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten,OnExtensionAddedDelegateWrapper wrapper)
+	extern(C) static void callBackExtensionAdded(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten, OnExtensionAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), wrapper.outer);
 	}
 	
 	extern(C) static void callBackExtensionAddedDestroy(OnExtensionAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnExtensionAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnExtensionAdded(OnExtensionAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onExtensionAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onExtensionAddedListeners[index] = null;
-				onExtensionAddedListeners = std.algorithm.remove(onExtensionAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnExtensionRemovedDelegateWrapper
 	{
+		static OnExtensionRemovedDelegateWrapper[] listeners;
 		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnExtensionRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnExtensionRemovedDelegateWrapper[] onExtensionRemovedListeners;
 
 	/**
 	 * The extension-removed signal is emitted when a new extension is about to be
@@ -262,38 +272,24 @@ public class ExtensionSet : ObjectG
 	 */
 	gulong addOnExtensionRemoved(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onExtensionRemovedListeners ~= new OnExtensionRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onExtensionRemovedListeners[onExtensionRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnExtensionRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"extension-removed",
 			cast(GCallback)&callBackExtensionRemoved,
-			cast(void*)onExtensionRemovedListeners[onExtensionRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackExtensionRemovedDestroy,
 			connectFlags);
-		return onExtensionRemovedListeners[onExtensionRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackExtensionRemoved(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten,OnExtensionRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackExtensionRemoved(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten, OnExtensionRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), wrapper.outer);
 	}
 	
 	extern(C) static void callBackExtensionRemovedDestroy(OnExtensionRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnExtensionRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnExtensionRemoved(OnExtensionRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onExtensionRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onExtensionRemovedListeners[index] = null;
-				onExtensionRemovedListeners = std.algorithm.remove(onExtensionRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

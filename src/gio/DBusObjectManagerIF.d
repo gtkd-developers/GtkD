@@ -103,6 +103,7 @@ public interface DBusObjectManagerIF{
 	 * Since: 2.30
 	 */
 	public ListG getObjects();
+
 	/**
 	 * Emitted when @interface is added to @object.
 	 *
@@ -115,8 +116,7 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	gulong addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnInterfaceAdded(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when @interface has been removed from @object.
@@ -130,8 +130,7 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	gulong addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnInterfaceRemoved(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when @object is added to @manager.
@@ -141,8 +140,7 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	gulong addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnObjectAdded(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when @object is removed from @manager.
@@ -152,7 +150,5 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Since: 2.30
 	 */
-	gulong addOnObjectRemoved(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnObjectRemoved(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

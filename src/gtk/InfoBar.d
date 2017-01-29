@@ -404,17 +404,29 @@ public class InfoBar : Box
 
 	protected class OnCloseDelegateWrapper
 	{
+		static OnCloseDelegateWrapper[] listeners;
 		void delegate(InfoBar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(InfoBar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(InfoBar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCloseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is a
@@ -428,54 +440,52 @@ public class InfoBar : Box
 	 */
 	gulong addOnClose(void delegate(InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCloseListeners ~= new OnCloseDelegateWrapper(dlg, 0, connectFlags);
-		onCloseListeners[onCloseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCloseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"close",
 			cast(GCallback)&callBackClose,
-			cast(void*)onCloseListeners[onCloseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCloseDestroy,
 			connectFlags);
-		return onCloseListeners[onCloseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClose(GtkInfoBar* infobarStruct,OnCloseDelegateWrapper wrapper)
+	extern(C) static void callBackClose(GtkInfoBar* infobarStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClose(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClose(OnCloseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCloseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCloseListeners[index] = null;
-				onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnResponseDelegateWrapper
 	{
+		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, InfoBar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, InfoBar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, InfoBar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnResponseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when an action widget is clicked or the application programmer
@@ -489,38 +499,24 @@ public class InfoBar : Box
 	 */
 	gulong addOnResponse(void delegate(int, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onResponseListeners ~= new OnResponseDelegateWrapper(dlg, 0, connectFlags);
-		onResponseListeners[onResponseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnResponseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"response",
 			cast(GCallback)&callBackResponse,
-			cast(void*)onResponseListeners[onResponseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackResponseDestroy,
 			connectFlags);
-		return onResponseListeners[onResponseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId,OnResponseDelegateWrapper wrapper)
+	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId, OnResponseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(responseId, wrapper.outer);
 	}
 	
 	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnResponse(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnResponse(OnResponseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onResponseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onResponseListeners[index] = null;
-				onResponseListeners = std.algorithm.remove(onResponseListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

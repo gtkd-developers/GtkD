@@ -223,17 +223,29 @@ public class Statusbar : Box
 
 	protected class OnTextPoppedDelegateWrapper
 	{
+		static OnTextPoppedDelegateWrapper[] listeners;
 		void delegate(uint, string, Statusbar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(uint, string, Statusbar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(uint, string, Statusbar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnTextPoppedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnTextPoppedDelegateWrapper[] onTextPoppedListeners;
 
 	/**
 	 * Is emitted whenever a new message is popped off a statusbar's stack.
@@ -244,54 +256,52 @@ public class Statusbar : Box
 	 */
 	gulong addOnTextPopped(void delegate(uint, string, Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onTextPoppedListeners ~= new OnTextPoppedDelegateWrapper(dlg, 0, connectFlags);
-		onTextPoppedListeners[onTextPoppedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnTextPoppedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"text-popped",
 			cast(GCallback)&callBackTextPopped,
-			cast(void*)onTextPoppedListeners[onTextPoppedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackTextPoppedDestroy,
 			connectFlags);
-		return onTextPoppedListeners[onTextPoppedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, uint contextId, char* text,OnTextPoppedDelegateWrapper wrapper)
+	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, uint contextId, char* text, OnTextPoppedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(contextId, Str.toString(text), wrapper.outer);
 	}
 	
 	extern(C) static void callBackTextPoppedDestroy(OnTextPoppedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnTextPopped(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnTextPopped(OnTextPoppedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onTextPoppedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onTextPoppedListeners[index] = null;
-				onTextPoppedListeners = std.algorithm.remove(onTextPoppedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnTextPushedDelegateWrapper
 	{
+		static OnTextPushedDelegateWrapper[] listeners;
 		void delegate(uint, string, Statusbar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(uint, string, Statusbar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(uint, string, Statusbar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnTextPushedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnTextPushedDelegateWrapper[] onTextPushedListeners;
 
 	/**
 	 * Is emitted whenever a new message gets pushed onto a statusbar's stack.
@@ -302,38 +312,24 @@ public class Statusbar : Box
 	 */
 	gulong addOnTextPushed(void delegate(uint, string, Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onTextPushedListeners ~= new OnTextPushedDelegateWrapper(dlg, 0, connectFlags);
-		onTextPushedListeners[onTextPushedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnTextPushedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"text-pushed",
 			cast(GCallback)&callBackTextPushed,
-			cast(void*)onTextPushedListeners[onTextPushedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackTextPushedDestroy,
 			connectFlags);
-		return onTextPushedListeners[onTextPushedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, uint contextId, char* text,OnTextPushedDelegateWrapper wrapper)
+	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, uint contextId, char* text, OnTextPushedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(contextId, Str.toString(text), wrapper.outer);
 	}
 	
 	extern(C) static void callBackTextPushedDestroy(OnTextPushedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnTextPushed(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnTextPushed(OnTextPushedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onTextPushedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onTextPushedListeners[index] = null;
-				onTextPushedListeners = std.algorithm.remove(onTextPushedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -313,17 +313,29 @@ public class SourceMarkAttributes : ObjectG
 
 	protected class OnQueryTooltipMarkupDelegateWrapper
 	{
+		static OnQueryTooltipMarkupDelegateWrapper[] listeners;
 		string delegate(SourceMark, SourceMarkAttributes) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(string delegate(SourceMark, SourceMarkAttributes) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnQueryTooltipMarkupDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnQueryTooltipMarkupDelegateWrapper[] onQueryTooltipMarkupListeners;
 
 	/**
 	 * The code should connect to this signal to provide a tooltip for given
@@ -337,54 +349,52 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	gulong addOnQueryTooltipMarkup(string delegate(SourceMark, SourceMarkAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onQueryTooltipMarkupListeners ~= new OnQueryTooltipMarkupDelegateWrapper(dlg, 0, connectFlags);
-		onQueryTooltipMarkupListeners[onQueryTooltipMarkupListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnQueryTooltipMarkupDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"query-tooltip-markup",
 			cast(GCallback)&callBackQueryTooltipMarkup,
-			cast(void*)onQueryTooltipMarkupListeners[onQueryTooltipMarkupListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackQueryTooltipMarkupDestroy,
 			connectFlags);
-		return onQueryTooltipMarkupListeners[onQueryTooltipMarkupListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static string callBackQueryTooltipMarkup(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark,OnQueryTooltipMarkupDelegateWrapper wrapper)
+	extern(C) static string callBackQueryTooltipMarkup(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark, OnQueryTooltipMarkupDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(SourceMark)(mark), wrapper.outer);
 	}
 	
 	extern(C) static void callBackQueryTooltipMarkupDestroy(OnQueryTooltipMarkupDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnQueryTooltipMarkup(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnQueryTooltipMarkup(OnQueryTooltipMarkupDelegateWrapper source)
-	{
-		foreach(index, wrapper; onQueryTooltipMarkupListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onQueryTooltipMarkupListeners[index] = null;
-				onQueryTooltipMarkupListeners = std.algorithm.remove(onQueryTooltipMarkupListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnQueryTooltipTextDelegateWrapper
 	{
+		static OnQueryTooltipTextDelegateWrapper[] listeners;
 		string delegate(SourceMark, SourceMarkAttributes) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(string delegate(SourceMark, SourceMarkAttributes) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnQueryTooltipTextDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnQueryTooltipTextDelegateWrapper[] onQueryTooltipTextListeners;
 
 	/**
 	 * The code should connect to this signal to provide a tooltip for given
@@ -398,38 +408,24 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	gulong addOnQueryTooltipText(string delegate(SourceMark, SourceMarkAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onQueryTooltipTextListeners ~= new OnQueryTooltipTextDelegateWrapper(dlg, 0, connectFlags);
-		onQueryTooltipTextListeners[onQueryTooltipTextListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnQueryTooltipTextDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"query-tooltip-text",
 			cast(GCallback)&callBackQueryTooltipText,
-			cast(void*)onQueryTooltipTextListeners[onQueryTooltipTextListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackQueryTooltipTextDestroy,
 			connectFlags);
-		return onQueryTooltipTextListeners[onQueryTooltipTextListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static string callBackQueryTooltipText(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark,OnQueryTooltipTextDelegateWrapper wrapper)
+	extern(C) static string callBackQueryTooltipText(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark, OnQueryTooltipTextDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(SourceMark)(mark), wrapper.outer);
 	}
 	
 	extern(C) static void callBackQueryTooltipTextDestroy(OnQueryTooltipTextDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnQueryTooltipText(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnQueryTooltipText(OnQueryTooltipTextDelegateWrapper source)
-	{
-		foreach(index, wrapper; onQueryTooltipTextListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onQueryTooltipTextListeners[index] = null;
-				onQueryTooltipTextListeners = std.algorithm.remove(onQueryTooltipTextListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

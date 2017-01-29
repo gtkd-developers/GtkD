@@ -142,17 +142,29 @@ public template TreeSortableT(TStruct)
 
 	protected class OnSortColumnChangedDelegateWrapper
 	{
+		static OnSortColumnChangedDelegateWrapper[] listeners;
 		void delegate(TreeSortableIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(TreeSortableIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(TreeSortableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSortColumnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSortColumnChangedDelegateWrapper[] onSortColumnChangedListeners;
 
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column
@@ -161,38 +173,24 @@ public template TreeSortableT(TStruct)
 	 */
 	gulong addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSortColumnChangedListeners ~= new OnSortColumnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onSortColumnChangedListeners[onSortColumnChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSortColumnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"sort-column-changed",
 			cast(GCallback)&callBackSortColumnChanged,
-			cast(void*)onSortColumnChangedListeners[onSortColumnChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSortColumnChangedDestroy,
 			connectFlags);
-		return onSortColumnChangedListeners[onSortColumnChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct,OnSortColumnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, OnSortColumnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackSortColumnChangedDestroy(OnSortColumnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSortColumnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSortColumnChanged(OnSortColumnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSortColumnChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSortColumnChangedListeners[index] = null;
-				onSortColumnChangedListeners = std.algorithm.remove(onSortColumnChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -357,6 +357,7 @@ public interface ActionGroupIF{
 	 * Since: 2.32
 	 */
 	public bool queryAction(string actionName, out bool enabled, out VariantType parameterType, out VariantType stateType, out Variant stateHint, out Variant state);
+
 	/**
 	 * Signals that a new action was just added to the group.
 	 * This signal is emitted after the action has been added
@@ -367,8 +368,7 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	gulong addOnActionAdded(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnActionAdded(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Signals that the enabled status of the named action has changed.
@@ -379,8 +379,7 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	gulong addOnActionEnabledChanged(void delegate(string, bool, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnActionEnabledChanged(void delegate(string, bool, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Signals that an action is just about to be removed from the group.
@@ -392,8 +391,7 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	gulong addOnActionRemoved(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnActionRemoved(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Signals that the state of the named action has changed.
@@ -404,7 +402,5 @@ public interface ActionGroupIF{
 	 *
 	 * Since: 2.28
 	 */
-	gulong addOnActionStateChanged(void delegate(string, Variant, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnActionStateChanged(void delegate(string, Variant, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

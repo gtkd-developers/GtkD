@@ -280,17 +280,29 @@ public template ComponentT(TStruct)
 
 	protected class OnBoundsChangedDelegateWrapper
 	{
+		static OnBoundsChangedDelegateWrapper[] listeners;
 		void delegate(AtkRectangle*, ComponentIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(AtkRectangle*, ComponentIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(AtkRectangle*, ComponentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnBoundsChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnBoundsChangedDelegateWrapper[] onBoundsChangedListeners;
 
 	/**
 	 * The 'bounds-changed" signal is emitted when the bposition or
@@ -301,38 +313,24 @@ public template ComponentT(TStruct)
 	 */
 	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onBoundsChangedListeners ~= new OnBoundsChangedDelegateWrapper(dlg, 0, connectFlags);
-		onBoundsChangedListeners[onBoundsChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnBoundsChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"bounds-changed",
 			cast(GCallback)&callBackBoundsChanged,
-			cast(void*)onBoundsChangedListeners[onBoundsChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackBoundsChangedDestroy,
 			connectFlags);
-		return onBoundsChangedListeners[onBoundsChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1,OnBoundsChangedDelegateWrapper wrapper)
+	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1, OnBoundsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
 	
 	extern(C) static void callBackBoundsChangedDestroy(OnBoundsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnBoundsChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnBoundsChanged(OnBoundsChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onBoundsChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onBoundsChangedListeners[index] = null;
-				onBoundsChangedListeners = std.algorithm.remove(onBoundsChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

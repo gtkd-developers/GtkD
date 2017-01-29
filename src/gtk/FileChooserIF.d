@@ -1131,6 +1131,7 @@ public interface FileChooserIF{
 	 * Since: 2.4
 	 */
 	public void unselectUri(string uri);
+
 	/**
 	 * This signal gets emitted whenever it is appropriate to present a
 	 * confirmation dialog when the user has selected a file name that
@@ -1196,8 +1197,7 @@ public interface FileChooserIF{
 	 *
 	 * Since: 2.8
 	 */
-	gulong addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the current folder in a #GtkFileChooser
@@ -1214,8 +1214,7 @@ public interface FileChooserIF{
 	 * gtk_file_chooser_set_current_folder_uri(),
 	 * gtk_file_chooser_get_current_folder_uri().
 	 */
-	gulong addOnCurrentFolderChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnCurrentFolderChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the user "activates" a file in the file
@@ -1230,8 +1229,7 @@ public interface FileChooserIF{
 	 * gtk_file_chooser_get_filenames(), gtk_file_chooser_get_uri(),
 	 * gtk_file_chooser_get_uris().
 	 */
-	gulong addOnFileActivated(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnFileActivated(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when there is a change in the set of selected files
@@ -1249,8 +1247,7 @@ public interface FileChooserIF{
 	 * gtk_file_chooser_unselect_uri(), gtk_file_chooser_get_uri(),
 	 * gtk_file_chooser_get_uris().
 	 */
-	gulong addOnSelectionChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnSelectionChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the preview in a file chooser should be
@@ -1276,7 +1273,5 @@ public interface FileChooserIF{
 	 * gtk_file_chooser_get_preview_filename(),
 	 * gtk_file_chooser_get_preview_uri().
 	 */
-	gulong addOnUpdatePreview(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnUpdatePreview(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

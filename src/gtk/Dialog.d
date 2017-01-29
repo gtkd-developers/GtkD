@@ -537,17 +537,29 @@ public class Dialog : Window
 
 	protected class OnCloseDelegateWrapper
 	{
+		static OnCloseDelegateWrapper[] listeners;
 		void delegate(Dialog) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Dialog) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Dialog) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCloseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is a
@@ -559,54 +571,52 @@ public class Dialog : Window
 	 */
 	gulong addOnClose(void delegate(Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCloseListeners ~= new OnCloseDelegateWrapper(dlg, 0, connectFlags);
-		onCloseListeners[onCloseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCloseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"close",
 			cast(GCallback)&callBackClose,
-			cast(void*)onCloseListeners[onCloseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCloseDestroy,
 			connectFlags);
-		return onCloseListeners[onCloseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClose(GtkDialog* dialogStruct,OnCloseDelegateWrapper wrapper)
+	extern(C) static void callBackClose(GtkDialog* dialogStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClose(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClose(OnCloseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCloseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCloseListeners[index] = null;
-				onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnResponseDelegateWrapper
 	{
+		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, Dialog) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, Dialog) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, Dialog) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnResponseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when an action widget is clicked, the dialog receives a
@@ -619,40 +629,26 @@ public class Dialog : Window
 	 */
 	gulong addOnResponse(void delegate(int, Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onResponseListeners ~= new OnResponseDelegateWrapper(dlg, 0, connectFlags);
-		onResponseListeners[onResponseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnResponseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"response",
 			cast(GCallback)&callBackResponse,
-			cast(void*)onResponseListeners[onResponseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackResponseDestroy,
 			connectFlags);
-		return onResponseListeners[onResponseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackResponse(GtkDialog* dialogStruct, int responseId,OnResponseDelegateWrapper wrapper)
+	extern(C) static void callBackResponse(GtkDialog* dialogStruct, int responseId, OnResponseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(responseId, wrapper.outer);
 	}
 	
 	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnResponse(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnResponse(OnResponseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onResponseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onResponseListeners[index] = null;
-				onResponseListeners = std.algorithm.remove(onResponseListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Returns %TRUE if dialogs are expected to use an alternative

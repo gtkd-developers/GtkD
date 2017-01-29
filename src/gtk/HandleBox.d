@@ -233,17 +233,29 @@ public class HandleBox : Bin
 
 	protected class OnChildAttachedDelegateWrapper
 	{
+		static OnChildAttachedDelegateWrapper[] listeners;
 		void delegate(Widget, HandleBox) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Widget, HandleBox) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Widget, HandleBox) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChildAttachedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChildAttachedDelegateWrapper[] onChildAttachedListeners;
 
 	/**
 	 * This signal is emitted when the contents of the
@@ -258,54 +270,52 @@ public class HandleBox : Bin
 	 */
 	gulong addOnChildAttached(void delegate(Widget, HandleBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChildAttachedListeners ~= new OnChildAttachedDelegateWrapper(dlg, 0, connectFlags);
-		onChildAttachedListeners[onChildAttachedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChildAttachedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"child-attached",
 			cast(GCallback)&callBackChildAttached,
-			cast(void*)onChildAttachedListeners[onChildAttachedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChildAttachedDestroy,
 			connectFlags);
-		return onChildAttachedListeners[onChildAttachedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChildAttached(GtkHandleBox* handleboxStruct, GtkWidget* widget,OnChildAttachedDelegateWrapper wrapper)
+	extern(C) static void callBackChildAttached(GtkHandleBox* handleboxStruct, GtkWidget* widget, OnChildAttachedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
 	
 	extern(C) static void callBackChildAttachedDestroy(OnChildAttachedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChildAttached(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChildAttached(OnChildAttachedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChildAttachedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChildAttachedListeners[index] = null;
-				onChildAttachedListeners = std.algorithm.remove(onChildAttachedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnChildDetachedDelegateWrapper
 	{
+		static OnChildDetachedDelegateWrapper[] listeners;
 		void delegate(Widget, HandleBox) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Widget, HandleBox) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Widget, HandleBox) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChildDetachedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChildDetachedDelegateWrapper[] onChildDetachedListeners;
 
 	/**
 	 * This signal is emitted when the contents of the
@@ -320,38 +330,24 @@ public class HandleBox : Bin
 	 */
 	gulong addOnChildDetached(void delegate(Widget, HandleBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChildDetachedListeners ~= new OnChildDetachedDelegateWrapper(dlg, 0, connectFlags);
-		onChildDetachedListeners[onChildDetachedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChildDetachedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"child-detached",
 			cast(GCallback)&callBackChildDetached,
-			cast(void*)onChildDetachedListeners[onChildDetachedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChildDetachedDestroy,
 			connectFlags);
-		return onChildDetachedListeners[onChildDetachedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChildDetached(GtkHandleBox* handleboxStruct, GtkWidget* widget,OnChildDetachedDelegateWrapper wrapper)
+	extern(C) static void callBackChildDetached(GtkHandleBox* handleboxStruct, GtkWidget* widget, OnChildDetachedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
 	
 	extern(C) static void callBackChildDetachedDestroy(OnChildDetachedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChildDetached(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChildDetached(OnChildDetachedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChildDetachedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChildDetachedListeners[index] = null;
-				onChildDetachedListeners = std.algorithm.remove(onChildDetachedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -147,17 +147,29 @@ public template ColorChooserT(TStruct)
 
 	protected class OnColorActivatedDelegateWrapper
 	{
+		static OnColorActivatedDelegateWrapper[] listeners;
 		void delegate(RGBA, ColorChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(RGBA, ColorChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(RGBA, ColorChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnColorActivatedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnColorActivatedDelegateWrapper[] onColorActivatedListeners;
 
 	/**
 	 * Emitted when a color is activated from the color chooser.
@@ -172,38 +184,24 @@ public template ColorChooserT(TStruct)
 	 */
 	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onColorActivatedListeners ~= new OnColorActivatedDelegateWrapper(dlg, 0, connectFlags);
-		onColorActivatedListeners[onColorActivatedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnColorActivatedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"color-activated",
 			cast(GCallback)&callBackColorActivated,
-			cast(void*)onColorActivatedListeners[onColorActivatedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackColorActivatedDestroy,
 			connectFlags);
-		return onColorActivatedListeners[onColorActivatedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackColorActivated(GtkColorChooser* colorchooserStruct, GdkRGBA* color,OnColorActivatedDelegateWrapper wrapper)
+	extern(C) static void callBackColorActivated(GtkColorChooser* colorchooserStruct, GdkRGBA* color, OnColorActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(RGBA)(color), wrapper.outer);
 	}
 	
 	extern(C) static void callBackColorActivatedDestroy(OnColorActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnColorActivated(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnColorActivated(OnColorActivatedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onColorActivatedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onColorActivatedListeners[index] = null;
-				onColorActivatedListeners = std.algorithm.remove(onColorActivatedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

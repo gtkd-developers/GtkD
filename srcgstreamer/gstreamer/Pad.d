@@ -1792,17 +1792,29 @@ public class Pad : ObjectGst
 
 	protected class OnLinkedDelegateWrapper
 	{
+		static OnLinkedDelegateWrapper[] listeners;
 		void delegate(Pad, Pad) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Pad, Pad) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Pad, Pad) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnLinkedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnLinkedDelegateWrapper[] onLinkedListeners;
 
 	/**
 	 * Signals that a pad has been linked to the peer pad.
@@ -1812,54 +1824,52 @@ public class Pad : ObjectGst
 	 */
 	gulong addOnLinked(void delegate(Pad, Pad) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onLinkedListeners ~= new OnLinkedDelegateWrapper(dlg, 0, connectFlags);
-		onLinkedListeners[onLinkedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnLinkedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"linked",
 			cast(GCallback)&callBackLinked,
-			cast(void*)onLinkedListeners[onLinkedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackLinkedDestroy,
 			connectFlags);
-		return onLinkedListeners[onLinkedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackLinked(GstPad* padStruct, GstPad* peer,OnLinkedDelegateWrapper wrapper)
+	extern(C) static void callBackLinked(GstPad* padStruct, GstPad* peer, OnLinkedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(peer), wrapper.outer);
 	}
 	
 	extern(C) static void callBackLinkedDestroy(OnLinkedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnLinked(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnLinked(OnLinkedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onLinkedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onLinkedListeners[index] = null;
-				onLinkedListeners = std.algorithm.remove(onLinkedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnUnlinkedDelegateWrapper
 	{
+		static OnUnlinkedDelegateWrapper[] listeners;
 		void delegate(Pad, Pad) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Pad, Pad) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Pad, Pad) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnUnlinkedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnUnlinkedDelegateWrapper[] onUnlinkedListeners;
 
 	/**
 	 * Signals that a pad has been unlinked from the peer pad.
@@ -1869,40 +1879,26 @@ public class Pad : ObjectGst
 	 */
 	gulong addOnUnlinked(void delegate(Pad, Pad) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onUnlinkedListeners ~= new OnUnlinkedDelegateWrapper(dlg, 0, connectFlags);
-		onUnlinkedListeners[onUnlinkedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnUnlinkedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"unlinked",
 			cast(GCallback)&callBackUnlinked,
-			cast(void*)onUnlinkedListeners[onUnlinkedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackUnlinkedDestroy,
 			connectFlags);
-		return onUnlinkedListeners[onUnlinkedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackUnlinked(GstPad* padStruct, GstPad* peer,OnUnlinkedDelegateWrapper wrapper)
+	extern(C) static void callBackUnlinked(GstPad* padStruct, GstPad* peer, OnUnlinkedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(peer), wrapper.outer);
 	}
 	
 	extern(C) static void callBackUnlinkedDestroy(OnUnlinkedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnUnlinked(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnUnlinked(OnUnlinkedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onUnlinkedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onUnlinkedListeners[index] = null;
-				onUnlinkedListeners = std.algorithm.remove(onUnlinkedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Gets a string representing the given flow return.

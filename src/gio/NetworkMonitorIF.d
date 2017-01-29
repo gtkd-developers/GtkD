@@ -175,6 +175,7 @@ public interface NetworkMonitorIF{
 	 * Since: 2.46
 	 */
 	public bool getNetworkMetered();
+
 	/**
 	 * Emitted when the network configuration changes. If @available is
 	 * %TRUE, then some hosts may be reachable that were not reachable
@@ -187,7 +188,5 @@ public interface NetworkMonitorIF{
 	 *
 	 * Since: 2.32
 	 */
-	gulong addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

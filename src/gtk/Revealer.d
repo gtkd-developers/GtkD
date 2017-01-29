@@ -109,7 +109,7 @@ public class Revealer : Bin
 	}
 
 	/**
-	 * Returns whether the child is fully revealed, ie wether
+	 * Returns whether the child is fully revealed, in other words whether
 	 * the transition to the revealed state is completed.
 	 *
 	 * Return: %TRUE if the child is fully revealed

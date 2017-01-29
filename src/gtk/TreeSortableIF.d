@@ -120,12 +120,11 @@ public interface TreeSortableIF{
 	 * Emits a #GtkTreeSortable::sort-column-changed signal on @sortable.
 	 */
 	public void sortColumnChanged();
+
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column
 	 * or sort order of @sortable is changed. The signal is emitted before
 	 * the contents of @sortable are resorted.
 	 */
-	gulong addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

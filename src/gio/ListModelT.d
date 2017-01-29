@@ -211,17 +211,29 @@ public template ListModelT(TStruct)
 
 	protected class OnItemsChangedDelegateWrapper
 	{
+		static OnItemsChangedDelegateWrapper[] listeners;
 		void delegate(uint, uint, uint, ListModelIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(uint, uint, uint, ListModelIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(uint, uint, uint, ListModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnItemsChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
 
 	/**
 	 * This signal is emitted whenever items were added or removed to
@@ -237,38 +249,24 @@ public template ListModelT(TStruct)
 	 */
 	gulong addOnItemsChanged(void delegate(uint, uint, uint, ListModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onItemsChangedListeners ~= new OnItemsChangedDelegateWrapper(dlg, 0, connectFlags);
-		onItemsChangedListeners[onItemsChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnItemsChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"items-changed",
 			cast(GCallback)&callBackItemsChanged,
-			cast(void*)onItemsChangedListeners[onItemsChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackItemsChangedDestroy,
 			connectFlags);
-		return onItemsChangedListeners[onItemsChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackItemsChanged(GListModel* listmodelStruct, uint position, uint removed, uint added,OnItemsChangedDelegateWrapper wrapper)
+	extern(C) static void callBackItemsChanged(GListModel* listmodelStruct, uint position, uint removed, uint added, OnItemsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, removed, added, wrapper.outer);
 	}
 	
 	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnItemsChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnItemsChanged(OnItemsChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onItemsChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onItemsChangedListeners[index] = null;
-				onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

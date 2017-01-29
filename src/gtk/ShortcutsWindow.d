@@ -115,17 +115,29 @@ public class ShortcutsWindow : Window
 
 	protected class OnCloseDelegateWrapper
 	{
+		static OnCloseDelegateWrapper[] listeners;
 		void delegate(ShortcutsWindow) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ShortcutsWindow) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ShortcutsWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCloseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is a
@@ -137,54 +149,52 @@ public class ShortcutsWindow : Window
 	 */
 	gulong addOnClose(void delegate(ShortcutsWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCloseListeners ~= new OnCloseDelegateWrapper(dlg, 0, connectFlags);
-		onCloseListeners[onCloseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCloseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"close",
 			cast(GCallback)&callBackClose,
-			cast(void*)onCloseListeners[onCloseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCloseDestroy,
 			connectFlags);
-		return onCloseListeners[onCloseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClose(GtkShortcutsWindow* shortcutswindowStruct,OnCloseDelegateWrapper wrapper)
+	extern(C) static void callBackClose(GtkShortcutsWindow* shortcutswindowStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClose(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClose(OnCloseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCloseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCloseListeners[index] = null;
-				onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSearchDelegateWrapper
 	{
+		static OnSearchDelegateWrapper[] listeners;
 		void delegate(ShortcutsWindow) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ShortcutsWindow) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ShortcutsWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSearchDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSearchDelegateWrapper[] onSearchListeners;
 
 	/**
 	 * The ::search signal is a
@@ -195,38 +205,24 @@ public class ShortcutsWindow : Window
 	 */
 	gulong addOnSearch(void delegate(ShortcutsWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSearchListeners ~= new OnSearchDelegateWrapper(dlg, 0, connectFlags);
-		onSearchListeners[onSearchListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSearchDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"search",
 			cast(GCallback)&callBackSearch,
-			cast(void*)onSearchListeners[onSearchListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSearchDestroy,
 			connectFlags);
-		return onSearchListeners[onSearchListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSearch(GtkShortcutsWindow* shortcutswindowStruct,OnSearchDelegateWrapper wrapper)
+	extern(C) static void callBackSearch(GtkShortcutsWindow* shortcutswindowStruct, OnSearchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackSearchDestroy(OnSearchDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSearch(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSearch(OnSearchDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSearchListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSearchListeners[index] = null;
-				onSearchListeners = std.algorithm.remove(onSearchListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

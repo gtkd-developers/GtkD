@@ -245,17 +245,29 @@ public class RadioAction : ToggleAction
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(RadioAction, RadioAction) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(RadioAction, RadioAction) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(RadioAction, RadioAction) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The ::changed signal is emitted on every member of a radio group when the
@@ -269,38 +281,24 @@ public class RadioAction : ToggleAction
 	 */
 	gulong addOnChanged(void delegate(RadioAction, RadioAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GtkRadioAction* radioactionStruct, GtkRadioAction* current,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GtkRadioAction* radioactionStruct, GtkRadioAction* current, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(RadioAction)(current), wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

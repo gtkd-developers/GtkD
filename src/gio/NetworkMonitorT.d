@@ -225,17 +225,29 @@ public template NetworkMonitorT(TStruct)
 
 	protected class OnNetworkChangedDelegateWrapper
 	{
+		static OnNetworkChangedDelegateWrapper[] listeners;
 		void delegate(bool, NetworkMonitorIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, NetworkMonitorIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, NetworkMonitorIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnNetworkChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnNetworkChangedDelegateWrapper[] onNetworkChangedListeners;
 
 	/**
 	 * Emitted when the network configuration changes. If @available is
@@ -251,38 +263,24 @@ public template NetworkMonitorT(TStruct)
 	 */
 	gulong addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onNetworkChangedListeners ~= new OnNetworkChangedDelegateWrapper(dlg, 0, connectFlags);
-		onNetworkChangedListeners[onNetworkChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnNetworkChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"network-changed",
 			cast(GCallback)&callBackNetworkChanged,
-			cast(void*)onNetworkChangedListeners[onNetworkChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackNetworkChangedDestroy,
 			connectFlags);
-		return onNetworkChangedListeners[onNetworkChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackNetworkChanged(GNetworkMonitor* networkmonitorStruct, bool available,OnNetworkChangedDelegateWrapper wrapper)
+	extern(C) static void callBackNetworkChanged(GNetworkMonitor* networkmonitorStruct, bool available, OnNetworkChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(available, wrapper.outer);
 	}
 	
 	extern(C) static void callBackNetworkChangedDestroy(OnNetworkChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnNetworkChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnNetworkChanged(OnNetworkChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onNetworkChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onNetworkChangedListeners[index] = null;
-				onNetworkChangedListeners = std.algorithm.remove(onNetworkChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

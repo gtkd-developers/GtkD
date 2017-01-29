@@ -242,17 +242,29 @@ public class Seat : ObjectG
 
 	protected class OnDeviceAddedDelegateWrapper
 	{
+		static OnDeviceAddedDelegateWrapper[] listeners;
 		void delegate(Device, Seat) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Device, Seat) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Device, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeviceAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeviceAddedDelegateWrapper[] onDeviceAddedListeners;
 
 	/**
 	 * The ::device-added signal is emitted when a new input
@@ -265,54 +277,52 @@ public class Seat : ObjectG
 	 */
 	gulong addOnDeviceAdded(void delegate(Device, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeviceAddedListeners ~= new OnDeviceAddedDelegateWrapper(dlg, 0, connectFlags);
-		onDeviceAddedListeners[onDeviceAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeviceAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"device-added",
 			cast(GCallback)&callBackDeviceAdded,
-			cast(void*)onDeviceAddedListeners[onDeviceAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeviceAddedDestroy,
 			connectFlags);
-		return onDeviceAddedListeners[onDeviceAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeviceAdded(GdkSeat* seatStruct, GdkDevice* device,OnDeviceAddedDelegateWrapper wrapper)
+	extern(C) static void callBackDeviceAdded(GdkSeat* seatStruct, GdkDevice* device, OnDeviceAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeviceAddedDestroy(OnDeviceAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeviceAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeviceAdded(OnDeviceAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeviceAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeviceAddedListeners[index] = null;
-				onDeviceAddedListeners = std.algorithm.remove(onDeviceAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDeviceRemovedDelegateWrapper
 	{
+		static OnDeviceRemovedDelegateWrapper[] listeners;
 		void delegate(Device, Seat) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Device, Seat) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Device, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeviceRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeviceRemovedDelegateWrapper[] onDeviceRemovedListeners;
 
 	/**
 	 * The ::device-removed signal is emitted when an
@@ -325,54 +335,52 @@ public class Seat : ObjectG
 	 */
 	gulong addOnDeviceRemoved(void delegate(Device, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeviceRemovedListeners ~= new OnDeviceRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onDeviceRemovedListeners[onDeviceRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeviceRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"device-removed",
 			cast(GCallback)&callBackDeviceRemoved,
-			cast(void*)onDeviceRemovedListeners[onDeviceRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeviceRemovedDestroy,
 			connectFlags);
-		return onDeviceRemovedListeners[onDeviceRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeviceRemoved(GdkSeat* seatStruct, GdkDevice* device,OnDeviceRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackDeviceRemoved(GdkSeat* seatStruct, GdkDevice* device, OnDeviceRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeviceRemovedDestroy(OnDeviceRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeviceRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeviceRemoved(OnDeviceRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeviceRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeviceRemovedListeners[index] = null;
-				onDeviceRemovedListeners = std.algorithm.remove(onDeviceRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnToolAddedDelegateWrapper
 	{
+		static OnToolAddedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Seat) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DeviceTool, Seat) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DeviceTool, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnToolAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnToolAddedDelegateWrapper[] onToolAddedListeners;
 
 	/**
 	 * The ::tool-added signal is emitted whenever a new tool
@@ -389,54 +397,52 @@ public class Seat : ObjectG
 	 */
 	gulong addOnToolAdded(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onToolAddedListeners ~= new OnToolAddedDelegateWrapper(dlg, 0, connectFlags);
-		onToolAddedListeners[onToolAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnToolAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"tool-added",
 			cast(GCallback)&callBackToolAdded,
-			cast(void*)onToolAddedListeners[onToolAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackToolAddedDestroy,
 			connectFlags);
-		return onToolAddedListeners[onToolAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackToolAdded(GdkSeat* seatStruct, GdkDeviceTool* tool,OnToolAddedDelegateWrapper wrapper)
+	extern(C) static void callBackToolAdded(GdkSeat* seatStruct, GdkDeviceTool* tool, OnToolAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DeviceTool)(tool), wrapper.outer);
 	}
 	
 	extern(C) static void callBackToolAddedDestroy(OnToolAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnToolAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnToolAdded(OnToolAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onToolAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onToolAddedListeners[index] = null;
-				onToolAddedListeners = std.algorithm.remove(onToolAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnToolRemovedDelegateWrapper
 	{
+		static OnToolRemovedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Seat) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DeviceTool, Seat) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DeviceTool, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnToolRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnToolRemovedDelegateWrapper[] onToolRemovedListeners;
 
 	/**
 	 * This signal is emitted whenever a tool is no longer known
@@ -449,38 +455,24 @@ public class Seat : ObjectG
 	 */
 	gulong addOnToolRemoved(void delegate(DeviceTool, Seat) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onToolRemovedListeners ~= new OnToolRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onToolRemovedListeners[onToolRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnToolRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"tool-removed",
 			cast(GCallback)&callBackToolRemoved,
-			cast(void*)onToolRemovedListeners[onToolRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackToolRemovedDestroy,
 			connectFlags);
-		return onToolRemovedListeners[onToolRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackToolRemoved(GdkSeat* seatStruct, GdkDeviceTool* tool,OnToolRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackToolRemoved(GdkSeat* seatStruct, GdkDeviceTool* tool, OnToolRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DeviceTool)(tool), wrapper.outer);
 	}
 	
 	extern(C) static void callBackToolRemovedDestroy(OnToolRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnToolRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnToolRemoved(OnToolRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onToolRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onToolRemovedListeners[index] = null;
-				onToolRemovedListeners = std.algorithm.remove(onToolRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

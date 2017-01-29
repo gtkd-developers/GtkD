@@ -257,17 +257,29 @@ public class FileChooserButton : Box, FileChooserIF
 
 	protected class OnFileSetDelegateWrapper
 	{
+		static OnFileSetDelegateWrapper[] listeners;
 		void delegate(FileChooserButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FileChooserButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FileChooserButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFileSetDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFileSetDelegateWrapper[] onFileSetListeners;
 
 	/**
 	 * The ::file-set signal is emitted when the user selects a file.
@@ -279,38 +291,24 @@ public class FileChooserButton : Box, FileChooserIF
 	 */
 	gulong addOnFileSet(void delegate(FileChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFileSetListeners ~= new OnFileSetDelegateWrapper(dlg, 0, connectFlags);
-		onFileSetListeners[onFileSetListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFileSetDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"file-set",
 			cast(GCallback)&callBackFileSet,
-			cast(void*)onFileSetListeners[onFileSetListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFileSetDestroy,
 			connectFlags);
-		return onFileSetListeners[onFileSetListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct,OnFileSetDelegateWrapper wrapper)
+	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, OnFileSetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackFileSetDestroy(OnFileSetDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFileSet(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFileSet(OnFileSetDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFileSetListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFileSetListeners[index] = null;
-				onFileSetListeners = std.algorithm.remove(onFileSetListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

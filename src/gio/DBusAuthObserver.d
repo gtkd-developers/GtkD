@@ -167,17 +167,29 @@ public class DBusAuthObserver : ObjectG
 
 	protected class OnAllowMechanismDelegateWrapper
 	{
+		static OnAllowMechanismDelegateWrapper[] listeners;
 		bool delegate(string, DBusAuthObserver) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(string, DBusAuthObserver) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(string, DBusAuthObserver) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnAllowMechanismDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnAllowMechanismDelegateWrapper[] onAllowMechanismListeners;
 
 	/**
 	 * Emitted to check if @mechanism is allowed to be used.
@@ -191,54 +203,52 @@ public class DBusAuthObserver : ObjectG
 	 */
 	gulong addOnAllowMechanism(bool delegate(string, DBusAuthObserver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onAllowMechanismListeners ~= new OnAllowMechanismDelegateWrapper(dlg, 0, connectFlags);
-		onAllowMechanismListeners[onAllowMechanismListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnAllowMechanismDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"allow-mechanism",
 			cast(GCallback)&callBackAllowMechanism,
-			cast(void*)onAllowMechanismListeners[onAllowMechanismListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackAllowMechanismDestroy,
 			connectFlags);
-		return onAllowMechanismListeners[onAllowMechanismListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackAllowMechanism(GDBusAuthObserver* dbusauthobserverStruct, char* mechanism,OnAllowMechanismDelegateWrapper wrapper)
+	extern(C) static int callBackAllowMechanism(GDBusAuthObserver* dbusauthobserverStruct, char* mechanism, OnAllowMechanismDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(mechanism), wrapper.outer);
 	}
 	
 	extern(C) static void callBackAllowMechanismDestroy(OnAllowMechanismDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnAllowMechanism(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnAllowMechanism(OnAllowMechanismDelegateWrapper source)
-	{
-		foreach(index, wrapper; onAllowMechanismListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onAllowMechanismListeners[index] = null;
-				onAllowMechanismListeners = std.algorithm.remove(onAllowMechanismListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnAuthorizeAuthenticatedPeerDelegateWrapper
 	{
+		static OnAuthorizeAuthenticatedPeerDelegateWrapper[] listeners;
 		bool delegate(IOStream, Credentials, DBusAuthObserver) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnAuthorizeAuthenticatedPeerDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnAuthorizeAuthenticatedPeerDelegateWrapper[] onAuthorizeAuthenticatedPeerListeners;
 
 	/**
 	 * Emitted to check if a peer that is successfully authenticated
@@ -254,38 +264,24 @@ public class DBusAuthObserver : ObjectG
 	 */
 	gulong addOnAuthorizeAuthenticatedPeer(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onAuthorizeAuthenticatedPeerListeners ~= new OnAuthorizeAuthenticatedPeerDelegateWrapper(dlg, 0, connectFlags);
-		onAuthorizeAuthenticatedPeerListeners[onAuthorizeAuthenticatedPeerListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnAuthorizeAuthenticatedPeerDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"authorize-authenticated-peer",
 			cast(GCallback)&callBackAuthorizeAuthenticatedPeer,
-			cast(void*)onAuthorizeAuthenticatedPeerListeners[onAuthorizeAuthenticatedPeerListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackAuthorizeAuthenticatedPeerDestroy,
 			connectFlags);
-		return onAuthorizeAuthenticatedPeerListeners[onAuthorizeAuthenticatedPeerListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackAuthorizeAuthenticatedPeer(GDBusAuthObserver* dbusauthobserverStruct, GIOStream* stream, GCredentials* credentials,OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper)
+	extern(C) static int callBackAuthorizeAuthenticatedPeer(GDBusAuthObserver* dbusauthobserverStruct, GIOStream* stream, GCredentials* credentials, OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(IOStream)(stream), ObjectG.getDObject!(Credentials)(credentials), wrapper.outer);
 	}
 	
 	extern(C) static void callBackAuthorizeAuthenticatedPeerDestroy(OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnAuthorizeAuthenticatedPeer(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnAuthorizeAuthenticatedPeer(OnAuthorizeAuthenticatedPeerDelegateWrapper source)
-	{
-		foreach(index, wrapper; onAuthorizeAuthenticatedPeerListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onAuthorizeAuthenticatedPeerListeners[index] = null;
-				onAuthorizeAuthenticatedPeerListeners = std.algorithm.remove(onAuthorizeAuthenticatedPeerListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

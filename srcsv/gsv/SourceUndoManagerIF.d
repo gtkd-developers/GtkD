@@ -105,20 +105,18 @@ public interface SourceUndoManagerIF{
 	 * Since: 2.10
 	 */
 	public void undo();
+
 	/**
 	 * Emitted when the ability to redo has changed.
 	 *
 	 * Since: 2.10
 	 */
-	gulong addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnCanRedoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when the ability to undo has changed.
 	 *
 	 * Since: 2.10
 	 */
-	gulong addOnCanUndoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnCanUndoChanged(void delegate(SourceUndoManagerIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

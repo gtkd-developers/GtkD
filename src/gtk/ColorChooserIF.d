@@ -118,6 +118,7 @@ public interface ColorChooserIF{
 	 * Since: 3.4
 	 */
 	public void setUseAlpha(bool useAlpha);
+
 	/**
 	 * Emitted when a color is activated from the color chooser.
 	 * This usually happens when the user clicks a color swatch,
@@ -129,7 +130,5 @@ public interface ColorChooserIF{
 	 *
 	 * Since: 3.4
 	 */
-	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

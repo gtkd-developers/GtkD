@@ -512,17 +512,29 @@ public class SpinButton : Entry, OrientableIF
 
 	protected class OnChangeValueDelegateWrapper
 	{
+		static OnChangeValueDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, SpinButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkScrollType, SpinButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkScrollType, SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangeValueDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangeValueDelegateWrapper[] onChangeValueListeners;
 
 	/**
 	 * The ::change-value signal is a [keybinding signal][GtkBindingSignal]
@@ -539,54 +551,52 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	gulong addOnChangeValue(void delegate(GtkScrollType, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangeValueListeners ~= new OnChangeValueDelegateWrapper(dlg, 0, connectFlags);
-		onChangeValueListeners[onChangeValueListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangeValueDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"change-value",
 			cast(GCallback)&callBackChangeValue,
-			cast(void*)onChangeValueListeners[onChangeValueListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangeValueDestroy,
 			connectFlags);
-		return onChangeValueListeners[onChangeValueListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType scroll,OnChangeValueDelegateWrapper wrapper)
+	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType scroll, OnChangeValueDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scroll, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangeValueDestroy(OnChangeValueDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChangeValue(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChangeValue(OnChangeValueDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangeValueListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangeValueListeners[index] = null;
-				onChangeValueListeners = std.algorithm.remove(onChangeValueListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnInputDelegateWrapper
 	{
+		static OnInputDelegateWrapper[] listeners;
 		int delegate(void*, SpinButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(int delegate(void*, SpinButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(int delegate(void*, SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInputDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInputDelegateWrapper[] onInputListeners;
 
 	/**
 	 * The ::input signal can be used to influence the conversion of
@@ -604,54 +614,52 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	gulong addOnInput(int delegate(void*, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInputListeners ~= new OnInputDelegateWrapper(dlg, 0, connectFlags);
-		onInputListeners[onInputListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInputDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"input",
 			cast(GCallback)&callBackInput,
-			cast(void*)onInputListeners[onInputListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInputDestroy,
 			connectFlags);
-		return onInputListeners[onInputListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackInput(GtkSpinButton* spinbuttonStruct, void* newValue,OnInputDelegateWrapper wrapper)
+	extern(C) static int callBackInput(GtkSpinButton* spinbuttonStruct, void* newValue, OnInputDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(newValue, wrapper.outer);
 	}
 	
 	extern(C) static void callBackInputDestroy(OnInputDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInput(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInput(OnInputDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInputListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInputListeners[index] = null;
-				onInputListeners = std.algorithm.remove(onInputListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnOutputDelegateWrapper
 	{
+		static OnOutputDelegateWrapper[] listeners;
 		bool delegate(SpinButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(SpinButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnOutputDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnOutputDelegateWrapper[] onOutputListeners;
 
 	/**
 	 * The ::output signal can be used to change to formatting
@@ -680,54 +688,52 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	gulong addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onOutputListeners ~= new OnOutputDelegateWrapper(dlg, 0, connectFlags);
-		onOutputListeners[onOutputListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnOutputDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"output",
 			cast(GCallback)&callBackOutput,
-			cast(void*)onOutputListeners[onOutputListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackOutputDestroy,
 			connectFlags);
-		return onOutputListeners[onOutputListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackOutput(GtkSpinButton* spinbuttonStruct,OnOutputDelegateWrapper wrapper)
+	extern(C) static int callBackOutput(GtkSpinButton* spinbuttonStruct, OnOutputDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackOutputDestroy(OnOutputDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnOutput(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnOutput(OnOutputDelegateWrapper source)
-	{
-		foreach(index, wrapper; onOutputListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onOutputListeners[index] = null;
-				onOutputListeners = std.algorithm.remove(onOutputListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnValueChangedDelegateWrapper
 	{
+		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(SpinButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SpinButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnValueChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * The ::value-changed signal is emitted when the value represented by
@@ -735,54 +741,52 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	gulong addOnValueChanged(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onValueChangedListeners ~= new OnValueChangedDelegateWrapper(dlg, 0, connectFlags);
-		onValueChangedListeners[onValueChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnValueChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"value-changed",
 			cast(GCallback)&callBackValueChanged,
-			cast(void*)onValueChangedListeners[onValueChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackValueChangedDestroy,
 			connectFlags);
-		return onValueChangedListeners[onValueChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct,OnValueChangedDelegateWrapper wrapper)
+	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnValueChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnValueChanged(OnValueChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onValueChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onValueChangedListeners[index] = null;
-				onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnWrappedDelegateWrapper
 	{
+		static OnWrappedDelegateWrapper[] listeners;
 		void delegate(SpinButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SpinButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnWrappedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnWrappedDelegateWrapper[] onWrappedListeners;
 
 	/**
 	 * The ::wrapped signal is emitted right after the spinbutton wraps
@@ -792,38 +796,24 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	gulong addOnWrapped(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onWrappedListeners ~= new OnWrappedDelegateWrapper(dlg, 0, connectFlags);
-		onWrappedListeners[onWrappedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnWrappedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"wrapped",
 			cast(GCallback)&callBackWrapped,
-			cast(void*)onWrappedListeners[onWrappedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackWrappedDestroy,
 			connectFlags);
-		return onWrappedListeners[onWrappedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct,OnWrappedDelegateWrapper wrapper)
+	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, OnWrappedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackWrappedDestroy(OnWrappedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnWrapped(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnWrapped(OnWrappedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onWrappedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onWrappedListeners[index] = null;
-				onWrappedListeners = std.algorithm.remove(onWrappedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

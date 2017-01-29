@@ -185,53 +185,51 @@ public class StreamCollection : ObjectGst
 
 	protected class OnStreamNotifyDelegateWrapper
 	{
+		static OnStreamNotifyDelegateWrapper[] listeners;
 		void delegate(Stream, ParamSpec, StreamCollection) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Stream, ParamSpec, StreamCollection) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Stream, ParamSpec, StreamCollection) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnStreamNotifyDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnStreamNotifyDelegateWrapper[] onStreamNotifyListeners;
 
 	/** */
 	gulong addOnStreamNotify(void delegate(Stream, ParamSpec, StreamCollection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onStreamNotifyListeners ~= new OnStreamNotifyDelegateWrapper(dlg, 0, connectFlags);
-		onStreamNotifyListeners[onStreamNotifyListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnStreamNotifyDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"stream-notify",
 			cast(GCallback)&callBackStreamNotify,
-			cast(void*)onStreamNotifyListeners[onStreamNotifyListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackStreamNotifyDestroy,
 			connectFlags);
-		return onStreamNotifyListeners[onStreamNotifyListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackStreamNotify(GstStreamCollection* streamcollectionStruct, GstStream* object, GParamSpec* p0,OnStreamNotifyDelegateWrapper wrapper)
+	extern(C) static void callBackStreamNotify(GstStreamCollection* streamcollectionStruct, GstStream* object, GParamSpec* p0, OnStreamNotifyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Stream)(object), ObjectG.getDObject!(ParamSpec)(p0), wrapper.outer);
 	}
 	
 	extern(C) static void callBackStreamNotifyDestroy(OnStreamNotifyDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnStreamNotify(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnStreamNotify(OnStreamNotifyDelegateWrapper source)
-	{
-		foreach(index, wrapper; onStreamNotifyListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onStreamNotifyListeners[index] = null;
-				onStreamNotifyListeners = std.algorithm.remove(onStreamNotifyListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

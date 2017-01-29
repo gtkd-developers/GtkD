@@ -227,6 +227,7 @@ public interface ComponentIF{
 	 * Return: %TRUE or %FALSE whether the size was set or not
 	 */
 	public bool setSize(int width, int height);
+
 	/**
 	 * The 'bounds-changed" signal is emitted when the bposition or
 	 * size of the component changes.
@@ -234,7 +235,5 @@ public interface ComponentIF{
 	 * Params:
 	 *     arg1 = The AtkRectangle giving the new position and size.
 	 */
-	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

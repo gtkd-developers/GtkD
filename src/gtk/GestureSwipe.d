@@ -131,17 +131,29 @@ public class GestureSwipe : GestureSingle
 
 	protected class OnSwipeDelegateWrapper
 	{
+		static OnSwipeDelegateWrapper[] listeners;
 		void delegate(double, double, GestureSwipe) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(double, double, GestureSwipe) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(double, double, GestureSwipe) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSwipeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSwipeDelegateWrapper[] onSwipeListeners;
 
 	/**
 	 * This signal is emitted when the recognized gesture is finished, velocity
@@ -155,38 +167,24 @@ public class GestureSwipe : GestureSingle
 	 */
 	gulong addOnSwipe(void delegate(double, double, GestureSwipe) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSwipeListeners ~= new OnSwipeDelegateWrapper(dlg, 0, connectFlags);
-		onSwipeListeners[onSwipeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSwipeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"swipe",
 			cast(GCallback)&callBackSwipe,
-			cast(void*)onSwipeListeners[onSwipeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSwipeDestroy,
 			connectFlags);
-		return onSwipeListeners[onSwipeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSwipe(GtkGestureSwipe* gestureswipeStruct, double velocityX, double velocityY,OnSwipeDelegateWrapper wrapper)
+	extern(C) static void callBackSwipe(GtkGestureSwipe* gestureswipeStruct, double velocityX, double velocityY, OnSwipeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(velocityX, velocityY, wrapper.outer);
 	}
 	
 	extern(C) static void callBackSwipeDestroy(OnSwipeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSwipe(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSwipe(OnSwipeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSwipeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSwipeListeners[index] = null;
-				onSwipeListeners = std.algorithm.remove(onSwipeListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

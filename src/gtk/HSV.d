@@ -204,107 +204,103 @@ public class HSV : Widget
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(HSV) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(HSV) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(HSV) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/** */
 	gulong addOnChanged(void delegate(HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GtkHSV* hsvStruct,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GtkHSV* hsvStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveDelegateWrapper
 	{
+		static OnMoveDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, HSV) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkDirectionType, HSV) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkDirectionType, HSV) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveDelegateWrapper[] onMoveListeners;
 
 	/** */
 	gulong addOnMove(void delegate(GtkDirectionType, HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveListeners ~= new OnMoveDelegateWrapper(dlg, 0, connectFlags);
-		onMoveListeners[onMoveListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move",
 			cast(GCallback)&callBackMove,
-			cast(void*)onMoveListeners[onMoveListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveDestroy,
 			connectFlags);
-		return onMoveListeners[onMoveListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMove(GtkHSV* hsvStruct, GtkDirectionType object,OnMoveDelegateWrapper wrapper)
+	extern(C) static void callBackMove(GtkHSV* hsvStruct, GtkDirectionType object, OnMoveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(object, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveDestroy(OnMoveDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMove(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMove(OnMoveDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveListeners[index] = null;
-				onMoveListeners = std.algorithm.remove(onMoveListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Converts a color from RGB space to HSV.

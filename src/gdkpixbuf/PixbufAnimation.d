@@ -208,7 +208,7 @@ public class PixbufAnimation : ObjectG
 	 * Params:
 	 *     stream = a #GInputStream from which to load the animation
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
-	 *     callback = a #GAsyncReadyCallback to call when the the pixbuf is loaded
+	 *     callback = a #GAsyncReadyCallback to call when the pixbuf is loaded
 	 *     userData = the data to pass to the callback function
 	 *
 	 * Since: 2.28

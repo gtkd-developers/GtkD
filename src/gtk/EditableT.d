@@ -264,17 +264,29 @@ public template EditableT(TStruct)
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(EditableIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(EditableIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(EditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The ::changed signal is emitted at the end of a single
@@ -288,54 +300,52 @@ public template EditableT(TStruct)
 	 */
 	gulong addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GtkEditable* editableStruct,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GtkEditable* editableStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDeleteTextDelegateWrapper
 	{
+		static OnDeleteTextDelegateWrapper[] listeners;
 		void delegate(int, int, EditableIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, int, EditableIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, int, EditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeleteTextDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeleteTextDelegateWrapper[] onDeleteTextListeners;
 
 	/**
 	 * This signal is emitted when text is deleted from
@@ -354,54 +364,52 @@ public template EditableT(TStruct)
 	 */
 	gulong addOnDeleteText(void delegate(int, int, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeleteTextListeners ~= new OnDeleteTextDelegateWrapper(dlg, 0, connectFlags);
-		onDeleteTextListeners[onDeleteTextListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeleteTextDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"delete-text",
 			cast(GCallback)&callBackDeleteText,
-			cast(void*)onDeleteTextListeners[onDeleteTextListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeleteTextDestroy,
 			connectFlags);
-		return onDeleteTextListeners[onDeleteTextListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, int startPos, int endPos,OnDeleteTextDelegateWrapper wrapper)
+	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, int startPos, int endPos, OnDeleteTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(startPos, endPos, wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeleteTextDestroy(OnDeleteTextDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeleteText(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeleteText(OnDeleteTextDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeleteTextListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeleteTextListeners[index] = null;
-				onDeleteTextListeners = std.algorithm.remove(onDeleteTextListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnInsertTextDelegateWrapper
 	{
+		static OnInsertTextDelegateWrapper[] listeners;
 		void delegate(string, int, void*, EditableIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, int, void*, EditableIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, int, void*, EditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInsertTextDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInsertTextDelegateWrapper[] onInsertTextListeners;
 
 	/**
 	 * This signal is emitted when text is inserted into
@@ -423,38 +431,24 @@ public template EditableT(TStruct)
 	 */
 	gulong addOnInsertText(void delegate(string, int, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInsertTextListeners ~= new OnInsertTextDelegateWrapper(dlg, 0, connectFlags);
-		onInsertTextListeners[onInsertTextListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInsertTextDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"insert-text",
 			cast(GCallback)&callBackInsertText,
-			cast(void*)onInsertTextListeners[onInsertTextListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInsertTextDestroy,
 			connectFlags);
-		return onInsertTextListeners[onInsertTextListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackInsertText(GtkEditable* editableStruct, char* newText, int newTextLength, void* position,OnInsertTextDelegateWrapper wrapper)
+	extern(C) static void callBackInsertText(GtkEditable* editableStruct, char* newText, int newTextLength, void* position, OnInsertTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(newText), newTextLength, position, wrapper.outer);
 	}
 	
 	extern(C) static void callBackInsertTextDestroy(OnInsertTextDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInsertText(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInsertText(OnInsertTextDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInsertTextListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInsertTextListeners[index] = null;
-				onInsertTextListeners = std.algorithm.remove(onInsertTextListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

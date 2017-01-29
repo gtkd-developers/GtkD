@@ -878,17 +878,29 @@ public class SocketClient : ObjectG
 
 	protected class OnDelegateWrapper
 	{
+		static OnDelegateWrapper[] listeners;
 		void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDelegateWrapper[] onListeners;
 
 	/**
 	 * Emitted when @client's activity on @connectable changes state.
@@ -950,38 +962,24 @@ public class SocketClient : ObjectG
 	 */
 	gulong addOn(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onListeners ~= new OnDelegateWrapper(dlg, 0, connectFlags);
-		onListeners[onListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"event",
 			cast(GCallback)&callBack,
-			cast(void*)onListeners[onListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDestroy,
 			connectFlags);
-		return onListeners[onListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBack(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection,OnDelegateWrapper wrapper)
+	extern(C) static void callBack(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, OnDelegateWrapper wrapper)
 	{
 		wrapper.dlg(event, ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOn(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOn(OnDelegateWrapper source)
-	{
-		foreach(index, wrapper; onListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onListeners[index] = null;
-				onListeners = std.algorithm.remove(onListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -606,6 +606,7 @@ public interface TreeModelIF{
 	 *     iter = the #GtkTreeIter-struct
 	 */
 	public void unrefNode(TreeIter iter);
+
 	/**
 	 * This signal is emitted when a row in the model has changed.
 	 *
@@ -613,8 +614,7 @@ public interface TreeModelIF{
 	 *     path = a #GtkTreePath-struct identifying the changed row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the changed row
 	 */
-	gulong addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnRowChanged(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when a row has been deleted.
@@ -629,8 +629,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     path = a #GtkTreePath-struct identifying the row
 	 */
-	gulong addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnRowDeleted(void delegate(TreePath, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when a row has gotten the first child
@@ -640,8 +639,7 @@ public interface TreeModelIF{
 	 *     path = a #GtkTreePath-struct identifying the row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the row
 	 */
-	gulong addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when a new row has been inserted in
@@ -655,8 +653,7 @@ public interface TreeModelIF{
 	 *     path = a #GtkTreePath-struct identifying the new row
 	 *     iter = a valid #GtkTreeIter-struct pointing to the new row
 	 */
-	gulong addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnRowInserted(void delegate(TreePath, TreeIter, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the children of a node in the
@@ -675,7 +672,5 @@ public interface TreeModelIF{
 	 *         of each child to its old position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`
 	 */
-	gulong addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnRowsReordered(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

@@ -169,6 +169,7 @@ public interface ChildProxyIF{
 	 *     varArgs = value for the first property, followed optionally by more name/value pairs, followed by %NULL
 	 */
 	public void childSetValist(string firstPropertyName, void* varArgs);
+
 	/**
 	 * Will be emitted after the @object was added to the @child_proxy.
 	 *
@@ -176,8 +177,7 @@ public interface ChildProxyIF{
 	 *     object = the #GObject that was added
 	 *     name = the name of the new child
 	 */
-	gulong addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnChildAdded(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Will be emitted after the @object was removed from the @child_proxy.
@@ -186,7 +186,5 @@ public interface ChildProxyIF{
 	 *     object = the #GObject that was removed
 	 *     name = the name of the old child
 	 */
-	gulong addOnChildRemoved(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnChildRemoved(void delegate(ObjectG, string, ChildProxyIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

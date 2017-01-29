@@ -146,55 +146,53 @@ public class FilenameCompleter : ObjectG
 
 	protected class OnGotCompletionDataDelegateWrapper
 	{
+		static OnGotCompletionDataDelegateWrapper[] listeners;
 		void delegate(FilenameCompleter) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FilenameCompleter) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FilenameCompleter) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnGotCompletionDataDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnGotCompletionDataDelegateWrapper[] onGotCompletionDataListeners;
 
 	/**
 	 * Emitted when the file name completion information comes available.
 	 */
 	gulong addOnGotCompletionData(void delegate(FilenameCompleter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onGotCompletionDataListeners ~= new OnGotCompletionDataDelegateWrapper(dlg, 0, connectFlags);
-		onGotCompletionDataListeners[onGotCompletionDataListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnGotCompletionDataDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"got-completion-data",
 			cast(GCallback)&callBackGotCompletionData,
-			cast(void*)onGotCompletionDataListeners[onGotCompletionDataListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackGotCompletionDataDestroy,
 			connectFlags);
-		return onGotCompletionDataListeners[onGotCompletionDataListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackGotCompletionData(GFilenameCompleter* filenamecompleterStruct,OnGotCompletionDataDelegateWrapper wrapper)
+	extern(C) static void callBackGotCompletionData(GFilenameCompleter* filenamecompleterStruct, OnGotCompletionDataDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackGotCompletionDataDestroy(OnGotCompletionDataDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnGotCompletionData(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnGotCompletionData(OnGotCompletionDataDelegateWrapper source)
-	{
-		foreach(index, wrapper; onGotCompletionDataListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onGotCompletionDataListeners[index] = null;
-				onGotCompletionDataListeners = std.algorithm.remove(onGotCompletionDataListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

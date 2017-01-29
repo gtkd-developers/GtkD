@@ -359,17 +359,29 @@ public class MenuShell : Container
 
 	protected class OnActivateCurrentDelegateWrapper
 	{
+		static OnActivateCurrentDelegateWrapper[] listeners;
 		void delegate(bool, MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActivateCurrentDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActivateCurrentDelegateWrapper[] onActivateCurrentListeners;
 
 	/**
 	 * An action signal that activates the current menu item within
@@ -380,54 +392,52 @@ public class MenuShell : Container
 	 */
 	gulong addOnActivateCurrent(void delegate(bool, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActivateCurrentListeners ~= new OnActivateCurrentDelegateWrapper(dlg, 0, connectFlags);
-		onActivateCurrentListeners[onActivateCurrentListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActivateCurrentDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"activate-current",
 			cast(GCallback)&callBackActivateCurrent,
-			cast(void*)onActivateCurrentListeners[onActivateCurrentListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActivateCurrentDestroy,
 			connectFlags);
-		return onActivateCurrentListeners[onActivateCurrentListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, bool forceHide,OnActivateCurrentDelegateWrapper wrapper)
+	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, bool forceHide, OnActivateCurrentDelegateWrapper wrapper)
 	{
 		wrapper.dlg(forceHide, wrapper.outer);
 	}
 	
 	extern(C) static void callBackActivateCurrentDestroy(OnActivateCurrentDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActivateCurrent(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActivateCurrent(OnActivateCurrentDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActivateCurrentListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActivateCurrentListeners[index] = null;
-				onActivateCurrentListeners = std.algorithm.remove(onActivateCurrentListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCancelDelegateWrapper
 	{
+		static OnCancelDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCancelDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * An action signal which cancels the selection within the menu shell.
@@ -435,54 +445,52 @@ public class MenuShell : Container
 	 */
 	gulong addOnCancel(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCancelListeners ~= new OnCancelDelegateWrapper(dlg, 0, connectFlags);
-		onCancelListeners[onCancelListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCancelDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"cancel",
 			cast(GCallback)&callBackCancel,
-			cast(void*)onCancelListeners[onCancelListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCancelDestroy,
 			connectFlags);
-		return onCancelListeners[onCancelListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCancel(GtkMenuShell* menushellStruct,OnCancelDelegateWrapper wrapper)
+	extern(C) static void callBackCancel(GtkMenuShell* menushellStruct, OnCancelDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCancel(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCancel(OnCancelDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCancelListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCancelListeners[index] = null;
-				onCancelListeners = std.algorithm.remove(onCancelListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCycleFocusDelegateWrapper
 	{
+		static OnCycleFocusDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkDirectionType, MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkDirectionType, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCycleFocusDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCycleFocusDelegateWrapper[] onCycleFocusListeners;
 
 	/**
 	 * A keybinding signal which moves the focus in the
@@ -493,108 +501,104 @@ public class MenuShell : Container
 	 */
 	gulong addOnCycleFocus(void delegate(GtkDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCycleFocusListeners ~= new OnCycleFocusDelegateWrapper(dlg, 0, connectFlags);
-		onCycleFocusListeners[onCycleFocusListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCycleFocusDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"cycle-focus",
 			cast(GCallback)&callBackCycleFocus,
-			cast(void*)onCycleFocusListeners[onCycleFocusListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCycleFocusDestroy,
 			connectFlags);
-		return onCycleFocusListeners[onCycleFocusListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType direction,OnCycleFocusDelegateWrapper wrapper)
+	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType direction, OnCycleFocusDelegateWrapper wrapper)
 	{
 		wrapper.dlg(direction, wrapper.outer);
 	}
 	
 	extern(C) static void callBackCycleFocusDestroy(OnCycleFocusDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCycleFocus(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCycleFocus(OnCycleFocusDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCycleFocusListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCycleFocusListeners[index] = null;
-				onCycleFocusListeners = std.algorithm.remove(onCycleFocusListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDeactivateDelegateWrapper
 	{
+		static OnDeactivateDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeactivateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeactivateDelegateWrapper[] onDeactivateListeners;
 
 	/**
 	 * This signal is emitted when a menu shell is deactivated.
 	 */
 	gulong addOnDeactivate(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeactivateListeners ~= new OnDeactivateDelegateWrapper(dlg, 0, connectFlags);
-		onDeactivateListeners[onDeactivateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeactivateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"deactivate",
 			cast(GCallback)&callBackDeactivate,
-			cast(void*)onDeactivateListeners[onDeactivateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeactivateDestroy,
 			connectFlags);
-		return onDeactivateListeners[onDeactivateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeactivate(GtkMenuShell* menushellStruct,OnDeactivateDelegateWrapper wrapper)
+	extern(C) static void callBackDeactivate(GtkMenuShell* menushellStruct, OnDeactivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeactivateDestroy(OnDeactivateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeactivate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeactivate(OnDeactivateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeactivateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeactivateListeners[index] = null;
-				onDeactivateListeners = std.algorithm.remove(onDeactivateListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnInsertDelegateWrapper
 	{
+		static OnInsertDelegateWrapper[] listeners;
 		void delegate(Widget, int, MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Widget, int, MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Widget, int, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInsertDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInsertDelegateWrapper[] onInsertListeners;
 
 	/**
 	 * The ::insert signal is emitted when a new #GtkMenuItem is added to
@@ -612,54 +616,52 @@ public class MenuShell : Container
 	 */
 	gulong addOnInsert(void delegate(Widget, int, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInsertListeners ~= new OnInsertDelegateWrapper(dlg, 0, connectFlags);
-		onInsertListeners[onInsertListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInsertDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"insert",
 			cast(GCallback)&callBackInsert,
-			cast(void*)onInsertListeners[onInsertListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInsertDestroy,
 			connectFlags);
-		return onInsertListeners[onInsertListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackInsert(GtkMenuShell* menushellStruct, GtkWidget* child, int position,OnInsertDelegateWrapper wrapper)
+	extern(C) static void callBackInsert(GtkMenuShell* menushellStruct, GtkWidget* child, int position, OnInsertDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(child), position, wrapper.outer);
 	}
 	
 	extern(C) static void callBackInsertDestroy(OnInsertDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInsert(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInsert(OnInsertDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInsertListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInsertListeners[index] = null;
-				onInsertListeners = std.algorithm.remove(onInsertListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveCurrentDelegateWrapper
 	{
+		static OnMoveCurrentDelegateWrapper[] listeners;
 		void delegate(GtkMenuDirectionType, MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkMenuDirectionType, MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkMenuDirectionType, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveCurrentDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveCurrentDelegateWrapper[] onMoveCurrentListeners;
 
 	/**
 	 * An keybinding signal which moves the current menu item
@@ -670,54 +672,52 @@ public class MenuShell : Container
 	 */
 	gulong addOnMoveCurrent(void delegate(GtkMenuDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveCurrentListeners ~= new OnMoveCurrentDelegateWrapper(dlg, 0, connectFlags);
-		onMoveCurrentListeners[onMoveCurrentListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveCurrentDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move-current",
 			cast(GCallback)&callBackMoveCurrent,
-			cast(void*)onMoveCurrentListeners[onMoveCurrentListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveCurrentDestroy,
 			connectFlags);
-		return onMoveCurrentListeners[onMoveCurrentListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType direction,OnMoveCurrentDelegateWrapper wrapper)
+	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType direction, OnMoveCurrentDelegateWrapper wrapper)
 	{
 		wrapper.dlg(direction, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveCurrentDestroy(OnMoveCurrentDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMoveCurrent(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMoveCurrent(OnMoveCurrentDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveCurrentListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveCurrentListeners[index] = null;
-				onMoveCurrentListeners = std.algorithm.remove(onMoveCurrentListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveSelectedDelegateWrapper
 	{
+		static OnMoveSelectedDelegateWrapper[] listeners;
 		bool delegate(int, MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(int, MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(int, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveSelectedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveSelectedDelegateWrapper[] onMoveSelectedListeners;
 
 	/**
 	 * The ::move-selected signal is emitted to move the selection to
@@ -732,54 +732,52 @@ public class MenuShell : Container
 	 */
 	gulong addOnMoveSelected(bool delegate(int, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveSelectedListeners ~= new OnMoveSelectedDelegateWrapper(dlg, 0, connectFlags);
-		onMoveSelectedListeners[onMoveSelectedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveSelectedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move-selected",
 			cast(GCallback)&callBackMoveSelected,
-			cast(void*)onMoveSelectedListeners[onMoveSelectedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveSelectedDestroy,
 			connectFlags);
-		return onMoveSelectedListeners[onMoveSelectedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackMoveSelected(GtkMenuShell* menushellStruct, int distance,OnMoveSelectedDelegateWrapper wrapper)
+	extern(C) static int callBackMoveSelected(GtkMenuShell* menushellStruct, int distance, OnMoveSelectedDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(distance, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveSelectedDestroy(OnMoveSelectedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMoveSelected(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMoveSelected(OnMoveSelectedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveSelectedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveSelectedListeners[index] = null;
-				onMoveSelectedListeners = std.algorithm.remove(onMoveSelectedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSelectionDoneDelegateWrapper
 	{
+		static OnSelectionDoneDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(MenuShell) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSelectionDoneDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSelectionDoneDelegateWrapper[] onSelectionDoneListeners;
 
 	/**
 	 * This signal is emitted when a selection has been
@@ -787,38 +785,24 @@ public class MenuShell : Container
 	 */
 	gulong addOnSelectionDone(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSelectionDoneListeners ~= new OnSelectionDoneDelegateWrapper(dlg, 0, connectFlags);
-		onSelectionDoneListeners[onSelectionDoneListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSelectionDoneDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"selection-done",
 			cast(GCallback)&callBackSelectionDone,
-			cast(void*)onSelectionDoneListeners[onSelectionDoneListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSelectionDoneDestroy,
 			connectFlags);
-		return onSelectionDoneListeners[onSelectionDoneListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSelectionDone(GtkMenuShell* menushellStruct,OnSelectionDoneDelegateWrapper wrapper)
+	extern(C) static void callBackSelectionDone(GtkMenuShell* menushellStruct, OnSelectionDoneDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackSelectionDoneDestroy(OnSelectionDoneDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSelectionDone(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSelectionDone(OnSelectionDoneDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSelectionDoneListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSelectionDoneListeners[index] = null;
-				onSelectionDoneListeners = std.algorithm.remove(onSelectionDoneListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

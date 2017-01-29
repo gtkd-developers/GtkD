@@ -246,53 +246,51 @@ public class MonitorG : ObjectG
 
 	protected class OnInvalidateDelegateWrapper
 	{
+		static OnInvalidateDelegateWrapper[] listeners;
 		void delegate(MonitorG) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(MonitorG) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(MonitorG) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInvalidateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInvalidateDelegateWrapper[] onInvalidateListeners;
 
 	/** */
 	gulong addOnInvalidate(void delegate(MonitorG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInvalidateListeners ~= new OnInvalidateDelegateWrapper(dlg, 0, connectFlags);
-		onInvalidateListeners[onInvalidateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInvalidateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"invalidate",
 			cast(GCallback)&callBackInvalidate,
-			cast(void*)onInvalidateListeners[onInvalidateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInvalidateDestroy,
 			connectFlags);
-		return onInvalidateListeners[onInvalidateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackInvalidate(GdkMonitor* monitorgStruct,OnInvalidateDelegateWrapper wrapper)
+	extern(C) static void callBackInvalidate(GdkMonitor* monitorgStruct, OnInvalidateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackInvalidateDestroy(OnInvalidateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInvalidate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInvalidate(OnInvalidateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInvalidateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInvalidateListeners[index] = null;
-				onInvalidateListeners = std.algorithm.remove(onInvalidateListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

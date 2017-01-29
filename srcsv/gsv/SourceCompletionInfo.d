@@ -148,17 +148,29 @@ public class SourceCompletionInfo : Window
 
 	protected class OnBeforeShowDelegateWrapper
 	{
+		static OnBeforeShowDelegateWrapper[] listeners;
 		void delegate(SourceCompletionInfo) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SourceCompletionInfo) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SourceCompletionInfo) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnBeforeShowDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnBeforeShowDelegateWrapper[] onBeforeShowListeners;
 
 	/**
 	 * This signal is emitted before any "show" management. You can connect
@@ -169,38 +181,24 @@ public class SourceCompletionInfo : Window
 	 */
 	gulong addOnBeforeShow(void delegate(SourceCompletionInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onBeforeShowListeners ~= new OnBeforeShowDelegateWrapper(dlg, 0, connectFlags);
-		onBeforeShowListeners[onBeforeShowListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnBeforeShowDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"before-show",
 			cast(GCallback)&callBackBeforeShow,
-			cast(void*)onBeforeShowListeners[onBeforeShowListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackBeforeShowDestroy,
 			connectFlags);
-		return onBeforeShowListeners[onBeforeShowListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct,OnBeforeShowDelegateWrapper wrapper)
+	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, OnBeforeShowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackBeforeShowDestroy(OnBeforeShowDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnBeforeShow(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnBeforeShow(OnBeforeShowDelegateWrapper source)
-	{
-		foreach(index, wrapper; onBeforeShowListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onBeforeShowListeners[index] = null;
-				onBeforeShowListeners = std.algorithm.remove(onBeforeShowListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

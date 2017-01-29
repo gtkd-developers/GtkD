@@ -627,17 +627,29 @@ public class Bus : ObjectGst
 
 	protected class OnMessageDelegateWrapper
 	{
+		static OnMessageDelegateWrapper[] listeners;
 		void delegate(Message, Bus) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Message, Bus) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Message, Bus) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMessageDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMessageDelegateWrapper[] onMessageListeners;
 
 	/**
 	 * A message has been posted on the bus. This signal is emitted from a
@@ -649,54 +661,52 @@ public class Bus : ObjectGst
 	 */
 	gulong addOnMessage(void delegate(Message, Bus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMessageListeners ~= new OnMessageDelegateWrapper(dlg, 0, connectFlags);
-		onMessageListeners[onMessageListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMessageDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"message",
 			cast(GCallback)&callBackMessage,
-			cast(void*)onMessageListeners[onMessageListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMessageDestroy,
 			connectFlags);
-		return onMessageListeners[onMessageListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message,OnMessageDelegateWrapper wrapper)
+	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message, OnMessageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Message)(message), wrapper.outer);
 	}
 	
 	extern(C) static void callBackMessageDestroy(OnMessageDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMessage(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMessage(OnMessageDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMessageListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMessageListeners[index] = null;
-				onMessageListeners = std.algorithm.remove(onMessageListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSyncMessageDelegateWrapper
 	{
+		static OnSyncMessageDelegateWrapper[] listeners;
 		void delegate(Message, Bus) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Message, Bus) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Message, Bus) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSyncMessageDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSyncMessageDelegateWrapper[] onSyncMessageListeners;
 
 	/**
 	 * A message has been posted on the bus. This signal is emitted from the
@@ -710,38 +720,24 @@ public class Bus : ObjectGst
 	 */
 	gulong addOnSyncMessage(void delegate(Message, Bus) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSyncMessageListeners ~= new OnSyncMessageDelegateWrapper(dlg, 0, connectFlags);
-		onSyncMessageListeners[onSyncMessageListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSyncMessageDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"sync-message",
 			cast(GCallback)&callBackSyncMessage,
-			cast(void*)onSyncMessageListeners[onSyncMessageListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSyncMessageDestroy,
 			connectFlags);
-		return onSyncMessageListeners[onSyncMessageListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message,OnSyncMessageDelegateWrapper wrapper)
+	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message, OnSyncMessageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Message)(message), wrapper.outer);
 	}
 	
 	extern(C) static void callBackSyncMessageDestroy(OnSyncMessageDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSyncMessage(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSyncMessage(OnSyncMessageDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSyncMessageListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSyncMessageListeners[index] = null;
-				onSyncMessageListeners = std.algorithm.remove(onSyncMessageListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

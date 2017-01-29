@@ -85,53 +85,51 @@ public class ShortcutsSection : Box
 
 	protected class OnChangeCurrentPageDelegateWrapper
 	{
+		static OnChangeCurrentPageDelegateWrapper[] listeners;
 		bool delegate(int, ShortcutsSection) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(int, ShortcutsSection) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(int, ShortcutsSection) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangeCurrentPageDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangeCurrentPageDelegateWrapper[] onChangeCurrentPageListeners;
 
 	/** */
 	gulong addOnChangeCurrentPage(bool delegate(int, ShortcutsSection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangeCurrentPageListeners ~= new OnChangeCurrentPageDelegateWrapper(dlg, 0, connectFlags);
-		onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangeCurrentPageDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"change-current-page",
 			cast(GCallback)&callBackChangeCurrentPage,
-			cast(void*)onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangeCurrentPageDestroy,
 			connectFlags);
-		return onChangeCurrentPageListeners[onChangeCurrentPageListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackChangeCurrentPage(GtkShortcutsSection* shortcutssectionStruct, int object,OnChangeCurrentPageDelegateWrapper wrapper)
+	extern(C) static int callBackChangeCurrentPage(GtkShortcutsSection* shortcutssectionStruct, int object, OnChangeCurrentPageDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangeCurrentPageDestroy(OnChangeCurrentPageDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChangeCurrentPage(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChangeCurrentPage(OnChangeCurrentPageDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangeCurrentPageListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangeCurrentPageListeners[index] = null;
-				onChangeCurrentPageListeners = std.algorithm.remove(onChangeCurrentPageListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

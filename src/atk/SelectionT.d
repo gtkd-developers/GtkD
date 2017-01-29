@@ -167,17 +167,29 @@ public template SelectionT(TStruct)
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
+		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(SelectionIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SelectionIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SelectionIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSelectionChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * The "selection-changed" signal is emitted by an object which
@@ -185,38 +197,24 @@ public template SelectionT(TStruct)
 	 */
 	gulong addOnSelectionChanged(void delegate(SelectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSelectionChangedListeners ~= new OnSelectionChangedDelegateWrapper(dlg, 0, connectFlags);
-		onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSelectionChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"selection-changed",
 			cast(GCallback)&callBackSelectionChanged,
-			cast(void*)onSelectionChangedListeners[onSelectionChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSelectionChangedDestroy,
 			connectFlags);
-		return onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSelectionChanged(AtkSelection* selectionStruct,OnSelectionChangedDelegateWrapper wrapper)
+	extern(C) static void callBackSelectionChanged(AtkSelection* selectionStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSelectionChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSelectionChanged(OnSelectionChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSelectionChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSelectionChangedListeners[index] = null;
-				onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

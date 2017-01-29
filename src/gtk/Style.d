@@ -351,17 +351,29 @@ public class Style : ObjectG
 
 	protected class OnRealizeDelegateWrapper
 	{
+		static OnRealizeDelegateWrapper[] listeners;
 		void delegate(Style) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Style) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Style) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnRealizeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnRealizeDelegateWrapper[] onRealizeListeners;
 
 	/**
 	 * Emitted when the style has been initialized for a particular
@@ -373,54 +385,52 @@ public class Style : ObjectG
 	 */
 	gulong addOnRealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onRealizeListeners ~= new OnRealizeDelegateWrapper(dlg, 0, connectFlags);
-		onRealizeListeners[onRealizeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnRealizeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"realize",
 			cast(GCallback)&callBackRealize,
-			cast(void*)onRealizeListeners[onRealizeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackRealizeDestroy,
 			connectFlags);
-		return onRealizeListeners[onRealizeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackRealize(GtkStyle* styleStruct,OnRealizeDelegateWrapper wrapper)
+	extern(C) static void callBackRealize(GtkStyle* styleStruct, OnRealizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackRealizeDestroy(OnRealizeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnRealize(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnRealize(OnRealizeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onRealizeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onRealizeListeners[index] = null;
-				onRealizeListeners = std.algorithm.remove(onRealizeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnUnrealizeDelegateWrapper
 	{
+		static OnUnrealizeDelegateWrapper[] listeners;
 		void delegate(Style) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Style) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Style) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnUnrealizeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnUnrealizeDelegateWrapper[] onUnrealizeListeners;
 
 	/**
 	 * Emitted when the aspects of the style specific to a particular visual
@@ -432,40 +442,26 @@ public class Style : ObjectG
 	 */
 	gulong addOnUnrealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onUnrealizeListeners ~= new OnUnrealizeDelegateWrapper(dlg, 0, connectFlags);
-		onUnrealizeListeners[onUnrealizeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnUnrealizeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"unrealize",
 			cast(GCallback)&callBackUnrealize,
-			cast(void*)onUnrealizeListeners[onUnrealizeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackUnrealizeDestroy,
 			connectFlags);
-		return onUnrealizeListeners[onUnrealizeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackUnrealize(GtkStyle* styleStruct,OnUnrealizeDelegateWrapper wrapper)
+	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, OnUnrealizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackUnrealizeDestroy(OnUnrealizeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnUnrealize(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnUnrealize(OnUnrealizeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onUnrealizeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onUnrealizeListeners[index] = null;
-				onUnrealizeListeners = std.algorithm.remove(onUnrealizeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Draws an arrow in the given rectangle on @cr using the given

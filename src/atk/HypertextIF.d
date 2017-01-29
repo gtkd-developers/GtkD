@@ -81,6 +81,7 @@ public interface HypertextIF{
 	 * Return: the number of links within this hypertext document
 	 */
 	public int getNLinks();
+
 	/**
 	 * The "link-selected" signal is emitted by an AtkHyperText
 	 * object when one of the hyperlinks associated with the object
@@ -89,7 +90,5 @@ public interface HypertextIF{
 	 * Params:
 	 *     arg1 = the index of the hyperlink which is selected
 	 */
-	gulong addOnLinkSelected(void delegate(int, HypertextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnLinkSelected(void delegate(int, HypertextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

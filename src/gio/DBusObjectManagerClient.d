@@ -432,17 +432,29 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 
 	protected class OnInterfaceProxyPropertiesChangedDelegateWrapper
 	{
+		static OnInterfaceProxyPropertiesChangedDelegateWrapper[] listeners;
 		void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInterfaceProxyPropertiesChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInterfaceProxyPropertiesChangedDelegateWrapper[] onInterfaceProxyPropertiesChangedListeners;
 
 	/**
 	 * Emitted when one or more D-Bus properties on proxy changes. The
@@ -467,54 +479,52 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 */
 	gulong addOnInterfaceProxyPropertiesChanged(void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInterfaceProxyPropertiesChangedListeners ~= new OnInterfaceProxyPropertiesChangedDelegateWrapper(dlg, 0, connectFlags);
-		onInterfaceProxyPropertiesChangedListeners[onInterfaceProxyPropertiesChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInterfaceProxyPropertiesChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"interface-proxy-properties-changed",
 			cast(GCallback)&callBackInterfaceProxyPropertiesChanged,
-			cast(void*)onInterfaceProxyPropertiesChangedListeners[onInterfaceProxyPropertiesChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInterfaceProxyPropertiesChangedDestroy,
 			connectFlags);
-		return onInterfaceProxyPropertiesChangedListeners[onInterfaceProxyPropertiesChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackInterfaceProxyPropertiesChanged(GDBusObjectManagerClient* dbusobjectmanagerclientStruct, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, GVariant* changedProperties, char** invalidatedProperties,OnInterfaceProxyPropertiesChangedDelegateWrapper wrapper)
+	extern(C) static void callBackInterfaceProxyPropertiesChanged(GDBusObjectManagerClient* dbusobjectmanagerclientStruct, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, GVariant* changedProperties, char** invalidatedProperties, OnInterfaceProxyPropertiesChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DBusObjectProxy)(objectProxy), ObjectG.getDObject!(DBusProxy)(interfaceProxy), new Variant(changedProperties), Str.toStringArray(invalidatedProperties), wrapper.outer);
 	}
 	
 	extern(C) static void callBackInterfaceProxyPropertiesChangedDestroy(OnInterfaceProxyPropertiesChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInterfaceProxyPropertiesChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInterfaceProxyPropertiesChanged(OnInterfaceProxyPropertiesChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInterfaceProxyPropertiesChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInterfaceProxyPropertiesChangedListeners[index] = null;
-				onInterfaceProxyPropertiesChangedListeners = std.algorithm.remove(onInterfaceProxyPropertiesChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnInterfaceProxySignalDelegateWrapper
 	{
+		static OnInterfaceProxySignalDelegateWrapper[] listeners;
 		void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInterfaceProxySignalDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInterfaceProxySignalDelegateWrapper[] onInterfaceProxySignalListeners;
 
 	/**
 	 * Emitted when a D-Bus signal is received on @interface_proxy.
@@ -537,38 +547,24 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 */
 	gulong addOnInterfaceProxySignal(void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInterfaceProxySignalListeners ~= new OnInterfaceProxySignalDelegateWrapper(dlg, 0, connectFlags);
-		onInterfaceProxySignalListeners[onInterfaceProxySignalListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInterfaceProxySignalDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"interface-proxy-signal",
 			cast(GCallback)&callBackInterfaceProxySignal,
-			cast(void*)onInterfaceProxySignalListeners[onInterfaceProxySignalListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInterfaceProxySignalDestroy,
 			connectFlags);
-		return onInterfaceProxySignalListeners[onInterfaceProxySignalListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackInterfaceProxySignal(GDBusObjectManagerClient* dbusobjectmanagerclientStruct, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, char* senderName, char* signalName, GVariant* parameters,OnInterfaceProxySignalDelegateWrapper wrapper)
+	extern(C) static void callBackInterfaceProxySignal(GDBusObjectManagerClient* dbusobjectmanagerclientStruct, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, char* senderName, char* signalName, GVariant* parameters, OnInterfaceProxySignalDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DBusObjectProxy)(objectProxy), ObjectG.getDObject!(DBusProxy)(interfaceProxy), Str.toString(senderName), Str.toString(signalName), new Variant(parameters), wrapper.outer);
 	}
 	
 	extern(C) static void callBackInterfaceProxySignalDestroy(OnInterfaceProxySignalDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInterfaceProxySignal(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInterfaceProxySignal(OnInterfaceProxySignalDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInterfaceProxySignalListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInterfaceProxySignalListeners[index] = null;
-				onInterfaceProxySignalListeners = std.algorithm.remove(onInterfaceProxySignalListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

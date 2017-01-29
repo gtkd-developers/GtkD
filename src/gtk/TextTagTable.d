@@ -198,157 +198,151 @@ public class TextTagTable : ObjectG, BuildableIF
 
 	protected class OnTagAddedDelegateWrapper
 	{
+		static OnTagAddedDelegateWrapper[] listeners;
 		void delegate(TextTag, TextTagTable) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(TextTag, TextTagTable) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(TextTag, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnTagAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnTagAddedDelegateWrapper[] onTagAddedListeners;
 
 	/** */
 	gulong addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onTagAddedListeners ~= new OnTagAddedDelegateWrapper(dlg, 0, connectFlags);
-		onTagAddedListeners[onTagAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnTagAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"tag-added",
 			cast(GCallback)&callBackTagAdded,
-			cast(void*)onTagAddedListeners[onTagAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackTagAddedDestroy,
 			connectFlags);
-		return onTagAddedListeners[onTagAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag,OnTagAddedDelegateWrapper wrapper)
+	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, OnTagAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), wrapper.outer);
 	}
 	
 	extern(C) static void callBackTagAddedDestroy(OnTagAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnTagAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnTagAdded(OnTagAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onTagAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onTagAddedListeners[index] = null;
-				onTagAddedListeners = std.algorithm.remove(onTagAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnTagChangedDelegateWrapper
 	{
+		static OnTagChangedDelegateWrapper[] listeners;
 		void delegate(TextTag, bool, TextTagTable) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(TextTag, bool, TextTagTable) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(TextTag, bool, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnTagChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnTagChangedDelegateWrapper[] onTagChangedListeners;
 
 	/** */
 	gulong addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onTagChangedListeners ~= new OnTagChangedDelegateWrapper(dlg, 0, connectFlags);
-		onTagChangedListeners[onTagChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnTagChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"tag-changed",
 			cast(GCallback)&callBackTagChanged,
-			cast(void*)onTagChangedListeners[onTagChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackTagChangedDestroy,
 			connectFlags);
-		return onTagChangedListeners[onTagChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, bool sizeChanged,OnTagChangedDelegateWrapper wrapper)
+	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, bool sizeChanged, OnTagChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), sizeChanged, wrapper.outer);
 	}
 	
 	extern(C) static void callBackTagChangedDestroy(OnTagChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnTagChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnTagChanged(OnTagChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onTagChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onTagChangedListeners[index] = null;
-				onTagChangedListeners = std.algorithm.remove(onTagChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnTagRemovedDelegateWrapper
 	{
+		static OnTagRemovedDelegateWrapper[] listeners;
 		void delegate(TextTag, TextTagTable) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(TextTag, TextTagTable) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(TextTag, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnTagRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnTagRemovedDelegateWrapper[] onTagRemovedListeners;
 
 	/** */
 	gulong addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onTagRemovedListeners ~= new OnTagRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onTagRemovedListeners[onTagRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnTagRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"tag-removed",
 			cast(GCallback)&callBackTagRemoved,
-			cast(void*)onTagRemovedListeners[onTagRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackTagRemovedDestroy,
 			connectFlags);
-		return onTagRemovedListeners[onTagRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag,OnTagRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, OnTagRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), wrapper.outer);
 	}
 	
 	extern(C) static void callBackTagRemovedDestroy(OnTagRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnTagRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnTagRemoved(OnTagRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onTagRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onTagRemovedListeners[index] = null;
-				onTagRemovedListeners = std.algorithm.remove(onTagRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

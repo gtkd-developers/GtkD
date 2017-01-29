@@ -83,6 +83,7 @@ public interface DBusObjectIF{
 	 * Since: 2.30
 	 */
 	public string getObjectPath();
+
 	/**
 	 * Emitted when @interface is added to @object.
 	 *
@@ -91,8 +92,7 @@ public interface DBusObjectIF{
 	 *
 	 * Since: 2.30
 	 */
-	gulong addOnInterfaceAdded(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnInterfaceAdded(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when @interface is removed from @object.
@@ -102,7 +102,5 @@ public interface DBusObjectIF{
 	 *
 	 * Since: 2.30
 	 */
-	gulong addOnInterfaceRemoved(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnInterfaceRemoved(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

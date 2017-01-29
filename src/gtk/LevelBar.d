@@ -407,17 +407,29 @@ public class LevelBar : Widget, OrientableIF
 
 	protected class OnOffsetChangedDelegateWrapper
 	{
+		static OnOffsetChangedDelegateWrapper[] listeners;
 		void delegate(string, LevelBar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, LevelBar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, LevelBar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnOffsetChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnOffsetChangedDelegateWrapper[] onOffsetChangedListeners;
 
 	/**
 	 * Emitted when an offset specified on the bar changes value as an
@@ -434,38 +446,24 @@ public class LevelBar : Widget, OrientableIF
 	 */
 	gulong addOnOffsetChanged(void delegate(string, LevelBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onOffsetChangedListeners ~= new OnOffsetChangedDelegateWrapper(dlg, 0, connectFlags);
-		onOffsetChangedListeners[onOffsetChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnOffsetChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"offset-changed",
 			cast(GCallback)&callBackOffsetChanged,
-			cast(void*)onOffsetChangedListeners[onOffsetChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackOffsetChangedDestroy,
 			connectFlags);
-		return onOffsetChangedListeners[onOffsetChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackOffsetChanged(GtkLevelBar* levelbarStruct, char* name,OnOffsetChangedDelegateWrapper wrapper)
+	extern(C) static void callBackOffsetChanged(GtkLevelBar* levelbarStruct, char* name, OnOffsetChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(name), wrapper.outer);
 	}
 	
 	extern(C) static void callBackOffsetChangedDestroy(OnOffsetChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnOffsetChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnOffsetChanged(OnOffsetChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onOffsetChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onOffsetChangedListeners[index] = null;
-				onOffsetChangedListeners = std.algorithm.remove(onOffsetChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

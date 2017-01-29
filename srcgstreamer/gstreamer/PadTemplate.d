@@ -195,17 +195,29 @@ public class PadTemplate : ObjectGst
 
 	protected class OnPadCreatedDelegateWrapper
 	{
+		static OnPadCreatedDelegateWrapper[] listeners;
 		void delegate(Pad, PadTemplate) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Pad, PadTemplate) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Pad, PadTemplate) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPadCreatedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPadCreatedDelegateWrapper[] onPadCreatedListeners;
 
 	/**
 	 * This signal is fired when an element creates a pad from this template.
@@ -215,38 +227,24 @@ public class PadTemplate : ObjectGst
 	 */
 	gulong addOnPadCreated(void delegate(Pad, PadTemplate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPadCreatedListeners ~= new OnPadCreatedDelegateWrapper(dlg, 0, connectFlags);
-		onPadCreatedListeners[onPadCreatedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPadCreatedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"pad-created",
 			cast(GCallback)&callBackPadCreated,
-			cast(void*)onPadCreatedListeners[onPadCreatedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPadCreatedDestroy,
 			connectFlags);
-		return onPadCreatedListeners[onPadCreatedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPadCreated(GstPadTemplate* padtemplateStruct, GstPad* pad,OnPadCreatedDelegateWrapper wrapper)
+	extern(C) static void callBackPadCreated(GstPadTemplate* padtemplateStruct, GstPad* pad, OnPadCreatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(pad), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPadCreatedDestroy(OnPadCreatedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPadCreated(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPadCreated(OnPadCreatedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPadCreatedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPadCreatedListeners[index] = null;
-				onPadCreatedListeners = std.algorithm.remove(onPadCreatedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

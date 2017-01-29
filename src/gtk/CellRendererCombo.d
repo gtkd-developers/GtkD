@@ -119,17 +119,29 @@ public class CellRendererCombo : CellRendererText
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(string, TreeIter, CellRendererCombo) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, TreeIter, CellRendererCombo) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, TreeIter, CellRendererCombo) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * This signal is emitted each time after the user selected an item in
@@ -154,38 +166,24 @@ public class CellRendererCombo : CellRendererText
 	 */
 	gulong addOnChanged(void delegate(string, TreeIter, CellRendererCombo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GtkCellRendererCombo* cellrenderercomboStruct, char* pathString, GtkTreeIter* newIter,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GtkCellRendererCombo* cellrenderercomboStruct, char* pathString, GtkTreeIter* newIter, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(pathString), ObjectG.getDObject!(TreeIter)(newIter), wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

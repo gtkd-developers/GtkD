@@ -120,17 +120,29 @@ public class GestureRotate : Gesture
 
 	protected class OnAngleChangedDelegateWrapper
 	{
+		static OnAngleChangedDelegateWrapper[] listeners;
 		void delegate(double, double, GestureRotate) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(double, double, GestureRotate) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(double, double, GestureRotate) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnAngleChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnAngleChangedDelegateWrapper[] onAngleChangedListeners;
 
 	/**
 	 * This signal is emitted when the angle between both tracked points
@@ -144,38 +156,24 @@ public class GestureRotate : Gesture
 	 */
 	gulong addOnAngleChanged(void delegate(double, double, GestureRotate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onAngleChangedListeners ~= new OnAngleChangedDelegateWrapper(dlg, 0, connectFlags);
-		onAngleChangedListeners[onAngleChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnAngleChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"angle-changed",
 			cast(GCallback)&callBackAngleChanged,
-			cast(void*)onAngleChangedListeners[onAngleChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackAngleChangedDestroy,
 			connectFlags);
-		return onAngleChangedListeners[onAngleChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackAngleChanged(GtkGestureRotate* gesturerotateStruct, double angle, double angleDelta,OnAngleChangedDelegateWrapper wrapper)
+	extern(C) static void callBackAngleChanged(GtkGestureRotate* gesturerotateStruct, double angle, double angleDelta, OnAngleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(angle, angleDelta, wrapper.outer);
 	}
 	
 	extern(C) static void callBackAngleChangedDestroy(OnAngleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnAngleChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnAngleChanged(OnAngleChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onAngleChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onAngleChangedListeners[index] = null;
-				onAngleChangedListeners = std.algorithm.remove(onAngleChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

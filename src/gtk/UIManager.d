@@ -762,17 +762,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnActionsChangedDelegateWrapper
 	{
+		static OnActionsChangedDelegateWrapper[] listeners;
 		void delegate(UIManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(UIManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActionsChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActionsChangedDelegateWrapper[] onActionsChangedListeners;
 
 	/**
 	 * The ::actions-changed signal is emitted whenever the set of actions
@@ -782,54 +794,52 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	gulong addOnActionsChanged(void delegate(UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActionsChangedListeners ~= new OnActionsChangedDelegateWrapper(dlg, 0, connectFlags);
-		onActionsChangedListeners[onActionsChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActionsChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"actions-changed",
 			cast(GCallback)&callBackActionsChanged,
-			cast(void*)onActionsChangedListeners[onActionsChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActionsChangedDestroy,
 			connectFlags);
-		return onActionsChangedListeners[onActionsChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackActionsChanged(GtkUIManager* uimanagerStruct,OnActionsChangedDelegateWrapper wrapper)
+	extern(C) static void callBackActionsChanged(GtkUIManager* uimanagerStruct, OnActionsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackActionsChangedDestroy(OnActionsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActionsChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActionsChanged(OnActionsChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActionsChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActionsChangedListeners[index] = null;
-				onActionsChangedListeners = std.algorithm.remove(onActionsChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnAddWidgetDelegateWrapper
 	{
+		static OnAddWidgetDelegateWrapper[] listeners;
 		void delegate(Widget, UIManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Widget, UIManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnAddWidgetDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnAddWidgetDelegateWrapper[] onAddWidgetListeners;
 
 	/**
 	 * The ::add-widget signal is emitted for each generated menubar and toolbar.
@@ -843,54 +853,52 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	gulong addOnAddWidget(void delegate(Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onAddWidgetListeners ~= new OnAddWidgetDelegateWrapper(dlg, 0, connectFlags);
-		onAddWidgetListeners[onAddWidgetListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnAddWidgetDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"add-widget",
 			cast(GCallback)&callBackAddWidget,
-			cast(void*)onAddWidgetListeners[onAddWidgetListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackAddWidgetDestroy,
 			connectFlags);
-		return onAddWidgetListeners[onAddWidgetListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackAddWidget(GtkUIManager* uimanagerStruct, GtkWidget* widget,OnAddWidgetDelegateWrapper wrapper)
+	extern(C) static void callBackAddWidget(GtkUIManager* uimanagerStruct, GtkWidget* widget, OnAddWidgetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
 	
 	extern(C) static void callBackAddWidgetDestroy(OnAddWidgetDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnAddWidget(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnAddWidget(OnAddWidgetDelegateWrapper source)
-	{
-		foreach(index, wrapper; onAddWidgetListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onAddWidgetListeners[index] = null;
-				onAddWidgetListeners = std.algorithm.remove(onAddWidgetListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnConnectProxyDelegateWrapper
 	{
+		static OnConnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, UIManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Action, Widget, UIManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Action, Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnConnectProxyDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnConnectProxyDelegateWrapper[] onConnectProxyListeners;
 
 	/**
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
@@ -908,54 +916,52 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	gulong addOnConnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onConnectProxyListeners ~= new OnConnectProxyDelegateWrapper(dlg, 0, connectFlags);
-		onConnectProxyListeners[onConnectProxyListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnConnectProxyDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"connect-proxy",
 			cast(GCallback)&callBackConnectProxy,
-			cast(void*)onConnectProxyListeners[onConnectProxyListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackConnectProxyDestroy,
 			connectFlags);
-		return onConnectProxyListeners[onConnectProxyListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy,OnConnectProxyDelegateWrapper wrapper)
+	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, OnConnectProxyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
 	}
 	
 	extern(C) static void callBackConnectProxyDestroy(OnConnectProxyDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnConnectProxy(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnConnectProxy(OnConnectProxyDelegateWrapper source)
-	{
-		foreach(index, wrapper; onConnectProxyListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onConnectProxyListeners[index] = null;
-				onConnectProxyListeners = std.algorithm.remove(onConnectProxyListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDisconnectProxyDelegateWrapper
 	{
+		static OnDisconnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, UIManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Action, Widget, UIManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Action, Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDisconnectProxyDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDisconnectProxyDelegateWrapper[] onDisconnectProxyListeners;
 
 	/**
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
@@ -969,54 +975,52 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	gulong addOnDisconnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDisconnectProxyListeners ~= new OnDisconnectProxyDelegateWrapper(dlg, 0, connectFlags);
-		onDisconnectProxyListeners[onDisconnectProxyListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDisconnectProxyDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"disconnect-proxy",
 			cast(GCallback)&callBackDisconnectProxy,
-			cast(void*)onDisconnectProxyListeners[onDisconnectProxyListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDisconnectProxyDestroy,
 			connectFlags);
-		return onDisconnectProxyListeners[onDisconnectProxyListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy,OnDisconnectProxyDelegateWrapper wrapper)
+	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, OnDisconnectProxyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDisconnectProxyDestroy(OnDisconnectProxyDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDisconnectProxy(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDisconnectProxy(OnDisconnectProxyDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDisconnectProxyListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDisconnectProxyListeners[index] = null;
-				onDisconnectProxyListeners = std.algorithm.remove(onDisconnectProxyListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPostActivateDelegateWrapper
 	{
+		static OnPostActivateDelegateWrapper[] listeners;
 		void delegate(Action, UIManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Action, UIManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Action, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPostActivateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPostActivateDelegateWrapper[] onPostActivateListeners;
 
 	/**
 	 * The ::post-activate signal is emitted just after the @action
@@ -1032,54 +1036,52 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	gulong addOnPostActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPostActivateListeners ~= new OnPostActivateDelegateWrapper(dlg, 0, connectFlags);
-		onPostActivateListeners[onPostActivateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPostActivateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"post-activate",
 			cast(GCallback)&callBackPostActivate,
-			cast(void*)onPostActivateListeners[onPostActivateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPostActivateDestroy,
 			connectFlags);
-		return onPostActivateListeners[onPostActivateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action,OnPostActivateDelegateWrapper wrapper)
+	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, OnPostActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPostActivateDestroy(OnPostActivateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPostActivate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPostActivate(OnPostActivateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPostActivateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPostActivateListeners[index] = null;
-				onPostActivateListeners = std.algorithm.remove(onPostActivateListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPreActivateDelegateWrapper
 	{
+		static OnPreActivateDelegateWrapper[] listeners;
 		void delegate(Action, UIManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Action, UIManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Action, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPreActivateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPreActivateDelegateWrapper[] onPreActivateListeners;
 
 	/**
 	 * The ::pre-activate signal is emitted just before the @action
@@ -1095,38 +1097,24 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	gulong addOnPreActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPreActivateListeners ~= new OnPreActivateDelegateWrapper(dlg, 0, connectFlags);
-		onPreActivateListeners[onPreActivateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPreActivateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"pre-activate",
 			cast(GCallback)&callBackPreActivate,
-			cast(void*)onPreActivateListeners[onPreActivateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPreActivateDestroy,
 			connectFlags);
-		return onPreActivateListeners[onPreActivateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action,OnPreActivateDelegateWrapper wrapper)
+	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, OnPreActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPreActivateDestroy(OnPreActivateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPreActivate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPreActivate(OnPreActivateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPreActivateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPreActivateListeners[index] = null;
-				onPreActivateListeners = std.algorithm.remove(onPreActivateListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

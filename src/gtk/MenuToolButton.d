@@ -234,17 +234,29 @@ public class MenuToolButton : ToolButton
 
 	protected class OnShowMenuDelegateWrapper
 	{
+		static OnShowMenuDelegateWrapper[] listeners;
 		void delegate(MenuToolButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(MenuToolButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(MenuToolButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnShowMenuDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnShowMenuDelegateWrapper[] onShowMenuListeners;
 
 	/**
 	 * The ::show-menu signal is emitted before the menu is shown.
@@ -258,38 +270,24 @@ public class MenuToolButton : ToolButton
 	 */
 	gulong addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onShowMenuListeners ~= new OnShowMenuDelegateWrapper(dlg, 0, connectFlags);
-		onShowMenuListeners[onShowMenuListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnShowMenuDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"show-menu",
 			cast(GCallback)&callBackShowMenu,
-			cast(void*)onShowMenuListeners[onShowMenuListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackShowMenuDestroy,
 			connectFlags);
-		return onShowMenuListeners[onShowMenuListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct,OnShowMenuDelegateWrapper wrapper)
+	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, OnShowMenuDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackShowMenuDestroy(OnShowMenuDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnShowMenu(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnShowMenu(OnShowMenuDelegateWrapper source)
-	{
-		foreach(index, wrapper; onShowMenuListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onShowMenuListeners[index] = null;
-				onShowMenuListeners = std.algorithm.remove(onShowMenuListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -143,17 +143,29 @@ public class FileMonitor : ObjectG
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * Emitted when @file has been changed.
@@ -192,38 +204,24 @@ public class FileMonitor : ObjectG
 	 */
 	gulong addOnChanged(void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GFileMonitor* filemonitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GFileMonitor* filemonitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(File, FileIF)(file), ObjectG.getDObject!(File, FileIF)(otherFile), eventType, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

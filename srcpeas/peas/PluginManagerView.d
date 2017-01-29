@@ -164,17 +164,29 @@ public class PluginManagerView : TreeView
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
+		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, PluginManagerView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Menu, PluginManagerView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Menu, PluginManagerView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPopulatePopupDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The ::populate-popup signal is emitted before showing the context
@@ -186,38 +198,24 @@ public class PluginManagerView : TreeView
 	 */
 	gulong addOnPopulatePopup(void delegate(Menu, PluginManagerView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPopulatePopupListeners ~= new OnPopulatePopupDelegateWrapper(dlg, 0, connectFlags);
-		onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPopulatePopupDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"populate-popup",
 			cast(GCallback)&callBackPopulatePopup,
-			cast(void*)onPopulatePopupListeners[onPopulatePopupListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPopulatePopupDestroy,
 			connectFlags);
-		return onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPopulatePopup(PeasGtkPluginManagerView* pluginmanagerviewStruct, GtkMenu* menu,OnPopulatePopupDelegateWrapper wrapper)
+	extern(C) static void callBackPopulatePopup(PeasGtkPluginManagerView* pluginmanagerviewStruct, GtkMenu* menu, OnPopulatePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPopulatePopup(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPopulatePopup(OnPopulatePopupDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPopulatePopupListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPopulatePopupListeners[index] = null;
-				onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

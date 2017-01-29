@@ -610,17 +610,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnActivateDelegateWrapper
 	{
+		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActivateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The ::activate signal on GtkButton is an action signal and
@@ -630,108 +642,104 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	gulong addOnActivate(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
-		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActivateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"activate",
 			cast(GCallback)&callBackActivate,
-			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActivateDestroy,
 			connectFlags);
-		return onActivateListeners[onActivateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackActivate(GtkButton* buttonStruct,OnActivateDelegateWrapper wrapper)
+	extern(C) static void callBackActivate(GtkButton* buttonStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActivate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActivateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActivateListeners[index] = null;
-				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnClickedDelegateWrapper
 	{
+		static OnClickedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnClickedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnClickedDelegateWrapper[] onClickedListeners;
 
 	/**
 	 * Emitted when the button has been activated (pressed and released).
 	 */
 	gulong addOnClicked(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onClickedListeners ~= new OnClickedDelegateWrapper(dlg, 0, connectFlags);
-		onClickedListeners[onClickedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnClickedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"clicked",
 			cast(GCallback)&callBackClicked,
-			cast(void*)onClickedListeners[onClickedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackClickedDestroy,
 			connectFlags);
-		return onClickedListeners[onClickedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClicked(GtkButton* buttonStruct,OnClickedDelegateWrapper wrapper)
+	extern(C) static void callBackClicked(GtkButton* buttonStruct, OnClickedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClicked(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClicked(OnClickedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onClickedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onClickedListeners[index] = null;
-				onClickedListeners = std.algorithm.remove(onClickedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnEnterDelegateWrapper
 	{
+		static OnEnterDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEnterDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEnterDelegateWrapper[] onEnterListeners;
 
 	/**
 	 * Emitted when the pointer enters the button.
@@ -740,54 +748,52 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	gulong addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEnterListeners ~= new OnEnterDelegateWrapper(dlg, 0, connectFlags);
-		onEnterListeners[onEnterListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEnterDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"enter",
 			cast(GCallback)&callBackEnter,
-			cast(void*)onEnterListeners[onEnterListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEnterDestroy,
 			connectFlags);
-		return onEnterListeners[onEnterListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEnter(GtkButton* buttonStruct,OnEnterDelegateWrapper wrapper)
+	extern(C) static void callBackEnter(GtkButton* buttonStruct, OnEnterDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackEnterDestroy(OnEnterDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEnter(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEnter(OnEnterDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEnterListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEnterListeners[index] = null;
-				onEnterListeners = std.algorithm.remove(onEnterListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnLeaveDelegateWrapper
 	{
+		static OnLeaveDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnLeaveDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnLeaveDelegateWrapper[] onLeaveListeners;
 
 	/**
 	 * Emitted when the pointer leaves the button.
@@ -796,54 +802,52 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	gulong addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onLeaveListeners ~= new OnLeaveDelegateWrapper(dlg, 0, connectFlags);
-		onLeaveListeners[onLeaveListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnLeaveDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"leave",
 			cast(GCallback)&callBackLeave,
-			cast(void*)onLeaveListeners[onLeaveListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackLeaveDestroy,
 			connectFlags);
-		return onLeaveListeners[onLeaveListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackLeave(GtkButton* buttonStruct,OnLeaveDelegateWrapper wrapper)
+	extern(C) static void callBackLeave(GtkButton* buttonStruct, OnLeaveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackLeaveDestroy(OnLeaveDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnLeave(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnLeave(OnLeaveDelegateWrapper source)
-	{
-		foreach(index, wrapper; onLeaveListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onLeaveListeners[index] = null;
-				onLeaveListeners = std.algorithm.remove(onLeaveListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPressedDelegateWrapper
 	{
+		static OnPressedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPressedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPressedDelegateWrapper[] onPressedListeners;
 
 	/**
 	 * Emitted when the button is pressed.
@@ -852,54 +856,52 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	gulong addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPressedListeners ~= new OnPressedDelegateWrapper(dlg, 0, connectFlags);
-		onPressedListeners[onPressedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPressedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"pressed",
 			cast(GCallback)&callBackPressed,
-			cast(void*)onPressedListeners[onPressedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPressedDestroy,
 			connectFlags);
-		return onPressedListeners[onPressedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPressed(GtkButton* buttonStruct,OnPressedDelegateWrapper wrapper)
+	extern(C) static void callBackPressed(GtkButton* buttonStruct, OnPressedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPressed(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPressed(OnPressedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPressedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPressedListeners[index] = null;
-				onPressedListeners = std.algorithm.remove(onPressedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnReleasedDelegateWrapper
 	{
+		static OnReleasedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Button) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnReleasedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnReleasedDelegateWrapper[] onReleasedListeners;
 
 	/**
 	 * Emitted when the button is released.
@@ -908,38 +910,24 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	gulong addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onReleasedListeners ~= new OnReleasedDelegateWrapper(dlg, 0, connectFlags);
-		onReleasedListeners[onReleasedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnReleasedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"released",
 			cast(GCallback)&callBackReleased,
-			cast(void*)onReleasedListeners[onReleasedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackReleasedDestroy,
 			connectFlags);
-		return onReleasedListeners[onReleasedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackReleased(GtkButton* buttonStruct,OnReleasedDelegateWrapper wrapper)
+	extern(C) static void callBackReleased(GtkButton* buttonStruct, OnReleasedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackReleasedDestroy(OnReleasedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnReleased(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnReleased(OnReleasedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onReleasedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onReleasedListeners[index] = null;
-				onReleasedListeners = std.algorithm.remove(onReleasedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

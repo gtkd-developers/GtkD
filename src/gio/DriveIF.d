@@ -395,11 +395,11 @@ public interface DriveIF{
 	 * Throws: GException on failure.
 	 */
 	public bool stopFinish(AsyncResultIF result);
+
 	/**
 	 * Emitted when the drive's state has changed.
 	 */
-	gulong addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnChanged(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the #GDrive have been
@@ -407,15 +407,13 @@ public interface DriveIF{
 	 * object they should release them so the object can be
 	 * finalized.
 	 */
-	gulong addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnDisconnected(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when the physical eject button (if any) of a drive has
 	 * been pressed.
 	 */
-	gulong addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnEjectButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Emitted when the physical stop button (if any) of a drive has
@@ -423,7 +421,5 @@ public interface DriveIF{
 	 *
 	 * Since: 2.22
 	 */
-	gulong addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnStopButton(void delegate(DriveIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

@@ -590,17 +590,29 @@ public class Assistant : Window
 
 	protected class OnApplyDelegateWrapper
 	{
+		static OnApplyDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Assistant) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnApplyDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnApplyDelegateWrapper[] onApplyListeners;
 
 	/**
 	 * The ::apply signal is emitted when the apply button is clicked.
@@ -619,54 +631,52 @@ public class Assistant : Window
 	 */
 	gulong addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onApplyListeners ~= new OnApplyDelegateWrapper(dlg, 0, connectFlags);
-		onApplyListeners[onApplyListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnApplyDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"apply",
 			cast(GCallback)&callBackApply,
-			cast(void*)onApplyListeners[onApplyListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackApplyDestroy,
 			connectFlags);
-		return onApplyListeners[onApplyListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackApply(GtkAssistant* assistantStruct,OnApplyDelegateWrapper wrapper)
+	extern(C) static void callBackApply(GtkAssistant* assistantStruct, OnApplyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackApplyDestroy(OnApplyDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnApply(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnApply(OnApplyDelegateWrapper source)
-	{
-		foreach(index, wrapper; onApplyListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onApplyListeners[index] = null;
-				onApplyListeners = std.algorithm.remove(onApplyListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCancelDelegateWrapper
 	{
+		static OnCancelDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Assistant) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCancelDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * The ::cancel signal is emitted when then the cancel button is clicked.
@@ -675,54 +685,52 @@ public class Assistant : Window
 	 */
 	gulong addOnCancel(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCancelListeners ~= new OnCancelDelegateWrapper(dlg, 0, connectFlags);
-		onCancelListeners[onCancelListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCancelDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"cancel",
 			cast(GCallback)&callBackCancel,
-			cast(void*)onCancelListeners[onCancelListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCancelDestroy,
 			connectFlags);
-		return onCancelListeners[onCancelListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCancel(GtkAssistant* assistantStruct,OnCancelDelegateWrapper wrapper)
+	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, OnCancelDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCancel(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCancel(OnCancelDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCancelListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCancelListeners[index] = null;
-				onCancelListeners = std.algorithm.remove(onCancelListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCloseDelegateWrapper
 	{
+		static OnCloseDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Assistant) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCloseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is emitted either when the close button of
@@ -733,106 +741,102 @@ public class Assistant : Window
 	 */
 	gulong addOnClose(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCloseListeners ~= new OnCloseDelegateWrapper(dlg, 0, connectFlags);
-		onCloseListeners[onCloseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCloseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"close",
 			cast(GCallback)&callBackClose,
-			cast(void*)onCloseListeners[onCloseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCloseDestroy,
 			connectFlags);
-		return onCloseListeners[onCloseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClose(GtkAssistant* assistantStruct,OnCloseDelegateWrapper wrapper)
+	extern(C) static void callBackClose(GtkAssistant* assistantStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClose(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClose(OnCloseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCloseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCloseListeners[index] = null;
-				onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnEscapeDelegateWrapper
 	{
+		static OnEscapeDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Assistant) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEscapeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEscapeDelegateWrapper[] onEscapeListeners;
 
 	/** */
 	gulong addOnEscape(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEscapeListeners ~= new OnEscapeDelegateWrapper(dlg, 0, connectFlags);
-		onEscapeListeners[onEscapeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEscapeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"escape",
 			cast(GCallback)&callBackEscape,
-			cast(void*)onEscapeListeners[onEscapeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEscapeDestroy,
 			connectFlags);
-		return onEscapeListeners[onEscapeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEscape(GtkAssistant* assistantStruct,OnEscapeDelegateWrapper wrapper)
+	extern(C) static void callBackEscape(GtkAssistant* assistantStruct, OnEscapeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackEscapeDestroy(OnEscapeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEscape(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEscape(OnEscapeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEscapeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEscapeListeners[index] = null;
-				onEscapeListeners = std.algorithm.remove(onEscapeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPrepareDelegateWrapper
 	{
+		static OnPrepareDelegateWrapper[] listeners;
 		void delegate(Widget, Assistant) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Widget, Assistant) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Widget, Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPrepareDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPrepareDelegateWrapper[] onPrepareListeners;
 
 	/**
 	 * The ::prepare signal is emitted when a new page is set as the
@@ -848,38 +852,24 @@ public class Assistant : Window
 	 */
 	gulong addOnPrepare(void delegate(Widget, Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPrepareListeners ~= new OnPrepareDelegateWrapper(dlg, 0, connectFlags);
-		onPrepareListeners[onPrepareListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPrepareDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"prepare",
 			cast(GCallback)&callBackPrepare,
-			cast(void*)onPrepareListeners[onPrepareListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPrepareDestroy,
 			connectFlags);
-		return onPrepareListeners[onPrepareListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page,OnPrepareDelegateWrapper wrapper)
+	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, OnPrepareDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(page), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPrepareDestroy(OnPrepareDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPrepare(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPrepare(OnPrepareDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPrepareListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPrepareListeners[index] = null;
-				onPrepareListeners = std.algorithm.remove(onPrepareListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

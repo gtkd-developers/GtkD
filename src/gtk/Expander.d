@@ -437,53 +437,51 @@ public class Expander : Bin
 
 	protected class OnActivateDelegateWrapper
 	{
+		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Expander) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Expander) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Expander) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActivateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActivateDelegateWrapper[] onActivateListeners;
 
 	/** */
 	gulong addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActivateListeners ~= new OnActivateDelegateWrapper(dlg, 0, connectFlags);
-		onActivateListeners[onActivateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActivateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"activate",
 			cast(GCallback)&callBackActivate,
-			cast(void*)onActivateListeners[onActivateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActivateDestroy,
 			connectFlags);
-		return onActivateListeners[onActivateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackActivate(GtkExpander* expanderStruct,OnActivateDelegateWrapper wrapper)
+	extern(C) static void callBackActivate(GtkExpander* expanderStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActivate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActivate(OnActivateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActivateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActivateListeners[index] = null;
-				onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

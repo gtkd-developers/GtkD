@@ -180,17 +180,29 @@ public class TextTag : ObjectG
 
 	protected class OnDelegateWrapper
 	{
+		static OnDelegateWrapper[] listeners;
 		bool delegate(ObjectG, Event, TextIter, TextTag) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(ObjectG, Event, TextIter, TextTag) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDelegateWrapper[] onListeners;
 
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
@@ -206,38 +218,24 @@ public class TextTag : ObjectG
 	 */
 	gulong addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onListeners ~= new OnDelegateWrapper(dlg, 0, connectFlags);
-		onListeners[onListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"event",
 			cast(GCallback)&callBack,
-			cast(void*)onListeners[onListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDestroy,
 			connectFlags);
-		return onListeners[onListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBack(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter,OnDelegateWrapper wrapper)
+	extern(C) static int callBack(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, OnDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), ObjectG.getDObject!(Event)(event), ObjectG.getDObject!(TextIter)(iter), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOn(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOn(OnDelegateWrapper source)
-	{
-		foreach(index, wrapper; onListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onListeners[index] = null;
-				onListeners = std.algorithm.remove(onListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -219,55 +219,53 @@ public class Plug : Window
 
 	protected class OnEmbeddedDelegateWrapper
 	{
+		static OnEmbeddedDelegateWrapper[] listeners;
 		void delegate(Plug) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Plug) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Plug) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEmbeddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEmbeddedDelegateWrapper[] onEmbeddedListeners;
 
 	/**
 	 * Gets emitted when the plug becomes embedded in a socket.
 	 */
 	gulong addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEmbeddedListeners ~= new OnEmbeddedDelegateWrapper(dlg, 0, connectFlags);
-		onEmbeddedListeners[onEmbeddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEmbeddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"embedded",
 			cast(GCallback)&callBackEmbedded,
-			cast(void*)onEmbeddedListeners[onEmbeddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEmbeddedDestroy,
 			connectFlags);
-		return onEmbeddedListeners[onEmbeddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEmbedded(GtkPlug* plugStruct,OnEmbeddedDelegateWrapper wrapper)
+	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, OnEmbeddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackEmbeddedDestroy(OnEmbeddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEmbedded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEmbedded(OnEmbeddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEmbeddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEmbeddedListeners[index] = null;
-				onEmbeddedListeners = std.algorithm.remove(onEmbeddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

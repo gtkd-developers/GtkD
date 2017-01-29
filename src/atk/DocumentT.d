@@ -169,17 +169,29 @@ public template DocumentT(TStruct)
 
 	protected class OnLoadCompleteDelegateWrapper
 	{
+		static OnLoadCompleteDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DocumentIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnLoadCompleteDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnLoadCompleteDelegateWrapper[] onLoadCompleteListeners;
 
 	/**
 	 * The 'load-complete' signal is emitted when a pending load of
@@ -194,54 +206,52 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnLoadComplete(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onLoadCompleteListeners ~= new OnLoadCompleteDelegateWrapper(dlg, 0, connectFlags);
-		onLoadCompleteListeners[onLoadCompleteListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnLoadCompleteDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"load-complete",
 			cast(GCallback)&callBackLoadComplete,
-			cast(void*)onLoadCompleteListeners[onLoadCompleteListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackLoadCompleteDestroy,
 			connectFlags);
-		return onLoadCompleteListeners[onLoadCompleteListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackLoadComplete(AtkDocument* documentStruct,OnLoadCompleteDelegateWrapper wrapper)
+	extern(C) static void callBackLoadComplete(AtkDocument* documentStruct, OnLoadCompleteDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackLoadCompleteDestroy(OnLoadCompleteDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnLoadComplete(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnLoadComplete(OnLoadCompleteDelegateWrapper source)
-	{
-		foreach(index, wrapper; onLoadCompleteListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onLoadCompleteListeners[index] = null;
-				onLoadCompleteListeners = std.algorithm.remove(onLoadCompleteListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnLoadStoppedDelegateWrapper
 	{
+		static OnLoadStoppedDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DocumentIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnLoadStoppedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnLoadStoppedDelegateWrapper[] onLoadStoppedListeners;
 
 	/**
 	 * The 'load-stopped' signal is emitted when a pending load of
@@ -253,54 +263,52 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnLoadStopped(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onLoadStoppedListeners ~= new OnLoadStoppedDelegateWrapper(dlg, 0, connectFlags);
-		onLoadStoppedListeners[onLoadStoppedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnLoadStoppedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"load-stopped",
 			cast(GCallback)&callBackLoadStopped,
-			cast(void*)onLoadStoppedListeners[onLoadStoppedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackLoadStoppedDestroy,
 			connectFlags);
-		return onLoadStoppedListeners[onLoadStoppedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackLoadStopped(AtkDocument* documentStruct,OnLoadStoppedDelegateWrapper wrapper)
+	extern(C) static void callBackLoadStopped(AtkDocument* documentStruct, OnLoadStoppedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackLoadStoppedDestroy(OnLoadStoppedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnLoadStopped(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnLoadStopped(OnLoadStoppedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onLoadStoppedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onLoadStoppedListeners[index] = null;
-				onLoadStoppedListeners = std.algorithm.remove(onLoadStoppedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPageChangedDelegateWrapper
 	{
+		static OnPageChangedDelegateWrapper[] listeners;
 		void delegate(int, DocumentIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, DocumentIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPageChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPageChangedDelegateWrapper[] onPageChangedListeners;
 
 	/**
 	 * The 'page-changed' signal is emitted when the current page of
@@ -315,54 +323,52 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnPageChanged(void delegate(int, DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPageChangedListeners ~= new OnPageChangedDelegateWrapper(dlg, 0, connectFlags);
-		onPageChangedListeners[onPageChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPageChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"page-changed",
 			cast(GCallback)&callBackPageChanged,
-			cast(void*)onPageChangedListeners[onPageChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPageChangedDestroy,
 			connectFlags);
-		return onPageChangedListeners[onPageChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPageChanged(AtkDocument* documentStruct, int pageNumber,OnPageChangedDelegateWrapper wrapper)
+	extern(C) static void callBackPageChanged(AtkDocument* documentStruct, int pageNumber, OnPageChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(pageNumber, wrapper.outer);
 	}
 	
 	extern(C) static void callBackPageChangedDestroy(OnPageChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPageChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPageChanged(OnPageChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPageChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPageChangedListeners[index] = null;
-				onPageChangedListeners = std.algorithm.remove(onPageChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnReloadDelegateWrapper
 	{
+		static OnReloadDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(DocumentIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnReloadDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnReloadDelegateWrapper[] onReloadListeners;
 
 	/**
 	 * The 'reload' signal is emitted when the contents of a
@@ -373,38 +379,24 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnReload(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onReloadListeners ~= new OnReloadDelegateWrapper(dlg, 0, connectFlags);
-		onReloadListeners[onReloadListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnReloadDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"reload",
 			cast(GCallback)&callBackReload,
-			cast(void*)onReloadListeners[onReloadListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackReloadDestroy,
 			connectFlags);
-		return onReloadListeners[onReloadListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackReload(AtkDocument* documentStruct,OnReloadDelegateWrapper wrapper)
+	extern(C) static void callBackReload(AtkDocument* documentStruct, OnReloadDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnReload(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnReload(OnReloadDelegateWrapper source)
-	{
-		foreach(index, wrapper; onReloadListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onReloadListeners[index] = null;
-				onReloadListeners = std.algorithm.remove(onReloadListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

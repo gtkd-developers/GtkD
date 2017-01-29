@@ -325,17 +325,29 @@ public template FontChooserT(TStruct)
 
 	protected class OnFontActivatedDelegateWrapper
 	{
+		static OnFontActivatedDelegateWrapper[] listeners;
 		void delegate(string, FontChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, FontChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, FontChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFontActivatedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFontActivatedDelegateWrapper[] onFontActivatedListeners;
 
 	/**
 	 * Emitted when a font is activated.
@@ -348,38 +360,24 @@ public template FontChooserT(TStruct)
 	 */
 	gulong addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFontActivatedListeners ~= new OnFontActivatedDelegateWrapper(dlg, 0, connectFlags);
-		onFontActivatedListeners[onFontActivatedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFontActivatedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"font-activated",
 			cast(GCallback)&callBackFontActivated,
-			cast(void*)onFontActivatedListeners[onFontActivatedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFontActivatedDestroy,
 			connectFlags);
-		return onFontActivatedListeners[onFontActivatedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, char* fontname,OnFontActivatedDelegateWrapper wrapper)
+	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, char* fontname, OnFontActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(fontname), wrapper.outer);
 	}
 	
 	extern(C) static void callBackFontActivatedDestroy(OnFontActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFontActivated(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFontActivated(OnFontActivatedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFontActivatedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFontActivatedListeners[index] = null;
-				onFontActivatedListeners = std.algorithm.remove(onFontActivatedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

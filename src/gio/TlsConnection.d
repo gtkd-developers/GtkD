@@ -496,17 +496,29 @@ public class TlsConnection : IOStream
 
 	protected class OnAcceptCertificateDelegateWrapper
 	{
+		static OnAcceptCertificateDelegateWrapper[] listeners;
 		bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnAcceptCertificateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnAcceptCertificateDelegateWrapper[] onAcceptCertificateListeners;
 
 	/**
 	 * Emitted during the TLS handshake after the peer certificate has
@@ -556,38 +568,24 @@ public class TlsConnection : IOStream
 	 */
 	gulong addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onAcceptCertificateListeners ~= new OnAcceptCertificateDelegateWrapper(dlg, 0, connectFlags);
-		onAcceptCertificateListeners[onAcceptCertificateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnAcceptCertificateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"accept-certificate",
 			cast(GCallback)&callBackAcceptCertificate,
-			cast(void*)onAcceptCertificateListeners[onAcceptCertificateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackAcceptCertificateDestroy,
 			connectFlags);
-		return onAcceptCertificateListeners[onAcceptCertificateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackAcceptCertificate(GTlsConnection* tlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors,OnAcceptCertificateDelegateWrapper wrapper)
+	extern(C) static int callBackAcceptCertificate(GTlsConnection* tlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, OnAcceptCertificateDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, wrapper.outer);
 	}
 	
 	extern(C) static void callBackAcceptCertificateDestroy(OnAcceptCertificateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnAcceptCertificate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnAcceptCertificate(OnAcceptCertificateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onAcceptCertificateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onAcceptCertificateListeners[index] = null;
-				onAcceptCertificateListeners = std.algorithm.remove(onAcceptCertificateListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

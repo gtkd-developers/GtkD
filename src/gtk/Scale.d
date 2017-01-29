@@ -394,17 +394,29 @@ public class Scale : Range
 
 	protected class OnFormatValueDelegateWrapper
 	{
+		static OnFormatValueDelegateWrapper[] listeners;
 		string delegate(double, Scale) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(string delegate(double, Scale) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(string delegate(double, Scale) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFormatValueDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFormatValueDelegateWrapper[] onFormatValueListeners;
 
 	/**
 	 * Signal which allows you to change how the scale value is displayed.
@@ -430,38 +442,24 @@ public class Scale : Range
 	 */
 	gulong addOnFormatValue(string delegate(double, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFormatValueListeners ~= new OnFormatValueDelegateWrapper(dlg, 0, connectFlags);
-		onFormatValueListeners[onFormatValueListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFormatValueDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"format-value",
 			cast(GCallback)&callBackFormatValue,
-			cast(void*)onFormatValueListeners[onFormatValueListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFormatValueDestroy,
 			connectFlags);
-		return onFormatValueListeners[onFormatValueListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static string callBackFormatValue(GtkScale* scaleStruct, double value,OnFormatValueDelegateWrapper wrapper)
+	extern(C) static string callBackFormatValue(GtkScale* scaleStruct, double value, OnFormatValueDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(value, wrapper.outer);
 	}
 	
 	extern(C) static void callBackFormatValueDestroy(OnFormatValueDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFormatValue(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFormatValue(OnFormatValueDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFormatValueListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFormatValueListeners[index] = null;
-				onFormatValueListeners = std.algorithm.remove(onFormatValueListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

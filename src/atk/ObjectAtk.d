@@ -459,17 +459,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnActiveDescendantChangedDelegateWrapper
 	{
+		static OnActiveDescendantChangedDelegateWrapper[] listeners;
 		void delegate(void*, ObjectAtk) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(void*, ObjectAtk) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActiveDescendantChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActiveDescendantChangedDelegateWrapper[] onActiveDescendantChangedListeners;
 
 	/**
 	 * The "active-descendant-changed" signal is emitted by an object
@@ -482,54 +494,52 @@ public class ObjectAtk : ObjectG
 	 */
 	gulong addOnActiveDescendantChanged(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActiveDescendantChangedListeners ~= new OnActiveDescendantChangedDelegateWrapper(dlg, 0, connectFlags);
-		onActiveDescendantChangedListeners[onActiveDescendantChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActiveDescendantChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"active-descendant-changed",
 			cast(GCallback)&callBackActiveDescendantChanged,
-			cast(void*)onActiveDescendantChangedListeners[onActiveDescendantChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActiveDescendantChangedDestroy,
 			connectFlags);
-		return onActiveDescendantChangedListeners[onActiveDescendantChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackActiveDescendantChanged(AtkObject* objectatkStruct, void* arg1,OnActiveDescendantChangedDelegateWrapper wrapper)
+	extern(C) static void callBackActiveDescendantChanged(AtkObject* objectatkStruct, void* arg1, OnActiveDescendantChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
 	
 	extern(C) static void callBackActiveDescendantChangedDestroy(OnActiveDescendantChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActiveDescendantChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActiveDescendantChanged(OnActiveDescendantChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActiveDescendantChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActiveDescendantChangedListeners[index] = null;
-				onActiveDescendantChangedListeners = std.algorithm.remove(onActiveDescendantChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnChildrenChangedDelegateWrapper
 	{
+		static OnChildrenChangedDelegateWrapper[] listeners;
 		void delegate(uint, void*, ObjectAtk) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(uint, void*, ObjectAtk) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(uint, void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChildrenChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChildrenChangedDelegateWrapper[] onChildrenChangedListeners;
 
 	/**
 	 * The signal "children-changed" is emitted when a child is added or
@@ -547,54 +557,52 @@ public class ObjectAtk : ObjectG
 	 */
 	gulong addOnChildrenChanged(void delegate(uint, void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChildrenChangedListeners ~= new OnChildrenChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChildrenChangedListeners[onChildrenChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChildrenChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"children-changed",
 			cast(GCallback)&callBackChildrenChanged,
-			cast(void*)onChildrenChangedListeners[onChildrenChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChildrenChangedDestroy,
 			connectFlags);
-		return onChildrenChangedListeners[onChildrenChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChildrenChanged(AtkObject* objectatkStruct, uint arg1, void* arg2,OnChildrenChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChildrenChanged(AtkObject* objectatkStruct, uint arg1, void* arg2, OnChildrenChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChildrenChangedDestroy(OnChildrenChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChildrenChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChildrenChanged(OnChildrenChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChildrenChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChildrenChangedListeners[index] = null;
-				onChildrenChangedListeners = std.algorithm.remove(onChildrenChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnFocusDelegateWrapper
 	{
+		static OnFocusDelegateWrapper[] listeners;
 		void delegate(bool, ObjectAtk) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, ObjectAtk) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFocusDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFocusDelegateWrapper[] onFocusListeners;
 
 	/**
 	 * The signal "focus-event" is emitted when an object gained or lost
@@ -608,54 +616,52 @@ public class ObjectAtk : ObjectG
 	 */
 	gulong addOnFocus(void delegate(bool, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFocusListeners ~= new OnFocusDelegateWrapper(dlg, 0, connectFlags);
-		onFocusListeners[onFocusListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFocusDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"focus-event",
 			cast(GCallback)&callBackFocus,
-			cast(void*)onFocusListeners[onFocusListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFocusDestroy,
 			connectFlags);
-		return onFocusListeners[onFocusListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackFocus(AtkObject* objectatkStruct, bool arg1,OnFocusDelegateWrapper wrapper)
+	extern(C) static void callBackFocus(AtkObject* objectatkStruct, bool arg1, OnFocusDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
 	
 	extern(C) static void callBackFocusDestroy(OnFocusDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFocus(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFocus(OnFocusDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFocusListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFocusListeners[index] = null;
-				onFocusListeners = std.algorithm.remove(onFocusListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPropertyChangeDelegateWrapper
 	{
+		static OnPropertyChangeDelegateWrapper[] listeners;
 		void delegate(void*, ObjectAtk) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(void*, ObjectAtk) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPropertyChangeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPropertyChangeDelegateWrapper[] onPropertyChangeListeners;
 
 	/**
 	 * The signal "property-change" is emitted when an object's property
@@ -678,54 +684,52 @@ public class ObjectAtk : ObjectG
 	 */
 	gulong addOnPropertyChange(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPropertyChangeListeners ~= new OnPropertyChangeDelegateWrapper(dlg, 0, connectFlags);
-		onPropertyChangeListeners[onPropertyChangeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPropertyChangeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"property-change",
 			cast(GCallback)&callBackPropertyChange,
-			cast(void*)onPropertyChangeListeners[onPropertyChangeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPropertyChangeDestroy,
 			connectFlags);
-		return onPropertyChangeListeners[onPropertyChangeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPropertyChange(AtkObject* objectatkStruct, void* arg1,OnPropertyChangeDelegateWrapper wrapper)
+	extern(C) static void callBackPropertyChange(AtkObject* objectatkStruct, void* arg1, OnPropertyChangeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
 	
 	extern(C) static void callBackPropertyChangeDestroy(OnPropertyChangeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPropertyChange(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPropertyChange(OnPropertyChangeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPropertyChangeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPropertyChangeListeners[index] = null;
-				onPropertyChangeListeners = std.algorithm.remove(onPropertyChangeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnStateChangeDelegateWrapper
 	{
+		static OnStateChangeDelegateWrapper[] listeners;
 		void delegate(string, bool, ObjectAtk) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, bool, ObjectAtk) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, bool, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnStateChangeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnStateChangeDelegateWrapper[] onStateChangeListeners;
 
 	/**
 	 * The "state-change" signal is emitted when an object's state
@@ -738,54 +742,52 @@ public class ObjectAtk : ObjectG
 	 */
 	gulong addOnStateChange(void delegate(string, bool, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onStateChangeListeners ~= new OnStateChangeDelegateWrapper(dlg, 0, connectFlags);
-		onStateChangeListeners[onStateChangeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnStateChangeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"state-change",
 			cast(GCallback)&callBackStateChange,
-			cast(void*)onStateChangeListeners[onStateChangeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackStateChangeDestroy,
 			connectFlags);
-		return onStateChangeListeners[onStateChangeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackStateChange(AtkObject* objectatkStruct, char* arg1, bool arg2,OnStateChangeDelegateWrapper wrapper)
+	extern(C) static void callBackStateChange(AtkObject* objectatkStruct, char* arg1, bool arg2, OnStateChangeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(arg1), arg2, wrapper.outer);
 	}
 	
 	extern(C) static void callBackStateChangeDestroy(OnStateChangeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnStateChange(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnStateChange(OnStateChangeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onStateChangeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onStateChangeListeners[index] = null;
-				onStateChangeListeners = std.algorithm.remove(onStateChangeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnVisibleDataChangedDelegateWrapper
 	{
+		static OnVisibleDataChangedDelegateWrapper[] listeners;
 		void delegate(ObjectAtk) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ObjectAtk) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnVisibleDataChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnVisibleDataChangedDelegateWrapper[] onVisibleDataChangedListeners;
 
 	/**
 	 * The "visible-data-changed" signal is emitted when the visual
@@ -793,40 +795,26 @@ public class ObjectAtk : ObjectG
 	 */
 	gulong addOnVisibleDataChanged(void delegate(ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onVisibleDataChangedListeners ~= new OnVisibleDataChangedDelegateWrapper(dlg, 0, connectFlags);
-		onVisibleDataChangedListeners[onVisibleDataChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnVisibleDataChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"visible-data-changed",
 			cast(GCallback)&callBackVisibleDataChanged,
-			cast(void*)onVisibleDataChangedListeners[onVisibleDataChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackVisibleDataChangedDestroy,
 			connectFlags);
-		return onVisibleDataChangedListeners[onVisibleDataChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackVisibleDataChanged(AtkObject* objectatkStruct,OnVisibleDataChangedDelegateWrapper wrapper)
+	extern(C) static void callBackVisibleDataChanged(AtkObject* objectatkStruct, OnVisibleDataChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackVisibleDataChangedDestroy(OnVisibleDataChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnVisibleDataChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnVisibleDataChanged(OnVisibleDataChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onVisibleDataChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onVisibleDataChangedListeners[index] = null;
-				onVisibleDataChangedListeners = std.algorithm.remove(onVisibleDataChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Get the #AtkRole type corresponding to a rolew name.

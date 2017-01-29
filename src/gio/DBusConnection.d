@@ -1710,17 +1710,29 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 	protected class OnClosedDelegateWrapper
 	{
+		static OnClosedDelegateWrapper[] listeners;
 		void delegate(bool, ErrorG, DBusConnection) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, ErrorG, DBusConnection) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, ErrorG, DBusConnection) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnClosedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnClosedDelegateWrapper[] onClosedListeners;
 
 	/**
 	 * Emitted when the connection is closed.
@@ -1749,40 +1761,26 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 */
 	gulong addOnClosed(void delegate(bool, ErrorG, DBusConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onClosedListeners ~= new OnClosedDelegateWrapper(dlg, 0, connectFlags);
-		onClosedListeners[onClosedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnClosedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"closed",
 			cast(GCallback)&callBackClosed,
-			cast(void*)onClosedListeners[onClosedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackClosedDestroy,
 			connectFlags);
-		return onClosedListeners[onClosedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClosed(GDBusConnection* dbusconnectionStruct, bool remotePeerVanished, GError* error,OnClosedDelegateWrapper wrapper)
+	extern(C) static void callBackClosed(GDBusConnection* dbusconnectionStruct, bool remotePeerVanished, GError* error, OnClosedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(remotePeerVanished, new ErrorG(error), wrapper.outer);
 	}
 	
 	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClosed(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClosed(OnClosedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onClosedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onClosedListeners[index] = null;
-				onClosedListeners = std.algorithm.remove(onClosedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Asynchronously connects to the message bus specified by @bus_type.

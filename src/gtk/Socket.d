@@ -207,17 +207,29 @@ public class Socket : Container
 
 	protected class OnPlugAddedDelegateWrapper
 	{
+		static OnPlugAddedDelegateWrapper[] listeners;
 		void delegate(Socket) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Socket) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Socket) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPlugAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPlugAddedDelegateWrapper[] onPlugAddedListeners;
 
 	/**
 	 * This signal is emitted when a client is successfully
@@ -225,54 +237,52 @@ public class Socket : Container
 	 */
 	gulong addOnPlugAdded(void delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPlugAddedListeners ~= new OnPlugAddedDelegateWrapper(dlg, 0, connectFlags);
-		onPlugAddedListeners[onPlugAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPlugAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"plug-added",
 			cast(GCallback)&callBackPlugAdded,
-			cast(void*)onPlugAddedListeners[onPlugAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPlugAddedDestroy,
 			connectFlags);
-		return onPlugAddedListeners[onPlugAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct,OnPlugAddedDelegateWrapper wrapper)
+	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, OnPlugAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPlugAddedDestroy(OnPlugAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPlugAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPlugAdded(OnPlugAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPlugAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPlugAddedListeners[index] = null;
-				onPlugAddedListeners = std.algorithm.remove(onPlugAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPlugRemovedDelegateWrapper
 	{
+		static OnPlugRemovedDelegateWrapper[] listeners;
 		bool delegate(Socket) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(Socket) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(Socket) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPlugRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPlugRemovedDelegateWrapper[] onPlugRemovedListeners;
 
 	/**
 	 * This signal is emitted when a client is removed from the socket.
@@ -283,38 +293,24 @@ public class Socket : Container
 	 */
 	gulong addOnPlugRemoved(bool delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPlugRemovedListeners ~= new OnPlugRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onPlugRemovedListeners[onPlugRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPlugRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"plug-removed",
 			cast(GCallback)&callBackPlugRemoved,
-			cast(void*)onPlugRemovedListeners[onPlugRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPlugRemovedDestroy,
 			connectFlags);
-		return onPlugRemovedListeners[onPlugRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackPlugRemoved(GtkSocket* socketStruct,OnPlugRemovedDelegateWrapper wrapper)
+	extern(C) static int callBackPlugRemoved(GtkSocket* socketStruct, OnPlugRemovedDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPlugRemovedDestroy(OnPlugRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPlugRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPlugRemoved(OnPlugRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPlugRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPlugRemovedListeners[index] = null;
-				onPlugRemovedListeners = std.algorithm.remove(onPlugRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

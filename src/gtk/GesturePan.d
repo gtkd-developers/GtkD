@@ -143,17 +143,29 @@ public class GesturePan : GestureDrag
 
 	protected class OnPanDelegateWrapper
 	{
+		static OnPanDelegateWrapper[] listeners;
 		void delegate(GtkPanDirection, double, GesturePan) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkPanDirection, double, GesturePan) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkPanDirection, double, GesturePan) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPanDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPanDelegateWrapper[] onPanListeners;
 
 	/**
 	 * This signal is emitted once a panning gesture along the
@@ -167,38 +179,24 @@ public class GesturePan : GestureDrag
 	 */
 	gulong addOnPan(void delegate(GtkPanDirection, double, GesturePan) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPanListeners ~= new OnPanDelegateWrapper(dlg, 0, connectFlags);
-		onPanListeners[onPanListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPanDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"pan",
 			cast(GCallback)&callBackPan,
-			cast(void*)onPanListeners[onPanListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPanDestroy,
 			connectFlags);
-		return onPanListeners[onPanListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPan(GtkGesturePan* gesturepanStruct, GtkPanDirection direction, double offset,OnPanDelegateWrapper wrapper)
+	extern(C) static void callBackPan(GtkGesturePan* gesturepanStruct, GtkPanDirection direction, double offset, OnPanDelegateWrapper wrapper)
 	{
 		wrapper.dlg(direction, offset, wrapper.outer);
 	}
 	
 	extern(C) static void callBackPanDestroy(OnPanDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPan(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPan(OnPanDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPanListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPanListeners[index] = null;
-				onPanListeners = std.algorithm.remove(onPanListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

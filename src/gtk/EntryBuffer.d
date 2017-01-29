@@ -285,17 +285,29 @@ public class EntryBuffer : ObjectG
 
 	protected class OnDeletedTextDelegateWrapper
 	{
+		static OnDeletedTextDelegateWrapper[] listeners;
 		void delegate(uint, uint, EntryBuffer) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(uint, uint, EntryBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(uint, uint, EntryBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeletedTextDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeletedTextDelegateWrapper[] onDeletedTextListeners;
 
 	/**
 	 * This signal is emitted after text is deleted from the buffer.
@@ -308,54 +320,52 @@ public class EntryBuffer : ObjectG
 	 */
 	gulong addOnDeletedText(void delegate(uint, uint, EntryBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeletedTextListeners ~= new OnDeletedTextDelegateWrapper(dlg, 0, connectFlags);
-		onDeletedTextListeners[onDeletedTextListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeletedTextDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"deleted-text",
 			cast(GCallback)&callBackDeletedText,
-			cast(void*)onDeletedTextListeners[onDeletedTextListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeletedTextDestroy,
 			connectFlags);
-		return onDeletedTextListeners[onDeletedTextListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeletedText(GtkEntryBuffer* entrybufferStruct, uint position, uint nChars,OnDeletedTextDelegateWrapper wrapper)
+	extern(C) static void callBackDeletedText(GtkEntryBuffer* entrybufferStruct, uint position, uint nChars, OnDeletedTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, nChars, wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeletedTextDestroy(OnDeletedTextDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeletedText(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeletedText(OnDeletedTextDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeletedTextListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeletedTextListeners[index] = null;
-				onDeletedTextListeners = std.algorithm.remove(onDeletedTextListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnInsertedTextDelegateWrapper
 	{
+		static OnInsertedTextDelegateWrapper[] listeners;
 		void delegate(uint, string, uint, EntryBuffer) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(uint, string, uint, EntryBuffer) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(uint, string, uint, EntryBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnInsertedTextDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnInsertedTextDelegateWrapper[] onInsertedTextListeners;
 
 	/**
 	 * This signal is emitted after text is inserted into the buffer.
@@ -369,38 +379,24 @@ public class EntryBuffer : ObjectG
 	 */
 	gulong addOnInsertedText(void delegate(uint, string, uint, EntryBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onInsertedTextListeners ~= new OnInsertedTextDelegateWrapper(dlg, 0, connectFlags);
-		onInsertedTextListeners[onInsertedTextListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnInsertedTextDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"inserted-text",
 			cast(GCallback)&callBackInsertedText,
-			cast(void*)onInsertedTextListeners[onInsertedTextListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackInsertedTextDestroy,
 			connectFlags);
-		return onInsertedTextListeners[onInsertedTextListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackInsertedText(GtkEntryBuffer* entrybufferStruct, uint position, char* chars, uint nChars,OnInsertedTextDelegateWrapper wrapper)
+	extern(C) static void callBackInsertedText(GtkEntryBuffer* entrybufferStruct, uint position, char* chars, uint nChars, OnInsertedTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, Str.toString(chars), nChars, wrapper.outer);
 	}
 	
 	extern(C) static void callBackInsertedTextDestroy(OnInsertedTextDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnInsertedText(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnInsertedText(OnInsertedTextDelegateWrapper source)
-	{
-		foreach(index, wrapper; onInsertedTextListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onInsertedTextListeners[index] = null;
-				onInsertedTextListeners = std.algorithm.remove(onInsertedTextListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

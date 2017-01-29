@@ -260,17 +260,29 @@ public class ScaleButton : Button, OrientableIF
 
 	protected class OnPopdownDelegateWrapper
 	{
+		static OnPopdownDelegateWrapper[] listeners;
 		void delegate(ScaleButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ScaleButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ScaleButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPopdownDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPopdownDelegateWrapper[] onPopdownListeners;
 
 	/**
 	 * The ::popdown signal is a
@@ -283,54 +295,52 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	gulong addOnPopdown(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPopdownListeners ~= new OnPopdownDelegateWrapper(dlg, 0, connectFlags);
-		onPopdownListeners[onPopdownListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPopdownDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"popdown",
 			cast(GCallback)&callBackPopdown,
-			cast(void*)onPopdownListeners[onPopdownListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPopdownDestroy,
 			connectFlags);
-		return onPopdownListeners[onPopdownListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPopdown(GtkScaleButton* scalebuttonStruct,OnPopdownDelegateWrapper wrapper)
+	extern(C) static void callBackPopdown(GtkScaleButton* scalebuttonStruct, OnPopdownDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPopdownDestroy(OnPopdownDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPopdown(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPopdown(OnPopdownDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPopdownListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPopdownListeners[index] = null;
-				onPopdownListeners = std.algorithm.remove(onPopdownListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPopupDelegateWrapper
 	{
+		static OnPopupDelegateWrapper[] listeners;
 		void delegate(ScaleButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ScaleButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ScaleButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPopupDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPopupDelegateWrapper[] onPopupListeners;
 
 	/**
 	 * The ::popup signal is a
@@ -343,54 +353,52 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	gulong addOnPopup(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPopupListeners ~= new OnPopupDelegateWrapper(dlg, 0, connectFlags);
-		onPopupListeners[onPopupListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPopupDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"popup",
 			cast(GCallback)&callBackPopup,
-			cast(void*)onPopupListeners[onPopupListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPopupDestroy,
 			connectFlags);
-		return onPopupListeners[onPopupListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPopup(GtkScaleButton* scalebuttonStruct,OnPopupDelegateWrapper wrapper)
+	extern(C) static void callBackPopup(GtkScaleButton* scalebuttonStruct, OnPopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPopupDestroy(OnPopupDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPopup(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPopup(OnPopupDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPopupListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPopupListeners[index] = null;
-				onPopupListeners = std.algorithm.remove(onPopupListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnValueChangedDelegateWrapper
 	{
+		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(double, ScaleButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(double, ScaleButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(double, ScaleButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnValueChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * The ::value-changed signal is emitted when the value field has
@@ -403,38 +411,24 @@ public class ScaleButton : Button, OrientableIF
 	 */
 	gulong addOnValueChanged(void delegate(double, ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onValueChangedListeners ~= new OnValueChangedDelegateWrapper(dlg, 0, connectFlags);
-		onValueChangedListeners[onValueChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnValueChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"value-changed",
 			cast(GCallback)&callBackValueChanged,
-			cast(void*)onValueChangedListeners[onValueChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackValueChangedDestroy,
 			connectFlags);
-		return onValueChangedListeners[onValueChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackValueChanged(GtkScaleButton* scalebuttonStruct, double value,OnValueChangedDelegateWrapper wrapper)
+	extern(C) static void callBackValueChanged(GtkScaleButton* scalebuttonStruct, double value, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(value, wrapper.outer);
 	}
 	
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnValueChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnValueChanged(OnValueChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onValueChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onValueChangedListeners[index] = null;
-				onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -1391,6 +1391,7 @@ shared static this()
 	Linker.link(gtk_flow_box_bind_model, "gtk_flow_box_bind_model", LIBRARY.GTK);
 	Linker.link(gtk_flow_box_get_activate_on_single_click, "gtk_flow_box_get_activate_on_single_click", LIBRARY.GTK);
 	Linker.link(gtk_flow_box_get_child_at_index, "gtk_flow_box_get_child_at_index", LIBRARY.GTK);
+	Linker.link(gtk_flow_box_get_child_at_pos, "gtk_flow_box_get_child_at_pos", LIBRARY.GTK);
 	Linker.link(gtk_flow_box_get_column_spacing, "gtk_flow_box_get_column_spacing", LIBRARY.GTK);
 	Linker.link(gtk_flow_box_get_homogeneous, "gtk_flow_box_get_homogeneous", LIBRARY.GTK);
 	Linker.link(gtk_flow_box_get_max_children_per_line, "gtk_flow_box_get_max_children_per_line", LIBRARY.GTK);
@@ -6546,6 +6547,7 @@ __gshared extern(C)
 	void function(GtkFlowBox* box, GListModel* model, GtkFlowBoxCreateWidgetFunc createWidgetFunc, void* userData, GDestroyNotify userDataFreeFunc) c_gtk_flow_box_bind_model;
 	int function(GtkFlowBox* box) c_gtk_flow_box_get_activate_on_single_click;
 	GtkFlowBoxChild* function(GtkFlowBox* box, int idx) c_gtk_flow_box_get_child_at_index;
+	GtkFlowBoxChild* function(GtkFlowBox* box, int x, int y) c_gtk_flow_box_get_child_at_pos;
 	uint function(GtkFlowBox* box) c_gtk_flow_box_get_column_spacing;
 	int function(GtkFlowBox* box) c_gtk_flow_box_get_homogeneous;
 	uint function(GtkFlowBox* box) c_gtk_flow_box_get_max_children_per_line;
@@ -11699,6 +11701,7 @@ alias c_gtk_flow_box_new gtk_flow_box_new;
 alias c_gtk_flow_box_bind_model gtk_flow_box_bind_model;
 alias c_gtk_flow_box_get_activate_on_single_click gtk_flow_box_get_activate_on_single_click;
 alias c_gtk_flow_box_get_child_at_index gtk_flow_box_get_child_at_index;
+alias c_gtk_flow_box_get_child_at_pos gtk_flow_box_get_child_at_pos;
 alias c_gtk_flow_box_get_column_spacing gtk_flow_box_get_column_spacing;
 alias c_gtk_flow_box_get_homogeneous gtk_flow_box_get_homogeneous;
 alias c_gtk_flow_box_get_max_children_per_line gtk_flow_box_get_max_children_per_line;

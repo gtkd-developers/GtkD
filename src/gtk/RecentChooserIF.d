@@ -399,6 +399,7 @@ public interface RecentChooserIF{
 	 * Since: 2.10
 	 */
 	public void unselectUri(string uri);
+
 	/**
 	 * This signal is emitted when the user "activates" a recent item
 	 * in the recent chooser.  This can happen by double-clicking on an item
@@ -407,8 +408,7 @@ public interface RecentChooserIF{
 	 *
 	 * Since: 2.10
 	 */
-	gulong addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when there is a change in the set of
@@ -418,7 +418,5 @@ public interface RecentChooserIF{
 	 *
 	 * Since: 2.10
 	 */
-	gulong addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

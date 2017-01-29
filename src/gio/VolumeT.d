@@ -471,71 +471,81 @@ public template VolumeT(TStruct)
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(VolumeIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(VolumeIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(VolumeIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * Emitted when the volume has been changed.
 	 */
 	gulong addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GVolume* volumeStruct,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GVolume* volumeStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnRemovedDelegateWrapper
 	{
+		static OnRemovedDelegateWrapper[] listeners;
 		void delegate(VolumeIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(VolumeIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(VolumeIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnRemovedDelegateWrapper[] onRemovedListeners;
 
 	/**
 	 * This signal is emitted when the #GVolume have been removed. If
@@ -544,38 +554,24 @@ public template VolumeT(TStruct)
 	 */
 	gulong addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onRemovedListeners ~= new OnRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onRemovedListeners[onRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"removed",
 			cast(GCallback)&callBackRemoved,
-			cast(void*)onRemovedListeners[onRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackRemovedDestroy,
 			connectFlags);
-		return onRemovedListeners[onRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackRemoved(GVolume* volumeStruct,OnRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackRemoved(GVolume* volumeStruct, OnRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnRemoved(OnRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onRemovedListeners[index] = null;
-				onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

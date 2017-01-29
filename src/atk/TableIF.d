@@ -391,6 +391,7 @@ public interface TableIF{
 	 *         to set for @table
 	 */
 	public void setSummary(ObjectAtk accessible);
+
 	/**
 	 * The "column-deleted" signal is emitted by an object which
 	 * implements the AtkTable interface when a column is deleted.
@@ -399,8 +400,7 @@ public interface TableIF{
 	 *     arg1 = The index of the first column deleted.
 	 *     arg2 = The number of columns deleted.
 	 */
-	gulong addOnColumnDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnColumnDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "column-inserted" signal is emitted by an object which
@@ -410,24 +410,21 @@ public interface TableIF{
 	 *     arg1 = The index of the column inserted.
 	 *     arg2 = The number of colums inserted.
 	 */
-	gulong addOnColumnInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnColumnInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "column-reordered" signal is emitted by an object which
 	 * implements the AtkTable interface when the columns are
 	 * reordered.
 	 */
-	gulong addOnColumnReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnColumnReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "model-changed" signal is emitted by an object which
 	 * implements the AtkTable interface when the model displayed by
 	 * the table changes.
 	 */
-	gulong addOnModelChanged(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnModelChanged(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "row-deleted" signal is emitted by an object which
@@ -437,8 +434,7 @@ public interface TableIF{
 	 *     arg1 = The index of the first row deleted.
 	 *     arg2 = The number of rows deleted.
 	 */
-	gulong addOnRowDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnRowDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "row-inserted" signal is emitted by an object which
@@ -448,15 +444,12 @@ public interface TableIF{
 	 *     arg1 = The index of the first row inserted.
 	 *     arg2 = The number of rows inserted.
 	 */
-	gulong addOnRowInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnRowInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "row-reordered" signal is emitted by an object which
 	 * implements the AtkTable interface when the rows are
 	 * reordered.
 	 */
-	gulong addOnRowReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnRowReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

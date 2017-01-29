@@ -63,6 +63,7 @@ public interface CellEditableIF{
 	 *     event = A #GdkEvent, or %NULL
 	 */
 	public void startEditing(Event event);
+
 	/**
 	 * This signal is a sign for the cell renderer to update its
 	 * value from the @cell_editable.
@@ -74,8 +75,7 @@ public interface CellEditableIF{
 	 * gtk_cell_editable_editing_done() is a convenience method
 	 * for emitting #GtkCellEditable::editing-done.
 	 */
-	gulong addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnEditingDone(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is meant to indicate that the cell is finished
@@ -90,7 +90,5 @@ public interface CellEditableIF{
 	 * gtk_cell_editable_remove_widget() is a convenience method
 	 * for emitting #GtkCellEditable::remove-widget.
 	 */
-	gulong addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnRemoveWidget(void delegate(CellEditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

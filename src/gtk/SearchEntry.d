@@ -152,17 +152,29 @@ public class SearchEntry : Entry
 
 	protected class OnNextMatchDelegateWrapper
 	{
+		static OnNextMatchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SearchEntry) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnNextMatchDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnNextMatchDelegateWrapper[] onNextMatchListeners;
 
 	/**
 	 * The ::next-match signal is a [keybinding signal][GtkBindingSignal]
@@ -178,54 +190,52 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnNextMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onNextMatchListeners ~= new OnNextMatchDelegateWrapper(dlg, 0, connectFlags);
-		onNextMatchListeners[onNextMatchListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnNextMatchDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"next-match",
 			cast(GCallback)&callBackNextMatch,
-			cast(void*)onNextMatchListeners[onNextMatchListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackNextMatchDestroy,
 			connectFlags);
-		return onNextMatchListeners[onNextMatchListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackNextMatch(GtkSearchEntry* searchentryStruct,OnNextMatchDelegateWrapper wrapper)
+	extern(C) static void callBackNextMatch(GtkSearchEntry* searchentryStruct, OnNextMatchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackNextMatchDestroy(OnNextMatchDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnNextMatch(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnNextMatch(OnNextMatchDelegateWrapper source)
-	{
-		foreach(index, wrapper; onNextMatchListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onNextMatchListeners[index] = null;
-				onNextMatchListeners = std.algorithm.remove(onNextMatchListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPreviousMatchDelegateWrapper
 	{
+		static OnPreviousMatchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SearchEntry) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPreviousMatchDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPreviousMatchDelegateWrapper[] onPreviousMatchListeners;
 
 	/**
 	 * The ::previous-match signal is a [keybinding signal][GtkBindingSignal]
@@ -241,54 +251,52 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnPreviousMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPreviousMatchListeners ~= new OnPreviousMatchDelegateWrapper(dlg, 0, connectFlags);
-		onPreviousMatchListeners[onPreviousMatchListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPreviousMatchDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"previous-match",
 			cast(GCallback)&callBackPreviousMatch,
-			cast(void*)onPreviousMatchListeners[onPreviousMatchListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPreviousMatchDestroy,
 			connectFlags);
-		return onPreviousMatchListeners[onPreviousMatchListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPreviousMatch(GtkSearchEntry* searchentryStruct,OnPreviousMatchDelegateWrapper wrapper)
+	extern(C) static void callBackPreviousMatch(GtkSearchEntry* searchentryStruct, OnPreviousMatchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPreviousMatchDestroy(OnPreviousMatchDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPreviousMatch(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPreviousMatch(OnPreviousMatchDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPreviousMatchListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPreviousMatchListeners[index] = null;
-				onPreviousMatchListeners = std.algorithm.remove(onPreviousMatchListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSearchChangedDelegateWrapper
 	{
+		static OnSearchChangedDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SearchEntry) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSearchChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSearchChangedDelegateWrapper[] onSearchChangedListeners;
 
 	/**
 	 * The #GtkSearchEntry::search-changed signal is emitted with a short
@@ -298,54 +306,52 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnSearchChanged(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSearchChangedListeners ~= new OnSearchChangedDelegateWrapper(dlg, 0, connectFlags);
-		onSearchChangedListeners[onSearchChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSearchChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"search-changed",
 			cast(GCallback)&callBackSearchChanged,
-			cast(void*)onSearchChangedListeners[onSearchChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSearchChangedDestroy,
 			connectFlags);
-		return onSearchChangedListeners[onSearchChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSearchChanged(GtkSearchEntry* searchentryStruct,OnSearchChangedDelegateWrapper wrapper)
+	extern(C) static void callBackSearchChanged(GtkSearchEntry* searchentryStruct, OnSearchChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackSearchChangedDestroy(OnSearchChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSearchChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSearchChanged(OnSearchChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSearchChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSearchChangedListeners[index] = null;
-				onSearchChangedListeners = std.algorithm.remove(onSearchChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnStopSearchDelegateWrapper
 	{
+		static OnStopSearchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SearchEntry) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnStopSearchDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnStopSearchDelegateWrapper[] onStopSearchListeners;
 
 	/**
 	 * The ::stop-search signal is a [keybinding signal][GtkBindingSignal]
@@ -360,38 +366,24 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnStopSearch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onStopSearchListeners ~= new OnStopSearchDelegateWrapper(dlg, 0, connectFlags);
-		onStopSearchListeners[onStopSearchListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnStopSearchDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"stop-search",
 			cast(GCallback)&callBackStopSearch,
-			cast(void*)onStopSearchListeners[onStopSearchListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackStopSearchDestroy,
 			connectFlags);
-		return onStopSearchListeners[onStopSearchListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackStopSearch(GtkSearchEntry* searchentryStruct,OnStopSearchDelegateWrapper wrapper)
+	extern(C) static void callBackStopSearch(GtkSearchEntry* searchentryStruct, OnStopSearchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackStopSearchDestroy(OnStopSearchDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnStopSearch(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnStopSearch(OnStopSearchDelegateWrapper source)
-	{
-		foreach(index, wrapper; onStopSearchListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onStopSearchListeners[index] = null;
-				onStopSearchListeners = std.algorithm.remove(onStopSearchListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

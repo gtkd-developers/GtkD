@@ -343,17 +343,29 @@ public class IMContext : ObjectG
 
 	protected class OnCommitDelegateWrapper
 	{
+		static OnCommitDelegateWrapper[] listeners;
 		void delegate(string, IMContext) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, IMContext) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCommitDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCommitDelegateWrapper[] onCommitListeners;
 
 	/**
 	 * The ::commit signal is emitted when a complete input sequence
@@ -365,54 +377,52 @@ public class IMContext : ObjectG
 	 */
 	gulong addOnCommit(void delegate(string, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCommitListeners ~= new OnCommitDelegateWrapper(dlg, 0, connectFlags);
-		onCommitListeners[onCommitListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCommitDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"commit",
 			cast(GCallback)&callBackCommit,
-			cast(void*)onCommitListeners[onCommitListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCommitDestroy,
 			connectFlags);
-		return onCommitListeners[onCommitListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCommit(GtkIMContext* imcontextStruct, char* str,OnCommitDelegateWrapper wrapper)
+	extern(C) static void callBackCommit(GtkIMContext* imcontextStruct, char* str, OnCommitDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(str), wrapper.outer);
 	}
 	
 	extern(C) static void callBackCommitDestroy(OnCommitDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCommit(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCommit(OnCommitDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCommitListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCommitListeners[index] = null;
-				onCommitListeners = std.algorithm.remove(onCommitListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDeleteSurroundingDelegateWrapper
 	{
+		static OnDeleteSurroundingDelegateWrapper[] listeners;
 		bool delegate(int, int, IMContext) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(int, int, IMContext) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(int, int, IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeleteSurroundingDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeleteSurroundingDelegateWrapper[] onDeleteSurroundingListeners;
 
 	/**
 	 * The ::delete-surrounding signal is emitted when the input method
@@ -428,54 +438,52 @@ public class IMContext : ObjectG
 	 */
 	gulong addOnDeleteSurrounding(bool delegate(int, int, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeleteSurroundingListeners ~= new OnDeleteSurroundingDelegateWrapper(dlg, 0, connectFlags);
-		onDeleteSurroundingListeners[onDeleteSurroundingListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeleteSurroundingDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"delete-surrounding",
 			cast(GCallback)&callBackDeleteSurrounding,
-			cast(void*)onDeleteSurroundingListeners[onDeleteSurroundingListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeleteSurroundingDestroy,
 			connectFlags);
-		return onDeleteSurroundingListeners[onDeleteSurroundingListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackDeleteSurrounding(GtkIMContext* imcontextStruct, int offset, int nChars,OnDeleteSurroundingDelegateWrapper wrapper)
+	extern(C) static int callBackDeleteSurrounding(GtkIMContext* imcontextStruct, int offset, int nChars, OnDeleteSurroundingDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(offset, nChars, wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeleteSurroundingDestroy(OnDeleteSurroundingDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeleteSurrounding(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeleteSurrounding(OnDeleteSurroundingDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeleteSurroundingListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeleteSurroundingListeners[index] = null;
-				onDeleteSurroundingListeners = std.algorithm.remove(onDeleteSurroundingListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPreeditChangedDelegateWrapper
 	{
+		static OnPreeditChangedDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(IMContext) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPreeditChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPreeditChangedDelegateWrapper[] onPreeditChangedListeners;
 
 	/**
 	 * The ::preedit-changed signal is emitted whenever the preedit sequence
@@ -485,54 +493,52 @@ public class IMContext : ObjectG
 	 */
 	gulong addOnPreeditChanged(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPreeditChangedListeners ~= new OnPreeditChangedDelegateWrapper(dlg, 0, connectFlags);
-		onPreeditChangedListeners[onPreeditChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPreeditChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"preedit-changed",
 			cast(GCallback)&callBackPreeditChanged,
-			cast(void*)onPreeditChangedListeners[onPreeditChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPreeditChangedDestroy,
 			connectFlags);
-		return onPreeditChangedListeners[onPreeditChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPreeditChanged(GtkIMContext* imcontextStruct,OnPreeditChangedDelegateWrapper wrapper)
+	extern(C) static void callBackPreeditChanged(GtkIMContext* imcontextStruct, OnPreeditChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPreeditChangedDestroy(OnPreeditChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPreeditChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPreeditChanged(OnPreeditChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPreeditChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPreeditChangedListeners[index] = null;
-				onPreeditChangedListeners = std.algorithm.remove(onPreeditChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPreeditEndDelegateWrapper
 	{
+		static OnPreeditEndDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(IMContext) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPreeditEndDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPreeditEndDelegateWrapper[] onPreeditEndListeners;
 
 	/**
 	 * The ::preedit-end signal is emitted when a preediting sequence
@@ -540,54 +546,52 @@ public class IMContext : ObjectG
 	 */
 	gulong addOnPreeditEnd(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPreeditEndListeners ~= new OnPreeditEndDelegateWrapper(dlg, 0, connectFlags);
-		onPreeditEndListeners[onPreeditEndListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPreeditEndDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"preedit-end",
 			cast(GCallback)&callBackPreeditEnd,
-			cast(void*)onPreeditEndListeners[onPreeditEndListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPreeditEndDestroy,
 			connectFlags);
-		return onPreeditEndListeners[onPreeditEndListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPreeditEnd(GtkIMContext* imcontextStruct,OnPreeditEndDelegateWrapper wrapper)
+	extern(C) static void callBackPreeditEnd(GtkIMContext* imcontextStruct, OnPreeditEndDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPreeditEndDestroy(OnPreeditEndDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPreeditEnd(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPreeditEnd(OnPreeditEndDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPreeditEndListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPreeditEndListeners[index] = null;
-				onPreeditEndListeners = std.algorithm.remove(onPreeditEndListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPreeditStartDelegateWrapper
 	{
+		static OnPreeditStartDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(IMContext) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPreeditStartDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPreeditStartDelegateWrapper[] onPreeditStartListeners;
 
 	/**
 	 * The ::preedit-start signal is emitted when a new preediting sequence
@@ -595,54 +599,52 @@ public class IMContext : ObjectG
 	 */
 	gulong addOnPreeditStart(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPreeditStartListeners ~= new OnPreeditStartDelegateWrapper(dlg, 0, connectFlags);
-		onPreeditStartListeners[onPreeditStartListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPreeditStartDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"preedit-start",
 			cast(GCallback)&callBackPreeditStart,
-			cast(void*)onPreeditStartListeners[onPreeditStartListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPreeditStartDestroy,
 			connectFlags);
-		return onPreeditStartListeners[onPreeditStartListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPreeditStart(GtkIMContext* imcontextStruct,OnPreeditStartDelegateWrapper wrapper)
+	extern(C) static void callBackPreeditStart(GtkIMContext* imcontextStruct, OnPreeditStartDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackPreeditStartDestroy(OnPreeditStartDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPreeditStart(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPreeditStart(OnPreeditStartDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPreeditStartListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPreeditStartListeners[index] = null;
-				onPreeditStartListeners = std.algorithm.remove(onPreeditStartListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnRetrieveSurroundingDelegateWrapper
 	{
+		static OnRetrieveSurroundingDelegateWrapper[] listeners;
 		bool delegate(IMContext) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(IMContext) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnRetrieveSurroundingDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnRetrieveSurroundingDelegateWrapper[] onRetrieveSurroundingListeners;
 
 	/**
 	 * The ::retrieve-surrounding signal is emitted when the input method
@@ -654,38 +656,24 @@ public class IMContext : ObjectG
 	 */
 	gulong addOnRetrieveSurrounding(bool delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onRetrieveSurroundingListeners ~= new OnRetrieveSurroundingDelegateWrapper(dlg, 0, connectFlags);
-		onRetrieveSurroundingListeners[onRetrieveSurroundingListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnRetrieveSurroundingDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"retrieve-surrounding",
 			cast(GCallback)&callBackRetrieveSurrounding,
-			cast(void*)onRetrieveSurroundingListeners[onRetrieveSurroundingListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackRetrieveSurroundingDestroy,
 			connectFlags);
-		return onRetrieveSurroundingListeners[onRetrieveSurroundingListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackRetrieveSurrounding(GtkIMContext* imcontextStruct,OnRetrieveSurroundingDelegateWrapper wrapper)
+	extern(C) static int callBackRetrieveSurrounding(GtkIMContext* imcontextStruct, OnRetrieveSurroundingDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackRetrieveSurroundingDestroy(OnRetrieveSurroundingDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnRetrieveSurrounding(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnRetrieveSurrounding(OnRetrieveSurroundingDelegateWrapper source)
-	{
-		foreach(index, wrapper; onRetrieveSurroundingListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onRetrieveSurroundingListeners[index] = null;
-				onRetrieveSurroundingListeners = std.algorithm.remove(onRetrieveSurroundingListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

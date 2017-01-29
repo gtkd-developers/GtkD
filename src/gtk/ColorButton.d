@@ -259,17 +259,29 @@ public class ColorButton : Button, ColorChooserIF
 
 	protected class OnColorSetDelegateWrapper
 	{
+		static OnColorSetDelegateWrapper[] listeners;
 		void delegate(ColorButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ColorButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ColorButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnColorSetDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnColorSetDelegateWrapper[] onColorSetListeners;
 
 	/**
 	 * The ::color-set signal is emitted when the user selects a color.
@@ -284,38 +296,24 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	gulong addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onColorSetListeners ~= new OnColorSetDelegateWrapper(dlg, 0, connectFlags);
-		onColorSetListeners[onColorSetListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnColorSetDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"color-set",
 			cast(GCallback)&callBackColorSet,
-			cast(void*)onColorSetListeners[onColorSetListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackColorSetDestroy,
 			connectFlags);
-		return onColorSetListeners[onColorSetListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackColorSet(GtkColorButton* colorbuttonStruct,OnColorSetDelegateWrapper wrapper)
+	extern(C) static void callBackColorSet(GtkColorButton* colorbuttonStruct, OnColorSetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackColorSetDestroy(OnColorSetDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnColorSet(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnColorSet(OnColorSetDelegateWrapper source)
-	{
-		foreach(index, wrapper; onColorSetListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onColorSetListeners[index] = null;
-				onColorSetListeners = std.algorithm.remove(onColorSetListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

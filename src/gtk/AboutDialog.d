@@ -52,7 +52,7 @@ private import std.algorithm;
  * #GtkAboutDialog::activate-link signal.
  * 
  * To specify a person with an email address, use a string like
- * "Edgar Allan Poe <edgar@poe.com>". To specify a website with a title,
+ * "Edgar Allan Poe <edgar\@poe.com>". To specify a website with a title,
  * use a string like "GTK+ team http://www.gtk.org".
  * 
  * To make constructing a GtkAboutDialog as convenient as possible, you can
@@ -588,17 +588,29 @@ public class AboutDialog : Dialog
 
 	protected class OnActivateLinkDelegateWrapper
 	{
+		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(string, AboutDialog) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(string, AboutDialog) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(string, AboutDialog) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActivateLinkDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActivateLinkDelegateWrapper[] onActivateLinkListeners;
 
 	/**
 	 * The signal which gets emitted to activate a URI.
@@ -614,38 +626,24 @@ public class AboutDialog : Dialog
 	 */
 	gulong addOnActivateLink(bool delegate(string, AboutDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActivateLinkListeners ~= new OnActivateLinkDelegateWrapper(dlg, 0, connectFlags);
-		onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActivateLinkDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"activate-link",
 			cast(GCallback)&callBackActivateLink,
-			cast(void*)onActivateLinkListeners[onActivateLinkListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActivateLinkDestroy,
 			connectFlags);
-		return onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackActivateLink(GtkAboutDialog* aboutdialogStruct, char* uri,OnActivateLinkDelegateWrapper wrapper)
+	extern(C) static int callBackActivateLink(GtkAboutDialog* aboutdialogStruct, char* uri, OnActivateLinkDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(uri), wrapper.outer);
 	}
 	
 	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActivateLink(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActivateLink(OnActivateLinkDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActivateLinkListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActivateLinkListeners[index] = null;
-				onActivateLinkListeners = std.algorithm.remove(onActivateLinkListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

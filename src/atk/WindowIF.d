@@ -43,14 +43,14 @@ public interface WindowIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
+
 	/**
 	 * The signal #AtkWindow::activate is emitted when a window
 	 * becomes the active window of the application or session.
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnActivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnActivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::create is emitted when a new window
@@ -58,8 +58,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnCreate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnCreate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::deactivate is emitted when a window is
@@ -67,8 +66,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnDeactivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnDeactivate(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::destroy is emitted when a window is
@@ -76,8 +74,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnDestroy(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnDestroy(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::maximize is emitted when a window
@@ -85,8 +82,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnMaximize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnMaximize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::minimize is emitted when a window
@@ -94,8 +90,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnMinimize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnMinimize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::move is emitted when a window
@@ -103,8 +98,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnMove(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnMove(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::resize is emitted when a window
@@ -112,8 +106,7 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnResize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnResize(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The signal #AtkWindow::restore is emitted when a window
@@ -121,7 +114,5 @@ public interface WindowIF{
 	 *
 	 * Since: 2.2
 	 */
-	gulong addOnRestore(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnRestore(void delegate(WindowIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

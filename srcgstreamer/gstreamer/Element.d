@@ -1489,17 +1489,29 @@ public class Element : ObjectGst
 
 	protected class OnNoMorePadsDelegateWrapper
 	{
+		static OnNoMorePadsDelegateWrapper[] listeners;
 		void delegate(Element) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Element) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Element) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnNoMorePadsDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnNoMorePadsDelegateWrapper[] onNoMorePadsListeners;
 
 	/**
 	 * This signals that the element will not generate more dynamic pads.
@@ -1508,54 +1520,52 @@ public class Element : ObjectGst
 	 */
 	gulong addOnNoMorePads(void delegate(Element) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onNoMorePadsListeners ~= new OnNoMorePadsDelegateWrapper(dlg, 0, connectFlags);
-		onNoMorePadsListeners[onNoMorePadsListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnNoMorePadsDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"no-more-pads",
 			cast(GCallback)&callBackNoMorePads,
-			cast(void*)onNoMorePadsListeners[onNoMorePadsListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackNoMorePadsDestroy,
 			connectFlags);
-		return onNoMorePadsListeners[onNoMorePadsListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackNoMorePads(GstElement* elementStruct,OnNoMorePadsDelegateWrapper wrapper)
+	extern(C) static void callBackNoMorePads(GstElement* elementStruct, OnNoMorePadsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackNoMorePadsDestroy(OnNoMorePadsDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnNoMorePads(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnNoMorePads(OnNoMorePadsDelegateWrapper source)
-	{
-		foreach(index, wrapper; onNoMorePadsListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onNoMorePadsListeners[index] = null;
-				onNoMorePadsListeners = std.algorithm.remove(onNoMorePadsListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPadAddedDelegateWrapper
 	{
+		static OnPadAddedDelegateWrapper[] listeners;
 		void delegate(Pad, Element) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Pad, Element) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Pad, Element) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPadAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPadAddedDelegateWrapper[] onPadAddedListeners;
 
 	/**
 	 * a new #GstPad has been added to the element. Note that this signal will
@@ -1569,54 +1579,52 @@ public class Element : ObjectGst
 	 */
 	gulong addOnPadAdded(void delegate(Pad, Element) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPadAddedListeners ~= new OnPadAddedDelegateWrapper(dlg, 0, connectFlags);
-		onPadAddedListeners[onPadAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPadAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"pad-added",
 			cast(GCallback)&callBackPadAdded,
-			cast(void*)onPadAddedListeners[onPadAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPadAddedDestroy,
 			connectFlags);
-		return onPadAddedListeners[onPadAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPadAdded(GstElement* elementStruct, GstPad* newPad,OnPadAddedDelegateWrapper wrapper)
+	extern(C) static void callBackPadAdded(GstElement* elementStruct, GstPad* newPad, OnPadAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(newPad), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPadAddedDestroy(OnPadAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPadAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPadAdded(OnPadAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPadAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPadAddedListeners[index] = null;
-				onPadAddedListeners = std.algorithm.remove(onPadAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPadRemovedDelegateWrapper
 	{
+		static OnPadRemovedDelegateWrapper[] listeners;
 		void delegate(Pad, Element) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Pad, Element) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Pad, Element) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPadRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPadRemovedDelegateWrapper[] onPadRemovedListeners;
 
 	/**
 	 * a #GstPad has been removed from the element
@@ -1626,38 +1634,24 @@ public class Element : ObjectGst
 	 */
 	gulong addOnPadRemoved(void delegate(Pad, Element) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPadRemovedListeners ~= new OnPadRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onPadRemovedListeners[onPadRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPadRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"pad-removed",
 			cast(GCallback)&callBackPadRemoved,
-			cast(void*)onPadRemovedListeners[onPadRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPadRemovedDestroy,
 			connectFlags);
-		return onPadRemovedListeners[onPadRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPadRemoved(GstElement* elementStruct, GstPad* oldPad,OnPadRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackPadRemoved(GstElement* elementStruct, GstPad* oldPad, OnPadRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(oldPad), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPadRemovedDestroy(OnPadRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPadRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPadRemoved(OnPadRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPadRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPadRemovedListeners[index] = null;
-				onPadRemovedListeners = std.algorithm.remove(onPadRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

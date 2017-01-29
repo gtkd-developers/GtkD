@@ -268,17 +268,29 @@ public class DeviceManager : ObjectG
 
 	protected class OnDeviceAddedDelegateWrapper
 	{
+		static OnDeviceAddedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Device, DeviceManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeviceAddedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeviceAddedDelegateWrapper[] onDeviceAddedListeners;
 
 	/**
 	 * The ::device-added signal is emitted either when a new master
@@ -290,54 +302,52 @@ public class DeviceManager : ObjectG
 	 */
 	gulong addOnDeviceAdded(void delegate(Device, DeviceManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeviceAddedListeners ~= new OnDeviceAddedDelegateWrapper(dlg, 0, connectFlags);
-		onDeviceAddedListeners[onDeviceAddedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeviceAddedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"device-added",
 			cast(GCallback)&callBackDeviceAdded,
-			cast(void*)onDeviceAddedListeners[onDeviceAddedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeviceAddedDestroy,
 			connectFlags);
-		return onDeviceAddedListeners[onDeviceAddedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeviceAdded(GdkDeviceManager* devicemanagerStruct, GdkDevice* device,OnDeviceAddedDelegateWrapper wrapper)
+	extern(C) static void callBackDeviceAdded(GdkDeviceManager* devicemanagerStruct, GdkDevice* device, OnDeviceAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeviceAddedDestroy(OnDeviceAddedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeviceAdded(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeviceAdded(OnDeviceAddedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeviceAddedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeviceAddedListeners[index] = null;
-				onDeviceAddedListeners = std.algorithm.remove(onDeviceAddedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDeviceChangedDelegateWrapper
 	{
+		static OnDeviceChangedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Device, DeviceManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeviceChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeviceChangedDelegateWrapper[] onDeviceChangedListeners;
 
 	/**
 	 * The ::device-changed signal is emitted whenever a device
@@ -356,54 +366,52 @@ public class DeviceManager : ObjectG
 	 */
 	gulong addOnDeviceChanged(void delegate(Device, DeviceManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeviceChangedListeners ~= new OnDeviceChangedDelegateWrapper(dlg, 0, connectFlags);
-		onDeviceChangedListeners[onDeviceChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeviceChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"device-changed",
 			cast(GCallback)&callBackDeviceChanged,
-			cast(void*)onDeviceChangedListeners[onDeviceChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeviceChangedDestroy,
 			connectFlags);
-		return onDeviceChangedListeners[onDeviceChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeviceChanged(GdkDeviceManager* devicemanagerStruct, GdkDevice* device,OnDeviceChangedDelegateWrapper wrapper)
+	extern(C) static void callBackDeviceChanged(GdkDeviceManager* devicemanagerStruct, GdkDevice* device, OnDeviceChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeviceChangedDestroy(OnDeviceChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeviceChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeviceChanged(OnDeviceChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeviceChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeviceChangedListeners[index] = null;
-				onDeviceChangedListeners = std.algorithm.remove(onDeviceChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnDeviceRemovedDelegateWrapper
 	{
+		static OnDeviceRemovedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Device, DeviceManager) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnDeviceRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnDeviceRemovedDelegateWrapper[] onDeviceRemovedListeners;
 
 	/**
 	 * The ::device-removed signal is emitted either when a master
@@ -415,40 +423,26 @@ public class DeviceManager : ObjectG
 	 */
 	gulong addOnDeviceRemoved(void delegate(Device, DeviceManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onDeviceRemovedListeners ~= new OnDeviceRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onDeviceRemovedListeners[onDeviceRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnDeviceRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"device-removed",
 			cast(GCallback)&callBackDeviceRemoved,
-			cast(void*)onDeviceRemovedListeners[onDeviceRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackDeviceRemovedDestroy,
 			connectFlags);
-		return onDeviceRemovedListeners[onDeviceRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackDeviceRemoved(GdkDeviceManager* devicemanagerStruct, GdkDevice* device,OnDeviceRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackDeviceRemoved(GdkDeviceManager* devicemanagerStruct, GdkDevice* device, OnDeviceRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
 	
 	extern(C) static void callBackDeviceRemovedDestroy(OnDeviceRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnDeviceRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnDeviceRemoved(OnDeviceRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onDeviceRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onDeviceRemovedListeners[index] = null;
-				onDeviceRemovedListeners = std.algorithm.remove(onDeviceRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	/**
 	 * Disables multidevice support in GDK. This call must happen prior

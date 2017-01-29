@@ -408,17 +408,29 @@ public class ColorSelection : Box
 
 	protected class OnColorChangedDelegateWrapper
 	{
+		static OnColorChangedDelegateWrapper[] listeners;
 		void delegate(ColorSelection) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ColorSelection) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ColorSelection) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnColorChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnColorChangedDelegateWrapper[] onColorChangedListeners;
 
 	/**
 	 * This signal is emitted when the color changes in the #GtkColorSelection
@@ -426,38 +438,24 @@ public class ColorSelection : Box
 	 */
 	gulong addOnColorChanged(void delegate(ColorSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onColorChangedListeners ~= new OnColorChangedDelegateWrapper(dlg, 0, connectFlags);
-		onColorChangedListeners[onColorChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnColorChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"color-changed",
 			cast(GCallback)&callBackColorChanged,
-			cast(void*)onColorChangedListeners[onColorChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackColorChangedDestroy,
 			connectFlags);
-		return onColorChangedListeners[onColorChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct,OnColorChangedDelegateWrapper wrapper)
+	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, OnColorChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackColorChangedDestroy(OnColorChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnColorChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnColorChanged(OnColorChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onColorChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onColorChangedListeners[index] = null;
-				onColorChangedListeners = std.algorithm.remove(onColorChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

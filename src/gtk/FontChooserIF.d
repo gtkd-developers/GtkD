@@ -245,6 +245,7 @@ public interface FontChooserIF{
 	 * Since: 3.2
 	 */
 	public void setShowPreviewEntry(bool showPreviewEntry);
+
 	/**
 	 * Emitted when a font is activated.
 	 * This usually happens when the user double clicks an item,
@@ -254,7 +255,5 @@ public interface FontChooserIF{
 	 * Params:
 	 *     fontname = the font name
 	 */
-	gulong addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

@@ -1492,17 +1492,29 @@ public template FileChooserT(TStruct)
 
 	protected class OnConfirmOverwriteDelegateWrapper
 	{
+		static OnConfirmOverwriteDelegateWrapper[] listeners;
 		GtkFileChooserConfirmation delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(GtkFileChooserConfirmation delegate(FileChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(GtkFileChooserConfirmation delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnConfirmOverwriteDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnConfirmOverwriteDelegateWrapper[] onConfirmOverwriteListeners;
 
 	/**
 	 * This signal gets emitted whenever it is appropriate to present a
@@ -1571,54 +1583,52 @@ public template FileChooserT(TStruct)
 	 */
 	gulong addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onConfirmOverwriteListeners ~= new OnConfirmOverwriteDelegateWrapper(dlg, 0, connectFlags);
-		onConfirmOverwriteListeners[onConfirmOverwriteListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnConfirmOverwriteDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"confirm-overwrite",
 			cast(GCallback)&callBackConfirmOverwrite,
-			cast(void*)onConfirmOverwriteListeners[onConfirmOverwriteListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackConfirmOverwriteDestroy,
 			connectFlags);
-		return onConfirmOverwriteListeners[onConfirmOverwriteListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static GtkFileChooserConfirmation callBackConfirmOverwrite(GtkFileChooser* filechooserStruct,OnConfirmOverwriteDelegateWrapper wrapper)
+	extern(C) static GtkFileChooserConfirmation callBackConfirmOverwrite(GtkFileChooser* filechooserStruct, OnConfirmOverwriteDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackConfirmOverwriteDestroy(OnConfirmOverwriteDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnConfirmOverwrite(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnConfirmOverwrite(OnConfirmOverwriteDelegateWrapper source)
-	{
-		foreach(index, wrapper; onConfirmOverwriteListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onConfirmOverwriteListeners[index] = null;
-				onConfirmOverwriteListeners = std.algorithm.remove(onConfirmOverwriteListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCurrentFolderChangedDelegateWrapper
 	{
+		static OnCurrentFolderChangedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FileChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCurrentFolderChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCurrentFolderChangedDelegateWrapper[] onCurrentFolderChangedListeners;
 
 	/**
 	 * This signal is emitted when the current folder in a #GtkFileChooser
@@ -1637,54 +1647,52 @@ public template FileChooserT(TStruct)
 	 */
 	gulong addOnCurrentFolderChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCurrentFolderChangedListeners ~= new OnCurrentFolderChangedDelegateWrapper(dlg, 0, connectFlags);
-		onCurrentFolderChangedListeners[onCurrentFolderChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCurrentFolderChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"current-folder-changed",
 			cast(GCallback)&callBackCurrentFolderChanged,
-			cast(void*)onCurrentFolderChangedListeners[onCurrentFolderChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCurrentFolderChangedDestroy,
 			connectFlags);
-		return onCurrentFolderChangedListeners[onCurrentFolderChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* filechooserStruct,OnCurrentFolderChangedDelegateWrapper wrapper)
+	extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* filechooserStruct, OnCurrentFolderChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCurrentFolderChangedDestroy(OnCurrentFolderChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCurrentFolderChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCurrentFolderChanged(OnCurrentFolderChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCurrentFolderChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCurrentFolderChangedListeners[index] = null;
-				onCurrentFolderChangedListeners = std.algorithm.remove(onCurrentFolderChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnFileActivatedDelegateWrapper
 	{
+		static OnFileActivatedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FileChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFileActivatedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFileActivatedDelegateWrapper[] onFileActivatedListeners;
 
 	/**
 	 * This signal is emitted when the user "activates" a file in the file
@@ -1701,54 +1709,52 @@ public template FileChooserT(TStruct)
 	 */
 	gulong addOnFileActivated(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFileActivatedListeners ~= new OnFileActivatedDelegateWrapper(dlg, 0, connectFlags);
-		onFileActivatedListeners[onFileActivatedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFileActivatedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"file-activated",
 			cast(GCallback)&callBackFileActivated,
-			cast(void*)onFileActivatedListeners[onFileActivatedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFileActivatedDestroy,
 			connectFlags);
-		return onFileActivatedListeners[onFileActivatedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackFileActivated(GtkFileChooser* filechooserStruct,OnFileActivatedDelegateWrapper wrapper)
+	extern(C) static void callBackFileActivated(GtkFileChooser* filechooserStruct, OnFileActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackFileActivatedDestroy(OnFileActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFileActivated(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFileActivated(OnFileActivatedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFileActivatedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFileActivatedListeners[index] = null;
-				onFileActivatedListeners = std.algorithm.remove(onFileActivatedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
+		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FileChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSelectionChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * This signal is emitted when there is a change in the set of selected files
@@ -1768,54 +1774,52 @@ public template FileChooserT(TStruct)
 	 */
 	gulong addOnSelectionChanged(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSelectionChangedListeners ~= new OnSelectionChangedDelegateWrapper(dlg, 0, connectFlags);
-		onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSelectionChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"selection-changed",
 			cast(GCallback)&callBackSelectionChanged,
-			cast(void*)onSelectionChangedListeners[onSelectionChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSelectionChangedDestroy,
 			connectFlags);
-		return onSelectionChangedListeners[onSelectionChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSelectionChanged(GtkFileChooser* filechooserStruct,OnSelectionChangedDelegateWrapper wrapper)
+	extern(C) static void callBackSelectionChanged(GtkFileChooser* filechooserStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSelectionChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSelectionChanged(OnSelectionChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSelectionChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSelectionChangedListeners[index] = null;
-				onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnUpdatePreviewDelegateWrapper
 	{
+		static OnUpdatePreviewDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(FileChooserIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnUpdatePreviewDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnUpdatePreviewDelegateWrapper[] onUpdatePreviewListeners;
 
 	/**
 	 * This signal is emitted when the preview in a file chooser should be
@@ -1843,38 +1847,24 @@ public template FileChooserT(TStruct)
 	 */
 	gulong addOnUpdatePreview(void delegate(FileChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onUpdatePreviewListeners ~= new OnUpdatePreviewDelegateWrapper(dlg, 0, connectFlags);
-		onUpdatePreviewListeners[onUpdatePreviewListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnUpdatePreviewDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"update-preview",
 			cast(GCallback)&callBackUpdatePreview,
-			cast(void*)onUpdatePreviewListeners[onUpdatePreviewListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackUpdatePreviewDestroy,
 			connectFlags);
-		return onUpdatePreviewListeners[onUpdatePreviewListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackUpdatePreview(GtkFileChooser* filechooserStruct,OnUpdatePreviewDelegateWrapper wrapper)
+	extern(C) static void callBackUpdatePreview(GtkFileChooser* filechooserStruct, OnUpdatePreviewDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackUpdatePreviewDestroy(OnUpdatePreviewDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnUpdatePreview(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnUpdatePreview(OnUpdatePreviewDelegateWrapper source)
-	{
-		foreach(index, wrapper; onUpdatePreviewListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onUpdatePreviewListeners[index] = null;
-				onUpdatePreviewListeners = std.algorithm.remove(onUpdatePreviewListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -470,6 +470,7 @@ public interface DtlsConnectionIF{
 	 * Throws: GException on failure.
 	 */
 	public bool shutdownFinish(AsyncResultIF result);
+
 	/**
 	 * Emitted during the TLS handshake after the peer certificate has
 	 * been received. You can examine @peer_cert's certification path by
@@ -516,7 +517,5 @@ public interface DtlsConnectionIF{
 	 *
 	 * Since: 2.48
 	 */
-	gulong addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

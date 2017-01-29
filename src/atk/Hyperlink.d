@@ -203,55 +203,53 @@ public class Hyperlink : ObjectG, ActionIF
 
 	protected class OnLinkActivatedDelegateWrapper
 	{
+		static OnLinkActivatedDelegateWrapper[] listeners;
 		void delegate(Hyperlink) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Hyperlink) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Hyperlink) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnLinkActivatedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnLinkActivatedDelegateWrapper[] onLinkActivatedListeners;
 
 	/**
 	 * The signal link-activated is emitted when a link is activated.
 	 */
 	gulong addOnLinkActivated(void delegate(Hyperlink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onLinkActivatedListeners ~= new OnLinkActivatedDelegateWrapper(dlg, 0, connectFlags);
-		onLinkActivatedListeners[onLinkActivatedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnLinkActivatedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"link-activated",
 			cast(GCallback)&callBackLinkActivated,
-			cast(void*)onLinkActivatedListeners[onLinkActivatedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackLinkActivatedDestroy,
 			connectFlags);
-		return onLinkActivatedListeners[onLinkActivatedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackLinkActivated(AtkHyperlink* hyperlinkStruct,OnLinkActivatedDelegateWrapper wrapper)
+	extern(C) static void callBackLinkActivated(AtkHyperlink* hyperlinkStruct, OnLinkActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackLinkActivatedDestroy(OnLinkActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnLinkActivated(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnLinkActivated(OnLinkActivatedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onLinkActivatedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onLinkActivatedListeners[index] = null;
-				onLinkActivatedListeners = std.algorithm.remove(onLinkActivatedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

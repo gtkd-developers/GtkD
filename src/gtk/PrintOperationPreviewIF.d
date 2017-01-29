@@ -81,6 +81,7 @@ public interface PrintOperationPreviewIF{
 	 * Since: 2.10
 	 */
 	public void renderPage(int pageNr);
+
 	/**
 	 * The ::got-page-size signal is emitted once for each page
 	 * that gets rendered to the preview.
@@ -93,8 +94,7 @@ public interface PrintOperationPreviewIF{
 	 *     context = the current #GtkPrintContext
 	 *     pageSetup = the #GtkPageSetup for the current page
 	 */
-	gulong addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnGotPageSize(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The ::ready signal gets emitted once per preview operation,
@@ -105,7 +105,5 @@ public interface PrintOperationPreviewIF{
 	 * Params:
 	 *     context = the current #GtkPrintContext
 	 */
-	gulong addOnReady(void delegate(PrintContext, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnReady(void delegate(PrintContext, PrintOperationPreviewIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

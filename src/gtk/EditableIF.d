@@ -218,6 +218,7 @@ public interface EditableIF{
 	 *     position = the position of the cursor
 	 */
 	public void setPosition(int position);
+
 	/**
 	 * The ::changed signal is emitted at the end of a single
 	 * user-visible operation on the contents of the #GtkEditable.
@@ -228,8 +229,7 @@ public interface EditableIF{
 	 * the new content, and may cause multiple ::notify::text signals
 	 * to be emitted).
 	 */
-	gulong addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnChanged(void delegate(EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when text is deleted from
@@ -246,8 +246,7 @@ public interface EditableIF{
 	 *     startPos = the starting position
 	 *     endPos = the end position
 	 */
-	gulong addOnDeleteText(void delegate(int, int, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnDeleteText(void delegate(int, int, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when text is inserted into
@@ -267,7 +266,5 @@ public interface EditableIF{
 	 *         parameter.  After the signal emission is finished, it
 	 *         should point after the newly inserted text.
 	 */
-	gulong addOnInsertText(void delegate(string, int, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnInsertText(void delegate(string, int, void*, EditableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

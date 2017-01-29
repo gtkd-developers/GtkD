@@ -177,55 +177,53 @@ public class ToggleToolButton : ToolButton
 
 	protected class OnToggledDelegateWrapper
 	{
+		static OnToggledDelegateWrapper[] listeners;
 		void delegate(ToggleToolButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ToggleToolButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ToggleToolButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnToggledDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnToggledDelegateWrapper[] onToggledListeners;
 
 	/**
 	 * Emitted whenever the toggle tool button changes state.
 	 */
 	gulong addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onToggledListeners ~= new OnToggledDelegateWrapper(dlg, 0, connectFlags);
-		onToggledListeners[onToggledListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnToggledDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"toggled",
 			cast(GCallback)&callBackToggled,
-			cast(void*)onToggledListeners[onToggledListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackToggledDestroy,
 			connectFlags);
-		return onToggledListeners[onToggledListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackToggled(GtkToggleToolButton* toggletoolbuttonStruct,OnToggledDelegateWrapper wrapper)
+	extern(C) static void callBackToggled(GtkToggleToolButton* toggletoolbuttonStruct, OnToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnToggled(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnToggled(OnToggledDelegateWrapper source)
-	{
-		foreach(index, wrapper; onToggledListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onToggledListeners[index] = null;
-				onToggledListeners = std.algorithm.remove(onToggledListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

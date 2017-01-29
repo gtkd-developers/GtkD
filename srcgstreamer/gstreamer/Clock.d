@@ -735,17 +735,29 @@ public class Clock : ObjectGst
 
 	protected class OnSyncedDelegateWrapper
 	{
+		static OnSyncedDelegateWrapper[] listeners;
 		void delegate(bool, Clock) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, Clock) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, Clock) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSyncedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSyncedDelegateWrapper[] onSyncedListeners;
 
 	/**
 	 * Signaled on clocks with GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once
@@ -762,38 +774,24 @@ public class Clock : ObjectGst
 	 */
 	gulong addOnSynced(void delegate(bool, Clock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSyncedListeners ~= new OnSyncedDelegateWrapper(dlg, 0, connectFlags);
-		onSyncedListeners[onSyncedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSyncedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"synced",
 			cast(GCallback)&callBackSynced,
-			cast(void*)onSyncedListeners[onSyncedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSyncedDestroy,
 			connectFlags);
-		return onSyncedListeners[onSyncedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced,OnSyncedDelegateWrapper wrapper)
+	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced, OnSyncedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(synced, wrapper.outer);
 	}
 	
 	extern(C) static void callBackSyncedDestroy(OnSyncedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSynced(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSynced(OnSyncedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSyncedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSyncedListeners[index] = null;
-				onSyncedListeners = std.algorithm.remove(onSyncedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

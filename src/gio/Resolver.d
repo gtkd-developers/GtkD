@@ -586,17 +586,29 @@ public class Resolver : ObjectG
 
 	protected class OnReloadDelegateWrapper
 	{
+		static OnReloadDelegateWrapper[] listeners;
 		void delegate(Resolver) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Resolver) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Resolver) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnReloadDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnReloadDelegateWrapper[] onReloadListeners;
 
 	/**
 	 * Emitted when the resolver notices that the system resolver
@@ -604,38 +616,24 @@ public class Resolver : ObjectG
 	 */
 	gulong addOnReload(void delegate(Resolver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onReloadListeners ~= new OnReloadDelegateWrapper(dlg, 0, connectFlags);
-		onReloadListeners[onReloadListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnReloadDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"reload",
 			cast(GCallback)&callBackReload,
-			cast(void*)onReloadListeners[onReloadListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackReloadDestroy,
 			connectFlags);
-		return onReloadListeners[onReloadListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackReload(GResolver* resolverStruct,OnReloadDelegateWrapper wrapper)
+	extern(C) static void callBackReload(GResolver* resolverStruct, OnReloadDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnReload(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnReload(OnReloadDelegateWrapper source)
-	{
-		foreach(index, wrapper; onReloadListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onReloadListeners[index] = null;
-				onReloadListeners = std.algorithm.remove(onReloadListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

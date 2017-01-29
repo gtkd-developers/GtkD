@@ -323,17 +323,29 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 
 	protected class OnFocusHomeOrEndDelegateWrapper
 	{
+		static OnFocusHomeOrEndDelegateWrapper[] listeners;
 		bool delegate(bool, Toolbar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(bool, Toolbar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(bool, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnFocusHomeOrEndDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnFocusHomeOrEndDelegateWrapper[] onFocusHomeOrEndListeners;
 
 	/**
 	 * A keybinding signal used internally by GTK+. This signal can't
@@ -346,54 +358,52 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	gulong addOnFocusHomeOrEnd(bool delegate(bool, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onFocusHomeOrEndListeners ~= new OnFocusHomeOrEndDelegateWrapper(dlg, 0, connectFlags);
-		onFocusHomeOrEndListeners[onFocusHomeOrEndListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnFocusHomeOrEndDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"focus-home-or-end",
 			cast(GCallback)&callBackFocusHomeOrEnd,
-			cast(void*)onFocusHomeOrEndListeners[onFocusHomeOrEndListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackFocusHomeOrEndDestroy,
 			connectFlags);
-		return onFocusHomeOrEndListeners[onFocusHomeOrEndListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, bool focusHome,OnFocusHomeOrEndDelegateWrapper wrapper)
+	extern(C) static int callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, bool focusHome, OnFocusHomeOrEndDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(focusHome, wrapper.outer);
 	}
 	
 	extern(C) static void callBackFocusHomeOrEndDestroy(OnFocusHomeOrEndDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnFocusHomeOrEnd(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnFocusHomeOrEnd(OnFocusHomeOrEndDelegateWrapper source)
-	{
-		foreach(index, wrapper; onFocusHomeOrEndListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onFocusHomeOrEndListeners[index] = null;
-				onFocusHomeOrEndListeners = std.algorithm.remove(onFocusHomeOrEndListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnOrientationChangedDelegateWrapper
 	{
+		static OnOrientationChangedDelegateWrapper[] listeners;
 		void delegate(GtkOrientation, Toolbar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkOrientation, Toolbar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkOrientation, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnOrientationChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnOrientationChangedDelegateWrapper[] onOrientationChangedListeners;
 
 	/**
 	 * Emitted when the orientation of the toolbar changes.
@@ -403,54 +413,52 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	gulong addOnOrientationChanged(void delegate(GtkOrientation, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onOrientationChangedListeners ~= new OnOrientationChangedDelegateWrapper(dlg, 0, connectFlags);
-		onOrientationChangedListeners[onOrientationChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnOrientationChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"orientation-changed",
 			cast(GCallback)&callBackOrientationChanged,
-			cast(void*)onOrientationChangedListeners[onOrientationChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackOrientationChangedDestroy,
 			connectFlags);
-		return onOrientationChangedListeners[onOrientationChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation,OnOrientationChangedDelegateWrapper wrapper)
+	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, OnOrientationChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(orientation, wrapper.outer);
 	}
 	
 	extern(C) static void callBackOrientationChangedDestroy(OnOrientationChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnOrientationChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnOrientationChanged(OnOrientationChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onOrientationChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onOrientationChangedListeners[index] = null;
-				onOrientationChangedListeners = std.algorithm.remove(onOrientationChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPopupContextMenuDelegateWrapper
 	{
+		static OnPopupContextMenuDelegateWrapper[] listeners;
 		bool delegate(int, int, int, Toolbar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(int, int, int, Toolbar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(int, int, int, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPopupContextMenuDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPopupContextMenuDelegateWrapper[] onPopupContextMenuListeners;
 
 	/**
 	 * Emitted when the user right-clicks the toolbar or uses the
@@ -471,54 +479,52 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	gulong addOnPopupContextMenu(bool delegate(int, int, int, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPopupContextMenuListeners ~= new OnPopupContextMenuDelegateWrapper(dlg, 0, connectFlags);
-		onPopupContextMenuListeners[onPopupContextMenuListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPopupContextMenuDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"popup-context-menu",
 			cast(GCallback)&callBackPopupContextMenu,
-			cast(void*)onPopupContextMenuListeners[onPopupContextMenuListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPopupContextMenuDestroy,
 			connectFlags);
-		return onPopupContextMenuListeners[onPopupContextMenuListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackPopupContextMenu(GtkToolbar* toolbarStruct, int x, int y, int button,OnPopupContextMenuDelegateWrapper wrapper)
+	extern(C) static int callBackPopupContextMenu(GtkToolbar* toolbarStruct, int x, int y, int button, OnPopupContextMenuDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(x, y, button, wrapper.outer);
 	}
 	
 	extern(C) static void callBackPopupContextMenuDestroy(OnPopupContextMenuDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPopupContextMenu(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPopupContextMenu(OnPopupContextMenuDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPopupContextMenuListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPopupContextMenuListeners[index] = null;
-				onPopupContextMenuListeners = std.algorithm.remove(onPopupContextMenuListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnStyleChangedDelegateWrapper
 	{
+		static OnStyleChangedDelegateWrapper[] listeners;
 		void delegate(GtkToolbarStyle, Toolbar) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkToolbarStyle, Toolbar) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkToolbarStyle, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnStyleChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnStyleChangedDelegateWrapper[] onStyleChangedListeners;
 
 	/**
 	 * Emitted when the style of the toolbar changes.
@@ -528,38 +534,24 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 */
 	gulong addOnStyleChanged(void delegate(GtkToolbarStyle, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onStyleChangedListeners ~= new OnStyleChangedDelegateWrapper(dlg, 0, connectFlags);
-		onStyleChangedListeners[onStyleChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnStyleChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"style-changed",
 			cast(GCallback)&callBackStyleChanged,
-			cast(void*)onStyleChangedListeners[onStyleChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackStyleChangedDestroy,
 			connectFlags);
-		return onStyleChangedListeners[onStyleChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style,OnStyleChangedDelegateWrapper wrapper)
+	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, OnStyleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(style, wrapper.outer);
 	}
 	
 	extern(C) static void callBackStyleChangedDestroy(OnStyleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnStyleChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnStyleChanged(OnStyleChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onStyleChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onStyleChangedListeners[index] = null;
-				onStyleChangedListeners = std.algorithm.remove(onStyleChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -121,17 +121,29 @@ public class GestureZoom : Gesture
 
 	protected class OnScaleChangedDelegateWrapper
 	{
+		static OnScaleChangedDelegateWrapper[] listeners;
 		void delegate(double, GestureZoom) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(double, GestureZoom) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(double, GestureZoom) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnScaleChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnScaleChangedDelegateWrapper[] onScaleChangedListeners;
 
 	/**
 	 * This signal is emitted whenever the distance between both tracked
@@ -144,38 +156,24 @@ public class GestureZoom : Gesture
 	 */
 	gulong addOnScaleChanged(void delegate(double, GestureZoom) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onScaleChangedListeners ~= new OnScaleChangedDelegateWrapper(dlg, 0, connectFlags);
-		onScaleChangedListeners[onScaleChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnScaleChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"scale-changed",
 			cast(GCallback)&callBackScaleChanged,
-			cast(void*)onScaleChangedListeners[onScaleChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackScaleChangedDestroy,
 			connectFlags);
-		return onScaleChangedListeners[onScaleChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackScaleChanged(GtkGestureZoom* gesturezoomStruct, double scale,OnScaleChangedDelegateWrapper wrapper)
+	extern(C) static void callBackScaleChanged(GtkGestureZoom* gesturezoomStruct, double scale, OnScaleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scale, wrapper.outer);
 	}
 	
 	extern(C) static void callBackScaleChangedDestroy(OnScaleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnScaleChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnScaleChanged(OnScaleChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onScaleChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onScaleChangedListeners[index] = null;
-				onScaleChangedListeners = std.algorithm.remove(onScaleChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

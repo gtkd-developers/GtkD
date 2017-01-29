@@ -188,17 +188,29 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 
 	protected class OnAuthorizeMethodDelegateWrapper
 	{
+		static OnAuthorizeMethodDelegateWrapper[] listeners;
 		bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnAuthorizeMethodDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnAuthorizeMethodDelegateWrapper[] onAuthorizeMethodListeners;
 
 	/**
 	 * Emitted when a method is invoked by a remote caller and used to
@@ -220,38 +232,24 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 */
 	gulong addOnAuthorizeMethod(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onAuthorizeMethodListeners ~= new OnAuthorizeMethodDelegateWrapper(dlg, 0, connectFlags);
-		onAuthorizeMethodListeners[onAuthorizeMethodListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnAuthorizeMethodDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"authorize-method",
 			cast(GCallback)&callBackAuthorizeMethod,
-			cast(void*)onAuthorizeMethodListeners[onAuthorizeMethodListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackAuthorizeMethodDestroy,
 			connectFlags);
-		return onAuthorizeMethodListeners[onAuthorizeMethodListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackAuthorizeMethod(GDBusObjectSkeleton* dbusobjectskeletonStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation,OnAuthorizeMethodDelegateWrapper wrapper)
+	extern(C) static int callBackAuthorizeMethod(GDBusObjectSkeleton* dbusobjectskeletonStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation, OnAuthorizeMethodDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(DBusInterfaceSkeleton)(iface), ObjectG.getDObject!(DBusMethodInvocation)(invocation), wrapper.outer);
 	}
 	
 	extern(C) static void callBackAuthorizeMethodDestroy(OnAuthorizeMethodDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnAuthorizeMethod(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnAuthorizeMethod(OnAuthorizeMethodDelegateWrapper source)
-	{
-		foreach(index, wrapper; onAuthorizeMethodListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onAuthorizeMethodListeners[index] = null;
-				onAuthorizeMethodListeners = std.algorithm.remove(onAuthorizeMethodListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

@@ -288,17 +288,29 @@ public class NativeDialog : ObjectG
 
 	protected class OnResponseDelegateWrapper
 	{
+		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, NativeDialog) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, NativeDialog) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, NativeDialog) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnResponseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when the user responds to the dialog.
@@ -315,38 +327,24 @@ public class NativeDialog : ObjectG
 	 */
 	gulong addOnResponse(void delegate(int, NativeDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onResponseListeners ~= new OnResponseDelegateWrapper(dlg, 0, connectFlags);
-		onResponseListeners[onResponseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnResponseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"response",
 			cast(GCallback)&callBackResponse,
-			cast(void*)onResponseListeners[onResponseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackResponseDestroy,
 			connectFlags);
-		return onResponseListeners[onResponseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackResponse(GtkNativeDialog* nativedialogStruct, int responseId,OnResponseDelegateWrapper wrapper)
+	extern(C) static void callBackResponse(GtkNativeDialog* nativedialogStruct, int responseId, OnResponseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(responseId, wrapper.outer);
 	}
 	
 	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnResponse(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnResponse(OnResponseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onResponseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onResponseListeners[index] = null;
-				onResponseListeners = std.algorithm.remove(onResponseListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

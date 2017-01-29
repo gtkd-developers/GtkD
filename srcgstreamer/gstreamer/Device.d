@@ -237,53 +237,51 @@ public class Device : ObjectGst
 
 	protected class OnRemovedDelegateWrapper
 	{
+		static OnRemovedDelegateWrapper[] listeners;
 		void delegate(Device) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Device) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Device) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnRemovedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnRemovedDelegateWrapper[] onRemovedListeners;
 
 	/** */
 	gulong addOnRemoved(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onRemovedListeners ~= new OnRemovedDelegateWrapper(dlg, 0, connectFlags);
-		onRemovedListeners[onRemovedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnRemovedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"removed",
 			cast(GCallback)&callBackRemoved,
-			cast(void*)onRemovedListeners[onRemovedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackRemovedDestroy,
 			connectFlags);
-		return onRemovedListeners[onRemovedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackRemoved(GstDevice* deviceStruct,OnRemovedDelegateWrapper wrapper)
+	extern(C) static void callBackRemoved(GstDevice* deviceStruct, OnRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnRemoved(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnRemoved(OnRemovedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onRemovedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onRemovedListeners[index] = null;
-				onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

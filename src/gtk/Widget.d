@@ -754,17 +754,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		
 		protected class ScopedOnDrawDelegateWrapper
 		{
+			static ScopedOnDrawDelegateWrapper[] listeners;
 			bool delegate(Scoped!Context, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Scoped!Context, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Scoped!Context, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(ScopedOnDrawDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected ScopedOnDrawDelegateWrapper[] scopedOnDrawListeners;
 		
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
@@ -795,15 +807,15 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			scopedOnDrawListeners ~= new ScopedOnDrawDelegateWrapper(dlg, 0, connectFlags);
-			scopedOnDrawListeners[scopedOnDrawListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new ScopedOnDrawDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"draw",
 				cast(GCallback)&callBackScopedDraw,
-				cast(void*)scopedOnDrawListeners[scopedOnDrawListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDrawScopedDestroy,
 				connectFlags);
-			return scopedOnDrawListeners[scopedOnDrawListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
 		extern(C) static int callBackScopedDraw(GtkWidget* widgetStruct, cairo_t* cr, ScopedOnDrawDelegateWrapper wrapper)
@@ -813,35 +825,34 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		
 		extern(C) static void callBackDrawScopedDestroy(ScopedOnDrawDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDraw(wrapper);
-		}
-		
-		protected void internalRemoveOnDraw(ScopedOnDrawDelegateWrapper source)
-		{
-			foreach(index, wrapper; scopedOnDrawListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					scopedOnDrawListeners[index] = null;
-					scopedOnDrawListeners = std.algorithm.remove(scopedOnDrawListeners, index);
-					break;
-				}
-			}
+			wrapper.remove(wrapper);
 		}
 		
 		protected class OnDrawDelegateWrapper
 		{
+			static OnDrawDelegateWrapper[] listeners;
 			bool delegate(Context, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Context, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Context, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDrawDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDrawDelegateWrapper[] onDrawListeners;
 		
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
@@ -872,15 +883,15 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		deprecated gulong addOnDraw(bool delegate(Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDrawListeners ~= new OnDrawDelegateWrapper(dlg, 0, connectFlags);
-			onDrawListeners[onDrawListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDrawDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"draw",
 				cast(GCallback)&callBackDraw,
-				cast(void*)onDrawListeners[onDrawListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDrawDestroy,
 				connectFlags);
-			return onDrawListeners[onDrawListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
 		extern(C) static int callBackDraw(GtkWidget* widgetStruct, cairo_t* cr,OnDrawDelegateWrapper wrapper)
@@ -890,22 +901,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		
 		extern(C) static void callBackDrawDestroy(OnDrawDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDraw(wrapper);
+			wrapper.remove(wrapper);
 		}
-		
-		protected void internalRemoveOnDraw(OnDrawDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDrawListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDrawListeners[index] = null;
-					onDrawListeners = std.algorithm.remove(onDrawListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		/**
 		 */
@@ -6017,69 +6014,79 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnAccelClosuresChangedDelegateWrapper
 		{
+			static OnAccelClosuresChangedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnAccelClosuresChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnAccelClosuresChangedDelegateWrapper[] onAccelClosuresChangedListeners;
 
 		/** */
 		gulong addOnAccelClosuresChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onAccelClosuresChangedListeners ~= new OnAccelClosuresChangedDelegateWrapper(dlg, 0, connectFlags);
-			onAccelClosuresChangedListeners[onAccelClosuresChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnAccelClosuresChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"accel-closures-changed",
 				cast(GCallback)&callBackAccelClosuresChanged,
-				cast(void*)onAccelClosuresChangedListeners[onAccelClosuresChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackAccelClosuresChangedDestroy,
 				connectFlags);
-			return onAccelClosuresChangedListeners[onAccelClosuresChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct,OnAccelClosuresChangedDelegateWrapper wrapper)
+		extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, OnAccelClosuresChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackAccelClosuresChangedDestroy(OnAccelClosuresChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnAccelClosuresChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnAccelClosuresChanged(OnAccelClosuresChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAccelClosuresChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onAccelClosuresChangedListeners[index] = null;
-					onAccelClosuresChangedListeners = std.algorithm.remove(onAccelClosuresChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnButtonPressDelegateWrapper
 		{
+			static OnButtonPressDelegateWrapper[] listeners;
 			bool delegate(GdkEventButton*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventButton*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventButton*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnButtonPressDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnButtonPressDelegateWrapper[] onButtonPressListeners;
 
 		/**
 		 * The ::button-press-event signal will be emitted when a button
@@ -6100,54 +6107,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnButtonPress(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.BUTTON_PRESS_MASK);
-			onButtonPressListeners ~= new OnButtonPressDelegateWrapper(dlg, 0, connectFlags);
-			onButtonPressListeners[onButtonPressListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnButtonPressDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"button-press-event",
 				cast(GCallback)&callBackButtonPress,
-				cast(void*)onButtonPressListeners[onButtonPressListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackButtonPressDestroy,
 				connectFlags);
-			return onButtonPressListeners[onButtonPressListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event,OnButtonPressDelegateWrapper wrapper)
+		extern(C) static int callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, OnButtonPressDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackButtonPressDestroy(OnButtonPressDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnButtonPress(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnButtonPress(OnButtonPressDelegateWrapper source)
-		{
-			foreach(index, wrapper; onButtonPressListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onButtonPressListeners[index] = null;
-					onButtonPressListeners = std.algorithm.remove(onButtonPressListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnButtonPressEventGenericDelegateWrapper
 		{
+			static OnButtonPressEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnButtonPressEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnButtonPressEventGenericDelegateWrapper[] onButtonPressEventGenericListeners;
 		
 		/**
 		 * The ::button-press-event signal will be emitted when a button
@@ -6168,53 +6173,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnButtonPress(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.BUTTON_PRESS_MASK);
-			onButtonPressEventGenericListeners ~= new OnButtonPressEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onButtonPressEventGenericListeners[onButtonPressEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnButtonPressEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"button-press-event",
 				cast(GCallback)&callBackButtonPressEventGeneric,
-				cast(void*)onButtonPressEventGenericListeners[onButtonPressEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackButtonPressEventGenericDestroy,
 				connectFlags);
-			return onButtonPressEventGenericListeners[onButtonPressEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackButtonPressEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnButtonPressEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackButtonPressEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnButtonPressEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackButtonPressEventGenericDestroy(OnButtonPressEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnButtonPressEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnButtonPressEventGeneric(OnButtonPressEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onButtonPressEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onButtonPressEventGenericListeners[index] = null;
-					onButtonPressEventGenericListeners = std.algorithm.remove(onButtonPressEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnButtonReleaseDelegateWrapper
 		{
+			static OnButtonReleaseDelegateWrapper[] listeners;
 			bool delegate(GdkEventButton*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventButton*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventButton*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnButtonReleaseDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnButtonReleaseDelegateWrapper[] onButtonReleaseListeners;
 
 		/**
 		 * The ::button-release-event signal will be emitted when a button
@@ -6235,54 +6239,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnButtonRelease(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.BUTTON_RELEASE_MASK);
-			onButtonReleaseListeners ~= new OnButtonReleaseDelegateWrapper(dlg, 0, connectFlags);
-			onButtonReleaseListeners[onButtonReleaseListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnButtonReleaseDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"button-release-event",
 				cast(GCallback)&callBackButtonRelease,
-				cast(void*)onButtonReleaseListeners[onButtonReleaseListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackButtonReleaseDestroy,
 				connectFlags);
-			return onButtonReleaseListeners[onButtonReleaseListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event,OnButtonReleaseDelegateWrapper wrapper)
+		extern(C) static int callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, OnButtonReleaseDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackButtonReleaseDestroy(OnButtonReleaseDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnButtonRelease(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnButtonRelease(OnButtonReleaseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onButtonReleaseListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onButtonReleaseListeners[index] = null;
-					onButtonReleaseListeners = std.algorithm.remove(onButtonReleaseListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnButtonReleaseEventGenericDelegateWrapper
 		{
+			static OnButtonReleaseEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnButtonReleaseEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnButtonReleaseEventGenericDelegateWrapper[] onButtonReleaseEventGenericListeners;
 		
 		/**
 		 * The ::button-release-event signal will be emitted when a button
@@ -6303,53 +6305,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnButtonRelease(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.BUTTON_RELEASE_MASK);
-			onButtonReleaseEventGenericListeners ~= new OnButtonReleaseEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onButtonReleaseEventGenericListeners[onButtonReleaseEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnButtonReleaseEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"button-release-event",
 				cast(GCallback)&callBackButtonReleaseEventGeneric,
-				cast(void*)onButtonReleaseEventGenericListeners[onButtonReleaseEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackButtonReleaseEventGenericDestroy,
 				connectFlags);
-			return onButtonReleaseEventGenericListeners[onButtonReleaseEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackButtonReleaseEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnButtonReleaseEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackButtonReleaseEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnButtonReleaseEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackButtonReleaseEventGenericDestroy(OnButtonReleaseEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnButtonReleaseEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnButtonReleaseEventGeneric(OnButtonReleaseEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onButtonReleaseEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onButtonReleaseEventGenericListeners[index] = null;
-					onButtonReleaseEventGenericListeners = std.algorithm.remove(onButtonReleaseEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnCanActivateAccelDelegateWrapper
 		{
+			static OnCanActivateAccelDelegateWrapper[] listeners;
 			bool delegate(uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnCanActivateAccelDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnCanActivateAccelDelegateWrapper[] onCanActivateAccelListeners;
 
 		/**
 		 * Determines whether an accelerator that activates the signal
@@ -6365,54 +6366,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnCanActivateAccel(bool delegate(uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onCanActivateAccelListeners ~= new OnCanActivateAccelDelegateWrapper(dlg, 0, connectFlags);
-			onCanActivateAccelListeners[onCanActivateAccelListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnCanActivateAccelDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"can-activate-accel",
 				cast(GCallback)&callBackCanActivateAccel,
-				cast(void*)onCanActivateAccelListeners[onCanActivateAccelListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackCanActivateAccelDestroy,
 				connectFlags);
-			return onCanActivateAccelListeners[onCanActivateAccelListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackCanActivateAccel(GtkWidget* widgetStruct, uint signalId,OnCanActivateAccelDelegateWrapper wrapper)
+		extern(C) static int callBackCanActivateAccel(GtkWidget* widgetStruct, uint signalId, OnCanActivateAccelDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(signalId, wrapper.outer);
 		}
 		
 		extern(C) static void callBackCanActivateAccelDestroy(OnCanActivateAccelDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnCanActivateAccel(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnCanActivateAccel(OnCanActivateAccelDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCanActivateAccelListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onCanActivateAccelListeners[index] = null;
-					onCanActivateAccelListeners = std.algorithm.remove(onCanActivateAccelListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnChildNotifyDelegateWrapper
 		{
+			static OnChildNotifyDelegateWrapper[] listeners;
 			void delegate(ParamSpec, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(ParamSpec, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(ParamSpec, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnChildNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnChildNotifyDelegateWrapper[] onChildNotifyListeners;
 
 		/**
 		 * The ::child-notify signal is emitted for each
@@ -6424,54 +6423,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnChildNotify(void delegate(ParamSpec, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onChildNotifyListeners ~= new OnChildNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onChildNotifyListeners[onChildNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnChildNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"child-notify",
 				cast(GCallback)&callBackChildNotify,
-				cast(void*)onChildNotifyListeners[onChildNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackChildNotifyDestroy,
 				connectFlags);
-			return onChildNotifyListeners[onChildNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* childProperty,OnChildNotifyDelegateWrapper wrapper)
+		extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* childProperty, OnChildNotifyDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(ParamSpec)(childProperty), wrapper.outer);
 		}
 		
 		extern(C) static void callBackChildNotifyDestroy(OnChildNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnChildNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnChildNotify(OnChildNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChildNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onChildNotifyListeners[index] = null;
-					onChildNotifyListeners = std.algorithm.remove(onChildNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnCompositedChangedDelegateWrapper
 		{
+			static OnCompositedChangedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnCompositedChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnCompositedChangedDelegateWrapper[] onCompositedChangedListeners;
 
 		/**
 		 * The ::composited-changed signal is emitted when the composited
@@ -6482,54 +6479,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnCompositedChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onCompositedChangedListeners ~= new OnCompositedChangedDelegateWrapper(dlg, 0, connectFlags);
-			onCompositedChangedListeners[onCompositedChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnCompositedChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"composited-changed",
 				cast(GCallback)&callBackCompositedChanged,
-				cast(void*)onCompositedChangedListeners[onCompositedChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackCompositedChangedDestroy,
 				connectFlags);
-			return onCompositedChangedListeners[onCompositedChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct,OnCompositedChangedDelegateWrapper wrapper)
+		extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, OnCompositedChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackCompositedChangedDestroy(OnCompositedChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnCompositedChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnCompositedChanged(OnCompositedChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCompositedChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onCompositedChangedListeners[index] = null;
-					onCompositedChangedListeners = std.algorithm.remove(onCompositedChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnConfigureDelegateWrapper
 		{
+			static OnConfigureDelegateWrapper[] listeners;
 			bool delegate(GdkEventConfigure*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventConfigure*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventConfigure*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnConfigureDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnConfigureDelegateWrapper[] onConfigureListeners;
 
 		/**
 		 * The ::configure-event signal will be emitted when the size, position or
@@ -6548,54 +6543,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnConfigure(bool delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onConfigureListeners ~= new OnConfigureDelegateWrapper(dlg, 0, connectFlags);
-			onConfigureListeners[onConfigureListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnConfigureDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"configure-event",
 				cast(GCallback)&callBackConfigure,
-				cast(void*)onConfigureListeners[onConfigureListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackConfigureDestroy,
 				connectFlags);
-			return onConfigureListeners[onConfigureListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event,OnConfigureDelegateWrapper wrapper)
+		extern(C) static int callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, OnConfigureDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackConfigureDestroy(OnConfigureDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnConfigure(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnConfigure(OnConfigureDelegateWrapper source)
-		{
-			foreach(index, wrapper; onConfigureListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onConfigureListeners[index] = null;
-					onConfigureListeners = std.algorithm.remove(onConfigureListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnConfigureEventGenericDelegateWrapper
 		{
+			static OnConfigureEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnConfigureEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnConfigureEventGenericDelegateWrapper[] onConfigureEventGenericListeners;
 		
 		/**
 		 * The ::configure-event signal will be emitted when the size, position or
@@ -6614,53 +6607,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnConfigure(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onConfigureEventGenericListeners ~= new OnConfigureEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onConfigureEventGenericListeners[onConfigureEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnConfigureEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"configure-event",
 				cast(GCallback)&callBackConfigureEventGeneric,
-				cast(void*)onConfigureEventGenericListeners[onConfigureEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackConfigureEventGenericDestroy,
 				connectFlags);
-			return onConfigureEventGenericListeners[onConfigureEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackConfigureEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnConfigureEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackConfigureEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnConfigureEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackConfigureEventGenericDestroy(OnConfigureEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnConfigureEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnConfigureEventGeneric(OnConfigureEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onConfigureEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onConfigureEventGenericListeners[index] = null;
-					onConfigureEventGenericListeners = std.algorithm.remove(onConfigureEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDamageDelegateWrapper
 		{
+			static OnDamageDelegateWrapper[] listeners;
 			bool delegate(GdkEventExpose*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventExpose*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventExpose*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDamageDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDamageDelegateWrapper[] onDamageListeners;
 
 		/**
 		 * Emitted when a redirected window belonging to @widget gets drawn into.
@@ -6677,54 +6669,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDamage(bool delegate(GdkEventExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDamageListeners ~= new OnDamageDelegateWrapper(dlg, 0, connectFlags);
-			onDamageListeners[onDamageListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDamageDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"damage-event",
 				cast(GCallback)&callBackDamage,
-				cast(void*)onDamageListeners[onDamageListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDamageDestroy,
 				connectFlags);
-			return onDamageListeners[onDamageListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDamage(GtkWidget* widgetStruct, GdkEventExpose* event,OnDamageDelegateWrapper wrapper)
+		extern(C) static int callBackDamage(GtkWidget* widgetStruct, GdkEventExpose* event, OnDamageDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDamageDestroy(OnDamageDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDamage(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDamage(OnDamageDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDamageListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDamageListeners[index] = null;
-					onDamageListeners = std.algorithm.remove(onDamageListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDamageEventGenericDelegateWrapper
 		{
+			static OnDamageEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDamageEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDamageEventGenericDelegateWrapper[] onDamageEventGenericListeners;
 		
 		/**
 		 * Emitted when a redirected window belonging to @widget gets drawn into.
@@ -6741,53 +6731,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDamage(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDamageEventGenericListeners ~= new OnDamageEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onDamageEventGenericListeners[onDamageEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDamageEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"damage-event",
 				cast(GCallback)&callBackDamageEventGeneric,
-				cast(void*)onDamageEventGenericListeners[onDamageEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDamageEventGenericDestroy,
 				connectFlags);
-			return onDamageEventGenericListeners[onDamageEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDamageEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnDamageEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackDamageEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnDamageEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDamageEventGenericDestroy(OnDamageEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDamageEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnDamageEventGeneric(OnDamageEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDamageEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDamageEventGenericListeners[index] = null;
-					onDamageEventGenericListeners = std.algorithm.remove(onDamageEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDeleteDelegateWrapper
 		{
+			static OnDeleteDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDeleteDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDeleteDelegateWrapper[] onDeleteListeners;
 
 		/**
 		 * The ::delete-event signal is emitted if a user requests that
@@ -6804,54 +6793,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDelete(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDeleteListeners ~= new OnDeleteDelegateWrapper(dlg, 0, connectFlags);
-			onDeleteListeners[onDeleteListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDeleteDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"delete-event",
 				cast(GCallback)&callBackDelete,
-				cast(void*)onDeleteListeners[onDeleteListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDeleteDestroy,
 				connectFlags);
-			return onDeleteListeners[onDeleteListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDelete(GtkWidget* widgetStruct, GdkEvent* event,OnDeleteDelegateWrapper wrapper)
+		extern(C) static int callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, OnDeleteDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDeleteDestroy(OnDeleteDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDelete(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDelete(OnDeleteDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDeleteListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDeleteListeners[index] = null;
-					onDeleteListeners = std.algorithm.remove(onDeleteListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDestroyDelegateWrapper
 		{
+			static OnDestroyDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDestroyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDestroyDelegateWrapper[] onDestroyListeners;
 
 		/**
 		 * Signals that all holders of a reference to the widget should release
@@ -6862,54 +6849,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDestroy(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDestroyListeners ~= new OnDestroyDelegateWrapper(dlg, 0, connectFlags);
-			onDestroyListeners[onDestroyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDestroyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"destroy",
 				cast(GCallback)&callBackDestroy,
-				cast(void*)onDestroyListeners[onDestroyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDestroyDestroy,
 				connectFlags);
-			return onDestroyListeners[onDestroyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDestroy(GtkWidget* widgetStruct,OnDestroyDelegateWrapper wrapper)
+		extern(C) static void callBackDestroy(GtkWidget* widgetStruct, OnDestroyDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackDestroyDestroy(OnDestroyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDestroy(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDestroy(OnDestroyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDestroyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDestroyListeners[index] = null;
-					onDestroyListeners = std.algorithm.remove(onDestroyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDestroyEventDelegateWrapper
 		{
+			static OnDestroyEventDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDestroyEventDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDestroyEventDelegateWrapper[] onDestroyEventListeners;
 
 		/**
 		 * The ::destroy-event signal is emitted when a #GdkWindow is destroyed.
@@ -6929,54 +6914,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDestroyEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDestroyEventListeners ~= new OnDestroyEventDelegateWrapper(dlg, 0, connectFlags);
-			onDestroyEventListeners[onDestroyEventListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDestroyEventDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"destroy-event",
 				cast(GCallback)&callBackDestroyEvent,
-				cast(void*)onDestroyEventListeners[onDestroyEventListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDestroyEventDestroy,
 				connectFlags);
-			return onDestroyEventListeners[onDestroyEventListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDestroyEvent(GtkWidget* widgetStruct, GdkEvent* event,OnDestroyEventDelegateWrapper wrapper)
+		extern(C) static int callBackDestroyEvent(GtkWidget* widgetStruct, GdkEvent* event, OnDestroyEventDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDestroyEventDestroy(OnDestroyEventDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDestroyEvent(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDestroyEvent(OnDestroyEventDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDestroyEventListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDestroyEventListeners[index] = null;
-					onDestroyEventListeners = std.algorithm.remove(onDestroyEventListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDirectionChangedDelegateWrapper
 		{
+			static OnDirectionChangedDelegateWrapper[] listeners;
 			void delegate(GtkTextDirection, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(GtkTextDirection, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(GtkTextDirection, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDirectionChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDirectionChangedDelegateWrapper[] onDirectionChangedListeners;
 
 		/**
 		 * The ::direction-changed signal is emitted when the text direction
@@ -6987,54 +6970,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDirectionChanged(void delegate(GtkTextDirection, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDirectionChangedListeners ~= new OnDirectionChangedDelegateWrapper(dlg, 0, connectFlags);
-			onDirectionChangedListeners[onDirectionChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDirectionChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"direction-changed",
 				cast(GCallback)&callBackDirectionChanged,
-				cast(void*)onDirectionChangedListeners[onDirectionChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDirectionChangedDestroy,
 				connectFlags);
-			return onDirectionChangedListeners[onDirectionChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection,OnDirectionChangedDelegateWrapper wrapper)
+		extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection, OnDirectionChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(previousDirection, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDirectionChangedDestroy(OnDirectionChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDirectionChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDirectionChanged(OnDirectionChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDirectionChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDirectionChangedListeners[index] = null;
-					onDirectionChangedListeners = std.algorithm.remove(onDirectionChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragBeginDelegateWrapper
 		{
+			static OnDragBeginDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(DragContext, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragBeginDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragBeginDelegateWrapper[] onDragBeginListeners;
 
 		/**
 		 * The ::drag-begin signal is emitted on the drag source when a drag is
@@ -7050,54 +7031,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragBegin(void delegate(DragContext, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragBeginListeners ~= new OnDragBeginDelegateWrapper(dlg, 0, connectFlags);
-			onDragBeginListeners[onDragBeginListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragBeginDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-begin",
 				cast(GCallback)&callBackDragBegin,
-				cast(void*)onDragBeginListeners[onDragBeginListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragBeginDestroy,
 				connectFlags);
-			return onDragBeginListeners[onDragBeginListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* context,OnDragBeginDelegateWrapper wrapper)
+		extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* context, OnDragBeginDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragBeginDestroy(OnDragBeginDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragBegin(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragBegin(OnDragBeginDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragBeginListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragBeginListeners[index] = null;
-					onDragBeginListeners = std.algorithm.remove(onDragBeginListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragDataDeleteDelegateWrapper
 		{
+			static OnDragDataDeleteDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(DragContext, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragDataDeleteDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragDataDeleteDelegateWrapper[] onDragDataDeleteListeners;
 
 		/**
 		 * The ::drag-data-delete signal is emitted on the drag source when a drag
@@ -7110,54 +7089,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragDataDelete(void delegate(DragContext, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragDataDeleteListeners ~= new OnDragDataDeleteDelegateWrapper(dlg, 0, connectFlags);
-			onDragDataDeleteListeners[onDragDataDeleteListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragDataDeleteDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-data-delete",
 				cast(GCallback)&callBackDragDataDelete,
-				cast(void*)onDragDataDeleteListeners[onDragDataDeleteListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragDataDeleteDestroy,
 				connectFlags);
-			return onDragDataDeleteListeners[onDragDataDeleteListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* context,OnDragDataDeleteDelegateWrapper wrapper)
+		extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* context, OnDragDataDeleteDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragDataDeleteDestroy(OnDragDataDeleteDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragDataDelete(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragDataDelete(OnDragDataDeleteDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragDataDeleteListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragDataDeleteListeners[index] = null;
-					onDragDataDeleteListeners = std.algorithm.remove(onDragDataDeleteListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragDataGetDelegateWrapper
 		{
+			static OnDragDataGetDelegateWrapper[] listeners;
 			void delegate(DragContext, SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(DragContext, SelectionData, uint, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(DragContext, SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragDataGetDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragDataGetDelegateWrapper[] onDragDataGetListeners;
 
 		/**
 		 * The ::drag-data-get signal is emitted on the drag source when the drop
@@ -7175,54 +7152,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragDataGet(void delegate(DragContext, SelectionData, uint, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragDataGetListeners ~= new OnDragDataGetDelegateWrapper(dlg, 0, connectFlags);
-			onDragDataGetListeners[onDragDataGetListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragDataGetDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-data-get",
 				cast(GCallback)&callBackDragDataGet,
-				cast(void*)onDragDataGetListeners[onDragDataGetListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragDataGetDestroy,
 				connectFlags);
-			return onDragDataGetListeners[onDragDataGetListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* context, GtkSelectionData* data, uint info, uint time,OnDragDataGetDelegateWrapper wrapper)
+		extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* context, GtkSelectionData* data, uint info, uint time, OnDragDataGetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), ObjectG.getDObject!(SelectionData)(data), info, time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragDataGetDestroy(OnDragDataGetDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragDataGet(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragDataGet(OnDragDataGetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragDataGetListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragDataGetListeners[index] = null;
-					onDragDataGetListeners = std.algorithm.remove(onDragDataGetListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragDataReceivedDelegateWrapper
 		{
+			static OnDragDataReceivedDelegateWrapper[] listeners;
 			void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragDataReceivedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragDataReceivedDelegateWrapper[] onDragDataReceivedListeners;
 
 		/**
 		 * The ::drag-data-received signal is emitted on the drop site when the
@@ -7297,54 +7272,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragDataReceived(void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragDataReceivedListeners ~= new OnDragDataReceivedDelegateWrapper(dlg, 0, connectFlags);
-			onDragDataReceivedListeners[onDragDataReceivedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragDataReceivedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-data-received",
 				cast(GCallback)&callBackDragDataReceived,
-				cast(void*)onDragDataReceivedListeners[onDragDataReceivedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragDataReceivedDestroy,
 				connectFlags);
-			return onDragDataReceivedListeners[onDragDataReceivedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, GtkSelectionData* data, uint info, uint time,OnDragDataReceivedDelegateWrapper wrapper)
+		extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, GtkSelectionData* data, uint info, uint time, OnDragDataReceivedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), x, y, ObjectG.getDObject!(SelectionData)(data), info, time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragDataReceivedDestroy(OnDragDataReceivedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragDataReceived(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragDataReceived(OnDragDataReceivedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragDataReceivedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragDataReceivedListeners[index] = null;
-					onDragDataReceivedListeners = std.algorithm.remove(onDragDataReceivedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragDropDelegateWrapper
 		{
+			static OnDragDropDelegateWrapper[] listeners;
 			bool delegate(DragContext, int, int, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(DragContext, int, int, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(DragContext, int, int, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragDropDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragDropDelegateWrapper[] onDragDropListeners;
 
 		/**
 		 * The ::drag-drop signal is emitted on the drop site when the user drops
@@ -7368,54 +7341,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragDrop(bool delegate(DragContext, int, int, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragDropListeners ~= new OnDragDropDelegateWrapper(dlg, 0, connectFlags);
-			onDragDropListeners[onDragDropListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragDropDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-drop",
 				cast(GCallback)&callBackDragDrop,
-				cast(void*)onDragDropListeners[onDragDropListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragDropDestroy,
 				connectFlags);
-			return onDragDropListeners[onDragDropListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, uint time,OnDragDropDelegateWrapper wrapper)
+		extern(C) static int callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, uint time, OnDragDropDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), x, y, time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragDropDestroy(OnDragDropDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragDrop(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragDrop(OnDragDropDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragDropListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragDropListeners[index] = null;
-					onDragDropListeners = std.algorithm.remove(onDragDropListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragEndDelegateWrapper
 		{
+			static OnDragEndDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(DragContext, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragEndDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragEndDelegateWrapper[] onDragEndListeners;
 
 		/**
 		 * The ::drag-end signal is emitted on the drag source when a drag is
@@ -7427,54 +7398,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragEnd(void delegate(DragContext, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragEndListeners ~= new OnDragEndDelegateWrapper(dlg, 0, connectFlags);
-			onDragEndListeners[onDragEndListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragEndDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-end",
 				cast(GCallback)&callBackDragEnd,
-				cast(void*)onDragEndListeners[onDragEndListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragEndDestroy,
 				connectFlags);
-			return onDragEndListeners[onDragEndListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* context,OnDragEndDelegateWrapper wrapper)
+		extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* context, OnDragEndDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragEndDestroy(OnDragEndDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragEnd(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragEnd(OnDragEndDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragEndListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragEndListeners[index] = null;
-					onDragEndListeners = std.algorithm.remove(onDragEndListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragFailedDelegateWrapper
 		{
+			static OnDragFailedDelegateWrapper[] listeners;
 			bool delegate(DragContext, GtkDragResult, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(DragContext, GtkDragResult, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(DragContext, GtkDragResult, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragFailedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragFailedDelegateWrapper[] onDragFailedListeners;
 
 		/**
 		 * The ::drag-failed signal is emitted on the drag source when a drag has
@@ -7493,54 +7462,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragFailed(bool delegate(DragContext, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragFailedListeners ~= new OnDragFailedDelegateWrapper(dlg, 0, connectFlags);
-			onDragFailedListeners[onDragFailedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragFailedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-failed",
 				cast(GCallback)&callBackDragFailed,
-				cast(void*)onDragFailedListeners[onDragFailedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragFailedDestroy,
 				connectFlags);
-			return onDragFailedListeners[onDragFailedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* context, GtkDragResult result,OnDragFailedDelegateWrapper wrapper)
+		extern(C) static int callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* context, GtkDragResult result, OnDragFailedDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), result, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragFailedDestroy(OnDragFailedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragFailed(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragFailed(OnDragFailedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragFailedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragFailedListeners[index] = null;
-					onDragFailedListeners = std.algorithm.remove(onDragFailedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragLeaveDelegateWrapper
 		{
+			static OnDragLeaveDelegateWrapper[] listeners;
 			void delegate(DragContext, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(DragContext, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(DragContext, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragLeaveDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragLeaveDelegateWrapper[] onDragLeaveListeners;
 
 		/**
 		 * The ::drag-leave signal is emitted on the drop site when the cursor
@@ -7559,54 +7526,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragLeave(void delegate(DragContext, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragLeaveListeners ~= new OnDragLeaveDelegateWrapper(dlg, 0, connectFlags);
-			onDragLeaveListeners[onDragLeaveListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragLeaveDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-leave",
 				cast(GCallback)&callBackDragLeave,
-				cast(void*)onDragLeaveListeners[onDragLeaveListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragLeaveDestroy,
 				connectFlags);
-			return onDragLeaveListeners[onDragLeaveListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* context, uint time,OnDragLeaveDelegateWrapper wrapper)
+		extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* context, uint time, OnDragLeaveDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragLeaveDestroy(OnDragLeaveDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragLeave(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragLeave(OnDragLeaveDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragLeaveListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragLeaveListeners[index] = null;
-					onDragLeaveListeners = std.algorithm.remove(onDragLeaveListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDragMotionDelegateWrapper
 		{
+			static OnDragMotionDelegateWrapper[] listeners;
 			bool delegate(DragContext, int, int, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(DragContext, int, int, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(DragContext, int, int, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDragMotionDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDragMotionDelegateWrapper[] onDragMotionListeners;
 
 		/**
 		 * The ::drag-motion signal is emitted on the drop site when the user
@@ -7706,54 +7671,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDragMotion(bool delegate(DragContext, int, int, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onDragMotionListeners ~= new OnDragMotionDelegateWrapper(dlg, 0, connectFlags);
-			onDragMotionListeners[onDragMotionListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDragMotionDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"drag-motion",
 				cast(GCallback)&callBackDragMotion,
-				cast(void*)onDragMotionListeners[onDragMotionListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDragMotionDestroy,
 				connectFlags);
-			return onDragMotionListeners[onDragMotionListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, uint time,OnDragMotionDelegateWrapper wrapper)
+		extern(C) static int callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, uint time, OnDragMotionDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), x, y, time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackDragMotionDestroy(OnDragMotionDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnDragMotion(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnDragMotion(OnDragMotionDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragMotionListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onDragMotionListeners[index] = null;
-					onDragMotionListeners = std.algorithm.remove(onDragMotionListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnEnterNotifyDelegateWrapper
 		{
+			static OnEnterNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventCrossing*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventCrossing*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventCrossing*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnEnterNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnEnterNotifyDelegateWrapper[] onEnterNotifyListeners;
 
 		/**
 		 * The ::enter-notify-event will be emitted when the pointer enters
@@ -7774,54 +7737,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnEnterNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.ENTER_NOTIFY_MASK);
-			onEnterNotifyListeners ~= new OnEnterNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onEnterNotifyListeners[onEnterNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnEnterNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"enter-notify-event",
 				cast(GCallback)&callBackEnterNotify,
-				cast(void*)onEnterNotifyListeners[onEnterNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackEnterNotifyDestroy,
 				connectFlags);
-			return onEnterNotifyListeners[onEnterNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event,OnEnterNotifyDelegateWrapper wrapper)
+		extern(C) static int callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, OnEnterNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackEnterNotifyDestroy(OnEnterNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnEnterNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnEnterNotify(OnEnterNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEnterNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onEnterNotifyListeners[index] = null;
-					onEnterNotifyListeners = std.algorithm.remove(onEnterNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnEnterNotifyEventGenericDelegateWrapper
 		{
+			static OnEnterNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnEnterNotifyEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnEnterNotifyEventGenericDelegateWrapper[] onEnterNotifyEventGenericListeners;
 		
 		/**
 		 * The ::enter-notify-event will be emitted when the pointer enters
@@ -7842,53 +7803,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnEnterNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.ENTER_NOTIFY_MASK);
-			onEnterNotifyEventGenericListeners ~= new OnEnterNotifyEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onEnterNotifyEventGenericListeners[onEnterNotifyEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnEnterNotifyEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"enter-notify-event",
 				cast(GCallback)&callBackEnterNotifyEventGeneric,
-				cast(void*)onEnterNotifyEventGenericListeners[onEnterNotifyEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackEnterNotifyEventGenericDestroy,
 				connectFlags);
-			return onEnterNotifyEventGenericListeners[onEnterNotifyEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackEnterNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnEnterNotifyEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackEnterNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnEnterNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackEnterNotifyEventGenericDestroy(OnEnterNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnEnterNotifyEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnEnterNotifyEventGeneric(OnEnterNotifyEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEnterNotifyEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onEnterNotifyEventGenericListeners[index] = null;
-					onEnterNotifyEventGenericListeners = std.algorithm.remove(onEnterNotifyEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnDelegateWrapper
 		{
+			static OnDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnDelegateWrapper[] onListeners;
 
 		/**
 		 * The GTK+ main loop will emit three signals for each GDK event delivered
@@ -7908,54 +7868,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onListeners ~= new OnDelegateWrapper(dlg, 0, connectFlags);
-			onListeners[onListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"event",
 				cast(GCallback)&callBack,
-				cast(void*)onListeners[onListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackDestroy,
 				connectFlags);
-			return onListeners[onListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBack(GtkWidget* widgetStruct, GdkEvent* event,OnDelegateWrapper wrapper)
+		extern(C) static int callBack(GtkWidget* widgetStruct, GdkEvent* event, OnDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOn(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOn(OnDelegateWrapper source)
-		{
-			foreach(index, wrapper; onListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onListeners[index] = null;
-					onListeners = std.algorithm.remove(onListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnEventAfterDelegateWrapper
 		{
+			static OnEventAfterDelegateWrapper[] listeners;
 			void delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnEventAfterDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnEventAfterDelegateWrapper[] onEventAfterListeners;
 
 		/**
 		 * After the emission of the #GtkWidget::event signal and (optionally)
@@ -7967,108 +7925,104 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnEventAfter(void delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onEventAfterListeners ~= new OnEventAfterDelegateWrapper(dlg, 0, connectFlags);
-			onEventAfterListeners[onEventAfterListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnEventAfterDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"event-after",
 				cast(GCallback)&callBackEventAfter,
-				cast(void*)onEventAfterListeners[onEventAfterListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackEventAfterDestroy,
 				connectFlags);
-			return onEventAfterListeners[onEventAfterListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event,OnEventAfterDelegateWrapper wrapper)
+		extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, OnEventAfterDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackEventAfterDestroy(OnEventAfterDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnEventAfter(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnEventAfter(OnEventAfterDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEventAfterListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onEventAfterListeners[index] = null;
-					onEventAfterListeners = std.algorithm.remove(onEventAfterListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnFocusDelegateWrapper
 		{
+			static OnFocusDelegateWrapper[] listeners;
 			bool delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GtkDirectionType, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnFocusDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnFocusDelegateWrapper[] onFocusListeners;
 
 		/**
 		 * Return: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
 		gulong addOnFocus(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onFocusListeners ~= new OnFocusDelegateWrapper(dlg, 0, connectFlags);
-			onFocusListeners[onFocusListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnFocusDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"focus",
 				cast(GCallback)&callBackFocus,
-				cast(void*)onFocusListeners[onFocusListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackFocusDestroy,
 				connectFlags);
-			return onFocusListeners[onFocusListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction,OnFocusDelegateWrapper wrapper)
+		extern(C) static int callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction, OnFocusDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(direction, wrapper.outer);
 		}
 		
 		extern(C) static void callBackFocusDestroy(OnFocusDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnFocus(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnFocus(OnFocusDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFocusListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onFocusListeners[index] = null;
-					onFocusListeners = std.algorithm.remove(onFocusListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnFocusInDelegateWrapper
 		{
+			static OnFocusInDelegateWrapper[] listeners;
 			bool delegate(GdkEventFocus*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventFocus*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventFocus*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnFocusInDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnFocusInDelegateWrapper[] onFocusInListeners;
 
 		/**
 		 * The ::focus-in-event signal will be emitted when the keyboard focus
@@ -8087,54 +8041,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnFocusIn(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.FOCUS_CHANGE_MASK);
-			onFocusInListeners ~= new OnFocusInDelegateWrapper(dlg, 0, connectFlags);
-			onFocusInListeners[onFocusInListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnFocusInDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"focus-in-event",
 				cast(GCallback)&callBackFocusIn,
-				cast(void*)onFocusInListeners[onFocusInListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackFocusInDestroy,
 				connectFlags);
-			return onFocusInListeners[onFocusInListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event,OnFocusInDelegateWrapper wrapper)
+		extern(C) static int callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, OnFocusInDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackFocusInDestroy(OnFocusInDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnFocusIn(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnFocusIn(OnFocusInDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFocusInListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onFocusInListeners[index] = null;
-					onFocusInListeners = std.algorithm.remove(onFocusInListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnFocusInEventGenericDelegateWrapper
 		{
+			static OnFocusInEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnFocusInEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnFocusInEventGenericDelegateWrapper[] onFocusInEventGenericListeners;
 		
 		/**
 		 * The ::focus-in-event signal will be emitted when the keyboard focus
@@ -8153,53 +8105,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnFocusIn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.FOCUS_CHANGE_MASK);
-			onFocusInEventGenericListeners ~= new OnFocusInEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onFocusInEventGenericListeners[onFocusInEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnFocusInEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"focus-in-event",
 				cast(GCallback)&callBackFocusInEventGeneric,
-				cast(void*)onFocusInEventGenericListeners[onFocusInEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackFocusInEventGenericDestroy,
 				connectFlags);
-			return onFocusInEventGenericListeners[onFocusInEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackFocusInEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnFocusInEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackFocusInEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnFocusInEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackFocusInEventGenericDestroy(OnFocusInEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnFocusInEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnFocusInEventGeneric(OnFocusInEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFocusInEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onFocusInEventGenericListeners[index] = null;
-					onFocusInEventGenericListeners = std.algorithm.remove(onFocusInEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnFocusOutDelegateWrapper
 		{
+			static OnFocusOutDelegateWrapper[] listeners;
 			bool delegate(GdkEventFocus*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventFocus*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventFocus*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnFocusOutDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnFocusOutDelegateWrapper[] onFocusOutListeners;
 
 		/**
 		 * The ::focus-out-event signal will be emitted when the keyboard focus
@@ -8218,54 +8169,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnFocusOut(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.FOCUS_CHANGE_MASK);
-			onFocusOutListeners ~= new OnFocusOutDelegateWrapper(dlg, 0, connectFlags);
-			onFocusOutListeners[onFocusOutListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnFocusOutDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"focus-out-event",
 				cast(GCallback)&callBackFocusOut,
-				cast(void*)onFocusOutListeners[onFocusOutListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackFocusOutDestroy,
 				connectFlags);
-			return onFocusOutListeners[onFocusOutListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event,OnFocusOutDelegateWrapper wrapper)
+		extern(C) static int callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, OnFocusOutDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackFocusOutDestroy(OnFocusOutDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnFocusOut(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnFocusOut(OnFocusOutDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFocusOutListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onFocusOutListeners[index] = null;
-					onFocusOutListeners = std.algorithm.remove(onFocusOutListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnFocusOutEventGenericDelegateWrapper
 		{
+			static OnFocusOutEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnFocusOutEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnFocusOutEventGenericDelegateWrapper[] onFocusOutEventGenericListeners;
 		
 		/**
 		 * The ::focus-out-event signal will be emitted when the keyboard focus
@@ -8284,53 +8233,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnFocusOut(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.FOCUS_CHANGE_MASK);
-			onFocusOutEventGenericListeners ~= new OnFocusOutEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onFocusOutEventGenericListeners[onFocusOutEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnFocusOutEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"focus-out-event",
 				cast(GCallback)&callBackFocusOutEventGeneric,
-				cast(void*)onFocusOutEventGenericListeners[onFocusOutEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackFocusOutEventGenericDestroy,
 				connectFlags);
-			return onFocusOutEventGenericListeners[onFocusOutEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackFocusOutEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnFocusOutEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackFocusOutEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnFocusOutEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackFocusOutEventGenericDestroy(OnFocusOutEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnFocusOutEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnFocusOutEventGeneric(OnFocusOutEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFocusOutEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onFocusOutEventGenericListeners[index] = null;
-					onFocusOutEventGenericListeners = std.algorithm.remove(onFocusOutEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnGrabBrokenDelegateWrapper
 		{
+			static OnGrabBrokenDelegateWrapper[] listeners;
 			bool delegate(GdkEventGrabBroken*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventGrabBroken*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventGrabBroken*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnGrabBrokenDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnGrabBrokenDelegateWrapper[] onGrabBrokenListeners;
 
 		/**
 		 * Emitted when a pointer or keyboard grab on a window belonging
@@ -8350,54 +8298,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnGrabBroken(bool delegate(GdkEventGrabBroken*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onGrabBrokenListeners ~= new OnGrabBrokenDelegateWrapper(dlg, 0, connectFlags);
-			onGrabBrokenListeners[onGrabBrokenListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnGrabBrokenDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"grab-broken-event",
 				cast(GCallback)&callBackGrabBroken,
-				cast(void*)onGrabBrokenListeners[onGrabBrokenListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackGrabBrokenDestroy,
 				connectFlags);
-			return onGrabBrokenListeners[onGrabBrokenListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackGrabBroken(GtkWidget* widgetStruct, GdkEventGrabBroken* event,OnGrabBrokenDelegateWrapper wrapper)
+		extern(C) static int callBackGrabBroken(GtkWidget* widgetStruct, GdkEventGrabBroken* event, OnGrabBrokenDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackGrabBrokenDestroy(OnGrabBrokenDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnGrabBroken(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnGrabBroken(OnGrabBrokenDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGrabBrokenListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onGrabBrokenListeners[index] = null;
-					onGrabBrokenListeners = std.algorithm.remove(onGrabBrokenListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnGrabBrokenEventGenericDelegateWrapper
 		{
+			static OnGrabBrokenEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnGrabBrokenEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnGrabBrokenEventGenericDelegateWrapper[] onGrabBrokenEventGenericListeners;
 		
 		/**
 		 * Emitted when a pointer or keyboard grab on a window belonging
@@ -8417,105 +8363,102 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnGrabBroken(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onGrabBrokenEventGenericListeners ~= new OnGrabBrokenEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onGrabBrokenEventGenericListeners[onGrabBrokenEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnGrabBrokenEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"grab-broken-event",
 				cast(GCallback)&callBackGrabBrokenEventGeneric,
-				cast(void*)onGrabBrokenEventGenericListeners[onGrabBrokenEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackGrabBrokenEventGenericDestroy,
 				connectFlags);
-			return onGrabBrokenEventGenericListeners[onGrabBrokenEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackGrabBrokenEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnGrabBrokenEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackGrabBrokenEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnGrabBrokenEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackGrabBrokenEventGenericDestroy(OnGrabBrokenEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnGrabBrokenEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnGrabBrokenEventGeneric(OnGrabBrokenEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGrabBrokenEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onGrabBrokenEventGenericListeners[index] = null;
-					onGrabBrokenEventGenericListeners = std.algorithm.remove(onGrabBrokenEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnGrabFocusDelegateWrapper
 		{
+			static OnGrabFocusDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnGrabFocusDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnGrabFocusDelegateWrapper[] onGrabFocusListeners;
 
 		/** */
 		gulong addOnGrabFocus(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onGrabFocusListeners ~= new OnGrabFocusDelegateWrapper(dlg, 0, connectFlags);
-			onGrabFocusListeners[onGrabFocusListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnGrabFocusDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"grab-focus",
 				cast(GCallback)&callBackGrabFocus,
-				cast(void*)onGrabFocusListeners[onGrabFocusListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackGrabFocusDestroy,
 				connectFlags);
-			return onGrabFocusListeners[onGrabFocusListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct,OnGrabFocusDelegateWrapper wrapper)
+		extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, OnGrabFocusDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackGrabFocusDestroy(OnGrabFocusDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnGrabFocus(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnGrabFocus(OnGrabFocusDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGrabFocusListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onGrabFocusListeners[index] = null;
-					onGrabFocusListeners = std.algorithm.remove(onGrabFocusListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnGrabNotifyDelegateWrapper
 		{
+			static OnGrabNotifyDelegateWrapper[] listeners;
 			void delegate(bool, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(bool, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(bool, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnGrabNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnGrabNotifyDelegateWrapper[] onGrabNotifyListeners;
 
 		/**
 		 * The ::grab-notify signal is emitted when a widget becomes
@@ -8533,54 +8476,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnGrabNotify(void delegate(bool, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onGrabNotifyListeners ~= new OnGrabNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onGrabNotifyListeners[onGrabNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnGrabNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"grab-notify",
 				cast(GCallback)&callBackGrabNotify,
-				cast(void*)onGrabNotifyListeners[onGrabNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackGrabNotifyDestroy,
 				connectFlags);
-			return onGrabNotifyListeners[onGrabNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, bool wasGrabbed,OnGrabNotifyDelegateWrapper wrapper)
+		extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, bool wasGrabbed, OnGrabNotifyDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wasGrabbed, wrapper.outer);
 		}
 		
 		extern(C) static void callBackGrabNotifyDestroy(OnGrabNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnGrabNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnGrabNotify(OnGrabNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGrabNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onGrabNotifyListeners[index] = null;
-					onGrabNotifyListeners = std.algorithm.remove(onGrabNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnHideDelegateWrapper
 		{
+			static OnHideDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnHideDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnHideDelegateWrapper[] onHideListeners;
 
 		/**
 		 * The ::hide signal is emitted when @widget is hidden, for example with
@@ -8588,54 +8529,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnHide(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onHideListeners ~= new OnHideDelegateWrapper(dlg, 0, connectFlags);
-			onHideListeners[onHideListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnHideDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"hide",
 				cast(GCallback)&callBackHide,
-				cast(void*)onHideListeners[onHideListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackHideDestroy,
 				connectFlags);
-			return onHideListeners[onHideListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackHide(GtkWidget* widgetStruct,OnHideDelegateWrapper wrapper)
+		extern(C) static void callBackHide(GtkWidget* widgetStruct, OnHideDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackHideDestroy(OnHideDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnHide(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnHide(OnHideDelegateWrapper source)
-		{
-			foreach(index, wrapper; onHideListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onHideListeners[index] = null;
-					onHideListeners = std.algorithm.remove(onHideListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnHierarchyChangedDelegateWrapper
 		{
+			static OnHierarchyChangedDelegateWrapper[] listeners;
 			void delegate(Widget, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnHierarchyChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnHierarchyChangedDelegateWrapper[] onHierarchyChangedListeners;
 
 		/**
 		 * The ::hierarchy-changed signal is emitted when the
@@ -8650,54 +8589,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnHierarchyChanged(void delegate(Widget, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onHierarchyChangedListeners ~= new OnHierarchyChangedDelegateWrapper(dlg, 0, connectFlags);
-			onHierarchyChangedListeners[onHierarchyChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnHierarchyChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"hierarchy-changed",
 				cast(GCallback)&callBackHierarchyChanged,
-				cast(void*)onHierarchyChangedListeners[onHierarchyChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackHierarchyChangedDestroy,
 				connectFlags);
-			return onHierarchyChangedListeners[onHierarchyChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel,OnHierarchyChangedDelegateWrapper wrapper)
+		extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel, OnHierarchyChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Widget)(previousToplevel), wrapper.outer);
 		}
 		
 		extern(C) static void callBackHierarchyChangedDestroy(OnHierarchyChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnHierarchyChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnHierarchyChanged(OnHierarchyChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onHierarchyChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onHierarchyChangedListeners[index] = null;
-					onHierarchyChangedListeners = std.algorithm.remove(onHierarchyChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnKeyPressDelegateWrapper
 		{
+			static OnKeyPressDelegateWrapper[] listeners;
 			bool delegate(GdkEventKey*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventKey*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventKey*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnKeyPressDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnKeyPressDelegateWrapper[] onKeyPressListeners;
 
 		/**
 		 * The ::key-press-event signal is emitted when a key is pressed. The signal
@@ -8717,54 +8654,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnKeyPress(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.KEY_PRESS_MASK);
-			onKeyPressListeners ~= new OnKeyPressDelegateWrapper(dlg, 0, connectFlags);
-			onKeyPressListeners[onKeyPressListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnKeyPressDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"key-press-event",
 				cast(GCallback)&callBackKeyPress,
-				cast(void*)onKeyPressListeners[onKeyPressListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackKeyPressDestroy,
 				connectFlags);
-			return onKeyPressListeners[onKeyPressListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event,OnKeyPressDelegateWrapper wrapper)
+		extern(C) static int callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, OnKeyPressDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackKeyPressDestroy(OnKeyPressDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnKeyPress(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnKeyPress(OnKeyPressDelegateWrapper source)
-		{
-			foreach(index, wrapper; onKeyPressListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onKeyPressListeners[index] = null;
-					onKeyPressListeners = std.algorithm.remove(onKeyPressListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnKeyPressEventGenericDelegateWrapper
 		{
+			static OnKeyPressEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnKeyPressEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnKeyPressEventGenericDelegateWrapper[] onKeyPressEventGenericListeners;
 		
 		/**
 		 * The ::key-press-event signal is emitted when a key is pressed. The signal
@@ -8784,53 +8719,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnKeyPress(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.KEY_PRESS_MASK);
-			onKeyPressEventGenericListeners ~= new OnKeyPressEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onKeyPressEventGenericListeners[onKeyPressEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnKeyPressEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"key-press-event",
 				cast(GCallback)&callBackKeyPressEventGeneric,
-				cast(void*)onKeyPressEventGenericListeners[onKeyPressEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackKeyPressEventGenericDestroy,
 				connectFlags);
-			return onKeyPressEventGenericListeners[onKeyPressEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackKeyPressEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnKeyPressEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackKeyPressEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnKeyPressEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackKeyPressEventGenericDestroy(OnKeyPressEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnKeyPressEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnKeyPressEventGeneric(OnKeyPressEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onKeyPressEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onKeyPressEventGenericListeners[index] = null;
-					onKeyPressEventGenericListeners = std.algorithm.remove(onKeyPressEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnKeyReleaseDelegateWrapper
 		{
+			static OnKeyReleaseDelegateWrapper[] listeners;
 			bool delegate(GdkEventKey*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventKey*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventKey*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnKeyReleaseDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnKeyReleaseDelegateWrapper[] onKeyReleaseListeners;
 
 		/**
 		 * The ::key-release-event signal is emitted when a key is released.
@@ -8849,54 +8783,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnKeyRelease(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.KEY_RELEASE_MASK);
-			onKeyReleaseListeners ~= new OnKeyReleaseDelegateWrapper(dlg, 0, connectFlags);
-			onKeyReleaseListeners[onKeyReleaseListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnKeyReleaseDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"key-release-event",
 				cast(GCallback)&callBackKeyRelease,
-				cast(void*)onKeyReleaseListeners[onKeyReleaseListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackKeyReleaseDestroy,
 				connectFlags);
-			return onKeyReleaseListeners[onKeyReleaseListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event,OnKeyReleaseDelegateWrapper wrapper)
+		extern(C) static int callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, OnKeyReleaseDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackKeyReleaseDestroy(OnKeyReleaseDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnKeyRelease(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnKeyRelease(OnKeyReleaseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onKeyReleaseListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onKeyReleaseListeners[index] = null;
-					onKeyReleaseListeners = std.algorithm.remove(onKeyReleaseListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnKeyReleaseEventGenericDelegateWrapper
 		{
+			static OnKeyReleaseEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnKeyReleaseEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnKeyReleaseEventGenericDelegateWrapper[] onKeyReleaseEventGenericListeners;
 		
 		/**
 		 * The ::key-release-event signal is emitted when a key is released.
@@ -8915,53 +8847,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnKeyRelease(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.KEY_RELEASE_MASK);
-			onKeyReleaseEventGenericListeners ~= new OnKeyReleaseEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onKeyReleaseEventGenericListeners[onKeyReleaseEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnKeyReleaseEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"key-release-event",
 				cast(GCallback)&callBackKeyReleaseEventGeneric,
-				cast(void*)onKeyReleaseEventGenericListeners[onKeyReleaseEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackKeyReleaseEventGenericDestroy,
 				connectFlags);
-			return onKeyReleaseEventGenericListeners[onKeyReleaseEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackKeyReleaseEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnKeyReleaseEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackKeyReleaseEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnKeyReleaseEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackKeyReleaseEventGenericDestroy(OnKeyReleaseEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnKeyReleaseEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnKeyReleaseEventGeneric(OnKeyReleaseEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onKeyReleaseEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onKeyReleaseEventGenericListeners[index] = null;
-					onKeyReleaseEventGenericListeners = std.algorithm.remove(onKeyReleaseEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnKeynavFailedDelegateWrapper
 		{
+			static OnKeynavFailedDelegateWrapper[] listeners;
 			bool delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GtkDirectionType, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnKeynavFailedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnKeynavFailedDelegateWrapper[] onKeynavFailedListeners;
 
 		/**
 		 * Gets emitted if keyboard navigation fails.
@@ -8978,54 +8909,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnKeynavFailed(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onKeynavFailedListeners ~= new OnKeynavFailedDelegateWrapper(dlg, 0, connectFlags);
-			onKeynavFailedListeners[onKeynavFailedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnKeynavFailedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"keynav-failed",
 				cast(GCallback)&callBackKeynavFailed,
-				cast(void*)onKeynavFailedListeners[onKeynavFailedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackKeynavFailedDestroy,
 				connectFlags);
-			return onKeynavFailedListeners[onKeynavFailedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction,OnKeynavFailedDelegateWrapper wrapper)
+		extern(C) static int callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, OnKeynavFailedDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(direction, wrapper.outer);
 		}
 		
 		extern(C) static void callBackKeynavFailedDestroy(OnKeynavFailedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnKeynavFailed(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnKeynavFailed(OnKeynavFailedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onKeynavFailedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onKeynavFailedListeners[index] = null;
-					onKeynavFailedListeners = std.algorithm.remove(onKeynavFailedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnLeaveNotifyDelegateWrapper
 		{
+			static OnLeaveNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventCrossing*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventCrossing*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventCrossing*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnLeaveNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnLeaveNotifyDelegateWrapper[] onLeaveNotifyListeners;
 
 		/**
 		 * The ::leave-notify-event will be emitted when the pointer leaves
@@ -9046,54 +8975,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnLeaveNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.LEAVE_NOTIFY_MASK);
-			onLeaveNotifyListeners ~= new OnLeaveNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onLeaveNotifyListeners[onLeaveNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnLeaveNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"leave-notify-event",
 				cast(GCallback)&callBackLeaveNotify,
-				cast(void*)onLeaveNotifyListeners[onLeaveNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackLeaveNotifyDestroy,
 				connectFlags);
-			return onLeaveNotifyListeners[onLeaveNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event,OnLeaveNotifyDelegateWrapper wrapper)
+		extern(C) static int callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, OnLeaveNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackLeaveNotifyDestroy(OnLeaveNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnLeaveNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnLeaveNotify(OnLeaveNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLeaveNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onLeaveNotifyListeners[index] = null;
-					onLeaveNotifyListeners = std.algorithm.remove(onLeaveNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnLeaveNotifyEventGenericDelegateWrapper
 		{
+			static OnLeaveNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnLeaveNotifyEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnLeaveNotifyEventGenericDelegateWrapper[] onLeaveNotifyEventGenericListeners;
 		
 		/**
 		 * The ::leave-notify-event will be emitted when the pointer leaves
@@ -9114,53 +9041,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnLeaveNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.LEAVE_NOTIFY_MASK);
-			onLeaveNotifyEventGenericListeners ~= new OnLeaveNotifyEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onLeaveNotifyEventGenericListeners[onLeaveNotifyEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnLeaveNotifyEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"leave-notify-event",
 				cast(GCallback)&callBackLeaveNotifyEventGeneric,
-				cast(void*)onLeaveNotifyEventGenericListeners[onLeaveNotifyEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackLeaveNotifyEventGenericDestroy,
 				connectFlags);
-			return onLeaveNotifyEventGenericListeners[onLeaveNotifyEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackLeaveNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnLeaveNotifyEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackLeaveNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnLeaveNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackLeaveNotifyEventGenericDestroy(OnLeaveNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnLeaveNotifyEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnLeaveNotifyEventGeneric(OnLeaveNotifyEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLeaveNotifyEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onLeaveNotifyEventGenericListeners[index] = null;
-					onLeaveNotifyEventGenericListeners = std.algorithm.remove(onLeaveNotifyEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMapDelegateWrapper
 		{
+			static OnMapDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMapDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMapDelegateWrapper[] onMapListeners;
 
 		/**
 		 * The ::map signal is emitted when @widget is going to be mapped, that is
@@ -9175,54 +9101,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnMap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onMapListeners ~= new OnMapDelegateWrapper(dlg, 0, connectFlags);
-			onMapListeners[onMapListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMapDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"map",
 				cast(GCallback)&callBackMap,
-				cast(void*)onMapListeners[onMapListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMapDestroy,
 				connectFlags);
-			return onMapListeners[onMapListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackMap(GtkWidget* widgetStruct,OnMapDelegateWrapper wrapper)
+		extern(C) static void callBackMap(GtkWidget* widgetStruct, OnMapDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackMapDestroy(OnMapDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMap(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnMap(OnMapDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMapListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMapListeners[index] = null;
-					onMapListeners = std.algorithm.remove(onMapListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMapEventDelegateWrapper
 		{
+			static OnMapEventDelegateWrapper[] listeners;
 			bool delegate(GdkEventAny*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventAny*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventAny*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMapEventDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMapEventDelegateWrapper[] onMapEventListeners;
 
 		/**
 		 * The ::map-event signal will be emitted when the @widget's window is
@@ -9240,54 +9164,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnMapEvent(bool delegate(GdkEventAny*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onMapEventListeners ~= new OnMapEventDelegateWrapper(dlg, 0, connectFlags);
-			onMapEventListeners[onMapEventListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMapEventDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"map-event",
 				cast(GCallback)&callBackMapEvent,
-				cast(void*)onMapEventListeners[onMapEventListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMapEventDestroy,
 				connectFlags);
-			return onMapEventListeners[onMapEventListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackMapEvent(GtkWidget* widgetStruct, GdkEventAny* event,OnMapEventDelegateWrapper wrapper)
+		extern(C) static int callBackMapEvent(GtkWidget* widgetStruct, GdkEventAny* event, OnMapEventDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackMapEventDestroy(OnMapEventDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMapEvent(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnMapEvent(OnMapEventDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMapEventListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMapEventListeners[index] = null;
-					onMapEventListeners = std.algorithm.remove(onMapEventListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMapEventGenericDelegateWrapper
 		{
+			static OnMapEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMapEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMapEventGenericDelegateWrapper[] onMapEventGenericListeners;
 		
 		/**
 		 * The ::map-event signal will be emitted when the @widget's window is
@@ -9305,53 +9227,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnMapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onMapEventGenericListeners ~= new OnMapEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onMapEventGenericListeners[onMapEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMapEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"map-event",
 				cast(GCallback)&callBackMapEventGeneric,
-				cast(void*)onMapEventGenericListeners[onMapEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMapEventGenericDestroy,
 				connectFlags);
-			return onMapEventGenericListeners[onMapEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackMapEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnMapEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackMapEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnMapEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackMapEventGenericDestroy(OnMapEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMapEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnMapEventGeneric(OnMapEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMapEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMapEventGenericListeners[index] = null;
-					onMapEventGenericListeners = std.algorithm.remove(onMapEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMnemonicActivateDelegateWrapper
 		{
+			static OnMnemonicActivateDelegateWrapper[] listeners;
 			bool delegate(bool, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(bool, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(bool, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMnemonicActivateDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMnemonicActivateDelegateWrapper[] onMnemonicActivateListeners;
 
 		/**
 		 * Return: %TRUE to stop other handlers from being invoked for the event.
@@ -9359,54 +9280,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnMnemonicActivate(bool delegate(bool, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onMnemonicActivateListeners ~= new OnMnemonicActivateDelegateWrapper(dlg, 0, connectFlags);
-			onMnemonicActivateListeners[onMnemonicActivateListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMnemonicActivateDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"mnemonic-activate",
 				cast(GCallback)&callBackMnemonicActivate,
-				cast(void*)onMnemonicActivateListeners[onMnemonicActivateListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMnemonicActivateDestroy,
 				connectFlags);
-			return onMnemonicActivateListeners[onMnemonicActivateListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackMnemonicActivate(GtkWidget* widgetStruct, bool arg1,OnMnemonicActivateDelegateWrapper wrapper)
+		extern(C) static int callBackMnemonicActivate(GtkWidget* widgetStruct, bool arg1, OnMnemonicActivateDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(arg1, wrapper.outer);
 		}
 		
 		extern(C) static void callBackMnemonicActivateDestroy(OnMnemonicActivateDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMnemonicActivate(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnMnemonicActivate(OnMnemonicActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMnemonicActivateListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMnemonicActivateListeners[index] = null;
-					onMnemonicActivateListeners = std.algorithm.remove(onMnemonicActivateListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMotionNotifyDelegateWrapper
 		{
+			static OnMotionNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventMotion*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventMotion*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventMotion*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMotionNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMotionNotifyDelegateWrapper[] onMotionNotifyListeners;
 
 		/**
 		 * The ::motion-notify-event signal is emitted when the pointer moves
@@ -9427,54 +9346,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnMotionNotify(bool delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.POINTER_MOTION_MASK);
-			onMotionNotifyListeners ~= new OnMotionNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onMotionNotifyListeners[onMotionNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMotionNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"motion-notify-event",
 				cast(GCallback)&callBackMotionNotify,
-				cast(void*)onMotionNotifyListeners[onMotionNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMotionNotifyDestroy,
 				connectFlags);
-			return onMotionNotifyListeners[onMotionNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event,OnMotionNotifyDelegateWrapper wrapper)
+		extern(C) static int callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, OnMotionNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackMotionNotifyDestroy(OnMotionNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMotionNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnMotionNotify(OnMotionNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMotionNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMotionNotifyListeners[index] = null;
-					onMotionNotifyListeners = std.algorithm.remove(onMotionNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMotionNotifyEventGenericDelegateWrapper
 		{
+			static OnMotionNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMotionNotifyEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMotionNotifyEventGenericDelegateWrapper[] onMotionNotifyEventGenericListeners;
 		
 		/**
 		 * The ::motion-notify-event signal is emitted when the pointer moves
@@ -9495,105 +9412,102 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnMotionNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.POINTER_MOTION_MASK);
-			onMotionNotifyEventGenericListeners ~= new OnMotionNotifyEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onMotionNotifyEventGenericListeners[onMotionNotifyEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMotionNotifyEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"motion-notify-event",
 				cast(GCallback)&callBackMotionNotifyEventGeneric,
-				cast(void*)onMotionNotifyEventGenericListeners[onMotionNotifyEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMotionNotifyEventGenericDestroy,
 				connectFlags);
-			return onMotionNotifyEventGenericListeners[onMotionNotifyEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackMotionNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnMotionNotifyEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackMotionNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnMotionNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackMotionNotifyEventGenericDestroy(OnMotionNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMotionNotifyEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnMotionNotifyEventGeneric(OnMotionNotifyEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMotionNotifyEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMotionNotifyEventGenericListeners[index] = null;
-					onMotionNotifyEventGenericListeners = std.algorithm.remove(onMotionNotifyEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnMoveFocusDelegateWrapper
 		{
+			static OnMoveFocusDelegateWrapper[] listeners;
 			void delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(GtkDirectionType, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnMoveFocusDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnMoveFocusDelegateWrapper[] onMoveFocusListeners;
 
 		/** */
 		gulong addOnMoveFocus(void delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onMoveFocusListeners ~= new OnMoveFocusDelegateWrapper(dlg, 0, connectFlags);
-			onMoveFocusListeners[onMoveFocusListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnMoveFocusDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"move-focus",
 				cast(GCallback)&callBackMoveFocus,
-				cast(void*)onMoveFocusListeners[onMoveFocusListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackMoveFocusDestroy,
 				connectFlags);
-			return onMoveFocusListeners[onMoveFocusListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction,OnMoveFocusDelegateWrapper wrapper)
+		extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction, OnMoveFocusDelegateWrapper wrapper)
 		{
 			wrapper.dlg(direction, wrapper.outer);
 		}
 		
 		extern(C) static void callBackMoveFocusDestroy(OnMoveFocusDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnMoveFocus(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnMoveFocus(OnMoveFocusDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveFocusListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onMoveFocusListeners[index] = null;
-					onMoveFocusListeners = std.algorithm.remove(onMoveFocusListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnParentSetDelegateWrapper
 		{
+			static OnParentSetDelegateWrapper[] listeners;
 			void delegate(Widget, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnParentSetDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnParentSetDelegateWrapper[] onParentSetListeners;
 
 		/**
 		 * The ::parent-set signal is emitted when a new parent
@@ -9605,54 +9519,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnParentSet(void delegate(Widget, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onParentSetListeners ~= new OnParentSetDelegateWrapper(dlg, 0, connectFlags);
-			onParentSetListeners[onParentSetListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnParentSetDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"parent-set",
 				cast(GCallback)&callBackParentSet,
-				cast(void*)onParentSetListeners[onParentSetListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackParentSetDestroy,
 				connectFlags);
-			return onParentSetListeners[onParentSetListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkWidget* oldParent,OnParentSetDelegateWrapper wrapper)
+		extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkWidget* oldParent, OnParentSetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Widget)(oldParent), wrapper.outer);
 		}
 		
 		extern(C) static void callBackParentSetDestroy(OnParentSetDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnParentSet(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnParentSet(OnParentSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onParentSetListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onParentSetListeners[index] = null;
-					onParentSetListeners = std.algorithm.remove(onParentSetListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnPopupMenuDelegateWrapper
 		{
+			static OnPopupMenuDelegateWrapper[] listeners;
 			bool delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnPopupMenuDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnPopupMenuDelegateWrapper[] onPopupMenuListeners;
 
 		/**
 		 * This signal gets emitted whenever a widget should pop up a context
@@ -9667,54 +9579,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnPopupMenu(bool delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onPopupMenuListeners ~= new OnPopupMenuDelegateWrapper(dlg, 0, connectFlags);
-			onPopupMenuListeners[onPopupMenuListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnPopupMenuDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"popup-menu",
 				cast(GCallback)&callBackPopupMenu,
-				cast(void*)onPopupMenuListeners[onPopupMenuListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackPopupMenuDestroy,
 				connectFlags);
-			return onPopupMenuListeners[onPopupMenuListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackPopupMenu(GtkWidget* widgetStruct,OnPopupMenuDelegateWrapper wrapper)
+		extern(C) static int callBackPopupMenu(GtkWidget* widgetStruct, OnPopupMenuDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackPopupMenuDestroy(OnPopupMenuDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnPopupMenu(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnPopupMenu(OnPopupMenuDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPopupMenuListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onPopupMenuListeners[index] = null;
-					onPopupMenuListeners = std.algorithm.remove(onPopupMenuListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnPropertyNotifyDelegateWrapper
 		{
+			static OnPropertyNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventProperty*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventProperty*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventProperty*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnPropertyNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnPropertyNotifyDelegateWrapper[] onPropertyNotifyListeners;
 
 		/**
 		 * The ::property-notify-event signal will be emitted when a property on
@@ -9733,54 +9643,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnPropertyNotify(bool delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.PROPERTY_CHANGE_MASK);
-			onPropertyNotifyListeners ~= new OnPropertyNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onPropertyNotifyListeners[onPropertyNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnPropertyNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"property-notify-event",
 				cast(GCallback)&callBackPropertyNotify,
-				cast(void*)onPropertyNotifyListeners[onPropertyNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackPropertyNotifyDestroy,
 				connectFlags);
-			return onPropertyNotifyListeners[onPropertyNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event,OnPropertyNotifyDelegateWrapper wrapper)
+		extern(C) static int callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, OnPropertyNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackPropertyNotifyDestroy(OnPropertyNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnPropertyNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnPropertyNotify(OnPropertyNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPropertyNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onPropertyNotifyListeners[index] = null;
-					onPropertyNotifyListeners = std.algorithm.remove(onPropertyNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnPropertyNotifyEventGenericDelegateWrapper
 		{
+			static OnPropertyNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnPropertyNotifyEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnPropertyNotifyEventGenericDelegateWrapper[] onPropertyNotifyEventGenericListeners;
 		
 		/**
 		 * The ::property-notify-event signal will be emitted when a property on
@@ -9799,53 +9707,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnPropertyNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.PROPERTY_CHANGE_MASK);
-			onPropertyNotifyEventGenericListeners ~= new OnPropertyNotifyEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onPropertyNotifyEventGenericListeners[onPropertyNotifyEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnPropertyNotifyEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"property-notify-event",
 				cast(GCallback)&callBackPropertyNotifyEventGeneric,
-				cast(void*)onPropertyNotifyEventGenericListeners[onPropertyNotifyEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackPropertyNotifyEventGenericDestroy,
 				connectFlags);
-			return onPropertyNotifyEventGenericListeners[onPropertyNotifyEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackPropertyNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnPropertyNotifyEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackPropertyNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnPropertyNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackPropertyNotifyEventGenericDestroy(OnPropertyNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnPropertyNotifyEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnPropertyNotifyEventGeneric(OnPropertyNotifyEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPropertyNotifyEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onPropertyNotifyEventGenericListeners[index] = null;
-					onPropertyNotifyEventGenericListeners = std.algorithm.remove(onPropertyNotifyEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnProximityInDelegateWrapper
 		{
+			static OnProximityInDelegateWrapper[] listeners;
 			bool delegate(GdkEventProximity*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventProximity*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventProximity*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnProximityInDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnProximityInDelegateWrapper[] onProximityInListeners;
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9863,54 +9770,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnProximityIn(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.PROXIMITY_IN_MASK);
-			onProximityInListeners ~= new OnProximityInDelegateWrapper(dlg, 0, connectFlags);
-			onProximityInListeners[onProximityInListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnProximityInDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"proximity-in-event",
 				cast(GCallback)&callBackProximityIn,
-				cast(void*)onProximityInListeners[onProximityInListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackProximityInDestroy,
 				connectFlags);
-			return onProximityInListeners[onProximityInListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event,OnProximityInDelegateWrapper wrapper)
+		extern(C) static int callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, OnProximityInDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackProximityInDestroy(OnProximityInDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnProximityIn(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnProximityIn(OnProximityInDelegateWrapper source)
-		{
-			foreach(index, wrapper; onProximityInListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onProximityInListeners[index] = null;
-					onProximityInListeners = std.algorithm.remove(onProximityInListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnProximityInEventGenericDelegateWrapper
 		{
+			static OnProximityInEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnProximityInEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnProximityInEventGenericDelegateWrapper[] onProximityInEventGenericListeners;
 		
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9928,53 +9833,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnProximityIn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.PROXIMITY_IN_MASK);
-			onProximityInEventGenericListeners ~= new OnProximityInEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onProximityInEventGenericListeners[onProximityInEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnProximityInEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"proximity-in-event",
 				cast(GCallback)&callBackProximityInEventGeneric,
-				cast(void*)onProximityInEventGenericListeners[onProximityInEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackProximityInEventGenericDestroy,
 				connectFlags);
-			return onProximityInEventGenericListeners[onProximityInEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackProximityInEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnProximityInEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackProximityInEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnProximityInEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackProximityInEventGenericDestroy(OnProximityInEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnProximityInEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnProximityInEventGeneric(OnProximityInEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onProximityInEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onProximityInEventGenericListeners[index] = null;
-					onProximityInEventGenericListeners = std.algorithm.remove(onProximityInEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnProximityOutDelegateWrapper
 		{
+			static OnProximityOutDelegateWrapper[] listeners;
 			bool delegate(GdkEventProximity*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventProximity*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventProximity*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnProximityOutDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnProximityOutDelegateWrapper[] onProximityOutListeners;
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9992,54 +9896,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnProximityOut(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.PROXIMITY_OUT_MASK);
-			onProximityOutListeners ~= new OnProximityOutDelegateWrapper(dlg, 0, connectFlags);
-			onProximityOutListeners[onProximityOutListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnProximityOutDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"proximity-out-event",
 				cast(GCallback)&callBackProximityOut,
-				cast(void*)onProximityOutListeners[onProximityOutListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackProximityOutDestroy,
 				connectFlags);
-			return onProximityOutListeners[onProximityOutListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event,OnProximityOutDelegateWrapper wrapper)
+		extern(C) static int callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, OnProximityOutDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackProximityOutDestroy(OnProximityOutDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnProximityOut(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnProximityOut(OnProximityOutDelegateWrapper source)
-		{
-			foreach(index, wrapper; onProximityOutListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onProximityOutListeners[index] = null;
-					onProximityOutListeners = std.algorithm.remove(onProximityOutListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnProximityOutEventGenericDelegateWrapper
 		{
+			static OnProximityOutEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnProximityOutEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnProximityOutEventGenericDelegateWrapper[] onProximityOutEventGenericListeners;
 		
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -10057,53 +9959,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnProximityOut(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.PROXIMITY_OUT_MASK);
-			onProximityOutEventGenericListeners ~= new OnProximityOutEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onProximityOutEventGenericListeners[onProximityOutEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnProximityOutEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"proximity-out-event",
 				cast(GCallback)&callBackProximityOutEventGeneric,
-				cast(void*)onProximityOutEventGenericListeners[onProximityOutEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackProximityOutEventGenericDestroy,
 				connectFlags);
-			return onProximityOutEventGenericListeners[onProximityOutEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackProximityOutEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnProximityOutEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackProximityOutEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnProximityOutEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackProximityOutEventGenericDestroy(OnProximityOutEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnProximityOutEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnProximityOutEventGeneric(OnProximityOutEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onProximityOutEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onProximityOutEventGenericListeners[index] = null;
-					onProximityOutEventGenericListeners = std.algorithm.remove(onProximityOutEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnQueryTooltipDelegateWrapper
 		{
+			static OnQueryTooltipDelegateWrapper[] listeners;
 			bool delegate(int, int, bool, Tooltip, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(int, int, bool, Tooltip, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(int, int, bool, Tooltip, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnQueryTooltipDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnQueryTooltipDelegateWrapper[] onQueryTooltipListeners;
 
 		/**
 		 * Emitted when #GtkWidget:has-tooltip is %TRUE and the hover timeout
@@ -10133,54 +10034,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnQueryTooltip(bool delegate(int, int, bool, Tooltip, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onQueryTooltipListeners ~= new OnQueryTooltipDelegateWrapper(dlg, 0, connectFlags);
-			onQueryTooltipListeners[onQueryTooltipListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnQueryTooltipDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"query-tooltip",
 				cast(GCallback)&callBackQueryTooltip,
-				cast(void*)onQueryTooltipListeners[onQueryTooltipListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackQueryTooltipDestroy,
 				connectFlags);
-			return onQueryTooltipListeners[onQueryTooltipListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackQueryTooltip(GtkWidget* widgetStruct, int x, int y, bool keyboardMode, GtkTooltip* tooltip,OnQueryTooltipDelegateWrapper wrapper)
+		extern(C) static int callBackQueryTooltip(GtkWidget* widgetStruct, int x, int y, bool keyboardMode, GtkTooltip* tooltip, OnQueryTooltipDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(x, y, keyboardMode, ObjectG.getDObject!(Tooltip)(tooltip), wrapper.outer);
 		}
 		
 		extern(C) static void callBackQueryTooltipDestroy(OnQueryTooltipDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnQueryTooltip(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnQueryTooltip(OnQueryTooltipDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueryTooltipListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onQueryTooltipListeners[index] = null;
-					onQueryTooltipListeners = std.algorithm.remove(onQueryTooltipListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnRealizeDelegateWrapper
 		{
+			static OnRealizeDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnRealizeDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnRealizeDelegateWrapper[] onRealizeListeners;
 
 		/**
 		 * The ::realize signal is emitted when @widget is associated with a
@@ -10189,54 +10088,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnRealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onRealizeListeners ~= new OnRealizeDelegateWrapper(dlg, 0, connectFlags);
-			onRealizeListeners[onRealizeListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnRealizeDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"realize",
 				cast(GCallback)&callBackRealize,
-				cast(void*)onRealizeListeners[onRealizeListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackRealizeDestroy,
 				connectFlags);
-			return onRealizeListeners[onRealizeListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackRealize(GtkWidget* widgetStruct,OnRealizeDelegateWrapper wrapper)
+		extern(C) static void callBackRealize(GtkWidget* widgetStruct, OnRealizeDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackRealizeDestroy(OnRealizeDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnRealize(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnRealize(OnRealizeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRealizeListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onRealizeListeners[index] = null;
-					onRealizeListeners = std.algorithm.remove(onRealizeListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnScreenChangedDelegateWrapper
 		{
+			static OnScreenChangedDelegateWrapper[] listeners;
 			void delegate(Screen, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Screen, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Screen, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnScreenChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnScreenChangedDelegateWrapper[] onScreenChangedListeners;
 
 		/**
 		 * The ::screen-changed signal gets emitted when the
@@ -10248,54 +10145,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnScreenChanged(void delegate(Screen, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onScreenChangedListeners ~= new OnScreenChangedDelegateWrapper(dlg, 0, connectFlags);
-			onScreenChangedListeners[onScreenChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnScreenChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"screen-changed",
 				cast(GCallback)&callBackScreenChanged,
-				cast(void*)onScreenChangedListeners[onScreenChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackScreenChangedDestroy,
 				connectFlags);
-			return onScreenChangedListeners[onScreenChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen,OnScreenChangedDelegateWrapper wrapper)
+		extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen, OnScreenChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Screen)(previousScreen), wrapper.outer);
 		}
 		
 		extern(C) static void callBackScreenChangedDestroy(OnScreenChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnScreenChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnScreenChanged(OnScreenChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onScreenChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onScreenChangedListeners[index] = null;
-					onScreenChangedListeners = std.algorithm.remove(onScreenChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnScrollDelegateWrapper
 		{
+			static OnScrollDelegateWrapper[] listeners;
 			bool delegate(GdkEventScroll*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventScroll*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventScroll*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnScrollDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnScrollDelegateWrapper[] onScrollListeners;
 
 		/**
 		 * The ::scroll-event signal is emitted when a button in the 4 to 7
@@ -10317,54 +10212,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnScroll(bool delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.SCROLL_MASK);
-			onScrollListeners ~= new OnScrollDelegateWrapper(dlg, 0, connectFlags);
-			onScrollListeners[onScrollListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnScrollDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"scroll-event",
 				cast(GCallback)&callBackScroll,
-				cast(void*)onScrollListeners[onScrollListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackScrollDestroy,
 				connectFlags);
-			return onScrollListeners[onScrollListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event,OnScrollDelegateWrapper wrapper)
+		extern(C) static int callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, OnScrollDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackScrollDestroy(OnScrollDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnScroll(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnScroll(OnScrollDelegateWrapper source)
-		{
-			foreach(index, wrapper; onScrollListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onScrollListeners[index] = null;
-					onScrollListeners = std.algorithm.remove(onScrollListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnScrollEventGenericDelegateWrapper
 		{
+			static OnScrollEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnScrollEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnScrollEventGenericDelegateWrapper[] onScrollEventGenericListeners;
 		
 		/**
 		 * The ::scroll-event signal is emitted when a button in the 4 to 7
@@ -10386,53 +10279,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnScroll(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.SCROLL_MASK);
-			onScrollEventGenericListeners ~= new OnScrollEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onScrollEventGenericListeners[onScrollEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnScrollEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"scroll-event",
 				cast(GCallback)&callBackScrollEventGeneric,
-				cast(void*)onScrollEventGenericListeners[onScrollEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackScrollEventGenericDestroy,
 				connectFlags);
-			return onScrollEventGenericListeners[onScrollEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackScrollEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnScrollEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackScrollEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnScrollEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackScrollEventGenericDestroy(OnScrollEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnScrollEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnScrollEventGeneric(OnScrollEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onScrollEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onScrollEventGenericListeners[index] = null;
-					onScrollEventGenericListeners = std.algorithm.remove(onScrollEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionClearDelegateWrapper
 		{
+			static OnSelectionClearDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventSelection*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionClearDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionClearDelegateWrapper[] onSelectionClearListeners;
 
 		/**
 		 * The ::selection-clear-event signal will be emitted when the
@@ -10447,54 +10339,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnSelectionClear(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionClearListeners ~= new OnSelectionClearDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionClearListeners[onSelectionClearListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionClearDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-clear-event",
 				cast(GCallback)&callBackSelectionClear,
-				cast(void*)onSelectionClearListeners[onSelectionClearListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionClearDestroy,
 				connectFlags);
-			return onSelectionClearListeners[onSelectionClearListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event,OnSelectionClearDelegateWrapper wrapper)
+		extern(C) static int callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, OnSelectionClearDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionClearDestroy(OnSelectionClearDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionClear(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnSelectionClear(OnSelectionClearDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionClearListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionClearListeners[index] = null;
-					onSelectionClearListeners = std.algorithm.remove(onSelectionClearListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionClearEventGenericDelegateWrapper
 		{
+			static OnSelectionClearEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionClearEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionClearEventGenericDelegateWrapper[] onSelectionClearEventGenericListeners;
 		
 		/**
 		 * The ::selection-clear-event signal will be emitted when the
@@ -10509,264 +10399,256 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnSelectionClear(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionClearEventGenericListeners ~= new OnSelectionClearEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionClearEventGenericListeners[onSelectionClearEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionClearEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-clear-event",
 				cast(GCallback)&callBackSelectionClearEventGeneric,
-				cast(void*)onSelectionClearEventGenericListeners[onSelectionClearEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionClearEventGenericDestroy,
 				connectFlags);
-			return onSelectionClearEventGenericListeners[onSelectionClearEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackSelectionClearEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnSelectionClearEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackSelectionClearEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnSelectionClearEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionClearEventGenericDestroy(OnSelectionClearEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionClearEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnSelectionClearEventGeneric(OnSelectionClearEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionClearEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionClearEventGenericListeners[index] = null;
-					onSelectionClearEventGenericListeners = std.algorithm.remove(onSelectionClearEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionGetDelegateWrapper
 		{
+			static OnSelectionGetDelegateWrapper[] listeners;
 			void delegate(SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(SelectionData, uint, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionGetDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionGetDelegateWrapper[] onSelectionGetListeners;
 
 		/** */
 		gulong addOnSelectionGet(void delegate(SelectionData, uint, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionGetListeners ~= new OnSelectionGetDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionGetListeners[onSelectionGetListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionGetDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-get",
 				cast(GCallback)&callBackSelectionGet,
-				cast(void*)onSelectionGetListeners[onSelectionGetListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionGetDestroy,
 				connectFlags);
-			return onSelectionGetListeners[onSelectionGetListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, uint info, uint time,OnSelectionGetDelegateWrapper wrapper)
+		extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, uint info, uint time, OnSelectionGetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(SelectionData)(data), info, time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionGetDestroy(OnSelectionGetDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionGet(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnSelectionGet(OnSelectionGetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionGetListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionGetListeners[index] = null;
-					onSelectionGetListeners = std.algorithm.remove(onSelectionGetListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionNotifyDelegateWrapper
 		{
+			static OnSelectionNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventSelection*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionNotifyDelegateWrapper[] onSelectionNotifyListeners;
 
 		/**
 		 * Return: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionNotify(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionNotifyListeners ~= new OnSelectionNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionNotifyListeners[onSelectionNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-notify-event",
 				cast(GCallback)&callBackSelectionNotify,
-				cast(void*)onSelectionNotifyListeners[onSelectionNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionNotifyDestroy,
 				connectFlags);
-			return onSelectionNotifyListeners[onSelectionNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event,OnSelectionNotifyDelegateWrapper wrapper)
+		extern(C) static int callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, OnSelectionNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionNotifyDestroy(OnSelectionNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnSelectionNotify(OnSelectionNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionNotifyListeners[index] = null;
-					onSelectionNotifyListeners = std.algorithm.remove(onSelectionNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionNotifyEventGenericDelegateWrapper
 		{
+			static OnSelectionNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionNotifyEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionNotifyEventGenericDelegateWrapper[] onSelectionNotifyEventGenericListeners;
 		
 		/**
 		 * Return: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionNotifyEventGenericListeners ~= new OnSelectionNotifyEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionNotifyEventGenericListeners[onSelectionNotifyEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionNotifyEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-notify-event",
 				cast(GCallback)&callBackSelectionNotifyEventGeneric,
-				cast(void*)onSelectionNotifyEventGenericListeners[onSelectionNotifyEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionNotifyEventGenericDestroy,
 				connectFlags);
-			return onSelectionNotifyEventGenericListeners[onSelectionNotifyEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackSelectionNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnSelectionNotifyEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackSelectionNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnSelectionNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionNotifyEventGenericDestroy(OnSelectionNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionNotifyEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnSelectionNotifyEventGeneric(OnSelectionNotifyEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionNotifyEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionNotifyEventGenericListeners[index] = null;
-					onSelectionNotifyEventGenericListeners = std.algorithm.remove(onSelectionNotifyEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionReceivedDelegateWrapper
 		{
+			static OnSelectionReceivedDelegateWrapper[] listeners;
 			void delegate(SelectionData, uint, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(SelectionData, uint, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(SelectionData, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionReceivedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionReceivedDelegateWrapper[] onSelectionReceivedListeners;
 
 		/** */
 		gulong addOnSelectionReceived(void delegate(SelectionData, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionReceivedListeners ~= new OnSelectionReceivedDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionReceivedListeners[onSelectionReceivedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionReceivedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-received",
 				cast(GCallback)&callBackSelectionReceived,
-				cast(void*)onSelectionReceivedListeners[onSelectionReceivedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionReceivedDestroy,
 				connectFlags);
-			return onSelectionReceivedListeners[onSelectionReceivedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, uint time,OnSelectionReceivedDelegateWrapper wrapper)
+		extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, uint time, OnSelectionReceivedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(SelectionData)(data), time, wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionReceivedDestroy(OnSelectionReceivedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionReceived(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnSelectionReceived(OnSelectionReceivedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionReceivedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionReceivedListeners[index] = null;
-					onSelectionReceivedListeners = std.algorithm.remove(onSelectionReceivedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionRequestDelegateWrapper
 		{
+			static OnSelectionRequestDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventSelection*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionRequestDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionRequestDelegateWrapper[] onSelectionRequestListeners;
 
 		/**
 		 * The ::selection-request-event signal will be emitted when
@@ -10782,54 +10664,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnSelectionRequest(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionRequestListeners ~= new OnSelectionRequestDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionRequestListeners[onSelectionRequestListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionRequestDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-request-event",
 				cast(GCallback)&callBackSelectionRequest,
-				cast(void*)onSelectionRequestListeners[onSelectionRequestListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionRequestDestroy,
 				connectFlags);
-			return onSelectionRequestListeners[onSelectionRequestListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event,OnSelectionRequestDelegateWrapper wrapper)
+		extern(C) static int callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, OnSelectionRequestDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionRequestDestroy(OnSelectionRequestDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionRequest(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnSelectionRequest(OnSelectionRequestDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionRequestListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionRequestListeners[index] = null;
-					onSelectionRequestListeners = std.algorithm.remove(onSelectionRequestListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSelectionRequestEventGenericDelegateWrapper
 		{
+			static OnSelectionRequestEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSelectionRequestEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSelectionRequestEventGenericDelegateWrapper[] onSelectionRequestEventGenericListeners;
 		
 		/**
 		 * The ::selection-request-event signal will be emitted when
@@ -10845,53 +10725,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnSelectionRequest(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSelectionRequestEventGenericListeners ~= new OnSelectionRequestEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onSelectionRequestEventGenericListeners[onSelectionRequestEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSelectionRequestEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"selection-request-event",
 				cast(GCallback)&callBackSelectionRequestEventGeneric,
-				cast(void*)onSelectionRequestEventGenericListeners[onSelectionRequestEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSelectionRequestEventGenericDestroy,
 				connectFlags);
-			return onSelectionRequestEventGenericListeners[onSelectionRequestEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackSelectionRequestEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnSelectionRequestEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackSelectionRequestEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnSelectionRequestEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackSelectionRequestEventGenericDestroy(OnSelectionRequestEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSelectionRequestEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnSelectionRequestEventGeneric(OnSelectionRequestEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionRequestEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSelectionRequestEventGenericListeners[index] = null;
-					onSelectionRequestEventGenericListeners = std.algorithm.remove(onSelectionRequestEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnShowDelegateWrapper
 		{
+			static OnShowDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnShowDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnShowDelegateWrapper[] onShowListeners;
 
 		/**
 		 * The ::show signal is emitted when @widget is shown, for example with
@@ -10899,54 +10778,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnShow(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onShowListeners ~= new OnShowDelegateWrapper(dlg, 0, connectFlags);
-			onShowListeners[onShowListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnShowDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"show",
 				cast(GCallback)&callBackShow,
-				cast(void*)onShowListeners[onShowListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackShowDestroy,
 				connectFlags);
-			return onShowListeners[onShowListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackShow(GtkWidget* widgetStruct,OnShowDelegateWrapper wrapper)
+		extern(C) static void callBackShow(GtkWidget* widgetStruct, OnShowDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackShowDestroy(OnShowDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnShow(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnShow(OnShowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onShowListeners[index] = null;
-					onShowListeners = std.algorithm.remove(onShowListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnShowHelpDelegateWrapper
 		{
+			static OnShowHelpDelegateWrapper[] listeners;
 			bool delegate(GtkWidgetHelpType, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GtkWidgetHelpType, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GtkWidgetHelpType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnShowHelpDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnShowHelpDelegateWrapper[] onShowHelpListeners;
 
 		/**
 		 * Return: %TRUE to stop other handlers from being invoked for the event.
@@ -10954,106 +10831,102 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnShowHelp(bool delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onShowHelpListeners ~= new OnShowHelpDelegateWrapper(dlg, 0, connectFlags);
-			onShowHelpListeners[onShowHelpListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnShowHelpDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"show-help",
 				cast(GCallback)&callBackShowHelp,
-				cast(void*)onShowHelpListeners[onShowHelpListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackShowHelpDestroy,
 				connectFlags);
-			return onShowHelpListeners[onShowHelpListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType,OnShowHelpDelegateWrapper wrapper)
+		extern(C) static int callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType, OnShowHelpDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(helpType, wrapper.outer);
 		}
 		
 		extern(C) static void callBackShowHelpDestroy(OnShowHelpDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnShowHelp(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnShowHelp(OnShowHelpDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowHelpListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onShowHelpListeners[index] = null;
-					onShowHelpListeners = std.algorithm.remove(onShowHelpListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnSizeAllocateDelegateWrapper
 		{
+			static OnSizeAllocateDelegateWrapper[] listeners;
 			void delegate(Allocation, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Allocation, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Allocation, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnSizeAllocateDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnSizeAllocateDelegateWrapper[] onSizeAllocateListeners;
 
 		/** */
 		gulong addOnSizeAllocate(void delegate(Allocation, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onSizeAllocateListeners ~= new OnSizeAllocateDelegateWrapper(dlg, 0, connectFlags);
-			onSizeAllocateListeners[onSizeAllocateListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnSizeAllocateDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"size-allocate",
 				cast(GCallback)&callBackSizeAllocate,
-				cast(void*)onSizeAllocateListeners[onSizeAllocateListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackSizeAllocateDestroy,
 				connectFlags);
-			return onSizeAllocateListeners[onSizeAllocateListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, Allocation allocation,OnSizeAllocateDelegateWrapper wrapper)
+		extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, Allocation allocation, OnSizeAllocateDelegateWrapper wrapper)
 		{
 			wrapper.dlg(allocation, wrapper.outer);
 		}
 		
 		extern(C) static void callBackSizeAllocateDestroy(OnSizeAllocateDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnSizeAllocate(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnSizeAllocate(OnSizeAllocateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSizeAllocateListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onSizeAllocateListeners[index] = null;
-					onSizeAllocateListeners = std.algorithm.remove(onSizeAllocateListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnStateChangedDelegateWrapper
 		{
+			static OnStateChangedDelegateWrapper[] listeners;
 			void delegate(GtkStateType, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(GtkStateType, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(GtkStateType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnStateChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnStateChangedDelegateWrapper[] onStateChangedListeners;
 
 		/**
 		 * The ::state-changed signal is emitted when the widget state changes.
@@ -11066,54 +10939,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnStateChanged(void delegate(GtkStateType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onStateChangedListeners ~= new OnStateChangedDelegateWrapper(dlg, 0, connectFlags);
-			onStateChangedListeners[onStateChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnStateChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"state-changed",
 				cast(GCallback)&callBackStateChanged,
-				cast(void*)onStateChangedListeners[onStateChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackStateChangedDestroy,
 				connectFlags);
-			return onStateChangedListeners[onStateChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state,OnStateChangedDelegateWrapper wrapper)
+		extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, OnStateChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(state, wrapper.outer);
 		}
 		
 		extern(C) static void callBackStateChangedDestroy(OnStateChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnStateChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnStateChanged(OnStateChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStateChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onStateChangedListeners[index] = null;
-					onStateChangedListeners = std.algorithm.remove(onStateChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnStateFlagsChangedDelegateWrapper
 		{
+			static OnStateFlagsChangedDelegateWrapper[] listeners;
 			void delegate(GtkStateFlags, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(GtkStateFlags, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(GtkStateFlags, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnStateFlagsChangedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnStateFlagsChangedDelegateWrapper[] onStateFlagsChangedListeners;
 
 		/**
 		 * The ::state-flags-changed signal is emitted when the widget state
@@ -11126,54 +10997,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnStateFlagsChanged(void delegate(GtkStateFlags, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onStateFlagsChangedListeners ~= new OnStateFlagsChangedDelegateWrapper(dlg, 0, connectFlags);
-			onStateFlagsChangedListeners[onStateFlagsChangedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnStateFlagsChangedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"state-flags-changed",
 				cast(GCallback)&callBackStateFlagsChanged,
-				cast(void*)onStateFlagsChangedListeners[onStateFlagsChangedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackStateFlagsChangedDestroy,
 				connectFlags);
-			return onStateFlagsChangedListeners[onStateFlagsChangedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackStateFlagsChanged(GtkWidget* widgetStruct, GtkStateFlags flags,OnStateFlagsChangedDelegateWrapper wrapper)
+		extern(C) static void callBackStateFlagsChanged(GtkWidget* widgetStruct, GtkStateFlags flags, OnStateFlagsChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(flags, wrapper.outer);
 		}
 		
 		extern(C) static void callBackStateFlagsChangedDestroy(OnStateFlagsChangedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnStateFlagsChanged(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnStateFlagsChanged(OnStateFlagsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStateFlagsChangedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onStateFlagsChangedListeners[index] = null;
-					onStateFlagsChangedListeners = std.algorithm.remove(onStateFlagsChangedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnStyleSetDelegateWrapper
 		{
+			static OnStyleSetDelegateWrapper[] listeners;
 			void delegate(Style, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Style, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Style, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnStyleSetDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnStyleSetDelegateWrapper[] onStyleSetListeners;
 
 		/**
 		 * The ::style-set signal is emitted when a new style has been set
@@ -11192,54 +11061,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnStyleSet(void delegate(Style, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onStyleSetListeners ~= new OnStyleSetDelegateWrapper(dlg, 0, connectFlags);
-			onStyleSetListeners[onStyleSetListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnStyleSetDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"style-set",
 				cast(GCallback)&callBackStyleSet,
-				cast(void*)onStyleSetListeners[onStyleSetListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackStyleSetDestroy,
 				connectFlags);
-			return onStyleSetListeners[onStyleSetListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle,OnStyleSetDelegateWrapper wrapper)
+		extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, OnStyleSetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Style)(previousStyle), wrapper.outer);
 		}
 		
 		extern(C) static void callBackStyleSetDestroy(OnStyleSetDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnStyleSet(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnStyleSet(OnStyleSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStyleSetListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onStyleSetListeners[index] = null;
-					onStyleSetListeners = std.algorithm.remove(onStyleSetListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnStyleUpdatedDelegateWrapper
 		{
+			static OnStyleUpdatedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnStyleUpdatedDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnStyleUpdatedDelegateWrapper[] onStyleUpdatedListeners;
 
 		/**
 		 * The ::style-updated signal is a convenience signal that is emitted when the
@@ -11253,106 +11120,102 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnStyleUpdated(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onStyleUpdatedListeners ~= new OnStyleUpdatedDelegateWrapper(dlg, 0, connectFlags);
-			onStyleUpdatedListeners[onStyleUpdatedListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnStyleUpdatedDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"style-updated",
 				cast(GCallback)&callBackStyleUpdated,
-				cast(void*)onStyleUpdatedListeners[onStyleUpdatedListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackStyleUpdatedDestroy,
 				connectFlags);
-			return onStyleUpdatedListeners[onStyleUpdatedListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackStyleUpdated(GtkWidget* widgetStruct,OnStyleUpdatedDelegateWrapper wrapper)
+		extern(C) static void callBackStyleUpdated(GtkWidget* widgetStruct, OnStyleUpdatedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackStyleUpdatedDestroy(OnStyleUpdatedDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnStyleUpdated(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnStyleUpdated(OnStyleUpdatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStyleUpdatedListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onStyleUpdatedListeners[index] = null;
-					onStyleUpdatedListeners = std.algorithm.remove(onStyleUpdatedListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnTouchDelegateWrapper
 		{
+			static OnTouchDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnTouchDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnTouchDelegateWrapper[] onTouchListeners;
 
 		/** */
 		gulong addOnTouch(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onTouchListeners ~= new OnTouchDelegateWrapper(dlg, 0, connectFlags);
-			onTouchListeners[onTouchListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnTouchDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"touch-event",
 				cast(GCallback)&callBackTouch,
-				cast(void*)onTouchListeners[onTouchListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackTouchDestroy,
 				connectFlags);
-			return onTouchListeners[onTouchListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackTouch(GtkWidget* widgetStruct, GdkEvent* object,OnTouchDelegateWrapper wrapper)
+		extern(C) static int callBackTouch(GtkWidget* widgetStruct, GdkEvent* object, OnTouchDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(object), wrapper.outer);
 		}
 		
 		extern(C) static void callBackTouchDestroy(OnTouchDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnTouch(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnTouch(OnTouchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTouchListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onTouchListeners[index] = null;
-					onTouchListeners = std.algorithm.remove(onTouchListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnUnmapDelegateWrapper
 		{
+			static OnUnmapDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnUnmapDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnUnmapDelegateWrapper[] onUnmapListeners;
 
 		/**
 		 * The ::unmap signal is emitted when @widget is going to be unmapped, which
@@ -11364,54 +11227,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnUnmap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onUnmapListeners ~= new OnUnmapDelegateWrapper(dlg, 0, connectFlags);
-			onUnmapListeners[onUnmapListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnUnmapDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"unmap",
 				cast(GCallback)&callBackUnmap,
-				cast(void*)onUnmapListeners[onUnmapListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackUnmapDestroy,
 				connectFlags);
-			return onUnmapListeners[onUnmapListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackUnmap(GtkWidget* widgetStruct,OnUnmapDelegateWrapper wrapper)
+		extern(C) static void callBackUnmap(GtkWidget* widgetStruct, OnUnmapDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackUnmapDestroy(OnUnmapDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnUnmap(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnUnmap(OnUnmapDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnmapListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onUnmapListeners[index] = null;
-					onUnmapListeners = std.algorithm.remove(onUnmapListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnUnmapEventDelegateWrapper
 		{
+			static OnUnmapEventDelegateWrapper[] listeners;
 			bool delegate(GdkEventAny*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventAny*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventAny*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnUnmapEventDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnUnmapEventDelegateWrapper[] onUnmapEventListeners;
 
 		/**
 		 * The ::unmap-event signal will be emitted when the @widget's window is
@@ -11429,54 +11290,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnUnmapEvent(bool delegate(GdkEventAny*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onUnmapEventListeners ~= new OnUnmapEventDelegateWrapper(dlg, 0, connectFlags);
-			onUnmapEventListeners[onUnmapEventListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnUnmapEventDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"unmap-event",
 				cast(GCallback)&callBackUnmapEvent,
-				cast(void*)onUnmapEventListeners[onUnmapEventListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackUnmapEventDestroy,
 				connectFlags);
-			return onUnmapEventListeners[onUnmapEventListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackUnmapEvent(GtkWidget* widgetStruct, GdkEventAny* event,OnUnmapEventDelegateWrapper wrapper)
+		extern(C) static int callBackUnmapEvent(GtkWidget* widgetStruct, GdkEventAny* event, OnUnmapEventDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackUnmapEventDestroy(OnUnmapEventDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnUnmapEvent(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnUnmapEvent(OnUnmapEventDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnmapEventListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onUnmapEventListeners[index] = null;
-					onUnmapEventListeners = std.algorithm.remove(onUnmapEventListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnUnmapEventGenericDelegateWrapper
 		{
+			static OnUnmapEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnUnmapEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnUnmapEventGenericDelegateWrapper[] onUnmapEventGenericListeners;
 		
 		/**
 		 * The ::unmap-event signal will be emitted when the @widget's window is
@@ -11494,53 +11353,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnUnmapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onUnmapEventGenericListeners ~= new OnUnmapEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onUnmapEventGenericListeners[onUnmapEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnUnmapEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"unmap-event",
 				cast(GCallback)&callBackUnmapEventGeneric,
-				cast(void*)onUnmapEventGenericListeners[onUnmapEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackUnmapEventGenericDestroy,
 				connectFlags);
-			return onUnmapEventGenericListeners[onUnmapEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackUnmapEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnUnmapEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackUnmapEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnUnmapEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackUnmapEventGenericDestroy(OnUnmapEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnUnmapEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnUnmapEventGeneric(OnUnmapEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnmapEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onUnmapEventGenericListeners[index] = null;
-					onUnmapEventGenericListeners = std.algorithm.remove(onUnmapEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnUnrealizeDelegateWrapper
 		{
+			static OnUnrealizeDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(void delegate(Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnUnrealizeDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnUnrealizeDelegateWrapper[] onUnrealizeListeners;
 
 		/**
 		 * The ::unrealize signal is emitted when the #GdkWindow associated with
@@ -11550,54 +11408,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnUnrealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onUnrealizeListeners ~= new OnUnrealizeDelegateWrapper(dlg, 0, connectFlags);
-			onUnrealizeListeners[onUnrealizeListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnUnrealizeDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"unrealize",
 				cast(GCallback)&callBackUnrealize,
-				cast(void*)onUnrealizeListeners[onUnrealizeListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackUnrealizeDestroy,
 				connectFlags);
-			return onUnrealizeListeners[onUnrealizeListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static void callBackUnrealize(GtkWidget* widgetStruct,OnUnrealizeDelegateWrapper wrapper)
+		extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, OnUnrealizeDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
 		
 		extern(C) static void callBackUnrealizeDestroy(OnUnrealizeDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnUnrealize(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnUnrealize(OnUnrealizeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnrealizeListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onUnrealizeListeners[index] = null;
-					onUnrealizeListeners = std.algorithm.remove(onUnrealizeListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnVisibilityNotifyDelegateWrapper
 		{
+			static OnVisibilityNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventVisibility*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventVisibility*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventVisibility*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnVisibilityNotifyDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnVisibilityNotifyDelegateWrapper[] onVisibilityNotifyListeners;
 
 		/**
 		 * The ::visibility-notify-event will be emitted when the @widget's
@@ -11621,54 +11477,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnVisibilityNotify(bool delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.VISIBILITY_NOTIFY_MASK);
-			onVisibilityNotifyListeners ~= new OnVisibilityNotifyDelegateWrapper(dlg, 0, connectFlags);
-			onVisibilityNotifyListeners[onVisibilityNotifyListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnVisibilityNotifyDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"visibility-notify-event",
 				cast(GCallback)&callBackVisibilityNotify,
-				cast(void*)onVisibilityNotifyListeners[onVisibilityNotifyListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackVisibilityNotifyDestroy,
 				connectFlags);
-			return onVisibilityNotifyListeners[onVisibilityNotifyListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event,OnVisibilityNotifyDelegateWrapper wrapper)
+		extern(C) static int callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, OnVisibilityNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackVisibilityNotifyDestroy(OnVisibilityNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnVisibilityNotify(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnVisibilityNotify(OnVisibilityNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onVisibilityNotifyListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onVisibilityNotifyListeners[index] = null;
-					onVisibilityNotifyListeners = std.algorithm.remove(onVisibilityNotifyListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnVisibilityNotifyEventGenericDelegateWrapper
 		{
+			static OnVisibilityNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnVisibilityNotifyEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnVisibilityNotifyEventGenericDelegateWrapper[] onVisibilityNotifyEventGenericListeners;
 		
 		/**
 		 * The ::visibility-notify-event will be emitted when the @widget's
@@ -11692,53 +11546,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gulong addOnVisibilityNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			addEvents(EventMask.VISIBILITY_NOTIFY_MASK);
-			onVisibilityNotifyEventGenericListeners ~= new OnVisibilityNotifyEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onVisibilityNotifyEventGenericListeners[onVisibilityNotifyEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnVisibilityNotifyEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"visibility-notify-event",
 				cast(GCallback)&callBackVisibilityNotifyEventGeneric,
-				cast(void*)onVisibilityNotifyEventGenericListeners[onVisibilityNotifyEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackVisibilityNotifyEventGenericDestroy,
 				connectFlags);
-			return onVisibilityNotifyEventGenericListeners[onVisibilityNotifyEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackVisibilityNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnVisibilityNotifyEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackVisibilityNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnVisibilityNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackVisibilityNotifyEventGenericDestroy(OnVisibilityNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnVisibilityNotifyEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnVisibilityNotifyEventGeneric(OnVisibilityNotifyEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onVisibilityNotifyEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onVisibilityNotifyEventGenericListeners[index] = null;
-					onVisibilityNotifyEventGenericListeners = std.algorithm.remove(onVisibilityNotifyEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnWindowStateDelegateWrapper
 		{
+			static OnWindowStateDelegateWrapper[] listeners;
 			bool delegate(GdkEventWindowState*, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(GdkEventWindowState*, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(GdkEventWindowState*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnWindowStateDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnWindowStateDelegateWrapper[] onWindowStateListeners;
 
 		/**
 		 * The ::window-state-event will be emitted when the state of the
@@ -11757,54 +11610,52 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnWindowState(bool delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onWindowStateListeners ~= new OnWindowStateDelegateWrapper(dlg, 0, connectFlags);
-			onWindowStateListeners[onWindowStateListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnWindowStateDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"window-state-event",
 				cast(GCallback)&callBackWindowState,
-				cast(void*)onWindowStateListeners[onWindowStateListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackWindowStateDestroy,
 				connectFlags);
-			return onWindowStateListeners[onWindowStateListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event,OnWindowStateDelegateWrapper wrapper)
+		extern(C) static int callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, OnWindowStateDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
 		
 		extern(C) static void callBackWindowStateDestroy(OnWindowStateDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnWindowState(wrapper);
+			wrapper.remove(wrapper);
 		}
-
-		protected void internalRemoveOnWindowState(OnWindowStateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onWindowStateListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onWindowStateListeners[index] = null;
-					onWindowStateListeners = std.algorithm.remove(onWindowStateListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		protected class OnWindowStateEventGenericDelegateWrapper
 		{
+			static OnWindowStateEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			ConnectFlags flags;
-			this(bool delegate(Event, Widget) dlg, gulong handlerId, ConnectFlags flags)
+			
+			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.handlerId = handlerId;
-				this.flags = flags;
+				this.listeners ~= this;
+			}
+			
+			void remove(OnWindowStateEventGenericDelegateWrapper source)
+			{
+				foreach(index, wrapper; listeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						listeners[index] = null;
+						listeners = std.algorithm.remove(listeners, index);
+						break;
+					}
+				}
 			}
 		}
-		protected OnWindowStateEventGenericDelegateWrapper[] onWindowStateEventGenericListeners;
 		
 		/**
 		 * The ::window-state-event will be emitted when the state of the
@@ -11823,39 +11674,26 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnWindowState(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			onWindowStateEventGenericListeners ~= new OnWindowStateEventGenericDelegateWrapper(dlg, 0, connectFlags);
-			onWindowStateEventGenericListeners[onWindowStateEventGenericListeners.length - 1].handlerId = Signals.connectData(
+			auto wrapper = new OnWindowStateEventGenericDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
 				this,
 				"window-state-event",
 				cast(GCallback)&callBackWindowStateEventGeneric,
-				cast(void*)onWindowStateEventGenericListeners[onWindowStateEventGenericListeners.length - 1],
+				cast(void*)wrapper,
 				cast(GClosureNotify)&callBackWindowStateEventGenericDestroy,
 				connectFlags);
-			return onWindowStateEventGenericListeners[onWindowStateEventGenericListeners.length - 1].handlerId;
+			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackWindowStateEventGeneric(GtkWidget* widgetStruct, GdkEvent* event,OnWindowStateEventGenericDelegateWrapper wrapper)
+		extern(C) static int callBackWindowStateEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnWindowStateEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
 		
 		extern(C) static void callBackWindowStateEventGenericDestroy(OnWindowStateEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
-			wrapper.outer.internalRemoveOnWindowStateEventGeneric(wrapper);
+			wrapper.remove(wrapper);
 		}
-		protected void internalRemoveOnWindowStateEventGeneric(OnWindowStateEventGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onWindowStateEventGenericListeners)
-			{
-				if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-				{
-					onWindowStateEventGenericListeners[index] = null;
-					onWindowStateEventGenericListeners = std.algorithm.remove(onWindowStateEventGenericListeners, index);
-					break;
-				}
-			}
-		}
-		
 
 		/**
 		 * This function is supposed to be called in #GtkWidget::draw

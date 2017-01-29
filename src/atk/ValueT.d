@@ -383,17 +383,29 @@ public template ValueT(TStruct)
 
 	protected class OnValueChangedDelegateWrapper
 	{
+		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(double, string, ValueIF) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(double, string, ValueIF) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(double, string, ValueIF) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnValueChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * The 'value-changed' signal is emitted when the current value
@@ -418,38 +430,24 @@ public template ValueT(TStruct)
 	 */
 	gulong addOnValueChanged(void delegate(double, string, ValueIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onValueChangedListeners ~= new OnValueChangedDelegateWrapper(dlg, 0, connectFlags);
-		onValueChangedListeners[onValueChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnValueChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"value-changed",
 			cast(GCallback)&callBackValueChanged,
-			cast(void*)onValueChangedListeners[onValueChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackValueChangedDestroy,
 			connectFlags);
-		return onValueChangedListeners[onValueChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackValueChanged(AtkValue* valueStruct, double value, char* text,OnValueChangedDelegateWrapper wrapper)
+	extern(C) static void callBackValueChanged(AtkValue* valueStruct, double value, char* text, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(value, Str.toString(text), wrapper.outer);
 	}
 	
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnValueChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnValueChanged(OnValueChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onValueChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onValueChangedListeners[index] = null;
-				onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

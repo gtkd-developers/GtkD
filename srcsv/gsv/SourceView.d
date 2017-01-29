@@ -631,17 +631,29 @@ public class SourceView : TextView
 
 	protected class OnChangeCaseDelegateWrapper
 	{
+		static OnChangeCaseDelegateWrapper[] listeners;
 		void delegate(GtkSourceChangeCaseType, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkSourceChangeCaseType, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkSourceChangeCaseType, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangeCaseDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangeCaseDelegateWrapper[] onChangeCaseListeners;
 
 	/**
 	 * Keybinding signal to change case of the text at the current cursor position.
@@ -653,54 +665,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnChangeCase(void delegate(GtkSourceChangeCaseType, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangeCaseListeners ~= new OnChangeCaseDelegateWrapper(dlg, 0, connectFlags);
-		onChangeCaseListeners[onChangeCaseListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangeCaseDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"change-case",
 			cast(GCallback)&callBackChangeCase,
-			cast(void*)onChangeCaseListeners[onChangeCaseListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangeCaseDestroy,
 			connectFlags);
-		return onChangeCaseListeners[onChangeCaseListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChangeCase(GtkSourceView* sourceviewStruct, GtkSourceChangeCaseType caseType,OnChangeCaseDelegateWrapper wrapper)
+	extern(C) static void callBackChangeCase(GtkSourceView* sourceviewStruct, GtkSourceChangeCaseType caseType, OnChangeCaseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(caseType, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangeCaseDestroy(OnChangeCaseDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChangeCase(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChangeCase(OnChangeCaseDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangeCaseListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangeCaseListeners[index] = null;
-				onChangeCaseListeners = std.algorithm.remove(onChangeCaseListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnChangeNumberDelegateWrapper
 	{
+		static OnChangeNumberDelegateWrapper[] listeners;
 		void delegate(int, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangeNumberDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangeNumberDelegateWrapper[] onChangeNumberListeners;
 
 	/**
 	 * Keybinding signal to edit a number at the current cursor position.
@@ -712,54 +722,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnChangeNumber(void delegate(int, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangeNumberListeners ~= new OnChangeNumberDelegateWrapper(dlg, 0, connectFlags);
-		onChangeNumberListeners[onChangeNumberListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangeNumberDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"change-number",
 			cast(GCallback)&callBackChangeNumber,
-			cast(void*)onChangeNumberListeners[onChangeNumberListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangeNumberDestroy,
 			connectFlags);
-		return onChangeNumberListeners[onChangeNumberListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChangeNumber(GtkSourceView* sourceviewStruct, int count,OnChangeNumberDelegateWrapper wrapper)
+	extern(C) static void callBackChangeNumber(GtkSourceView* sourceviewStruct, int count, OnChangeNumberDelegateWrapper wrapper)
 	{
 		wrapper.dlg(count, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangeNumberDestroy(OnChangeNumberDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChangeNumber(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChangeNumber(OnChangeNumberDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangeNumberListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangeNumberListeners[index] = null;
-				onChangeNumberListeners = std.algorithm.remove(onChangeNumberListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnJoinLinesDelegateWrapper
 	{
+		static OnJoinLinesDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnJoinLinesDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnJoinLinesDelegateWrapper[] onJoinLinesListeners;
 
 	/**
 	 * Keybinding signal to join the lines currently selected.
@@ -768,54 +776,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnJoinLines(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onJoinLinesListeners ~= new OnJoinLinesDelegateWrapper(dlg, 0, connectFlags);
-		onJoinLinesListeners[onJoinLinesListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnJoinLinesDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"join-lines",
 			cast(GCallback)&callBackJoinLines,
-			cast(void*)onJoinLinesListeners[onJoinLinesListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackJoinLinesDestroy,
 			connectFlags);
-		return onJoinLinesListeners[onJoinLinesListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackJoinLines(GtkSourceView* sourceviewStruct,OnJoinLinesDelegateWrapper wrapper)
+	extern(C) static void callBackJoinLines(GtkSourceView* sourceviewStruct, OnJoinLinesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackJoinLinesDestroy(OnJoinLinesDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnJoinLines(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnJoinLines(OnJoinLinesDelegateWrapper source)
-	{
-		foreach(index, wrapper; onJoinLinesListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onJoinLinesListeners[index] = null;
-				onJoinLinesListeners = std.algorithm.remove(onJoinLinesListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnLineMarkActivatedDelegateWrapper
 	{
+		static OnLineMarkActivatedDelegateWrapper[] listeners;
 		void delegate(TextIter, Event, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(TextIter, Event, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(TextIter, Event, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnLineMarkActivatedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnLineMarkActivatedDelegateWrapper[] onLineMarkActivatedListeners;
 
 	/**
 	 * Emitted when a line mark has been activated (for instance when there
@@ -828,54 +834,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnLineMarkActivated(void delegate(TextIter, Event, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onLineMarkActivatedListeners ~= new OnLineMarkActivatedDelegateWrapper(dlg, 0, connectFlags);
-		onLineMarkActivatedListeners[onLineMarkActivatedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnLineMarkActivatedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"line-mark-activated",
 			cast(GCallback)&callBackLineMarkActivated,
-			cast(void*)onLineMarkActivatedListeners[onLineMarkActivatedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackLineMarkActivatedDestroy,
 			connectFlags);
-		return onLineMarkActivatedListeners[onLineMarkActivatedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackLineMarkActivated(GtkSourceView* sourceviewStruct, GtkTextIter* iter, GdkEvent* event,OnLineMarkActivatedDelegateWrapper wrapper)
+	extern(C) static void callBackLineMarkActivated(GtkSourceView* sourceviewStruct, GtkTextIter* iter, GdkEvent* event, OnLineMarkActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
 	
 	extern(C) static void callBackLineMarkActivatedDestroy(OnLineMarkActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnLineMarkActivated(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnLineMarkActivated(OnLineMarkActivatedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onLineMarkActivatedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onLineMarkActivatedListeners[index] = null;
-				onLineMarkActivatedListeners = std.algorithm.remove(onLineMarkActivatedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveLinesDelegateWrapper
 	{
+		static OnMoveLinesDelegateWrapper[] listeners;
 		void delegate(bool, int, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, int, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveLinesDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveLinesDelegateWrapper[] onMoveLinesListeners;
 
 	/**
 	 * The ::move-lines signal is a keybinding which gets emitted
@@ -893,54 +897,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnMoveLines(void delegate(bool, int, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveLinesListeners ~= new OnMoveLinesDelegateWrapper(dlg, 0, connectFlags);
-		onMoveLinesListeners[onMoveLinesListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveLinesDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move-lines",
 			cast(GCallback)&callBackMoveLines,
-			cast(void*)onMoveLinesListeners[onMoveLinesListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveLinesDestroy,
 			connectFlags);
-		return onMoveLinesListeners[onMoveLinesListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, bool copy, int count,OnMoveLinesDelegateWrapper wrapper)
+	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, bool copy, int count, OnMoveLinesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(copy, count, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveLinesDestroy(OnMoveLinesDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMoveLines(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMoveLines(OnMoveLinesDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveLinesListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveLinesListeners[index] = null;
-				onMoveLinesListeners = std.algorithm.remove(onMoveLinesListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveToMatchingBracketDelegateWrapper
 	{
+		static OnMoveToMatchingBracketDelegateWrapper[] listeners;
 		void delegate(bool, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(bool, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(bool, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveToMatchingBracketDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveToMatchingBracketDelegateWrapper[] onMoveToMatchingBracketListeners;
 
 	/**
 	 * Keybinding signal to move the cursor to the matching bracket.
@@ -952,54 +954,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnMoveToMatchingBracket(void delegate(bool, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveToMatchingBracketListeners ~= new OnMoveToMatchingBracketDelegateWrapper(dlg, 0, connectFlags);
-		onMoveToMatchingBracketListeners[onMoveToMatchingBracketListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveToMatchingBracketDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move-to-matching-bracket",
 			cast(GCallback)&callBackMoveToMatchingBracket,
-			cast(void*)onMoveToMatchingBracketListeners[onMoveToMatchingBracketListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveToMatchingBracketDestroy,
 			connectFlags);
-		return onMoveToMatchingBracketListeners[onMoveToMatchingBracketListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMoveToMatchingBracket(GtkSourceView* sourceviewStruct, bool extendSelection,OnMoveToMatchingBracketDelegateWrapper wrapper)
+	extern(C) static void callBackMoveToMatchingBracket(GtkSourceView* sourceviewStruct, bool extendSelection, OnMoveToMatchingBracketDelegateWrapper wrapper)
 	{
 		wrapper.dlg(extendSelection, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveToMatchingBracketDestroy(OnMoveToMatchingBracketDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMoveToMatchingBracket(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMoveToMatchingBracket(OnMoveToMatchingBracketDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveToMatchingBracketListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveToMatchingBracketListeners[index] = null;
-				onMoveToMatchingBracketListeners = std.algorithm.remove(onMoveToMatchingBracketListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveWordsDelegateWrapper
 	{
+		static OnMoveWordsDelegateWrapper[] listeners;
 		void delegate(int, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(int, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveWordsDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveWordsDelegateWrapper[] onMoveWordsListeners;
 
 	/**
 	 * The ::move-words signal is a keybinding which gets emitted
@@ -1014,106 +1014,102 @@ public class SourceView : TextView
 	 */
 	gulong addOnMoveWords(void delegate(int, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveWordsListeners ~= new OnMoveWordsDelegateWrapper(dlg, 0, connectFlags);
-		onMoveWordsListeners[onMoveWordsListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveWordsDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move-words",
 			cast(GCallback)&callBackMoveWords,
-			cast(void*)onMoveWordsListeners[onMoveWordsListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveWordsDestroy,
 			connectFlags);
-		return onMoveWordsListeners[onMoveWordsListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMoveWords(GtkSourceView* sourceviewStruct, int count,OnMoveWordsDelegateWrapper wrapper)
+	extern(C) static void callBackMoveWords(GtkSourceView* sourceviewStruct, int count, OnMoveWordsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(count, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveWordsDestroy(OnMoveWordsDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMoveWords(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMoveWords(OnMoveWordsDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveWordsListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveWordsListeners[index] = null;
-				onMoveWordsListeners = std.algorithm.remove(onMoveWordsListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnRedoDelegateWrapper
 	{
+		static OnRedoDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnRedoDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnRedoDelegateWrapper[] onRedoListeners;
 
 	/** */
 	gulong addOnRedo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onRedoListeners ~= new OnRedoDelegateWrapper(dlg, 0, connectFlags);
-		onRedoListeners[onRedoListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnRedoDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"redo",
 			cast(GCallback)&callBackRedo,
-			cast(void*)onRedoListeners[onRedoListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackRedoDestroy,
 			connectFlags);
-		return onRedoListeners[onRedoListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct,OnRedoDelegateWrapper wrapper)
+	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, OnRedoDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackRedoDestroy(OnRedoDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnRedo(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnRedo(OnRedoDelegateWrapper source)
-	{
-		foreach(index, wrapper; onRedoListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onRedoListeners[index] = null;
-				onRedoListeners = std.algorithm.remove(onRedoListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnShowCompletionDelegateWrapper
 	{
+		static OnShowCompletionDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnShowCompletionDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnShowCompletionDelegateWrapper[] onShowCompletionListeners;
 
 	/**
 	 * The ::show-completion signal is a key binding signal which gets
@@ -1129,54 +1125,52 @@ public class SourceView : TextView
 	 */
 	gulong addOnShowCompletion(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onShowCompletionListeners ~= new OnShowCompletionDelegateWrapper(dlg, 0, connectFlags);
-		onShowCompletionListeners[onShowCompletionListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnShowCompletionDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"show-completion",
 			cast(GCallback)&callBackShowCompletion,
-			cast(void*)onShowCompletionListeners[onShowCompletionListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackShowCompletionDestroy,
 			connectFlags);
-		return onShowCompletionListeners[onShowCompletionListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackShowCompletion(GtkSourceView* sourceviewStruct,OnShowCompletionDelegateWrapper wrapper)
+	extern(C) static void callBackShowCompletion(GtkSourceView* sourceviewStruct, OnShowCompletionDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackShowCompletionDestroy(OnShowCompletionDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnShowCompletion(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnShowCompletion(OnShowCompletionDelegateWrapper source)
-	{
-		foreach(index, wrapper; onShowCompletionListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onShowCompletionListeners[index] = null;
-				onShowCompletionListeners = std.algorithm.remove(onShowCompletionListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSmartHomeEndDelegateWrapper
 	{
+		static OnSmartHomeEndDelegateWrapper[] listeners;
 		void delegate(TextIter, int, SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(TextIter, int, SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(TextIter, int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSmartHomeEndDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSmartHomeEndDelegateWrapper[] onSmartHomeEndListeners;
 
 	/**
 	 * Emitted when a the cursor was moved according to the smart home
@@ -1193,90 +1187,74 @@ public class SourceView : TextView
 	 */
 	gulong addOnSmartHomeEnd(void delegate(TextIter, int, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSmartHomeEndListeners ~= new OnSmartHomeEndDelegateWrapper(dlg, 0, connectFlags);
-		onSmartHomeEndListeners[onSmartHomeEndListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSmartHomeEndDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"smart-home-end",
 			cast(GCallback)&callBackSmartHomeEnd,
-			cast(void*)onSmartHomeEndListeners[onSmartHomeEndListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSmartHomeEndDestroy,
 			connectFlags);
-		return onSmartHomeEndListeners[onSmartHomeEndListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSmartHomeEnd(GtkSourceView* sourceviewStruct, GtkTextIter* iter, int count,OnSmartHomeEndDelegateWrapper wrapper)
+	extern(C) static void callBackSmartHomeEnd(GtkSourceView* sourceviewStruct, GtkTextIter* iter, int count, OnSmartHomeEndDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), count, wrapper.outer);
 	}
 	
 	extern(C) static void callBackSmartHomeEndDestroy(OnSmartHomeEndDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSmartHomeEnd(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSmartHomeEnd(OnSmartHomeEndDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSmartHomeEndListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSmartHomeEndListeners[index] = null;
-				onSmartHomeEndListeners = std.algorithm.remove(onSmartHomeEndListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnUndoDelegateWrapper
 	{
+		static OnUndoDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(SourceView) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnUndoDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnUndoDelegateWrapper[] onUndoListeners;
 
 	/** */
 	gulong addOnUndo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onUndoListeners ~= new OnUndoDelegateWrapper(dlg, 0, connectFlags);
-		onUndoListeners[onUndoListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnUndoDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"undo",
 			cast(GCallback)&callBackUndo,
-			cast(void*)onUndoListeners[onUndoListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackUndoDestroy,
 			connectFlags);
-		return onUndoListeners[onUndoListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct,OnUndoDelegateWrapper wrapper)
+	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, OnUndoDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackUndoDestroy(OnUndoDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnUndo(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnUndo(OnUndoDelegateWrapper source)
-	{
-		foreach(index, wrapper; onUndoListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onUndoListeners[index] = null;
-				onUndoListeners = std.algorithm.remove(onUndoListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

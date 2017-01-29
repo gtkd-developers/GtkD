@@ -336,18 +336,16 @@ public interface VolumeIF{
 	 * Return: %TRUE if the volume should be automatically mounted
 	 */
 	public bool shouldAutomount();
+
 	/**
 	 * Emitted when the volume has been changed.
 	 */
-	gulong addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnChanged(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * This signal is emitted when the #GVolume have been removed. If
 	 * the recipient is holding references to the object they should
 	 * release them so the object can be finalized.
 	 */
-	gulong addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnRemoved(void delegate(VolumeIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

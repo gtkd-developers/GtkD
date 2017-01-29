@@ -222,17 +222,29 @@ public class DBusServer : ObjectG, InitableIF
 
 	protected class OnNewConnectionDelegateWrapper
 	{
+		static OnNewConnectionDelegateWrapper[] listeners;
 		bool delegate(DBusConnection, DBusServer) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(DBusConnection, DBusServer) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(DBusConnection, DBusServer) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnNewConnectionDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnNewConnectionDelegateWrapper[] onNewConnectionListeners;
 
 	/**
 	 * Emitted when a new authenticated connection has been made. Use
@@ -267,38 +279,24 @@ public class DBusServer : ObjectG, InitableIF
 	 */
 	gulong addOnNewConnection(bool delegate(DBusConnection, DBusServer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onNewConnectionListeners ~= new OnNewConnectionDelegateWrapper(dlg, 0, connectFlags);
-		onNewConnectionListeners[onNewConnectionListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnNewConnectionDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"new-connection",
 			cast(GCallback)&callBackNewConnection,
-			cast(void*)onNewConnectionListeners[onNewConnectionListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackNewConnectionDestroy,
 			connectFlags);
-		return onNewConnectionListeners[onNewConnectionListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackNewConnection(GDBusServer* dbusserverStruct, GDBusConnection* connection,OnNewConnectionDelegateWrapper wrapper)
+	extern(C) static int callBackNewConnection(GDBusServer* dbusserverStruct, GDBusConnection* connection, OnNewConnectionDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(DBusConnection)(connection), wrapper.outer);
 	}
 	
 	extern(C) static void callBackNewConnectionDestroy(OnNewConnectionDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnNewConnection(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnNewConnection(OnNewConnectionDelegateWrapper source)
-	{
-		foreach(index, wrapper; onNewConnectionListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onNewConnectionListeners[index] = null;
-				onNewConnectionListeners = std.algorithm.remove(onNewConnectionListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

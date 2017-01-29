@@ -551,17 +551,29 @@ public class Gesture : EventController
 
 	protected class OnBeginDelegateWrapper
 	{
+		static OnBeginDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GdkEventSequence*, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnBeginDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnBeginDelegateWrapper[] onBeginListeners;
 
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
@@ -579,54 +591,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnBegin(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onBeginListeners ~= new OnBeginDelegateWrapper(dlg, 0, connectFlags);
-		onBeginListeners[onBeginListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnBeginDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"begin",
 			cast(GCallback)&callBackBegin,
-			cast(void*)onBeginListeners[onBeginListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackBeginDestroy,
 			connectFlags);
-		return onBeginListeners[onBeginListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackBegin(GtkGesture* gestureStruct, GdkEventSequence* sequence,OnBeginDelegateWrapper wrapper)
+	extern(C) static void callBackBegin(GtkGesture* gestureStruct, GdkEventSequence* sequence, OnBeginDelegateWrapper wrapper)
 	{
 		wrapper.dlg(sequence, wrapper.outer);
 	}
 	
 	extern(C) static void callBackBeginDestroy(OnBeginDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnBegin(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnBegin(OnBeginDelegateWrapper source)
-	{
-		foreach(index, wrapper; onBeginListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onBeginListeners[index] = null;
-				onBeginListeners = std.algorithm.remove(onBeginListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnBeginGenericDelegateWrapper
 	{
+		static OnBeginGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Event, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnBeginGenericDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnBeginGenericDelegateWrapper[] onBeginGenericListeners;
 	
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
@@ -644,53 +654,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnBegin(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onBeginGenericListeners ~= new OnBeginGenericDelegateWrapper(dlg, 0, connectFlags);
-		onBeginGenericListeners[onBeginGenericListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnBeginGenericDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"begin",
 			cast(GCallback)&callBackBeginGeneric,
-			cast(void*)onBeginGenericListeners[onBeginGenericListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackBeginGenericDestroy,
 			connectFlags);
-		return onBeginGenericListeners[onBeginGenericListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackBeginGeneric(GtkGesture* gestureStruct, GdkEvent* sequence,OnBeginGenericDelegateWrapper wrapper)
+	extern(C) static void callBackBeginGeneric(GtkGesture* gestureStruct, GdkEvent* sequence, OnBeginGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Event)(sequence), wrapper.outer);
 	}
 	
 	extern(C) static void callBackBeginGenericDestroy(OnBeginGenericDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnBeginGeneric(wrapper);
+		wrapper.remove(wrapper);
 	}
-	protected void internalRemoveOnBeginGeneric(OnBeginGenericDelegateWrapper source)
-	{
-		foreach(index, wrapper; onBeginGenericListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onBeginGenericListeners[index] = null;
-				onBeginGenericListeners = std.algorithm.remove(onBeginGenericListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCancelDelegateWrapper
 	{
+		static OnCancelDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GdkEventSequence*, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCancelDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * This signal is emitted whenever a sequence is cancelled. This usually
@@ -707,54 +716,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnCancel(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCancelListeners ~= new OnCancelDelegateWrapper(dlg, 0, connectFlags);
-		onCancelListeners[onCancelListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCancelDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"cancel",
 			cast(GCallback)&callBackCancel,
-			cast(void*)onCancelListeners[onCancelListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCancelDestroy,
 			connectFlags);
-		return onCancelListeners[onCancelListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCancel(GtkGesture* gestureStruct, GdkEventSequence* sequence,OnCancelDelegateWrapper wrapper)
+	extern(C) static void callBackCancel(GtkGesture* gestureStruct, GdkEventSequence* sequence, OnCancelDelegateWrapper wrapper)
 	{
 		wrapper.dlg(sequence, wrapper.outer);
 	}
 	
 	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCancel(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCancel(OnCancelDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCancelListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCancelListeners[index] = null;
-				onCancelListeners = std.algorithm.remove(onCancelListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCancelGenericDelegateWrapper
 	{
+		static OnCancelGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Event, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCancelGenericDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCancelGenericDelegateWrapper[] onCancelGenericListeners;
 	
 	/**
 	 * This signal is emitted whenever a sequence is cancelled. This usually
@@ -771,53 +778,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnCancel(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCancelGenericListeners ~= new OnCancelGenericDelegateWrapper(dlg, 0, connectFlags);
-		onCancelGenericListeners[onCancelGenericListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCancelGenericDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"cancel",
 			cast(GCallback)&callBackCancelGeneric,
-			cast(void*)onCancelGenericListeners[onCancelGenericListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCancelGenericDestroy,
 			connectFlags);
-		return onCancelGenericListeners[onCancelGenericListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCancelGeneric(GtkGesture* gestureStruct, GdkEvent* sequence,OnCancelGenericDelegateWrapper wrapper)
+	extern(C) static void callBackCancelGeneric(GtkGesture* gestureStruct, GdkEvent* sequence, OnCancelGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Event)(sequence), wrapper.outer);
 	}
 	
 	extern(C) static void callBackCancelGenericDestroy(OnCancelGenericDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCancelGeneric(wrapper);
+		wrapper.remove(wrapper);
 	}
-	protected void internalRemoveOnCancelGeneric(OnCancelGenericDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCancelGenericListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCancelGenericListeners[index] = null;
-				onCancelGenericListeners = std.algorithm.remove(onCancelGenericListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnEndDelegateWrapper
 	{
+		static OnEndDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GdkEventSequence*, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEndDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEndDelegateWrapper[] onEndListeners;
 
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
@@ -837,54 +843,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnEnd(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEndListeners ~= new OnEndDelegateWrapper(dlg, 0, connectFlags);
-		onEndListeners[onEndListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEndDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"end",
 			cast(GCallback)&callBackEnd,
-			cast(void*)onEndListeners[onEndListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEndDestroy,
 			connectFlags);
-		return onEndListeners[onEndListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEnd(GtkGesture* gestureStruct, GdkEventSequence* sequence,OnEndDelegateWrapper wrapper)
+	extern(C) static void callBackEnd(GtkGesture* gestureStruct, GdkEventSequence* sequence, OnEndDelegateWrapper wrapper)
 	{
 		wrapper.dlg(sequence, wrapper.outer);
 	}
 	
 	extern(C) static void callBackEndDestroy(OnEndDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEnd(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnEnd(OnEndDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEndListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEndListeners[index] = null;
-				onEndListeners = std.algorithm.remove(onEndListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnEndGenericDelegateWrapper
 	{
+		static OnEndGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Event, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnEndGenericDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnEndGenericDelegateWrapper[] onEndGenericListeners;
 	
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
@@ -904,53 +908,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnEnd(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onEndGenericListeners ~= new OnEndGenericDelegateWrapper(dlg, 0, connectFlags);
-		onEndGenericListeners[onEndGenericListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnEndGenericDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"end",
 			cast(GCallback)&callBackEndGeneric,
-			cast(void*)onEndGenericListeners[onEndGenericListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackEndGenericDestroy,
 			connectFlags);
-		return onEndGenericListeners[onEndGenericListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackEndGeneric(GtkGesture* gestureStruct, GdkEvent* sequence,OnEndGenericDelegateWrapper wrapper)
+	extern(C) static void callBackEndGeneric(GtkGesture* gestureStruct, GdkEvent* sequence, OnEndGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Event)(sequence), wrapper.outer);
 	}
 	
 	extern(C) static void callBackEndGenericDestroy(OnEndGenericDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnEndGeneric(wrapper);
+		wrapper.remove(wrapper);
 	}
-	protected void internalRemoveOnEndGeneric(OnEndGenericDelegateWrapper source)
-	{
-		foreach(index, wrapper; onEndGenericListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onEndGenericListeners[index] = null;
-				onEndGenericListeners = std.algorithm.remove(onEndGenericListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSequenceStateChangedDelegateWrapper
 	{
+		static OnSequenceStateChangedDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSequenceStateChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSequenceStateChangedDelegateWrapper[] onSequenceStateChangedListeners;
 
 	/**
 	 * This signal is emitted whenever a sequence state changes. See
@@ -965,54 +968,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnSequenceStateChanged(void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSequenceStateChangedListeners ~= new OnSequenceStateChangedDelegateWrapper(dlg, 0, connectFlags);
-		onSequenceStateChangedListeners[onSequenceStateChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSequenceStateChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"sequence-state-changed",
 			cast(GCallback)&callBackSequenceStateChanged,
-			cast(void*)onSequenceStateChangedListeners[onSequenceStateChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSequenceStateChangedDestroy,
 			connectFlags);
-		return onSequenceStateChangedListeners[onSequenceStateChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSequenceStateChanged(GtkGesture* gestureStruct, GdkEventSequence* sequence, GtkEventSequenceState state,OnSequenceStateChangedDelegateWrapper wrapper)
+	extern(C) static void callBackSequenceStateChanged(GtkGesture* gestureStruct, GdkEventSequence* sequence, GtkEventSequenceState state, OnSequenceStateChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(sequence, state, wrapper.outer);
 	}
 	
 	extern(C) static void callBackSequenceStateChangedDestroy(OnSequenceStateChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSequenceStateChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnSequenceStateChanged(OnSequenceStateChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSequenceStateChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSequenceStateChangedListeners[index] = null;
-				onSequenceStateChangedListeners = std.algorithm.remove(onSequenceStateChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnSequenceStateChangedGenericDelegateWrapper
 	{
+		static OnSequenceStateChangedGenericDelegateWrapper[] listeners;
 		void delegate(Event, GtkEventSequenceState, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Event, GtkEventSequenceState, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Event, GtkEventSequenceState, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnSequenceStateChangedGenericDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnSequenceStateChangedGenericDelegateWrapper[] onSequenceStateChangedGenericListeners;
 	
 	/**
 	 * This signal is emitted whenever a sequence state changes. See
@@ -1027,53 +1028,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnSequenceStateChanged(void delegate(Event, GtkEventSequenceState, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSequenceStateChangedGenericListeners ~= new OnSequenceStateChangedGenericDelegateWrapper(dlg, 0, connectFlags);
-		onSequenceStateChangedGenericListeners[onSequenceStateChangedGenericListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnSequenceStateChangedGenericDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"sequence-state-changed",
 			cast(GCallback)&callBackSequenceStateChangedGeneric,
-			cast(void*)onSequenceStateChangedGenericListeners[onSequenceStateChangedGenericListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackSequenceStateChangedGenericDestroy,
 			connectFlags);
-		return onSequenceStateChangedGenericListeners[onSequenceStateChangedGenericListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackSequenceStateChangedGeneric(GtkGesture* gestureStruct, GdkEvent* sequence, GtkEventSequenceState state,OnSequenceStateChangedGenericDelegateWrapper wrapper)
+	extern(C) static void callBackSequenceStateChangedGeneric(GtkGesture* gestureStruct, GdkEvent* sequence, GtkEventSequenceState state, OnSequenceStateChangedGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Event)(sequence), state, wrapper.outer);
 	}
 	
 	extern(C) static void callBackSequenceStateChangedGenericDestroy(OnSequenceStateChangedGenericDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnSequenceStateChangedGeneric(wrapper);
+		wrapper.remove(wrapper);
 	}
-	protected void internalRemoveOnSequenceStateChangedGeneric(OnSequenceStateChangedGenericDelegateWrapper source)
-	{
-		foreach(index, wrapper; onSequenceStateChangedGenericListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onSequenceStateChangedGenericListeners[index] = null;
-				onSequenceStateChangedGenericListeners = std.algorithm.remove(onSequenceStateChangedGenericListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnUpdateDelegateWrapper
 	{
+		static OnUpdateDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GdkEventSequence*, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnUpdateDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnUpdateDelegateWrapper[] onUpdateListeners;
 
 	/**
 	 * This signal is emitted whenever an event is handled while the gesture is
@@ -1086,54 +1086,52 @@ public class Gesture : EventController
 	 */
 	gulong addOnUpdate(void delegate(GdkEventSequence*, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onUpdateListeners ~= new OnUpdateDelegateWrapper(dlg, 0, connectFlags);
-		onUpdateListeners[onUpdateListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnUpdateDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"update",
 			cast(GCallback)&callBackUpdate,
-			cast(void*)onUpdateListeners[onUpdateListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackUpdateDestroy,
 			connectFlags);
-		return onUpdateListeners[onUpdateListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackUpdate(GtkGesture* gestureStruct, GdkEventSequence* sequence,OnUpdateDelegateWrapper wrapper)
+	extern(C) static void callBackUpdate(GtkGesture* gestureStruct, GdkEventSequence* sequence, OnUpdateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(sequence, wrapper.outer);
 	}
 	
 	extern(C) static void callBackUpdateDestroy(OnUpdateDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnUpdate(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnUpdate(OnUpdateDelegateWrapper source)
-	{
-		foreach(index, wrapper; onUpdateListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onUpdateListeners[index] = null;
-				onUpdateListeners = std.algorithm.remove(onUpdateListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnUpdateGenericDelegateWrapper
 	{
+		static OnUpdateGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Event, Gesture) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnUpdateGenericDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnUpdateGenericDelegateWrapper[] onUpdateGenericListeners;
 	
 	/**
 	 * This signal is emitted whenever an event is handled while the gesture is
@@ -1146,37 +1144,24 @@ public class Gesture : EventController
 	 */
 	gulong addOnUpdate(void delegate(Event, Gesture) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onUpdateGenericListeners ~= new OnUpdateGenericDelegateWrapper(dlg, 0, connectFlags);
-		onUpdateGenericListeners[onUpdateGenericListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnUpdateGenericDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"update",
 			cast(GCallback)&callBackUpdateGeneric,
-			cast(void*)onUpdateGenericListeners[onUpdateGenericListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackUpdateGenericDestroy,
 			connectFlags);
-		return onUpdateGenericListeners[onUpdateGenericListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackUpdateGeneric(GtkGesture* gestureStruct, GdkEvent* sequence,OnUpdateGenericDelegateWrapper wrapper)
+	extern(C) static void callBackUpdateGeneric(GtkGesture* gestureStruct, GdkEvent* sequence, OnUpdateGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Event)(sequence), wrapper.outer);
 	}
 	
 	extern(C) static void callBackUpdateGenericDestroy(OnUpdateGenericDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnUpdateGeneric(wrapper);
+		wrapper.remove(wrapper);
 	}
-	protected void internalRemoveOnUpdateGeneric(OnUpdateGenericDelegateWrapper source)
-	{
-		foreach(index, wrapper; onUpdateGenericListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onUpdateGenericListeners[index] = null;
-				onUpdateGenericListeners = std.algorithm.remove(onUpdateGenericListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

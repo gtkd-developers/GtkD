@@ -141,6 +141,7 @@ public interface DocumentIF{
 	 * Since: 1.12
 	 */
 	public bool setAttributeValue(string attributeName, string attributeValue);
+
 	/**
 	 * The 'load-complete' signal is emitted when a pending load of
 	 * a static document has completed.  This signal is to be
@@ -152,8 +153,7 @@ public interface DocumentIF{
 	 * (Dynamic document contents should be exposed via other
 	 * signals.)
 	 */
-	gulong addOnLoadComplete(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnLoadComplete(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The 'load-stopped' signal is emitted when a pending load of
@@ -163,8 +163,7 @@ public interface DocumentIF{
 	 * while blocking on a file or network read) unless a
 	 * user-significant timeout has occurred.
 	 */
-	gulong addOnLoadStopped(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnLoadStopped(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The 'page-changed' signal is emitted when the current page of
@@ -177,8 +176,7 @@ public interface DocumentIF{
 	 *
 	 * Since: 2.12
 	 */
-	gulong addOnPageChanged(void delegate(int, DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnPageChanged(void delegate(int, DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The 'reload' signal is emitted when the contents of a
@@ -187,7 +185,5 @@ public interface DocumentIF{
 	 * signal should follow, which clients may await before
 	 * interrogating ATK for the latest document content.
 	 */
-	gulong addOnReload(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnReload(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

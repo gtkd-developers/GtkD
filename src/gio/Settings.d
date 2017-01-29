@@ -1560,17 +1560,29 @@ public class Settings : ObjectG
 
 	protected class OnChangeDelegateWrapper
 	{
+		static OnChangeDelegateWrapper[] listeners;
 		bool delegate(void*, int, Settings) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(void*, int, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(void*, int, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangeDelegateWrapper[] onChangeListeners;
 
 	/**
 	 * The "change-event" signal is emitted once per change event that
@@ -1598,54 +1610,52 @@ public class Settings : ObjectG
 	 */
 	gulong addOnChange(bool delegate(void*, int, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangeListeners ~= new OnChangeDelegateWrapper(dlg, 0, connectFlags);
-		onChangeListeners[onChangeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"change-event",
 			cast(GCallback)&callBackChange,
-			cast(void*)onChangeListeners[onChangeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangeDestroy,
 			connectFlags);
-		return onChangeListeners[onChangeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackChange(GSettings* settingsStruct, void* keys, int nKeys,OnChangeDelegateWrapper wrapper)
+	extern(C) static int callBackChange(GSettings* settingsStruct, void* keys, int nKeys, OnChangeDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(keys, nKeys, wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangeDestroy(OnChangeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChange(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChange(OnChangeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangeListeners[index] = null;
-				onChangeListeners = std.algorithm.remove(onChangeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnChangedDelegateWrapper
 	{
+		static OnChangedDelegateWrapper[] listeners;
 		void delegate(string, Settings) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The "changed" signal is emitted when a key has potentially changed.
@@ -1664,54 +1674,52 @@ public class Settings : ObjectG
 	 */
 	gulong addOnChanged(void delegate(string, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onChangedListeners ~= new OnChangedDelegateWrapper(dlg, 0, connectFlags);
-		onChangedListeners[onChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"changed",
 			cast(GCallback)&callBackChanged,
-			cast(void*)onChangedListeners[onChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackChangedDestroy,
 			connectFlags);
-		return onChangedListeners[onChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackChanged(GSettings* settingsStruct, char* key,OnChangedDelegateWrapper wrapper)
+	extern(C) static void callBackChanged(GSettings* settingsStruct, char* key, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(key), wrapper.outer);
 	}
 	
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnChanged(OnChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onChangedListeners[index] = null;
-				onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnWritableChangeDelegateWrapper
 	{
+		static OnWritableChangeDelegateWrapper[] listeners;
 		bool delegate(uint, Settings) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(uint, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(uint, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnWritableChangeDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnWritableChangeDelegateWrapper[] onWritableChangeListeners;
 
 	/**
 	 * The "writable-change-event" signal is emitted once per writability
@@ -1741,54 +1749,52 @@ public class Settings : ObjectG
 	 */
 	gulong addOnWritableChange(bool delegate(uint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onWritableChangeListeners ~= new OnWritableChangeDelegateWrapper(dlg, 0, connectFlags);
-		onWritableChangeListeners[onWritableChangeListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnWritableChangeDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"writable-change-event",
 			cast(GCallback)&callBackWritableChange,
-			cast(void*)onWritableChangeListeners[onWritableChangeListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackWritableChangeDestroy,
 			connectFlags);
-		return onWritableChangeListeners[onWritableChangeListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackWritableChange(GSettings* settingsStruct, uint key,OnWritableChangeDelegateWrapper wrapper)
+	extern(C) static int callBackWritableChange(GSettings* settingsStruct, uint key, OnWritableChangeDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(key, wrapper.outer);
 	}
 	
 	extern(C) static void callBackWritableChangeDestroy(OnWritableChangeDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnWritableChange(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnWritableChange(OnWritableChangeDelegateWrapper source)
-	{
-		foreach(index, wrapper; onWritableChangeListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onWritableChangeListeners[index] = null;
-				onWritableChangeListeners = std.algorithm.remove(onWritableChangeListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnWritableChangedDelegateWrapper
 	{
+		static OnWritableChangedDelegateWrapper[] listeners;
 		void delegate(string, Settings) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(string, Settings) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(string, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnWritableChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnWritableChangedDelegateWrapper[] onWritableChangedListeners;
 
 	/**
 	 * The "writable-changed" signal is emitted when the writability of a
@@ -1804,38 +1810,24 @@ public class Settings : ObjectG
 	 */
 	gulong addOnWritableChanged(void delegate(string, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onWritableChangedListeners ~= new OnWritableChangedDelegateWrapper(dlg, 0, connectFlags);
-		onWritableChangedListeners[onWritableChangedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnWritableChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"writable-changed",
 			cast(GCallback)&callBackWritableChanged,
-			cast(void*)onWritableChangedListeners[onWritableChangedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackWritableChangedDestroy,
 			connectFlags);
-		return onWritableChangedListeners[onWritableChangedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, char* key,OnWritableChangedDelegateWrapper wrapper)
+	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, char* key, OnWritableChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(key), wrapper.outer);
 	}
 	
 	extern(C) static void callBackWritableChangedDestroy(OnWritableChangedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnWritableChanged(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnWritableChanged(OnWritableChangedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onWritableChangedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onWritableChangedListeners[index] = null;
-				onWritableChangedListeners = std.algorithm.remove(onWritableChangedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

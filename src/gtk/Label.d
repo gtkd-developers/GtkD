@@ -1025,17 +1025,29 @@ public class Label : Misc
 
 	protected class OnActivateCurrentLinkDelegateWrapper
 	{
+		static OnActivateCurrentLinkDelegateWrapper[] listeners;
 		void delegate(Label) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Label) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Label) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActivateCurrentLinkDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActivateCurrentLinkDelegateWrapper[] onActivateCurrentLinkListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
@@ -1050,54 +1062,52 @@ public class Label : Misc
 	 */
 	gulong addOnActivateCurrentLink(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActivateCurrentLinkListeners ~= new OnActivateCurrentLinkDelegateWrapper(dlg, 0, connectFlags);
-		onActivateCurrentLinkListeners[onActivateCurrentLinkListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActivateCurrentLinkDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"activate-current-link",
 			cast(GCallback)&callBackActivateCurrentLink,
-			cast(void*)onActivateCurrentLinkListeners[onActivateCurrentLinkListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActivateCurrentLinkDestroy,
 			connectFlags);
-		return onActivateCurrentLinkListeners[onActivateCurrentLinkListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct,OnActivateCurrentLinkDelegateWrapper wrapper)
+	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, OnActivateCurrentLinkDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackActivateCurrentLinkDestroy(OnActivateCurrentLinkDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActivateCurrentLink(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActivateCurrentLink(OnActivateCurrentLinkDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActivateCurrentLinkListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActivateCurrentLinkListeners[index] = null;
-				onActivateCurrentLinkListeners = std.algorithm.remove(onActivateCurrentLinkListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnActivateLinkDelegateWrapper
 	{
+		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(string, Label) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(bool delegate(string, Label) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(bool delegate(string, Label) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnActivateLinkDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnActivateLinkDelegateWrapper[] onActivateLinkListeners;
 
 	/**
 	 * The signal which gets emitted to activate a URI.
@@ -1113,54 +1123,52 @@ public class Label : Misc
 	 */
 	gulong addOnActivateLink(bool delegate(string, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onActivateLinkListeners ~= new OnActivateLinkDelegateWrapper(dlg, 0, connectFlags);
-		onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnActivateLinkDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"activate-link",
 			cast(GCallback)&callBackActivateLink,
-			cast(void*)onActivateLinkListeners[onActivateLinkListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackActivateLinkDestroy,
 			connectFlags);
-		return onActivateLinkListeners[onActivateLinkListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static int callBackActivateLink(GtkLabel* labelStruct, char* uri,OnActivateLinkDelegateWrapper wrapper)
+	extern(C) static int callBackActivateLink(GtkLabel* labelStruct, char* uri, OnActivateLinkDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(uri), wrapper.outer);
 	}
 	
 	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnActivateLink(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnActivateLink(OnActivateLinkDelegateWrapper source)
-	{
-		foreach(index, wrapper; onActivateLinkListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onActivateLinkListeners[index] = null;
-				onActivateLinkListeners = std.algorithm.remove(onActivateLinkListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnCopyClipboardDelegateWrapper
 	{
+		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Label) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Label) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Label) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnCopyClipboardDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
 
 	/**
 	 * The ::copy-clipboard signal is a
@@ -1171,54 +1179,52 @@ public class Label : Misc
 	 */
 	gulong addOnCopyClipboard(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onCopyClipboardListeners ~= new OnCopyClipboardDelegateWrapper(dlg, 0, connectFlags);
-		onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnCopyClipboardDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"copy-clipboard",
 			cast(GCallback)&callBackCopyClipboard,
-			cast(void*)onCopyClipboardListeners[onCopyClipboardListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackCopyClipboardDestroy,
 			connectFlags);
-		return onCopyClipboardListeners[onCopyClipboardListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct,OnCopyClipboardDelegateWrapper wrapper)
+	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, OnCopyClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCopyClipboard(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnCopyClipboard(OnCopyClipboardDelegateWrapper source)
-	{
-		foreach(index, wrapper; onCopyClipboardListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onCopyClipboardListeners[index] = null;
-				onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnMoveCursorDelegateWrapper
 	{
+		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, bool, Label) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(GtkMovementStep, int, bool, Label) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(GtkMovementStep, int, bool, Label) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnMoveCursorDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -1246,54 +1252,52 @@ public class Label : Misc
 	 */
 	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, bool, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onMoveCursorListeners ~= new OnMoveCursorDelegateWrapper(dlg, 0, connectFlags);
-		onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnMoveCursorDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"move-cursor",
 			cast(GCallback)&callBackMoveCursor,
-			cast(void*)onMoveCursorListeners[onMoveCursorListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackMoveCursorDestroy,
 			connectFlags);
-		return onMoveCursorListeners[onMoveCursorListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackMoveCursor(GtkLabel* labelStruct, GtkMovementStep step, int count, bool extendSelection,OnMoveCursorDelegateWrapper wrapper)
+	extern(C) static void callBackMoveCursor(GtkLabel* labelStruct, GtkMovementStep step, int count, bool extendSelection, OnMoveCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(step, count, extendSelection, wrapper.outer);
 	}
 	
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnMoveCursor(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnMoveCursor(OnMoveCursorDelegateWrapper source)
-	{
-		foreach(index, wrapper; onMoveCursorListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onMoveCursorListeners[index] = null;
-				onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
-				break;
-			}
-		}
-	}
-	
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
+		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, Label) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(Menu, Label) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(Menu, Label) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnPopulatePopupDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
@@ -1308,38 +1312,24 @@ public class Label : Misc
 	 */
 	gulong addOnPopulatePopup(void delegate(Menu, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onPopulatePopupListeners ~= new OnPopulatePopupDelegateWrapper(dlg, 0, connectFlags);
-		onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnPopulatePopupDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"populate-popup",
 			cast(GCallback)&callBackPopulatePopup,
-			cast(void*)onPopulatePopupListeners[onPopulatePopupListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackPopulatePopupDestroy,
 			connectFlags);
-		return onPopulatePopupListeners[onPopulatePopupListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu,OnPopulatePopupDelegateWrapper wrapper)
+	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, OnPopulatePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), wrapper.outer);
 	}
 	
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnPopulatePopup(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnPopulatePopup(OnPopulatePopupDelegateWrapper source)
-	{
-		foreach(index, wrapper; onPopulatePopupListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onPopulatePopupListeners[index] = null;
-				onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

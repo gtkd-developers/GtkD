@@ -374,17 +374,29 @@ public class ToolButton : ToolItem, ActionableIF
 
 	protected class OnClickedDelegateWrapper
 	{
+		static OnClickedDelegateWrapper[] listeners;
 		void delegate(ToolButton) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ToolButton) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ToolButton) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnClickedDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnClickedDelegateWrapper[] onClickedListeners;
 
 	/**
 	 * This signal is emitted when the tool button is clicked with the mouse
@@ -392,38 +404,24 @@ public class ToolButton : ToolItem, ActionableIF
 	 */
 	gulong addOnClicked(void delegate(ToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onClickedListeners ~= new OnClickedDelegateWrapper(dlg, 0, connectFlags);
-		onClickedListeners[onClickedListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnClickedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"clicked",
 			cast(GCallback)&callBackClicked,
-			cast(void*)onClickedListeners[onClickedListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackClickedDestroy,
 			connectFlags);
-		return onClickedListeners[onClickedListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
-	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct,OnClickedDelegateWrapper wrapper)
+	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, OnClickedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
 	
 	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnClicked(wrapper);
+		wrapper.remove(wrapper);
 	}
-
-	protected void internalRemoveOnClicked(OnClickedDelegateWrapper source)
-	{
-		foreach(index, wrapper; onClickedListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onClickedListeners[index] = null;
-				onClickedListeners = std.algorithm.remove(onClickedListeners, index);
-				break;
-			}
-		}
-	}
-	
 }

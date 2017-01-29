@@ -135,11 +135,10 @@ public interface SelectionIF{
 	 * Return: TRUE if success, FALSE otherwise.
 	 */
 	public bool selectAllSelection();
+
 	/**
 	 * The "selection-changed" signal is emitted by an object which
 	 * implements AtkSelection interface when the selection changes.
 	 */
-	gulong addOnSelectionChanged(void delegate(SelectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnSelectionChanged(void delegate(SelectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

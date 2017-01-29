@@ -405,13 +405,13 @@ public interface TextIF{
 	 * Return: %TRUE if success, %FALSE otherwise
 	 */
 	public bool setSelection(int selectionNum, int startOffset, int endOffset);
+
 	/**
 	 * The "text-attributes-changed" signal is emitted when the text
 	 * attributes of the text of an object which implements AtkText
 	 * changes.
 	 */
-	gulong addOnTextAttributesChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnTextAttributesChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "text-caret-moved" signal is emitted when the caret
@@ -421,8 +421,7 @@ public interface TextIF{
 	 * Params:
 	 *     arg1 = The new position of the text caret.
 	 */
-	gulong addOnTextCaretMoved(void delegate(int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnTextCaretMoved(void delegate(int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "text-changed" signal is emitted when the text of the
@@ -438,8 +437,7 @@ public interface TextIF{
 	 *     arg1 = The position (character offset) of the insertion or deletion.
 	 *     arg2 = The length (in characters) of text inserted or deleted.
 	 */
-	gulong addOnTextChanged(void delegate(int, int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnTextChanged(void delegate(int, int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "text-insert" signal is emitted when a new text is
@@ -452,8 +450,7 @@ public interface TextIF{
 	 *     arg2 = The length (in characters) of text inserted.
 	 *     arg3 = The new text inserted
 	 */
-	gulong addOnTextInsert(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnTextInsert(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "text-remove" signal is emitted when a new text is
@@ -466,16 +463,13 @@ public interface TextIF{
 	 *     arg2 = The length (in characters) of text removed.
 	 *     arg3 = The old text removed
 	 */
-	gulong addOnTextRemove(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
+	gulong addOnTextRemove(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * The "text-selection-changed" signal is emitted when the
 	 * selected text of an object which implements AtkText changes.
 	 */
-	gulong addOnTextSelectionChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	;
-
+	gulong addOnTextSelectionChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
 	 * Frees the memory used by an #AtkAttributeSet, including all its
