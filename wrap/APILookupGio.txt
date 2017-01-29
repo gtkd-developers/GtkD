@@ -47,18 +47,29 @@ struct: Application
 code: start
 	protected class ScopedOnCommandLineDelegateWrapper
 	{
+		static ScopedOnCommandLineDelegateWrapper[] listeners;
 		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(ScopedOnCommandLineDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-
-	protected ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
 
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
@@ -74,15 +85,15 @@ code: start
 	 */
 	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		scopedOnCommandLineListeners ~= new ScopedOnCommandLineDelegateWrapper(dlg, 0, connectFlags);
-		scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new ScopedOnCommandLineDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			"command-line",
 			cast(GCallback)&callBackScopedCommandLine,
-			cast(void*)scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
 			connectFlags);
-		return scopedOnCommandLineListeners[scopedOnCommandLineListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
 	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
@@ -92,20 +103,7 @@ code: start
 	
 	extern(C) static void callBackScopedCommandLineDestroy(ScopedOnCommandLineDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnCommandLine(wrapper);
-	}
-
-	protected void internalRemoveOnCommandLine(ScopedOnCommandLineDelegateWrapper source)
-	{
-		foreach(index, wrapper; scopedOnCommandLineListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				scopedOnCommandLineListeners[index] = null;
-				scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
-				break;
-			}
-		}
+		wrapper.remove(wrapper);
 	}
 code: end
 

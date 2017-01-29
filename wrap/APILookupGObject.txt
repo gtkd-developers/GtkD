@@ -312,20 +312,31 @@ code: start
 		return obj.doref();
 	}
 
-
 	protected class OnNotifyDelegateWrapper
 	{
+		static OnNotifyDelegateWrapper[] listeners;
 		void delegate(ParamSpec, ObjectG) dlg;
 		gulong handlerId;
-		ConnectFlags flags;
-		this(void delegate(ParamSpec, ObjectG) dlg, gulong handlerId, ConnectFlags flags)
+		
+		this(void delegate(ParamSpec, ObjectG) dlg)
 		{
 			this.dlg = dlg;
-			this.handlerId = handlerId;
-			this.flags = flags;
+			this.listeners ~= this;
+		}
+		
+		void remove(OnNotifyDelegateWrapper source)
+		{
+			foreach(index, wrapper; listeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					listeners[index] = null;
+					listeners = std.algorithm.remove(listeners, index);
+					break;
+				}
+			}
 		}
 	}
-	protected OnNotifyDelegateWrapper[] onNotifyListeners;
 
 	/**
 	 * The notify signal is emitted on an object when one of its
@@ -354,15 +365,15 @@ code: start
 		else
 			signalName = "notify::"~ property;
 
-		onNotifyListeners ~= new OnNotifyDelegateWrapper(dlg, 0, connectFlags);
-		onNotifyListeners[onNotifyListeners.length - 1].handlerId = Signals.connectData(
+		auto wrapper = new OnNotifyDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
 			this,
 			signalName,
 			cast(GCallback)&callBackNotify,
-			cast(void*)onNotifyListeners[onNotifyListeners.length - 1],
+			cast(void*)wrapper,
 			cast(GClosureNotify)&callBackNotifyDestroy,
 			connectFlags);
-		return onNotifyListeners[onNotifyListeners.length - 1].handlerId;
+		return wrapper.handlerId;
 	}
 	
 	extern(C) static void callBackNotify(GObject* objectgStruct, GParamSpec* pspec,OnNotifyDelegateWrapper wrapper)
@@ -372,20 +383,7 @@ code: start
 	
 	extern(C) static void callBackNotifyDestroy(OnNotifyDelegateWrapper wrapper, GClosure* closure)
 	{
-		wrapper.outer.internalRemoveOnNotify(wrapper);
-	}
-
-	protected void internalRemoveOnNotify(OnNotifyDelegateWrapper source)
-	{
-		foreach(index, wrapper; onNotifyListeners)
-		{
-			if (wrapper.dlg == source.dlg && wrapper.flags == source.flags && wrapper.handlerId == source.handlerId)
-			{
-				onNotifyListeners[index] = null;
-				onNotifyListeners = std.algorithm.remove(onNotifyListeners, index);
-				break;
-			}
-		}
+		wrapper.remove(wrapper);
 	}
 code: end
 
