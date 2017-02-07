@@ -159,7 +159,7 @@ class GtkWrapper
 							throw new WrapError(defReader, "Failed to create directory: "~ outDir);
 					}
 
-					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
+					copyFiles(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
 					break;
 				case "lookup":
 					proccess(defReader.value);
@@ -442,7 +442,7 @@ class GtkWrapper
 						throw new WrapError(defReader,
 						                    "Can't copy the file when srcDir is not set");
 
-					copyFile(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
+					copyFiles(apiRoot, buildPath(outputRoot, srcDir), defReader.value);
 					break;
 				default:
 					throw new WrapError(defReader, "Unknown key: "~defReader.key);
@@ -488,16 +488,35 @@ class GtkWrapper
 			throw new WrapError(defReader, "Unknown key: "~defReader.key);
 	}
 
-	private void copyFile(string srcDir, string destDir, string file)
+	private void copyFiles(string srcDir, string destDir, string file)
 	{
-		string from = buildPath(srcDir, file);
-		string to   = buildPath(destDir, file);
+		string from = buildNormalizedPath(srcDir, file);
+		string to = buildNormalizedPath(destDir, file);
 
 		writefln("copying file [%s] to [%s]", from, to);
-		copy(from, to);
 
-		if ( !exists(to) )
-			throw new Exception("Cannot copy  file: "~from);
+		if ( isFile(from) )
+		{
+			copy(from, to);
+			return;
+		}
+
+		void copyDir(string from, string to)
+		{
+			mkdir(to);
+
+			foreach ( entry; dirEntries(from, SpanMode.shallow) )
+			{
+				string dst = buildPath(to, entry.name.baseName);
+
+				if ( isDir(entry.name) )
+					copyDir(entry.name, dst);
+				else
+					copy(entry.name, dst);
+			}
+		}
+
+		copyDir(from, to);
 	}
 
 	private GtkStruct createClass(GtkPackage pack, string name)
