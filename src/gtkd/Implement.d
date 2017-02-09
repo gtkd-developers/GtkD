@@ -37,6 +37,7 @@ template ImplementInterfaceImpl(Base, Klass, Impl)
 	import std.algorithm;
 	import std.traits;
 	import std.meta;
+	import std.range;
 	import std.string;
 	import std.uni;
 	import std.conv;
