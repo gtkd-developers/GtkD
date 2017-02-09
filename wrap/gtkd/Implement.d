@@ -37,6 +37,7 @@ template ImplementInterfaceImpl(Base, Klass, Impl)
 	import std.algorithm;
 	import std.traits;
 	import std.meta;
+	import std.range;
 	import std.string;
 	import std.uni;
 	import std.conv;
@@ -209,9 +210,9 @@ template ImplementInterfaceImpl(Base, Klass, Impl)
 			result ~= ")\n"~
 			          "{\n";
 
-			//if ( isGtkdType!Impl )
-			//	result ~= "\tauto impl = ObjectG.getDObject!("~ Impl.stringof ~")(cast("~ toPascalCase!Impl() ~"*)iface);\n";
-			//else
+			if ( implements("get"~ Impl.stringof ~"Struct") && implements("getStruct") )
+				result ~= "\tauto impl = ObjectG.getDObject!("~ Impl.stringof ~")(cast("~ toPascalCase!Impl() ~"*)iface);\n";
+			else
 				result ~= "\tauto impl = cast("~ Impl.stringof ~")g_object_get_data(cast(GObject*)iface, \"GObject\".ptr);\n";
 
 			foreach ( i, param; Params )
