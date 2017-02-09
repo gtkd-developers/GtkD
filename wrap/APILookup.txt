@@ -63,6 +63,7 @@ copy: Loader.d
 
 srcDir: src
 bindDir: gtkc
+copy: gtkd
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt

@@ -503,7 +503,8 @@ class GtkWrapper
 
 		void copyDir(string from, string to)
 		{
-			mkdir(to);
+			if ( !exists(to) )
+				mkdir(to);
 
 			foreach ( entry; dirEntries(from, SpanMode.shallow) )
 			{

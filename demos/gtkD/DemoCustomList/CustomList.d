@@ -1,10 +1,13 @@
 module CustomList;
 
 import glib.RandG;
+import gobject.ObjectG;
 import gobject.Value;
 import gtk.TreeIter;
 import gtk.TreePath;
-import gtk.TreeModel;
+import gtk.TreeModelIF;
+import gtk.TreeModelT;
+import gtkd.Implement;
 
 struct CustomRecord
 {
@@ -24,7 +27,7 @@ enum CustomListColumn
 	NColumns,
 }
 
-class CustomList : TreeModel
+class CustomList : ObjectG, TreeModelIF
 {
 	uint numRows;
 	int nColumns;
@@ -32,8 +35,13 @@ class CustomList : TreeModel
 	GType[3] columnTypes;
 	CustomRecord*[] rows;
 
+	mixin ImplementInterface!(GObject, GtkTreeModelIface);
+	mixin TreeModelT!(GtkTreeModel);
+
 	public this()
 	{
+		super(getType(), null);
+
 		nColumns = columnTypes.length;
 		columnTypes[0] = GType.POINTER;
 		columnTypes[1] = GType.STRING;

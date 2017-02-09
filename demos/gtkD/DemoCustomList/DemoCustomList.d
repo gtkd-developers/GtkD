@@ -16,7 +16,7 @@ class CustomListWindow : MainWindow
 	this()
 	{
 		super("GtkD - Custom TreeModel");
-		setDefaultSize(200, 400);
+		setDefaultSize(300, 400);
 		
 		ScrolledWindow scrollwin = new ScrolledWindow();
 		TreeView view = createViewAndModel();
