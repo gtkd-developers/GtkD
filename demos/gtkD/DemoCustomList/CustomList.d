@@ -92,7 +92,7 @@ class CustomList : ObjectG, TreeModelIF
 	 * We simply store a pointer to our CustomRecord
 	 * structure that represents that row in the tree iter.
 	 */
-	override int getIter(TreeIter iter, TreePath path)
+	override int getIter(out TreeIter iter, TreePath path)
 	{
 		CustomRecord* record;
 		int[]         indices;
@@ -118,6 +118,7 @@ class CustomList : ObjectG, TreeModelIF
 			throw new Exception("record.pos != TreePath.getIndices()[0]");
 
 		/* We simply store a pointer to our custom record in the iter */
+		iter = new TreeIter();
 		iter.stamp     = stamp;
 		iter.userData  = record;
 

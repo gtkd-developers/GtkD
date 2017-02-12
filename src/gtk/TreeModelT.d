@@ -261,23 +261,6 @@ public template TreeModelT(TStruct)
 	}
 	
 	/**
-	 * Sets iter to a valid iterator pointing to path.
-	 * Params:
-	 *  iter = The uninitialized GtkTreeIter.
-	 *  path = The GtkTreePath.
-	 * Returns:
-	 *  TRUE, if iter was set.
-	 */
-	public int getIter(TreeIter iter, TreePath path)
-	{
-		iter.setModel(this);
-		return gtk_tree_model_get_iter(
-			getTreeModelStruct(),
-			(iter is null) ? null : iter.getTreeIterStruct(),
-		(path is null) ? null : path.getTreePathStruct());
-	}
-	
-	/**
 	 * Initializes and sets value to that at column.
 	 * When done with value, g_value_unset() needs to be called
 	 * to free any allocated memory.
@@ -339,6 +322,27 @@ public template TreeModelT(TStruct)
 	public GtkTreeModelFlags getFlags()
 	{
 		return gtk_tree_model_get_flags(getTreeModelStruct());
+	}
+
+	/**
+	 * Sets @iter to a valid iterator pointing to @path.  If @path does
+	 * not exist, @iter is set to an invalid iterator and %FALSE is returned.
+	 *
+	 * Params:
+	 *     iter = the uninitialized #GtkTreeIter-struct
+	 *     path = the #GtkTreePath-struct
+	 *
+	 * Return: %TRUE, if @iter was set
+	 */
+	public bool getIter(out TreeIter iter, TreePath path)
+	{
+		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		
+		auto p = gtk_tree_model_get_iter(getTreeModelStruct(), outiter, (path is null) ? null : path.getTreePathStruct()) != 0;
+		
+		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
+		
+		return p;
 	}
 
 	/**
