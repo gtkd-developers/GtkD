@@ -203,8 +203,13 @@ public class TreeModel : ObjectG, TreeModelIF
 		static int customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
+			TreeIter ti;
 			
-			return tm.getIter(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(gtk_tree_path_copy(path)));
+			if ( !tm.getIter(ti, ObjectG.getDObject!(TreePath)(gtk_tree_path_copy(path))) )
+				return false;
+			
+			iter = ti.getTreeIterStruct();
+			return true;
 		}
 		
 		static GtkTreePath* customTreeModelGetPath(GtkTreeModel *tree_model, GtkTreeIter *iter)
