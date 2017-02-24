@@ -4126,6 +4126,7 @@ move: filter_new TreeModelFilter new
 move: sort_new_with_model TreeModelSort new_with_model
 import: gobject.Value
 noCode: get_value
+noCode: get_iter
 interfaceCode: start
 	/**
 	 * Get the value of a column as a char array.
@@ -4138,6 +4139,16 @@ interfaceCode: start
 	 * this is the same calling getValue and get the int from the value object
 	 */
 	int getValueInt(TreeIter iter, int column);
+
+	/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path);
 
 	/**
 	 * Initializes and sets value to that at column.
@@ -4169,6 +4180,23 @@ code: start
 	{
 		Value value = getValue(iter, column);
 		return value.getInt();
+	}
+
+	/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path)
+	{
+		iter.setModel(this);
+		return gtk_tree_model_get_iter(
+				getTreeModelStruct(),
+				(iter is null) ? null : iter.getTreeIterStruct(),
+				(path is null) ? null : path.getTreePathStruct());
 	}
 
 	/**
@@ -4369,13 +4397,8 @@ public class TreeModel : ObjectG, TreeModelIF
 		static int customTreeModelGetIter(GtkTreeModel *tree_model, GtkTreeIter *iter, GtkTreePath *path)
 		{
 			auto tm = ObjectG.getDObject!(TreeModel)(tree_model);
-			TreeIter ti;
-	
-			if ( !tm.getIter(ti, ObjectG.getDObject!(TreePath)(gtk_tree_path_copy(path))) )
-				return false;
 
-			iter = ti.getTreeIterStruct();
-			return true;
+			return tm.getIter(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(gtk_tree_path_copy(path)));
 		}
 
 		static GtkTreePath* customTreeModelGetPath(GtkTreeModel *tree_model, GtkTreeIter *iter)

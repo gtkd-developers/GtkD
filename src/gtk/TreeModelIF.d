@@ -252,6 +252,16 @@ public interface TreeModelIF{
 	int getValueInt(TreeIter iter, int column);
 	
 	/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path);
+	
+	/**
 	 * Initializes and sets value to that at column.
 	 * When done with value, g_value_unset() needs to be called
 	 * to free any allocated memory.
@@ -297,18 +307,6 @@ public interface TreeModelIF{
 	 * Return: the flags supported by this interface
 	 */
 	public GtkTreeModelFlags getFlags();
-
-	/**
-	 * Sets @iter to a valid iterator pointing to @path.  If @path does
-	 * not exist, @iter is set to an invalid iterator and %FALSE is returned.
-	 *
-	 * Params:
-	 *     iter = the uninitialized #GtkTreeIter-struct
-	 *     path = the #GtkTreePath-struct
-	 *
-	 * Return: %TRUE, if @iter was set
-	 */
-	public bool getIter(out TreeIter iter, TreePath path);
 
 	/**
 	 * Initializes @iter with the first iterator in the tree
