@@ -1,8 +1,9 @@
 module gtk.PopupMenu;
 
-import gtk.Main;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
 import gtk.EventBox;
-import gtk.MainWindow;
 import gtk.Menu;
 import gtk.Label;
 import gtk.ImageMenuItem;
@@ -10,13 +11,14 @@ import gtk.Widget;
 import gtk.AccelGroup;
 import gdk.Event;
 
-class ExampleWindow : MainWindow
+class PopupMenuDemo : ApplicationWindow
 {
 	Menu menu;
 
-	this()
+	this(Application application)
 	{
-		super("GtkD: Popup Menu");
+		super(application);
+		setTitle("GtkD: Popup Menu");
 		setDefaultSize(200, 200);
 
 		auto eventBox = new EventBox();
@@ -52,11 +54,9 @@ class ExampleWindow : MainWindow
 	}
 }
 
-void main(string[] arg)
+int main(string[] args)
 {
-	Main.init(arg);
-
-	new ExampleWindow();
-
-	Main.run();
+    auto application = new Application("org.gtkd.demo.popupmenu", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(delegate void(GioApplication app) { new PopupMenuDemo(application); });
+    return application.run(args);
 }
