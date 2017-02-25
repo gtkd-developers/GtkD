@@ -96,46 +96,46 @@ template ImplementClassImpl(Klass, Impl)
 		if ( !hasMember!(Impl, toCamelCase!Impl()) )
 		{
 			result ~= "\nstruct "~ toPascalCase!Impl() ~"\n"~
-				      "{\n"~
-				      "\t"~ Klass.stringof ~" parentInstance;\n"~
-				      "}\n\n";
+			          "{\n"~
+			          "\t"~ Klass.stringof ~" parentInstance;\n"~
+			          "}\n\n";
 
 			result ~= "struct "~ toPascalCase!Impl() ~"Class\n"~
-				      "{\n"~
-				      "\t"~ Klass.stringof ~"Class parentClass;\n"~
-				      "}\n\n";
+			          "{\n"~
+			          "\t"~ Klass.stringof ~"Class parentClass;\n"~
+			          "}\n\n";
 
 			result ~= "protected "~ toPascalCase!Impl() ~"* "~ toCamelCase!Impl() ~";\n"~
-				      "protected static "~ Klass.stringof ~"Class* parentClass = null;\n\n";
+			          "protected static "~ Klass.stringof ~"Class* parentClass = null;\n\n";
 
 			result ~= "protected override void* getStruct()\n"~
-				      "{\n"~
-				      "\treturn cast(void*)gObject;\n"~
-				      "}\n\n";
+			          "{\n"~
+			          "\treturn cast(void*)gObject;\n"~
+			          "}\n\n";
 		}
 
 		if ( !implements!Impl("getType") )
 		{
 			result ~= "public static GType getType()\n"~
-				      "{\n"~
+			         "{\n"~
 			          "\timport std.algorithm : startsWith;\n\n"~
-				      "\tGType "~ toCamelCase!Impl() ~"Type = Type.fromName(\""~ toPascalCase!Impl() ~"\");\n\n"~
-				      "\tif ("~ toCamelCase!Impl() ~"Type == GType.INVALID)\n"~
-				      "\t{\n"~
-				      "\t\t"~ toCamelCase!Impl() ~"Type = Type.registerStaticSimple(\n"~
+			          "\tGType "~ toCamelCase!Impl() ~"Type = Type.fromName(\""~ toPascalCase!Impl() ~"\");\n\n"~
+			          "\tif ("~ toCamelCase!Impl() ~"Type == GType.INVALID)\n"~
+			          "\t{\n"~
+			          "\t\t"~ toCamelCase!Impl() ~"Type = Type.registerStaticSimple(\n"~
 			          "\t\t\t"~ getTypeFunction!Klass() ~",\n"~
-				      "\t\t\t\""~ toPascalCase!Impl() ~"\",\n"~
-				      "\t\t\tcast(uint)"~ toPascalCase!Impl() ~"Class.sizeof,\n"~
-				      "\t\t\tcast(GClassInitFunc) &"~ toCamelCase!Impl() ~"ClassInit,\n"~
-				      "\t\t\tcast(uint)"~ toPascalCase!Impl() ~".sizeof, null, cast(GTypeFlags)0);\n\n"~
-				      "\t\tforeach ( member; __traits(derivedMembers, "~ Impl.stringof ~") )\n"~
-				      "\t\t{\n"~
-				      "\t\t\tstatic if ( member.startsWith(\"_implementInterface\") )\n"~
-				      "\t\t\t\t__traits(getMember, "~ Impl.stringof ~", member)("~ toCamelCase!Impl() ~"Type);\n"~
-				      "\t\t}\n"~
-				      "\t}\n\n"~
-				      "\treturn "~ toCamelCase!Impl() ~"Type;\n"~
-				      "}\n\n";
+			          "\t\t\t\""~ toPascalCase!Impl() ~"\",\n"~
+			          "\t\t\tcast(uint)"~ toPascalCase!Impl() ~"Class.sizeof,\n"~
+			          "\t\t\tcast(GClassInitFunc) &"~ toCamelCase!Impl() ~"ClassInit,\n"~
+			          "\t\t\tcast(uint)"~ toPascalCase!Impl() ~".sizeof, null, cast(GTypeFlags)0);\n\n"~
+			          "\t\tforeach ( member; __traits(derivedMembers, "~ Impl.stringof ~") )\n"~
+			          "\t\t{\n"~
+			          "\t\t\tstatic if ( member.startsWith(\"_implementInterface\") )\n"~
+			          "\t\t\t\t__traits(getMember, "~ Impl.stringof ~", member)("~ toCamelCase!Impl() ~"Type);\n"~
+			          "\t\t}\n"~
+			          "\t}\n\n"~
+			          "\treturn "~ toCamelCase!Impl() ~"Type;\n"~
+			          "}\n\n";
 		}
 
 		result ~= "extern(C)\n{\n";
@@ -235,54 +235,54 @@ template ImplementInterfaceImpl(Base, Klass, Impl)
 		if ( !hasMember!(Impl, toCamelCase!Impl()) )
 		{
 			result ~= "\nstruct "~ toPascalCase!Impl() ~"\n"~
-				      "{\n"~
-				      "\t"~ Base.stringof ~" parentInstance;\n"~
-				      "}\n\n";
+			          "{\n"~
+			          "\t"~ Base.stringof ~" parentInstance;\n"~
+			          "}\n\n";
 
 			result ~= "struct "~ toPascalCase!Impl() ~"Class\n"~
-				      "{\n"~
-				      "\t"~ Base.stringof ~"Class parentClass;\n"~
-				      "}\n\n";
+			          "{\n"~
+			          "\t"~ Base.stringof ~"Class parentClass;\n"~
+			          "}\n\n";
 
 			result ~= "protected "~ toPascalCase!Impl() ~"* "~ toCamelCase!Impl() ~";\n"~
-				      "protected static "~ Base.stringof ~"Class* parentClass = null;\n\n";
+			          "protected static "~ Base.stringof ~"Class* parentClass = null;\n\n";
 
 			result ~= "protected override void* getStruct()\n"~
-				      "{\n"~
-				      "\treturn cast(void*)gObject;\n"~
-				      "}\n\n";
+			          "{\n"~
+			          "\treturn cast(void*)gObject;\n"~
+			          "}\n\n";
 
 			if ( is(Base == gtkc.gobjecttypes.GObject) )
 			{
 				result ~= "public this()\n"~
-						  "{\n"~
-						  "\tauto p = super(getType(), null);\n"~
-						  "\t"~ toCamelCase!Impl() ~" = cast("~ toPascalCase!Impl() ~"*) p.getObjectGStruct();\n"~
-						  "}\n\n";
+				          "{\n"~
+				          "\tauto p = super(getType(), null);\n"~
+				          "\t"~ toCamelCase!Impl() ~" = cast("~ toPascalCase!Impl() ~"*) p.getObjectGStruct();\n"~
+				          "}\n\n";
 			}
 		}
 
 		if ( !implements!Impl("getType") )
 		{
 			result ~= "public static GType getType()\n"~
-				      "{\n"~
-				      "\tGType "~ toCamelCase!Impl() ~"Type = Type.fromName(\""~ toPascalCase!Impl() ~"\");\n\n"~
-				      "\tif ("~ toCamelCase!Impl() ~"Type == GType.INVALID)\n"~
-				      "\t{\n"~
-				      "\t\t"~ toCamelCase!Impl() ~"Type = Type.registerStaticSimple(\n"~
+			          "{\n"~
+			          "\tGType "~ toCamelCase!Impl() ~"Type = Type.fromName(\""~ toPascalCase!Impl() ~"\");\n\n"~
+			          "\tif ("~ toCamelCase!Impl() ~"Type == GType.INVALID)\n"~
+			          "\t{\n"~
+			          "\t\t"~ toCamelCase!Impl() ~"Type = Type.registerStaticSimple(\n"~
 			          "\t\t\t"~ getTypeFunction!Base() ~",\n"~
-				      "\t\t\t\""~ toPascalCase!Impl() ~"\",\n"~
-				      "\t\t\tcast(uint)"~ toPascalCase!Impl() ~"Class.sizeof,\n"~
-				      "\t\t\tcast(GClassInitFunc) &"~ toCamelCase!Impl() ~"ClassInit,\n"~
-				      "\t\t\tcast(uint)"~ toPascalCase!Impl() ~".sizeof, null, cast(GTypeFlags)0);\n\n"~
-				      "\t\tforeach ( member; __traits(derivedMembers, "~ Impl.stringof ~") )\n"~
-				      "\t\t{\n"~
-				      "\t\t\tstatic if ( member.startsWith(\"_implementInterface\") )\n"~
-				      "\t\t\t\t__traits(getMember, "~ Impl.stringof ~", member)("~ toCamelCase!Impl() ~"Type);\n"~
-				      "\t\t}\n"~
-				      "\t}\n\n"~
-				      "\treturn "~ toCamelCase!Impl() ~"Type;\n"~
-				      "}\n\n";
+			          "\t\t\t\""~ toPascalCase!Impl() ~"\",\n"~
+			          "\t\t\tcast(uint)"~ toPascalCase!Impl() ~"Class.sizeof,\n"~
+			          "\t\t\tcast(GClassInitFunc) &"~ toCamelCase!Impl() ~"ClassInit,\n"~
+			          "\t\t\tcast(uint)"~ toPascalCase!Impl() ~".sizeof, null, cast(GTypeFlags)0);\n\n"~
+			          "\t\tforeach ( member; __traits(derivedMembers, "~ Impl.stringof ~") )\n"~
+			          "\t\t{\n"~
+			          "\t\t\tstatic if ( member.startsWith(\"_implementInterface\") )\n"~
+			          "\t\t\t\t__traits(getMember, "~ Impl.stringof ~", member)("~ toCamelCase!Impl() ~"Type);\n"~
+			          "\t\t}\n"~
+			          "\t}\n\n"~
+			          "\treturn "~ toCamelCase!Impl() ~"Type;\n"~
+			          "}\n\n";
 		}
 
 		result ~= "static void _implementInterface"~ Klass.stringof ~"(GType type)\n"~
