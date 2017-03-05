@@ -68,37 +68,37 @@ BUGFIX = $(word 3,$(subst ., ,$(GTKD_VERSION)))
 
 LIBNAME_GTKD = libgtkd-$(MAJOR).a
 SONAME_GTKD = libgtkd-$(MAJOR).so
-SOURCES_GTKD = $(wildcard src/*/*.d)
+SOURCES_GTKD = $(wildcard generated/gtkd/*/*.d)
 OBJECTS_GTKD = $(patsubst %.d,%.o,$(SOURCES_GTKD))
 PICOBJECTS_GTKD = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD))
 
 LIBNAME_GTKDGL = libgtkdgl-$(MAJOR).a
 SONAME_GTKDGL = libgtkdgl-$(MAJOR).so
-SOURCES_GTKDGL = $(wildcard srcgl/*/*.d)
+SOURCES_GTKDGL = $(wildcard generated/gtkdgl/*/*.d)
 OBJECTS_GTKDGL = $(patsubst %.d,%.o,$(SOURCES_GTKDGL))
 PICOBJECTS_GTKDGL = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGL))
 
 LIBNAME_GTKDSV = libgtkdsv-$(MAJOR).a
 SONAME_GTKDSV = libgtkdsv-$(MAJOR).so
-SOURCES_GTKDSV = $(wildcard srcsv/*/*.d)
+SOURCES_GTKDSV = $(wildcard generated/sourceview/*/*.d)
 OBJECTS_GTKDSV = $(patsubst %.d,%.o,$(SOURCES_GTKDSV))
 PICOBJECTS_GTKDSV = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDSV))
 
 LIBNAME_GSTREAMERD = libgstreamerd-$(MAJOR).a
 SONAME_GSTREAMERD = libgstreamerd-$(MAJOR).so
-SOURCES_GSTREAMERD = $(wildcard srcgstreamer/*/*.d)
+SOURCES_GSTREAMERD = $(wildcard generated/gstreamer/*/*.d)
 OBJECTS_GSTREAMERD = $(patsubst %.d,%.o,$(SOURCES_GSTREAMERD))
 PICOBJECTS_GSTREAMERD = $(patsubst %.o,%.pic.o,$(OBJECTS_GSTREAMERD))
 
 LIBNAME_VTED = libvted-$(MAJOR).a
 SONAME_VTED = libvted-$(MAJOR).so
-SOURCES_VTED = $(wildcard srcvte/*/*.d)
+SOURCES_VTED = $(wildcard generated/vte/*/*.d)
 OBJECTS_VTED = $(patsubst %.d,%.o,$(SOURCES_VTED))
 PICOBJECTS_VTED = $(patsubst %.o,%.pic.o,$(OBJECTS_VTED))
 
 LIBNAME_PEASD = libpeasd-$(MAJOR).a
 SONAME_PEASD = libpeasd-$(MAJOR).so
-SOURCES_PEASD = $(wildcard srcpeas/*/*.d)
+SOURCES_PEASD = $(wildcard generated/peas/*/*.d)
 OBJECTS_PEASD = $(patsubst %.d,%.o,$(SOURCES_PEASD))
 PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
 
@@ -138,53 +138,53 @@ shared-peas:      $(SONAME_PEASD)
 
 #######################################################################
 
-$(LIBNAME_GTKD): IMPORTS=-Isrc
+$(LIBNAME_GTKD): IMPORTS=-Igenerated/gtkd
 $(LIBNAME_GTKD): $(OBJECTS_GTKD)
 	$(make-lib)
 
-$(LIBNAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
+$(LIBNAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
 $(LIBNAME_GTKDGL): $(LIBNAME_GTKD) $(OBJECTS_GTKDGL)
 	$(make-lib)
 
-$(LIBNAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
+$(LIBNAME_GTKDSV): IMPORTS=-Igenerated/gtkd -Igenerated/sourceview
 $(LIBNAME_GTKDSV): $(LIBNAME_GTKD) $(OBJECTS_GTKDSV)
 	$(make-lib)
 
-$(LIBNAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
+$(LIBNAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
 $(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
 	$(make-lib)
 
-$(LIBNAME_VTED): IMPORTS=-Isrc -Isrcvte
+$(LIBNAME_VTED): IMPORTS=-Igenerated/gtkd -Igenerated/vte
 $(LIBNAME_VTED): $(LIBNAME_GTKD) $(OBJECTS_VTED)
 	$(make-lib)
 
-$(LIBNAME_PEASD): IMPORTS=-Isrc -Isrcpeas
+$(LIBNAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
 $(LIBNAME_PEASD): $(LIBNAME_GTKD) $(OBJECTS_PEASD)
 	$(make-lib)
 
 #######################################################################
 
-$(SONAME_GTKD): IMPORTS=-Isrc
+$(SONAME_GTKD): IMPORTS=-Igenerated/gtkd
 $(SONAME_GTKD): $(PICOBJECTS_GTKD)
 	$(make-shared-lib)
 
-$(SONAME_GTKDGL): IMPORTS=-Isrc -Isrcgl
+$(SONAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
 $(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
 	$(make-shared-lib)
 
-$(SONAME_GTKDSV): IMPORTS=-Isrc -Isrcsv
+$(SONAME_GTKDSV): IMPORTS=-Igenerated/gtkd -Igenerated/sourceview
 $(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV)
 	$(make-shared-lib)
 
-$(SONAME_GSTREAMERD): IMPORTS=-Isrc -Isrcgstreamer
+$(SONAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
 $(SONAME_GSTREAMERD): $(PICOBJECTS_GSTREAMERD)
 	$(make-shared-lib)
 
-$(SONAME_VTED): IMPORTS=-Isrc -Isrcvte
+$(SONAME_VTED): IMPORTS=-Igenerated/gtkd -Igenerated/vte
 $(SONAME_VTED): $(PICOBJECTS_VTED)
 	$(make-shared-lib)
 
-$(SONAME_PEASD): IMPORTS=-Isrc -Isrcpeas
+$(SONAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
 $(SONAME_PEASD): $(PICOBJECTS_PEASD)
 	$(make-shared-lib)
 
@@ -201,7 +201,7 @@ test: $(BINNAME_DEMO)
 
 # Create a versioned symlink so the demo is able to load it.
 
-$(BINNAME_DEMO): IMPORTS=-Isrc -Idemos/gtkD/TestWindow
+$(BINNAME_DEMO): IMPORTS=-Igenerated/gtkd -Idemos/gtkD/TestWindow
 $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),,$(if $(wildcard $(LIBNAME_GTKD)),,$(MAKE) $(LIBNAME_GTKD)))
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
@@ -327,31 +327,31 @@ install-shared-peas: $(SONAME_PEASD) install-shared-gtkd
 install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
 	install -d $(DESTDIR)$(datadir)/pkgconfig
-	(cd src;   echo $(SOURCES_GTKD)   | sed -e s,src/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	(cd generated/gtkd;   echo $(SOURCES_GTKD)   | sed -e s,generated/gtkd/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
-	(cd srcgl; echo $(SOURCES_GTKDGL) | sed -e s,srcgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	(cd generated/gtkdgl; echo $(SOURCES_GTKDGL) | sed -e s,generated/gtkdgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gtkdsv: gtkdsv-$(MAJOR).pc install-headers-gtkd
-	(cd srcsv; echo $(SOURCES_GTKDSV) | sed -e s,srcsv/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	(cd generated/sourceview; echo $(SOURCES_GTKDSV) | sed -e s,generated/sourceview/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
-	(cd srcgstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,srcgstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	(cd generated/gstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,generated/gstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-vte: vted-$(MAJOR).pc install-headers-gtkd
-	(cd srcvte; echo $(SOURCES_VTED) | sed -e s,srcvte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	(cd generated/vte; echo $(SOURCES_VTED) | sed -e s,generated/vte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 install-headers-peas: peasd-$(MAJOR).pc install-headers-gtkd
-	(cd srcpeas; echo $(SOURCES_PEASD) | sed -e s,srcpeas/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
+	(cd generated/peas; echo $(SOURCES_PEASD) | sed -e s,generated/peas/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xv)
 	install -m 644 peasd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer
-	$(foreach dir,$(shell ls src)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
+	$(foreach dir,$(shell ls generated/gtkd)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gtkd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
@@ -359,7 +359,7 @@ uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
 uninstall-gtkdgl:
-	$(foreach dir,$(shell ls srcsv), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
+	$(foreach dir,$(shell ls generated/gtkdgl), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gtkdgl-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
@@ -367,7 +367,7 @@ uninstall-gtkdgl:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
 uninstall-gtkdsv:
-	$(foreach dir,$(shell ls srcgl), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
+	$(foreach dir,$(shell ls generated/sourceview), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gtkdsv-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
@@ -375,7 +375,7 @@ uninstall-gtkdsv:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
 uninstall-gstreamer:
-	$(foreach dir,$(shell ls srcgstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
+	$(foreach dir,$(shell ls generated/gstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/gstreamerd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
@@ -383,7 +383,7 @@ uninstall-gstreamer:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
 uninstall-vte:
-	$(foreach dir,$(shell ls srcvte), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
+	$(foreach dir,$(shell ls generated/vte), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/pkgconfig/vted-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_VTED)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED)
@@ -391,7 +391,7 @@ uninstall-vte:
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED).$(SO_VERSION).$(MINOR).$(BUGFIX)
 
 uninstall-peas:
-	$(foreach dir,$(shell ls srcpeas), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
+	$(foreach dir,$(shell ls generated/peas), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
 	rm -f $(DESTDIR)$(datadir)/pkgconfig/peasd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_PEASD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_PEASD)

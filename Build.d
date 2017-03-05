@@ -43,22 +43,22 @@ int main(string[] args)
 		switch ( arg )
 		{
 			case "gtkd":
-				build("src", "gtkd");
+				build("generated\\gtkd", "gtkd");
 				break;
 			case "gtkdgl":
-				build("srcgl", "gtkdgl");
+				build("generated\\gtkdgl", "gtkdgl");
 				break;
 			case "sv":
-				build("srcsv", "gtkdsv");
+				build("generated\\sourceview", "gtkdsv");
 				break;
 			case "gstreamer":
-				build("srcgstreamer", "gstreamerd");
+				build("generated\\gstreamer", "gstreamerd");
 				break;
 			case "vte":
-				build("srcvte", "vted");
+				build("generated\\vte", "vted");
 				break;
 			case "peas":
-				build("srcpeas", "peasd");
+				build("generated\\peas", "peasd");
 				break;
 			default:
 				assert(false);

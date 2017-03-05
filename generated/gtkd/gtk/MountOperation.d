@@ -182,18 +182,13 @@ public class MountOperation : GioMountOperation
 	}
 
 	/**
-	 * This is a convenience function for launching the default application
-	 * to show the uri. The uri must be of a form understood by GIO (i.e. you
-	 * need to install gvfs to get support for uri schemes such as http://
-	 * or ftp://, as only local files are handled by GIO itself).
-	 * Typical examples are
-	 * - `file:///home/gnome/pict.jpg`
-	 * - `http://www.gnome.org`
-	 * - `mailto:me@gnome.org`
+	 * A convenience function for launching the default application
+	 * to show the uri. Like gtk_show_uri_on_window(), but takes a screen
+	 * as transient parent instead of a window.
 	 *
-	 * Ideally the timestamp is taken from the event triggering
-	 * the gtk_show_uri() call. If timestamp is not known you can take
-	 * %GDK_CURRENT_TIME.
+	 * Note that this function is deprecated as it does not pass the necessary
+	 * information for helpers to parent their dialog properly, when run from
+	 * sandboxed applications for example.
 	 *
 	 * Params:
 	 *     screen = screen to show the uri on

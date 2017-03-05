@@ -250,7 +250,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * gtk_button_set_image().
 	 *
 	 * Params:
-	 *     iconName = an icon name
+	 *     iconName = an icon name or %NULL
 	 *     size = an icon size (#GtkIconSize)
 	 *
 	 * Return: a new #GtkButton displaying the themed icon

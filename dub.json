@@ -29,53 +29,53 @@
             "name": "gtkd",
             "targetType": "library",
             "targetName": "gtkd-3",
-            "sourcePaths": ["src"],
+            "sourcePaths": ["generated/gtkd"],
             "libs-posix": ["dl"],
-            "importPaths": ["src"]
+            "importPaths": ["generated/gtkd"]
         },
         {
             "name": "gtkdgl",
             "targetType": "library",
             "targetName": "gtkdgl-3",
-            "sourcePaths": ["srcgl"],
+            "sourcePaths": ["generated/gtkdgl"],
             "libs-posix": ["dl"],
-            "importPaths": ["srcgl"],
+            "importPaths": ["generated/gtkdgl"],
             "dependencies": {"gtk-d:gtkd":"~>3.5.0"}
         },
         {
             "name": "sv",
             "targetType": "library",
             "targetName": "gtkdsv-3",
-            "sourcePaths": ["srcsv"],
+            "sourcePaths": ["generated/sourceview"],
             "libs-posix": ["dl"],
-            "importPaths": ["srcsv"],
+            "importPaths": ["generated/sourceview"],
             "dependencies": {"gtk-d:gtkd":"~>3.5.0"}
         },
         {
             "name": "gstreamer",
             "targetType": "library",
             "targetName": "gstreamerd-3",
-            "sourcePaths": ["srcgstreamer"],
+            "sourcePaths": ["generated/gstreamer"],
             "libs-posix": ["dl"],
-            "importPaths": ["srcgstreamer"],
+            "importPaths": ["generated/gstreamer"],
             "dependencies": {"gtk-d:gtkd":"~>3.5.0"}
         },
         {
             "name": "vte",
             "targetType": "library",
             "targetName": "vted-3",
-            "sourcePaths": ["srcvte"],
+            "sourcePaths": ["generated/vte"],
             "libs-posix": ["dl"],
-            "importPaths": ["srcvte"],
+            "importPaths": ["generated/vte"],
             "dependencies": {"gtk-d:gtkd":"~>3.5.0"}
         },
         {
             "name": "peas",
             "targetType": "library",
             "targetName": "peasd-3",
-            "sourcePaths": ["srcpeas"],
+            "sourcePaths": ["generated/peas"],
             "libs-posix": ["dl"],
-            "importPaths": ["srcpeas"],
+            "importPaths": ["generated/peas"],
             "dependencies": {"gtk-d:gtkd":"~>3.5.0"}
         }
     ]

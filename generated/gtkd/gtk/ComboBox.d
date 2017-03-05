@@ -96,7 +96,7 @@ private import std.algorithm;
  * ]|
  * 
  * A GtkComboBox with an entry has a single CSS node with name combobox. It
- * contains a bx with the .linked class and that box contains an entry and a
+ * contains a box with the .linked class. That box contains an entry and a
  * button, both with the .combo class added.
  * The button also contains another node with name arrow.
  */
@@ -512,6 +512,8 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
+	 *
+	 * Before calling this, @combo_box must be mapped, or nothing will happen.
 	 *
 	 * Since: 2.4
 	 */

@@ -393,9 +393,9 @@ public class Gesture : EventController
 	 * @sequence.
 	 *
 	 * Params:
-	 *     sequence = a #GdkEventSequence
+	 *     sequence = a #GdkEventSequence or %NULL
 	 *
-	 * Return: %TRUE if @gesture is handling @sequence
+	 * Return: %TRUE if @gesture is handling @sequence, %FALSE otherwise
 	 *
 	 * Since: 3.14
 	 */

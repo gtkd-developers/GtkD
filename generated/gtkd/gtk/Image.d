@@ -310,7 +310,7 @@ public class Image : Misc
 	 * will be updated appropriately.
 	 *
 	 * Params:
-	 *     iconName = an icon name
+	 *     iconName = an icon name or %NULL
 	 *     size = a stock icon size (#GtkIconSize)
 	 *
 	 * Return: a new #GtkImage displaying the themed icon
@@ -635,7 +635,7 @@ public class Image : Misc
 	 * See gtk_image_new_from_icon_name() for details.
 	 *
 	 * Params:
-	 *     iconName = an icon name
+	 *     iconName = an icon name or %NULL
 	 *     size = an icon size (#GtkIconSize)
 	 *
 	 * Since: 2.6
@@ -699,7 +699,7 @@ public class Image : Misc
 	 * See gtk_image_new_from_surface() for details.
 	 *
 	 * Params:
-	 *     surface = a cairo_surface_t
+	 *     surface = a cairo_surface_t or %NULL
 	 *
 	 * Since: 3.10
 	 */

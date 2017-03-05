@@ -47,7 +47,7 @@ private import std.algorithm;
  * All parts of the dialog are optional.
  * 
  * About dialogs often contain links and email addresses. GtkAboutDialog
- * displays these as clickable links. By default, it calls gtk_show_uri()
+ * displays these as clickable links. By default, it calls gtk_show_uri_on_window()
  * when a user clicks one. The behaviour can be overridden with the
  * #GtkAboutDialog::activate-link signal.
  * 
@@ -615,7 +615,7 @@ public class AboutDialog : Dialog
 	/**
 	 * The signal which gets emitted to activate a URI.
 	 * Applications may connect to it to override the default behaviour,
-	 * which is to call gtk_show_uri().
+	 * which is to call gtk_show_uri_on_window().
 	 *
 	 * Params:
 	 *     uri = the URI that is activated

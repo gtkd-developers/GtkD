@@ -601,9 +601,6 @@ public class Range : Widget, OrientableIF
 	 * value to the desired number of decimal digits; the default GTK+
 	 * handler clamps the value based on #GtkRange:round-digits.
 	 *
-	 * It is not possible to use delayed update policies in an overridden
-	 * #GtkRange::change-value handler.
-	 *
 	 * Params:
 	 *     scroll = the type of scroll action that was performed
 	 *     value = the new value resulting from the scroll action

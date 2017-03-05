@@ -3979,10 +3979,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Emits the #GtkWidget::mnemonic-activate signal.
 		 *
-		 * The default handler for this signal activates the @widget if
-		 * @group_cycling is %FALSE, and just grabs the focus if @group_cycling
-		 * is %TRUE.
-		 *
 		 * Params:
 		 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
 		 *
@@ -9275,6 +9271,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
+		 * The default handler for this signal activates @widget if @group_cycling
+		 * is %FALSE, or just makes @widget grab focus if @group_cycling is %TRUE.
+		 *
+		 * Params:
+		 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
+		 *
 		 * Return: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
@@ -9291,9 +9293,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return wrapper.handlerId;
 		}
 		
-		extern(C) static int callBackMnemonicActivate(GtkWidget* widgetStruct, bool arg1, OnMnemonicActivateDelegateWrapper wrapper)
+		extern(C) static int callBackMnemonicActivate(GtkWidget* widgetStruct, bool groupCycling, OnMnemonicActivateDelegateWrapper wrapper)
 		{
-			return wrapper.dlg(arg1, wrapper.outer);
+			return wrapper.dlg(groupCycling, wrapper.outer);
 		}
 		
 		extern(C) static void callBackMnemonicActivateDestroy(OnMnemonicActivateDelegateWrapper wrapper, GClosure* closure)

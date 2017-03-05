@@ -51,18 +51,19 @@ includeComments: y
 # define the lookup and destination directories
 # "src" will be added to outputRoot
 inputRoot: ./gtkdocs
-outputRoot: ../
+outputRoot: generated
 
 ###########################################################
 ### predifined: lib
 ###########################################################
 
-srcDir: src/gtkc
+srcDir: gtkd/gtkc
 copy: paths.d
 copy: Loader.d
 
-srcDir: src
+srcDir: gtkd
 bindDir: gtkc
+copy: cairo
 copy: gtkd
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
@@ -75,24 +76,24 @@ lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
 
-srcDir: srcgl
-bindDir: gtkglc
-lookup: APILookupGLd.txt
-lookup: APILookupGLt.txt
+#srcDir: gtkdgl
+#bindDir: gtkglc
+#lookup: APILookupGLd.txt
+#lookup: APILookupGLt.txt
 
-srcDir: srcsv
+srcDir: sourceview
 bindDir: gsvc
 lookup: APILookupSourceView.txt
 
-srcDir: srcgstreamer
+srcDir: gstreamer
 bindDir: gstreamerc
 lookup: APILookupGStreamer.txt
 lookup: APILookupGstInterfaces.txt
 
-srcDir: srcvte
+srcDir: vte
 bindDir: vtec
 lookup: APILookupVte.txt
 
-srcDir: srcpeas
+srcDir: peas
 bindDir: peasc
 lookup: APILookupPeas.txt

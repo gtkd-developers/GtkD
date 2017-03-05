@@ -31,7 +31,7 @@ endif
 
 .DEFAULT_GOAL = $(BINNAME)
 
-SOURCES = $(wildcard utils/*.d)
+SOURCES = $(wildcard src/*.d)
 BINNAME = gtkwrap
 
 $(BINNAME): $(SOURCES)

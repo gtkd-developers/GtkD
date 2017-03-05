@@ -70,7 +70,7 @@ void main(string[] args)
 	if ( inputDir.empty )
 		inputDir = "./";
 	if ( outputDir.empty )
-		outputDir = buildPath (inputDir, "../");
+		outputDir = buildPath(inputDir, "out");
 
 	//Read in the GIR and API files.
 	GtkWrapper wrapper = new GtkWrapper(inputDir, outputDir);
@@ -137,7 +137,8 @@ class GtkWrapper
 					inputRoot = defReader.value;
 					break;
 				case "outputRoot":
-					outputRoot = defReader.value;
+					if ( outputRoot == buildPath(apiRoot, "out") )
+						outputRoot = defReader.value;
 					break;
 				case "srcDir":
 					srcDir = defReader.value;
@@ -518,6 +519,15 @@ class GtkWrapper
 		}
 
 		copyDir(from, to);
+
+		if ( file == "cairo" )
+		{
+			copy(buildNormalizedPath(to, "cairo.d"), buildNormalizedPath(to, "../gtkc/cairo.d"));
+			copy(buildNormalizedPath(to, "cairotypes.d"), buildNormalizedPath(to, "../gtkc/cairotypes.d"));
+
+			remove(buildNormalizedPath(to, "cairo.d"));
+			remove(buildNormalizedPath(to, "cairotypes.d"));
+		}
 	}
 
 	private GtkStruct createClass(GtkPackage pack, string name)

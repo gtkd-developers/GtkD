@@ -1,15 +1,15 @@
 #!/bin/sh
-echo "MODULES =" > modules.ddoc ;grep -h -e "^module" src/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" srcgl/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" srcsv/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
-grep -h -e "^module" srcvte/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+echo "MODULES =" > modules.ddoc ;grep -h -e "^module" generated/gtkd/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" generated/gtkdgl/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" generated/sourceview/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
+grep -h -e "^module" generated/vte/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 
 dmd -o- -D -Dddocs  modules.ddoc docs/candy.ddoc \
-	src/gtk/*  src/gtkc/* src/glib/* src/gio/* src/gdk/* \
-	src/gobject/* src/gthread/* src/atk/* \
-	src/pango/* src/cairo/* src/gdkpixbuf/* \
-	srcgl/glgdk/*  srcgl/glgtk/*  srcgl/gtkglc/* \
-	srcsv/gsv/*  srcsv/gsvc/* \
-	srcvte/vtec/* srcvte/vte/* -op
+	generated/gtkd/gtk/*  generated/gtkd/gtkc/* generated/gtkd/glib/* generated/gtkd/gio/* generated/gtkd/gdk/* \
+	generated/gtkd/gobject/* generated/gtkd/gthread/* generated/gtkd/atk/* \
+	generated/gtkd/pango/* generated/gtkd/cairo/* generated/gtkd/gdkpixbuf/* \
+	generated/gtkdgl/glgdk/*  generated/gtkdgl/glgtk/*  generated/gtkdgl/gtkglc/* \
+	generated/sourceview/gsv/*  generated/sourceview/gsvc/* \
+	generated/vte/vtec/* generated/vte/vte/* -op
 
 

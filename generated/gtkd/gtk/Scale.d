@@ -250,9 +250,10 @@ public class Scale : Range
 	}
 
 	/**
-	 * Gets the number of decimal places that are displayed in the value.
+	 * Gets the number of decimal places to which the value is rounded on change.
+	 * This number is also used by the default #GtkScale::format-value handler.
 	 *
-	 * Return: the number of decimal places that are displayed
+	 * Return: the number of decimal places
 	 */
 	public int getDigits()
 	{
@@ -335,9 +336,9 @@ public class Scale : Range
 	}
 
 	/**
-	 * Sets the number of decimal places that are displayed in the value.
-	 * Also causes the value of the adjustment to be rounded off to this
-	 * number of digits, so the retrieved value matches the value the user saw.
+	 * Sets the number of decimal places to which the value is rounded when it is
+	 * changed. This also sets the number of digits shown in the displayed value
+	 * when using the default handler for the #GtkScale::format-value signal.
 	 *
 	 * Note that rounding to a small number of digits can interfere with
 	 * the smooth autoscrolling that is built into #GtkScale. As an alternative,
@@ -345,8 +346,7 @@ public class Scale : Range
 	 * value yourself.
 	 *
 	 * Params:
-	 *     digits = the number of decimal places to display,
-	 *         e.g. use 1 to display 1.0, 2 to display 1.00, etc
+	 *     digits = the number of decimal places to which the value will be rounded
 	 */
 	public void setDigits(int digits)
 	{
@@ -422,6 +422,9 @@ public class Scale : Range
 	 * Signal which allows you to change how the scale value is displayed.
 	 * Connect a signal handler which returns an allocated string representing
 	 * @value. That string will then be used to display the scale's value.
+	 *
+	 * If no user-provided handlers are installed, the value will be displayed on
+	 * its own, rounded according to the value of the #GtkScale:digits property.
 	 *
 	 * Here's an example signal handler which displays a value 1.0 as
 	 * with "-->1.0<--".
