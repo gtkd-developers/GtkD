@@ -317,8 +317,8 @@ code: start
 code: end
 
 struct: Border
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -349,7 +349,7 @@ import: std.string
 
 #imports for gtk_builder_real_get_type_from_name_override
 import: gtkc.gobject
-import: gtkc.paths
+import: gtkd.paths
 import: glib.Module
 import: gobject.Type
 
@@ -1421,8 +1421,8 @@ code: start
 code: end
 
 struct: CssSection
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -1727,8 +1727,8 @@ code: start
 code: end
 
 struct: Gradient
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -1771,8 +1771,8 @@ code: start
 code: end
 
 struct: IconInfo
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -1784,8 +1784,8 @@ code: start
 code: end
 
 struct: IconSet
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -1797,8 +1797,8 @@ code: start
 code: end
 
 struct: IconSource
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -3003,8 +3003,8 @@ code: start
 code: end
 
 struct: RecentInfo
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -3016,8 +3016,8 @@ code: start
 code: end
 
 struct: Requisition
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -3156,8 +3156,8 @@ code: start
 code: end
 
 struct: StockItem
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -3181,8 +3181,8 @@ alias: getProperty getStyleProperty
 alias: getValist getStyleValist
 
 struct: SymbolicColor
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 noCode: new_shade
 noCode: new_alpha
 code: start
@@ -3303,8 +3303,8 @@ code: start
 code: end
 
 struct: TargetEntry
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -3316,8 +3316,8 @@ code: start
 code: end
 
 struct: TargetList
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -3353,8 +3353,8 @@ code: start
 code: end
 
 struct: TextAttributes
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{
@@ -4232,8 +4232,8 @@ import: gtk.TreePath
 import: gtk.TreeModelT
 import: gtk.TreeModelIF
 import: gtkc.gobject
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 struct CustomTreeModelClass
 {
@@ -5448,8 +5448,8 @@ code: start
 code: end
 
 struct: WidgetPath
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this ()
 	{

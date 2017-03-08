@@ -26,8 +26,8 @@ module gstreamerc.gstinterfaces;
 
 import std.stdio;
 import gstreamerc.gstinterfacestypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {

@@ -52,8 +52,8 @@
  * 	- cairo.Surface
  * 	- cairo.Pattern
  * 	- glib.Str
- * 	- gtkc.paths;
- * 	- gtkc.Loader;
+ * 	- gtkd.paths;
+ * 	- gtkd.Loader;
  * structWrap:
  * 	- cairo_font_face_t* -> FontFace
  * 	- cairo_font_options_t* -> FontOption
@@ -81,8 +81,8 @@ private import cairo.ScaledFont;
 private import cairo.Surface;
 private import cairo.Pattern;
 private import glib.Str;
-private import gtkc.paths;;
-private import gtkc.Loader;;
+private import gtkd.paths;;
+private import gtkd.Loader;;
 
 
 

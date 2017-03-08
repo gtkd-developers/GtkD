@@ -232,8 +232,8 @@ code: start
 code: end
 
 struct: DateTime
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 structWrap: gpointer DateTime
 noCode: new_now_utc
 noCode: new_now_local

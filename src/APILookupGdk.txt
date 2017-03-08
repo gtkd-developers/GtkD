@@ -54,8 +54,8 @@ namespace:
 
 struct: Color
 import: gobject.ObjectG
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 override: to_string
 code: start
 	/**
@@ -306,8 +306,8 @@ noCode: get_type
 namespace:
 
 struct: RGBA
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 override: to_string
 code: start
 	/**

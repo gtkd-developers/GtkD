@@ -27,8 +27,8 @@ module gtkc.pango;
 import std.stdio;
 import gtkc.pangotypes;
 import gtkc.cairotypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {

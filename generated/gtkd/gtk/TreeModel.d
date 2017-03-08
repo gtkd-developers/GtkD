@@ -33,11 +33,11 @@ private import gtk.TreeIter;
 private import gtk.TreeModelIF;
 private import gtk.TreeModelT;
 private import gtk.TreePath;
-private import gtkc.Loader;
 private import gtkc.gobject;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */

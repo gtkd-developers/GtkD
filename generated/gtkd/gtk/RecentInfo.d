@@ -33,10 +33,10 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.Loader;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**

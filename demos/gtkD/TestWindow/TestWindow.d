@@ -1074,7 +1074,7 @@ class TestWindow : MainWindow
 	}
 }
 
-private import gtkc.Loader;
+private import gtkd.Loader;
 
 void main(string[] args)
 {

@@ -26,8 +26,8 @@ module gtkc.gobject;
 
 import std.stdio;
 import gtkc.gobjecttypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {

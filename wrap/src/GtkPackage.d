@@ -345,8 +345,8 @@ class GtkPackage
 		if ( name == "gdk" || name == "pango" )
 			buff ~= "import gtkc.cairotypes;\n";
 
-		buff ~= "import gtkc.Loader;\n"
-			~ "import gtkc.paths;\n\n"
+		buff ~= "import gtkd.Loader;\n"
+			~ "import gtkd.paths;\n\n"
 			~ "shared static this()\n"
 			~ "{";
 

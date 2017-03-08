@@ -26,8 +26,8 @@ module gtkc.atk;
 
 import std.stdio;
 import gtkc.atktypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {

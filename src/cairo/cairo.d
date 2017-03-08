@@ -26,8 +26,8 @@ module gtkc.cairo;
 
 private import std.stdio;
 private import gtkc.cairotypes;
-private import gtkc.Loader;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 shared static this()
 {

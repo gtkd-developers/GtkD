@@ -22,7 +22,7 @@
  * Updated: 2008-02-16 Tango support
  */
 
-module gtkc.paths;
+module gtkd.paths;
 
 /*
  * Define the Libraries that gtkD will be using.

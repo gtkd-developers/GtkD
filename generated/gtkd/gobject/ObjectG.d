@@ -34,10 +34,10 @@ private import gobject.ParamSpec;
 private import gobject.Signals;
 private import gobject.TypeInterface;
 private import gobject.Value;
-private import gtkc.Loader;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 private import std.algorithm;
 
 

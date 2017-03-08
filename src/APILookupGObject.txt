@@ -134,8 +134,8 @@ struct: Object
 class: ObjectG
 import: core.memory
 import: gobject.Signals
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 import: std.algorithm
 merge: InitiallyUnowned
 noSignal: notify

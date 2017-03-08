@@ -26,8 +26,8 @@ module gtkc.gthread;
 
 import std.stdio;
 import gtkc.gthreadtypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {}

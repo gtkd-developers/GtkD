@@ -26,8 +26,8 @@ module gstreamerc.gstreamer;
 
 import std.stdio;
 import gstreamerc.gstreamertypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {

@@ -28,10 +28,10 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.TimeVal;
 private import glib.TimeZone;
-private import gtkc.Loader;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**

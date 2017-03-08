@@ -34,10 +34,10 @@ private import gtk.IconSource;
 private import gtk.Style;
 private import gtk.StyleContext;
 private import gtk.Widget;
-private import gtkc.Loader;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */

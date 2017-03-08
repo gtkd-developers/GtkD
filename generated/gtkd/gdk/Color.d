@@ -26,10 +26,10 @@ module gdk.Color;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.Loader;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
-private import gtkc.paths;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**

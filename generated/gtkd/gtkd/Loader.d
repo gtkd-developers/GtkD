@@ -17,12 +17,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
-module gtkc.Loader;
+module gtkd.Loader;
 
 import std.stdio;
 import std.string;
 
-import gtkc.paths;
+import gtkd.paths;
 
 public struct Linker
 {

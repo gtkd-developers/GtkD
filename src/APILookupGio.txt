@@ -428,8 +428,8 @@ code: start
 code: end
 
 struct: IOModuleScope
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this()
 	{
@@ -473,8 +473,8 @@ implements: ProxyResolver
 struct: Resource
 alias: _register register
 alias: _unregister unregister
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this()
 	{
@@ -486,8 +486,8 @@ code: start
 code: end
 
 struct: SettingsSchema
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this()
 	{
@@ -499,8 +499,8 @@ code: start
 code: end
 
 struct: SettingsSchemaSource
-import: gtkc.Loader
-import: gtkc.paths
+import: gtkd.Loader
+import: gtkd.paths
 code: start
 	~this()
 	{

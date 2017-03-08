@@ -57,10 +57,6 @@ outputRoot: generated
 ### predifined: lib
 ###########################################################
 
-srcDir: gtkd/gtkc
-copy: paths.d
-copy: Loader.d
-
 srcDir: gtkd
 bindDir: gtkc
 copy: cairo

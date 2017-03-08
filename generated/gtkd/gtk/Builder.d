@@ -39,7 +39,7 @@ private import gtkc.glib;
 private import gtkc.gobject;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
-private import gtkc.paths;
+private import gtkd.paths;
 private import std.string;
 
 

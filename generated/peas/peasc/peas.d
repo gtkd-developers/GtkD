@@ -26,8 +26,8 @@ module peasc.peas;
 
 import std.stdio;
 import peasc.peastypes;
-import gtkc.Loader;
-import gtkc.paths;
+import gtkd.Loader;
+import gtkd.paths;
 
 shared static this()
 {
