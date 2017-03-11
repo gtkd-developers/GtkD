@@ -433,8 +433,7 @@ class GtkPackage
 		if ( name == "gdk" || name == "pango" )
 			buff ~= "import gtkc.cairotypes;\n";
 
-		buff ~= "}\n\n"
-			~ "__gshared extern(C)\n"
+		buff ~= "__gshared extern(C)\n"
 			~ "{\n";
 
 		foreach ( strct; collectedStructs )
