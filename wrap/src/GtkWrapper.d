@@ -73,7 +73,7 @@ void main(string[] args)
 		outputDir = buildPath(inputDir, "out");
 
 	//Read in the GIR and API files.
-	GtkWrapper wrapper = new GtkWrapper(inputDir, outputDir);
+	GtkWrapper wrapper = new GtkWrapper(inputDir, outputDir, useRuntimeLinker);
 	wrapper.proccess("APILookup.txt");
 
 	if ( printFree )
@@ -98,6 +98,7 @@ void main(string[] args)
 class GtkWrapper
 {
 	bool includeComments;
+	bool useRuntimeLinker;
 
 	string apiRoot;
 	string inputRoot;
@@ -110,10 +111,11 @@ class GtkWrapper
 
 	static GtkPackage[string] packages;
 
-	public this(string apiRoot, string outputRoot)
+	public this(string apiRoot, string outputRoot, bool useRuntimeLinker)
 	{
-		this.apiRoot    = apiRoot;
-		this.outputRoot = outputRoot;
+		this.apiRoot          = apiRoot;
+		this.outputRoot       = outputRoot;
+		this.useRuntimeLinker = useRuntimeLinker;
 	}
 
 	public void proccess(string apiLookupDefinition)
@@ -522,11 +524,17 @@ class GtkWrapper
 
 		if ( file == "cairo" )
 		{
-			copy(buildNormalizedPath(to, "cairo.d"), buildNormalizedPath(to, "../gtkc/cairo.d"));
-			copy(buildNormalizedPath(to, "cairotypes.d"), buildNormalizedPath(to, "../gtkc/cairotypes.d"));
+			if ( useRuntimeLinker )
+				copy(buildNormalizedPath(to, "gtkc/cairo-runtime.d"), buildNormalizedPath(to, "../gtkc/cairo.d"));
+			else
+				copy(buildNormalizedPath(to, "gtkc/cairo-compiletime.d"), buildNormalizedPath(to, "../gtkc/cairo.d"));
 
-			remove(buildNormalizedPath(to, "cairo.d"));
-			remove(buildNormalizedPath(to, "cairotypes.d"));
+			copy(buildNormalizedPath(to, "gtkc/cairotypes.d"), buildNormalizedPath(to, "../gtkc/cairotypes.d"));
+
+			remove(buildNormalizedPath(to, "gtkc/cairo-runtime.d"));
+			remove(buildNormalizedPath(to, "gtkc/cairo-compiletime.d"));
+			remove(buildNormalizedPath(to, "gtkc/cairotypes.d"));
+			remove(buildNormalizedPath(to, "gtkc"));
 		}
 	}
 

@@ -427,6 +427,15 @@ code: start
 	}
 code: end
 
+struct: NoExternal
+noCode: true
+noExternal: true
+
+struct: IOModule
+move: load NoExternal
+move: unload NoExternal
+move: query NoExternal
+
 struct: IOModuleScope
 import: gtkd.Loader
 import: gtkd.paths

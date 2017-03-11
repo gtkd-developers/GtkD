@@ -1094,9 +1094,6 @@ shared static this()
 
 	Linker.link(g_io_module_get_type, "g_io_module_get_type", LIBRARY.GIO);
 	Linker.link(g_io_module_new, "g_io_module_new", LIBRARY.GIO);
-	Linker.link(g_io_module_query, "g_io_module_query", LIBRARY.GIO);
-	Linker.link(g_io_module_load, "g_io_module_load", LIBRARY.GIO);
-	Linker.link(g_io_module_unload, "g_io_module_unload", LIBRARY.GIO);
 	Linker.link(g_io_modules_load_all_in_directory, "g_io_modules_load_all_in_directory", LIBRARY.GIO);
 	Linker.link(g_io_modules_load_all_in_directory_with_scope, "g_io_modules_load_all_in_directory_with_scope", LIBRARY.GIO);
 	Linker.link(g_io_modules_scan_all_in_directory, "g_io_modules_scan_all_in_directory", LIBRARY.GIO);
@@ -3486,9 +3483,6 @@ __gshared extern(C)
 
 	GType function() c_g_io_module_get_type;
 	GIOModule* function(char* filename) c_g_io_module_new;
-	char** function() c_g_io_module_query;
-	void function(GIOModule* modul) c_g_io_module_load;
-	void function(GIOModule* modul) c_g_io_module_unload;
 	GList* function(char* dirname) c_g_io_modules_load_all_in_directory;
 	GList* function(char* dirname, GIOModuleScope* scop) c_g_io_modules_load_all_in_directory_with_scope;
 	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
@@ -5876,9 +5870,6 @@ alias c_g_io_extension_point_register g_io_extension_point_register;
 
 alias c_g_io_module_get_type g_io_module_get_type;
 alias c_g_io_module_new g_io_module_new;
-alias c_g_io_module_query g_io_module_query;
-alias c_g_io_module_load g_io_module_load;
-alias c_g_io_module_unload g_io_module_unload;
 alias c_g_io_modules_load_all_in_directory g_io_modules_load_all_in_directory;
 alias c_g_io_modules_load_all_in_directory_with_scope g_io_modules_load_all_in_directory_with_scope;
 alias c_g_io_modules_scan_all_in_directory g_io_modules_scan_all_in_directory;

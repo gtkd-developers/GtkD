@@ -105,68 +105,6 @@ public class IOModule : TypeModule
 	}
 
 	/**
-	 * Optional API for GIO modules to implement.
-	 *
-	 * Should return a list of all the extension points that may be
-	 * implemented in this module.
-	 *
-	 * This method will not be called in normal use, however it may be
-	 * called when probing existing modules and recording which extension
-	 * points that this model is used for. This means we won't have to
-	 * load and initialize this module unless its needed.
-	 *
-	 * If this function is not implemented by the module the module will
-	 * always be loaded, initialized and then unloaded on application
-	 * startup so that it can register its extension points during init.
-	 *
-	 * Note that a module need not actually implement all the extension
-	 * points that g_io_module_query() returns, since the exact list of
-	 * extension may depend on runtime issues. However all extension
-	 * points actually implemented must be returned by g_io_module_query()
-	 * (if defined).
-	 *
-	 * When installing a module that implements g_io_module_query() you must
-	 * run gio-querymodules in order to build the cache files required for
-	 * lazy loading.
-	 *
-	 * Return: A %NULL-terminated array of strings,
-	 *     listing the supported extension points of the module. The array
-	 *     must be suitable for freeing with g_strfreev().
-	 *
-	 * Since: 2.24
-	 */
-	public static string[] query()
-	{
-		auto retStr = g_io_module_query();
-		
-		scope(exit) Str.freeStringArray(retStr);
-		return Str.toStringArray(retStr);
-	}
-
-	/**
-	 * Required API for GIO modules to implement.
-	 *
-	 * This function is run after the module has been loaded into GIO,
-	 * to initialize the module. Typically, this function will call
-	 * g_io_extension_point_implement().
-	 */
-	public void load()
-	{
-		g_io_module_load(gIOModule);
-	}
-
-	/**
-	 * Required API for GIO modules to implement.
-	 *
-	 * This function is run when the module is being unloaded from GIO,
-	 * to finalize the module.
-	 */
-	public void unload()
-	{
-		g_io_module_unload(gIOModule);
-	}
-
-	/**
 	 * Loads all the modules in the specified directory.
 	 *
 	 * If don't require all modules to be initialized (and thus registering
