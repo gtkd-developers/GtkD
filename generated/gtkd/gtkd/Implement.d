@@ -397,6 +397,8 @@ private string getWrapFunction(Impl, Member, string name)()
 		{
 			if ( ParamStorage[i] == STC.out_ && isGtkdType!(DParamTypes[i]) )
 				result ~= "\t"~ DParamTypes[i].stringof ~" d_"~ ParamNames[i] ~";\n";
+			else if ( ParamStorage[i] == STC.ref_ && isGtkdType!(DParamTypes[i]) )
+				result ~= "\t"~ DParamTypes[i].stringof ~" d_"~ ParamNames[i] ~" = "~ ParamNames[i] ~".get"~ DParamTypes[i].stringof ~"Struct();\n";
 		}
 
 		if ( is(ReturnType!Member == void) )
@@ -411,7 +413,7 @@ private string getWrapFunction(Impl, Member, string name)()
 			if ( i > 1 )
 				result ~= ", ";
 
-			if ( ParamStorage[i] == STC.out_ && isGtkdType!(DParamTypes[i]) )
+			if ( (ParamStorage[i] == STC.out_ || ParamStorage[i] == STC.ref_) && isGtkdType!(DParamTypes[i]) )
 				result ~= "d_"~ ParamNames[i];
 			else if ( isGtkdType!(DParamTypes[i]) )
 				result ~= "ObjectG.getDObject!("~ DParamTypes[i].stringof ~")("~ ParamNames[i] ~")";
@@ -423,7 +425,7 @@ private string getWrapFunction(Impl, Member, string name)()
 
 		foreach ( i, param; Params )
 		{
-			if ( ParamStorage[i] == STC.out_ && isGtkdType!(DParamTypes[i]) )
+			if ( (ParamStorage[i] == STC.out_ || ParamStorage[i] == STC.ref_) && isGtkdType!(DParamTypes[i]) )
 			{
 				result ~= "\tif ( d_"~ ParamNames[i] ~" !is null )\n"~
 				          "\t\t"~ ParamNames[i] ~" = d_"~ ParamNames[i] ~".get"~ DParamTypes[i].stringof ~"Struct();\n";
