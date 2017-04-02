@@ -134,8 +134,8 @@ public class OtherTests : ApplicationWindow
 
 int main(string[] args)
 {
-    auto application = new Application("org.gtkd.demo.othertests", GApplicationFlags.FLAGS_NONE);
-    application.addOnActivate(delegate void(GioApplication app) { new OtherTests(application); });
-    return application.run(args);
+	auto application = new Application("org.gtkd.demo.othertests", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate void(GioApplication app) { new OtherTests(application); });
+	return application.run(args);
 }
 

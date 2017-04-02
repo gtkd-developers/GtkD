@@ -975,7 +975,7 @@ int main(string[] args)
 	Linker.dumpLoadLibraries();
 	Linker.dumpFailedLoads();
 
-    auto application = new Application("org.gtkd.demo.TestWindow", GApplicationFlags.FLAGS_NONE);
-    application.addOnActivate(delegate void(GioApplication app) { new TestWindow(application); });
-    return application.run(args);
+	auto application = new Application("org.gtkd.demo.TestWindow", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate void(GioApplication app) { new TestWindow(application); });
+	return application.run(args);
 }

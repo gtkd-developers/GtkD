@@ -159,7 +159,7 @@ int main(string[] args)
 {
 	auto application = new Application("org.gtkd.demo.spawntest", GApplicationFlags.FLAGS_NONE);
 
-    application.addOnActivate(delegate void(GioApplication app) { 
+	application.addOnActivate(delegate void(GioApplication app) { 
 		SpawnWindow sw = new SpawnWindow(application);
 
 		if ( args.length > 1 )
@@ -172,5 +172,5 @@ int main(string[] args)
 		}
 	});
 
-    return application.run(args);
+	return application.run(args);
 }

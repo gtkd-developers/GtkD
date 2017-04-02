@@ -138,6 +138,6 @@ int main(string[] args)
 	}
 
 	application = new Application("org.gtkd.demo.cairo.text", GApplicationFlags.FLAGS_NONE);
-    application.addOnActivate(&activateText);
-    return application.run(args);
+	application.addOnActivate(&activateText);
+	return application.run(args);
 }

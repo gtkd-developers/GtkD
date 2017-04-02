@@ -41,7 +41,7 @@ int main(string[] args)
 	}
 
 	application = new Application("org.gtkd.demo.cairo.clock", GApplicationFlags.FLAGS_NONE);
-    application.addOnActivate(&activateClock);
-    return application.run(args);
+	application.addOnActivate(&activateClock);
+	return application.run(args);
 }
 

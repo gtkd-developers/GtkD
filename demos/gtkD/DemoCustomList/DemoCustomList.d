@@ -75,7 +75,7 @@ class CustomListWindow : ApplicationWindow
 
 int main (string[] args)
 {
-    auto application = new Application("org.gtkd.demo.customlist", GApplicationFlags.FLAGS_NONE);
-    application.addOnActivate(delegate void(GioApplication app) { new CustomListWindow(application); });
-    return application.run(args);
+	auto application = new Application("org.gtkd.demo.customlist", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate void(GioApplication app) { new CustomListWindow(application); });
+	return application.run(args);
 }

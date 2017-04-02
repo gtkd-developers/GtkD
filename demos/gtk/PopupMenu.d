@@ -56,7 +56,7 @@ class PopupMenuDemo : ApplicationWindow
 
 int main(string[] args)
 {
-    auto application = new Application("org.gtkd.demo.popupmenu", GApplicationFlags.FLAGS_NONE);
-    application.addOnActivate(delegate void(GioApplication app) { new PopupMenuDemo(application); });
-    return application.run(args);
+	auto application = new Application("org.gtkd.demo.popupmenu", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate void(GioApplication app) { new PopupMenuDemo(application); });
+	return application.run(args);
 }
