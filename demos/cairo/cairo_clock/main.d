@@ -19,22 +19,29 @@ module main;
 
 import clock;
 
-import gtk.MainWindow;
-import gtk.Main;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
 
-void main(string[] args)
+int main(string[] args)
 {
-	Main.init(args);
-	
-	MainWindow win = new MainWindow("gtkD Cairo Clock");
-	
-	win.setDefaultSize( 250, 250 );
+	Application application;
 
-	Clock c = new Clock();
-	win.add(c);
-	c.show();
-	win.showAll();
+	void activateClock(GioApplication app)
+	{
+		ApplicationWindow win = new ApplicationWindow(application);
 
-	Main.run();
+		win.setTitle("gtkD Cairo Clock");
+		win.setDefaultSize( 250, 250 );
+
+		Clock c = new Clock();
+		win.add(c);
+		c.show();
+		win.showAll();
+	}
+
+	application = new Application("org.gtkd.demo.cairo.clock", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(&activateClock);
+    return application.run(args);
 }
 

@@ -18,31 +18,33 @@
 
 module gtk.OtherTests;
 
-private import gtk.AboutDialog;
-private import gtk.Dialog;
-private import gtk.Widget;
-private import gtk.Window;
-private import gtk.Label;
-private import gtk.Button;
-private import gtk.VBox;
-private import gtk.Main;
-private import gtk.Image;
+import gtk.AboutDialog;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
+import gtk.Dialog;
+import gtk.Widget;
+import gtk.Label;
+import gtk.Button;
+import gtk.VBox;
+import gtk.Image;
 
-private import glib.Timeout;
-private import gdk.Event;
+import glib.Timeout;
+import gdk.Event;
 
 import std.stdio;
 import core.stdc.stdlib : exit;
 
-public class OtherTests : Window
+public class OtherTests : ApplicationWindow
 {
 
 	Label byeLabel;
 	Timeout timeout;
 
-	this()
+	this(Application application)
 	{
-		super("GtkD");
+		super(application);
+		setTitle("GtkD");
 		setDecorated(true);
 		VBox box = new VBox(false, 2);
 		box.add(new Label("Hello World"));
@@ -130,10 +132,10 @@ public class OtherTests : Window
 
 }
 
-void main(string[] args)
+int main(string[] args)
 {
-	Main.init(args);
-	new OtherTests();
-	Main.run();
+    auto application = new Application("org.gtkd.demo.othertests", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(delegate void(GioApplication app) { new OtherTests(application); });
+    return application.run(args);
 }
 

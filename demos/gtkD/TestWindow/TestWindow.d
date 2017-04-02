@@ -22,116 +22,108 @@ module TestWindow;
 
 //version=cairo;
 
-version(cairo)private import cairo.clock;
+version(cairo)import cairo.clock;
 
-private import gtk.Version;
-private import gtk.Table;
+import gtk.Version;
+import gtk.Table;
 
-private import stdlib = core.stdc.stdlib : exit;
-private import core.thread;
-private import std.random;
-private import std.string;
+import stdlib = core.stdc.stdlib : exit;
+import core.thread;
+import std.random;
+import std.string;
 
 import gdk.Threads;
 
-private import gtk.Main;
-private import gtk.MainWindow;
-private import gtk.Adjustment;
-private import gtk.AccelGroup;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
+import gtk.Adjustment;
+import gtk.AccelGroup;
 
-private import TestEntries;
+import TestEntries;
 
-//private import gtkDTree;
-private import TestStock;
-private import TestDrawingArea;
-private import TestScales;
-private import TestText;
-//private import TestTree;
-private import TestTreeView;
-//private import TestTreeView1;
-private import TestImage;
-private import TestThemes;
-private import TestAspectFrame;
-private import TestIdle;
-private import TTextView;
-//private import TEditableCells;
+import TestStock;
+import TestDrawingArea;
+import TestScales;
+import TestText;
+import TestTreeView;
+import TestImage;
+import TestThemes;
+import TestAspectFrame;
+import TestIdle;
+import TTextView;
 
-private import gtk.MenuItem;
-private import gtk.Widget;
-private import gtk.MenuBar;
-private import gtk.Notebook;
-private import gtk.ComboBoxText;
-private import gtk.FileChooserDialog;
-private import gtk.FontSelectionDialog;
-private import gtk.ColorSelectionDialog;
-private import gtk.Button;
-private import gtk.VBox;
-private import gtk.MessageDialog;
-private import gtk.Frame;
-private import gtk.HButtonBox;
-private import gtk.Statusbar;
-private import gtk.Menu;
-private import gtk.HandleBox;
-private import gtk.Toolbar;
-private import gtk.SeparatorToolItem;
-private import gtk.ToolButton;
-private import gtk.RadioButton;
-private import gtk.CheckButton;
-private import gtk.ToggleButton;
-//private import gtk.ListItem;
-private import gtk.HBox;
-private import gtk.Arrow;
-//private import gtk.ListG;
-//private import gtk.OptionMenu;
-private import gtk.ButtonBox;
-private import gtk.Calendar;
-private import gtk.VButtonBox;
-private import gtk.SpinButton;
-private import gtk.ListStore;
-private import gtk.TreeIter;
-private import gtk.TreeView;
-private import gtk.TreeViewColumn;
-private import gtk.CellRendererText;
-//private import gtk.SListG;
-//private import ddi.Drawable;
-private import gtk.Window;
+import gtk.MenuItem;
+import gtk.Widget;
+import gtk.MenuBar;
+import gtk.Notebook;
+import gtk.ComboBoxText;
+import gtk.FileChooserDialog;
+import gtk.FontSelectionDialog;
+import gtk.ColorSelectionDialog;
+import gtk.Button;
+import gtk.VBox;
+import gtk.MessageDialog;
+import gtk.Frame;
+import gtk.HButtonBox;
+import gtk.Statusbar;
+import gtk.Menu;
+import gtk.HandleBox;
+import gtk.Toolbar;
+import gtk.SeparatorToolItem;
+import gtk.ToolButton;
+import gtk.RadioButton;
+import gtk.CheckButton;
+import gtk.ToggleButton;
+import gtk.HBox;
+import gtk.Arrow;
+import gtk.ButtonBox;
+import gtk.Calendar;
+import gtk.VButtonBox;
+import gtk.SpinButton;
+import gtk.ListStore;
+import gtk.TreeIter;
+import gtk.TreeView;
+import gtk.TreeViewColumn;
+import gtk.CellRendererText;
+import gtk.Window;
 
-private import gtk.ScrolledWindow;
-private import gtk.MessageDialog;
+import gtk.ScrolledWindow;
+import gtk.MessageDialog;
 
-private import core.memory;
+import core.memory;
 
-private import glib.ListSG;
+import glib.ListSG;
 
-private import glib.Str;
-private import gtk.Label;
-private import glib.ListG;
-private import gtk.Paned;
-private import gtk.HPaned;
-private import gtk.VPaned;
+import glib.Str;
+import gtk.Label;
+import glib.ListG;
+import gtk.Paned;
+import gtk.HPaned;
+import gtk.VPaned;
 
-private import gtk.Calendar;
-private import std.stdio;
-private import gtk.VButtonBox;
-private import gtk.FileChooserButton;
+import gtk.Calendar;
+import std.stdio;
+import gtk.VButtonBox;
+import gtk.FileChooserButton;
 
-private import gtk.AboutDialog;
-private import gtk.Dialog;
+import gtk.AboutDialog;
+import gtk.Dialog;
 
-private import gtk.TreeStore;
-private import gdk.Pixbuf;
-private import gtk.ComboBox;
+import gtk.TreeStore;
+import gdk.Pixbuf;
+import gtk.ComboBox;
 
-private import gtk.TreePath;
-private import gtk.CellRenderer;
-private import gtk.CellRendererPixbuf;
+import gtk.TreePath;
+import gtk.CellRenderer;
+import gtk.CellRendererPixbuf;
 
 /**
  * This tests the GtkD widgets
  */
 
 
-class TestWindow : MainWindow
+class TestWindow : ApplicationWindow
 {
 	/**
 	 * Executed when the user tries to close the window
@@ -161,9 +153,10 @@ class TestWindow : MainWindow
 			stdlib.exit(0);
 	}
 
-	this()
+	this(Application application)
 	{
-		super("GtkD tests");
+		super(application);
+		setTitle("GtkD tests");
 		setup();
 		showAll();
 
@@ -222,15 +215,6 @@ class TestWindow : MainWindow
 		testPaned(notebook);
 		testDialogs(notebook);
 		testViewport(notebook);
-
-		version(Windows)
-		{
-			// todo - threads are still broken on windows
-		}
-		else
-		{
-			testThreads(notebook);
-		}
 
 		notebook.appendPage(new TestScales,"Scales");
 			testSpinButton(notebook);
@@ -366,7 +350,7 @@ class TestWindow : MainWindow
 		//writefln("exiting Notebook switch to page %s", pageNumber);
 	}
 
-	//private import EventBox;
+	//import EventBox;
 
 	void testEventBox(Notebook notebook)
 	{
@@ -824,96 +808,6 @@ class TestWindow : MainWindow
 
 	}
 
-	__gshared Button[] threadTestButtons;
-	static T1[] t1s;
-
-	class T1 : Thread
-	{
-		int num;
-
-		this(int num)
-		{
-			super(&run);
-			this.num = num;
-		}
-
-		void run()
-		{
-			runCommon();
-		}
-		
-		int runCommon()
-		{
-			while(1)
-			{
-				size_t buttonNum = uniform(0, threadTestButtons.length);
-				Button button = threadTestButtons[buttonNum];
-
-				threadsEnter();
-				button.removeAll();
-				button.setLabel(format("%s", num));
-				threadsLeave();
-				yield();
-			}
-			assert(0);
-		}
-	}
-
-	void testThreads(Notebook notebook)
-	{
-
-		Table grid = new Table(8,8,0);
-		for ( int i = 0 ; i<8 ; i++)
-		{
-			for ( int j = 0 ; j<8; j++)
-			{
-				Button button = new Button(format("%s",(j+8*i)));
-				threadTestButtons ~= button;
-				grid.attach( button,
-							i,i+1,
-							j,j+1,
-							AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
-
-				t1s ~= new T1(j+8*i);
-			}
-		}
-
-		void stop(Button button)
-		{
-			foreach ( T1 t ; t1s )
-			{
-				if ( t.isRunning() )
-				{
-					t.sleep(dur!("hnsecs")(100));
-				}
-			}
-		}
-
-		void go(Button button)
-		{
-			foreach ( T1 t ; t1s )
-			{
-				if ( !t.isRunning() )
-				{
-					t.start();
-				}
-			}
-		}
-
-		VBox vbox = new VBox(false, 2);
-		vbox.packStart(grid, true, true,2);
-		ButtonBox actions = HButtonBox.createActionBox();
-
-		Button button = new Button(StockID.STOP, &stop);
-		actions.packStart(button, false, false, 7);
-		button = new Button(StockID.OK, &go);
-		actions.packStart(button, false, false, 7);
-
-		vbox.packStart(actions, false, false, 2);
-
-		notebook.appendPage(vbox,new Label("Threads"));
-	}
-
 	void testViewport(Notebook notebook)
 	{
 
@@ -1074,26 +968,14 @@ class TestWindow : MainWindow
 	}
 }
 
-private import gtkd.Loader;
-
-void main(string[] args)
+int main(string[] args)
 {
+	import gtkd.Loader;
+
 	Linker.dumpLoadLibraries();
 	Linker.dumpFailedLoads();
 
-	version(Windows)
-	{
-		// todo threads are still broken on windows...
-		Main.init(args);
-	}
-	else
-	{
-		Main.initMultiThread(args);
-	}
-
-	TestWindow window = new TestWindow();
-
-	debug(1)writefln("before Main.run");
-	Main.run();
-	debug(1)writefln("after Main.run");
+    auto application = new Application("org.gtkd.demo.TestWindow", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(delegate void(GioApplication app) { new TestWindow(application); });
+    return application.run(args);
 }

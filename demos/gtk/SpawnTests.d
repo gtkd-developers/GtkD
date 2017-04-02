@@ -18,36 +18,35 @@
 
 module gtk.SpawnTests;
 
-private import glib.Spawn;
-private import gtk.Main;
+import glib.Spawn;
 
-private import gtk.TextView;
-private import gtk.TextBuffer;
-private import gtk.TextIter;
-private import gtk.Box;
-private import gtk.VBox;
-private import gtk.ScrolledWindow;
-
-private import gtk.MainWindow;
-
-private import gtk.Button;
-private import gtk.Image;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
+import gtk.TextView;
+import gtk.TextBuffer;
+import gtk.TextIter;
+import gtk.Box;
+import gtk.VBox;
+import gtk.ScrolledWindow;
+import gtk.Button;
+import gtk.Image;
 
 import std.string;
 import std.stdio;
 
-class SpawnWindow : MainWindow
+class SpawnWindow : ApplicationWindow
 {
-
 	TextView viewInput;
 	TextView viewOutput;
 	TextView viewError;
 	TextIter iterOut;
 	TextIter iterError;
 
-	this()
+	this(Application application)
 	{
-		super("Spawn testing");
+		super(application);
+		setTitle("Spawn testing");
 		setupWindow();
 		setSizeRequest(400,400);
 		showAll();
@@ -156,19 +155,22 @@ class SpawnWindow : MainWindow
 	}
 }
 
-void main(string[] args)
+int main(string[] args)
 {
-	Main.init(args);
+	auto application = new Application("org.gtkd.demo.spawntest", GApplicationFlags.FLAGS_NONE);
 
-	SpawnWindow sw = new SpawnWindow();
-	if ( args.length > 1 )
-	{
-		sw.setInput(args[1..args.length]);
-	}
-	else
-	{
-		sw.setInput("/bin/ls");
-	}
+    application.addOnActivate(delegate void(GioApplication app) { 
+		SpawnWindow sw = new SpawnWindow(application);
 
-	Main.run();
+		if ( args.length > 1 )
+		{
+			sw.setInput(args[1..args.length]);
+		}
+		else
+		{
+			sw.setInput("/bin/ls");
+		}
+	});
+
+    return application.run(args);
 }

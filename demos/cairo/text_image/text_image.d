@@ -3,8 +3,9 @@ module text_image;
 import std.stdio;
 import std.math;
 
-import gtk.Main;
-import gtk.MainWindow;
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
 
 import cairo.FontOption;
 import cairo.Context;
@@ -119,19 +120,24 @@ protected:
 }
 
 
-void main(string[] args)
+int main(string[] args)
 {
-	Main.init(args);
-	
-	MainWindow win = new MainWindow("gtkD Cairo text & image");
-	
-	win.setDefaultSize( 250, 250 );
+	Application application;
 
-	CairoText c = new CairoText();
-	win.add(c);
-	c.show();
-	win.showAll();
+	void activateText(GioApplication app)
+	{
+		ApplicationWindow win = new ApplicationWindow(application);
 
-	Main.run();
+		win.setTitle("gtkD Cairo text & image");
+		win.setDefaultSize( 250, 250 );
+
+		CairoText c = new CairoText();
+		win.add(c);
+		c.show();
+		win.showAll();
+	}
+
+	application = new Application("org.gtkd.demo.cairo.text", GApplicationFlags.FLAGS_NONE);
+    application.addOnActivate(&activateText);
+    return application.run(args);
 }
-
