@@ -66,6 +66,7 @@ lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
 lookup: APILookupGio.txt
 lookup: APILookupCairo.txt
+lookup: APILookupRsvg.txt
 lookup: APILookupPango.txt
 lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
