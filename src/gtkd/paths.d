@@ -109,7 +109,7 @@ else version(darwin)
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dylib",
 		LIBRARY.VTE:           "libvte-2.91.dylib",
 		LIBRARY.PEAS:          "libpeas-1.0.dylib",
-		LIBRARY.RSVG:          "libpeas-2-2.dylib",
+		LIBRARY.RSVG:          "librsvg-2-2.dylib",
 	];
 }
 else
