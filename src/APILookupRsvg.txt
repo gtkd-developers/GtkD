@@ -27,9 +27,5 @@ addAliases: start
 	public import gtkc.cairotypes;
 	public import gtkc.glibtypes;
 	public import gtkc.gobjecttypes;
-        public import gtkc.gdkpixbuftypes;
-
+	public import gtkc.gdkpixbuftypes;
 addAliases: end
-
-struct: Handle
-class: Handle
