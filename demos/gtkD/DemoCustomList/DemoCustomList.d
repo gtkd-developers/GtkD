@@ -2,20 +2,22 @@ module DemoCustomList;
 
 import CustomList;
 
+import gio.Application : GioApplication = Application;
 import glib.RandG;
-import gtk.Main;
-import gtk.ScrolledWindow;
-import gtk.MainWindow;
-import gtk.TreeView;
-import gtk.TreeViewColumn;
+import gtk.Application;
+import gtk.ApplicationWindow;
 import gtk.CellRendererText;
 import gtk.ListStore;
+import gtk.ScrolledWindow;
+import gtk.TreeView;
+import gtk.TreeViewColumn;
 
-class CustomListWindow : MainWindow
+class CustomListWindow : ApplicationWindow
 {
-	this()
+	this(Application application)
 	{
-		super("GtkD - Custom TreeModel");
+		super(application);
+		setTitle("GtkD - Custom TreeModel");
 		setDefaultSize(300, 400);
 		
 		ScrolledWindow scrollwin = new ScrolledWindow();
@@ -71,11 +73,9 @@ class CustomListWindow : MainWindow
 	}
 }
 
-void main (string[] arg)
+int main (string[] args)
 {
-	Main.init(arg);
-
-	new CustomListWindow();
-
-	Main.run();
+	auto application = new Application("org.gtkd.demo.customlist", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate void(GioApplication app) { new CustomListWindow(application); });
+	return application.run(args);
 }
