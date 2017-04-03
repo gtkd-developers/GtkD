@@ -53,6 +53,7 @@ enum LIBRARY
 	GSTINTERFACES,
 	VTE,
 	PEAS,
+        RSVG,
 }
 
 version (Windows)
@@ -80,6 +81,7 @@ version (Windows)
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dll",
 		LIBRARY.VTE:           "libvte-2.91.dll",
 		LIBRARY.PEAS:          "libpeas-1.0.dll",
+		LIBRARY.RSVG:          "librsvg-2-2.dll",
 	];
 }
 else version(darwin)
@@ -107,6 +109,7 @@ else version(darwin)
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.dylib",
 		LIBRARY.VTE:           "libvte-2.91.dylib",
 		LIBRARY.PEAS:          "libpeas-1.0.dylib",
+		LIBRARY.RSVG:          "libpeas-2-2.dylib",
 	];
 }
 else
@@ -134,5 +137,6 @@ else
 		LIBRARY.GSTINTERFACES: "libgstvideo-1.0.so.0",
 		LIBRARY.VTE:           "libvte-2.91.so.0",
 		LIBRARY.PEAS:          "libpeas-1.0.so.0",
+		LIBRARY.RSVG:          "librsvg-2.so.2",
 	];
 }
