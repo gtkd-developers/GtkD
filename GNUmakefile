@@ -104,6 +104,19 @@ PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
 
 #######################################################################
 
+USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/gtkc/atk.d)
+
+ifneq (USE_RUNTIME_LINKER,)
+    SOFLAGS_GTKD = $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtk+-3.0 librsvg-2.0))
+    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtkglext-3.0))
+    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtksourceview-3.0))
+    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gstreamer-base-1.0))
+    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs vte-2.91))
+    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs-only-l libpeas-1.0))
+endif
+
+#######################################################################
+
 BINNAME_DEMO = TestWindow
 SOURCES_DEMO = $(shell find \
         demos/gtkD/TestWindow \
@@ -164,29 +177,29 @@ $(LIBNAME_PEASD): $(LIBNAME_GTKD) $(OBJECTS_PEASD)
 
 #######################################################################
 
-$(SONAME_GTKD): IMPORTS=-Igenerated/gtkd
+$(SONAME_GTKD): IMPORTS=-Igenerated/gtkd 
 $(SONAME_GTKD): $(PICOBJECTS_GTKD)
-	$(make-shared-lib)
+	$(call make-shared-lib,$(SOFLAGS_GTKD))
 
 $(SONAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
-$(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL)
-	$(make-shared-lib)
+$(SONAME_GTKDGL): $(SONAME_GTKD) $(PICOBJECTS_GTKDGL)
+	$(call make-shared-lib,$(SOFLAGS_GTKDGL))
 
 $(SONAME_GTKDSV): IMPORTS=-Igenerated/gtkd -Igenerated/sourceview
-$(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV)
-	$(make-shared-lib)
+$(SONAME_GTKDSV): $(SONAME_GTKD) $(PICOBJECTS_GTKDSV)
+	$(call make-shared-lib,$(SOFLAGS_GTKDSV))
 
 $(SONAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
-$(SONAME_GSTREAMERD): $(PICOBJECTS_GSTREAMERD)
-	$(make-shared-lib)
+$(SONAME_GSTREAMERD): $(SONAME_GTKD) $(PICOBJECTS_GSTREAMERD)
+	$(call make-shared-lib,$(SOFLAGS_GSTREAMERD))
 
 $(SONAME_VTED): IMPORTS=-Igenerated/gtkd -Igenerated/vte
-$(SONAME_VTED): $(PICOBJECTS_VTED)
-	$(make-shared-lib)
+$(SONAME_VTED): $(SONAME_GTKD) $(PICOBJECTS_VTED)
+	$(call make-shared-lib,$(SOFLAGS_VTED))
 
 $(SONAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
-$(SONAME_PEASD): $(PICOBJECTS_PEASD)
-	$(make-shared-lib)
+$(SONAME_PEASD): $(SONAME_GTKD) $(PICOBJECTS_PEASD)
+	$(call make-shared-lib,$(SOFLAGS_PEASD))
 
 #######################################################################
 
@@ -419,7 +432,7 @@ define make-shared-lib
 	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
 	$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos))
  
-	$(DC) -shared $(output) $(LDFLAGS) $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
+	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
 endef
 
 define install-so
