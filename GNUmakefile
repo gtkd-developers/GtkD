@@ -5,7 +5,7 @@ OS=$(shell uname || uname -s)
 ARCH=$(shell uname -m || arch)
 
 datadir?=$(prefix)/share
-ifeq (, $(shell which dpkg-architecture))
+ifeq (, $(shell which dpkg-architecture 2>/dev/null))
 	libdir?=lib/
 else
 	libdir?=lib/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
@@ -29,7 +29,7 @@ endif
 default-goal: libs test
 shared: shared-libs
 
-all: libs shared-libs gstreamer vte peas shared-gstreamer shared-vte shared-peas test
+all: libs shared-libs test
 
 ifeq ("$(DC)","gdc")
     DCFLAGS=-O2
@@ -131,8 +131,8 @@ ifeq ("$(OS)","Darwin")
     libs: gtkd
     shared-libs: shared-gtkd
 else
-    libs: gtkd gtkdgl sv
-    shared-libs: shared-gtkd shared-gtkdgl shared-sv
+    libs: gtkd sv gstreamer vte peas
+    shared-libs: shared-gtkd shared-sv shared-gstreamer shared-vte
 endif
 
 gtkd:      $(LIBNAME_GTKD)
