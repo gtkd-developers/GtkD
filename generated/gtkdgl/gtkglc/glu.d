@@ -24,12 +24,6 @@
 
 module gtkglc.glu;
 
-
-//private import std.stdio;
-private import gtkglc.glgdktypes;
-private import gtkc.Loader;
-private import gtkc.paths;
-
 /*
 ** License Applicability. Except to the extent portions of this file are
 ** made subject to an alternative license as permitted in the SGI Free

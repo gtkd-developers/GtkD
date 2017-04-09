@@ -25,11 +25,6 @@
 module gtkglc.gl;
 
 
-//private import std.stdio;
-private import gtkglc.glgdktypes;
-private import gtkc.Loader;
-private import gtkc.paths;
-
 /*
  * Mesa 3-D graphics library
  * Version:  6.3
