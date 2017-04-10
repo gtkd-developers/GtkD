@@ -82,7 +82,7 @@ void build(string dir, string lib)
 		{
 			string files = dFiles(dir);
 			
-			int pivot = indexOf(files, ' ', files.length / 2);
+			ptrdiff_t pivot = indexOf(files, ' ', files.length / 2);
 
 			string files2 = files[pivot .. $];
 			files = files [0 .. pivot];
