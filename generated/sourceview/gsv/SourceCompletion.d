@@ -193,7 +193,8 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * The #GtkSourceView associated with @completion, or %NULL if the view has been
 	 * destroyed.
 	 *
-	 * Return: The #GtkSourceView associated with @completion, or %NULL.
+	 * Return: The #GtkSourceView associated with
+	 *     @completion, or %NULL.
 	 */
 	public SourceView getView()
 	{

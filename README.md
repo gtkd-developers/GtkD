@@ -95,12 +95,12 @@ Library | Version
 --- | ---
 Gtk+ | 3.22
 Gdk | 3.22
-Glib | 2.50
-GObject | 2.50
-Gio | 2.50
+Glib | 2.52
+GObject | 2.52
+Gio | 2.52
 Pango | 1.40
 Gdk-pixbuf | 2.36
 Cairo | 1.12.2
-GtksourceView | 3.22
+GtksourceView | 3.24
 GStreamer | 1.10
 Vte3 | 0.46

@@ -710,6 +710,13 @@ public class SourceSearchContext : ObjectG
 	 *
 	 * The search context holds a reference to @settings.
 	 *
+	 * Deprecated: The #GtkSourceSearchContext:settings property will become a
+	 * construct-only property in a future version. Create a new
+	 * #GtkSourceSearchContext instead, or change the #GtkSourceSearchSettings
+	 * properties. When the #GtkSourceSearchContext:settings property will become
+	 * construct-only, it will be possible to simplify some code that needed to
+	 * listen to the notify::settings signal.
+	 *
 	 * Params:
 	 *     settings = the new #GtkSourceSearchSettings, or %NULL.
 	 *

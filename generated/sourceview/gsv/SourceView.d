@@ -33,6 +33,7 @@ private import gsv.SourceBuffer;
 private import gsv.SourceCompletion;
 private import gsv.SourceGutter;
 private import gsv.SourceMarkAttributes;
+private import gsv.SpaceDrawer;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 private import gtk.BuildableIF;
@@ -176,7 +177,9 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Gets the #GtkSourceCompletion associated with @view.
+	 * Gets the #GtkSourceCompletion associated with @view. The returned object is
+	 * guaranteed to be the same for the lifetime of @view. Each #GtkSourceView
+	 * object has a different #GtkSourceCompletion.
 	 *
 	 * Return: the #GtkSourceCompletion associated with @view.
 	 */
@@ -195,6 +198,9 @@ public class SourceView : TextView
 	/**
 	 * Returns the #GtkSourceDrawSpacesFlags specifying if and how spaces
 	 * should be displayed for this @view.
+	 *
+	 * Deprecated: Use gtk_source_space_drawer_get_types_for_locations()
+	 * instead.
 	 *
 	 * Return: the #GtkSourceDrawSpacesFlags, 0 if no spaces should be drawn.
 	 */
@@ -360,6 +366,27 @@ public class SourceView : TextView
 	}
 
 	/**
+	 * Gets the #GtkSourceSpaceDrawer associated with @view. The returned object is
+	 * guaranteed to be the same for the lifetime of @view. Each #GtkSourceView
+	 * object has a different #GtkSourceSpaceDrawer.
+	 *
+	 * Return: the #GtkSourceSpaceDrawer associated with @view.
+	 *
+	 * Since: 3.24
+	 */
+	public SpaceDrawer getSpaceDrawer()
+	{
+		auto p = gtk_source_view_get_space_drawer(gtkSourceView);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SpaceDrawer)(cast(GtkSourceSpaceDrawer*) p);
+	}
+
+	/**
 	 * Returns the width of tabulation in characters.
 	 *
 	 * Return: width of tab.
@@ -433,6 +460,9 @@ public class SourceView : TextView
 	 *
 	 * For a finer-grained method, there is also the GtkSourceTag's
 	 * #GtkSourceTag:draw-spaces property.
+	 *
+	 * Deprecated: Use gtk_source_space_drawer_set_types_for_locations()
+	 * instead.
 	 *
 	 * Params:
 	 *     flags = #GtkSourceDrawSpacesFlags specifing how white spaces should
@@ -888,10 +918,15 @@ public class SourceView : TextView
 	 * or the current line by @count. For the moment, only
 	 * @count of -1 or 1 is valid.
 	 *
+	 * The @copy parameter is deprecated, it has never been used by
+	 * GtkSourceView (the value is always %FALSE) and was buggy.
+	 *
 	 * Params:
-	 *     copy = %TRUE if the line should be copied,
-	 *         %FALSE if it should be moved
-	 *     count = the number of lines to move over.
+	 *     copy = %TRUE if the line should be copied, %FALSE if it should be
+	 *         moved. This parameter is deprecated and will be removed in a later
+	 *         version, it should be always %FALSE.
+	 *     count = the number of lines to move over. Only 1 and -1 are
+	 *         supported.
 	 *
 	 * Since: 2.10
 	 */

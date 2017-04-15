@@ -108,6 +108,14 @@ shared static this()
 	Linker.link(gtk_source_completion_item_new, "gtk_source_completion_item_new", LIBRARY.GSV);
 	Linker.link(gtk_source_completion_item_new_from_stock, "gtk_source_completion_item_new_from_stock", LIBRARY.GSV);
 	Linker.link(gtk_source_completion_item_new_with_markup, "gtk_source_completion_item_new_with_markup", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_new2, "gtk_source_completion_item_new2", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_gicon, "gtk_source_completion_item_set_gicon", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_icon, "gtk_source_completion_item_set_icon", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_icon_name, "gtk_source_completion_item_set_icon_name", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_info, "gtk_source_completion_item_set_info", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_label, "gtk_source_completion_item_set_label", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_markup, "gtk_source_completion_item_set_markup", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_set_text, "gtk_source_completion_item_set_text", LIBRARY.GSV);
 
 	// gsv.SourceCompletionProposal
 
@@ -217,7 +225,9 @@ shared static this()
 	Linker.link(gtk_source_gutter_get_type, "gtk_source_gutter_get_type", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_get_padding, "gtk_source_gutter_get_padding", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_get_renderer_at_pos, "gtk_source_gutter_get_renderer_at_pos", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_get_view, "gtk_source_gutter_get_view", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_get_window, "gtk_source_gutter_get_window", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_get_window_type, "gtk_source_gutter_get_window_type", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_insert, "gtk_source_gutter_insert", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_queue_draw, "gtk_source_gutter_queue_draw", LIBRARY.GSV);
 	Linker.link(gtk_source_gutter_remove, "gtk_source_gutter_remove", LIBRARY.GSV);
@@ -436,6 +446,18 @@ shared static this()
 	Linker.link(gtk_source_search_settings_set_search_text, "gtk_source_search_settings_set_search_text", LIBRARY.GSV);
 	Linker.link(gtk_source_search_settings_set_wrap_around, "gtk_source_search_settings_set_wrap_around", LIBRARY.GSV);
 
+	// gsv.SpaceDrawer
+
+	Linker.link(gtk_source_space_drawer_get_type, "gtk_source_space_drawer_get_type", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_new, "gtk_source_space_drawer_new", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_bind_matrix_setting, "gtk_source_space_drawer_bind_matrix_setting", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_get_enable_matrix, "gtk_source_space_drawer_get_enable_matrix", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_get_matrix, "gtk_source_space_drawer_get_matrix", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_get_types_for_locations, "gtk_source_space_drawer_get_types_for_locations", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_set_enable_matrix, "gtk_source_space_drawer_set_enable_matrix", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_set_matrix, "gtk_source_space_drawer_set_matrix", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_set_types_for_locations, "gtk_source_space_drawer_set_types_for_locations", LIBRARY.GSV);
+
 	// gsv.SourceStyle
 
 	Linker.link(gtk_source_style_get_type, "gtk_source_style_get_type", LIBRARY.GSV);
@@ -519,6 +541,7 @@ shared static this()
 	Linker.link(gtk_source_view_get_show_right_margin, "gtk_source_view_get_show_right_margin", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_smart_backspace, "gtk_source_view_get_smart_backspace", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_smart_home_end, "gtk_source_view_get_smart_home_end", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_space_drawer, "gtk_source_view_get_space_drawer", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_tab_width, "gtk_source_view_get_tab_width", LIBRARY.GSV);
 	Linker.link(gtk_source_view_get_visual_column, "gtk_source_view_get_visual_column", LIBRARY.GSV);
 	Linker.link(gtk_source_view_indent_lines, "gtk_source_view_indent_lines", LIBRARY.GSV);
@@ -625,6 +648,14 @@ __gshared extern(C)
 	GtkSourceCompletionItem* function(const(char)* label, const(char)* text, GdkPixbuf* icon, const(char)* info) c_gtk_source_completion_item_new;
 	GtkSourceCompletionItem* function(const(char)* label, const(char)* text, const(char)* stock, const(char)* info) c_gtk_source_completion_item_new_from_stock;
 	GtkSourceCompletionItem* function(const(char)* markup, const(char)* text, GdkPixbuf* icon, const(char)* info) c_gtk_source_completion_item_new_with_markup;
+	GtkSourceCompletionItem* function() c_gtk_source_completion_item_new2;
+	void function(GtkSourceCompletionItem* item, GIcon* gicon) c_gtk_source_completion_item_set_gicon;
+	void function(GtkSourceCompletionItem* item, GdkPixbuf* icon) c_gtk_source_completion_item_set_icon;
+	void function(GtkSourceCompletionItem* item, const(char)* iconName) c_gtk_source_completion_item_set_icon_name;
+	void function(GtkSourceCompletionItem* item, const(char)* info) c_gtk_source_completion_item_set_info;
+	void function(GtkSourceCompletionItem* item, const(char)* label) c_gtk_source_completion_item_set_label;
+	void function(GtkSourceCompletionItem* item, const(char)* markup) c_gtk_source_completion_item_set_markup;
+	void function(GtkSourceCompletionItem* item, const(char)* text) c_gtk_source_completion_item_set_text;
 
 	// gsv.SourceCompletionProposal
 
@@ -734,7 +765,9 @@ __gshared extern(C)
 	GType function() c_gtk_source_gutter_get_type;
 	void function(GtkSourceGutter* gutter, int* xpad, int* ypad) c_gtk_source_gutter_get_padding;
 	GtkSourceGutterRenderer* function(GtkSourceGutter* gutter, int x, int y) c_gtk_source_gutter_get_renderer_at_pos;
+	GtkSourceView* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_view;
 	GdkWindow* function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window;
+	GtkTextWindowType function(GtkSourceGutter* gutter) c_gtk_source_gutter_get_window_type;
 	int function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer, int position) c_gtk_source_gutter_insert;
 	void function(GtkSourceGutter* gutter) c_gtk_source_gutter_queue_draw;
 	void function(GtkSourceGutter* gutter, GtkSourceGutterRenderer* renderer) c_gtk_source_gutter_remove;
@@ -953,6 +986,18 @@ __gshared extern(C)
 	void function(GtkSourceSearchSettings* settings, const(char)* searchText) c_gtk_source_search_settings_set_search_text;
 	void function(GtkSourceSearchSettings* settings, int wrapAround) c_gtk_source_search_settings_set_wrap_around;
 
+	// gsv.SpaceDrawer
+
+	GType function() c_gtk_source_space_drawer_get_type;
+	GtkSourceSpaceDrawer* function() c_gtk_source_space_drawer_new;
+	void function(GtkSourceSpaceDrawer* drawer, GSettings* settings, const(char)* key, GSettingsBindFlags flags) c_gtk_source_space_drawer_bind_matrix_setting;
+	int function(GtkSourceSpaceDrawer* drawer) c_gtk_source_space_drawer_get_enable_matrix;
+	GVariant* function(GtkSourceSpaceDrawer* drawer) c_gtk_source_space_drawer_get_matrix;
+	GtkSourceSpaceTypeFlags function(GtkSourceSpaceDrawer* drawer, GtkSourceSpaceLocationFlags locations) c_gtk_source_space_drawer_get_types_for_locations;
+	void function(GtkSourceSpaceDrawer* drawer, int enableMatrix) c_gtk_source_space_drawer_set_enable_matrix;
+	void function(GtkSourceSpaceDrawer* drawer, GVariant* matrix) c_gtk_source_space_drawer_set_matrix;
+	void function(GtkSourceSpaceDrawer* drawer, GtkSourceSpaceLocationFlags locations, GtkSourceSpaceTypeFlags types) c_gtk_source_space_drawer_set_types_for_locations;
+
 	// gsv.SourceStyle
 
 	GType function() c_gtk_source_style_get_type;
@@ -1036,6 +1081,7 @@ __gshared extern(C)
 	int function(GtkSourceView* view) c_gtk_source_view_get_show_right_margin;
 	int function(GtkSourceView* view) c_gtk_source_view_get_smart_backspace;
 	GtkSourceSmartHomeEndType function(GtkSourceView* view) c_gtk_source_view_get_smart_home_end;
+	GtkSourceSpaceDrawer* function(GtkSourceView* view) c_gtk_source_view_get_space_drawer;
 	uint function(GtkSourceView* view) c_gtk_source_view_get_tab_width;
 	uint function(GtkSourceView* view, GtkTextIter* iter) c_gtk_source_view_get_visual_column;
 	void function(GtkSourceView* view, GtkTextIter* start, GtkTextIter* end) c_gtk_source_view_indent_lines;
@@ -1140,6 +1186,14 @@ alias c_gtk_source_completion_item_get_type gtk_source_completion_item_get_type;
 alias c_gtk_source_completion_item_new gtk_source_completion_item_new;
 alias c_gtk_source_completion_item_new_from_stock gtk_source_completion_item_new_from_stock;
 alias c_gtk_source_completion_item_new_with_markup gtk_source_completion_item_new_with_markup;
+alias c_gtk_source_completion_item_new2 gtk_source_completion_item_new2;
+alias c_gtk_source_completion_item_set_gicon gtk_source_completion_item_set_gicon;
+alias c_gtk_source_completion_item_set_icon gtk_source_completion_item_set_icon;
+alias c_gtk_source_completion_item_set_icon_name gtk_source_completion_item_set_icon_name;
+alias c_gtk_source_completion_item_set_info gtk_source_completion_item_set_info;
+alias c_gtk_source_completion_item_set_label gtk_source_completion_item_set_label;
+alias c_gtk_source_completion_item_set_markup gtk_source_completion_item_set_markup;
+alias c_gtk_source_completion_item_set_text gtk_source_completion_item_set_text;
 
 // gsv.SourceCompletionProposal
 
@@ -1249,7 +1303,9 @@ alias c_gtk_source_file_saver_set_newline_type gtk_source_file_saver_set_newline
 alias c_gtk_source_gutter_get_type gtk_source_gutter_get_type;
 alias c_gtk_source_gutter_get_padding gtk_source_gutter_get_padding;
 alias c_gtk_source_gutter_get_renderer_at_pos gtk_source_gutter_get_renderer_at_pos;
+alias c_gtk_source_gutter_get_view gtk_source_gutter_get_view;
 alias c_gtk_source_gutter_get_window gtk_source_gutter_get_window;
+alias c_gtk_source_gutter_get_window_type gtk_source_gutter_get_window_type;
 alias c_gtk_source_gutter_insert gtk_source_gutter_insert;
 alias c_gtk_source_gutter_queue_draw gtk_source_gutter_queue_draw;
 alias c_gtk_source_gutter_remove gtk_source_gutter_remove;
@@ -1468,6 +1524,18 @@ alias c_gtk_source_search_settings_set_regex_enabled gtk_source_search_settings_
 alias c_gtk_source_search_settings_set_search_text gtk_source_search_settings_set_search_text;
 alias c_gtk_source_search_settings_set_wrap_around gtk_source_search_settings_set_wrap_around;
 
+// gsv.SpaceDrawer
+
+alias c_gtk_source_space_drawer_get_type gtk_source_space_drawer_get_type;
+alias c_gtk_source_space_drawer_new gtk_source_space_drawer_new;
+alias c_gtk_source_space_drawer_bind_matrix_setting gtk_source_space_drawer_bind_matrix_setting;
+alias c_gtk_source_space_drawer_get_enable_matrix gtk_source_space_drawer_get_enable_matrix;
+alias c_gtk_source_space_drawer_get_matrix gtk_source_space_drawer_get_matrix;
+alias c_gtk_source_space_drawer_get_types_for_locations gtk_source_space_drawer_get_types_for_locations;
+alias c_gtk_source_space_drawer_set_enable_matrix gtk_source_space_drawer_set_enable_matrix;
+alias c_gtk_source_space_drawer_set_matrix gtk_source_space_drawer_set_matrix;
+alias c_gtk_source_space_drawer_set_types_for_locations gtk_source_space_drawer_set_types_for_locations;
+
 // gsv.SourceStyle
 
 alias c_gtk_source_style_get_type gtk_source_style_get_type;
@@ -1551,6 +1619,7 @@ alias c_gtk_source_view_get_show_line_numbers gtk_source_view_get_show_line_numb
 alias c_gtk_source_view_get_show_right_margin gtk_source_view_get_show_right_margin;
 alias c_gtk_source_view_get_smart_backspace gtk_source_view_get_smart_backspace;
 alias c_gtk_source_view_get_smart_home_end gtk_source_view_get_smart_home_end;
+alias c_gtk_source_view_get_space_drawer gtk_source_view_get_space_drawer;
 alias c_gtk_source_view_get_tab_width gtk_source_view_get_tab_width;
 alias c_gtk_source_view_get_visual_column gtk_source_view_get_visual_column;
 alias c_gtk_source_view_indent_lines gtk_source_view_indent_lines;

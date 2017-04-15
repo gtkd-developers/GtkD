@@ -27,6 +27,7 @@ module gsv.SourceGutter;
 private import gdk.Window;
 private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
+private import gsv.SourceView;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 
@@ -103,6 +104,23 @@ public class SourceGutter : ObjectG
 	}
 
 	/**
+	 * Return: the associated #GtkSourceView.
+	 *
+	 * Since: 3.24
+	 */
+	public SourceView getView()
+	{
+		auto p = gtk_source_gutter_get_view(gtkSourceGutter);
+		
+		if(p is null)
+		{
+			return null;
+		}
+		
+		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
+	}
+
+	/**
 	 * Get the #GdkWindow of the gutter. The window will only be available when the
 	 * gutter has at least one, non-zero width, cell renderer packed.
 	 *
@@ -123,6 +141,16 @@ public class SourceGutter : ObjectG
 		}
 		
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+	}
+
+	/**
+	 * Return: the #GtkTextWindowType of @gutter.
+	 *
+	 * Since: 3.24
+	 */
+	public GtkTextWindowType getWindowType()
+	{
+		return gtk_source_gutter_get_window_type(gtkSourceGutter);
 	}
 
 	/**

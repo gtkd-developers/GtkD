@@ -24,6 +24,8 @@
 
 module gsv.SourceCompletionItem;
 
+private import gdkpixbuf.Pixbuf;
+private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -114,7 +116,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 * Creates a new #GtkSourceCompletionItem from a stock item. If @label is %NULL,
 	 * the stock label will be used.
 	 *
-	 * Deprecated: Use gtk_source_completion_item_new() instead.
+	 * Deprecated: Use gtk_source_completion_item_new2() instead.
 	 *
 	 * Params:
 	 *     label = The item label.
@@ -136,5 +138,69 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 		}
 		
 		this(cast(GtkSourceCompletionItem*) p, true);
+	}
+
+	/**
+	 * Creates a new #GtkSourceCompletionItem. The desired properties need to be set
+	 * afterwards.
+	 *
+	 * Return: a new #GtkSourceCompletionItem.
+	 *
+	 * Since: 3.24
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto p = gtk_source_completion_item_new2();
+		
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new2");
+		}
+		
+		this(cast(GtkSourceCompletionItem*) p, true);
+	}
+
+	/** */
+	public void setGicon(IconIF gicon)
+	{
+		gtk_source_completion_item_set_gicon(gtkSourceCompletionItem, (gicon is null) ? null : gicon.getIconStruct());
+	}
+
+	/** */
+	public void setIcon(Pixbuf icon)
+	{
+		gtk_source_completion_item_set_icon(gtkSourceCompletionItem, (icon is null) ? null : icon.getPixbufStruct());
+	}
+
+	/** */
+	public void setIconName(string iconName)
+	{
+		gtk_source_completion_item_set_icon_name(gtkSourceCompletionItem, Str.toStringz(iconName));
+	}
+
+	/** */
+	public void setInfo(string info)
+	{
+		gtk_source_completion_item_set_info(gtkSourceCompletionItem, Str.toStringz(info));
+	}
+
+	/** */
+	public void setLabel(string label)
+	{
+		gtk_source_completion_item_set_label(gtkSourceCompletionItem, Str.toStringz(label));
+	}
+
+	/** */
+	public void setMarkup(string markup)
+	{
+		gtk_source_completion_item_set_markup(gtkSourceCompletionItem, Str.toStringz(markup));
+	}
+
+	/** */
+	public void setText(string text)
+	{
+		gtk_source_completion_item_set_text(gtkSourceCompletionItem, Str.toStringz(text));
 	}
 }

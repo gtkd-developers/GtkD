@@ -140,6 +140,9 @@ alias GtkSourceCompressionType CompressionType;
  * of GTK_SOURCE_DRAW_SPACES_LEADING, GTK_SOURCE_DRAW_SPACES_TEXT or
  * GTK_SOURCE_DRAW_SPACES_TRAILING is specified, whitespaces at any position in
  * the line will be drawn (i.e. it has the same effect as specifying all of them).
+ *
+ * Deprecated: Use #GtkSourceSpaceTypeFlags and
+ * #GtkSourceSpaceLocationFlags instead.
  */
 public enum GtkSourceDrawSpacesFlags
 {
@@ -357,6 +360,76 @@ public enum GtkSourceSortFlags
 	REMOVE_DUPLICATES = 4,
 }
 alias GtkSourceSortFlags SortFlags;
+
+/**
+ * #GtkSourceSpaceLocationFlags contains flags for white space locations.
+ *
+ * If a line contains only white spaces (no text), the white spaces match both
+ * %GTK_SOURCE_SPACE_LOCATION_LEADING and %GTK_SOURCE_SPACE_LOCATION_TRAILING.
+ *
+ * Since: 3.24
+ */
+public enum GtkSourceSpaceLocationFlags
+{
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
+	/**
+	 * Leading white spaces on a line, i.e. the
+	 * indentation.
+	 */
+	LEADING = 1,
+	/**
+	 * White spaces inside a line of text.
+	 */
+	INSIDE_TEXT = 2,
+	/**
+	 * Trailing white spaces on a line.
+	 */
+	TRAILING = 4,
+	/**
+	 * White spaces anywhere.
+	 */
+	ALL = 7,
+}
+alias GtkSourceSpaceLocationFlags SpaceLocationFlags;
+
+/**
+ * #GtkSourceSpaceTypeFlags contains flags for white space types.
+ *
+ * Since: 3.24
+ */
+public enum GtkSourceSpaceTypeFlags
+{
+	/**
+	 * No flags.
+	 */
+	NONE = 0,
+	/**
+	 * Space character.
+	 */
+	SPACE = 1,
+	/**
+	 * Tab character.
+	 */
+	TAB = 2,
+	/**
+	 * Line break character. If the
+	 * #GtkSourceBuffer:implicit-trailing-newline property is %TRUE,
+	 * #GtkSourceSpaceDrawer also draws a line break at the end of the buffer.
+	 */
+	NEWLINE = 4,
+	/**
+	 * Non-breaking space character.
+	 */
+	NBSP = 8,
+	/**
+	 * All white spaces.
+	 */
+	ALL = 15,
+}
+alias GtkSourceSpaceTypeFlags SpaceTypeFlags;
 
 public enum GtkSourceViewGutterPosition
 {
@@ -950,6 +1023,20 @@ struct GtkSourceSearchSettingsClass
 }
 
 struct GtkSourceSearchSettingsPrivate;
+
+struct GtkSourceSpaceDrawer
+{
+	GObject parent;
+	GtkSourceSpaceDrawerPrivate* priv;
+}
+
+struct GtkSourceSpaceDrawerClass
+{
+	GObjectClass parentClass;
+	void*[20] padding;
+}
+
+struct GtkSourceSpaceDrawerPrivate;
 
 struct GtkSourceStyle;
 
