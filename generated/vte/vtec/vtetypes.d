@@ -282,3 +282,20 @@ struct VteTerminalClassPrivate;
  * Return: %TRUE if cell has to be selected; %FALSE if otherwise.
  */
 public alias extern(C) int function(VteTerminal* terminal, glong column, glong row, void* data) VteSelectionFunc;
+
+/**
+ * Callback for vte_terminal_spawn_async().
+ *
+ * On success, @pid contains the PID of the spawned process, and @error
+ * is %NULL.
+ * On failure, @pid is -1 and @error contains the error information.
+ *
+ * Params:
+ *     terminal = the #VteTerminal
+ *     pid = a #GPid
+ *     error = a #GError, or %NULL
+ *     userData = user data that was passed to vte_terminal_spawn_async
+ *
+ * Since: 0.48
+ */
+public alias extern(C) void function(VteTerminal* terminal, GPid pid, GError* error, void* userData) VteTerminalSpawnAsyncCallback;

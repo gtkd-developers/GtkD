@@ -24,12 +24,14 @@
 
 module vte.Pty;
 
+private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InitableIF;
 private import gio.InitableT;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.Str;
 private import gobject.ObjectG;
 private import vtec.vte;
 public  import vtec.vtetypes;
@@ -257,6 +259,67 @@ public class Pty : ObjectG, InitableIF
 		GError* err = null;
 		
 		auto p = vte_pty_set_utf8(vtePty, utf8, &err) != 0;
+		
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+		
+		return p;
+	}
+
+	/**
+	 * Starts the specified command under the pseudo-terminal @pty.
+	 * The @argv and @envv lists should be %NULL-terminated.
+	 * The "TERM" environment variable is automatically set to a default value,
+	 * but can be overridden from @envv.
+	 * @pty_flags controls logging the session to the specified system log files.
+	 *
+	 * Note that %G_SPAWN_DO_NOT_REAP_CHILD will always be added to @spawn_flags.
+	 *
+	 * Note that all open file descriptors will be closed in the child. If you want
+	 * to keep some file descriptor open for use in the child process, you need to
+	 * use a child setup function that unsets the FD_CLOEXEC flag on that file
+	 * descriptor.
+	 *
+	 * See vte_pty_new(), g_spawn_async() and vte_terminal_watch_child() for more information.
+	 *
+	 * Params:
+	 *     workingDirectory = the name of a directory the command should start
+	 *         in, or %NULL to use the current working directory
+	 *     argv = child's argument vector
+	 *     envv = a list of environment
+	 *         variables to be added to the environment before starting the process, or %NULL
+	 *     spawnFlags = flags from #GSpawnFlags
+	 *     childSetup = an extra child setup function to run in the child just before exec(), or %NULL
+	 *     childSetupData = user data for @child_setup, or %NULL
+	 *     childSetupDataDestroy = a #GDestroyNotify for @child_setup_data, or %NULL
+	 *     timeout = a timeout value in ms, or -1 to wait indefinitely
+	 *     cancellable = a #GCancellable, or %NULL
+	 *
+	 * Since: 0.48
+	 */
+	public void spawnAsync(string workingDirectory, string[] argv, string[] envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		vte_pty_spawn_async(vtePty, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, childSetupDataDestroy, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *     childPid = a location to store the child PID, or %NULL
+	 * Return: %TRUE on success, or %FALSE on error with @error filled in
+	 *
+	 * Since: 0.48
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool spawnFinish(AsyncResultIF result, out GPid childPid)
+	{
+		GError* err = null;
+		
+		auto p = vte_pty_spawn_finish(vtePty, (result is null) ? null : result.getAsyncResultStruct(), &childPid, &err) != 0;
 		
 		if (err !is null)
 		{

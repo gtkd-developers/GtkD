@@ -1332,6 +1332,48 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * A convenience function that wraps creating the #VtePty and spawning
+	 * the child process on it. See vte_pty_new_sync(), vte_pty_spawn_async(),
+	 * and vte_pty_spawn_finish() for more information.
+	 *
+	 * When the operation is finished successfully, @callback will be called
+	 * with the child #GPid, and a %NULL #GError. The child PID will already be
+	 * watched via vte_terminal_watch_child().
+	 *
+	 * When the operation fails, @callback will be called with a -1 #GPid,
+	 * and a non-%NULL #GError containing the error information.
+	 *
+	 * Note that if @terminal has been destroyed before the operation is called,
+	 * @callback will be called with a %NULL @terminal; you must not do anything
+	 * in the callback besides freeing any resources associated with @user_data,
+	 * but taking care not to access the now-destroyed #VteTerminal. Note that
+	 * in this case, if spawning was successful, the child process will be aborted
+	 * automatically.
+	 *
+	 * Params:
+	 *     ptyFlags = flags from #VtePtyFlags
+	 *     workingDirectory = the name of a directory the command should start
+	 *         in, or %NULL to use the current working directory
+	 *     argv = child's argument vector
+	 *     envv = a list of environment
+	 *         variables to be added to the environment before starting the process, or %NULL
+	 *     spawnFlags = flags from #GSpawnFlags
+	 *     childSetup = an extra child setup function to run in the child just before exec(), or %NULL
+	 *     childSetupData = user data for @child_setup, or %NULL
+	 *     childSetupDataDestroy = a #GDestroyNotify for @child_setup_data, or %NULL
+	 *     timeout = a timeout value in ms, or -1 to wait indefinitely
+	 *     cancellable = a #GCancellable, or %NULL
+	 *     callback = a #VteTerminalSpawnAsyncCallback, or %NULL
+	 *     userData = user data for @callback, or %NULL
+	 *
+	 * Since: 0.48
+	 */
+	public void spawnAsync(VtePtyFlags ptyFlags, string workingDirectory, string[] argv, string[] envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, Cancellable cancellable, VteTerminalSpawnAsyncCallback callback, void* userData)
+	{
+		vte_terminal_spawn_async(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, childSetupDataDestroy, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
 	 * Starts the specified command under a newly-allocated controlling
 	 * pseudo-terminal.  The @argv and @envv lists should be %NULL-terminated.
 	 * The "TERM" environment variable is automatically set to a default value,
@@ -1346,6 +1388,8 @@ public class Terminal : Widget, ScrollableIF
 	 * descriptor.
 	 *
 	 * See vte_pty_new(), g_spawn_async() and vte_terminal_watch_child() for more information.
+	 *
+	 * Deprecated: Use vte_terminal_spawn_async() instead.
 	 *
 	 * Params:
 	 *     ptyFlags = flags from #VtePtyFlags

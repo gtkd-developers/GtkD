@@ -103,4 +103,4 @@ Gdk-pixbuf | 2.36
 Cairo | 1.12.2
 GtksourceView | 3.24
 GStreamer | 1.10
-Vte3 | 0.46
+Vte3 | 0.48

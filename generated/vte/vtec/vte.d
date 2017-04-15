@@ -42,6 +42,8 @@ shared static this()
 	Linker.link(vte_pty_get_size, "vte_pty_get_size", LIBRARY.VTE);
 	Linker.link(vte_pty_set_size, "vte_pty_set_size", LIBRARY.VTE);
 	Linker.link(vte_pty_set_utf8, "vte_pty_set_utf8", LIBRARY.VTE);
+	Linker.link(vte_pty_spawn_async, "vte_pty_spawn_async", LIBRARY.VTE);
+	Linker.link(vte_pty_spawn_finish, "vte_pty_spawn_finish", LIBRARY.VTE);
 
 	// vte.Regex
 
@@ -141,6 +143,7 @@ shared static this()
 	Linker.link(vte_terminal_set_scrollback_lines, "vte_terminal_set_scrollback_lines", LIBRARY.VTE);
 	Linker.link(vte_terminal_set_size, "vte_terminal_set_size", LIBRARY.VTE);
 	Linker.link(vte_terminal_set_word_char_exceptions, "vte_terminal_set_word_char_exceptions", LIBRARY.VTE);
+	Linker.link(vte_terminal_spawn_async, "vte_terminal_spawn_async", LIBRARY.VTE);
 	Linker.link(vte_terminal_spawn_sync, "vte_terminal_spawn_sync", LIBRARY.VTE);
 	Linker.link(vte_terminal_unselect_all, "vte_terminal_unselect_all", LIBRARY.VTE);
 	Linker.link(vte_terminal_watch_child, "vte_terminal_watch_child", LIBRARY.VTE);
@@ -169,6 +172,8 @@ __gshared extern(C)
 	int function(VtePty* pty, int* rows, int* columns, GError** err) c_vte_pty_get_size;
 	int function(VtePty* pty, int rows, int columns, GError** err) c_vte_pty_set_size;
 	int function(VtePty* pty, int utf8, GError** err) c_vte_pty_set_utf8;
+	void function(VtePty* pty, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_vte_pty_spawn_async;
+	int function(VtePty* pty, GAsyncResult* result, GPid* childPid, GError** err) c_vte_pty_spawn_finish;
 
 	// vte.Regex
 
@@ -268,6 +273,7 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, glong lines) c_vte_terminal_set_scrollback_lines;
 	void function(VteTerminal* terminal, glong columns, glong rows) c_vte_terminal_set_size;
 	void function(VteTerminal* terminal, const(char)* exceptions) c_vte_terminal_set_word_char_exceptions;
+	void function(VteTerminal* terminal, VtePtyFlags ptyFlags, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GDestroyNotify childSetupDataDestroy, int timeout, GCancellable* cancellable, VteTerminalSpawnAsyncCallback callback, void* userData) c_vte_terminal_spawn_async;
 	int function(VteTerminal* terminal, VtePtyFlags ptyFlags, const(char)* workingDirectory, char** argv, char** envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, GPid* childPid, GCancellable* cancellable, GError** err) c_vte_terminal_spawn_sync;
 	void function(VteTerminal* terminal) c_vte_terminal_unselect_all;
 	void function(VteTerminal* terminal, GPid childPid) c_vte_terminal_watch_child;
@@ -294,6 +300,8 @@ alias c_vte_pty_get_fd vte_pty_get_fd;
 alias c_vte_pty_get_size vte_pty_get_size;
 alias c_vte_pty_set_size vte_pty_set_size;
 alias c_vte_pty_set_utf8 vte_pty_set_utf8;
+alias c_vte_pty_spawn_async vte_pty_spawn_async;
+alias c_vte_pty_spawn_finish vte_pty_spawn_finish;
 
 // vte.Regex
 
@@ -393,6 +401,7 @@ alias c_vte_terminal_set_scroll_on_output vte_terminal_set_scroll_on_output;
 alias c_vte_terminal_set_scrollback_lines vte_terminal_set_scrollback_lines;
 alias c_vte_terminal_set_size vte_terminal_set_size;
 alias c_vte_terminal_set_word_char_exceptions vte_terminal_set_word_char_exceptions;
+alias c_vte_terminal_spawn_async vte_terminal_spawn_async;
 alias c_vte_terminal_spawn_sync vte_terminal_spawn_sync;
 alias c_vte_terminal_unselect_all vte_terminal_unselect_all;
 alias c_vte_terminal_watch_child vte_terminal_watch_child;
