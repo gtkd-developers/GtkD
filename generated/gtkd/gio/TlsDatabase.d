@@ -404,8 +404,8 @@ public class TlsDatabase : ObjectG
 	}
 
 	/**
-	 * Verify's a certificate chain after looking up and adding any missing
-	 * certificates to the chain.
+	 * Determines the validity of a certificate chain after looking up and
+	 * adding any missing certificates to the chain.
 	 *
 	 * @chain is a chain of #GTlsCertificate objects each pointing to the next
 	 * certificate in the chain by its %issuer property. The chain may initially
@@ -425,6 +425,15 @@ public class TlsDatabase : ObjectG
 	 *
 	 * Currently there are no @flags, and %G_TLS_DATABASE_VERIFY_NONE should be
 	 * used.
+	 *
+	 * If @chain is found to be valid, then the return value will be 0. If
+	 * @chain is found to be invalid, then the return value will indicate
+	 * the problems found. If the function is unable to determine whether
+	 * @chain is valid or not (eg, because @cancellable is triggered
+	 * before it completes) then the return value will be
+	 * %G_TLS_CERTIFICATE_GENERIC_ERROR and @error will be set
+	 * accordingly. @error is not set when @chain is successfully analyzed
+	 * but found to be invalid.
 	 *
 	 * This function can block, use g_tls_database_verify_chain_async() to perform
 	 * the verification operation asynchronously.
@@ -459,9 +468,9 @@ public class TlsDatabase : ObjectG
 	}
 
 	/**
-	 * Asynchronously verify's a certificate chain after looking up and adding
-	 * any missing certificates to the chain. See g_tls_database_verify_chain()
-	 * for more information.
+	 * Asynchronously determines the validity of a certificate chain after
+	 * looking up and adding any missing certificates to the chain. See
+	 * g_tls_database_verify_chain() for more information.
 	 *
 	 * Params:
 	 *     chain = a #GTlsCertificate chain
@@ -482,7 +491,16 @@ public class TlsDatabase : ObjectG
 
 	/**
 	 * Finish an asynchronous verify chain operation. See
-	 * g_tls_database_verify_chain() for more information. *
+	 * g_tls_database_verify_chain() for more information.
+	 *
+	 * If @chain is found to be valid, then the return value will be 0. If
+	 * @chain is found to be invalid, then the return value will indicate
+	 * the problems found. If the function is unable to determine whether
+	 * @chain is valid or not (eg, because @cancellable is triggered
+	 * before it completes) then the return value will be
+	 * %G_TLS_CERTIFICATE_GENERIC_ERROR and @error will be set
+	 * accordingly. @error is not set when @chain is successfully analyzed
+	 * but found to be invalid.
 	 *
 	 * Params:
 	 *     result = a #GAsyncResult.

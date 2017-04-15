@@ -148,7 +148,7 @@ public struct Signals
 	 *     after = whether the handler should be called before or after the
 	 *         default handler of the signal.
 	 *
-	 * Return: the handler id (always greater than 0 for successful connections)
+	 * Return: the handler ID (always greater than 0 for successful connections)
 	 */
 	public static gulong connectClosure(ObjectG instanc, string detailedSignal, Closure closure, bool after)
 	{
@@ -166,7 +166,7 @@ public struct Signals
 	 *     after = whether the handler should be called before or after the
 	 *         default handler of the signal.
 	 *
-	 * Return: the handler id (always greater than 0 for successful connections)
+	 * Return: the handler ID (always greater than 0 for successful connections)
 	 */
 	public static gulong connectClosureById(ObjectG instanc, uint signalId, GQuark detail, Closure closure, bool after)
 	{
@@ -188,7 +188,7 @@ public struct Signals
 	 *     destroyData = a #GClosureNotify for @data.
 	 *     connectFlags = a combination of #GConnectFlags.
 	 *
-	 * Return: the handler id (always greater than 0 for successful connections)
+	 * Return: the handler ID (always greater than 0 for successful connections)
 	 */
 	public static gulong connectData(ObjectG instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
@@ -341,11 +341,11 @@ public struct Signals
 	}
 
 	/**
-	 * Returns whether @handler_id is the id of a handler connected to @instance.
+	 * Returns whether @handler_id is the ID of a handler connected to @instance.
 	 *
 	 * Params:
 	 *     instanc = The instance where a signal handler is sought.
-	 *     handlerId = the handler id.
+	 *     handlerId = the handler ID.
 	 *
 	 * Return: whether @handler_id identifies a handler connected to @instance.
 	 */

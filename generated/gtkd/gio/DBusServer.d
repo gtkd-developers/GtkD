@@ -151,8 +151,9 @@ public class DBusServer : ObjectG, InitableIF
 	}
 
 	/**
-	 * Gets a D-Bus address string that can be used by clients to connect
-	 * to @server.
+	 * Gets a
+	 * [D-Bus address](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses)
+	 * string that can be used by clients to connect to @server.
 	 *
 	 * Return: A D-Bus address string. Do not free, the string is owned
 	 *     by @server.

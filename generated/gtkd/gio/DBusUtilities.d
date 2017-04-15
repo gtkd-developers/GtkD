@@ -73,6 +73,9 @@ public struct DBusUtilities
 	 * bus instance specified by @bus_type. This may involve using various
 	 * platform specific mechanisms.
 	 *
+	 * The returned address will be in the
+	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
+	 *
 	 * Params:
 	 *     busType = a #GBusType
 	 *     cancellable = a #GCancellable or %NULL
@@ -102,7 +105,8 @@ public struct DBusUtilities
 	/**
 	 * Asynchronously connects to an endpoint specified by @address and
 	 * sets up the connection so it is in a state to run the client-side
-	 * of the D-Bus authentication conversation.
+	 * of the D-Bus authentication conversation. @address must be in the
+	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * When the operation is finished, @callback will be invoked. You can
 	 * then call g_dbus_address_get_stream_finish() to get the result of
@@ -162,7 +166,8 @@ public struct DBusUtilities
 	/**
 	 * Synchronously connects to an endpoint specified by @address and
 	 * sets up the connection so it is in a state to run the client-side
-	 * of the D-Bus authentication conversation.
+	 * of the D-Bus authentication conversation. @address must be in the
+	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * This is a synchronous failable function. See
 	 * g_dbus_address_get_stream() for the asynchronous version.
@@ -296,7 +301,8 @@ public struct DBusUtilities
 	}
 
 	/**
-	 * Checks if @string is a D-Bus address.
+	 * Checks if @string is a
+	 * [D-Bus address](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * This doesn't check if @string is actually supported by #GDBusServer
 	 * or #GDBusConnection - use g_dbus_is_supported_address() to do more
@@ -378,9 +384,10 @@ public struct DBusUtilities
 	}
 
 	/**
-	 * Like g_dbus_is_address() but also checks if the library suppors the
+	 * Like g_dbus_is_address() but also checks if the library supports the
 	 * transports in @string and that key/value pairs for each transport
-	 * are valid.
+	 * are valid. See the specification of the
+	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * Params:
 	 *     str = A string.

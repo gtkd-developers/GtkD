@@ -797,7 +797,7 @@ public enum GDBusProxyFlags
 	 */
 	DO_NOT_AUTO_START = 4,
 	/**
-	 * If set, the property value for any <emphasis>invalidated property</emphasis> will be (asynchronously) retrieved upon receiving the <ulink url="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties">PropertiesChanged</ulink> D-Bus signal and the property will not cause emission of the #GDBusProxy::g-properties-changed signal. When the value is received the #GDBusProxy::g-properties-changed signal is emitted for the property along with the retrieved value. Since 2.32.
+	 * If set, the property value for any __invalidated property__ will be (asynchronously) retrieved upon receiving the [`PropertiesChanged`](http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties) D-Bus signal and the property will not cause emission of the #GDBusProxy::g-properties-changed signal. When the value is received the #GDBusProxy::g-properties-changed signal is emitted for the property along with the retrieved value. Since 2.32.
 	 */
 	GET_INVALIDATED_PROPERTIES = 8,
 	/**
@@ -1255,19 +1255,19 @@ public enum GFileMonitorEvent
 	/**
 	 * the file was renamed within the
 	 * current directory -- only sent if the %G_FILE_MONITOR_WATCH_MOVES
-	 * flag is set.  Since: 2.44.
+	 * flag is set.  Since: 2.46.
 	 */
 	RENAMED = 8,
 	/**
 	 * the file was moved into the
 	 * monitored directory from another location -- only sent if the
-	 * %G_FILE_MONITOR_WATCH_MOVES flag is set.  Since: 2.44.
+	 * %G_FILE_MONITOR_WATCH_MOVES flag is set.  Since: 2.46.
 	 */
 	MOVED_IN = 9,
 	/**
 	 * the file was moved out of the
 	 * monitored directory to another location -- only sent if the
-	 * %G_FILE_MONITOR_WATCH_MOVES flag is set.  Since: 2.44
+	 * %G_FILE_MONITOR_WATCH_MOVES flag is set.  Since: 2.46
 	 */
 	MOVED_OUT = 10,
 }
@@ -1291,7 +1291,7 @@ public enum GFileMonitorFlags
 	 * by file renames (moves) and send a single G_FILE_MONITOR_EVENT_MOVED
 	 * event instead (NB: not supported on all backends; the default
 	 * behaviour -without specifying this flag- is to send single DELETED
-	 * and CREATED events).  Deprecated since 2.44: use
+	 * and CREATED events).  Deprecated since 2.46: use
 	 * %G_FILE_MONITOR_WATCH_MOVES instead.
 	 */
 	SEND_MOVED = 2,
@@ -1304,7 +1304,7 @@ public enum GFileMonitorFlags
 	 * Watch for rename operations on a
 	 * monitored directory.  This causes %G_FILE_MONITOR_EVENT_RENAMED,
 	 * %G_FILE_MONITOR_EVENT_MOVED_IN and %G_FILE_MONITOR_EVENT_MOVED_OUT
-	 * events to be emitted when possible.  Since: 2.44.
+	 * events to be emitted when possible.  Since: 2.46.
 	 */
 	WATCH_MOVES = 8,
 }
@@ -8923,7 +8923,7 @@ public alias extern(C) int function(GDBusConnection* connection, const(char)* se
  * If the returned #GDBusMessage is different from @message and cannot
  * be sent on @connection (it could use features, such as file
  * descriptors, not compatible with @connection), then a warning is
- * logged to <emphasis>standard error</emphasis>. Applications can
+ * logged to standard error. Applications can
  * check this ahead of time using g_dbus_message_to_blob() passing a
  * #GDBusCapabilityFlags value obtained from @connection.
  *

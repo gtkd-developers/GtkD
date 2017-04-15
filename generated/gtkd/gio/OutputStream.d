@@ -156,7 +156,7 @@ public class OutputStream : ObjectG
 	 *
 	 * For behaviour details see g_output_stream_close().
 	 *
-	 * The asyncronous methods have a default fallback that uses threads
+	 * The asynchronous methods have a default fallback that uses threads
 	 * to implement asynchronicity, so they are optional for inheriting
 	 * classes. However, if you override one you must override all.
 	 *
@@ -272,7 +272,7 @@ public class OutputStream : ObjectG
 	}
 
 	/**
-	 * Checks if an ouput stream has pending actions.
+	 * Checks if an output stream has pending actions.
 	 *
 	 * Return: %TRUE if @stream has pending actions.
 	 */
@@ -629,7 +629,7 @@ public class OutputStream : ObjectG
 	 * value) will be executed before an outstanding request with lower
 	 * priority. Default priority is %G_PRIORITY_DEFAULT.
 	 *
-	 * The asyncronous methods have a default fallback that uses threads
+	 * The asynchronous methods have a default fallback that uses threads
 	 * to implement asynchronicity, so they are optional for inheriting
 	 * classes. However, if you override one you must override all.
 	 *

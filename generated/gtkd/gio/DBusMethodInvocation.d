@@ -273,7 +273,9 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Finishes handling a D-Bus method call by returning an error.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Params:
 	 *     errorName = A valid D-Bus error name.
@@ -289,7 +291,9 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Like g_dbus_method_invocation_return_error() but without printf()-style formatting.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Params:
 	 *     domain = A #GQuark for the #GError error domain.
@@ -307,7 +311,9 @@ public class DBusMethodInvocation : ObjectG
 	 * Like g_dbus_method_invocation_return_error() but intended for
 	 * language bindings.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Params:
 	 *     domain = A #GQuark for the #GError error domain.
@@ -326,7 +332,9 @@ public class DBusMethodInvocation : ObjectG
 	 * Like g_dbus_method_invocation_return_error() but takes a #GError
 	 * instead of the error domain, error code and message.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Params:
 	 *     error = A #GError.
@@ -342,9 +350,30 @@ public class DBusMethodInvocation : ObjectG
 	 * Finishes handling a D-Bus method call by returning @parameters.
 	 * If the @parameters GVariant is floating, it is consumed.
 	 *
-	 * It is an error if @parameters is not of the right format.
+	 * It is an error if @parameters is not of the right format: it must be a tuple
+	 * containing the out-parameters of the D-Bus method. Even if the method has a
+	 * single out-parameter, it must be contained in a tuple. If the method has no
+	 * out-parameters, @parameters may be %NULL or an empty tuple.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * |[<!-- language="C" -->
+	 * GDBusMethodInvocation *invocation = some_invocation;
+	 * g_autofree gchar *result_string = NULL;
+	 * g_autoptr (GError) error = NULL;
+	 *
+	 * result_string = calculate_result (&error);
+	 *
+	 * if (error != NULL)
+	 * g_dbus_method_invocation_return_gerror (invocation, error);
+	 * else
+	 * g_dbus_method_invocation_return_value (invocation,
+	 * g_variant_new ("(s)", result_string));
+	 *
+	 * /<!-- -->* Do not free @invocation here; returning a value does that *<!-- -->/
+	 * ]|
+	 *
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Since 2.48, if the method call requested for a reply not to be sent
 	 * then this call will sink @parameters and free @invocation, but
@@ -366,7 +395,9 @@ public class DBusMethodInvocation : ObjectG
 	 *
 	 * This method is only available on UNIX.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Params:
 	 *     parameters = A #GVariant tuple with out parameters for the method or %NULL if not passing any parameters.
@@ -383,7 +414,9 @@ public class DBusMethodInvocation : ObjectG
 	 * Like g_dbus_method_invocation_return_gerror() but takes ownership
 	 * of @error so the caller does not need to free it.
 	 *
-	 * This method will free @invocation, you cannot use it afterwards.
+	 * This method will take ownership of @invocation. See
+	 * #GDBusInterfaceVTable for more information about the ownership of
+	 * @invocation.
 	 *
 	 * Params:
 	 *     error = A #GError.

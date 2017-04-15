@@ -2380,6 +2380,7 @@ shared static this()
 	Linker.link(g_content_type_is_a, "g_content_type_is_a", LIBRARY.GIO);
 	Linker.link(g_content_type_is_unknown, "g_content_type_is_unknown", LIBRARY.GIO);
 	Linker.link(g_content_types_get_registered, "g_content_types_get_registered", LIBRARY.GIO);
+	Linker.link(g_content_type_is_mime_type, "g_content_type_is_mime_type", LIBRARY.GIO);
 
 	// gio.DBusError
 
@@ -4769,6 +4770,7 @@ __gshared extern(C)
 	int function(const(char)* type, const(char)* supertype) c_g_content_type_is_a;
 	int function(const(char)* type) c_g_content_type_is_unknown;
 	GList* function() c_g_content_types_get_registered;
+	int function(const(char)* type, const(char)* mimeType) c_g_content_type_is_mime_type;
 
 	// gio.DBusError
 
@@ -7156,6 +7158,7 @@ alias c_g_content_type_guess_for_tree g_content_type_guess_for_tree;
 alias c_g_content_type_is_a g_content_type_is_a;
 alias c_g_content_type_is_unknown g_content_type_is_unknown;
 alias c_g_content_types_get_registered g_content_types_get_registered;
+alias c_g_content_type_is_mime_type g_content_type_is_mime_type;
 
 // gio.DBusError
 

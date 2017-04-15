@@ -195,7 +195,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	/**
 	 * Synchronously connects and sets up a D-Bus client connection for
 	 * exchanging D-Bus messages with an endpoint specified by @address
-	 * which must be in the D-Bus address format.
+	 * which must be in the
+	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * This constructor can only be used to initiate client-side
 	 * connections - use g_dbus_connection_new_sync() if you need to act
@@ -333,7 +334,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	/**
 	 * Asynchronously connects and sets up a D-Bus client connection for
 	 * exchanging D-Bus messages with an endpoint specified by @address
-	 * which must be in the D-Bus address format.
+	 * which must be in the
+	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * This constructor can only be used to initiate client-side
 	 * connections - use g_dbus_connection_new() if you need to act as the

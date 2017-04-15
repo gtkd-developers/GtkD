@@ -264,7 +264,8 @@ public struct ContentType
 	/**
 	 * Checks if the content type is the generic "unknown" type.
 	 * On UNIX this is the "application/octet-stream" mimetype,
-	 * while on win32 it is "*".
+	 * while on win32 it is "*" and on OSX it is a dynamic type
+	 * or octet-stream.
 	 *
 	 * Params:
 	 *     type = a content type string
@@ -294,5 +295,23 @@ public struct ContentType
 		}
 		
 		return new ListG(cast(GList*) p, true);
+	}
+
+	/**
+	 * Determines if @type is a subset of @mime_type.
+	 * Convenience wrapper around g_content_type_is_a().
+	 *
+	 * Params:
+	 *     type = a content type string
+	 *     mimeType = a mime type string
+	 *
+	 * Return: %TRUE if @type is a kind of @mime_type,
+	 *     %FALSE otherwise.
+	 *
+	 * Since: 2.52
+	 */
+	public static bool isMimeType(string type, string mimeType)
+	{
+		return g_content_type_is_mime_type(Str.toStringz(type), Str.toStringz(mimeType)) != 0;
 	}
 }

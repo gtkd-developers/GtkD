@@ -460,6 +460,10 @@ public template AppInfoT(TStruct)
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
+	 * Note that the check <em>may not</em> compare each individual field, and
+	 * only does an identity check. In case detecting changes in the contents
+	 * is needed, program code must additionally compare relevant fields.
+	 *
 	 * Params:
 	 *     appinfo2 = the second #GAppInfo.
 	 *
