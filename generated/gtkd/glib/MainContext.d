@@ -134,9 +134,9 @@ public class MainContext
 	 *
 	 * Return: %TRUE if some sources are ready to be dispatched.
 	 */
-	public int check(int maxPriority, GPollFD[] fds)
+	public bool check(int maxPriority, GPollFD[] fds)
 	{
-		return g_main_context_check(gMainContext, maxPriority, fds.ptr, cast(int)fds.length);
+		return g_main_context_check(gMainContext, maxPriority, fds.ptr, cast(int)fds.length) != 0;
 	}
 
 	/**

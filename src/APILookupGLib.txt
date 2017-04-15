@@ -1965,6 +1965,7 @@ move: utf8_to_ucs4 Unicode
 move: utf8_to_ucs4_fast Unicode
 move: utf8_to_utf16 Unicode
 move: utf8_validate Unicode
+version 2.52: move: utf8_make_valid Unicode
 
 move: unix_error_quark UnixUtils error_quark
 move: unix_fd_add UnixUtils fd_add
@@ -1983,6 +1984,11 @@ move: uri_list_extract_uris URI
 move: uri_parse_scheme URI
 move: uri_unescape_segment URI
 move: uri_unescape_string URI
+
+version 2.52: start
+	move: uuid_string_is_valid Uuid string_is_valid
+	move: uuid_string_random Uuid string_random
+version: end
 
 move: atexit Util
 move: basename Util

@@ -1036,8 +1036,7 @@ public struct Unicode
 	 *
 	 * Params:
 	 *     p = a pointer to Unicode character encoded as UTF-8
-	 *     maxLen = the maximum number of bytes to read, or -1, for no maximum or
-	 *         if @p is nul-terminated
+	 *     maxLen = the maximum number of bytes to read, or -1 if @p is nul-terminated
 	 *
 	 * Return: the resulting character. If @p points to a partial
 	 *     sequence at the end of a string that could begin a valid
@@ -1474,5 +1473,33 @@ public struct Unicode
 		end = Str.toString(outend);
 		
 		return p;
+	}
+
+	/**
+	 * If the provided string is valid UTF-8, return a copy of it. If not,
+	 * return a copy in which bytes that could not be interpreted as valid Unicode
+	 * are replaced with the Unicode replacement character (U+FFFD).
+	 *
+	 * For example, this is an appropriate function to use if you have received
+	 * a string that was incorrectly declared to be UTF-8, and you need a valid
+	 * UTF-8 version of it that can be logged or displayed to the user, with the
+	 * assumption that it is close enough to ASCII or UTF-8 to be mostly
+	 * readable as-is.
+	 *
+	 * Params:
+	 *     str = string to coerce into UTF-8
+	 *     len = the maximum length of @str to use, in bytes. If @len < 0,
+	 *         then the string is nul-terminated.
+	 *
+	 * Return: a valid UTF-8 string whose content resembles @str
+	 *
+	 * Since: 2.52
+	 */
+	public static string utf8MakeValid(string str, ptrdiff_t len)
+	{
+		auto retStr = g_utf8_make_valid(Str.toStringz(str), len);
+		
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

@@ -139,7 +139,7 @@ public alias ushort GDateYear;
 /**
  * Opaque type. See g_mutex_locker_new() for details.
  */
-public alias void* GMutexLocker;
+public alias void GMutexLocker;
 
 /**
  * A type which is used to hold a process identification.
@@ -162,7 +162,7 @@ public alias uint GQuark;
  * A typedef alias for gchar**. This is mostly useful when used together with
  * g_auto().
  */
-public alias void* GStrv;
+public alias char** GStrv;
 
 /**
  * Simply a replacement for time_t. It has been deprecated
@@ -286,6 +286,10 @@ public enum GChecksumType
 	 * Use the SHA-512 hashing algorithm (Since: 2.36)
 	 */
 	SHA512 = 3,
+	/**
+	 * Use the SHA-384 hashing algorithm (Since: 2.51)
+	 */
+	SHA384 = 4,
 }
 alias GChecksumType ChecksumType;
 
@@ -2114,7 +2118,7 @@ alias GSpawnFlags SpawnFlags;
  * 'built' terminology that automake uses and are explicitly used to
  * distinguish between the 'srcdir' and 'builddir' being separate.  All
  * files in your project should either be dist (in the
- * `DIST_EXTRA` or `dist_schema_DATA`
+ * `EXTRA_DIST` or `dist_schema_DATA`
  * sense, in which case they will always be in the srcdir) or built (in
  * the `BUILT_SOURCES` sense, in which case they will
  * always be in the builddir).
@@ -2446,7 +2450,7 @@ alias GTraverseType TraverseType;
  * Since new unicode versions may add new types here, applications should be ready
  * to handle unknown values. They may be regarded as %G_UNICODE_BREAK_UNKNOWN.
  *
- * See <ulink url="http://www.unicode.org/unicode/reports/tr14/">http://www.unicode.org/unicode/reports/tr14/</ulink>.
+ * See [Unicode Line Breaking Algorithm](http://www.unicode.org/unicode/reports/tr14/).
  */
 public enum GUnicodeBreakType
 {
@@ -2633,9 +2637,7 @@ alias GUnicodeBreakType UnicodeBreakType;
  *
  * Note that new types may be added in the future. Applications
  * should be ready to handle unknown values.
- * See <ulink
- * url="http://www.unicode.org/reports/tr24/">Unicode Standard Annex
- * #24: Script names</ulink>.
+ * See [Unicode Standard Annex #24: Script names](http://www.unicode.org/reports/tr24/).
  */
 public enum GUnicodeScript
 {
@@ -3202,7 +3204,7 @@ alias GUnicodeScript UnicodeScript;
 /**
  * These are the possible character classifications from the
  * Unicode specification.
- * See <ulink url="http://www.unicode.org/reports/tr44/#General_Category_Values">Unicode Character Database</unlink>.
+ * See [Unicode Character Database](http://www.unicode.org/reports/tr44/#General_Category_Values).
  */
 public enum GUnicodeType
 {

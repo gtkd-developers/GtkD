@@ -1710,6 +1710,7 @@ shared static this()
 	Linker.link(g_utf8_to_ucs4_fast, "g_utf8_to_ucs4_fast", LIBRARY.GLIB);
 	Linker.link(g_utf8_to_utf16, "g_utf8_to_utf16", LIBRARY.GLIB);
 	Linker.link(g_utf8_validate, "g_utf8_validate", LIBRARY.GLIB);
+	Linker.link(g_utf8_make_valid, "g_utf8_make_valid", LIBRARY.GLIB);
 
 	// glib.UnixUtils
 
@@ -1732,6 +1733,11 @@ shared static this()
 	Linker.link(g_uri_parse_scheme, "g_uri_parse_scheme", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_segment, "g_uri_unescape_segment", LIBRARY.GLIB);
 	Linker.link(g_uri_unescape_string, "g_uri_unescape_string", LIBRARY.GLIB);
+
+	// glib.Uuid
+
+	Linker.link(g_uuid_string_is_valid, "g_uuid_string_is_valid", LIBRARY.GLIB);
+	Linker.link(g_uuid_string_random, "g_uuid_string_random", LIBRARY.GLIB);
 
 	// glib.Version
 
@@ -3425,6 +3431,7 @@ __gshared extern(C)
 	dchar* function(const(char)* str, glong len, glong* itemsWritten) c_g_utf8_to_ucs4_fast;
 	wchar* function(const(char)* str, glong len, glong* itemsRead, glong* itemsWritten, GError** err) c_g_utf8_to_utf16;
 	int function(char* str, ptrdiff_t maxLen, char** end) c_g_utf8_validate;
+	char* function(const(char)* str, ptrdiff_t len) c_g_utf8_make_valid;
 
 	// glib.UnixUtils
 
@@ -3447,6 +3454,11 @@ __gshared extern(C)
 	char* function(const(char)* uri) c_g_uri_parse_scheme;
 	char* function(const(char)* escapedString, const(char)* escapedStringEnd, const(char)* illegalCharacters) c_g_uri_unescape_segment;
 	char* function(const(char)* escapedString, const(char)* illegalCharacters) c_g_uri_unescape_string;
+
+	// glib.Uuid
+
+	int function(const(char)* str) c_g_uuid_string_is_valid;
+	char* function() c_g_uuid_string_random;
 
 	// glib.Version
 
@@ -5132,6 +5144,7 @@ alias c_g_utf8_to_ucs4 g_utf8_to_ucs4;
 alias c_g_utf8_to_ucs4_fast g_utf8_to_ucs4_fast;
 alias c_g_utf8_to_utf16 g_utf8_to_utf16;
 alias c_g_utf8_validate g_utf8_validate;
+alias c_g_utf8_make_valid g_utf8_make_valid;
 
 // glib.UnixUtils
 
@@ -5154,6 +5167,11 @@ alias c_g_uri_list_extract_uris g_uri_list_extract_uris;
 alias c_g_uri_parse_scheme g_uri_parse_scheme;
 alias c_g_uri_unescape_segment g_uri_unescape_segment;
 alias c_g_uri_unescape_string g_uri_unescape_string;
+
+// glib.Uuid
+
+alias c_g_uuid_string_is_valid g_uuid_string_is_valid;
+alias c_g_uuid_string_random g_uuid_string_random;
 
 // glib.Version
 

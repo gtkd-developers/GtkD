@@ -1152,7 +1152,7 @@ alias AtkTextAttribute TextAttribute;
 
 /**
  * Text boundary types used for specifying boundaries for regions of text.
- * This enumerationis deprecated since 2.9.4 and should not be used. Use
+ * This enumeration is deprecated since 2.9.4 and should not be used. Use
  * AtkTextGranularity with #atk_text_get_string_at_offset instead.
  */
 public enum AtkTextBoundary

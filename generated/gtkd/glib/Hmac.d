@@ -198,6 +198,7 @@ public class Hmac
 	 * on it anymore.
 	 *
 	 * Support for digests of type %G_CHECKSUM_SHA512 has been added in GLib 2.42.
+	 * Support for %G_CHECKSUM_SHA384 was added in GLib 2.52.
 	 *
 	 * Params:
 	 *     digestType = the desired type of digest

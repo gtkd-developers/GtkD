@@ -336,7 +336,8 @@ public class KeyFile
 	 *
 	 * If @key cannot be found then 0 is returned and @error is set to
 	 * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
-	 * with @key cannot be interpreted as an integer then 0 is returned
+	 * with @key cannot be interpreted as an integer, or is out of range
+	 * for a #gint, then 0 is returned
 	 * and @error is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
 	 *
 	 * Params:
@@ -370,7 +371,8 @@ public class KeyFile
 	 *
 	 * If @key cannot be found then %NULL is returned and @error is set to
 	 * #G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
-	 * with @key cannot be interpreted as integers then %NULL is returned
+	 * with @key cannot be interpreted as integers, or are out of range for
+	 * #gint, then %NULL is returned
 	 * and @error is set to #G_KEY_FILE_ERROR_INVALID_VALUE.
 	 *
 	 * Params:
@@ -810,9 +812,13 @@ public class KeyFile
 	/**
 	 * This function looks for a key file named @file in the paths
 	 * specified in @search_dirs, loads the file into @key_file and
-	 * returns the file's full path in @full_path.  If the file could not
-	 * be loaded then an %error is set to either a #GFileError or
-	 * #GKeyFileError.
+	 * returns the file's full path in @full_path.
+	 *
+	 * If the file could not be found in any of the @search_dirs,
+	 * %G_KEY_FILE_ERROR_NOT_FOUND is returned. If
+	 * the file is found but the OS returns an error when opening or reading the
+	 * file, a %G_FILE_ERROR is returned. If there is a problem parsing the file, a
+	 * %G_KEY_FILE_ERROR is returned.
 	 *
 	 * Params:
 	 *     file = a relative path to a filename to open and parse
@@ -846,8 +852,13 @@ public class KeyFile
 
 	/**
 	 * Loads a key file into an empty #GKeyFile structure.
-	 * If the file could not be loaded then @error is set to
-	 * either a #GFileError or #GKeyFileError.
+	 *
+	 * If the OS returns an error when opening or reading the file, a
+	 * %G_FILE_ERROR is returned. If there is a problem parsing the file, a
+	 * %G_KEY_FILE_ERROR is returned.
+	 *
+	 * This function will never return a %G_KEY_FILE_ERROR_NOT_FOUND error. If the
+	 * @file is not found, %G_FILE_ERROR_NOENT is returned.
 	 *
 	 * Params:
 	 *     file = the path of a filename to load, in the GLib filename encoding

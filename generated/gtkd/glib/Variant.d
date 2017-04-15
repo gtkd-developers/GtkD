@@ -1543,11 +1543,11 @@ public class Variant
 	 * - %G_VARIANT_TYPE_DOUBLE: #gdouble
 	 *
 	 * For example, if calling this function for an array of 32-bit integers,
-	 * you might say sizeof(gint32). This value isn't used except for the purpose
+	 * you might say `sizeof(gint32)`. This value isn't used except for the purpose
 	 * of a double-check that the form of the serialised data matches the caller's
 	 * expectation.
 	 *
-	 * @n_elements, which must be non-%NULL is set equal to the number of
+	 * @n_elements, which must be non-%NULL, is set equal to the number of
 	 * items in the array.
 	 *
 	 * Params:

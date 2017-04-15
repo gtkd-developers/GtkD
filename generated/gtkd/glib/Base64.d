@@ -139,6 +139,8 @@ public struct Base64
 	 * be written to it. It will need up to 4 bytes, or up to 5 bytes if
 	 * line-breaking is enabled.
 	 *
+	 * The @out array will not be automatically nul-terminated.
+	 *
 	 * Params:
 	 *     breakLines = whether to break long lines
 	 *     output = pointer to destination buffer
