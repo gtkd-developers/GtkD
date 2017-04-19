@@ -39,6 +39,7 @@ public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
 private import gtkd.paths;
 private import std.algorithm;
+private import std.traits;
 
 
 /**
@@ -135,7 +136,12 @@ public class ObjectG
 	
 	~this()
 	{
-		if ( Linker.isLoaded(LIBRARY.GOBJECT) && gObject !is null )
+		static if ( isPointer!(typeof(g_object_steal_data)) )
+			bool libLoaded = Linker.isLoaded(LIBRARY.GOBJECT);
+		else
+			enum libLoaded = true;
+		
+		if ( libLoaded && gObject !is null )
 		{
 			// Remove the GDestroyNotify callback,
 			// for when the D object is destroyed before the C one.

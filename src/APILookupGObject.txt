@@ -137,6 +137,7 @@ import: gobject.Signals
 import: gtkd.Loader
 import: gtkd.paths
 import: std.algorithm
+import: std.traits
 merge: InitiallyUnowned
 noSignal: notify
 move: clear_object Object
@@ -215,7 +216,12 @@ code: start
 
 	~this()
 	{
-		if ( Linker.isLoaded(LIBRARY.GOBJECT) && gObject !is null )
+		static if ( isPointer!(typeof(g_object_steal_data)) )
+			bool libLoaded = Linker.isLoaded(LIBRARY.GOBJECT);
+		else
+			enum libLoaded = true;
+
+		if ( libLoaded && gObject !is null )
 		{
 			// Remove the GDestroyNotify callback,
 			// for when the D object is destroyed before the C one.
