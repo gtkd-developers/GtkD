@@ -103,5 +103,5 @@ Atk | 2.24
 Gdk-pixbuf | 2.36
 Cairo | 1.12.2
 GtksourceView | 3.24
-GStreamer | 1.10
+GStreamer | 1.12
 Vte3 | 0.48

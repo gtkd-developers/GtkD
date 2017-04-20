@@ -1029,6 +1029,11 @@ code: start
 	}
 code: end
 
+version 1.12: start
+	struct: ParamArray
+	noCode: true
+version 1.12: end
+
 struct: ParamFraction
 noCode: true
 
@@ -1438,6 +1443,12 @@ move: util_uint64_scale_int Utils uint64_scale_int
 move: util_uint64_scale_int_ceil Utils uint64_scale_int_ceil
 move: util_uint64_scale_int_round Utils uint64_scale_int_round
 move: util_uint64_scale_round Utils uint64_scale_round
+version 1.12: start
+	move: calculate_linear_regression Utils
+	move: dynamic_type_register Utils
+	move: util_get_object_array Utils get_object_array
+	move: util_set_object_array Utils set_object_array
+version 1.12: end
 
 move: value_can_compare ValueGst can_compare
 move: value_can_intersect ValueGst can_intersect

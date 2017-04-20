@@ -126,11 +126,9 @@ public class DebugCategory
 	 * Sets the threshold of the category to the given level. Debug information will
 	 * only be output if the threshold is lower or equal to the level of the
 	 * debugging message.
-	 * <note><para>
-	 * Do not use this function in production code, because other functions may
-	 * change the threshold of categories as side effect. It is however a nice
-	 * function to use when debugging (even from gdb).
-	 * </para></note>
+	 * > Do not use this function in production code, because other functions may
+	 * > change the threshold of categories as side effect. It is however a nice
+	 * > function to use when debugging (even from gdb).
 	 *
 	 * Params:
 	 *     level = the #GstDebugLevel threshold to set.

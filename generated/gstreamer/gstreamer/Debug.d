@@ -230,8 +230,8 @@ public struct Debug
 	}
 
 	/**
-	 * If GST_ENABLE_FUNC_INSTRUMENTATION is defined a stacktrace is available for
-	 * gstreamer code, which can be printed with this function.
+	 * If libunwind or glibc backtrace are present
+	 * a stack trace is printed.
 	 */
 	public static void printStackTrace()
 	{
@@ -269,8 +269,8 @@ public struct Debug
 	 * If activated, debugging messages are sent to the debugging
 	 * handlers.
 	 * It makes sense to deactivate it for speed issues.
-	 * <note><para>This function is not threadsafe. It makes sense to only call it
-	 * during initialization.</para></note>
+	 * > This function is not threadsafe. It makes sense to only call it
+	 * during initialization.
 	 *
 	 * Params:
 	 *     active = Whether to use debugging output or not

@@ -792,6 +792,27 @@ public class Buffer
 	}
 
 	/**
+	 * Retrieve the next #GstMeta of type @meta_api_type after the current one
+	 * according to @state. If @state points to %NULL, the first metadata of
+	 * type @meta_api_type is returned.
+	 *
+	 * @state will be updated with an opaque state pointer
+	 *
+	 * Params:
+	 *     state = an opaque state pointer
+	 *     metaApiType = only return #GstMeta of this type
+	 *
+	 * Return: The next #GstMeta of type
+	 *     @meta_api_type or %NULL when there are no more items.
+	 *
+	 * Since: 1.12
+	 */
+	public GstMeta* iterateMetaFiltered(void** state, GType metaApiType)
+	{
+		return gst_buffer_iterate_meta_filtered(gstBuffer, state, metaApiType);
+	}
+
+	/**
 	 * This function fills @info with the #GstMapInfo of all merged memory
 	 * blocks in @buffer.
 	 *

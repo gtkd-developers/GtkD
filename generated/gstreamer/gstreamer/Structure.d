@@ -29,6 +29,7 @@ private import glib.Date;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
+private import gobject.ValueArray;
 private import gstreamer.DateTime;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
@@ -375,6 +376,31 @@ public class Structure
 	}
 
 	/**
+	 * This is useful in language bindings where unknown #GValue types are not
+	 * supported. This function will convert the %GST_TYPE_ARRAY and
+	 * %GST_TYPE_LIST into a newly allocated #GValueArray and return it through
+	 * @array. Be aware that this is slower then getting the #GValue directly.
+	 *
+	 * Params:
+	 *     fieldname = the name of a field
+	 *     array = a pointer to a #GValueArray
+	 *
+	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 *     with @fieldname or the existing field did not contain an int, this function
+	 *     returns %FALSE.
+	 */
+	public bool getArray(string fieldname, out ValueArray array)
+	{
+		GValueArray* outarray = null;
+		
+		auto p = gst_structure_get_array(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
+		
+		array = ObjectG.getDObject!(ValueArray)(outarray);
+		
+		return p;
+	}
+
+	/**
 	 * Sets the boolean pointed to by @value corresponding to the value of the
 	 * given field.  Caller is responsible for making sure the field exists
 	 * and has the correct type.
@@ -601,6 +627,33 @@ public class Structure
 	public bool getInt64(string fieldname, out long value)
 	{
 		return gst_structure_get_int64(gstStructure, Str.toStringz(fieldname), &value) != 0;
+	}
+
+	/**
+	 * This is useful in language bindings where unknown #GValue types are not
+	 * supported. This function will convert the %GST_TYPE_ARRAY and
+	 * %GST_TYPE_LIST into a newly allocated GValueArray and return it through
+	 * @array. Be aware that this is slower then getting the #GValue directly.
+	 *
+	 * Params:
+	 *     fieldname = the name of a field
+	 *     array = a pointer to a #GValueArray
+	 *
+	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 *     with @fieldname or the existing field did not contain an int, this function
+	 *     returns %FALSE.
+	 *
+	 *     Since 1.12
+	 */
+	public bool getList(string fieldname, out ValueArray array)
+	{
+		GValueArray* outarray = null;
+		
+		auto p = gst_structure_get_list(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
+		
+		array = ObjectG.getDObject!(ValueArray)(outarray);
+		
+		return p;
 	}
 
 	/**
@@ -978,6 +1031,40 @@ public class Structure
 	public void removeFieldsValist(string fieldname, void* varargs)
 	{
 		gst_structure_remove_fields_valist(gstStructure, Str.toStringz(fieldname), varargs);
+	}
+
+	/**
+	 * This is useful in language bindings where unknown GValue types are not
+	 * supported. This function will convert a @array to %GST_TYPE_ARRAY and set
+	 * the field specified by @fieldname.  Be aware that this is slower then using
+	 * %GST_TYPE_ARRAY in a #GValue directly.
+	 *
+	 * Since 1.12
+	 *
+	 * Params:
+	 *     fieldname = the name of a field
+	 *     array = a pointer to a #GValueArray
+	 */
+	public void setArray(string fieldname, ValueArray array)
+	{
+		gst_structure_set_array(gstStructure, Str.toStringz(fieldname), (array is null) ? null : array.getValueArrayStruct());
+	}
+
+	/**
+	 * This is useful in language bindings where unknown GValue types are not
+	 * supported. This function will convert a @array to %GST_TYPE_ARRAY and set
+	 * the field specified by @fieldname. Be aware that this is slower then using
+	 * %GST_TYPE_ARRAY in a #GValue directly.
+	 *
+	 * Since 1.12
+	 *
+	 * Params:
+	 *     fieldname = the name of a field
+	 *     array = a pointer to a #GValueArray
+	 */
+	public void setList(string fieldname, ValueArray array)
+	{
+		gst_structure_set_list(gstStructure, Str.toStringz(fieldname), (array is null) ? null : array.getValueArrayStruct());
 	}
 
 	/**

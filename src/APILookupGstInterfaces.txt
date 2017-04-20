@@ -228,6 +228,12 @@ struct: VideoTimeCodeMeta
 noCode: true
 noExternal: true
 
+version 1.12: start
+	struct: VideoTimeCodeInterval
+	noCode: true
+	noExternal: true
+version 1.12: end
+
 noEnum: ColorBalanceType
 noEnum: NavigationCommand
 noEnum: NavigationEventType
@@ -267,6 +273,11 @@ noEnum: VideoScalerFlags
 noEnum: VideoTileMode
 noEnum: VideoTileType
 noEnum: VideoTransferFunction
+
+version 1.12: start
+	noEnum: VideoFieldOrder
+	noEnum: VideoTimeCodeInterval
+version 1.12: end
 
 noCallback: VideoAffineTransformationGetMatrix
 noCallback: VideoConvertSampleCallback

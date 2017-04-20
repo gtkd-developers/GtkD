@@ -553,9 +553,9 @@ public class Clock : ObjectGst
 	 * Subsequent calls to gst_clock_get_time() will return clock times computed as
 	 * follows:
 	 *
-	 * <programlisting>
+	 * |[
 	 * time = (internal_time - internal) * rate_num / rate_denom + external
-	 * </programlisting>
+	 * ]|
 	 *
 	 * This formula is implemented in gst_clock_adjust_unlocked(). Of course, it
 	 * tries to do the integer arithmetic as precisely as possible.
@@ -715,7 +715,6 @@ public class Clock : ObjectGst
 	 * after @timeout nanoseconds.
 	 *
 	 * For asynchronous waiting, the GstClock::synced signal can be used.
-	 *
 	 *
 	 * This returns immediately with TRUE if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC
 	 * is not set on the clock, or if the clock is already synced.

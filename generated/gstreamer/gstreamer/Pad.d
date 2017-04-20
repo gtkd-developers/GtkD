@@ -807,6 +807,19 @@ public class Pad : ObjectGst
 	}
 
 	/**
+	 * Get @pad task state. If no task is currently
+	 * set, #GST_TASK_STOPPED is returned.
+	 *
+	 * Return: The current state of @pad's task.
+	 *
+	 * Since: 1.12
+	 */
+	public GstTaskState getTaskState()
+	{
+		return gst_pad_get_task_state(gstPad);
+	}
+
+	/**
 	 * Check if @pad has caps set on it with a #GST_EVENT_CAPS event.
 	 *
 	 * Return: %TRUE when @pad has caps associated with it.

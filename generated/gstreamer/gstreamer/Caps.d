@@ -798,8 +798,8 @@ public class Caps
 
 	/**
 	 * Subtracts the @subtrahend from the @minuend.
-	 * <note>This function does not work reliably if optional properties for caps
-	 * are included on one caps and omitted on the other.</note>
+	 * > This function does not work reliably if optional properties for caps
+	 * > are included on one caps and omitted on the other.
 	 *
 	 * Params:
 	 *     subtrahend = #GstCaps to subtract

@@ -27,6 +27,8 @@ module gstreamer.Utils;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
+private import gobject.ValueArray;
+private import gstreamer.Plugin;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 
@@ -429,5 +431,88 @@ public struct Utils
 	public static ulong uint64ScaleRound(ulong val, ulong num, ulong denom)
 	{
 		return gst_util_uint64_scale_round(val, num, denom);
+	}
+
+	/**
+	 * Calculates the linear regression of the values @xy and places the
+	 * result in @m_num, @m_denom, @b and @xbase, representing the function
+	 * y(x) = m_num/m_denom * (x - xbase) + b
+	 * that has the least-square distance from all points @x and @y.
+	 *
+	 * @r_squared will contain the remaining error.
+	 *
+	 * If @temp is not %NULL, it will be used as temporary space for the function,
+	 * in which case the function works without any allocation at all. If @temp is
+	 * %NULL, an allocation will take place. @temp should have at least the same
+	 * amount of memory allocated as @xy, i.e. 2*n*sizeof(GstClockTime).
+	 *
+	 * > This function assumes (x,y) values with reasonable large differences
+	 * > between them. It will not calculate the exact results if the differences
+	 * > between neighbouring values are too small due to not being able to
+	 * > represent sub-integer values during the calculations.
+	 *
+	 * Params:
+	 *     xy = Pairs of (x,y) values
+	 *     temp = Temporary scratch space used by the function
+	 *     n = number of (x,y) pairs
+	 *     mNum = numerator of calculated slope
+	 *     mDenom = denominator of calculated slope
+	 *     b = Offset at Y-axis
+	 *     xbase = Offset at X-axis
+	 *     rSquared = R-squared
+	 *
+	 * Return: %TRUE if the linear regression was successfully calculated
+	 *
+	 * Since: 1.12
+	 */
+	public static bool calculateLinearRegression(GstClockTime* xy, GstClockTime* temp, uint n, out GstClockTime mNum, out GstClockTime mDenom, out GstClockTime b, out GstClockTime xbase, out double rSquared)
+	{
+		return gst_calculate_linear_regression(xy, temp, n, &mNum, &mDenom, &b, &xbase, &rSquared) != 0;
+	}
+
+	/** */
+	public static bool dynamicTypeRegister(Plugin plugin, GType type)
+	{
+		return gst_dynamic_type_register((plugin is null) ? null : plugin.getPluginStruct(), type) != 0;
+	}
+
+	/**
+	 * Get a property of type %GST_TYPE_ARRAY and transform it into a
+	 * #GValueArray. This allow language bindings to get GST_TYPE_ARRAY
+	 * properties which are otherwise not an accessible type.
+	 *
+	 * Params:
+	 *     object = the object to set the array to
+	 *     name = the name of the property to set
+	 *     array = a return #GValueArray
+	 *
+	 * Since: 1.12
+	 */
+	public static bool getObjectArray(ObjectG object, string name, out ValueArray array)
+	{
+		GValueArray* outarray = null;
+		
+		auto p = gst_util_get_object_array((object is null) ? null : object.getObjectGStruct(), Str.toStringz(name), &outarray) != 0;
+		
+		array = ObjectG.getDObject!(ValueArray)(outarray);
+		
+		return p;
+	}
+
+	/**
+	 * Transfer a #GValueArray to %GST_TYPE_ARRAY and set this value on the
+	 * specified property name. This allow language bindings to set GST_TYPE_ARRAY
+	 * properties which are otherwise not an accessible type.
+	 *
+	 * Params:
+	 *     object = the object to set the array to
+	 *     name = the name of the property to set
+	 *     array = a #GValueArray containing the values
+	 *
+	 * Since: 1.12
+	 */
+	public static bool setObjectArray(ObjectG object, string name, ValueArray array)
+	{
+		return gst_util_set_object_array((object is null) ? null : object.getObjectGStruct(), Str.toStringz(name), (array is null) ? null : array.getValueArrayStruct()) != 0;
 	}
 }

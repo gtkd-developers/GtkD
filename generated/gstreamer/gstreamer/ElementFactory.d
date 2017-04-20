@@ -45,9 +45,8 @@ public  import gstreamerc.gstreamertypes;
  * 
  * The following code example shows you how to create a GstFileSrc element.
  * 
- * <example>
- * <title>Using an element factory</title>
- * <programlisting language="c">
+ * ## Using an element factory
+ * |[<!-- language="C" -->
  * #include &lt;gst/gst.h&gt;
  * 
  * GstElement *src;
@@ -60,8 +59,7 @@ public  import gstreamerc.gstreamertypes;
  * src = gst_element_factory_create (srcfactory, "src");
  * g_return_if_fail (src != NULL);
  * ...
- * </programlisting>
- * </example>
+ * ]|
  */
 public class ElementFactory : PluginFeature
 {

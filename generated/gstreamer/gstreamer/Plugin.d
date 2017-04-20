@@ -417,13 +417,13 @@ public class Plugin : ObjectGst
 	 * Loads @plugin. Note that the *return value* is the loaded plugin; @plugin is
 	 * untouched. The normal use pattern of this function goes like this:
 	 *
-	 * <programlisting>
+	 * |[
 	 * GstPlugin *loaded_plugin;
 	 * loaded_plugin = gst_plugin_load (plugin);
 	 * // presumably, we're no longer interested in the potentially-unloaded plugin
 	 * gst_object_unref (plugin);
 	 * plugin = loaded_plugin;
-	 * </programlisting>
+	 * ]|
 	 *
 	 * Return: a reference to a loaded plugin, or %NULL on error.
 	 */

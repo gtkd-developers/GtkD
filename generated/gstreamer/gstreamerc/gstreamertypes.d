@@ -1652,12 +1652,10 @@ alias GstPadFlags PadFlags;
  * and @GST_PAD_LINK_CHECK_TEMPLATE_CAPS are mutually exclusive. If both are
  * specified, expensive but safe @GST_PAD_LINK_CHECK_CAPS are performed.
  *
- * <warning><para>
- * Only disable some of the checks if you are 100% certain you know the link
- * will not fail because of hierarchy/caps compatibility failures. If uncertain,
- * use the default checks (%GST_PAD_LINK_CHECK_DEFAULT) or the regular methods
- * for linking the pads.
- * </para></warning>
+ * > Only disable some of the checks if you are 100% certain you know the link
+ * > will not fail because of hierarchy/caps compatibility failures. If uncertain,
+ * > use the default checks (%GST_PAD_LINK_CHECK_DEFAULT) or the regular methods
+ * > for linking the pads.
  */
 public enum GstPadLinkCheck
 {
@@ -1682,6 +1680,11 @@ public enum GstPadLinkCheck
 	 * caps returned by gst_pad_query_caps().
 	 */
 	CAPS = 4,
+	/**
+	 * Disables pushing a reconfigure event when pads are
+	 * linked.
+	 */
+	NO_RECONFIGURE = 8,
 	/**
 	 * The default checks done when linking
 	 * pads (i.e. the ones used by gst_pad_link()).
@@ -1777,16 +1780,17 @@ public enum GstPadProbeReturn
 	/**
 	 * drop data in data probes. For push mode this means that
 	 * the data item is not sent downstream. For pull mode, it means that
-	 * the data item is not passed upstream. In both cases, no more probes
-	 * are called and #GST_FLOW_OK or %TRUE is returned to the caller.
+	 * the data item is not passed upstream. In both cases, no other probes
+	 * are called for this item and %GST_FLOW_OK or %TRUE is returned to the
+	 * caller.
 	 */
 	DROP = 0,
 	/**
 	 * normal probe return value. This leaves the probe in
 	 * place, and defers decisions about dropping or passing data to other
 	 * probes, if any. If there are no other probes, the default behaviour
-	 * for the probe type applies (block for blocking probes, and pass for
-	 * non-blocking probes).
+	 * for the probe type applies ('block' for blocking probes,
+	 * and 'pass' for non-blocking probes).
 	 */
 	OK = 1,
 	/**
@@ -1801,7 +1805,7 @@ public enum GstPadProbeReturn
 	/**
 	 * Data has been handled in the probe and will not be
 	 * forwarded further. For events and buffers this is the same behaviour as
-	 * @GST_PAD_PROBE_DROP (except that in this case you need to unref the buffer
+	 * %GST_PAD_PROBE_DROP (except that in this case you need to unref the buffer
 	 * or event yourself). For queries it will also return %TRUE to the caller.
 	 * The probe can also modify the #GstFlowReturn value by using the
 	 * #GST_PAD_PROBE_INFO_FLOW_RETURN() accessor.
@@ -2568,6 +2572,16 @@ public enum GstSegmentFlags
 }
 alias GstSegmentFlags SegmentFlags;
 
+public enum GstStackTraceFlags
+{
+	/**
+	 * Try to retrieve as much information as
+	 * possible when getting the stack trace
+	 */
+	FULL = 1,
+}
+alias GstStackTraceFlags StackTraceFlags;
+
 /**
  * The possible states an element can be in. States can be changed using
  * gst_element_set_state() and checked using gst_element_get_state().
@@ -2601,149 +2615,85 @@ public enum GstState
 alias GstState State;
 
 /**
+ * #GST_STATE_CHANGE_NULL_TO_READY    : state change from NULL to READY.
+ * * The element must check if the resources it needs are available. Device
+ * sinks and -sources typically try to probe the device to constrain their
+ * caps.
+ * * The element opens the device (in case feature need to be probed).
+ *
+ * #GST_STATE_CHANGE_READY_TO_PAUSED  : state change from READY to PAUSED.
+ *
+ * * The element pads are activated in order to receive data in PAUSED.
+ * Streaming threads are started.
+ * * Some elements might need to return %GST_STATE_CHANGE_ASYNC and complete
+ * the state change when they have enough information. It is a requirement
+ * for sinks to return %GST_STATE_CHANGE_ASYNC and complete the state change
+ * when they receive the first buffer or %GST_EVENT_EOS (preroll).
+ * Sinks also block the dataflow when in PAUSED.
+ * * A pipeline resets the running_time to 0.
+ *
+ * * Live sources return %GST_STATE_CHANGE_NO_PREROLL and don't generate data.
+ *
+ * #GST_STATE_CHANGE_PAUSED_TO_PLAYING: state change from PAUSED to PLAYING.
+ *
+ * * Most elements ignore this state change.
+ * * The pipeline selects a #GstClock and distributes this to all the children
+ * before setting them to PLAYING. This means that it is only allowed to
+ * synchronize on the #GstClock in the PLAYING state.
+ * * The pipeline uses the #GstClock and the running_time to calculate the
+ * base_time. The base_time is distributed to all children when performing
+ * the state change.
+ * * Sink elements stop blocking on the preroll buffer or event and start
+ * rendering the data.
+ * * Sinks can post %GST_MESSAGE_EOS in the PLAYING state. It is not allowed
+ * to post %GST_MESSAGE_EOS when not in the PLAYING state.
+ * * While streaming in PAUSED or PLAYING elements can create and remove
+ * sometimes pads.
+ * * Live sources start generating data and return %GST_STATE_CHANGE_SUCCESS.
+ *
+ * #GST_STATE_CHANGE_PLAYING_TO_PAUSED: state change from PLAYING to PAUSED.
+ *
+ * * Most elements ignore this state change.
+ * * The pipeline calculates the running_time based on the last selected
+ * #GstClock and the base_time. It stores this information to continue
+ * playback when going back to the PLAYING state.
+ *
+ * * Sinks unblock any #GstClock wait calls.
+ * * When a sink does not have a pending buffer to play, it returns
+ * #GST_STATE_CHANGE_ASYNC from this state change and completes the state
+ * change when it receives a new buffer or an %GST_EVENT_EOS.
+ * * Any queued %GST_MESSAGE_EOS items are removed since they will be reposted
+ * when going back to the PLAYING state. The EOS messages are queued in
+ * #GstBin containers.
+ *
+ * * Live sources stop generating data and return %GST_STATE_CHANGE_NO_PREROLL.
+ *
+ * #GST_STATE_CHANGE_PAUSED_TO_READY  : state change from PAUSED to READY.
+ *
+ * * Sinks unblock any waits in the preroll.
+ * * Elements unblock any waits on devices
+ * * Chain or get_range functions return %GST_FLOW_FLUSHING.
+ * * The element pads are deactivated so that streaming becomes impossible and
+ * all streaming threads are stopped.
+ * * The sink forgets all negotiated formats
+ * * Elements remove all sometimes pads
+ *
+ * #GST_STATE_CHANGE_READY_TO_NULL    : state change from READY to NULL.
+ *
+ * * Elements close devices
+ * * Elements reset any internal state.
+ *
  * These are the different state changes an element goes through.
  * %GST_STATE_NULL &rArr; %GST_STATE_PLAYING is called an upwards state change
  * and %GST_STATE_PLAYING &rArr; %GST_STATE_NULL a downwards state change.
  */
 public enum GstStateChange
 {
-	/**
-	 * state change from NULL to READY.
-	 * <itemizedlist>
-	 * <listitem><para>
-	 * The element must check if the resources it needs are available. Device
-	 * sinks and -sources typically try to probe the device to constrain their
-	 * caps.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * The element opens the device (in case feature need to be probed).
-	 * </para></listitem>
-	 * </itemizedlist>
-	 */
 	NULL_TO_READY = 10,
-	/**
-	 * state change from READY to PAUSED.
-	 * <itemizedlist>
-	 * <listitem><para>
-	 * The element pads are activated in order to receive data in PAUSED.
-	 * Streaming threads are started.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Some elements might need to return %GST_STATE_CHANGE_ASYNC and complete
-	 * the state change when they have enough information. It is a requirement
-	 * for sinks to return %GST_STATE_CHANGE_ASYNC and complete the state change
-	 * when they receive the first buffer or %GST_EVENT_EOS (preroll).
-	 * Sinks also block the dataflow when in PAUSED.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * A pipeline resets the running_time to 0.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Live sources return %GST_STATE_CHANGE_NO_PREROLL and don't generate data.
-	 * </para></listitem>
-	 * </itemizedlist>
-	 */
 	READY_TO_PAUSED = 19,
-	/**
-	 * state change from PAUSED to PLAYING.
-	 * <itemizedlist>
-	 * <listitem><para>
-	 * Most elements ignore this state change.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * The pipeline selects a #GstClock and distributes this to all the children
-	 * before setting them to PLAYING. This means that it is only allowed to
-	 * synchronize on the #GstClock in the PLAYING state.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * The pipeline uses the #GstClock and the running_time to calculate the
-	 * base_time. The base_time is distributed to all children when performing
-	 * the state change.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Sink elements stop blocking on the preroll buffer or event and start
-	 * rendering the data.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Sinks can post %GST_MESSAGE_EOS in the PLAYING state. It is not allowed
-	 * to post %GST_MESSAGE_EOS when not in the PLAYING state.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * While streaming in PAUSED or PLAYING elements can create and remove
-	 * sometimes pads.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Live sources start generating data and return %GST_STATE_CHANGE_SUCCESS.
-	 * </para></listitem>
-	 * </itemizedlist>
-	 */
 	PAUSED_TO_PLAYING = 28,
-	/**
-	 * state change from PLAYING to PAUSED.
-	 * <itemizedlist>
-	 * <listitem><para>
-	 * Most elements ignore this state change.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * The pipeline calculates the running_time based on the last selected
-	 * #GstClock and the base_time. It stores this information to continue
-	 * playback when going back to the PLAYING state.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Sinks unblock any #GstClock wait calls.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * When a sink does not have a pending buffer to play, it returns
-	 * %GST_STATE_CHANGE_ASYNC from this state change and completes the state
-	 * change when it receives a new buffer or an %GST_EVENT_EOS.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Any queued %GST_MESSAGE_EOS items are removed since they will be reposted
-	 * when going back to the PLAYING state. The EOS messages are queued in
-	 * #GstBin containers.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Live sources stop generating data and return %GST_STATE_CHANGE_NO_PREROLL.
-	 * </para></listitem>
-	 * </itemizedlist>
-	 */
 	PLAYING_TO_PAUSED = 35,
-	/**
-	 * state change from PAUSED to READY.
-	 * <itemizedlist>
-	 * <listitem><para>
-	 * Sinks unblock any waits in the preroll.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Elements unblock any waits on devices
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Chain or get_range functions return %GST_FLOW_FLUSHING.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * The element pads are deactivated so that streaming becomes impossible and
-	 * all streaming threads are stopped.
-	 * </para></listitem>
-	 * <listitem><para>
-	 * The sink forgets all negotiated formats
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Elements remove all sometimes pads
-	 * </para></listitem>
-	 * </itemizedlist>
-	 */
 	PAUSED_TO_READY = 26,
-	/**
-	 * state change from READY to NULL.
-	 * <itemizedlist>
-	 * <listitem><para>
-	 * Elements close devices
-	 * </para></listitem>
-	 * <listitem><para>
-	 * Elements reset any internal state.
-	 * </para></listitem>
-	 * </itemizedlist>
-	 */
 	READY_TO_NULL = 17,
 }
 alias GstStateChange StateChange;
@@ -3239,8 +3189,8 @@ public enum GstTracerValueFlags
 	 */
 	OPTIONAL = 1,
 	/**
-	 * the value is combined since the start of
-	 * tracing
+	 * the value is a combined figure, since the
+	 * start of tracing. Examples are averages or timestamps.
 	 */
 	AGGREGATED = 2,
 }
@@ -3496,7 +3446,7 @@ struct GstBin
  * message handling.  @handle_message takes ownership of the message, just like
  * #gst_element_post_message.
  *
- * The @element_added_deep vfunc will be called when a new element has been
+ * The @deep_element_added vfunc will be called when a new element has been
  * added to any bin inside this bin, so it will also be called if a new child
  * was added to a sub-bin of this bin. #GstBin implementations that override
  * this message should chain up to the parent class implementation so the
@@ -4063,6 +4013,10 @@ struct GstDeviceProviderFactoryClass;
 struct GstDeviceProviderPrivate;
 
 
+struct GstDynamicTypeFactory;
+
+struct GstDynamicTypeFactoryClass;
+
 struct GstElement
 {
 	GstObject object;
@@ -4149,6 +4103,9 @@ struct GstElement
 	 * updated whenever the a pad is added or removed
 	 */
 	uint padsCookie;
+	/**
+	 * list of contexts
+	 */
 	GList* contexts;
 	void*[3] GstReserved;
 }
@@ -4568,7 +4525,6 @@ struct GstMetaInfo
 	 * function for transforming the metadata
 	 */
 	GstMetaTransformFunction transformFunc;
-	void*[4] GstReserved;
 }
 
 /**
@@ -4803,6 +4759,20 @@ struct GstPadTemplateClass
 	void*[4] GstReserved;
 }
 
+
+
+/**
+ * A GParamSpec derived structure that contains the meta data for fractional
+ * properties.
+ */
+struct GstParamSpecArray
+{
+	/**
+	 * super class
+	 */
+	GParamSpec parentInstance;
+	GParamSpec* elementSpec;
+}
 
 /**
  * A GParamSpec derived structure that contains the meta data for fractional

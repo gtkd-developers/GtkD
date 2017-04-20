@@ -46,7 +46,6 @@ public  import gstreamerc.gstreamertypes;
  * The device monitor will monitor all devices matching the filters that
  * the application has set.
  * 
- * 
  * The basic use pattern of a device monitor is as follows:
  * |[
  * static gboolean

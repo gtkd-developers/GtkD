@@ -1055,8 +1055,8 @@ public class Element : ObjectGst
 
 	/**
 	 * Get the clock provided by the given element.
-	 * <note>An element is only required to provide a clock in the PAUSED
-	 * state. Some elements can provide a clock in other states.</note>
+	 * > An element is only required to provide a clock in the PAUSED
+	 * > state. Some elements can provide a clock in other states.
 	 *
 	 * Return: the GstClock provided by the
 	 *     element or %NULL if no clock could be provided.  Unref after usage.

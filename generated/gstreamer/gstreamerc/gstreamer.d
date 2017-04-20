@@ -119,6 +119,7 @@ shared static this()
 	Linker.link(gst_buffer_is_all_memory_writable, "gst_buffer_is_all_memory_writable", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_is_memory_range_writable, "gst_buffer_is_memory_range_writable", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_iterate_meta, "gst_buffer_iterate_meta", LIBRARY.GSTREAMER);
+	Linker.link(gst_buffer_iterate_meta_filtered, "gst_buffer_iterate_meta_filtered", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_map, "gst_buffer_map", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_map_range, "gst_buffer_map_range", LIBRARY.GSTREAMER);
 	Linker.link(gst_buffer_memcmp, "gst_buffer_memcmp", LIBRARY.GSTREAMER);
@@ -465,6 +466,11 @@ shared static this()
 	// gstreamer.DoubleRange
 
 	Linker.link(gst_double_range_get_type, "gst_double_range_get_type", LIBRARY.GSTREAMER);
+
+	// gstreamer.DynamicTypeFactory
+
+	Linker.link(gst_dynamic_type_factory_get_type, "gst_dynamic_type_factory_get_type", LIBRARY.GSTREAMER);
+	Linker.link(gst_dynamic_type_factory_load, "gst_dynamic_type_factory_load", LIBRARY.GSTREAMER);
 
 	// gstreamer.Element
 
@@ -886,6 +892,7 @@ shared static this()
 	Linker.link(gst_pad_get_sticky_event, "gst_pad_get_sticky_event", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_stream, "gst_pad_get_stream", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_get_stream_id, "gst_pad_get_stream_id", LIBRARY.GSTREAMER);
+	Linker.link(gst_pad_get_task_state, "gst_pad_get_task_state", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_has_current_caps, "gst_pad_has_current_caps", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_is_active, "gst_pad_is_active", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_is_blocked, "gst_pad_is_blocked", LIBRARY.GSTREAMER);
@@ -958,6 +965,10 @@ shared static this()
 	Linker.link(gst_pad_template_new, "gst_pad_template_new", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_template_get_caps, "gst_pad_template_get_caps", LIBRARY.GSTREAMER);
 	Linker.link(gst_pad_template_pad_created, "gst_pad_template_pad_created", LIBRARY.GSTREAMER);
+
+	// gstreamer.ParamArray
+
+	Linker.link(gst_param_spec_array_get_type, "gst_param_spec_array_get_type", LIBRARY.GSTREAMER);
 
 	// gstreamer.ParamFraction
 
@@ -1291,6 +1302,7 @@ shared static this()
 	Linker.link(gst_structure_foreach, "gst_structure_foreach", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_free, "gst_structure_free", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get, "gst_structure_get", LIBRARY.GSTREAMER);
+	Linker.link(gst_structure_get_array, "gst_structure_get_array", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_boolean, "gst_structure_get_boolean", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_clock_time, "gst_structure_get_clock_time", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_date, "gst_structure_get_date", LIBRARY.GSTREAMER);
@@ -1302,6 +1314,7 @@ shared static this()
 	Linker.link(gst_structure_get_fraction, "gst_structure_get_fraction", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_int, "gst_structure_get_int", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_int64, "gst_structure_get_int64", LIBRARY.GSTREAMER);
+	Linker.link(gst_structure_get_list, "gst_structure_get_list", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_name, "gst_structure_get_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_name_id, "gst_structure_get_name_id", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_get_string, "gst_structure_get_string", LIBRARY.GSTREAMER);
@@ -1332,6 +1345,8 @@ shared static this()
 	Linker.link(gst_structure_remove_fields, "gst_structure_remove_fields", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_remove_fields_valist, "gst_structure_remove_fields_valist", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_set, "gst_structure_set", LIBRARY.GSTREAMER);
+	Linker.link(gst_structure_set_array, "gst_structure_set_array", LIBRARY.GSTREAMER);
+	Linker.link(gst_structure_set_list, "gst_structure_set_list", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_set_name, "gst_structure_set_name", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_set_parent_refcount, "gst_structure_set_parent_refcount", LIBRARY.GSTREAMER);
 	Linker.link(gst_structure_set_valist, "gst_structure_set_valist", LIBRARY.GSTREAMER);
@@ -1536,6 +1551,7 @@ shared static this()
 	Linker.link(gst_uri_from_string_with_base, "gst_uri_from_string_with_base", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_fragment, "gst_uri_get_fragment", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_host, "gst_uri_get_host", LIBRARY.GSTREAMER);
+	Linker.link(gst_uri_get_media_fragment_table, "gst_uri_get_media_fragment_table", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_path, "gst_uri_get_path", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_path_segments, "gst_uri_get_path_segments", LIBRARY.GSTREAMER);
 	Linker.link(gst_uri_get_path_string, "gst_uri_get_path_string", LIBRARY.GSTREAMER);
@@ -1689,6 +1705,10 @@ shared static this()
 	Linker.link(gst_util_uint64_scale_int_ceil, "gst_util_uint64_scale_int_ceil", LIBRARY.GSTREAMER);
 	Linker.link(gst_util_uint64_scale_int_round, "gst_util_uint64_scale_int_round", LIBRARY.GSTREAMER);
 	Linker.link(gst_util_uint64_scale_round, "gst_util_uint64_scale_round", LIBRARY.GSTREAMER);
+	Linker.link(gst_calculate_linear_regression, "gst_calculate_linear_regression", LIBRARY.GSTREAMER);
+	Linker.link(gst_dynamic_type_register, "gst_dynamic_type_register", LIBRARY.GSTREAMER);
+	Linker.link(gst_util_get_object_array, "gst_util_get_object_array", LIBRARY.GSTREAMER);
+	Linker.link(gst_util_set_object_array, "gst_util_set_object_array", LIBRARY.GSTREAMER);
 
 	// gstreamer.ValueGst
 
@@ -1833,6 +1853,7 @@ __gshared extern(C)
 	int function(GstBuffer* buffer) c_gst_buffer_is_all_memory_writable;
 	int function(GstBuffer* buffer, uint idx, int length) c_gst_buffer_is_memory_range_writable;
 	GstMeta* function(GstBuffer* buffer, void** state) c_gst_buffer_iterate_meta;
+	GstMeta* function(GstBuffer* buffer, void** state, GType metaApiType) c_gst_buffer_iterate_meta_filtered;
 	int function(GstBuffer* buffer, GstMapInfo* info, GstMapFlags flags) c_gst_buffer_map;
 	int function(GstBuffer* buffer, uint idx, int length, GstMapInfo* info, GstMapFlags flags) c_gst_buffer_map_range;
 	int function(GstBuffer* buffer, size_t offset, void* mem, size_t size) c_gst_buffer_memcmp;
@@ -2179,6 +2200,11 @@ __gshared extern(C)
 	// gstreamer.DoubleRange
 
 	GType function() c_gst_double_range_get_type;
+
+	// gstreamer.DynamicTypeFactory
+
+	GType function() c_gst_dynamic_type_factory_get_type;
+	GType function(const(char)* factoryname) c_gst_dynamic_type_factory_load;
 
 	// gstreamer.Element
 
@@ -2600,6 +2626,7 @@ __gshared extern(C)
 	GstEvent* function(GstPad* pad, GstEventType eventType, uint idx) c_gst_pad_get_sticky_event;
 	GstStream* function(GstPad* pad) c_gst_pad_get_stream;
 	char* function(GstPad* pad) c_gst_pad_get_stream_id;
+	GstTaskState function(GstPad* pad) c_gst_pad_get_task_state;
 	int function(GstPad* pad) c_gst_pad_has_current_caps;
 	int function(GstPad* pad) c_gst_pad_is_active;
 	int function(GstPad* pad) c_gst_pad_is_blocked;
@@ -2672,6 +2699,10 @@ __gshared extern(C)
 	GstPadTemplate* function(const(char)* nameTemplate, GstPadDirection direction, GstPadPresence presence, GstCaps* caps) c_gst_pad_template_new;
 	GstCaps* function(GstPadTemplate* templ) c_gst_pad_template_get_caps;
 	void function(GstPadTemplate* templ, GstPad* pad) c_gst_pad_template_pad_created;
+
+	// gstreamer.ParamArray
+
+	GType function() c_gst_param_spec_array_get_type;
 
 	// gstreamer.ParamFraction
 
@@ -3005,6 +3036,7 @@ __gshared extern(C)
 	int function(GstStructure* structure, GstStructureForeachFunc func, void* userData) c_gst_structure_foreach;
 	void function(GstStructure* structure) c_gst_structure_free;
 	int function(GstStructure* structure, const(char)* firstFieldname, ... ) c_gst_structure_get;
+	int function(GstStructure* structure, const(char)* fieldname, GValueArray** array) c_gst_structure_get_array;
 	int function(GstStructure* structure, const(char)* fieldname, int* value) c_gst_structure_get_boolean;
 	int function(GstStructure* structure, const(char)* fieldname, GstClockTime* value) c_gst_structure_get_clock_time;
 	int function(GstStructure* structure, const(char)* fieldname, GDate** value) c_gst_structure_get_date;
@@ -3016,6 +3048,7 @@ __gshared extern(C)
 	int function(GstStructure* structure, const(char)* fieldname, int* valueNumerator, int* valueDenominator) c_gst_structure_get_fraction;
 	int function(GstStructure* structure, const(char)* fieldname, int* value) c_gst_structure_get_int;
 	int function(GstStructure* structure, const(char)* fieldname, long* value) c_gst_structure_get_int64;
+	int function(GstStructure* structure, const(char)* fieldname, GValueArray** array) c_gst_structure_get_list;
 	const(char)* function(GstStructure* structure) c_gst_structure_get_name;
 	GQuark function(GstStructure* structure) c_gst_structure_get_name_id;
 	const(char)* function(GstStructure* structure, const(char)* fieldname) c_gst_structure_get_string;
@@ -3046,6 +3079,8 @@ __gshared extern(C)
 	void function(GstStructure* structure, const(char)* fieldname, ... ) c_gst_structure_remove_fields;
 	void function(GstStructure* structure, const(char)* fieldname, void* varargs) c_gst_structure_remove_fields_valist;
 	void function(GstStructure* structure, const(char)* fieldname, ... ) c_gst_structure_set;
+	void function(GstStructure* structure, const(char)* fieldname, GValueArray* array) c_gst_structure_set_array;
+	void function(GstStructure* structure, const(char)* fieldname, GValueArray* array) c_gst_structure_set_list;
 	void function(GstStructure* structure, const(char)* name) c_gst_structure_set_name;
 	int function(GstStructure* structure, int* refcount) c_gst_structure_set_parent_refcount;
 	void function(GstStructure* structure, const(char)* fieldname, void* varargs) c_gst_structure_set_valist;
@@ -3250,6 +3285,7 @@ __gshared extern(C)
 	GstUri* function(GstUri* base, const(char)* uri) c_gst_uri_from_string_with_base;
 	const(char)* function(GstUri* uri) c_gst_uri_get_fragment;
 	const(char)* function(GstUri* uri) c_gst_uri_get_host;
+	GHashTable* function(GstUri* uri) c_gst_uri_get_media_fragment_table;
 	char* function(GstUri* uri) c_gst_uri_get_path;
 	GList* function(GstUri* uri) c_gst_uri_get_path_segments;
 	char* function(GstUri* uri) c_gst_uri_get_path_string;
@@ -3403,6 +3439,10 @@ __gshared extern(C)
 	ulong function(ulong val, int num, int denom) c_gst_util_uint64_scale_int_ceil;
 	ulong function(ulong val, int num, int denom) c_gst_util_uint64_scale_int_round;
 	ulong function(ulong val, ulong num, ulong denom) c_gst_util_uint64_scale_round;
+	int function(GstClockTime* xy, GstClockTime* temp, uint n, GstClockTime* mNum, GstClockTime* mDenom, GstClockTime* b, GstClockTime* xbase, double* rSquared) c_gst_calculate_linear_regression;
+	int function(GstPlugin* plugin, GType type) c_gst_dynamic_type_register;
+	int function(GObject* object, const(char)* name, GValueArray** array) c_gst_util_get_object_array;
+	int function(GObject* object, const(char)* name, GValueArray* array) c_gst_util_set_object_array;
 
 	// gstreamer.ValueGst
 
@@ -3545,6 +3585,7 @@ alias c_gst_buffer_insert_memory gst_buffer_insert_memory;
 alias c_gst_buffer_is_all_memory_writable gst_buffer_is_all_memory_writable;
 alias c_gst_buffer_is_memory_range_writable gst_buffer_is_memory_range_writable;
 alias c_gst_buffer_iterate_meta gst_buffer_iterate_meta;
+alias c_gst_buffer_iterate_meta_filtered gst_buffer_iterate_meta_filtered;
 alias c_gst_buffer_map gst_buffer_map;
 alias c_gst_buffer_map_range gst_buffer_map_range;
 alias c_gst_buffer_memcmp gst_buffer_memcmp;
@@ -3891,6 +3932,11 @@ alias c_gst_device_provider_factory_has_classesv gst_device_provider_factory_has
 // gstreamer.DoubleRange
 
 alias c_gst_double_range_get_type gst_double_range_get_type;
+
+// gstreamer.DynamicTypeFactory
+
+alias c_gst_dynamic_type_factory_get_type gst_dynamic_type_factory_get_type;
+alias c_gst_dynamic_type_factory_load gst_dynamic_type_factory_load;
 
 // gstreamer.Element
 
@@ -4312,6 +4358,7 @@ alias c_gst_pad_get_range gst_pad_get_range;
 alias c_gst_pad_get_sticky_event gst_pad_get_sticky_event;
 alias c_gst_pad_get_stream gst_pad_get_stream;
 alias c_gst_pad_get_stream_id gst_pad_get_stream_id;
+alias c_gst_pad_get_task_state gst_pad_get_task_state;
 alias c_gst_pad_has_current_caps gst_pad_has_current_caps;
 alias c_gst_pad_is_active gst_pad_is_active;
 alias c_gst_pad_is_blocked gst_pad_is_blocked;
@@ -4384,6 +4431,10 @@ alias c_gst_pad_template_get_type gst_pad_template_get_type;
 alias c_gst_pad_template_new gst_pad_template_new;
 alias c_gst_pad_template_get_caps gst_pad_template_get_caps;
 alias c_gst_pad_template_pad_created gst_pad_template_pad_created;
+
+// gstreamer.ParamArray
+
+alias c_gst_param_spec_array_get_type gst_param_spec_array_get_type;
 
 // gstreamer.ParamFraction
 
@@ -4717,6 +4768,7 @@ alias c_gst_structure_fixate_field_string gst_structure_fixate_field_string;
 alias c_gst_structure_foreach gst_structure_foreach;
 alias c_gst_structure_free gst_structure_free;
 alias c_gst_structure_get gst_structure_get;
+alias c_gst_structure_get_array gst_structure_get_array;
 alias c_gst_structure_get_boolean gst_structure_get_boolean;
 alias c_gst_structure_get_clock_time gst_structure_get_clock_time;
 alias c_gst_structure_get_date gst_structure_get_date;
@@ -4728,6 +4780,7 @@ alias c_gst_structure_get_flagset gst_structure_get_flagset;
 alias c_gst_structure_get_fraction gst_structure_get_fraction;
 alias c_gst_structure_get_int gst_structure_get_int;
 alias c_gst_structure_get_int64 gst_structure_get_int64;
+alias c_gst_structure_get_list gst_structure_get_list;
 alias c_gst_structure_get_name gst_structure_get_name;
 alias c_gst_structure_get_name_id gst_structure_get_name_id;
 alias c_gst_structure_get_string gst_structure_get_string;
@@ -4758,6 +4811,8 @@ alias c_gst_structure_remove_field gst_structure_remove_field;
 alias c_gst_structure_remove_fields gst_structure_remove_fields;
 alias c_gst_structure_remove_fields_valist gst_structure_remove_fields_valist;
 alias c_gst_structure_set gst_structure_set;
+alias c_gst_structure_set_array gst_structure_set_array;
+alias c_gst_structure_set_list gst_structure_set_list;
 alias c_gst_structure_set_name gst_structure_set_name;
 alias c_gst_structure_set_parent_refcount gst_structure_set_parent_refcount;
 alias c_gst_structure_set_valist gst_structure_set_valist;
@@ -4962,6 +5017,7 @@ alias c_gst_uri_equal gst_uri_equal;
 alias c_gst_uri_from_string_with_base gst_uri_from_string_with_base;
 alias c_gst_uri_get_fragment gst_uri_get_fragment;
 alias c_gst_uri_get_host gst_uri_get_host;
+alias c_gst_uri_get_media_fragment_table gst_uri_get_media_fragment_table;
 alias c_gst_uri_get_path gst_uri_get_path;
 alias c_gst_uri_get_path_segments gst_uri_get_path_segments;
 alias c_gst_uri_get_path_string gst_uri_get_path_string;
@@ -5115,6 +5171,10 @@ alias c_gst_util_uint64_scale_int gst_util_uint64_scale_int;
 alias c_gst_util_uint64_scale_int_ceil gst_util_uint64_scale_int_ceil;
 alias c_gst_util_uint64_scale_int_round gst_util_uint64_scale_int_round;
 alias c_gst_util_uint64_scale_round gst_util_uint64_scale_round;
+alias c_gst_calculate_linear_regression gst_calculate_linear_regression;
+alias c_gst_dynamic_type_register gst_dynamic_type_register;
+alias c_gst_util_get_object_array gst_util_get_object_array;
+alias c_gst_util_set_object_array gst_util_set_object_array;
 
 // gstreamer.ValueGst
 
