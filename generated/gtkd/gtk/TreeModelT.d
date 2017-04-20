@@ -30,7 +30,6 @@ public  import gobject.Signals;
 public  import gobject.Value;
 public  import gtk.TreeIter;
 public  import gtk.TreePath;
-public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
 public  import std.algorithm;

@@ -28,7 +28,6 @@ private import gdk.Window;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgAttributeList;

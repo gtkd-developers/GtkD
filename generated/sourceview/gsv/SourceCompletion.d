@@ -38,7 +38,6 @@ public  import gsvc.gsvtypes;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextIter;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

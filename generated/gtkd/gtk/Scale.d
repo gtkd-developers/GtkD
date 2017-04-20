@@ -31,7 +31,6 @@ private import gobject.Signals;
 private import gtk.Adjustment;
 private import gtk.Range;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgLayout;

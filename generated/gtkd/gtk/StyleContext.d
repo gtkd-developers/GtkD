@@ -43,7 +43,6 @@ private import gtk.IconSet;
 private import gtk.IconSource;
 private import gtk.StyleProviderIF;
 private import gtk.WidgetPath;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgFontDescription;

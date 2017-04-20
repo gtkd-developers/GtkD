@@ -32,7 +32,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

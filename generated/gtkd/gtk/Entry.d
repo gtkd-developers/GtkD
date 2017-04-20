@@ -42,7 +42,6 @@ private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
 private import gtk.TargetList;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgAttributeList;

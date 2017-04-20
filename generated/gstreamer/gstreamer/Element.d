@@ -47,7 +47,6 @@ private import gstreamer.Query;
 private import gstreamer.Structure;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
-public  import gtkc.gdktypes;
 private import gtkc.gobject;
 private import std.algorithm;
 

@@ -31,7 +31,6 @@ private import gobject.Signals;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextTag;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

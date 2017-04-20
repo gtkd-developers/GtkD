@@ -32,7 +32,6 @@ private import gobject.Signals;
 private import gtk.Dialog;
 private import gtk.Widget;
 private import gtk.Window;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

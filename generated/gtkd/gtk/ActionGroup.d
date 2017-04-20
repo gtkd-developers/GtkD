@@ -34,7 +34,6 @@ private import gtk.Action;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

@@ -68,7 +68,6 @@ private import gtk.TargetList;
 private import gtk.Tooltip;
 private import gtk.WidgetPath;
 private import gtk.Window;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgContext;

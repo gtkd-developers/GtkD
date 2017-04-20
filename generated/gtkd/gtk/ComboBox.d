@@ -38,7 +38,6 @@ private import gtk.CellLayoutT;
 private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

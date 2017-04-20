@@ -43,7 +43,6 @@ private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
 private import gtk.Widget;
 private import gtk.Window;
-public  import gtkc.gdktypes;
 private import pango.PgFontDescription;
 private import std.algorithm;
 private import vte.Pty;

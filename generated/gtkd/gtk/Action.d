@@ -39,7 +39,6 @@ private import gtk.Image;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.ToolItem;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

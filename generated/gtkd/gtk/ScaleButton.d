@@ -33,7 +33,6 @@ private import gtk.Button;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

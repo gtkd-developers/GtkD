@@ -38,7 +38,6 @@ private import gtk.Application;
 private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.WindowGroup;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

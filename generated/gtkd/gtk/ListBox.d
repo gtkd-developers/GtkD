@@ -33,7 +33,6 @@ private import gtk.Adjustment;
 private import gtk.Container;
 private import gtk.ListBoxRow;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

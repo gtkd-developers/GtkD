@@ -38,7 +38,6 @@ private import gtk.TextChildAnchor;
 private import gtk.TextIter;
 private import gtk.TextMark;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import pango.PgTabArray;

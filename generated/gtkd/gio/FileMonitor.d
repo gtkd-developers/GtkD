@@ -28,7 +28,6 @@ private import gio.File;
 private import gio.FileIF;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import gtkc.gio;
 public  import gtkc.giotypes;
 private import std.algorithm;

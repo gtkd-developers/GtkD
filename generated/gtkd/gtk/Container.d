@@ -34,7 +34,6 @@ private import gobject.Value;
 private import gtk.Adjustment;
 private import gtk.Widget;
 private import gtk.WidgetPath;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

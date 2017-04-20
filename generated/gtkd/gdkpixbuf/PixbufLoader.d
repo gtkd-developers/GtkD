@@ -36,7 +36,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtkc.gdkpixbuf;
 public  import gtkc.gdkpixbuftypes;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

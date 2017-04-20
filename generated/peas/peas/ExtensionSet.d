@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import peas.Engine;
 private import peas.PluginInfo;
 private import peasc.peas;

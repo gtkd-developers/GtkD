@@ -33,7 +33,6 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Stream;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

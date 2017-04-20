@@ -40,7 +40,6 @@ private import gtk.TextIter;
 private import gtk.TextMark;
 private import gtk.TextTag;
 private import gtk.TextTagTable;
-public  import gtkc.gdktypes;
 private import gtkc.gobject;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;

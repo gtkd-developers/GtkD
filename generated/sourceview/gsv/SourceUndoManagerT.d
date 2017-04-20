@@ -27,7 +27,6 @@ module gsv.SourceUndoManagerT;
 public  import gobject.Signals;
 public  import gsvc.gsv;
 public  import gsvc.gsvtypes;
-public  import gtkc.gdktypes;
 public  import std.algorithm;
 
 

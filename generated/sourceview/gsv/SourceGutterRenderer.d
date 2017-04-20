@@ -34,7 +34,6 @@ public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Tooltip;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

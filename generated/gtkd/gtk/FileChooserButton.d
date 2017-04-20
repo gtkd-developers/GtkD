@@ -33,7 +33,6 @@ private import gtk.Dialog;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

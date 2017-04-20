@@ -35,7 +35,6 @@ private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Widget;
 private import gtk.Window;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

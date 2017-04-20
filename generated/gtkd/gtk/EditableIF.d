@@ -26,7 +26,6 @@ module gtk.EditableIF;
 
 private import glib.Str;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

@@ -36,7 +36,6 @@ private import gsv.SourceMark;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

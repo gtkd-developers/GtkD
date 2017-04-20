@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

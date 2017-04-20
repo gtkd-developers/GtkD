@@ -32,7 +32,6 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeView;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

@@ -33,7 +33,6 @@ private import gobject.Signals;
 private import gtk.SelectionData;
 private import gtk.TargetEntry;
 private import gtk.TextBuffer;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

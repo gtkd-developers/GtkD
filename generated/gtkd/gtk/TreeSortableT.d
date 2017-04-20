@@ -25,7 +25,6 @@
 module gtk.TreeSortableT;
 
 public  import gobject.Signals;
-public  import gtkc.gdktypes;
 public  import gtkc.gtk;
 public  import gtkc.gtktypes;
 public  import std.algorithm;

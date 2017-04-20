@@ -28,7 +28,6 @@ public  import glib.Str;
 public  import gobject.Signals;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
-public  import gtkc.gdktypes;
 public  import std.algorithm;
 
 

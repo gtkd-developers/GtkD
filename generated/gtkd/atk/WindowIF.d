@@ -27,7 +27,6 @@ module atk.WindowIF;
 private import gobject.Signals;
 private import gtkc.atk;
 public  import gtkc.atktypes;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

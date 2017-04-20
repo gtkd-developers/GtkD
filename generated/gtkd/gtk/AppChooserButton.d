@@ -33,7 +33,6 @@ private import gtk.AppChooserIF;
 private import gtk.AppChooserT;
 private import gtk.ComboBox;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

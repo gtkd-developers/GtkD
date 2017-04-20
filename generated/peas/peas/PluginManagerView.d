@@ -34,7 +34,6 @@ private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
 private import gtk.TreeView;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import peas.Engine;
 private import peas.PluginInfo;
 private import peasc.peas;

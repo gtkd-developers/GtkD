@@ -31,7 +31,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

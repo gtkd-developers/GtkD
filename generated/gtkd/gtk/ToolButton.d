@@ -32,7 +32,6 @@ private import gtk.ActionableIF;
 private import gtk.ActionableT;
 private import gtk.ToolItem;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;

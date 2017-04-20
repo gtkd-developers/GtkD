@@ -43,7 +43,6 @@ private import gtk.ScrollableT;
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Widget;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

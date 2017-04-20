@@ -32,7 +32,6 @@ public  import gobject.Signals;
 public  import gobject.Value;
 public  import gtkc.atk;
 public  import gtkc.atktypes;
-public  import gtkc.gdktypes;
 public  import std.algorithm;
 
 

@@ -34,7 +34,6 @@ private import gobject.Value;
 private import gstreamer.ControlBinding;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

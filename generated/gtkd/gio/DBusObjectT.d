@@ -30,7 +30,6 @@ public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gdktypes;
 public  import gtkc.gio;
 public  import gtkc.giotypes;
 public  import std.algorithm;

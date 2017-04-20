@@ -34,7 +34,6 @@ private import gobject.Signals;
 private import gtk.CssSection;
 private import gtk.StyleProviderIF;
 private import gtk.StyleProviderT;
-public  import gtkc.gdktypes;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import std.algorithm;
