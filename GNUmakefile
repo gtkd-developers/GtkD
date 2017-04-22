@@ -156,23 +156,23 @@ $(LIBNAME_GTKD): $(OBJECTS_GTKD)
 	$(make-lib)
 
 $(LIBNAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
-$(LIBNAME_GTKDGL): $(LIBNAME_GTKD) $(OBJECTS_GTKDGL)
+$(LIBNAME_GTKDGL): $(OBJECTS_GTKDGL) $(LIBNAME_GTKD)
 	$(make-lib)
 
 $(LIBNAME_GTKDSV): IMPORTS=-Igenerated/gtkd -Igenerated/sourceview
-$(LIBNAME_GTKDSV): $(LIBNAME_GTKD) $(OBJECTS_GTKDSV)
+$(LIBNAME_GTKDSV): $(OBJECTS_GTKDSV) $(LIBNAME_GTKD)
 	$(make-lib)
 
 $(LIBNAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
-$(LIBNAME_GSTREAMERD): $(LIBNAME_GTKD) $(OBJECTS_GSTREAMERD)
+$(LIBNAME_GSTREAMERD): $(OBJECTS_GSTREAMERD) $(LIBNAME_GTKD)
 	$(make-lib)
 
 $(LIBNAME_VTED): IMPORTS=-Igenerated/gtkd -Igenerated/vte
-$(LIBNAME_VTED): $(LIBNAME_GTKD) $(OBJECTS_VTED)
+$(LIBNAME_VTED): $(OBJECTS_VTED) $(LIBNAME_GTKD)
 	$(make-lib)
 
 $(LIBNAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
-$(LIBNAME_PEASD): $(LIBNAME_GTKD) $(OBJECTS_PEASD)
+$(LIBNAME_PEASD): $(OBJECTS_PEASD) $(LIBNAME_GTKD)
 	$(make-lib)
 
 #######################################################################
@@ -182,23 +182,23 @@ $(SONAME_GTKD): $(PICOBJECTS_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_GTKD))
 
 $(SONAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
-$(SONAME_GTKDGL): $(SONAME_GTKD) $(PICOBJECTS_GTKDGL)
+$(SONAME_GTKDGL): $(PICOBJECTS_GTKDGL) $(SONAME_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_GTKDGL))
 
 $(SONAME_GTKDSV): IMPORTS=-Igenerated/gtkd -Igenerated/sourceview
-$(SONAME_GTKDSV): $(SONAME_GTKD) $(PICOBJECTS_GTKDSV)
+$(SONAME_GTKDSV): $(PICOBJECTS_GTKDSV) $(SONAME_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_GTKDSV))
 
 $(SONAME_GSTREAMERD): IMPORTS=-Igenerated/gtkd -Igenerated/gstreamer
-$(SONAME_GSTREAMERD): $(SONAME_GTKD) $(PICOBJECTS_GSTREAMERD)
+$(SONAME_GSTREAMERD): $(PICOBJECTS_GSTREAMERD) $(SONAME_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_GSTREAMERD))
 
 $(SONAME_VTED): IMPORTS=-Igenerated/gtkd -Igenerated/vte
-$(SONAME_VTED): $(SONAME_GTKD) $(PICOBJECTS_VTED)
+$(SONAME_VTED): $(PICOBJECTS_VTED) $(SONAME_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_VTED))
 
 $(SONAME_PEASD): IMPORTS=-Igenerated/gtkd -Igenerated/peas
-$(SONAME_PEASD): $(SONAME_GTKD) $(PICOBJECTS_PEASD)
+$(SONAME_PEASD): $(PICOBJECTS_PEASD) $(SONAME_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_PEASD))
 
 #######################################################################
@@ -423,7 +423,7 @@ clean:
 #######################################################################
 
 define make-lib
-    $(AR) rcs $@ $(subst $(LIBNAME_GTKD),,$^)
+    $(AR) rcs $@ $<
     $(RANLIB) $@
 endef
 
@@ -432,7 +432,7 @@ define make-shared-lib
 	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
 	$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos))
  
-	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
+	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $<
 endef
 
 define install-so
