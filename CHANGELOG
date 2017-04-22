@@ -1,9 +1,17 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.6.0
+--------------
+-Update the libraries to the latest versions.
+-Add librsvg. #193
+-Allow for not using the runtime linker when generating the binding.
+-Add mixin templates to generate the boilerplate needed to implement Gtk interfaces
+   or overrideing Gtk functions.
+
 Release: 3.5.1
 --------------
-- Set the correct path for the pkgconfig files. #181
+-Set the correct path for the pkgconfig files. #181
 
 Release: 3.5.0
 --------------
