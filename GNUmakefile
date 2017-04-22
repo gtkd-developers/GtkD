@@ -432,7 +432,7 @@ define make-shared-lib
 	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
 	$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos))
  
-	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $^
+	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $(subst $(SONAME_GTKD),,$^)
 endef
 
 define install-so

@@ -73,7 +73,7 @@ void build(string dir, string lib)
 {
 	version(Win64)
 	{
-		std.file.write("build.rf", format("-m64 -c -lib %s %s -Isrc -of%s.lib %s", dcflags, ldflags, lib, dFiles(dir)));
+		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd -of%s.lib %s", dcflags, ldflags, lib, dFiles(dir)));
 		executeShell("dmd @build.rf");
 	}
 	else
@@ -87,9 +87,9 @@ void build(string dir, string lib)
 			string files2 = files[pivot .. $];
 			files = files [0 .. pivot];
 
-			std.file.write("build.rf", format("-c %s -Isrc -ofgtkd1.obj %s", dcflags, files));
+			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -ofgtkd1.obj %s", dcflags, files));
 			executeShell("dmd @build.rf");
-			std.file.write("build.rf", format("-c %s -Isrc -ofgtkd2.obj %s", dcflags, files2));
+			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -ofgtkd2.obj %s", dcflags, files2));
 			executeShell("dmd @build.rf");
 
 			executeShell(format("dmd -lib %s -of%s.lib gtkd1.obj gtkd2.obj", ldflags, lib));
@@ -99,7 +99,7 @@ void build(string dir, string lib)
 		}
 		else
 		{
-			std.file.write("build.rf", format("-c %s -Isrc -of%s.obj %s", dcflags, lib, dFiles(dir)));
+			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -of%s.obj %s", dcflags, lib, dFiles(dir)));
 			executeShell("dmd @build.rf");
 			executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
 			std.file.remove(lib ~".obj");
